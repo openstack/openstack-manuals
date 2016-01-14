@@ -1,14 +1,16 @@
+.. _scenario-l3ha-lb:
+
 ===============================================================
-Scenario: High Availability using VRRP (L3HA) with Open vSwitch
+Scenario: High Availability using VRRP (L3HA) with Linux Bridge
 ===============================================================
 
 This scenario describes a high-availability implementation of the OpenStack
-Networking service using the ML2 plug-in and Open vSwitch (OVS).
+Networking service using the ML2 plug-in and Linux bridge.
 
-This high-availability implementation augments the :doc:`scenario_legacy_ovs`
+This high-availability implementation augments the :ref:`scenario-classic-lb`
 architecture with Virtual Router Redundancy Protocol (VRRP) using
 ``keepalived`` to provide quick failover of layer-3 services. See
-:ref:`scenario_l3ha_ovs-packet_flow` for VRRP operation. Similar to the legacy
+:ref:`scenario_l3ha_lb-packet_flow` for VRRP operation. Similar to the classic
 scenario, all network traffic on a project network that requires routing
 actively traverses only one network node regardless of the quantity of network
 nodes providing HA for the router. Therefore, this high-availability
@@ -18,7 +20,7 @@ of routers on different network nodes to reduce the chances of bandwidth
 constraints and to improve scaling. Also, this implementation does not address
 situations where one or more layer-3 agents fail and the underlying virtual
 networks continue to operate normally. Consider deploying
-:doc:`scenario_dvr_ovs` to increase performance in addition to redundancy. As
+:ref:`scenario-dvr-ovs` to increase performance in addition to redundancy. As
 of the Liberty release, you cannot combine the DVR and L3HA mechanisms.
 
 .. note::
@@ -28,11 +30,12 @@ of the Liberty release, you cannot combine the DVR and L3HA mechanisms.
 
 The example configuration creates one flat external network and one VXLAN
 project (tenant) network. However, this configuration also supports VLAN
-external networks, VLAN project networks, and GRE project networks.
+external and project networks.
 
 .. note::
 
-   Due to a bug in releases prior to Liberty, VXLAN and GRE project
+   In the releases prior to Liberty, L3HA with Linux bridge supports
+   VLAN and VXLAN project networks. However, due to a bug, VXLAN project
    networks must use multicast instead of the layer-2 population mechanism.
 
 .. todo:
@@ -58,53 +61,40 @@ Infrastructure
 --------------
 
 #. One controller node with one network interface: management.
-#. Two network nodes with four network interfaces: management, project tunnel
-   networks, project VLAN networks, and external (typically the Internet).
-   The Open vSwitch bridge ``br-vlan`` must contain a port on the VLAN
-   interface and Open vSwitch bridge ``br-ex`` must contain a port on the
-   external interface.
-#. At least one compute node with three network interfaces: management,
-   project tunnel networks, and project VLAN networks. The Open vSwitch
-   bridge ``br-vlan`` must contain a port on the VLAN interface.
+#. At least two network nodes with four network interfaces: management,
+   project tunnel networks, project VLAN networks, and external (typically
+   the Internet).
+#. At least two compute nodes with three network interfaces: management,
+   project tunnel networks, and project VLAN networks.
 
 To improve understanding of network traffic flow, the network and compute
 nodes contain a separate network interface for project VLAN networks. In
-production environments, project VLAN networks can use any Open vSwitch
-bridge with access to a network interface. For example, the ``br-tun``
-bridge.
+production environments, you can use any network interface for VLAN project
+networks.
 
 In the example configuration, the management network uses 10.0.0.0/24,
 the tunnel network uses 10.0.1.0/24, the VRRP network uses 169.254.192.0/18,
 and the external network uses 203.0.113.0/24. The VLAN network does not
 require an IP address range because it only handles layer-2 connectivity.
 
-.. figure:: figures/scenario-l3ha-hw.png
+.. image:: figures/scenario-l3ha-hw.png
    :alt: Hardware layout
 
-.. figure:: figures/scenario-l3ha-networks.png
+.. image:: figures/scenario-l3ha-networks.png
    :alt: Network layout
 
-.. figure:: figures/scenario-l3ha-ovs-services.png
+.. image:: figures/scenario-l3ha-lb-services.png
    :alt: Service layout
 
 .. note::
 
    For VLAN external and project networks, the network infrastructure
-   must support VLAN tagging. For best performance with VXLAN and GRE
-   project networks, the network infrastructure should support jumbo frames.
+   must support VLAN tagging. For best performance with VXLAN project
+   networks, the network infrastructure should support jumbo frames.
 
 .. warning::
 
-   Linux distributions often package older releases of Open vSwitch that can
-   introduce issues during operation with the Networking service. We recommend
-   using at least the latest long-term stable (LTS) release of Open vSwitch
-   for the best experience and support from Open vSwitch. See
-   `<http://www.openvswitch.org>`__ for available releases and the
-   `installation instructions
-   <https://github.com/openvswitch/ovs/blob/master/INSTALL.md>`__ for
-   building newer releases from source on various distributions.
-
-   Implementing VXLAN networks requires Linux kernel 3.13 or newer.
+   Proper operation of VXLAN requires kernel 3.13 or newer.
 
 OpenStack services - controller node
 ------------------------------------
@@ -116,40 +106,37 @@ OpenStack services - controller node
 #. Operational OpenStack Identity service with appropriate configuration
    in the ``neutron.conf`` file.
 #. Operational OpenStack Compute controller/management service with
-   appropriate configuration to use OpenStack Networking in the
-   ``nova.conf`` file.
+   appropriate configuration to use neutron in the ``nova.conf`` file.
 #. Neutron server service, ML2 plug-in, and any dependencies.
 
-OpenStack services - network nodes
-----------------------------------
+OpenStack services - network node
+---------------------------------
 
 #. Operational OpenStack Identity service with appropriate configuration
    in the ``neutron.conf`` file.
-#. Open vSwitch service, ML2 plug-in, Open vSwitch agent, L3 agent,
-   DHCP agent, metadata agent, and any dependencies.
+#. ML2 plug-in, Linux bridge agent, L3 agent, DHCP agent, metadata agent,
+   and any dependencies.
 
 OpenStack services - compute nodes
 ----------------------------------
 
 #. Operational OpenStack Identity service with appropriate configuration
    in the ``neutron.conf`` file.
-#. Operational OpenStack Compute controller/management service with
-   appropriate configuration to use OpenStack Networking in the
-   ``neutron.conf`` file.
-#. Open vSwitch service, ML2 plug-in, Open vSwitch agent, and any
-   dependencies.
+#. Operational OpenStack Compute hypervisor service with appropriate
+   configuration to use neutron in the ``nova.conf`` file.
+#. ML2 plug-in, Linux bridge agent, and any dependencies.
 
 Architecture
 ~~~~~~~~~~~~
 
-.. figure:: figures/scenario-l3ha-general.png
+.. image:: figures/scenario-l3ha-general.png
    :alt: Architecture overview
 
 The network nodes contain the following components:
 
-#. Open vSwitch agent managing virtual switches, connectivity among
+#. Linux bridge agent managing virtual switches, connectivity among
    them, and interaction via virtual ports with other network components
-   such as namespaces, Linux bridges, and underlying interfaces.
+   such as namespaces and underlying interfaces.
 #. DHCP agent managing the ``qdhcp`` namespaces. The ``qdhcp`` namespaces
    provide DHCP services for instances using project networks.
 #. L3 agent managing the ``qrouter`` namespaces and VRRP using ``keepalived``.
@@ -158,37 +145,35 @@ The network nodes contain the following components:
    between instances and the metadata agent.
 #. Metadata agent handling metadata operations for instances.
 
-.. figure:: figures/scenario-l3ha-ovs-network1.png
+.. image:: figures/scenario-l3ha-lb-network1.png
    :alt: Network node components - overview
 
-.. figure:: figures/scenario-l3ha-ovs-network2.png
+.. image:: figures/scenario-l3ha-lb-network2.png
    :alt: Network node components - connectivity
 
-The compute nodes contain the following components:
+.. note::
 
-#. Open vSwitch agent managing virtual switches, connectivity among
+   For simplicity, the hidden project network that connects all HA routers for
+   a particular project uses the VXLAN network type.
+
+The compute nodes contain the following network components:
+
+#. Linux bridge agent managing virtual switches, connectivity among
    them, and interaction via virtual ports with other network components
-   such as namespaces, Linux bridges, and underlying interfaces.
-#. Linux bridges handling security groups.
+   such as namespaces, security groups, and underlying interfaces.
 
-   .. note::
-
-      Due to limitations with Open vSwitch and *iptables*, the Networking
-      service uses a Linux bridge to manage security groups for
-      instances.
-
-.. figure:: figures/scenario-l3ha-ovs-compute1.png
+.. image:: figures/scenario-l3ha-lb-compute1.png
    :alt: Compute node components - overview
 
-.. figure:: figures/scenario-l3ha-ovs-compute2.png
+.. image:: figures/scenario-l3ha-lb-compute2.png
    :alt: Compute node components - connectivity
 
-.. _scenario_l3ha_ovs-packet_flow:
+.. _scenario_l3ha_lb-packet_flow:
 
 Packet flow
 ~~~~~~~~~~~
 
-The L3HA mechanism simply augments :doc:`scenario_legacy_ovs` with quick
+The L3HA mechanism simply augments :ref:`scenario-classic-lb` with quick
 failover of layer-3 services to another router if the master router
 fails.
 
@@ -243,7 +228,7 @@ Controller node
       [ml2]
       type_drivers = flat,vlan,gre,vxlan
       tenant_network_types = vlan,gre,vxlan
-      mechanism_drivers = openvswitch
+      mechanism_drivers = linuxbridge
 
       [ml2_type_flat]
       flat_networks = external
@@ -251,21 +236,18 @@ Controller node
       [ml2_type_vlan]
       network_vlan_ranges = external,vlan:MIN_VLAN_ID:MAX_VLAN_ID
 
-      [ml2_type_gre]
-      tunnel_id_ranges = MIN_GRE_ID:MAX_GRE_ID
-
       [ml2_type_vxlan]
       vni_ranges = MIN_VXLAN_ID:MAX_VXLAN_ID
       vxlan_group = 239.1.1.1
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
       enable_security_group = True
       enable_ipset = True
 
-   Replace ``MIN_VLAN_ID``, ``MAX_VLAN_ID``, ``MIN_GRE_ID``, ``MAX_GRE_ID``,
-   ``MIN_VXLAN_ID``, and ``MAX_VXLAN_ID`` with VLAN, GRE, and VXLAN ID minimum
-   and maximum values suitable for your environment.
+   Replace ``MIN_VLAN_ID``, ``MAX_VLAN_ID``, ``MIN_VXLAN_ID``, and
+   ``MAX_VXLAN_ID`` with VLAN and VXLAN ID minimum and maximum values suitable
+   for your environment.
 
    .. note::
 
@@ -306,26 +288,28 @@ Network nodes
       [DEFAULT]
       verbose = True
 
-#. Configure the Open vSwitch agent. Edit the
+#. Configure the Linux bridge agent. Edit the
    ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
 
    .. code-block:: ini
 
-      [ovs]
-      local_ip = TUNNEL_INTERFACE_IP_ADDRESS
-      bridge_mappings = vlan:br-vlan,external:br-ex
+      [linux_bridge]
+      physical_interface_mappings = vlan:PROJECT_VLAN_INTERFACE,external:EXTERNAL_INTERFACE
 
-      [agent]
-      tunnel_types = gre,vxlan
+      [vxlan]
+      enable_vxlan = True
+      local_ip = TUNNEL_INTERFACE_IP_ADDRESS
       l2_population = False
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
       enable_security_group = True
       enable_ipset = True
 
-   Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
-   that handles GRE/VXLAN project networks.
+   Replace ``PROJECT_VLAN_INTERFACE`` and ``EXTERNAL_INTERFACE`` with the name
+   of the underlying interface that handles VLAN project networks and external
+   networks, respectively. Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP
+   address of the interface that handles project tunnel networks.
 
 #. Configure the L3 agent. Edit the ``/etc/neutron/l3_agent.ini`` file:
 
@@ -333,7 +317,7 @@ Network nodes
 
       [DEFAULT]
       verbose = True
-      interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+      interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
       use_namespaces = True
       external_network_bridge =
       router_delete_namespaces = True
@@ -351,12 +335,12 @@ Network nodes
 
       [DEFAULT]
       verbose = True
-      interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+      interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
       dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
       use_namespaces = True
       dhcp_delete_namespaces = True
 
-#. (Optional) Reduce MTU for VXLAN/GRE project networks.
+#. (Optional) Reduce MTU for VXLAN project networks.
 
    #. Edit the ``/etc/neutron/dhcp_agent.ini`` file:
 
@@ -385,8 +369,7 @@ Network nodes
 
 #. Start the following services:
 
-   * Open vSwitch
-   * Open vSwitch agent
+   * Linux bridge agent
    * L3 agent
    * DHCP agent
    * Metadata agent
@@ -417,31 +400,32 @@ Compute nodes
       [DEFAULT]
       verbose = True
 
-#. Configure the Open vSwitch agent. Edit the
+#. Configure the Linux bridge agent. Edit the
    ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
 
    .. code-block:: ini
 
-      [ovs]
-      local_ip = TUNNEL_INTERFACE_IP_ADDRESS
-      bridge_mappings = vlan:br-vlan
+      [linux_bridge]
+      physical_interface_mappings = vlan:PROJECT_VLAN_INTERFACE
 
-      [agent]
-      tunnel_types = gre,vxlan
+      [vxlan]
+      enable_vxlan = True
+      local_ip = TUNNEL_INTERFACE_IP_ADDRESS
       l2_population = False
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
       enable_security_group = True
       enable_ipset = True
 
-   Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
-   that handles GRE/VXLAN project networks.
+   Replace ``PROJECT_VLAN_INTERFACE`` and ``EXTERNAL_INTERFACE`` with the name
+   of the underlying interface that handles VLAN project networks and external
+   networks, respectively. Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP
+   address of the interface that handles project tunnel networks.
 
 #. Start the following services:
 
-   * Open vSwitch
-   * Open vSwitch agent
+   * Linux bridge agent
 
 Verify service operation
 ------------------------
@@ -456,20 +440,20 @@ Verify service operation
       +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
       | id                                   | agent_type         | host     | alive | admin_state_up | binary                    |
       +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
-      | 0bfe5b5d-0b82-434e-b8a0-524cc18da3a4 | DHCP agent         | network1 | :-)   | True           | neutron-dhcp-agent        |
-      | 25224bd5-0905-4ec9-9f2d-3b17cdaf5650 | Open vSwitch agent | compute2 | :-)   | True           | neutron-openvswitch-agent |
-      | 29afe014-273d-42f3-ad71-8a226e40dea6 | L3 agent           | network1 | :-)   | True           | neutron-l3-agent          |
-      | 3bed5093-e46c-4b0f-9460-3309c62254a3 | DHCP agent         | network2 | :-)   | True           | neutron-dhcp-agent        |
-      | 54aefb1c-35f7-4ebf-a848-3bb4fe81dcf7 | Open vSwitch agent | network1 | :-)   | True           | neutron-openvswitch-agent |
-      | 91c9cc03-1678-4d7a-b0a7-fa1ac24e5516 | Open vSwitch agent | compute1 | :-)   | True           | neutron-openvswitch-agent |
-      | ac7b3f77-7e4d-47a6-9dbd-3358cfb67b61 | Open vSwitch agent | network2 | :-)   | True           | neutron-openvswitch-agent |
-      | ceef5c49-3148-4c39-9e15-4985fc995113 | Metadata agent     | network1 | :-)   | True           | neutron-metadata-agent    |
-      | d27ac19b-fb4d-4fec-b81d-e8c65557b6ec | L3 agent           | network2 | :-)   | True           | neutron-l3-agent          |
-      | f072a1ec-f842-4223-a6b6-ec725419be85 | Metadata agent     | network2 | :-)   | True           | neutron-metadata-agent    |
+      | 7856ba29-5447-4392-b2e1-2c236bd5f479 | Metadata agent     | network1 | :-)   | True           | neutron-metadata-agent    |
+      | 85d5c715-08f6-425d-9efc-73633736bf06 | Linux bridge agent | network2 | :-)   | True           | neutron-linuxbridge-agent |
+      | 98d32a4d-1257-4b42-aea4-ad9bd7deea62 | Metadata agent     | network2 | :-)   | True           | neutron-metadata-agent    |
+      | b45096a1-7bfa-4816-8b3c-900b752a9c08 | DHCP agent         | network1 | :-)   | True           | neutron-dhcp-agent        |
+      | d4c45b8e-3b34-4192-80b1-bbdefb110c3f | Linux bridge agent | compute2 | :-)   | True           | neutron-linuxbridge-agent |
+      | e5a4e06b-dd9d-4b97-a09a-c8ba07706753 | Linux bridge agent | network1 | :-)   | True           | neutron-linuxbridge-agent |
+      | e8f8b228-5c3e-4378-b8f5-36b5c41cb3fe | L3 agent           | network2 | :-)   | True           | neutron-l3-agent          |
+      | f2d10c26-2136-4e6a-86e5-d22f67ab22d7 | Linux bridge agent | compute1 | :-)   | True           | neutron-linuxbridge-agent |
+      | f9f94732-08af-4f82-8908-fdcd69ab12e8 | L3 agent           | network1 | :-)   | True           | neutron-l3-agent          |
+      | fbeebad9-6590-4f78-bb29-7d58ea867878 | DHCP agent         | network2 | :-)   | True           | neutron-dhcp-agent        |
       +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
 
 Create initial networks
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 This example creates a flat external network and a VXLAN project network.
 
@@ -478,7 +462,7 @@ This example creates a flat external network and a VXLAN project network.
 
    .. code-block:: console
 
-      $ neutron net-create ext-net --router:external True \
+      $ neutron net-create ext-net --router:external \
         --provider:physical_network external --provider:network_type flat
 
       Created a new network:
@@ -529,8 +513,8 @@ This example creates a flat external network and a VXLAN project network.
 
    The example configuration contains ``vlan`` as the first project network
    type. Only an administrative user can create other types of networks such as
-   GRE or VXLAN. The following commands use the ``admin`` project credentials
-   to create a VXLAN project network.
+   VXLAN. The following commands use the ``admin`` project credentials to
+   create a VXLAN project network.
 
 #. Obtain the ID of a regular project. For example, using the ``demo`` project:
 
@@ -543,16 +527,16 @@ This example creates a flat external network and a VXLAN project network.
       +-------------+----------------------------------+
       | description |           Demo Tenant            |
       |   enabled   |               True               |
-      |      id     | 443cd1596b2e46d49965750771ebbfe1 |
+      |      id     | f8207c03fd1e4b4aaf123efea4662819 |
       |     name    |               demo               |
       +-------------+----------------------------------+
 
-#. Create the project network:
+#. Create a project network:
 
    .. code-block:: console
 
       $ neutron net-create demo-net \
-        --tenant-id 443cd1596b2e46d49965750771ebbfe1 \
+        --tenant-id f8207c03fd1e4b4aaf123efea4662819 \
         --provider:network_type vxlan
 
       Created a new network:
@@ -560,7 +544,7 @@ This example creates a flat external network and a VXLAN project network.
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
       | admin_state_up            | True                                 |
-      | id                        | 7ac9a268-1ddd-453f-857b-0fd9552b645f |
+      | id                        | d990778b-49ea-4beb-9336-6ea2248edf7d |
       | name                      | demo-net                             |
       | provider:network_type     | vxlan                                |
       | provider:physical_network |                                      |
@@ -569,10 +553,10 @@ This example creates a flat external network and a VXLAN project network.
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | 443cd1596b2e46d49965750771ebbfe1     |
+      | tenant_id                 | f8207c03fd1e4b4aaf123efea4662819     |
       +---------------------------+--------------------------------------+
 
-#. Source the ``demo`` project credentials. The following steps use the
+#. Source the regular project credentials. The following steps use the
    ``demo`` project.
 #. Create a subnet on the project network:
 
@@ -591,13 +575,13 @@ This example creates a flat external network and a VXLAN project network.
       | enable_dhcp       | True                                             |
       | gateway_ip        | 192.168.1.1                                      |
       | host_routes       |                                                  |
-      | id                | 2945790c-5999-4693-b8e7-50a9fc7f46f5             |
+      | id                | b7fe4e86-65d5-4e88-8266-88795ae4ac53             |
       | ip_version        | 4                                                |
       | ipv6_address_mode |                                                  |
       | ipv6_ra_mode      |                                                  |
       | name              | demo-subnet                                      |
-      | network_id        | 7ac9a268-1ddd-453f-857b-0fd9552b645f             |
-      | tenant_id         | 443cd1596b2e46d49965750771ebbfe1                 |
+      | network_id        | d990778b-49ea-4beb-9336-6ea2248edf7d             |
+      | tenant_id         | f8207c03fd1e4b4aaf123efea4662819                 |
       +-------------------+--------------------------------------------------+
 
 #. Create a project router:
@@ -614,11 +598,11 @@ This example creates a flat external network and a VXLAN project network.
       | distributed           | False                                |
       | external_gateway_info |                                      |
       | ha                    | True                                 |
-      | id                    | 7a46dba8-8846-498c-9e10-588664558473 |
+      | id                    | 557bf478-6afe-48af-872f-63513f7e9b92 |
       | name                  | demo-router                          |
       | routes                |                                      |
       | status                | ACTIVE                               |
-      | tenant_id             | 443cd1596b2e46d49965750771ebbfe1     |
+      | tenant_id             | f8207c03fd1e4b4aaf123efea4662819     |
       +-----------------------+--------------------------------------+
 
    .. note::
@@ -627,12 +611,12 @@ This example creates a flat external network and a VXLAN project network.
       to enable/disable HA during router creation and view the ``ha`` flag
       for a router.
 
-#. Add the project subnet as an interface on the router:
+#. Attach the project subnet as an interface on the router:
 
    .. code-block:: console
 
       $ neutron router-interface-add demo-router demo-subnet
-      Added interface 8de3e172-5317-4c87-bdc1-f69e359de92e to router demo-router.
+      Added interface 4cb8f7ea-28f2-4fe1-91f7-1c2823994fc4 to router demo-router.
 
 #. Add a gateway to the external network on the router:
 
@@ -654,9 +638,9 @@ Verify network operation
       +--------------------------------------+----------------------------------------------------+-------------------------------------------------------+
       | id                                   | name                                               | subnets                                               |
       +--------------------------------------+----------------------------------------------------+-------------------------------------------------------+
-      | 5266fcbc-d429-4b21-8544-6170d1691826 | ext-net                                            | b32e0efc-8cc3-43ff-9899-873b94df0db1 203.0.113.0/24   |
-      | e029b568-0fd7-4d10-bb16-f9e014811d10 | HA network tenant 443cd1596b2e46d49965750771ebbfe1 | ee30083f-eb4c-41ea-8937-1bae65740af4 169.254.192.0/18 |
-      | 7ac9a268-1ddd-453f-857b-0fd9552b645f | demo-net                                           | 2945790c-5999-4693-b8e7-50a9fc7f46f5 192.168.1.0/24   |
+      | b304e495-b80d-4dd7-9345-5455302397a7 | HA network tenant f8207c03fd1e4b4aaf123efea4662819 | bbb53715-f4e9-4ce3-bf2b-44b2aed2f4ef 169.254.192.0/18 |
+      | d990778b-49ea-4beb-9336-6ea2248edf7d | demo-net                                           | b7fe4e86-65d5-4e88-8266-88795ae4ac53 192.168.1.0/24   |
+      | fde31a29-3e23-470d-bc9d-6218375dca4f | ext-net                                            | 2e1d865a-ef56-41e9-aa31-63fb8a591003 203.0.113.0/24   |
       +--------------------------------------+----------------------------------------------------+-------------------------------------------------------+
 
 #. On the controller node, verify creation of the router on more than one
@@ -669,8 +653,8 @@ Verify network operation
       +--------------------------------------+----------+----------------+-------+----------+
       | id                                   | host     | admin_state_up | alive | ha_state |
       +--------------------------------------+----------+----------------+-------+----------+
-      | 29afe014-273d-42f3-ad71-8a226e40dea6 | network1 | True           | :-)   | active   |
-      | d27ac19b-fb4d-4fec-b81d-e8c65557b6ec | network2 | True           | :-)   | standby  |
+      | e5a4e06b-dd9d-4b97-a09a-c8ba07706753 | network1 | True           | :-)   | active   |
+      | 85d5c715-08f6-425d-9efc-73633736bf06 | network2 | True           | :-)   | standby  |
       +--------------------------------------+----------+----------------+-------+----------+
 
    .. note::
@@ -687,14 +671,14 @@ Verify network operation
       +--------------------------------------+-------------------------------------------------+-------------------+----------------------------------------------------------------------------------------+
       | id                                   | name                                            | mac_address       | fixed_ips                                                                              |
       +--------------------------------------+-------------------------------------------------+-------------------+----------------------------------------------------------------------------------------+
-      | 255d2e4b-33ba-4166-a13f-6531122641fe | HA port tenant 443cd1596b2e46d49965750771ebbfe1 | fa:16:3e:25:05:d7 | {"subnet_id": "8e8e4c7d-fa38-417d-a4e3-03ee5ab5493c", "ip_address": "169.254.192.1"}   |
-      | 374587d7-2acd-4156-8993-4294f788b55e |                                                 | fa:16:3e:82:a0:59 | {"subnet_id": "b32e0efc-8cc3-43ff-9899-873b94df0db1", "ip_address": "203.0.113.101"}   |
-      | 8de3e172-5317-4c87-bdc1-f69e359de92e |                                                 | fa:16:3e:10:9f:f6 | {"subnet_id": "2945790c-5999-4693-b8e7-50a9fc7f46f5", "ip_address": "192.168.1.1"}     |
-      | 90d1a59f-b122-459d-a94a-162a104de629 | HA port tenant 443cd1596b2e46d49965750771ebbfe1 | fa:16:3e:ae:3b:22 | {"subnet_id": "8e8e4c7d-fa38-417d-a4e3-03ee5ab5493c", "ip_address": "169.254.192.2"}   |
+      | 255d2e4b-33ba-4166-a13f-6531122641fe | HA port tenant f8207c03fd1e4b4aaf123efea4662819 | fa:16:3e:25:05:d7 | {"subnet_id": "bbb53715-f4e9-4ce3-bf2b-44b2aed2f4ef", "ip_address": "169.254.192.1"}   |
+      | 374587d7-2acd-4156-8993-4294f788b55e |                                                 | fa:16:3e:82:a0:59 | {"subnet_id": "2e1d865a-ef56-41e9-aa31-63fb8a591003", "ip_address": "203.0.113.101"}   |
+      | 8de3e172-5317-4c87-bdc1-f69e359de92e |                                                 | fa:16:3e:10:9f:f6 | {"subnet_id": "b7fe4e86-65d5-4e88-8266-88795ae4ac53", "ip_address": "192.168.1.1"}     |
+      | 90d1a59f-b122-459d-a94a-162a104de629 | HA port tenant f8207c03fd1e4b4aaf123efea4662819 | fa:16:3e:ae:3b:22 | {"subnet_id": "bbb53715-f4e9-4ce3-bf2b-44b2aed2f4ef", "ip_address": "169.254.192.2"}   |
       +--------------------------------------+-------------------------------------------------+-------------------+----------------------------------------------------------------------------------------+
 
 #. On the network nodes, verify creation of the ``qrouter`` and ``qdhcp``
-   namespaces:
+   namespaces.
 
    Network node 1:
 
@@ -714,7 +698,7 @@ Verify network operation
 
    .. note::
 
-      The ``qdhcp`` namespaces might not exist until launching an instance.
+      The ``qdhcp`` namespaces might not appear until launching an instance.
 
 #. On the network nodes, verify HA operation:
 
@@ -765,13 +749,13 @@ Verify network operation
    On each network node, the ``qrouter`` namespace should include the ``ha``,
    ``qr``, and ``qg`` interfaces. On the master node, the ``qr`` interface
    contains the project network gateway IP address and the ``qg`` interface
-   contains the project router IP address on the external network. On the
-   backup node, the ``qr`` and ``qg`` interfaces should not contain an IP
-   address. On both nodes, the ``ha`` interface should contain a unique IP
-   address in the 169.254.192.0/18 range.
+   contains the project network router IP address on the external network.
+   On the backup node, the ``qr`` and ``qg`` interfaces should not contain
+   an IP address. On both nodes, the ``ha`` interface should contain a
+   unique IP address in the 169.254.192.0/18 range.
 
 #. On the network nodes, verify VRRP advertisements from the master node
-   HA interface IP address on the appropriate network interface:
+   HA interface IP address on the appropriate network interface.
 
    Network node 1:
 
@@ -806,10 +790,10 @@ Verify network operation
       +--------------------------------------+-------------------------------------------------+-------------------+----------------------------------------------------------------------------------------+
       | id                                   | name                                            | mac_address       | fixed_ips                                                                              |
       +--------------------------------------+-------------------------------------------------+-------------------+----------------------------------------------------------------------------------------+
-      | 255d2e4b-33ba-4166-a13f-6531122641fe | HA port tenant 443cd1596b2e46d49965750771ebbfe1 | fa:16:3e:25:05:d7 | {"subnet_id": "8e8e4c7d-fa38-417d-a4e3-03ee5ab5493c", "ip_address": "169.254.192.1"}   |
-      | 374587d7-2acd-4156-8993-4294f788b55e |                                                 | fa:16:3e:82:a0:59 | {"subnet_id": "b32e0efc-8cc3-43ff-9899-873b94df0db1", "ip_address": "203.0.113.101"}   |
-      | 8de3e172-5317-4c87-bdc1-f69e359de92e |                                                 | fa:16:3e:10:9f:f6 | {"subnet_id": "2945790c-5999-4693-b8e7-50a9fc7f46f5", "ip_address": "192.168.1.1"}     |
-      | 90d1a59f-b122-459d-a94a-162a104de629 | HA port tenant 443cd1596b2e46d49965750771ebbfe1 | fa:16:3e:ae:3b:22 | {"subnet_id": "8e8e4c7d-fa38-417d-a4e3-03ee5ab5493c", "ip_address": "169.254.192.2"}   |
+      | 255d2e4b-33ba-4166-a13f-6531122641fe | HA port tenant f8207c03fd1e4b4aaf123efea4662819 | fa:16:3e:25:05:d7 | {"subnet_id": "bbb53715-f4e9-4ce3-bf2b-44b2aed2f4ef", "ip_address": "169.254.192.1"}   |
+      | 374587d7-2acd-4156-8993-4294f788b55e |                                                 | fa:16:3e:82:a0:59 | {"subnet_id": "2e1d865a-ef56-41e9-aa31-63fb8a591003", "ip_address": "203.0.113.101"}   |
+      | 8de3e172-5317-4c87-bdc1-f69e359de92e |                                                 | fa:16:3e:10:9f:f6 | {"subnet_id": "b7fe4e86-65d5-4e88-8266-88795ae4ac53", "ip_address": "192.168.1.1"}     |
+      | 90d1a59f-b122-459d-a94a-162a104de629 | HA port tenant f8207c03fd1e4b4aaf123efea4662819 | fa:16:3e:ae:3b:22 | {"subnet_id": "bbb53715-f4e9-4ce3-bf2b-44b2aed2f4ef", "ip_address": "169.254.192.2"}   |
       +--------------------------------------+-------------------------------------------------+-------------------+----------------------------------------------------------------------------------------+
 
 #. On the controller node or any host with access to the external network,
@@ -828,8 +812,8 @@ Verify network operation
       4 packets transmitted, 4 received, 0% packet loss, time 2999ms
       rtt min/avg/max/mdev = 0.165/0.297/0.619/0.187 ms
 
-#. Source the regular project credentials. The following steps use the
-   ``demo`` project.
+#. Source the credentials for a non-privileged project. The following
+   steps use the ``demo`` project.
 #. Create the appropriate security group rules to allow ping and SSH access
    to the instance. For example:
 
@@ -857,7 +841,7 @@ Verify network operation
    .. code-block:: console
 
       $ nova boot --flavor m1.tiny --image cirros \
-        --nic net-id=7ac9a268-1ddd-453f-857b-0fd9552b645f demo-instance1
+        --nic net-id=d990778b-49ea-4beb-9336-6ea2248edf7d demo-instance1
 
       +--------------------------------------+-----------------------------------------------+
       | Property                             | Value                                         |
@@ -885,7 +869,7 @@ Verify network operation
       | progress                             | 0                                             |
       | security_groups                      | default                                       |
       | status                               | BUILD                                         |
-      | tenant_id                            | 443cd1596b2e46d49965750771ebbfe1              |
+      | tenant_id                            | f8207c03fd1e4b4aaf123efea4662819              |
       | updated                              | 2015-08-10T15:06:25Z                          |
       | user_id                              | bdd4e165bdf94b258ddd4856340ed01c              |
       +--------------------------------------+-----------------------------------------------+
@@ -934,12 +918,12 @@ Verify network operation
       +---------------------+--------------------------------------+
       | fixed_ip_address    |                                      |
       | floating_ip_address | 203.0.113.102                        |
-      | floating_network_id | 5266fcbc-d429-4b21-8544-6170d1691826 |
-      | id                  | 20a6b5dd-1c5c-460e-8a81-8b5cf1739307 |
+      | floating_network_id | fde31a29-3e23-470d-bc9d-6218375dca4f |
+      | id                  | 05e36754-e7f3-46bb-9eaa-3521623b3722 |
       | port_id             |                                      |
       | router_id           |                                      |
       | status              | DOWN                                 |
-      | tenant_id           | 443cd1596b2e46d49965750771ebbfe1     |
+      | tenant_id           | f8207c03fd1e4b4aaf123efea4662819     |
       +---------------------+--------------------------------------+
 
 #. Associate the floating IP address with the instance:

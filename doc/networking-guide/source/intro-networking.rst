@@ -37,8 +37,8 @@ components:
 .. toctree::
    :maxdepth: 2
 
-   intro_basic_networking.rst
-   intro_networking_components.rst
-   intro_tunnel_technologies.rst
-   intro_network_namespaces.rst
-   intro_network_address_translation.rst
+   intro-basic-networking.rst
+   intro-networking-components.rst
+   intro-tunnel-technologies.rst
+   intro-network-namespaces.rst
+   intro-network-address-translation.rst

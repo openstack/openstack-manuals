@@ -1,3 +1,5 @@
+.. _scenario-provider-lb:
+
 =============================================
 Scenario: Provider networks with Linux bridge
 =============================================
