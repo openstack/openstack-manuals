@@ -54,6 +54,8 @@ The following table lists the preferred word or phrase choice.
 +----------------+----------------------+
 | host name      | hostname, Hostname   |
 +----------------+----------------------+
+| lifecycle      | life cycle           |
++----------------+----------------------+
 | login (noun)   | logon, log-in        |
 +----------------+----------------------+
 | log in (verb)  | login                |
