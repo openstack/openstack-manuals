@@ -168,7 +168,7 @@ This guide has a review in place to get a license indicator in output:
 .. _`OpenStack End User Guide`: http://docs.openstack.org/user-guide/index.html
 .. _`OpenStack Admin User Guide`: http://docs.openstack.org/user-guide-admin/index.html
 .. _`OpenStack API Guide`: http://developer.openstack.org/api-guide/quick-start/
-.. _`Command-Line Interface Reference`: http://docs.openstack.org/cli-reference/content/
+.. _`Command-Line Interface Reference`: http://docs.openstack.org/cli-reference/
 
 .. _`Complete API Reference`: http://developer.openstack.org/api-ref.html
 .. _`API specifications`: http://specs.openstack.org/

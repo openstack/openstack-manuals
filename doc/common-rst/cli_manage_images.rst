@@ -135,7 +135,7 @@ The following list explains the optional arguments that you can use with
 the ``create`` and ``update`` commands to modify image properties. For
 more information, refer to Image service chapter in the `OpenStack
 Command-Line Interface
-Reference <http://docs.openstack.org/cli-reference/content/index.html>`__.
+Reference <http://docs.openstack.org/cli-reference/index.html>`__.
 
 ``--name NAME``
   The name of the image.

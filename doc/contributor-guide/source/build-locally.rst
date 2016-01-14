@@ -134,17 +134,17 @@ using Maven plug-in in that directory. For example:
 
 .. code-block:: console
 
-   cd openstack-manuals/doc/cli-reference
+   cd openstack-manuals/doc/glossary
    mvn clean generate-sources
 
 Find the generated documentation in the
 ``openstack-manuals/doc/<guide-name>/target`` directory of the guide that you
 build. For example:
 
-* PDF: ``openstack-manuals/doc/cli-reference/target/docbkx/webhelp/
-  cli-reference/cli-reference.pdf``
-* HTML: ``openstack-manuals/doc/cli-reference/target/docbkx/webhelp/
-  cli-reference/content/index.html``.
+* PDF: ``openstack-manuals/doc/glossary/target/docbkx/webhelp/
+  glossary/glossary.pdf``
+* HTML: ``openstack-manuals/doc/glossary/target/docbkx/webhelp/
+  glossary/content/index.html``.
 
 Using Tox to check builds
 -------------------------

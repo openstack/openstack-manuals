@@ -128,7 +128,7 @@ Guides for end users
 
    * - Command Line Interface Reference
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/cli-reference
-     - http://docs.openstack.org/cli-reference/content
+     - http://docs.openstack.org/cli-reference
 
 Developer guides
 ----------------
@@ -235,9 +235,9 @@ tell the build where to place the built files.
 
 ::
 
-  <targetDirectory>${basedir}/target/docbkx/webhelp/admin-guide-cloud<targetDirectory>
+  <targetDirectory>${basedir}/target/docbkx/webhelp/glossary<targetDirectory>
   <webhelpDirname>/</webhelpDirname>
-  <pdfFilenameBase>bk-admin-guide-cloud-latest</pdfFilenameBase>
+  <pdfFilenameBase>bk-glossary</pdfFilenameBase>
 
 The clouddocs-maven-plugin automatically detects which images you use in your
 document and copies them to the output directory. When you use .svg graphics,
