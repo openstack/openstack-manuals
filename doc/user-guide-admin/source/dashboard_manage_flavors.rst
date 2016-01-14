@@ -49,7 +49,7 @@ Create flavors
                                is 0 by default.
 
                                Ephemeral disks offer machine local
-                               disk storage linked to the life cycle
+                               disk storage linked to the lifecycle
                                of a VM instance. When a VM is
                                terminated, all data on the ephemeral
                                disk is lost. Ephemeral disks are not

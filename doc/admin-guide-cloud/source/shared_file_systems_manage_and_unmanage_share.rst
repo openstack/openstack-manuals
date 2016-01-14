@@ -5,7 +5,7 @@ Manage and unmanage share
 =========================
 
 To ``manage`` a share means that an administrator rather than a share driver
-manages the storage life cycle. This approach is appropriate when an
+manages the storage lifecycle. This approach is appropriate when an
 administrator already has the custom non-manila share with its size, shared
 file system protocol, export path and so on, and administrator wants to
 register it in the Shared File System service.
@@ -18,7 +18,7 @@ File Systems service. An administrator can manage the custom share back.
 Unmanage share
 --------------
 You can ``unmanage`` a share, to unregister it from the Shared File System
-service, and take manual control on share life cycle. The ``unmanage``
+service, and take manual control on share lifecycle. The ``unmanage``
 operation is not supported for shares that were created on top of share servers
 and created with share networks), so share service should have option
 ``driver_handles_share_servers = False`` in its configuration. You can unmanage

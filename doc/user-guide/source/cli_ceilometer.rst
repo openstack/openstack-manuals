@@ -14,7 +14,7 @@ Meter
   ongoing performance, such as the CPU utilization
   for an instance. Meters exist for each type of
   resource. For example, a separate ``cpu_util``
-  meter exists for each instance. The life cycle
+  meter exists for each instance. The lifecycle
   of a meter is decoupled from the existence of
   its related resource. The meter persists after
   the resource goes away.

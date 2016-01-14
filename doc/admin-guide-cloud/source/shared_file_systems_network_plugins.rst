@@ -13,7 +13,7 @@ OpenStack.
 
 The Shared File Systems service may need a network resource provisioning if
 share service with specified driver works in mode, when a share driver manages
-life cycle of share servers on its own. This behavior is defined by a flag
+lifecycle of share servers on its own. This behavior is defined by a flag
 ``driver_handles_share_servers`` in share service configuration.  When
 ``driver_handles_share_servers`` is set to ``True``, a share driver will be
 called to create share servers for shares using information provided within a

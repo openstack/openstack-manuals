@@ -23,7 +23,7 @@ SLA.
 Consider the ability to upgrade the infrastructure. As demand for
 network resources increase, operators add additional IP address blocks
 and add additional bandwidth capacity. In addition, consider managing
-hardware and software life cycle events, for example upgrades,
+hardware and software lifecycle events, for example upgrades,
 decommissioning, and outages, while avoiding service interruptions for
 tenants.
 

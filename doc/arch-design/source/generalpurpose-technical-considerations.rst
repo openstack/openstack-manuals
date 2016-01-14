@@ -44,7 +44,7 @@ will be allocated in a way that makes the most efficient use of the
 available hardware. Bin packing also requires a common hardware design,
 with all hardware nodes within a compute resource pool sharing a common
 processor, memory, and storage layout. This makes it easier to deploy,
-support, and maintain nodes throughout their life cycle.
+support, and maintain nodes throughout their lifecycle.
 
 An overcommit ratio is the ratio of available virtual resources to
 available physical resources. This ratio is configurable for CPU and

@@ -11,7 +11,7 @@ Input-Output requirements
  expected performance levels. If these tests include details, then
  the resulting data can help model behavior and results during
  different workloads. Running scripted smaller benchmarks during the
- life cycle of the architecture helps record the system health at
+ lifecycle of the architecture helps record the system health at
  different points in time. The data from these scripted benchmarks
  assist in future scoping and gaining a deeper understanding of an
  organization's needs.

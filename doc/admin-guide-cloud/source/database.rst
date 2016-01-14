@@ -64,7 +64,7 @@ data store version.
 
    .. important::
 
-      If you have a guest image that was created with an Openstack version
+      If you have a guest image that was created with an OpenStack version
       before Kilo, modify the guest agent init script for the guest image to
       read the configuration files from the directory ``/etc/trove/conf.d``.
 

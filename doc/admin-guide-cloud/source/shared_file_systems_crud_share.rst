@@ -37,7 +37,7 @@ Each share driver supports one or two of possible back end modes that can be
 configured in the ``manila.conf`` file. The configuration option
 ``driver_handles_share_servers`` in the ``manila.conf`` file sets the share
 servers mode or no share servers mode, and defines the driver mode for share
-storage life cycle management:
+storage lifecycle management:
 
 +------------------+-------------------------------------+--------------------+
 | Mode             | Config option                       |  Description       |
