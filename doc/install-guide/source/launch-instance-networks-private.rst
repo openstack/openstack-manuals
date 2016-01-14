@@ -12,7 +12,7 @@ to an instance on this network from external networks such as the Internet
 requires a :term:`floating IP address`.
 
 The ``demo`` or other unprivileged user can create this network because it
-only provides connectivity to instances within the ``demo`` project.
+provides connectivity to instances within the ``demo`` project only.
 
 .. warning::
 
