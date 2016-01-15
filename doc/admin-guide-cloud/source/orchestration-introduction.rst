@@ -28,8 +28,5 @@ integrated with the OpenStack dashboard to perform stack functions through
 a web interface.
 
 For more information about using the Orchestration service through the
-command line, see the `OpenStack Command-Line Interface Reference`_.
-
-.. Links
-.. _`OpenStack Command-Line Interface Reference`: http://docs.openstack.org/
-   cli-reference/content/heatclient_commands.html
+command line, see the `OpenStack Command-Line Interface Reference
+<http://docs.openstack.org/cli-reference/heat.html>`_.

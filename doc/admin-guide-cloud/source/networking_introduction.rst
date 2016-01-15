@@ -264,7 +264,7 @@ Then, create a firewall that applies the policy.
    * To add a single rule, use the insert-rule operation.
 
    For more details, see `Networking command-line client
-   <http://docs.openstack.org/cli-reference/content/neutronclient_commands.html#neutronclient_subcommand_firewall-policy-create>`_
+   <http://docs.openstack.org/cli-reference/neutron.html>`_
    in the OpenStack Command-Line Interface Reference.
 
    .. note::

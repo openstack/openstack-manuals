@@ -30,8 +30,8 @@ command. More than one property can be specified. For example:
 Common image properties are also specified in the
 ``/etc/glance/schema-image.json`` file.
 For a complete list of valid property keys and values, refer to the
-`OpenStack Command-Line Reference <http://docs.openstack.org/
-cli-reference/content/chapter_cli-glance-property.html>`_.
+`OpenStack Command-Line Reference
+<http://docs.openstack.org/cli-reference/glance.html#image-service-property-keys>`_.
 
 All associated properties for an image can be displayed using the
 :command:`glance image-show` command. For example:
