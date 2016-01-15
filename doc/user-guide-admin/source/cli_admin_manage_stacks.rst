@@ -21,7 +21,8 @@ For information about:
 -  basic creation and deletion of Orchestration stacks, refer
    to the `OpenStack End User Guide <http://docs.openstack.org/user-guide/dashboard_stacks.html>`_
 
--  **heat** CLI commands, see the `OpenStack Command Line Interface Reference <http://docs.openstack.org/cli-reference/content/heatclient_commands.html>`_
+-  **heat** CLI commands, see the `OpenStack Command Line Interface Reference
+   <http://docs.openstack.org/cli-reference/heat.html>`_
 
 As an administrator, you can also carry out stack functions
 on behalf of your users. For example, to resume, suspend,

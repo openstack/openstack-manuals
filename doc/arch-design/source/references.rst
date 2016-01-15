@@ -20,7 +20,7 @@ techsupport/papers/ethernet_switch_reliability.pdf>`_
 : Requirements of the Financial Industry Regulatory Authority in the USA.
 
 `Image Service property keys <http://docs.openstack.org/
-cli-reference/content/chapter_cli-glance-property.html>`_
+cli-reference/glance.html#image-service-property-keys>`_
 : Glance API property keys allows the administrator to attach custom
 characteristics to images.
 

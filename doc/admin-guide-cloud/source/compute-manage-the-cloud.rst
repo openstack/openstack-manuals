@@ -67,7 +67,8 @@ the Identity Service.
        $ nova help SUBCOMMAND
 
    For a complete list of ``nova`` commands and parameters, see the
-   `OpenStack Command-Line Reference <http://docs.openstack.org/cli-reference/content/novaclient_commands.html>`__.
+   `OpenStack Command-Line Reference
+   <http://docs.openstack.org/cli-reference/nova.html>`__.
 
 #. Set the required parameters as environment variables to make running
    commands easier. For example, you can add :option:`--os-username` as a

@@ -25,8 +25,8 @@ To provide cryptography offloading to a set of instances,
 you can use Image service configuration options.
 For example, assign the cryptography chip to a device node in the guest.
 The OpenStack Command Line Reference contains further information on
-configuring this solution in the chapter `Image service property keys
-<http://docs.openstack.org/cli-reference/content/chapter_cli-glance-property.html>`_.
+configuring this solution in the section `Image service property keys
+<http://docs.openstack.org/cli-reference/glance.html#image-service-property-keys>`_.
 A challenge, however, is this option allows all guests using the
 configured images to access the hypervisor cryptography device.
 

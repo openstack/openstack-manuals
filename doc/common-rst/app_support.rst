@@ -68,7 +68,7 @@ command-line clients:
    Guide <http://docs.openstack.org/user-guide-admin/>`__
 
 -  `Command-Line Interface
-   Reference <http://docs.openstack.org/cli-reference/content/>`__
+   Reference <http://docs.openstack.org/cli-reference/>`__
 
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
