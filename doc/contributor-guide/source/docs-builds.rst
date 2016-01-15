@@ -182,6 +182,10 @@ for the built documentation.
      - Source location
      - Target location
 
+   * - Documentation Contributor Guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/contributor-guide
+     - http://docs.openstack.org/contributor-guide/
+
    * - Python Developer Documentation
      - http://git.openstack.org/cgit/openstack/<project>/tree/master/doc/source/,
        such as http://git.openstack.org/cgit/openstack/nova/tree/doc/source
