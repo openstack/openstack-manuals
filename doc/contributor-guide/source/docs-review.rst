@@ -66,7 +66,7 @@ The process is:
   - http://stackalytics.com/?module=openstack-manuals&metric=commits
 
 - The PTL then consults the existing core team with a list of names to be
-  removed and added from/to the core list. Once agreement is reached, the
+  removed and added from/to the core list. Once an agreement is reached, the
   changes are made and advertised to the main documentation mailing list.
   Cores who are being removed will be contacted personally before removal.
 - Existing core team members can nominate a new core member at any time,

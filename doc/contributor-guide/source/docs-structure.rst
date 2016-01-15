@@ -44,7 +44,7 @@ Common practices include:
 * Figure subdirectory includes images (both PNG and SVG source files).
 * Sample subdirectory contains samples of source code and configuration files.
 * Chapter subdirectory stores all sections included in one chapter with the
-  parent file located in the top level directory.
+  parent file located in the top-level directory.
 
 
 Structure checklist
@@ -80,8 +80,8 @@ Use the following checklist for a DocBook manual.
      -
 
    * - Document history
-     - The preface includes the document history. Also make sure that you have
-       included a revision entry for your latest change.
+     - The preface includes the document history. Also, make sure that you
+       have included a revision entry for your latest change.
      -
 
    * - Titles
