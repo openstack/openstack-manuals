@@ -87,7 +87,7 @@ However, passive voice is acceptable in the following situations:
   +---------------------------------+------------------------------------+
   | **Do not use**                  | **Use**                            |
   +=================================+====================================+
-  | In 2009 engineers developed a   | A software that simplifies the     |
+  | In 2009, engineers developed a   | A software that simplifies the    |
   | software that simplifies the    | installation was developed in 2009.|
   | installation.                   |                                    |
   +---------------------------------+------------------------------------+
@@ -247,30 +247,30 @@ Do not give human characteristics to non-human subjects or objects.
 Write positively
 ----------------
 
-Write in positive tone. Positive sentences improve readability.
+Write in a positive tone. Positive sentences improve readability.
 Try to avoid the following words as much as possible:
 
 **Example of usage**
 
-+------------------------+----------------------------------+
-| **Do not use**         | **Use**                          |
-+========================+==================================+
-| damage                 | affect                           |
-+------------------------+----------------------------------+
-| catastrophic           | serious                          |
-+------------------------+----------------------------------+
-| bad                    | Use "serious" or add explanation |
-+------------------------+----------------------------------+
-| fail                   | unable to                        |
-+------------------------+----------------------------------+
-| kill                   | cancel                           |
-+------------------------+----------------------------------+
-| fatal                  | serious                          |
-+------------------------+----------------------------------+
-| destroy                | remove                           |
-+------------------------+----------------------------------+
-| wrong                  | incorrect, inconsistent          |
-+------------------------+----------------------------------+
++------------------------+------------------------------------+
+| **Do not use**         | **Use**                            |
++========================+====================================+
+| damage                 | affect                             |
++------------------------+------------------------------------+
+| catastrophic           | serious                            |
++------------------------+------------------------------------+
+| bad                    | Use "serious" or add an explanation|
++------------------------+------------------------------------+
+| fail                   | unable to                          |
++------------------------+------------------------------------+
+| kill                   | cancel                             |
++------------------------+------------------------------------+
+| fatal                  | serious                            |
++------------------------+------------------------------------+
+| destroy                | remove                             |
++------------------------+------------------------------------+
+| wrong                  | incorrect, inconsistent            |
++------------------------+------------------------------------+
 
 Avoid prepositions at the end of sentences
 ------------------------------------------
