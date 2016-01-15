@@ -7,8 +7,6 @@ Abstract
 
 This guide documents the OpenStack command-line clients.
 
-.. warning:: This guide is a work-in-progress.
-
 Contents
 ~~~~~~~~
 
