@@ -749,7 +749,6 @@ Network node
       [DEFAULT]
       verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
-      use_namespaces = True
       external_network_bridge =
       router_delete_namespaces = True
 
@@ -767,7 +766,6 @@ Network node
       verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
       dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
-      use_namespaces = True
       dhcp_delete_namespaces = True
 
 #. (Optional) Reduce MTU for VXLAN/GRE project networks.

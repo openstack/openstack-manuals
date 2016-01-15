@@ -38,23 +38,6 @@ service. The driver adds metering to the routing interface.
 |                                          | BridgeInterfaceDriver           |
 +------------------------------------------+---------------------------------+
 
-Namespace
----------
-
-The metering agent and the L3 agent must have the same network
-namespaces configuration.
-
-.. note::
-
-   If the Linux installation does not support network namespaces, you
-   must disable network namespaces in the L3 metering configuration
-   file. The default value of the ``use_namespaces`` option is
-   ``True``.
-
-.. code-block:: ini
-
-    use_namespaces = False
-
 L3 metering driver
 ------------------
 

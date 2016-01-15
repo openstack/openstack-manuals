@@ -318,7 +318,6 @@ Network nodes
       [DEFAULT]
       verbose = True
       interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
-      use_namespaces = True
       external_network_bridge =
       router_delete_namespaces = True
       agent_mode = legacy
@@ -337,7 +336,6 @@ Network nodes
       verbose = True
       interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
       dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
-      use_namespaces = True
       dhcp_delete_namespaces = True
 
 #. (Optional) Reduce MTU for VXLAN project networks.

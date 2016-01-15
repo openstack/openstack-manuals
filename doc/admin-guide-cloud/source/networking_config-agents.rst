@@ -136,7 +136,6 @@ These DHCP agent options are required in the
 
    [DEFAULT]
    enable_isolated_metadata = True
-   use_namespaces = True
    interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
 DHCP agent setup: NSX plug-in
@@ -150,7 +149,6 @@ These DHCP agent options are required in the
    [DEFAULT]
    enable_metadata_network = True
    enable_isolated_metadata = True
-   use_namespaces = True
    interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
 Configure L3 agent
