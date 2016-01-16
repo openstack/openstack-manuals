@@ -11,6 +11,7 @@ Message service
    messaging/zaqar-drivers.rst
    messaging/zaqar-storage-drivers.rst
    messaging/zaqar-transport-drivers.rst
+   messaging/zaqar-notifications.rst
    messaging/zaqar-authentication.rst
    messaging/zaqar-pooling.rst
    messaging/zaqar-cache.rst
