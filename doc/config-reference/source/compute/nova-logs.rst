@@ -13,28 +13,28 @@ The corresponding log file of each Compute service is stored in the
      - Service name (CentOS/Fedora/openSUSE/Red Hat Enterprise
        Linux/SUSE Linux Enterprise)
      - Service name (Ubuntu/Debian)
-   * - ``api.log``
+   * - ``nova-api.log``
      - ``openstack-nova-api``
      - ``nova-api``
-   * - ``cert.log`` [#a]_
+   * - ``nova-cert.log`` [#a]_
      - ``openstack-nova-cert``
      - ``nova-cert``
-   * - ``compute.log``
+   * - ``nova-compute.log``
      - ``openstack-nova-compute``
      - ``nova-compute``
-   * - ``conductor.log``
+   * - ``nova-conductor.log``
      - ``openstack-nova-conductor``
      - ``nova-conductor``
-   * - ``consoleauth.log``
+   * - ``nova-consoleauth.log``
      - ``openstack-nova-consoleauth``
      - ``nova-consoleauth``
-   * - ``network.log`` [#b]_
+   * - ``nova-network.log`` [#b]_
      - ``openstack-nova-network``
      - ``nova-network``
    * - ``nova-manage.log``
      - ``nova-manage``
      - ``nova-manage``
-   * - ``scheduler.log``
+   * - ``nova-scheduler.log``
      - ``openstack-nova-scheduler``
      - ``nova-scheduler``
 
