@@ -157,11 +157,14 @@ products for either iSCSI or Fibre Channel storage products.
 
    In the ``[default]`` block of ``/etc/cinder/cinder.conf``, add the following
    contents:
-   #. ``volume_driver`` indicates the loaded driver.
-   #. ``cinder_huawei_conf_file`` indicates the specified Huawei-customized
-   configuration file.
-   #. ``hypermetro_devices`` indicates the list of remote storage devices for
-   which Hypermetro is to be used.
+
+   * ``volume_driver`` indicates the loaded driver.
+
+   * ``cinder_huawei_conf_file`` indicates the specified Huawei-customized
+     configuration file.
+
+   * ``hypermetro_devices`` indicates the list of remote storage devices for
+     which Hypermetro is to be used.
 
    The added content in the ``[default]`` block of ``/etc/cinder/cinder.conf``
    with the appropriate ``volume_driver`` and the list of
