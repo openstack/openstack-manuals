@@ -3,8 +3,8 @@ OpenStack Manuals
 
 This repository contains documentation for the OpenStack project.
 
-For more details, see the `OpenStack Documentation wiki page
-<http://wiki.openstack.org/Documentation>`_.
+For more details, see the `OpenStack Documentation Contributor
+Guide <http://docs.openstack.org/contributor-guide/>`_.
 
 It includes these manuals:
 
@@ -21,12 +21,34 @@ It includes these manuals:
 
 In addition to the guides, this repository contains:
 
- * docs.openstack.org: ``www``
+ * docs.openstack.org contents: ``www``
 
-Prerequisites
-=============
+
+Building
+========
+Various manuals are in subdirectories of the ``doc/`` directory.
+
+Guides
+------
+Various guides are in the RST format. You can use tox to prepare
+virtual environment and build all RST based guides::
+
+    tox -e docs
+
+You can also build a specific guide.
+For example, to build *OpenStack End User Guide*, use the following command::
+
+    tox -e build -- user-guide
+
+You can find the root of the generated HTML documentation at::
+
+    doc/user-guide/build/html/index.html
+
+Glossary
+--------
+
 `Apache Maven <http://maven.apache.org/>`_ must be installed to build the
-documentation.
+glossary.
 
 To install Maven 3 for Ubuntu 12.04 and later, and Debian wheezy and later::
 
@@ -41,47 +63,20 @@ On openSUSE 13.1 and later::
     zypper ar http://download.opensuse.org/repositories/devel:/tools:/building/openSUSE_13.1/devel:tools:building.repo
     zypper install maven
 
-Building
-========
-The different manuals are in subdirectories of the
-``openstack-manuals/doc/`` directory.
+To build the glossary, move to ``doc/glossary``,
+then run the ``mvn`` command in that directory::
 
-DocBook guides
---------------
-
-For example, the root directory of the *OpenStack Command-Line Interface Reference*
-is ``openstack-manuals/doc/cli-reference``.
-
-To build a specific guide, look for a ``pom.xml`` file within a subdirectory,
-then run the ``mvn`` command in that directory. For example::
-
-    cd openstack-manuals/doc/cli-reference/
+    cd doc/glossary
     mvn clean generate-sources
 
 The generated PDF documentation file is::
 
-    openstack-manuals/doc/cli-reference/target/docbkx/webhelp/cli-reference/cli-reference.pdf
+    doc/glossary/target/docbkx/webhelp/glossary/glossary.pdf
 
 The root of the generated HTML documentation is::
 
-    openstack-manuals/doc/cli-reference/target/docbkx/webhelp/cli-reference/content/index.html
+    doc/glossary/target/docbkx/webhelp/glossary/content/index.html
 
-
-RST guides
-----------
-Then, you can see some guides written in the RST format, so we can't use mvn command.
-You can use tox to prepare virtual environment and build all RST based guides::
-
-    tox -e docs
-
-You can also build a specific guide.
-For example, to build *OpenStack End User Guide*, use the following command::
-
-    tox -e build -- user-guide
-
-You can find the root of the generated HTML documentation at::
-
-    openstack-manuals/doc/user-guide/build/html/index.html
 
 Testing of changes and building of the manual
 =============================================
