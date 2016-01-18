@@ -155,6 +155,8 @@ for each client. The following values are valid:
 
 -  ``cloudkitty`` - Rating service API
 
+-  ``designate`` - DNS service API
+
 -  ``glance`` - Image service API
 
 -  ``gnocchi`` - Telemetry API v3

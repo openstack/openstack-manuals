@@ -184,6 +184,8 @@ The following Launchpad Bugs areas are available:
 
 -  `Bugs: Deployment service (tuskar) <https://bugs.launchpad.net/tuskar>`__
 
+-  `Bugs: DNS service (designate) <https://bugs.launchpad.net/designate>`__
+
 -  `Bugs: Key Manager Service (barbican) <https://bugs.launchpad.net/barbican>`__
 
 -  `Bugs: Monitoring (monasca) <https://bugs.launchpad.net/monasca>`__
