@@ -38,8 +38,8 @@ function copy_rst {
     mkdir -p $PROJECT_DIR/$target
     tools/glossary2rst.py $PROJECT_DIR/$target/glossary.rst
 
-    for filename in doc/common-rst/app_support.rst; do
-        cp $filename $PROJECT_DIR/$target
+    for filename in app_support.rst conventions.rst; do
+        cp doc/common-rst/$filename $PROJECT_DIR/$target
     done
     (cd $PROJECT_DIR; git add $target)
 }
