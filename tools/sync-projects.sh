@@ -64,8 +64,6 @@ function copy_glossary_xml {
 
     # Sync entitites file
     cp doc/common/entities/openstack.ent $GLOSSARY_DIR/../$ENT_DIR/
-    sed -i -e "s|imagedata fileref=\"../common/figures|imagedata fileref=\"$CHECK_MARK_DIR|" \
-        $GLOSSARY_DIR/../$ENT_DIR/openstack.ent
 
     # Add files
     (cd $PROJECT_DIR; git add $GLOSSARY_SUB_DIR \
