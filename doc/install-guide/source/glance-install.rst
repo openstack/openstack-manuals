@@ -374,7 +374,7 @@ Install and configure components
 
    .. only:: obs or rdo
 
-      * Start the Image service services and configure them to start when
+      * Start the Image services and configure them to start when
         the system boots:
 
         .. code-block:: console
@@ -386,7 +386,7 @@ Install and configure components
 
    .. only:: ubuntu
 
-      #. Restart the Image service services:
+      #. Restart the Image services:
 
          .. code-block:: console
 
