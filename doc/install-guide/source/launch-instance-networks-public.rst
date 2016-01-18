@@ -25,7 +25,7 @@ connects directly to the physical network infrastructure.
 .. figure:: figures/network1-connectivity.png
    :alt: Networking Option 1: Provider networks - Connectivity
 
-   **Networking Option 2: Provider networks - Connectivity**
+   **Networking Option 1: Provider networks - Connectivity**
 
 Create the public network
 -------------------------

@@ -150,7 +150,7 @@ requests and Memcached to store tokens instead of an SQL database.
 
            Replace ``KEYSTONE_DBPASS`` with the password you chose for the database.
 
-         * In the ``[memcache]`` section, configure the Memcache service:
+         * In the ``[memcache]`` section, configure the Memcached service:
 
            .. code-block:: ini
 

@@ -195,7 +195,7 @@ to the existing ``public`` provider network.
 Verify operation
 ----------------
 
-We recommend that you verify operation and fix any issues before proceeding
+We recommend that you verify operation and fix any issues before proceeding.
 The following steps use the IP address ranges from the network and subnet
 creation examples.
 

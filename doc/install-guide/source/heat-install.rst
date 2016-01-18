@@ -12,7 +12,7 @@ Orchestration service, code-named heat, on the controller node.
    -------------
 
    Before you install and configure Orchestration, you must create a
-   database, service credentials, API endpoints. Orchestration also
+   database, service credentials, and API endpoints. Orchestration also
    requires additional information in the Identity service.
 
    #. To create the database, complete these steps:
