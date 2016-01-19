@@ -250,7 +250,7 @@ Sheepdog
     A distributed storage system for QEMU/KVM.
 
 GridFS
-    Stores images using MongoDB.
+    Stores images using MongoDB. This store driver will be removed in Mitaka.
 
 
 Image properties and property protection

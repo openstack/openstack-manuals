@@ -7,7 +7,6 @@ images:
 
 * OpenStack Block Storage (cinder)
 * A directory on a local file system
-* GridFS
 * Ceph RBD
 * Amazon S3
 * Sheepdog
@@ -18,7 +17,6 @@ The following tables detail the options available for each.
 
 .. include:: ../tables/glance-cinder.rst
 .. include:: ../tables/glance-filesystem.rst
-.. include:: ../tables/glance-gridfs.rst
 .. include:: ../tables/glance-rbd.rst
 .. include:: ../tables/glance-s3.rst
 .. include:: ../tables/glance-sheepdog.rst
