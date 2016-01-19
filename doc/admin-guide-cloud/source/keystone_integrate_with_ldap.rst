@@ -153,10 +153,6 @@ seconds.
 When you have finished the configuration, restart the OpenStack Identity
 service.
 
-.. code-block:: console
-
-   # service keystone restart
-
 .. warning::
 
    During the service restart, authentication and authorization are
