@@ -31,7 +31,7 @@ This screen registers packages in the Identity service catalog:
 |
 
 You are prompted for the Identity service ``admin_token`` value. The
-Identity Service uses this value to register the API service. When you
+Identity service uses this value to register the API service. When you
 set up the ``keystone`` package, this value is configured automatically.
 
 .. image:: ../figures/debconf-screenshots/api-endpoint_3_keystone_authtoken.png

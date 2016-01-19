@@ -69,7 +69,7 @@ high-level steps:
 #. Configure vCenter. See :ref:`vmware-prereqs`.
 #. Configure the VMware vCenter driver in the ``nova.conf`` file.
    See :ref:`vmware-vcdriver`.
-#. Load desired VMDK images into the Image Service. See :ref:`vmware-images`.
+#. Load desired VMDK images into the Image service. See :ref:`vmware-images`.
 #. Configure networking with either ``nova-network`` or
    the Networking service. See :ref:`vmware-networking`.
 
@@ -861,7 +861,7 @@ In the previous cases, the converted vmdk is actually a pair of files:
 * The descriptor file ``converted.vmdk``.
 * The actual virtual disk data file ``converted-flat.vmdk``.
 
-The file to be uploaded to the Image Service is ``converted-flat.vmdk``.
+The file to be uploaded to the Image service is ``converted-flat.vmdk``.
 
 Image handling
 --------------

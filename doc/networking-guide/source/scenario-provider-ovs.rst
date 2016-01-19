@@ -683,7 +683,7 @@ Verify network operation
 
    .. note::
 
-      This example uses a CirrOS image that was manually uploaded into the Image Service
+      This example uses a CirrOS image that was manually uploaded into the Image service
 
    .. code-block:: console
 
