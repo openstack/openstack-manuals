@@ -971,7 +971,8 @@ initiator auto registration is enabled).
       :menuselection:`FNM0000000000 > Hosts > Initiators`.
 
    #. Refresh and wait until the initiator
-   ``iqn.1993-08.org.debian:01:1a2b3c4d5f6g`` with SP Port ``A-8v0`` appears.
+      ``iqn.1993-08.org.debian:01:1a2b3c4d5f6g`` with SP Port ``A-8v0``
+      appears.
 
    #. Click the :guilabel:`Register` button, select :guilabel:`CLARiiON/VNX`
       and enter the host name
