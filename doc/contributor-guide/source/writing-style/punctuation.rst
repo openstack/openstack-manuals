@@ -40,5 +40,5 @@ mistakes made by contributors.
 
        Though, if the quotation marks are required, place commas and periods
        inside closing quotation marks.
-       These applies to both words-as-words and sentence fragments.
+       This applies to both words-as-words and sentence fragments.
      - The screen displays, "Hello, world."
