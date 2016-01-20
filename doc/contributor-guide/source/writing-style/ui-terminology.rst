@@ -27,7 +27,7 @@ When documenting actions that readers must perform in a command-line interface
 
 * When you provide an output of a command, consider if a user needs to see all
   output or partial. If an output includes multiple lines, consider cutting
-  the output. Use elipses (...) to show that the page displays a portion of
+  the output. Use ellipses (...) to show that the page displays a portion of
   the output.
 
 * Depending on whether you describe CLI actions in the running text or
