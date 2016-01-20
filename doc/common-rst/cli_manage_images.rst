@@ -39,7 +39,6 @@ commands.
 .. code-block:: console
 
    $ glance image-show myCirrosImage
-
    +---------------------------------------+--------------------------------------+
    | Property                              | Value                                |
    +---------------------------------------+--------------------------------------+
@@ -208,6 +207,16 @@ CentOS 6.3 image in qcow2 format and configure it for public access:
 The following example shows how to update an existing image with a
 properties that describe the disk bus, the CD-ROM bus, and the VIF
 model:
+
+.. note::
+
+   When you use OpenStack with VMware vCenter Server, you need to specify
+   the ``vmware_disktype`` and ``vmware_adaptertype`` properties with
+   :command:`glance image-create`.
+   Also, we recommend that you set the ``hypervisor_type="vmware"`` property.
+   For more information, see `Images with VMware vSphere
+   <http://docs.openstack.org/liberty/config-reference/content/vmware.html#VMware_images>`_
+   in the *OpenStack Configuration Reference*.
 
 .. code-block:: console
 
