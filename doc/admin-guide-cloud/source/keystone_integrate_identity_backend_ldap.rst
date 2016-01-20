@@ -61,11 +61,7 @@ administrators to use users and groups in LDAP.
       group_allow_update = False
       group_allow_delete = False
 
-   Restart the OpenStack Identity service:
-
-   .. code-block:: console
-
-      # service keystone restart
+   Restart the OpenStack Identity service.
 
    .. warning::
 
@@ -93,11 +89,12 @@ administrators to use users and groups in LDAP.
          domain_specific_drivers_enabled = True
          domain_config_dir = /etc/keystone/domains
 
-#. Restart the service:
+#. Restart the OpenStack Identity service.
 
-   .. code-block:: console
+   .. warning::
 
-      # service keystone restart
+      During service restart, authentication and authorization are
+      unavailable.
 
 #. List the domains using the dashboard, or the OpenStackClient CLI. Refer
    to the `Command List
@@ -168,11 +165,7 @@ administrators to use users and groups in LDAP.
       group_allow_update = False
       group_allow_delete = False
 
-#. Restart the OpenStack Identity service:
-
-   .. code-block:: console
-
-      # service keystone restart
+#. Restart the OpenStack Identity service.
 
    .. warning::
 
@@ -242,11 +235,7 @@ Enabled emulation
       user_enabled_emulation_dn = false
 
 When you have finished configuration, restart the OpenStack Identity
-service:
-
-.. code-block:: console
-
-   # service keystone restart
+service.
 
 .. warning::
 

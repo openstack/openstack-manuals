@@ -72,11 +72,7 @@ assignments in LDAP.
       project_allow_update = False
       project_allow_delete = False
 
-#. Restart the OpenStack Identity service:
-
-   .. code-block:: console
-
-      # service keystone restart
+#. Restart the OpenStack Identity service.
 
    .. warning::
 
