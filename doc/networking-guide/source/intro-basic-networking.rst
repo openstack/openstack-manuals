@@ -21,7 +21,7 @@ has a unique MAC address, which is different from the MAC address of the
 compute host. A MAC address has 48 bits and is typically represented as a
 hexadecimal string, such as ``08:00:27:b9:88:74``. The MAC address is
 hard-coded into the NIC by the manufacturer, although modern NICs
-allow you to change the MAC address programatically. In Linux, you can
+allow you to change the MAC address programmatically. In Linux, you can
 retrieve the MAC address of a NIC using the ``ip`` command::
 
     $ ip link show eth0
