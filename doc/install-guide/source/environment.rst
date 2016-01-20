@@ -33,8 +33,8 @@ environment with core services and several :term:`CirrOS` instances:
 
 *  Compute Node: 1 processor, 2 GB memory, and 10 GB storage
 
-As the number of OpenStack services and virtual machines increases, so do the
-hardware requirements for best performance. If performance degrades after
+As the number of OpenStack services and virtual machines increase, so do the
+hardware requirements for the best performance. If performance degrades after
 enabling additional services or virtual machines, consider adding hardware
 resources to your environment.
 
