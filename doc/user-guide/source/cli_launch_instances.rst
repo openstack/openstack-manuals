@@ -2,12 +2,6 @@
 Launch instances
 ================
 
-.. toctree::
-   :maxdepth: 2
-
-   cli_nova_launch_instance_from_volume.rst
-   cli_nova_launch_instance_using_ISO_image.rst
-
 Instances are virtual machines that run inside the cloud.
 
 Before you can launch an instance, gather the following parameters:
@@ -293,3 +287,10 @@ Launch an instance from an image
       If you did not provide a key pair, security groups, or rules, you
       can access the instance only from inside the cloud through VNC. Even
       pinging the instance is not possible.
+
+.. toctree::
+   :maxdepth: 2
+
+   cli_nova_launch_instance_from_volume.rst
+   cli_nova_launch_instance_using_ISO_image.rst
+
