@@ -17,6 +17,9 @@ multiple PCIe devices. You can directly assign each virtual PCIe device to
 a VM, bypassing the hypervisor and virtual switch layer. As a result, users
 are able to achieve low latency and near-line wire speed.
 
+SR-IOV with ethernet
+~~~~~~~~~~~~~~~~~~~~
+
 The following terms are used over the document:
 
 .. list-table::
@@ -41,8 +44,8 @@ In order to enable SR-IOV, the following steps are required:
 #. Configure nova-scheduler (Controller)
 #. Enable neutron sriov-agent (Compute)
 
-Neutron sriov-agent
---------------------
+**Neutron sriov-agent**
+
 There are 2 ways of configuring SR-IOV:
 
 #. With the sriov-agent running on each compute node
@@ -60,7 +63,7 @@ port security (enable and disable spoofchecking) and QoS rate limit settings.
    removed in Mitaka.
 
 Known limitations
-~~~~~~~~~~~~~~~~~
+-----------------
 
 * QoS is supported since Liberty, while it has limitations.
   max_burst_kbps (burst over max_kbps) is not supported.
@@ -77,7 +80,7 @@ Known limitations
      sriov-agent.
 
 Environment example
-~~~~~~~~~~~~~~~~~~~
+-------------------
 We recommend using Open vSwitch with VLAN as segregation. This
 way you can combine normal VMs without SR-IOV ports
 and instances with SR-IOV ports on a single neutron
@@ -92,7 +95,7 @@ network.
 
 
 Create Virtual Functions (Compute)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 In this step, create the VFs for the network
 interface that will be used for SR-IOV.
 Use eth3 as PF, which is also used
@@ -165,7 +168,7 @@ For **QLogic SR-IOV Ethernet cards** see:
 
 
 Whitelist PCI devices nova-compute (Compute)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
 Tell nova-compute which pci devices are allowed to be passed
 through. Edit the file ``/etc/nova/nova.conf``:
@@ -209,7 +212,7 @@ entries per host are supported.
 .. _configure_sriov_neutron_server:
 
 Configure neutron-server (Controller)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 #. Add ``sriovnicswitch`` as mechanism driver. Edit the file
    ``/etc/neutron/plugins/ml2/ml2_conf.ini``:
@@ -250,7 +253,7 @@ Configure neutron-server (Controller)
    the :command:`service neutron-server restart`.
 
 Configure nova-scheduler (Controller)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 #. On every controller node running nova-scheduler add
    PCIDeviceScheduler to the scheduler_default_filters parameter
@@ -271,7 +274,7 @@ Configure nova-scheduler (Controller)
 
 
 Enable neutron sriov-agent (Compute)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. note::
 
@@ -316,7 +319,7 @@ Enable neutron sriov-agent (Compute)
 
 
 Creating instances with SR-IOV ports
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 After the configuration is done, you can now launch Instances
 with neutron SR-IOV ports.
 
@@ -340,3 +343,38 @@ with neutron SR-IOV ports.
 
       $ nova boot --flavor m1.large --image ubuntu_14.04 --nic port-id=$port_id test-sriov
 
+SR-IOV with InfiniBand
+~~~~~~~~~~~~~~~~~~~~~~
+
+The support for SR-IOV with InfiniBand allows a Virtual PCI device (VF) to
+be directly mapped to the guest, allowing higher performance and advanced
+features such as RDMA (remote direct memory access). To use this feature,
+you must:
+
+#. Use InfiniBand enabled network adapters.
+
+#. Run InfiniBand subnet managers to enable InfiniBand fabric.
+
+   All InfiniBand networks must have a subnet manager running for the network
+   to function. This is true even when doing a simple network of two
+   machines with no switch and the cards are plugged in back-to-back. A
+   subnet manager is required for the link on the cards to come up.
+   It is possible to have more than one subnet manager. In this case, one
+   of them will act as the master, and any other will act as a slave that
+   will take over when the master subnet manager fails.
+
+#. Install the ``ebrctl`` utility on the compute nodes.
+
+   Check that ``ebrctl`` is listed somewhere in ``/etc/nova/rootwrap.d/*``:
+
+   .. code-block:: console
+
+      $ grep 'ebrctl' /etc/nova/rootwrap.d/*
+
+   If ``ebrctl`` does not appear in any of the rootwrap files, add this to the
+   ``/etc/nova/rootwrap.d/compute.filters`` file in the ``[Filters]`` section.
+
+   .. code-block:: ini
+
+      [Filters]
+      ebrctl: CommandFilter, ebrctl, root
