@@ -4,15 +4,15 @@ OpenStack Telemetry service
 
 The Telemetry service performs the following functions:
 
-- Efficiently polls metering data related to OpenStack services.
+* Efficiently polls metering data related to OpenStack services.
 
-- Collects event and metering data by monitoring notifications sent
+* Collects event and metering data by monitoring notifications sent
   from services.
 
-- Publishes collected data to various targets including data stores and
+* Publishes collected data to various targets including data stores and
   message queues.
 
-- Creates alarms when collected data breaks defined rules.
+* Creates alarms when collected data breaks defined rules.
 
 The Telemetry service consists of the following components:
 

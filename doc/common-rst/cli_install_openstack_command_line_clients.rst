@@ -147,52 +147,52 @@ When following the instructions in this section, replace PROJECT with
 the lowercase name of the client to install, such as ``nova``. Repeat
 for each client. The following values are valid:
 
--  ``barbican`` - Key Manager Service API
+*  ``barbican`` - Key Manager Service API
 
--  ``ceilometer`` - Telemetry API
+*  ``ceilometer`` - Telemetry API
 
--  ``cinder`` - Block Storage API and extensions
+*  ``cinder`` - Block Storage API and extensions
 
--  ``cloudkitty`` - Rating service API
+*  ``cloudkitty`` - Rating service API
 
--  ``designate`` - DNS service API
+*  ``designate`` - DNS service API
 
--  ``glance`` - Image service API
+*  ``glance`` - Image service API
 
--  ``gnocchi`` - Telemetry API v3
+*  ``gnocchi`` - Telemetry API v3
 
--  ``heat`` - Orchestration API
+*  ``heat`` - Orchestration API
 
--  ``magnum`` - Containers service API
+*  ``magnum`` - Containers service API
 
--  ``manila`` - Shared file systems API
+*  ``manila`` - Shared file systems API
 
--  ``mistral`` - Workflow service API
+*  ``mistral`` - Workflow service API
 
--  ``monasca`` - Monitoring API
+*  ``monasca`` - Monitoring API
 
--  ``murano`` - Application catalog API
+*  ``murano`` - Application catalog API
 
--  ``neutron`` - Networking API
+*  ``neutron`` - Networking API
 
--  ``nova`` - Compute API and extensions
+*  ``nova`` - Compute API and extensions
 
--  ``sahara`` - Data Processing API
+*  ``sahara`` - Data Processing API
 
--  ``senlin`` - Clustering service API
+*  ``senlin`` - Clustering service API
 
--  ``swift`` - Object Storage API
+*  ``swift`` - Object Storage API
 
--  ``trove`` - Database service API
+*  ``trove`` - Database service API
 
--  ``tuskar`` - Deployment service API
+*  ``tuskar`` - Deployment service API
 
--  ``openstack`` - Common OpenStack client supporting multiple services
+*  ``openstack`` - Common OpenStack client supporting multiple services
 
 The following CLIs are deprecated in favor of ``openstack``, the
 Common OpenStack client supporting multiple services:
 
--  ``keystone`` - Identity service API and extensions
+*  ``keystone`` - Identity service API and extensions
 
 The following example shows the command for installing the nova client
 with ``pip``.
@@ -212,13 +212,13 @@ or remove a package.
 
 Install each client separately by using the following command:
 
--  For Mac OS X or Linux:
+*  For Mac OS X or Linux:
 
    .. code-block:: console
 
       # pip install python-PROJECTclient
 
--  For Microsoft Windows:
+*  For Microsoft Windows:
 
    .. code-block:: console
 
@@ -232,7 +232,7 @@ Installing from packages
 RDO, openSUSE, SUSE Linux Enterprise, Debian, and Ubuntu have client packages
 that can be installed without ``pip``.
 
--  On Red Hat Enterprise Linux, CentOS, or Fedora, use ``yum`` to install
+*  On Red Hat Enterprise Linux, CentOS, or Fedora, use ``yum`` to install
    the clients from the packaged versions available in
    `RDO <https://www.rdoproject.org/>`__:
 
@@ -240,21 +240,21 @@ that can be installed without ``pip``.
 
       # yum install python-PROJECTclient
 
-- For Ubuntu or Debian, use ``apt-get`` to install the clients from the
+* For Ubuntu or Debian, use ``apt-get`` to install the clients from the
   packaged versions:
 
   .. code-block:: console
 
      # apt-get install python-PROJECTclient
 
--  For openSUSE, use ``zypper`` to install the clients from the distribution
+*  For openSUSE, use ``zypper`` to install the clients from the distribution
    packages service:
 
    .. code-block:: console
 
       # zypper install python-PROJECTclient
 
--  For SUSE Linux Enterprise Server, use ``zypper`` to install the clients from
+*  For SUSE Linux Enterprise Server, use ``zypper`` to install the clients from
    the distribution packages in the Open Build Service. First, add the Open
    Build Service repository:
 

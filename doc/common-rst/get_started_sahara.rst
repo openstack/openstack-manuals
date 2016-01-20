@@ -12,29 +12,29 @@ clusters by adding or removing worker nodes on demand.
 
 The solution addresses the following use cases:
 
-- Fast provisioning of Hadoop clusters on OpenStack for development and
+* Fast provisioning of Hadoop clusters on OpenStack for development and
   QA.
 
-- Utilization of unused compute power from general purpose OpenStack
+* Utilization of unused compute power from general purpose OpenStack
   IaaS cloud.
 
-- Analytics-as-a-Service for ad-hoc or bursty analytic workloads.
+* Analytics-as-a-Service for ad-hoc or bursty analytic workloads.
 
 Key features are:
 
-- Designed as an OpenStack component.
+* Designed as an OpenStack component.
 
-- Managed through REST API with UI available as part of OpenStack
+* Managed through REST API with UI available as part of OpenStack
   dashboard.
 
-- Support for different Hadoop distributions:
+* Support for different Hadoop distributions:
 
-  - Pluggable system of Hadoop installation engines.
+  * Pluggable system of Hadoop installation engines.
 
-  - Integration with vendor specific management tools, such as Apache
+  * Integration with vendor specific management tools, such as Apache
     Ambari or Cloudera Management Console.
 
-- Predefined templates of Hadoop configurations with the ability to
+* Predefined templates of Hadoop configurations with the ability to
   modify parameters.
 
-- User-friendly UI for ad-hoc analytics queries based on Hive or Pig.
+* User-friendly UI for ad-hoc analytics queries based on Hive or Pig.

@@ -18,7 +18,7 @@ Show host usage statistics
 The following examples show the host usage statistics for a host called
 ``devstack``.
 
--  List the hosts and the nova-related services that run on them:
+*  List the hosts and the nova-related services that run on them:
 
    .. code-block:: console
 
@@ -34,7 +34,7 @@ The following examples show the host usage statistics for a host called
       | devstack  | consoleauth | internal |
       +-----------+-------------+----------+
 
--  Get a summary of resource usage of all of the instances running on
+*  Get a summary of resource usage of all of the instances running on
    the host:
 
    .. code-block:: console
@@ -77,7 +77,7 @@ The following examples show the host usage statistics for a host called
 Show instance usage statistics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  Get CPU, memory, I/O, and network statistics for an instance.
+*  Get CPU, memory, I/O, and network statistics for an instance.
 
    #. List instances:
 
@@ -116,7 +116,7 @@ Show instance usage statistics
          | vda_errors       | -1             |
          +------------------+----------------+
 
--  Get summary statistics for each tenant:
+*  Get summary statistics for each tenant:
 
    .. code-block:: console
 

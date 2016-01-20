@@ -24,64 +24,64 @@ bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`__.
 The following books explain how to install an OpenStack cloud and its
 associated components:
 
--  `Installation Guide for openSUSE 13.2 and SUSE Linux Enterprise
+*  `Installation Guide for openSUSE 13.2 and SUSE Linux Enterprise
    Server 12
    <http://docs.openstack.org/liberty/install-guide-obs/>`__
 
--  `Installation Guide for Red Hat Enterprise Linux 7 and CentOS 7
+*  `Installation Guide for Red Hat Enterprise Linux 7 and CentOS 7
    <http://docs.openstack.org/liberty/install-guide-rdo/>`__
 
--  `Installation Guide for Ubuntu
+*  `Installation Guide for Ubuntu
    14.04 <http://docs.openstack.org/liberty/install-guide-ubuntu/>`__
 
 The following books explain how to configure and run an OpenStack cloud:
 
--  `Architecture Design
+*  `Architecture Design
    Guide <http://docs.openstack.org/arch-design/>`__
 
--  `Cloud Administrator
+*  `Cloud Administrator
    Guide <http://docs.openstack.org/admin-guide-cloud/>`__
 
--  `Configuration
+*  `Configuration
    Reference <http://docs.openstack.org/liberty/config-reference/content/>`__
 
--  `Operations Guide <http://docs.openstack.org/ops/>`__
+*  `Operations Guide <http://docs.openstack.org/ops/>`__
 
--  `Networking Guide <http://docs.openstack.org/liberty/networking-guide>`__
+*  `Networking Guide <http://docs.openstack.org/liberty/networking-guide>`__
 
--  `High Availability
+*  `High Availability
    Guide <http://docs.openstack.org/ha-guide/>`__
 
--  `Security Guide <http://docs.openstack.org/sec/>`__
+*  `Security Guide <http://docs.openstack.org/sec/>`__
 
--  `Virtual Machine Image
+*  `Virtual Machine Image
    Guide <http://docs.openstack.org/image-guide/>`__
 
 The following books explain how to use the OpenStack dashboard and
 command-line clients:
 
--  `API Guide <http://developer.openstack.org/api-guide/quick-start/>`__
+*  `API Guide <http://developer.openstack.org/api-guide/quick-start/>`__
 
--  `End User Guide <http://docs.openstack.org/user-guide/>`__
+*  `End User Guide <http://docs.openstack.org/user-guide/>`__
 
--  `Admin User
+*  `Admin User
    Guide <http://docs.openstack.org/user-guide-admin/>`__
 
--  `Command-Line Interface
+*  `Command-Line Interface
    Reference <http://docs.openstack.org/cli-reference/>`__
 
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
 
--  `OpenStack API Complete Reference
+*  `OpenStack API Complete Reference
    (HTML) <http://developer.openstack.org/api-ref.html>`__
 
--  `API Complete Reference
+*  `API Complete Reference
    (PDF) <http://developer.openstack.org/api-ref-guides/bk-api-ref.pdf>`__
 
 The following guide provides how to contribute to OpenStack documentation:
 
--  `Documentation contributor guide <http://docs.openstack.org/contributor-guide/>`__
+*  `Documentation contributor guide <http://docs.openstack.org/contributor-guide/>`__
 
 ask.openstack.org
 ~~~~~~~~~~~~~~~~~
@@ -134,84 +134,84 @@ seems like your bug is unreported, fill out a bug report.
 
 Some tips:
 
--  Give a clear, concise summary.
+*  Give a clear, concise summary.
 
--  Provide as much detail as possible in the description. Paste in your
+*  Provide as much detail as possible in the description. Paste in your
    command output or stack traces, links to screen shots, and any other
    information which might be useful.
 
--  Be sure to include the software and package versions that you are
+*  Be sure to include the software and package versions that you are
    using, especially if you are using a development branch, such as,
    ``"Kilo release" vs git commit bc79c3ecc55929bac585d04a03475b72e06a3208``.
 
--  Any deployment-specific information is helpful, such as whether you
+*  Any deployment-specific information is helpful, such as whether you
    are using Ubuntu 14.04 or are performing a multi-node installation.
 
 The following Launchpad Bugs areas are available:
 
--  `Bugs: OpenStack Block Storage
+*  `Bugs: OpenStack Block Storage
    (cinder) <https://bugs.launchpad.net/cinder>`__
 
--  `Bugs: OpenStack Compute (nova) <https://bugs.launchpad.net/nova>`__
+*  `Bugs: OpenStack Compute (nova) <https://bugs.launchpad.net/nova>`__
 
--  `Bugs: OpenStack Dashboard
+*  `Bugs: OpenStack Dashboard
    (horizon) <https://bugs.launchpad.net/horizon>`__
 
--  `Bugs: OpenStack Identity
+*  `Bugs: OpenStack Identity
    (keystone) <https://bugs.launchpad.net/keystone>`__
 
--  `Bugs: OpenStack Image service
+*  `Bugs: OpenStack Image service
    (glance) <https://bugs.launchpad.net/glance>`__
 
--  `Bugs: OpenStack Networking
+*  `Bugs: OpenStack Networking
    (neutron) <https://bugs.launchpad.net/neutron>`__
 
--  `Bugs: OpenStack Object Storage
+*  `Bugs: OpenStack Object Storage
    (swift) <https://bugs.launchpad.net/swift>`__
 
--  `Bugs: Application catalog (murano) <https://bugs.launchpad.net/murano>`__
+*  `Bugs: Application catalog (murano) <https://bugs.launchpad.net/murano>`__
 
--  `Bugs: Bare metal service (ironic) <https://bugs.launchpad.net/ironic>`__
+*  `Bugs: Bare metal service (ironic) <https://bugs.launchpad.net/ironic>`__
 
--  `Bugs: Clustering service (senlin) <https://bugs.launchpad.net/senlin>`__
+*  `Bugs: Clustering service (senlin) <https://bugs.launchpad.net/senlin>`__
 
--  `Bugs: Containers service (magnum) <https://bugs.launchpad.net/magnum>`__
+*  `Bugs: Containers service (magnum) <https://bugs.launchpad.net/magnum>`__
 
--  `Bugs: Data processing service
+*  `Bugs: Data processing service
    (sahara) <https://bugs.launchpad.net/sahara>`__
 
--  `Bugs: Database service (trove) <https://bugs.launchpad.net/trove>`__
+*  `Bugs: Database service (trove) <https://bugs.launchpad.net/trove>`__
 
--  `Bugs: Deployment service (tuskar) <https://bugs.launchpad.net/tuskar>`__
+*  `Bugs: Deployment service (tuskar) <https://bugs.launchpad.net/tuskar>`__
 
--  `Bugs: DNS service (designate) <https://bugs.launchpad.net/designate>`__
+*  `Bugs: DNS service (designate) <https://bugs.launchpad.net/designate>`__
 
--  `Bugs: Key Manager Service (barbican) <https://bugs.launchpad.net/barbican>`__
+*  `Bugs: Key Manager Service (barbican) <https://bugs.launchpad.net/barbican>`__
 
--  `Bugs: Monitoring (monasca) <https://bugs.launchpad.net/monasca>`__
+*  `Bugs: Monitoring (monasca) <https://bugs.launchpad.net/monasca>`__
 
--  `Bugs: Orchestration (heat) <https://bugs.launchpad.net/heat>`__
+*  `Bugs: Orchestration (heat) <https://bugs.launchpad.net/heat>`__
 
--  `Bugs: Rating (cloudkitty) <https://bugs.launchpad.net/cloudkitty>`__
+*  `Bugs: Rating (cloudkitty) <https://bugs.launchpad.net/cloudkitty>`__
 
--  `Bugs: Shared file systems (manila) <https://bugs.launchpad.net/manila>`__
+*  `Bugs: Shared file systems (manila) <https://bugs.launchpad.net/manila>`__
 
--  `Bugs: Telemetry
+*  `Bugs: Telemetry
    (ceilometer) <https://bugs.launchpad.net/ceilometer>`__
 
--  `Bugs: Telemetry v3
+*  `Bugs: Telemetry v3
    (gnocchi) <https://bugs.launchpad.net/gnocchi>`__
 
--  `Bugs: Workflow service
+*  `Bugs: Workflow service
    (mistral) <https://bugs.launchpad.net/mistral>`__
 
--  `Bugs: Messaging service
+*  `Bugs: Messaging service
    (zaqar) <https://bugs.launchpad.net/zaqar>`__
 
--  `Bugs: OpenStack API Documentation
+*  `Bugs: OpenStack API Documentation
    (developer.openstack.org) <https://bugs.launchpad.net/openstack-api-site>`__
 
--  `Bugs: OpenStack Documentation
+*  `Bugs: OpenStack Documentation
    (docs.openstack.org) <https://bugs.launchpad.net/openstack-manuals>`__
 
 The OpenStack IRC channel
@@ -248,12 +248,12 @@ OpenStack distribution packages
 The following Linux distributions provide community-supported packages
 for OpenStack:
 
--  **Debian:** https://wiki.debian.org/OpenStack
+*  **Debian:** https://wiki.debian.org/OpenStack
 
--  **CentOS, Fedora, and Red Hat Enterprise Linux:**
+*  **CentOS, Fedora, and Red Hat Enterprise Linux:**
    https://www.rdoproject.org/
 
--  **openSUSE and SUSE Linux Enterprise Server:**
+*  **openSUSE and SUSE Linux Enterprise Server:**
    https://en.opensuse.org/Portal:OpenStack
 
--  **Ubuntu:** https://wiki.ubuntu.com/ServerTeam/CloudArchive
+*  **Ubuntu:** https://wiki.ubuntu.com/ServerTeam/CloudArchive
