@@ -8,5 +8,5 @@ Use the names of the OpenStack releases as described on
 
 **Example:**
 
-Icehouse - a single word with only initial capital.
+Icehouse - a single word with only the first initial capitalized.
 
