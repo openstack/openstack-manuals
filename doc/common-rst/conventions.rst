@@ -1,3 +1,10 @@
+.. ## WARNING ##########################################################
+.. This file is synced from openstack/openstack-manuals repository to
+.. other related repositories. If you need to make changes to this file,
+.. make the changes in openstack-manuals. After any change merged to,
+.. openstack-manuals, automatically a patch for others will be proposed.
+.. #####################################################################
+
 ===========
 Conventions
 ===========
