@@ -266,6 +266,11 @@ capabilities:
       run this command or write your own system script that runs on boot
       before the neutron-l3-agent service starts.
 
+**How routers are assigned to L3 agents**
+By default, a router is assigned to the L3 agent with the least number
+of routers (LeastRoutersScheduler). This can be changed by altering the
+router_scheduler_driver setting in the configuration file.
+
 Configure metering agent
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
