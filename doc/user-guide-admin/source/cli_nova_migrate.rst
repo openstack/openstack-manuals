@@ -23,11 +23,11 @@ target host.
 
 #. Now, use the :command:`nova migrate` command.
 
-  .. code-block:: console
+   .. code-block:: console
 
-     $ nova migrate VM_ID
+      $ nova migrate VM_ID
 
-#. To migrate of an instance and watch the status, use this example script:
+#. To migrate an instance and watch the status, use this example script:
 
    .. code-block:: bash
 
