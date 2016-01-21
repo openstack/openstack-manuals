@@ -12,7 +12,7 @@ By default, when you reboot an instance, it is a soft reboot.
 
    $ nova reboot SERVER
 
-To perform a hard reboot, pass the :option:`--hard` parameter, as follows:
+To perform a hard reboot, pass the `--hard` parameter, as follows:
 
 .. code-block:: console
 
@@ -68,7 +68,7 @@ command:
    $ nova unrescue SERVER
 
 If you want to rescue an instance with a specific image, rather than the
-default one, use the :option:`--rescue_image_ref` parameter:
+default one, use the `--rescue_image_ref` parameter:
 
 .. code-block:: console
 

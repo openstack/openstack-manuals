@@ -86,7 +86,7 @@ scratch, if you cannot download the file from the dashboard.
    lives in clear text format in the ``PROJECT-openrc.sh`` file.
    Restrict the permissions on this file to avoid security problems.
    You can also remove the ``OS_PASSWORD`` variable from the file, and
-   use the :option:`--password` parameter with OpenStack client commands
+   use the `--password` parameter with OpenStack client commands
    instead.
 
 .. note::
@@ -120,7 +120,7 @@ or command-line argument. It is not safe to specify the password using
 either of these methods.
 
 For example, when you specify your password using the command-line
-client with the :option:`--os-password` argument, anyone with access to your
+client with the `--os-password` argument, anyone with access to your
 computer can view it in plain text with the ``ps`` field.
 
 To avoid storing the password in plain text, you can prompt for the

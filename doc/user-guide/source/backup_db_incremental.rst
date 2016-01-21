@@ -98,7 +98,7 @@ Create and use incremental backups
    instance called ``guest2``.
 
    To incorporate your incremental backups, you simply use the
-   :option:`--backup` parameter to pass in the ``BACKUP_ID`` of your most
+   `--backup` parameter to pass in the ``BACKUP_ID`` of your most
    recent incremental backup. The Database service handles the
    complexities of applying the chain of all previous incremental
    backups.

@@ -126,7 +126,8 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'openstackdocs'
+#html_theme = 'openstackdocs'
+html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -304,3 +305,7 @@ locale_dirs = ['locale/']
 pdf_documents = [
     ('index', u'UserGuides', u'End User Guide', u'OpenStack contributors')
 ]
+
+html_add_permalinks = ""
+html_sidebars = {'**':[]}
+footer = False

@@ -116,7 +116,7 @@ This example shows you how to back up and restore a MySQL database.
       (``10``) and the same root volume size (``2``) as the original
       ``guest1`` instance.
 
-   -  You use the :option:`--backup` argument to indicate that this new
+   -  You use the `--backup` argument to indicate that this new
       instance is based on the backup artifact identified by
       ``BACKUP_ID``. In this example, replace ``BACKUP_ID`` with
       ``8af30763-61fd-4aab-8fe8-57d528911138``.
