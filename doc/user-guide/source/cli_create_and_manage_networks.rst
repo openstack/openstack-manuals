@@ -204,7 +204,7 @@ Create ports
       +----------------------+----------------------------------------------------------------------+
 
    In the previous command, ``net1`` is the network name, which is a
-   positional argument. :option:`--fixed-ip ip_address=192.168.2.40` is
+   positional argument. `--fixed-ip ip_address=192.168.2.40` is
    an option which specifies the port's fixed IP address we wanted.
 
    .. note::
@@ -256,7 +256,7 @@ Create ports
       | f7a08fe4-e7... |      | fa:16:3e:97:e0:fc | {"subnet_id"... ..."ip_address": "192.168.2.40"}|
       +----------------+------+-------------------+-------------------------------------------------+
 
-   :option:`--fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40` is one
+   `--fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40` is one
    unknown option.
 
 **How to find unknown options**

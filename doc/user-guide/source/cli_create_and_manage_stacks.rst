@@ -32,10 +32,10 @@ Create a stack from an example template file
       $ heat stack-create mystack --template-file /PATH_TO_HEAT_TEMPLATES/WordPress_Single_Instance.template \
         --parameters "InstanceType=m1.large;DBUsername=USERNAME;DBPassword=PASSWORD;KeyName=HEAT_KEY;LinuxDistribution=F17"
 
-   The :option:`--parameters` values that you specify depend on the parameters
+   The `--parameters` values that you specify depend on the parameters
    that are defined in the template. If a website hosts the template
-   file, you can specify the URL with the :option:`--template-url` parameter
-   instead of the :option:`--template-file` parameter.
+   file, you can specify the URL with the `--template-url` parameter
+   instead of the :`--template-file` parameter.
 
    The command returns the following output:
 
@@ -50,7 +50,7 @@ Create a stack from an example template file
    .. note::
 
       When you run the :command:`heat stack-create` command with the
-      :option:`--poll` option, it prints the :command:`heat stack-show`
+      `--poll` option, it prints the :command:`heat stack-show`
       output first, and then continuously prints the events in log format
       until the stack completes its action with success or failure.
 

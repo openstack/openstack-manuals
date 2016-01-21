@@ -283,7 +283,7 @@ that can be installed without ``pip``.
 Upgrade or remove clients
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To upgrade a client, add the :option:`--upgrade` option to the
+To upgrade a client, add the `--upgrade` option to the
 :command:`pip install` command:
 
 .. code-block:: console

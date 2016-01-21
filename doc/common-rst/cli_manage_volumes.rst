@@ -32,7 +32,7 @@ following example:
 
    $ cinder migrate volumeID destinationHost --force-host-copy True|False
 
-In this example, :option:`--force-host-copy True` forces the generic
+In this example, `--force-host-copy True` forces the generic
 host-based migration mechanism and bypasses any driver optimizations.
 
 .. note::

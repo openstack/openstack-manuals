@@ -63,8 +63,8 @@ This example uses the :command:`heat` client to create an auto-scaling
 stack and the :command:`ceilometer` client to measure resources.
 
 #. Create an auto-scaling stack by running the following command.
-   The :option:`-f` option specifies the name of the stack template
-   file, and the :option:`-P` option specifies the ``KeyName``
+   The `-f` option specifies the name of the stack template
+   file, and the `-P` option specifies the ``KeyName``
    parameter as ``heat_key``:
 
    .. code-block:: console

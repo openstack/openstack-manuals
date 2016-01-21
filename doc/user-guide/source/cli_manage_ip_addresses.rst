@@ -138,7 +138,7 @@ You can assign a floating IP address to a project and to an instance.
 
       If an instance is connected to multiple networks, you can associate a
       floating IP address with a specific fixed IP address using the optional
-      :option:`--fixed-address` parameter:
+      `--fixed-address` parameter:
 
       .. code-block:: console
 

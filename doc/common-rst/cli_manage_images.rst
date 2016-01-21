@@ -172,7 +172,7 @@ Reference <http://docs.openstack.org/cli-reference/index.html>`__.
   Hash of image data to use for verification.
 
 ``--copy-from IMAGE_URL``
-  Similar to :option:`--location` in usage, but indicates that the image
+  Similar to `--location` in usage, but indicates that the image
   server should immediately copy the data and store it in its
   configured image store.
 

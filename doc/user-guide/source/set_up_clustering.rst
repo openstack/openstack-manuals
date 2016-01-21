@@ -44,7 +44,7 @@ Set up clustering
    -  The name and version of the datastore you want to use.
 
    -  The three instances you want to include in the replication set for
-      the first shard. Specify each instance by using the :option:`--instance`
+      the first shard. Specify each instance by using the `--instance`
       argument and the associated flavor ID and volume size. Use the
       same flavor ID and volume size for each instance. In this example,
       flavor ``7`` is a custom flavor that meets the MongoDB minimum

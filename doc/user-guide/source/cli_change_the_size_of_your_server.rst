@@ -59,7 +59,7 @@ Change the size of a server by changing its flavor.
       +-----+-----------+-----------+------+-----------+------+-------+-------------+----------+
 
 #. To resize the server, use the :command:`nova resize` command and add
-   the server ID or name and the new flavor. Include the :option:`--poll`
+   the server ID or name and the new flavor. Include the `--poll`
    parameter to display the resize progress. For example:
 
    .. code-block:: console

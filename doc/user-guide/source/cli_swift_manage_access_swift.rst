@@ -9,8 +9,8 @@ Manage access
    ``X-Container-Read`` and ``X-Container-Write`` headers.
 
    To give a user read access, use the :command:`swift post` command with the
-   :option:`-r` parameter. To give a user write access, use the
-   :option:`-w` parameter.
+   `-r` parameter. To give a user write access, use the
+   `-w` parameter.
 
    The following example enables the ``testuser`` user to read objects
    in the container:

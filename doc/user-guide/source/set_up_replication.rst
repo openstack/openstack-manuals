@@ -8,8 +8,8 @@ applies those changes to the replica.
 
 -  Replicas are read-only.
 
--  When you create a replica, do not specify the :option:`--users` or
-   :option:`--databases` options.
+-  When you create a replica, do not specify the `--users` or
+   `--databases` options.
 
 -  You can choose a smaller volume or flavor for a replica than for the
    original, but the replica's volume must be big enough to hold the
@@ -36,7 +36,7 @@ Set up replication
 #. **Create the replica**
 
    Create a new instance that will be a replica of the original
-   instance. You do this by passing in the :option:`--replica_of` option with
+   instance. You do this by passing in the `--replica_of` option with
    the :command:`trove create` command. This example creates a replica
    called ``replica_1``. ``replica_1`` is a replica of the original instance,
    ``base_1``:
