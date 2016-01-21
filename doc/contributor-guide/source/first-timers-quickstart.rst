@@ -98,12 +98,12 @@ Set up git and git-review
 #. Install git-review so that you are able to submit patches.
    See `Installing git-review`_ for details.
 
-  .. note::
+   .. note::
 
-     If you use Windows to contribute to OpenStack, install
-     `Python <https://docs.python.org/3/using/windows.html>`_
-     as prerequisites. As part of the Python installation,
-     be sure to install setuptools and pip as instructed.
+      If you use Windows to contribute to OpenStack, install
+      `Python <https://docs.python.org/3/using/windows.html>`_
+      as prerequisites. As part of the Python installation,
+      be sure to install setuptools and pip as instructed.
 
 Set up SSH
 ----------
