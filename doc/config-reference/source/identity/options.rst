@@ -56,7 +56,7 @@ configuration files, or in the Identity SQL database using API REST calls.
 
 .. note::
 
-    Storing and managing configuration options in a SQL database is
+    Storing and managing configuration options in an SQL database is
     experimental in Kilo.
 
 Enable drivers for domain-specific configuration files
