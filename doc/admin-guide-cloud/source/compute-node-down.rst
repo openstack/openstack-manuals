@@ -271,7 +271,7 @@ After power resumes and all hardware components restart:
 
    When you plan for and complete a disaster recovery, follow these tips:
 
--  Use the :option:`errors=remount` option in the ``fstab`` file to prevent
+-  Use the ``errors=remount`` option in the ``fstab`` file to prevent
    data corruption.
 
    In the event of an I/O error, this option prevents writes to the disk. Add
