@@ -140,12 +140,27 @@ command-line clients, and provides installation instructions as needed.
 |                       | as described in Installing_from_packages_.          |
 +-----------------------+-----------------------------------------------------+
 
-Install the clients
-~~~~~~~~~~~~~~~~~~~
+Install the OpenStack client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When following the instructions in this section, replace PROJECT with
-the lowercase name of the client to install, such as ``nova``. Repeat
-for each client. The following values are valid:
+The following example shows the command for installing the OpenStack client
+with ``pip``, which supports multiple services.
+
+.. code-block:: console
+
+   # pip install python-openstackclient
+
+The following clients, while valid, are de-emphasized in favor of a common
+client. Instead of installing and learning all these clients, we recommend
+installing and using the OpenStack client. You may need to install an
+individual project's client because coverage is not yet sufficient in the
+OpenStack client. If you need to install an individual client's project,
+replace the ``<project>`` name in this ``pip install`` command using the
+list below.
+
+.. code-block:: console
+
+    # pip install python-<project>client
 
 *  ``barbican`` - Key Manager Service API
 
@@ -194,12 +209,9 @@ Common OpenStack client supporting multiple services:
 
 *  ``keystone`` - Identity service API and extensions
 
-The following example shows the command for installing the nova client
-with ``pip``.
-
-.. code-block:: console
-
-   # pip install python-novaclient
+While you can install the ``keystone`` client for interacting with version 2.0
+of the service's API, you should use the ``openstack`` client for all Identity
+interactions.
 
 Installing with pip
 -------------------
