@@ -664,3 +664,38 @@ Delete images
    Images` to confirm the deletion.
 
    You cannot undo this action.
+
+Launch instances with UEFI
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Unified Extensible Firmware Interface (UEFI) is a standard firmware
+designed to replace legacy BIOS. There is a slow but steady trend
+for operating systems to move to the UEFI format and, in some cases,
+make it their only format.
+
+**To configure UEFI environment**
+
+To successfully launch an instance from an UEFI image in QEMU/KVM
+environment, the cloud administrator has to install the following
+packages on compute node:
+
+-  OVMF, a port of Intel's tianocore firmware to QEMU virtual machine.
+
+-  libvirt, which has been supporting UEFI boot since version 1.2.9.
+
+Because default UEFI loader path is ``/usr/share/OVMF/OVMF_CODE.fd``, the
+cloud administrator must create one link to this location after UEFI package
+is installed.
+
+**To upload UEFI images**
+
+To launch instances from a UEFI image, the administrator first has to
+upload one UEFI image. To do so, ``hw_firmware_type`` property must
+be set to ``uefi`` when the image is created. For example:
+
+.. code-block:: console
+
+    glance image-create --container-format bare --disk-format qcow2 \
+    --property hw_firmware_type=uefi --file /tmp/cloud-uefi.qcow --name uefi
+
+After that, you can launch instances from this UEFI image.
