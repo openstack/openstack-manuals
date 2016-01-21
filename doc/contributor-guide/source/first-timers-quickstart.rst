@@ -17,7 +17,7 @@ Other good first-time documentation tasks are bug triaging and bug fixing:
 
 #. When you can confirm a bug, give it a status based on
    the :ref:`documentation bug triaging guidelines <doc_bugs_triaging>`.
-   You may skip this step and proceed with the bug fixing.
+   You may skip this step and proceed with bug fixing.
 
 #. If you are up for it, assign the bug to yourself after it has been
    confirmed by one other person. Fix it by committing the required changes
@@ -40,7 +40,7 @@ To get started, complete the following steps:
 
 #. Join the Launchpad `OpenStack Documentation Bug Team`_.
 
-To set up the environment for contribution, proceed with the subsections
+To set up your environment for contributions, proceed with the subsections
 below.
 
 Set up a text editor
@@ -67,13 +67,13 @@ example:
     * https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing
     * http://infohost.nmt.edu/tcc/help/pubs/nxml/
 
-To keep the documents clean and easy to compare, all the OpenStack
-projects requirement is that text is wrapped at `79 characters maximum`_,
+To keep the documents clean and easy to compare, all of the OpenStack
+projects require that text is wrapped at `79 characters maximum`_,
 with no white spaces at the end of the line.
 
 You can configure the text editor to do that automatically.
 
-For example, in :file:`.vimrc`:
+For example, in the :file:`.vimrc`:
 
 .. code-block:: ini
 
@@ -123,7 +123,7 @@ Set up SSH
 
       $ less ~/.ssh/id_rsa.pub
 
-#. Add your SSH key by logging into Gerrit and viewing
+#. Add your SSH key by logging into gerrit and viewing
    the `Settings > SSH Public Keys`_ page.
 
 
@@ -143,7 +143,7 @@ of the Infrastructure manual.
    *openstack/security-guide*, *openstack/training-guides*,
    or *openstack/ha-guide* repository.
 
-See :ref:`troubleshoot_setup` if you have any difficulty with a repository
+See :ref:`troubleshoot_setup` if you have difficulty with a repository
 setup.
 
 
@@ -198,8 +198,8 @@ Wait for more reviews.
 
 .. _troubleshoot_setup:
 
-Troubleshooting a setup
-~~~~~~~~~~~~~~~~~~~~~~~
+Troubleshooting your setup
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 git and git review
 ------------------
@@ -265,12 +265,12 @@ git and git review
 
      Permission denied (publickey).
 
-  Doublecheck the :guilabel:`Settings` page at
+  Double check the :guilabel:`Settings` page at
   http://review.openstack.org to make sure your public key on the computer
-  or virtual server has been copied to SSH Public Keys on
+  or virtual server has been copied to SSH public keys on
   https://review.openstack.org/#/settings/ssh-keys. If you have not adjusted
   your ``.ssh`` configuration, your system may not be connecting using
-  the correct key for Gerrit.
+  the correct key for gerrit.
 
   List your local public key on Mac or Linux with:
 
@@ -292,9 +292,9 @@ If your network connection is weak, you might see this error:
 
 Try again when your network connection improves.
 
-**Accessing Gerrit over HTTP/HTTPS**
+**Accessing gerrit over HTTP/HTTPS**
 
-If you suspect that ssh over non-standards ports might be blocked or need to
+If you suspect that SSH over non-standards ports might be blocked or need to
 access the web using http/https, you can configure git-review to `use an http
 endpoint instead of ssh <http://docs.openstack.org/infra/manual/developers.html#accessing-gerrit-over-https>`_
 as explained in the Infrastructure Manual.
