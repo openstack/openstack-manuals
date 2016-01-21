@@ -1,19 +1,19 @@
 .. _scenario-l3ha-ovs:
 
 ===============================================================
-Scenario: High Availability using VRRP (L3HA) with Open vSwitch
+Scenario: High availability using VRRP (L3HA) with Open vSwitch
 ===============================================================
 
 This scenario describes a high-availability implementation of the OpenStack
 Networking service using the ML2 plug-in and Open vSwitch (OVS).
 
-This high-availability implementation augments the :ref:`scenario-classic-ovs`
+This high availability implementation augments the :ref:`scenario-classic-ovs`
 architecture with Virtual Router Redundancy Protocol (VRRP) using
 ``keepalived`` to provide quick failover of layer-3 services. See
 :ref:`scenario_l3ha_ovs-packet_flow` for VRRP operation. Similar to the classic
 scenario, all network traffic on a project network that requires routing
 actively traverses only one network node regardless of the quantity of network
-nodes providing HA for the router. Therefore, this high-availability
+nodes providing HA for the router. Therefore, this high availability
 implementation primarily addresses failure situations instead of bandwidth
 constraints that limit performance. However, it supports random distribution
 of routers on different network nodes to reduce the chances of bandwidth
