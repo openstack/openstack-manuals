@@ -2,9 +2,9 @@
 Role-Based Access Control for networks
 ======================================
 
-A new policy framework was added during Liberty to enable both
-operators and users to grant specific projects access to resources.
-As of the Liberty release, the only access that can be granted via
+A new policy framework was added in Liberty that allows both
+operators and users to grant access to resources for specific projects.
+Currently, the only access that can be granted using
 this feature is regular port creation permissions on networks.
 
 
@@ -15,7 +15,7 @@ Sharing a network with a specific project is accomplished by creating
 a policy entry that permits the target project the ``access_as_shared``
 action on that network.
 
-First, we create a network we want to share:
+Create a network to share:
 
 .. code-block:: console
 
@@ -40,7 +40,7 @@ First, we create a network we want to share:
    | tenant_id                 | de56db175c1d48b0bbe72f09a24a3b66     |
    +---------------------------+--------------------------------------+
 
-Now we create the policy entry using the :command:`rbac-create` command (In
+Create the policy entry using the :command:`rbac-create` command (In
 this example, the ID of the project we want to share with is
 ``e28769db97d9449da658bc6931fcb683``):
 
@@ -61,9 +61,9 @@ this example, the ID of the project we want to share with is
    | tenant_id     | de56db175c1d48b0bbe72f09a24a3b66     |
    +---------------+--------------------------------------+
 
-The ``target-tenant`` parameter specifies the project that we wanted to
-gain access to the network. The ``action`` parameter specifies what we
-want the project to be allowed to do. The ``type`` parameter says
+The ``target-tenant`` parameter specifies the project that requires
+access to the network. The ``action`` parameter specifies what
+the project is allowed to do. The ``type`` parameter says
 that the target object is a network. The final parameter is the ID of
 the network we are granting access to.
 
@@ -72,7 +72,7 @@ the network when running :command:`net-list` and :command:`net-show`
 and will also be able to create ports on that network. No other users
 (other than admins and the owner) will be able to see the network.
 
-To remove access for that project, just delete the policy that allows
+To remove access for that project, delete the policy that allows
 it using the :command:`rbac-delete` command:
 
 .. code-block:: console
@@ -124,9 +124,8 @@ using the ``shared`` flag on the network:
 
 This is the equivalent of creating a policy on the network that permits
 every project to perform the action ``access_as_shared`` on that network.
-In fact, neutron treats them as the same thing, so we should
-be able to see a policy entry for that network using the :command:`rbac-list`
-command:
+Neutron treats them as the same thing, so the policy entry for that
+network should be visible using the :command:`rbac-list` command:
 
 .. code-block:: console
 
@@ -138,7 +137,7 @@ command:
    | fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55 | 9a4af544-7158-456d-b180-95f2e11eaa8c |
    +--------------------------------------+--------------------------------------+
 
-Then we can use the :command:`rbac-show` command to see the details:
+Use the :command:`rbac-show` command to see the details:
 
 .. code-block:: console
 
@@ -155,16 +154,16 @@ Then we can use the :command:`rbac-show` command to see the details:
    | tenant_id     | de56db175c1d48b0bbe72f09a24a3b66     |
    +---------------+--------------------------------------+
 
-Above we can see that the entry allows the action ``access_as_shared``
+The output shows that the entry allows the action ``access_as_shared``
 on object ``9a4af544-7158-456d-b180-95f2e11eaa8c`` of type ``network``
 to target_tenant ``*``, which is a wildcard that represents all projects.
 
-As of Liberty, the ``shared`` flag is just a mapping to the underlying
+Currently, the ``shared`` flag is just a mapping to the underlying
 RBAC policies for a network. Setting the flag to ``True`` on a network
 creates a wildcard RBAC entry. Setting it to ``False`` removes the
 wildcard entry.
 
-When a :command:`net-list` or :command:`net-show` is done, the
+When you run :command:`net-list` or :command:`net-show`, the
 ``shared`` flag is calculated by the server based on the calling
 project and the RBAC entries for each network. If there is a
 wildcard entry, the ``shared`` flag is always set to ``True``.
@@ -176,7 +175,7 @@ and the rest will see the flag as ``False``.
 Preventing regular users from sharing networks with each other
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The default ``policy.json`` shipped with neutron will not allow regular
+The default ``policy.json`` file will not allow regular
 users to share networks with every other project using a wildcard;
 however, it will allow them to share networks with specific project
 IDs.
