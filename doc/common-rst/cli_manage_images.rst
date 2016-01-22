@@ -7,9 +7,9 @@ upload and manage images. The operator might restrict image upload and
 management to only cloud administrators or operators.
 
 You can upload images through the ``glance`` client or the Image service
-API. Besides, you can use the ``nova`` client for the image management.
+API. You can use the ``nova`` client for the image management.
 The latter provides mechanisms to list and delete images, set and delete
-image metadata, and create images of a running instance of snapshot and
+image metadata, and create images of a running instance or snapshot and
 backup types.
 
 After you upload an image, you cannot change it.
@@ -20,7 +20,7 @@ Guide <http://docs.openstack.org/image-guide/>`__.
 List or get details for images (glance)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To get a list of images and to then get further details about a single
+To get a list of images and to get further details about a single
 image, use :command:`glance image-list` and :command:`glance image-show`
 commands.
 
@@ -298,7 +298,7 @@ in the following tables.
 Troubleshoot image creation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you encounter problems in creating an image in Image service or
+If you encounter problems in creating an image in the Image service or
 Compute, the following information may help you troubleshoot the
 creation process.
 
