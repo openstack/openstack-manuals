@@ -38,7 +38,6 @@ Volume drivers
    drivers/smbfs-volume-driver.rst
    drivers/solidfire-volume-driver.rst
    drivers/tintri-volume-driver.rst
-   drivers/violin-v6000-driver.rst
    drivers/violin-v7000-driver.rst
    drivers/vmware-vmdk-driver.rst
    drivers/windows-iscsi-volume-driver.rst
