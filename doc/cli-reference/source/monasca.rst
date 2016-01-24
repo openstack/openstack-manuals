@@ -9,7 +9,7 @@ Monitoring command-line client
 The monasca client is the command-line interface (CLI) for
 the Monitoring API and its extensions.
 
-This chapter documents :command:`monasca` version ``1.0.27``.
+This chapter documents :command:`monasca` version ``1.0.28``.
 
 For help on a specific :command:`monasca` command, enter:
 
@@ -349,15 +349,15 @@ monasca alarm-definition-update
 
 .. code-block:: console
 
-   usage: monasca alarm-definition-update [--description <DESCRIPTION>]
-                                          [--alarm-actions <NOTIFICATION-ID>]
-                                          [--ok-actions <NOTIFICATION-ID>]
-                                          [--undetermined-actions <NOTIFICATION-ID>]
-                                          [--match-by <DIMENSION_KEY1,DIMENSION_KEY2,...>]
-                                          [--severity <SEVERITY>]
-                                          <ALARM_DEFINITION_ID>
-                                          <ALARM_DEFINITION_NAME> <EXPRESSION>
+   usage: monasca alarm-definition-update <ALARM_DEFINITION_ID>
+                                          <ALARM_DEFINITION_NAME> <DESCRIPTION>
+                                          <EXPRESSION>
+                                          <ALARM-NOTIFICATION-ID1,ALARM-NOTIFICATION-ID2,...>
+                                          <OK-NOTIFICATION-ID1,OK-NOTIFICATION-ID2,...>
+                                          <UNDETERMINED-NOTIFICATION-ID1,UNDETERMINED-NOTIFICATION-ID2,...>
                                           <ACTIONS-ENABLED>
+                                          <DIMENSION_KEY1,DIMENSION_KEY2,...>
+                                          <SEVERITY>
 
 Update the alarm definition.
 
@@ -370,39 +370,35 @@ Positional arguments
 ``<ALARM_DEFINITION_NAME>``
   Name of the alarm definition.
 
+``<DESCRIPTION>``
+  Description of the alarm.
+
 ``<EXPRESSION>``
   The alarm expression to evaluate. Quoted.
+
+``<ALARM-NOTIFICATION-ID1,ALARM-NOTIFICATION-ID2,...>``
+  The notification method(s) to use when an alarm state
+  is ALARM as a comma separated list.
+
+``<OK-NOTIFICATION-ID1,OK-NOTIFICATION-ID2,...>``
+  The notification method(s) to use when an alarm state
+  is OK as a comma separated list.
+
+``<UNDETERMINED-NOTIFICATION-ID1,UNDETERMINED-NOTIFICATION-ID2,...>``
+  The notification method(s) to use when an alarm state
+  is UNDETERMINED as a comma separated list.
 
 ``<ACTIONS-ENABLED>``
   The actions-enabled boolean is one of [true,false]
 
-Optional arguments
-------------------
-
-``--description <DESCRIPTION>``
-  Description of the alarm.
-
-``--alarm-actions <NOTIFICATION-ID>``
-  The notification method to use when an alarm state is
-  ALARM. This param may be specified multiple times.
-
-``--ok-actions <NOTIFICATION-ID>``
-  The notification method to use when an alarm state is
-  OK. This param may be specified multiple times.
-
-``--undetermined-actions <NOTIFICATION-ID>``
-  The notification method to use when an alarm state is
-  UNDETERMINED. This param may be specified multiple
-  times.
-
-``--match-by <DIMENSION_KEY1,DIMENSION_KEY2,...>``
+``<DIMENSION_KEY1,DIMENSION_KEY2,...>``
   The metric dimensions to match to the alarm
   dimensions. One or more dimension key names separated
   by a comma. Key names need quoting when they contain
   special chars [&,(,),{,},>,<] that confuse the CLI
   parser.
 
-``--severity <SEVERITY>``
+``<SEVERITY>``
   Severity is one of [LOW, MEDIUM, HIGH, CRITICAL].
 
 .. _monasca_alarm-delete:
