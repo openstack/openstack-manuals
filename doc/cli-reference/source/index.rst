@@ -28,7 +28,6 @@ Contents
    trove
    trove-misc
    sahara
-   tuskar
    designate
    keystone
    glance
