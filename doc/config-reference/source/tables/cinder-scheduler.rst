@@ -35,6 +35,6 @@
    * - ``scheduler_manager`` = ``cinder.scheduler.manager.SchedulerManager``
      - (StrOpt) Full class name for the Manager for scheduler
    * - ``scheduler_max_attempts`` = ``3``
-     - (IntOpt) Maximum number of attempts to schedule an volume
+     - (IntOpt) Maximum number of attempts to schedule a volume
    * - ``scheduler_topic`` = ``cinder-scheduler``
      - (StrOpt) The topic that scheduler nodes listen on

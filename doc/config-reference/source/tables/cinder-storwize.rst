@@ -20,16 +20,16 @@
      -
    * - ``storwize_svc_allow_tenant_qos`` = ``False``
      - (BoolOpt) Allow tenants to specify QOS on create
-   * - ``storwize_svc_connection_protocol`` = ``iSCSI``
-     - (StrOpt) Connection protocol (iSCSI/FC)
+   * - ``storwize_svc_flashcopy_rate`` = ``50``
+     - (IntOpt) Specifies the Storwize FlashCopy copy rate to be used when creating a full volume copy. The default is rate is 50, and the valid rates are 1-100.
    * - ``storwize_svc_flashcopy_timeout`` = ``120``
      - (IntOpt) Maximum number of seconds to wait for FlashCopy to be prepared.
    * - ``storwize_svc_iscsi_chap_enabled`` = ``True``
      - (BoolOpt) Configure CHAP authentication for iSCSI connections (Default: Enabled)
    * - ``storwize_svc_multihostmap_enabled`` = ``True``
-     - (BoolOpt) Allows vdisk to multi host mapping
-   * - ``storwize_svc_multipath_enabled`` = ``False``
      - (BoolOpt) This option no longer has any affect. It is deprecated and will be removed in the next release.
+   * - ``storwize_svc_multipath_enabled`` = ``False``
+     - (BoolOpt) Connect with multipath (FC only; iSCSI multipath is controlled by Nova)
    * - ``storwize_svc_stretched_cluster_partner`` = ``None``
      - (StrOpt) If operating in stretched cluster mode, specify the name of the pool in which mirrored copies are stored.Example: "pool2"
    * - ``storwize_svc_vol_autoexpand`` = ``True``
@@ -44,8 +44,6 @@
      - (IntOpt) The I/O group in which to allocate volumes
    * - ``storwize_svc_vol_nofmtdisk`` = ``False``
      - (BoolOpt) Specifies that the volume not be formatted during creation.
-   * - ``storwize_svc_flashcopy_rate`` = ``50``
-     - (IntOpt) Specifies the storwize Flashcopy rate to be used when creating a full volume copy.
    * - ``storwize_svc_vol_rsize`` = ``2``
      - (IntOpt) Storage system space-efficiency parameter for volumes (percentage)
    * - ``storwize_svc_vol_warning`` = ``0``

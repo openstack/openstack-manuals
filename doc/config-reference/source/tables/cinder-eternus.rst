@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _cinder-ca:
+.. _cinder-eternus:
 
-.. list-table:: Description of CA and SSL configuration options
+.. list-table:: Description of Eternus volume driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,9 +18,5 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``ssl_ca_file`` = ``None``
-     - (StrOpt) CA certificate file to use to verify connecting clients
-   * - ``ssl_cert_file`` = ``None``
-     - (StrOpt) Certificate file to use when starting the server securely
-   * - ``ssl_key_file`` = ``None``
-     - (StrOpt) Private key file to use when starting the server securely
+   * - ``cinder_eternus_config_file`` = ``/etc/cinder/cinder_fujitsu_eternus_dx.xml``
+     - (StrOpt) config file for cinder eternus_dx volume driver

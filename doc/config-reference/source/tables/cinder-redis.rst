@@ -23,4 +23,4 @@
    * - ``password`` =
      - (StrOpt) Password for Redis server (optional).
    * - ``port`` = ``6379``
-     - (IntOpt) Use this port to connect to redis host.
+     - (PortOpt) Use this port to connect to redis host.

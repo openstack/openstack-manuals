@@ -8,19 +8,15 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _cinder-profiler:
+.. _cinder-hyperv:
 
-.. list-table:: Description of profiler configuration options
+.. list-table:: Description of HyperV volume driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[profiler]**
+   * - **[hyperv]**
      -
-   * - ``hmac_keys`` = ``SECRET_KEY``
-     - (StrOpt) Secret key to use to sign tracing messages.
-   * - ``profiler_enabled`` = ``False``
-     - (BoolOpt) If False fully disable profiling feature.
-   * - ``trace_sqlalchemy`` = ``False``
-     - (BoolOpt) If False doesn't trace SQL requests.
+   * - ``force_volumeutils_v1`` = ``False``
+     - (BoolOpt) Force V1 volume utility class

@@ -18,8 +18,8 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``rpc_zmq_all_req_rep`` = ``True``
-     - (BoolOpt) Use REQ/REP pattern for all methods CALL/CAST/FANOUT.
+   * - ``direct_over_proxy`` = ``True``
+     - (BoolOpt) Configures zmq-messaging to use proxy with non PUB/SUB patterns.
    * - ``rpc_zmq_bind_address`` = ``*``
      - (StrOpt) ZeroMQ bind address. Should be a wildcard (*), an ethernet interface, or IP. The "host" option should point or resolve to this address.
    * - ``rpc_zmq_bind_port_retries`` = ``100``
@@ -37,8 +37,8 @@
    * - ``rpc_zmq_max_port`` = ``65536``
      - (IntOpt) Maximal port number for random ports range.
    * - ``rpc_zmq_min_port`` = ``49152``
-     - (IntOpt) Minimal port number for random ports range.
+     - (PortOpt) Minimal port number for random ports range.
    * - ``rpc_zmq_topic_backlog`` = ``None``
      - (IntOpt) Maximum number of ingress messages to locally buffer per topic. Default is unlimited.
-   * - ``zmq_use_broker`` = ``True``
-     - (BoolOpt) Shows whether zmq-messaging uses broker or not.
+   * - ``use_pub_sub`` = ``True``
+     - (BoolOpt) Use PUB/SUB pattern for fanout methods. PUB/SUB always uses proxy.

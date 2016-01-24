@@ -50,3 +50,5 @@
      - (IntOpt) Interval between retries in case array is busy
    * - ``xtremio_cluster_name`` =
      - (StrOpt) XMS cluster id in multi-cluster environment
+   * - ``xtremio_volumes_per_glance_cache`` = ``100``
+     - (IntOpt) Number of volumes created from each cached glance image

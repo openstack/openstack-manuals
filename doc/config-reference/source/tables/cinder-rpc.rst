@@ -19,7 +19,7 @@
    * - **[DEFAULT]**
      -
    * - ``rpc_backend`` = ``rabbit``
-     - (StrOpt) The messaging driver to use, defaults to rabbit. Other drivers include qpid and zmq.
+     - (StrOpt) The messaging driver to use, defaults to rabbit. Other drivers include amqp and zmq.
    * - ``rpc_cast_timeout`` = ``30``
      - (IntOpt) Seconds to wait before a cast expires (TTL). Only supported by impl_zmq.
    * - ``rpc_conn_pool_size`` = ``30``
@@ -70,3 +70,11 @@
      - (BoolOpt) Debug: dump AMQP frames to stdout
    * - ``username`` =
      - (StrOpt) User name for message broker authentication
+   * - **[oslo_messaging_notifications]**
+     -
+   * - ``driver`` = ``[]``
+     - (MultiStrOpt) The Drivers(s) to handle sending notifications. Possible values are messaging, messagingv2, routing, log, test, noop
+   * - ``topics`` = ``notifications``
+     - (ListOpt) AMQP topic used for OpenStack notifications.
+   * - ``transport_url`` = ``None``
+     - (StrOpt) A URL representing the messaging driver to use for notifications. If not set, we fall back to the same configuration used for RPC.

@@ -28,5 +28,7 @@
      - (BoolOpt) Configure CHAP authentication for iSCSI connections (Default: Disabled)
    * - ``hpelefthand_password`` = ``None``
      - (StrOpt) HPE LeftHand Super user password
+   * - ``hpelefthand_ssh_port`` = ``16022``
+     - (PortOpt) Port number of SSH service.
    * - ``hpelefthand_username`` = ``None``
      - (StrOpt) HPE LeftHand Super user username

@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _cinder-srb:
+.. _cinder-coho:
 
-.. list-table:: Description of Scality REST Block storage driver configuration options
+.. list-table:: Description of Coho volume driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,5 +18,5 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``srb_base_urls`` = ``None``
-     - (StrOpt) Comma-separated list of REST servers IP to connect to. (eg http://IP1/,http://IP2:81/path
+   * - ``coho_rpc_port`` = ``2049``
+     - (IntOpt) RPC port to connect to Coha Data MicroArray
