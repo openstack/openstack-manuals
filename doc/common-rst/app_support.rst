@@ -189,7 +189,7 @@ The following Launchpad Bugs areas are available:
 
 *  `Bugs: Database service (trove) <https://bugs.launchpad.net/trove>`__
 
-*  `Bugs: Deployment service (tuskar) <https://bugs.launchpad.net/tuskar>`__
+*  `Bugs: Deployment service (fuel) <https://bugs.launchpad.net/fuel>`__
 
 *  `Bugs: DNS service (designate) <https://bugs.launchpad.net/designate>`__
 

@@ -56,7 +56,7 @@ service with its package name and description.
 |                |          |                       |Hadoop clusters on      |
 |                |          |                       |OpenStack.              |
 +----------------+----------+-----------------------+------------------------+
-|Deployment      |tuskar    |python-tuskarclient    |Plans Deployments.      |
+|Deployment      |fuel      |python-fuelclient      |Plans deployments.      |
 |service         |          |                       |                        |
 +----------------+----------+-----------------------+------------------------+
 |Identity        |keystone  |python-keystoneclient  |Creates and manages     |
