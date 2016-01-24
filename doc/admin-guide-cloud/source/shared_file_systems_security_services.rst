@@ -4,12 +4,12 @@
 Security services
 =================
 
-A security service stores configuration information for clients for
+A security service stores client configuration information used for
 authentication and authorization (AuthN/AuthZ). For example, a share server
 will be the client for an existing service such as LDAP, Kerberos, or
 Microsoft Active Directory.
 
-You can associate a share with from one to three security service types:
+You can associate a share with one to three security service types:
 
 - ``ldap``. LDAP.
 
@@ -29,13 +29,14 @@ You can configure a security service with these options:
 
 - The password for the user, if you specify a user name.
 
-The security service can be added to the
+You can add the security service to the
 :ref:`share network <shared_file_systems_share_networks>`.
 
-To create a security service, specify the security service type and optionally
-name, description of a security service, DNS IP address used inside tenant's
+To create a security service, specify the security service type, a
+description of a security service, DNS IP address used inside tenant's
 network, security service IP address or host name, domain, security
-service user or group used by tenant, a password of user.
+service user or group used by tenant, and a password for the user. The
+share name is optional.
 
 Create a ``ldap`` security service:
 
@@ -97,13 +98,14 @@ To see the list of created security service use
    +--------------------------------------+------------------------------+--------+----------+
 
 You can add a security service to the existing
-:ref:`share network <shared_file_systems_share_networks>` that is not used yet
-(is not associated with a share).
+:ref:`share network <shared_file_systems_share_networks>`, which is not
+yet used (a ``share network`` not associated with a share).
 
 Add a security service to the share network with
-``share-network-security-service-add`` specifying share network, security
-service and print the information about the security service. You can see
-new attribute ``share_networks`` with associated share network ID.
+``share-network-security-service-add`` specifying share network and
+security service. The command returns information about the
+security service. You can see view new attributes and ``share_networks``
+using the associated share network ID.
 
 .. code-block:: console
 
@@ -129,8 +131,9 @@ new attribute ``share_networks`` with associated share network ID.
    | description    | None                                      |
    +----------------+-------------------------------------------+
 
-It is possible to see the list of security services associated with
-given share network. List security services for ``share_net2`` share network:
+It is possible to see the list of security services associated
+with a given share network. List security services for ``share_net2``
+share network with:
 
 .. code-block:: console
 
@@ -142,7 +145,8 @@ given share network. List security services for ``share_net2`` share network:
    +--------------------------------------+--------------------------+--------+------+
 
 You also can dissociate a security service from the share network
-and see that a security service now has empty list of share networks:
+and confirm that the security service now has an empty list of
+share networks:
 
 .. code-block:: console
 
@@ -168,13 +172,13 @@ and see that a security service now has empty list of share networks:
    | description    | None                                 |
    +----------------+--------------------------------------+
 
-Shared File Systems service allows you to update a security service fields
+The Shared File Systems service allows you to update a security service field
 using :command:`manila security-service-update` command with optional
 arguments such as :option:`--dns-ip`, :option:`--server`, :option:`--domain`,
 :option:`--user`, :option:`--password`, :option:`--name`, or
 :option:`--description`.
 
-To remove a security service, that is not associated with any share networks,
+To remove a security service not associated with any share networks
 run:
 
 .. code-block:: console

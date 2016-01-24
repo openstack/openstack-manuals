@@ -23,18 +23,17 @@ To create a share type, use :command:`manila type-create` command as:
 where the ``name`` is the share type name, ``--is_public`` defines the level of
 the visibility for the share type, ``snapshot_support`` and
 ``spec_driver_handles_share_servers`` are the extra specifications used to
-filter back ends.
-Administrators can create share types with these extra specifications that are
-used for the back ends filtering:
+filter back ends. Administrators can create share types with these extra
+specifications for the back ends filtering:
 
 - ``driver_handles_share_servers``. Required. Defines the driver mode for share
   server life cycle management. Valid values are ``true``/``1`` and
   ``false``/``0``.
   Set to True when the share driver can manage, or handle, the share server
   life cycle.
-  Set to False when an administrator rather than a share driver manages the
-  bare metal storage with some net interface instead of the presence of the
-  share servers.
+  Set to False when an administrator, rather than a share driver, manages
+  the bare metal storage with some net interface instead of the presence
+  of the share servers.
 
 - ``snapshot_support``. Filters back ends by whether they do or do not support
   share snapshots. Default is ``True``.
@@ -49,16 +48,16 @@ used for the back ends filtering:
 Administrators can also set additional extra specifications for a share type
 for the following purposes:
 
-- *Filter back ends*. Unqualified extra specifications that are written in
+- *Filter back ends*. Unqualified extra specifications written in
   this format: ``extra_spec=value``. For example, **netapp_raid_type=raid4**.
 
-- *Set data for the driver*. Qualified extra specifications that are written
-  always with the prefix with a colon, except for the special ``capabilities``
+- *Set data for the driver*. Qualified extra specifications always written
+  with the prefix with a colon, except for the special ``capabilities``
   prefix, in this format: ``vendor:extra_spec=value``. For example,
   **netapp:thin_provisioned=true**.
 
 The scheduler uses the special capabilities prefix for filtering. The scheduler
-can only create a share on a back end that reports capabilities that match the
+can only create a share on a back end that reports capabilities matching the
 un-scoped extra-spec keys for the share type. For details, see `Capabilities
 and Extra-Specs <http://docs.openstack.org/developer/manila/devref/
 capabilities_and_extra_specs.html>`_.
@@ -77,9 +76,9 @@ default a share type is created as publicly accessible. Set
 Share type operations
 ---------------------
 
-To create a new share type you need to specify name of new share type and
-required extra spec ``driver_handles_share_servers``. Also, the new share type
-can be public.
+To create a new share type you need to specify the name of the new share
+type. You also require an extra spec ``driver_handles_share_servers``.
+The new share type can also be public.
 
 .. code-block:: console
 
@@ -95,14 +94,14 @@ can be public.
 You can set or unset extra specifications for a share type
 using **manila type-key <share_type> set <key=value>** command. Since it is up
 to each driver what extra specification keys it uses, see the documentation
-for a specified driver.
+for the specified driver.
 
 .. code-block:: console
 
    $ manila type-key netapp1 set thin_provisioned=True
 
-It is also possible for administrator to see a list of current share types and
-extra specifications:
+It is also possible to view a list of current share types and extra
+specifications:
 
 .. code-block:: console
 
@@ -118,7 +117,7 @@ extra specifications:
 Use :command:`manila type-key <share_type> unset <key>` to unset an extra
 specification.
 
-The public or private share type can be deleted by means of
+The public or private share type can be deleted with the
 :command:`manila type-delete <share_type>` command.
 
 .. _share_type_access:
@@ -126,9 +125,9 @@ The public or private share type can be deleted by means of
 Share type access
 -----------------
 
-You can manage the access to the private share type for the different projects:
-add access, remove access, and get information about access for a specified
-private share type.
+You can manage access to a private share type for different projects.
+Administrators can provide access, remove access, and retrieve
+information about access for a specified private share.
 
 Create a private type:
 
@@ -143,8 +142,8 @@ Create a private type:
 
 .. note::
 
-   If you run :command:`manila type-list` you see only public types.
-   To see the private types also, run :command:`manila type-list` with
+   If you run :command:`manila type-list` only public share types appear.
+   To see private share types, run :command:`manila type-list` with
    :option:`-all` optional argument.
 
 Grant access to created private type for a demo and alt_demo projects
@@ -155,7 +154,7 @@ by providing their IDs:
    $ manila type-access-add my_type1 d8f9af6915404114ae4f30668a4f5ba7
    $ manila type-access-add my_type1 e4970f57f1824faab2701db61ee7efdf
 
-Get information about access for a private share type ``my_type1``:
+To view information about access for a private share, type ``my_type1``:
 
 .. code-block:: console
 
@@ -167,9 +166,9 @@ Get information about access for a private share type ``my_type1``:
    | e4970f57f1824faab2701db61ee7efdf |
    +----------------------------------+
 
-After you granted the access to the share type users that belong to project
-with granted access can see the type in the list and create shares with
-allowed private share type.
+After granting access to the share, the target project
+can see the share type in the list, and create private
+shares.
 
 To deny access for a specified project, use
 :command:`manila type-access-remove <share_type> <project_id>` command.

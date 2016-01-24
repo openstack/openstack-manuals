@@ -7,11 +7,12 @@ Share snapshots
 The Shared File Systems service provides a snapshot mechanism to help users
 restore data by running the :command:`manila snapshot-create` command.
 
-To export a snapshot, you can create shares from it, then mount new share to
-instance and then directly copy files from attached share into archive.
+To export a snapshot, create a share from it, then mount the new share
+to an instance. Copy files from the attached share into the archive.
 
 To import a snapshot, create a new share with appropriate size, attach it to
-instance and then copy file from archive to attached file system.
+instance, and then copy a file from the archive to the attached file
+system.
 
 .. note::
 
@@ -36,7 +37,7 @@ Create a snapshot from the share:
    | description | Snapshot of Share1                   |
    +-------------+--------------------------------------+
 
-Update name or description of a snapshot if it is needed:
+Update snapshot name or description if needed:
 
 .. code-block:: console
 
@@ -61,9 +62,10 @@ Check that status of a snapshot is ``available``:
    | description | Snapshot of Share1                   |
    +-------------+--------------------------------------+
 
-To restore your data from snapshot, use :command:`manila create` with key
-:option:`--snapshot-id`. This creates a new share from exiting snapshot.
-Create a share from a snapshot and check whether it is available:
+To restore your data from a snapshot, use :command:`manila create` with
+key :option:`--snapshot-id`. This creates a new share from an
+existing snapshot. Create a share from a snapshot and check whether
+it is available:
 
 .. code-block:: console
 
@@ -125,13 +127,14 @@ Create a share from a snapshot and check whether it is available:
    +-----------------------------+-------------------------------------------+
 
 You can soft-delete a snapshot using :command:`manila snapshot-delete
-<snapshot_name_or_ID>`. If a snapshot is in busy state and during deleting
-got the ``error_deleting`` status, administrator can force-delete it or
-explicitly reset the state.
+<snapshot_name_or_ID>`. If a snapshot is in busy state, and during
+the delete an ``error_deleting`` status appeared, administrator can
+force-delete it or explicitly reset the state.
+
 Use :command:`snapshot-reset-state [--state <state>] <snapshot>` to update
 the state of a snapshot explicitly. A valid value of a status are
 ``available``, ``error``, ``creating``, ``deleting``, ``error_deleting``.
-If no state is provided, available will be used.
+If no state is provided, the ``available`` state will be used.
 
 Use :command:`manila snapshot-force-delete <snapshot>` to force-delete
 a specified share snapshot in any state.
