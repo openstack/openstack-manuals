@@ -9,7 +9,7 @@ Application Catalog service command-line client
 The murano client is the command-line interface (CLI) for
 the Application Catalog service API and its extensions.
 
-This chapter documents :command:`murano` version ``0.8.0``.
+This chapter documents :command:`murano` version ``0.8.1``.
 
 For help on a specific :command:`murano` command, enter:
 
@@ -153,7 +153,7 @@ Subcommands
   Display details for a package.
 
 ``package-update``
-  Edit the package in question
+  Update an existing package.
 
 ``bash-completion``
   Prints all of the commands and options to stdout.
@@ -990,7 +990,9 @@ Positional arguments
 Optional arguments
 ------------------
 
-``-c [<CATEGORY> [<CATEGORY>...]], --categories [<CATEGORY> [<CATEGORY>...]]``
+``-c [<CATEGORY> [<CATEGORY> ...]],``
+
+``--categories [<CATEGORY> [<CATEGORY> ...]]``
   Category list to attach.
 
 ``--is-public``
@@ -1085,7 +1087,7 @@ murano package-update
                                 [--tags [<TAG> [<TAG> ...]]]
                                 <ID>
 
-Edit the package in question
+Update an existing package.
 
 Positional arguments
 --------------------
