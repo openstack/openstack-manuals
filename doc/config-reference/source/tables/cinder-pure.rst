@@ -20,3 +20,5 @@
      -
    * - ``pure_api_token`` = ``None``
      - (StrOpt) REST API authorization token.
+   * - ``pure_automatic_max_oversubscription_ratio`` = ``True``
+     - (BoolOpt) Automatically determine an oversubscription ratio based on the current total data reduction values. If used this calculated value will override the max_over_subscription_ratio config option.

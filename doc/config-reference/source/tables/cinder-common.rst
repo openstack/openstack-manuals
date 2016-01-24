@@ -30,8 +30,6 @@
      - (StrOpt) ID of the project which will be used as the Cinder internal tenant.
    * - ``cinder_internal_tenant_user_id`` = ``None``
      - (StrOpt) ID of the user to be used in volume operations as the Cinder internal tenant.
-   * - ``client_socket_timeout`` = ``900``
-     - (IntOpt) Timeout for client connections' socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.
    * - ``compute_api_class`` = ``cinder.compute.nova.API``
      - (StrOpt) The full class name of the compute API class to use
    * - ``consistencygroup_api_class`` = ``cinder.consistencygroup.api.API``
@@ -62,8 +60,6 @@
      - (ListOpt) The list of secondary IP addresses of the iSCSI daemon
    * - ``max_over_subscription_ratio`` = ``20.0``
      - (FloatOpt) Float representation of the over subscription ratio when thin provisioning is involved. Default ratio is 20.0, meaning provisioned capacity can be 20 times of the total physical capacity. If the ratio is 10.5, it means provisioned capacity can be 10.5 times of the total physical capacity. A ratio of 1.0 means provisioned capacity cannot exceed the total physical capacity. A ratio lower than 1.0 will be ignored and the default value will be used instead.
-   * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
    * - ``monkey_patch`` = ``False``
      - (BoolOpt) Enable monkey patching
    * - ``monkey_patch_modules`` =
@@ -90,10 +86,10 @@
      - (StrOpt) The full class name of the volume replication API class
    * - ``replication_device`` = ``None``
      - (MultiOpt) Multi opt of dictionaries to represent a replication target device. This option may be specified multiple times in a single config section to specify multiple replication target devices. Each entry takes the standard dict config form: replication_device = target_device_id:<required>,managed_backend_name:<host@backend_name>,key1:value1,key2:value2...
+   * - ``report_discard_supported`` = ``False``
+     - (BoolOpt) Report to clients of Cinder that the backend supports discard (aka. trim/unmap). This will not actually change the behavior of the backend or the client directly, it will only notify that it can be used.
    * - ``report_interval`` = ``10``
      - (IntOpt) Interval, in seconds, between nodes reporting state to datastore
-   * - ``request_timeout`` = ``300``
-     - (IntOpt) Global backend request timeout, in seconds
    * - ``reserved_percentage`` = ``0``
      - (IntOpt) The percentage of backend capacity is reserved
    * - ``rootwrap_config`` = ``/etc/cinder/rootwrap.conf``
@@ -120,8 +116,6 @@
      - (IntOpt) Sets the value of TCP_KEEPCNT for each server socket. Not supported on OS X.
    * - ``tcp_keepalive_interval`` = ``None``
      - (IntOpt) Sets the value of TCP_KEEPINTVL in seconds for each server socket. Not supported on OS X.
-   * - ``tcp_keepidle`` = ``600``
-     - (IntOpt) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Not supported on OS X.
    * - ``until_refresh`` = ``0``
      - (IntOpt) Count of reservations until usage is refreshed
    * - ``use_chap_auth`` = ``False``
@@ -129,9 +123,7 @@
    * - ``use_forwarded_for`` = ``False``
      - (BoolOpt) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.
    * - ``watch_log_file`` = ``False``
-     - (BoolOpt) (Optional) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log-file option is specified and Linux platform is used. This option is ignored if log_config_append is set.
-   * - ``wsgi_keep_alive`` = ``True``
-     - (BoolOpt) If False, closes the client socket connection explicitly. Setting it to True to maintain backward compatibility. Recommended setting is set it to False.
+     - (BoolOpt) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log_file option is specified and Linux platform is used. This option is ignored if log_config_append is set.
    * - **[keystone_authtoken]**
      -
    * - ``memcached_servers`` = ``None``

@@ -18,11 +18,5 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``gateway_mga`` = ``None``
-     - (StrOpt) IP address or hostname of mg-a
-   * - ``gateway_mgb`` = ``None``
-     - (StrOpt) IP address or hostname of mg-b
-   * - ``use_igroups`` = ``False``
-     - (BoolOpt) Use igroups to manage targets and initiators
    * - ``violin_request_timeout`` = ``300``
      - (IntOpt) Global backend request timeout, in seconds.

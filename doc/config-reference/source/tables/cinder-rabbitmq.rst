@@ -28,10 +28,12 @@
      - (IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.
    * - ``heartbeat_timeout_threshold`` = ``60``
      - (IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat). EXPERIMENTAL
+   * - ``kombu_failover_strategy`` = ``round-robin``
+     - (StrOpt) Determines how the next RabbitMQ node is chosen in case the one we are currently connected to becomes unavailable. Takes effect only if more than one RabbitMQ node is provided in config.
+   * - ``kombu_missing_consumer_retry_timeout`` = ``60``
+     - (IntOpt) How long to wait a missing client beforce abandoning to send it its replies. This value should not be longer than rpc_response_timeout.
    * - ``kombu_reconnect_delay`` = ``1.0``
      - (FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.
-   * - ``kombu_reconnect_timeout`` = ``60``
-     - (IntOpt) How long to wait before considering a reconnect attempt to have failed. This value should not be longer than rpc_response_timeout.
    * - ``kombu_ssl_ca_certs`` =
      - (StrOpt) SSL certification authority file (valid only if SSL enabled).
    * - ``kombu_ssl_certfile`` =
@@ -53,7 +55,7 @@
    * - ``rabbit_password`` = ``guest``
      - (StrOpt) The RabbitMQ password.
    * - ``rabbit_port`` = ``5672``
-     - (IntOpt) The RabbitMQ broker port where a single node is used.
+     - (PortOpt) The RabbitMQ broker port where a single node is used.
    * - ``rabbit_retry_backoff`` = ``2``
      - (IntOpt) How long to backoff for between retries when connecting to RabbitMQ.
    * - ``rabbit_retry_interval`` = ``1``
@@ -64,5 +66,3 @@
      - (StrOpt) The RabbitMQ userid.
    * - ``rabbit_virtual_host`` = ``/``
      - (StrOpt) The RabbitMQ virtual host.
-   * - ``send_single_reply`` = ``False``
-     - (BoolOpt) Send a single AMQP reply to call message. The current behaviour since oslo-incubator is to send two AMQP replies - first one with the payload, a second one to ensure the other have finish to send the payload. We are going to remove it in the N release, but we must keep backward compatible at the same time. This option provides such compatibility - it defaults to False in Liberty and can be turned on for early adopters with a new installations or for testing. Please note, that this option will be removed in the Mitaka release.

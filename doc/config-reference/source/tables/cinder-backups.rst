@@ -40,6 +40,8 @@
      - (IntOpt) Interval, in seconds, between two progress notifications reporting the backup status
    * - ``backup_topic`` = ``cinder-backup``
      - (StrOpt) The topic that volume backup nodes listen on
+   * - ``snapshot_check_timeout`` = ``3600``
+     - (IntOpt) How long we check whether a snapshot is finished before we give up
    * - ``snapshot_name_template`` = ``snapshot-%s``
      - (StrOpt) Template string to be used to generate snapshot names
    * - ``snapshot_same_host`` = ``True``

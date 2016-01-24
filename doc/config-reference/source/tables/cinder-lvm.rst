@@ -20,6 +20,8 @@
      -
    * - ``lvm_conf_file`` = ``/etc/cinder/lvm.conf``
      - (StrOpt) LVM conf file to use for the LVM driver in Cinder; this setting is ignored if the specified file does not exist (You can also specify 'None' to not use a conf file even if one exists).
+   * - ``lvm_max_over_subscription_ratio`` = ``1.0``
+     - (FloatOpt) max_over_subscription_ratio setting for the LVM driver. If set, this takes precedence over the general max_over_subscription_ratio option. If None, the general option is used.
    * - ``lvm_mirrors`` = ``0``
      - (IntOpt) If >0, create LVs with multiple mirrors. Note that this requires lvm_mirrors + 2 PVs with available space
    * - ``lvm_type`` = ``default``
