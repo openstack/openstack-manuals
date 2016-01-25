@@ -172,6 +172,8 @@ list below.
 
 *  ``designate`` - DNS service API
 
+*  ``fuel`` - Deployment service API
+
 *  ``glance`` - Image service API
 
 *  ``gnocchi`` - Telemetry API v3
@@ -199,8 +201,6 @@ list below.
 *  ``swift`` - Object Storage API
 
 *  ``trove`` - Database service API
-
-*  ``tuskar`` - Deployment service API
 
 *  ``openstack`` - Common OpenStack client supporting multiple services
 
