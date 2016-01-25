@@ -116,15 +116,15 @@ number of commands.
       $ heat resource-show mystack WikiDatabase
 
 -  Some resources have associated metadata which can change throughout
-   the life cycle of a resource. Show the metadata by running the
+   the lifecycle of a resource. Show the metadata by running the
    following command:
 
    .. code-block:: console
 
       $ heat resource-metadata mystack WikiDatabase
 
--  A series of events is generated during the life cycle of a stack. To
-   display life cycle events, run the following command:
+-  A series of events is generated during the lifecycle of a stack. To
+   display lifecycle events, run the following command:
 
    .. code-block:: console
 

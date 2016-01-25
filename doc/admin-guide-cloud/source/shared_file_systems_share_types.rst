@@ -27,10 +27,10 @@ filter back ends. Administrators can create share types with these extra
 specifications for the back ends filtering:
 
 - ``driver_handles_share_servers``. Required. Defines the driver mode for share
-  server life cycle management. Valid values are ``true``/``1`` and
+  server lifecycle management. Valid values are ``true``/``1`` and
   ``false``/``0``.
   Set to True when the share driver can manage, or handle, the share server
-  life cycle.
+  lifecycle.
   Set to False when an administrator, rather than a share driver, manages
   the bare metal storage with some net interface instead of the presence
   of the share servers.
