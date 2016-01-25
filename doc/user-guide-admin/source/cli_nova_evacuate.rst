@@ -29,7 +29,7 @@ current VM host is not operational. Otherwise, the evacuation fails.
       $ nova evacuate EVACUATED_SERVER_NAME HOST_B
 
    The command rebuilds the instance from the original image or volume and
-   returns a password. The comamnd preserves the original configuration, which
+   returns a password. The command preserves the original configuration, which
    includes the instance ID, name, uid, IP address, and so on.
 
    .. code-block:: console
