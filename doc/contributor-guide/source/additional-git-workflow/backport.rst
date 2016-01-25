@@ -5,7 +5,8 @@ Backport a change
 
 When committing to the master branch, add the ``backport`` line to your
 commit message for potential backport patches (Installation Guide,
-Configuration Reference, and common directory). For example:
+Configuration Reference, Networking Guide, and common directory).
+For example:
 
 * To backport to a single branch:
 
