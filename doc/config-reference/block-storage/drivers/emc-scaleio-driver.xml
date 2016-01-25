@@ -18,6 +18,33 @@
       </listitem>
     </itemizedlist>
   </section>
+  <section xml:id="sio-qos">
+    <title>ScaleIO QoS support</title>
+    <para>The ScaleIO Block Storage driver allows limiting the IOPS and bandwidth that one SDC
+    generates for a volume.</para>
+    <para>Add the following keys to
+    the volume type to set the SDC's limits for volume of this type:</para>
+      <itemizedlist>
+        <listitem>
+          <para><code>sio:iops_limit</code> - limits the volume IOPS. Must be larger than 10.</para>
+        </listitem>
+        <listitem>
+          <para><code>sio:bandwidth_limit</code> - limits the volume network bandwidth.
+          The bandwidth is in KB per second.</para>
+        </listitem>
+      </itemizedlist>
+    <para>Since the limits are per SDC, they will be applied after the volume is attached to an instance,
+    and thus to a compute node/SDC.</para>
+  </section>
+  <section xml:id="sio-thin-provisioning">
+    <title>ScaleIO thin provisioning support</title>
+    <para>The Block Storage driver supports creation of thin provisioned volumes, in addition to thick
+    provisioning.</para>
+    <para>The provisioning type settings should be added as an extra specification of the volume type, as
+    follows:</para>
+      <para><code>sio:provisioning_type=<replaceable>thin\thick</replaceable></code></para>
+      <para>If the provisioning type is not specified, the default value of thick will be used.</para>
+  </section>
     <section xml:id="sio-supported-operations">
     <title>Supported operations</title>
     <itemizedlist>
