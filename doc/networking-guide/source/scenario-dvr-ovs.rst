@@ -21,12 +21,6 @@ address using project networks on the same distributed virtual router.
 However, instances with a fixed IP address still rely on the network node for
 routing and SNAT services between project and external networks.
 
-.. note::
-
-   In the Juno (initial) release, DVR supports VXLAN and GRE project networks.
-   In the Kilo release, support was added for DVR with VLAN project networks.
-   All releases support flat and VLAN external networks.
-
 Prerequisites
 ~~~~~~~~~~~~~
 
@@ -106,8 +100,8 @@ OpenStack services - network node
 
 #. Operational OpenStack Identity service with appropriate configuration
    in the ``neutron.conf`` file.
-#. Open vSwitch service, ML2 plug-in, Open vSwitch agent, L3 agent,
-   DHCP agent, metadata agent, and any dependencies.
+#. Open vSwitch service, Open vSwitch agent, L3 agent, DHCP agent, metadata
+   agent, and any dependencies.
 
 OpenStack services - compute nodes
 ----------------------------------
@@ -116,8 +110,8 @@ OpenStack services - compute nodes
    in the ``neutron.conf`` file.
 #. Operational OpenStack Compute hypervisor service with appropriate
    configuration to use neutron in the ``nova.conf`` file.
-#. Open vSwitch service, ML2 plug-in, Open vSwitch agent, L3 agent,
-   metadata agent, and any dependencies.
+#. Open vSwitch service, Open vSwitch agent, L3 agent, metadata agent, and
+   any dependencies.
 
 Architecture
 ~~~~~~~~~~~~
@@ -515,6 +509,7 @@ Controller node
       type_drivers = flat,vlan,gre,vxlan
       tenant_network_types = vlan,gre,vxlan
       mechanism_drivers = openvswitch,l2population
+      extension_drivers = port_security
 
       [ml2_type_flat]
       flat_networks = external
@@ -527,11 +522,8 @@ Controller node
 
       [ml2_type_vxlan]
       vni_ranges = MIN_VXLAN_ID:MAX_VXLAN_ID
-      vxlan_group = 239.1.1.1
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
-      enable_security_group = True
       enable_ipset = True
 
    Replace ``MIN_VLAN_ID``, ``MAX_VLAN_ID``, ``MIN_GRE_ID``, ``MAX_GRE_ID``,
@@ -556,21 +548,6 @@ Controller node
 Network node
 ------------
 
-#. Configure the kernel to enable packet forwarding and disable reverse path
-   filtering. Edit the ``/etc/sysctl.conf`` file:
-
-   .. code-block:: ini
-
-      net.ipv4.ip_forward=1
-      net.ipv4.conf.default.rp_filter=0
-      net.ipv4.conf.all.rp_filter=0
-
-#. Load the new kernel configuration:
-
-   .. code-block:: console
-
-      $ sysctl -p
-
 #. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
@@ -579,7 +556,7 @@ Network node
       verbose = True
 
 #. Configure the Open vSwitch agent. Edit the
-   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
+   ``/etc/neutron/plugins/ml2/openvswitch_agent.ini`` file:
 
    .. code-block:: ini
 
@@ -588,15 +565,15 @@ Network node
       bridge_mappings = vlan:br-vlan,external:br-ex
 
       [agent]
-      l2_population = True
       tunnel_types = gre,vxlan
       enable_distributed_routing = True
+      l2_population = True
       arp_responder = True
+      prevent_arp_spoofing = True
 
       [securitygroup]
       firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
       enable_security_group = True
-      enable_ipset = True
 
    Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
    that handles GRE/VXLAN project networks.
@@ -609,7 +586,6 @@ Network node
       verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
       external_network_bridge =
-      router_delete_namespaces = True
       agent_mode = dvr_snat
 
    .. note::
@@ -626,7 +602,7 @@ Network node
       verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
       dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
-      dhcp_delete_namespaces = True
+      enable_isolated_metadata = True
 
 #. (Optional) Reduce MTU for GRE/VXLAN project networks.
 
@@ -666,24 +642,6 @@ Network node
 Compute nodes
 -------------
 
-#. Configure the kernel to enable packet forwarding, enable *iptables* on
-   bridges, and disable reverse path filtering. Edit the
-   ``/etc/sysctl.conf`` file:
-
-   .. code-block:: ini
-
-      net.ipv4.ip_forward=1
-      net.ipv4.conf.default.rp_filter=0
-      net.ipv4.conf.all.rp_filter=0
-      net.bridge.bridge-nf-call-iptables=1
-      net.bridge.bridge-nf-call-ip6tables=1
-
-#. Load the new kernel configuration:
-
-   .. code-block:: console
-
-      $ sysctl -p
-
 #. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
@@ -692,7 +650,7 @@ Compute nodes
       verbose = True
 
 #. Configure the Open vSwitch agent. Edit the
-   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
+   ``/etc/neutron/plugins/ml2/openvswitch_agent.ini`` file:
 
    .. code-block:: ini
 
@@ -701,15 +659,15 @@ Compute nodes
       bridge_mappings = vlan:br-vlan,external:br-ex
 
       [agent]
-      l2_population = True
       tunnel_types = gre,vxlan
       enable_distributed_routing = True
+      l2_population = True
       arp_responder = True
+      prevent_arp_spoofing = True
 
       [securitygroup]
       firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
       enable_security_group = True
-      enable_ipset = True
 
    Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
    that handles GRE/VXLAN project networks.
@@ -722,7 +680,6 @@ Compute nodes
       verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
       external_network_bridge =
-      router_delete_namespaces = True
       agent_mode = dvr
 
    .. note::
