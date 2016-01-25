@@ -96,7 +96,7 @@ CPU limits
        a VM configured with value 2048 gets twice as much CPU time as a
        VM configured with value 1024.
 
-    -  ``cpu_shares_level``. On VMWare, specifies the allocation level. Can
+    -  ``cpu_shares_level``. On VMware, specifies the allocation level. Can
        be ``custom``, ``high``, ``normal``, or ``low``. If you choose
        ``custom``, set the number of shares using ``cpu_shares_share``.
 
@@ -169,7 +169,7 @@ Disk I/O limits
 
     Use these optional parameters to limit the disk utilization,
     guarantee disk allocation, and to specify shares
-    used in case of resource contention. This allows the VMWare
+    used in case of resource contention. This allows the VMware
     driver to enable disk allocations for the running instance.
 
     -  ``disk_io_limit``: Specifies the upper limit for disk
