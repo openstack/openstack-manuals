@@ -22,6 +22,7 @@ Bugs differ depending on:
   * Add new content
 
 .. note::
+
    To work on documentation bugs, join the openstack-doc-bugs team on
    Launchpad. For more information, see :ref:`first_timers_quickstart`.
 
