@@ -430,9 +430,7 @@ options to the ``nova.conf`` file:
      setting to the above configuration. For more information, see
      :ref:`vSphere 5.0 and earlier additional set up <vmware-additional>`.
 
-   * Clusters: The vCenter driver can support multiple clusters.
-     To use more than one cluster, simply add multiple ``cluster_name`` lines
-     in ``nova.conf`` with the appropriate cluster name.
+   * Clusters: The vCenter driver can support only a single cluster.
      Clusters and data stores used by the vCenter driver should not contain
      any VMs other than those created by the driver.
 
