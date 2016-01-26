@@ -14,24 +14,79 @@ nodes to a ScaleIO storage cluster.
 Support matrix
 ~~~~~~~~~~~~~~
 
-- ScaleIO: Version 1.32
+* ScaleIO: Version 1.32
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
-- Create, delete, clone, attach, and detach volumes
+* Create, delete, clone, attach, and detach volumes
 
-- Create and delete volume snapshots
+* Create and delete volume snapshots
 
-- Create a volume from a snapshot
+* Create a volume from a snapshot
 
-- Copy an image to a volume
+* Copy an image to a volume
 
-- Copy a volume to an image
+* Copy a volume to an image
 
-- Extend a volume
+* Extend a volume
 
-- Get volume statistics
+* Get volume statistics
+
+* Manage and unmanage a volume
+
+* Create, list, update, and delete consistency groups
+
+* Create, list, update, and delete consistency group snapshots
+
+ScaleIO QoS support
+~~~~~~~~~~~~~~~~~~~~
+
+QoS support for ScaleIO driver includes the ability to set the
+following capabilities in the Block Storate API
+``cinder.api.contrib.qos_specs_manage`` QoS specs extension module:
+
+* ``minBWS``
+
+* ``maxBWS``
+
+The QoS keys above must be created and associated to a volume type.
+For information about how to set the key-value pairs and associate
+them with a volume type, run the following commands:
+
+.. code-block:: console
+
+   $ cinder help qos-create
+
+   $ cinder help qos-key
+
+   $ cinder help qos-associate
+
+``maxBWS``
+ The QoS I/O issue bandwidth rate limit in KBs. If not set, the I/O issue
+ bandwidth rate has no limit. Must have a granularity of 1024.
+
+``maxIOPS``
+ The QoS I/O issue bandwidth rate limit in MBs. If not set, the I/O issue
+ bandwidth rate has no limit. Must be larger than 10.
+
+Since the limits are per SDC, they will be applied after the volume
+is attached to an instance and thus to a compute node/SDC.
+
+ScaleIO thin provisioning support
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Block Storage driver supports creation of thin-provisioned volumes,
+in addition to thick provisioning.
+The provisioning type settings should be added as an extra specification
+of the volume type, as follows:
+
+.. code-block:: ini
+
+   sio:provisioning_type = thin\thick
+
+If the provisioning type value is not specified, the default value of
+thick will be used.
 
 ScaleIO Block Storage driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,7 +107,7 @@ Configure the driver name by adding the following parameter:
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.emc.scaleio.ScaleIODriver
+   volume_driver = cinder.volume.drivers.emc.scaleio.ScaleIODriver
 
 ScaleIO MDM server IP
 ---------------------
@@ -67,55 +122,55 @@ Configure the MDM server IP by adding the following parameter:
 
 .. code-block:: ini
 
-    san_ip = ScaleIO GATEWAY IP
+   san_ip = ScaleIO GATEWAY IP
 
-ScaleIO protection domain name
+ScaleIO Protection Domain name
 ------------------------------
 
-ScaleIO allows multiple protection domains (groups of SDSs that provide
+ScaleIO allows multiple Protection Domains (groups of SDSs that provide
 backup for each other).
 
-To retrieve the available protection domains, use the
+To retrieve the available Protection Domains, use the
 :command:`scli --query_all` command and search for the protection
 domains section.
 
-Configure the protection domain for newly created volumes by adding the
+Configure the Protection Domain for newly created volumes by adding the
 following parameter:
 
 .. code-block:: ini
 
-    sio_protection_domain_name = ScaleIO Protection Domain
+   sio_protection_domain_name = ScaleIO Protection Domain
 
-ScaleIO storage pool name
+ScaleIO Storage Pool name
 -------------------------
 
-A ScaleIO storage pool is a set of physical devices in a protection
+A ScaleIO Storage Pool is a set of physical devices in a protection
 domain.
 
-To retrieve the available storage pools, use the :command:`scli --query_all`
-command and search for available storage pools.
+To retrieve the available Storage Pools, use the :command:`scli --query_all`
+command and search for available Storage Pools.
 
-Configure the storage pool for newly created volumes by adding the
+Configure the Storage Pool for newly created volumes by adding the
 following parameter:
 
 .. code-block:: ini
 
-    sio_storage_pool_name = ScaleIO Storage Pool
+   sio_storage_pool_name = ScaleIO Storage Pool
 
-ScaleIO storage pools
+ScaleIO Storage Pools
 ---------------------
 
-Multiple storage pools and protection domains can be listed for use by
+Multiple Storage Pools and Protection Domains can be listed for use by
 the virtual machines.
 
-To retrieve the available storage pools, use the :command:`scli --query_all`
-command and search for available storage pools.
+To retrieve the available Storage Pools, use the :command:`scli --query_all`
+command and search for available Storage Pools.
 
-Configure the available storage pools by adding the following parameter:
+Configure the available Storage Pools by adding the following parameter:
 
 .. code-block:: ini
 
-    sio_storage_pools = Comma separated list of protection domain:storage pool name
+   sio_storage_pools = Comma separated list of protection domain:storage pool name
 
 ScaleIO user credentials
 ------------------------
@@ -130,9 +185,9 @@ Configure the user credentials by adding the following parameters:
 
 .. code-block:: ini
 
-    san_login = ScaleIO username
+   san_login = ScaleIO username
 
-    san_password = ScaleIO password
+   san_password = ScaleIO password
 
 Multiple back ends
 ~~~~~~~~~~~~~~~~~~
@@ -155,18 +210,18 @@ parameters as follows:
 
 .. code-block:: ini
 
-    [Default]
-    enabled_backends = scaleio
+   [Default]
+   enabled_backends = scaleio
 
-    [scaleio]
-    volume_driver = cinder.volume.drivers.emc.scaleio.ScaleIODriver
-    volume_backend_name = scaleio
-    san_ip = GATEWAY_IP
-    sio_protection_domain_name = Default_domain
-    sio_storage_pool_name = Default_pool
-    sio_storage_pools = Domain1:Pool1,Domain2:Pool2
-    san_login = SIO_USER
-    san_password = SIO_PASSWD
+   [scaleio]
+   volume_driver = cinder.volume.drivers.emc.scaleio.ScaleIODriver
+   volume_backend_name = scaleio
+   san_ip = GATEWAY_IP
+   sio_protection_domain_name = Default_domain
+   sio_storage_pool_name = Default_pool
+   sio_storage_pools = Domain1:Pool1,Domain2:Pool2
+   san_login = SIO_USER
+   san_password = SIO_PASSWD
 
 Configuration options
 ~~~~~~~~~~~~~~~~~~~~~
