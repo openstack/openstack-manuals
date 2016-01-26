@@ -12,5 +12,6 @@ Telemetry service
    ceilometer-nova.rst
    ceilometer-cinder.rst
    ceilometer-swift.rst
+   ceilometer-aodh.rst
    ceilometer-verify.rst
    ceilometer-next-steps.rst

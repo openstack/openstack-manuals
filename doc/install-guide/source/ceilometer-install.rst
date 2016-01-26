@@ -174,9 +174,7 @@ Install and configure components
          # zypper install openstack-ceilometer-api \
            openstack-ceilometer-collector \
            openstack-ceilometer-agent-notification \
-           openstack-ceilometer-agent-central python-ceilometerclient \
-           openstack-ceilometer-alarm-evaluator \
-           openstack-ceilometer-alarm-notifier
+           openstack-ceilometer-agent-central python-ceilometerclient
 
 .. only:: rdo
 
@@ -186,8 +184,7 @@ Install and configure components
 
          # yum install openstack-ceilometer-api \
            openstack-ceilometer-collector openstack-ceilometer-notification \
-           openstack-ceilometer-central openstack-ceilometer-alarm \
-           python-ceilometerclient
+           openstack-ceilometer-central python-ceilometerclient
 
 .. only:: ubuntu or debian
 
@@ -196,8 +193,7 @@ Install and configure components
       .. code-block:: console
 
          # apt-get install ceilometer-api ceilometer-collector \
-           ceilometer-agent-central ceilometer-agent-notification \
-           ceilometer-alarm-evaluator ceilometer-alarm-notifier \
+           ceilometer-agent-central ceilometer-agent-notification
            python-ceilometerclient
 
       .. only:: debian
@@ -314,15 +310,11 @@ Finalize installation
         # systemctl enable openstack-ceilometer-api.service \
           openstack-ceilometer-agent-notification.service \
           openstack-ceilometer-agent-central.service \
-          openstack-ceilometer-collector.service \
-          openstack-ceilometer-alarm-evaluator.service \
-          openstack-ceilometer-alarm-notifier.service
+          openstack-ceilometer-collector.service
         # systemctl start openstack-ceilometer-api.service \
           openstack-ceilometer-agent-notification.service \
           openstack-ceilometer-agent-central.service \
-          openstack-ceilometer-collector.service \
-          openstack-ceilometer-alarm-evaluator.service \
-          openstack-ceilometer-alarm-notifier.service
+          openstack-ceilometer-collector.service
 
 .. only:: rdo
 
@@ -334,15 +326,11 @@ Finalize installation
         # systemctl enable openstack-ceilometer-api.service \
           openstack-ceilometer-notification.service \
           openstack-ceilometer-central.service \
-          openstack-ceilometer-collector.service \
-          openstack-ceilometer-alarm-evaluator.service \
-          openstack-ceilometer-alarm-notifier.service
+          openstack-ceilometer-collector.service
         # systemctl start openstack-ceilometer-api.service \
           openstack-ceilometer-notification.service \
           openstack-ceilometer-central.service \
-          openstack-ceilometer-collector.service \
-          openstack-ceilometer-alarm-evaluator.service \
-          openstack-ceilometer-alarm-notifier.service
+          openstack-ceilometer-collector.service
 
 .. only:: ubuntu or debian
 
@@ -354,5 +342,3 @@ Finalize installation
         # service ceilometer-agent-notification restart
         # service ceilometer-api restart
         # service ceilometer-collector restart
-        # service ceilometer-alarm-evaluator restart
-        # service ceilometer-alarm-notifier restart
