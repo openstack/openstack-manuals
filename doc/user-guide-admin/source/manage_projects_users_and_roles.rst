@@ -25,7 +25,7 @@ You can also change quotas at the project level.
 Before you can delete a user account, you must remove the user account
 from its primary project.
 
-Before you can run keystone client commands, you must download and
+Before you can run client commands, you must download and
 source an OpenStack RC file. See `Download and source the OpenStack RC file
 <http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html#download-and-source-the-openstack-rc-file>`_.
 
