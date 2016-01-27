@@ -8,13 +8,306 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Installation Guide 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 06:12+0000\n"
+"POT-Creation-Date: 2016-01-27 06:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: ../ceilometer-aodh.rst:5
+msgid "Install and configure the alarming service"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:7
+msgid ""
+"The Telemetry module contains a stand-alone alarming service, code-named "
+"Aodh. This chapter guides you through the installation steps of this alarm "
+"management module that will work together with the other services of "
+"Telemetry."
+msgstr ""
+
+#: ../ceilometer-aodh.rst:16
+msgid ""
+"In the Liberty release of OpenStack, the services of the new Telemetry "
+"Alarming module are not officially supported on Ubuntu-based deployments."
+msgstr ""
+
+#: ../ceilometer-aodh.rst:21
+msgid "Configure prerequisites"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:23
+msgid ""
+"The alarming service requires database access to store alarm definitions and "
+"history. You must install a database back end and create a database for "
+"Aodh. You also need to create service credentials, and API endpoint. If you "
+"already installed a database back end for the base services of the Telemetry "
+"module, you can choose to use that for the alarming service also. If you "
+"need to install a back end, see :ref:`environment-nosql-database` to install "
+"and configure MongoDB before proceeding further."
+msgstr ""
+
+#: ../ceilometer-aodh.rst:33 ../ceilometer-aodh.rst:60
+msgid "Create the ``aodh`` database:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:56 ../ceilometer-aodh.rst:74
+msgid "Replace ``AODH_DBPASS`` with a suitable password."
+msgstr ""
+
+# #-#-#-#-#  ceilometer-aodh.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-verify.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-verify.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  glance-verify.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  neutron-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  neutron-verify.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  nova-verify.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  swift-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+#: ../ceilometer-aodh.rst:77 ../ceilometer-install.rst:62
+#: ../ceilometer-verify.rst:12 ../cinder-controller-install.rst:47
+#: ../cinder-verify.rst:12 ../glance-install.rst:44 ../glance-verify.rst:23
+#: ../heat-install.rst:46 ../neutron-controller-install.rst:39
+#: ../neutron-verify.rst:4 ../nova-controller-install.rst:43
+#: ../nova-verify.rst:10 ../swift-controller-install.rst:30
+msgid ""
+"Source the ``admin`` credentials to gain access to admin-only CLI commands:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:84
+msgid "Create the service credentials:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:86
+msgid "Create the ``aodh`` user:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:103
+msgid "Add the ``admin`` role to the ``aodh`` user:"
+msgstr ""
+
+# #-#-#-#-#  ceilometer-aodh.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-swift.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  keystone-users.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  launch-instance-private.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  neutron-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  swift-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  swift-initial-rings.pot (Installation Guide 0.1)  #-#-#-#-#
+#: ../ceilometer-aodh.rst:111 ../ceilometer-install.rst:95
+#: ../ceilometer-swift.rst:45 ../cinder-controller-install.rst:80
+#: ../glance-install.rst:78 ../heat-install.rst:79 ../heat-install.rst:256
+#: ../heat-install.rst:279 ../keystone-users.rst:76 ../keystone-users.rst:170
+#: ../launch-instance-private.rst:224 ../neutron-controller-install.rst:73
+#: ../nova-controller-install.rst:76 ../swift-controller-install.rst:62
+#: ../swift-initial-rings.rst:32 ../swift-initial-rings.rst:109
+#: ../swift-initial-rings.rst:186
+msgid "This command provides no output."
+msgstr ""
+
+#: ../ceilometer-aodh.rst:113
+msgid "Create the ``aodh`` service entity:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:129
+msgid "Create the Telemetry Alarming service API endpoints:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:182
+msgid "Install and configure the Telemetry Alarming service components"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:186
+msgid ""
+"Default configuration files vary by distribution. You might need to add "
+"these sections and options rather than modifying existing sections and "
+"options. Also, an ellipsis (...) in the configuration snippets indicates "
+"potential default configuration options that you should retain."
+msgstr ""
+
+# #-#-#-#-#  ceilometer-aodh.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-nova.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-swift.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  environment-ntp-controller.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  environment-ntp-other.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  environment-sql-database.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  horizon-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  nova-compute-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  swift-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  swift-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
+#: ../ceilometer-aodh.rst:193 ../ceilometer-aodh.rst:204
+#: ../ceilometer-install.rst:170 ../ceilometer-install.rst:181
+#: ../ceilometer-install.rst:191 ../ceilometer-nova.rst:12
+#: ../ceilometer-nova.rst:20 ../ceilometer-nova.rst:28
+#: ../ceilometer-swift.rst:50 ../cinder-controller-install.rst:228
+#: ../cinder-controller-install.rst:236 ../cinder-controller-install.rst:244
+#: ../cinder-storage-install.rst:138 ../cinder-storage-install.rst:146
+#: ../cinder-storage-install.rst:154 ../environment-ntp-controller.rst:11
+#: ../environment-ntp-other.rst:12 ../environment-sql-database.rst:13
+#: ../glance-install.rst:157 ../glance-install.rst:165
+#: ../glance-install.rst:176 ../glance-install.rst:352 ../heat-install.rst:316
+#: ../heat-install.rst:325 ../heat-install.rst:334 ../horizon-install.rst:31
+#: ../horizon-install.rst:39 ../horizon-install.rst:47
+#: ../horizon-install.rst:55 ../nova-compute-install.rst:31
+#: ../nova-compute-install.rst:39 ../nova-compute-install.rst:47
+#: ../nova-controller-install.rst:153 ../nova-controller-install.rst:164
+#: ../nova-controller-install.rst:175 ../nova-controller-install.rst:185
+#: ../swift-controller-install.rst:137 ../swift-storage-install.rst:147
+msgid "Install the packages:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:211
+msgid "Edit the ``/etc/aodh/aodh.conf`` file and perform these steps:"
+msgstr ""
+
+# #-#-#-#-#  ceilometer-aodh.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  keystone-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  neutron-controller-install-option1.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  neutron-controller-install-option2.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+#: ../ceilometer-aodh.rst:213 ../ceilometer-install.rst:209
+#: ../cinder-controller-install.rst:263 ../cinder-storage-install.rst:163
+#: ../glance-install.rst:187 ../glance-install.rst:271 ../heat-install.rst:346
+#: ../keystone-install.rst:133 ../neutron-controller-install-option1.rst:111
+#: ../neutron-controller-install-option2.rst:69
+#: ../nova-controller-install.rst:218
+msgid "In the ``[database]`` section, configure database access:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:221
+msgid ""
+"Replace ``AODH_DBPASS`` with the password you chose for the Telemetry "
+"Alarming module database. You must escape special characters such as ':', "
+"'/', '+', and '@' in the connection string. For further information see the "
+"Reserved Characters section of :ref:`RFC2396 <https://www.ietf.org/rfc/"
+"rfc2396.txt>`."
+msgstr ""
+
+#: ../ceilometer-aodh.rst:228
+msgid "configure ``RabbitMQ`` message queue access:"
+msgstr ""
+
+# #-#-#-#-#  ceilometer-aodh.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-glance.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-nova.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-swift.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  nova-compute-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+#: ../ceilometer-aodh.rst:242 ../ceilometer-glance.rst:30
+#: ../ceilometer-install.rst:239 ../ceilometer-nova.rst:52
+#: ../ceilometer-swift.rst:111 ../cinder-controller-install.rst:299
+#: ../cinder-storage-install.rst:199 ../heat-install.rst:382
+#: ../nova-compute-install.rst:82 ../nova-controller-install.rst:254
+msgid ""
+"Replace ``RABBIT_PASS`` with the password you chose for the ``openstack`` "
+"account in ``RabbitMQ``."
+msgstr ""
+
+#: ../ceilometer-aodh.rst:243
+msgid "In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:246
+msgid "configure Identity service access:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:262 ../ceilometer-aodh.rst:278
+msgid ""
+"Replace ``AODH_PASS`` with the password you chose for the ``aodh`` user in "
+"the Identity service."
+msgstr ""
+
+#: ../ceilometer-aodh.rst:263
+msgid "In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,"
+msgstr ""
+
+# #-#-#-#-#  ceilometer-aodh.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-nova.pot (Installation Guide 0.1)  #-#-#-#-#
+#: ../ceilometer-aodh.rst:265 ../ceilometer-install.rst:265
+#: ../ceilometer-nova.rst:78
+msgid ""
+"In the ``[service_credentials]`` section, configure service credentials:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:282
+msgid "logging in the ``[DEFAULT]`` section:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:288
+msgid "(Optional) To assist with troubleshooting, enable verbose"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:292
+msgid ""
+"Edit the api_paste.ini file and add or modify the ``[filter:authtoken]`` "
+"section:"
+msgstr ""
+
+# #-#-#-#-#  ceilometer-aodh.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-cinder.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-glance.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-nova.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  ceilometer-swift.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  cinder-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  environment-nosql-database.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  environment-sql-database.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  horizon-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  neutron-compute-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  neutron-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  nova-compute-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  swift-finalize-installation.pot (Installation Guide 0.1)  #-#-#-#-#
+#: ../ceilometer-aodh.rst:302 ../ceilometer-cinder.rst:26
+#: ../ceilometer-glance.rst:34 ../ceilometer-install.rst:301
+#: ../ceilometer-nova.rst:120 ../ceilometer-swift.rst:115
+#: ../cinder-controller-install.rst:378 ../cinder-storage-install.rst:313
+#: ../environment-nosql-database.rst:145 ../environment-sql-database.rst:114
+#: ../glance-install.rst:373 ../heat-install.rst:486
+#: ../horizon-install.rst:292 ../neutron-compute-install.rst:179
+#: ../neutron-controller-install.rst:256 ../nova-compute-install.rst:237
+#: ../nova-controller-install.rst:409 ../swift-finalize-installation.rst:2
+msgid "Finalize installation"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:306
+msgid ""
+"Start the Telemetry Alarming services and configure them to start when the "
+"system boots:"
+msgstr ""
+
+#: ../ceilometer-aodh.rst:322
+msgid "Restart the Telemetry Alarming services:"
+msgstr ""
 
 #: ../ceilometer-cinder.rst:2
 msgid "Enable Block Storage meters"
@@ -45,35 +338,6 @@ msgstr ""
 
 #: ../ceilometer-cinder.rst:17
 msgid "In the ``[DEFAULT]`` section, configure notifications:"
-msgstr ""
-
-# #-#-#-#-#  ceilometer-cinder.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-glance.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-nova.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-swift.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  environment-nosql-database.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  environment-sql-database.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  horizon-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  neutron-compute-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  neutron-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  nova-compute-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  swift-finalize-installation.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-cinder.rst:26 ../ceilometer-glance.rst:34
-#: ../ceilometer-install.rst:305 ../ceilometer-nova.rst:120
-#: ../ceilometer-swift.rst:115 ../cinder-controller-install.rst:378
-#: ../cinder-storage-install.rst:313 ../environment-nosql-database.rst:145
-#: ../environment-sql-database.rst:114 ../glance-install.rst:373
-#: ../heat-install.rst:486 ../horizon-install.rst:292
-#: ../neutron-compute-install.rst:179 ../neutron-controller-install.rst:256
-#: ../nova-compute-install.rst:237 ../nova-controller-install.rst:409
-#: ../swift-finalize-installation.rst:2
-msgid "Finalize installation"
 msgstr ""
 
 #: ../ceilometer-cinder.rst:30 ../ceilometer-cinder.rst:44
@@ -117,25 +381,6 @@ msgstr ""
 msgid ""
 "In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections, configure "
 "notifications and RabbitMQ message broker access:"
-msgstr ""
-
-# #-#-#-#-#  ceilometer-glance.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-nova.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-swift.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  nova-compute-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-glance.rst:30 ../ceilometer-install.rst:243
-#: ../ceilometer-nova.rst:52 ../ceilometer-swift.rst:111
-#: ../cinder-controller-install.rst:299 ../cinder-storage-install.rst:199
-#: ../heat-install.rst:382 ../nova-compute-install.rst:82
-#: ../nova-controller-install.rst:254
-msgid ""
-"Replace ``RABBIT_PASS`` with the password you chose for the ``openstack`` "
-"account in ``RabbitMQ``."
 msgstr ""
 
 #: ../ceilometer-glance.rst:38 ../ceilometer-glance.rst:46
@@ -200,28 +445,6 @@ msgid "Replace ``CEILOMETER_DBPASS`` with a suitable password."
 msgstr ""
 
 # #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-verify.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-verify.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  glance-verify.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  neutron-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  neutron-verify.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  nova-verify.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  swift-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-install.rst:62 ../ceilometer-verify.rst:12
-#: ../cinder-controller-install.rst:47 ../cinder-verify.rst:12
-#: ../glance-install.rst:44 ../glance-verify.rst:23 ../heat-install.rst:46
-#: ../neutron-controller-install.rst:39 ../neutron-verify.rst:4
-#: ../nova-controller-install.rst:43 ../nova-verify.rst:10
-#: ../swift-controller-install.rst:30
-msgid ""
-"Source the ``admin`` credentials to gain access to admin-only CLI commands:"
-msgstr ""
-
-# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
@@ -239,28 +462,6 @@ msgstr ""
 
 #: ../ceilometer-install.rst:87
 msgid "Add the ``admin`` role to the ``ceilometer`` user."
-msgstr ""
-
-# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-swift.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  keystone-users.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  launch-instance-private.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  neutron-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  swift-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  swift-initial-rings.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-install.rst:95 ../ceilometer-swift.rst:45
-#: ../cinder-controller-install.rst:80 ../glance-install.rst:78
-#: ../heat-install.rst:79 ../heat-install.rst:256 ../heat-install.rst:279
-#: ../keystone-users.rst:76 ../keystone-users.rst:170
-#: ../launch-instance-private.rst:224 ../neutron-controller-install.rst:73
-#: ../nova-controller-install.rst:76 ../swift-controller-install.rst:62
-#: ../swift-initial-rings.rst:32 ../swift-initial-rings.rst:109
-#: ../swift-initial-rings.rst:186
-msgid "This command provides no output."
 msgstr ""
 
 #: ../ceilometer-install.rst:97
@@ -300,42 +501,7 @@ msgstr ""
 msgid "Install and configure components"
 msgstr ""
 
-# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-nova.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-swift.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  environment-ntp-controller.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  environment-ntp-other.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  environment-sql-database.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  horizon-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  nova-compute-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  swift-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  swift-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-install.rst:170 ../ceilometer-install.rst:183
-#: ../ceilometer-install.rst:194 ../ceilometer-nova.rst:12
-#: ../ceilometer-nova.rst:20 ../ceilometer-nova.rst:28
-#: ../ceilometer-swift.rst:50 ../cinder-controller-install.rst:228
-#: ../cinder-controller-install.rst:236 ../cinder-controller-install.rst:244
-#: ../cinder-storage-install.rst:138 ../cinder-storage-install.rst:146
-#: ../cinder-storage-install.rst:154 ../environment-ntp-controller.rst:11
-#: ../environment-ntp-other.rst:12 ../environment-sql-database.rst:13
-#: ../glance-install.rst:157 ../glance-install.rst:165
-#: ../glance-install.rst:176 ../glance-install.rst:352 ../heat-install.rst:316
-#: ../heat-install.rst:325 ../heat-install.rst:334 ../horizon-install.rst:31
-#: ../horizon-install.rst:39 ../horizon-install.rst:47
-#: ../horizon-install.rst:55 ../nova-compute-install.rst:31
-#: ../nova-compute-install.rst:39 ../nova-compute-install.rst:47
-#: ../nova-controller-install.rst:153 ../nova-controller-install.rst:164
-#: ../nova-controller-install.rst:175 ../nova-controller-install.rst:185
-#: ../swift-controller-install.rst:137 ../swift-storage-install.rst:147
-msgid "Install the packages:"
-msgstr ""
-
-#: ../ceilometer-install.rst:205
+#: ../ceilometer-install.rst:201
 msgid ""
 "Respond to prompts for :doc:`Identity service credentials <debconf/debconf-"
 "keystone-authtoken>`, :doc:`service endpoint registration <debconf/debconf-"
@@ -345,31 +511,13 @@ msgstr ""
 
 # #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  ceilometer-nova.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-install.rst:210 ../ceilometer-nova.rst:34
+#: ../ceilometer-install.rst:206 ../ceilometer-nova.rst:34
 msgid ""
 "Edit the ``/etc/ceilometer/ceilometer.conf`` file and complete the following "
 "actions:"
 msgstr ""
 
-# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  cinder-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  keystone-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  neutron-controller-install-option1.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  neutron-controller-install-option2.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-install.rst:213 ../cinder-controller-install.rst:263
-#: ../cinder-storage-install.rst:163 ../glance-install.rst:187
-#: ../glance-install.rst:271 ../heat-install.rst:346
-#: ../keystone-install.rst:133 ../neutron-controller-install-option1.rst:111
-#: ../neutron-controller-install-option2.rst:69
-#: ../nova-controller-install.rst:218
-msgid "In the ``[database]`` section, configure database access:"
-msgstr ""
-
-#: ../ceilometer-install.rst:221
+#: ../ceilometer-install.rst:217
 msgid ""
 "Replace ``CEILOMETER_DBPASS`` with the password you chose for the Telemetry "
 "service database. You must escape special characters such as ':', '/', '+', "
@@ -382,7 +530,7 @@ msgstr ""
 # #-#-#-#-#  cinder-storage-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  heat-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-install.rst:228 ../ceilometer-nova.rst:37
+#: ../ceilometer-install.rst:224 ../ceilometer-nova.rst:37
 #: ../cinder-controller-install.rst:284 ../cinder-storage-install.rst:184
 #: ../heat-install.rst:367 ../nova-controller-install.rst:239
 msgid ""
@@ -399,7 +547,7 @@ msgstr ""
 # #-#-#-#-#  neutron-controller-install-option2.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  nova-compute-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-install.rst:246 ../ceilometer-nova.rst:55
+#: ../ceilometer-install.rst:242 ../ceilometer-nova.rst:55
 #: ../cinder-controller-install.rst:302 ../cinder-storage-install.rst:202
 #: ../neutron-compute-install.rst:87
 #: ../neutron-controller-install-option1.rst:160
@@ -412,21 +560,14 @@ msgstr ""
 
 # #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  ceilometer-nova.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-install.rst:266 ../ceilometer-install.rst:282
+#: ../ceilometer-install.rst:262 ../ceilometer-install.rst:278
 #: ../ceilometer-nova.rst:92
 msgid ""
 "Replace ``CEILOMETER_PASS`` with the password you chose for the "
 "``ceilometer`` user in the Identity service."
 msgstr ""
 
-# #-#-#-#-#  ceilometer-install.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-nova.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-install.rst:269 ../ceilometer-nova.rst:78
-msgid ""
-"In the ``[service_credentials]`` section, configure service credentials:"
-msgstr ""
-
-#: ../ceilometer-install.rst:287
+#: ../ceilometer-install.rst:283
 msgid "In the ``[collector]`` section, configure the dispatcher:"
 msgstr ""
 
@@ -443,7 +584,7 @@ msgstr ""
 # #-#-#-#-#  neutron-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  nova-compute-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  nova-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../ceilometer-install.rst:295 ../ceilometer-nova.rst:95
+#: ../ceilometer-install.rst:291 ../ceilometer-nova.rst:95
 #: ../cinder-controller-install.rst:349 ../cinder-storage-install.rst:303
 #: ../glance-install.rst:259 ../glance-install.rst:333 ../heat-install.rst:445
 #: ../keystone-install.rst:179 ../neutron-compute-install.rst:125
@@ -459,13 +600,13 @@ msgid ""
 "``[DEFAULT]`` section:"
 msgstr ""
 
-#: ../ceilometer-install.rst:309 ../ceilometer-install.rst:329
+#: ../ceilometer-install.rst:305 ../ceilometer-install.rst:321
 msgid ""
 "Start the Telemetry services and configure them to start when the system "
 "boots:"
 msgstr ""
 
-#: ../ceilometer-install.rst:349
+#: ../ceilometer-install.rst:337
 msgid "Restart the Telemetry services:"
 msgstr ""
 
