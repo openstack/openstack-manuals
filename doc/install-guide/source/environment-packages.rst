@@ -30,11 +30,11 @@ these procedures on all nodes.
    Prerequisites
    -------------
 
-   #. Enable the `EPEL <https://fedoraproject.org/wiki/EPEL>`_ repository:
+   .. warning::
 
-      .. code-block:: console
-
-         # yum install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+      It is recommended to disable EPEL when using RDO packages due to
+      some updates in EPEL breaking backwards compatibility. Or preferably
+      pin packages versions using the yum-versionlock plugin
 
    #. On RHEL, enable additional repositories using the subscription
       manager:
