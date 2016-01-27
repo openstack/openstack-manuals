@@ -58,12 +58,12 @@ function copy_glossary_xml {
     # currently while the ha-guide is additionally translated to zh_CN.
     # Training-guides is not translated at all.
     cp doc/glossary/locale/{ja,zh_CN}.po $GLOSSARY_DIR/locale/
-    sed -i -e "s|\"../common/entities/openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|" \
+    sed -i -e "s|\"./openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|" \
         $GLOSSARY_DIR/glossary-terms.xml
     (cd $PROJECT_DIR; git add $GLOSSARY_SUB_DIR)
 
     # Sync entitites file
-    cp doc/common/entities/openstack.ent $GLOSSARY_DIR/../$ENT_DIR/
+    cp doc/glossary/openstack.ent $GLOSSARY_DIR/../$ENT_DIR/
 
     # Add files
     (cd $PROJECT_DIR; git add $GLOSSARY_SUB_DIR \
