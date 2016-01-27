@@ -55,13 +55,61 @@ Use the delimiter parameter to limit the displayed results. To use
 The system returns status code 2xx (between 200 and 299, inclusive) and
 the requested matching objects. Because you use the slash, only the
 pseudo-directory ``photos/`` displays. The returned values from a slash
-``delimiter`` query are not real objects. They have a content-type of
-``application/directory`` and are in the ``subdir`` section of JSON and
-XML results.
+``delimiter`` query are not real objects. The value will refer to
+a real object if it does not end with a slash. The pseudo-directories
+have no content-type, rather, each pseudo-directory has
+its own ``subdir`` entry in the response of JSON and XML results.
+For example:
 
-.. code-block:: console
+.. code-block:: JSON
 
-    photos/
+   [
+      {
+        "subdir": "photos/"
+      }
+    ]
+
+    [
+      {
+        "subdir": "photos/animals/"
+      },
+      {
+        "hash": "b249a153f8f38b51e92916bbc6ea57ad",
+        "last_modified": "2015-12-03T17:31:28.187370",
+        "bytes": 2906,
+        "name": "photos/me.jpg",
+        "content_type": "image/jpeg"
+      },
+      {
+        "subdir": "photos/plants/"
+      }
+    ]
+
+.. code-block:: XML
+
+   <?xml version="1.0" encoding="UTF-8"?>
+    <container name="backups">
+      <subdir name="photos/">
+        <name>photos/</name>
+      </subdir>
+    </container>
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <container name="backups">
+      <subdir name="photos/animals/">
+        <name>photos/animals/</name>
+      </subdir>
+      <object>
+        <name>photos/me.jpg</name>
+        <hash>b249a153f8f38b51e92916bbc6ea57ad</hash>
+        <bytes>2906</bytes>
+        <content_type>image/jpeg</content_type>
+        <last_modified>2015-12-03T17:31:28.187370</last_modified>
+      </object>
+      <subdir name="photos/plants/">
+        <name>photos/plants/</name>
+      </subdir>
+    </container>
 
 Use the ``prefix`` and ``delimiter`` parameters to view the objects
 inside a pseudo-directory, including further nested pseudo-directories.
