@@ -9,7 +9,7 @@ Orchestration service command-line client
 The heat client is the command-line interface (CLI) for
 the Orchestration service API and its extensions.
 
-This chapter documents :command:`heat` version ``0.8.0``.
+This chapter documents :command:`heat` version ``0.9.0``.
 
 For help on a specific :command:`heat` command, enter:
 
@@ -64,6 +64,9 @@ Subcommands
 ``config-delete``
   Delete a software configuration.
 
+``config-list``
+  List software configs.
+
 ``config-show``
   View details of a software configuration.
 
@@ -71,7 +74,7 @@ Subcommands
   Create a software deployment.
 
 ``deployment-delete``
-  Delete a software deployment.
+  Delete software deployments.
 
 ``deployment-list``
   List software deployments.
@@ -420,6 +423,26 @@ Positional arguments
 ``<ID>``
   IDs of the configurations to delete.
 
+.. _heat_config-list:
+
+heat config-list
+~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: heat config-list [-l <LIMIT>] [-m <ID>]
+
+List software configs.
+
+Optional arguments
+------------------
+
+``-l <LIMIT>, --limit <LIMIT>``
+  Limit the number of configs returned.
+
+``-m <ID>, --marker <ID>``
+  Return configs that appear after the given config ID.
+
 .. _heat_config-show:
 
 heat config-show
@@ -509,7 +532,7 @@ heat deployment-delete
 
    usage: heat deployment-delete <ID> [<ID> ...]
 
-Delete a software deployment.
+Delete software deployments.
 
 Positional arguments
 --------------------
@@ -745,7 +768,7 @@ heat output-show
 
 .. code-block:: console
 
-   usage: heat output-show [-a] [-F <FORMAT>] <NAME or ID> [<OUTPUT NAME>]
+   usage: heat output-show [-F <FORMAT>] [-a] [-v] <NAME or ID> [<OUTPUT NAME>]
 
 Show a specific stack output.
 
@@ -761,11 +784,14 @@ Positional arguments
 Optional arguments
 ------------------
 
+``-F <FORMAT>, --format <FORMAT>``
+  The output value format, one of: json, raw.
+
 ``-a, --all``
   Display all stack outputs.
 
-``-F <FORMAT>, --format <FORMAT>``
-  The output value format, one of: json, raw
+``-v, --only-value``
+  Returns only output value in specified format.
 
 .. _heat_resource-list:
 
@@ -1193,7 +1219,7 @@ heat stack-list
                           [-t <TAG1,TAG2...>] [--tags-any <TAG1,TAG2...>]
                           [--not-tags <TAG1,TAG2...>]
                           [--not-tags-any <TAG1,TAG2...>] [-l <LIMIT>] [-m <ID>]
-                          [-k <KEY1,KEY2...>] [-d [asc|desc]] [-g] [-o]
+                          [-k <KEY1;KEY2...>] [-d [asc|desc]] [-g] [-o]
 
 List the user's stacks.
 
@@ -1237,7 +1263,7 @@ Optional arguments
   Only return stacks that appear after the given stack
   ID.
 
-``-k <KEY1,KEY2...>, --sort-keys <KEY1,KEY2...>``
+``-k <KEY1;KEY2...>, --sort-keys <KEY1;KEY2...>``
   List of keys for sorting the returned stacks. This can
   be specified multiple times or once with keys
   separated by semicolons. Valid sorting keys include
@@ -1296,12 +1322,12 @@ Optional arguments
 
 ``-t <TIMEOUT>, --timeout <TIMEOUT>``
   Stack creation timeout in minutes. This is only used
-  duringvalidation in preview.
+  during validation in preview.
 
 ``-r, --enable-rollback``
   Enable rollback on failure. This option is not used
-  duringpreview and exists only for symmetry with stack-
-  create.
+  during preview and exists only for symmetry with
+  stack-create.
 
 ``-P <KEY1=VALUE1;KEY2=VALUE2...>, --parameters <KEY1=VALUE1;KEY2=VALUE2...>``
   Parameter values used to preview the stack. This can
@@ -1343,7 +1369,7 @@ heat stack-show
 
 .. code-block:: console
 
-   usage: heat stack-show <NAME or ID>
+   usage: heat stack-show [--no-resolve-outputs] <NAME or ID>
 
 Describe the stack.
 
@@ -1352,6 +1378,12 @@ Positional arguments
 
 ``<NAME or ID>``
   Name or ID of stack to describe.
+
+Optional arguments
+------------------
+
+``--no-resolve-outputs``
+  Do not resolve outputs of the stack.
 
 .. _heat_stack-snapshot:
 
@@ -1514,6 +1546,7 @@ heat template-validate
 
    usage: heat template-validate [-u <URL>] [-f <FILE>] [-e <FILE or URL>]
                                  [-o <URL>] [-n]
+                                 [-P <KEY1=VALUE1;KEY2=VALUE2...>]
 
 Validate a template with parameters.
 
@@ -1535,6 +1568,11 @@ Optional arguments
 
 ``-n, --show-nested``
   Resolve parameters from nested templates as well.
+
+``-P <KEY1=VALUE1;KEY2=VALUE2...>, --parameters <KEY1=VALUE1;KEY2=VALUE2...>``
+  Parameter values for the template. This can be
+  specified multiple times, or once with parameters
+  separated by a semicolon.
 
 .. _heat_template-version-list:
 
