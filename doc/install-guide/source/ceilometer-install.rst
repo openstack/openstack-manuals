@@ -217,7 +217,7 @@ Install and configure components
      Replace ``CEILOMETER_DBPASS`` with the password you chose for the
      Telemetry service database. You must escape special characters such
      as ':', '/', '+', and '@' in the connection string in accordance
-     with RFC2396.
+     with `RFC2396 <https://www.ietf.org/rfc/rfc2396.txt>`_.
 
    .. only:: obs or rdo or ubuntu
 
