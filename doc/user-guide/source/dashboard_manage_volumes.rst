@@ -53,6 +53,8 @@ Create a volume
 
 The dashboard shows the volume on the :guilabel:`Volumes` tab.
 
+.. _attach_a_volume_to_an_instance_dash:
+
 Attach a volume to an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
