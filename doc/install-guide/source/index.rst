@@ -64,13 +64,6 @@ are included.
 
 This guide documents OpenStack Liberty release.
 
-.. warning::
-
-   This guide is a work-in-progress and is subject to frequent updates.
-   Pre-release packages have been used for testing, and some instructions
-   might not work with final versions. Please help us make this guide better
-   by reporting any errors you encounter.
-
 Contents
 ~~~~~~~~
 
