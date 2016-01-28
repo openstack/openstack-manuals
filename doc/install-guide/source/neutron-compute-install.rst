@@ -135,13 +135,8 @@ Configure networking options
 ----------------------------
 
 Choose the same networking option that you chose for the controller node to
-configure services specific to it.
-
-.. note::
-
-   Option 2 augments option 1 with the layer-3 (routing) service and
-   enables self-service (private) networks. If you want to use public
-   (provider) and private (self-service) networks, choose option 2.
+configure services specific to it. Afterwards, return here and proceed to
+:ref:`neutron-compute-compute`.
 
 .. toctree::
    :maxdepth: 1
