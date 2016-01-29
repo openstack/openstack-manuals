@@ -1,36 +1,23 @@
 .. _aodh-install:
 
-==========================================
-Install and configure the alarming service
-==========================================
+================
+Alarming service
+================
 
-The Telemetry module contains a stand-alone alarming service,
-code-named Aodh. This chapter guides you through the installation
-steps of this alarm management module that will work together with
-the other services of Telemetry.
+This section describes how to install and configure the Telemetry Alarming
+service, code-named aodh.
 
-.. only:: ubuntu
+Prerequisites
+~~~~~~~~~~~~~
 
-   .. warning::
-
-      In the Liberty release of OpenStack, the services of the new Telemetry
-      Alarming module are not officially supported on Ubuntu-based
-      deployments.
-
-Configure prerequisites
-~~~~~~~~~~~~~~~~~~~~~~~
-
-The alarming service requires database access to store alarm definitions and
-history. You must install a database back end and create a database
-for Aodh. You also need to create service credentials, and API endpoint. If
-you already installed a database back end for the base services of the
-Telemetry module, you can choose to use that for the alarming service also.
-If you need to install a back end, see :ref:`environment-nosql-database` to
-install and configure MongoDB before proceeding further.
+Before you install and configure the Alarming service, you must create a
+database, service credentials, and API endpoints. Similar to other Telemetry
+module services, this guide configures a NoSQL database. For more information,
+see :ref:`environment-nosql-database`.
 
 .. only:: ubuntu
 
-   #. Create the ``aodh`` database:
+   1. Create the ``aodh`` database:
 
       .. code-block:: console
 
@@ -52,12 +39,11 @@ install and configure MongoDB before proceeding further.
           "_id" : ObjectId("5489c22270d7fad1ba631dc3")
          }
 
-
       Replace ``AODH_DBPASS`` with a suitable password.
 
 .. only:: rdo
 
-   #. Create the ``aodh`` database:
+   1. Create the ``aodh`` database:
 
       .. code-block:: console
 
@@ -73,60 +59,58 @@ install and configure MongoDB before proceeding further.
 
       Replace ``AODH_DBPASS`` with a suitable password.
 
-
-#. Source the ``admin`` credentials to gain access to admin-only
+2. Source the ``admin`` credentials to gain access to admin-only
    CLI commands:
 
    .. code-block:: console
 
       $ source admin-openrc.sh
 
-#. Create the service credentials:
+3. To create the service credentials, complete these steps:
 
    * Create the ``aodh`` user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack user create --password-prompt aodh
-         User Password:
-         Repeat User Password:
-         +----------+----------------------------------+
-         | Field    | Value                            |
-         +----------+----------------------------------+
-         | email    | None                             |
-         | enabled  | True                             |
-         | id       | b7657c9ea07a4556aef5d34cf70713a3 |
-         | name     | aodh                             |
-         | username | aodh                             |
-         +----------+----------------------------------+
+        $ openstack user create --password-prompt aodh
+        User Password:
+        Repeat User Password:
+        +-----------+----------------------------------+
+        | Field     | Value                            |
+        +-----------+----------------------------------+
+        | domain_id | default                          |
+        | enabled   | True                             |
+        | id        | b7657c9ea07a4556aef5d34cf70713a3 |
+        | name      | aodh                             |
+        +-----------+----------------------------------+
 
    * Add the ``admin`` role to the ``aodh`` user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack role add --project service --user aodh admin
+        $ openstack role add --project service --user aodh admin
 
-      .. note::
+     .. note::
 
         This command provides no output.
 
    * Create the ``aodh`` service entity:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack service create --name aodh \
-           --description "Telemetry" alarming
-         +-------------+----------------------------------+
-         | Field       | Value                            |
-         +-------------+----------------------------------+
-         | description | Telemetry                        |
-         | enabled     | True                             |
-         | id          | 3405453b14da441ebb258edfeba96d83 |
-         | name        | aodh                             |
-         | type        | alarming                         |
-         +-------------+----------------------------------+
+        $ openstack service create --name aodh \
+          --description "Telemetry" alarming
+        +-------------+----------------------------------+
+        | Field       | Value                            |
+        +-------------+----------------------------------+
+        | description | Telemetry                        |
+        | enabled     | True                             |
+        | id          | 3405453b14da441ebb258edfeba96d83 |
+        | name        | aodh                             |
+        | type        | alarming                         |
+        +-------------+----------------------------------+
 
-#. Create the Telemetry Alarming service API endpoints:
+4. Create the Alarming service API endpoints:
 
    .. code-block:: console
 
@@ -178,8 +162,8 @@ install and configure MongoDB before proceeding further.
         | url          | http://controller:8042           |
         +--------------+----------------------------------+
 
-Install and configure the Telemetry Alarming service components
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Install and configure components
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
 
@@ -208,89 +192,95 @@ Install and configure the Telemetry Alarming service components
          # apt-get install aodh-api aodh-evaluator aodh-notifier \
            aodh-listener aodh-expirer python-ceilometerclient
 
-#. Edit the ``/etc/aodh/aodh.conf`` file and perform these steps:
+2. Edit the ``/etc/aodh/aodh.conf`` file and complete the following actions:
 
    * In the ``[database]`` section, configure database access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [database]
-         ...
-         connection = mongodb://aodh:AODH_DBPASS@controller:27017/aodh
+        [database]
+        ...
+        connection = mongodb://aodh:AODH_DBPASS@controller:27017/aodh
 
-      Replace ``AODH_DBPASS`` with the password you chose for the
-      Telemetry Alarming module database. You must escape special characters
-      such as ':', '/', '+', and '@' in the connection string. For further
-      information see the Reserved Characters section of
-      :ref:`RFC2396 <https://www.ietf.org/rfc/rfc2396.txt>`.
+     Replace ``AODH_DBPASS`` with the password you chose for the
+     Telemetry Alarming module database. You must escape special characters
+     such as ':', '/', '+', and '@' in the connection string in accordance
+     with `RFC2396 <https://www.ietf.org/rfc/rfc2396.txt>`_.
 
    * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-      configure ``RabbitMQ`` message queue access:
+     configure ``RabbitMQ`` message queue access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         rpc_backend = rabbit
+        [DEFAULT]
+        ...
+        rpc_backend = rabbit
 
-         [oslo_messaging_rabbit]
-         ...
-         rabbit_host = controller
-         rabbit_userid = openstack
-         rabbit_password = RABBIT_PASS
+        [oslo_messaging_rabbit]
+        ...
+        rabbit_host = controller
+        rabbit_userid = openstack
+        rabbit_password = RABBIT_PASS
 
-      Replace ``RABBIT_PASS`` with the password you chose for the
-      ``openstack`` account in ``RabbitMQ``.
+     Replace ``RABBIT_PASS`` with the password you chose for the
+     ``openstack`` account in ``RabbitMQ``.
 
    * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
-      configure Identity service access:
+     configure Identity service access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         auth_strategy = keystone
+        [DEFAULT]
+        ...
+        auth_strategy = keystone
 
-         [keystone_authtoken]
-         ...
-         auth_uri = http://controller:5000/v2.0
-         identity_uri = http://controller:35357
-         admin_tenant_name = service
-         admin_user = aodh
-         admin_password = AODH_PASS
+        [keystone_authtoken]
+        ...
+        auth_uri = http://controller:5000
+        auth_url = http://controller:35357
+        auth_plugin = password
+        project_domain_id = default
+        user_domain_id = default
+        project_name = service
+        username = aodh
+        password = AODH_PASS
 
-      Replace ``AODH_PASS`` with the password you chose for
-      the ``aodh`` user in the Identity service.
+     Replace ``AODH_PASS`` with the password you chose for
+     the ``aodh`` user in the Identity service.
 
    * In the ``[service_credentials]`` section, configure service credentials:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [service_credentials]
-         ...
-         os_auth_url = http://controller:5000/v2.0
-         os_username = aodh
-         os_tenant_name = service
-         os_password = AODH_PASS
-         os_endpoint_type = internalURL
-         os_region_name = RegionOne
+        [service_credentials]
+        ...
+        os_auth_url = http://controller:5000/v2.0
+        os_username = aodh
+        os_tenant_name = service
+        os_password = AODH_PASS
+        os_endpoint_type = internalURL
+        os_region_name = RegionOne
 
-      Replace ``AODH_PASS`` with the password you chose for
-      the ``aodh`` user in the Identity service.
+     Replace ``AODH_PASS`` with the password you chose for
+     the ``aodh`` user in the Identity service.
 
    * (Optional) To assist with troubleshooting, enable verbose
-      logging in the ``[DEFAULT]`` section:
+     logging in the ``[DEFAULT]`` section:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         verbose = True
+        [DEFAULT]
+        ...
+        verbose = True
+
+.. todo:
+
+   Workaround for https://bugs.launchpad.net/ubuntu/+source/aodh/+bug/1513599.
 
 .. only:: ubuntu
 
-   #. Edit the api_paste.ini file and add or modify the
-      ``[filter:authtoken]`` section:
+   3. Edit the ``/etc/aodh/api_paste.ini`` file and modify the
+      ``[filter:authtoken]`` section as follows:
 
       .. code-block:: ini
 
@@ -303,27 +293,27 @@ Finalize installation
 
 .. only:: rdo
 
-   #. Start the Telemetry Alarming services and configure them to start
-      when the system boots:
+   * Start the Alarming services and configure them to start when the system
+     boots:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # systemctl enable openstack-aodh-api.service \
-           openstack-aodh-evaluator.service \
-           openstack-aodh-notifier.service \
-           openstack-aodh-listener.service
-         # systemctl start openstack-aodh-api.service \
-           openstack-aodh-evaluator.service \
-           openstack-aodh-notifier.service \
-           openstack-aodh-listener.service
+        # systemctl enable openstack-aodh-api.service \
+          openstack-aodh-evaluator.service \
+          openstack-aodh-notifier.service \
+          openstack-aodh-listener.service
+        # systemctl start openstack-aodh-api.service \
+          openstack-aodh-evaluator.service \
+          openstack-aodh-notifier.service \
+          openstack-aodh-listener.service
 
 .. only:: ubuntu
 
-   #. Restart the Telemetry Alarming services:
+   * Restart the Alarming services:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # service aodh-api restart
-         # service aodh-evaluator restart
-         # service aodh-notifier restart
-         # service aodh-listener restart
+        # service aodh-api restart
+        # service aodh-evaluator restart
+        # service aodh-notifier restart
+        # service aodh-listener restart
