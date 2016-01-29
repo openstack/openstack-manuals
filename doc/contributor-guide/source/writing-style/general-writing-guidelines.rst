@@ -19,6 +19,8 @@ When in doubt about the spelling of a word, consult the
 `Merriam-Webster's Collegiate Dictionary` and the `IBM Style Guide
 <http://www.redbooks.ibm.com/Redbooks.nsf/ibmpressisbn/9780132101301?Open>`_.
 
+.. _write_in_active_voice:
+
 Write in active voice
 ---------------------
 
@@ -211,12 +213,16 @@ Also, ensure that you follow the documentation guidelines for titles.
 For more information,
 see http://docs.openstack.org/contributor-guide/rst-conv/titles.html.
 
+.. _be_clear_and_concise:
+
 Be clear and concise
 --------------------
 
 Follow the principles of minimalism. If you can describe
 an idea in one word, do not use two words.
 Eliminate all redundant modifiers, such as adjectives and adverbs.
+
+.. _write_objectively:
 
 Write objectively
 -----------------
@@ -343,6 +349,8 @@ Avoid personification
 Do not express your fears or feelings in technical writing. Avoid
 the adverbs such as "probably", "hopefully", "basically", and so on.
 
+.. _do_not_use_contractions:
+
 Do not use contractions
 -----------------------
 
@@ -358,10 +366,14 @@ Generally, do not contract the words.
 | don't                  | do not             |
 +------------------------+--------------------+
 
+.. _eliminate_needless_politeness:
+
 Eliminate needless politeness
 -----------------------------
 
 Do not use "please" and "thank you" in technical documentation.
+
+.. _use_consistent_terminology:
 
 Use consistent terminology
 --------------------------
