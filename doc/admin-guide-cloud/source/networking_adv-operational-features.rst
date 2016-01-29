@@ -52,14 +52,14 @@ subnet and port are created, updated or deleted.
 Notification options
 --------------------
 
-To support DHCP agent, rpc\_notifier driver must be set. To set up the
+To support DHCP agent, ``rpc_notifier`` driver must be set. To set up the
 notification, edit notification options in ``neutron.conf``:
 
 .. code-block:: ini
 
    # Driver or drivers to handle sending notifications. (multi
    # valued)
-   #notification_driver=
+   #notification_driver=messagingv2
 
    # AMQP topic used for OpenStack notifications. (list value)
    # Deprecated group/name - [rpc_notifier2]/topics
@@ -77,80 +77,52 @@ Configuration Reference . RPC notifications go to ``notifications.info``
 queue bound to a topic exchange defined by ``control_exchange`` in
 ``neutron.conf``.
 
-.. code-block:: ini
+**Notification System Options**
 
-   # ============ Notification System Options ====================
+A notification can be sent when a network, subnet, or port is created,
+updated or deleted. The notification system options are:
 
-   # Notifications can be sent when network/subnet/port are create,
-     updated or deleted.
-   # There are three methods of sending notifications: logging
-     (via the log_file directive), rpc (via a message queue) and
-   # noop (no notifications sent, the default)
+* ``notification_driver``
+    Defines the driver or drivers to handle the sending of a notification.
+    The six available options are:
 
-   # Notification_driver can be defined multiple times
-   # Do nothing driver
-   # notification_driver = neutron.openstack.common.notifier.
-     no_op_notifier
-   # Logging driver
-     notification_driver = neutron.openstack.common.notifier.
-     log_notifier
-   # RPC driver
-     notification_driver = neutron.openstack.common.notifier.
-     rpc_notifier
+    * ``messaging``
+        Send notifications using the 1.0 message format.
+    * ``messagingv2``
+        Send notifications using the 2.0 message format (with a message
+        envelope).
+    * ``routing``
+        Configurable routing notifier (by priority or event_type).
+    * ``log``
+        Publish notifications using Python logging infrastructure.
+    * ``test``
+        Store notifications in memory for test verification.
+    * ``noop``
+        Disable sending notifications entirely.
+* ``default_notification_level``
+    Is used to form topic names or to set a logging level.
+* ``default_publisher_id``
+    Is a part of the notification payload.
+* ``notification_topics``
+    AMQP topic used for OpenStack notifications. They can be comma-separated
+    values. The actual topic names will be the values of
+    ``default_notification_level``.
+* ``control_exchange``
+    This is an option defined in oslo.messaging. It is the default exchange
+    under which topics are scoped. May be overridden by an exchange name
+    specified in the ``transport_url`` option. It is a string value.
 
-   # default_notification_level is used to form actual topic
-     names or to set logging level
-     default_notification_level = INFO
-
-   # default_publisher_id is a part of the notification payload
-   # host = myhost.com
-   # default_publisher_id = $host
-
-   # Defined in rpc_notifier for rpc way, can be comma-separated values.
-   # The actual topic names will be %s.%(default_notification_level)s
-     notification_topics = notifications
-
-   # Options defined in oslo.messaging
-
-   # The default exchange under which topics are scoped. May be
-   # overridden by an exchange name specified in the
-   # transport_url option. (string value)
-   #control_exchange=openstack
-
-Multiple RPC topics
-^^^^^^^^^^^^^^^^^^^
-
-These options configure the Networking server to send notifications to
-multiple RPC topics. RPC notifications go to ``notifications_one.info``
-and ``notifications_two.info`` queues bound to a topic exchange defined
-by ``control_exchange`` in ``neutron.conf``.
+Below is a sample ``neutron.conf`` configuration file:
 
 .. code-block:: ini
 
-   # ============ Notification System Options =====================
+    notification_driver = messagingv2
 
-   # Notifications can be sent when network/subnet/port are create,
-     updated or deleted.
-   # There are three methods of sending notifications: logging (via the
-   # log_file directive), rpc (via a message queue) and
-   # noop (no notifications sent, the default)
+    default_notification_level = INFO
 
-   # Notification_driver can be defined multiple times
-   # Do nothing driver
-   # notification_driver = neutron.openstack.common.notifier.no_op_notifier
-   # Logging driver
-   # notification_driver = neutron.openstack.common.notifier.log_notifier
-   # RPC driver
-     notification_driver = neutron.openstack.common.notifier.rpc_notifier
+    host = myhost.com
+    default_publisher_id = $host
 
-   # default_notification_level is used to form actual topic names or to set
-     logging level
-     default_notification_level = INFO
+    notification_topics = notifications
 
-   # default_publisher_id is a part of the notification payload
-   # host = myhost.com
-   # default_publisher_id = $host
-
-   # Defined in rpc_notifier for rpc way, can be comma-separated values.
-   # The actual topic names will be %s.%(default_notification_level)s
-     notification_topics = notifications_one,notifications_two
+    control_exchange=openstack

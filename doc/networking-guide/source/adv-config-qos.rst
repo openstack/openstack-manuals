@@ -68,7 +68,7 @@ On server side:
 
 * Enable ``qos`` service in ``service_plugins``.
 * Set the needed ``notification_drivers`` in ``[qos]`` section
-  (``message_queue`` is the default).
+  (``messaging`` is the default).
 * For ml2, add ``qos`` to ``extension_drivers`` in ``[ml2]`` section.
 
 On agent side (OVS):
