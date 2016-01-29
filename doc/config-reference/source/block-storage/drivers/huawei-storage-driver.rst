@@ -22,7 +22,7 @@ driver, Huawei storage system and OpenStack:
      - Volume Driver Version
    * - Create, delete, expand, attach, and detach volumes.
 
-       Create and delete a snapshot
+       Create, delete, manage and unmanage a snapshot.
 
        Copy an image to a volume
 
