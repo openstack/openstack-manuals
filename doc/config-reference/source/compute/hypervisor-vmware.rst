@@ -10,7 +10,7 @@ access to advanced features such as vMotion, High Availability, and
 Dynamic Resource Scheduling (DRS).
 
 This section describes how to configure VMware-based virtual machine
-images for launch. vSphere versions 4.1 and later are supported.
+images for launch. The VMware driver supports vCenter version 5.1.0 and later.
 
 The VMware vCenter driver enables the ``nova-compute`` service to communicate
 with a VMware vCenter server that manages one or more ESX host clusters.
@@ -81,7 +81,7 @@ Prerequisites and limitations
 Use the following list to prepare a vSphere environment that runs with
 the VMware vCenter driver:
 
-Copying VMDK files (vSphere 5.1 only)
+Copying VMDK files
   In vSphere 5.1, copying large image files (for example, 12 GB and
   greater) from the Image service can take a long time.
   To improve performance, VMware recommends that you upgrade to VMware
@@ -961,102 +961,6 @@ used for managing volumes based on vSphere data stores. For more information
 about the VMware VMDK driver, see :ref:`block_storage_vmdk_driver`.  Also an
 iSCSI volume driver provides limited support and can be used only for
 attachments.
-
-.. _vmware-additional:
-
-vSphere 5.0 and earlier additional set up
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Users of vSphere 5.0 or earlier must host their WSDL files locally.
-These steps are applicable for vCenter 5.0 or ESXi 5.0 and you can either
-mirror the WSDL from the vCenter or ESXi server that you intend to use or
-you can download the SDK directly from VMware. These workaround steps fix
-a `known issue <http://kb.vmware.com/selfservice/microsites/search.do?
-cmd=displayKC&amp;externalId=2010507>`_ with the WSDL that was resolved
-in later versions.
-
-When setting the VMwareVCDriver configuration options, you must include the
-``wsdl_location`` option. For more information, see :ref:`vmware-vcdriver`.
-
-**To mirror WSDL from vCenter (or ESXi)**
-
-#. Set the ``VMWAREAPI_IP`` shell variable to the IP address for your
-   vCenter or ESXi host from where you plan to mirror files. For example:
-
-   .. code-block:: console
-
-      $ export VMWAREAPI_IP=<your_vsphere_host_ip>
-
-#. Create a local file system directory to hold the WSDL files:
-
-   .. code-block:: console
-
-      $ mkdir -p /opt/stack/vmware/wsdl/5.0
-
-#. Change into the new directory.
-
-   .. code-block:: console
-
-      $ cd /opt/stack/vmware/wsdl/5.0
-
-#. Use your OS-specific tools to install a command-line tool that can
-   download files like :command:`wget`.
-
-#. Download the files to the local file cache:
-
-   .. code-block:: console
-
-      $ wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vimService.wsdl
-      $ wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim.wsdl
-      $ wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/core-types.xsd
-      $ wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-messagetypes.xsd
-      $ wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/query-types.xsd
-      $ wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim-messagetypes.xsd
-      $ wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/vim-types.xsd
-      $ wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-messagetypes.xsd
-      $ wget  --no-check-certificate https://$VMWAREAPI_IP/sdk/reflect-types.xsd
-
-#. Because the ``reflect-types.xsd`` and ``reflect-messagetypes.xsd`` files
-   do not fetch properly, you must stub out these files. Use the following
-   XML listing to replace the missing file content. The XML parser underneath
-   Python can be very particular and if you put a space in the wrong place, it
-   can break the parser. Copy the following contents and formatting carefully.
-
-   .. code-block:: xml
-
-      <xml version="1.0" encoding="UTF-8"?>
-        <schema
-          targetNamespace="urn:reflect"
-          xmlns="http://www.w3.org/2001/XMLSchema"
-          xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-          elementFormDefault="qualified">
-        </schema>
-
-#. Now that the files are locally present, tell the driver to look for the
-   SOAP service WSDLs in the local file system and not on the remote
-   vSphere server. Add the following setting to the ``nova.conf`` file
-   for your ``nova-compute`` node:
-
-   .. code-block:: ini
-
-      [vmware]
-      wsdl_location=file:///opt/stack/vmware/wsdl/5.0/vimService.wsdl
-
-Alternatively, download the version appropriate SDK from
-http://www.vmware.com/support/developer/vc-sdk/ and copy it to the
-``/opt/stack/vmware`` file. Make sure that the WSDL is available, in for
-example ``/opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl``.
-You must point ``nova.conf`` to fetch this WSDL file from the local file
-system by using a URL.
-
-When using the VMwareVCDriver (vCenter) with OpenStack Compute with
-vSphere version 5.0 or earlier, ``nova.conf`` must include the following
-extra config option:
-
-.. code-block:: ini
-
-   [vmware]
-   wsdl_location=file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl
 
 .. _vmware-config:
 
