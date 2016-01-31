@@ -8,7 +8,7 @@ Storage back ends
 The Message service supports several different storage back ends (storage
 drivers) for storing management information, messages and their metadata. The
 recommended storage back end is MongoDB. For information on how to specify the
-storage back ends, see :doc:`messaging/zaqar-drivers`.
+storage back ends, see :doc:`zaqar-drivers`.
 
 When the storage back end is chosen, the corresponding back-end options become
 active. For example, if Redis is chosen as the management storage back end, the
@@ -43,7 +43,9 @@ stages, the sequence in which the option values are listed does matter or not.
 
 You can add external stages to the storage layer pipelines. For information how
 to write and add your own external stages, see
-`Writing stages for the storage pipelines`_ tutorial.
+`Writing stages for the storage pipelines
+<http://docs.openstack.org/developer/zaqar/writing_pipeline_stages.html>`_
+tutorial.
 
 Options
 ~~~~~~~
@@ -55,4 +57,3 @@ The following tables detail the available options:
 .. include:: ../tables/zaqar-redis.rst
 .. include:: ../tables/zaqar-sqlalchemy.rst
 
-.. _`Writing stages for the storage pipelines` : http://docs.openstack.org/developer/zaqar/writing_pipeline_stages.html
