@@ -21,7 +21,7 @@ dedicated host. If your deployment uses a controller host to run
 centralized Compute components, you can deploy the Networking server
 to that specific host instead.
 
-OpenStack Networking integrates with various other OpenStack
+OpenStack Networking integrates with various OpenStack
 components:
 
 * OpenStack :term:`Identity` (keystone) is used for authentication and
