@@ -9,7 +9,7 @@ Bare Metal service command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.0.0``.
+This chapter documents :command:`ironic` version ``1.1.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -69,7 +69,7 @@ Subcommands
   Register a new node with the Ironic service.
 
 ``node-delete``
-  Unregister a node from the Ironic service.
+  Unregister node(s) from the Ironic service.
 
 ``node-get-boot-device``
   Get the current boot device for a node.
@@ -280,7 +280,7 @@ ironic chassis-create
 
 .. code-block:: console
 
-   usage: ironic chassis-create [-d <description>] [-e <key=value>]
+   usage: ironic chassis-create [-d <description>] [-e <key=value>] [-u <uuid>]
 
 Create a new chassis.
 
@@ -293,6 +293,9 @@ Optional arguments
 ``-e <key=value>, --extra <key=value>``
   Record arbitrary key/value metadata. Can be specified
   multiple times.
+
+``-u <uuid>, --uuid <uuid>``
+  UUID of the chassis.
 
 .. _ironic_chassis-delete:
 
@@ -493,7 +496,7 @@ ironic driver-properties
 
 .. code-block:: console
 
-   usage: ironic driver-properties <driver>
+   usage: ironic driver-properties [--wrap <integer>] <driver>
 
 Get properties of a driver.
 
@@ -502,6 +505,13 @@ Positional arguments
 
 ``<driver>``
   Name of the driver.
+
+Optional arguments
+------------------
+
+``--wrap <integer>``
+  Wrap the output to a specified length. Positive number can
+  realize wrap functionality. 0 is default for disabled.
 
 .. _ironic_driver-show:
 
@@ -605,7 +615,7 @@ ironic node-delete
 
    usage: ironic node-delete <node> [<node> ...]
 
-Unregister a node from the Ironic service.
+Unregister node(s) from the Ironic service.
 
 Positional arguments
 --------------------
@@ -750,7 +760,7 @@ Positional arguments
 --------------------
 
 ``<node>``
-  UUID of the node.
+  Name or UUID of the node.
 
 Optional arguments
 ------------------
@@ -1033,7 +1043,7 @@ ironic port-create
 
 .. code-block:: console
 
-   usage: ironic port-create -a <address> -n <node> [-e <key=value>]
+   usage: ironic port-create -a <address> -n <node> [-e <key=value>] [-u <uuid>]
 
 Create a new port.
 
@@ -1049,6 +1059,9 @@ Optional arguments
 ``-e <key=value>, --extra <key=value>``
   Record arbitrary key/value metadata. Can be specified
   multiple times.
+
+``-u <uuid>, --uuid <uuid>``
+  UUID of the port.
 
 .. _ironic_port-delete:
 
