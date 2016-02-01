@@ -42,24 +42,24 @@ driver, Huawei storage system and OpenStack:
        OceanStor 18500/18800V1R1C00/C20/C30 V3R3C00
      - 1.1.0
 
-       1.2.0
-   * - Volume Migration(version 1.2.0 or later)
+       1.1.1
+   * - Volume Migration(version 1.1.1 or later)
 
-       Auto zoning(version 1.2.0 or later)
+       Auto zoning(version 1.1.1 or later)
 
-       SmartTier(version 1.2.0 or later)
+       SmartTier(version 1.1.1 or later)
 
-       SmartCache(version 1.2.0 or later)
+       SmartCache(version 1.1.1 or later)
 
-       Smart Thin/Thick(version 1.2.0 or later)
+       Smart Thin/Thick(version 1.1.1 or later)
 
-       SmartPartition(version 1.2.0 or later)
+       SmartPartition(version 1.1.1 or later)
      - OceanStor T series V2R2 C00/C20/C30
 
        OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
 
        OceanStor 18500/18800V1R1C00/C20/C30
-     - 1.2.0
+     - 1.1.1
 
 Volume driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
