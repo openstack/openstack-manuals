@@ -143,19 +143,28 @@ Install and configure controller node
 Configure networking options
 ----------------------------
 
-Choose one of the following networking options to configure services
-specific to it.
+You can deploy the Networking service using one of two architectures
+represented by options 1 and 2.
+
+Option 1 deploys the simplest possible architecture that only supports
+attaching instances to public (provider) networks. No self-service
+networks, routers, or floating IP addresses. Only the ``admin`` or other
+privileged user can manage provider networks.
+
+Option 2 augments option 1 with layer-3 services that support attaching
+instances to self-service (private) networks. The ``demo`` or other
+unprivileged user can manage self-service networks including routers that
+provide connectivity between self-service and provider networks. Additionally,
+floating IP addresses provide connectivity to instances using self-service
+networks from external networks such as the Internet.
 
 .. note::
 
-   Option 2 augments option 1 with the layer-3 (routing) service and
-   enables self-service (private) networks. If you want to use public
-   (provider) and private (self-service) networks, choose option 2.
+   Option 2 also supports attaching instances to public (provider) networks.
 
-Complete the procedure for your selected networking option by clicking
-one of the following links. After finishing that procedure, you will
-be directed back to this page to proceed with configuring the metadata
-agent.
+Choose one of the following networking options to configure services
+specific to it. Afterwards, return here and proceed to
+:ref:`neutron-controller-metadata-agent`.
 
 .. toctree::
    :maxdepth: 1
