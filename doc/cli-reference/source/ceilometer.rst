@@ -9,7 +9,7 @@ Telemetry service command-line client
 The ceilometer client is the command-line interface (CLI) for
 the Telemetry service API and its extensions.
 
-This chapter documents :command:`ceilometer` version ``2.1.0``.
+This chapter documents :command:`ceilometer` version ``2.3.0``.
 
 For help on a specific :command:`ceilometer` command, enter:
 
@@ -1842,7 +1842,10 @@ Optional arguments
   If specified, traits will not be printed.
 
 ``-l <NUMBER>, --limit <NUMBER>``
-  Maximum number of events to return.
+  Maximum number of events to return. API server
+  limits result to <default_api_return_limit>
+  rows if no limit provided. Option is
+  configured in ceilometer.conf [api] group
 
 .. _ceilometer_event-show:
 
@@ -1892,7 +1895,10 @@ Optional arguments
   integer, float, or boolean.
 
 ``-l <NUMBER>, --limit <NUMBER>``
-  Maximum number of meters to return.
+  Maximum number of meters to return. API server
+  limits result to <default_api_return_limit>
+  rows if no limit provided. Option is
+  configured in ceilometer.conf [api] group
 
 .. _ceilometer_query-alarm-history:
 
@@ -1922,7 +1928,10 @@ Optional arguments
 
 ``-l <LIMIT>, --limit <LIMIT>``
   Maximum number of alarm history items to
-  return.
+  return. API server limits result to
+  <default_api_return_limit> rows if no limit
+  provided. Option is configured in
+  ceilometer.conf [api] group
 
 .. _ceilometer_query-alarms:
 
@@ -1950,7 +1959,10 @@ Optional arguments
   'desc'].
 
 ``-l <LIMIT>, --limit <LIMIT>``
-  Maximum number of alarms to return.
+  Maximum number of alarms to return. API server
+  limits result to <default_api_return_limit>
+  rows if no limit provided. Option is
+  configured in ceilometer.conf [api] group
 
 .. _ceilometer_query-samples:
 
@@ -1978,7 +1990,11 @@ Optional arguments
   'desc'].
 
 ``-l <LIMIT>, --limit <LIMIT>``
-  Maximum number of samples to return.
+  Maximum number of samples to return. API
+  server limits result to
+  <default_api_return_limit> rows if no limit
+  provided. Option is configured in
+  ceilometer.conf [api] group
 
 .. _ceilometer_resource-list:
 
@@ -1987,7 +2003,7 @@ ceilometer resource-list
 
 .. code-block:: console
 
-   usage: ceilometer resource-list [-q <QUERY>] [--meter-links] [-l <NUMBER>]
+   usage: ceilometer resource-list [-q <QUERY>] [-l <NUMBER>]
 
 List the resources.
 
@@ -1999,11 +2015,12 @@ Optional arguments
   optional, but if supplied must be string,
   integer, float, or boolean.
 
-``--meter-links``
-  If specified, meter links will be generated.
-
 ``-l <NUMBER>, --limit <NUMBER>``
-  Maximum number of resources to return.
+  Maximum number of resources to return. API
+  server limits result to
+  <default_api_return_limit> rows if no limit
+  provided. Option is configured in
+  ceilometer.conf [api] group
 
 .. _ceilometer_resource-show:
 
@@ -2122,7 +2139,11 @@ Optional arguments
   Name of meter to show samples for.
 
 ``-l <NUMBER>, --limit <NUMBER>``
-  Maximum number of samples to return.
+  Maximum number of samples to return. API
+  server limits result to
+  <default_api_return_limit> rows if no limit
+  provided. Option is configured in
+  ceilometer.conf [api] group
 
 .. _ceilometer_sample-show:
 
