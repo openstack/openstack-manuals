@@ -9,7 +9,7 @@ Monitoring command-line client
 The monasca client is the command-line interface (CLI) for
 the Monitoring API and its extensions.
 
-This chapter documents :command:`monasca` version ``1.0.28``.
+This chapter documents :command:`monasca` version ``1.0.29``.
 
 For help on a specific :command:`monasca` command, enter:
 
@@ -41,6 +41,7 @@ monasca usage
                   [--os-endpoint-type OS_ENDPOINT_TYPE]
                   <subcommand> ...
      <subcommand>
+       alarm-count              Count alarms.
        alarm-definition-create  Create an alarm definition.
        alarm-definition-delete  Delete the alarm definition.
        alarm-definition-list    List alarm definitions for this tenant.
@@ -163,6 +164,63 @@ monasca optional arguments
 ``--os-endpoint-type OS_ENDPOINT_TYPE``
   Defaults to ``env[OS_ENDPOINT_TYPE]``.
 
+.. _monasca_alarm-count:
+
+monasca alarm-count
+~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: monasca alarm-count [--alarm-definition-id <ALARM_DEFINITION_ID>]
+                              [--metric-name <METRIC_NAME>]
+                              [--metric-dimensions <KEY1=VALUE1,KEY2=VALUE2...>]
+                              [--state <ALARM_STATE>]
+                              [--lifecycle-state <LIFECYCLE_STATE>]
+                              [--link <LINK>] [--group-by <GROUP_BY>]
+                              [--offset <OFFSET LOCATION>]
+                              [--limit <RETURN LIMIT>]
+
+Count alarms.
+
+Optional arguments
+------------------
+
+``--alarm-definition-id <ALARM_DEFINITION_ID>``
+  The ID of the alarm definition.
+
+``--metric-name <METRIC_NAME>``
+  Name of the metric.
+
+``--metric-dimensions <KEY1=VALUE1,KEY2=VALUE2...>``
+  key value pair used to specify a metric dimension.
+  This can be specified multiple times, or once with
+  parameters separated by a comma. Dimensions need
+  quoting when they contain special chars
+  [&,(,),{,},>,<] that confuse the CLI parser.
+
+``--state <ALARM_STATE>``
+  ALARM_STATE is one of [UNDETERMINED, OK, ALARM].
+
+``--lifecycle-state <LIFECYCLE_STATE>``
+  The lifecycle state of the alarm
+
+``--link <LINK>``
+  The link to external data associated with the alarm
+
+``--group-by <GROUP_BY>``
+  Comma separated list of one or more fields to group
+  the results by.Group by is one or more of
+  [alarm_definition_id, name, state,
+  link,lifecycle_state, metric_name, dimension_name,
+  dimension_value]
+
+``--offset <OFFSET LOCATION>``
+  The offset used to paginate the return data.
+
+``--limit <RETURN LIMIT>``
+  The amount of data to be returned up to the API
+  maximum limit.
+
 .. _monasca_alarm-definition-create:
 
 monasca alarm-definition-create
@@ -244,6 +302,7 @@ monasca alarm-definition-list
 
    usage: monasca alarm-definition-list [--name <ALARM_DEFINITION_NAME>]
                                         [--dimensions <KEY1=VALUE1,KEY2=VALUE2...>]
+                                        [--sort-by <SORT BY FIELDS>]
                                         [--offset <OFFSET LOCATION>]
                                         [--limit <RETURN LIMIT>]
 
@@ -261,6 +320,13 @@ Optional arguments
   parameters separated by a comma. Dimensions need
   quoting when they contain special chars
   [&,(,),{,},>,<] that confuse the CLI parser.
+
+``--sort-by <SORT BY FIELDS>``
+  Fields to sort by as a comma separated list. Valid
+  values are id, name, severity, updated_timestamp,
+  created_timestamp. Fields may be followed by "asc" or
+  "desc", ex "severity desc", to set the direction of
+  sorting.
 
 ``--offset <OFFSET LOCATION>``
   The offset used to paginate the return data.
@@ -501,7 +567,8 @@ monasca alarm-list
                              [--state <ALARM_STATE>]
                              [--state-updated-start-time <UTC_STATE_UPDATED_START>]
                              [--lifecycle-state <LIFECYCLE_STATE>]
-                             [--link <LINK>] [--offset <OFFSET LOCATION>]
+                             [--link <LINK>] [--sort-by <SORT BY FIELDS>]
+                             [--offset <OFFSET LOCATION>]
                              [--limit <RETURN LIMIT>]
 
 List alarms for this tenant.
@@ -534,6 +601,15 @@ Optional arguments
 
 ``--link <LINK>``
   The link to external data associated with the alarm
+
+``--sort-by <SORT BY FIELDS>``
+  Fields to sort by as a comma separated list. Valid
+  values are alarm_id, alarm_definition_id, state,
+  severity, lifecycle_state, link,
+  state_updated_timestamp, updated_timestamp,
+  created_timestamp. Fields may be followed by "asc" or
+  "desc", ex "severity desc", to set the direction of
+  sorting.
 
 ``--offset <OFFSET LOCATION>``
   The offset used to paginate the return data.
