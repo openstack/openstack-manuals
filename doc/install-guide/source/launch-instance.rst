@@ -139,3 +139,14 @@ a stack that launches an instance.
    :maxdepth: 1
 
    launch-instance-heat.rst
+
+Shared File Systems
+-------------------
+
+If your environment includes the Shared File Systems service, you can create
+a share.
+
+.. toctree::
+   :maxdepth: 1
+
+   launch-instance-manila.rst
