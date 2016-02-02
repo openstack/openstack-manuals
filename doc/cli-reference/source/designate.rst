@@ -9,7 +9,7 @@ DNS service command-line client
 The designate client is the command-line interface (CLI) for
 the DNS service API and its extensions.
 
-This chapter documents :command:`designate` version ``1.5.0``.
+This chapter documents :command:`designate` version ``2.0.0``.
 
 For help on a specific :command:`designate` command, enter:
 
@@ -198,16 +198,16 @@ Optional arguments
   show this help message and exit
 
 ``--name NAME``
-  Domain name
+  Domain name.
 
 ``--email EMAIL``
-  Domain email
+  Domain email.
 
 ``--ttl TTL``
-  Time to live (seconds)
+  Time to live (seconds).
 
 ``--description DESCRIPTION``
-  Description
+  Description.
 
 .. _designate_domain-delete:
 
@@ -228,7 +228,7 @@ Positional arguments
 --------------------
 
 ``id``
-  Domain ID or name
+  Domain ID or name.
 
 Optional arguments
 ------------------
@@ -255,7 +255,7 @@ Positional arguments
 --------------------
 
 ``id``
-  Domain ID or name
+  Domain ID or name.
 
 Optional arguments
 ------------------
@@ -303,7 +303,7 @@ Positional arguments
 --------------------
 
 ``id``
-  Domain ID or name
+  Domain ID or name.
 
 Optional arguments
 ------------------
@@ -332,7 +332,7 @@ Positional arguments
 --------------------
 
 ``id``
-  Domain ID or name
+  Domain ID or name.
 
 Optional arguments
 ------------------
@@ -341,16 +341,16 @@ Optional arguments
   show this help message and exit
 
 ``--name NAME``
-  Domain name
+  Domain name.
 
 ``--email EMAIL``
-  Domain email
+  Domain email.
 
 ``--ttl TTL``
-  Time to live (seconds)
+  Time to live (seconds).
 
 ``--description DESCRIPTION``
-  Description
+  Description.
 
 ``--no-description``
 
@@ -400,7 +400,7 @@ Positional arguments
 --------------------
 
 ``tenant_id``
-  Tenant ID
+  Tenant ID.
 
 Optional arguments
 ------------------
@@ -422,6 +422,7 @@ designate quota-update
                                  [--domain-recordsets DOMAIN_RECORDSETS]
                                  [--recordset-records RECORDSET_RECORDS]
                                  [--domain-records DOMAIN_RECORDS]
+                                 [--api-export-size API_EXPORT_SIZE]
                                  tenant_id
 
 Update Quota
@@ -430,7 +431,7 @@ Positional arguments
 --------------------
 
 ``tenant_id``
-  Tenant ID
+  Tenant ID.
 
 Optional arguments
 ------------------
@@ -439,16 +440,19 @@ Optional arguments
   show this help message and exit
 
 ``--domains DOMAINS``
-  Allowed domains
+  Allowed domains.
 
 ``--domain-recordsets DOMAIN_RECORDSETS``
-  Allowed domain records
+  Allowed domain records.
 
 ``--recordset-records RECORDSET_RECORDS``
-  Allowed recordset records
+  Allowed recordset records.
 
 ``--domain-records DOMAIN_RECORDS``
-  Allowed domain records
+  Allowed domain records.
+
+``--api-export-size API_EXPORT_SIZE``
+  Allowed zone export recordsets.
 
 .. _designate_record-create:
 
@@ -472,7 +476,7 @@ Positional arguments
 --------------------
 
 ``domain_id``
-  Domain ID or name
+  Domain ID or name.
 
 Optional arguments
 ------------------
@@ -481,22 +485,22 @@ Optional arguments
   show this help message and exit
 
 ``--name NAME``
-  Record (relative|absolute) name
+  Record (relative|absolute) name.
 
 ``--type TYPE``
-  Record type
+  Record type.
 
 ``--data DATA``
-  Record data
+  Record data.
 
 ``--ttl TTL``
-  Record TTL
+  Record TTL.
 
 ``--priority PRIORITY``
-  Record priority
+  Record priority.
 
 ``--description DESCRIPTION``
-  Description
+  Description.
 
 .. _designate_record-delete:
 
@@ -517,10 +521,10 @@ Positional arguments
 --------------------
 
 ``domain_id``
-  Domain ID or name
+  Domain ID or name.
 
 ``id``
-  Record ID
+  Record ID.
 
 Optional arguments
 ------------------
@@ -547,10 +551,10 @@ Positional arguments
 --------------------
 
 ``domain_id``
-  Domain ID or name
+  Domain ID or name.
 
 ``id``
-  Record ID
+  Record ID.
 
 Optional arguments
 ------------------
@@ -577,7 +581,7 @@ Positional arguments
 --------------------
 
 ``domain_id``
-  Domain ID or name
+  Domain ID or name.
 
 Optional arguments
 ------------------
@@ -608,10 +612,10 @@ Positional arguments
 --------------------
 
 ``domain_id``
-  Domain ID or name
+  Domain ID or name.
 
 ``id``
-  Record ID
+  Record ID.
 
 Optional arguments
 ------------------
@@ -620,26 +624,26 @@ Optional arguments
   show this help message and exit
 
 ``--name NAME``
-  Record name
+  Record name.
 
 ``--type TYPE``
-  Record type
+  Record type.
 
 ``--data DATA``
-  Record data
+  Record data.
 
 ``--description DESCRIPTION``
-  Description
+  Description.
 
 ``--no-description``
 
 ``--ttl TTL``
-  Record time to live (seconds)
+  Record time to live (seconds).
 
 ``--no-ttl``
 
 ``--priority PRIORITY``
-  Record priority
+  Record priority.
 
 ``--no-priority``
 
@@ -790,7 +794,7 @@ Optional arguments
   show this help message and exit
 
 ``--name NAME``
-  Server name
+  Server name.
 
 .. _designate_server-delete:
 
@@ -811,7 +815,7 @@ Positional arguments
 --------------------
 
 ``id``
-  Server ID
+  Server ID.
 
 Optional arguments
 ------------------
@@ -838,7 +842,7 @@ Positional arguments
 --------------------
 
 ``id``
-  Server ID
+  Server ID.
 
 Optional arguments
 ------------------
@@ -885,7 +889,7 @@ Positional arguments
 --------------------
 
 ``id``
-  Server ID
+  Server ID.
 
 Optional arguments
 ------------------
@@ -894,7 +898,7 @@ Optional arguments
   show this help message and exit
 
 ``--name NAME``
-  Server name
+  Server name.
 
 .. _designate_sync-all:
 
