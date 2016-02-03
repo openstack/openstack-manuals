@@ -45,7 +45,7 @@ configuration file, or add it yourself according to the pattern below.
    allow_headers = Content-Type,Cache-Control,Content-Language,Expires,Last-Modified,Pragma,X-Custom-Header
    expose_headers = Content-Type,Cache-Control,Content-Language,Expires,Last-Modified,Pragma,X-Custom-Header
 
-This method also enables you to define multiple origins. To express this in
+Additional origins can be explicitly added. To express this in
 your configuration file, first begin with a ``[cors]`` group as above,
 into which you place your default configuration values. Then, add as many
 additional configuration groups as necessary, naming them
@@ -74,11 +74,10 @@ human-readable string:
 Enabling CORS with PasteDeploy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In other services, CORS is configured via PasteDeploy. In this case,
-you must first make sure that OpenStack's ``oslo_middleware`` package
-(version 2.4.0 or later) is available in the Python environment that is
-running the service. Then, add the following configuration block to your
-``paste.ini`` file.
+CORS can also be configured using PasteDeploy. First of all, ensure that
+OpenStack's ``oslo_middleware`` package (version 2.4.0 or later) is
+available in the Python environment that is running the service. Then,
+add the following configuration block to your ``paste.ini`` file.
 
 .. code-block:: ini
 
@@ -91,8 +90,9 @@ running the service. Then, add the following configuration block to your
    expose_headers = Content-Type,Cache-Control,Content-Language,Expires,Last-Modified,Pragma,X-Custom-Header
 
 .. note::
-
-   To add another domain, simply add another filter.
+   To add an additional domain in oslo_middleware v2.4.0, add
+   another filter. In v3.0.0 and after, you may add multiple domains
+   in the above ``allowed_origin`` field, separated by commas.
 
 Security concerns
 ~~~~~~~~~~~~~~~~~
