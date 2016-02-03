@@ -690,7 +690,7 @@ each of the supported guest OS:
    * - winLonghornGuest
      - Windows Longhorn (experimental)
    * - winMeGuest
-     - Windows Millenium Edition
+     - Windows Millennium Edition
    * - winNetBusinessGuest
      - Windows Small Business Server 2003
    * - winNetDatacenter64Guest

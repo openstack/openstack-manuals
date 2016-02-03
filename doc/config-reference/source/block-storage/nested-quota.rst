@@ -69,7 +69,7 @@ Getting default quotas
      .. note::
 
         This command returns the default values for resources.
-        This is because the quotas for this project were not explictly set.
+        This is because the quotas for this project were not explicitly set.
 
 #. Get the quota for subprojects.
 
