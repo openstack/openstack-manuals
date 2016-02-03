@@ -425,8 +425,7 @@ options to the ``nova.conf`` file:
    * vSphere vCenter versions 5.0 and earlier: You must specify the
      location of the WSDL files by adding the
      ``wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl``
-     setting to the above configuration. For more information, see
-     :ref:`vSphere 5.0 and earlier additional set up <vmware-additional>`.
+     setting to the above configuration.
 
    * Clusters: The vCenter driver can support only a single cluster.
      Clusters and data stores used by the vCenter driver should not contain
@@ -463,7 +462,9 @@ can fail while the vCenter and ESX still run, you must protect the
    to this driver.
 
 You must complete additional configuration for environments that use
-vSphere 5.0 and earlier. See :ref:`vmware-additional`.
+vSphere 5.0 and earlier. See
+`vSphere 5.0 and earlier additional set up <http://docs.openstack.org/liberty/config-reference/content/vmware.html#VMware_additional_config>`_
+available in previous released documents.
 
 .. _vmware-images:
 
