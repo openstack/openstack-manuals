@@ -4,9 +4,9 @@
 Tools and content overview
 ==========================
 
-In the past, the documentation team used DocBook format, now the guides are
-being converted from DocBook to ReStructured Text (RST). For more information
-on the conversion, see `Doc Migration from DocBook to RST`_.
+While in the past the documentation team used DocBook format, the guides are
+now being converted from DocBook to ReStructured Text (RST). For more
+information on the conversion, see `Doc Migration from DocBook to RST`_.
 
 To work on the RST source files, find the :file:`/doc/guide/source/` directory
 in a given OpenStack project. These files are built to
@@ -26,7 +26,7 @@ source files are built from.
 OpenStack projects
 ~~~~~~~~~~~~~~~~~~
 
-The OpenStack Documentation program focuses on the documentation for the
+The OpenStack Documentation program focuses on documentation for the
 following primary projects:
 
 * Compute service (nova)
