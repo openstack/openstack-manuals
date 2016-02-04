@@ -10,7 +10,7 @@ Documentation structure
 File naming conventions
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-For XML filenames, to indicate the hierarchical type of files use
+To indicate the hierarchical type of files for XML filenames use
 the following prefixes:
 
 * ``bk_`` for book,
