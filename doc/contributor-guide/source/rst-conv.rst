@@ -7,10 +7,10 @@ RST formatting conventions
 OpenStack documentation uses reStructuredText (RST) markup syntax
 with Sphinx extensions.
 
-RST is a powerful and straightforward markup language, that in combination
+RST is a powerful and straightforward markup language that, in combination
 with Sphinx, provides a wide range of facilities for intelligent and
-good-looking documentation creation. It uses simple and implicit
-syntax to introduce a wide range of content elements, such as, titles,
+appealing documentation creation. It uses simple and implicit
+syntax to introduce a variety of content elements such as titles,
 code blocks, vertical lists, and many others. All the source content formatted
 using RST is stored in files with the ``.rst`` extension.
 

@@ -21,7 +21,7 @@ Other good first-time documentation tasks are bug triaging and bug fixing:
 
 #. If you are up for it, assign the bug to yourself after it has been
    confirmed by one other person. Fix it by committing the required changes
-   to the OpenStack documentation.
+   to OpenStack documentation.
 
 The following diagram shows the basic setup workflow:
 
