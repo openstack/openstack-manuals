@@ -234,17 +234,17 @@ attached port.
 .. code-block:: console
 
     $ neutron qos-bandwidth-limit-rule-update \
-        a49f02fe-6ab5-4cd2-8a68-f4589f58a010 bw-limiter \
+        92ceb52f-170f-49d0-9528-976e2fee2d6f bw-limiter \
         --max-kbps 2000 --max-burst-kbps 200
-    Updated bandwidth_limit_rule: a49f02fe-6ab5-4cd2-8a68-f4589f58a010
+    Updated bandwidth_limit_rule: 92ceb52f-170f-49d0-9528-976e2fee2d6f
 
     $ neutron qos-bandwidth-limit-rule-show \
-        a49f02fe-6ab5-4cd2-8a68-f4589f58a010 bw-limiter
+        92ceb52f-170f-49d0-9528-976e2fee2d6f bw-limiter
 
     +----------------+--------------------------------------+
     | Field          | Value                                |
     +----------------+--------------------------------------+
-    | id             | a49f02fe-6ab5-4cd2-8a68-f4589f58a010 |
+    | id             | 92ceb52f-170f-49d0-9528-976e2fee2d6f |
     | max_burst_kbps | 200                                  |
     | max_kbps       | 2000                                 |
     +----------------+--------------------------------------+
