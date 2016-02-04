@@ -203,18 +203,18 @@ configuring-ec2-api.html>`__.
 
    Nova in tree EC2-compatible API is deprecated.
    The `ec2-api project <http://git.openstack.org/cgit/openstack/ec2-api/>`_
-   is working on implementation of EC2 API.
+   is working to implement the EC2 API.
 
-Numerous third-party tools and language-specific SDKs can be used to
-interact with OpenStack clouds, using both native and compatibility
-APIs. Some of the more popular third-party tools are:
+You can use numerous third-party tools and language-specific SDKs to
+interact with OpenStack clouds. You can use both native and
+compatibility APIs. Some of the more popular third-party tools are:
 
 Euca2ools
     A popular open source command-line tool for interacting with the EC2
     API. This is convenient for multi-cloud environments where EC2 is
     the common API, or for transitioning from EC2-based clouds to
-    OpenStack. For more information, see the `euca2ools
-    site <https://www.eucalyptus.com/docs/eucalyptus/4.1.2/index.html#shared/euca2ools_section.html>`__.
+    OpenStack. For more information, see the `Eucalyptus
+    Documentation <http://docs.hpcloud.com/eucalyptus>`__.
 
 Hybridfox
     A Firefox browser add-on that provides a graphical interface to many
@@ -223,19 +223,19 @@ Hybridfox
     site <http://code.google.com/p/hybridfox/>`__.
 
 boto
-    A Python library for interacting with Amazon Web Services. It can be
-    used to access OpenStack through the EC2 compatibility API. For more
-    information, see the `boto project page on
+    Python library for interacting with Amazon Web Services. You can use
+    this library to access OpenStack through the EC2 compatibility API.
+    For more     information, see the `boto project page on
     GitHub <https://github.com/boto/boto>`__.
 
 fog
-    A Ruby cloud services library. It provides methods for interacting
+    A Ruby cloud services library. It provides methods to interact
     with a large number of cloud and virtualization platforms, including
     OpenStack. For more information, see the `fog
     site <https://rubygems.org/gems/fog>`__.
 
 php-opencloud
-    A PHP SDK designed to work with most OpenStack- based cloud
+    A PHP SDK designed to work with most OpenStack-based cloud
     deployments, as well as Rackspace public cloud. For more
     information, see the `php-opencloud
     site <http://www.php-opencloud.com>`__.
