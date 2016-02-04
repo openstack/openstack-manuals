@@ -63,6 +63,10 @@ Supported operations
 
 * Manage and unmanage a volume.
 
+* Replicate volumes to managed and unmanaged targets.
+
+* Fail-over volumes to managed and unmanaged targets.
+
 When you use back end assisted volume migration, both source and destination
 clusters must be in the same HPE LeftHand/StoreVirtual management group.
 The HPE LeftHand/StoreVirtual array will use native LeftHand APIs to migrate
