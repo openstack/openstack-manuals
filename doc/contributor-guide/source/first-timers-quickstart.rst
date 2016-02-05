@@ -190,8 +190,17 @@ To submit changes to your patch, proceed with the following steps:
 
 #. Make your edits.
 
-#. Commit the changes and push them to review as described
-   in the `Updating a Change`_ section of the Infrastructure manual.
+#. Commit the changes using the `amend` flag:
+
+   .. code-block:: console
+
+      $ git commit -a --amend
+
+   Ensure that the Change-ID line remains intact in your commit message. This
+   prevents Gerrit from creating a new patch.
+
+#. Push the changes to review as described in the `Updating a Change`_ section
+   of the Infrastructure manual.
 
 Wait for more reviews.
 
