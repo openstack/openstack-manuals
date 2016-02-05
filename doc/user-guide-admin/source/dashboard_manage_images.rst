@@ -56,6 +56,12 @@ Guide <http://docs.openstack.org/image-guide/>`_.
    |                               | image file on your file system  |
    |                               | and add it.                     |
    +-------------------------------+---------------------------------+
+   | :guilabel:`Kernel`            | Select the kernel to boot an    |
+   |                               | AMI-style image.                |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Ramdisk`           | Select the ramdisk to boot an   |
+   |                               | AMI-style image.                |
+   +-------------------------------+---------------------------------+
    | :guilabel:`Format`            | Select the image format.        |
    +-------------------------------+---------------------------------+
    | :guilabel:`Architecture`      | Specify the architecture. For   |
