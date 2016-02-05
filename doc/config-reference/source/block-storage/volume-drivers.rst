@@ -7,6 +7,7 @@ Volume drivers
 
    drivers/blockbridge-eps-driver.rst
    drivers/ceph-rbd-volume-driver.rst
+   drivers/coho-data-driver.rst
    drivers/dell-equallogic-driver.rst
    drivers/dell-storagecenter-driver.rst
    drivers/dothill-driver.rst
