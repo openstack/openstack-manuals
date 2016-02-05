@@ -9,7 +9,7 @@ Database service command-line client
 The trove client is the command-line interface (CLI) for
 the Database service API and its extensions.
 
-This chapter documents :command:`trove` version ``1.4.0``.
+This chapter documents :command:`trove` version ``2.0.0``.
 
 For help on a specific :command:`trove` command, enter:
 
@@ -210,6 +210,9 @@ Subcommands
 ``restart``
   Restarts an instance.
 
+``root-disable``
+  Disables root for an instance.
+
 ``root-enable``
   Enables root for an instance and resets if
   already exists.
@@ -278,7 +281,7 @@ trove optional arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``--version``
-  show program's version number and exit
+  Show program's version number and exit.
 
 ``--debug``
   Print debugging output.
@@ -465,7 +468,7 @@ Positional arguments
 --------------------
 
 ``<backup>``
-  ID of the backup.
+  ID or name of the backup.
 
 .. _trove_backup-list:
 
@@ -546,7 +549,7 @@ trove cluster-create
 .. code-block:: console
 
    usage: trove cluster-create <name> <datastore> <datastore_version>
-                               [--instance <opt=value,opt=value,...>]
+                               [--instance "<opt=value,opt=value,...>"]
 
 Creates a new cluster.
 
@@ -565,13 +568,14 @@ Positional arguments
 Optional arguments
 ------------------
 
-``--instance <opt=value,opt=value,...>``
+``--instance "<opt=value,opt=value,...>"``
   Create an instance for the cluster. Specify
   multiple times to create multiple instances.
   Valid options are: flavor=flavor_name_or_id,
-  volume=disk_size_in_GB, nic='net-id=net-
-  uuid,v4-fixed-ip=ip-addr,port-id=port-uuid'
-  (where net-id=network_id, v4-fixed-
+  volume=disk_size_in_GB, volume_type=type,
+  nic='net-id=net-uuid,v4-fixed-ip=ip-addr
+  ,port-id=port-uuid' (where net-
+  id=network_id, v4-fixed-
   ip=IPv4r_fixed_address, port-id=port_id),
   availability_zone=AZ_hint_for_Nova.
 
@@ -966,7 +970,7 @@ trove create
 .. code-block:: console
 
    usage: trove create <name> <flavor>
-                       [--size <size>]
+                       [--size <size>] [--volume_type <volume_type>]
                        [--databases <databases> [<databases> ...]]
                        [--users <users> [<users> ...]] [--backup <backup>]
                        [--availability_zone <availability_zone>]
@@ -994,6 +998,10 @@ Optional arguments
   Size of the instance disk volume in GB.
   Required when volume support is enabled.
 
+``--volume_type <volume_type>``
+  Volume type. Optional when volume support is
+  enabled.
+
 ``--databases <databases> [<databases> ...]``
   Optional list of databases.
 
@@ -1013,7 +1021,9 @@ Optional arguments
 ``--datastore_version <datastore_version>``
   A datastore version name or ID.
 
-``--nic <net-id=net-uuid,v4-fixed-ip=ip-addr,port-id=port-uuid>``
+``--nic <net-id=net-uuid,``
+
+``v4-fixed-ip=ip-addr,port-id=port-uuid>``
   Create a NIC on the instance. Specify option
   multiple times to create multiple NICs. net-
   id: attach NIC to network with this ID
@@ -1495,6 +1505,23 @@ trove restart
    usage: trove restart <instance>
 
 Restarts an instance.
+
+Positional arguments
+--------------------
+
+``<instance>``
+  ID or name of the instance.
+
+.. _trove_root-disable:
+
+trove root-disable
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: trove root-disable <instance>
+
+Disables root for an instance.
 
 Positional arguments
 --------------------
