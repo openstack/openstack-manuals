@@ -96,8 +96,7 @@ Download the snapshot as an image
 
    .. code-block:: console
 
-      $ glance image-download --file snapshot.raw
-       f30b204e-1ce6-40e7-b8d9-b353d4d84e7d
+      $ glance image-download --file snapshot.raw f30b204e-1ce6-40e7-b8d9-b353d4d84e7d
 
    .. note::
 
