@@ -9,23 +9,23 @@ volume.
 
 To back up a volume, you must create a snapshot of it. An LVM snapshot
 is the exact copy of a logical volume, which contains data in a frozen
-state. This prevents data corruption, because data cannot be manipulated
+state. This prevents data corruption because data cannot be manipulated
 during the volume creation process. Remember that the volumes created
 through a :command:`nova volume-create` command exist in an LVM logical
 volume.
 
 You must also make sure that the operating system is not using the
-volume, and that all data has been flushed on the guest file systems.
+volume and that all data has been flushed on the guest file systems.
 This usually means that those file systems have to be unmounted during
 the snapshot creation. They can be mounted again as soon as the logical
 volume snapshot has been created.
 
-Before you create the snapshot, you must have enough space to save it.
+Before you create the snapshot you must have enough space to save it.
 As a precaution, you should have at least twice as much space as the
 potential snapshot size. If insufficient space is available, the snapshot
 might become corrupted.
 
-For this example, assume that a 100 GB volume named ``volume-00000001``
+For this example assume that a 100 GB volume named ``volume-00000001``
 was created for an instance while only 4 GB are used. This example uses
 these commands to back up only those 4 GB:
 
@@ -198,8 +198,8 @@ You can apply this process to volumes of any size.
       takes to complete the calculation is directly proportional to the
       size of the file.
 
-      For files larger than around 4 to 6 GB, and depending on your CPU,
-      the process might take a long time.
+      Depending on your CPU, the process might take a long time for
+      files larger than around 4 to 6 GB.
 
 #. After work cleaning
 
