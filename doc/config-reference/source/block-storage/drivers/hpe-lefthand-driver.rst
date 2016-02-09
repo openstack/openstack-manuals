@@ -63,6 +63,8 @@ Supported operations
 
 * Manage and unmanage a volume.
 
+* Manage and unmanage a snapshot.
+
 * Replicate volumes to managed and unmanaged targets.
 
 * Fail-over volumes to managed and unmanaged targets.
