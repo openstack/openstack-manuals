@@ -112,8 +112,10 @@ Create an encrypted volume
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use the OpenStack dashboard (horizon), or the :command:`cinder`
-command to create volumes just as you normally would. For an encrypted
-volume use the LUKS tag, for unencrypted leave the LUKS tag off.
+command to create volumes just as you normally would. For an encrypted volume,
+pass the ``--volume-type LUKS`` flag, which denotes that the volume will be of
+encrypted type ``LUKS``. If that argument is left out, the default volume
+type, ``unencrypted``, is used.
 
 #. Source your admin credentials:
 
