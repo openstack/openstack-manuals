@@ -18,9 +18,6 @@ command:
        volume.
      - ``--block-device``
      -  :ref:`Boot_instance_from_image_and_attach_non-bootable_volume`
-   * - Attach a swap disk to an instance.
-     - ``--swap``
-     - :ref:`Attach_swap_or_ephemeral_disk_to_an_instance`
    * - Create a volume from an image and boot an instance from that
        volume.
      - ``--block-device``
