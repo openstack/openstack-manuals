@@ -5,6 +5,6 @@ Managing the cloud with euca2ools
 =================================
 
 The ``euca2ools`` command-line tool provides a command line interface to
-EC2 API calls. For more information about ``euca2ools``, see
-`https://www.eucalyptus.com/docs/eucalyptus/4.1.2/index.html
-<https://www.eucalyptus.com/docs/eucalyptus/4.1.2/index.html>`__.
+EC2 API calls. For more information, see the `Official Eucalyptus Documentation
+<http://docs.hpcloud.com/eucalyptus/>`_.
+
