@@ -10,7 +10,7 @@ Introduction
 ~~~~~~~~~~~~
 
 The Bare Metal service provides physical hardware as opposed to
-virtual machines and provides several reference drivers which
+virtual machines. It also provides several reference drivers, which
 leverage common technologies like PXE and IPMI, to cover a wide range
 of hardware. The pluggable driver architecture also allows
 vendor-specific drivers to be added for improved performance or
@@ -139,7 +139,7 @@ If you get this message, check the following:
 
 #. It takes some time for nodes information to propagate from the Bare Metal
    service to the Compute service after introspection. Our tooling usually
-   accounts for it, but if you did some steps manually, there may be a period
+   accounts for it, but if you did some steps manually there may be a period
    of time when nodes are not available to the Compute service yet. Check that
    :command:`nova hypervisor-stats` correctly shows total amount of resources
    in your system.
