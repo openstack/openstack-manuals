@@ -93,8 +93,8 @@ done, follow the steps below to submit a patch review.
    built manuals to see how the change will look on the web page. For a new
    patch, it takes some time before Jenkins checks appear on the Gerrit
    page. You can also `build the patch locally`_ if necessary.
-#. Click *Review* to vote and enter any comments about your review,
-   then click *Publish Comments*.
+#. Click *Reply* to vote and enter any comments about your review,
+   then click *Post*.
 
 .. note:: The patch with WorkInProgress (WIP) status needs additional work
           before it gets merged. Therefore, you may skip such a patch and
