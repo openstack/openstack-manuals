@@ -35,16 +35,16 @@ else
     NUMBER_OF_CORES=2
 fi
 
-# common-rst is imported from various RST documents, but what files are
+# common is imported from various RST documents, but what files are
 # used varies across RST documents. Thus we need an index file to include
-# all files under common-rst. To this aim, we create such document called
-# 'common-rst-work' dynamically to generate the POT file of common-rst.
-if [[ "$REPOSITORY" = "openstack-manuals" && "$DOCNAME" = "common-rst" ]] ; then
-    DIRECTORY="doc/common-rst-work"
+# all files under common. To this aim, we create such document called
+# 'common-work' dynamically to generate the POT file of common.
+if [[ "$REPOSITORY" = "openstack-manuals" && "$DOCNAME" = "common" ]] ; then
+    DIRECTORY="doc/common-work"
     TOPDIR="doc/"
     mkdir -p $DIRECTORY/source
-    cp doc/common-rst/source/conf.py $DIRECTORY/source/conf.py
-    ln -sf ../../common-rst $DIRECTORY/source/common
+    cp doc/common/source/conf.py $DIRECTORY/source/conf.py
+    ln -sf ../../common $DIRECTORY/source/common
     cat <<EOF > $DIRECTORY/source/index.rst
 .. toctree::
    :maxdepth: 2
@@ -56,7 +56,7 @@ fi
 
 if [ "$REPOSITORY" = "openstack-manuals" ] ; then
     # Build Glossary
-    tools/glossary2rst.py doc/common-rst/glossary.rst
+    tools/glossary2rst.py doc/common/glossary.rst
 fi
 # First remove the old pot file, otherwise the new file will contain
 # old references
@@ -74,16 +74,16 @@ fi
 sphinx-build -j $NUMBER_OF_CORES -b gettext $TAG ${DIRECTORY}/source/ \
     ${DIRECTORY}/source/locale/
 
-if [[ "$REPOSITORY" = "openstack-manuals" && "$DOCNAME" = "common-rst" ]] ; then
-    # In case of common-rst, we use the working directory 'common-rst-work'.
-    # Copies the generated POT to common-rst/source/locale
+if [[ "$REPOSITORY" = "openstack-manuals" && "$DOCNAME" = "common" ]] ; then
+    # In case of common, we use the working directory 'common-work'.
+    # Copies the generated POT to common/source/locale
     # and finally removes the working directory.
     msgcat ${DIRECTORY}/source/locale/common.pot | \
         awk '$0 !~ /^\# [a-z0-9]+$/' \
-        > ${TOPDIR}common-rst/source/locale/common-rst.pot
+        > ${TOPDIR}common/source/locale/common.pot
     rm -rf $DIRECTORY
 else
-    # common-rst is translated as part of openstack-manuals, do not
+    # common is translated as part of openstack-manuals, do not
     # include the file in the combined tree if it exists.
     rm -f ${DIRECTORY}/source/locale/common.pot
     # Take care of deleting all temporary files so that

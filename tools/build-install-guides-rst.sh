@@ -24,7 +24,7 @@ trap "mv -f ${INDEX}.save ${INDEX}" EXIT
 
 for tag in $TAGS; do
     GLOSSARY=""
-    if [[ ! -e doc/common-rst/glossary.rst ]] ; then
+    if [[ ! -e doc/common/glossary.rst ]] ; then
         GLOSSARY="--glossary"
     fi
 

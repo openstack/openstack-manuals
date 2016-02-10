@@ -26,7 +26,7 @@ function copy_rst_trans {
     for lang in ja ; do
         TARGET=$PROJECT_DIR/$target/source/locale/$lang/LC_MESSAGES
         mkdir -p $TARGET
-        cp doc/common-rst/source/locale/$lang/LC_MESSAGES/common-rst.po \
+        cp doc/common/source/locale/$lang/LC_MESSAGES/common.po \
             $TARGET
     done
     (cd $PROJECT_DIR; git add $target/source/locale/)
@@ -39,7 +39,7 @@ function copy_rst {
     tools/glossary2rst.py $PROJECT_DIR/$target/glossary.rst
 
     for filename in app_support.rst conventions.rst; do
-        cp doc/common-rst/$filename $PROJECT_DIR/$target
+        cp doc/common/$filename $PROJECT_DIR/$target
     done
     (cd $PROJECT_DIR; git add $target)
 }
