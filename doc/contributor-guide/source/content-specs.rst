@@ -8,8 +8,8 @@ Content specification
 Release-specific documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Installation Guides and Configuration Reference are released at release
-time, with draft material published to
+The Installation Guides, Configuration Reference, and Networking Guide
+are released at release time, with draft material published to
 docs.openstack.org/draft/draft-index.html. The rest of the guides are
 continuously released.
 
@@ -31,9 +31,11 @@ multiple distributions based on the following packaging systems:
 Guides for deployers and administrators
 ---------------------------------------
 
-`OpenStack Configuration Reference`_: Contains a reference listing of all
-configuration options for core and integrated OpenStack services by release
-version.
+* `OpenStack Configuration Reference`_: Contains a reference listing of all
+  configuration options for core and integrated OpenStack services by release
+  version.
+* `OpenStack Networking Guide`_: This guide targets OpenStack administrators
+  seeking to deploy and manage OpenStack Networking (neutron).
 
 Continuously released documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -106,6 +108,7 @@ This section shows the license indicators as of March 20, 2015.
 * OpenStack Install Guides (all): Apache 2.0
 * OpenStack High Availability Guide: Apache 2.0
 * OpenStack Configuration Reference: Apache 2.0
+* OpenStack Networking Guide: Apache 2.0
 
 * OpenStack Security Guide: CC-by 3.0
 * Virtual Machine Image Guide: CC-by 3.0
@@ -156,6 +159,8 @@ This guide has a review in place to get a license indicator in output:
 .. _`Installation Guide for Ubuntu`: http://docs.openstack.org/liberty/install-guide-ubuntu/
 
 .. _`OpenStack Configuration Reference`: http://docs.openstack.org/liberty/config-reference/content/
+
+.. _`OpenStack Networking Guide`: http://docs.openstack.org/liberty/networking-guide/
 
 .. _`release information`: https://wiki.openstack.org/wiki/Releases
 
