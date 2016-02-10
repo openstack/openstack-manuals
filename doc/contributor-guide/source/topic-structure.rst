@@ -11,21 +11,21 @@ submit to the ``openstack-manuals`` repository.
 Organize technical information in topics. Use the principles of topic-based
 authoring in all technical publications.
 
-Topic-based authoring is an approach to the content creation where
-you structure information in small chunks of a particular type. In contrast to
-the book content, where information has a linear structure, in topic-based
-authoring, you presume that a user can start reading documentation from
+Topic-based authoring is a method of content creation in which information
+is structured in small chunks of a particular type. In contrast to
+book content, where information has a linear structure, in topic-based
+authoring you presume that a user can begin reading documentation from
 any topic. Therefore, each topic represents an independent piece of
 information. Each topic states prerequisites and dependencies, if any, as
-well as provides information about the next steps.
+well as providing information about the next steps.
 
-In topic-based authoring, a chunk of information is called `topic`.
+In topic-based authoring a chunk of information is called `topic`.
 
 Structure the information around the following topics:
 
 **Concept**
-  A concept topic explains a particular functionality. A concept
-  topic does not provide a sequence of steps or information on how to use the
+  A concept topic explains a particular functionality. It does not
+  provide a sequence of steps or information on how to use the
   functionality.
 
   Example of a concept topic title: *Introduction to the OpenStack components
@@ -40,20 +40,19 @@ Structure the information around the following topics:
   * (optional) Examples
 
 **Task**
-  A task topic explains how to complete a particular task and provides
-  a sequence of steps on how to achieve the goal of the task. A section
-  (or chapter) is the high level task topic.
+  A task topic provides a sequence of steps detailing how to achieve a
+  certain task. A section (or chapter) is the high level task topic.
 
   Typically, a section includes multiple sub-sections: task, concept, and
   reference topics. Start the title of a high level task topic with a verb
-  in gerund and the title of a subtask topics with a verb in imperative.
+  in gerund and the title of a subtask topic with a verb in imperative.
 
   Task topics are the most important topics in any technical documentation.
   Typically, the reader browses through the table of contents searching for
-  the information on how to configure the network, storage, or any other
+  information on how to configure the network, storage, or any other
   component of a system.
 
-  Examples of the concept topic titles:
+  Examples of concept topic titles:
 
   * Section topic title: *Monitoring performance*.
   * Task topic title: *Delete a node*, *Recover from a failure*.
