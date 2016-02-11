@@ -11,8 +11,8 @@ Install the prerequisite software
 Most Linux distributions include packaged versions of the command-line
 clients that you can install directly, see Installing_from_packages_.
 
-If you need to install the command-line packages source packages, the
-following table lists the software that you need to have to run the
+If you need to install the source package for the command-line package,
+the following table lists the software needed to run the
 command-line clients, and provides installation instructions as needed.
 
 +-----------------------+-----------------------------------------------------+
