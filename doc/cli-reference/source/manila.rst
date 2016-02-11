@@ -9,7 +9,7 @@ Shared file systems command-line client
 The manila client is the command-line interface (CLI) for
 the Shared file systems API and its extensions.
 
-This chapter documents :command:`manila` version ``1.6.0``.
+This chapter documents :command:`manila` version ``1.7.0``.
 
 For help on a specific :command:`manila` command, enter:
 
@@ -472,7 +472,7 @@ manila access-list
 
 .. code-block:: console
 
-   usage: manila access-list <share>
+   usage: manila access-list [--columns <columns>] <share>
 
 Show access list for share.
 
@@ -481,6 +481,13 @@ Positional arguments
 
 ``<share>``
   Name or ID of the share.
+
+Optional arguments
+------------------
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "access_type,access_to"
 
 .. _manila_api-version:
 
@@ -561,7 +568,7 @@ manila cg-list
 .. code-block:: console
 
    usage: manila cg-list [--all-tenants [<0|1>]] [--limit <limit>]
-                         [--offset <offset>]
+                         [--offset <offset>] [--columns <columns>]
 
 List consistency groups with filters.
 
@@ -577,6 +584,10 @@ Optional arguments
 
 ``--offset <offset>``
   Start position of consistency group listing.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,name"
 
 .. _manila_cg-reset-state:
 
@@ -682,6 +693,7 @@ manila cg-snapshot-list
 
    usage: manila cg-snapshot-list [--all-tenants [<0|1>]] [--limit <limit>]
                                   [--offset <offset>] [--detailed DETAILED]
+                                  [--columns <columns>]
 
 List consistency group snapshots with filters.
 
@@ -700,6 +712,10 @@ Optional arguments
 
 ``--detailed DETAILED``
   Show detailed information about snapshots.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,name"
 
 .. _manila_cg-snapshot-members:
 
@@ -978,9 +994,16 @@ manila extra-specs-list
 
 .. code-block:: console
 
-   usage: manila extra-specs-list
+   usage: manila extra-specs-list [--columns <columns>]
 
 Print a list of current 'share types and extra specs' (Admin Only).
+
+Optional arguments
+------------------
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,name"
 
 .. _manila_force-delete:
 
@@ -1280,6 +1303,7 @@ manila pool-list
 .. code-block:: console
 
    usage: manila pool-list [--host <host>] [--backend <backend>] [--pool <pool>]
+                           [--columns <columns>]
 
 List all backend storage pools known to the scheduler (Admin only).
 
@@ -1297,6 +1321,10 @@ Optional arguments
 ``--pool <pool>``
   Filter results by pool name. Regular expressions are
   supported.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "name,host"
 
 .. _manila_quota-class-show:
 
@@ -1468,9 +1496,16 @@ manila rate-limits
 
 .. code-block:: console
 
-   usage: manila rate-limits
+   usage: manila rate-limits [--columns <columns>]
 
 Print a list of rate limits for a user.
+
+Optional arguments
+------------------
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "verb,uri,value"
 
 .. _manila_reset-state:
 
@@ -1574,6 +1609,7 @@ manila security-service-list
                                        [--dns-ip <dns_ip>] [--server <server>]
                                        [--domain <domain>] [--detailed [<0|1>]]
                                        [--offset <offset>] [--limit <limit>]
+                                       [--columns <columns>]
 
 Get a list of security services.
 
@@ -1618,6 +1654,10 @@ Optional arguments
 
 ``--limit <limit>``
   Number of security services to return per request.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "name,type"
 
 .. _manila_security-service-show:
 
@@ -1730,7 +1770,7 @@ manila service-list
 
    usage: manila service-list [--host <hostname>] [--binary <binary>]
                               [--status <status>] [--state <state>]
-                              [--zone <zone>]
+                              [--zone <zone>] [--columns <columns>]
 
 List all services.
 
@@ -1751,6 +1791,10 @@ Optional arguments
 
 ``--zone <zone>``
   Availability zone.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,host"
 
 .. _manila_share-instance-force-delete:
 
@@ -1777,6 +1821,7 @@ manila share-instance-list
 .. code-block:: console
 
    usage: manila share-instance-list [--share-id <share_id>]
+                                     [--columns <columns>]
 
 List share instances.
 
@@ -1785,6 +1830,10 @@ Optional arguments
 
 ``--share-id <share_id>, --share_id <share_id>``
   Filter results by share ID.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,host,status"
 
 .. _manila_share-instance-reset-state:
 
@@ -1919,6 +1968,7 @@ manila share-network-list
                                     [--segmentation-id <segmentation_id>]
                                     [--cidr <cidr>] [--ip-version <ip_version>]
                                     [--offset <offset>] [--limit <limit>]
+                                    [--columns <columns>]
 
 Get a list of network info.
 
@@ -1992,6 +2042,10 @@ Optional arguments
 ``--limit <limit>``
   Number of share networks to return per request.
 
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id"
+
 .. _manila_share-network-security-service-add:
 
 manila share-network-security-service-add
@@ -2020,7 +2074,8 @@ manila share-network-security-service-list
 
 .. code-block:: console
 
-   usage: manila share-network-security-service-list <share-network>
+   usage: manila share-network-security-service-list [--columns <columns>]
+                                                     <share-network>
 
 Get list of security services associated with a given share network.
 
@@ -2029,6 +2084,13 @@ Positional arguments
 
 ``<share-network>``
   Share network name or ID.
+
+Optional arguments
+------------------
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,name"
 
 .. _manila_share-network-security-service-remove:
 
@@ -2173,6 +2235,7 @@ manila share-server-list
    usage: manila share-server-list [--host <hostname>] [--status <status>]
                                    [--share-network <share_network>]
                                    [--project-id <project_id>]
+                                   [--columns <columns>]
 
 List all share servers.
 
@@ -2190,6 +2253,10 @@ Optional arguments
 
 ``--project-id <project_id>``
   Filter results by project ID.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,host,status"
 
 .. _manila_share-server-show:
 
@@ -2322,7 +2389,7 @@ manila snapshot-list
                                [--status <status>] [--share-id <share_id>]
                                [--usage [any|used|unused]] [--limit <limit>]
                                [--offset <offset>] [--sort-key <sort_key>]
-                               [--sort-dir <sort_dir>]
+                               [--sort-dir <sort_dir>] [--columns <columns>]
 
 List all the snapshots.
 
@@ -2361,6 +2428,10 @@ Optional arguments
 ``--sort-dir <sort_dir>, --sort_dir <sort_dir>``
   Sort direction, available values are ('asc', 'desc').
   OPTIONAL: Default=None.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,name"
 
 .. _manila_snapshot-rename:
 
@@ -2572,7 +2643,7 @@ manila type-list
 
 .. code-block:: console
 
-   usage: manila type-list [--all]
+   usage: manila type-list [--all] [--columns <columns>]
 
 Print a list of available 'share types'.
 
@@ -2581,6 +2652,10 @@ Optional arguments
 
 ``--all``
   Display all share types (Admin only).
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,name"
 
 .. _manila_unmanage:
 
