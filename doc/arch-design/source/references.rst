@@ -35,7 +35,7 @@ characteristics to images.
 : An Open Source Cloud Management Platform for managing multiple clouds.
 
 `N-Tron Network Availability
-<http://www.n-tron.com/pdf/network_availability.pdf>`_
+<https://www.scribd.com/doc/298973976/Network-Availability>`_
 : Research white paper on network availability.
 
 `Nested KVM <http://davejingtian.org/2014/03/30/nested-kvm-just-for-fun>`_
