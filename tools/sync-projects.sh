@@ -27,7 +27,7 @@ function copy_rst_trans {
         TARGET=$PROJECT_DIR/$target/source/locale/$lang/LC_MESSAGES
         mkdir -p $TARGET
         cp doc/common/source/locale/$lang/LC_MESSAGES/common.po \
-            $TARGET
+            $TARGET/common-rst.po
     done
     (cd $PROJECT_DIR; git add $target/source/locale/)
 }
