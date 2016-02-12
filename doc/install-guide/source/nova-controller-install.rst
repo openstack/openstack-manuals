@@ -217,21 +217,11 @@ Install and configure components
 
       * In the ``[database]`` section, configure database access:
 
-        .. only:: ubuntu or obs
+        .. code-block:: ini
 
-           .. code-block:: ini
-
-              [database]
-              ...
-              connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
-
-        .. only:: rdo
-
-           .. code-block:: ini
-
-              [database]
-              ...
-              connection = mysql://nova:NOVA_DBPASS@controller/nova
+           [database]
+           ...
+           connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
 
         Replace ``NOVA_DBPASS`` with the password you chose for
         the Compute database.

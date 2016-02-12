@@ -132,21 +132,11 @@ requests and Memcached to store tokens instead of an SQL database.
 
          * In the ``[database]`` section, configure database access:
 
-           .. only:: ubuntu or obs
+           .. code-block:: ini
 
-              .. code-block:: ini
-
-                 [database]
-                 ...
-                 connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
-
-           .. only:: rdo
-
-              .. code-block:: ini
-
-                 [database]
-                 ...
-                 connection = mysql://keystone:KEYSTONE_DBPASS@controller/keystone
+              [database]
+              ...
+              connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
 
            Replace ``KEYSTONE_DBPASS`` with the password you chose for the database.
 

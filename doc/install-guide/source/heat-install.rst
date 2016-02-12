@@ -345,21 +345,11 @@ Install and configure components
 
       * In the ``[database]`` section, configure database access:
 
-        .. only:: ubuntu or obs
+        .. code-block:: ini
 
-           .. code-block:: ini
-
-              [database]
-              ...
-              connection = mysql+pymysql://heat:HEAT_DBPASS@controller/heat
-
-        .. only:: rdo
-
-           .. code-block:: ini
-
-              [database]
-              ...
-              connection = mysql://heat:HEAT_DBPASS@controller/heat
+           [database]
+           ...
+           connection = mysql+pymysql://heat:HEAT_DBPASS@controller/heat
 
         Replace ``HEAT_DBPASS`` with the password you chose for the
         Orchestration database.
