@@ -89,7 +89,7 @@ However, passive voice is acceptable in the following situations:
   +---------------------------------+------------------------------------+
   | **Do not use**                  | **Use**                            |
   +=================================+====================================+
-  | In 2009, engineers developed a   | A software that simplifies the    |
+  | In 2009, engineers developed a  | A software that simplifies the     |
   | software that simplifies the    | installation was developed in 2009.|
   | installation.                   |                                    |
   +---------------------------------+------------------------------------+
