@@ -71,7 +71,7 @@ then run the ``mvn`` command in that directory::
 
 The generated PDF documentation file is::
 
-    doc/glossary/target/docbkx/webhelp/glossary/glossary.pdf
+    doc/glossary/target/docbkx/webhelp/glossary/openstack-glossary.pdf
 
 The root of the generated HTML documentation is::
 
