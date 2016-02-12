@@ -14,6 +14,8 @@ When you manually install the Block Storage service, the options in the
 ``cinder.conf`` file are set to default values.
 
 The ``cinder.conf`` file contains most of the options to configure the
+Block Storage service. Here is the sample configuration file and you can
+generate the latest configuration file by using the tox provided by the
 Block Storage service.
 
 .. literalinclude:: ../samples/cinder.conf.sample
