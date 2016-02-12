@@ -24,7 +24,6 @@ scripts to load appropriate credentials for client operations.
       export OS_PROJECT_DOMAIN_ID=default
       export OS_USER_DOMAIN_ID=default
       export OS_PROJECT_NAME=admin
-      export OS_TENANT_NAME=admin
       export OS_USERNAME=admin
       export OS_PASSWORD=ADMIN_PASS
       export OS_AUTH_URL=http://controller:35357/v3
@@ -40,7 +39,6 @@ scripts to load appropriate credentials for client operations.
       export OS_PROJECT_DOMAIN_ID=default
       export OS_USER_DOMAIN_ID=default
       export OS_PROJECT_NAME=demo
-      export OS_TENANT_NAME=demo
       export OS_USERNAME=demo
       export OS_PASSWORD=DEMO_PASS
       export OS_AUTH_URL=http://controller:5000/v3
@@ -69,11 +67,13 @@ For example:
    .. code-block:: console
 
       $ openstack token issue
-      +------------+----------------------------------+
-      | Field      | Value                            |
-      +------------+----------------------------------+
-      | expires    | 2015-03-25T01:45:49.950092Z      |
-      | id         | cd4110152ac24bdeaa82e1443c910c36 |
-      | project_id | cf12a15c5ea84b019aec3dc45580896b |
-      | user_id    | 4d411f2291f34941b30eef9bd797505a |
-      +------------+----------------------------------+
+      +------------+-----------------------------------------------------------------+
+      | Field      | Value                                                           |
+      +------------+-----------------------------------------------------------------+
+      | expires    | 2016-02-12T20:44:35.659723Z                                     |
+      | id         | gAAAAABWvjYj-Zjfg8WXFaQnUd1DMYTBVrKw4h3fIagi5NoEmh21U72SrRv2trl |
+      |            | JWFYhLi2_uPR31Igf6A8mH2Rw9kv_bxNo1jbLNPLGzW_u5FC7InFqx0yYtTwa1e |
+      |            | eq2b0f6-18KZyQhs7F3teAta143kJEWuNEYET-y7u29y0be1_64KYkM7E       |
+      | project_id | 343d245e850143a096806dfaefa9afdc                                |
+      | user_id    | ac3377633149401296f6c0d92d79dc16                                |
+      +------------+-----------------------------------------------------------------+
