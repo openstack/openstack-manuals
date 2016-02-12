@@ -80,3 +80,4 @@ Operations Guide <http://docs.openstack.org/ops/>`_.
    environment-sql-database.rst
    environment-nosql-database.rst
    environment-messaging.rst
+   environment-memcached.rst

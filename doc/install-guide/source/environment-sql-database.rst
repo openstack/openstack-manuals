@@ -28,7 +28,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install mariadb mariadb-server MySQL-python
+         # yum install mariadb mariadb-server python2-PyMySQL
 
    .. only:: obs
 
@@ -38,9 +38,9 @@ Install and configure components
 
 .. only:: ubuntu or debian
 
-   2. Choose a suitable password for the database root account.
+   2. Choose a suitable password for the database ``root`` account.
 
-   3. Create and edit the ``/etc/mysql/conf.d/mysqld_openstack.cnf`` file
+   3. Create and edit the ``/etc/mysql/conf.d/openstack.cnf`` file
       and complete the following actions:
 
       - In the ``[mysqld]`` section, set the
@@ -64,13 +64,11 @@ Install and configure components
            default-storage-engine = innodb
            innodb_file_per_table
            collation-server = utf8_general_ci
-           init-connect = 'SET NAMES utf8'
            character-set-server = utf8
-
 
 .. only:: obs or rdo
 
-   2. Create and edit the ``/etc/my.cnf.d/mariadb_openstack.cnf`` file
+   2. Create and edit the ``/etc/my.cnf.d/openstack.cnf`` file
       and complete the following actions:
 
       - In the ``[mysqld]`` section, set the
@@ -87,28 +85,14 @@ Install and configure components
       - In the ``[mysqld]`` section, set the following keys to enable
         useful options and the UTF-8 character set:
 
-        .. only:: rdo
+        .. code-block:: ini
 
-           .. code-block:: ini
-
-              [mysqld]
-              ...
-              default-storage-engine = innodb
-              innodb_file_per_table
-              collation-server = utf8_general_ci
-              init-connect = 'SET NAMES utf8'
-              character-set-server = utf8
-
-        .. only:: obs
-
-           .. code-block:: ini
-
-              [mysqld]
-              ...
-              default-storage-engine = innodb
-              innodb_file_per_table
-              collation-server = utf8_general_ci
-              character-set-server = utf8
+           [mysqld]
+           ...
+           default-storage-engine = innodb
+           innodb_file_per_table
+           collation-server = utf8_general_ci
+           character-set-server = utf8
 
 Finalize installation
 ---------------------
@@ -140,10 +124,20 @@ Finalize installation
             # systemctl enable mysql.service
             # systemctl start mysql.service
 
-.. only:: ubuntu or rdo or obs
+.. only:: ubuntu
 
-   2. Secure the database service by running the
-      ``mysql_secure_installation`` script.
+   2. Secure the database service by running the ``mysql_secure_installation``
+      script.
+
+      .. code-block:: console
+
+         # mysql_secure_installation
+
+.. only:: rdo or obs
+
+   2. Secure the database service by running the ``mysql_secure_installation``
+      script. In particular, choose a suitable password for the database
+      ``root`` account.
 
       .. code-block:: console
 
