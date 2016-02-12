@@ -192,7 +192,7 @@ such as credentials to instances.
        auth_uri = http://controller:5000
        auth_url = http://controller:35357
        auth_region = RegionOne
-       auth_plugin = password
+       auth_type = password
        project_domain_id = default
        user_domain_id = default
        project_name = service
@@ -244,7 +244,7 @@ Configure Compute to use Networking
        ...
        url = http://controller:9696
        auth_url = http://controller:35357
-       auth_plugin = password
+       auth_type = password
        project_domain_id = default
        user_domain_id = default
        region_name = RegionOne
