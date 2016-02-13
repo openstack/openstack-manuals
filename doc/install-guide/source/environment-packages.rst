@@ -23,7 +23,15 @@ these procedures on all nodes.
    .. code-block:: console
 
       # apt-get install software-properties-common
-      # add-apt-repository cloud-archive:liberty
+      # add-apt-repository cloud-archive:mitaka
+
+   .. note::
+
+      For pre-release testing, use the staging repository:
+
+      .. code-block:: console
+
+         # add-apt-repository cloud-archive:mitaka-proposed
 
 .. only:: rdo
 
@@ -60,14 +68,24 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # yum install centos-release-openstack-liberty
+        # yum install centos-release-openstack-mitaka
 
    * On RHEL, download and install the RDO repository RPM to enable the
      OpenStack repository.
 
      .. code-block:: console
 
-        # yum install https://rdoproject.org/repos/openstack-liberty/rdo-release-liberty.rpm
+        # yum install https://rdoproject.org/repos/openstack-liberty/rdo-release-mitaka.rpm
+
+   .. note::
+
+      For pre-release testing on CentOS or RHEL, use the delorean repositories:
+
+      .. code-block:: console
+
+         # yum install yum-plugin-priorities
+         # wget http://trunk.rdoproject.org/centos7/delorean-deps.repo
+         # wget http://trunk.rdoproject.org/centos7/current-passed-ci/delorean.repo
 
 .. only:: obs
 
