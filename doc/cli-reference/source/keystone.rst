@@ -17,7 +17,7 @@ Identity service command-line client
 The keystone client is the command-line interface (CLI) for
 the Identity service API and its extensions.
 
-This chapter documents :command:`keystone` version ``2.0.0``.
+This chapter documents :command:`keystone` version ``2.1.2``.
 
 For help on a specific :command:`keystone` command, enter:
 
