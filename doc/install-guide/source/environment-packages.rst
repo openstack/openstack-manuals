@@ -127,7 +127,7 @@ these procedures on all nodes.
 
       .. code-block:: console
 
-         # echo "deb deb http://http.debian.net/debian jessie-backports main" \
+         # echo "deb http://http.debian.net/debian jessie-backports main" \
            >>/etc/apt/sources.list
 
       .. note::
