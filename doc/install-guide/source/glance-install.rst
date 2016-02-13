@@ -186,21 +186,11 @@ Install and configure components
 
       * In the ``[database]`` section, configure database access:
 
-        .. only:: ubuntu or obs
+        .. code-block:: ini
 
-           .. code-block:: ini
-
-              [database]
-              ...
-              connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
-
-        .. only:: rdo
-
-           .. code-block:: ini
-
-              [database]
-              ...
-              connection = mysql://glance:GLANCE_DBPASS@controller/glance
+           [database]
+           ...
+           connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
 
         Replace ``GLANCE_DBPASS`` with the password you chose for the
         Image service database.
@@ -271,21 +261,11 @@ Install and configure components
 
       * In the ``[database]`` section, configure database access:
 
-        .. only:: ubuntu or obs
+        .. code-block:: ini
 
-           .. code-block:: ini
-
-              [database]
-              ...
-              connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
-
-        .. only:: rdo
-
-           .. code-block:: ini
-
-              [database]
-              ...
-              connection = mysql://glance:GLANCE_DBPASS@controller/glance
+           [database]
+           ...
+           connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
 
         Replace ``GLANCE_DBPASS`` with the password you chose for the
         Image service database.
