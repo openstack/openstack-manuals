@@ -129,7 +129,8 @@ Install the components
           ...
           auth_uri = http://controller:5000
           auth_url = http://controller:35357
-          auth_plugin = password
+          memcached_servers = controller:11211
+          auth_type = password
           project_domain_id = default
           user_domain_id = default
           project_name = service
@@ -158,7 +159,7 @@ Install the components
           [nova]
           ...
           auth_url = http://controller:35357
-          auth_plugin = password
+          auth_type = password
           project_domain_id = default
           user_domain_id = default
           region_name = RegionOne
