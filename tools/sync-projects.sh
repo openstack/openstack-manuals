@@ -72,11 +72,11 @@ function copy_glossary_xml {
 
 case "$PROJECT_DIR" in
     api-site)
-        copy_rst common-rst
-        copy_rst_trans common-rst
+        copy_rst common
+        copy_rst_trans common
         ;;
     ha-guide)
-        copy_rst doc/common-rst
+        copy_rst doc/common
         # TODO(jaegerandi): Copy over once translations are ready
         #copy_rst_trans doc/common-rst
         ;;
@@ -84,8 +84,8 @@ case "$PROJECT_DIR" in
         copy_glossary_xml "doc/glossary" "openstack-ops" "figures"
         ;;
     security-doc)
-        copy_rst common-rst
-        copy_rst_trans common-rst
+        copy_rst common
+        copy_rst_trans common
         ;;
     *)
         echo "$PROJECT_DIR not handled"
