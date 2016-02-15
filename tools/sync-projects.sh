@@ -77,8 +77,7 @@ case "$PROJECT_DIR" in
         ;;
     ha-guide)
         copy_rst doc/common
-        # TODO(jaegerandi): Copy over once translations are ready
-        #copy_rst_trans doc/common-rst
+        copy_rst_trans doc/common
         ;;
     operations-guide)
         copy_glossary_xml "doc/glossary" "openstack-ops" "figures"
