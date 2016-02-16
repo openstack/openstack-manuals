@@ -28,7 +28,7 @@ the HPE 3PAR storage system:
 
     * HPE 3PAR Operating System software version 3.2.1 MU2 or higher.
 
-    * python-3parclient version 4.0.0 or newer.
+    * python-3parclient version 4.1.0 or newer.
 
     * Array must have the Adaptive Flash Cache license installed.
 
