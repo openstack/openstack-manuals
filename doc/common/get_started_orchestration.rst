@@ -6,9 +6,9 @@ The Orchestration service provides a template-based orchestration for
 describing a cloud application by running OpenStack API calls to
 generate running cloud applications. The software integrates other core
 components of OpenStack into a one-file template system. The templates
-allow you to create most OpenStack resource types, such as instances,
+allow you to create most OpenStack resource types such as instances,
 floating IPs, volumes, security groups, and users. It also provides
-advanced functionality, such as instance high availability, instance
+advanced functionality such as instance high availability, instance
 auto-scaling, and nested stacks. This enables OpenStack core projects to
 receive a larger user base.
 
