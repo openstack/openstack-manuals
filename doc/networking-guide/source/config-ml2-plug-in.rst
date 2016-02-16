@@ -64,6 +64,11 @@ ML2 driver support matrix
      - yes
      - no
      - no
+   * - MacVTap
+     - yes
+     - yes
+     - no
+     - no
    * - L2 population
      - no
      - no
@@ -228,6 +233,10 @@ For more details, see the
   by OpenStack. For more details, see the related section in the
   `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-sr-iov-mechanism-configuration-options>`__.
 
+* MacVTap
+  No additional configurations required for the mechanism driver. Additional
+  agent configuration is required. Please see the related section.
+
 * L2 population
 
   The administrator can configure some optional configuration options. For more
@@ -298,6 +307,20 @@ resources. It typically runs on each Network Node and on each Compute Node.
 
   For a detailed list of configuration options, see the related section in the
   `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/networking/networking_options_reference.html#sr-iov-configuration-options>`__.
+
+* MacVTap agent
+
+  The MacVTap agent uses kernel MacVTap devices for realizing L2
+  networks for OpenStack instances. Network attachments for other resources
+  like routers, DHCP, and so on are not supported.
+
+  Configuration for the MacVTap agent is typically done in the
+  ``macvtap_agent.ini`` configuration file. Make sure that on agent start
+  you pass this configuration file as argument.
+
+  .. todo::
+     Add Link to Configuration Reference as soon as available. See bug
+     https://bugs.launchpad.net/openstack-manuals/+bug/1567804
 
 L3 agent
 ^^^^^^^^
@@ -388,6 +411,8 @@ implementations:
      - Linux bridge agent
    * - SRIOV
      - SRIOV nic switch agent
+   * - MacVTap
+     - MacVTap agent
    * - L2 population
      - Open vSwitch agent, Linux bridge agent
 
@@ -413,6 +438,11 @@ non-L2 neutron agents:
      - yes
      - yes
    * - SRIOV & SRIOV nic switch agent
+     - no
+     - no
+     - no
+     - no
+   * - MacVTap & MacVTap agent
      - no
      - no
      - no
@@ -462,3 +492,20 @@ This guide characterizes the L2 reference implementations that currently exist.
 
   For more information see the
   `Networking Guide <http://docs.openstack.org/mitaka/networking-guide/adv-config-sriov.html>`__.
+
+* MacVTap mechanism driver and MacVTap agent
+
+  Can only be used for instance network attachments (device_owner = compute)
+  and not for attachment of other resources like routers, DHCP, and so on.
+
+  It is positioned as alternative to Open vSwitch or Linux bridge support on
+  the compute node for internal deployments.
+
+  MacVTap offers a direct connection with very little overhead between
+  instances and down to the adapter. You can use MacVTap agent on the
+  compute node when you require a network connection that is performance
+  critical. It does not require specific hardware (like with SRIOV).
+
+  Due to the direct connection, some features are not available when using
+  it on the compute node. For example, DVR, security groups and arp-spoofing
+  protection.
