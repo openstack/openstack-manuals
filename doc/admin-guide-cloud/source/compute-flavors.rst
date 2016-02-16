@@ -361,25 +361,27 @@ CPU topology
     -  FLAVOR-THREADS: (integer) The number of threads per core for the guest
        VM. By this is set to 1.
 
-Core pinning
-    VMs can be pinned to specific physical cores in the hypervisor to improve
-    performance. This should only be done where there is no CPU overcommit
-    (``cpu_allocation_ratio`` is 1.0).
+CPU pinning policy
+    For the libvirt driver, you can pin the virtual CPUs (vCPUs) of instances
+    to the host's physical CPU cores (pCPUs) using properties. This will
+    result in improved instance determinism and performance. Host aggregates
+    should be used to separate these "pinned" instances from unpinned
+    instances as the latter will not respect the resourcing requirements of
+    the former.
 
     .. code:: console
 
-       $ openstack flavor set FLAVOR-NAME --property hw:dedicated=PIN-POLICY
+       $ openstack flavor set FLAVOR-NAME --property hw:cpu_policy=CPU-POLICY
 
-    Valid PIN-POLICY values are:
+    Valid CPU-POLICY values are:
 
     -  ``shared``: (default) The guest vCPUs will be allowed to freely float
        across host pCPUs, albeit potentially constrained by NUMA policy.
-
     -  ``dedicated``: The guest vCPUs will be strictly pinned to a set of host
        pCPUs. In the absence of an explicit vCPU topology request, the drivers
        typically expose all vCPUs as sockets with one core and one thread.
        When strict CPU pinning is in effect the guest CPU topology will be
        setup to match the topology of the CPUs to which it is pinned. This
-       option assumes the overcommit ratio is 1.0. For example, if a two vCPU
+       option implies an overcommit ratio of 1.0. For example, if a two vCPU
        guest is pinned to a single host core with two threads, then the guest
        will get a topology of one socket, one core, threads threads.
