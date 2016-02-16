@@ -7,7 +7,7 @@ Scenario: High Availability using Distributed Virtual Routing (DVR)
 This scenario describes the high-availability Distributed Virtual Routing
 (DVR) implementation of the OpenStack Networking service using the ML2
 plug-in and Open vSwitch. The example configuration creates one flat
-external network and one VXLAN project (tenant) network. However, This
+external network and one VXLAN project (tenant) network. However, this
 configuration also supports VLAN external networks, VLAN project networks,
 and GRE project networks.
 
