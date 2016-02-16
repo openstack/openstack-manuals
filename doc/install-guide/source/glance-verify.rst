@@ -13,7 +13,7 @@ For information about how to manage images, see the
 <http://docs.openstack.org/user-guide/common/cli_manage_images.html>`__.
 
 #. In each client environment script, configure the Image service
-   client to use API version 2.0:
+   client to use API version 2:
 
    .. code-block:: console
 
