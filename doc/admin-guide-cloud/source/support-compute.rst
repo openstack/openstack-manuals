@@ -35,7 +35,7 @@ If the log level is set to ``debug``, you can also specify
 For information about what variables are available for the
 formatter see http://docs.python.org/library/logging.html#formatter-objects.
 
-You have two options for logging for OpenStack Compute based on
+You have two logging options for OpenStack Compute based on
 configuration settings. In ``nova.conf``, include the
 ``logfile`` option to enable logging. Alternatively you can set
 ``use_syslog = 1`` so that the nova daemon logs to syslog.
