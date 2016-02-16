@@ -408,6 +408,20 @@ the image to glance using the native glance-client:
 
       PS C:\> New-VHD DISK_NAME.vhd -SizeBytes VHD_SIZE
 
+Inject interfaces and routes
+----------------------------
+
+The ``interfaces.template`` file describes the network interfaces and routes
+available on your system and how to activate them. You can specify the
+location of the file with the ``injected_network_template`` configuration
+option in ``/etc/nova/nova.conf``.
+
+.. code-block:: ini
+
+   injected_network_template = PATH_TO_FILE
+
+A default template exists in ``nova/virt/interfaces.template``.
+
 Run Compute with Hyper-V
 ------------------------
 
