@@ -5,8 +5,8 @@ Install and configure
 
 This section describes how to install and configure the OpenStack
 Identity service, code-named keystone, on the controller node. For
-performance, this configuration deploys the Apache HTTP server to handle
-requests and Memcached to store tokens instead of an SQL database.
+performance, this configuration deploys Fernet tokens and the Apache
+HTTP server to handle requests.
 
 .. only:: obs or rdo or ubuntu
 
@@ -59,7 +59,7 @@ requests and Memcached to store tokens instead of an SQL database.
    .. include:: shared/note_configuration_vary_by_distribution.rst
 
    .. note::
-      In Kilo and Liberty releases, the keystone project deprecates eventlet
+      In Kilo and newer releases, the keystone project deprecates eventlet
       in favor of a separate web server with WSGI extensions. This guide uses
       the Apache HTTP server with ``mod_wsgi`` to serve Identity service
       requests on port 5000 and 35357. By default, the keystone service
@@ -82,8 +82,7 @@ requests and Memcached to store tokens instead of an SQL database.
 
             .. code-block:: console
 
-               # apt-get install keystone apache2 libapache2-mod-wsgi \
-                 memcached python-memcache
+               # apt-get install keystone apache2 libapache2-mod-wsgi
 
    .. only:: obs or rdo
 
@@ -93,25 +92,13 @@ requests and Memcached to store tokens instead of an SQL database.
 
             .. code-block:: console
 
-               # yum install openstack-keystone httpd mod_wsgi \
-                 memcached python-memcached
+               # yum install openstack-keystone httpd mod_wsgi
 
          .. only:: obs
 
             .. code-block:: console
 
-               # zypper install openstack-keystone apache2-mod_wsgi \
-                 memcached python-python-memcached
-
-   .. only:: obs or rdo
-
-      2. Start the Memcached service and configure it to start when the system
-         boots:
-
-         .. code-block:: console
-
-            # systemctl enable memcached.service
-            # systemctl start memcached.service
+               # zypper install openstack-keystone apache2-mod_wsgi
 
    .. only:: obs or rdo or ubuntu
 
@@ -140,23 +127,13 @@ requests and Memcached to store tokens instead of an SQL database.
 
            Replace ``KEYSTONE_DBPASS`` with the password you chose for the database.
 
-         * In the ``[memcache]`` section, configure the Memcached service:
-
-           .. code-block:: ini
-
-              [memcache]
-              ...
-              servers = localhost:11211
-
-         * In the ``[token]`` section, configure the UUID token provider and
-           Memcached driver:
+         * In the ``[token]`` section, configure the Fernet token provider:
 
            .. code-block:: ini
 
               [token]
               ...
-              provider = uuid
-              driver = memcache
+              provider = fernet
 
          * In the ``[revoke]`` section, configure the SQL revocation driver:
 
@@ -182,6 +159,12 @@ requests and Memcached to store tokens instead of an SQL database.
          .. code-block:: console
 
             # su -s /bin/sh -c "keystone-manage db_sync" keystone
+
+      5. Initialize Fernet keys:
+
+         .. code-block:: console
+
+            # keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
 
 .. only:: debian
 
@@ -335,7 +318,6 @@ requests and Memcached to store tokens instead of an SQL database.
            keystone admin http://controller:35357/v2.0
 
       .. image:: figures/debconf-screenshots/keystone_7_register_endpoint.png
-
 
 .. only:: obs or rdo or ubuntu
 
