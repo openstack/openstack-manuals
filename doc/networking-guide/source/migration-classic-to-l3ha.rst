@@ -101,7 +101,7 @@ L3 HA to Legacy
 ~~~~~~~~~~~~~~~
 
 To return to classic mode, turn down the router again, turning off L3 HA
-and starting the router again
+and starting the router again.
 
 .. warning::
 
