@@ -43,8 +43,8 @@ Support
 Management tools
  The management tools used for Ubuntu and Kinstance differ from the
  management tools for VMware vSphere. Although both OS and hypervisor
- combinations are supported by OpenStack, there will be very
- different impacts to the rest of the design as a result of the
+ combinations are supported by OpenStack, there is
+ different impact to the rest of the design as a result of the
  selection of one combination versus the other.
 
 Scale and performance
