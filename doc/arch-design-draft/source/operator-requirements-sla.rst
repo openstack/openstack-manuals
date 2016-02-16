@@ -28,7 +28,7 @@ In any environment larger than just a few hosts, it is important to note that
 there are two separate areas that might be subject to an SLA. Firstly, the
 services that provide actual virtualization, networking and storage, are
 subject to an SLA that customers of the environment are most likely to want to
-be continuously available.  This is often referred to as the 'Data Plane'.
+be continuously available. This is often referred to as the 'Data Plane'.
 
 Secondly, there are the ancillary services such as API endpoints, and the
 various services that control CRUD operations. These are often referred to as
@@ -44,8 +44,8 @@ following:
 * Unplanned (system faults)
 
 It is important to determine as part of the SLA negotiation which party is
-responsible for monitoring and starting up Compute service Instances should an
-outage occur which shuts them down.
+responsible for monitoring and starting up the Compute service instances if an
+outage occurs.
 
 Resiliency of overall system and individual components are going to be
 dictated by the requirements of the SLA, meaning designing for
@@ -69,21 +69,21 @@ code which affects the ability of any given design to meet SLA, including:
   and/or NFS services.
 
 Depending on the design, some Network service functions may fall into both the
-Control and Data Plane categories.  E.g. the neutron L3 Agent service may be
-considered a Control Plane component, but the routers themselves would be Data
-Plane.
+Control and Data Plane categories. For example, the neutron L3 Agent service
+may be considered a Control Plane component, but the routers themselves would
+be a Data Plane component.
 
 It may be that a given set of requirements could dictate an SLA that suggests
 some services need HA, and some do not.
 
 In a design with multiple regions, the SLA would also need to take into
 consideration the use of shared services such as the Identity service,
-Dashboard, and so on.
+Dashboard service, and others.
 
 Any SLA negotiation must also take into account the reliance on 3rd parties for
 critical aspects of the design - for example, if there is an existing SLA on a
 component such as a storage system, the cloud SLA must take into account this
-limitation.  If the required SLA for the cloud exceeds the agreed uptime levels
+limitation. If the required SLA for the cloud exceeds the agreed uptime levels
 of the components comprising that cloud, additional redundancy would be
-required.  This consideration is critical to review in a hybrid cloud design,
+required. This consideration is critical to review in a hybrid cloud design,
 where there are multiple 3rd parties involved.
