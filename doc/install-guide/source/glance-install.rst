@@ -158,7 +158,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper install openstack-glance python-glanceclient
+         # zypper install openstack-glance
 
 .. only:: rdo
 
@@ -166,10 +166,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install openstack-glance python-glance python-glanceclient
-
-.. The installation of python-glance is a workaround
-   for bug: https://bugzilla.redhat.com/show_bug.cgi?id=1213545
+         # yum install openstack-glance
 
 .. only:: ubuntu
 
@@ -177,11 +174,12 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install glance python-glanceclient
+         # apt-get install glance
 
 .. only:: obs or rdo or ubuntu
 
-   2. Edit the ``/etc/glance/glance-api.conf`` file and complete
+   2. Edit the ``/etc/glance/glance-api.conf`` and
+      ``/etc/glance/glance-registry.conf`` files and complete
       the following actions:
 
       * In the ``[database]`` section, configure database access:
@@ -231,6 +229,7 @@ Install and configure components
 
            [glance_store]
            ...
+           stores = file,http
            default_store = file
            filesystem_store_datadir = /var/lib/glance/images/
 
@@ -242,7 +241,7 @@ Install and configure components
 
            [DEFAULT]
            ...
-           notification_driver = noop
+           driver = noop
 
         The Telemetry chapter provides an Image service configuration
         that enables notifications.
@@ -256,74 +255,13 @@ Install and configure components
            ...
            verbose = True
 
-   3. Edit the ``/etc/glance/glance-registry.conf`` file and
-      complete the following actions:
+      .. note::
 
-      * In the ``[database]`` section, configure database access:
-
-        .. code-block:: ini
-
-           [database]
-           ...
-           connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
-
-        Replace ``GLANCE_DBPASS`` with the password you chose for the
-        Image service database.
-
-      * In the ``[keystone_authtoken]`` and ``[paste_deploy]`` sections,
-        configure Identity service access:
-
-        .. code-block:: ini
-
-           [keystone_authtoken]
-           ...
-           auth_uri = http://controller:5000
-           auth_url = http://controller:35357
-           memcached_servers = controller:11211
-           auth_type = password
-           project_domain_id = default
-           user_domain_id = default
-           project_name = service
-           username = glance
-           password = GLANCE_PASS
-
-           [paste_deploy]
-           ...
-           flavor = keystone
-
-        Replace ``GLANCE_PASS`` with the password you chose for the
-        ``glance`` user in the Identity service.
-
-        .. note::
-
-           Comment out or remove any other options in the
-           ``[keystone_authtoken]`` section.
-
-      * In the ``[DEFAULT]`` section, configure the ``noop`` notification
-        driver to disable notifications because they only pertain to the
-        optional Telemetry service:
-
-        .. code-block:: ini
-
-           [DEFAULT]
-           ...
-           notification_driver = noop
-
-        The Telemetry chapter provides an Image service configuration
-        that enables notifications.
-
-      * (Optional) To assist with troubleshooting,
-        enable verbose logging in the ``[DEFAULT]`` section:
-
-        .. code-block:: ini
-
-           [DEFAULT]
-           ...
-           verbose = True
+         Both files contain the same configuration options.
 
 .. only:: rdo or ubuntu
 
-   4. Populate the Image service database:
+   3. Populate the Image service database:
 
       .. code-block:: console
 
