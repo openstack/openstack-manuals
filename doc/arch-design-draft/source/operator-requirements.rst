@@ -42,7 +42,7 @@ Reliability and availability
 In order to run efficiently, automate as many of the operational processes as
 possible. Automation includes the configuration of provisioning, monitoring and
 alerting systems. Part of the automation process includes the capability to
-determine when human intervention is required and who should act.  The
+determine when human intervention is required and who should act. The
 objective is to increase the ratio of operational staff to running systems as
 much as possible in order to reduce maintenance costs. In a massively scaled
 environment, it is very difficult for staff to give each system individual
@@ -51,7 +51,7 @@ care.
 Configuration management tools such as Ansible, Puppet, and Chef enable
 operations staff to categorize systems into groups based on their roles and
 thus create configurations and system states that the provisioning system
-enforces.  Systems that fall out of the defined state due to errors or failures
+enforces. Systems that fall out of the defined state due to errors or failures
 are quickly removed from the pool of active nodes and replaced.
 
 At large scale, the resource cost of diagnosing failed individual systems is
@@ -61,5 +61,5 @@ and adding it to the pool of active nodes. By automating tasks that are
 labor-intensive, repetitive, and critical to operations, cloud operations
 teams can work more efficiently because fewer resources are required for these
 common tasks. Administrators are then free to tackle tasks that are not easy
-to automate and that have longer-term impacts on the business, for example,
+to automate and that have longer-term impact on the business, for example,
 capacity planning.
