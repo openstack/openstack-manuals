@@ -15,6 +15,7 @@ Support matrix
 ~~~~~~~~~~~~~~
 
 * ScaleIO: Version 1.32
+* ScaleIO: Version 2.0
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
