@@ -39,7 +39,7 @@ Internet can not send an IP packet to any of these addresses. Private IP
 addresses are widely used in both residential and corporate environments.
 
 Often, an application running on a host with a private IP address will need to
-connect to a server on the public Internet. One such example is a user
+connect to a server on the public Internet. An example is a user
 who wants to access a public website such as www.openstack.org. If the IP
 packets reach the web server at www.openstack.org with a private IP address as
 the source, then the web server cannot send packets back to the sender.
