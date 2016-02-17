@@ -192,7 +192,7 @@ When you launch an instance from a volume, note the following steps:
 Connect to your instance by using SSH
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To use SSH to connect to your instance, you use the downloaded keypair
+To use SSH to connect to your instance, use the downloaded keypair
 file.
 
 .. note::
@@ -209,6 +209,12 @@ file.
       $ ssh -i MyKey.pem ubuntu@10.0.0.2
 
 #. At the prompt, type ``yes``.
+
+It is also possible to SSH into an instance without an SSH keypair, if the
+administrator has enabled root password injection.  For more information
+about root password injection, see `Injecting the administrator password
+<http://docs.openstack.org/admin-guide-cloud/compute-admin-password-injection.html>`_
+in the *OpenStack Cloud Administrator Guide*.
 
 Track usage for instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~
