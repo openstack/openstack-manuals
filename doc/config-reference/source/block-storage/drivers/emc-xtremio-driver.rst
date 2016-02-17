@@ -12,7 +12,7 @@ storage nodes to an XtremIO storage cluster.
 Support matrix
 ~~~~~~~~~~~~~~
 
-XtremApp version 3.0 and 4.0 are supported.
+XtremIO version 4.x is supported.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
@@ -32,6 +32,13 @@ Supported operations
 -  Manage and unmanage a volume.
 
 -  Get volume statistics.
+
+-  Create, modify, delete, and list consistency groups.
+
+-  Create, modify, delete, and list snapshots of consistency groups.
+
+-  Create consistency group from consistency group or consistency group
+   snapshot.
 
 XtremIO Block Storage driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -151,26 +158,70 @@ modified as follows:
       use_multipath_for_image_xfer = True
 
 
+Image service optimization
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Limit the number of copies (XtremIO snapshots) taken from each image cache.
+
+.. code-block:: ini
+
+    xtremio_volumes_per_glance_cache = 100
+
+The default value is ``100``. A value of ``0`` ignores the limit and defers to
+the array maximum as the effective limit.
+
+SSL certification
+~~~~~~~~~~~~~~~~~
+
+To enable SSL certificate validation, modify the following option in the
+``cinder.conf`` file:
+
+.. code-block:: ini
+
+    driver_ssl_cert_verify = true
+
+By default, SSL certificate validation is disabled.
+
+To specify a non-default path to ``CA_Bundle`` file or directory with
+certificates of trusted CAs:
+
+
+.. code-block:: ini
+
+    driver_ssl_cert_path = Certificate path
+
 Configuring CHAP
 ~~~~~~~~~~~~~~~~
 
-The XtremIO Block Storage driver supports CHAP initiator authentication.
+The XtremIO Block Storage driver supports CHAP initiator authentication and
+discovery.
+
 If CHAP initiator authentication is required, set the CHAP
 Authentication mode to initiator.
 
-To set the CHAP initiator mode using CLI, run the following CLI command:
+To set the CHAP initiator mode using CLI, run the following XMCLI command:
 
 .. code-block:: console
 
    $ modify-chap chap-authentication-mode=initiator
 
-The CHAP initiator mode can also be set via the XMS GUI.
+If CHAP initiator discovery is required, set the CHAP discovery mode to
+initiator.
+
+To set the CHAP initiator discovery mode using CLI, run the following XMCLI
+command:
+
+.. code-block:: console
+
+   $ modify-chap chap-discovery-mode=initiator
+
+The CHAP initiator modes can also be set via the XMS GUI.
 
 Refer to XtremIO User Guide for details on CHAP configuration via GUI and CLI.
 
-The CHAP initiator authentication credentials (username and password) are
-generated automatically by the Block Storage driver. Therefore, there is no
-need to configure the initial CHAP credentials manually in XMS.
+The CHAP initiator authentication and discovery credentials (username and
+password) are generated automatically by the Block Storage driver. Therefore,
+there is no need to configure the initial CHAP credentials manually in XMS.
 
 .. _emc_extremio_configuration_example:
 
