@@ -467,8 +467,8 @@ tenant network prefixes.
 Configuring OpenStack Networking for prefix delegation
 ------------------------------------------------------
 
-To enable prefix delegation, edit the ``etc/neutron.conf`` file. If you
-are running OpenStack Liberty, make the following change:
+To enable prefix delegation, edit the ``/etc/neutron/neutron.conf`` file.
+If you are running OpenStack Liberty, make the following change:
 
 .. code-block:: console
 
@@ -484,7 +484,7 @@ Otherwise if you are running OpenStack Mitaka, make this change:
 
    If you are not using the default dibbler-based driver for prefix
    delegation, then you also need to set the driver in
-   ``etc/neutron.conf``:
+   ``/etc/neutron/neutron.conf``:
 
    .. code-block:: console
 
@@ -710,7 +710,7 @@ Extra configuration
 Neutron dhcpv6_pd_agent
 ^^^^^^^^^^^^^^^^^^^^^^^
 To enable the driver for the dhcpv6_pd_agent, set pd_dhcp_driver to this in
-``etc/neutron.conf``:
+``/etc/neutron/neutron.conf``:
 
 .. code-block:: console
 
