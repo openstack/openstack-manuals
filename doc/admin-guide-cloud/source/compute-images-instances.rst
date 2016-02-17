@@ -275,8 +275,8 @@ core properties and the image owner can manage additional properties.
 
 **To configure property protection**
 
-To configure property protection, the cloud administrator completes
-these steps:
+To configure property protection, edit the ``policy.json`` file. This file
+can also be used to set policies for Image service actions.
 
 #. Define roles or policies in the ``policy.json`` file:
 
