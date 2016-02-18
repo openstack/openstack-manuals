@@ -17,6 +17,7 @@ is usable, consistent, and concise.
    ui-text-guidelines/ui-text-capitalization.rst
    ui-text-guidelines/ui-action-labels.rst
    ui-text-guidelines/ui-error-messages.rst
+   ui-text-guidelines/ui-panel-formatting.rst
 
 In addition to these resources, ensure you
 review the :ref:`stg_writing_style` section. The general
