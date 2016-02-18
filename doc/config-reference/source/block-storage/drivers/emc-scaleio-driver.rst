@@ -4,7 +4,7 @@ EMC ScaleIO Block Storage driver configuration
 
 ScaleIO is a software-only solution that uses existing servers' local
 disks and LAN to create a virtual SAN that has all of the benefits of
-external storage but at a fraction of the cost and complexity. Using the
+external storage, but at a fraction of the cost and complexity. Using the
 driver, Block Storage hosts can connect to a ScaleIO Storage
 cluster.
 
@@ -43,15 +43,15 @@ Supported operations
 ScaleIO QoS support
 ~~~~~~~~~~~~~~~~~~~~
 
-QoS support for ScaleIO driver includes the ability to set the
-following capabilities in the Block Storate API
+QoS support for the ScaleIO driver includes the ability to set the
+following capabilities in the Block Storage API
 ``cinder.api.contrib.qos_specs_manage`` QoS specs extension module:
 
 * ``minBWS``
 
 * ``maxBWS``
 
-The QoS keys above must be created and associated to a volume type.
+The QoS keys above must be created and associated with a volume type.
 For information about how to set the key-value pairs and associate
 them with a volume type, run the following commands:
 
@@ -65,14 +65,14 @@ them with a volume type, run the following commands:
 
 ``maxBWS``
  The QoS I/O issue bandwidth rate limit in KBs. If not set, the I/O issue
- bandwidth rate has no limit. Must have a granularity of 1024.
+ bandwidth rate has no limit. The setting must be a multiple of 1024.
 
 ``maxIOPS``
  The QoS I/O issue bandwidth rate limit in MBs. If not set, the I/O issue
- bandwidth rate has no limit. Must be larger than 10.
+ bandwidth rate has no limit. The setting must be larger than 10.
 
 Since the limits are per SDC, they will be applied after the volume
-is attached to an instance and thus to a compute node/SDC.
+is attached to an instance, and thus to a compute node/SDC.
 
 ScaleIO thin provisioning support
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -87,19 +87,19 @@ of the volume type, as follows:
    sio:provisioning_type = thin\thick
 
 If the provisioning type value is not specified, the default value of
-thick will be used.
+"thick" will be used.
 
 ScaleIO Block Storage driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Edit the ``cinder.conf`` file by adding the configuration below under
-the ``[DEFAULT]`` section of the file in case of a single back end or
+the ``[DEFAULT]`` section of the file in case of a single back end, or
 under a separate section in case of multiple back ends (for example
 [ScaleIO]). The configuration file is usually located at
 ``/etc/cinder/cinder.conf``.
 
-For a configuration example, refer to the
-:ref:`cinder.conf <cg_configuration_example_emc>` example.
+For a configuration example, refer to the example
+:ref:`cinder.conf <cg_configuration_example_emc>` .
 
 ScaleIO driver name
 -------------------
@@ -116,10 +116,10 @@ ScaleIO MDM server IP
 The ScaleIO Meta Data Manager monitors and maintains the available
 resources and permissions.
 
-To retrieve the MDM server IP, use the :command:`drv_cfg --query_mdms`
+To retrieve the MDM server IP address, use the :command:`drv_cfg --query_mdms`
 command.
 
-Configure the MDM server IP by adding the following parameter:
+Configure the MDM server IP address by adding the following parameter:
 
 .. code-block:: ini
 
@@ -131,9 +131,9 @@ ScaleIO Protection Domain name
 ScaleIO allows multiple Protection Domains (groups of SDSs that provide
 backup for each other).
 
-To retrieve the available Protection Domains, use the
-:command:`scli --query_all` command and search for the protection
-domains section.
+To retrieve the available Protection Domains, use the command
+:command:`scli --query_all` and search for the Protection
+Domains section.
 
 Configure the Protection Domain for newly created volumes by adding the
 following parameter:
@@ -145,11 +145,11 @@ following parameter:
 ScaleIO Storage Pool name
 -------------------------
 
-A ScaleIO Storage Pool is a set of physical devices in a protection
-domain.
+A ScaleIO Storage Pool is a set of physical devices in a Protection
+Domain.
 
-To retrieve the available Storage Pools, use the :command:`scli --query_all`
-command and search for available Storage Pools.
+To retrieve the available Storage Pools, use the command
+:command:`scli --query_all` and search for available Storage Pools.
 
 Configure the Storage Pool for newly created volumes by adding the
 following parameter:
@@ -164,21 +164,21 @@ ScaleIO Storage Pools
 Multiple Storage Pools and Protection Domains can be listed for use by
 the virtual machines.
 
-To retrieve the available Storage Pools, use the :command:`scli --query_all`
-command and search for available Storage Pools.
+To retrieve the available Storage Pools, use the command
+:command:`scli --query_all` and search for available Storage Pools.
 
 Configure the available Storage Pools by adding the following parameter:
 
 .. code-block:: ini
 
-   sio_storage_pools = Comma separated list of protection domain:storage pool name
+   sio_storage_pools = Comma-separated list of protection domain:storage pool name
 
 ScaleIO user credentials
 ------------------------
 
 Block Storage requires a ScaleIO user with administrative
 privileges. ScaleIO recommends creating a dedicated OpenStack user
-account that holds an administrative user role.
+account that has an administrative user role.
 
 Refer to the ScaleIO User Guide for details on user account management.
 
@@ -193,7 +193,7 @@ Configure the user credentials by adding the following parameters:
 Multiple back ends
 ~~~~~~~~~~~~~~~~~~
 
-Configuring multiple storage back ends enables you to create several back-end
+Configuring multiple storage back ends allows you to create several back-end
 storage solutions that serve the same Compute resources.
 
 When a volume is created, the scheduler selects the appropriate back end
