@@ -2,7 +2,7 @@
 Set up session storage for the Dashboard
 ========================================
 
-The dashboard uses `Django sessions
+The Dashboard uses `Django sessions
 framework <https://docs.djangoproject.com/en/dev/topics/http/sessions/>`__
 to handle user session data. However, you can use any available session
 back end. You customize the session back end through the
