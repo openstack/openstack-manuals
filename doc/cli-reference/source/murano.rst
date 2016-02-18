@@ -9,7 +9,7 @@ Application Catalog service command-line client
 The murano client is the command-line interface (CLI) for
 the Application Catalog service API and its extensions.
 
-This chapter documents :command:`murano` version ``0.8.1``.
+This chapter documents :command:`murano` version ``0.8.2``.
 
 For help on a specific :command:`murano` command, enter:
 
@@ -33,7 +33,8 @@ murano usage
                  [--murano-api-version MURANO_API_VERSION]
                  [--os-service-type OS_SERVICE_TYPE]
                  [--os-endpoint-type OS_ENDPOINT_TYPE] [--include-password]
-                 [--murano-repo-url MURANO_REPO_URL] [--insecure]
+                 [--murano-repo-url MURANO_REPO_URL]
+                 [--murano-packages-service {murano,glance}] [--insecure]
                  [--os-cacert <ca-certificate>] [--os-cert <certificate>]
                  [--os-key <key>] [--timeout <seconds>]
                  [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
@@ -78,6 +79,9 @@ Subcommands
 
 ``env-template-add-app``
   Add application to the environment template.
+
+``env-template-clone``
+  Create a new template, cloned from template.
 
 ``env-template-create``
   Create an environment template.
@@ -226,6 +230,12 @@ murano optional arguments
 ``--murano-repo-url MURANO_REPO_URL``
   Defaults to ``env[MURANO_REPO_URL]`` or
   http://apps.openstack.org/api/v1/murano_repo/liberty/
+
+``--murano-packages-service {murano,glance}``
+  Specifies if murano-api ("murano") or Glance Artifact
+  Repository ("glance") should be used to store murano
+  packages. Defaults to ``env[MURANO_PACKAGES_SERVICE]`` or
+  to "murano"
 
 ``--insecure``
   Explicitly allow client to perform "insecure" TLS
@@ -470,18 +480,38 @@ murano env-template-add-app
 
 .. code-block:: console
 
-   usage: murano env-template-add-app <ENV_TEMPLATE_NAME> <FILE>
+   usage: murano env-template-add-app <ENV_TEMPLATE_ID> <FILE>
 
 Add application to the environment template.
 
 Positional arguments
 --------------------
 
-``<ENV_TEMPLATE_NAME>``
-  Environment template name.
+``<ENV_TEMPLATE_ID>``
+  Environment template ID.
 
 ``<FILE>``
   Path to the template.
+
+.. _murano_env-template-clone:
+
+murano env-template-clone
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: murano env-template-clone <ID> <ENV_TEMPLATE_NAME>
+
+Create a new template, cloned from template.
+
+Positional arguments
+--------------------
+
+``<ID>``
+  Environment template ID.
+
+``<ENV_TEMPLATE_NAME>``
+  New environment template name.
 
 .. _murano_env-template-create:
 
@@ -490,7 +520,7 @@ murano env-template-create
 
 .. code-block:: console
 
-   usage: murano env-template-create <ENV_TEMPLATE_NAME>
+   usage: murano env-template-create [--is-public] <ENV_TEMPLATE_NAME>
 
 Create an environment template.
 
@@ -499,6 +529,13 @@ Positional arguments
 
 ``<ENV_TEMPLATE_NAME>``
   Environment template name.
+
+Optional arguments
+------------------
+
+``--is-public``
+  Make the template available for users from other
+  tenants.
 
 .. _murano_env-template-create-env:
 
@@ -710,6 +747,7 @@ murano environment-create
 
    usage: murano environment-create [--join-net-id <NET_ID>]
                                     [--join-subnet-id <SUBNET_ID>]
+                                    [--region <REGION_NAME>]
                                     <ENVIRONMENT_NAME>
 
 Create an environment.
@@ -728,6 +766,9 @@ Optional arguments
 
 ``--join-subnet-id <SUBNET_ID>``
   Subnetwork id to join.
+
+``--region <REGION_NAME>``
+  Name of the target OpenStack region.
 
 .. _murano_environment-delete:
 
@@ -961,7 +1002,8 @@ murano package-import
 .. code-block:: console
 
    usage: murano package-import [-c [<CATEGORY> [<CATEGORY> ...]]] [--is-public]
-                                [--version VERSION] [--exists-action {a,s,u}]
+                                [--package-version PACKAGE_VERSION]
+                                [--exists-action {a,s,u}]
                                 <FILE> [<FILE> ...]
 
 Import a package. \`FILE\` can be either a path to a zip file, url or a FQPN.
@@ -999,7 +1041,7 @@ Optional arguments
   Make the package available for users from other
   tenants.
 
-``--version VERSION``
+``--package-version PACKAGE_VERSION``
   Version of the package to use from repository (ignored
   when importing with multiple packages).
 
@@ -1013,7 +1055,13 @@ murano package-list
 
 .. code-block:: console
 
-   usage: murano package-list [--limit LIMIT] [--include-disabled]
+   usage: murano package-list [--limit LIMIT] [--include-disabled] [--owned]
+                              [--search <SEARCH_KEYS>] [--name <PACKAGE_NAME>]
+                              [--fqn <PACKAGE_FULLY_QUALIFIED_NAME>]
+                              [--type <PACKAGE_TYPE>]
+                              [--category <PACKAGE_CATEGORY>]
+                              [--class_name <PACKAGE_CLASS_NAME>]
+                              [--tag <PACKAGE_TAG>]
 
 List available packages.
 
@@ -1024,6 +1072,31 @@ Optional arguments
 
 ``--include-disabled``
 
+``--owned``
+
+``--search <SEARCH_KEYS>``
+  Show packages, that match search keys fuzzily
+
+``--name <PACKAGE_NAME>``
+  Show packages, whose name match parameter exactly
+
+``--fqn <PACKAGE_FULLY_QUALIFIED_NAME>``
+  Show packages, whose fully qualified name match
+  parameter exactly
+
+``--type <PACKAGE_TYPE>``
+  Show packages, whose type match parameter exactly
+
+``--category <PACKAGE_CATEGORY>``
+  Show packages, whose categories include parameter
+
+``--class_name <PACKAGE_CLASS_NAME>``
+  Show packages, whose class name match parameter
+  exactly
+
+``--tag <PACKAGE_TAG>``
+  Show packages, whose tags include parameter
+
 .. _murano_package-save:
 
 murano package-save
@@ -1031,7 +1104,8 @@ murano package-save
 
 .. code-block:: console
 
-   usage: murano package-save [-p <PATH>] [--version VERSION] [--no-images]
+   usage: murano package-save [-p <PATH>] [--package-version PACKAGE_VERSION]
+                              [--no-images]
                               <PACKAGE> [<PACKAGE> ...]
 
 Save a package. This will download package(s) with all dependencies to
@@ -1050,7 +1124,7 @@ Optional arguments
   Path to the directory to store package. If not set
   will use current directory.
 
-``--version VERSION``
+``--package-version PACKAGE_VERSION``
   Version of the package to use from repository (ignored
   when saving with multiple packages).
 
