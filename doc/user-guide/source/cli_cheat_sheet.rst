@@ -75,7 +75,7 @@ Register raw image
 
 .. code-block:: console
 
-   $ glance image-create --name "cirros-qcow2" --disk-format qcow2 \
+   $ glance image-create --name "cirros-raw" --disk-format raw \
      --container-format bare --is-public False \
      --file ~/images/cirros-0.3.1~pre4-x86_64-disk.img
 
