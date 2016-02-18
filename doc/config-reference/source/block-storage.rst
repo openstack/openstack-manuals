@@ -9,7 +9,7 @@ Block Storage
    block-storage/volume-drivers.rst
    block-storage/backup-drivers.rst
    block-storage/block-storage-sample-configuration-files.rst
-   block-storage/cinder-log-files.rst
+   block-storage/logs.rst
    block-storage/fc-zoning.rst
    block-storage/nested-quota.rst
    block-storage/volume-encryption.rst

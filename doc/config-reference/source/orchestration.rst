@@ -7,6 +7,7 @@ Orchestration
    orchestration/orchestration_api.rst
    orchestration/orchestration_clients.rst
    orchestration/orchestration_rpc.rst
+   orchestration/logs.rst
    tables/conf-changes/heat.rst
 
 

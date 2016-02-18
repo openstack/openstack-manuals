@@ -6,6 +6,7 @@ Identity service
 
    identity/caching.rst
    identity/options.rst
+   identity/logs.rst
    identity/sample-configuration-files.rst
    tables/conf-changes/keystone.rst
 

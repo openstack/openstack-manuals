@@ -14,6 +14,7 @@ Message service
    messaging/zaqar-notifications.rst
    messaging/zaqar-authentication.rst
    messaging/zaqar-pooling.rst
+   messaging/logs.rst
    messaging/zaqar-cache.rst
 
 The Message service is multi-tenant, fast, reliable, and scalable. It allows

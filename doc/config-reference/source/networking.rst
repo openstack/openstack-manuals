@@ -5,7 +5,7 @@ Networking
 .. toctree::
 
    networking/networking_options_reference.rst
-   networking/networking_log.rst
+   networking/logs.rst
    networking/sample-configuration-files.rst
    networking/sample-configuration-files-advanced.rst
    tables/conf-changes/neutron.rst

@@ -18,3 +18,5 @@ where the dashboard is hosted. The following table describes these files:
    * - ``error_log``
      - Logs all unsuccessful attempts to access the web server,
        along with the reason that each attempt failed.
+   * - ``/var/log/horizon/horizon.log``
+     - Log of certain user interactions
