@@ -5,27 +5,46 @@ Network components
 Switches
 ~~~~~~~~
 
-A switch is a device that is used to connect devices on a network.
-Switches forward packets on to other devices, using packet switching to
-pass data along only to devices that need to receive it. Switches operate
-at layer 2 of the OSI model.
+Switches are devices that enable packets to travel from one node to
+another. They are Multi-Input Multi-Output devices. Switches connect
+hosts that belong to the same layer-2 network together. Switches enable
+forwarding of the packet received on one port (input) to another port
+(output) so that they reach the desired destination node. Switches operate
+at layer-2 in the networking model. They forward the traffic based on the
+destination Ethernet address in the packet header.
 
 Routers
 ~~~~~~~
 
-A router is a networking device that connects multiple networks
-together. Routers are connected to two or more networks. When they
-receive data packets, they use a routing table to determine which
-networks to pass the information to.
+Routers are special devices that enable packets to travel from one
+layer-3 network to another. Routers enable communication between two nodes
+on different layer-3 networks that are not directly connected to each other.
+Routers operate at layer-3 in the networking model. They route the traffic
+based on the destination IP address in the packet header.
 
 Firewalls
 ~~~~~~~~~
 
-A firewall is a network device that controls the incoming and outgoing
-network traffic based on an applied rule set.
+Firewalls are used to regulate traffic to and from a host or a network.
+Firewalls can either be a specialized device connecting two networks or can
+be a software-based filtering mechanism implemented on an operating system.
+Firewalls are used to restrict traffic to a host based on the rules
+defined on the host. They can filter packets based on several criteria such as
+source IP address, destination IP address, port numbers, connection state,
+and so on. It is primarily used to protect the hosts from unauthorized access
+and malicious attacks. Linux-based operating systems implement firewalls
+through ``iptables``.
 
 Load balancers
 ~~~~~~~~~~~~~~
 
-A load balancer is a network device that distributes network or application
-traffic across a number of servers.
+A load balancer can be a software-based or a hardware-based device that allows
+traffic to be evenly distributed across several servers. By distributing the
+traffic across multiple servers, it avoids overload of a single server thereby
+preventing a single point of failure in the product. This further improves the
+performance, network throughput, and response time of the servers.
+Load balancers are typically used in a 3-tier architecture. In this model,
+a load balancer receives a request from the front-end web server,
+which then forwards the request to one of the available back-end database
+servers for processing. The response from the database server is passed back to
+the web server for further processing.
