@@ -43,9 +43,9 @@ OpenStack with sufficient Linux experience:
        attachments into them. Has a pluggable architecture
        that supports many popular networking vendors and
        technologies.
-   * -
+   * - **Storage**
      -
-     - **Storage**
+     -
    * - `Object Storage <http://www.openstack.org/software/releases/liberty/components/swift>`_
      - `Swift <http://docs.openstack.org/developer/swift/>`_
      - Stores and retrieves arbitrary unstructured
@@ -60,9 +60,9 @@ OpenStack with sufficient Linux experience:
      - Provides persistent block storage to running instances. Its pluggable
        driver architecture facilitates the creation and management of
        block storage devices.
-   * -
+   * - **Shared services**
      -
-     - **Shared services**
+     -
    * - `Identity service <http://www.openstack.org/software/releases/liberty/components/keystone>`_
      - `Keystone <http://docs.openstack.org/developer/keystone/>`_
      - Provides an authentication and authorization service
@@ -77,9 +77,9 @@ OpenStack with sufficient Linux experience:
      - `Ceilometer <http://docs.openstack.org/developer/ceilometer/>`_
      - Monitors and meters the OpenStack cloud for billing, benchmarking,
        scalability, and statistical purposes.
-   * -
+   * - **Higher-level services**
      -
-     - **Higher-level services**
+     -
    * - `Orchestration <http://www.openstack.org/software/releases/liberty/components/heat>`_
      - `Heat <http://docs.openstack.org/developer/heat/>`_
      - Orchestrates multiple composite cloud applications by using
