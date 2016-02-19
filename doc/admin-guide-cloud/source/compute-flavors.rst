@@ -36,7 +36,7 @@ Flavors define these elements:
 | Name        | A descriptive name. XX.SIZE_NAME is typically not required,   |
 |             | though some third party tools may rely on it.                 |
 +-------------+---------------------------------------------------------------+
-| Memory_MB   | Virtual machine memory in megabytes.                          |
+| Memory MB   | Instance memory in megabytes.                                 |
 +-------------+---------------------------------------------------------------+
 | Disk        | Virtual root disk size in gigabytes. This is an ephemeral di\ |
 |             | sk that the base image is copied into. When booting from a p\ |
@@ -52,28 +52,43 @@ Flavors define these elements:
 +-------------+---------------------------------------------------------------+
 | VCPUs       | Number of virtual CPUs presented to the instance.             |
 +-------------+---------------------------------------------------------------+
-| RXTX_Factor | Optional property allows created servers to have a different  |
+| RXTX Factor | Optional property allows created servers to have a different  |
 |             | bandwidth cap than that defined in the network they are att\  |
 |             | ached to. This factor is multiplied by the rxtx_base propert\ |
 |             | y of the network. Default value is 1.0. That is, the same as  |
 |             | attached network. This parameter is only available for Xen    |
 |             | or NSX based systems.                                         |
 +-------------+---------------------------------------------------------------+
-| Is_Public   | Boolean value, whether flavor is available to all users or p\ |
+| Is Public   | Boolean value, whether flavor is available to all users or p\ |
 |             | rivate to the tenant it was created in. Defaults to ``True``. |
 +-------------+---------------------------------------------------------------+
-| extra_specs | Key and value pairs that define on which compute nodes a fla\ |
+| Extra Specs | Key and value pairs that define on which compute nodes a fla\ |
 |             | vor can run. These pairs must match corresponding pairs on t\ |
 |             | he compute nodes. Use to implement special resources, such a\ |
 |             | s flavors that run on only compute nodes with GPU hardware.   |
 +-------------+---------------------------------------------------------------+
 
-|
+.. note::
 
-Flavor customization can be limited by the hypervisor in use. For
-example the libvirt driver enables quotas on CPUs available to a VM,
-disk tuning, bandwidth I/O, watchdog behavior, random number generator
-device control, and instance VIF traffic control.
+    Flavor customization can be limited by the hypervisor in use. For
+    example the libvirt driver enables quotas on CPUs available to a VM,
+    disk tuning, bandwidth I/O, watchdog behavior, random number generator
+    device control, and instance VIF traffic control.
+
+Is Public
+~~~~~~~~~
+
+Flavors can be assigned to particular projects. By default, a flavor is public
+and available to all projects. Private flavors are only accessible to those on
+the access list and are invisible to other projects. To create and assign a
+private flavor to a project, run this command:
+
+.. code-block:: console
+
+   $ openstack flavor create --private p1.medium auto 512 40 4
+
+Extra Specs
+~~~~~~~~~~~
 
 CPU limits
     You can configure the CPU limits with control parameters with the
@@ -211,32 +226,22 @@ Disk tuning
 
     The disk I/O options are:
 
-    -  disk\_read\_bytes\_sec
-
-    -  disk\_read\_iops\_sec
-
-    -  disk\_write\_bytes\_sec
-
-    -  disk\_write\_iops\_sec
-
-    -  disk\_total\_bytes\_sec
-
-    -  disk\_total\_iops\_sec
+    -  ``disk_read_bytes_sec``
+    -  ``disk_read_iops_sec``
+    -  ``disk_write_bytes_sec``
+    -  ``disk_write_iops_sec``
+    -  ``disk_total_bytes_sec``
+    -  ``disk_total_iops_sec``
 
 Bandwidth I/O
     The vif I/O options are:
 
-    -  vif\_inbound\_ average
-
-    -  vif\_inbound\_burst
-
-    -  vif\_inbound\_peak
-
-    -  vif\_outbound\_ average
-
-    -  vif\_outbound\_burst
-
-    -  vif\_outbound\_peak
+    -  ``vif_inbound_average``
+    -  ``vif_inbound_burst``
+    -  ``vif_inbound_peak``
+    -  ``vif_outbound_average``
+    -  ``vif_outbound_burst``
+    -  ``vif_outbound_peak``
 
     Incoming and outgoing traffic can be shaped independently. The
     bandwidth element can have at most, one inbound and at most, one
@@ -303,16 +308,11 @@ Watchdog behavior
 
     Valid ACTION values are:
 
-    -  ``disabled``—(default) The device is not attached.
-
-    -  ``reset``—Forcefully reset the guest.
-
-    -  ``poweroff``—Forcefully power off the guest.
-
-    -  ``pause``—Pause the guest.
-
-    -  ``none``—Only enable the watchdog; do nothing if the server
-       hangs.
+    -  ``disabled``: (default) The device is not attached.
+    -  ``reset``: Forcefully reset the guest.
+    -  ``poweroff``: Forcefully power off the guest.
+    -  ``pause``: Pause the guest.
+    -  ``none``: Only enable the watchdog; do nothing if the server hangs.
 
     .. note::
 
@@ -333,10 +333,9 @@ Random-number generator
 
     Where:
 
-    -  RATE-BYTES—(Integer) Allowed amount of bytes that the guest can
+    -  RATE-BYTES: (Integer) Allowed amount of bytes that the guest can
        read from the host's entropy per period.
-
-    -  RATE-PERIOD—(Integer) Duration of the read period in seconds.
+    -  RATE-PERIOD: (Integer) Duration of the read period in seconds.
 
 CPU topology
     For the libvirt driver, you can define the topology of the processors
@@ -355,14 +354,12 @@ CPU topology
 
     Where:
 
-    -  FLAVOR-SOCKETS—(Integer) The number of sockets for the guest VM. By
+    -  FLAVOR-SOCKETS: (integer) The number of sockets for the guest VM. By
        this is set to the number of vCPUs requested.
-
-    -  FLAVOR-CORES—(Integer) The number of cores per socket for the guest VM. By
-       this is set to 1.
-
-    -  FLAVOR-THREADS—(Integer) The number of threads per core for the guest VM. By
-       this is set to 1.
+    -  FLAVOR-CORES: (integer) The number of cores per socket for the guest
+       VM. By this is set to 1.
+    -  FLAVOR-THREADS: (integer) The number of threads per core for the guest
+       VM. By this is set to 1.
 
 Core pinning
     VMs can be pinned to specific physical cores in the hypervisor to improve
@@ -371,29 +368,18 @@ Core pinning
 
     .. code:: console
 
-        $ openstack flavor set FLAVOR-NAME --property hw:dedicated=PIN-POLICY
+       $ openstack flavor set FLAVOR-NAME --property hw:dedicated=PIN-POLICY
 
     Valid PIN-POLICY values are:
 
-    -  ``shared``—(default) The guest vCPUs will be allowed to freely float
+    -  ``shared``: (default) The guest vCPUs will be allowed to freely float
        across host pCPUs, albeit potentially constrained by NUMA policy.
 
-    -  ``dedicated``—the guest vCPUs will be strictly pinned to a set of host
+    -  ``dedicated``: The guest vCPUs will be strictly pinned to a set of host
        pCPUs. In the absence of an explicit vCPU topology request, the drivers
-       typically expose all vCPUs as sockets with 1 core and 1 thread. When strict
-       CPU pinning is in effect the guest CPU topology will be setup to match the
-       topology of the CPUs to which it is pinned. This option assumes the overcommit
-       ratio is 1.0. For example, if a 2 vCPU guest is pinned to a single host core
-       with 2 threads, then the guest will get a topology of 1 socket, 1 core, 2
-       threads.
-
-Project private flavors
-    Flavors can also be assigned to particular projects. By default, a
-    flavor is public and available to all projects. Private flavors are
-    only accessible to those on the access list and are invisible to
-    other projects. To create and assign a private flavor to a project,
-    run these commands:
-
-    .. code-block:: console
-
-       $ openstack flavor create --private p1.medium auto 512 40 4
+       typically expose all vCPUs as sockets with one core and one thread.
+       When strict CPU pinning is in effect the guest CPU topology will be
+       setup to match the topology of the CPUs to which it is pinned. This
+       option assumes the overcommit ratio is 1.0. For example, if a two vCPU
+       guest is pinned to a single host core with two threads, then the guest
+       will get a topology of one socket, one core, threads threads.
