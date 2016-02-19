@@ -5,6 +5,10 @@ Verify operation
 
 Verify operation of the Orchestration service.
 
+.. note::
+
+   Perform these commands on the controller node.
+
 #. Source the ``admin`` tenant credentials:
 
    .. code-block:: console

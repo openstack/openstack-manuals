@@ -12,6 +12,10 @@ For information about how to manage images, see the
 `OpenStack User Guide
 <http://docs.openstack.org/user-guide/common/cli_manage_images.html>`__.
 
+.. note::
+
+   Perform these commands on the controller node.
+
 #. In each client environment script, configure the Image service
    client to use API version 2.0:
 

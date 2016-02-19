@@ -1,6 +1,10 @@
 Verify operation
 ~~~~~~~~~~~~~~~~
 
+.. note::
+
+   Perform these commands on the controller node.
+
 #. Source the ``admin`` credentials to gain access to admin-only CLI
    commands:
 
