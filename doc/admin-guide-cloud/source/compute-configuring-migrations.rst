@@ -253,9 +253,9 @@ Example Compute installation environment
 
    .. code-block:: ini
 
-      live_migration_downtime
-      live_migration_downtime_steps
-      live_migration_downtime_delay
+      live_migration_downtime = 500
+      live_migration_downtime_steps = 10
+      live_migration_downtime_delay = 75
 
    The ``live_migration_downtime`` parameter sets the maximum permitted
    downtime for a live migration, in milliseconds. This setting defaults to
