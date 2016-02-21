@@ -58,7 +58,7 @@
      - (BoolOpt) Whether to include the backend image storage location in image properties. Revealing storage location can be a security risk, so use this setting with caution!
    * - ``user_storage_quota`` = ``0``
      - (StrOpt) Set a system wide quota for every user. This value is the total capacity that a user can use across all storage systems. A value of 0 means unlimited.Optional unit can be specified for the value. Accepted units are B, KB, MB, GB and TB representing Bytes, KiloBytes, MegaBytes, GigaBytes and TeraBytes respectively. If no unit is specified then Bytes is assumed. Note that there should not be any space between value and unit and units are case sensitive.
-   * - ``workers`` = ``1``
+   * - ``workers`` = ``4``
      - (IntOpt) The number of child process workers that will be created to service requests. The default will be equal to the number of CPUs available.
    * - **[glance_store]**
      -
@@ -66,7 +66,7 @@
      - (StrOpt) Region name of this node
    * - **[image_format]**
      -
-   * - ``container_formats`` = ``ami, ari, aki, bare, ovf, ova``
+   * - ``container_formats`` = ``ami, ari, aki, bare, ovf, ova, docker``
      - (ListOpt) Supported values for the 'container_format' image attribute
    * - ``disk_formats`` = ``ami, ari, aki, vhd, vmdk, raw, qcow2, vdi, iso``
      - (ListOpt) Supported values for the 'disk_format' image attribute

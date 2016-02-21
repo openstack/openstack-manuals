@@ -24,11 +24,13 @@
      - (StrOpt) Default publisher_id for outgoing notifications.
    * - ``disabled_notifications`` =
      - (ListOpt) List of disabled notifications. A notification can be given either as a notification type to disable a single event, or as a notification group prefix to disable all events within a group. Example: if this config option is set to ["image.create", "metadef_namespace"], then "image.create" notification will not be sent after image is created and none of the notifications for metadefinition namespaces will be sent.
-   * - ``notification_driver`` = ``[]``
-     - (MultiStrOpt) The Drivers(s) to handle sending notifications. Possible values are messaging, messagingv2, routing, log, test, noop
-   * - ``notification_topics`` = ``notifications``
-     - (ListOpt) AMQP topic used for OpenStack notifications.
-   * - ``notification_transport_url`` = ``None``
-     - (StrOpt) A URL representing the messaging driver to use for notifications. If not set, we fall back to the same configuration used for RPC.
    * - ``transport_url`` = ``None``
      - (StrOpt) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.
+   * - **[oslo_messaging_notifications]**
+     -
+   * - ``driver`` = ``[]``
+     - (MultiStrOpt) The Drivers(s) to handle sending notifications. Possible values are messaging, messagingv2, routing, log, test, noop
+   * - ``topics`` = ``notifications``
+     - (ListOpt) AMQP topic used for OpenStack notifications.
+   * - ``transport_url`` = ``None``
+     - (StrOpt) A URL representing the messaging driver to use for notifications. If not set, we fall back to the same configuration used for RPC.

@@ -22,12 +22,8 @@
      - (BoolOpt) Allow to perform insecure SSL requests to ESX/VC.
    * - ``vmware_api_retry_count`` = ``10``
      - (IntOpt) Number of times VMware ESX/VC server API must be retried upon connection related issues.
-   * - ``vmware_datacenter_path`` = ``ha-datacenter``
-     - (StrOpt) DEPRECATED. Inventory path to a datacenter. If the vmware_server_host specified is an ESX/ESXi, the vmware_datacenter_path is optional. If specified, it should be "ha-datacenter". This option is deprecated in favor of vmware_datastores and will be removed in the Liberty release.
-   * - ``vmware_datastore_name`` = ``None``
-     - (StrOpt) DEPRECATED. Datastore associated with the datacenter. This option is deprecated in favor of vmware_datastores and will be removed in the Liberty release.
    * - ``vmware_datastores`` = ``None``
-     - (MultiStrOpt) A list of datastores where the image can be stored. This option may be specified multiple times for specifying multiple datastores. Either one of vmware_datastore_name or vmware_datastores is required. The datastore name should be specified after its datacenter path, seperated by ":". An optional weight may be given after the datastore name, seperated again by ":". Thus, the required format becomes <datacenter_path>:<datastore_name>:<optional_weight>. When adding an image, the datastore with highest weight will be selected, unless there is not enough free space available in cases where the image size is already known. If no weight is given, it is assumed to be zero and the directory will be considered for selection last. If multiple datastores have the same weight, then the one with the most free space available is selected.
+     - (MultiStrOpt) A list of datastores where the image can be stored. This option may be specified multiple times for specifying multiple datastores. The datastore name should be specified after its datacenter path, seperated by ":". An optional weight may be given after the datastore name, seperated again by ":". Thus, the required format becomes <datacenter_path>:<datastore_name>:<optional_weight>. When adding an image, the datastore with highest weight will be selected, unless there is not enough free space available in cases where the image size is already known. If no weight is given, it is assumed to be zero and the directory will be considered for selection last. If multiple datastores have the same weight, then the one with the most free space available is selected.
    * - ``vmware_server_host`` = ``None``
      - (StrOpt) ESX/ESXi or vCenter Server target system. The server value can be an IP address or a DNS name.
    * - ``vmware_server_password`` = ``None``

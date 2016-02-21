@@ -21,9 +21,9 @@
    * - ``allowed_rpc_exception_modules`` = ``glance.common.exception, builtins, exceptions``
      - (ListOpt) Modules of exceptions that are permitted to be recreated upon receiving exception data from an rpc call.
    * - ``rpc_backend`` = ``rabbit``
-     - (StrOpt) The messaging driver to use, defaults to rabbit. Other drivers include qpid and zmq.
-   * - ``rpc_cast_timeout`` = ``30``
-     - (IntOpt) Seconds to wait before a cast expires (TTL). Only supported by impl_zmq.
+     - (StrOpt) The messaging driver to use, defaults to rabbit. Other drivers include amqp and zmq.
+   * - ``rpc_cast_timeout`` = ``-1``
+     - (IntOpt) Seconds to wait before a cast expires (TTL). The default value of -1 specifies an infinite linger period. The value of 0 specifies no linger period. Pending messages shall be discarded immediately when the socket is closed. Only supported by impl_zmq.
    * - ``rpc_conn_pool_size`` = ``30``
      - (IntOpt) Size of RPC connection pool.
    * - ``rpc_poll_timeout`` = ``1``
