@@ -19,7 +19,7 @@
    * - **[taskflow_executor]**
      -
    * - ``conversion_format`` = ``None``
-     - (StrOpt) The format to which images will be automatically converted.
+     - (StrOpt) The format to which images will be automatically converted. When using the RBD backend, this should be set to 'raw'
    * - ``engine_mode`` = ``parallel``
      - (StrOpt) The mode in which the engine will run. Can be 'serial' or 'parallel'.
    * - ``max_workers`` = ``10``

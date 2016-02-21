@@ -67,7 +67,7 @@
    * - ``store_capabilities_update_min_interval`` = ``0``
      - (IntOpt) Minimum interval seconds to execute updating dynamic storage capabilities based on backend status then. It's not a periodic routine, the update logic will be executed only when interval seconds elapsed and an operation of store has triggered. The feature will be enabled only when the option value greater then zero.
    * - ``stores`` = ``file, http``
-     - (ListOpt) List of stores enabled
+     - (ListOpt) List of stores enabled. Valid stores are: cinder, file, http, rbd, sheepdog, swift, s3, vsphere
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``

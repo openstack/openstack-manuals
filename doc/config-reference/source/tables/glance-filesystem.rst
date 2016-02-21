@@ -18,7 +18,7 @@
      - Description
    * - **[glance_store]**
      -
-   * - ``filesystem_store_datadir`` = ``None``
+   * - ``filesystem_store_datadir`` = ``/var/lib/glance/images``
      - (StrOpt) Directory to which the Filesystem backend store writes images.
    * - ``filesystem_store_datadirs`` = ``None``
      - (MultiStrOpt) List of directories and its priorities to which the Filesystem backend store writes images.

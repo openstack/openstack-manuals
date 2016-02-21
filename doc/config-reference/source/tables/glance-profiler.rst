@@ -20,5 +20,7 @@
      -
    * - ``enabled`` = ``False``
      - (BoolOpt) If False fully disable profiling feature.
+   * - ``hmac_keys`` = ``SECRET_KEY``
+     - (StrOpt) Secret key to use to sign Glance API and Glance Registry services tracing messages.
    * - ``trace_sqlalchemy`` = ``False``
      - (BoolOpt) If False doesn't trace SQL requests.
