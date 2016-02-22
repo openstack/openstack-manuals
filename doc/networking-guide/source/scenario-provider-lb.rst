@@ -350,28 +350,14 @@ Use the following example configuration as a template to deploy this
 scenario in your environment.
 
 .. note::
-   The lack of L3 agents in this scenario prevents operation of the
-   conventional metadata agent. You must use a configuration drive to
-   provide instance metadata.
+
+   To further simplify this scenario, we recommend using a configuration drive
+   rather than the conventional metadata agent to provide instance metadata.
 
 Controller node
 ---------------
 
-#. Configure the kernel to disable reverse path filtering. Edit the
-   :file:`/etc/sysctl.conf` file:
-
-   .. code-block:: ini
-
-      net.ipv4.conf.default.rp_filter=0
-      net.ipv4.conf.all.rp_filter=0
-
-#. Load the new kernel configuration:
-
-   .. code-block:: console
-
-      $ sysctl -p
-
-#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
@@ -383,7 +369,10 @@ Controller node
    .. note::
       The ``service_plugins`` option contains no value because the
       Networking service does not provide layer-3 services such as
-      routing.
+      routing. However, this breaks portions of the dashboard that
+      manage the Networking service. See the
+      `Installation Guide <http://docs.openstack.org/liberty/install-guide-ubuntu/horizon-install.html>`__
+      for more information.
 
 #. Configure the ML2 plug-in and Linux bridge agent. Edit the
    :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
@@ -394,6 +383,7 @@ Controller node
       type_drivers = flat,vlan
       tenant_network_types =
       mechanism_drivers = linuxbridge
+      extension_drivers = port_security
 
       [ml2_type_flat]
       flat_networks = provider
@@ -401,15 +391,7 @@ Controller node
       [ml2_type_vlan]
       network_vlan_ranges = provider
 
-      [linux_bridge]
-      physical_interface_mappings = provider:PROVIDER_INTERFACE
-
-      [vxlan]
-      enable_vxlan = False
-
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
-      enable_security_group = True
       enable_ipset = True
 
    Replace ``PROVIDER_INTERFACE`` with the name of the underlying interface
@@ -423,7 +405,25 @@ Controller node
       The ``provider`` value in the ``network_vlan_ranges`` option lacks VLAN
       ID ranges to support use of arbitrary VLAN IDs.
 
-#. Configure the DHCP agent. Edit the :file:`/etc/neutron/dhcp_agent.ini`
+#. Configure the Linux bridge agent. Edit the
+   ``/etc/neutron/plugins/ml2/linuxbridge_agent.ini`` file:
+
+   .. code-block:: ini
+
+      [linux_bridge]
+      physical_interface_mappings = provider:PROVIDER_INTERFACE
+
+      [vxlan]
+      enable_vxlan = False
+
+      [agent]
+      prevent_arp_spoofing = True
+
+      [securitygroup]
+      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+      enable_security_group = True
+
+#. Configure the DHCP agent. Edit the ``/etc/neutron/dhcp_agent.ini``
    file:
 
    .. code-block:: ini
@@ -432,7 +432,7 @@ Controller node
       verbose = True
       interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
       dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
-      dhcp_delete_namespaces = True
+      enable_isolated_metadata = True
 
 #. Start the following services:
 
@@ -443,21 +443,7 @@ Controller node
 Compute nodes
 -------------
 
-#. Configure the kernel to disable reverse path filtering. Edit the
-   :file:`/etc/sysctl.conf` file:
-
-   .. code-block:: ini
-
-      net.ipv4.conf.default.rp_filter=0
-      net.ipv4.conf.all.rp_filter=0
-
-#. Load the new kernel configuration:
-
-   .. code-block:: console
-
-      $ sysctl -p
-
-#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
@@ -465,7 +451,7 @@ Compute nodes
       verbose = True
 
 #. Configure the Linux bridge agent. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+   ``/etc/neutron/plugins/ml2/linuxbridge_agent.ini`` file:
 
    .. code-block:: ini
 
@@ -475,10 +461,12 @@ Compute nodes
       [vxlan]
       enable_vxlan = False
 
+      [agent]
+      prevent_arp_spoofing = True
+
       [securitygroup]
       firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
       enable_security_group = True
-      enable_ipset = True
 
    Replace ``PROVIDER_INTERFACE`` with the name of the underlying interface
    that handles provider networks. For example, ``eth1``.
