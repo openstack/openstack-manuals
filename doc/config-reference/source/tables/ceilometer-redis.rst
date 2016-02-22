@@ -16,17 +16,21 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``password`` =
-     - (StrOpt) Password for Redis server (optional).
-   * - ``port`` = ``6379``
-     - (IntOpt) Use this port to connect to redis host.
    * - **[matchmaker_redis]**
      -
+   * - ``check_timeout`` = ``20000``
+     - (IntOpt) Time in ms to wait before the transaction is killed.
    * - ``host`` = ``127.0.0.1``
      - (StrOpt) Host to locate redis.
    * - ``password`` =
      - (StrOpt) Password for Redis server (optional).
    * - ``port`` = ``6379``
-     - (IntOpt) Use this port to connect to redis host.
+     - (PortOpt) Use this port to connect to redis host.
+   * - ``sentinel_group_name`` = ``oslo-messaging-zeromq``
+     - (StrOpt) Redis replica set name.
+   * - ``sentinel_hosts`` =
+     - (ListOpt) List of Redis Sentinel hosts (fault tolerance mode) e.g. [host:port, host1:port ... ]
+   * - ``socket_timeout`` = ``1000``
+     - (IntOpt) Timeout in ms on blocking socket operations
+   * - ``wait_timeout`` = ``500``
+     - (IntOpt) Time in ms to wait between connection attempts.

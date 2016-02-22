@@ -25,7 +25,7 @@
    * - ``allow_methods`` = ``GET, POST, PUT, DELETE, OPTIONS``
      - (ListOpt) Indicate which methods can be used during the actual request.
    * - ``allowed_origin`` = ``None``
-     - (StrOpt) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
+     - (ListOpt) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
    * - ``expose_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
      - (ListOpt) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
    * - ``max_age`` = ``3600``
@@ -39,7 +39,7 @@
    * - ``allow_methods`` = ``GET, POST, PUT, DELETE, OPTIONS``
      - (ListOpt) Indicate which methods can be used during the actual request.
    * - ``allowed_origin`` = ``None``
-     - (StrOpt) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
+     - (ListOpt) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
    * - ``expose_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
      - (ListOpt) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
    * - ``max_age`` = ``3600``

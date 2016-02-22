@@ -18,6 +18,10 @@
      - Description
    * - **[collector]**
      -
+   * - ``batch_size`` = ``1``
+     - (IntOpt) Number of notification messages to wait before dispatching them
+   * - ``batch_timeout`` = ``None``
+     - (IntOpt) Number of seconds to wait before dispatching sampleswhen batch_size is not reached (None means indefinitely)
    * - ``requeue_event_on_dispatcher_error`` = ``False``
      - (BoolOpt) Requeue the event on the collector event queue when the collector fails to dispatch it.
    * - ``requeue_sample_on_dispatcher_error`` = ``False``

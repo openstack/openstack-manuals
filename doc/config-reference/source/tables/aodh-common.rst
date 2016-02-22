@@ -28,8 +28,8 @@
      - (StrOpt) The topic that aodh uses for event alarm evaluation.
    * - ``executor_thread_pool_size`` = ``64``
      - (IntOpt) Size of executor thread pool.
-   * - ``gnocchi_url`` = ``http://localhost:8041``
-     - (StrOpt) URL to Gnocchi.
+   * - ``gnocchi_url`` = ``None``
+     - (StrOpt) URL to Gnocchi. default: autodetection
    * - ``host`` = ``localhost``
      - (StrOpt) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.
    * - ``http_timeout`` = ``600``
@@ -38,10 +38,8 @@
      - (ListOpt) Memcached servers or None for in process cache.
    * - ``notifier_rpc_topic`` = ``alarm_notifier``
      - (StrOpt) The topic that aodh uses for alarm notifier messages.
-   * - ``password`` =
-     - (StrOpt) Password for Redis server (optional).
-   * - ``port`` = ``6379``
-     - (IntOpt) Use this port to connect to redis host.
+   * - ``notifier_topic`` = ``alarming``
+     - (StrOpt) The topic that aodh uses for alarm notifier messages.
    * - ``project_alarm_quota`` = ``None``
      - (IntOpt) Maximum number of alarms defined for a project.
    * - ``record_history`` = ``True``
@@ -56,3 +54,9 @@
      - (BoolOpt) Whether to verify the SSL Server certificate when calling alarm action.
    * - ``user_alarm_quota`` = ``None``
      - (IntOpt) Maximum number of alarms defined for a user.
+   * - **[service_credentials]**
+     -
+   * - ``interface`` = ``public``
+     - (StrOpt) Type of endpoint in Identity service catalog to use for communication with OpenStack services.
+   * - ``region_name`` = ``None``
+     - (StrOpt) Region name to use for OpenStack service endpoints.
