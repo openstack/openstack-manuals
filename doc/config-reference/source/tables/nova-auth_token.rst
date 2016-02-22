@@ -30,14 +30,14 @@
      - (StrOpt) Prefix to prepend at the beginning of the path. Deprecated, use identity_uri.
    * - ``auth_host`` = ``127.0.0.1``
      - (StrOpt) Host providing the admin Identity API endpoint. Deprecated, use identity_uri.
-   * - ``auth_plugin`` = ``None``
-     - (StrOpt) Name of the plugin to load
    * - ``auth_port`` = ``35357``
      - (IntOpt) Port of the admin Identity API endpoint. Deprecated, use identity_uri.
    * - ``auth_protocol`` = ``https``
-     - (StrOpt) Protocol of the admin Identity API endpoint (http or https). Deprecated, use identity_uri.
+     - (StrOpt) Protocol of the admin Identity API endpoint. Deprecated, use identity_uri.
    * - ``auth_section`` = ``None``
-     - (StrOpt) Config Section from which to load plugin specific options
+     - (Opt) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Opt) Authentication type to load
    * - ``auth_uri`` = ``None``
      - (StrOpt) Complete public Identity API endpoint.
    * - ``auth_version`` = ``None``
@@ -81,7 +81,7 @@
    * - ``memcache_secret_key`` = ``None``
      - (StrOpt) (Optional, mandatory if memcache_security_strategy is defined) This string is used for key derivation.
    * - ``memcache_security_strategy`` = ``None``
-     - (StrOpt) (Optional) If defined, indicate whether token data should be authenticated or authenticated and encrypted. Acceptable values are MAC or ENCRYPT. If MAC, token data is authenticated (with HMAC) in the cache. If ENCRYPT, token data is encrypted and authenticated in the cache. If the value is not one of these options or empty, auth_token will raise an exception on initialization.
+     - (StrOpt) (Optional) If defined, indicate whether token data should be authenticated or authenticated and encrypted. If MAC, token data is authenticated (with HMAC) in the cache. If ENCRYPT, token data is encrypted and authenticated in the cache. If the value is not one of these options or empty, auth_token will raise an exception on initialization.
    * - ``memcache_use_advanced_pool`` = ``False``
      - (BoolOpt) (Optional) Use the advanced (eventlet safe) memcached client pool. The advanced pool will only work under python 2.x.
    * - ``region_name`` = ``None``

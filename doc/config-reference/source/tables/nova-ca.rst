@@ -27,7 +27,7 @@
    * - ``cert_manager`` = ``nova.cert.manager.CertManager``
      - (StrOpt) Full class name for the Manager for cert
    * - ``cert_topic`` = ``cert``
-     - (StrOpt) The topic cert nodes listen on
+     - (StrOpt) Determines the RPC topic that the cert nodes listen on. The default is 'cert', and for most deployments there is no need to ever change it. Possible values: Any string. * Services which consume this: ``nova-cert`` * Related options: None
    * - ``crl_file`` = ``crl.pem``
      - (StrOpt) Filename of root Certificate Revocation List
    * - ``key_file`` = ``private/cakey.pem``
@@ -46,15 +46,3 @@
      - (BoolOpt) Should we use a CA for each project?
    * - ``user_cert_subject`` = ``/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=%.16s-%.16s-%s``
      - (StrOpt) Subject for certificate for users, %s for project, user, timestamp
-   * - **[ssl]**
-     -
-   * - ``ca_file`` = ``None``
-     - (StrOpt) CA certificate file to use to verify connecting clients.
-   * - ``cert_file`` = ``None``
-     - (StrOpt) Certificate file to use when starting the server securely.
-   * - ``ciphers`` = ``None``
-     - (StrOpt) Sets the list of available ciphers. value should be a string in the OpenSSL cipher list format.
-   * - ``key_file`` = ``None``
-     - (StrOpt) Private key file to use when starting the server securely.
-   * - ``version`` = ``None``
-     - (StrOpt) SSL version to use (valid only if SSL enabled). Valid values are TLSv1 and SSLv23. SSLv2, SSLv3, TLSv1_1, and TLSv1_2 may be available on some distributions.

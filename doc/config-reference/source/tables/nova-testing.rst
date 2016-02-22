@@ -24,5 +24,5 @@
      - (BoolOpt) If passed, use fake network devices and addresses
    * - ``monkey_patch`` = ``False``
      - (BoolOpt) Whether to apply monkey patching
-   * - ``monkey_patch_modules`` = ``nova.api.ec2.cloud:nova.notifications.notify_decorator, nova.compute.api:nova.notifications.notify_decorator``
+   * - ``monkey_patch_modules`` = ``nova.compute.api:nova.notifications.notify_decorator``
      - (ListOpt) List of modules/decorators to monkey patch

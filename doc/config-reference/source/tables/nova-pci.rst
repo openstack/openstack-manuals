@@ -19,6 +19,6 @@
    * - **[DEFAULT]**
      -
    * - ``pci_alias`` = ``[]``
-     - (MultiStrOpt) An alias for a PCI passthrough device requirement. This allows users to specify the alias in the extra_spec for a flavor, without needing to repeat all the PCI property requirements. For example: pci_alias = { "name": "QuickAssist", "product_id": "0443", "vendor_id": "8086", "device_type": "ACCEL" } defines an alias for the Intel QuickAssist card. (multi valued)
+     - (MultiStrOpt) An alias for a PCI passthrough device requirement. This allows users to specify the alias in the extra_spec for a flavor, without needing to repeat all the PCI property requirements. For example: pci_alias = { "name": "QuickAssist", "product_id": "0443", "vendor_id": "8086", "device_type": "type-PCI" } defines an alias for the Intel QuickAssist card. (multi valued).
    * - ``pci_passthrough_whitelist`` = ``[]``
      - (MultiStrOpt) White list of PCI devices available to VMs. For example: pci_passthrough_whitelist = [{"vendor_id": "8086", "product_id": "0443"}]

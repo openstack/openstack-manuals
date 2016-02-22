@@ -32,15 +32,17 @@
      - (IntOpt) The maximum number of items returned in a single response from a collection resource
    * - ``password_length`` = ``12``
      - (IntOpt) Length of generated instance admin passwords
-   * - ``policy_default_rule`` = ``default``
-     - (StrOpt) Default rule. Enforced when a requested rule is not found.
-   * - ``policy_dirs`` = ``['policy.d']``
-     - (MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
-   * - ``policy_file`` = ``policy.json``
-     - (StrOpt) The JSON file that defines policies.
    * - ``reservation_expire`` = ``86400``
      - (IntOpt) Number of seconds until a reservation expires
    * - ``resize_fs_using_block_device`` = ``False``
      - (BoolOpt) Attempt to resize the filesystem by accessing the image over a block device. This is done by the host and may not be necessary if the image contains a recent version of cloud-init. Possible mechanisms require the nbd driver (for qcow and raw), or loop (for raw).
    * - ``until_refresh`` = ``0``
      - (IntOpt) Count of reservations until usage is refreshed. This defaults to 0(off) to avoid additional load but it is useful to turn on to help keep quota usage up to date and reduce the impact of out of sync usage issues.
+   * - **[oslo_policy]**
+     -
+   * - ``policy_default_rule`` = ``default``
+     - (StrOpt) Default rule. Enforced when a requested rule is not found.
+   * - ``policy_dirs`` = ``['policy.d']``
+     - (MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
+   * - ``policy_file`` = ``policy.json``
+     - (StrOpt) The JSON file that defines policies.

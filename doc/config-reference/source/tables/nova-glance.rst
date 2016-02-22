@@ -27,15 +27,17 @@
    * - ``api_insecure`` = ``False``
      - (BoolOpt) Allow to perform insecure SSL (https) requests to glance
    * - ``api_servers`` = ``None``
-     - (ListOpt) A list of the glance api servers available to nova. Prefix with https:// for ssl-based glance api servers. ([hostname|ip]:port)
+     - (ListOpt) A list of the glance api servers endpoints available to nova. These should be fully qualified urls of the form "scheme://hostname:port[/path]" (i.e. "http://10.0.1.0:9292" or "https://my.glance.server/image")
    * - ``host`` = ``$my_ip``
-     - (StrOpt) Default glance hostname or IP address
+     - (StrOpt) Glance server hostname or IP address
    * - ``num_retries`` = ``0``
      - (IntOpt) Number of retries when uploading / downloading an image to / from glance.
    * - ``port`` = ``9292``
-     - (IntOpt) Default glance port
+     - (IntOpt) Glance server port
    * - ``protocol`` = ``http``
-     - (StrOpt) Default protocol to use when connecting to glance. Set to https for SSL.
+     - (StrOpt) Protocol to use when connecting to glance. Set to https for SSL.
+   * - ``verify_glance_signatures`` = ``False``
+     - (BoolOpt) Require Nova to perform signature verification on each image downloaded from Glance.
    * - **[image_file_url]**
      -
    * - ``filesystems`` =

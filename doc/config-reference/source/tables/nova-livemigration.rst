@@ -36,7 +36,11 @@
      - (IntOpt) Number of incremental steps to reach max downtime value. Will be rounded up to a minimum of 3 steps
    * - ``live_migration_flag`` = ``VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED``
      - (StrOpt) Migration flags to be set for live migration
+   * - ``live_migration_inbound_addr`` = ``None``
+     - (StrOpt) Live migration target ip or hostname (if this option is set to be None,the hostname of the migration targetcompute node will be used)
    * - ``live_migration_progress_timeout`` = ``150``
      - (IntOpt) Time to wait, in seconds, for migration to make forward progress in transferring data before aborting the operation. Set to 0 to disable timeouts.
-   * - ``live_migration_uri`` = ``qemu+tcp://%s/system``
-     - (StrOpt) Migration target URI (any included "%s" is replaced with the migration target hostname)
+   * - ``live_migration_tunnelled`` = ``None``
+     - (BoolOpt) Whether to use tunnelled migration, where migration data is transported over the libvirtd connection. If True, we use the VIR_MIGRATE_TUNNELLED migration flag, avoiding the need to configure the network to allow direct hypervisor to hypervisor communication. If False, use the native transport. If not set, Nova will choose a sensible default based on, for example the availability of native encryption support in the hypervisor.
+   * - ``live_migration_uri`` = ``None``
+     - (StrOpt) Override the default libvirt live migration target URI (which is dependent on virt_type) (any included "%s" is replaced with the migration target hostname)

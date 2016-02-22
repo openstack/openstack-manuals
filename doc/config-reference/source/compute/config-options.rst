@@ -20,6 +20,8 @@ OpenStack Compute service, run
 
 .. include:: ../tables/nova-ca.rst
 
+.. include:: ../tables/nova-cache.rst
+
 .. include:: ../tables/nova-cells.rst
 
 .. include:: ../tables/nova-common.rst
@@ -37,8 +39,6 @@ OpenStack Compute service, run
 .. include:: ../tables/nova-database.rst
 
 .. include:: ../tables/nova-debug.rst
-
-.. include:: ../tables/nova-ec2.rst
 
 .. include:: ../tables/nova-ephemeral_storage_encryption.rst
 
@@ -107,7 +107,3 @@ OpenStack Compute service, run
 .. include:: ../tables/nova-vpn.rst
 
 .. include:: ../tables/nova-xen.rst
-
-.. include:: ../tables/nova-xvpvncproxy.rst
-
-.. include:: ../tables/nova-zookeeper.rst

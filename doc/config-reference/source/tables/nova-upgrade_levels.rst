@@ -19,15 +19,15 @@
    * - **[cells]**
      -
    * - ``scheduler`` = ``nova.cells.scheduler.CellsScheduler``
-     - (StrOpt) Cells scheduler to use
+     - (StrOpt) Cells scheduler The class of the driver used by the cells scheduler. This should be the full Python path to the class to be used. If nothing is specified in this option, the CellsScheduler is used. Possible values: * 'nova.cells.scheduler.CellsScheduler' is the default option * Otherwise it should be the full Python path to the class to be used Services which consume this: * nova-cells Related options: * None
    * - **[upgrade_levels]**
      -
    * - ``cells`` = ``None``
      - (StrOpt) Set a version cap for messages sent to local cells services
    * - ``cert`` = ``None``
-     - (StrOpt) Set a version cap for messages sent to cert services
+     - (StrOpt) Specifies the maximum version for messages sent from cert services. This should be the minimum value that is supported by all of the deployed cert services. Possible values: Any valid OpenStack release name, in lower case, such as 'mitaka' or 'liberty'. Alternatively, it can be any string representing a version number in the format 'N.N'; for example, possible values might be '1.12' or '2.0'. * Services which consume this: ``nova-cert`` * Related options: None
    * - ``compute`` = ``None``
-     - (StrOpt) Set a version cap for messages sent to compute services. If you plan to do a live upgrade from an old version to a newer version, you should set this option to the old version before beginning the live upgrade procedure. Only upgrading to the next version is supported, so you cannot skip a release for the live upgrade procedure.
+     - (StrOpt) Set a version cap for messages sent to compute services. Set this option to "auto" if you want to let the compute RPC module automatically determine what version to use based on the service versions in the deployment. Otherwise, you can set this to a specific version to pin this service to messages at a particular level. All services of a single type (i.e. compute) should be configured to use the same version, and it should be set to the minimum commonly-supported version of all those services in the deployment.
    * - ``conductor`` = ``None``
      - (StrOpt) Set a version cap for messages sent to conductor services
    * - ``console`` = ``None``
@@ -39,4 +39,4 @@
    * - ``network`` = ``None``
      - (StrOpt) Set a version cap for messages sent to network services
    * - ``scheduler`` = ``None``
-     - (StrOpt) Set a version cap for messages sent to scheduler services
+     - (StrOpt) Sets a version cap (limit) for messages sent to scheduler services. In the situation where there were multiple scheduler services running, and they were not being upgraded together, you would set this to the lowest deployed version to guarantee that other services never send messages that any of your running schedulers cannot understand. This is rarely needed in practice as most deployments run a single scheduler. It exists mainly for design compatibility with the other services, such as compute, which are routinely upgraded in a rolling fashion. * Services that use this: ``nova-compute, nova-conductor`` * Related options: None

@@ -22,24 +22,10 @@
      - (StrOpt) Default tenant id when creating neutron networks
    * - **[neutron]**
      -
-   * - ``admin_auth_url`` = ``http://localhost:5000/v2.0``
-     - (StrOpt) Authorization URL for connecting to neutron in admin context. DEPRECATED: specify an auth_plugin and appropriate credentials instead.
-   * - ``admin_password`` = ``None``
-     - (StrOpt) Password for connecting to neutron in admin context DEPRECATED: specify an auth_plugin and appropriate credentials instead.
-   * - ``admin_tenant_id`` = ``None``
-     - (StrOpt) Tenant id for connecting to neutron in admin context DEPRECATED: specify an auth_plugin and appropriate credentials instead.
-   * - ``admin_tenant_name`` = ``None``
-     - (StrOpt) Tenant name for connecting to neutron in admin context. This option will be ignored if neutron_admin_tenant_id is set. Note that with Keystone V3 tenant names are only unique within a domain. DEPRECATED: specify an auth_plugin and appropriate credentials instead.
-   * - ``admin_user_id`` = ``None``
-     - (StrOpt) User id for connecting to neutron in admin context. DEPRECATED: specify an auth_plugin and appropriate credentials instead.
-   * - ``admin_username`` = ``None``
-     - (StrOpt) Username for connecting to neutron in admin context DEPRECATED: specify an auth_plugin and appropriate credentials instead.
-   * - ``auth_plugin`` = ``None``
-     - (StrOpt) Name of the plugin to load
    * - ``auth_section`` = ``None``
-     - (StrOpt) Config Section from which to load plugin specific options
-   * - ``auth_strategy`` = ``keystone``
-     - (StrOpt) Authorization strategy for connecting to neutron in admin context. DEPRECATED: specify an auth_plugin and appropriate credentials instead. If an auth_plugin is specified strategy will be ignored.
+     - (Opt) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Opt) Authentication type to load
    * - ``cafile`` = ``None``
      - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``certfile`` = ``None``
@@ -53,7 +39,7 @@
    * - ``metadata_proxy_shared_secret`` =
      - (StrOpt) Shared secret to validate proxies Neutron metadata requests
    * - ``ovs_bridge`` = ``br-int``
-     - (StrOpt) Name of Integration Bridge used by Open vSwitch
+     - (StrOpt) Default OVS bridge name to use if not specified by Neutron
    * - ``region_name`` = ``None``
      - (StrOpt) Region name for connecting to neutron in admin context
    * - ``service_metadata_proxy`` = ``False``

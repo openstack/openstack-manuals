@@ -65,11 +65,13 @@
    * - ``iscsi_iface`` = ``None``
      - (StrOpt) The iSCSI transport iface to use to connect to target in case offload support is desired. Default format is of the form <transport_name>.<hwaddress> where <transport_name> is one of (be2iscsi, bnx2i, cxgb3i, cxgb4i, qla4xxx, ocs) and <hwaddress> is the MAC address of the interface and can be generated via the iscsiadm -m iface command. Do not confuse the iscsi_iface parameter to be provided here with the actual transport name.
    * - ``iscsi_use_multipath`` = ``False``
-     - (BoolOpt) Use multipath connection of the iSCSI volume
+     - (BoolOpt) Use multipath connection of the iSCSI or FC volume
    * - ``iser_use_multipath`` = ``False``
      - (BoolOpt) Use multipath connection of the iSER volume
    * - ``mem_stats_period_seconds`` = ``10``
      - (IntOpt) A number of seconds to memory usage statistics period. Zero or negative value mean to disable memory usage statistics.
+   * - ``realtime_scheduler_priority`` = ``1``
+     - (IntOpt) In a realtime host context vCPUs for guest will run in that scheduling priority. Priority depends on the host kernel (usually 1-99)
    * - ``remove_unused_kernels`` = ``True``
      - (BoolOpt) DEPRECATED: Should unused kernel images be removed? This is only safe to enable if all compute nodes have been updated to support this option (running Grizzly or newer level compute). This will be the default behavior in the 13.0.0 release.
    * - ``remove_unused_resized_minimum_age_seconds`` = ``3600``

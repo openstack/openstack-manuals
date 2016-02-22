@@ -19,7 +19,7 @@
    * - **[DEFAULT]**
      -
    * - ``block_device_allocate_retries`` = ``60``
-     - (IntOpt) Number of times to retry block device allocation on failures
+     - (IntOpt) Number of times to retry block device allocation on failures. Starting with Liberty, Cinder can use image volume cache. This may help with block device allocation performance. Look at the cinder image_volume_cache_enabled configuration option.
    * - ``block_device_allocate_retries_interval`` = ``3``
      - (IntOpt) Waiting time interval (seconds) between block device allocation retries on failures
    * - ``my_block_storage_ip`` = ``$my_ip``

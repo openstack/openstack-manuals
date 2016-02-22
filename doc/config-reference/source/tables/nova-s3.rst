@@ -18,8 +18,6 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``buckets_path`` = ``$state_path/buckets``
-     - (StrOpt) Path to S3 buckets
    * - ``image_decryption_dir`` = ``/tmp``
      - (StrOpt) Parent directory for tempdir used for image decryption
    * - ``s3_access_key`` = ``notchecked``
@@ -28,10 +26,6 @@
      - (BoolOpt) Whether to affix the tenant id to the access key when downloading from S3
    * - ``s3_host`` = ``$my_ip``
      - (StrOpt) Hostname or IP for OpenStack to use when accessing the S3 api
-   * - ``s3_listen`` = ``0.0.0.0``
-     - (StrOpt) IP address for S3 API to listen
-   * - ``s3_listen_port`` = ``3333``
-     - (IntOpt) Port for S3 API to listen
    * - ``s3_port`` = ``3333``
      - (IntOpt) Port used when accessing the S3 api
    * - ``s3_secret_key`` = ``notchecked``
