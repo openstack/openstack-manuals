@@ -2,11 +2,11 @@
 Dashboard
 =========
 
-The OpenStack dashboard is a web-based interface that allows you to
-manage OpenStack resources and services. The dashboard allows you to
+The OpenStack Dashboard is a web-based interface that allows you to
+manage OpenStack resources and services. The Dashboard allows you to
 interact with the OpenStack Compute cloud controller using the OpenStack
 APIs. For more information about installing and configuring the
-dashboard, see the `OpenStack Installation Guide
+Dashboard, see the `OpenStack Installation Guide
 <http://docs.openstack.org/index.html#install-guides>`__
 for your operating system.
 
@@ -15,9 +15,28 @@ for your operating system.
 
    common/dashboard_customizing.rst
    dashboard_sessions.rst
+   dashboard_manage_images.rst
+   dashboard_manage_instances.rst
+   dashboard_manage_flavors.rst
+   dashboard_manage_shares.rst
+   dashboard_manage_host_aggregates.rst
+   dashboard_admin_manage_stacks.rst
 
 
-- To deploy the dashboard, see the `OpenStack dashboard documentation
+- To deploy the Dashboard, see the `OpenStack dashboard documentation
   <http://docs.openstack.org/developer/horizon/topics/deployment.html>`__.
-- To launch instances with the dashboard, see the `OpenStack End User
+- To launch instances with the Dashboard, see the `OpenStack End User
   Guide <http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
+
+..  Additional Documents to add-the final toctree should resemble this- <JR>
+
+..   dashboard_manage_images.rst
+..   *dashboard_admin_manage_roles.rst
+..   dashboard_manage_instances.rst
+..   dashboard_manage_flavors.rst
+..   *dashboard_manage_volumes.rst
+..   *dashboard_manage_shares.rst
+..   *dashboard_set_quotas
+..   *dashboard_manage_resources.rst
+..   dashboard_manage_host_aggregates.rst
+..   dashboard_admin_manage_stacks.rst

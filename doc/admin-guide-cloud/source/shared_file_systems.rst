@@ -22,7 +22,6 @@ System (EFS) does.
    shared_file_systems_share_management.rst
    shared_file_systems_manage_shares_cli.rst
    shared_file_systems_share_types.rst
-   shared_file_systems_manage_shares_dashboard.rst
    shared_file_systems_snapshots.rst
    shared_file_systems_security_services.rst
    shared_file_systems_cgroups.rst

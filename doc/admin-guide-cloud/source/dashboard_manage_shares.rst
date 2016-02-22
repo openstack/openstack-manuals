@@ -4,7 +4,7 @@ Manage shares and share types
 
 Shares are file storage that instances can access. Users can
 allow or deny a running instance to have access to a share at any time.
-For information about using the dashboard to create and manage shares as
+For information about using the Dashboard to create and manage shares as
 an end user, see the
 `OpenStack End User Guide <http://docs.openstack.org/user-guide/dashboard_manage_shares.html>`_.
 
@@ -17,7 +17,7 @@ or delete shares.
 Create a share type
 ~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin`
+#. Log in to the Dashboard and choose the :guilabel:`admin`
    project from the drop-down list at the top of the page.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
@@ -43,7 +43,7 @@ Create a share type
 Update share type
 ~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project from
+#. Log in to the Dashboard and choose the :guilabel:`admin` project from
    the drop-down list at the top of the page.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
@@ -70,7 +70,7 @@ Delete share types
 
 When you delete a share type, shares of that type are not deleted.
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project from
+#. Log in to the Dashboard and choose the :guilabel:`admin` project from
    the drop-down list at the top of the page.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
@@ -91,7 +91,7 @@ When you delete a share type, shares of that type are not deleted.
 Delete shares
 ~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project
+#. Log in to the Dashboard and choose the :guilabel:`admin` project
    from the drop-down list at the top of the page.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
@@ -111,7 +111,7 @@ Delete shares
 Delete share server
 ~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project
+#. Log in to the Dashboard and choose the :guilabel:`admin` project
    from the drop-down list at the top of the page.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
@@ -131,7 +131,7 @@ Delete share server
 Delete share networks
 ~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project
+#. Log in to the Dashboard and choose the :guilabel:`admin` project
    from the drop-down list at the top of the page.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
