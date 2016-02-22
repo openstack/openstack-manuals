@@ -20,7 +20,7 @@ Compute
    compute/cells.rst
    compute/conductor.rst
    compute/nova-conf-samples.rst
-   compute/nova-logs.rst
+   compute/logs.rst
    compute/config-samples.rst
    tables/conf-changes/nova.rst
 
