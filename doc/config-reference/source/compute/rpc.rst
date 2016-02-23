@@ -82,10 +82,6 @@ To enable SSL, set the ``qpid_protocol`` option:
 
    qpid_protocol=ssl
 
-This table lists additional options that can be used to configure the Qpid
-messaging driver for OpenStack Oslo RPC. These options are used infrequently.
-
-.. include:: ../tables/nova-qpid.rst
 
 Configure ZeroMQ
 ~~~~~~~~~~~~~~~~

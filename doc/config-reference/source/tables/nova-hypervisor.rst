@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``default_ephemeral_format`` = ``None``
-     - (StrOpt) The default format an ephemeral_volume will be formatted with on creation.
+     - (StrOpt) The default format an ephemeral_volume will be formatted with on creation. Possible values: * ``ext2`` * ``ext3`` * ``ext4`` * ``xfs`` * ``ntfs`` (only for Windows guests) Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
    * - ``force_raw_images`` = ``True``
      - (BoolOpt) Force backing images to raw format
    * - ``preallocate_images`` = ``none``
-     - (StrOpt) VM image preallocation mode: "none" => no storage provisioning is done up front, "space" => storage is fully allocated at instance start
+     - (StrOpt) The image preallocation mode to use. Image preallocation allows storage for instance images to be allocated up front when the instance is initially provisioned. This ensures immediate feedback is given if enough space isn't available. In addition, it should significantly improve performance on writes to new blocks and may even improve I/O performance to prewritten blocks due to reduced fragmentation. Possible values: * "none" => no storage provisioning is done up front * "space" => storage is fully allocated at instance start Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
    * - ``timeout_nbd`` = ``10``
      - (IntOpt) Amount of time, in seconds, to wait for NBD device start up.
    * - ``use_cow_images`` = ``True``
-     - (BoolOpt) Whether to use cow images
+     - (BoolOpt) Enable use of copy-on-write (cow) images. QEMU/KVM allow the use of qcow2 as backing files. By disabling this, backing files will not be used. Possible values: * True: Enable use of cow images * False: Disable use of cow images Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
    * - ``vcpu_pin_set`` = ``None``
-     - (StrOpt) Defines which pcpus that instance vcpus can use. For example, "4-12,^8,15"
+     - (StrOpt) Defines which physical CPUs (pCPUs) can be used by instance virtual CPUs (vCPUs). Possible values: * A comma-separated list of physical CPU numbers that virtual CPUs can be allocated to by default. Each element should be either a single CPU number, a range of CPU numbers, or a caret followed by a CPU number to be excluded from a previous range. For example: vcpu_pin_set = "4-12,^8,15" Services which consume this: * ``nova-scheduler`` * ``nova-compute`` Interdependencies to other options: * None
    * - ``virt_mkfs`` = ``[]``
      - (MultiStrOpt) Name of the mkfs commands for ephemeral device. The format is <os_type>=<mkfs command>

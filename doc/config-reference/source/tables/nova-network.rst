@@ -67,7 +67,7 @@
    * - ``force_dhcp_release`` = ``True``
      - (BoolOpt) If True, send a dhcp release on instance termination
    * - ``force_snat_range`` = ``[]``
-     - (MultiStrOpt) Traffic to this range will always be snatted to the fallback ip, even if it would normally be bridged out of the node. Can be specified multiple times.
+     - (MultiStrOpt) Traffic to this range will always be snatted to the fallback IP, even if it would normally be bridged out of the node. Can be specified multiple times.
    * - ``forward_bridge_interface`` = ``['all']``
      - (MultiStrOpt) An interface that bridges can forward to. If this is set to all then all traffic will be forwarded. Can be specified multiple times.
    * - ``gateway`` = ``None``

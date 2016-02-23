@@ -31,7 +31,7 @@
    * - ``host`` = ``localhost``
      - (StrOpt) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
+     - (_DeprecatedListOpt) DEPRECATED: Memcached servers or None for in process cache. "memcached_servers" opt is deprecated in Mitaka. In Newton release oslo.cache config options should be used as this option will be removed. Please add a [cache] group in your nova.conf file and add "enable" and "memcache_servers" option in this section.
    * - ``my_ip`` = ``10.0.0.1``
      - (StrOpt) IP address of this host
    * - ``notify_api_faults`` = ``False``

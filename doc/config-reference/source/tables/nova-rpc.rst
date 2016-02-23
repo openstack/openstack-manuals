@@ -18,10 +18,12 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``notification_format`` = ``both``
+     - (StrOpt) Specifies which notification format shall be used by nova.
    * - ``rpc_backend`` = ``rabbit``
-     - (StrOpt) The messaging driver to use, defaults to rabbit. Other drivers include qpid and zmq.
-   * - ``rpc_cast_timeout`` = ``30``
-     - (IntOpt) Seconds to wait before a cast expires (TTL). Only supported by impl_zmq.
+     - (StrOpt) The messaging driver to use, defaults to rabbit. Other drivers include amqp and zmq.
+   * - ``rpc_cast_timeout`` = ``-1``
+     - (IntOpt) Seconds to wait before a cast expires (TTL). The default value of -1 specifies an infinite linger period. The value of 0 specifies no linger period. Pending messages shall be discarded immediately when the socket is closed. Only supported by impl_zmq.
    * - ``rpc_conn_pool_size`` = ``30``
      - (IntOpt) Size of RPC connection pool.
    * - ``rpc_poll_timeout`` = ``1``
@@ -31,7 +33,7 @@
    * - **[cells]**
      -
    * - ``rpc_driver_queue_base`` = ``cells.intercell``
-     - (StrOpt) Base queue name to use when communicating between cells. Various topics by message type will be appended to this.
+     - (StrOpt) RPC driver queue base When sending a message to another cell by JSON-ifying the message and making an RPC cast to 'process_message', a base queue is used. This option defines the base queue name to be used when communicating between cells. Various topics by message type will be appended to this. Possible values: * The base queue name to be used when communicating between cells. Services which consume this: * nova-cells Related options: * None
    * - **[oslo_concurrency]**
      -
    * - ``disable_process_locking`` = ``False``

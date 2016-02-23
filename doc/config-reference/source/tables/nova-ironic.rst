@@ -35,6 +35,6 @@
    * - ``api_retry_interval`` = ``2``
      - (IntOpt) How often to retry in seconds when a request does conflict
    * - ``api_version`` = ``1``
-     - (IntOpt) Version of Ironic API service endpoint.
+     - (IntOpt) Version of Ironic API service endpoint. DEPRECATED: Setting the API version is not possible anymore.
    * - ``client_log_level`` = ``None``
      - (StrOpt) Log level override for ironicclient. Set this in order to override the global "default_log_levels", "verbose", and "debug" settings. DEPRECATED: use standard logging configuration.

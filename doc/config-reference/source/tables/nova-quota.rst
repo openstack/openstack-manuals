@@ -57,4 +57,4 @@
    * - **[cells]**
      -
    * - ``bandwidth_update_interval`` = ``600``
-     - (IntOpt) Seconds between bandwidth updates for cells.
+     - (IntOpt) Bandwidth update interval Seconds between bandwidth usage cache updates for cells. Possible values: * Time in seconds. Services which consume this: * nova-compute Related options: * None

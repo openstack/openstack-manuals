@@ -21,7 +21,7 @@
    * - ``compute_available_monitors`` = ``None``
      - (MultiStrOpt) Monitor classes available to the compute which may be specified more than once. This option is DEPRECATED and no longer used. Use setuptools entry points to list available monitor plugins.
    * - ``compute_driver`` = ``None``
-     - (StrOpt) Driver to use for controlling virtualization. Options include: libvirt.LibvirtDriver, xenapi.XenAPIDriver, fake.FakeDriver, ironic.IronicDriver, vmwareapi.VMwareVCDriver, hyperv.HyperVDriver
+     - (StrOpt) Defines which driver to use for controlling virtualization. Possible values: * ``libvirt.LibvirtDriver`` * ``xenapi.XenAPIDriver`` * ``fake.FakeDriver`` * ``ironic.IronicDriver`` * ``vmwareapi.VMwareVCDriver`` * ``hyperv.HyperVDriver`` Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
    * - ``compute_manager`` = ``nova.compute.manager.ComputeManager``
      - (StrOpt) Full class name for the Manager for compute
    * - ``compute_monitors`` =
@@ -63,7 +63,7 @@
    * - ``reboot_timeout`` = ``0``
      - (IntOpt) Automatically hard reboot an instance if it has been stuck in a rebooting state longer than N seconds. Set to 0 to disable.
    * - ``reclaim_instance_interval`` = ``0``
-     - (IntOpt) Interval in seconds for reclaiming deleted instances
+     - (IntOpt) Interval in seconds for reclaiming deleted instances. It takes effect only when value is greater than 0.
    * - ``rescue_timeout`` = ``0``
      - (IntOpt) Automatically unrescue an instance after N seconds. Set to 0 to disable.
    * - ``resize_confirm_window`` = ``0``
@@ -87,6 +87,6 @@
    * - ``update_resources_interval`` = ``0``
      - (IntOpt) Interval in seconds for updating compute resources. A number less than 0 means to disable the task completely. Leaving this at the default of 0 will cause this to run at the default periodic interval. Setting it to any positive value will cause it to run at approximately that number of seconds.
    * - ``vif_plugging_is_fatal`` = ``True``
-     - (BoolOpt) Fail instance boot if vif plugging fails
+     - (BoolOpt) Determine if instance should boot or fail on VIF plugging timeout. Nova sends a port update to Neutron after an instance has been scheduled, providing Neutron with the necessary information to finish setup of the port. Once completed, Neutron notifies Nova that it has finished setting up the port, at which point Nova resumes the boot of the instance since network connectivity is now supposed to be present. A timeout will occur if the reply is not received after a given interval. This option determines what Nova does when the VIF plugging timeout event happens. When enabled, the instance will error out. When disabled, the instance will continue to boot on the assumption that the port is ready. Possible values: * True: Instances should fail after VIF plugging timeout * False: Instances should continue booting after VIF plugging timeout Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
    * - ``vif_plugging_timeout`` = ``300``
-     - (IntOpt) Number of seconds to wait for neutron vif plugging events to arrive before continuing or failing (see vif_plugging_is_fatal). If this is set to zero and vif_plugging_is_fatal is False, events should not be expected to arrive at all.
+     - (IntOpt) Timeout for Neutron VIF plugging event message arrival. Number of seconds to wait for Neutron vif plugging events to arrive before continuing or failing (see 'vif_plugging_is_fatal'). If this is set to zero and 'vif_plugging_is_fatal' is False, events should not be expected to arrive at all. Possible values: * A time interval in seconds Services which consume this: * ``nova-compute`` Interdependencies to other options: * None

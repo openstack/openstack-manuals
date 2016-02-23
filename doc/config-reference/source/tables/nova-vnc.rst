@@ -22,10 +22,6 @@
      - (BoolOpt) Become a daemon (background process)
    * - ``key`` = ``None``
      - (StrOpt) SSL key file (if separate from cert)
-   * - ``novncproxy_host`` = ``0.0.0.0``
-     - (StrOpt) Host on which to listen for incoming requests
-   * - ``novncproxy_port`` = ``6080``
-     - (IntOpt) Port on which to listen for incoming requests
    * - ``record`` = ``False``
      - (BoolOpt) Record sessions to FILE.[session_number]
    * - ``source_is_ipv6`` = ``False``
@@ -43,14 +39,22 @@
    * - **[vnc]**
      -
    * - ``enabled`` = ``True``
-     - (BoolOpt) Enable VNC related features
+     - (BoolOpt) Enable VNC related features. Guests will get created with graphical devices to support this. Clients (for example Horizon) can then establish a VNC connection to the guest. Possible values: * True: Enables the feature * False: Disables the feature Services which consume this: * ``nova-compute`` Related options: * None
    * - ``keymap`` = ``en-us``
-     - (StrOpt) Keymap for VNC
+     - (StrOpt) Keymap for VNC. The keyboard mapping (keymap) determines which keyboard layout a VNC session should use by default. Possible values: * A keyboard layout which is supported by the underlying hypervisor on this node. This is usually an 'IETF language tag' (for example 'en-us'). If you use QEMU as hypervisor, you should find the list of supported keyboard layouts at ``/usr/share/qemu/keymaps``. Services which consume this: * ``nova-compute`` Related options: * None
    * - ``novncproxy_base_url`` = ``http://127.0.0.1:6080/vnc_auto.html``
-     - (StrOpt) Location of VNC console proxy, in the form "http://127.0.0.1:6080/vnc_auto.html"
+     - (StrOpt) Public address of noVNC VNC console proxy. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client. This option sets the public base URL to which client systems will connect. noVNC clients can use this address to connect to the noVNC instance and, by extension, the VNC sessions. Possible values: * A URL Services which consume this: * ``nova-compute`` Related options: * novncproxy_host * novncproxy_port
+   * - ``novncproxy_host`` = ``0.0.0.0``
+     - (StrOpt) IP address that the noVNC console proxy should bind to. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client. This option sets the private address to which the noVNC console proxy service should bind to. Possible values: * An IP address Services which consume this: * ``nova-compute`` Related options: * novncproxy_port * novncproxy_base_url
+   * - ``novncproxy_port`` = ``6080``
+     - (IntOpt) Port that the noVNC console proxy should bind to. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client. This option sets the private port to which the noVNC console proxy service should bind to. Possible values: * A port number Services which consume this: * ``nova-compute`` Related options: * novncproxy_host * novncproxy_base_url
    * - ``vncserver_listen`` = ``127.0.0.1``
-     - (StrOpt) IP address on which instance vncservers should listen
+     - (StrOpt) The IP address on which an instance should listen to for incoming VNC connection requests on this node. Possible values: * An IP address Services which consume this: * ``nova-compute`` Related options: * None
    * - ``vncserver_proxyclient_address`` = ``127.0.0.1``
-     - (StrOpt) The address to which proxy clients (like nova-xvpvncproxy) should connect
+     - (StrOpt) Private, internal address of VNC console proxy. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. This option sets the private address to which proxy clients, such as ``nova-xvpvncproxy``, should connect to. Possible values: * An IP address Services which consume this: * ``nova-compute`` Related options: * None
    * - ``xvpvncproxy_base_url`` = ``http://127.0.0.1:6081/console``
-     - (StrOpt) Location of nova xvp VNC console proxy, in the form "http://127.0.0.1:6081/console"
+     - (StrOpt) Public address of XVP VNC console proxy. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based. This option sets the public base URL to which client systems will connect. XVP clients can use this address to connect to the XVP instance and, by extension, the VNC sessions. Possible values: * A URL Services which consume this: * ``nova-compute`` Related options: * xvpvncproxy_host * xvpvncproxy_port
+   * - ``xvpvncproxy_host`` = ``0.0.0.0``
+     - (StrOpt) IP address that the XVP VNC console proxy should bind to. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based. This option sets the private address to which the XVP VNC console proxy service should bind to. Possible values: * An IP address Services which consume this: * ``nova-compute`` Related options: * xvpvncproxy_port * xvpvncproxy_base_url
+   * - ``xvpvncproxy_port`` = ``6081``
+     - (IntOpt) Port that the XVP VNC console proxy should bind to. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based. This option sets the private port to which the XVP VNC console proxy service should bind to. Possible values: * A port number Services which consume this: * ``nova-compute`` Related options: * xvpvncproxy_host * xvpvncproxy_base_url
