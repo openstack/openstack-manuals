@@ -20,7 +20,8 @@ high availability.
 For information about:
 
 * administrative tasks on the command-line, see
-  :doc:`cli_admin_manage_stacks`.
+  the `OpenStack Admin User Guide
+  <http://docs.openstack.org/user-guide-admin/cli_admin_manage_stacks.html>`__.
 
   .. note::
 

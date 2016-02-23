@@ -12,7 +12,6 @@ Compute
    compute/database-connections.rst
    compute/rpc.rst
    compute/api.rst
-   compute/ec2-api.rst
    compute/fibre-channel.rst
    compute/iscsi-offload.rst
    compute/hypervisors.rst

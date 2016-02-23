@@ -188,7 +188,7 @@ Troubleshoot Xen with Libvirt
 across other issues, you should first consult the following log files:
 
 * ``/var/log/nova/compute.log``
-  (for more information refer to :doc:`nova-logs`).
+  (for more information refer to :ref:`nova_logs`).
 * ``/var/log/libvirt/libxl/libxl-driver.log``,
 * ``/var/log/xen/qemu-dm-${instancename}.log``,
 * ``/var/log/xen/xen-hotplug.log``,
