@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-17 06:08+0000\n"
+"POT-Creation-Date: 2016-02-23 06:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1232,8 +1232,9 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  blockstorage.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  compute-images-instances.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../blockstorage.rst:5 ../compute-images-instances.rst:232
+# #-#-#-#-#  dashboard_set_quotas.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+#: ../blockstorage.rst:5 ../dashboard_set_quotas.rst:39
+#: ../dashboard_set_quotas.rst:65 ../dashboard_set_quotas.rst:71
 msgid "Block Storage"
 msgstr ""
 
@@ -1773,7 +1774,7 @@ msgstr ""
 #: ../blockstorage_glusterfs_backend.rst:55
 #: ../blockstorage_glusterfs_backend.rst:107
 #: ../blockstorage_nfs_backend.rst:44 ../compute-flavors.rst:334
-#: ../compute-flavors.rst:356 ../identity_service_api_protection.rst:19
+#: ../compute-flavors.rst:355 ../identity_service_api_protection.rst:19
 #: ../keystone_secure_identity_to_ldap_backend.rst:64
 msgid "Where:"
 msgstr ""
@@ -3929,11 +3930,11 @@ msgid "Name"
 msgstr ""
 
 #: ../compute-flavors.rst:39
-msgid "Memory_MB"
+msgid "Instance memory in megabytes."
 msgstr ""
 
 #: ../compute-flavors.rst:39
-msgid "Virtual machine memory in megabytes."
+msgid "Memory MB"
 msgstr ""
 
 #: ../compute-flavors.rst:41
@@ -3970,7 +3971,11 @@ msgstr ""
 msgid "Number of virtual CPUs presented to the instance."
 msgstr ""
 
-#: ../compute-flavors.rst:53
+# #-#-#-#-#  compute-flavors.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_manage_flavors.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_set_quotas.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+#: ../compute-flavors.rst:53 ../dashboard_manage_flavors.rst:12
+#: ../dashboard_set_quotas.rst:68
 msgid "VCPUs"
 msgstr ""
 
@@ -3984,7 +3989,7 @@ msgid ""
 msgstr ""
 
 #: ../compute-flavors.rst:55
-msgid "RXTX_Factor"
+msgid "RXTX Factor"
 msgstr ""
 
 #: ../compute-flavors.rst:62
@@ -3993,8 +3998,12 @@ msgid ""
 "tenant it was created in. Defaults to ``True``."
 msgstr ""
 
-#: ../compute-flavors.rst:62
-msgid "Is_Public"
+#: ../compute-flavors.rst:62 ../compute-flavors.rst:79
+msgid "Is Public"
+msgstr ""
+
+#: ../compute-flavors.rst:65 ../compute-flavors.rst:91
+msgid "Extra Specs"
 msgstr ""
 
 #: ../compute-flavors.rst:65
@@ -4005,10 +4014,6 @@ msgid ""
 "nodes with GPU hardware."
 msgstr ""
 
-#: ../compute-flavors.rst:65
-msgid "extra_specs"
-msgstr ""
-
 #: ../compute-flavors.rst:73
 msgid ""
 "Flavor customization can be limited by the hypervisor in use. For example "
@@ -4017,19 +4022,27 @@ msgid ""
 "and instance VIF traffic control."
 msgstr ""
 
-#: ../compute-flavors.rst:79
+#: ../compute-flavors.rst:81
+msgid ""
+"Flavors can be assigned to particular projects. By default, a flavor is "
+"public and available to all projects. Private flavors are only accessible to "
+"those on the access list and are invisible to other projects. To create and "
+"assign a private flavor to a project, run this command:"
+msgstr ""
+
+#: ../compute-flavors.rst:94
 msgid ""
 "You can configure the CPU limits with control parameters with the ``nova`` "
 "client. For example, to configure the I/O limit, use:"
 msgstr ""
 
-#: ../compute-flavors.rst:88
+#: ../compute-flavors.rst:103
 msgid ""
 "Use these optional parameters to control weight shares, enforcement "
 "intervals for runtime quotas, and a quota for maximum allowed bandwidth:"
 msgstr ""
 
-#: ../compute-flavors.rst:92
+#: ../compute-flavors.rst:107
 msgid ""
 "``cpu_shares``. Specifies the proportional weighted share for the domain. If "
 "this element is omitted, the service defaults to the OS provided defaults. "
@@ -4038,14 +4051,14 @@ msgid ""
 "twice as much CPU time as a VM configured with value 1024."
 msgstr ""
 
-#: ../compute-flavors.rst:99
+#: ../compute-flavors.rst:114
 msgid ""
 "``cpu_shares_level``. On VMware, specifies the allocation level. Can be "
 "``custom``, ``high``, ``normal``, or ``low``. If you choose ``custom``, set "
 "the number of shares using ``cpu_shares_share``."
 msgstr ""
 
-#: ../compute-flavors.rst:103
+#: ../compute-flavors.rst:118
 msgid ""
 "``cpu_period``. Specifies the enforcement interval (unit: microseconds) for "
 "QEMU and LXC hypervisors. Within a period, each VCPU of the domain is not "
@@ -4053,7 +4066,7 @@ msgid ""
 "in range ``[1000, 1000000]``. A period with value 0 means no value."
 msgstr ""
 
-#: ../compute-flavors.rst:109
+#: ../compute-flavors.rst:124
 msgid ""
 "``cpu_limit``. Specifies the upper limit for VMware machine CPU allocation "
 "in MHz. This parameter ensures that a machine never uses more than the "
@@ -4061,14 +4074,14 @@ msgid ""
 "machine's CPU performance."
 msgstr ""
 
-#: ../compute-flavors.rst:114
+#: ../compute-flavors.rst:129
 msgid ""
 "``cpu_reservation``. Specifies the guaranteed minimum CPU reservation in MHz "
 "for VMware. This means that if needed, the machine will definitely get "
 "allocated the reserved amount of CPU cycles."
 msgstr ""
 
-#: ../compute-flavors.rst:119
+#: ../compute-flavors.rst:134
 msgid ""
 "``cpu_quota``. Specifies the maximum allowed bandwidth (unit: microseconds). "
 "A domain with a negative-value quota indicates that the domain has infinite "
@@ -4078,29 +4091,29 @@ msgid ""
 "the same speed. For example:"
 msgstr ""
 
-#: ../compute-flavors.rst:133
+#: ../compute-flavors.rst:148
 msgid ""
 "In this example, the instance of ``m1.low_cpu`` can only consume a maximum "
 "of 50% CPU of a physical CPU computing capability."
 msgstr ""
 
-#: ../compute-flavors.rst:134
+#: ../compute-flavors.rst:149
 msgid "CPU limits"
 msgstr ""
 
-#: ../compute-flavors.rst:137
+#: ../compute-flavors.rst:152
 msgid ""
 "For VMware, you can configure the memory limits with control parameters."
 msgstr ""
 
-#: ../compute-flavors.rst:139
+#: ../compute-flavors.rst:154
 msgid ""
 "Use these optional parameters to limit the memory allocation, guarantee "
 "minimum memory reservation, and to specify shares used in case of resource "
 "contention:"
 msgstr ""
 
-#: ../compute-flavors.rst:143
+#: ../compute-flavors.rst:158
 msgid ""
 "``memory_limit``: Specifies the upper limit for VMware machine memory "
 "allocation in MB. The utilization of a virtual machine will not exceed this "
@@ -4109,45 +4122,45 @@ msgid ""
 "resources."
 msgstr ""
 
-#: ../compute-flavors.rst:149
+#: ../compute-flavors.rst:164
 msgid ""
 "``memory_reservation``: Specifies the guaranteed minimum memory reservation "
 "in MB for VMware. This means the specified amount of memory will definitely "
 "be allocated to the machine."
 msgstr ""
 
-#: ../compute-flavors.rst:153
+#: ../compute-flavors.rst:168
 msgid ""
 "``memory_shares_level``: On VMware, specifies the allocation level. This can "
 "be ``custom``, ``high``, ``normal`` or ``low``. If you choose ``custom``, "
 "set the number of shares using ``memory_shares_share``."
 msgstr ""
 
-#: ../compute-flavors.rst:157
+#: ../compute-flavors.rst:172
 msgid ""
 "``memory_shares_share``: Specifies the number of shares allocated in the "
 "event that ``custom`` is used. There is no unit for this value. It is a "
 "relative measure based on the settings for other VMs. For example:"
 msgstr ""
 
-#: ../compute-flavors.rst:166
+#: ../compute-flavors.rst:181
 msgid "Memory limits"
 msgstr ""
 
-#: ../compute-flavors.rst:169
+#: ../compute-flavors.rst:184
 msgid ""
 "For VMware, you can configure the resource limits for disk with control "
 "parameters."
 msgstr ""
 
-#: ../compute-flavors.rst:172
+#: ../compute-flavors.rst:187
 msgid ""
 "Use these optional parameters to limit the disk utilization, guarantee disk "
 "allocation, and to specify shares used in case of resource contention. This "
 "allows the VMware driver to enable disk allocations for the running instance."
 msgstr ""
 
-#: ../compute-flavors.rst:177
+#: ../compute-flavors.rst:192
 msgid ""
 "``disk_io_limit``: Specifies the upper limit for disk utilization in I/O per "
 "second. The utilization of a virtual machine will not exceed this limit, "
@@ -4155,101 +4168,101 @@ msgid ""
 "indicates unlimited usage."
 msgstr ""
 
-#: ../compute-flavors.rst:183
+#: ../compute-flavors.rst:198
 msgid ""
 "``disk_io_reservation``: Specifies the guaranteed minimum disk allocation in "
 "terms of :term:`IOPS`."
 msgstr ""
 
-#: ../compute-flavors.rst:186
+#: ../compute-flavors.rst:201
 msgid ""
 "``disk_io_shares_level``: Specifies the allocation level. This can be "
 "``custom``, ``high``, ``normal`` or ``low``. If you choose custom, set the "
 "number of shares using ``disk_io_shares_share``."
 msgstr ""
 
-#: ../compute-flavors.rst:191
+#: ../compute-flavors.rst:206
 msgid ""
 "``disk_io_shares_share``: Specifies the number of shares allocated in the "
 "event that ``custom`` is used. When there is resource contention, this value "
 "is used to determine the resource allocation."
 msgstr ""
 
-#: ../compute-flavors.rst:196
+#: ../compute-flavors.rst:211
 msgid "The example below sets the ``disk_io_reservation`` to 2000 IOPS."
 msgstr ""
 
-#: ../compute-flavors.rst:201
+#: ../compute-flavors.rst:216
 msgid "Disk I/O limits"
 msgstr ""
 
-#: ../compute-flavors.rst:204
+#: ../compute-flavors.rst:219
 msgid ""
 "Using disk I/O quotas, you can set maximum disk write to 10 MB per second "
 "for a VM user. For example:"
 msgstr ""
 
-#: ../compute-flavors.rst:212
+#: ../compute-flavors.rst:227
 msgid "The disk I/O options are:"
 msgstr ""
 
-#: ../compute-flavors.rst:214
-msgid "disk\\_read\\_bytes\\_sec"
-msgstr ""
-
-#: ../compute-flavors.rst:216
-msgid "disk\\_read\\_iops\\_sec"
-msgstr ""
-
-#: ../compute-flavors.rst:218
-msgid "disk\\_write\\_bytes\\_sec"
-msgstr ""
-
-#: ../compute-flavors.rst:220
-msgid "disk\\_write\\_iops\\_sec"
-msgstr ""
-
-#: ../compute-flavors.rst:222
-msgid "disk\\_total\\_bytes\\_sec"
-msgstr ""
-
-#: ../compute-flavors.rst:224
-msgid "Disk tuning"
-msgstr ""
-
-#: ../compute-flavors.rst:224
-msgid "disk\\_total\\_iops\\_sec"
-msgstr ""
-
-#: ../compute-flavors.rst:227
-msgid "The vif I/O options are:"
-msgstr ""
-
 #: ../compute-flavors.rst:229
-msgid "vif\\_inbound\\_ average"
+msgid "``disk_read_bytes_sec``"
+msgstr ""
+
+#: ../compute-flavors.rst:230
+msgid "``disk_read_iops_sec``"
 msgstr ""
 
 #: ../compute-flavors.rst:231
-msgid "vif\\_inbound\\_burst"
+msgid "``disk_write_bytes_sec``"
+msgstr ""
+
+#: ../compute-flavors.rst:232
+msgid "``disk_write_iops_sec``"
 msgstr ""
 
 #: ../compute-flavors.rst:233
-msgid "vif\\_inbound\\_peak"
+msgid "``disk_total_bytes_sec``"
 msgstr ""
 
-#: ../compute-flavors.rst:235
-msgid "vif\\_outbound\\_ average"
+#: ../compute-flavors.rst:234
+msgid "Disk tuning"
+msgstr ""
+
+#: ../compute-flavors.rst:234
+msgid "``disk_total_iops_sec``"
 msgstr ""
 
 #: ../compute-flavors.rst:237
-msgid "vif\\_outbound\\_burst"
+msgid "The vif I/O options are:"
 msgstr ""
 
 #: ../compute-flavors.rst:239
-msgid "vif\\_outbound\\_peak"
+msgid "``vif_inbound_average``"
+msgstr ""
+
+#: ../compute-flavors.rst:240
+msgid "``vif_inbound_burst``"
 msgstr ""
 
 #: ../compute-flavors.rst:241
+msgid "``vif_inbound_peak``"
+msgstr ""
+
+#: ../compute-flavors.rst:242
+msgid "``vif_outbound_average``"
+msgstr ""
+
+#: ../compute-flavors.rst:243
+msgid "``vif_outbound_burst``"
+msgstr ""
+
+#: ../compute-flavors.rst:244
+msgid "``vif_outbound_peak``"
+msgstr ""
+
+#: ../compute-flavors.rst:246
 msgid ""
 "Incoming and outgoing traffic can be shaped independently. The bandwidth "
 "element can have at most, one inbound and at most, one outbound child "
@@ -4260,7 +4273,7 @@ msgid ""
 "rate on the interface being shaped."
 msgstr ""
 
-#: ../compute-flavors.rst:250
+#: ../compute-flavors.rst:255
 msgid ""
 "There are also two optional attributes (integer): ``peak``, which specifies "
 "the maximum rate at which a bridge can send data (kilobytes/second), and "
@@ -4268,43 +4281,43 @@ msgid ""
 "The rate is shared equally within domains connected to the network."
 msgstr ""
 
-#: ../compute-flavors.rst:256
+#: ../compute-flavors.rst:261
 msgid ""
 "The example below sets network traffic bandwidth limits for existing flavor "
 "as follows:"
 msgstr ""
 
-#: ../compute-flavors.rst:259
+#: ../compute-flavors.rst:264
 msgid "Outbound traffic:"
 msgstr ""
 
-#: ../compute-flavors.rst:261 ../compute-flavors.rst:269
+#: ../compute-flavors.rst:266 ../compute-flavors.rst:274
 msgid "average: 256 Mbps (32768 kilobytes/second)"
 msgstr ""
 
-#: ../compute-flavors.rst:263 ../compute-flavors.rst:271
+#: ../compute-flavors.rst:268 ../compute-flavors.rst:276
 msgid "peak: 512 Mbps (65536 kilobytes/second)"
 msgstr ""
 
-#: ../compute-flavors.rst:265 ../compute-flavors.rst:273
+#: ../compute-flavors.rst:270 ../compute-flavors.rst:278
 msgid "burst: 65536 kilobytes"
 msgstr ""
 
-#: ../compute-flavors.rst:267
+#: ../compute-flavors.rst:272
 msgid "Inbound traffic:"
 msgstr ""
 
-#: ../compute-flavors.rst:287
+#: ../compute-flavors.rst:292
 msgid ""
 "All the speed limit values in above example are specified in kilobytes/"
 "second. And burst values are in kilobytes."
 msgstr ""
 
-#: ../compute-flavors.rst:288
+#: ../compute-flavors.rst:293
 msgid "Bandwidth I/O"
 msgstr ""
 
-#: ../compute-flavors.rst:291
+#: ../compute-flavors.rst:296
 msgid ""
 "For the libvirt driver, you can enable and set the behavior of a virtual "
 "hardware watchdog device for each flavor. Watchdog devices keep an eye on "
@@ -4313,32 +4326,32 @@ msgid ""
 "``hw:watchdog_action`` is not specified, the watchdog is disabled."
 msgstr ""
 
-#: ../compute-flavors.rst:298
+#: ../compute-flavors.rst:303
 msgid "To set the behavior, use:"
 msgstr ""
 
-#: ../compute-flavors.rst:304
+#: ../compute-flavors.rst:309
 msgid "Valid ACTION values are:"
 msgstr ""
 
-#: ../compute-flavors.rst:306
-msgid "``disabled``—(default) The device is not attached."
-msgstr ""
-
-#: ../compute-flavors.rst:308
-msgid "``reset``—Forcefully reset the guest."
-msgstr ""
-
-#: ../compute-flavors.rst:310
-msgid "``poweroff``—Forcefully power off the guest."
+#: ../compute-flavors.rst:311
+msgid "``disabled``: (default) The device is not attached."
 msgstr ""
 
 #: ../compute-flavors.rst:312
-msgid "``pause``—Pause the guest."
+msgid "``reset``: Forcefully reset the guest."
+msgstr ""
+
+#: ../compute-flavors.rst:313
+msgid "``poweroff``: Forcefully power off the guest."
 msgstr ""
 
 #: ../compute-flavors.rst:314
-msgid "``none``—Only enable the watchdog; do nothing if the server hangs."
+msgid "``pause``: Pause the guest."
+msgstr ""
+
+#: ../compute-flavors.rst:315
+msgid "``none``: Only enable the watchdog; do nothing if the server hangs."
 msgstr ""
 
 #: ../compute-flavors.rst:319
@@ -4359,90 +4372,80 @@ msgstr ""
 
 #: ../compute-flavors.rst:336
 msgid ""
-"RATE-BYTES—(Integer) Allowed amount of bytes that the guest can read from "
+"RATE-BYTES: (Integer) Allowed amount of bytes that the guest can read from "
 "the host's entropy per period."
 msgstr ""
 
-#: ../compute-flavors.rst:339
-msgid "RATE-PERIOD—(Integer) Duration of the read period in seconds."
+#: ../compute-flavors.rst:338
+msgid "RATE-PERIOD: (Integer) Duration of the read period in seconds."
 msgstr ""
 
-#: ../compute-flavors.rst:339
+#: ../compute-flavors.rst:338
 msgid "Random-number generator"
 msgstr ""
 
-#: ../compute-flavors.rst:342
+#: ../compute-flavors.rst:341
 msgid ""
 "For the libvirt driver, you can define the topology of the processors in the "
 "virtual machine using properties. The properties with ``max`` limit the "
 "number that can be selected by the user with image properties."
 msgstr ""
 
-#: ../compute-flavors.rst:358
+#: ../compute-flavors.rst:357
 msgid ""
-"FLAVOR-SOCKETS—(Integer) The number of sockets for the guest VM. By this is "
+"FLAVOR-SOCKETS: (integer) The number of sockets for the guest VM. By this is "
 "set to the number of vCPUs requested."
+msgstr ""
+
+#: ../compute-flavors.rst:359
+msgid ""
+"FLAVOR-CORES: (integer) The number of cores per socket for the guest VM. By "
+"this is set to 1."
 msgstr ""
 
 #: ../compute-flavors.rst:361
 msgid ""
-"FLAVOR-CORES—(Integer) The number of cores per socket for the guest VM. By "
-"this is set to 1."
+"FLAVOR-THREADS: (integer) The number of threads per core for the guest VM. "
+"By this is set to 1."
 msgstr ""
 
-#: ../compute-flavors.rst:364
-msgid ""
-"FLAVOR-THREADS—(Integer) The number of threads per core for the guest VM. By "
-"this is set to 1."
-msgstr ""
-
-#: ../compute-flavors.rst:365
+#: ../compute-flavors.rst:362
 msgid "CPU topology"
 msgstr ""
 
-#: ../compute-flavors.rst:368
+#: ../compute-flavors.rst:365
 msgid ""
-"VMs can be pinned to specific physical cores in the hypervisor to improve "
-"performance. This should only be done where there is no CPU overcommit "
-"(``cpu_allocation_ratio`` is 1.0)."
+"For the libvirt driver, you can pin the virtual CPUs (vCPUs) of instances to "
+"the host's physical CPU cores (pCPUs) using properties. This will result in "
+"improved instance determinism and performance. Host aggregates should be "
+"used to separate these \"pinned\" instances from unpinned instances as the "
+"latter will not respect the resourcing requirements of the former."
 msgstr ""
 
 #: ../compute-flavors.rst:376
-msgid "Valid PIN-POLICY values are:"
+msgid "Valid CPU-POLICY values are:"
 msgstr ""
 
 #: ../compute-flavors.rst:378
 msgid ""
-"``shared``—(default) The guest vCPUs will be allowed to freely float across "
+"``shared``: (default) The guest vCPUs will be allowed to freely float across "
 "host pCPUs, albeit potentially constrained by NUMA policy."
 msgstr ""
 
-#: ../compute-flavors.rst:381
+#: ../compute-flavors.rst:380
 msgid ""
-"``dedicated``—the guest vCPUs will be strictly pinned to a set of host "
+"``dedicated``: The guest vCPUs will be strictly pinned to a set of host "
 "pCPUs. In the absence of an explicit vCPU topology request, the drivers "
-"typically expose all vCPUs as sockets with 1 core and 1 thread. When strict "
-"CPU pinning is in effect the guest CPU topology will be setup to match the "
-"topology of the CPUs to which it is pinned. This option assumes the "
-"overcommit ratio is 1.0. For example, if a 2 vCPU guest is pinned to a "
-"single host core with 2 threads, then the guest will get a topology of 1 "
-"socket, 1 core, 2 threads."
+"typically expose all vCPUs as sockets with one core and one thread. When "
+"strict CPU pinning is in effect the guest CPU topology will be setup to "
+"match the topology of the CPUs to which it is pinned. This option implies an "
+"overcommit ratio of 1.0. For example, if a two vCPU guest is pinned to a "
+"single host core with two threads, then the guest will get a topology of one "
+"socket, one core, threads threads."
 msgstr ""
 
-#: ../compute-flavors.rst:388
-msgid "Core pinning"
-msgstr ""
-
-#: ../compute-flavors.rst:391
-msgid ""
-"Flavors can also be assigned to particular projects. By default, a flavor is "
-"public and available to all projects. Private flavors are only accessible to "
-"those on the access list and are invisible to other projects. To create and "
-"assign a private flavor to a project, run these commands:"
-msgstr ""
-
-#: ../compute-flavors.rst:398
-msgid "Project private flavors"
+#: ../compute-flavors.rst:386
+msgid "CPU pinning policy"
 msgstr ""
 
 #: ../compute-images-instances.rst:3
@@ -4580,251 +4583,28 @@ msgstr ""
 msgid "**The end state of an image and volume after the instance exits**"
 msgstr ""
 
-#: ../compute-images-instances.rst:125
-msgid "Manage instances"
-msgstr ""
-
-#: ../compute-images-instances.rst:127
-msgid ""
-"Administrative users can manage instances for users in various projects. As "
-"an administrative user, you can view, terminate, edit, perform, or migrate "
-"an instance. You can perform a soft or hard reboot if needed. You can also "
-"view instance logs, or launch a VNC console for an instance."
-msgstr ""
-
-#: ../compute-images-instances.rst:132
-msgid ""
-"For information about using the Dashboard to launch instances as an end "
-"user, see the `OpenStack End User Guide <http://docs.openstack.org/user-"
-"guide/dashboard_launch_instances.html>`__."
-msgstr ""
-
-#: ../compute-images-instances.rst:138
-msgid "Create instance snapshots"
-msgstr ""
-
-#: ../compute-images-instances.rst:140 ../compute-images-instances.rst:163
-#: ../compute-images-instances.rst:187
-msgid ""
-"Log in to the Dashboard and choose the admin project from the drop-down list "
-"at the top of the page."
-msgstr ""
-
-#: ../compute-images-instances.rst:143 ../compute-images-instances.rst:166
-msgid ""
-"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
-"guilabel:`Instances` category."
-msgstr ""
-
-#: ../compute-images-instances.rst:146
-msgid ""
-"Select an instance to create a snapshot from it. From the :guilabel:"
-"`Actions` drop-down list, select :guilabel:`Create Snapshot`."
-msgstr ""
-
-#: ../compute-images-instances.rst:149
-msgid ""
-"In the :guilabel:`Create Snapshot` window, enter a name for the snapshot."
-msgstr ""
-
-#: ../compute-images-instances.rst:151
-msgid ""
-"Click :guilabel:`Create Snapshot`. The Dashboard shows the instance snapshot "
-"in the :guilabel:`Images` category."
-msgstr ""
-
-#: ../compute-images-instances.rst:154
-msgid ""
-"To launch an instance from the snapshot, select the snapshot and click :"
-"guilabel:`Launch Instance`. For information about launching instances, see "
-"the `OpenStack End User Guide <http://docs.openstack.org/user-guide/"
-"dashboard_launch_instances.html>`__."
-msgstr ""
-
-#: ../compute-images-instances.rst:161
-msgid "Control the state of an instance"
-msgstr ""
-
-#: ../compute-images-instances.rst:169
-msgid "Select the instance for which you want to change the state."
-msgstr ""
-
-#: ../compute-images-instances.rst:171
-msgid ""
-"From the drop-down list in the :guilabel:`Actions` column, select the state."
-msgstr ""
-
-#: ../compute-images-instances.rst:174
-msgid ""
-"Depending on the current state of the instance, you can choose to pause, un-"
-"pause, suspend, resume, soft or hard reboot, or terminate an instance "
-"(actions in red color are dangerous)."
-msgstr ""
-
-#: ../compute-images-instances.rst:179
-msgid "Track usage"
-msgstr ""
-
-#: ../compute-images-instances.rst:181
-msgid ""
-"Use the :guilabel:`Overview` category to track usage of instances for each "
-"project."
-msgstr ""
-
-#: ../compute-images-instances.rst:184
-msgid ""
-"You can track costs per month by showing meters like number of VCPUs, disks, "
-"RAM, and uptime of all your instances."
-msgstr ""
-
-#: ../compute-images-instances.rst:190
-msgid "On the :guilabel:`Admin` tab, click the :guilabel:`Instances` category."
-msgstr ""
-
-#: ../compute-images-instances.rst:192
-msgid ""
-"Select a month and click :guilabel:`Submit` to query the instance usage for "
-"that month."
-msgstr ""
-
-#: ../compute-images-instances.rst:195
-msgid "Click :guilabel:`Download CSV Summary` to download a CSV summary."
-msgstr ""
-
-#: ../compute-images-instances.rst:198
-msgid "Image management"
-msgstr ""
-
-#: ../compute-images-instances.rst:200
-msgid ""
-"The OpenStack Image service discovers, registers, and retrieves virtual "
-"machine images. The service also includes a RESTful API that allows you to "
-"query VM image metadata and retrieve the actual image with HTTP requests. "
-"For more information about the API, see the `OpenStack API Complete "
-"Reference <http://developer.openstack.org/api-ref.html>`__ and the `Python "
-"API <http://docs.openstack.org/developer/python-glanceclient/>`__."
-msgstr ""
-
-#: ../compute-images-instances.rst:208
-msgid ""
-"The OpenStack Image service can be controlled using a command-line tool. For "
-"more information about using the OpenStack Image command-line tool, see the "
-"`Manage Images <http://docs.openstack.org/user-guide/common/"
-"cli_manage_images.html>`__ section in the OpenStack End User Guide."
-msgstr ""
-
-#: ../compute-images-instances.rst:214
-msgid ""
-"You can store virtual images made available through the Image service in a "
-"variety of ways. In order to use these services, you must have a working "
-"installation of the Image service, with a working endpoint, and users that "
-"have been created in OpenStack Identity. Additionally, you must meet the "
-"environment variables required by the Compute and Image service clients."
-msgstr ""
-
-#: ../compute-images-instances.rst:221
-msgid "The Image service supports these back-end stores:"
-msgstr ""
-
-#: ../compute-images-instances.rst:224
-msgid ""
-"The OpenStack Image service stores virtual machine images in the file system "
-"back end by default. This simple back end writes image files to the local "
-"file system."
-msgstr ""
-
-#: ../compute-images-instances.rst:226
-msgid "File system"
-msgstr ""
-
-# #-#-#-#-#  compute-images-instances.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  objectstorage.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-images-instances.rst:229 ../objectstorage.rst:3
-msgid "Object Storage"
-msgstr ""
-
-#: ../compute-images-instances.rst:229
-msgid "The OpenStack highly available service for storing objects."
-msgstr ""
-
-#: ../compute-images-instances.rst:232
-msgid "The OpenStack highly available service for storing blocks."
-msgstr ""
-
-#: ../compute-images-instances.rst:235
-msgid "ESX/ESXi or vCenter Server target system."
-msgstr ""
-
-#: ../compute-images-instances.rst:235
-msgid "VMware"
-msgstr ""
-
-#: ../compute-images-instances.rst:238
-msgid "S3"
-msgstr ""
-
-#: ../compute-images-instances.rst:238
-msgid "The Amazon S3 service."
-msgstr ""
-
-#: ../compute-images-instances.rst:241
-msgid ""
-"OpenStack Image service can read virtual machine images that are available "
-"on the Internet using HTTP. This store is read only."
-msgstr ""
-
-#: ../compute-images-instances.rst:242
-msgid "HTTP"
-msgstr ""
-
-#: ../compute-images-instances.rst:245
-msgid ""
-"Stores images inside of a Ceph storage cluster using Ceph's RBD interface."
-msgstr ""
-
-#: ../compute-images-instances.rst:246
-msgid "RADOS Block Device (RBD)"
-msgstr ""
-
-#: ../compute-images-instances.rst:249
-msgid "A distributed storage system for QEMU/KVM."
-msgstr ""
-
-#: ../compute-images-instances.rst:249
-msgid "Sheepdog"
-msgstr ""
-
-#: ../compute-images-instances.rst:252
-msgid ""
-"Stores images using MongoDB. This store driver will be removed in Mitaka."
-msgstr ""
-
-#: ../compute-images-instances.rst:253
-msgid "GridFS"
-msgstr ""
-
-#: ../compute-images-instances.rst:256
+#: ../compute-images-instances.rst:126
 msgid "Image properties and property protection"
 msgstr ""
 
-#: ../compute-images-instances.rst:258
+#: ../compute-images-instances.rst:128
 msgid ""
 "An image property is a key and value pair that the cloud administrator or "
 "the image owner attaches to an OpenStack Image service image, as follows:"
 msgstr ""
 
-#: ../compute-images-instances.rst:262
+#: ../compute-images-instances.rst:132
 msgid ""
 "The cloud administrator defines core properties, such as the image name."
 msgstr ""
 
-#: ../compute-images-instances.rst:265
+#: ../compute-images-instances.rst:135
 msgid ""
 "The cloud administrator and the image owner can define additional "
 "properties, such as licensing and billing information."
 msgstr ""
 
-#: ../compute-images-instances.rst:268
+#: ../compute-images-instances.rst:138
 msgid ""
 "The cloud administrator can configure any property as protected, which "
 "limits which policies or user roles can perform CRUD operations on that "
@@ -4832,98 +4612,98 @@ msgid ""
 "only cloud administrators have access."
 msgstr ""
 
-#: ../compute-images-instances.rst:273
+#: ../compute-images-instances.rst:143
 msgid ""
 "For unprotected image properties, the cloud administrator can manage core "
 "properties and the image owner can manage additional properties."
 msgstr ""
 
-#: ../compute-images-instances.rst:276
+#: ../compute-images-instances.rst:146
 msgid "**To configure property protection**"
 msgstr ""
 
-#: ../compute-images-instances.rst:278
+#: ../compute-images-instances.rst:148
 msgid ""
-"To configure property protection, the cloud administrator completes these "
-"steps:"
+"To configure property protection, edit the ``policy.json`` file. This file "
+"can also be used to set policies for Image service actions."
 msgstr ""
 
-#: ../compute-images-instances.rst:281
+#: ../compute-images-instances.rst:151
 msgid "Define roles or policies in the ``policy.json`` file:"
 msgstr ""
 
-#: ../compute-images-instances.rst:347
+#: ../compute-images-instances.rst:217
 msgid ""
 "For each parameter, use ``\"rule:restricted\"`` to restrict access to all "
 "users or ``\"role:admin\"`` to limit access to administrator roles. For "
 "example:"
 msgstr ""
 
-#: ../compute-images-instances.rst:356
+#: ../compute-images-instances.rst:226
 msgid ""
 "Define which roles or policies can manage which properties in a property "
 "protections configuration file. For example:"
 msgstr ""
 
-#: ../compute-images-instances.rst:379
+#: ../compute-images-instances.rst:249
 msgid "A value of ``@`` allows the corresponding operation for a property."
 msgstr ""
 
-#: ../compute-images-instances.rst:381
+#: ../compute-images-instances.rst:251
 msgid "A value of ``!`` disallows the corresponding operation for a property."
 msgstr ""
 
-#: ../compute-images-instances.rst:384
+#: ../compute-images-instances.rst:254
 msgid ""
 "In the ``glance-api.conf`` file, define the location of a property "
 "protections configuration file."
 msgstr ""
 
-#: ../compute-images-instances.rst:391
+#: ../compute-images-instances.rst:261
 msgid ""
 "This file contains the rules for property protections and the roles and "
 "policies associated with it."
 msgstr ""
 
-#: ../compute-images-instances.rst:394
+#: ../compute-images-instances.rst:264
 msgid "By default, property protections are not enforced."
 msgstr ""
 
-#: ../compute-images-instances.rst:396
+#: ../compute-images-instances.rst:266
 msgid ""
 "If you specify a file name value and the file is not found, the ``glance-"
 "api`` service does not start."
 msgstr ""
 
-#: ../compute-images-instances.rst:399 ../compute-images-instances.rst:412
+#: ../compute-images-instances.rst:269 ../compute-images-instances.rst:282
 msgid ""
 "To view a sample configuration file, see `glance-api.conf <http://docs."
 "openstack.org/liberty/config-reference/content/section_glance-api.conf."
 "html>`__."
 msgstr ""
 
-#: ../compute-images-instances.rst:403
+#: ../compute-images-instances.rst:273
 msgid ""
 "Optionally, in the ``glance-api.conf`` file, specify whether roles or "
 "policies are used in the property protections configuration file"
 msgstr ""
 
-#: ../compute-images-instances.rst:410
+#: ../compute-images-instances.rst:280
 msgid "The default is ``roles``."
 msgstr ""
 
-#: ../compute-images-instances.rst:417
+#: ../compute-images-instances.rst:287
 msgid "Image download: how it works"
 msgstr ""
 
-#: ../compute-images-instances.rst:419
+#: ../compute-images-instances.rst:289
 msgid ""
 "Prior to starting a virtual machine, transfer the virtual machine image to "
 "the compute node from the Image service. How this works can change depending "
 "on the settings chosen for the compute node and the Image service."
 msgstr ""
 
-#: ../compute-images-instances.rst:424
+#: ../compute-images-instances.rst:294
 msgid ""
 "Typically, the Compute service will use the image identifier passed to it by "
 "the scheduler service and request the image from the Image API. Though "
@@ -4934,7 +4714,7 @@ msgid ""
 "the compute node."
 msgstr ""
 
-#: ../compute-images-instances.rst:432
+#: ../compute-images-instances.rst:302
 msgid ""
 "It is possible to set up the Object Storage node on a separate network, and "
 "still allow image traffic to flow between the Compute and Object Storage "
@@ -4942,7 +4722,7 @@ msgid ""
 "configuration file to allow block storage traffic to reach the Compute node."
 msgstr ""
 
-#: ../compute-images-instances.rst:438
+#: ../compute-images-instances.rst:308
 msgid ""
 "Certain back ends support a more direct method, where on request the Image "
 "service will return a URL that links directly to the back-end store. You can "
@@ -4952,7 +4732,7 @@ msgid ""
 "of the ``nova.conf`` file on compute nodes."
 msgstr ""
 
-#: ../compute-images-instances.rst:446
+#: ../compute-images-instances.rst:316
 msgid ""
 "Compute nodes also implement caching of images, meaning that if an image has "
 "been used before it won't necessarily be downloaded every time. Information "
@@ -4961,11 +4741,11 @@ msgid ""
 "reference/content/>`__."
 msgstr ""
 
-#: ../compute-images-instances.rst:453
+#: ../compute-images-instances.rst:323
 msgid "Instance building blocks"
 msgstr ""
 
-#: ../compute-images-instances.rst:455
+#: ../compute-images-instances.rst:325
 msgid ""
 "In OpenStack, the base operating system is usually copied from an image "
 "stored in the OpenStack Image service. This results in an ephemeral instance "
@@ -4973,7 +4753,7 @@ msgid ""
 "shutdown."
 msgstr ""
 
-#: ../compute-images-instances.rst:460
+#: ../compute-images-instances.rst:330
 msgid ""
 "You can also put an operating system on a persistent volume in Compute or "
 "the Block Storage volume system. This gives a more traditional, persistent "
@@ -4983,46 +4763,46 @@ msgstr ""
 
 # #-#-#-#-#  compute_arch.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  compute-images-instances.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-images-instances.rst:481 ../compute_arch.rst:267
+#: ../compute-images-instances.rst:351 ../compute_arch.rst:267
 msgid "The displayed image attributes are:"
 msgstr ""
 
-#: ../compute-images-instances.rst:484
+#: ../compute-images-instances.rst:354
 msgid "Automatically generated UUID of the image."
 msgstr ""
 
 # #-#-#-#-#  compute_arch.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  compute-images-instances.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-images-instances.rst:484 ../compute_arch.rst:270
+#: ../compute-images-instances.rst:354 ../compute_arch.rst:270
 msgid "``ID``"
 msgstr ""
 
-#: ../compute-images-instances.rst:487
+#: ../compute-images-instances.rst:357
 msgid "Free form, human-readable name for the image."
 msgstr ""
 
 # #-#-#-#-#  compute_arch.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  compute-images-instances.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-images-instances.rst:487 ../compute_arch.rst:273
+#: ../compute-images-instances.rst:357 ../compute_arch.rst:273
 msgid "``Name``"
 msgstr ""
 
 # #-#-#-#-#  compute_arch.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  compute-images-instances.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-images-instances.rst:490 ../compute_arch.rst:276
+#: ../compute-images-instances.rst:360 ../compute_arch.rst:276
 msgid ""
 "The status of the image. Images marked ``ACTIVE`` are available for use."
 msgstr ""
 
 # #-#-#-#-#  compute_arch.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  compute-images-instances.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-images-instances.rst:491 ../compute_arch.rst:277
+#: ../compute-images-instances.rst:361 ../compute_arch.rst:277
 msgid "``Status``"
 msgstr ""
 
 # #-#-#-#-#  compute_arch.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  compute-images-instances.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-images-instances.rst:494 ../compute_arch.rst:280
+#: ../compute-images-instances.rst:364 ../compute_arch.rst:280
 msgid ""
 "For images that are created as snapshots of running instances, this is the "
 "UUID of the instance the snapshot derives from. For uploaded images, this "
@@ -5031,39 +4811,39 @@ msgstr ""
 
 # #-#-#-#-#  compute_arch.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  compute-images-instances.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-images-instances.rst:496 ../compute_arch.rst:282
+#: ../compute-images-instances.rst:366 ../compute_arch.rst:282
 msgid "``Server``"
 msgstr ""
 
-#: ../compute-images-instances.rst:498
+#: ../compute-images-instances.rst:368
 msgid ""
 "Virtual hardware templates are called ``flavors``. The default installation "
 "provides five predefined flavors."
 msgstr ""
 
-#: ../compute-images-instances.rst:501
+#: ../compute-images-instances.rst:371
 msgid "For a list of flavors that are available on your system, run:"
 msgstr ""
 
-#: ../compute-images-instances.rst:516
+#: ../compute-images-instances.rst:386
 msgid ""
 "By default, administrative users can configure the flavors. You can change "
 "this behavior by redefining the access controls for ``compute_extension:"
 "flavormanage`` in ``/etc/nova/policy.json`` on the ``compute-api`` server."
 msgstr ""
 
-#: ../compute-images-instances.rst:523
+#: ../compute-images-instances.rst:393
 msgid "Instance management tools"
 msgstr ""
 
-#: ../compute-images-instances.rst:525
+#: ../compute-images-instances.rst:395
 msgid ""
 "OpenStack provides command-line, web interface, and API-based instance "
 "management tools. Third-party management tools are also available, using "
 "either the native API or the provided EC2-compatible API."
 msgstr ""
 
-#: ../compute-images-instances.rst:529
+#: ../compute-images-instances.rst:399
 msgid ""
 "The OpenStack python-novaclient package provides a basic command-line "
 "utility, which uses the :command:`nova` command. This is available as a "
@@ -5071,18 +4851,18 @@ msgid ""
 "version using the pip python package installer:"
 msgstr ""
 
-#: ../compute-images-instances.rst:538
+#: ../compute-images-instances.rst:408
 msgid ""
 "For more information about python-novaclient and other command-line tools, "
 "see the `OpenStack End User Guide <http://docs.openstack.org/user-guide/"
 "index.html>`__."
 msgstr ""
 
-#: ../compute-images-instances.rst:544
+#: ../compute-images-instances.rst:414
 msgid "Control where instances run"
 msgstr ""
 
-#: ../compute-images-instances.rst:546
+#: ../compute-images-instances.rst:416
 msgid ""
 "The `OpenStack Configuration Reference <http://docs.openstack.org/liberty/"
 "config-reference/content/>`__ provides detailed information on controlling "
@@ -5091,250 +4871,18 @@ msgid ""
 "performance inter-instance communications."
 msgstr ""
 
-#: ../compute-images-instances.rst:553
+#: ../compute-images-instances.rst:423
 msgid ""
 "Administrative users can specify which compute node their instances run on. "
 "To do this, specify the ``--availability-zone AVAILABILITY_ZONE:"
 "COMPUTE_HOST`` parameter."
 msgstr ""
 
-#: ../compute-images-instances.rst:558
-msgid "Create and manage images"
-msgstr ""
-
-#: ../compute-images-instances.rst:560
-msgid ""
-"Administrative users can create and manage images for the projects to which "
-"you belong. You can create and manage images for users in all projects to "
-"which you have administative access."
-msgstr ""
-
-#: ../compute-images-instances.rst:564
-msgid ""
-"To create and manage images in specified projects as an end user, see the "
-"`OpenStack End User Guide <http://docs.openstack.org/user-guide/>`_."
-msgstr ""
-
-#: ../compute-images-instances.rst:568
-msgid ""
-"To create and manage images as an administrator for other users, use the "
-"following procedures."
-msgstr ""
-
-#: ../compute-images-instances.rst:572
-msgid "Create images"
-msgstr ""
-
-#: ../compute-images-instances.rst:574
-msgid ""
-"For details about image creation, see the `Virtual Machine Image Guide "
-"<http://docs.openstack.org/image-guide/>`_."
-msgstr ""
-
-#: ../compute-images-instances.rst:577
-msgid "Log in to the dashboard."
-msgstr ""
-
-#: ../compute-images-instances.rst:579
-msgid ""
-"Choose the :guilabel:`admin` project from the drop-down list at the top of "
-"the page."
-msgstr ""
-
-#: ../compute-images-instances.rst:581
-msgid ""
-"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
-"guilabel:`Images` category. The images that you can administer for cloud "
-"users appear on this page."
-msgstr ""
-
-#: ../compute-images-instances.rst:584
-msgid ""
-"Click :guilabel:`Create Image`, which opens the :guilabel:`Create An Image` "
-"window."
-msgstr ""
-
-#: ../compute-images-instances.rst:591
-msgid "**Create images**"
-msgstr ""
-
-#: ../compute-images-instances.rst:597
-msgid ""
-"In the :guilabel:`Create An Image` window, enter or select the following "
-"values:"
-msgstr ""
-
-#: ../compute-images-instances.rst:601
-msgid ":guilabel:`Name`"
-msgstr ""
-
-#: ../compute-images-instances.rst:601
-msgid "Enter a name for the image."
-msgstr ""
-
-#: ../compute-images-instances.rst:603
-msgid ":guilabel:`Description`"
-msgstr ""
-
-#: ../compute-images-instances.rst:603
-msgid "Enter a brief description of the image."
-msgstr ""
-
-#: ../compute-images-instances.rst:606
-msgid ":guilabel:`Image Source`"
-msgstr ""
-
-#: ../compute-images-instances.rst:606
-msgid ""
-"Choose the image source from the dropdown list. Your choices are :guilabel:"
-"`Image Location` and :guilabel:`Image File`."
-msgstr ""
-
-#: ../compute-images-instances.rst:611
-msgid ":guilabel:`Image File` or :guilabel:`Image Location`"
-msgstr ""
-
-#: ../compute-images-instances.rst:611
-msgid ""
-"Based on your selection, there is an :guilabel:`Image File` or :guilabel:"
-"`Image Location` field. You can include the location URL or browse for the "
-"image file on your file system and add it."
-msgstr ""
-
-#: ../compute-images-instances.rst:619
-msgid ":guilabel:`Format`"
-msgstr ""
-
-#: ../compute-images-instances.rst:619
-msgid "Select the image format."
-msgstr ""
-
-#: ../compute-images-instances.rst:621
-msgid ":guilabel:`Architecture`"
-msgstr ""
-
-#: ../compute-images-instances.rst:621
-msgid ""
-"Specify the architecture. For example, ``i386`` for a 32-bit architecture or "
-"``x86_64`` for a 64-bit architecture."
-msgstr ""
-
-#: ../compute-images-instances.rst:626
-msgid ":guilabel:`Minimum Disk (GB)`"
-msgstr ""
-
-#: ../compute-images-instances.rst:626 ../compute-images-instances.rst:628
-msgid "Leave this field empty."
-msgstr ""
-
-#: ../compute-images-instances.rst:628
-msgid ":guilabel:`Minimum RAM (MB)`"
-msgstr ""
-
-#: ../compute-images-instances.rst:630
-msgid ":guilabel:`Copy Data`"
-msgstr ""
-
-#: ../compute-images-instances.rst:630
-msgid "Specify this option to copy image data to the Image service."
-msgstr ""
-
-#: ../compute-images-instances.rst:633
-msgid ":guilabel:`Public`"
-msgstr ""
-
-#: ../compute-images-instances.rst:633
-msgid "Select this option to make the image public to all users."
-msgstr ""
-
-#: ../compute-images-instances.rst:636
-msgid ":guilabel:`Protected`"
-msgstr ""
-
-#: ../compute-images-instances.rst:636
-msgid ""
-"Select this option to ensure that only users with permissions can delete it."
-msgstr ""
-
-#: ../compute-images-instances.rst:641
-msgid "Click :guilabel:`Create Image`."
-msgstr ""
-
-#: ../compute-images-instances.rst:643
-msgid ""
-"The image is queued to be uploaded. It might take several minutes before the "
-"status changes from ``Queued`` to ``Active``."
-msgstr ""
-
-#: ../compute-images-instances.rst:647
-msgid "Update images"
-msgstr ""
-
-#: ../compute-images-instances.rst:649 ../compute-images-instances.rst:666
-msgid ""
-"Log in to the Dashboard. Choose the :guilabel:`admin` project from the drop-"
-"down list at the top of the page."
-msgstr ""
-
-#: ../compute-images-instances.rst:652
-msgid ""
-"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
-"guilabel:`Images` category."
-msgstr ""
-
-#: ../compute-images-instances.rst:654
-msgid "Select the images that you want to edit. Click :guilabel:`Edit Image`."
-msgstr ""
-
-#: ../compute-images-instances.rst:655
-msgid "In the :guilabel:`Update Image` window, you can change the image name."
-msgstr ""
-
-#: ../compute-images-instances.rst:657
-msgid ""
-"Select the :guilabel:`Public` check box to make the image public. Clear this "
-"check box to make the image private. You cannot change the :guilabel:`Kernel "
-"ID`, :guilabel:`Ramdisk ID`, or :guilabel:`Architecture` attributes for an "
-"image."
-msgstr ""
-
-#: ../compute-images-instances.rst:661
-msgid "Click :guilabel:`Update Image`."
-msgstr ""
-
-#: ../compute-images-instances.rst:664
-msgid "Delete images"
-msgstr ""
-
-#: ../compute-images-instances.rst:669
-msgid ""
-"On the :guilabel:`Admin tab`, open the :guilabel:`System` tab and click the :"
-"guilabel:`Images` category."
-msgstr ""
-
-#: ../compute-images-instances.rst:671
-msgid "Select the images that you want to delete."
-msgstr ""
-
-#: ../compute-images-instances.rst:672
-msgid "Click :guilabel:`Delete Images`."
-msgstr ""
-
-#: ../compute-images-instances.rst:673
-msgid ""
-"In the :guilabel:`Confirm Delete Images` window, click :guilabel:`Delete "
-"Images` to confirm the deletion."
-msgstr ""
-
-#: ../compute-images-instances.rst:676
-msgid "You cannot undo this action."
-msgstr ""
-
-#: ../compute-images-instances.rst:679
+#: ../compute-images-instances.rst:429
 msgid "Launch instances with UEFI"
 msgstr ""
 
-#: ../compute-images-instances.rst:681
+#: ../compute-images-instances.rst:431
 msgid ""
 "Unified Extensible Firmware Interface (UEFI) is a standard firmware designed "
 "to replace legacy BIOS. There is a slow but steady trend for operating "
@@ -5342,44 +4890,44 @@ msgid ""
 "format."
 msgstr ""
 
-#: ../compute-images-instances.rst:686
+#: ../compute-images-instances.rst:436
 msgid "**To configure UEFI environment**"
 msgstr ""
 
-#: ../compute-images-instances.rst:688
+#: ../compute-images-instances.rst:438
 msgid ""
 "To successfully launch an instance from an UEFI image in QEMU/KVM "
 "environment, the cloud administrator has to install the following packages "
 "on compute node:"
 msgstr ""
 
-#: ../compute-images-instances.rst:692
+#: ../compute-images-instances.rst:442
 msgid "OVMF, a port of Intel's tianocore firmware to QEMU virtual machine."
 msgstr ""
 
-#: ../compute-images-instances.rst:694
+#: ../compute-images-instances.rst:444
 msgid "libvirt, which has been supporting UEFI boot since version 1.2.9."
 msgstr ""
 
-#: ../compute-images-instances.rst:696
+#: ../compute-images-instances.rst:446
 msgid ""
 "Because default UEFI loader path is ``/usr/share/OVMF/OVMF_CODE.fd``, the "
 "cloud administrator must create one link to this location after UEFI package "
 "is installed."
 msgstr ""
 
-#: ../compute-images-instances.rst:700
+#: ../compute-images-instances.rst:450
 msgid "**To upload UEFI images**"
 msgstr ""
 
-#: ../compute-images-instances.rst:702
+#: ../compute-images-instances.rst:452
 msgid ""
 "To launch instances from a UEFI image, the administrator first has to upload "
 "one UEFI image. To do so, ``hw_firmware_type`` property must be set to "
 "``uefi`` when the image is created. For example:"
 msgstr ""
 
-#: ../compute-images-instances.rst:711
+#: ../compute-images-instances.rst:461
 msgid "After that, you can launch instances from this UEFI image."
 msgstr ""
 
@@ -5522,7 +5070,9 @@ msgstr ""
 msgid "HostB"
 msgstr ""
 
-#: ../compute-live-migration-usage.rst:86
+# #-#-#-#-#  compute-live-migration-usage.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_manage_flavors.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+#: ../compute-live-migration-usage.rst:86 ../dashboard_manage_flavors.rst:14
 msgid "m1.tiny"
 msgstr ""
 
@@ -9055,8 +8605,14 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  compute.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_set_quotas.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  networking_config-identity.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute.rst:3 ../networking_config-identity.rst:123
+#: ../compute.rst:3 ../dashboard_set_quotas.rst:42
+#: ../dashboard_set_quotas.rst:45 ../dashboard_set_quotas.rst:48
+#: ../dashboard_set_quotas.rst:51 ../dashboard_set_quotas.rst:53
+#: ../dashboard_set_quotas.rst:56 ../dashboard_set_quotas.rst:59
+#: ../dashboard_set_quotas.rst:62 ../dashboard_set_quotas.rst:68
+#: ../networking_config-identity.rst:123
 msgid "Compute"
 msgstr ""
 
@@ -9831,24 +9387,1544 @@ msgstr ""
 
 #: ../dashboard.rst:5
 msgid ""
-"The OpenStack dashboard is a web-based interface that allows you to manage "
-"OpenStack resources and services. The dashboard allows you to interact with "
+"The OpenStack Dashboard is a web-based interface that allows you to manage "
+"OpenStack resources and services. The Dashboard allows you to interact with "
 "the OpenStack Compute cloud controller using the OpenStack APIs. For more "
-"information about installing and configuring the dashboard, see the "
+"information about installing and configuring the Dashboard, see the "
 "`OpenStack Installation Guide <http://docs.openstack.org/index.html#install-"
 "guides>`__ for your operating system."
 msgstr ""
 
-#: ../dashboard.rst:20
+#: ../dashboard.rst:29
 msgid ""
 "To deploy the dashboard, see the `OpenStack dashboard documentation <http://"
 "docs.openstack.org/developer/horizon/topics/deployment.html>`__."
 msgstr ""
 
-#: ../dashboard.rst:22
+#: ../dashboard.rst:31
 msgid ""
 "To launch instances with the dashboard, see the `OpenStack End User Guide "
 "<http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:3
+msgid "Create and manage roles"
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:5
+msgid ""
+"A role is a personality that a user assumes to perform a specific set of "
+"operations. A role includes a set of rights and privileges. A user assumes "
+"that role inherits those rights and privileges."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:11
+msgid ""
+"OpenStack Identity service defines a user's role on a project, but it is "
+"completely up to the individual service to define what that role means. This "
+"is referred to as the service's policy. To get details about what the "
+"privileges for each role are, refer to the ``policy.json`` file available "
+"for each service in the ``/etc/SERVICE/policy.json`` file. For example, the "
+"policy defined for OpenStack Identity service is defined in the ``/etc/"
+"keystone/policy.json`` file."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:22
+msgid "Create a role"
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:24
+#: ../dashboard_admin_manage_roles.rst:35
+#: ../dashboard_admin_manage_roles.rst:51
+msgid ""
+"Log in to the dashboard and choose the :guilabel:`admin` project from the :"
+"guilabel:`CURRENT PROJECT` drop-down list."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:26
+#: ../dashboard_admin_manage_roles.rst:37
+#: ../dashboard_admin_manage_roles.rst:53
+msgid "On the :guilabel:`Admin` tab, click the :guilabel:`Roles` category."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:27
+msgid "Click the :guilabel:`Create Role` button."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:29
+msgid "In the :guilabel:`Create Role` window, enter a name for the role."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:30
+msgid "Click the :guilabel:`Create Role` button to confirm your changes."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:33
+msgid "Edit a role"
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:38
+msgid "Click the :guilabel:`Edit` button."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:40
+msgid "In the :guilabel:`Update Role` window, enter a new name for the role."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:41
+msgid "Click the :guilabel:`Update Role` button to confirm your changes."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:45
+msgid "Using the dashboard, you can edit only the name assigned to a role."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:49
+msgid "Delete a role"
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:54
+msgid ""
+"Select the role you want to delete and click the :guilabel:`Delete Roles` "
+"button."
+msgstr ""
+
+#: ../dashboard_admin_manage_roles.rst:56
+msgid ""
+"In the :guilabel:`Confirm Delete Roles` window, click :guilabel:`Delete "
+"Roles` to confirm the deletion."
+msgstr ""
+
+# #-#-#-#-#  dashboard_admin_manage_roles.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_manage_images.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+#: ../dashboard_admin_manage_roles.rst:59 ../dashboard_manage_images.rst:122
+msgid "You cannot undo this action."
+msgstr ""
+
+#: ../dashboard_admin_manage_stacks.rst:3
+msgid "Launch and manage stacks using the Dashboard"
+msgstr ""
+
+#: ../dashboard_admin_manage_stacks.rst:5
+msgid ""
+"The Orchestration service provides a template-based orchestration engine for "
+"the OpenStack cloud. Orchestration services create and manage cloud "
+"infrastructure resources such as storage, networking, instances, and "
+"applications as a repeatable running environment."
+msgstr ""
+
+#: ../dashboard_admin_manage_stacks.rst:11
+msgid ""
+"Administrators use templates to create stacks, which are collections of "
+"resources. For example, a stack might include instances, floating IPs, "
+"volumes, security groups, or users. The Orchestration service offers access "
+"to all OpenStack core services via a single modular template, with "
+"additional orchestration capabilities such as auto-scaling and basic high "
+"availability."
+msgstr ""
+
+#: ../dashboard_admin_manage_stacks.rst:20
+msgid "For information about:"
+msgstr ""
+
+#: ../dashboard_admin_manage_stacks.rst:22
+msgid ""
+"administrative tasks on the command-line, see :doc:`cli_admin_manage_stacks`."
+msgstr ""
+
+#: ../dashboard_admin_manage_stacks.rst:27
+msgid ""
+"There are no administration-specific tasks that can be done through the "
+"Dashboard."
+msgstr ""
+
+#: ../dashboard_admin_manage_stacks.rst:30
+msgid ""
+"the basic creation and deletion of Orchestration stacks, refer to the "
+"`OpenStack End User Guide <http://docs.openstack.org/user-guide/"
+"dashboard_stacks.html>`__."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:3
+msgid "Manage flavors"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:5
+msgid ""
+"In OpenStack, a flavor defines the compute, memory, and storage capacity of "
+"a virtual server, also known as an instance. As an administrative user, you "
+"can create, edit, and delete flavors."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:9
+msgid "The following table lists the default flavors."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:12
+msgid "Disk (in GB)"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:12
+msgid "Flavor"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:12
+msgid "RAM (in MB)"
+msgstr ""
+
+# #-#-#-#-#  dashboard_manage_flavors.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  database.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+#: ../dashboard_manage_flavors.rst:14 ../dashboard_manage_flavors.rst:15
+#: ../database.rst:213
+msgid "1"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:14
+msgid "512"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:15
+msgid "20"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:15
+msgid "2048"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:15
+msgid "m1.small"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:16
+msgid "2"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:16
+msgid "40"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:16
+msgid "4096"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:16
+msgid "m1.medium"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:17
+msgid "4"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:17
+msgid "80"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:17
+msgid "8192"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:17
+msgid "m1.large"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:18
+msgid "160"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:18
+msgid "16384"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:18
+msgid "8"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:18
+msgid "m1.xlarge"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:22
+msgid "Create flavors"
+msgstr ""
+
+# #-#-#-#-#  dashboard_manage_flavors.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_manage_host_aggregates.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_manage_images.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+#: ../dashboard_manage_flavors.rst:24 ../dashboard_manage_flavors.rst:74
+#: ../dashboard_manage_flavors.rst:88 ../dashboard_manage_flavors.rst:154
+#: ../dashboard_manage_host_aggregates.rst:19
+#: ../dashboard_manage_images.rst:23
+msgid "Log in to the Dashboard."
+msgstr ""
+
+# #-#-#-#-#  dashboard_manage_flavors.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_manage_host_aggregates.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_manage_images.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+#: ../dashboard_manage_flavors.rst:26 ../dashboard_manage_flavors.rst:75
+#: ../dashboard_manage_flavors.rst:90 ../dashboard_manage_flavors.rst:155
+#: ../dashboard_manage_host_aggregates.rst:21
+#: ../dashboard_manage_host_aggregates.rst:58
+#: ../dashboard_manage_images.rst:25
+msgid ""
+"Choose the :guilabel:`admin` project from the drop-down list at the top of "
+"the page."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:28 ../dashboard_manage_flavors.rst:77
+#: ../dashboard_manage_flavors.rst:92 ../dashboard_manage_flavors.rst:157
+msgid ""
+"In the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Flavors` category."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:30 ../dashboard_manage_flavors.rst:69
+msgid "Click :guilabel:`Create Flavor`."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:31
+msgid ""
+"In the :guilabel:`Create Flavor` window, enter or select the parameters for "
+"the flavor in the :guilabel:`Flavor Information` tab."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:35
+msgid "**Name**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:35
+msgid "Enter the flavor name."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:36
+msgid "**ID**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:36
+msgid ""
+"Unique ID (integer or UUID) for the new flavor. If specifying 'auto', a UUID "
+"will be automatically generated."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:39
+msgid "**VCPUs**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:39
+msgid "Enter the number of virtual CPUs to use."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:41
+msgid "**RAM (MB)**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:41
+msgid "Enter the amount of RAM to use, in megabytes."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:43
+msgid "**Root Disk (GB)**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:43
+msgid ""
+"Enter the amount of disk space in gigabytes to use for the root (/) "
+"partition."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:46
+msgid "**Ephemeral Disk (GB)**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:46
+msgid ""
+"Enter the amount of disk space in gigabytes to use for the ephemeral "
+"partition. If unspecified, the value is 0 by default."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:51
+msgid ""
+"Ephemeral disks offer machine local disk storage linked to the lifecycle of "
+"a VM instance. When a VM is terminated, all data on the ephemeral disk is "
+"lost. Ephemeral disks are not included in any snapshots."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:57
+msgid "**Swap Disk (MB)**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:57
+msgid ""
+"Enter the amount of swap space (in megabytes) to use. If unspecified, the "
+"default is 0."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:62
+msgid ""
+"In the :guilabel:`Flavor Access` tab, you can control access to the flavor "
+"by moving projects from the :guilabel:`All Projects` column to the :guilabel:"
+"`Selected Projects` column."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:66
+msgid ""
+"Only projects in the :guilabel:`Selected Projects` column can use the "
+"flavor. If there are no projects in the right column, all projects can use "
+"the flavor."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:72
+msgid "Update flavors"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:79
+msgid "Select the flavor that you want to edit. Click :guilabel:`Edit Flavor`."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:81
+msgid ""
+"In the :guilabel:`Edit Flavor` window, you can change the flavor name, "
+"VCPUs, RAM, root disk, ephemeral disk, and swap disk values."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:83 ../dashboard_manage_flavors.rst:99
+msgid "Click :guilabel:`Save`."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:86
+msgid "Update Metadata"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:94
+msgid ""
+"Select the flavor that you want to update. In the drop-down list, click :"
+"guilabel:`Update Metadata` or click :guilabel:`No` or :guilabel:`Yes` in "
+"the :guilabel:`Metadata` column."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:97
+msgid ""
+"In the :guilabel:`Update Flavor Metadata` window, you can customize some "
+"metadata keys, then add it to this flavor and set them values."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:101
+msgid "**Optional metadata keys**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:104
+msgid "quota:cpu_shares"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:106
+msgid "**CPU limits**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:106
+msgid "quota:cpu_period"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:108
+msgid "quota:cpu_limit"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:110
+msgid "quota:cpu_reservation"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:112
+msgid "quota:cpu_quota"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:114
+msgid "quota:disk_read_bytes_sec"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:116
+msgid "**Disk tuning**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:116
+msgid "quota:disk_read_iops_sec"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:118
+msgid "quota:disk_write_bytes_sec"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:120
+msgid "quota:disk_write_iops_sec"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:122
+msgid "quota:disk_total_bytes_sec"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:124
+msgid "quota:disk_total_iops_sec"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:126
+msgid "quota:vif_inbound_average"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:128
+msgid "**Bandwidth I/O**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:128
+msgid "quota:vif_inbound_burst"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:130
+msgid "quota:vif_inbound_peak"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:132
+msgid "quota:vif_outbound_average"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:134
+msgid "quota:vif_outbound_burst"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:136
+msgid "quota:vif_outbound_peak"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:138
+msgid "**Watchdog behavior**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:138
+msgid "hw:watchdog_action"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:140
+msgid "hw_rng:allowed"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:142
+msgid "**Random-number generator**"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:142
+msgid "hw_rng:rate_bytes"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:144
+msgid "hw_rng:rate_period"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:147
+msgid ""
+"For information about supporting metadata keys, see the `OpenStack Cloud "
+"Administrator Guide <http://docs.openstack.org/admin-guide-cloud/compute-"
+"flavors.html>`__."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:152
+msgid "Delete flavors"
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:159
+msgid "Select the flavors that you want to delete."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:160
+msgid "Click :guilabel:`Delete Flavors`."
+msgstr ""
+
+#: ../dashboard_manage_flavors.rst:161
+msgid ""
+"In the :guilabel:`Confirm Delete Flavors` window, click :guilabel:`Delete "
+"Flavors` to confirm the deletion. You cannot undo this action."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:3
+msgid "Create and manage host aggregates"
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:5
+msgid ""
+"Host aggregates enable administrative users to assign key-value pairs to "
+"groups of machines."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:8
+msgid ""
+"Each node can have multiple aggregates and each aggregate can have multiple "
+"key-value pairs. You can assign the same key-value pair to multiple "
+"aggregates."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:12
+msgid ""
+"The scheduler uses this information to make scheduling decisions. For "
+"information, see `Scheduling <http://docs.openstack.org/liberty/config-"
+"reference/content/section_compute-scheduler.html>`__."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:17
+msgid "To create a host aggregate"
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:24
+#: ../dashboard_manage_host_aggregates.rst:61
+msgid ""
+"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Host Aggregates` category."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:27
+msgid "Click :guilabel:`Create Host Aggregate`."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:29
+msgid ""
+"In the :guilabel:`Create Host Aggregate` dialog box, enter or select the "
+"following values on the :guilabel:`Host Aggregate Information` tab:"
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:32
+msgid ":guilabel:`Name`: The host aggregate name."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:34
+msgid ""
+":guilabel:`Availability Zone`: The cloud provider defines the default "
+"availability zone, such as ``us-west``, ``apac-south``, or ``nova``. You can "
+"target the host aggregate, as follows:"
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:38
+msgid ""
+"When the host aggregate is exposed as an availability zone, select the "
+"availability zone when you launch an instance."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:41
+msgid ""
+"When the host aggregate is not exposed as an availability zone, select a "
+"flavor and its extra specs to target the host aggregate."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:45
+msgid ""
+"Assign hosts to the aggregate using the :guilabel:`Manage Hosts within "
+"Aggregate` tab in the same dialog box."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:48
+msgid ""
+"To assign a host to the aggregate, click **+** for the host. The host moves "
+"from the :guilabel:`All available hosts` list to the :guilabel:`Selected "
+"hosts` list."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:52
+msgid ""
+"You can add one host to one or more aggregates. To add a host to an existing "
+"aggregate, edit the aggregate."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:56
+msgid "To manage host aggregates"
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:64
+msgid ""
+"To edit host aggregates, select the host aggregate that you want to edit. "
+"Click :guilabel:`Edit Host Aggregate`."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:67
+msgid ""
+"In the :guilabel:`Edit Host Aggregate` dialog box, you can change the name "
+"and availability zone for the aggregate."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:70
+msgid ""
+"To manage hosts, locate the host aggregate that you want to edit in the "
+"table. Click :guilabel:`More` and select :guilabel:`Manage Hosts`."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:73
+msgid ""
+"In the :guilabel:`Add/Remove Hosts to Aggregate` dialog box, click **+** to "
+"assign a host to an aggregate. Click **-** to remove a host that is assigned "
+"to an aggregate."
+msgstr ""
+
+#: ../dashboard_manage_host_aggregates.rst:77
+msgid ""
+"To delete host aggregates, locate the host aggregate that you want to edit "
+"in the table. Click :guilabel:`More` and select :guilabel:`Delete Host "
+"Aggregate`."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:3
+msgid "Create and manage images"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:5
+msgid ""
+"As an administrative user, you can create and manage images for the projects "
+"to which you belong. You can also create and manage images for users in all "
+"projects to which you have access."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:10
+msgid ""
+"To create and manage images in specified projects as an end user, see the "
+"`OpenStack End User Guide <http://docs.openstack.org/user-guide/>`_."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:14
+msgid ""
+"To create and manage images as an administrator for other users, use the "
+"following procedures."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:18
+msgid "Create images"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:20
+msgid ""
+"For details about image creation, see the `Virtual Machine Image Guide "
+"<http://docs.openstack.org/image-guide/>`_."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:27
+msgid ""
+"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Images` category. The images that you can administer for cloud "
+"users appear on this page."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:30
+msgid ""
+"Click :guilabel:`Create Image`, which opens the :guilabel:`Create An Image` "
+"window."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:35
+msgid "**Figure Dashboard — Create Image**"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:37
+msgid ""
+"In the :guilabel:`Create An Image` window, enter or select the following "
+"values:"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:41
+msgid ":guilabel:`Name`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:41
+msgid "Enter a name for the image."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:43
+msgid ":guilabel:`Description`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:43
+msgid "Enter a brief description of the image."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:46
+msgid ":guilabel:`Image Source`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:46
+msgid ""
+"Choose the image source from the dropdown list. Your choices are :guilabel:"
+"`Image Location` and :guilabel:`Image File`."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:51
+msgid ":guilabel:`Image File` or :guilabel:`Image Location`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:51
+msgid ""
+"Based on your selection, there is an :guilabel:`Image File` or :guilabel:"
+"`Image Location` field. You can include the location URL or browse for the "
+"image file on your file system and add it."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:59
+msgid ":guilabel:`Kernel`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:59
+msgid "Select the kernel to boot an AMI-style image."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:62
+msgid ":guilabel:`Ramdisk`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:62
+msgid "Select the ramdisk to boot an AMI-style image."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:65
+msgid ":guilabel:`Format`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:65
+msgid "Select the image format."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:67
+msgid ":guilabel:`Architecture`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:67
+msgid ""
+"Specify the architecture. For example, ``i386`` for a 32-bit architecture or "
+"``x86_64`` for a 64-bit architecture."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:72
+msgid ":guilabel:`Minimum Disk (GB)`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:72 ../dashboard_manage_images.rst:74
+msgid "Leave this field empty."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:74
+msgid ":guilabel:`Minimum RAM (MB)`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:76
+msgid ":guilabel:`Copy Data`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:76
+msgid "Specify this option to copy image data to the Image service."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:79
+msgid ":guilabel:`Public`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:79
+msgid "Select this option to make the image public to all users."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:82
+msgid ":guilabel:`Protected`"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:82
+msgid ""
+"Select this option to ensure that only users with permissions can delete it."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:87
+msgid "Click :guilabel:`Create Image`."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:89
+msgid ""
+"The image is queued to be uploaded. It might take several minutes before the "
+"status changes from ``Queued`` to ``Active``."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:93
+msgid "Update images"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:95 ../dashboard_manage_images.rst:112
+msgid ""
+"Log in to the Dashboard. Choose the :guilabel:`admin` project from the drop-"
+"down list at the top of the page."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:98
+msgid ""
+"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Images` category."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:100
+msgid "Select the images that you want to edit. Click :guilabel:`Edit Image`."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:101
+msgid "In the :guilabel:`Update Image` window, you can change the image name."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:103
+msgid ""
+"Select the :guilabel:`Public` check box to make the image public. Clear this "
+"check box to make the image private. You cannot change the :guilabel:`Kernel "
+"ID`, :guilabel:`Ramdisk ID`, or :guilabel:`Architecture` attributes for an "
+"image."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:107
+msgid "Click :guilabel:`Update Image`."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:110
+msgid "Delete images"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:115
+msgid ""
+"On the :guilabel:`Admin tab`, open the :guilabel:`System` tab and click the :"
+"guilabel:`Images` category."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:117
+msgid "Select the images that you want to delete."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:118
+msgid "Click :guilabel:`Delete Images`."
+msgstr ""
+
+#: ../dashboard_manage_images.rst:119
+msgid ""
+"In the :guilabel:`Confirm Delete Images` window, click :guilabel:`Delete "
+"Images` to confirm the deletion."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:3
+msgid "Manage instances"
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:5
+msgid ""
+"As an administrative user, you can manage instances for users in various "
+"projects. You can view, terminate, edit, perform a soft or hard reboot, "
+"create a snapshot from, and migrate instances. You can also view the logs "
+"for instances or launch a VNC console for an instance."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:10
+msgid ""
+"For information about using the Dashboard to launch instances as an end "
+"user, see the `OpenStack End User Guide <http://docs.openstack.org/user-"
+"guide/dashboard_launch_instances.html>`__."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:14
+msgid "Create instance snapshots"
+msgstr ""
+
+# #-#-#-#-#  dashboard_manage_instances.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_manage_shares.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+#: ../dashboard_manage_instances.rst:16 ../dashboard_manage_instances.rst:38
+#: ../dashboard_manage_instances.rst:68 ../dashboard_manage_shares.rst:20
+#: ../dashboard_manage_shares.rst:46 ../dashboard_manage_shares.rst:73
+#: ../dashboard_manage_shares.rst:94 ../dashboard_manage_shares.rst:114
+#: ../dashboard_manage_shares.rst:134
+msgid ""
+"Log in to the Dashboard and choose the :guilabel:`admin` project from the "
+"drop-down list at the top of the page."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:19 ../dashboard_manage_instances.rst:41
+msgid ""
+"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Instances` category."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:22
+msgid ""
+"Select an instance to create a snapshot from it. From the :guilabel:"
+"`Actions` drop-down list, select :guilabel:`Create Snapshot`."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:25
+msgid ""
+"In the :guilabel:`Create Snapshot` window, enter a name for the snapshot."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:27
+msgid ""
+"Click :guilabel:`Create Snapshot`. The Dashboard shows the instance snapshot "
+"in the :guilabel:`Images` category."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:30
+msgid ""
+"To launch an instance from the snapshot, select the snapshot and click :"
+"guilabel:`Launch Instance`. For information about launching instances, see "
+"the `OpenStack End User Guide <http://docs.openstack.org/user-guide/"
+"dashboard_launch_instances.html>`__."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:36
+msgid "Control the state of an instance"
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:44
+msgid "Select the instance for which you want to change the state."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:46
+msgid ""
+"From the drop-down list in the :guilabel:`Actions` column, select the state."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:49
+msgid ""
+"Depending on the current state of the instance, you can perform various "
+"actions on the instance. For example, pause, un-pause, suspend, resume, soft "
+"or hard reboot, or terminate (actions in red are dangerous)."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:56
+msgid "**Figure Dashboard — Instance Actions**"
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:60
+msgid "Track usage"
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:62
+msgid ""
+"Use the :guilabel:`Overview` category to track usage of instances for each "
+"project."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:65
+msgid ""
+"You can track costs per month by showing meters like number of VCPUs, disks, "
+"RAM, and uptime of all your instances."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:71
+msgid ""
+"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Overview` category."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:74
+msgid ""
+"Select a month and click :guilabel:`Submit` to query the instance usage for "
+"that month."
+msgstr ""
+
+#: ../dashboard_manage_instances.rst:77
+msgid "Click :guilabel:`Download CSV Summary` to download a CSV summary."
+msgstr ""
+
+#: ../dashboard_manage_resources.rst:3
+msgid "View cloud resources"
+msgstr ""
+
+#: ../dashboard_manage_services.rst:3
+msgid "View services information"
+msgstr ""
+
+#: ../dashboard_manage_services.rst:5
+msgid ""
+"As an administrative user, you can view information for OpenStack services."
+msgstr ""
+
+#: ../dashboard_manage_services.rst:7
+msgid ""
+"Log in to the OpenStack dashboard and choose the :guilabel:`admin` project "
+"from the drop-down list at the top of the page."
+msgstr ""
+
+#: ../dashboard_manage_services.rst:11
+msgid ""
+"On the :guilabel:`Admin` tab, click the :guilabel:`System Information` "
+"category."
+msgstr ""
+
+#: ../dashboard_manage_services.rst:14
+msgid "View the following information on these tabs:"
+msgstr ""
+
+#: ../dashboard_manage_services.rst:16
+msgid ""
+":guilabel:`Services`: Displays the internal name and the public OpenStack "
+"name for each service, the host on which the service runs, and whether or "
+"not the service is enabled."
+msgstr ""
+
+#: ../dashboard_manage_services.rst:21
+msgid ""
+":guilabel:`Compute Services`: Displays information specific to the Compute "
+"service. Both host and zone are listed for each service, as well as its "
+"activation status."
+msgstr ""
+
+#: ../dashboard_manage_services.rst:26
+msgid ""
+":guilabel:`Block Storage Services`: Displays information specific to the "
+"Block Storage service. Both host and zone are listed for each service, as "
+"well as its activation status."
+msgstr ""
+
+#: ../dashboard_manage_services.rst:31
+msgid ""
+":guilabel:`Network Agents`: Displays the network agents active within the "
+"cluster, such as L3 and DHCP agents, and the status of each agent."
+msgstr ""
+
+#: ../dashboard_manage_services.rst:35
+msgid ""
+":guilabel:`Orchestration Services`: Displays information specific to the "
+"Orchestration service. Name, engine id, host and topic are listed for each "
+"service, as well as its activation status."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:3
+msgid "Manage shares and share types"
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:5
+msgid ""
+"Shares are file storage that instances can access. Users can allow or deny a "
+"running instance to have access to a share at any time. For information "
+"about using the Dashboard to create and manage shares as an end user, see "
+"the `OpenStack End User Guide <http://docs.openstack.org/user-guide/"
+"dashboard_manage_shares.html>`_."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:11
+msgid ""
+"As an administrative user, you can manage shares and share types for users "
+"in various projects. You can create and delete share types, and view or "
+"delete shares."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:18
+msgid "Create a share type"
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:23 ../dashboard_manage_shares.rst:49
+#: ../dashboard_manage_shares.rst:76 ../dashboard_manage_shares.rst:97
+msgid ""
+"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Shares` category."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:26
+msgid ""
+"Click the :guilabel:`Share Types` tab, and click :guilabel:`Create Share "
+"Type` button. In the :guilabel:`Create Share Type` window, enter or select "
+"the following values."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:31
+msgid ":guilabel:`Name`: Enter a name for the share type."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:33
+msgid ":guilabel:`Driver handles share servers`: Choose True or False"
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:35
+msgid ":guilabel:`Extra specs`: To add extra specs, use key=value."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:37
+msgid "Click :guilabel:`Create Share Type` button to confirm your changes."
+msgstr ""
+
+# #-#-#-#-#  dashboard_manage_shares.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  dashboard_manage_volumes.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+#: ../dashboard_manage_shares.rst:41 ../dashboard_manage_shares.rst:66
+#: ../dashboard_manage_shares.rst:89 ../dashboard_manage_shares.rst:109
+#: ../dashboard_manage_shares.rst:129 ../dashboard_manage_shares.rst:149
+#: ../dashboard_manage_volumes.rst:35 ../dashboard_manage_volumes.rst:136
+#: ../dashboard_manage_volumes.rst:159
+msgid "A message indicates whether the action succeeded."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:44
+msgid "Update share type"
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:52
+msgid ""
+"Click the :guilabel:`Share Types` tab, select the share type that you want "
+"to update."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:55
+msgid "Select :guilabel:`Update Share Type` from Actions."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:57
+msgid "In the :guilabel:`Update Share Type` window, update extra specs."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:59
+msgid ""
+":guilabel:`Extra specs`: To add extra specs, use key=value. To unset extra "
+"specs, use key."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:62
+msgid "Click :guilabel:`Update Share Type` button to confirm your changes."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:69
+msgid "Delete share types"
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:71
+msgid "When you delete a share type, shares of that type are not deleted."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:79
+msgid ""
+"Click the :guilabel:`Share Types` tab, select the share type or types that "
+"you want to delete."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:82
+msgid "Click :guilabel:`Delete Share Types` button."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:84
+msgid ""
+"In the :guilabel:`Confirm Delete Share Types` window, click the :guilabel:"
+"`Delete Share Types` button to confirm the action."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:92
+msgid "Delete shares"
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:100
+msgid "Select the share or shares that you want to delete."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:102
+msgid "Click :guilabel:`Delete Shares` button."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:104
+msgid ""
+"In the :guilabel:`Confirm Delete Shares` window, click the :guilabel:`Delete "
+"Shares` button to confirm the action."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:112
+msgid "Delete share server"
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:117
+msgid ""
+"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Share Servers` category."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:120
+msgid "Select the share that you want to delete."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:122
+msgid "Click :guilabel:`Delete Share Server` button."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:124
+msgid ""
+"In the :guilabel:`Confirm Delete Share Server` window, click the :guilabel:"
+"`Delete Share Server` button to confirm the action."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:132
+msgid "Delete share networks"
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:137
+msgid ""
+"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Share Networks` category."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:140
+msgid "Select the share network or share networks that you want to delete."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:142
+msgid "Click :guilabel:`Delete Share Networks` button."
+msgstr ""
+
+#: ../dashboard_manage_shares.rst:144
+msgid ""
+"In the :guilabel:`Confirm Delete Share Networks` window, click the :guilabel:"
+"`Delete Share Networks` button to confirm the action."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:3
+msgid "Manage volumes and volume types"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:5
+msgid ""
+"Volumes are the Block Storage devices that you attach to instances to enable "
+"persistent storage. Users can attach a volume to a running instance or "
+"detach a volume and attach it to another instance at any time. For "
+"information about using the dashboard to create and manage volumes as an end "
+"user, see the `OpenStack End User Guide <http://docs.openstack.org/user-"
+"guide/dashboard_manage_volumes.html>`_."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:11
+msgid ""
+"As an administrative user, you can manage volumes and volume types for users "
+"in various projects. You can create and delete volume types, and you can "
+"view and delete volumes. Note that a volume can be encrypted by using the "
+"steps outlined below."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:19
+msgid "Create a volume type"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:21 ../dashboard_manage_volumes.rst:120
+#: ../dashboard_manage_volumes.rst:144
+msgid ""
+"Log in to the dashboard and choose the :guilabel:`admin` project from the "
+"drop-down list at the top of the page."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:24 ../dashboard_manage_volumes.rst:123
+#: ../dashboard_manage_volumes.rst:147
+msgid ""
+"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Volumes` category."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:27
+msgid ""
+"Click the :guilabel:`Volume Types` tab, and click :guilabel:`Create Volume "
+"Type` button. In the :guilabel:`Create Volume Type` window, enter a name for "
+"the volume type."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:31
+msgid "Click :guilabel:`Create Volume Type` button to confirm your changes."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:38
+msgid "Create an encrypted volume type"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:40
+msgid ""
+"Create a volume type using the steps above for :ref:`create-a-volume-type`."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:42
+msgid ""
+"Click :guilabel:`Create Encryption` in the Actions column of the newly "
+"created volume type."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:45
+msgid ""
+"Configure the encrypted volume by setting the parameters below from "
+"available options (see table):"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:48 ../dashboard_manage_volumes.rst:69
+msgid "Provider"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:49
+msgid "Specifies the class responsible for configuring the encryption."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:51 ../dashboard_manage_volumes.rst:80
+msgid "Control Location"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:51
+msgid ""
+"Specifies whether the encryption is from the front end (nova) or the back "
+"end (cinder)."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:53 ../dashboard_manage_volumes.rst:96
+msgid "Cipher"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:54
+msgid "Specifies the encryption algorithm."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:56 ../dashboard_manage_volumes.rst:103
+msgid "Key Size (bits)"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:56
+msgid "Specifies the encryption key size."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:58
+msgid "Click :guilabel:`Create Volume Type Encryption`."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:60
+msgid "**Encryption Options**"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:62
+msgid ""
+"The table below provides a few alternatives available for creating encrypted "
+"volumes."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:66
+msgid "Comments"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:66
+msgid "Encryption parameters"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:66
+msgid "Parameter options"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:69
+msgid ""
+"Allows easier import and migration of imported encrypted volumes, and allows "
+"access key to be changed without re-encrypting the volume"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:69
+msgid "nova.volume.encryptors. luks.LuksEncryptor (Recommended)"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:76
+msgid "Less disk overhead than LUKS"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:76
+msgid "nova.volume.encryptors. cryptsetup. CryptsetupEncryptor"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:80
+msgid ""
+"The encryption occurs within nova so that the data transmitted over the "
+"network is encrypted"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:80
+msgid "front-end (Recommended)"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:86
+msgid ""
+"This could be selected if a cinder plug-in supporting an encrypted back-end "
+"block storage device becomes available in the future. TLS or other network "
+"encryption would also be needed to protect data as it traverses the network"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:86
+msgid "back-end"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:96
+msgid "See NIST reference below to see advantages*"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:96
+msgid "aes-xts-plain64 (Recommended)"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:99
+msgid ""
+"Note: On the command line, type 'cryptsetup benchmark' for additional options"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:99
+msgid "aes-cbc-essiv"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:103
+msgid ""
+"512 (Recommended for aes-xts-plain64. 256 should be used for aes-cbc-essiv)"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:103
+msgid ""
+"Using this selection for aes-xts, the underlying key size would only be 256-"
+"bits*"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:108
+msgid "256"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:108
+msgid ""
+"Using this selection for aes-xts, the underlying key size would only be 128-"
+"bits*"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:113
+msgid ""
+"`*` Source `NIST SP 800-38E <http://csrc.nist.gov/publications/"
+"nistpubs/800-38E/nist-sp-800-38E.pdf>`_"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:116
+msgid "Delete volume types"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:118
+msgid "When you delete a volume type, volumes of that type are not deleted."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:126
+msgid ""
+"Click the :guilabel:`Volume Types` tab, select the volume type or types that "
+"you want to delete."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:129
+msgid "Click :guilabel:`Delete Volume Types` button."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:131
+msgid ""
+"In the :guilabel:`Confirm Delete Volume Types` window, click the :guilabel:"
+"`Delete Volume Types` button to confirm the action."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:139
+msgid "Delete volumes"
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:141
+msgid ""
+"When you delete an instance, the data of its attached volumes is not "
+"destroyed."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:150
+msgid "Select the volume or volumes that you want to delete."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:152
+msgid "Click :guilabel:`Delete Volumes` button."
+msgstr ""
+
+#: ../dashboard_manage_volumes.rst:154
+msgid ""
+"In the :guilabel:`Confirm Delete Volumes` window, click the :guilabel:"
+"`Delete Volumes` button to confirm the action."
 msgstr ""
 
 #: ../dashboard_sessions.rst:3
@@ -9857,7 +10933,7 @@ msgstr ""
 
 #: ../dashboard_sessions.rst:5
 msgid ""
-"The dashboard uses `Django sessions framework <https://docs.djangoproject."
+"The Dashboard uses `Django sessions framework <https://docs.djangoproject."
 "com/en/dev/topics/http/sessions/>`__ to handle user session data. However, "
 "you can use any available session back end. You customize the session back "
 "end through the ``SESSION_ENGINE`` setting in your ``local_settings.py`` "
@@ -10077,6 +11153,256 @@ msgstr ""
 msgid ""
 "See the Django `cookie-based sessions <https://docs.djangoproject.com/en/dev/"
 "topics/http/sessions/#using-cookie-based-sessions>`__ documentation."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:5
+msgid "View and manage quotas"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:10
+msgid ""
+"To prevent system capacities from being exhausted without notification, you "
+"can set up quotas. Quotas are operational limits. For example, the number of "
+"gigabytes allowed for each tenant can be controlled so that cloud resources "
+"are optimized. Quotas can be enforced at both the tenant (or project) and "
+"the tenant-user level."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:16
+msgid ""
+"Typically, you change quotas when a project needs more than ten volumes or 1 "
+"|nbsp| TB on a compute node."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:19
+msgid ""
+"Using the Dashboard, you can view default Compute and Block Storage quotas "
+"for new tenants, as well as update quotas for existing tenants."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:24
+msgid ""
+"Using the command-line interface, you can manage quotas for the OpenStack "
+"Compute service, the OpenStack Block Storage service, and the OpenStack "
+"Networking service (see :doc:`cli_set_quotas`). Additionally, you can update "
+"Compute service quotas for tenant users."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:30
+msgid ""
+"The following table describes the Compute and Block Storage service quotas:"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:34
+msgid "**Quota Descriptions**"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:37
+msgid "Defines the number of"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:37
+msgid "Quota Name"
+msgstr ""
+
+# #-#-#-#-#  dashboard_set_quotas.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  identity_concepts.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
+#: ../dashboard_set_quotas.rst:37 ../identity_concepts.rst:72
+msgid "Service"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:39
+msgid "Gigabytes"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:39
+msgid "Volume gigabytes allowed for each project."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:42
+msgid "Instances"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:42
+msgid "Instances allowed for each project."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:45
+msgid "Injected Files"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:45
+msgid "Injected files allowed for each project."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:48
+msgid "Content bytes allowed for each injected file."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:48
+msgid "Injected File Content Bytes"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:51
+msgid "Keypairs"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:51
+msgid "Number of keypairs."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:53
+msgid "Metadata Items"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:53
+msgid "Metadata items allowed for each instance."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:56
+msgid "RAM (MB)"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:56
+msgid "RAM megabytes allowed for each instance."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:59
+msgid "Security Groups"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:59
+msgid "Security groups allowed for each project."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:62
+msgid "Rules allowed for each security group."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:62
+msgid "Security Group Rules"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:65
+msgid "Snapshots"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:65
+msgid "Volume snapshots allowed for each project."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:68
+msgid "Instance cores allowed for each project."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:71
+msgid "Volumes"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:71
+msgid "Volumes allowed for each project."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:78
+msgid "View default project quotas"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:80 ../dashboard_set_quotas.rst:97
+msgid "Log in to the OpenStack dashboard."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:82 ../dashboard_set_quotas.rst:99
+msgid ""
+"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
+"guilabel:`Defaults` category."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:85
+msgid "The default quota values are displayed."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:89
+msgid ""
+"You can sort the table by clicking on either the :guilabel:`Quota Name` or :"
+"guilabel:`Limit` column headers."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:95
+msgid "Update project quotas"
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:102 ../dashboard_set_quotas.rst:107
+msgid "Click the :guilabel:`Update Defaults` button."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:104
+msgid ""
+"In the :guilabel:`Update Default Quotas` window, you can edit the default "
+"quota values."
+msgstr ""
+
+#: ../dashboard_set_quotas.rst:111
+msgid ""
+"The dashboard does not show all possible project quotas. To view and update "
+"the quotas for a service, use its command-line client. See :doc:"
+"`cli_set_quotas`."
+msgstr ""
+
+#: ../dashboard_view_cloud_resources.rst:3
+msgid "View cloud usage statistics"
+msgstr ""
+
+#: ../dashboard_view_cloud_resources.rst:5
+msgid ""
+"The Telemetry service provides user-level usage data for OpenStack-based "
+"clouds, which can be used for customer billing, system monitoring, or "
+"alerts. Data can be collected by notifications sent by existing OpenStack "
+"components (for example, usage events emitted from Compute) or by polling "
+"the infrastructure (for example, libvirt)."
+msgstr ""
+
+#: ../dashboard_view_cloud_resources.rst:13
+msgid ""
+"You can only view metering statistics on the dashboard (available only to "
+"administrators). The Telemetry service must be set up and administered "
+"through the :command:`ceilometer` command-line interface (CLI)."
+msgstr ""
+
+#: ../dashboard_view_cloud_resources.rst:18
+msgid ""
+"For basic administration information, refer to the \"Measure Cloud Resources"
+"\" chapter in the `OpenStack End User Guide <http://docs.openstack.org/user-"
+"guide/>`_."
+msgstr ""
+
+#: ../dashboard_view_cloud_resources.rst:25
+msgid "View resource statistics"
+msgstr ""
+
+#: ../dashboard_view_cloud_resources.rst:27
+msgid "Log in to the OpenStack dashboard as a user with Admin privileges."
+msgstr ""
+
+#: ../dashboard_view_cloud_resources.rst:29
+msgid ""
+"On the :guilabel:`Admin` tab, click the :guilabel:`Resource Usage` category."
+msgstr ""
+
+#: ../dashboard_view_cloud_resources.rst:31
+msgid "Click the:"
+msgstr ""
+
+#: ../dashboard_view_cloud_resources.rst:33
+msgid ""
+":guilabel:`Usage Report` tab to view a usage report per tenant (project) by "
+"specifying the time period (or even use a calendar to define a date range)."
+msgstr ""
+
+#: ../dashboard_view_cloud_resources.rst:37
+msgid ""
+":guilabel:`Stats` tab to view a multi-series line chart with user-defined "
+"meters. You group by project, define the value type (min, max, avg, or sum), "
+"and specify the time period (or even use a calendar to define a date range)."
 msgstr ""
 
 # #-#-#-#-#  database.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
@@ -10389,10 +11715,6 @@ msgstr ""
 
 #: ../database.rst:212
 msgid "``0`` = disabled"
-msgstr ""
-
-#: ../database.rst:213
-msgid "1"
 msgstr ""
 
 #: ../database.rst:223
@@ -10892,10 +12214,6 @@ msgid ""
 "An OpenStack service, such as Compute (nova), Object Storage (swift), or "
 "Image service (glance), that provides one or more endpoints through which "
 "users can access resources and perform operations."
-msgstr ""
-
-#: ../identity_concepts.rst:72
-msgid "Service"
 msgstr ""
 
 #: ../identity_concepts.rst:75
@@ -18123,6 +19441,10 @@ msgid ""
 "you might get usable builder files."
 msgstr ""
 
+#: ../objectstorage.rst:3
+msgid "Object Storage"
+msgstr ""
+
 #: ../objectstorage_EC.rst:3
 msgid "Erasure coding"
 msgstr ""
@@ -21093,200 +22415,6 @@ msgstr ""
 
 #: ../shared_file_systems_manage_shares_cli.rst:35
 msgid "If the user is not an administrator, the migration fails."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:3
-msgid "Manage shares and share types"
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:5
-msgid ""
-"Shares are file storage that instances can access. Users can allow or deny a "
-"running instance to have access to a share at any time. For information "
-"about using the dashboard to create and manage shares as an end user, see "
-"the `OpenStack End User Guide <http://docs.openstack.org/user-guide/"
-"dashboard_manage_shares.html>`_."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:11
-msgid ""
-"As an administrative user, you can manage shares and share types for users "
-"in various projects. You can create and delete share types, and view or "
-"delete shares."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:18
-msgid "Create a share type"
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:20
-#: ../shared_file_systems_manage_shares_dashboard.rst:46
-#: ../shared_file_systems_manage_shares_dashboard.rst:73
-#: ../shared_file_systems_manage_shares_dashboard.rst:94
-#: ../shared_file_systems_manage_shares_dashboard.rst:114
-#: ../shared_file_systems_manage_shares_dashboard.rst:134
-msgid ""
-"Log in to the dashboard and choose the :guilabel:`admin` project from the "
-"drop-down list at the top of the page."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:23
-#: ../shared_file_systems_manage_shares_dashboard.rst:49
-#: ../shared_file_systems_manage_shares_dashboard.rst:76
-#: ../shared_file_systems_manage_shares_dashboard.rst:97
-msgid ""
-"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
-"guilabel:`Shares` category."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:26
-msgid ""
-"Click the :guilabel:`Share Types` tab, and click :guilabel:`Create Share "
-"Type` button. In the :guilabel:`Create Share Type` window, enter or select "
-"the following values."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:31
-msgid ":guilabel:`Name`: Enter a name for the share type."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:33
-msgid ":guilabel:`Driver handles share servers`: Choose True or False"
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:35
-msgid ":guilabel:`Extra specs`: To add extra specs, use key=value."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:37
-msgid "Click :guilabel:`Create Share Type` button to confirm your changes."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:41
-#: ../shared_file_systems_manage_shares_dashboard.rst:66
-#: ../shared_file_systems_manage_shares_dashboard.rst:89
-#: ../shared_file_systems_manage_shares_dashboard.rst:109
-#: ../shared_file_systems_manage_shares_dashboard.rst:129
-#: ../shared_file_systems_manage_shares_dashboard.rst:149
-msgid "A message indicates whether the action succeeded."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:44
-msgid "Update share type"
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:52
-msgid ""
-"Click the :guilabel:`Share Types` tab, select the share type that you want "
-"to update."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:55
-msgid "Select :guilabel:`Update Share Type` from Actions."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:57
-msgid "In the :guilabel:`Update Share Type` window, update extra specs."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:59
-msgid ""
-":guilabel:`Extra specs`: To add extra specs, use key=value. To unset extra "
-"specs, use key."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:62
-msgid "Click :guilabel:`Update Share Type` button to confirm your changes."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:69
-msgid "Delete share types"
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:71
-msgid "When you delete a share type, shares of that type are not deleted."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:79
-msgid ""
-"Click the :guilabel:`Share Types` tab, select the share type or types that "
-"you want to delete."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:82
-msgid "Click :guilabel:`Delete Share Types` button."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:84
-msgid ""
-"In the :guilabel:`Confirm Delete Share Types` window, click the :guilabel:"
-"`Delete Share Types` button to confirm the action."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:92
-msgid "Delete shares"
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:100
-msgid "Select the share or shares that you want to delete."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:102
-msgid "Click :guilabel:`Delete Shares` button."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:104
-msgid ""
-"In the :guilabel:`Confirm Delete Shares` window, click the :guilabel:`Delete "
-"Shares` button to confirm the action."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:112
-msgid "Delete share server"
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:117
-msgid ""
-"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
-"guilabel:`Share Servers` category."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:120
-msgid "Select the share that you want to delete."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:122
-msgid "Click :guilabel:`Delete Share Server` button."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:124
-msgid ""
-"In the :guilabel:`Confirm Delete Share Server` window, click the :guilabel:"
-"`Delete Share Server` button to confirm the action."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:132
-msgid "Delete share networks"
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:137
-msgid ""
-"On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
-"guilabel:`Share Networks` category."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:140
-msgid "Select the share network or share networks that you want to delete."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:142
-msgid "Click :guilabel:`Delete Share Networks` button."
-msgstr ""
-
-#: ../shared_file_systems_manage_shares_dashboard.rst:144
-msgid ""
-"In the :guilabel:`Confirm Delete Share Networks` window, click the :guilabel:"
-"`Delete Share Networks` button to confirm the action."
 msgstr ""
 
 #: ../shared_file_systems_multi_backend.rst:5
