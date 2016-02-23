@@ -14,10 +14,7 @@
                 <literal>http://openstack.example.com</literal>
             domain. Use a domain that fits your current setup.</para>
         <step>
-            <para>In the <filename>local_settings</filename> file(on Fedora/RHEL/
-                  CentOS: <filename>/etc/openstack-dashboard/local_settings</filename>,
-                  on Ubuntu and Debian: <filename>/etc/openstack-dashboard/local_settings.py</filename>,
-                  and on openSUSE: <filename>/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>),
+            <para>In the <filename>local_settings.py</filename> file,
                   update the following options:</para>
             <programlisting language="python">USE_SSL = True
 CSRF_COOKIE_SECURE = True
@@ -98,15 +95,10 @@ Allow from all
         </step>
         <step>
             <para>Restart the Apache HTTP server.</para>
-            <para>For Debian, Ubuntu, or SUSE distributions:</para>
-            <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
-            <para>For Fedora, RHEL, or CentOS distributions:</para>
-            <screen><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
         </step>
         <step>
             <para>Restart <systemitem class="service"
-                    >memcached</systemitem>:</para>
-            <screen><prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
+                    >memcached</systemitem>.</para>
             <para>If you try to access the dashboard through HTTP, the
                 browser redirects you to the HTTPS page.</para>
         </step>
