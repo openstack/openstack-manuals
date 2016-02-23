@@ -9,7 +9,7 @@ Data Processing service command-line client
 The sahara client is the command-line interface (CLI) for
 the Data Processing service API and its extensions.
 
-This chapter documents :command:`sahara` version ``0.11.1``.
+This chapter documents :command:`sahara` version ``0.12.0``.
 
 For help on a specific :command:`sahara` command, enter:
 
@@ -239,26 +239,6 @@ sahara optional arguments
 
 ``--os-auth-token OS_AUTH_TOKEN``
   Defaults to ``env[OS_AUTH_TOKEN]``.
-
-``--insecure``
-  Explicitly allow client to perform "insecure" TLS
-  (https) requests. The server's certificate will not be
-  verified against any certificate authorities. This
-  option should be used with caution.
-
-``--os-cacert <ca-certificate>``
-  Specify a CA bundle file to use in verifying a TLS
-  (https) server certificate. Defaults to
-  ``env[OS_CACERT]``.
-
-``--os-cert <certificate>``
-  Defaults to ``env[OS_CERT]``.
-
-``--os-key <key>``
-  Defaults to ``env[OS_KEY]``.
-
-``--timeout <seconds>``
-  Set request timeout (in seconds).
 
 ``--os-auth-url OS_AUTH_URL``
   Authentication URL
