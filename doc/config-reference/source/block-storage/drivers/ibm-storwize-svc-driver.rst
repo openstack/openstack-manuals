@@ -20,7 +20,7 @@ one iSCSI IP address. The IBM Storwize/SVC driver uses an iSCSI IP
 address associated with the volume's preferred node (if available) to
 attach the volume to the instance, otherwise it uses the first available
 iSCSI IP address of the system. The driver obtains the iSCSI IP address
-directly from the storage system; you do not need to provide these iSCSI
+directly from the storage system. You do not need to provide these iSCSI
 IP addresses directly to the driver.
 
 .. note::
@@ -35,14 +35,10 @@ IP addresses directly to the driver.
    documentation), multipath is enabled.
 
 If using Fibre Channel (FC), each Storwize family or SVC node should
-have at least one WWPN port configured. If the
-``storwize_svc_multipath_enabled`` flag is set to ``True`` in the Cinder
-configuration file, the driver uses all available WWPNs to attach the
-volume to the instance. If the flag is not
-set, the driver uses the WWPN associated with the volume's preferred
-node (if available), otherwise it uses the first available WWPN of the
-system. The driver obtains the WWPNs directly from the storage system;
-you do not need to provide these WWPNs directly to the driver.
+have at least one WWPN port configured. The driver uses all available
+WWPNs to attach the volume to the instance. The driver obtains the
+WWPNs directly from the storage system. You do not need to provide
+these WWPNs directly to the driver.
 
 .. note::
 
@@ -161,9 +157,17 @@ Enable the Storwize family and SVC driver
 Set the volume driver to the Storwize family and SVC driver by setting
 the ``volume_driver`` option in the ``cinder.conf`` file as follows:
 
+iSCSI:
+
 .. code-block:: ini
 
-   volume_driver = cinder.volume.drivers.ibm.storwize_svc.StorwizeSVCDriver
+   volume_driver = cinder.volume.drivers.ibm.storwize_svc.storwize_svc_iscsi.StorwizeSVCISCSIDriver
+
+FC:
+
+.. code-block:: ini
+
+   volume_driver = cinder.volume.drivers.ibm.storwize_svc.storwize_svc_fc.StorwizeSVCFCDriver
 
 .. _config_flags:
 
@@ -236,26 +240,18 @@ be over-ridden using volume types, which are described below.
      - Optional
      - 120
      - FlashCopy timeout threshold  [6]_ (seconds)
-   * - ``storwize_svc_connection_protocol``
-     - Optional
-     - iSCSI
-     - Connection protocol to use (currently supports 'iSCSI' or 'FC')
    * - ``storwize_svc_iscsi_chap_enabled``
      - Optional
      - True
      - Configure CHAP authentication for iSCSI connections
-   * - ``storwize_svc_multipath_enabled``
-     - Optional
-     - False
-     - Enable multipath for FC connections  [7]_
    * - ``storwize_svc_multihost_enabled``
      - Optional
      - True
-     - Enable mapping vdisks to multiple hosts  [8]_
+     - Enable mapping vdisks to multiple hosts  [7]_
    * - ``storwize_svc_vol_nofmtdisk``
      - Optional
      - False
-     - Enable or disable fast format  [9]_
+     - Enable or disable fast format  [8]_
 
 .. [1]
    The authentication requires either a password (``san_password``) or
@@ -297,11 +293,6 @@ be over-ridden using volume types, which are described below.
    seconds (10 minutes).
 
 .. [7]
-   Multipath for iSCSI connections requires no storage-side
-   configuration and is enabled if the compute host has multipath
-   configured.
-
-.. [8]
    This option allows the driver to map a vdisk to more than one host at
    a time. This scenario occurs during migration of a virtual machine
    with an attached volume; the volume is simultaneously mapped to both
@@ -309,7 +300,7 @@ be over-ridden using volume types, which are described below.
    require attaching vdisks to multiple hosts, setting this flag to
    ``False`` will provide added safety.
 
-.. [9]
+.. [8]
    Defines whether or not the fast formatting of thick-provisioned
    volumes is disabled at creation. The default value is ``False`` and a
    value of ``True`` means that fast format is disabled. Details about
