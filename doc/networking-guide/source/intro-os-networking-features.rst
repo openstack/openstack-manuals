@@ -32,9 +32,11 @@ steps:
 #. Set up a default external network
 
    Setting up an external network is described in
-   :ref:`L3-routing-and-NAT`. Assuming the external network to be used
-   for the auto-allocation feature is named ``public``, make it the
-   default external network with the following command:
+   `OpenStack Admin Cloud Guide
+   <http://docs.openstack.org/admin-guide-cloud/networking_adv-features.html>`_.
+   Assuming the external network to be used for the auto-allocation feature
+   is named ``public``, make it the default external network
+   with the following command:
 
    .. code-block:: console
 
