@@ -120,6 +120,123 @@ This example creates a ``my-new-volume`` volume based on an image.
    If your volume was created successfully, its status is ``available``. If
    its status is ``error``, you might have exceeded your quota.
 
+.. _Create_a_volume_from_specified_volume_type:
+
+Create a volume from specified volume type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Cinder supports these three ways to specify ``volume type`` during
+volume creation.
+
+#. volume_type
+#. cinder_img_volume_type (via glance image metadata)
+#. default_volume_type (via cinder.conf)
+
+.. _volume_type:
+
+volume_type
+-----------
+
+User can specify `volume type` when creating a volume.
+
+.. code-block:: console
+
+      $ cinder create --name <volume name> --volume-type <volume type> <size>
+
+.. _cinder_img_volume_type:
+
+cinder_img_volume_type
+----------------------
+
+If glance image has ``cinder_img_volume_type`` property, Cinder uses this
+parameter to specify ``volume type`` when creating a volume.
+
+Choose glance image which has "cinder_img_volume_type" property and create
+a volume from the image.
+
+.. code-block:: console
+
+      $ glance image-list
+      +--------------------------------------+---------------------------------+
+      | ID                                   | Name                            |
+      +--------------------------------------+---------------------------------+
+      | a8701119-ca8d-4957-846c-9f4d27f251fa | cirros-0.3.4-x86_64-uec         |
+      | 6cf01154-0408-416a-b69c-b28b48c5d28a | cirros-0.3.4-x86_64-uec-kernel  |
+      | de457c7c-2038-435d-abed-5dfa6430e66e | cirros-0.3.4-x86_64-uec-ramdisk |
+      +--------------------------------------+---------------------------------+
+
+      $ glance image-show a8701119-ca8d-4957-846c-9f4d27f251fa
+      +------------------------+--------------------------------------+
+      | Property               | Value                                |
+      +------------------------+--------------------------------------+
+      | checksum               | eb9139e4942121f22bbc2afc0400b2a4     |
+      | cinder_img_volume_type | lvmdriver-1                          |
+      | container_format       | ami                                  |
+      | created_at             | 2016-02-07T19:39:13Z                 |
+      | disk_format            | ami                                  |
+      | id                     | a8701119-ca8d-4957-846c-9f4d27f251fa |
+      | kernel_id              | 6cf01154-0408-416a-b69c-b28b48c5d28a |
+      | min_disk               | 0                                    |
+      | min_ram                | 0                                    |
+      | name                   | cirros-0.3.4-x86_64-uec              |
+      | owner                  | 4c0dbc92040c41b1bdb3827653682952     |
+      | protected              | False                                |
+      | ramdisk_id             | de457c7c-2038-435d-abed-5dfa6430e66e |
+      | size                   | 25165824                             |
+      | status                 | active                               |
+      | tags                   | []                                   |
+      | updated_at             | 2016-02-22T23:01:54Z                 |
+      | virtual_size           | None                                 |
+      | visibility             | public                               |
+      +------------------------+--------------------------------------+
+
+      $ cinder create --name test --image-id a8701119-ca8d-4957-846c-9f4d27f251fa 1
+      +---------------------------------------+--------------------------------------+
+      |                Property               |                Value                 |
+      +---------------------------------------+--------------------------------------+
+      |              attachments              |                  []                  |
+      |           availability_zone           |                 nova                 |
+      |                bootable               |                false                 |
+      |          consistencygroup_id          |                 None                 |
+      |               created_at              |      2016-02-22T23:17:51.000000      |
+      |              description              |                 None                 |
+      |               encrypted               |                False                 |
+      |                   id                  | 123ad92f-8f4c-4639-ab10-3742a1d9b47c |
+      |                metadata               |                  {}                  |
+      |            migration_status           |                 None                 |
+      |              multiattach              |                False                 |
+      |                  name                 |                 test                 |
+      |         os-vol-host-attr:host         |                 None                 |
+      |     os-vol-mig-status-attr:migstat    |                 None                 |
+      |     os-vol-mig-status-attr:name_id    |                 None                 |
+      |      os-vol-tenant-attr:tenant_id     |   4c0dbc92040c41b1bdb3827653682952   |
+      |   os-volume-replication:driver_data   |                 None                 |
+      | os-volume-replication:extended_status |                 None                 |
+      |           replication_status          |               disabled               |
+      |                  size                 |                  1                   |
+      |              snapshot_id              |                 None                 |
+      |              source_volid             |                 None                 |
+      |                 status                |               creating               |
+      |               updated_at              |                 None                 |
+      |                user_id                |   9a125f3d111e47e6a25f573853b32fd9   |
+      |              volume_type              |             lvmdriver-1              |
+      +---------------------------------------+--------------------------------------+
+
+.. _default_volume_type:
+
+default_volume_type
+-------------------
+
+If above parameters are not set, Cinder uses default_volume_type which is
+defined in cinder.conf during volume creation.
+
+Example cinder.conf file configuration.
+
+.. code-block:: console
+
+   [default]
+   default_volume_type = lvmdriver-1
+
 .. _Attach_a_volume_to_an_instance:
 
 Attach a volume to an instance
