@@ -5,13 +5,13 @@ Network components
 Switches
 ~~~~~~~~
 
-Switches are devices that enable packets to travel from one node to
-another. They are Multi-Input Multi-Output devices. Switches connect
-hosts that belong to the same layer-2 network together. Switches enable
-forwarding of the packet received on one port (input) to another port
-(output) so that they reach the desired destination node. Switches operate
-at layer-2 in the networking model. They forward the traffic based on the
-destination Ethernet address in the packet header.
+Switches are Multi-Input Multi-Output (MIMO) devices that enable packets
+to travel from one node to another. Switches connect hosts that belong
+to the same layer-2 network together. Switches enable forwarding of the
+packet received on one port (input) to another port (output) so that they
+reach the desired destination node. Switches operate at layer-2 in the
+networking model. They forward the traffic based on the destination
+Ethernet address in the packet header.
 
 Routers
 ~~~~~~~
@@ -39,7 +39,7 @@ Load balancers
 ~~~~~~~~~~~~~~
 
 A load balancer can be a software-based or a hardware-based device that allows
-traffic to be evenly distributed across several servers. By distributing the
+traffic to evenly be distributed across several servers. By distributing the
 traffic across multiple servers, it avoids overload of a single server thereby
 preventing a single point of failure in the product. This further improves the
 performance, network throughput, and response time of the servers.
