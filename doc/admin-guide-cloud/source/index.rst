@@ -30,6 +30,7 @@ Contents
    database.rst
    baremetal.rst
    orchestration.rst
+   cli.rst
    cross_project.rst
    common/app_support.rst
    common/glossary.rst
