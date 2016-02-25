@@ -308,7 +308,18 @@ available
 .. code-block:: console
 
    $ nova volume-attach INSTANCE_ID VOLUME_ID auto
-   $ nova volume-attach MyVolumeInstance /dev/vdb auto
+   $ nova volume-attach MyVolumeInstance 573e024d-5235-49ce-8332-be1576d323f8 auto
+
+.. note::
+
+   On the Xen Hypervisor it is possible to provide a specific device name instead of
+   automatic allocation. For example:
+
+   .. code-block:: console
+
+      $ nova volume-attach MyVolumeInstance 573e024d-5235-49ce-8332-be1576d323f8 /dev/vdb
+
+   This is not currently possible when using non-Xen hypervisors with OpenStack.
 
 Manage volumes after login into the instance
 
