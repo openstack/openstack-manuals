@@ -1,12 +1,12 @@
-.. _launch-instance-networks-public:
+.. _launch-instance-networks-provider:
 
-Public provider network
-~~~~~~~~~~~~~~~~~~~~~~~
+Provider network
+~~~~~~~~~~~~~~~~
 
 Before launching an instance, you must create the necessary virtual network
-infrastructure. For networking option 1, an instance uses a public provider
-virtual network that connects to the physical network infrastructure
-via layer-2 (bridging/switching). This network includes a DHCP server that
+infrastructure. For networking option 1, an instance uses a provider
+(external) network that connects to the physical network infrastructure via
+layer-2 (bridging/switching). This network includes a DHCP server that
 provides IP addresses to instances.
 
 The ``admin`` or other privileged user must create this network because it
@@ -27,8 +27,8 @@ connects directly to the physical network infrastructure.
 
    **Networking Option 1: Provider networks - Connectivity**
 
-Create the public network
--------------------------
+Create the provider network
+---------------------------
 
 #. On the controller node, source the ``admin`` credentials to gain access to
    admin-only CLI commands:
@@ -41,19 +41,19 @@ Create the public network
 
    .. code-block:: console
 
-      $ neutron net-create public --shared --provider:physical_network public \
-        --provider:network_type flat
+      $ neutron net-create --shared --provider:physical_network provider \
+        --provider:network_type flat provider
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
       | admin_state_up            | True                                 |
       | id                        | 0e62efcd-8cee-46c7-b163-d8df05c3c5ad |
-      | mtu                       | 0                                    |
-      | name                      | public                               |
+      | mtu                       | 1500                                 |
+      | name                      | provider                             |
       | port_security_enabled     | True                                 |
       | provider:network_type     | flat                                 |
-      | provider:physical_network | public                               |
+      | provider:physical_network | provider                             |
       | provider:segmentation_id  |                                      |
       | router:external           | False                                |
       | shared                    | True                                 |
@@ -64,35 +64,36 @@ Create the public network
 
    The ``--shared`` option allows all projects to use the virtual network.
 
-   The ``--provider:physical_network public`` and
+   The ``--provider:physical_network provider`` and
    ``--provider:network_type flat`` options connect the flat virtual network
-   to the flat (native/untagged) public physical network on the ``eth1``
-   interface on the host using information from the following files:
+   to the flat (native/untagged) physical network on the ``eth1`` interface
+   on the host using information from the following files:
 
    ``ml2_conf.ini``:
 
    .. code-block:: ini
 
       [ml2_type_flat]
-      flat_networks = public
+      flat_networks = provider
 
    ``linuxbridge_agent.ini``:
 
    .. code-block:: ini
 
       [linux_bridge]
-      physical_interface_mappings = public:eth1
+      physical_interface_mappings = provider:eth1
 
 #. Create a subnet on the network:
 
    .. code-block:: console
 
-      $ neutron subnet-create public PUBLIC_NETWORK_CIDR --name public \
-        --allocation-pool start=START_IP_ADDRESS,end=END_IP_ADDRESS\
-        --dns-nameserver DNS_RESOLVER --gateway PUBLIC_NETWORK_GATEWAY
+      $ neutron subnet-create --name provider \
+        --allocation-pool start=START_IP_ADDRESS,end=END_IP_ADDRESS \
+        --dns-nameserver DNS_RESOLVER --gateway PROVIDER_NETWORK_GATEWAY \
+        provider PROVIDER_NETWORK_CIDR
 
-   Replace ``PUBLIC_NETWORK_CIDR`` with the subnet on the public physical
-   network in CIDR notation.
+   Replace ``PROVIDER_NETWORK_CIDR`` with the subnet on the provider
+   physical network in CIDR notation.
 
    Replace ``START_IP_ADDRESS`` and ``END_IP_ADDRESS`` with the first and
    last IP address of the range within the subnet that you want to allocate
@@ -103,25 +104,26 @@ Create the public network
    most cases, you can use one from the ``/etc/resolv.conf`` file on
    the host.
 
-   Replace ``PUBLIC_NETWORK_GATEWAY`` with the gateway IP address on the
-   public physical network, typically the ".1" IP address.
+   Replace ``PROVIDER_NETWORK_GATEWAY`` with the gateway IP address on the
+   provider provider network, typically the ".1" IP address.
 
    **Example**
 
-   The public network uses 203.0.113.0/24 with a gateway on 203.0.113.1.
+   The provider network uses 203.0.113.0/24 with a gateway on 203.0.113.1.
    A DHCP server assigns each instance an IP address from 203.0.113.101
-   to 203.0.113.200. All instances use 8.8.4.4 as a DNS resolver.
+   to 203.0.113.250. All instances use 8.8.4.4 as a DNS resolver.
 
    .. code-block:: console
 
-      $ neutron subnet-create public 203.0.113.0/24 --name public \
-        --allocation-pool start=203.0.113.101,end=203.0.113.200 \
-        --dns-nameserver 8.8.4.4 --gateway 203.0.113.1
+      $ neutron subnet-create --name provider \
+        --allocation-pool start=203.0.113.101,end=203.0.113.250 \
+        --dns-nameserver 8.8.4.4 --gateway 203.0.113.1 \
+        provider 203.0.113.0/24
       Created a new subnet:
       +-------------------+----------------------------------------------------+
       | Field             | Value                                              |
       +-------------------+----------------------------------------------------+
-      | allocation_pools  | {"start": "203.0.113.101", "end": "203.0.113.200"} |
+      | allocation_pools  | {"start": "203.0.113.101", "end": "203.0.113.250"} |
       | cidr              | 203.0.113.0/24                                     |
       | dns_nameservers   | 8.8.4.4                                            |
       | enable_dhcp       | True                                               |
@@ -131,7 +133,7 @@ Create the public network
       | ip_version        | 4                                                  |
       | ipv6_address_mode |                                                    |
       | ipv6_ra_mode      |                                                    |
-      | name              | public                                             |
+      | name              | provider                                           |
       | network_id        | 0e62efcd-8cee-46c7-b163-d8df05c3c5ad               |
       | subnetpool_id     |                                                    |
       | tenant_id         | d84313397390425c8ed50b2f6e18d092                   |

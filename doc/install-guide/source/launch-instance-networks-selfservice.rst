@@ -1,23 +1,22 @@
-.. _launch-instance-networks-private:
+.. _launch-instance-networks-selfservice:
 
-Private project network
-~~~~~~~~~~~~~~~~~~~~~~~
+Self-service network
+~~~~~~~~~~~~~~~~~~~~
 
-If you chose networking option 2, you can also create a private project
-virtual network that connects to the physical network infrastructure
-via layer-3 (routing) and NAT. This network includes a DHCP server that
-provides IP addresses to instances. An instance on this network can
-automatically access external networks such as the Internet. However, access
-to an instance on this network from external networks such as the Internet
-requires a :term:`floating IP address`.
+If you chose networking option 2, you can also create a self-service (private)
+network that connects to the physical network infrastructure via NAT.
+This network includes a DHCP server that provides IP addresses to instances.
+An instance on this network can automatically access external networks such
+as the Internet. However, access to an instance on this network from external
+networks such as the Internet requires a :term:`floating IP address`.
 
 The ``demo`` or other unprivileged user can create this network because it
 provides connectivity to instances within the ``demo`` project only.
 
 .. warning::
 
-   You must :ref:`create the public provider network
-   <launch-instance-networks-public>` before the private project network.
+   You must :ref:`create the provider network
+   <launch-instance-networks-provider>` before the self-service network.
 
 .. note::
 
@@ -34,8 +33,8 @@ provides connectivity to instances within the ``demo`` project only.
 
    **Networking Option 2: Self-service networks - Connectivity**
 
-Create the private project network
-----------------------------------
+Create the self-service network
+-------------------------------
 
 #. On the controller node, source the ``demo`` credentials to gain access to
    user-only CLI commands:
@@ -48,7 +47,7 @@ Create the private project network
 
    .. code-block:: console
 
-      $ neutron net-create private
+      $ neutron net-create selfservice
       Created a new network:
       +-----------------------+--------------------------------------+
       | Field                 | Value                                |
@@ -56,7 +55,7 @@ Create the private project network
       | admin_state_up        | True                                 |
       | id                    | 7c6f9b37-76b4-463e-98d8-27e5686ed083 |
       | mtu                   | 0                                    |
-      | name                  | private                              |
+      | name                  | selfservice                          |
       | port_security_enabled | True                                 |
       | router:external       | False                                |
       | shared                | False                                |
@@ -83,30 +82,32 @@ Create the private project network
 
    .. code-block:: console
 
-      $ neutron subnet-create private PRIVATE_NETWORK_CIDR --name private \
-        --dns-nameserver DNS_RESOLVER --gateway PRIVATE_NETWORK_GATEWAY
-
-   Replace ``PRIVATE_NETWORK_CIDR`` with the subnet you want to use on the
-   private network. You can use any arbitrary value, although we recommend
-   a network from `RFC 1918 <https://tools.ietf.org/html/rfc1918>`_.
+      $ neutron subnet-create --name selfservice \
+        --dns-nameserver DNS_RESOLVER --gateway SELFSERVICE_NETWORK_GATEWAY \
+        selfservice SELFSERVICE_NETWORK_CIDR
 
    Replace ``DNS_RESOLVER`` with the IP address of a DNS resolver. In
    most cases, you can use one from the ``/etc/resolv.conf`` file on
    the host.
 
-   Replace ``PRIVATE_NETWORK_GATEWAY`` with the gateway you want to use on
-   the private network, typically the ".1" IP address.
+   Replace ``SELFSERVICE_NETWORK_GATEWAY`` with the gateway you want to use on
+   the self-service network, typically the ".1" IP address.
+
+   Replace ``SELFSERVICE_NETWORK_CIDR`` with the subnet you want to use on the
+   self-service network. You can use any arbitrary value, although we recommend
+   a network from `RFC 1918 <https://tools.ietf.org/html/rfc1918>`_.
 
    **Example**
 
-   The private network uses 172.16.1.0/24 with a gateway on 172.16.1.1.
+   The self-service network uses 172.16.1.0/24 with a gateway on 172.16.1.1.
    A DHCP server assigns each instance an IP address from 172.16.1.2
    to 172.16.1.254. All instances use 8.8.4.4 as a DNS resolver.
 
    .. code-block:: console
 
-      $ neutron subnet-create private 172.16.1.0/24 --name private
-        --dns-nameserver 8.8.4.4 --gateway 172.16.1.1
+      $ neutron subnet-create --name selfservice \
+        --dns-nameserver 8.8.4.4 --gateway 172.16.1.1 \
+        selfservice 172.16.1.0/24
       Created a new subnet:
       +-------------------+------------------------------------------------+
       | Field             | Value                                          |
@@ -121,7 +122,7 @@ Create the private project network
       | ip_version        | 4                                              |
       | ipv6_address_mode |                                                |
       | ipv6_ra_mode      |                                                |
-      | name              | private                                        |
+      | name              | selfservice                                    |
       | network_id        | 7c6f9b37-76b4-463e-98d8-27e5686ed083           |
       | subnetpool_id     |                                                |
       | tenant_id         | f5b2ccaa75ac413591f12fcaa096aa5c               |
@@ -130,15 +131,15 @@ Create the private project network
 Create a router
 ---------------
 
-Private project networks connect to public provider networks using a virtual
-router. Each router contains an interface to at least one private project
-network and a gateway on a public provider network.
+Self-service networks connect to provider networks using a virtual router
+that typically performs bidirectional NAT. Each router contains an interface
+on at least one self-service network and a gateway on a provider network.
 
-The public provider network must include the ``router: external`` option to
-enable project routers to use it for connectivity to external networks such
-as the Internet. The ``admin`` or other privileged user must include this
+The provider network must include the ``router:external`` option to
+enable self-service routers to use it for connectivity to external networks
+such as the Internet. The ``admin`` or other privileged user must include this
 option during network creation or add it later. In this case, we can add it
-to the existing ``public`` provider network.
+to the existing ``provider`` provider network.
 
 #. On the controller node, source the ``admin`` credentials to gain access to
    admin-only CLI commands:
@@ -147,12 +148,12 @@ to the existing ``public`` provider network.
 
       $ source admin-openrc.sh
 
-#. Add the ``router: external`` option to the ``public`` provider network:
+#. Add the ``router: external`` option to the ``provider`` network:
 
    .. code-block:: console
 
-      $ neutron net-update public --router:external
-      Updated network: public
+      $ neutron net-update provider --router:external
+      Updated network: provider
 
 #. Source the ``demo`` credentials to gain access to user-only CLI commands:
 
@@ -178,18 +179,18 @@ to the existing ``public`` provider network.
       | tenant_id             | f5b2ccaa75ac413591f12fcaa096aa5c     |
       +-----------------------+--------------------------------------+
 
-#. Add the private network subnet as an interface on the router:
+#. Add the self-service network subnet as an interface on the router:
 
    .. code-block:: console
 
-      $ neutron router-interface-add router private
+      $ neutron router-interface-add router selfservice
       Added interface bff6605d-824c-41f9-b744-21d128fc86e1 to router router.
 
-#. Set a gateway on the public network on the router:
+#. Set a gateway on the provider network on the router:
 
    .. code-block:: console
 
-      $ neutron router-gateway-set router public
+      $ neutron router-gateway-set router provider
       Set gateway for router router
 
 Verify operation
@@ -216,7 +217,7 @@ creation examples.
       qdhcp-7c6f9b37-76b4-463e-98d8-27e5686ed083
       qdhcp-0e62efcd-8cee-46c7-b163-d8df05c3c5ad
 
-#. List ports on the router to determine the gateway IP address on the public
+#. List ports on the router to determine the gateway IP address on the
    provider network:
 
    .. code-block:: console
@@ -233,8 +234,8 @@ creation examples.
       |                                      |      |                   | "ip_address": "203.0.113.102"}           |
       +--------------------------------------+------+-------------------+------------------------------------------+
 
-#. Ping this IP address from the controller node or any host on the public
-   physical network:
+#. Ping this IP address from the controller node or any host on the physical
+   provider network:
 
    .. code-block:: console
 

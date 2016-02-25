@@ -1,7 +1,7 @@
-.. _launch-instance-public:
+.. _launch-instance-provider:
 
-Launch an instance on the public network
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Launch an instance on the provider network
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Determine instance options
 --------------------------
@@ -23,16 +23,16 @@ name, network, security group, key, and instance name.
 
    .. code-block:: console
 
-      $ nova flavor-list
-      +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-      | ID  | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
-      +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-      | 1   | m1.tiny   | 512       | 1    | 0         |      | 1     | 1.0         | True      |
-      | 2   | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |
-      | 3   | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |
-      | 4   | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
-      | 5   | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
-      +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+      $ openstack flavor list
+      +----+-----------+-------+------+-----------+-------+-----------+
+      | ID | Name      |   RAM | Disk | Ephemeral | VCPUs | Is Public |
+      +----+-----------+-------+------+-----------+-------+-----------+
+      | 1  | m1.tiny   |   512 |    1 |         0 |     1 | True      |
+      | 2  | m1.small  |  2048 |   20 |         0 |     1 | True      |
+      | 3  | m1.medium |  4096 |   40 |         0 |     2 | True      |
+      | 4  | m1.large  |  8192 |   80 |         0 |     4 | True      |
+      | 5  | m1.xlarge | 16384 |  160 |         0 |     8 | True      |
+      +----+-----------+-------+------+-----------+-------+-----------+
 
    This instance uses the ``m1.tiny`` flavor.
 
@@ -44,12 +44,12 @@ name, network, security group, key, and instance name.
 
    .. code-block:: console
 
-      $ nova image-list
-      +--------------------------------------+--------+--------+--------+
-      | ID                                   | Name   | Status | Server |
-      +--------------------------------------+--------+--------+--------+
-      | 38047887-61a7-41ea-9b49-27987d5e8bb9 | cirros | ACTIVE |        |
-      +--------------------------------------+--------+--------+--------+
+      $ openstack image list
+      +--------------------------------------+--------+--------+
+      | ID                                   | Name   | Status |
+      +--------------------------------------+--------+--------+
+      | 390eb5f7-8d49-41ec-95b7-68c0d5d54b34 | cirros | active |
+      +--------------------------------------+--------+--------+
 
    This instance uses the ``cirros`` image.
 
@@ -57,30 +57,32 @@ name, network, security group, key, and instance name.
 
    .. code-block:: console
 
-      $ neutron net-list
-      +--------------------------------------+---------+-----------------------------------------------------+
-      | id                                   | name    | subnets                                             |
-      +--------------------------------------+---------+-----------------------------------------------------+
-      | 7e25a106-e978-4adb-a4ef-d46c6170254a | public  | 0e62efcd-8cee-46c7-b163-d8df05c3c5ad 203.0.113.0/24 |
-      +--------------------------------------+---------+-----------------------------------------------------+
+      $ openstack network list
+      +--------------------------------------+--------------+--------------------------------------+
+      | ID                                   | Name         | Subnets                              |
+      +--------------------------------------+--------------+--------------------------------------+
+      | 4716ddfe-6e60-40e7-b2a8-42e57bf3c31c | selfservice  | 2112d5eb-f9d6-45fd-906e-7cabd38b7c7c |
+      | b5b6993c-ddf9-40e7-91d0-86806a42edb8 | provider     | 310911f6-acf0-4a47-824e-3032916582ff |
+      +--------------------------------------+--------------+--------------------------------------+
 
-   This instance uses the ``public`` provider network. However, you must
+   This instance uses the ``provider`` provider network. However, you must
    reference this network using the ID instead of the name.
 
    .. note::
 
-      If you chose option 2, the output should also contain the private network.
+      If you chose option 2, the output should also contain the
+      ``selfservice`` self-service network.
 
 #. List available security groups:
 
    .. code-block:: console
 
-      $ nova secgroup-list
-      +--------------------------------------+---------+-------------+
-      | Id                                   | Name    | Description |
-      +--------------------------------------+---------+-------------+
-      | ad8d4ea5-3cad-4f7d-b164-ada67ec59473 | default | default     |
-      +--------------------------------------+---------+-------------+
+      $ openstack security group list
+      +--------------------------------------+---------+------------------------+
+      | ID                                   | Name    | Description            |
+      +--------------------------------------+---------+------------------------+
+      | dd2b614c-3dad-48ed-958b-b155a3b38515 | default | Default security group |
+      +--------------------------------------+---------+------------------------+
 
    This instance uses the ``default`` security group.
 
@@ -89,7 +91,8 @@ Launch the instance
 
 #. Launch the instance:
 
-   Replace ``PUBLIC_NET_ID`` with the ID of the ``public`` provider network.
+   Replace ``PROVIDER_NET_ID`` with the ID of the ``provider`` provider
+   network.
 
    .. note::
 
@@ -99,8 +102,10 @@ Launch the instance
 
    .. code-block:: console
 
-      $ nova boot --flavor m1.tiny --image cirros --nic net-id=PUBLIC_NET_ID \
-        --security-group default --key-name mykey public-instance
+      $ openstack server create --flavor m1.tiny --image cirros \
+        --nic net-id=PROVIDER_NET_ID --security-group default \
+        --key-name mykey provider-instance
+
       +--------------------------------------+-----------------------------------------------+
       | Property                             | Value                                         |
       +--------------------------------------+-----------------------------------------------+
@@ -122,7 +127,7 @@ Launch the instance
       | image                                | cirros (38047887-61a7-41ea-9b49-27987d5e8bb9) |
       | key_name                             | mykey                                         |
       | metadata                             | {}                                            |
-      | name                                 | public-instance                               |
+      | name                                 | provider-instance                             |
       | os-extended-volumes:volumes_attached | []                                            |
       | progress                             | 0                                             |
       | security_groups                      | default                                       |
@@ -136,12 +141,12 @@ Launch the instance
 
    .. code-block:: console
 
-      $ nova list
-      +--------------------------------------+-----------------+--------+------------+-------------+----------------------+
-      | ID                                   | Name            | Status | Task State | Power State | Networks             |
-      +--------------------------------------+-----------------+--------+------------+-------------+----------------------+
-      | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf | public-instance | ACTIVE | -          | Running     | public=203.0.113.103 |
-      +--------------------------------------+-----------------+--------+------------+-------------+----------------------+
+      $ openstack server list
+      +--------------------------------------+-------------------+--------+---------------------------------+
+      | ID                                   | Name              | Status | Networks                        |
+      +--------------------------------------+-------------------+--------+---------------------------------+
+      | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf | provider-instance | ACTIVE | provider=203.0.113.103 |
+      +--------------------------------------+-------------------+--------+---------------------------------+
 
    The status changes from ``BUILD`` to ``ACTIVE`` when the build process
    successfully completes.
@@ -154,12 +159,13 @@ Access the instance using the virtual console
 
    .. code-block:: console
 
-      $ nova get-vnc-console public-instance novnc
-      +-------+------------------------------------------------------------------------------------+
-      | Type  | Url                                                                                |
-      +-------+------------------------------------------------------------------------------------+
-      | novnc | http://controller:6080/vnc_auto.html?token=2f6dd985-f906-4bfc-b566-e87ce656375b    |
-      +-------+------------------------------------------------------------------------------------+
+      $ openstack console url show provider-instance
+      +-------+---------------------------------------------------------------------------------+
+      | Field | Value                                                                           |
+      +-------+---------------------------------------------------------------------------------+
+      | type  | novnc                                                                           |
+      | url   | http://controller:6080/vnc_auto.html?token=5eeccb47-525c-4918-ac2a-3ad1e9f1f493 |
+      +-------+---------------------------------------------------------------------------------+
 
    .. note::
 
@@ -172,7 +178,7 @@ Access the instance using the virtual console
    After logging into CirrOS, we recommend that you verify network
    connectivity using ``ping``.
 
-#. Verify access to the public provider network gateway:
+#. Verify access to the provider physical network gateway:
 
    .. code-block:: console
 
@@ -206,7 +212,7 @@ Access the instance remotely
 ----------------------------
 
 #. Verify connectivity to the instance from the controller node or any host
-   on the public physical network:
+   on the provider physical network:
 
    .. code-block:: console
 
@@ -222,7 +228,7 @@ Access the instance remotely
       rtt min/avg/max/mdev = 0.929/1.539/3.183/0.951 ms
 
 #. Access your instance using SSH from the controller node or any
-   host on the public physical network:
+   host on the provider physical network:
 
    .. code-block:: console
 
@@ -232,12 +238,6 @@ Access the instance remotely
       Are you sure you want to continue connecting (yes/no)? yes
       Warning: Permanently added '203.0.113.102' (RSA) to the list of known hosts.
       $
-
-   .. note::
-
-      If your host does not contain the public/private key pair created
-      in an earlier step, SSH prompts for the default password associated
-      with the ``cirros`` user, ``cubswin:)``.
 
 If your instance does not launch or seem to work as you expect, see the
 `OpenStack Operations Guide <http://docs.openstack.org/ops>`__ for more
