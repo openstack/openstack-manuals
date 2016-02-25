@@ -69,13 +69,13 @@ stack and the :command:`ceilometer` client to measure resources.
 
    .. code-block:: console
 
-      $ heat stack-create -f cfn/F17/AutoScalingCeilometer.yaml -P "KeyName=heat_key"
+      $ heat stack-create mystack  -f cfn/F17/AutoScalingCeilometer.yaml -P "KeyName=heat_key"
 
 #. List the heat resources that were created:
 
    .. code-block:: console
 
-      $ heat resource-list
+      $ heat mystack resource-list
 
       +--------------------------+-----------------------------------------+----------------+----------------------+
       | resource_name            | resource_type                           |resource_status | updated_time         |
