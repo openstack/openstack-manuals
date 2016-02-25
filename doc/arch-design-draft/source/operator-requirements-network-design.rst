@@ -3,22 +3,21 @@ Network design
 ==============
 
 The network design for an OpenStack cluster includes decisions regarding
-the interconnect needs within the cluster, plus the need to allow clients to
-access their resources, and for operators to access the cluster for
-maintenance.  The bandwidth, latency, and reliability of these networks needs
-consideration.
+the interconnect needs within the cluster, the need to allow clients to
+access their resources, and the access requirements for operators to
+administrate the cluster. You should consider the bandwidth, latency,
+and reliability of these networks.
 
-Make additional design decisions about monitoring and alarming. This can
-be an internal responsibility or the responsibility of the external
-provider. In the case of using an external provider, service level
-agreements (SLAs) likely apply. In addition, other operational
-considerations such as bandwidth, latency, and jitter can be part of an
-SLA.
+Whether you are using an external provider or an internal team, you need
+to consider additional design decisions about monitoring and alarming.
+If you are using an external provider, service level agreements (SLAs)
+are typically defined in your contract. Operational considerations such
+as bandwidth, latency, and jitter can be part of the SLA.
 
-Consider the ability to upgrade the infrastructure. As demand for
-network resources increase, operators add additional IP address blocks
-and add additional bandwidth capacity. In addition, consider managing
-hardware and software lifecycle events, for example upgrades,
+As demand for network resources increase, make sure your network design
+accommodates expansion and upgrades. Operators add additional IP address
+blocks and add additional bandwidth capacity. In addition, consider
+managing hardware and software lifecycle events, for example upgrades,
 decommissioning, and outages, while avoiding service interruptions for
 tenants.
 
@@ -40,7 +39,7 @@ have differences in implementation.
 
 To segregate traffic, allow applications to create a private tenant
 network for database and storage network traffic. Use a public network
-for services that require direct client access from the internet. Upon
+for services that require direct client access from the Internet. Upon
 segregating the traffic, consider quality of service (QoS) and security
 to ensure each network has the required level of service.
 
@@ -50,10 +49,10 @@ policy that satisfies business requirements, consider the economic cost
 of transmitting traffic over expensive links versus cheaper links, in
 addition to bandwidth, latency, and jitter requirements.
 
-Additionally, consider how to respond to network events. As an example,
-how load transfers from one link to another during a failure scenario
-could be a factor in the design. If you do not plan network capacity
-correctly, failover traffic could overwhelm other ports or network links
-and create a cascading failure scenario. In this case, traffic that
-fails over to one link overwhelms that link and then moves to the
-subsequent links until all network traffic stops.
+Additionally, consider how to respond to network events. How load
+transfers from one link to another during a failure scenario could be
+a factor in the design. If you do not plan network capacity
+correctly, failover traffic could overwhelm other ports or network
+links and create a cascading failure scenario. In this case,
+traffic that fails over to one link overwhelms that link and then
+moves to the subsequent links until all network traffic stops.
