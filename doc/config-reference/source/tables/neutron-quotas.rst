@@ -52,7 +52,7 @@
      - (IntOpt) Number of pools allowed per tenant. A negative value means unlimited.
    * - ``quota_port`` = ``50``
      - (IntOpt) Number of ports allowed per tenant. A negative value means unlimited.
-   * - ``quota_rbac_entry`` = ``10``
+   * - ``quota_rbac_policy`` = ``10``
      - (IntOpt) Default number of RBAC entries allowed per tenant. A negative value means unlimited.
    * - ``quota_router`` = ``10``
      - (IntOpt) Number of routers allowed per tenant. A negative value means unlimited.

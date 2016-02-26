@@ -36,7 +36,7 @@
      - (IntOpt) Seconds between retries of a database transaction.
    * - ``idle_timeout`` = ``3600``
      - (IntOpt) Timeout before idle SQL connections are reaped.
-   * - ``max_overflow`` = ``None``
+   * - ``max_overflow`` = ``50``
      - (IntOpt) If set, use this value for max_overflow with SQLAlchemy.
    * - ``max_pool_size`` = ``None``
      - (IntOpt) Maximum number of SQL connections to keep open in a pool.

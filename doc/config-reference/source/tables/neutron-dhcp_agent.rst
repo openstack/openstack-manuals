@@ -18,18 +18,20 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``advertise_mtu`` = ``False``
-     - (BoolOpt) If True, effort is made to advertise MTU settings to VMs via network methods (DHCP and RA MTU options) when the network's preferred MTU is known.
+   * - ``advertise_mtu`` = ``True``
+     - (BoolOpt) If True, advertise network MTU values if core plugin calculates them. MTU is advertised to running instances via DHCP and RA MTU options.
    * - ``dhcp_driver`` = ``neutron.agent.linux.dhcp.Dnsmasq``
      - (StrOpt) The driver used to manage the DHCP server.
    * - ``dnsmasq_base_log_dir`` = ``None``
      - (StrOpt) Base log dir for dnsmasq logging. The log contains DHCP and DNS log information and is useful for debugging issues with either DHCP or DNS. If this section is null, disable dnsmasq log.
    * - ``dnsmasq_config_file`` =
-     - (StrOpt) Override the default dnsmasq settings with this file
+     - (StrOpt) Override the default dnsmasq settings with this file.
    * - ``dnsmasq_dns_servers`` = ``None``
      - (ListOpt) Comma-separated list of the DNS servers which will be used as forwarders.
    * - ``dnsmasq_lease_max`` = ``16777216``
      - (IntOpt) Limit number of leases to prevent a denial-of-service.
+   * - ``dnsmasq_local_resolv`` = ``False``
+     - (BoolOpt) Enables the dnsmasq service to provide name resolution for instances via DNS resolvers on the host running the DHCP agent. Effectively removes the '--no-resolv' option from the dnsmasq process arguments. Adding custom DNS resolvers to the 'dnsmasq_dns_servers' option disables this feature.
    * - ``enable_isolated_metadata`` = ``False``
      - (BoolOpt) The DHCP server can assist with providing metadata support on isolated networks. Setting this value to True will cause the DHCP server to append specific host routes to the DHCP request. The metadata service will only be activated when the subnet does not contain any router port. The guest instance must be configured to request host routes via DHCP (Option 121). This option doesn't have any effect when force_metadata is set to True.
    * - ``enable_metadata_network`` = ``False``

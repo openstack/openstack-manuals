@@ -32,6 +32,8 @@
      - (StrOpt) Authentication endpoint
    * - ``auth_version`` = ``2``
      - (StrOpt) The auth version used to authenticate
+   * - ``endpoint_type`` = ``public``
+     - (StrOpt) The endpoint_type to be used
    * - ``region`` = ``RegionOne``
      - (StrOpt) The deployment region
    * - ``service_name`` = ``lbaas``

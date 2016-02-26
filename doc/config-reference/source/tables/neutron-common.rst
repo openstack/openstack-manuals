@@ -28,6 +28,8 @@
      - (StrOpt) The type of authentication to use
    * - ``base_mac`` = ``fa:16:3e:00:00:00``
      - (StrOpt) The base MAC address Neutron will use for VIFs. The first 3 octets will remain unchanged. If the 4th octet is not 00, it will also be used. The others will be randomly generated.
+   * - ``bgp_drscheduler_driver`` = ``neutron.services.bgp.scheduler.bgp_dragent_scheduler.ChanceScheduler``
+     - (StrOpt) Driver used for scheduling BGP speakers to BGP DrAgent
    * - ``bind_host`` = ``0.0.0.0``
      - (StrOpt) The host IP to bind to
    * - ``bind_port`` = ``9696``
@@ -45,11 +47,11 @@
    * - ``dhcp_agents_per_network`` = ``1``
      - (IntOpt) Number of DHCP agents scheduled to host a tenant network. If this number is greater than 1, the scheduler automatically assigns multiple DHCP agents for a given tenant network, providing high availability for DHCP service.
    * - ``dhcp_broadcast_reply`` = ``False``
-     - (BoolOpt) Use broadcast in DHCP replies
+     - (BoolOpt) Use broadcast in DHCP replies.
    * - ``dhcp_confs`` = ``$state_path/dhcp``
-     - (StrOpt) Location to store DHCP server config files
+     - (StrOpt) Location to store DHCP server config files.
    * - ``dhcp_domain`` = ``openstacklocal``
-     - (StrOpt) Domain to use for building the hostnames.This option is deprecated. It has been moved to neutron.conf as dns_domain. It will removed from here in a future release
+     - (StrOpt) Domain to use for building the hostnames. This option is deprecated. It has been moved to neutron.conf as dns_domain. It will be removed in a future release.
    * - ``dhcp_lease_duration`` = ``86400``
      - (IntOpt) DHCP lease duration (in seconds). Use -1 to tell dnsmasq to use infinite lease times.
    * - ``dhcp_load_type`` = ``networks``
@@ -62,8 +64,10 @@
      - (BoolOpt) Enable services on an agent with admin_state_up False. If this option is False, when admin_state_up of an agent is turned False, services on it will be disabled. Agents with admin_state_up False are not selected for automatic scheduling regardless of this option. But manual scheduling to such agents is available if this option is True.
    * - ``executor_thread_pool_size`` = ``64``
      - (IntOpt) Size of executor thread pool.
+   * - ``external_dns_driver`` = ``None``
+     - (StrOpt) Driver for external DNS integration.
    * - ``force_gateway_on_subnet`` = ``True``
-     - (BoolOpt) Ensure that configured gateway is on subnet. For IPv6, validate only if gateway is not a link local address.
+     - (BoolOpt) Ensure that configured gateway is on subnet. For IPv6, validate only if gateway is not a link local address. Deprecated, to be removed during the Newton release, at which point the gateway will not be forced on to subnet.
    * - ``ip_lib_force_root`` = ``False``
      - (BoolOpt) Force ip_lib calls to use the root helper
    * - ``ipam_driver`` = ``None``
@@ -76,12 +80,14 @@
      - (IntOpt) Maximum number of DNS nameservers per subnet
    * - ``max_fixed_ips_per_port`` = ``5``
      - (IntOpt) Maximum number of fixed ips per port. This option is deprecated and will be removed in the N release.
+   * - ``max_rtr_adv_interval`` = ``100``
+     - (IntOpt) MaxRtrAdvInterval setting for radvd.conf
    * - ``max_subnet_host_routes`` = ``20``
      - (IntOpt) Maximum number of host routes per subnet
    * - ``memcached_servers`` = ``None``
      - (ListOpt) Memcached servers or None for in process cache.
-   * - ``password`` =
-     - (StrOpt) Password for Redis server (optional).
+   * - ``min_rtr_adv_interval`` = ``30``
+     - (IntOpt) MinRtrAdvInterval setting for radvd.conf
    * - ``periodic_fuzzy_delay`` = ``5``
      - (IntOpt) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
    * - ``periodic_interval`` = ``40``
@@ -92,6 +98,8 @@
      - (StrOpt) Where to store Neutron state files. This directory must be writable by the agent.
    * - ``vlan_transparent`` = ``False``
      - (BoolOpt) If True, then allow plugins that support it to create VLAN transparent networks.
+   * - ``web_framework`` = ``legacy``
+     - (StrOpt) This will choose the web framework in which to run the Neutron API server. 'pecan' is a new experiemental rewrite of the API server.
    * - **[AGENT]**
      -
    * - ``check_child_processes_action`` = ``respawn``
