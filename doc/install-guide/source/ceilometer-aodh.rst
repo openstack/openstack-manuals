@@ -11,62 +11,44 @@ Prerequisites
 ~~~~~~~~~~~~~
 
 Before you install and configure the Alarming service, you must create a
-database, service credentials, and API endpoints. Similar to other Telemetry
-module services, this guide configures a NoSQL database. For more information,
-see :ref:`environment-nosql-database`.
+database, service credentials, and API endpoints.
 
-.. only:: obs or ubuntu
+#. To create the database, complete these steps:
 
-   1. Create the ``aodh`` database:
+   * Use the database access client to connect to
+     the database server as the ``root`` user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # mongo --host controller --eval '
-           db = db.getSiblingDB("aodh");
-           db.addUser({user: "aodh",
-           pwd: "AODH_DBPASS",
-           roles: [ "readWrite", "dbAdmin" ]})'
+        $ mysql -u root -p
 
-         MongoDB shell version: 2.4.x
-         connecting to: controller:27017/test
-         {
-          "user" : "aodh",
-          "pwd" : "72f25aeee7ad4be52437d7cd3fc60f6f",
-          "roles" : [
-           "readWrite",
-           "dbAdmin"
-          ],
-          "_id" : ObjectId("5489c22270d7fad1ba631dc3")
-         }
+   * Create the ``aodh`` database:
 
-      Replace ``AODH_DBPASS`` with a suitable password.
+     .. code-block:: console
 
-.. only:: rdo
+        CREATE DATABASE aodh;
 
-   1. Create the ``aodh`` database:
+   * Grant proper access to the ``aodh`` database:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # mongo --host controller --eval '
-           db = db.getSiblingDB("aodh");
-           db.createUser({user: "aodh",
-           pwd: "AODH_DBPASS",
-           roles: [ "readWrite", "dbAdmin" ]})'
+        GRANT ALL PRIVILEGES ON aodh.* TO 'aodh'@'localhost' \
+          IDENTIFIED BY 'AODH_DBPASS';
+        GRANT ALL PRIVILEGES ON aodh.* TO 'aodh'@'%' \
+          IDENTIFIED BY 'AODH_DBPASS';
 
-         MongoDB shell version: 2.6.x
-         connecting to: controller:27017/test
-         Successfully added user: { "user" : "aodh", "roles" : [ "readWrite", "dbAdmin" ] }
+     Replace ``AODH_DBPASS`` with a suitable password.
 
-      Replace ``AODH_DBPASS`` with a suitable password.
+   * Exit the database access client.
 
-2. Source the ``admin`` credentials to gain access to admin-only
+#. Source the ``admin`` credentials to gain access to admin-only
    CLI commands:
 
    .. code-block:: console
 
       $ source admin-openrc.sh
 
-3. To create the service credentials, complete these steps:
+#. To create the service credentials, complete these steps:
 
    * Create the ``aodh`` user:
 
@@ -110,7 +92,7 @@ see :ref:`environment-nosql-database`.
         | type        | alarming                         |
         +-------------+----------------------------------+
 
-4. Create the Alarming service API endpoints:
+#. Create the Alarming service API endpoints:
 
    .. code-block:: console
 
@@ -174,7 +156,7 @@ Install and configure components
 
 .. only:: obs
 
-   #. Install the packages:
+   1. Install the packages:
 
       .. code-block:: console
 
@@ -185,7 +167,7 @@ Install and configure components
 
 .. only:: rdo
 
-   #. Install the packages:
+   1. Install the packages:
 
       .. code-block:: console
 
@@ -196,7 +178,7 @@ Install and configure components
 
 .. only:: ubuntu
 
-   #. Install the packages:
+   1. Install the packages:
 
       .. code-block:: console
 
