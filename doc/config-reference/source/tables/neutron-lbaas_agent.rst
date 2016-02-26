@@ -19,7 +19,7 @@
    * - **[DEFAULT]**
      -
    * - ``debug`` = ``False``
-     - (BoolOpt) Print debugging output (set logging level to DEBUG instead of default INFO level).
+     - (BoolOpt) If set to true, the logging level will be set to DEBUG instead of the default INFO level.
    * - ``device_driver`` = ``['neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver']``
      - (MultiStrOpt) Drivers used to manage loadbalancing devices
    * - ``interface_driver`` = ``None``

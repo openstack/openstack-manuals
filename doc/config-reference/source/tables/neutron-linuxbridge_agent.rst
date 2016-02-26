@@ -16,6 +16,10 @@
 
    * - Configuration option = Default value
      - Description
+   * - **[AGENT]**
+     -
+   * - ``quitting_rpc_timeout`` = ``10``
+     - (IntOpt) Set new timeout in seconds for new rpc calls after agent receives SIGTERM. If value is set to 0, rpc timeout won't be changed
    * - **[LINUX_BRIDGE]**
      -
    * - ``bridge_mappings`` =

@@ -28,10 +28,14 @@
      - (IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.
    * - ``heartbeat_timeout_threshold`` = ``60``
      - (IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat). EXPERIMENTAL
+   * - ``kombu_compression`` = ``None``
+     - (StrOpt) EXPERIMENTAL: Possible values are: gzip, bz2. If not set compression will not be used. This option may notbe available in future versions.
+   * - ``kombu_failover_strategy`` = ``round-robin``
+     - (StrOpt) Determines how the next RabbitMQ node is chosen in case the one we are currently connected to becomes unavailable. Takes effect only if more than one RabbitMQ node is provided in config.
+   * - ``kombu_missing_consumer_retry_timeout`` = ``60``
+     - (IntOpt) How long to wait a missing client beforce abandoning to send it its replies. This value should not be longer than rpc_response_timeout.
    * - ``kombu_reconnect_delay`` = ``1.0``
      - (FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.
-   * - ``kombu_reconnect_timeout`` = ``60``
-     - (IntOpt) How long to wait before considering a reconnect attempt to have failed. This value should not be longer than rpc_response_timeout.
    * - ``kombu_ssl_ca_certs`` =
      - (StrOpt) SSL certification authority file (valid only if SSL enabled).
    * - ``kombu_ssl_certfile`` =
@@ -46,6 +50,8 @@
      - (StrOpt) The RabbitMQ broker address where a single node is used.
    * - ``rabbit_hosts`` = ``$rabbit_host:$rabbit_port``
      - (ListOpt) RabbitMQ HA cluster host:port pairs.
+   * - ``rabbit_interval_max`` = ``30``
+     - (IntOpt) Maximum interval of RabbitMQ connection retries. Default is 30 seconds.
    * - ``rabbit_login_method`` = ``AMQPLAIN``
      - (StrOpt) The RabbitMQ login method.
    * - ``rabbit_max_retries`` = ``0``
@@ -53,16 +59,18 @@
    * - ``rabbit_password`` = ``guest``
      - (StrOpt) The RabbitMQ password.
    * - ``rabbit_port`` = ``5672``
-     - (IntOpt) The RabbitMQ broker port where a single node is used.
+     - (PortOpt) The RabbitMQ broker port where a single node is used.
+   * - ``rabbit_qos_prefetch_count`` = ``0``
+     - (IntOpt) Specifies the number of messages to prefetch. Setting to zero allows unlimited messages.
    * - ``rabbit_retry_backoff`` = ``2``
      - (IntOpt) How long to backoff for between retries when connecting to RabbitMQ.
    * - ``rabbit_retry_interval`` = ``1``
      - (IntOpt) How frequently to retry connecting with RabbitMQ.
+   * - ``rabbit_transient_queues_ttl`` = ``600``
+     - (IntOpt) Positive integer representing duration in seconds for queue TTL (x-expires). Queues which are unused for the duration of the TTL are automatically deleted. The parameter affects only reply and fanout queues.
    * - ``rabbit_use_ssl`` = ``False``
      - (BoolOpt) Connect over SSL for RabbitMQ.
    * - ``rabbit_userid`` = ``guest``
      - (StrOpt) The RabbitMQ userid.
    * - ``rabbit_virtual_host`` = ``/``
      - (StrOpt) The RabbitMQ virtual host.
-   * - ``send_single_reply`` = ``False``
-     - (BoolOpt) Send a single AMQP reply to call message. The current behaviour since oslo-incubator is to send two AMQP replies - first one with the payload, a second one to ensure the other have finish to send the payload. We are going to remove it in the N release, but we must keep backward compatible at the same time. This option provides such compatibility - it defaults to False in Liberty and can be turned on for early adopters with a new installations or for testing. Please note, that this option will be removed in the Mitaka release.

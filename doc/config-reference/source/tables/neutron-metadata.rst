@@ -36,7 +36,7 @@
      - (StrOpt) User (uid or name) running metadata proxy after its initialization (if empty: agent effective user).
    * - ``metadata_proxy_watch_log`` = ``None``
      - (BoolOpt) Enable/Disable log watch by metadata proxy. It should be disabled when metadata_proxy_user/group is not allowed to read/write its log file and copytruncate logrotate option must be used if logrotate is enabled on metadata proxy log files. Option default value is deduced from metadata_proxy_user: watch log is enabled if metadata_proxy_user is agent effective user id/name.
-   * - ``metadata_workers`` = ``2``
+   * - ``metadata_workers`` = ``1``
      - (IntOpt) Number of separate worker processes for metadata server (defaults to half of the number of CPUs)
    * - ``nova_metadata_insecure`` = ``False``
      - (BoolOpt) Allow to perform insecure SSL (https) requests to nova metadata

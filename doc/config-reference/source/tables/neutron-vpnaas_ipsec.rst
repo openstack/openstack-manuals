@@ -21,7 +21,7 @@
    * - ``config_base_dir`` = ``$state_path/ipsec``
      - (StrOpt) Location to store ipsec server config files
    * - ``enable_detailed_logging`` = ``False``
-     - (BoolOpt) Enable detail logging for ipsec pluto process. If the flag set to True, the detailed logging will be written into config_base_dir/<pid>/log.
+     - (BoolOpt) Enable detail logging for ipsec pluto process. If the flag set to True, the detailed logging will be written into config_base_dir/<pid>/log. Note: This setting applies to OpenSwan and LibreSwan only. StrongSwan logs to syslog.
    * - ``ipsec_status_check_interval`` = ``60``
      - (IntOpt) Interval for checking ipsec status
    * - **[pluto]**

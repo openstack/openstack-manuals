@@ -41,7 +41,7 @@
    * - ``ovsdb_monitor_respawn_interval`` = ``30``
      - (IntOpt) The number of seconds to wait before respawning the ovsdb monitor after losing communication with it.
    * - ``prevent_arp_spoofing`` = ``True``
-     - (BoolOpt) Enable suppression of ARP responses that don't match an IP address that belongs to the port from which they originate. Note: This prevents the VMs attached to this agent from spoofing, it doesn't protect them from other devices which have the capability to spoof (e.g. bare metal or VMs attached to agents without this flag set to True). Spoofing rules will not be added to any ports that have port security disabled. For LinuxBridge, this requires ebtables. For OVS, it requires a version that supports matching ARP headers.
+     - (BoolOpt) Enable suppression of ARP responses that don't match an IP address that belongs to the port from which they originate. Note: This prevents the VMs attached to this agent from spoofing, it doesn't protect them from other devices which have the capability to spoof (e.g. bare metal or VMs attached to agents without this flag set to True). Spoofing rules will not be added to any ports that have port security disabled. For LinuxBridge, this requires ebtables. For OVS, it requires a version that supports matching ARP headers. This option will be removed in Newton so the only way to disable protection will be via the port security extension.
    * - ``quitting_rpc_timeout`` = ``10``
      - (IntOpt) Set new timeout in seconds for new rpc calls after agent receives SIGTERM. If value is set to 0, rpc timeout won't be changed
    * - ``tunnel_csum`` = ``False``

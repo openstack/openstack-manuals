@@ -18,14 +18,16 @@
      - Description
    * - **[nova]**
      -
-   * - ``auth_plugin`` = ``None``
-     - (StrOpt) Name of the plugin to load
    * - ``auth_section`` = ``None``
-     - (StrOpt) Config Section from which to load plugin specific options
+     - (Opt) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Opt) Authentication type to load
    * - ``cafile`` = ``None``
      - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``certfile`` = ``None``
      - (StrOpt) PEM encoded client certificate cert file
+   * - ``endpoint_type`` = ``public``
+     - (StrOpt) Type of the nova endpoint to use. This endpoint will be looked up in the keystone catalog and should be one of public, internal or admin.
    * - ``insecure`` = ``False``
      - (BoolOpt) Verify HTTPS connections.
    * - ``keyfile`` = ``None``
