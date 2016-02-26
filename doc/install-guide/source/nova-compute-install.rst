@@ -40,7 +40,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install openstack-nova-compute sysfsutils
+         # yum install openstack-nova-compute
 
 .. only:: ubuntu or debian
 
@@ -48,7 +48,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install nova-compute sysfsutils
+         # apt-get install nova-compute
 
       .. only:: debian
 
@@ -186,13 +186,13 @@ Install and configure components
         interface IP address of the controller node.
 
    * In the ``[glance]`` section, configure the location of the
-     Image service:
+     Image service API:
 
      .. code-block:: ini
 
         [glance]
         ...
-        host = controller
+        api_servers = http://controller:9292
 
    .. only:: obs
 

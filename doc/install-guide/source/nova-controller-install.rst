@@ -10,9 +10,9 @@ Compute service, code-named nova, on the controller node.
    -------------
 
    Before you install and configure the Compute service, you must
-   create a database, service credentials, and API endpoints.
+   create databases, service credentials, and API endpoints.
 
-   #. To create the database, complete these steps:
+   #. To create the databases, complete these steps:
 
       * Use the database access client to connect to
         the database server as the ``root`` user:
@@ -21,19 +21,24 @@ Compute service, code-named nova, on the controller node.
 
            $ mysql -u root -p
 
-      * Create the ``nova`` database:
+      * Create the ``nova`` and ``nova_api`` databases:
 
         .. code-block:: console
 
            CREATE DATABASE nova;
+           CREATE DATABASE nova_api;
 
-      * Grant proper access to the ``nova`` database:
+      * Grant proper access to the databases:
 
         .. code-block:: console
 
            GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
              IDENTIFIED BY 'NOVA_DBPASS';
            GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
+             IDENTIFIED BY 'NOVA_DBPASS';
+           GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' \
+             IDENTIFIED BY 'NOVA_DBPASS';
+           GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
              IDENTIFIED BY 'NOVA_DBPASS';
 
         Replace ``NOVA_DBPASS`` with a suitable password.
@@ -53,7 +58,8 @@ Compute service, code-named nova, on the controller node.
 
         .. code-block:: console
 
-           $ openstack user create --domain default --password-prompt nova
+           $ openstack user create --domain default \
+             --password-prompt nova
            User Password:
            Repeat User Password:
            +-----------+----------------------------------+
@@ -96,52 +102,52 @@ Compute service, code-named nova, on the controller node.
       .. code-block:: console
 
          $ openstack endpoint create --region RegionOne \
-           compute public http://controller:8774/v2/%\(tenant_id\)s
-         +--------------+-----------------------------------------+
-         | Field        | Value                                   |
-         +--------------+-----------------------------------------+
-         | enabled      | True                                    |
-         | id           | 3c1caa473bfe4390a11e7177894bcc7b        |
-         | interface    | public                                  |
-         | region       | RegionOne                               |
-         | region_id    | RegionOne                               |
-         | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
-         | service_name | nova                                    |
-         | service_type | compute                                 |
-         | url          | http://controller:8774/v2/%(tenant_id)s |
-         +--------------+-----------------------------------------+
+           compute public http://controller:8774/v2.1/%\(tenant_id\)s
+         +--------------+-------------------------------------------+
+         | Field        | Value                                     |
+         +--------------+-------------------------------------------+
+         | enabled      | True                                      |
+         | id           | 3c1caa473bfe4390a11e7177894bcc7b          |
+         | interface    | public                                    |
+         | region       | RegionOne                                 |
+         | region_id    | RegionOne                                 |
+         | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78          |
+         | service_name | nova                                      |
+         | service_type | compute                                   |
+         | url          | http://controller:8774/v2.1/%(tenant_id)s |
+         +--------------+-------------------------------------------+
 
          $ openstack endpoint create --region RegionOne \
-           compute internal http://controller:8774/v2/%\(tenant_id\)s
-         +--------------+-----------------------------------------+
-         | Field        | Value                                   |
-         +--------------+-----------------------------------------+
-         | enabled      | True                                    |
-         | id           | e3c918de680746a586eac1f2d9bc10ab        |
-         | interface    | internal                                |
-         | region       | RegionOne                               |
-         | region_id    | RegionOne                               |
-         | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
-         | service_name | nova                                    |
-         | service_type | compute                                 |
-         | url          | http://controller:8774/v2/%(tenant_id)s |
-         +--------------+-----------------------------------------+
+           compute internal http://controller:8774/v2.1/%\(tenant_id\)s
+         +--------------+-------------------------------------------+
+         | Field        | Value                                     |
+         +--------------+-------------------------------------------+
+         | enabled      | True                                      |
+         | id           | e3c918de680746a586eac1f2d9bc10ab          |
+         | interface    | internal                                  |
+         | region       | RegionOne                                 |
+         | region_id    | RegionOne                                 |
+         | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78          |
+         | service_name | nova                                      |
+         | service_type | compute                                   |
+         | url          | http://controller:8774/v2.1/%(tenant_id)s |
+         +--------------+-------------------------------------------+
 
          $ openstack endpoint create --region RegionOne \
-           compute admin http://controller:8774/v2/%\(tenant_id\)s
-         +--------------+-----------------------------------------+
-         | Field        | Value                                   |
-         +--------------+-----------------------------------------+
-         | enabled      | True                                    |
-         | id           | 38f7af91666a47cfb97b4dc790b94424        |
-         | interface    | admin                                   |
-         | region       | RegionOne                               |
-         | region_id    | RegionOne                               |
-         | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
-         | service_name | nova                                    |
-         | service_type | compute                                 |
-         | url          | http://controller:8774/v2/%(tenant_id)s |
-         +--------------+-----------------------------------------+
+           compute admin http://controller:8774/v2.1/%\(tenant_id\)s
+         +--------------+-------------------------------------------+
+         | Field        | Value                                     |
+         +--------------+-------------------------------------------+
+         | enabled      | True                                      |
+         | id           | 38f7af91666a47cfb97b4dc790b94424          |
+         | interface    | admin                                     |
+         | region       | RegionOne                                 |
+         | region_id    | RegionOne                                 |
+         | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78          |
+         | service_name | nova                                      |
+         | service_type | compute                                   |
+         | url          | http://controller:8774/v2.1/%(tenant_id)s |
+         +--------------+-------------------------------------------+
 
 Install and configure components
 --------------------------------
@@ -157,7 +163,7 @@ Install and configure components
          # zypper install openstack-nova-api openstack-nova-scheduler \
            openstack-nova-cert openstack-nova-conductor \
            openstack-nova-consoleauth openstack-nova-novncproxy \
-           python-novaclient iptables
+           iptables
 
 .. only:: rdo
 
@@ -167,8 +173,7 @@ Install and configure components
 
          # yum install openstack-nova-api openstack-nova-cert \
            openstack-nova-conductor openstack-nova-console \
-           openstack-nova-novncproxy openstack-nova-scheduler \
-           python-novaclient
+           openstack-nova-novncproxy openstack-nova-scheduler
 
 .. only:: ubuntu
 
@@ -177,8 +182,7 @@ Install and configure components
       .. code-block:: console
 
          # apt-get install nova-api nova-cert nova-conductor \
-           nova-consoleauth nova-novncproxy nova-scheduler \
-           python-novaclient
+           nova-consoleauth nova-novncproxy nova-scheduler
 
 .. only:: debian
 
@@ -215,7 +219,8 @@ Install and configure components
 
    .. only:: obs or rdo or ubuntu
 
-      * In the ``[database]`` section, configure database access:
+      * In the ``[database]`` and ``[api_database]`` sections, configure
+        database access:
 
         .. code-block:: ini
 
@@ -223,8 +228,12 @@ Install and configure components
            ...
            connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
 
+           [api_database]
+           ...
+           connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova_api
+
         Replace ``NOVA_DBPASS`` with the password you chose for
-        the Compute database.
+        the Compute databases.
 
       * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
         configure ``RabbitMQ`` message queue access:
@@ -309,9 +318,9 @@ Install and configure components
 
      .. note::
 
-        By default, Compute uses an internal firewall service. Since
-        Networking includes a firewall service, you must disable the Compute
-        firewall service by using the
+        By default, Compute uses an internal firewall driver. Since the
+        Networking service includes a firewall driver, you must disable the
+        Compute firewall driver by using the
         ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
 
    * In the ``[vnc]`` section, configure the VNC proxy to use the management
@@ -325,13 +334,13 @@ Install and configure components
         vncserver_proxyclient_address = $my_ip
 
    * In the ``[glance]`` section, configure the location of the
-     Image service:
+     Image service API:
 
      .. code-block:: ini
 
         [glance]
         ...
-        host = controller
+        api_servers = http://controller:9292
 
    .. only:: obs
 
@@ -380,21 +389,14 @@ Install and configure components
         ...
         verbose = True
 
-.. only:: rdo
+.. only:: rdo or ubuntu
 
-   3. Populate the Compute database:
-
-      .. code-block:: console
-
-         # su -s /bin/sh -c "nova-manage db sync" nova
-
-.. only:: ubuntu
-
-   3. Populate the Compute database:
+   3. Populate the Compute databases:
 
       .. code-block:: console
 
          # su -s /bin/sh -c "nova-manage db sync" nova
+         # su -s /bin/sh -c "nova-manage api_db sync" nova
 
 Finalize installation
 ---------------------
