@@ -35,8 +35,11 @@ For information about how to manage images, see the
 
    .. code-block:: console
 
-      $ curl -O \
-        http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+      $ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+
+   .. note::
+
+      Install ``wget`` if your distribution does not include it.
 
 #. Upload the image to the Image service using the
    :term:`QCOW2 <QEMU Copy On Write 2 (QCOW2)>` disk format, :term:`bare`
