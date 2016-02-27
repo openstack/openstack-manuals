@@ -300,7 +300,9 @@ networks and handles security groups.
 
     Replace ``OVERLAY_INTERFACE_IP_ADDRESS`` with the IP address of the
     underlying physical network interface that handles overlay networks. The
-    example architecture uses the management interface.
+    example architecture uses the management interface to tunnel traffic to
+    the other nodes. Therefore, replace ``OVERLAY_INTERFACE_IP_ADDRESS`` with
+    each node's own management IP address.
 
   * In the ``[agent]`` section, enable ARP spoofing protection:
 
