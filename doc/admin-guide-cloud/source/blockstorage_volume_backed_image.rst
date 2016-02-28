@@ -57,6 +57,14 @@ following options in each back-end section of the ``cinder.conf`` file:
 
     image_upload_use_internal_tenant = True
 
+To make the Image-Volume in the internal tenant accessible from the Image
+service, set the following options in the ``glance_store`` section of
+the ``glance-api.conf`` file:
+
+- ``cinder_store_auth_address``
+- ``cinder_store_user_name``
+- ``cinder_store_password``
+- ``cinder_store_project_name``
 
 Creating a Volume-backed image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,9 +87,3 @@ store of the Image service.
 .. code-block:: console
 
    $ cinder upload-to-image <volume> <image-name>
-
-.. note::
-
-   Currently, the cinder store of the Image services does not support uploading
-   and downloading of image data. By this limitation, Volume-backed images can
-   only be used to create a new volume.
