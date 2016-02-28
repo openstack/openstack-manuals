@@ -90,8 +90,6 @@ New, updated, and deprecated options in Mitaka for OpenStack Networking
 
    * - Deprecated option
      - New Option
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] use_syslog``
      - ``None``
 

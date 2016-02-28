@@ -37,8 +37,6 @@ New, updated, and deprecated options in Mitaka for OpenStack Identity
 
    * - Deprecated option
      - New Option
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] use_syslog``
      - ``None``
 

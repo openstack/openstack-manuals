@@ -26,8 +26,6 @@ New, updated, and deprecated options in Mitaka for Orchestration
 
    * - Deprecated option
      - New Option
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] use_syslog``
      - ``None``
 

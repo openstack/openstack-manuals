@@ -40,8 +40,6 @@ New, updated, and deprecated options in Mitaka for Telemetry
      - ``[DEFAULT] meter_dispatchers``
    * - ``[DEFAULT] dispatcher``
      - ``[DEFAULT] event_dispatchers``
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] use_syslog``
      - ``None``
 

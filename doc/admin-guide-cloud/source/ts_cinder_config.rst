@@ -69,10 +69,7 @@ assist in troubleshooting your Block Storage configuration.
 
    # If an instance UUID is passed with the log message, format
    # it like this (string value)
-   # A logging.Formatter log message format string which may use
-   # any of the available logging.LogRecord attributes. Default:
-   # %(default)s (string value)
-   # log_format=%(asctime)s %(levelname)8s [%(name)s] %(message)s
+   #instance_uuid_format="[instance: %(uuid)s] "
 
    # Format string for %%(asctime)s in log records. Default:
    # %(default)s (string value)
