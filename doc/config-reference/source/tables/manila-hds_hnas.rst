@@ -37,6 +37,8 @@
    * - ``hds_hnas_user`` = ``None``
      - (String) HNAS username Base64 String in order to perform tasks such as create file-systems and network interfaces.
    * - ``share_backend_name`` = ``None``
-     - (String) The backend name for a given driver implementation.
-   * - ``share_driver`` = ``manila.share.drivers.generic.GenericShareDriver``
-     - (String) Driver to use for share creation.
+     - (StrOpt) The backend name for a given driver implementation.
+   * - ``share_driver`` = ``manila.share.drivers.hitachi.hds_hnas.HDSHNASDriver``
+     - (StrOpt) Driver to use for share creation.
+   * - ``hds_hnas_driver_helper`` = ``manila.share.drivers.hitachi.ssh.HNASSSHBackend``
+     - (StrOpt) Python class to be used for driver helper.
