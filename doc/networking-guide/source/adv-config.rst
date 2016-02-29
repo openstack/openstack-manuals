@@ -9,6 +9,8 @@ Advanced configuration
    adv-config-operational.rst
    adv-config-dvr-ha-snat.rst
    adv-config-rbac.rst
+   adv-config-subnet-pools.rst
+   adv-config-address-scopes.rst
    adv-config-lbaas.rst
    adv-config-fwaas.rst
    adv-config-vpnaas.rst

@@ -110,6 +110,18 @@ networking service for both tenant and provider networks.
 Subnets are used to allocate IP addresses when new ports are created on a
 network.
 
+Subnet Pools
+------------
+
+End users normally can create subnets with any valid IP addresses without other
+restrictions. However, in some cases, it is nice for the admin or the tenant
+to pre-define a pool of addresses from which to create subnets with automatic
+allocation. This is what :doc:`adv-config-subnet-pools` provide.
+
+Using subnet pools constrains what addresses can be used by requiring that
+every subnet be within the defined pool. It also prevents address reuse or
+overlap by two subnets from the same pool.
+
 Ports
 -----
 
