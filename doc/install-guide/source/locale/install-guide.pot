@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Installation Guide 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-17 06:11+0000\n"
+"POT-Creation-Date: 2016-02-29 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -213,8 +213,8 @@ msgstr ""
 # #-#-#-#-#  swift-controller-install.pot (Installation Guide 0.1)  #-#-#-#-#
 #: ../ceilometer-install.rst:62 ../ceilometer-verify.rst:12
 #: ../cinder-controller-install.rst:45 ../cinder-verify.rst:12
-#: ../glance-install.rst:44 ../glance-verify.rst:23 ../heat-install.rst:46
-#: ../neutron-controller-install.rst:39 ../neutron-verify.rst:4
+#: ../glance-install.rst:44 ../glance-verify.rst:27 ../heat-install.rst:46
+#: ../neutron-controller-install.rst:39 ../neutron-verify.rst:8
 #: ../nova-controller-install.rst:41 ../nova-verify.rst:10
 #: ../swift-controller-install.rst:30
 msgid ""
@@ -1044,8 +1044,13 @@ msgid "Verify operation of the Block Storage service."
 msgstr ""
 
 # #-#-#-#-#  cinder-verify.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  glance-verify.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  heat-verify.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  keystone-verify.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  neutron-verify.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  nova-verify.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../cinder-verify.rst:10 ../nova-verify.rst:8
+#: ../cinder-verify.rst:10 ../glance-verify.rst:17 ../heat-verify.rst:10
+#: ../keystone-verify.rst:9 ../neutron-verify.rst:6 ../nova-verify.rst:8
 msgid "Perform these commands on the controller node."
 msgstr ""
 
@@ -2771,24 +2776,28 @@ msgid ""
 "cli_manage_images.html>`__."
 msgstr ""
 
-#: ../glance-verify.rst:15
+#: ../glance-verify.rst:19
 msgid ""
 "In each client environment script, configure the Image service client to use "
 "API version 2.0:"
 msgstr ""
 
-#: ../glance-verify.rst:30
+#: ../glance-verify.rst:34
 msgid "Download the source image:"
 msgstr ""
 
-#: ../glance-verify.rst:36
+#: ../glance-verify.rst:42
+msgid "Install ``wget`` if your distribution does not include it."
+msgstr ""
+
+#: ../glance-verify.rst:44
 msgid ""
 "Upload the image to the Image service using the :term:`QCOW2 <QEMU Copy On "
 "Write 2 (QCOW2)>` disk format, :term:`bare` container format, and public "
 "visibility so all projects can access it:"
 msgstr ""
 
-#: ../glance-verify.rst:68
+#: ../glance-verify.rst:76
 msgid ""
 "For information about the :command:`glance image-create` parameters, see "
 "`Image service command-line client <http://docs.openstack.org/cli-reference/"
@@ -2796,7 +2805,7 @@ msgid ""
 "create_v2>`__ in the ``OpenStack Command-Line Interface Reference``."
 msgstr ""
 
-#: ../glance-verify.rst:74
+#: ../glance-verify.rst:82
 msgid ""
 "For information about disk and container formats for images, see `Disk and "
 "container formats for images <http://docs.openstack.org/image-guide/content/"
@@ -2806,14 +2815,14 @@ msgstr ""
 # #-#-#-#-#  glance-verify.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  keystone-services.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  keystone-users.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../glance-verify.rst:81 ../keystone-services.rst:99
+#: ../glance-verify.rst:89 ../keystone-services.rst:99
 #: ../keystone-users.rst:36
 msgid ""
 "OpenStack generates IDs dynamically, so you will see different values in the "
 "example command output."
 msgstr ""
 
-#: ../glance-verify.rst:84
+#: ../glance-verify.rst:92
 msgid "Confirm upload of the image and validate attributes:"
 msgstr ""
 
@@ -3015,19 +3024,19 @@ msgstr ""
 msgid "Verify operation of the Orchestration service."
 msgstr ""
 
-#: ../heat-verify.rst:8
+#: ../heat-verify.rst:12
 msgid "Source the ``admin`` tenant credentials:"
 msgstr ""
 
 # #-#-#-#-#  heat-verify.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  nova-verify.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../heat-verify.rst:14 ../nova-verify.rst:17
+#: ../heat-verify.rst:18 ../nova-verify.rst:17
 msgid ""
 "List service components to verify successful launch and registration of each "
 "process:"
 msgstr ""
 
-#: ../heat-verify.rst:31
+#: ../heat-verify.rst:35
 msgid ""
 "This output should indicate four ``heat-engine`` components on the "
 "controller node."
@@ -3851,42 +3860,42 @@ msgid ""
 "Verify operation of the Identity service before installing other services."
 msgstr ""
 
-#: ../keystone-verify.rst:9 ../keystone-verify.rst:19
+#: ../keystone-verify.rst:13 ../keystone-verify.rst:23
 msgid ""
 "For security reasons, disable the temporary authentication token mechanism:"
 msgstr ""
 
-#: ../keystone-verify.rst:12
+#: ../keystone-verify.rst:16
 msgid ""
 "Edit the ``/etc/keystone/keystone-paste.ini`` file and remove "
 "``admin_token_auth`` from the ``[pipeline:public_api]``, ``[pipeline:"
 "admin_api]``, and ``[pipeline:api_v3]`` sections."
 msgstr ""
 
-#: ../keystone-verify.rst:22
+#: ../keystone-verify.rst:26
 msgid ""
 "Edit the ``/usr/share/keystone/keystone-dist-paste.ini`` file and remove "
 "``admin_token_auth`` from the ``[pipeline:public_api]``, ``[pipeline:"
 "admin_api]``, and ``[pipeline:api_v3]`` sections."
 msgstr ""
 
-#: ../keystone-verify.rst:27
+#: ../keystone-verify.rst:31
 msgid "Unset the temporary ``OS_TOKEN`` and ``OS_URL`` environment variables:"
 msgstr ""
 
-#: ../keystone-verify.rst:33
+#: ../keystone-verify.rst:37
 msgid "As the ``admin`` user, request an authentication token:"
 msgstr ""
 
-#: ../keystone-verify.rst:53
+#: ../keystone-verify.rst:57
 msgid "This command uses the password for the ``admin`` user."
 msgstr ""
 
-#: ../keystone-verify.rst:55
+#: ../keystone-verify.rst:59
 msgid "As the ``demo`` user, request an authentication token:"
 msgstr ""
 
-#: ../keystone-verify.rst:75
+#: ../keystone-verify.rst:79
 msgid ""
 "This command uses the password for the ``demo`` user and API port 5000 which "
 "only allows regular (non-admin) access to the Identity service API."
@@ -5555,13 +5564,13 @@ msgid ""
 "on each compute node."
 msgstr ""
 
-#: ../neutron-verify.rst:11
+#: ../neutron-verify.rst:15
 msgid ""
 "List loaded extensions to verify successful launch of the ``neutron-server`` "
 "process:"
 msgstr ""
 
-#: ../neutron-verify.rst:44
+#: ../neutron-verify.rst:48
 msgid ""
 "Use the verification section for the networking option that you chose to "
 "deploy."
