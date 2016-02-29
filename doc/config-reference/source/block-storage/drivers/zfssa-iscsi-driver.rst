@@ -19,7 +19,7 @@ ZFSSA software release ``2013.1.2.0`` and later.
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
-- Create, delete, attach, and detach volumes.
+- Create, delete, attach, detach, manage, and unmanage volumes.
 
 - Create and delete snapshots.
 

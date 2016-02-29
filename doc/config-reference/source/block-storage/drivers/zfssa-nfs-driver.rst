@@ -14,7 +14,7 @@ Oracle ZFS Storage Appliance Software version ``2013.1.2.0`` or later.
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
-- Create, delete, attach, and detach volumes.
+- Create, delete, attach, detach, manage, and unmanage volumes.
 
 - Create and delete snapshots.
 
