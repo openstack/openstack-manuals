@@ -109,7 +109,7 @@ example, you can override the ``OS_PASSWORD`` setting in the
 
 .. code-block:: console
 
-   $ openstack --os-password PASSWORD service list
+   $ openstack --os-password PASSWORD server list
 
 Where ``PASSWORD`` is your password.
 
