@@ -51,9 +51,9 @@ or as connected entities.
 
 .. only:: obs
 
-   This guide will show you how to install OpenStack by using packages on
-   openSUSE 13.2 and SUSE Linux Enterprise Server 12 through the Open
-   Build Service Cloud repository.
+   This guide will show you how to install OpenStack by using packages
+   on openSUSE Leap 42.1 and SUSE Linux Enterprise Server 12 SP1
+   through the Open Build Service Cloud repository.
 
 .. only:: debian
 
