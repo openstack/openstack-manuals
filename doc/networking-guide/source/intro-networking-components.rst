@@ -7,7 +7,7 @@ Switches
 
 Switches are Multi-Input Multi-Output devices that enable packets
 to travel from one node to another. Switches connect hosts that belong
-to the same layer-2 network together. Switches enable forwarding of the
+to the same layer-2 network. Switches enable forwarding of the
 packet received on one port (input) to another port (output) so that they
 reach the desired destination node. Switches operate at layer-2 in the
 networking model. They forward the traffic based on the destination
@@ -26,8 +26,8 @@ Firewalls
 ~~~~~~~~~
 
 Firewalls are used to regulate traffic to and from a host or a network.
-Firewalls can either be a specialized device connecting two networks or can
-be a software-based filtering mechanism implemented on an operating system.
+A firewall can be either a specialized device connecting two networks or
+a software-based filtering mechanism implemented on an operating system.
 Firewalls are used to restrict traffic to a host based on the rules
 defined on the host. They can filter packets based on several criteria such as
 source IP address, destination IP address, port numbers, connection state,
@@ -38,7 +38,7 @@ through ``iptables``.
 Load balancers
 ~~~~~~~~~~~~~~
 
-A load balancer can be a software-based or a hardware-based device that allows
+Load balancers can be software-based or hardware-based devices that allow
 traffic to evenly be distributed across several servers. By distributing the
 traffic across multiple servers, it avoids overload of a single server thereby
 preventing a single point of failure in the product. This further improves the
