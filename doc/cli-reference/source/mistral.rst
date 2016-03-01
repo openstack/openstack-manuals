@@ -9,7 +9,7 @@ Workflow service command-line client
 The mistral client is the command-line interface (CLI) for
 the Workflow service API and its extensions.
 
-This chapter documents :command:`mistral` version ``1.2.0``.
+This chapter documents :command:`mistral` version ``2.0.0``.
 
 For help on a specific :command:`mistral` command, enter:
 
@@ -109,8 +109,7 @@ mistral action-create
 
 .. code-block:: console
 
-   usage: mistral action-create [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral action-create [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--public]
@@ -187,7 +186,7 @@ mistral action-execution-get
 .. code-block:: console
 
    usage: mistral action-execution-get [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        id
@@ -260,7 +259,7 @@ mistral action-execution-list
 .. code-block:: console
 
    usage: mistral action-execution-list [-h]
-                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                        [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
@@ -288,7 +287,7 @@ mistral action-execution-update
 .. code-block:: console
 
    usage: mistral action-execution-update [-h]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                          [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           [--state {IDLE,RUNNING,SUCCESS,ERROR}]
@@ -322,8 +321,7 @@ mistral action-get
 
 .. code-block:: console
 
-   usage: mistral action-get [-h]
-                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral action-get [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--prefix PREFIX]
                              name
@@ -372,8 +370,7 @@ mistral action-list
 
 .. code-block:: console
 
-   usage: mistral action-list [-h]
-                              [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral action-list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
 
@@ -392,8 +389,7 @@ mistral action-update
 
 .. code-block:: console
 
-   usage: mistral action-update [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral action-update [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--public]
@@ -424,13 +420,13 @@ mistral cron-trigger-create
 .. code-block:: console
 
    usage: mistral cron-trigger-create [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                      [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent] [--prefix PREFIX]
                                       [--params PARAMS] [--pattern <* * * * *>]
                                       [--first-time <YYYY-MM-DD HH:MM>]
                                       [--count <integer>]
-                                      name workflow_name [workflow_input]
+                                      name workflow_identifier [workflow_input]
 
 Create new trigger.
 
@@ -440,8 +436,8 @@ Positional arguments
 ``name``
   Cron trigger name
 
-``workflow_name``
-  Workflow name
+``workflow_identifier``
+  Workflow name or ID
 
 ``workflow_input``
   Workflow input
@@ -494,8 +490,7 @@ mistral cron-trigger-get
 
 .. code-block:: console
 
-   usage: mistral cron-trigger-get [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral cron-trigger-get [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    name
@@ -521,8 +516,7 @@ mistral cron-trigger-list
 
 .. code-block:: console
 
-   usage: mistral cron-trigger-list [-h]
-                                    [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral cron-trigger-list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
@@ -542,8 +536,7 @@ mistral environment-create
 
 .. code-block:: console
 
-   usage: mistral environment-create [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral environment-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      file
@@ -592,8 +585,7 @@ mistral environment-get
 
 .. code-block:: console
 
-   usage: mistral environment-get [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral environment-get [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   name
@@ -619,8 +611,7 @@ mistral environment-list
 
 .. code-block:: console
 
-   usage: mistral environment-list [-h]
-                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral environment-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
@@ -640,8 +631,7 @@ mistral environment-update
 
 .. code-block:: console
 
-   usage: mistral environment-update [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral environment-update [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      file
@@ -667,20 +657,20 @@ mistral execution-create
 
 .. code-block:: console
 
-   usage: mistral execution-create [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral execution-create [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    [-d DESCRIPTION]
-                                   workflow_name [workflow_input] [params]
+                                   workflow_identifier [workflow_input] [params]
 
 Create new execution.
 
 Positional arguments
 --------------------
 
-``workflow_name``
-  Workflow name
+``workflow_identifier``
+  Workflow ID or name. Workflow name will be deprecated
+  sinceMitaka.
 
 ``workflow_input``
   Workflow input
@@ -727,8 +717,7 @@ mistral execution-get
 
 .. code-block:: console
 
-   usage: mistral execution-get [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral execution-get [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 id
@@ -800,8 +789,7 @@ mistral execution-list
 
 .. code-block:: console
 
-   usage: mistral execution-list [-h]
-                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral execution-list [-h] [-f {csv,html,json,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--marker [MARKER]] [--limit [LIMIT]]
@@ -841,11 +829,11 @@ mistral execution-update
 
 .. code-block:: console
 
-   usage: mistral execution-update [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral execution-update [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
-                                   (-s {RUNNING,PAUSED,SUCCESS,ERROR} | -d DESCRIPTION)
+                                   [-s {RUNNING,PAUSED,SUCCESS,ERROR}] [-e ENV]
+                                   [-d DESCRIPTION]
                                    id
 
 Update execution.
@@ -865,8 +853,171 @@ Optional arguments
 ``-s {RUNNING,PAUSED,SUCCESS,ERROR}, --state {RUNNING,PAUSED,SUCCESS,ERROR}``
   Execution state
 
+``-e ENV, --env ENV``
+  Environment variables
+
 ``-d DESCRIPTION, --description DESCRIPTION``
   Execution description
+
+.. _mistral_member-create:
+
+mistral member-create
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: mistral member-create [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX]
+                                resource_id resource_type member_id
+
+Shares a resource to another tenant.
+
+Positional arguments
+--------------------
+
+``resource_id``
+  Resource ID to be shared.
+
+``resource_type``
+  Resource type.
+
+``member_id``
+  Project ID to whom the resource is shared to.
+
+Optional arguments
+------------------
+
+``-h, --help``
+  show this help message and exit
+
+.. _mistral_member-delete:
+
+mistral member-delete
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: mistral member-delete [-h] resource_id resource_type member_id
+
+Delete a resource sharing relationship.
+
+Positional arguments
+--------------------
+
+``resource_id``
+  Resource ID to be shared.
+
+``resource_type``
+  Resource type.
+
+``member_id``
+  Project ID to whom the resource is shared to.
+
+Optional arguments
+------------------
+
+``-h, --help``
+  show this help message and exit
+
+.. _mistral_member-get:
+
+mistral member-get
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: mistral member-get [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
+                             [--prefix PREFIX] [-m MEMBER_ID]
+                             resource_id resource_type
+
+Show specific member information.
+
+Positional arguments
+--------------------
+
+``resource_id``
+  Resource ID to be shared.
+
+``resource_type``
+  Resource type.
+
+Optional arguments
+------------------
+
+``-h, --help``
+  show this help message and exit
+
+``-m MEMBER_ID, --member-id MEMBER_ID``
+  Project ID to whom the resource is shared to. No need
+  to provide this param if you are the resource member.
+
+.. _mistral_member-list:
+
+mistral member-list
+~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: mistral member-list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--quote {all,minimal,none,nonnumeric}]
+                              resource_id resource_type
+
+List all members.
+
+Positional arguments
+--------------------
+
+``resource_id``
+  Resource id to be shared.
+
+``resource_type``
+  Resource type.
+
+Optional arguments
+------------------
+
+``-h, --help``
+  show this help message and exit
+
+.. _mistral_member-update:
+
+mistral member-update
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: mistral member-update [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX] [-m MEMBER_ID]
+                                [-s {pending,accepted,rejected}]
+                                resource_id resource_type
+
+Update resource sharing status.
+
+Positional arguments
+--------------------
+
+``resource_id``
+  Resource ID to be shared.
+
+``resource_type``
+  Resource type.
+
+Optional arguments
+------------------
+
+``-h, --help``
+  show this help message and exit
+
+``-m MEMBER_ID, --member-id MEMBER_ID``
+  Project ID to whom the resource is shared to. No need
+  to provide this param if you are the resource member.
+
+``-s {pending,accepted,rejected}, --status {pending,accepted,rejected}``
+  status of the sharing.
 
 .. _mistral_run-action:
 
@@ -875,8 +1026,7 @@ mistral run-action
 
 .. code-block:: console
 
-   usage: mistral run-action [-h]
-                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral run-action [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--prefix PREFIX] [-s] [-t TARGET]
                              name [input]
@@ -911,8 +1061,7 @@ mistral service-list
 
 .. code-block:: console
 
-   usage: mistral service-list [-h]
-                               [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral service-list [-h] [-f {csv,html,json,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
 
@@ -931,7 +1080,7 @@ mistral task-get
 
 .. code-block:: console
 
-   usage: mistral task-get [-h] [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral task-get [-h] [-f {html,json,shell,table,value,yaml}]
                            [-c COLUMN] [--max-width <integer>] [--noindent]
                            [--prefix PREFIX]
                            id
@@ -1003,7 +1152,7 @@ mistral task-list
 
 .. code-block:: console
 
-   usage: mistral task-list [-h] [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral task-list [-h] [-f {csv,html,json,table,value,yaml}]
                             [-c COLUMN] [--max-width <integer>] [--noindent]
                             [--quote {all,minimal,none,nonnumeric}]
                             [workflow_execution]
@@ -1029,10 +1178,9 @@ mistral task-rerun
 
 .. code-block:: console
 
-   usage: mistral task-rerun [-h]
-                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral task-rerun [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [--resume]
+                             [--prefix PREFIX] [--resume] [-e ENV]
                              id
 
 Rerun an existing task.
@@ -1053,6 +1201,9 @@ Optional arguments
   rerun only failed or unstarted action executions for
   with-items task
 
+``-e ENV, --env ENV``
+  Environment variables
+
 .. _mistral_workbook-create:
 
 mistral workbook-create
@@ -1060,8 +1211,7 @@ mistral workbook-create
 
 .. code-block:: console
 
-   usage: mistral workbook-create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral workbook-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   definition
@@ -1110,8 +1260,7 @@ mistral workbook-get
 
 .. code-block:: console
 
-   usage: mistral workbook-get [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral workbook-get [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                name
@@ -1160,8 +1309,7 @@ mistral workbook-list
 
 .. code-block:: console
 
-   usage: mistral workbook-list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral workbook-list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
@@ -1180,8 +1328,7 @@ mistral workbook-update
 
 .. code-block:: console
 
-   usage: mistral workbook-update [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral workbook-update [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   definition
@@ -1207,8 +1354,7 @@ mistral workbook-validate
 
 .. code-block:: console
 
-   usage: mistral workbook-validate [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral workbook-validate [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     definition
@@ -1234,8 +1380,7 @@ mistral workflow-create
 
 .. code-block:: console
 
-   usage: mistral workflow-create [-h]
-                                  [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral workflow-create [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
@@ -1248,7 +1393,7 @@ Positional arguments
 --------------------
 
 ``definition``
-  Workflow definition file
+  Workflow definition file.
 
 Optional arguments
 ------------------
@@ -1266,15 +1411,15 @@ mistral workflow-delete
 
 .. code-block:: console
 
-   usage: mistral workflow-delete [-h] name [name ...]
+   usage: mistral workflow-delete [-h] identifier [identifier ...]
 
 Delete workflow.
 
 Positional arguments
 --------------------
 
-``name``
-  Name of workflow(s).
+``identifier``
+  Name or ID of workflow(s).
 
 Optional arguments
 ------------------
@@ -1289,19 +1434,18 @@ mistral workflow-get
 
 .. code-block:: console
 
-   usage: mistral workflow-get [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral workflow-get [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
-                               name
+                               identifier
 
 Show specific workflow.
 
 Positional arguments
 --------------------
 
-``name``
-  Workflow name
+``identifier``
+  Workflow ID or name.
 
 Optional arguments
 ------------------
@@ -1316,15 +1460,15 @@ mistral workflow-get-definition
 
 .. code-block:: console
 
-   usage: mistral workflow-get-definition [-h] name
+   usage: mistral workflow-get-definition [-h] identifier
 
 Show workflow definition.
 
 Positional arguments
 --------------------
 
-``name``
-  Workflow name
+``identifier``
+  Workflow ID or name.
 
 Optional arguments
 ------------------
@@ -1339,8 +1483,7 @@ mistral workflow-list
 
 .. code-block:: console
 
-   usage: mistral workflow-list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral workflow-list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
@@ -1359,12 +1502,11 @@ mistral workflow-update
 
 .. code-block:: console
 
-   usage: mistral workflow-update [-h]
-                                  [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: mistral workflow-update [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
-                                  [--public]
+                                  [--id ID] [--public]
                                   definition
 
 Update workflow.
@@ -1381,6 +1523,9 @@ Optional arguments
 ``-h, --help``
   show this help message and exit
 
+``--id ID``
+  Workflow ID.
+
 ``--public``
   With this flag workflow will be marked as "public".
 
@@ -1391,8 +1536,7 @@ mistral workflow-validate
 
 .. code-block:: console
 
-   usage: mistral workflow-validate [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: mistral workflow-validate [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     definition
