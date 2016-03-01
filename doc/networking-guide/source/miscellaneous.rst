@@ -7,3 +7,4 @@ Miscellaneous
 
    misc-libvirt.rst
    misc-add-ha-for-dhcp.rst
+   misc-neutron-purge.rst
