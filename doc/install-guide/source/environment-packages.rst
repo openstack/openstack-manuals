@@ -95,11 +95,11 @@ these procedures on all nodes.
    * Enable the Open Build Service repositories based on your openSUSE or
      SLES version:
 
-     **On openSUSE 13.2:**
+     **On openSUSE:**
 
      .. code-block:: console
 
-        # zypper addrepo -f obs://Cloud:OpenStack:Liberty/openSUSE_13.2 Liberty
+        # zypper addrepo -f obs://Cloud:OpenStack:Mitaka/openSUSE_Leap_42.1 Mitaka
 
      The openSUSE distribution uses the concept of patterns to represent
      collections of packages. If you selected 'Minimal Server Selection (Text
@@ -111,11 +111,11 @@ these procedures on all nodes.
 
         # zypper rm patterns-openSUSE-minimal_base-conflicts
 
-     **On SLES 12:**
+     **On SLES:**
 
      .. code-block:: console
 
-        # zypper addrepo -f obs://Cloud:OpenStack:Liberty/SLE_12 Liberty
+        # zypper addrepo -f obs://Cloud:OpenStack:Mitaka/SLE_12_SP1 Mitaka
 
      .. note::
 
@@ -126,8 +126,8 @@ these procedures on all nodes.
 
            Key Name:         Cloud:OpenStack OBS Project <Cloud:OpenStack@build.opensuse.org>
            Key Fingerprint:  35B34E18 ABC1076D 66D5A86B 893A90DA D85F9316
-           Key Created:      Tue 08 Oct 2013 01:34:21 PM UTC
-           Key Expires:      Thu 17 Dec 2015 01:34:21 PM UTC
+           Key Created:      2015-12-16T16:48:37 CET
+           Key Expires:      2018-02-23T16:48:37 CET
 
 .. only:: debian
 

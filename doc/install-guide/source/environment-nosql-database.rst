@@ -24,13 +24,13 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper addrepo -f obs://server:database/openSUSE_13.2 Database
+         # zypper addrepo -f obs://server:database/openSUSE_42.1 Database
 
       On SLES:
 
       .. code-block:: console
 
-         # zypper addrepo -f obs://server:database/SLE_12 Database
+         # zypper addrepo -f obs://server:database/SLE_12_SP1 Database
 
       .. note::
 
