@@ -19,13 +19,13 @@ Install the components
 
    .. code-block:: console
 
-      # yum install openstack-neutron openstack-neutron-linuxbridge ebtables ipset
+      # yum install openstack-neutron-linuxbridge ebtables
 
 .. only:: obs
 
    .. code-block:: console
 
-      # zypper install --no-recommends openstack-neutron-linuxbridge-agent ipset
+      # zypper install --no-recommends openstack-neutron-linuxbridge-agent
 
 .. only:: debian
 
@@ -122,15 +122,6 @@ authentication mechanism, message queue, and plug-in.
           [oslo_concurrency]
           ...
           lock_path = /var/lib/neutron/tmp
-
-  * (Optional) To assist with troubleshooting, enable verbose logging in the
-    ``[DEFAULT]`` section:
-
-    .. code-block:: ini
-
-       [DEFAULT]
-       ...
-       verbose = True
 
 Configure networking options
 ----------------------------

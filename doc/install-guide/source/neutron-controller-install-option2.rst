@@ -12,14 +12,14 @@ Install the components
 
       # apt-get install neutron-server neutron-plugin-ml2 \
         neutron-plugin-linuxbridge-agent neutron-l3-agent neutron-dhcp-agent \
-        neutron-metadata-agent python-neutronclient conntrack
+        neutron-metadata-agent conntrack
 
 .. only:: rdo
 
    .. code-block:: console
 
       # yum install openstack-neutron openstack-neutron-ml2 \
-        openstack-neutron-linuxbridge python-neutronclient ebtables ipset
+        openstack-neutron-linuxbridge ebtables
 
 .. only:: obs
 
@@ -28,7 +28,7 @@ Install the components
       # zypper install --no-recommends openstack-neutron \
         openstack-neutron-server openstack-neutron-linuxbridge-agent \
         openstack-neutron-l3-agent openstack-neutron-dhcp-agent \
-        openstack-neutron-metadata-agent ipset
+        openstack-neutron-metadata-agent
 
 .. only:: debian
 
@@ -144,7 +144,6 @@ Install the components
           ...
           notify_nova_on_port_status_changes = True
           notify_nova_on_port_data_changes = True
-          nova_url = http://controller:8774/v2
 
           [nova]
           ...
@@ -170,15 +169,6 @@ Install the components
              ...
              lock_path = /var/lib/neutron/tmp
 
-     * (Optional) To assist with troubleshooting, enable verbose logging in
-       the ``[DEFAULT]`` section:
-
-       .. code-block:: ini
-
-          [DEFAULT]
-          ...
-          verbose = True
-
 Configure the Modular Layer 2 (ML2) plug-in
 -------------------------------------------
 
@@ -196,7 +186,7 @@ and switching) virtual networking infrastructure for instances.
        ...
        type_drivers = flat,vlan,vxlan
 
-  * In the ``[ml2]`` section, enable VXLAN project (private) networks:
+  * In the ``[ml2]`` section, enable VXLAN self-service networks:
 
     .. code-block:: ini
 
@@ -230,17 +220,17 @@ and switching) virtual networking infrastructure for instances.
        ...
        extension_drivers = port_security
 
-  * In the ``[ml2_type_flat]`` section, configure the public flat provider
-    network:
+  * In the ``[ml2_type_flat]`` section, configure the provider virtual
+    network as a flat network:
 
     .. code-block:: ini
 
        [ml2_type_flat]
        ...
-       flat_networks = public
+       flat_networks = provider
 
   * In the ``[ml2_type_vxlan]`` section, configure the VXLAN network identifier
-    range for private networks:
+    range for self-service networks:
 
     .. code-block:: ini
 
@@ -261,22 +251,22 @@ Configure the Linux bridge agent
 --------------------------------
 
 The Linux bridge agent builds layer-2 (bridging and switching) virtual
-networking infrastructure for instances including VXLAN tunnels for private
-networks and handles security groups.
+networking infrastructure for instances and handles security groups.
 
 * Edit the ``/etc/neutron/plugins/ml2/linuxbridge_agent.ini`` file and
   complete the following actions:
 
-  * In the ``[linux_bridge]`` section, map the public virtual network to the
-    public physical network interface:
+  * In the ``[linux_bridge]`` section, map the provider virtual network to the
+    provider physical network interface:
 
     .. code-block:: ini
 
        [linux_bridge]
-       physical_interface_mappings = public:PUBLIC_INTERFACE_NAME
+       physical_interface_mappings = provider:PROVIDER_INTERFACE_NAME
 
-    Replace ``PUBLIC_INTERFACE_NAME`` with the name of the underlying physical
-    public network interface.
+    Replace ``PROVIDER_INTERFACE_NAME`` with the name of the underlying
+    provider physical network interface. See :ref:`environment-networking`
+    for more information.
 
   * In the ``[vxlan]`` section, enable VXLAN overlay networks, configure the
     IP address of the physical network interface that handles overlay
@@ -293,15 +283,8 @@ networks and handles security groups.
     underlying physical network interface that handles overlay networks. The
     example architecture uses the management interface to tunnel traffic to
     the other nodes. Therefore, replace ``OVERLAY_INTERFACE_IP_ADDRESS`` with
-    each node's own management IP address.
-
-  * In the ``[agent]`` section, enable ARP spoofing protection:
-
-    .. code-block:: ini
-
-       [agent]
-       ...
-       prevent_arp_spoofing = True
+    the management IP address of the controller node. See
+    :ref:`environment-networking` for more information.
 
   * In the ``[securitygroup]`` section, enable security groups and
     configure the Linux bridge :term:`iptables` firewall driver:
@@ -316,8 +299,8 @@ networks and handles security groups.
 Configure the layer-3 agent
 ---------------------------
 
-The :term:`Layer-3 (L3) agent` provides routing and NAT services for virtual
-networks.
+The :term:`Layer-3 (L3) agent` provides routing and NAT services for
+self-service virtual networks.
 
 * Edit the ``/etc/neutron/l3_agent.ini`` file and complete the following
   actions:
@@ -337,15 +320,6 @@ networks.
        The ``external_network_bridge`` option intentionally lacks a value
        to enable multiple external networks on a single agent.
 
-  * (Optional) To assist with troubleshooting, enable verbose logging in the
-    ``[DEFAULT]`` section:
-
-    .. code-block:: ini
-
-       [DEFAULT]
-       ...
-       verbose = True
-
 Configure the DHCP agent
 ------------------------
 
@@ -355,7 +329,7 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
   actions:
 
   * In the ``[DEFAULT]`` section, configure the Linux bridge interface driver,
-    Dnsmasq DHCP driver, and enable isolated metadata so instances on public
+    Dnsmasq DHCP driver, and enable isolated metadata so instances on provider
     networks can access metadata over the network:
 
     .. code-block:: ini
@@ -365,59 +339,6 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
        interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
        dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
        enable_isolated_metadata = True
-
-  * (Optional) To assist with troubleshooting, enable verbose logging in the
-    ``[DEFAULT]`` section:
-
-    .. code-block:: ini
-
-       [DEFAULT]
-       ...
-       verbose = True
-
-  Overlay networks such as VXLAN include additional packet headers that
-  increase overhead and decrease space available for the payload or user
-  data. Without knowledge of the virtual network infrastructure, instances
-  attempt to send packets using the default Ethernet :term:`maximum
-  transmission unit (MTU)` of 1500 bytes. :term:`Internet protocol (IP)`
-  networks contain the :term:`path MTU discovery (PMTUD)` mechanism to detect
-  end-to-end MTU and adjust packet size accordingly. However, some operating
-  systems and networks block or otherwise lack support for PMTUD causing
-  performance degradation or connectivity failure.
-
-  Ideally, you can prevent these problems by enabling :term:`jumbo frames
-  <jumbo frame>` on the physical network that contains your tenant virtual
-  networks. Jumbo frames support MTUs up to approximately 9000 bytes which
-  negates the impact of VXLAN overhead on virtual networks. However, many
-  network devices lack support for jumbo frames and OpenStack administrators
-  often lack control over network infrastructure. Given the latter
-  complications, you can also prevent MTU problems by reducing the
-  instance MTU to account for VXLAN overhead. Determining the proper MTU
-  value often takes experimentation, but 1450 bytes works in most
-  environments. You can configure the DHCP server that assigns IP
-  addresses to your instances to also adjust the MTU.
-
-  .. note::
-
-     Some cloud images ignore the DHCP MTU option in which case you
-     should configure it using metadata, a script, or other suitable
-     method.
-
-  * In the ``[DEFAULT]`` section, enable the :term:`dnsmasq` configuration
-    file:
-
-    .. code-block:: ini
-
-       [DEFAULT]
-       ...
-       dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.conf
-
-  * Create and edit the ``/etc/neutron/dnsmasq-neutron.conf`` file to
-    enable the DHCP MTU option (26) and configure it to 1450 bytes:
-
-    .. code-block:: ini
-
-       dhcp-option-force=26,1450
 
 Return to
 :ref:`Networking controller node configuration

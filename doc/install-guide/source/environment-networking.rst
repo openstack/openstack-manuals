@@ -1,3 +1,5 @@
+.. _environment-networking:
+
 Host networking
 ~~~~~~~~~~~~~~~
 

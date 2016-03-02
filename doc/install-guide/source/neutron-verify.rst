@@ -45,6 +45,10 @@ Verify operation
       | dvr                   | Distributed Virtual Router                    |
       +-----------------------+-----------------------------------------------+
 
+   .. note::
+
+      Actual output may differ slightly from this example.
+
 Use the verification section for the networking option that you chose to
 deploy.
 
