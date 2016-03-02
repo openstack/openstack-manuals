@@ -622,7 +622,7 @@ First, create a network and IPv6 subnet:
    +-----------------+--------------------------------------+
 
    $ neutron subnet-create ipv6-pd --name ipv6-pd-1 --ip_version 6 \
-     --ipv6_ra_mode slaac --ipv6_address_mode slaac
+     --ipv6_ra_mode slaac --ipv6_address_mode slaac --use_default_subnetpool
 
    Created a new subnet:
    +-------------------+--------------------------------------------------+
