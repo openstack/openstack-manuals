@@ -111,7 +111,7 @@ For example:
 
    .. code-block:: console
 
-      $ keystone tenant-list
+      $ openstack project list
 
 Advanced Networking operations
 ------------------------------
