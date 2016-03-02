@@ -21,24 +21,24 @@ Compute service, code-named nova, on the controller node.
 
            $ mysql -u root -p
 
-      * Create the ``nova`` and ``nova_api`` databases:
+      * Create the ``nova_api`` and ``nova`` databases:
 
         .. code-block:: console
 
-           CREATE DATABASE nova;
            CREATE DATABASE nova_api;
+           CREATE DATABASE nova;
 
       * Grant proper access to the databases:
 
         .. code-block:: console
 
-           GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
-             IDENTIFIED BY 'NOVA_DBPASS';
-           GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
-             IDENTIFIED BY 'NOVA_DBPASS';
            GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' \
              IDENTIFIED BY 'NOVA_DBPASS';
            GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
+             IDENTIFIED BY 'NOVA_DBPASS';
+           GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
+             IDENTIFIED BY 'NOVA_DBPASS';
+           GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
              IDENTIFIED BY 'NOVA_DBPASS';
 
         Replace ``NOVA_DBPASS`` with a suitable password.
@@ -219,18 +219,18 @@ Install and configure components
 
    .. only:: obs or rdo or ubuntu
 
-      * In the ``[database]`` and ``[api_database]`` sections, configure
+      * In the ``[api_database]`` and ``[database]`` sections, configure
         database access:
 
         .. code-block:: ini
 
-           [database]
-           ...
-           connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
-
            [api_database]
            ...
            connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova_api
+
+           [database]
+           ...
+           connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
 
         Replace ``NOVA_DBPASS`` with the password you chose for
         the Compute databases.
@@ -313,7 +313,6 @@ Install and configure components
         ...
         network_api_class = nova.network.neutronv2.api.API
         security_group_api = neutron
-        linuxnet_interface_driver = nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver
         firewall_driver = nova.virt.firewall.NoopFirewallDriver
 
      .. note::
@@ -395,8 +394,8 @@ Install and configure components
 
       .. code-block:: console
 
-         # su -s /bin/sh -c "nova-manage db sync" nova
          # su -s /bin/sh -c "nova-manage api_db sync" nova
+         # su -s /bin/sh -c "nova-manage db sync" nova
 
 Finalize installation
 ---------------------
