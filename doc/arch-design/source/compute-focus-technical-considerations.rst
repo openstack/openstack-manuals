@@ -191,14 +191,14 @@ Also consider several specialized components:
    batch of instances and the running of tests, but it makes sense to
    use the Orchestration service to handle all these actions.
 
-* Telemetry (ceilometer)
+* :term:`Telemetry` (ceilometer)
    Telemetry and the alarms it generates support autoscaling of
    instances using Orchestration. Users that are not using the
    Orchestration service do not need to deploy the Telemetry service and
    may choose to use external solutions to fulfill their metering and
    monitoring requirements.
 
-* OpenStack Block Storage (cinder)
+* OpenStack :term:`Block Storage` (cinder)
    Due to the burst-able nature of the workloads and the applications
    and instances that perform batch processing, this cloud mainly uses
    memory or CPU, so the need for add-on storage to each instance is not
@@ -206,7 +206,7 @@ Also consider several specialized components:
    OpenStack Block Storage (cinder) in the infrastructure, but typically
    it is not a central component.
 
-* Networking
+* :term:`Networking` (neutron)
    When choosing a networking platform, ensure that it either works with
    all desired hypervisor and container technologies and their OpenStack
    drivers, or that it includes an implementation of an ML2 mechanism
