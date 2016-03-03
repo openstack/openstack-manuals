@@ -423,7 +423,7 @@ The following steps involve compute node 1:
 #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
    the Open vSwitch tunnel bridge ``br-tun``.
 #. The Open vSwitch tunnel bridge ``br-tun`` replaces the packet source
-   MAC address *I1* with *D1*.
+   MAC address *TG2* with *D1*.
 #. The Open vSwitch tunnel bridge ``br-tun`` wraps the packet in a VXLAN
    tunnel that contains a tag for project network 2.
 #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to
