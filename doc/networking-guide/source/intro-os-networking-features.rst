@@ -131,6 +131,35 @@ a VM.
 
 The auto-allocated topology for a user never changes.
 
+Validating the requirements for auto-allocation
+-----------------------------------------------
+
+To validate that the required resources are correctly set up for
+auto-allocation, use the ``--dry-run`` option:
+
+.. code-block:: console
+
+   $ neutron auto-allocated-topology-show --dry-run
+   Deployment error: No default router:external network.
+
+   $ neutron net-update public --is-default=True
+
+   $ neutron auto-allocated-topology-show --dry-run
+   Deployment error: No default subnetpools defined.
+
+   $ neutron subnetpool-update shared-default --is-default=True
+
+   $ neutron auto-allocated-topology-show --dry-run
+   +---------+-------+
+   | Field   | Value |
+   +---------+-------+
+   | dry-run | pass  |
+   +---------+-------+
+
+The validation option behaves identically for all users. However, it
+is considered primarily an admin utility since it is the operator who
+must set up the requirements.
+
 Project resources created by auto-allocation
 --------------------------------------------
 
