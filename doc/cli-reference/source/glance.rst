@@ -9,7 +9,7 @@ Image service command-line client
 The glance client is the command-line interface (CLI) for
 the Image service API and its extensions.
 
-This chapter documents :command:`glance` version ``1.2.0``.
+This chapter documents :command:`glance` version ``2.0.0``.
 
 For help on a specific :command:`glance` command, enter:
 
@@ -629,7 +629,7 @@ glance image-create (v2)
                               [--kernel-id <KERNEL_ID>]
                               [--tags <TAGS> [<TAGS> ...]]
                               [--os-version <OS_VERSION>]
-                              [--disk-format <DISK_FORMAT>] [--self <SELF>]
+                              [--disk-format <DISK_FORMAT>]
                               [--os-distro <OS_DISTRO>] [--id <ID>]
                               [--owner <OWNER>] [--ramdisk-id <RAMDISK_ID>]
                               [--min-ram <MIN_RAM>]
@@ -654,7 +654,9 @@ Optional arguments
   Descriptive name for the image
 
 ``--instance-uuid <INSTANCE_UUID>``
-  ID of instance used to create this image.
+  Metadata which can be used to record which instance
+  this image is associated with. (Informational only,
+  does not create an instance snapshot.)
 
 ``--min-disk <MIN_DISK>``
   Amount of disk space (in GB) required to boot image.
@@ -678,9 +680,6 @@ Optional arguments
   Format of the disk Valid values: ami, ari, aki, vhd,
   vmdk, raw, qcow2, vdi, iso
 
-``--self <SELF>``
-  (READ-ONLY)
-
 ``--os-distro <OS_DISTRO>``
   Common name of operating system distribution as
   specified in http://docs.openstack.org/trunk
@@ -701,7 +700,7 @@ Optional arguments
 
 ``--container-format <CONTAINER_FORMAT>``
   Format of the container Valid values: ami, ari, aki,
-  bare, ovf, ova
+  bare, ovf, ova, docker
 
 ``--property <key=value>``
   Arbitrary property to associate with image. May be
@@ -709,7 +708,7 @@ Optional arguments
 
 ``--file <FILE>``
   Local file that contains disk image to be uploaded
-  during creation. Must be present if images are not
+  during creation. Alternatively, the image data can be
   passed to the client via stdin.
 
 ``--progress``
@@ -824,7 +823,8 @@ Optional arguments
 ``--sort-key {name,status,``
 
 ``container_format,disk_format,size,id,created_at,updated_at}``
-  Sort image list by specified fields.
+  Sort image list by specified fields. May be used
+  multiple times.
 
 ``--sort-dir {asc,desc}``
   Sort image list in specified directions.
@@ -932,7 +932,7 @@ glance image-update (v2)
                               [--min-disk <MIN_DISK>] [--visibility <VISIBILITY>]
                               [--kernel-id <KERNEL_ID>]
                               [--os-version <OS_VERSION>]
-                              [--disk-format <DISK_FORMAT>] [--self <SELF>]
+                              [--disk-format <DISK_FORMAT>]
                               [--os-distro <OS_DISTRO>] [--owner <OWNER>]
                               [--ramdisk-id <RAMDISK_ID>] [--min-ram <MIN_RAM>]
                               [--container-format <CONTAINER_FORMAT>]
@@ -962,7 +962,9 @@ Optional arguments
   Descriptive name for the image
 
 ``--instance-uuid <INSTANCE_UUID>``
-  ID of instance used to create this image.
+  Metadata which can be used to record which instance
+  this image is associated with. (Informational only,
+  does not create an instance snapshot.)
 
 ``--min-disk <MIN_DISK>``
   Amount of disk space (in GB) required to boot image.
@@ -983,9 +985,6 @@ Optional arguments
   Format of the disk Valid values: ami, ari, aki, vhd,
   vmdk, raw, qcow2, vdi, iso
 
-``--self <SELF>``
-  (READ-ONLY)
-
 ``--os-distro <OS_DISTRO>``
   Common name of operating system distribution as
   specified in http://docs.openstack.org/trunk
@@ -1003,7 +1002,7 @@ Optional arguments
 
 ``--container-format <CONTAINER_FORMAT>``
   Format of the container Valid values: ami, ari, aki,
-  bare, ovf, ova
+  bare, ovf, ova, docker
 
 ``--property <key=value>``
   Arbitrary property to associate with image. May be
@@ -1054,14 +1053,14 @@ glance location-add (v2)
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 location-add --url <URL> [--metadata <STRING>] <ID>
+   usage: glance --os-image-api-version 2 location-add --url <URL> [--metadata <STRING>] <IMAGE_ID>
 
 Add a location (and related metadata) to an image.
 
 Positional arguments
 --------------------
 
-``<ID>``
+``<IMAGE_ID>``
   ID of image to which the location is to be added.
 
 Optional arguments
@@ -1081,14 +1080,14 @@ glance location-delete (v2)
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 location-delete --url <URL> <ID>
+   usage: glance --os-image-api-version 2 location-delete --url <URL> <IMAGE_ID>
 
 Remove locations (and related metadata) from an image.
 
 Positional arguments
 --------------------
 
-``<ID>``
+``<IMAGE_ID>``
   ID of image whose locations are to be removed.
 
 Optional arguments
@@ -1104,14 +1103,14 @@ glance location-update (v2)
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 location-update --url <URL> [--metadata <STRING>] <ID>
+   usage: glance --os-image-api-version 2 location-update --url <URL> [--metadata <STRING>] <IMAGE_ID>
 
 Update metadata of an image's location.
 
 Positional arguments
 --------------------
 
-``<ID>``
+``<IMAGE_ID>``
   ID of image whose location is to be updated.
 
 Optional arguments
@@ -1656,15 +1655,6 @@ glance md-resource-type-list (v2)
    usage: glance --os-image-api-version 2 md-resource-type-list
 
 List available resource type names.
-Run
-\`glance
-:option:`--os-image-api-version`
-1
-help
-md-resource-type-list\`
-for
-v1
-help
 
 .. _glance_md-tag-create_v2:
 
