@@ -9,7 +9,7 @@ Block Storage service command-line client
 The cinder client is the command-line interface (CLI) for
 the Block Storage service API and its extensions.
 
-This chapter documents :command:`cinder` version ``1.5.0``.
+This chapter documents :command:`cinder` version ``1.6.0``.
 
 For help on a specific :command:`cinder` command, enter:
 
@@ -60,7 +60,7 @@ Subcommands
   Creates a volume backup.
 
 ``backup-delete``
-  Removes a backup.
+  Removes one or more backups.
 
 ``backup-export``
   Export backup metadata record.
@@ -148,8 +148,12 @@ Subcommands
 ``extra-specs-list``
   Lists current volume types and extra specs.
 
+``failover-host``
+
 ``force-delete``
   Attempts force-delete of volume, regardless of state.
+
+``freeze-host``
 
 ``get-capabilities``
   Show backend volume stats and properties. Admin only.
@@ -238,18 +242,6 @@ Subcommands
 ``rename``
   Renames a volume.
 
-``replication-disable``
-  Disables volume replication on a given volume.
-
-``replication-enable``
-  Enables volume replication on a given volume.
-
-``replication-failover``
-  Failover a volume to a secondary target
-
-``replication-list-targets``
-  List replication targets available for a volume.
-
 ``replication-promote``
   Promote a secondary volume to primary for a
   relationship.
@@ -289,6 +281,9 @@ Subcommands
 ``snapshot-list``
   Lists all snapshots.
 
+``snapshot-manage``
+  Manage an existing snapshot.
+
 ``snapshot-metadata``
   Sets or deletes snapshot metadata.
 
@@ -306,6 +301,11 @@ Subcommands
 
 ``snapshot-show``
   Shows snapshot details.
+
+``snapshot-unmanage``
+  Stop managing a snapshot.
+
+``thaw-host``
 
 ``transfer-accept``
   Accepts a volume transfer.
@@ -351,7 +351,7 @@ Subcommands
   Show volume type details.
 
 ``type-update``
-  Updates volume type name ,description and/or
+  Updates volume type name, description, and/or
   is_public.
 
 ``unmanage``
@@ -490,8 +490,8 @@ cinder optional arguments
 ``--timeout <seconds>``
   Set request timeout (in seconds).
 
-Block Storage API v1 commands
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Block Storage API v1 commands (DEPRECATED)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. _cinder_absolute-limits:
 
@@ -524,7 +524,7 @@ cinder backup-create
 
    usage: cinder backup-create [--container <container>] [--name <name>]
                                [--description <description>] [--incremental]
-                               [--force]
+                               [--force] [--snapshot-id <snapshot-id>]
                                <volume>
 
 Creates a volume backup.
@@ -557,6 +557,9 @@ Optional arguments
   use". The backup of an "in-use" volume means your data
   is crash consistent. Default=False.
 
+``--snapshot-id <snapshot-id>``
+  ID of snapshot to backup. Default=None.
+
 .. _cinder_backup-delete:
 
 cinder backup-delete
@@ -564,15 +567,15 @@ cinder backup-delete
 
 .. code-block:: console
 
-   usage: cinder backup-delete <backup>
+   usage: cinder backup-delete <backup> [<backup> ...]
 
-Removes a backup.
+Removes one or more backups.
 
 Positional arguments
 --------------------
 
 ``<backup>``
-  Name or ID of backup to delete.
+  Name or ID of backup(s) to delete.
 
 .. _cinder_backup-export:
 
@@ -676,8 +679,7 @@ Optional arguments
 
 ``--state <state>``
   The state to assign to the backup. Valid values are
-  "available", "error", "creating", "deleting", and
-  "error_deleting". Default=available.
+  "available", "error". Default=available.
 
 .. _cinder_backup-restore:
 
@@ -1236,6 +1238,28 @@ cinder extra-specs-list
 
 Lists current volume types and extra specs.
 
+.. _cinder_failover-host:
+
+cinder failover-host
+~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cinder failover-host [--backend_id <backend-id>] <hostname>
+
+
+Positional arguments
+--------------------
+
+``<hostname>``
+  Host name.
+
+Optional arguments
+------------------
+
+``--backend_id <backend-id>``
+  ID of backend to failover to (Default=None)
+
 .. _cinder_force-delete:
 
 cinder force-delete
@@ -1252,6 +1276,22 @@ Positional arguments
 
 ``<volume>``
   Name or ID of volume or volumes to delete.
+
+.. _cinder_freeze-host:
+
+cinder freeze-host
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cinder freeze-host <hostname>
+
+
+Positional arguments
+--------------------
+
+``<hostname>``
+  Host name.
 
 .. _cinder_get-capabilities:
 
@@ -1337,9 +1377,10 @@ cinder list
 .. code-block:: console
 
    usage: cinder list [--all-tenants [<0|1>]] [--name <name>] [--status <status>]
+                      [--bootable [<True|true|False|false>]]
                       [--migration_status <migration_status>]
                       [--metadata [<key=value> [<key=value> ...]]]
-                      [--marker <marker>] [--limit <limit>]
+                      [--marker <marker>] [--limit <limit>] [--fields <fields>]
                       [--sort <key>[:<direction>]] [--tenant [<tenant>]]
 
 Lists all volumes.
@@ -1356,6 +1397,9 @@ Optional arguments
 ``--status <status>``
   Filters results by a status. Default=None.
 
+``--bootable [<True|true|False|false>]``
+  Filters results by bootable status. Default=None.
+
 ``--migration_status <migration_status>``
   Filters results by a migration status. Default=None.
   Admin only.
@@ -1371,6 +1415,12 @@ Optional arguments
 
 ``--limit <limit>``
   Maximum number of volumes to return. Default=None.
+
+``--fields <fields>``
+  Comma-separated list of fields to display. Use the
+  show command to see which fields are available.
+  Unavailable/non-existent fields will be ignored.
+  Default=None.
 
 ``--sort <key>[:<direction>]``
   Comma-separated list of sort keys and directions in
@@ -1947,77 +1997,6 @@ Optional arguments
 ``--description <description>``
   Volume description. Default=None.
 
-.. _cinder_replication-disable:
-
-cinder replication-disable
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: cinder replication-disable <volume>
-
-Disables volume replication on a given volume.
-
-Positional arguments
---------------------
-
-``<volume>``
-  ID of volume to disable replication.
-
-.. _cinder_replication-enable:
-
-cinder replication-enable
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: cinder replication-enable <volume>
-
-Enables volume replication on a given volume.
-
-Positional arguments
---------------------
-
-``<volume>``
-  ID of volume to enable replication.
-
-.. _cinder_replication-failover:
-
-cinder replication-failover
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: cinder replication-failover <volume> <secondary>
-
-Failover a volume to a secondary target
-
-Positional arguments
---------------------
-
-``<volume>``
-  ID of volume to failover.
-
-``<secondary>``
-  A unqiue identifier that represents a failover target.
-
-.. _cinder_replication-list-targets:
-
-cinder replication-list-targets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: cinder replication-list-targets <volume>
-
-List replication targets available for a volume.
-
-Positional arguments
---------------------
-
-``<volume>``
-  ID of volume to list available replication targets.
-
 .. _cinder_replication-promote:
 
 cinder replication-promote
@@ -2183,6 +2162,7 @@ cinder service-list
 .. code-block:: console
 
    usage: cinder service-list [--host <hostname>] [--binary <binary>]
+                              [--withreplication [<True|False>]]
 
 Lists all services. Filter by host and service binary.
 
@@ -2194,6 +2174,10 @@ Optional arguments
 
 ``--binary <binary>``
   Service binary. Default=None.
+
+``--withreplication [<True|False>]``
+  Enables or disables display of Replication info for
+  c-vol services. Default=False.
 
 .. _cinder_set-bootable:
 
@@ -2298,7 +2282,7 @@ cinder snapshot-list
    usage: cinder snapshot-list [--all-tenants [<0|1>]] [--name <name>]
                                [--status <status>] [--volume-id <volume-id>]
                                [--marker <marker>] [--limit <limit>]
-                               [--sort <key>[:<direction>]]
+                               [--sort <key>[:<direction>]] [--tenant [<tenant>]]
 
 Lists all snapshots.
 
@@ -2330,6 +2314,48 @@ Optional arguments
   the form of <key>[:<asc|desc>]. Valid keys: id,
   status, size, availability_zone, name, bootable,
   created_at. Default=None.
+
+``--tenant [<tenant>]``
+  Display information from single tenant (Admin only).
+
+.. _cinder_snapshot-manage:
+
+cinder snapshot-manage
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cinder snapshot-manage [--id-type <id-type>] [--name <name>]
+                                 [--description <description>]
+                                 [--metadata [<key=value> [<key=value> ...]]]
+                                 <volume> <identifier>
+
+Manage an existing snapshot.
+
+Positional arguments
+--------------------
+
+``<volume>``
+  Cinder volume already exists in volume backend
+
+``<identifier>``
+  Name or other Identifier for existing snapshot
+
+Optional arguments
+------------------
+
+``--id-type <id-type>``
+  Type of backend device identifier provided, typically
+  source-name or source-id (Default=source-name)
+
+``--name <name>``
+  Snapshot name (Default=None)
+
+``--description <description>``
+  Snapshot description (Default=None)
+
+``--metadata [<key=value> [<key=value> ...]]``
+  Metadata key=value pairs (Default=None)
 
 .. _cinder_snapshot-metadata:
 
@@ -2466,6 +2492,39 @@ Positional arguments
 
 ``<snapshot>``
   Name or ID of snapshot.
+
+.. _cinder_snapshot-unmanage:
+
+cinder snapshot-unmanage
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cinder snapshot-unmanage <snapshot>
+
+Stop managing a snapshot.
+
+Positional arguments
+--------------------
+
+``<snapshot>``
+  Name or ID of the snapshot to unmanage.
+
+.. _cinder_thaw-host:
+
+cinder thaw-host
+~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cinder thaw-host <hostname>
+
+
+Positional arguments
+--------------------
+
+``<hostname>``
+  Host name.
 
 .. _cinder_transfer-accept:
 
@@ -2741,7 +2800,7 @@ cinder type-update
                              [--is-public <is-public>]
                              <id>
 
-Updates volume type name ,description and/or is_public.
+Updates volume type name, description, and/or is_public.
 
 Positional arguments
 --------------------
@@ -2857,7 +2916,7 @@ cinder backup-create (v2)
 
    usage: cinder --os-volume-api-version 2 backup-create [--container <container>] [--name <name>]
                                [--description <description>] [--incremental]
-                               [--force]
+                               [--force] [--snapshot-id <snapshot-id>]
                                <volume>
 
 Creates a volume backup.
@@ -2890,6 +2949,9 @@ Optional arguments
   use". The backup of an "in-use" volume means your data
   is crash consistent. Default=False.
 
+``--snapshot-id <snapshot-id>``
+  ID of snapshot to backup. Default=None.
+
 .. _cinder_backup-delete_v2:
 
 cinder backup-delete (v2)
@@ -2897,15 +2959,15 @@ cinder backup-delete (v2)
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 backup-delete <backup>
+   usage: cinder --os-volume-api-version 2 backup-delete <backup> [<backup> ...]
 
-Removes a backup.
+Removes one or more backups.
 
 Positional arguments
 --------------------
 
 ``<backup>``
-  Name or ID of backup to delete.
+  Name or ID of backup(s) to delete.
 
 .. _cinder_backup-export_v2:
 
@@ -3009,8 +3071,7 @@ Optional arguments
 
 ``--state <state>``
   The state to assign to the backup. Valid values are
-  "available", "error", "creating", "deleting", and
-  "error_deleting". Default=available.
+  "available", "error". Default=available.
 
 .. _cinder_backup-restore_v2:
 
@@ -3569,6 +3630,28 @@ cinder extra-specs-list (v2)
 
 Lists current volume types and extra specs.
 
+.. _cinder_failover-host_v2:
+
+cinder failover-host (v2)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cinder --os-volume-api-version 2 failover-host [--backend_id <backend-id>] <hostname>
+
+
+Positional arguments
+--------------------
+
+``<hostname>``
+  Host name.
+
+Optional arguments
+------------------
+
+``--backend_id <backend-id>``
+  ID of backend to failover to (Default=None)
+
 .. _cinder_force-delete_v2:
 
 cinder force-delete (v2)
@@ -3585,6 +3668,22 @@ Positional arguments
 
 ``<volume>``
   Name or ID of volume or volumes to delete.
+
+.. _cinder_freeze-host_v2:
+
+cinder freeze-host (v2)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cinder --os-volume-api-version 2 freeze-host <hostname>
+
+
+Positional arguments
+--------------------
+
+``<hostname>``
+  Host name.
 
 .. _cinder_get-capabilities_v2:
 
@@ -3670,9 +3769,10 @@ cinder list (v2)
 .. code-block:: console
 
    usage: cinder --os-volume-api-version 2 list [--all-tenants [<0|1>]] [--name <name>] [--status <status>]
+                      [--bootable [<True|true|False|false>]]
                       [--migration_status <migration_status>]
                       [--metadata [<key=value> [<key=value> ...]]]
-                      [--marker <marker>] [--limit <limit>]
+                      [--marker <marker>] [--limit <limit>] [--fields <fields>]
                       [--sort <key>[:<direction>]] [--tenant [<tenant>]]
 
 Lists all volumes.
@@ -3689,6 +3789,9 @@ Optional arguments
 ``--status <status>``
   Filters results by a status. Default=None.
 
+``--bootable [<True|true|False|false>]``
+  Filters results by bootable status. Default=None.
+
 ``--migration_status <migration_status>``
   Filters results by a migration status. Default=None.
   Admin only.
@@ -3704,6 +3807,12 @@ Optional arguments
 
 ``--limit <limit>``
   Maximum number of volumes to return. Default=None.
+
+``--fields <fields>``
+  Comma-separated list of fields to display. Use the
+  show command to see which fields are available.
+  Unavailable/non-existent fields will be ignored.
+  Default=None.
 
 ``--sort <key>[:<direction>]``
   Comma-separated list of sort keys and directions in
@@ -4280,77 +4389,6 @@ Optional arguments
 ``--description <description>``
   Volume description. Default=None.
 
-.. _cinder_replication-disable_v2:
-
-cinder replication-disable (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: cinder --os-volume-api-version 2 replication-disable <volume>
-
-Disables volume replication on a given volume.
-
-Positional arguments
---------------------
-
-``<volume>``
-  ID of volume to disable replication.
-
-.. _cinder_replication-enable_v2:
-
-cinder replication-enable (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: cinder --os-volume-api-version 2 replication-enable <volume>
-
-Enables volume replication on a given volume.
-
-Positional arguments
---------------------
-
-``<volume>``
-  ID of volume to enable replication.
-
-.. _cinder_replication-failover_v2:
-
-cinder replication-failover (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: cinder --os-volume-api-version 2 replication-failover <volume> <secondary>
-
-Failover a volume to a secondary target
-
-Positional arguments
---------------------
-
-``<volume>``
-  ID of volume to failover.
-
-``<secondary>``
-  A unqiue identifier that represents a failover target.
-
-.. _cinder_replication-list-targets_v2:
-
-cinder replication-list-targets (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: cinder --os-volume-api-version 2 replication-list-targets <volume>
-
-List replication targets available for a volume.
-
-Positional arguments
---------------------
-
-``<volume>``
-  ID of volume to list available replication targets.
-
 .. _cinder_replication-promote_v2:
 
 cinder replication-promote (v2)
@@ -4516,6 +4554,7 @@ cinder service-list (v2)
 .. code-block:: console
 
    usage: cinder --os-volume-api-version 2 service-list [--host <hostname>] [--binary <binary>]
+                              [--withreplication [<True|False>]]
 
 Lists all services. Filter by host and service binary.
 
@@ -4527,6 +4566,10 @@ Optional arguments
 
 ``--binary <binary>``
   Service binary. Default=None.
+
+``--withreplication [<True|False>]``
+  Enables or disables display of Replication info for
+  c-vol services. Default=False.
 
 .. _cinder_set-bootable_v2:
 
@@ -4631,7 +4674,7 @@ cinder snapshot-list (v2)
    usage: cinder --os-volume-api-version 2 snapshot-list [--all-tenants [<0|1>]] [--name <name>]
                                [--status <status>] [--volume-id <volume-id>]
                                [--marker <marker>] [--limit <limit>]
-                               [--sort <key>[:<direction>]]
+                               [--sort <key>[:<direction>]] [--tenant [<tenant>]]
 
 Lists all snapshots.
 
@@ -4663,6 +4706,48 @@ Optional arguments
   the form of <key>[:<asc|desc>]. Valid keys: id,
   status, size, availability_zone, name, bootable,
   created_at. Default=None.
+
+``--tenant [<tenant>]``
+  Display information from single tenant (Admin only).
+
+.. _cinder_snapshot-manage_v2:
+
+cinder snapshot-manage (v2)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cinder --os-volume-api-version 2 snapshot-manage [--id-type <id-type>] [--name <name>]
+                                 [--description <description>]
+                                 [--metadata [<key=value> [<key=value> ...]]]
+                                 <volume> <identifier>
+
+Manage an existing snapshot.
+
+Positional arguments
+--------------------
+
+``<volume>``
+  Cinder volume already exists in volume backend
+
+``<identifier>``
+  Name or other Identifier for existing snapshot
+
+Optional arguments
+------------------
+
+``--id-type <id-type>``
+  Type of backend device identifier provided, typically
+  source-name or source-id (Default=source-name)
+
+``--name <name>``
+  Snapshot name (Default=None)
+
+``--description <description>``
+  Snapshot description (Default=None)
+
+``--metadata [<key=value> [<key=value> ...]]``
+  Metadata key=value pairs (Default=None)
 
 .. _cinder_snapshot-metadata_v2:
 
@@ -4799,6 +4884,39 @@ Positional arguments
 
 ``<snapshot>``
   Name or ID of snapshot.
+
+.. _cinder_snapshot-unmanage_v2:
+
+cinder snapshot-unmanage (v2)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cinder --os-volume-api-version 2 snapshot-unmanage <snapshot>
+
+Stop managing a snapshot.
+
+Positional arguments
+--------------------
+
+``<snapshot>``
+  Name or ID of the snapshot to unmanage.
+
+.. _cinder_thaw-host_v2:
+
+cinder thaw-host (v2)
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cinder --os-volume-api-version 2 thaw-host <hostname>
+
+
+Positional arguments
+--------------------
+
+``<hostname>``
+  Host name.
 
 .. _cinder_transfer-accept_v2:
 
@@ -5074,7 +5192,7 @@ cinder type-update (v2)
                              [--is-public <is-public>]
                              <id>
 
-Updates volume type name ,description and/or is_public.
+Updates volume type name, description, and/or is_public.
 
 Positional arguments
 --------------------
