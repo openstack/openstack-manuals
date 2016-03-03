@@ -9,7 +9,7 @@ Orchestration service command-line client
 The heat client is the command-line interface (CLI) for
 the Orchestration service API and its extensions.
 
-This chapter documents :command:`heat` version ``0.9.0``.
+This chapter documents :command:`heat` version ``1.0.0``.
 
 For help on a specific :command:`heat` command, enter:
 
@@ -62,7 +62,7 @@ Subcommands
   Create a software configuration.
 
 ``config-delete``
-  Delete a software configuration.
+  Delete the software configuration(s).
 
 ``config-list``
   List software configs.
@@ -74,7 +74,7 @@ Subcommands
   Create a software deployment.
 
 ``deployment-delete``
-  Delete software deployments.
+  Delete the software deployment(s).
 
 ``deployment-list``
   List software deployments.
@@ -112,6 +112,9 @@ Subcommands
 
 ``resource-list``
   Show list of resources belonging to a stack.
+
+``resource-mark-unhealthy``
+  Set resource's health.
 
 ``resource-metadata``
   List resource metadata.
@@ -415,13 +418,13 @@ heat config-delete
 
    usage: heat config-delete <ID> [<ID> ...]
 
-Delete a software configuration.
+Delete the software configuration(s).
 
 Positional arguments
 --------------------
 
 ``<ID>``
-  IDs of the configurations to delete.
+  ID of the configuration(s) to delete.
 
 .. _heat_config-list:
 
@@ -532,13 +535,13 @@ heat deployment-delete
 
    usage: heat deployment-delete <ID> [<ID> ...]
 
-Delete software deployments.
+Delete the software deployment(s).
 
 Positional arguments
 --------------------
 
 ``<ID>``
-  IDs of the deployments to delete.
+  ID of the deployment(s) to delete.
 
 .. _heat_deployment-list:
 
@@ -768,7 +771,8 @@ heat output-show
 
 .. code-block:: console
 
-   usage: heat output-show [-F <FORMAT>] [-a] [-v] <NAME or ID> [<OUTPUT NAME>]
+   usage: heat output-show [-F <FORMAT>] [-a] [--with-detail]
+                           <NAME or ID> [<OUTPUT NAME>]
 
 Show a specific stack output.
 
@@ -790,8 +794,9 @@ Optional arguments
 ``-a, --all``
   Display all stack outputs.
 
-``-v, --only-value``
-  Returns only output value in specified format.
+``--with-detail``
+  Enable detail information presented, like key and
+  description.
 
 .. _heat_resource-list:
 
@@ -800,7 +805,8 @@ heat resource-list
 
 .. code-block:: console
 
-   usage: heat resource-list [-n <DEPTH>] [--with-detail] <NAME or ID>
+   usage: heat resource-list [-n <DEPTH>] [--with-detail] [-f <KEY=VALUE>]
+                             <NAME or ID>
 
 Show list of resources belonging to a stack.
 
@@ -820,6 +826,41 @@ Optional arguments
 ``--with-detail``
   Enable detail information presented for each resource
   in resources list.
+
+``-f <KEY=VALUE>, --filter <KEY=VALUE>``
+  Filter parameters to apply on returned resources based
+  on their name, status, type, action, id and
+  physcial_resource_id. This can be specified multiple
+  times.
+
+.. _heat_resource-mark-unhealthy:
+
+heat resource-mark-unhealthy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: heat resource-mark-unhealthy [--reset] <NAME or ID> <RESOURCE> [reason]
+
+Set resource's health.
+
+Positional arguments
+--------------------
+
+``<NAME or ID>``
+  Name or ID of stack the resource belongs to.
+
+``<RESOURCE>``
+  Name of the resource.
+
+``reason``
+  Reason for state change.
+
+Optional arguments
+------------------
+
+``--reset``
+  Set the resource as healthy.
 
 .. _heat_resource-metadata:
 
@@ -1198,7 +1239,7 @@ heat stack-delete
 
 .. code-block:: console
 
-   usage: heat stack-delete <NAME or ID> [<NAME or ID> ...]
+   usage: heat stack-delete [-y] <NAME or ID> [<NAME or ID> ...]
 
 Delete the stack(s).
 
@@ -1207,6 +1248,12 @@ Positional arguments
 
 ``<NAME or ID>``
   Name or ID of stack(s) to delete.
+
+Optional arguments
+------------------
+
+``-y, --yes``
+  Skip yes/no prompt (assume yes).
 
 .. _heat_stack-list:
 
@@ -1417,7 +1464,7 @@ heat stack-update
 
    usage: heat stack-update [-f <FILE>] [-e <FILE or URL>]
                             [--pre-update <RESOURCE>] [-u <URL>] [-o <URL>]
-                            [-t <TIMEOUT>] [-r] [--rollback <VALUE>] [-y]
+                            [-t <TIMEOUT>] [-r] [--rollback <VALUE>] [-y] [-n]
                             [-P <KEY1=VALUE1;KEY2=VALUE2...>] [-Pf <KEY=FILE>]
                             [-x] [-c <PARAMETER>] [--tags <TAG1,TAG2>]
                             <NAME or ID>
@@ -1473,6 +1520,9 @@ Optional arguments
 ``-y, --dry-run``
   Do not actually perform the stack update, but show
   what would be changed
+
+``-n, --show-nested``
+  Show nested stacks when performing :option:`--dry-run`
 
 ``-P <KEY1=VALUE1;KEY2=VALUE2...>, --parameters <KEY1=VALUE1;KEY2=VALUE2...>``
   Parameter values used to create the stack. This can be
@@ -1547,6 +1597,7 @@ heat template-validate
    usage: heat template-validate [-u <URL>] [-f <FILE>] [-e <FILE or URL>]
                                  [-o <URL>] [-n]
                                  [-P <KEY1=VALUE1;KEY2=VALUE2...>]
+                                 [-I <ERR1,ERR2...>]
 
 Validate a template with parameters.
 
@@ -1573,6 +1624,9 @@ Optional arguments
   Parameter values for the template. This can be
   specified multiple times, or once with parameters
   separated by a semicolon.
+
+``-I <ERR1,ERR2...>, --ignore-errors <ERR1,ERR2...>``
+  List of heat errors to ignore.
 
 .. _heat_template-version-list:
 
