@@ -151,7 +151,6 @@ Install and configure components
         ...
         network_api_class = nova.network.neutronv2.api.API
         security_group_api = neutron
-        linuxnet_interface_driver = nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver
         firewall_driver = nova.virt.firewall.NoopFirewallDriver
 
      .. note::
