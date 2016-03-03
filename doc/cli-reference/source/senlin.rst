@@ -9,7 +9,7 @@ Clustering service command-line client
 The senlin client is the command-line interface (CLI) for
 the Clustering service API and its extensions.
 
-This chapter documents :command:`senlin` version ``0.2.1``.
+This chapter documents :command:`senlin` version ``0.4.0``.
 
 For help on a specific :command:`senlin` command, enter:
 
@@ -80,12 +80,6 @@ Subcommands
 ``cluster-policy-detach``
   Detach policy from cluster.
 
-``cluster-policy-disable``
-  Disable a policy on a cluster.
-
-``cluster-policy-enable``
-  Enable a policy on a cluster.
-
 ``cluster-policy-list``
   List policies from cluster.
 
@@ -122,12 +116,6 @@ Subcommands
 
 ``node-delete``
   Delete the node(s).
-
-``node-join``
-  Make node join the specified cluster.
-
-``node-leave``
-  Make node leave its current cluster.
 
 ``node-list``
   Show list of nodes.
@@ -314,8 +302,8 @@ senlin action-list
 
 .. code-block:: console
 
-   usage: senlin action-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-k <KEYS>]
-                             [-s <DIR>] [-l <LIMIT>] [-m <ID>] [-F]
+   usage: senlin action-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-o <KEY:DIR>]
+                             [-l <LIMIT>] [-m <ID>] [-F]
 
 List actions.
 
@@ -327,12 +315,10 @@ Optional arguments
   can be specified multiple times, or once with
   parameters separated by a semicolon.
 
-``-k <KEYS>, --sort-keys <KEYS>``
-  Name of keys used for sorting the returned actions.
-
-``-s <DIR>, --sort-dir <DIR>``
-  Direction for sorting, where DIR can be "asc" or
-  "desc".
+``-o <KEY:DIR>, --sort <KEY:DIR>``
+  Sorting option which is a string containing a list of
+  keys separated by commas. Each key can be optionally
+  appened by a sort direction (:asc or :desc)
 
 ``-l <LIMIT>, --limit <LIMIT>``
   Limit the number of actions returned.
@@ -381,8 +367,8 @@ senlin cluster-create
 .. code-block:: console
 
    usage: senlin cluster-create -p <PROFILE> [-n <MIN-SIZE>] [-m <MAX-SIZE>]
-                                [-c <DESIRED-CAPACITY>] [-o <PARENT_ID>]
-                                [-t <TIMEOUT>] [-M <KEY1=VALUE1;KEY2=VALUE2...>]
+                                [-c <DESIRED-CAPACITY>] [-t <TIMEOUT>]
+                                [-M <KEY1=VALUE1;KEY2=VALUE2...>]
                                 <CLUSTER_NAME>
 
 Create the cluster.
@@ -409,9 +395,6 @@ Optional arguments
 ``-c <DESIRED-CAPACITY>, --desired-capacity <DESIRED-CAPACITY>``
   Desired capacity of the cluster. Default to min_size
   if min_size is specified else 0.
-
-``-o <PARENT_ID>, --parent <PARENT_ID>``
-  ID of the parent cluster, if exists.
 
 ``-t <TIMEOUT>, --timeout <TIMEOUT>``
   Cluster creation timeout in seconds.
@@ -445,28 +428,23 @@ senlin cluster-list
 
 .. code-block:: console
 
-   usage: senlin cluster-list [-n] [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-k <KEYS>]
-                              [-s <DIR>] [-l <LIMIT>] [-m <ID>] [-g] [-F]
+   usage: senlin cluster-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-o <KEY:DIR>]
+                              [-l <LIMIT>] [-m <ID>] [-g] [-F]
 
 List the user's clusters.
 
 Optional arguments
 ------------------
 
-``-n, --show-nested``
-  Include nested clusters if any.
-
 ``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
   Filter parameters to apply on returned clusters. This
   can be specified multiple times, or once with
   parameters separated by a semicolon.
 
-``-k <KEYS>, --sort-keys <KEYS>``
-  Name of keys used for sorting the returned clusters.
-
-``-s <DIR>, --sort-dir <DIR>``
-  Direction for sorting, where DIR can be "asc" or
-  "desc".
+``-o <KEY:DIR>, --sort <KEY:DIR>``
+  Sorting option which is a string containing a list of
+  keys separated by commas. Each key can be optionally
+  appened by a sort direction (:asc or :desc)
 
 ``-l <LIMIT>, --limit <LIMIT>``
   Limit the number of clusters returned.
@@ -574,9 +552,7 @@ senlin cluster-policy-attach
 
 .. code-block:: console
 
-   usage: senlin cluster-policy-attach -p <POLICY> [-r <PRIORITY>] [-l <LEVEL>]
-                                       [-c <SECONDS>] [-e]
-                                       <NAME or ID>
+   usage: senlin cluster-policy-attach -p <POLICY> [-e] <NAME or ID>
 
 Attach policy to cluster.
 
@@ -591,20 +567,6 @@ Optional arguments
 
 ``-p <POLICY>, --policy <POLICY>``
   ID or name of policy to be attached.
-
-``-r <PRIORITY>, --priority <PRIORITY>``
-  An integer specifying the relative priority among all
-  policies attached to a cluster. The lower the value,
-  the higher the priority. Default is 50.
-
-``-l <LEVEL>, --enforcement-level <LEVEL>``
-  An integer between 0 and 100 representing the
-  enforcement level. Default to enforcement level of
-  policy.
-
-``-c <SECONDS>, --cooldown <SECONDS>``
-  An integer indicating the cooldown seconds once the
-  policy is effected. Default to cooldown of policy.
 
 ``-e, --enabled``
   Whether the policy should be enabled once attached.
@@ -633,52 +595,6 @@ Optional arguments
 ``-p <POLICY>, --policy <POLICY>``
   ID or name of policy to be detached.
 
-.. _senlin_cluster-policy-disable:
-
-senlin cluster-policy-disable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: senlin cluster-policy-disable -p <POLICY> <NAME or ID>
-
-Disable a policy on a cluster.
-
-Positional arguments
---------------------
-
-``<NAME or ID>``
-  Name or ID of cluster to operate on.
-
-Optional arguments
-------------------
-
-``-p <POLICY>, --policy <POLICY>``
-  ID or name of policy to be disabled.
-
-.. _senlin_cluster-policy-enable:
-
-senlin cluster-policy-enable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: senlin cluster-policy-enable -p <POLICY> <NAME or ID>
-
-Enable a policy on a cluster.
-
-Positional arguments
---------------------
-
-``<NAME or ID>``
-  Name or ID of cluster to operate on.
-
-Optional arguments
-------------------
-
-``-p <POLICY>, --policy <POLICY>``
-  ID or name of policy to be enabled.
-
 .. _senlin_cluster-policy-list:
 
 senlin cluster-policy-list
@@ -687,7 +603,7 @@ senlin cluster-policy-list
 .. code-block:: console
 
    usage: senlin cluster-policy-list [-f <KEY1=VALUE1;KEY2=VALUE2...>]
-                                     [-k <KEYS>] [-s <DIR>] [-F]
+                                     [-o <SORT_STRING>] [-F]
                                      <CLUSTER>
 
 List policies from cluster.
@@ -706,12 +622,10 @@ Optional arguments
   can be specified multiple times, or once with
   parameters separated by a semicolon.
 
-``-k <KEYS>, --sort-keys <KEYS>``
-  Name of keys used for sorting the returned policies.
-
-``-s <DIR>, --sort-dir <DIR>``
-  Direction for sorting, where DIR can be "asc" or
-  "desc".
+``-o <SORT_STRING>, --sort <SORT_STRING>``
+  Sorting option which is a string containing a list of
+  keys separated by commas. Each key can be optionally
+  appened by a sort direction (:asc or :desc)
 
 ``-F, --full-id``
   Print full IDs in list.
@@ -746,9 +660,7 @@ senlin cluster-policy-update
 
 .. code-block:: console
 
-   usage: senlin cluster-policy-update -p <POLICY> [-r <PRIORITY>] [-l <LEVEL>]
-                                       [-c <COOLDOWN>] [-e <BOOLEAN>]
-                                       <NAME or ID>
+   usage: senlin cluster-policy-update -p <POLICY> [-e <BOOLEAN>] <NAME or ID>
 
 Update a policy's properties on a cluster.
 
@@ -763,17 +675,6 @@ Optional arguments
 
 ``-p <POLICY>, --policy <POLICY>``
   ID or name of policy to be updated.
-
-``-r <PRIORITY>, --priority <PRIORITY>``
-  An integer specifying the relative priority among all
-  policies attached to a cluster. The lower the value,
-  the higher the priority. Default is 50.
-
-``-l <LEVEL>, --enforcement-level <LEVEL>``
-  New enforcement level.
-
-``-c <COOLDOWN>, --cooldown <COOLDOWN>``
-  Cooldown interval in seconds.
 
 ``-e <BOOLEAN>, --enabled <BOOLEAN>``
   Whether the policy should be enabled.
@@ -900,7 +801,7 @@ senlin cluster-update
 
 .. code-block:: console
 
-   usage: senlin cluster-update [-p <PROFILE>] [-t <TIMEOUT>] [-r <PARENT>]
+   usage: senlin cluster-update [-p <PROFILE>] [-t <TIMEOUT>]
                                 [-M <KEY1=VALUE1;KEY2=VALUE2...>] [-n <NAME>]
                                 <CLUSTER>
 
@@ -921,9 +822,6 @@ Optional arguments
 ``-t <TIMEOUT>, --timeout <TIMEOUT>``
   New timeout (in seconds) value for the cluster.
 
-``-r <PARENT>, --parent <PARENT>``
-  ID of parent cluster for the cluster.
-
 ``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
   Metadata values to be attached to the cluster. This
   can be specified multiple times, or once with key-
@@ -940,7 +838,7 @@ senlin event-list
 .. code-block:: console
 
    usage: senlin event-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-l <LIMIT>]
-                            [-m <ID>] [-k <KEYS>] [-s <DIR>] [-g] [-F]
+                            [-m <ID>] [-o <KEY:DIR>] [-g] [-F]
 
 List events.
 
@@ -959,12 +857,10 @@ Optional arguments
   Only return events that appear after the given event
   ID.
 
-``-k <KEYS>, --sort-keys <KEYS>``
-  Name of keys used for sorting the returned events.
-
-``-s <DIR>, --sort-dir <DIR>``
-  Direction for sorting, where DIR can be "asc" or
-  "desc".
+``-o <KEY:DIR>, --sort <KEY:DIR>``
+  Sorting option which is a string containing a list of
+  keys separated by commas. Each key can be optionally
+  appened by a sort direction (:asc or :desc)
 
 ``-g, --global-project``
   Whether events from all projects should be listed.
@@ -1044,46 +940,6 @@ Positional arguments
 ``<NODE>``
   Name or ID of node(s) to delete.
 
-.. _senlin_node-join:
-
-senlin node-join
-~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: senlin node-join -c CLUSTER <NODE>
-
-Make node join the specified cluster.
-
-Positional arguments
---------------------
-
-``<NODE>``
-  Name or ID of node to operate on.
-
-Optional arguments
-------------------
-
-``-c CLUSTER, --cluster CLUSTER``
-  ID or name of cluster for node to join.
-
-.. _senlin_node-leave:
-
-senlin node-leave
-~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: senlin node-leave <NODE>
-
-Make node leave its current cluster.
-
-Positional arguments
---------------------
-
-``<NODE>``
-  Name or ID of node to operate on.
-
 .. _senlin_node-list:
 
 senlin node-list
@@ -1092,8 +948,7 @@ senlin node-list
 .. code-block:: console
 
    usage: senlin node-list [-c <CLUSTER>] [-f <KEY1=VALUE1;KEY2=VALUE2...>]
-                           [-k <KEYS>] [-s <DIR>] [-l <LIMIT>] [-m <ID>] [-g]
-                           [-F]
+                           [-o <KEY:DIR>] [-l <LIMIT>] [-m <ID>] [-g] [-F]
 
 Show list of nodes.
 
@@ -1109,12 +964,10 @@ Optional arguments
   be specified multiple times, or once with parameters
   separated by a semicolon.
 
-``-k <KEYS>, --sort-keys <KEYS>``
-  Name of keys used for sorting the returned nodes.
-
-``-s <DIR>, --sort-dir <DIR>``
-  Direction for sorting, where DIR can be "asc" or
-  "desc".
+``-o <KEY:DIR>, --sort <KEY:DIR>``
+  Sorting option which is a string containing a list of
+  keys separated by commas. Each key can be optionally
+  appened by a sort direction (:asc or :desc)
 
 ``-l <LIMIT>, --limit <LIMIT>``
   Limit the number of nodes returned.
@@ -1196,7 +1049,7 @@ senlin policy-create
 
 .. code-block:: console
 
-   usage: senlin policy-create -s <SPEC_FILE> [-c <SECONDS>] [-l <LEVEL>] <NAME>
+   usage: senlin policy-create -s <SPEC_FILE> <NAME>
 
 Create a policy.
 
@@ -1211,14 +1064,6 @@ Optional arguments
 
 ``-s <SPEC_FILE>, --spec-file <SPEC_FILE>``
   The spec file used to create the policy.
-
-``-c <SECONDS>, --cooldown <SECONDS>``
-  An integer indicating the cooldown seconds once the
-  policy is effected. Default to 0.
-
-``-l <LEVEL>, --enforcement-level <LEVEL>``
-  An integer between 0 and 100 representing the
-  enforcement level. Default to 0.
 
 .. _senlin_policy-delete:
 
@@ -1244,18 +1089,34 @@ senlin policy-list
 
 .. code-block:: console
 
-   usage: senlin policy-list [-l <LIMIT>] [-m <ID>] [-F]
+   usage: senlin policy-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-l <LIMIT>]
+                             [-m <ID>] [-o <KEY:DIR>] [-g] [-F]
 
 List policies that meet the criteria.
 
 Optional arguments
 ------------------
 
+``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+  Filter parameters to apply on returned policies. This
+  can be specified multiple times, or once with
+  parameters separated by a semicolon.
+
 ``-l <LIMIT>, --limit <LIMIT>``
   Limit the number of policies returned.
 
 ``-m <ID>, --marker <ID>``
   Only return policies that appear after the given ID.
+
+``-o <KEY:DIR>, --sort <KEY:DIR>``
+  Sorting option which is a string containing a list of
+  keys separated by commas. Each key can be optionally
+  appened by a sort direction (:asc or :desc)
+
+``-g, --global-project``
+  Indicate that the list should include policies from
+  all projects. This option is subject to access policy
+  checking. Default is False.
 
 ``-F, --full-id``
   Print full IDs in list.
@@ -1318,7 +1179,7 @@ senlin policy-update
 
 .. code-block:: console
 
-   usage: senlin policy-update [-c <SECONDS>] [-l <LEVEL>] [-n <NAME>] <POLICY>
+   usage: senlin policy-update [-n <NAME>] <POLICY>
 
 Update a policy.
 
@@ -1331,14 +1192,6 @@ Positional arguments
 Optional arguments
 ------------------
 
-``-c <SECONDS>, --cooldown <SECONDS>``
-  An integer indicating the cooldown seconds once the
-  policy is effected. Default to 0.
-
-``-l <LEVEL>, --enforcement-level <LEVEL>``
-  An integer between 0 and 100 representing the
-  enforcement level. Default to 0.
-
 ``-n <NAME>, --name <NAME>``
   New name of the policy to be updated.
 
@@ -1349,8 +1202,7 @@ senlin profile-create
 
 .. code-block:: console
 
-   usage: senlin profile-create -s <SPEC FILE> [-p <PERMISSION>]
-                                [-M <KEY1=VALUE1;KEY2=VALUE2...>]
+   usage: senlin profile-create -s <SPEC FILE> [-M <KEY1=VALUE1;KEY2=VALUE2...>]
                                 <PROFILE_NAME>
 
 Create a profile.
@@ -1366,9 +1218,6 @@ Optional arguments
 
 ``-s <SPEC FILE>, --spec-file <SPEC FILE>``
   The spec file used to create the profile.
-
-``-p <PERMISSION>, --permission <PERMISSION>``
-  A string format permission for this profile.
 
 ``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
   Metadata values to be attached to the profile. This
@@ -1399,18 +1248,34 @@ senlin profile-list
 
 .. code-block:: console
 
-   usage: senlin profile-list [-l <LIMIT>] [-m <ID>] [-F]
+   usage: senlin profile-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-l <LIMIT>]
+                              [-m <ID>] [-o <KEY:DIR>] [-g] [-F]
 
 List profiles that meet the criteria.
 
 Optional arguments
 ------------------
 
+``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+  Filter parameters to apply on returned profiles. This
+  can be specified multiple times, or once with
+  parameters separated by a semicolon.
+
 ``-l <LIMIT>, --limit <LIMIT>``
   Limit the number of profiles returned.
 
 ``-m <ID>, --marker <ID>``
   Only return profiles that appear after the given ID.
+
+``-o <KEY:DIR>, --sort <KEY:DIR>``
+  Sorting option which is a string containing a list of
+  keys separated by commas. Each key can be optionally
+  appened by a sort direction (:asc or :desc)
+
+``-g, --global-project``
+  Indicate that the list should include profiles from
+  all projects. This option is subject to access policy
+  checking. Default is False.
 
 ``-F, --full-id``
   Print full IDs in list.
@@ -1474,8 +1339,7 @@ senlin profile-update
 
 .. code-block:: console
 
-   usage: senlin profile-update [-n <NAME>] [-p <PERMISSION>]
-                                [-M <KEY1=VALUE1;KEY2=VALUE2...>]
+   usage: senlin profile-update [-n <NAME>] [-M <KEY1=VALUE1;KEY2=VALUE2...>]
                                 <PROFILE_ID>
 
 Update a profile.
@@ -1492,9 +1356,6 @@ Optional arguments
 ``-n <NAME>, --name <NAME>``
   The new name for the profile.
 
-``-p <PERMISSION>, --permission <PERMISSION>``
-  A string format permission for this profile.
-
 ``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
   Metadata values to be attached to the profile. This
   can be specified multiple times, or once with key-
@@ -1507,7 +1368,7 @@ senlin receiver-create
 
 .. code-block:: console
 
-   usage: senlin receiver-create [-t <TYPE>] [-c <CLUSTER>] -a <ACTION>
+   usage: senlin receiver-create [-t <TYPE>] -c <CLUSTER> -a <ACTION>
                                  [-P <KEY1=VALUE1;KEY2=VALUE2...>]
                                  <NAME>
 
@@ -1560,7 +1421,7 @@ senlin receiver-list
 .. code-block:: console
 
    usage: senlin receiver-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-l <LIMIT>]
-                               [-m <ID>] [-k <KEYS>] [-s <DIR>] [-g] [-F]
+                               [-m <ID>] [-o <KEY:DIR>] [-g] [-F]
 
 List receivers that meet the criteria.
 
@@ -1578,12 +1439,10 @@ Optional arguments
 ``-m <ID>, --marker <ID>``
   Only return receivers that appear after the given ID.
 
-``-k <KEYS>, --sort-keys <KEYS>``
-  Name of keys used for sorting the returned receivers.
-
-``-s <DIR>, --sort-dir <DIR>``
-  Direction for sorting, where DIR can be "asc" or
-  "desc".
+``-o <KEY:DIR>, --sort <KEY:DIR>``
+  Sorting option which is a string containing a list of
+  keys separated by commas. Each key can be optionally
+  appened by a sort direction (:asc or :desc)
 
 ``-g, --global-project``
   Indicate that the list should include receivers from
