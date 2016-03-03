@@ -19,7 +19,8 @@ manage images in the admin project.
 
    You can also use the :command:`openstack`, :command:`glance` and
    :command:`nova` command-line clients or the Image service and Compute
-   APIs to manage images.
+   APIs to manage images.  For more information see
+   :doc:`../common/cli_manage_images`.
 
 Upload an image
 ~~~~~~~~~~~~~~~
