@@ -337,13 +337,6 @@ For the back end, use either Octavia or Haproxy. This example uses Octavia.
       service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.
       drivers.octavia.driver.OctaviaDriver:default
 
-   .. warning::
-
-      The ``service_provider`` option is already
-      defined in the ``/usr/share/neutron/neutron-dist.conf`` file on
-      Red Hat based systems. Do not define it in ``neutron_lbaas.conf``
-      otherwise the Networking services will fail to restart.
-
 
 #. Edit the ``/etc/neutron/neutron.conf`` file and add the
    ``service_plugins`` parameter to enable the load-balancing plug-in:
