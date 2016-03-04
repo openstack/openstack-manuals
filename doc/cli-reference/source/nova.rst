@@ -9,7 +9,7 @@ Compute command-line client
 The nova client is the command-line interface (CLI) for
 the OpenStack Compute API and its extensions.
 
-This chapter documents :command:`nova` version ``3.2.0``.
+This chapter documents :command:`nova` version ``3.3.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -47,8 +47,7 @@ nova usage
                [--os-password OS_PASSWORD]
                <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``absolute-limits``
   **DEPRECATED**, use limits instead.
@@ -343,6 +342,19 @@ Subcommands
 ``live-migration``
   Migrate running server to a new machine.
 
+``live-migration-abort``
+  Abort an on-going live migration. (Supported
+  by API versions '2.24' - '2.latest') [hint:
+  use ':option:`--os-compute-api-version`' flag to show
+  help message for proper version]
+
+``live-migration-force-complete``
+  Force on-going live migration to complete.
+  (Supported by API versions '2.22' -
+  '2.latest') [hint: use ':option:`--os-compute-api-`
+  version' flag to show help message for proper
+  version]
+
 ``lock``
   Lock a server. A normal (non-admin) user will
   not be able to execute actions on a locked
@@ -422,7 +434,7 @@ Subcommands
   Remove a Security Group from a server.
 
 ``rename``
-  Rename a server.
+  **DEPRECATED**, use update instead.
 
 ``rescue``
   Reboots a server into rescue mode, which
@@ -511,6 +523,20 @@ Subcommands
 ``server-group-list``
   Print a list of all server groups.
 
+``server-migration-list``
+  Get the migrations list of specified server.
+  (Supported by API versions '2.23' -
+  '2.latest') [hint: use ':option:`--os-compute-api-`
+  version' flag to show help message for proper
+  version]
+
+``server-migration-show``
+  Get the migration of specified server.
+  (Supported by API versions '2.23' -
+  '2.latest') [hint: use ':option:`--os-compute-api-`
+  version' flag to show help message for proper
+  version]
+
 ``service-delete``
   Delete the service.
 
@@ -554,6 +580,12 @@ Subcommands
 ``suspend``
   Suspend a server.
 
+``trigger-crash-dump``
+  Trigger crash dump in an instance. (Supported
+  by API versions '2.17' - '2.latest') [hint:
+  use ':option:`--os-compute-api-version`' flag to show
+  help message for proper version]
+
 ``unlock``
   Unlock a server.
 
@@ -566,6 +598,10 @@ Subcommands
 
 ``unshelve``
   Unshelve a server.
+
+``update``
+  Update the name or the description for a
+  server.
 
 ``usage``
   Show usage data for a single tenant.
@@ -641,59 +677,9 @@ Subcommands
   Display help about this program or one of its
   subcommands.
 
-``host-meta``
-  Set or Delete metadata on all instances of a
-  host.
-
-``host-servers-migrate``
-  Migrate all instances of the specified host to
-  other available hosts.
-
-``instance-action``
-  Show an action.
-
-``instance-action-list``
-  List actions on a server.
-
-``baremetal-interface-add``
-  Add a network interface to a baremetal node.
-
-``baremetal-interface-list``
-  List network interfaces associated with a
-  baremetal node.
-
-``baremetal-interface-remove``
-  Remove a network interface from a baremetal
-  node.
-
-``baremetal-node-create``
-  Create a baremetal node.
-
-``baremetal-node-delete``
-  Remove a baremetal node and any associated
-  interfaces.
-
-``baremetal-node-list``
-  Print list of available baremetal nodes.
-
-``baremetal-node-show``
-  Show information about a baremetal node.
-
-``migration-list``
-  Print a list of migrations.
-
-``host-evacuate``
-  Evacuate all instances from failed host.
-
 ``host-evacuate-live``
   Live migrate all instances of the specified
   host to other available hosts.
-
-``force-delete``
-  Force delete a server.
-
-``restore``
-  Restore a soft-deleted server.
 
 ``cell-capacities``
   Get cell capacities for all cells or a given
@@ -702,9 +688,14 @@ Subcommands
 ``cell-show``
   Show details of a given cell.
 
-``list-extensions``
-  List all the os-api extensions that are
-  available.
+``migration-list``
+  Print a list of migrations.
+
+``instance-action``
+  Show an action.
+
+``instance-action-list``
+  List actions on a server.
 
 ``net``
   **DEPRECATED**, use tenant-network-show instead.
@@ -729,6 +720,51 @@ Subcommands
 
 ``tenant-network-show``
   Show a tenant network.
+
+``host-servers-migrate``
+  Migrate all instances of the specified host to
+  other available hosts.
+
+``host-evacuate``
+  Evacuate all instances from failed host.
+
+``host-meta``
+  Set or Delete metadata on all instances of a
+  host.
+
+``list-extensions``
+  List all the os-api extensions that are
+  available.
+
+``force-delete``
+  Force delete a server.
+
+``restore``
+  Restore a soft-deleted server.
+
+``baremetal-interface-add``
+  Add a network interface to a baremetal node.
+
+``baremetal-interface-list``
+  List network interfaces associated with a
+  baremetal node.
+
+``baremetal-interface-remove``
+  Remove a network interface from a baremetal
+  node.
+
+``baremetal-node-create``
+  Create a baremetal node.
+
+``baremetal-node-delete``
+  Remove a baremetal node and any associated
+  interfaces.
+
+``baremetal-node-list``
+  Print list of available baremetal nodes.
+
+``baremetal-node-show``
+  Show information about a baremetal node.
 
 .. _nova_command_options:
 
@@ -788,8 +824,7 @@ nova add-fixed-ip
 
 Add new IP address on a network to server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -808,8 +843,7 @@ nova add-secgroup
 
 Add a Security Group to a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -829,8 +863,7 @@ nova agent-create
 
 Create new agent build.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<os>``
   Type of OS.
@@ -861,8 +894,7 @@ nova agent-delete
 
 Delete existing agent build.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of the agent-build.
@@ -878,8 +910,7 @@ nova agent-list
 
 List all builds.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--hypervisor <hypervisor>``
   Type of hypervisor.
@@ -895,8 +926,7 @@ nova agent-modify
 
 Modify existing agent build.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of the agent-build.
@@ -921,8 +951,7 @@ nova aggregate-add-host
 
 Add the host to the specified aggregate.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Name or ID of aggregate.
@@ -941,8 +970,7 @@ nova aggregate-create
 
 Create a new aggregate with the specified details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Name of aggregate.
@@ -961,8 +989,7 @@ nova aggregate-delete
 
 Delete the aggregate.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Name or ID of aggregate to delete.
@@ -978,8 +1005,7 @@ nova aggregate-details
 
 Show details of the specified aggregate.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Name or ID of aggregate.
@@ -1006,8 +1032,7 @@ nova aggregate-remove-host
 
 Remove the specified host from the specified aggregate.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Name or ID of aggregate.
@@ -1026,8 +1051,7 @@ nova aggregate-set-metadata
 
 Update the metadata associated with the aggregate.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Name or ID of aggregate to update.
@@ -1047,8 +1071,7 @@ nova aggregate-update
 
 Update the aggregate's name and optionally availability zone.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Name or ID of aggregate to update.
@@ -1081,8 +1104,7 @@ nova backup
 
 Backup a server by creating a 'backup' type snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -1109,8 +1131,7 @@ nova baremetal-interface-add
 
 Add a network interface to a baremetal node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   ID of node
@@ -1118,8 +1139,7 @@ Positional arguments
 ``<address>``
   MAC address of interface
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--datapath_id <datapath_id>``
   OpenFlow Datapath ID of interface
@@ -1138,8 +1158,7 @@ nova baremetal-interface-list
 
 List network interfaces associated with a baremetal node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   ID of node
@@ -1155,8 +1174,7 @@ nova baremetal-interface-remove
 
 Remove a network interface from a baremetal node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   ID of node
@@ -1180,8 +1198,7 @@ nova baremetal-node-create
 
 Create a baremetal node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<service_host>``
   Name of nova compute host which will control
@@ -1199,8 +1216,7 @@ Positional arguments
 ``<prov_mac_address>``
   MAC address to provision the node
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--pm_address <pm_address>``
   Power management IP for the node
@@ -1225,8 +1241,7 @@ nova baremetal-node-delete
 
 Remove a baremetal node and any associated interfaces.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   ID of the node to delete.
@@ -1253,8 +1268,7 @@ nova baremetal-node-show
 
 Show information about a baremetal node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   ID of node
@@ -1279,21 +1293,20 @@ nova boot
                     [--swap <swap_size>]
                     [--ephemeral size=<size>[,format=<format>]]
                     [--hint <key=value>]
-                    [--nic <net-id=net-uuid,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>]
+                    [--nic <net-id=net-uuid,net-name=network-name,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>]
                     [--config-drive <value>] [--poll] [--admin-pass <value>]
                     [--access-ip-v4 <value>] [--access-ip-v6 <value>]
+                    [--description <description>]
                     <name>
 
 Boot a new server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Name for the new server.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--flavor <flavor>``
   Name or ID of flavor (see 'nova flavor-list').
@@ -1392,16 +1405,17 @@ Optional arguments
 
 ``--nic <net-id=net-uuid,``
 
-``v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>``
+``net-name=network-name,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>``
   Create a NIC on the server. Specify option
   multiple times to create multiple NICs. net-
-  id: attach NIC to network with this UUID
-  (either port-id or net-id must be provided),
-  v4-fixed-ip: IPv4 fixed address for NIC
-  (optional), v6-fixed-ip: IPv6 fixed address
-  for NIC (optional), port-id: attach NIC to
-  port with this UUID (either port-id or net-id
-  must be provided).
+  id: attach NIC to network with this UUID net-
+  name: attach NIC to network with this name
+  (either port-id or net-id or net-name must be
+  provided), v4-fixed-ip: IPv4 fixed address for
+  NIC (optional), v6-fixed-ip: IPv6 fixed
+  address for NIC (optional), port-id: attach
+  NIC to port with this UUID (either port-id or
+  net-id must be provided).
 
 ``--config-drive <value>``
   Enable config drive.
@@ -1419,6 +1433,10 @@ Optional arguments
 ``--access-ip-v6 <value>``
   Alternative access IPv6 of the instance.
 
+``--description <description>``
+  Description for the server. (Supported by API
+  versions '2.19' - '2.latest')
+
 .. _nova_cell-capacities:
 
 nova cell-capacities
@@ -1430,8 +1448,7 @@ nova cell-capacities
 
 Get cell capacities for all cells or a given cell.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--cell <cell-name>``
   Name of the cell to get the capacities.
@@ -1447,8 +1464,7 @@ nova cell-show
 
 Show details of a given cell.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<cell-name>``
   Name of the cell.
@@ -1464,8 +1480,7 @@ nova clear-password
 
 Clear the admin password for a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -1481,8 +1496,7 @@ nova cloudpipe-configure
 
 Update the VPN IP/port of a cloudpipe instance.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ip address>``
   New IP Address.
@@ -1501,8 +1515,7 @@ nova cloudpipe-create
 
 Create a cloudpipe instance for the given project.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<project_id>``
   UUID of the project to create the cloudpipe for.
@@ -1529,14 +1542,12 @@ nova console-log
 
 Get console log output of a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--length <length>``
   Length in lines to tail.
@@ -1552,8 +1563,7 @@ nova credentials
 
 Show user credentials returned from auth.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--wrap <integer>``
   Wrap PKI tokens to a specified length, or 0 to disable.
@@ -1569,14 +1579,12 @@ nova delete
 
 Immediately shut down and delete specified server(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants``
   Delete server(s) in another tenant by name (Admin only).
@@ -1592,8 +1600,7 @@ nova diagnostics
 
 Retrieve server diagnostics.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -1609,8 +1616,7 @@ nova dns-create
 
 Create a DNS entry for domain, name, and IP.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ip>``
   IP address.
@@ -1621,8 +1627,7 @@ Positional arguments
 ``<domain>``
   DNS domain.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--type <type>``
   DNS type (e.g. "A")
@@ -1640,14 +1645,12 @@ nova dns-create-private-domain
 
 Create the specified DNS domain.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<domain>``
   DNS domain.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--availability-zone <availability-zone>``
   Limit access to this domain to servers in the
@@ -1664,14 +1667,12 @@ nova dns-create-public-domain
 
 Create the specified DNS domain.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<domain>``
   DNS domain.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--project <project>``
   Limit access to this domain to users of the specified
@@ -1688,8 +1689,7 @@ nova dns-delete
 
 Delete the specified DNS entry.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<domain>``
   DNS domain.
@@ -1708,8 +1708,7 @@ nova dns-delete-domain
 
 Delete the specified DNS domain.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<domain>``
   DNS domain.
@@ -1736,14 +1735,12 @@ nova dns-list
 
 List current DNS entries for domain and IP or domain and name.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<domain>``
   DNS domain.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--ip <ip>``
   IP address.
@@ -1769,13 +1766,11 @@ nova evacuate
 
 .. code-block:: console
 
-   usage: nova evacuate [--password <password>] [--on-shared-storage]
-                        <server> [<host>]
+   usage: nova evacuate [--password <password>] <server> [<host>]
 
 Evacuate server from failed host.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -1784,15 +1779,11 @@ Positional arguments
   Name or ID of the target host. If no host is
   specified, the scheduler will choose one.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--password <password>``
   Set the provided admin password on the evacuated
-  server. Not applicable with on-shared-storage flag.
-
-``--on-shared-storage``
-  Specifies whether server files are located on shared
+  server. Not applicable if the server is on shared
   storage.
 
 .. _nova_fixed-ip-get:
@@ -1806,8 +1797,7 @@ nova fixed-ip-get
 
 Retrieve info on a fixed IP.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<fixed_ip>``
   Fixed IP Address.
@@ -1823,8 +1813,7 @@ nova fixed-ip-reserve
 
 Reserve a fixed IP.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<fixed_ip>``
   Fixed IP Address.
@@ -1840,8 +1829,7 @@ nova fixed-ip-unreserve
 
 Unreserve a fixed IP.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<fixed_ip>``
   Fixed IP Address.
@@ -1857,8 +1845,7 @@ nova flavor-access-add
 
 Add flavor access for the given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<flavor>``
   Flavor name or ID to add access for the given tenant.
@@ -1877,8 +1864,7 @@ nova flavor-access-list
 
 Print access information about the given flavor.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--flavor <flavor>``
   Filter results by flavor name or ID.
@@ -1897,8 +1883,7 @@ nova flavor-access-remove
 
 Remove flavor access for the given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<flavor>``
   Flavor name or ID to remove access for the given tenant.
@@ -1919,8 +1904,7 @@ nova flavor-create
 
 Create a new flavor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Unique name of the new flavor.
@@ -1938,8 +1922,7 @@ Positional arguments
 ``<vcpus>``
   Number of vcpus
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--ephemeral <ephemeral>``
   Ephemeral space size in GB (default 0).
@@ -1965,8 +1948,7 @@ nova flavor-delete
 
 Delete a specific flavor
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<flavor>``
   Name or ID of the flavor to delete.
@@ -1982,8 +1964,7 @@ nova flavor-key
 
 Set or unset extra_spec for a flavor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<flavor>``
   Name or ID of flavor.
@@ -2006,8 +1987,7 @@ nova flavor-list
 
 Print a list of available 'flavors' (sizes of servers).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--extra-specs``
   Get extra-specs of each flavor.
@@ -2036,8 +2016,7 @@ nova flavor-show
 
 Show details about the given flavor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<flavor>``
   Name or ID of flavor.
@@ -2054,8 +2033,7 @@ nova floating-ip-associate
 
 Associate a floating IP address to a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2063,8 +2041,7 @@ Positional arguments
 ``<address>``
   IP Address.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--fixed-address <fixed_address>``
   Fixed IP Address to associate with.
@@ -2081,14 +2058,12 @@ nova floating-ip-bulk-create
 
 Bulk create floating IPs by range (nova-network only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<range>``
   Address range to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--pool <pool>``
   Pool for new Floating IPs.
@@ -2107,8 +2082,7 @@ nova floating-ip-bulk-delete
 
 Bulk delete floating IPs by range (nova-network only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<range>``
   Address range to delete.
@@ -2124,8 +2098,7 @@ nova floating-ip-bulk-list
 
 List all floating IPs (nova-network only).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--host <host>``
   Filter by host.
@@ -2141,8 +2114,7 @@ nova floating-ip-create
 
 Allocate a floating IP for the current tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<floating-ip-pool>``
   Name of Floating IP Pool. (Optional)
@@ -2158,8 +2130,7 @@ nova floating-ip-delete
 
 De-allocate a floating IP.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<address>``
   IP of Floating IP.
@@ -2175,8 +2146,7 @@ nova floating-ip-disassociate
 
 Disassociate a floating IP address from a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2217,8 +2187,7 @@ nova force-delete
 
 Force delete a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2244,8 +2213,7 @@ help
 message
 for proper version]
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2261,8 +2229,7 @@ nova get-password
 
 Get the admin password for a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2284,8 +2251,7 @@ nova get-rdp-console
 
 Get a rdp console to a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2300,20 +2266,18 @@ nova get-serial-console
 
 .. code-block:: console
 
-   usage: nova get-serial-console [--console_type CONSOLE_TYPE] <server>
+   usage: nova get-serial-console [--console-type CONSOLE_TYPE] <server>
 
 Get a serial console to a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
-``--console_type CONSOLE_TYPE``
+``--console-type CONSOLE_TYPE``
   Type of serial console, default="serial".
 
 .. _nova_get-spice-console:
@@ -2327,8 +2291,7 @@ nova get-spice-console
 
 Get a spice console to a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2347,8 +2310,7 @@ nova get-vnc-console
 
 Get a vnc console to a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2367,14 +2329,12 @@ nova host-action
 
 Perform a power action on a host.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Name of host.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--action <action>``
   A power action: startup, reboot, or shutdown.
@@ -2390,8 +2350,7 @@ nova host-describe
 
 Describe a specific host.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Name of host.
@@ -2408,14 +2367,12 @@ nova host-evacuate
 
 Evacuate all instances from failed host.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<host>``
   Name of host.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--target_host <target_host>``
   Name of target host. If no host is specified
@@ -2439,14 +2396,12 @@ nova host-evacuate-live
 
 Live migrate all instances of the specified host to other available hosts.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<host>``
   Name of host.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--target-host <target_host>``
   Name of target host.
@@ -2472,8 +2427,7 @@ nova host-list
 
 List all hosts by service.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--zone <zone>``
   Filters the list, returning only those hosts in the
@@ -2490,8 +2444,7 @@ nova host-meta
 
 Set or Delete metadata on all instances of a host.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<host>``
   Name of host.
@@ -2513,8 +2466,7 @@ nova host-servers-migrate
 
 Migrate all instances of the specified host to other available hosts.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<host>``
   Name of host.
@@ -2532,14 +2484,12 @@ nova host-update
 
 Update host settings.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Name of host.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--status <enable|disable>``
   Either enable or disable a host.
@@ -2558,8 +2508,7 @@ nova hypervisor-list
 
 List hypervisors.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--matching <hostname>``
   List hypervisors matching the given <hostname>.
@@ -2575,8 +2524,7 @@ nova hypervisor-servers
 
 List servers belonging to specific hypervisors.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   The hypervisor hostname (or pattern) to search for.
@@ -2592,14 +2540,12 @@ nova hypervisor-show
 
 Display the details of the specified hypervisor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hypervisor>``
   Name or ID of the hypervisor to show the details of.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--wrap <integer>``
   Wrap the output to a specified length. Default is 40 or 0
@@ -2627,8 +2573,7 @@ nova hypervisor-uptime
 
 Display the uptime of the specified hypervisor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hypervisor>``
   Name or ID of the hypervisor to show the uptime of.
@@ -2645,8 +2590,7 @@ nova image-create
 
 Create a new image by taking a snapshot of a running server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2654,8 +2598,7 @@ Positional arguments
 ``<name>``
   Name of snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--metadata <key=value>``
   Record arbitrary key/value metadata to
@@ -2680,8 +2623,7 @@ nova image-delete
 
 Delete specified image(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<image>``
   Name or ID of image(s).
@@ -2697,8 +2639,7 @@ nova image-list
 
 Print a list of available images to boot from.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--limit <limit>``
   Number of images to return per request.
@@ -2714,8 +2655,7 @@ nova image-meta
 
 Set or delete metadata on an image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<image>``
   Name or ID of image.
@@ -2738,8 +2678,7 @@ nova image-show
 
 Show details about the given image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<image>``
   Name or ID of image.
@@ -2755,11 +2694,12 @@ nova instance-action
 
 Show an action.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
-  Name or UUID of the server to show an action for.
+  Name or UUID of the server to show actions for. Only UUID can
+  be used to show actions for a deleted server. (Supported by
+  API versions '2.21' - '2.latest')
 
 ``<request_id>``
   Request ID of the action to get.
@@ -2775,11 +2715,12 @@ nova instance-action-list
 
 List actions on a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
-  Name or UUID of the server to list actions for.
+  Name or UUID of the server to list actions for. Only UUID can be
+  used to list actions on a deleted server. (Supported by API
+  versions '2.21' - '2.latest')
 
 .. _nova_interface-attach:
 
@@ -2794,14 +2735,12 @@ nova interface-attach
 
 Attach a network interface to a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--port-id <port_id>``
   Port ID.
@@ -2823,8 +2762,7 @@ nova interface-detach
 
 Detach a network interface from a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2843,8 +2781,7 @@ nova interface-list
 
 List interfaces attached to a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -2862,14 +2799,12 @@ nova keypair-add
 
 Create a new key pair for use with servers.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Name of key.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--pub-key <pub-key>``
   Path to a public ssh key.
@@ -2903,14 +2838,12 @@ help
 message
 for proper version]
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Keypair name to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--user <user-id>``
   ID of key-pair owner (Admin only).
@@ -2936,8 +2869,7 @@ help
 message
 for proper version]
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--user <user-id>``
   List key-pairs of specified user ID (Admin only).
@@ -2963,14 +2895,12 @@ help
 message
 for proper version]
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<keypair>``
   Name of keypair.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--user <user-id>``
   ID of key-pair owner (Admin only).
@@ -2986,8 +2916,7 @@ nova limits
 
 Print rate and absolute limits.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--tenant [<tenant>]``
   Display information from single tenant (Admin only).
@@ -3013,8 +2942,7 @@ nova list
 
 List active servers.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--reservation-id <reservation-id>``
   Only return servers that match reservation-id.
@@ -3109,8 +3037,7 @@ nova list-secgroup
 
 List Security Group(s) of a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -3122,13 +3049,11 @@ nova live-migration
 
 .. code-block:: console
 
-   usage: nova live-migration [--block-migrate] [--disk-over-commit]
-                              <server> [<host>]
+   usage: nova live-migration [--block-migrate] <server> [<host>]
 
 Migrate running server to a new machine.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -3136,15 +3061,70 @@ Positional arguments
 ``<host>``
   Destination host name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--block-migrate``
   True in case of block_migration.
-  (Default=False:live_migration)
+  (Default=auto:live_migration) (Supported by API versions
+  '2.25' - '2.latest')
 
-``--disk-over-commit``
-  Allow overcommit. (Default=False)
+.. _nova_live-migration-abort:
+
+nova live-migration-abort
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: nova live-migration-abort <server> <migration>
+
+Abort an on-going live migration. (Supported by API versions '2.24' -
+'2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for proper version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
+
+``<migration>``
+  ID of migration.
+
+.. _nova_live-migration-force-complete:
+
+nova live-migration-force-complete
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: nova live-migration-force-complete <server> <migration>
+
+Force on-going live migration to complete. (Supported by API versions '2.22' -
+'2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for proper version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
+
+``<migration>``
+  ID of migration.
 
 .. _nova_lock:
 
@@ -3158,8 +3138,7 @@ nova lock
 Lock a server. A normal (non-admin) user will not be able to execute actions
 on a locked server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -3175,8 +3154,7 @@ nova meta
 
 Set or delete metadata on a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -3198,14 +3176,12 @@ nova migrate
 
 Migrate a server. The new host will be selected by the scheduler.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--poll``
   Report the server migration progress until it completes.
@@ -3222,8 +3198,7 @@ nova migration-list
 
 Print a list of migrations.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--host <host>``
   Fetch migrations for the given host.
@@ -3245,8 +3220,7 @@ nova network-associate-host
 
 Associate host with network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network>``
   UUID of network.
@@ -3265,8 +3239,7 @@ nova network-associate-project
 
 Associate project with network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network>``
   UUID of network.
@@ -3297,14 +3270,12 @@ nova network-create
 
 Create a network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network_label>``
   Label for network
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--fixed-range-v4 <x.x.x.x/yy>``
   IPv4 subnet (ex: 10.0.0.0/8)
@@ -3387,8 +3358,7 @@ nova network-delete
 
 Delete network by label or id.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network>``
   UUID or label of network.
@@ -3406,14 +3376,12 @@ nova network-disassociate
 
 Disassociate host and/or project from the given network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network>``
   UUID of network.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--host-only [<0|1>]``
 
@@ -3430,8 +3398,7 @@ nova network-list
 
 Print a list of available networks.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--fields <fields>``
   Comma-separated list of fields to display. Use the show
@@ -3448,8 +3415,7 @@ nova network-show
 
 Show details about the given network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network>``
   UUID or label of network.
@@ -3465,8 +3431,7 @@ nova pause
 
 Pause a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -3482,8 +3447,7 @@ nova quota-class-show
 
 List the quotas for a quota class.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<class>``
   Name of quota class to list the quotas for.
@@ -3511,14 +3475,12 @@ nova quota-class-update
 
 Update the quotas for a quota class.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<class>``
   Name of quota class to set the quotas for.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--instances <instances>``
   New value for the "instances" quota.
@@ -3577,8 +3539,7 @@ nova quota-defaults
 
 List the default quotas for a tenant.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--tenant <tenant-id>``
   ID of tenant to list the default quotas for.
@@ -3594,8 +3555,7 @@ nova quota-delete
 
 Delete quota for a tenant/user so their quota will Revert back to default.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--tenant <tenant-id>``
   ID of tenant to delete quota for.
@@ -3614,8 +3574,7 @@ nova quota-show
 
 List the quotas for a tenant/user.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--tenant <tenant-id>``
   ID of tenant to list the quotas for.
@@ -3648,14 +3607,12 @@ nova quota-update
 
 Update the quotas for a tenant/user.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant-id>``
   ID of tenant to set the quotas for.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--user <user-id>``
   ID of user to set the quotas for.
@@ -3722,14 +3679,12 @@ nova reboot
 
 Reboot a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--hard``
   Perform a hard reboot (instead of a soft one).
@@ -3746,13 +3701,13 @@ nova rebuild
 
    usage: nova rebuild [--rebuild-password <rebuild-password>] [--poll]
                        [--minimal] [--preserve-ephemeral] [--name <name>]
-                       [--meta <key=value>] [--file <dst-path=src-path>]
+                       [--description <description>] [--meta <key=value>]
+                       [--file <dst-path=src-path>]
                        <server> <image>
 
 Shutdown, re-image, and re-boot a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -3760,8 +3715,7 @@ Positional arguments
 ``<image>``
   Name or ID of new image.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--rebuild-password <rebuild-password>``
   Set the provided admin password on the rebuilt
@@ -3781,6 +3735,10 @@ Optional arguments
 
 ``--name <name>``
   Name for the new server.
+
+``--description <description>``
+  New description for the server. (Supported by
+  API versions '2.19' - '2.latest')
 
 ``--meta <key=value>``
   Record arbitrary key/value metadata to
@@ -3803,8 +3761,7 @@ nova refresh-network
 
 Refresh server network information.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of a server for which the network cache should be
@@ -3821,8 +3778,7 @@ nova remove-fixed-ip
 
 Remove an IP address from a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -3841,34 +3797,13 @@ nova remove-secgroup
 
 Remove a Security Group from a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
 
 ``<secgroup>``
   Name of Security Group.
-
-.. _nova_rename:
-
-nova rename
-~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: nova rename <server> <name>
-
-Rename a server.
-
-Positional arguments
---------------------
-
-``<server>``
-  Name (old name) or ID of server.
-
-``<name>``
-  New name for the server.
 
 .. _nova_rescue:
 
@@ -3883,14 +3818,12 @@ Reboots a server into rescue mode, which starts the machine from either the
 initial image or a specified image, attaching the current boot disk as
 secondary.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--password <password>``
   The admin password to be set in the rescue
@@ -3910,8 +3843,7 @@ nova reset-network
 
 Reset network of a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -3927,14 +3859,12 @@ nova reset-state
 
 Reset the state of a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants``
   Reset state server(s) in another tenant by name (Admin only).
@@ -3954,8 +3884,7 @@ nova resize
 
 Resize a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -3963,8 +3892,7 @@ Positional arguments
 ``<flavor>``
   Name or ID of new flavor.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--poll``
   Report the server resize progress until it completes.
@@ -3980,8 +3908,7 @@ nova resize-confirm
 
 Confirm a previous resize.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -3997,8 +3924,7 @@ nova resize-revert
 
 Revert a previous resize (and return to the previous VM).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4014,8 +3940,7 @@ nova restore
 
 Restore a soft-deleted server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4031,8 +3956,7 @@ nova resume
 
 Resume a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4048,8 +3972,7 @@ nova scrub
 
 Delete networks and security groups associated with a project.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<project_id>``
   The ID of the project.
@@ -4066,8 +3989,7 @@ nova secgroup-add-default-rule
 Add a rule to the set of rules that will be added to the 'default' security
 group for new tenants (nova-network only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ip-proto>``
   IP protocol (icmp, tcp, udp).
@@ -4093,8 +4015,7 @@ nova secgroup-add-group-rule
 
 Add a source group rule to a security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<secgroup>``
   ID or name of security group.
@@ -4123,8 +4044,7 @@ nova secgroup-add-rule
 
 Add a rule to a security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<secgroup>``
   ID or name of security group.
@@ -4152,8 +4072,7 @@ nova secgroup-create
 
 Create a security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Name of security group.
@@ -4172,8 +4091,7 @@ nova secgroup-delete
 
 Delete a security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<secgroup>``
   ID or name of security group.
@@ -4191,8 +4109,7 @@ nova secgroup-delete-default-rule
 Delete a rule from the set of rules that will be added to the 'default'
 security group for new tenants (nova-network only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ip-proto>``
   IP protocol (icmp, tcp, udp).
@@ -4218,8 +4135,7 @@ nova secgroup-delete-group-rule
 
 Delete a source group rule from a security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<secgroup>``
   ID or name of security group.
@@ -4248,8 +4164,7 @@ nova secgroup-delete-rule
 
 Delete a rule from a security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<secgroup>``
   ID or name of security group.
@@ -4277,8 +4192,7 @@ nova secgroup-list
 
 List security groups for the current tenant.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Display information from all tenants (Admin only).
@@ -4305,8 +4219,7 @@ nova secgroup-list-rules
 
 List rules for a security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<secgroup>``
   ID or name of security group.
@@ -4322,8 +4235,7 @@ nova secgroup-update
 
 Update a security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<secgroup>``
   ID or name of security group.
@@ -4345,14 +4257,13 @@ nova server-group-create
 
 Create a new server group with the specified details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Server group name.
 
 ``<policy>``
-  Policies for the server groups. ("affinity" or "anti-affinity")
+  Policies for the server groups.
 
 .. _nova_server-group-delete:
 
@@ -4365,8 +4276,7 @@ nova server-group-delete
 
 Delete specific server group(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   Unique ID(s) of the server group to delete.
@@ -4382,8 +4292,7 @@ nova server-group-get
 
 Get a specific server group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   Unique ID of the server group to get.
@@ -4399,11 +4308,66 @@ nova server-group-list
 
 Print a list of all server groups.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-projects``
   Display server groups from all projects (Admin only).
+
+.. _nova_server-migration-list:
+
+nova server-migration-list
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: nova server-migration-list <server>
+
+Get the migrations list of specified server. (Supported by API versions '2.23'
+-
+'2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for proper version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
+
+.. _nova_server-migration-show:
+
+nova server-migration-show
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: nova server-migration-show <server> <migration>
+
+Get the migration of specified server. (Supported by API versions '2.23' -
+'2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for proper version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
+
+``<migration>``
+  ID of migration.
 
 .. _nova_service-delete:
 
@@ -4416,8 +4380,7 @@ nova service-delete
 
 Delete the service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of service.
@@ -4433,8 +4396,7 @@ nova service-disable
 
 Disable the service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Name of host.
@@ -4442,8 +4404,7 @@ Positional arguments
 ``<binary>``
   Service binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--reason <reason>``
   Reason for disabling service.
@@ -4459,8 +4420,7 @@ nova service-enable
 
 Enable the service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Name of host.
@@ -4489,8 +4449,7 @@ for
 proper
 version]
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Name of host.
@@ -4498,8 +4457,7 @@ Positional arguments
 ``<binary>``
   Service binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--unset``
   Unset the force state down of service.
@@ -4515,8 +4473,7 @@ nova service-list
 
 Show a list of all running services. Filter by host & binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--host <hostname>``
   Name of host.
@@ -4535,8 +4492,7 @@ nova set-password
 
 Change the admin password for a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4552,8 +4508,7 @@ nova shelve
 
 Shelve a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4569,8 +4524,7 @@ nova shelve-offload
 
 Remove a shelved server from the compute node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4586,14 +4540,12 @@ nova show
 
 Show details about the given server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--minimal``
   Skips flavor/image lookups when showing servers.
@@ -4612,14 +4564,12 @@ nova ssh
 
 SSH into a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--port PORT``
   Optional flag to indicate which port to use
@@ -4659,14 +4609,12 @@ nova start
 
 Start the server(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants``
   Start server(s) in another tenant by name (Admin only).
@@ -4682,14 +4630,12 @@ nova stop
 
 Stop the server(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants``
   Stop server(s) in another tenant by name (Admin only).
@@ -4705,8 +4651,7 @@ nova suspend
 
 Suspend a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4722,8 +4667,7 @@ nova tenant-network-create
 
 Create a tenant network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network_label>``
   Network label (ex. my_new_network)
@@ -4743,8 +4687,7 @@ nova tenant-network-delete
 
 Delete a tenant network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network_id>``
   ID of network
@@ -4771,11 +4714,36 @@ nova tenant-network-show
 
 Show a tenant network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network_id>``
   ID of network
+
+.. _nova_trigger-crash-dump:
+
+nova trigger-crash-dump
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: nova trigger-crash-dump <server>
+
+Trigger crash dump in an instance. (Supported by API versions '2.17' -
+'2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for proper version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
 
 .. _nova_unlock:
 
@@ -4788,8 +4756,7 @@ nova unlock
 
 Unlock a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4805,8 +4772,7 @@ nova unpause
 
 Unpause a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4822,8 +4788,7 @@ nova unrescue
 
 Restart the server from normal boot disk again.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4839,11 +4804,37 @@ nova unshelve
 
 Unshelve a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
+
+.. _nova_update:
+
+nova update
+~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: nova update [--name <name>] [--description <description>] <server>
+
+Update the name or the description for a server.
+
+**Positional arguments:**
+
+``<server>``
+  Name (old name) or ID of server.
+
+**Optional arguments:**
+
+``--name <name>``
+  New name for the server.
+
+``--description <description>``
+  New description for the server. If it equals to
+  empty string (i.g. ""), the server description
+  will be removed. (Supported by API versions
+  '2.19' - '2.latest')
 
 .. _nova_usage:
 
@@ -4856,8 +4847,7 @@ nova usage
 
 Show usage data for a single tenant.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--start <start>``
   Usage range start date ex 2012-01-20. (default: 4
@@ -4881,8 +4871,7 @@ nova usage-list
 
 List usage data for all tenants.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--start <start>``
   Usage range start date ex 2012-01-20. (default: 4 weeks
@@ -4913,8 +4902,7 @@ nova virtual-interface-list
 
 Show virtual interface info about the given server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   ID of server.
@@ -4930,8 +4918,7 @@ nova volume-attach
 
 Attach a volume to a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4954,8 +4941,7 @@ nova volume-attachments
 
 List all the volumes attached to a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4971,8 +4957,7 @@ nova volume-detach
 
 Detach a volume from a server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -4991,8 +4976,7 @@ nova volume-update
 
 Update volume attachment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server.
@@ -5014,8 +4998,7 @@ nova x509-create-cert
 
 Create x509 cert for a user in tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<private-key-filename>``
   Filename for the private key. [Default: pk.pem]
@@ -5035,8 +5018,7 @@ nova x509-get-root-cert
 
 Fetch the x509 root cert.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<filename>``
   Filename to write the x509 root cert.
