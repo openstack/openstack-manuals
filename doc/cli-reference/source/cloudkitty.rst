@@ -9,7 +9,7 @@ Rating service command-line client
 The cloudkitty client is the command-line interface (CLI) for
 the Rating service API and its extensions.
 
-This chapter documents :command:`cloudkitty` version ``0.4.1``.
+This chapter documents :command:`cloudkitty` version ``0.5.0``.
 
 For help on a specific :command:`cloudkitty` command, enter:
 
@@ -36,6 +36,9 @@ cloudkitty usage
                      [--os-key-file <key-file>] [--os-cert <cert>]
                      [--os-key <key>] [--os-project-name <project-name>]
                      [--os-project-id <project-id>]
+                     [--os-project-domain-id <project-domain-id>]
+                     [--os-project-domain-name <project-domain-name>]
+                     [--os-user-id <user-id>]
                      [--os-user-domain-id <user-domain-id>]
                      [--os-user-domain-name <user-domain-name>]
                      [--os-endpoint <endpoint>] [--os-auth-system <auth-system>]
@@ -44,8 +47,7 @@ cloudkitty usage
                      [--os-auth-url <auth-url>]
                      <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``module-disable``
   Disable a module.
@@ -57,24 +59,34 @@ Subcommands
   List the samples for this meters.
 
 ``collector-mapping-create``
+  Create collector mapping.
 
 ``collector-mapping-delete``
+  Delete collector mapping.
 
 ``collector-mapping-get``
+  Show collector mapping detail.
 
 ``collector-mapping-list``
+  List collector mapping.
 
 ``collector-state-disable``
+  Disable collector state.
 
 ``collector-state-enable``
+  Enable collector state.
 
 ``collector-state-get``
+  Show collector state.
 
 ``report-tenant-list``
+  List tenant report.
 
 ``total-get``
+  Get total reports.
 
 ``storage-dataframe-list``
+  List dataframes.
 
 ``hashmap-field-create``
   Create a field.
@@ -83,7 +95,7 @@ Subcommands
   Delete a field.
 
 ``hashmap-field-list``
-  Create a field.
+  List fields.
 
 ``hashmap-group-create``
   Create a group.
@@ -132,6 +144,24 @@ Subcommands
 
 ``hashmap-threshold-update``
   Update a threshold.
+
+``pyscripts-script-create``
+  Create a script.
+
+``pyscripts-script-delete``
+  Delete a script.
+
+``pyscripts-script-get``
+  Get script.
+
+``pyscripts-script-get-data``
+  Get script data.
+
+``pyscripts-script-list``
+  List scripts.
+
+``pyscripts-script-update``
+  Update a mapping.
 
 ``bash-completion``
   Prints all of the commands and options to
@@ -204,6 +234,15 @@ cloudkitty optional arguments
 ``--os-project-id <project-id>``
   Defaults to ``env[OS_PROJECT_ID]``.
 
+``--os-project-domain-id <project-domain-id>``
+  Defaults to ``env[OS_PROJECT_DOMAIN_ID]``.
+
+``--os-project-domain-name <project-domain-name>``
+  Defaults to ``env[OS_PROJECT_DOMAIN_NAME]``.
+
+``--os-user-id <user-id>``
+  Defaults to ``env[OS_USER_ID]``.
+
 ``--os-user-domain-id <user-domain-id>``
   Defaults to ``env[OS_USER_DOMAIN_ID]``.
 
@@ -241,15 +280,15 @@ cloudkitty collector-mapping-create
    usage: cloudkitty collector-mapping-create --collector COLLECTOR --service
                                               SERVICE
 
+Create collector mapping.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--collector COLLECTOR``
-  Map a service to this collector. Required.
+  Map a service to this collector. required.
 
 ``--service SERVICE``
-  Map a collector to this service. Required.
+  Map a collector to this service. required.
 
 .. _cloudkitty_collector-mapping-delete:
 
@@ -260,12 +299,12 @@ cloudkitty collector-mapping-delete
 
    usage: cloudkitty collector-mapping-delete --service SERVICE
 
+Delete collector mapping.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--service SERVICE``
-  Filter on this service. Required.
+  Filter on this service. required.
 
 .. _cloudkitty_collector-mapping-get:
 
@@ -276,12 +315,12 @@ cloudkitty collector-mapping-get
 
    usage: cloudkitty collector-mapping-get --service SERVICE
 
+Show collector mapping detail.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--service SERVICE``
-  Which service to get the mapping for. Required.
+  Which service to get the mapping for. required.
 
 .. _cloudkitty_collector-mapping-list:
 
@@ -292,9 +331,9 @@ cloudkitty collector-mapping-list
 
    usage: cloudkitty collector-mapping-list [--collector COLLECTOR]
 
+List collector mapping.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--collector COLLECTOR``
   Collector name to filter on. Defaults to None.
@@ -308,12 +347,12 @@ cloudkitty collector-state-disable
 
    usage: cloudkitty collector-state-disable --name NAME
 
+Disable collector state.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
-  Name of the collector. Required.
+  Name of the collector. required.
 
 .. _cloudkitty_collector-state-enable:
 
@@ -324,12 +363,12 @@ cloudkitty collector-state-enable
 
    usage: cloudkitty collector-state-enable --name NAME
 
+Enable collector state.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
-  Name of the collector. Required.
+  Name of the collector. required.
 
 .. _cloudkitty_collector-state-get:
 
@@ -340,12 +379,12 @@ cloudkitty collector-state-get
 
    usage: cloudkitty collector-state-get --name NAME
 
+Show collector state.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
-  Name of the collector. Required.
+  Name of the collector. required.
 
 .. _cloudkitty_hashmap-field-create:
 
@@ -358,14 +397,13 @@ cloudkitty hashmap-field-create
 
 Create a field.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n NAME, --name NAME``
-  Field name Required.
+  Field name required.
 
 ``-s SERVICE_ID, --service-id SERVICE_ID``
-  Service id Required.
+  Service id required.
 
 .. _cloudkitty_hashmap-field-delete:
 
@@ -378,11 +416,10 @@ cloudkitty hashmap-field-delete
 
 Delete a field.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f FIELD_ID, --field-id FIELD_ID``
-  Field uuid Required.
+  Field uuid required.
 
 .. _cloudkitty_hashmap-field-list:
 
@@ -393,13 +430,12 @@ cloudkitty hashmap-field-list
 
    usage: cloudkitty hashmap-field-list -s SERVICE_ID
 
-Create a field.
+List fields.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-s SERVICE_ID, --service-id SERVICE_ID``
-  Service id Required.
+  Service id required.
 
 .. _cloudkitty_hashmap-group-create:
 
@@ -412,11 +448,10 @@ cloudkitty hashmap-group-create
 
 Create a group.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n NAME, --name NAME``
-  Group name Required.
+  Group name required.
 
 .. _cloudkitty_hashmap-group-delete:
 
@@ -429,11 +464,10 @@ cloudkitty hashmap-group-delete
 
 Delete a group.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-g GROUP_ID, --group-id GROUP_ID``
-  Group uuid Required.
+  Group uuid required.
 
 ``-r RECURSIVE, --recursive RECURSIVE``
   Delete the group's mappings Defaults to False.
@@ -456,32 +490,30 @@ cloudkitty hashmap-mapping-create
 
 .. code-block:: console
 
-   usage: cloudkitty hashmap-mapping-create -c COST [-v VALUE] [-t TYPE]
-                                            [-s SERVICE_ID] [-f FIELD_ID]
-                                            [-g GROUP_ID]
+   usage: cloudkitty hashmap-mapping-create [-s SERVICE_ID] [-f FIELD_ID] -c COST
+                                            [-v VALUE] [-t TYPE] [-g GROUP_ID]
 
 Create a mapping.
 
-Optional arguments
-------------------
-
-``-c COST, --cost COST``
-  Mapping cost Required.
-
-``-v VALUE, --value VALUE``
-  Mapping value
-
-``-t TYPE, --type TYPE``
-  Mapping type (flat, rate)
+**Optional arguments:**
 
 ``-s SERVICE_ID, --service-id SERVICE_ID``
-  Service id
+  Service id.
 
 ``-f FIELD_ID, --field-id FIELD_ID``
-  Field id
+  Field id.
+
+``-c COST, --cost COST``
+  Mapping cost required.
+
+``-v VALUE, --value VALUE``
+  Mapping value.
+
+``-t TYPE, --type TYPE``
+  Mapping type (flat, rate).
 
 ``-g GROUP_ID, --group-id GROUP_ID``
-  Group id
+  Group id.
 
 .. _cloudkitty_hashmap-mapping-delete:
 
@@ -494,11 +526,10 @@ cloudkitty hashmap-mapping-delete
 
 Delete a mapping.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-m MAPPING_ID, --mapping-id MAPPING_ID``
-  Mapping uuid Required.
+  Mapping uuid required.
 
 .. _cloudkitty_hashmap-mapping-list:
 
@@ -512,17 +543,16 @@ cloudkitty hashmap-mapping-list
 
 List mappings.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-s SERVICE_ID, --service-id SERVICE_ID``
-  Service id
+  Service id.
 
 ``-f FIELD_ID, --field-id FIELD_ID``
-  Field id
+  Field id.
 
 ``-g GROUP_ID, --group-id GROUP_ID``
-  Group id
+  Group id.
 
 .. _cloudkitty_hashmap-mapping-update:
 
@@ -536,23 +566,22 @@ cloudkitty hashmap-mapping-update
 
 Update a mapping.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-m MAPPING_ID, --mapping-id MAPPING_ID``
-  Mapping id Required.
+  Mapping id required.
 
 ``-c COST, --cost COST``
-  Mapping cost
+  Mapping cost.
 
 ``-v VALUE, --value VALUE``
-  Mapping value
+  Mapping value.
 
 ``-t TYPE, --type TYPE``
-  Mapping type (flat, rate)
+  Mapping type (flat, rate).
 
 ``-g GROUP_ID, --group-id GROUP_ID``
-  Group id
+  Group id.
 
 .. _cloudkitty_hashmap-service-create:
 
@@ -565,11 +594,10 @@ cloudkitty hashmap-service-create
 
 Create a service.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n NAME, --name NAME``
-  Service name Required.
+  Service name required.
 
 .. _cloudkitty_hashmap-service-delete:
 
@@ -582,11 +610,10 @@ cloudkitty hashmap-service-delete
 
 Delete a service.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-s SERVICE_ID, --service-id SERVICE_ID``
-  Service uuid Required.
+  Service uuid required.
 
 .. _cloudkitty_hashmap-service-list:
 
@@ -606,32 +633,31 @@ cloudkitty hashmap-threshold-create
 
 .. code-block:: console
 
-   usage: cloudkitty hashmap-threshold-create -l LEVEL -c COST [-m MAP_TYPE]
-                                              [-s SERVICE_ID] [-f FIELD_ID]
+   usage: cloudkitty hashmap-threshold-create [-s SERVICE_ID] [-f FIELD_ID] -l
+                                              LEVEL -c COST [-m MAP_TYPE]
                                               [-g GROUP_ID]
 
 Create a mapping.
 
-Optional arguments
-------------------
-
-``-l LEVEL, --level LEVEL``
-  Threshold level Required.
-
-``-c COST, --cost COST``
-  Threshold cost Required.
-
-``-m MAP_TYPE, --map-type MAP_TYPE``
-  Threshold type (flat, rate)
+**Optional arguments:**
 
 ``-s SERVICE_ID, --service-id SERVICE_ID``
-  Service id
+  Service id.
 
 ``-f FIELD_ID, --field-id FIELD_ID``
-  Field id
+  Field id.
+
+``-l LEVEL, --level LEVEL``
+  Threshold level required.
+
+``-c COST, --cost COST``
+  Threshold cost required.
+
+``-m MAP_TYPE, --map-type MAP_TYPE``
+  Threshold type (flat, rate).
 
 ``-g GROUP_ID, --group-id GROUP_ID``
-  Group id
+  Group id.
 
 .. _cloudkitty_hashmap-threshold-delete:
 
@@ -644,11 +670,10 @@ cloudkitty hashmap-threshold-delete
 
 Delete a threshold.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-t THRESHOLD_ID, --threshold-id THRESHOLD_ID``
-  Threshold uuid Required.
+  Threshold uuid required.
 
 .. _cloudkitty_hashmap-threshold-get:
 
@@ -661,11 +686,10 @@ cloudkitty hashmap-threshold-get
 
 Get a threshold.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-t THRESHOLD_ID, --threshold-id THRESHOLD_ID``
-  Threshold uuid Required.
+  Threshold uuid required.
 
 .. _cloudkitty_hashmap-threshold-group:
 
@@ -678,11 +702,10 @@ cloudkitty hashmap-threshold-group
 
 Get a threshold group.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-t THRESHOLD_ID, --threshold-id THRESHOLD_ID``
-  Threshold uuid Required.
+  Threshold uuid required.
 
 .. _cloudkitty_hashmap-threshold-list:
 
@@ -697,20 +720,19 @@ cloudkitty hashmap-threshold-list
 
 List thresholds.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-s SERVICE_ID, --service-id SERVICE_ID``
-  Service id
+  Service id.
 
 ``-f FIELD_ID, --field-id FIELD_ID``
-  Field id
+  Field id.
 
 ``-g GROUP_ID, --group-id GROUP_ID``
-  Group id
+  Group id.
 
 ``--no-group {True,False}``
-  If True, list only orhpaned thresholds
+  If True, list only orhpaned thresholds.
 
 .. _cloudkitty_hashmap-threshold-update:
 
@@ -725,23 +747,22 @@ cloudkitty hashmap-threshold-update
 
 Update a threshold.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-t THRESHOLD_ID, --threshold-id THRESHOLD_ID``
-  Threshold id Required.
+  Threshold id required.
 
 ``-l LEVEL, --level LEVEL``
-  Threshold level
+  Threshold level.
 
 ``-c COST, --cost COST``
-  Threshold cost
+  Threshold cost.
 
 ``-m MAP_TYPE, --map-type MAP_TYPE``
-  Threshold type (flat, rate)
+  Threshold type (flat, rate).
 
 ``-g GROUP_ID, --group-id GROUP_ID``
-  Group id
+  Group id.
 
 .. _cloudkitty_module-disable:
 
@@ -754,11 +775,10 @@ cloudkitty module-disable
 
 Disable a module.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n NAME, --name NAME``
-  Module name Required.
+  Module name required.
 
 .. _cloudkitty_module-enable:
 
@@ -771,11 +791,10 @@ cloudkitty module-enable
 
 Enable a module.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n NAME, --name NAME``
-  Module name Required.
+  Module name required.
 
 .. _cloudkitty_module-list:
 
@@ -788,6 +807,108 @@ cloudkitty module-list
 
 List the samples for this meters.
 
+.. _cloudkitty_pyscripts-script-create:
+
+cloudkitty pyscripts-script-create
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cloudkitty pyscripts-script-create -n NAME [-f FILE]
+
+Create a script.
+
+**Optional arguments:**
+
+``-n NAME, --name NAME``
+  Script name required.
+
+``-f FILE, --file FILE``
+  Script file.
+
+.. _cloudkitty_pyscripts-script-delete:
+
+cloudkitty pyscripts-script-delete
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cloudkitty pyscripts-script-delete -s SCRIPT_ID
+
+Delete a script.
+
+**Optional arguments:**
+
+``-s SCRIPT_ID, --script-id SCRIPT_ID``
+  Script uuid required.
+
+.. _cloudkitty_pyscripts-script-get:
+
+cloudkitty pyscripts-script-get
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cloudkitty pyscripts-script-get -s SCRIPT_ID
+
+Get script.
+
+**Optional arguments:**
+
+``-s SCRIPT_ID, --script-id SCRIPT_ID``
+  Script uuid required.
+
+.. _cloudkitty_pyscripts-script-get-data:
+
+cloudkitty pyscripts-script-get-data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cloudkitty pyscripts-script-get-data -s SCRIPT_ID
+
+Get script data.
+
+**Optional arguments:**
+
+``-s SCRIPT_ID, --script-id SCRIPT_ID``
+  Script uuid required.
+
+.. _cloudkitty_pyscripts-script-list:
+
+cloudkitty pyscripts-script-list
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cloudkitty pyscripts-script-list [-d SHOW_DATA]
+
+List scripts.
+
+**Optional arguments:**
+
+``-d SHOW_DATA, --show-data SHOW_DATA``
+  Show data in the listing Defaults to False.
+
+.. _cloudkitty_pyscripts-script-update:
+
+cloudkitty pyscripts-script-update
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: cloudkitty pyscripts-script-update -s SCRIPT_ID -f FILE
+
+Update a mapping.
+
+**Optional arguments:**
+
+``-s SCRIPT_ID, --script-id SCRIPT_ID``
+  Script uuid required.
+
+``-f FILE, --file FILE``
+  Script file required.
+
 .. _cloudkitty_report-tenant-list:
 
 cloudkitty report-tenant-list
@@ -797,6 +918,7 @@ cloudkitty report-tenant-list
 
    usage: cloudkitty report-tenant-list
 
+List tenant report.
 
 .. _cloudkitty_storage-dataframe-list:
 
@@ -809,17 +931,17 @@ cloudkitty storage-dataframe-list
                                             [--tenant TENANT]
                                             [--resource-type RESOURCE_TYPE]
 
+List dataframes.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--begin BEGIN``
   Starting date/time (YYYY-MM-ddThh:mm:ss)
-  Required.
+  required.
 
 ``--end END``
   Ending date/time (YYYY-MM-ddThh:mm:ss)
-  Required.
+  required.
 
 ``--tenant TENANT``
   Tenant ID Defaults to None.
@@ -836,17 +958,21 @@ cloudkitty total-get
 .. code-block:: console
 
    usage: cloudkitty total-get [-t TOTAL_TENANT_ID] [-b BEGIN] [-e END]
+                               [-s SERVICE]
 
+Get total reports.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-t TOTAL_TENANT_ID, --tenant-id TOTAL_TENANT_ID``
-  Tenant id
+  Tenant id.
 
 ``-b BEGIN, --begin BEGIN``
-  Begin timestamp
+  Begin timestamp.
 
 ``-e END, --end END``
-  End timestamp
+  End timestamp.
+
+``-s SERVICE, --service SERVICE``
+  Service Type.
 
