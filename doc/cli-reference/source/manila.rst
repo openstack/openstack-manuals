@@ -9,7 +9,7 @@ Shared file systems command-line client
 The manila client is the command-line interface (CLI) for
 the Shared file systems API and its extensions.
 
-This chapter documents :command:`manila` version ``1.7.0``.
+This chapter documents :command:`manila` version ``1.8.0``.
 
 For help on a specific :command:`manila` command, enter:
 
@@ -63,46 +63,54 @@ Subcommands
   Display the API version information.
 
 ``cg-create``
-  Creates a new consistency group.
+  Creates a new consistency group (Experimental).
 
 ``cg-delete``
-  Remove one or more consistency groups.
+  Remove one or more consistency groups (Experimental).
 
 ``cg-list``
-  List consistency groups with filters.
+  List consistency groups with filters (Experimental).
 
 ``cg-reset-state``
-  Explicitly update the state of a consistency group.
+  Explicitly update the state of a consistency group
+  (Admin only, Experimental).
 
 ``cg-show``
-  Show details about a consistency group.
+  Show details about a consistency group (Experimental).
 
 ``cg-snapshot-create``
-  Creates a new consistency group snapshot.
+  Creates a new consistency group snapshot
+  (Experimental).
 
 ``cg-snapshot-delete``
-  Remove one or more consistency group snapshots.
+  Remove one or more consistency group snapshots
+  (Experimental).
 
 ``cg-snapshot-list``
-  List consistency group snapshots with filters.
+  List consistency group snapshots with filters
+  (Experimental).
 
 ``cg-snapshot-members``
-  Get member details for a consistency group snapshot.
+  Get member details for a consistency group snapshot
+  (Experimental).
 
 ``cg-snapshot-reset-state``
-  Explicitly update the state of a consistency group.
+  Explicitly update the state of a consistency group
+  (Admin only, Experimental).
 
 ``cg-snapshot-show``
-  Show details about a consistency group snapshot.
+  Show details about a consistency group snapshot
+  (Experimental).
 
 ``cg-snapshot-update``
-  Update a consistency group snapshot.
+  Update a consistency group snapshot (Experimental).
 
 ``cg-update``
-  Update a consistency group.
+  Update a consistency group (Experimental).
 
 ``create``
-  Creates a new share (NFS, CIFS, GlusterFS or HDFS).
+  Creates a new share (NFS, CIFS, CephFS, GlusterFS or
+  HDFS).
 
 ``credentials``
   Show user credentials returned from auth.
@@ -122,13 +130,14 @@ Subcommands
   (Admin Only).
 
 ``force-delete``
-  Attempt force-delete of share, regardless of state.
+  Attempt force-delete of share, regardless of state
+  (Admin only).
 
 ``list``
   List NAS shares with filters.
 
 ``manage``
-  Manage share not handled by Manila.
+  Manage share not handled by Manila (Admin only).
 
 ``metadata``
   Set or delete metadata on a share.
@@ -140,7 +149,24 @@ Subcommands
   Update all metadata of a share.
 
 ``migrate``
-  Migrates share to a new host.
+  (Deprecated) Migrates share to a new host (Admin only,
+  Experimental).
+
+``migration-cancel``
+  Cancels migration of a given share when copying (Admin
+  only, Experimental).
+
+``migration-complete``
+  Completes migration for a given share (Admin only,
+  Experimental).
+
+``migration-get-progress``
+  Gets migration progress of a given share when copying
+  (Admin only, Experimental).
+
+``migration-start``
+  Migrates share to a new host (Admin only,
+  Experimental).
 
 ``pool-list``
   List all backend storage pools known to the scheduler
@@ -150,26 +176,30 @@ Subcommands
   List the quotas for a quota class.
 
 ``quota-class-update``
-  Update the quotas for a quota class.
+  Update the quotas for a quota class (Admin only).
 
 ``quota-defaults``
   List the default quotas for a tenant.
 
 ``quota-delete``
   Delete quota for a tenant/user. The quota will revert
-  back to default.
+  back to default (Admin only).
 
 ``quota-show``
   List the quotas for a tenant/user.
 
 ``quota-update``
-  Update the quotas for a tenant/user.
+  Update the quotas for a tenant/user (Admin only).
 
 ``rate-limits``
   Print a list of rate limits for a user.
 
 ``reset-state``
-  Explicitly update the state of a share.
+  Explicitly update the state of a share (Admin only).
+
+``reset-task-state``
+  Explicitly update the task state of a share (Admin
+  only, Experimental).
 
 ``security-service-create``
   Create security service used by tenant.
@@ -187,27 +217,41 @@ Subcommands
   Update security service.
 
 ``service-disable``
-  Disables 'manila-share' or 'manila-scheduler'
-  services.
+  Disables 'manila-share' or 'manila-scheduler' services
+  (Admin only).
 
 ``service-enable``
-  Enables 'manila-share' or 'manila-scheduler' services.
+  Enables 'manila-share' or 'manila-scheduler' services
+  (Admin only).
 
 ``service-list``
-  List all services.
+  List all services (Admin only).
+
+``share-export-location-list``
+  List export locations of a given share.
+
+``share-export-location-show``
+  Show export location of the share.
+
+``share-instance-export-location-list``
+  List export locations of a given share instance.
+
+``share-instance-export-location-show``
+  Show export location for the share instance.
 
 ``share-instance-force-delete``
-  Attempt force-delete of share instance, regardless of
-  state.
+  Force-delete the share instance, regardless of state
+  (Admin only).
 
 ``share-instance-list``
-  List share instances.
+  List share instances (Admin only).
 
 ``share-instance-reset-state``
-  Explicitly update the state of a share instance.
+  Explicitly update the state of a share instance (Admin
+  only).
 
 ``share-instance-show``
-  Show details about a share instance.
+  Show details about a share instance (Admin only).
 
 ``share-network-create``
   Create description for network used by the tenant.
@@ -234,17 +278,45 @@ Subcommands
 ``share-network-update``
   Update share network data.
 
+``share-replica-create``
+  Create a share replica (Experimental).
+
+``share-replica-delete``
+  Remove one or more share replicas (Experimental).
+
+``share-replica-list``
+  List share replicas (Experimental).
+
+``share-replica-promote``
+  Promote specified replica to 'active' replica_state
+  (Experimental).
+
+``share-replica-reset-replica-state``
+  Explicitly update the 'replica_state' of a share
+  replica (Experimental).
+
+``share-replica-reset-state``
+  Explicitly update the 'status' of a share replica
+  (Experimental).
+
+``share-replica-resync``
+  Attempt to update the share replica with its 'active'
+  mirror (Experimental).
+
+``share-replica-show``
+  Show details about a replica (Experimental).
+
 ``share-server-delete``
-  Delete share server.
+  Delete share server (Admin only).
 
 ``share-server-details``
-  Show share server details.
+  Show share server details (Admin only).
 
 ``share-server-list``
-  List all share servers.
+  List all share servers (Admin only).
 
 ``share-server-show``
-  Show share server info.
+  Show share server info (Admin only).
 
 ``show``
   Show details about a NAS share.
@@ -259,43 +331,55 @@ Subcommands
   Remove a snapshot.
 
 ``snapshot-force-delete``
-  Attempt force-delete of snapshot, regardless of state.
+  Attempt force-delete of snapshot, regardless of state
+  (Admin only).
 
 ``snapshot-list``
   List all the snapshots.
+
+``snapshot-manage``
+  Manage share snapshot not handled by Manila (Admin
+  only).
 
 ``snapshot-rename``
   Rename a snapshot.
 
 ``snapshot-reset-state``
-  Explicitly update the state of a snapshot.
+  Explicitly update the state of a snapshot (Admin
+  only).
 
 ``snapshot-show``
   Show details about a snapshot.
 
+``snapshot-unmanage``
+  Unmanage one or more share snapshots (Admin only).
+
 ``type-access-add``
-  Adds share type access for the given project.
+  Adds share type access for the given project (Admin
+  only).
 
 ``type-access-list``
-  Print access information about the given share type.
+  Print access information about the given share type
+  (Admin only).
 
 ``type-access-remove``
-  Removes share type access for the given project.
+  Removes share type access for the given project (Admin
+  only).
 
 ``type-create``
-  Create a new share type.
+  Create a new share type (Admin only).
 
 ``type-delete``
-  Delete a specific share type.
+  Delete a specific share type (Admin only).
 
 ``type-key``
-  Set or unset extra_spec for a share type.
+  Set or unset extra_spec for a share type (Admin only).
 
 ``type-list``
   Print a list of available 'share types'.
 
 ``unmanage``
-  Unmanage share.
+  Unmanage share (Admin only).
 
 ``update``
   Rename a share.
@@ -433,7 +517,7 @@ Positional arguments
 
 ``<access_type>``
   Access rule type (only "ip", "user"(user or group),
-  and "cert" are supported).
+  "cert" or "cephx" are supported).
 
 ``<access_to>``
   Value that defines access.
@@ -443,7 +527,7 @@ Optional arguments
 
 ``--access-level <access_level>, --access_level <access_level>``
   Share access level ("rw" and "ro" access levels are
-  supported). Defaults to None.
+  supported). Defaults to rw.
 
 .. _manila_access-deny:
 
@@ -512,7 +596,7 @@ manila cg-create
                            [--share-network <share_network>]
                            [--source-cgsnapshot-id <source_cgsnapshot_id>]
 
-Creates a new consistency group.
+Creates a new consistency group (Experimental).
 
 Optional arguments
 ------------------
@@ -545,7 +629,7 @@ manila cg-delete
    usage: manila cg-delete [--force]
                            <consistency_group> [<consistency_group> ...]
 
-Remove one or more consistency groups.
+Remove one or more consistency groups (Experimental).
 
 Positional arguments
 --------------------
@@ -558,7 +642,7 @@ Optional arguments
 
 ``--force``
   Attempt to force delete the consistency group
-  (Default=False).
+  (Default=False) (Admin only).
 
 .. _manila_cg-list:
 
@@ -570,7 +654,7 @@ manila cg-list
    usage: manila cg-list [--all-tenants [<0|1>]] [--limit <limit>]
                          [--offset <offset>] [--columns <columns>]
 
-List consistency groups with filters.
+List consistency groups with filters (Experimental).
 
 Optional arguments
 ------------------
@@ -598,7 +682,7 @@ manila cg-reset-state
 
    usage: manila cg-reset-state [--state <state>] <consistency_group>
 
-Explicitly update the state of a consistency group.
+Explicitly update the state of a consistency group (Admin only, Experimental).
 
 Positional arguments
 --------------------
@@ -624,7 +708,7 @@ manila cg-show
 
    usage: manila cg-show <consistency_group>
 
-Show details about a consistency group.
+Show details about a consistency group (Experimental).
 
 Positional arguments
 --------------------
@@ -642,7 +726,7 @@ manila cg-snapshot-create
    usage: manila cg-snapshot-create [--name <name>] [--description <description>]
                                     <consistency_group>
 
-Creates a new consistency group snapshot.
+Creates a new consistency group snapshot (Experimental).
 
 Positional arguments
 --------------------
@@ -670,7 +754,7 @@ manila cg-snapshot-delete
 
    usage: manila cg-snapshot-delete [--force] <cg_snapshot> [<cg_snapshot> ...]
 
-Remove one or more consistency group snapshots.
+Remove one or more consistency group snapshots (Experimental).
 
 Positional arguments
 --------------------
@@ -682,7 +766,8 @@ Optional arguments
 ------------------
 
 ``--force``
-  Attempt to force delete the cg snapshot(s) (Default=False).
+  Attempt to force delete the cg snapshot(s) (Default=False)
+  (Admin only).
 
 .. _manila_cg-snapshot-list:
 
@@ -695,7 +780,7 @@ manila cg-snapshot-list
                                   [--offset <offset>] [--detailed DETAILED]
                                   [--columns <columns>]
 
-List consistency group snapshots with filters.
+List consistency group snapshots with filters (Experimental).
 
 Optional arguments
 ------------------
@@ -727,7 +812,7 @@ manila cg-snapshot-members
    usage: manila cg-snapshot-members [--limit <limit>] [--offset <offset>]
                                      <cg_snapshot>
 
-Get member details for a consistency group snapshot.
+Get member details for a consistency group snapshot (Experimental).
 
 Positional arguments
 --------------------
@@ -753,7 +838,7 @@ manila cg-snapshot-reset-state
 
    usage: manila cg-snapshot-reset-state [--state <state>] <cg_snapshot>
 
-Explicitly update the state of a consistency group.
+Explicitly update the state of a consistency group (Admin only, Experimental).
 
 Positional arguments
 --------------------
@@ -779,7 +864,7 @@ manila cg-snapshot-show
 
    usage: manila cg-snapshot-show <cg_snapshot>
 
-Show details about a consistency group snapshot.
+Show details about a consistency group snapshot (Experimental).
 
 Positional arguments
 --------------------
@@ -797,7 +882,7 @@ manila cg-snapshot-update
    usage: manila cg-snapshot-update [--name <name>] [--description <description>]
                                     <cg_snapshot>
 
-Update a consistency group snapshot.
+Update a consistency group snapshot (Experimental).
 
 Positional arguments
 --------------------
@@ -824,7 +909,7 @@ manila cg-update
    usage: manila cg-update [--name <name>] [--description <description>]
                            <consistency_group>
 
-Update a consistency group.
+Update a consistency group (Experimental).
 
 Positional arguments
 --------------------
@@ -857,13 +942,13 @@ manila create
                         [--consistency-group <consistency-group>]
                         <share_protocol> <size>
 
-Creates a new share (NFS, CIFS, GlusterFS or HDFS).
+Creates a new share (NFS, CIFS, CephFS, GlusterFS or HDFS).
 
 Positional arguments
 --------------------
 
 ``<share_protocol>``
-  Share type (NFS, CIFS, GlusterFS or HDFS).
+  Share type (NFS, CIFS, CephFS, GlusterFS or HDFS).
 
 ``<size>``
   Share size in GiB.
@@ -914,7 +999,7 @@ Optional arguments
 
 ``--cg <consistency-group>``
   Optional consistency group name or ID in which to
-  create the share. (Default=None)
+  create the share (Experimental, Default=None).
 
 .. _manila_credentials:
 
@@ -954,7 +1039,7 @@ Optional arguments
 
 ``--cg <consistency-group>``
   Optional consistency group name or ID which contains
-  the share. (Default=None)
+  the share (Experimental, Default=None).
 
 .. _manila_endpoints:
 
@@ -1014,7 +1099,7 @@ manila force-delete
 
    usage: manila force-delete <share> [<share> ...]
 
-Attempt force-delete of share, regardless of state.
+Attempt force-delete of share, regardless of state (Admin only).
 
 Positional arguments
 --------------------
@@ -1062,7 +1147,7 @@ Optional arguments
 ``--share_server-id <share_server_id>,``
 
 ``--share_server_id <share_server_id>``
-  Filter results by share server ID.
+  Filter results by share server ID (Admin only).
 
 ``--metadata [<key=value> [<key=value> ...]]``
   Filters results by a metadata key and value. OPTIONAL:
@@ -1138,7 +1223,8 @@ Optional arguments
 ``--consistency_group <consistency_group>,``
 
 ``--cg <consistency_group>``
-  Filter results by consistency group name or ID.
+  Filter results by consistency group name or ID
+  (Experimental, Default=None).
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
@@ -1168,7 +1254,7 @@ manila manage
                         [--public]
                         <service_host> <protocol> <export_path>
 
-Manage share not handled by Manila.
+Manage share not handled by Manila (Admin only).
 
 Positional arguments
 --------------------
@@ -1181,8 +1267,8 @@ Positional arguments
 
 ``<export_path>``
   Share export path, NFS share such as:
-  10.0.0.1:/foo_path, CIFS share such as:
-  \\\\10.0.0.1\\foo_name_of_cifs_share
+  10.0.0.1:/example_path, CIFS share such as:
+  \\\\10.0.0.1\\example_cifs_share
 
 Optional arguments
 ------------------
@@ -1267,16 +1353,71 @@ Positional arguments
 ``<key=value>``
   Metadata entry or entries to update.
 
-.. _manila_migrate:
+.. _manila_migration-cancel:
 
-manila migrate
-~~~~~~~~~~~~~~
+manila migration-cancel
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: console
 
-   usage: manila migrate [--force-host-copy <True|False>] <share> <host#pool>
+   usage: manila migration-cancel <share>
 
-Migrates share to a new host.
+Cancels migration of a given share when copying (Admin only, Experimental).
+
+Positional arguments
+--------------------
+
+``<share>``
+  Name or ID of share to cancel migration.
+
+.. _manila_migration-complete:
+
+manila migration-complete
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila migration-complete <share>
+
+Completes migration for a given share (Admin only, Experimental).
+
+Positional arguments
+--------------------
+
+``<share>``
+  Name or ID of share to complete migration.
+
+.. _manila_migration-get-progress:
+
+manila migration-get-progress
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila migration-get-progress <share>
+
+Gets migration progress of a given share when copying (Admin only,
+Experimental).
+
+Positional arguments
+--------------------
+
+``<share>``
+  Name or ID of the share to get share migration progress
+  information.
+
+.. _manila_migration-start:
+
+manila migration-start
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila migration-start [--force-host-copy <True|False>]
+                                 [--notify <True|False>]
+                                 <share> <host#pool>
+
+Migrates share to a new host (Admin only, Experimental).
 
 Positional arguments
 --------------------
@@ -1290,10 +1431,14 @@ Positional arguments
 Optional arguments
 ------------------
 
-``--force-host-copy <True|False>``
+``--force-host-copy <True|False>, --force_host_copy <True|False>``
   Enables or disables generic host-based force-
   migration, which bypasses driver optimizations.
   Default=False.
+
+``--notify <True|False>``
+  Enables or disables notification of data copying
+  completed. Default=True.
 
 .. _manila_pool-list:
 
@@ -1356,7 +1501,7 @@ manila quota-class-update
                                     [--share-networks <share-networks>]
                                     <class-name>
 
-Update the quotas for a quota class.
+Update the quotas for a quota class (Admin only).
 
 Positional arguments
 --------------------
@@ -1410,7 +1555,8 @@ manila quota-delete
 
    usage: manila quota-delete [--tenant <tenant-id>] [--user <user-id>]
 
-Delete quota for a tenant/user. The quota will revert back to default.
+Delete quota for a tenant/user. The quota will revert back to default (Admin
+only).
 
 Optional arguments
 ------------------
@@ -1454,7 +1600,7 @@ manila quota-update
                               [--share-networks <share-networks>] [--force]
                               <tenant_id>
 
-Update the quotas for a tenant/user.
+Update the quotas for a tenant/user (Admin only).
 
 Positional arguments
 --------------------
@@ -1516,7 +1662,7 @@ manila reset-state
 
    usage: manila reset-state [--state <state>] <share>
 
-Explicitly update the state of a share.
+Explicitly update the state of a share (Admin only).
 
 Positional arguments
 --------------------
@@ -1531,6 +1677,38 @@ Optional arguments
   Indicate which state to assign the share. Options include
   available, error, creating, deleting, error_deleting. If no
   state is provided, available will be used.
+
+.. _manila_reset-task-state:
+
+manila reset-task-state
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila reset-task-state [--task-state <task_state>] <share>
+
+Explicitly update the task state of a share (Admin only, Experimental).
+
+Positional arguments
+--------------------
+
+``<share>``
+  Name or ID of the share to modify.
+
+Optional arguments
+------------------
+
+``--task-state <task_state>, --task_state <task_state>, --state <task_state>``
+  Indicate which task state to assign the share. Options
+  include migration_starting, migration_in_progress,
+  migration_completing, migration_success,
+  migration_error, migration_cancelled,
+  migration_driver_in_progress,
+  migration_driver_phase1_done, data_copying_starting,
+  data_copying_in_progress, data_copying_completing,
+  data_copying_completed, data_copying_cancelled,
+  data_copying_error. If no value is provided,
+  migration_error will be used.
 
 .. _manila_security-service-create:
 
@@ -1730,13 +1908,13 @@ manila service-disable
 
    usage: manila service-disable <hostname> <binary>
 
-Disables 'manila-share' or 'manila-scheduler' services.
+Disables 'manila-share' or 'manila-scheduler' services (Admin only).
 
 Positional arguments
 --------------------
 
 ``<hostname>``
-  Host name as 'foo_host@bar_backend'.
+  Host name as 'example_host@example_backend'.
 
 ``<binary>``
   Service binary, could be 'manila-share' or 'manila-scheduler'.
@@ -1750,13 +1928,13 @@ manila service-enable
 
    usage: manila service-enable <hostname> <binary>
 
-Enables 'manila-share' or 'manila-scheduler' services.
+Enables 'manila-share' or 'manila-scheduler' services (Admin only).
 
 Positional arguments
 --------------------
 
 ``<hostname>``
-  Host name as 'foo_host@bar_backend'.
+  Host name as 'example_host@example_backend'.
 
 ``<binary>``
   Service binary, could be 'manila-share' or 'manila-scheduler'.
@@ -1772,7 +1950,7 @@ manila service-list
                               [--status <status>] [--state <state>]
                               [--zone <zone>] [--columns <columns>]
 
-List all services.
+List all services (Admin only).
 
 Optional arguments
 ------------------
@@ -1796,6 +1974,95 @@ Optional arguments
   Comma separated list of columns to be displayed e.g.
   :option:`--columns` "id,host"
 
+.. _manila_share-export-location-list:
+
+manila share-export-location-list
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-export-location-list [--columns <columns>] <share>
+
+List export locations of a given share.
+
+Positional arguments
+--------------------
+
+``<share>``
+  Name or ID of the share.
+
+Optional arguments
+------------------
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,host,status"
+
+.. _manila_share-export-location-show:
+
+manila share-export-location-show
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-export-location-show <share> <export_location>
+
+Show export location of the share.
+
+Positional arguments
+--------------------
+
+``<share>``
+  Name or ID of the share.
+
+``<export_location>``
+  ID of the share export location.
+
+.. _manila_share-instance-export-location-list:
+
+manila share-instance-export-location-list
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-instance-export-location-list [--columns <columns>]
+                                                     <instance>
+
+List export locations of a given share instance.
+
+Positional arguments
+--------------------
+
+``<instance>``
+  Name or ID of the share instance.
+
+Optional arguments
+------------------
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id,host,status"
+
+.. _manila_share-instance-export-location-show:
+
+manila share-instance-export-location-show
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-instance-export-location-show <instance> <export_location>
+
+Show export location for the share instance.
+
+Positional arguments
+--------------------
+
+``<instance>``
+  Name or ID of the share instance.
+
+``<export_location>``
+  ID of the share instance export location.
+
 .. _manila_share-instance-force-delete:
 
 manila share-instance-force-delete
@@ -1805,7 +2072,7 @@ manila share-instance-force-delete
 
    usage: manila share-instance-force-delete <instance> [<instance> ...]
 
-Attempt force-delete of share instance, regardless of state.
+Force-delete the share instance, regardless of state (Admin only).
 
 Positional arguments
 --------------------
@@ -1823,7 +2090,7 @@ manila share-instance-list
    usage: manila share-instance-list [--share-id <share_id>]
                                      [--columns <columns>]
 
-List share instances.
+List share instances (Admin only).
 
 Optional arguments
 ------------------
@@ -1844,7 +2111,7 @@ manila share-instance-reset-state
 
    usage: manila share-instance-reset-state [--state <state>] <instance>
 
-Explicitly update the state of a share instance.
+Explicitly update the state of a share instance (Admin only).
 
 Positional arguments
 --------------------
@@ -1870,7 +2137,7 @@ manila share-instance-show
 
    usage: manila share-instance-show <instance>
 
-Show details about a share instance.
+Show details about a share instance (Admin only).
 
 Positional arguments
 --------------------
@@ -2191,6 +2458,188 @@ Optional arguments
 ``--description <description>``
   Share network description.
 
+.. _manila_share-replica-create:
+
+manila share-replica-create
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-replica-create [--availability-zone <availability-zone>]
+                                      [--share-network <network-info>]
+                                      <share>
+
+Create a share replica (Experimental).
+
+Positional arguments
+--------------------
+
+``<share>``
+  Name or ID of the share to replicate.
+
+Optional arguments
+------------------
+
+``--availability-zone <availability-zone>,``
+
+``--availability_zone <availability-zone>,``
+
+``--az <availability-zone>``
+  Optional Availability zone in which replica should be
+  created.
+
+``--share-network <network-info>, --share_network <network-info>``
+  Optional network info ID or name.
+
+.. _manila_share-replica-delete:
+
+manila share-replica-delete
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-replica-delete [--force] <replica> [<replica> ...]
+
+Remove one or more share replicas (Experimental).
+
+Positional arguments
+--------------------
+
+``<replica>``
+  ID of the share replica.
+
+Optional arguments
+------------------
+
+``--force``
+  Attempt to force deletion of a replica on its backend. Using this
+  option will purge the replica from Manila even if it is not
+  cleaned up on the backend. Defaults to False.
+
+.. _manila_share-replica-list:
+
+manila share-replica-list
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-replica-list [--share-id <share_id>]
+
+List share replicas (Experimental).
+
+Optional arguments
+------------------
+
+``--share-id <share_id>, --share_id <share_id>, --si <share_id>``
+  List replicas belonging to share.
+
+.. _manila_share-replica-promote:
+
+manila share-replica-promote
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-replica-promote <replica>
+
+Promote specified replica to 'active' replica_state (Experimental).
+
+Positional arguments
+--------------------
+
+``<replica>``
+  ID of the share replica.
+
+.. _manila_share-replica-reset-replica-state:
+
+manila share-replica-reset-replica-state
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-replica-reset-replica-state
+                                                   [--replica-state <replica_state>]
+                                                   <replica>
+
+Explicitly update the 'replica_state' of a share replica (Experimental).
+
+Positional arguments
+--------------------
+
+``<replica>``
+  ID of the share replica to modify.
+
+Optional arguments
+------------------
+
+``--replica-state <replica_state>,``
+
+``--replica_state <replica_state>,``
+
+``--state <replica_state>``
+  Indicate which replica_state to assign the replica.
+  Options include in_sync, out_of_sync, active, error.
+  If no state is provided, out_of_sync will be used.
+
+.. _manila_share-replica-reset-state:
+
+manila share-replica-reset-state
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-replica-reset-state [--state <state>] <replica>
+
+Explicitly update the 'status' of a share replica (Experimental).
+
+Positional arguments
+--------------------
+
+``<replica>``
+  ID of the share replica to modify.
+
+Optional arguments
+------------------
+
+``--state <state>``
+  Indicate which state to assign the replica. Options include
+  available, error, creating, deleting, error_deleting. If no
+  state is provided, available will be used.
+
+.. _manila_share-replica-resync:
+
+manila share-replica-resync
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-replica-resync <replica>
+
+Attempt to update the share replica with its 'active' mirror (Experimental).
+
+Positional arguments
+--------------------
+
+``<replica>``
+  ID of the share replica to resync.
+
+.. _manila_share-replica-show:
+
+manila share-replica-show
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila share-replica-show <replica>
+
+Show details about a replica (Experimental).
+
+Positional arguments
+--------------------
+
+``<replica>``
+  ID of the share replica.
+
 .. _manila_share-server-delete:
 
 manila share-server-delete
@@ -2200,7 +2649,7 @@ manila share-server-delete
 
    usage: manila share-server-delete <id>
 
-Delete share server.
+Delete share server (Admin only).
 
 Positional arguments
 --------------------
@@ -2217,7 +2666,7 @@ manila share-server-details
 
    usage: manila share-server-details <id>
 
-Show share server details.
+Show share server details (Admin only).
 
 Positional arguments
 --------------------
@@ -2237,7 +2686,7 @@ manila share-server-list
                                    [--project-id <project_id>]
                                    [--columns <columns>]
 
-List all share servers.
+List all share servers (Admin only).
 
 Optional arguments
 ------------------
@@ -2267,7 +2716,7 @@ manila share-server-show
 
    usage: manila share-server-show <id>
 
-Show share server info.
+Show share server info (Admin only).
 
 Positional arguments
 --------------------
@@ -2370,7 +2819,7 @@ manila snapshot-force-delete
 
    usage: manila snapshot-force-delete <snapshot>
 
-Attempt force-delete of snapshot, regardless of state.
+Attempt force-delete of snapshot, regardless of state (Admin only).
 
 Positional arguments
 --------------------
@@ -2433,6 +2882,43 @@ Optional arguments
   Comma separated list of columns to be displayed e.g.
   :option:`--columns` "id,name"
 
+.. _manila_snapshot-manage:
+
+manila snapshot-manage
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila snapshot-manage [--name <name>] [--description <description>]
+                                 [--driver_options [<key=value> [<key=value> ...]]]
+                                 <share> <provider_location>
+
+Manage share snapshot not handled by Manila (Admin only).
+
+Positional arguments
+--------------------
+
+``<share>``
+  Name or ID of the share.
+
+``<provider_location>``
+  Provider location of the snapshot on the backend.
+
+Optional arguments
+------------------
+
+``--name <name>``
+  Optional snapshot name (Default=None).
+
+``--description <description>``
+  Optional snapshot description (Default=None).
+
+``--driver_options [<key=value> [<key=value> ...]],``
+
+``--driver-options [<key=value> [<key=value> ...]]``
+  Optional driver options as key=value pairs
+  (Default=None).
+
 .. _manila_snapshot-rename:
 
 manila snapshot-rename
@@ -2469,7 +2955,7 @@ manila snapshot-reset-state
 
    usage: manila snapshot-reset-state [--state <state>] <snapshot>
 
-Explicitly update the state of a snapshot.
+Explicitly update the state of a snapshot (Admin only).
 
 Positional arguments
 --------------------
@@ -2503,6 +2989,23 @@ Positional arguments
 ``<snapshot>``
   Name or ID of the snapshot.
 
+.. _manila_snapshot-unmanage:
+
+manila snapshot-unmanage
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: manila snapshot-unmanage <snapshot> [<snapshot> ...]
+
+Unmanage one or more share snapshots (Admin only).
+
+Positional arguments
+--------------------
+
+``<snapshot>``
+  Name or ID of the snapshot(s).
+
 .. _manila_type-access-add:
 
 manila type-access-add
@@ -2512,7 +3015,7 @@ manila type-access-add
 
    usage: manila type-access-add <share_type> <project_id>
 
-Adds share type access for the given project.
+Adds share type access for the given project (Admin only).
 
 Positional arguments
 --------------------
@@ -2532,7 +3035,7 @@ manila type-access-list
 
    usage: manila type-access-list <share_type>
 
-Print access information about the given share type.
+Print access information about the given share type (Admin only).
 
 Positional arguments
 --------------------
@@ -2549,7 +3052,7 @@ manila type-access-remove
 
    usage: manila type-access-remove <share_type> <project_id>
 
-Removes share type access for the given project.
+Removes share type access for the given project (Admin only).
 
 Positional arguments
 --------------------
@@ -2571,7 +3074,7 @@ manila type-create
                              [--is_public <is_public>]
                              <name> <spec_driver_handles_share_servers>
 
-Create a new share type.
+Create a new share type (Admin only).
 
 Positional arguments
 --------------------
@@ -2605,7 +3108,7 @@ manila type-delete
 
    usage: manila type-delete <id>
 
-Delete a specific share type.
+Delete a specific share type (Admin only).
 
 Positional arguments
 --------------------
@@ -2622,7 +3125,7 @@ manila type-key
 
    usage: manila type-key <stype> <action> [<key=value> [<key=value> ...]]
 
-Set or unset extra_spec for a share type.
+Set or unset extra_spec for a share type (Admin only).
 
 Positional arguments
 --------------------
@@ -2666,7 +3169,7 @@ manila unmanage
 
    usage: manila unmanage <share>
 
-Unmanage share.
+Unmanage share (Admin only).
 
 Positional arguments
 --------------------
