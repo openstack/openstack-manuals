@@ -343,16 +343,14 @@ For the back end, use either Octavia or Haproxy. This example uses Octavia.
 
    .. code-block:: ini
 
-      service_plugins = neutron_lbaas.services.loadbalancer.plugin.
-      LoadBalancerPluginv2
+      service_plugins = lbaasv2
 
    If this option is already defined, add the load-balancing plug-in to
    the list using a comma as a separator. For example:
 
    .. code-block:: ini
 
-      service_plugins = [already defined plugins],
-      neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
+      service_plugins = [already defined plugins],lbaasv2
 
 
 
