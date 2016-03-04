@@ -9,7 +9,7 @@ Networking service command-line client
 The neutron client is the command-line interface (CLI) for
 the Networking service API and its extensions.
 
-This chapter documents :command:`neutron` version ``4.0.0``.
+This chapter documents :command:`neutron` version ``4.1.0``.
 
 For help on a specific :command:`neutron` command, enter:
 
@@ -195,11 +195,71 @@ neutron API v2.0 commands
 ``agent-update``
   Updates the admin status and description for a specified agent.
 
+``auto-allocated-topology-show``
+  Show the auto-allocated topology of a given tenant.
+
 ``availability-zone-list``
   List availability zones.
 
 ``bash-completion``
   Prints all of the commands and options for bash-completion.
+
+``bgp-dragent-list-hosting-speaker``
+  List Dynamic Routing agents hosting a BGP speaker.
+
+``bgp-dragent-speaker-add``
+  Add a BGP speaker to a Dynamic Routing agent.
+
+``bgp-dragent-speaker-remove``
+  Removes a BGP speaker from a Dynamic Routing agent.
+
+``bgp-peer-create``
+  Create a BGP Peer.
+
+``bgp-peer-delete``
+  Delete a BGP peer.
+
+``bgp-peer-list``
+  List BGP peers.
+
+``bgp-peer-show``
+  Show information of a given BGP peer.
+
+``bgp-peer-update``
+  Update BGP Peer's information.
+
+``bgp-speaker-advertiseroute-list``
+  List routes advertised by a given BGP speaker.
+
+``bgp-speaker-create``
+  Create a BGP Speaker.
+
+``bgp-speaker-delete``
+  Delete a BGP speaker.
+
+``bgp-speaker-list``
+  List BGP speakers.
+
+``bgp-speaker-list-on-dragent``
+  List BGP speakers hosted by a Dynamic Routing agent.
+
+``bgp-speaker-network-add``
+  Add a network to the BGP speaker.
+
+``bgp-speaker-network-remove``
+  Remove a network from the BGP speaker.
+
+``bgp-speaker-peer-add``
+  Add a peer to the BGP speaker.
+
+``bgp-speaker-peer-remove``
+  Remove a peer from the BGP speaker.
+
+``bgp-speaker-show``
+  Show information of a given BGP speaker.
+
+``bgp-speaker-update``
+  Update BGP Speaker's information.
 
 ``dhcp-agent-list-hosting-net``
   List DHCP agents hosting a network.
@@ -456,6 +516,36 @@ neutron API v2.0 commands
 ``lbaas-healthmonitor-update``
   LBaaS v2 Update a given healthmonitor.
 
+``lbaas-l7policy-create``
+  LBaaS v2 Create L7 policy.
+
+``lbaas-l7policy-delete``
+  LBaaS v2 Delete a given L7 policy.
+
+``lbaas-l7policy-list``
+  LBaaS v2 List L7 policies that belong to a given listener.
+
+``lbaas-l7policy-show``
+  LBaaS v2 Show information of a given L7 policy.
+
+``lbaas-l7policy-update``
+  LBaaS v2 Update a given L7 policy.
+
+``lbaas-l7rule-create``
+  LBaaS v2 Create L7 rule.
+
+``lbaas-l7rule-delete``
+  LBaaS v2 Delete a given L7 rule.
+
+``lbaas-l7rule-list``
+  LBaaS v2 List L7 rules that belong to a given L7 policy.
+
+``lbaas-l7rule-show``
+  LBaaS v2 Show information of a given rule.
+
+``lbaas-l7rule-update``
+  LBaaS v2 Update a given L7 rule.
+
 ``lbaas-listener-create``
   LBaaS v2 Create a listener.
 
@@ -488,6 +578,9 @@ neutron API v2.0 commands
 
 ``lbaas-loadbalancer-stats``
   Retrieve stats for a given loadbalancer.
+
+``lbaas-loadbalancer-status``
+  Retrieve status for a given loadbalancer.
 
 ``lbaas-loadbalancer-update``
   LBaaS v2 Update a given loadbalancer.
@@ -576,6 +669,12 @@ neutron API v2.0 commands
 ``net-gateway-update``
   Update the name for a network gateway.
 
+``net-ip-availability-list``
+  List IP usage of networks
+
+``net-ip-availability-show``
+  Show IP usage of specific network
+
 ``net-list``
   List networks that belong to a given tenant.
 
@@ -602,6 +701,8 @@ neutron API v2.0 commands
 
 ``port-update``
   Update port's information.
+
+``purge``
 
 ``qos-available-rule-types``
   List available qos rule types.
@@ -768,6 +869,15 @@ neutron API v2.0 commands
 ``subnetpool-update``
   Update subnetpool's information.
 
+``tag-add``
+  Add a tag into the resource.
+
+``tag-remove``
+  Remove a tag on the resource.
+
+``tag-replace``
+  Replace all tags on the resource.
+
 ``vpn-endpoint-group-create``
   Create a VPN endpoint group.
 
@@ -836,23 +946,24 @@ neutron address-scope-create
 .. code-block:: console
 
    usage: neutron address-scope-create [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        [--request-format {json}]
                                        [--tenant-id TENANT_ID] [--shared]
-                                       name
+                                       NAME IP_VERSION
 
 Create an address scope for a given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``name``
+``NAME``
   Specify the name of the address scope.
 
-Optional arguments
-------------------
+``IP_VERSION``
+  Specify the address family of the address scope.
+
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -878,14 +989,12 @@ neutron address-scope-delete
 
 Delete an address scope.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ADDRESS_SCOPE``
   ID or name of address_scope to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -900,8 +1009,7 @@ neutron address-scope-show
 
 .. code-block:: console
 
-   usage: neutron address-scope-show [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron address-scope-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      [--request-format {json}] [-D] [-F FIELD]
@@ -909,14 +1017,12 @@ neutron address-scope-show
 
 Show information about an address scope.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ADDRESS_SCOPE``
   ID or name of address_scope to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -944,14 +1050,12 @@ neutron address-scope-update
 
 Update an address scope.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ADDRESS_SCOPE``
   ID or name of address_scope to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -973,14 +1077,12 @@ neutron agent-delete
 
 Delete a given agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``AGENT``
   ID of agent to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -995,8 +1097,7 @@ neutron agent-show
 
 .. code-block:: console
 
-   usage: neutron agent-show [-h]
-                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron agent-show [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--prefix PREFIX] [--request-format {json}] [-D]
                              [-F FIELD]
@@ -1004,14 +1105,12 @@ neutron agent-show
 
 Show information of a given agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``AGENT``
   ID of agent to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1039,14 +1138,12 @@ neutron agent-update
 
 Updates the admin status and description for a specified agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``AGENT``
   ID of agent to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1060,6 +1157,600 @@ Optional arguments
 ``--description DESCRIPTION``
   Description for the agent.
 
+.. _neutron_bgp-dragent-list-hosting-speaker:
+
+neutron bgp-dragent-list-hosting-speaker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-dragent-list-hosting-speaker [-h]
+                                                   [-f {csv,html,json,table,value,yaml}]
+                                                   [-c COLUMN]
+                                                   [--max-width <integer>]
+                                                   [--noindent]
+                                                   [--quote {all,minimal,none,nonnumeric}]
+                                                   [--request-format {json}] [-D]
+                                                   [-F FIELD]
+                                                   BGP_SPEAKER
+
+List Dynamic Routing agents hosting a BGP speaker.
+
+**Positional arguments:**
+
+``BGP_SPEAKER``
+  ID or name of the BGP speaker.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _neutron_bgp-dragent-speaker-add:
+
+neutron bgp-dragent-speaker-add
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-dragent-speaker-add [-h] [--request-format {json}]
+                                          BGP_DRAGENT_ID BGP_SPEAKER
+
+Add a BGP speaker to a Dynamic Routing agent.
+
+**Positional arguments:**
+
+``BGP_DRAGENT_ID``
+  ID of the Dynamic Routing agent.
+
+``BGP_SPEAKER``
+  ID or name of the BGP speaker.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_bgp-dragent-speaker-remove:
+
+neutron bgp-dragent-speaker-remove
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-dragent-speaker-remove [-h] [--request-format {json}]
+                                             BGP_DRAGENT_ID BGP_SPEAKER
+
+Removes a BGP speaker from a Dynamic Routing agent.
+
+**Positional arguments:**
+
+``BGP_DRAGENT_ID``
+  ID of the Dynamic Routing agent.
+
+``BGP_SPEAKER``
+  ID or name of the BGP speaker.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_bgp-peer-create:
+
+neutron bgp-peer-create
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-peer-create [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX]
+                                  [--request-format {json}]
+                                  [--tenant-id TENANT_ID] --peer-ip
+                                  PEER_IP_ADDRESS --remote-as PEER_REMOTE_AS
+                                  [--auth-type PEER_AUTH_TYPE]
+                                  [--password AUTH_PASSWORD]
+                                  NAME
+
+Create a BGP Peer.
+
+**Positional arguments:**
+
+``NAME``
+  Name of the BGP peer to create.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--peer-ip PEER_IP_ADDRESS``
+  Peer IP address.
+
+``--remote-as PEER_REMOTE_AS``
+  Peer AS number. (Integer in [1, 65535] is allowed.)
+
+``--auth-type PEER_AUTH_TYPE``
+  Authentication algorithm. Supported algorithms:
+  none(default), md5
+
+``--password AUTH_PASSWORD``
+  Authentication password.
+
+.. _neutron_bgp-peer-delete:
+
+neutron bgp-peer-delete
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-peer-delete [-h] [--request-format {json}] BGP_PEER
+
+Delete a BGP peer.
+
+**Positional arguments:**
+
+``BGP_PEER``
+  ID or name of bgp_peer to delete.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_bgp-peer-show:
+
+neutron bgp-peer-show
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-peer-show [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX] [--request-format {json}] [-D]
+                                [-F FIELD]
+                                BGP_PEER
+
+Show information of a given BGP peer.
+
+**Positional arguments:**
+
+``BGP_PEER``
+  ID or name of bgp_peer to look up.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _neutron_bgp-peer-update:
+
+neutron bgp-peer-update
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-peer-update [-h] [--request-format {json}] [--name NAME]
+                                  [--password AUTH_PASSWORD]
+                                  BGP_PEER
+
+Update BGP Peer's information.
+
+**Positional arguments:**
+
+``BGP_PEER``
+  ID or name of bgp_peer to update.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--name NAME``
+  Updated name of the BGP peer.
+
+``--password AUTH_PASSWORD``
+  Updated authentication password.
+
+.. _neutron_bgp-speaker-advertiseroute-list:
+
+neutron bgp-speaker-advertiseroute-list
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-advertiseroute-list [-h]
+                                                  [-f {csv,html,json,table,value,yaml}]
+                                                  [-c COLUMN]
+                                                  [--max-width <integer>]
+                                                  [--noindent]
+                                                  [--quote {all,minimal,none,nonnumeric}]
+                                                  [--request-format {json}] [-D]
+                                                  [-F FIELD] [-P SIZE]
+                                                  [--sort-key FIELD]
+                                                  [--sort-dir {asc,desc}]
+                                                  BGP_SPEAKER
+
+List routes advertised by a given BGP speaker.
+
+**Positional arguments:**
+
+``BGP_SPEAKER``
+  ID or name of the BGP speaker.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
+.. _neutron_bgp-speaker-create:
+
+neutron bgp-speaker-create
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-create [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     [--request-format {json}]
+                                     [--tenant-id TENANT_ID] --local-as LOCAL_AS
+                                     [--ip-version {4,6}]
+                                     [--advertise-floating-ip-host-routes {True,False}]
+                                     [--advertise-tenant-networks {True,False}]
+                                     NAME
+
+Create a BGP Speaker.
+
+**Positional arguments:**
+
+``NAME``
+  Name of the BGP speaker to create.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--local-as LOCAL_AS``
+  Local AS number. (Integer in [1, 65535] is allowed.)
+
+``--ip-version {4,6} IP``
+  version for the BGP speaker (default is 4).
+
+``--advertise-floating-ip-host-routes {True,False}``
+  Whether to enable or disable the advertisement of
+  floating-ip host routes by the BGP speaker. By default
+  floating ip host routes will be advertised by the BGP
+  speaker.
+
+``--advertise-tenant-networks {True,False}``
+  Whether to enable or disable the advertisement of
+  tenant network routes by the BGP speaker. By default
+  tenant network routes will be advertised by the BGP
+  speaker.
+
+.. _neutron_bgp-speaker-delete:
+
+neutron bgp-speaker-delete
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-delete [-h] [--request-format {json}] BGP_SPEAKER
+
+Delete a BGP speaker.
+
+**Positional arguments:**
+
+``BGP_SPEAKER``
+  ID or name of bgp_speaker to delete.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_bgp-speaker-list-on-dragent:
+
+neutron bgp-speaker-list-on-dragent
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-list-on-dragent [-h]
+                                              [-f {csv,html,json,table,value,yaml}]
+                                              [-c COLUMN] [--max-width <integer>]
+                                              [--noindent]
+                                              [--quote {all,minimal,none,nonnumeric}]
+                                              [--request-format {json}] [-D]
+                                              [-F FIELD]
+                                              BGP_DRAGENT_ID
+
+List BGP speakers hosted by a Dynamic Routing agent.
+
+**Positional arguments:**
+
+``BGP_DRAGENT_ID``
+  ID of the Dynamic Routing agent.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _neutron_bgp-speaker-network-add:
+
+neutron bgp-speaker-network-add
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-network-add [-h] [--request-format {json}]
+                                          BGP_SPEAKER NETWORK
+
+Add a network to the BGP speaker.
+
+**Positional arguments:**
+
+``BGP_SPEAKER``
+  ID or name of the BGP speaker.
+
+``NETWORK``
+  ID or name of the network to add.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_bgp-speaker-network-remove:
+
+neutron bgp-speaker-network-remove
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-network-remove [-h] [--request-format {json}]
+                                             BGP_SPEAKER NETWORK
+
+Remove a network from the BGP speaker.
+
+**Positional arguments:**
+
+``BGP_SPEAKER``
+  ID or name of the BGP speaker.
+
+``NETWORK``
+  ID or name of the network to remove.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_bgp-speaker-peer-add:
+
+neutron bgp-speaker-peer-add
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-peer-add [-h] [--request-format {json}]
+                                       BGP_SPEAKER BGP_PEER
+
+Add a peer to the BGP speaker.
+
+**Positional arguments:**
+
+``BGP_SPEAKER``
+  ID or name of the BGP speaker.
+
+``BGP_PEER``
+  ID or name of the BGP peer to add.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_bgp-speaker-peer-remove:
+
+neutron bgp-speaker-peer-remove
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-peer-remove [-h] [--request-format {json}]
+                                          BGP_SPEAKER BGP_PEER
+
+Remove a peer from the BGP speaker.
+
+**Positional arguments:**
+
+``BGP_SPEAKER``
+  ID or name of the BGP speaker.
+
+``BGP_PEER``
+  ID or name of the BGP peer to remove.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_bgp-speaker-show:
+
+neutron bgp-speaker-show
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-show [-h] [-f {html,json,shell,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent] [--prefix PREFIX]
+                                   [--request-format {json}] [-D] [-F FIELD]
+                                   BGP_SPEAKER
+
+Show information of a given BGP speaker.
+
+**Positional arguments:**
+
+``BGP_SPEAKER``
+  ID or name of bgp_speaker to look up.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _neutron_bgp-speaker-update:
+
+neutron bgp-speaker-update
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-update [-h] [--request-format {json}] [--name NAME]
+                                     [--advertise-floating-ip-host-routes {True,False}]
+                                     [--advertise-tenant-networks {True,False}]
+                                     BGP_SPEAKER
+
+Update BGP Speaker's information.
+
+**Positional arguments:**
+
+``BGP_SPEAKER``
+  ID or name of bgp_speaker to update.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--name NAME``
+  Name of the BGP speaker to update.
+
+``--advertise-floating-ip-host-routes {True,False}``
+  Whether to enable or disable the advertisement of
+  floating-ip host routes by the BGP speaker. By default
+  floating ip host routes will be advertised by the BGP
+  speaker.
+
+``--advertise-tenant-networks {True,False}``
+  Whether to enable or disable the advertisement of
+  tenant network routes by the BGP speaker. By default
+  tenant network routes will be advertised by the BGP
+  speaker.
+
 .. _neutron_dhcp-agent-list-hosting-net:
 
 neutron dhcp-agent-list-hosting-net
@@ -1068,24 +1759,22 @@ neutron dhcp-agent-list-hosting-net
 .. code-block:: console
 
    usage: neutron dhcp-agent-list-hosting-net [-h]
-                                              [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                              [-f {csv,html,json,table,value,yaml}]
                                               [-c COLUMN] [--max-width <integer>]
                                               [--noindent]
                                               [--quote {all,minimal,none,nonnumeric}]
                                               [--request-format {json}] [-D]
                                               [-F FIELD]
-                                              network
+                                              NETWORK
 
 List DHCP agents hosting a network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``network``
+``NETWORK``
   Network to query.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1108,21 +1797,19 @@ neutron dhcp-agent-network-add
 .. code-block:: console
 
    usage: neutron dhcp-agent-network-add [-h] [--request-format {json}]
-                                         dhcp_agent network
+                                         DHCP_AGENT NETWORK
 
 Add a network to a DHCP agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``dhcp_agent``
+``DHCP_AGENT``
   ID of the DHCP agent.
 
-``network``
+``NETWORK``
   Network to add.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1138,21 +1825,19 @@ neutron dhcp-agent-network-remove
 .. code-block:: console
 
    usage: neutron dhcp-agent-network-remove [-h] [--request-format {json}]
-                                            dhcp_agent network
+                                            DHCP_AGENT NETWORK
 
 Remove a network from a DHCP agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``dhcp_agent``
+``DHCP_AGENT``
   ID of the DHCP agent.
 
-``network``
+``NETWORK``
   Network to remove.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1167,7 +1852,7 @@ neutron ext-show
 
 .. code-block:: console
 
-   usage: neutron ext-show [-h] [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron ext-show [-h] [-f {html,json,shell,table,value,yaml}]
                            [-c COLUMN] [--max-width <integer>] [--noindent]
                            [--prefix PREFIX] [--request-format {json}] [-D]
                            [-F FIELD]
@@ -1175,14 +1860,12 @@ neutron ext-show
 
 Show information of a given resource.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``EXTENSION``
   ID of extension to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1204,26 +1887,24 @@ neutron firewall-create
 
 .. code-block:: console
 
-   usage: neutron firewall-create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron firewall-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   [--request-format {json}]
                                   [--tenant-id TENANT_ID] [--name NAME]
                                   [--description DESCRIPTION]
-                                  [--admin-state-down] [--router ROUTER]
+                                  [--router ROUTER | --no-routers]
+                                  [--admin-state-down]
                                   POLICY
 
 Create a firewall.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POLICY``
   Firewall policy name or ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1238,15 +1919,19 @@ Optional arguments
   Name for the firewall.
 
 ``--description DESCRIPTION``
-  Description for the firewall rule.
+  Description for the firewall.
+
+``--router ROUTER``
+  Firewall associated router name or ID (requires FWaaS
+  router insertion extension, this option can be
+  repeated)
+
+``--no-routers``
+  Associate no routers with the firewall (requires FWaaS
+  router insertion extension)
 
 ``--admin-state-down``
   Set admin state up to false.
-
-``--router ROUTER``
-  Firewall associated router names or IDs (requires
-  FWaaS router insertion extension, this option can be
-  repeated)
 
 .. _neutron_firewall-delete:
 
@@ -1259,14 +1944,12 @@ neutron firewall-delete
 
 Delete a given firewall.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL``
   ID or name of firewall to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1282,26 +1965,23 @@ neutron firewall-policy-create
 .. code-block:: console
 
    usage: neutron firewall-policy-create [-h]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                         [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
                                          [--request-format {json}]
-                                         [--tenant-id TENANT_ID]
-                                         [--description DESCRIPTION] [--shared]
+                                         [--tenant-id TENANT_ID] [--shared]
+                                         [--audited] [--description DESCRIPTION]
                                          [--firewall-rules FIREWALL_RULES]
-                                         [--audited]
                                          NAME
 
 Create a firewall policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name for the firewall policy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1312,18 +1992,18 @@ Optional arguments
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
-``--description DESCRIPTION``
-  Description for the firewall policy.
-
 ``--shared``
   Create a shared policy.
+
+``--audited``
+  Sets audited to True.
+
+``--description DESCRIPTION``
+  Description for the firewall policy.
 
 ``--firewall-rules FIREWALL_RULES``
   Ordered list of whitespace-delimited firewall rule
   names or IDs; e.g., :option:`--firewall-rules` "rule1 rule2"
-
-``--audited``
-  Sets audited to True.
 
 .. _neutron_firewall-policy-delete:
 
@@ -1337,14 +2017,12 @@ neutron firewall-policy-delete
 
 Delete a given firewall policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL_POLICY``
   ID or name of firewall_policy to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1366,8 +2044,7 @@ neutron firewall-policy-insert-rule
 
 Insert a rule into a given firewall policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL_POLICY``
   ID or name of firewall_policy to update.
@@ -1375,8 +2052,7 @@ Positional arguments
 ``FIREWALL_RULE``
   New rule to insert.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1402,8 +2078,7 @@ neutron firewall-policy-remove-rule
 
 Remove a rule from a given firewall policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL_POLICY``
   ID or name of firewall_policy to update.
@@ -1411,8 +2086,7 @@ Positional arguments
 ``FIREWALL_RULE``
   Firewall rule to remove from policy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1428,7 +2102,7 @@ neutron firewall-policy-show
 .. code-block:: console
 
    usage: neutron firewall-policy-show [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        [--request-format {json}] [-D] [-F FIELD]
@@ -1436,14 +2110,12 @@ neutron firewall-policy-show
 
 Show information of a given firewall policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL_POLICY``
   ID or name of firewall_policy to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1466,19 +2138,20 @@ neutron firewall-policy-update
 .. code-block:: console
 
    usage: neutron firewall-policy-update [-h] [--request-format {json}]
+                                         [--description DESCRIPTION]
                                          [--firewall-rules FIREWALL_RULES]
+                                         [--name NAME] [--shared {True,False}]
+                                         [--audited {True,False}]
                                          FIREWALL_POLICY
 
 Update a given firewall policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL_POLICY``
   ID or name of firewall_policy to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1486,9 +2159,23 @@ Optional arguments
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+``--description DESCRIPTION``
+  Description for the firewall policy.
+
 ``--firewall-rules FIREWALL_RULES``
   Ordered list of whitespace-delimited firewall rule
   names or IDs; e.g., :option:`--firewall-rules` "rule1 rule2"
+
+``--name NAME``
+  Name for the firewall policy.
+
+``--shared {True,False}``
+  Update the sharing status of the policy. (True means
+  shared)
+
+``--audited {True,False}``
+  Update the audit status of the policy. (True means
+  auditing is enabled)
 
 .. _neutron_firewall-rule-delete:
 
@@ -1502,14 +2189,12 @@ neutron firewall-rule-delete
 
 Delete a given firewall rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL_RULE``
   ID or name of firewall_rule to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1524,8 +2209,7 @@ neutron firewall-rule-show
 
 .. code-block:: console
 
-   usage: neutron firewall-rule-show [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron firewall-rule-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      [--request-format {json}] [-D] [-F FIELD]
@@ -1533,14 +2217,12 @@ neutron firewall-rule-show
 
 Show information of a given firewall rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL_RULE``
   ID or name of firewall_rule to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1563,19 +2245,26 @@ neutron firewall-rule-update
 .. code-block:: console
 
    usage: neutron firewall-rule-update [-h] [--request-format {json}]
+                                       [--shared {True,False}]
+                                       [--ip-version {4,6}] [--name NAME]
+                                       [--description DESCRIPTION]
+                                       [--source-ip-address SOURCE_IP_ADDRESS]
+                                       [--destination-ip-address DESTINATION_IP_ADDRESS]
+                                       [--source-port SOURCE_PORT]
+                                       [--destination-port DESTINATION_PORT]
+                                       [--enabled {True,False}]
                                        [--protocol {tcp,udp,icmp,any}]
+                                       [--action {allow,deny,reject}]
                                        FIREWALL_RULE
 
 Update a given firewall rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL_RULE``
   ID or name of firewall_rule to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1583,8 +2272,39 @@ Optional arguments
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+``--shared {True,False}``
+  Update the shared flag for the firewall rule.
+
+``--ip-version {4,6}``
+  Update IP version for the firewall rule.
+
+``--name NAME``
+  Name for the firewall rule.
+
+``--description DESCRIPTION``
+  Description for the firewall rule.
+
+``--source-ip-address SOURCE_IP_ADDRESS``
+  Source IP address or subnet.
+
+``--destination-ip-address DESTINATION_IP_ADDRESS``
+  Destination IP address or subnet.
+
+``--source-port SOURCE_PORT``
+  Source port (integer in [1, 65535] or range in a:b).
+
+``--destination-port DESTINATION_PORT``
+  Destination port (integer in [1, 65535] or range in
+  a:b).
+
+``--enabled {True,False}``
+  Whether to enable or disable this rule.
+
 ``--protocol {tcp,udp,icmp,any}``
   Protocol for the firewall rule.
+
+``--action {allow,deny,reject}``
+  Action for the firewall rule.
 
 .. _neutron_firewall-show:
 
@@ -1593,8 +2313,7 @@ neutron firewall-show
 
 .. code-block:: console
 
-   usage: neutron firewall-show [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron firewall-show [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--request-format {json}] [-D]
                                 [-F FIELD]
@@ -1602,14 +2321,12 @@ neutron firewall-show
 
 Show information of a given firewall.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL``
   ID or name of firewall to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1631,21 +2348,21 @@ neutron firewall-update
 
 .. code-block:: console
 
-   usage: neutron firewall-update [-h] [--request-format {json}]
-                                  [--policy POLICY]
+   usage: neutron firewall-update [-h] [--request-format {json}] [--name NAME]
+                                  [--description DESCRIPTION]
                                   [--router ROUTER | --no-routers]
+                                  [--policy POLICY]
+                                  [--admin-state-up {True,False}]
                                   FIREWALL
 
 Update a given firewall.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FIREWALL``
   ID or name of firewall to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1653,17 +2370,26 @@ Optional arguments
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
-``--policy POLICY``
-  Firewall policy name or ID.
+``--name NAME``
+  Name for the firewall.
+
+``--description DESCRIPTION``
+  Description for the firewall.
 
 ``--router ROUTER``
-  Firewall associated router names or IDs (requires
-  FWaaS router insertion extension, this option can be
+  Firewall associated router name or ID (requires FWaaS
+  router insertion extension, this option can be
   repeated)
 
 ``--no-routers``
   Associate no routers with the firewall (requires FWaaS
   router insertion extension)
+
+``--policy POLICY``
+  Firewall policy name or ID.
+
+``--admin-state-up {True,False}``
+  Update the admin state for the firewall(True means UP)
 
 .. _neutron_flavor-associate:
 
@@ -1677,8 +2403,7 @@ neutron flavor-associate
 
 Associate a Neutron service flavor with a flavor profile.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FLAVOR``
   Name or ID of the flavor to associate.
@@ -1687,8 +2412,7 @@ Positional arguments
   ID of the flavor profile to be associated with the
   flavor.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1703,8 +2427,7 @@ neutron flavor-create
 
 .. code-block:: console
 
-   usage: neutron flavor-create [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron flavor-create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--request-format {json}]
                                 [--tenant-id TENANT_ID]
@@ -1714,8 +2437,7 @@ neutron flavor-create
 
 Create a Neutron service flavor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name for the flavor.
@@ -1724,8 +2446,7 @@ Positional arguments
   Service type to which the flavor applies to: e.g. VPN.
   (See service-provider-list for loaded examples.)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1753,14 +2474,12 @@ neutron flavor-delete
 
 Delete a given Neutron service flavor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FLAVOR``
   ID or name of flavor to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1780,8 +2499,7 @@ neutron flavor-disassociate
 
 Disassociate a Neutron service flavor from a flavor profile.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FLAVOR``
   Name or ID of the flavor.
@@ -1790,8 +2508,7 @@ Positional arguments
   ID of the flavor profile to be disassociated from the
   flavor.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1811,14 +2528,12 @@ neutron flavor-profile-delete
 
 Delete a given Neutron service flavor profile.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SERVICE_PROFILE``
   ID or name of service_profile to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1834,7 +2549,7 @@ neutron flavor-profile-show
 .. code-block:: console
 
    usage: neutron flavor-profile-show [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                      [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent] [--prefix PREFIX]
                                       [--request-format {json}] [-D] [-F FIELD]
@@ -1842,14 +2557,12 @@ neutron flavor-profile-show
 
 Show information about a given Neutron service flavor profile.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SERVICE_PROFILE``
   ID or name of service_profile to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1879,14 +2592,12 @@ neutron flavor-profile-update
 
 Update a given Neutron service flavor profile.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SERVICE_PROFILE``
   ID or name of service_profile to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1913,8 +2624,7 @@ neutron flavor-show
 
 .. code-block:: console
 
-   usage: neutron flavor-show [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron flavor-show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX] [--request-format {json}] [-D]
                               [-F FIELD]
@@ -1922,14 +2632,12 @@ neutron flavor-show
 
 Show information about a given Neutron service flavor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FLAVOR``
   ID or name of flavor to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1958,14 +2666,12 @@ neutron flavor-update
 
 Update a Neutron service flavor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FLAVOR``
   ID or name of flavor to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1995,8 +2701,7 @@ neutron floatingip-associate
 
 Create a mapping between a floating IP and a fixed IP.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FLOATINGIP_ID``
   ID of the floating IP to associate.
@@ -2005,8 +2710,7 @@ Positional arguments
   ID or name of the port to be associated with the
   floating IP.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2025,8 +2729,7 @@ neutron floatingip-create
 
 .. code-block:: console
 
-   usage: neutron floatingip-create [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron floatingip-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     [--request-format {json}]
@@ -2034,18 +2737,18 @@ neutron floatingip-create
                                     [--fixed-ip-address FIXED_IP_ADDRESS]
                                     [--floating-ip-address FLOATING_IP_ADDRESS]
                                     [--subnet SUBNET_ID]
+                                    [--dns-domain DNS_DOMAIN]
+                                    [--dns-name DNS_NAME]
                                     FLOATING_NETWORK
 
 Create a floating IP for a given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FLOATING_NETWORK``
   Network name or ID to allocate floating IP from.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2069,6 +2772,14 @@ Optional arguments
 ``--subnet SUBNET_ID``
   Subnet ID on which you want to create the floating IP.
 
+``--dns-domain DNS_DOMAIN``
+  Assign DNS domain to the floatingip (requires DNS
+  integration extension)
+
+``--dns-name DNS_NAME``
+  Assign DNS name to the floatingip (requires DNS
+  integration extension)
+
 .. _neutron_floatingip-delete:
 
 neutron floatingip-delete
@@ -2080,14 +2791,12 @@ neutron floatingip-delete
 
 Delete a given floating IP.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FLOATINGIP``
   ID of floatingip to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2107,14 +2816,12 @@ neutron floatingip-disassociate
 
 Remove a mapping from a floating IP to a fixed IP.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FLOATINGIP_ID``
   ID of the floating IP to disassociate.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2129,8 +2836,7 @@ neutron floatingip-show
 
 .. code-block:: console
 
-   usage: neutron floatingip-show [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron floatingip-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   [--request-format {json}] [-D] [-F FIELD]
@@ -2138,14 +2844,12 @@ neutron floatingip-show
 
 Show information of a given floating IP.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``FLOATINGIP``
   ID of floatingip to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2168,7 +2872,7 @@ neutron gateway-device-create
 .. code-block:: console
 
    usage: neutron gateway-device-create [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                        [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent] [--prefix PREFIX]
                                         [--request-format {json}]
@@ -2180,14 +2884,12 @@ neutron gateway-device-create
 
 Create a network gateway device.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name of network gateway device to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2230,14 +2932,12 @@ neutron gateway-device-delete
 
 Delete a given network gateway device.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``GATEWAY_DEVICE``
   ID or name of gateway_device to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2253,7 +2953,7 @@ neutron gateway-device-show
 .. code-block:: console
 
    usage: neutron gateway-device-show [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                      [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent] [--prefix PREFIX]
                                       [--request-format {json}] [-D] [-F FIELD]
@@ -2261,14 +2961,12 @@ neutron gateway-device-show
 
 Show information for a given network gateway device.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``GATEWAY_DEVICE``
   ID or name of gateway_device to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2299,14 +2997,12 @@ neutron gateway-device-update
 
 Update a network gateway device.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``GATEWAY_DEVICE``
   ID or name of gateway_device to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2349,14 +3045,12 @@ neutron ipsec-site-connection-delete
 
 Delete a given IPsec site connection.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``IPSEC_SITE_CONNECTION``
-  ID or name of ipsec_site_connection to delete.
+  ID or name of IPsec site connection to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2372,7 +3066,7 @@ neutron ipsec-site-connection-show
 .. code-block:: console
 
    usage: neutron ipsec-site-connection-show [-h]
-                                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                             [-f {html,json,shell,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
                                              [--noindent] [--prefix PREFIX]
                                              [--request-format {json}] [-D]
@@ -2381,14 +3075,12 @@ neutron ipsec-site-connection-show
 
 Show information of a given IPsec site connection.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``IPSEC_SITE_CONNECTION``
-  ID or name of ipsec_site_connection to look up.
+  ID or name of IPsec site connection to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2418,14 +3110,12 @@ neutron ipsec-site-connection-update
 
 Update a given IPsec site connection.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``IPSEC_SITE_CONNECTION``
-  ID or name of ipsec_site_connection to update.
+  ID or name of IPsec site connection to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2458,25 +3148,23 @@ neutron l3-agent-list-hosting-router
 .. code-block:: console
 
    usage: neutron l3-agent-list-hosting-router [-h]
-                                               [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                               [-f {csv,html,json,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
                                                [--noindent]
                                                [--quote {all,minimal,none,nonnumeric}]
                                                [--request-format {json}] [-D]
                                                [-F FIELD]
-                                               router
+                                               ROUTER
 
 List L3 agents hosting a router.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``router``
+``ROUTER``
   Router to query.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2499,21 +3187,19 @@ neutron l3-agent-router-add
 .. code-block:: console
 
    usage: neutron l3-agent-router-add [-h] [--request-format {json}]
-                                      l3_agent router
+                                      L3_AGENT ROUTER
 
 Add a router to a L3 agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``l3_agent``
+``L3_AGENT``
   ID of the L3 agent.
 
-``router``
+``ROUTER``
   Router to add.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2529,21 +3215,19 @@ neutron l3-agent-router-remove
 .. code-block:: console
 
    usage: neutron l3-agent-router-remove [-h] [--request-format {json}]
-                                         l3_agent router
+                                         L3_AGENT ROUTER
 
 Remove a router from a L3 agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``l3_agent``
+``L3_AGENT``
   ID of the L3 agent.
 
-``router``
+``ROUTER``
   Router to remove.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2559,25 +3243,23 @@ neutron lb-agent-hosting-pool
 .. code-block:: console
 
    usage: neutron lb-agent-hosting-pool [-h]
-                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                        [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         [--request-format {json}] [-D] [-F FIELD]
-                                        pool
+                                        POOL
 
 Get loadbalancer agent hosting a pool. Deriving from ListCommand though server
 will return only one agent to keep common output format for all agent
 schedulers
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``pool``
+``POOL``
   Pool to query.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2604,8 +3286,7 @@ neutron lb-healthmonitor-associate
 
 Create a mapping between a health monitor and a pool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``HEALTH_MONITOR_ID``
   Health monitor to associate.
@@ -2614,8 +3295,7 @@ Positional arguments
   ID of the pool to be associated with the health
   monitor.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2635,14 +3315,12 @@ neutron lb-healthmonitor-delete
 
 Delete a given health monitor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``HEALTH_MONITOR``
   ID of health_monitor to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2662,8 +3340,7 @@ neutron lb-healthmonitor-disassociate
 
 Remove a mapping from a health monitor to a pool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``HEALTH_MONITOR_ID``
   Health monitor to associate.
@@ -2672,8 +3349,7 @@ Positional arguments
   ID of the pool to be associated with the health
   monitor.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2689,7 +3365,7 @@ neutron lb-healthmonitor-show
 .. code-block:: console
 
    usage: neutron lb-healthmonitor-show [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                        [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent] [--prefix PREFIX]
                                         [--request-format {json}] [-D] [-F FIELD]
@@ -2697,14 +3373,12 @@ neutron lb-healthmonitor-show
 
 Show information of a given health monitor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``HEALTH_MONITOR``
   ID of health_monitor to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2731,14 +3405,12 @@ neutron lb-healthmonitor-update
 
 Update a given health monitor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``HEALTH_MONITOR``
   ID of health_monitor to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2753,8 +3425,7 @@ neutron lb-member-create
 
 .. code-block:: console
 
-   usage: neutron lb-member-create [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron lb-member-create [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    [--request-format {json}]
@@ -2765,14 +3436,12 @@ neutron lb-member-create
 
 Create a member.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   Pool ID or name this vip belongs to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2808,14 +3477,12 @@ neutron lb-member-delete
 
 Delete a given member.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``MEMBER``
   ID or name of member to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2830,8 +3497,7 @@ neutron lb-member-show
 
 .. code-block:: console
 
-   usage: neutron lb-member-show [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron lb-member-show [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX] [--request-format {json}] [-D]
                                  [-F FIELD]
@@ -2839,14 +3505,12 @@ neutron lb-member-show
 
 Show information of a given member.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``MEMBER``
   ID of member to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2872,14 +3536,12 @@ neutron lb-member-update
 
 Update a given member.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``MEMBER``
   ID or name of member to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2898,14 +3560,12 @@ neutron lb-pool-delete
 
 Delete a given pool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   ID or name of pool to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2921,23 +3581,21 @@ neutron lb-pool-list-on-agent
 .. code-block:: console
 
    usage: neutron lb-pool-list-on-agent [-h]
-                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                        [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         [--request-format {json}] [-D] [-F FIELD]
-                                        lbaas_agent
+                                        LBAAS_AGENT
 
 List the pools on a loadbalancer agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``lbaas_agent``
+``LBAAS_AGENT``
   ID of the loadbalancer agent to query.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2959,8 +3617,7 @@ neutron lb-pool-show
 
 .. code-block:: console
 
-   usage: neutron lb-pool-show [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron lb-pool-show [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX] [--request-format {json}] [-D]
                                [-F FIELD]
@@ -2968,14 +3625,12 @@ neutron lb-pool-show
 
 Show information of a given pool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   ID or name of pool to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2997,8 +3652,7 @@ neutron lb-pool-stats
 
 .. code-block:: console
 
-   usage: neutron lb-pool-stats [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron lb-pool-stats [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--request-format {json}] [-D]
                                 [-F FIELD]
@@ -3006,14 +3660,12 @@ neutron lb-pool-stats
 
 Retrieve stats for a given pool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   ID or name of pool to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3039,14 +3691,12 @@ neutron lb-pool-update
 
 Update a given pool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   ID or name of pool to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3061,8 +3711,7 @@ neutron lb-vip-create
 
 .. code-block:: console
 
-   usage: neutron lb-vip-create [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron lb-vip-create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--request-format {json}]
                                 [--tenant-id TENANT_ID] [--address ADDRESS]
@@ -3075,14 +3724,12 @@ neutron lb-vip-create
 
 Create a vip.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   Pool ID or name this vip belongs to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3131,14 +3778,12 @@ neutron lb-vip-delete
 
 Delete a given vip.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``VIP``
   ID or name of vip to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3153,8 +3798,7 @@ neutron lb-vip-show
 
 .. code-block:: console
 
-   usage: neutron lb-vip-show [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron lb-vip-show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX] [--request-format {json}] [-D]
                               [-F FIELD]
@@ -3162,14 +3806,12 @@ neutron lb-vip-show
 
 Show information of a given vip.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``VIP``
   ID or name of vip to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3195,14 +3837,12 @@ neutron lb-vip-update
 
 Update a given vip.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``VIP``
   ID or name of vip to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3218,27 +3858,25 @@ neutron lbaas-agent-hosting-loadbalancer
 .. code-block:: console
 
    usage: neutron lbaas-agent-hosting-loadbalancer [-h]
-                                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                                   [-f {csv,html,json,table,value,yaml}]
                                                    [-c COLUMN]
                                                    [--max-width <integer>]
                                                    [--noindent]
                                                    [--quote {all,minimal,none,nonnumeric}]
                                                    [--request-format {json}] [-D]
                                                    [-F FIELD]
-                                                   loadbalancer
+                                                   LOADBALANCER
 
 Get lbaas v2 agent hosting a loadbalancer. Deriving from ListCommand though
 server will return only one agent to keep common output format for all agent
 schedulers
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``loadbalancer``
+``LOADBALANCER``
   LoadBalancer to query.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3265,14 +3903,12 @@ neutron lbaas-healthmonitor-delete
 
 LBaaS v2 Delete a given healthmonitor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``HEALTHMONITOR``
   ID or name of healthmonitor to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3288,7 +3924,7 @@ neutron lbaas-healthmonitor-show
 .. code-block:: console
 
    usage: neutron lbaas-healthmonitor-show [-h]
-                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                           [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--noindent] [--prefix PREFIX]
                                            [--request-format {json}] [-D]
@@ -3297,14 +3933,12 @@ neutron lbaas-healthmonitor-show
 
 LBaaS v2 Show information of a given healthmonitor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``HEALTHMONITOR``
   ID or name of healthmonitor to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3332,14 +3966,12 @@ neutron lbaas-healthmonitor-update
 
 LBaaS v2 Update a given healthmonitor.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``HEALTHMONITOR``
   ID or name of healthmonitor to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3349,6 +3981,353 @@ Optional arguments
 
 ``--name NAME``
   Updated name of the health monitor.
+
+.. _neutron_lbaas-l7policy-delete:
+
+neutron lbaas-l7policy-delete
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron lbaas-l7policy-delete [-h] [--request-format {json}] L7POLICY
+
+LBaaS v2 Delete a given L7 policy.
+
+**Positional arguments:**
+
+``L7POLICY``
+  ID or name of l7policy to delete.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_lbaas-l7policy-show:
+
+neutron lbaas-l7policy-show
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron lbaas-l7policy-show [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent] [--prefix PREFIX]
+                                      [--request-format {json}] [-D] [-F FIELD]
+                                      L7POLICY
+
+LBaaS v2 Show information of a given L7 policy.
+
+**Positional arguments:**
+
+``L7POLICY``
+  ID or name of l7policy to look up.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _neutron_lbaas-l7policy-update:
+
+neutron lbaas-l7policy-update
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron lbaas-l7policy-update [-h] [--request-format {json}]
+                                        [--name NAME] [--description DESCRIPTION]
+                                        [--action ACTION]
+                                        [--redirect-pool REDIRECT_POOL]
+                                        [--redirect-url REDIRECT_URL]
+                                        [--position POSITION]
+                                        [--admin-state-up {True,False}]
+                                        L7POLICY
+
+LBaaS v2 Update a given L7 policy.
+
+**Positional arguments:**
+
+``L7POLICY``
+  ID or name of l7policy to update.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--name NAME``
+  Name of the policy.
+
+``--description DESCRIPTION``
+  Description of the policy.
+
+``--action ACTION``
+  Action type of the policy.
+
+``--redirect-pool REDIRECT_POOL``
+  ID or name of the pool for REDIRECT_TO_POOL action
+  type.
+
+``--redirect-url REDIRECT_URL``
+  URL for REDIRECT_TO_URL action type. This should be a
+  valid URL string.
+
+``--position POSITION``
+  L7 policy position in ordered policies list. This must
+  be an integer starting from 1. Not specifying the
+  position will place the policy at the tail of existing
+  policies list.
+
+``--admin-state-up {True,False}``
+  Specify the administrative state of the policy (True
+  meaning "Up").
+
+.. _neutron_lbaas-l7rule-create:
+
+neutron lbaas-l7rule-create
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron lbaas-l7rule-create [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent] [--prefix PREFIX]
+                                      [--request-format {json}]
+                                      [--tenant-id TENANT_ID] --type
+                                      {HOST_NAME,PATH,FILE_TYPE,HEADER,COOKIE}
+                                      --compare-type
+                                      {REGEX,STARTS_WITH,ENDS_WITH,CONTAINS,EQUAL_TO}
+                                      [--invert-compare] [--key KEY] --value
+                                      VALUE [--admin-state-down]
+                                      L7POLICY
+
+LBaaS v2 Create L7 rule.
+
+**Positional arguments:**
+
+``L7POLICY``
+  ID or name of L7 policy this rule belongs to.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--type {HOST_NAME,PATH,FILE_TYPE,HEADER,COOKIE}``
+  Rule type.
+
+``--compare-type {REGEX,STARTS_WITH,ENDS_WITH,CONTAINS,EQUAL_TO}``
+  Rule compare type.
+
+``--invert-compare``
+  Invert the compare type.
+
+``--key KEY``
+  Key to compare. Relevant for HEADER and COOKIE types
+  only.
+
+``--value VALUE``
+  Value to compare.
+
+``--admin-state-down``
+  Set admin state up to false
+
+.. _neutron_lbaas-l7rule-delete:
+
+neutron lbaas-l7rule-delete
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron lbaas-l7rule-delete [-h] [--request-format {json}]
+                                      RULE L7POLICY
+
+LBaaS v2 Delete a given L7 rule.
+
+**Positional arguments:**
+
+``RULE``
+  ID or name of rule to delete.
+
+``L7POLICY``
+  ID or name of L7 policy this rule belongs to.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_lbaas-l7rule-list:
+
+neutron lbaas-l7rule-list
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron lbaas-l7rule-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent]
+                                    [--quote {all,minimal,none,nonnumeric}]
+                                    [--request-format {json}] [-D] [-F FIELD]
+                                    [-P SIZE] [--sort-key FIELD]
+                                    [--sort-dir {asc,desc}]
+                                    L7POLICY
+
+LBaaS v2 List L7 rules that belong to a given L7 policy.
+
+**Positional arguments:**
+
+``L7POLICY``
+  ID or name of L7 policy this rule belongs to.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
+.. _neutron_lbaas-l7rule-show:
+
+neutron lbaas-l7rule-show
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron lbaas-l7rule-show [-h] [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent] [--prefix PREFIX]
+                                    [--request-format {json}] [-D] [-F FIELD]
+                                    RULE L7POLICY
+
+LBaaS v2 Show information of a given rule.
+
+**Positional arguments:**
+
+``RULE``
+  ID or name of rule to look up.
+
+``L7POLICY``
+  ID or name of L7 policy this rule belongs to.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _neutron_lbaas-l7rule-update:
+
+neutron lbaas-l7rule-update
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron lbaas-l7rule-update [-h] [--request-format {json}]
+                                      [--type {HOST_NAME,PATH,FILE_TYPE,HEADER,COOKIE}]
+                                      [--compare-type {REGEX,STARTS_WITH,ENDS_WITH,CONTAINS,EQUAL_TO}]
+                                      [--invert-compare] [--key KEY]
+                                      [--value VALUE]
+                                      [--admin-state-up {True,False}]
+                                      RULE L7POLICY
+
+LBaaS v2 Update a given L7 rule.
+
+**Positional arguments:**
+
+``RULE``
+  ID or name of rule to update.
+
+``L7POLICY``
+  ID or name of L7 policy this rule belongs to.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--type {HOST_NAME,PATH,FILE_TYPE,HEADER,COOKIE}``
+  Rule type.
+
+``--compare-type {REGEX,STARTS_WITH,ENDS_WITH,CONTAINS,EQUAL_TO}``
+  Rule compare type.
+
+``--invert-compare``
+  Invert the compare type.
+
+``--key KEY``
+  Key to compare. Relevant for HEADER and COOKIE types
+  only.
+
+``--value VALUE``
+  Value to compare.
+
+``--admin-state-up {True,False}``
+  Specify the administrative state of the rule (True
+  meaning "Up").
 
 .. _neutron_lbaas-listener-delete:
 
@@ -3361,14 +4340,12 @@ neutron lbaas-listener-delete
 
 LBaaS v2 Delete a given listener.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``LISTENER``
   ID or name of listener to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3384,7 +4361,7 @@ neutron lbaas-listener-show
 .. code-block:: console
 
    usage: neutron lbaas-listener-show [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                      [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent] [--prefix PREFIX]
                                       [--request-format {json}] [-D] [-F FIELD]
@@ -3392,14 +4369,12 @@ neutron lbaas-listener-show
 
 LBaaS v2 Show information of a given listener.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``LISTENER``
   ID or name of listener to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3425,14 +4400,12 @@ neutron lbaas-listener-update
 
 LBaaS v2 Update a given listener.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``LISTENER``
   ID of listener to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3448,7 +4421,7 @@ neutron lbaas-loadbalancer-create
 .. code-block:: console
 
    usage: neutron lbaas-loadbalancer-create [-h]
-                                            [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                            [-f {html,json,shell,table,value,yaml}]
                                             [-c COLUMN] [--max-width <integer>]
                                             [--noindent] [--prefix PREFIX]
                                             [--request-format {json}]
@@ -3462,14 +4435,12 @@ neutron lbaas-loadbalancer-create
 
 LBaaS v2 Create a loadbalancer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``VIP_SUBNET``
   Load balancer VIP subnet.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3510,14 +4481,12 @@ neutron lbaas-loadbalancer-delete
 
 LBaaS v2 Delete a given loadbalancer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``LOADBALANCER``
   ID or name of loadbalancer to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3533,25 +4502,23 @@ neutron lbaas-loadbalancer-list-on-agent
 .. code-block:: console
 
    usage: neutron lbaas-loadbalancer-list-on-agent [-h]
-                                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                                   [-f {csv,html,json,table,value,yaml}]
                                                    [-c COLUMN]
                                                    [--max-width <integer>]
                                                    [--noindent]
                                                    [--quote {all,minimal,none,nonnumeric}]
                                                    [--request-format {json}] [-D]
                                                    [-F FIELD]
-                                                   lbaas_agent
+                                                   LBAAS_AGENT
 
 List the loadbalancers on a loadbalancer v2 agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``lbaas_agent``
+``LBAAS_AGENT``
   ID of the loadbalancer agent to query.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3574,7 +4541,7 @@ neutron lbaas-loadbalancer-show
 .. code-block:: console
 
    usage: neutron lbaas-loadbalancer-show [-h]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                          [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           [--request-format {json}] [-D]
@@ -3583,14 +4550,12 @@ neutron lbaas-loadbalancer-show
 
 LBaaS v2 Show information of a given loadbalancer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``LOADBALANCER``
   ID or name of loadbalancer to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3613,7 +4578,7 @@ neutron lbaas-loadbalancer-stats
 .. code-block:: console
 
    usage: neutron lbaas-loadbalancer-stats [-h]
-                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                           [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--noindent] [--prefix PREFIX]
                                            [--request-format {json}] [-D]
@@ -3622,14 +4587,12 @@ neutron lbaas-loadbalancer-stats
 
 Retrieve stats for a given loadbalancer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``LOADBALANCER``
   ID or name of loadbalancer to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3644,6 +4607,32 @@ Optional arguments
   Specify the field(s) to be returned by server. You can
   repeat this option.
 
+.. _neutron_lbaas-loadbalancer-status:
+
+neutron lbaas-loadbalancer-status
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron lbaas-loadbalancer-status [-h] [--request-format {json}]
+                                            LOADBALANCER
+
+Retrieve status for a given loadbalancer. The only output is a formatted JSON
+tree, and the table format does not support this type of data.
+
+**Positional arguments:**
+
+``LOADBALANCER``
+  ID or name of loadbalancer to show.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
 .. _neutron_lbaas-loadbalancer-update:
 
 neutron lbaas-loadbalancer-update
@@ -3656,14 +4645,12 @@ neutron lbaas-loadbalancer-update
 
 LBaaS v2 Update a given loadbalancer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``LOADBALANCER``
   ID or name of loadbalancer to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3679,7 +4666,7 @@ neutron lbaas-member-create
 .. code-block:: console
 
    usage: neutron lbaas-member-create [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                      [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent] [--prefix PREFIX]
                                       [--request-format {json}]
@@ -3691,14 +4678,12 @@ neutron lbaas-member-create
 
 LBaaS v2 Create a member.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   ID or name of the pool that this member belongs to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3739,8 +4724,7 @@ neutron lbaas-member-delete
 
 LBaaS v2 Delete a given member.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``MEMBER``
   ID or name of member to delete.
@@ -3748,8 +4732,7 @@ Positional arguments
 ``POOL``
   ID or name of the pool that this member belongs to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3764,8 +4747,7 @@ neutron lbaas-member-list
 
 .. code-block:: console
 
-   usage: neutron lbaas-member-list [-h]
-                                    [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: neutron lbaas-member-list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
@@ -3776,14 +4758,12 @@ neutron lbaas-member-list
 
 LBaaS v2 List members that belong to a given pool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   ID or name of the pool that this member belongs to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3820,8 +4800,7 @@ neutron lbaas-member-show
 
 .. code-block:: console
 
-   usage: neutron lbaas-member-show [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron lbaas-member-show [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     [--request-format {json}] [-D] [-F FIELD]
@@ -3829,8 +4808,7 @@ neutron lbaas-member-show
 
 LBaaS v2 Show information of a given member.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``MEMBER``
   ID or name of member to look up.
@@ -3838,8 +4816,7 @@ Positional arguments
 ``POOL``
   ID or name of the pool that this member belongs to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3868,8 +4845,7 @@ neutron lbaas-member-update
 
 LBaaS v2 Update a given member.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``MEMBER``
   ID or name of member to update.
@@ -3877,8 +4853,7 @@ Positional arguments
 ``POOL``
   ID or name of the pool that this member belongs to
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3906,14 +4881,12 @@ neutron lbaas-pool-delete
 
 LBaaS v2 Delete a given pool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   ID or name of pool to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3928,8 +4901,7 @@ neutron lbaas-pool-show
 
 .. code-block:: console
 
-   usage: neutron lbaas-pool-show [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron lbaas-pool-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   [--request-format {json}] [-D] [-F FIELD]
@@ -3937,14 +4909,12 @@ neutron lbaas-pool-show
 
 LBaaS v2 Show information of a given pool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   ID or name of pool to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3970,14 +4940,12 @@ neutron lbaas-pool-update
 
 LBaaS v2 Update a given pool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POOL``
   ID or name of pool to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3992,8 +4960,7 @@ neutron meter-label-create
 
 .. code-block:: console
 
-   usage: neutron meter-label-create [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron meter-label-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      [--request-format {json}]
@@ -4003,14 +4970,12 @@ neutron meter-label-create
 
 Create a metering label for a given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name of metering label to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4039,14 +5004,12 @@ neutron meter-label-delete
 
 Delete a given metering label.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``METERING_LABEL``
   ID or name of metering_label to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4062,7 +5025,7 @@ neutron meter-label-rule-create
 .. code-block:: console
 
    usage: neutron meter-label-rule-create [-h]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                          [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           [--request-format {json}]
@@ -4073,8 +5036,7 @@ neutron meter-label-rule-create
 
 Create a metering label rule for a given label.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``LABEL``
   Id or Name of the label.
@@ -4082,8 +5044,7 @@ Positional arguments
 ``REMOTE_IP_PREFIX``
   CIDR to match on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4113,14 +5074,12 @@ neutron meter-label-rule-delete
 
 Delete a given metering label.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``METERING_LABEL_RULE``
   ID or name of metering_label_rule to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4136,7 +5095,7 @@ neutron meter-label-rule-show
 .. code-block:: console
 
    usage: neutron meter-label-rule-show [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                        [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent] [--prefix PREFIX]
                                         [--request-format {json}] [-D] [-F FIELD]
@@ -4144,14 +5103,12 @@ neutron meter-label-rule-show
 
 Show information of a given metering label rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``METERING_LABEL_RULE``
   ID or name of metering_label_rule to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4173,8 +5130,7 @@ neutron meter-label-show
 
 .. code-block:: console
 
-   usage: neutron meter-label-show [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron meter-label-show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    [--request-format {json}] [-D] [-F FIELD]
@@ -4182,14 +5138,12 @@ neutron meter-label-show
 
 Show information of a given metering label.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``METERING_LABEL``
   ID or name of metering_label to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4211,8 +5165,7 @@ neutron net-create
 
 .. code-block:: console
 
-   usage: neutron net-create [-h]
-                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron net-create [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--prefix PREFIX] [--request-format {json}]
                              [--tenant-id TENANT_ID] [--admin-state-down]
@@ -4222,18 +5175,17 @@ neutron net-create
                              [--vlan-transparent {True,False}]
                              [--qos-policy QOS_POLICY]
                              [--availability-zone-hint AVAILABILITY_ZONE]
+                             [--dns-domain DNS_DOMAIN]
                              NAME
 
 Create a network for a given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name of network to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4273,6 +5225,10 @@ Optional arguments
   availability zone extension, this option can be
   repeated).
 
+``--dns-domain DNS_DOMAIN``
+  Assign DNS domain to the network (requires DNS
+  integration extension)
+
 .. _neutron_net-delete:
 
 neutron net-delete
@@ -4284,14 +5240,12 @@ neutron net-delete
 
 Delete a given network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NETWORK``
   ID or name of network to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4313,8 +5267,7 @@ neutron net-gateway-connect
 
 Add an internal network interface to a router.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NET-GATEWAY-ID``
   ID of the network gateway.
@@ -4322,8 +5275,7 @@ Positional arguments
 ``NETWORK-ID``
   ID of the internal network to connect on the gateway.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4346,8 +5298,7 @@ neutron net-gateway-create
 
 .. code-block:: console
 
-   usage: neutron net-gateway-create [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron net-gateway-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      [--request-format {json}]
@@ -4357,14 +5308,12 @@ neutron net-gateway-create
 
 Create a network gateway.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name of network gateway to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4392,14 +5341,12 @@ neutron net-gateway-delete
 
 Delete a given network gateway.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NETWORK_GATEWAY``
   ID or name of network_gateway to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4421,8 +5368,7 @@ neutron net-gateway-disconnect
 
 Remove a network from a network gateway.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NET-GATEWAY-ID``
   ID of the network gateway.
@@ -4430,8 +5376,7 @@ Positional arguments
 ``NETWORK-ID``
   ID of the internal network to connect on the gateway.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4454,8 +5399,7 @@ neutron net-gateway-show
 
 .. code-block:: console
 
-   usage: neutron net-gateway-show [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron net-gateway-show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    [--request-format {json}] [-D] [-F FIELD]
@@ -4463,14 +5407,12 @@ neutron net-gateway-show
 
 Show information of a given network gateway.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NETWORK_GATEWAY``
   ID or name of network_gateway to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4497,14 +5439,41 @@ neutron net-gateway-update
 
 Update the name for a network gateway.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NETWORK_GATEWAY``
   ID or name of network_gateway to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_net-ip-availability-show:
+
+neutron net-ip-availability-show
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron net-ip-availability-show [-h]
+                                           [-f {html,json,shell,table,value,yaml}]
+                                           [-c COLUMN] [--max-width <integer>]
+                                           [--noindent] [--prefix PREFIX]
+                                           [--request-format {json}]
+                                           NETWORK
+
+Show IP usage of specific network
+
+**Positional arguments:**
+
+``NETWORK``
+  ID or name of network to look up.
+
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4520,25 +5489,30 @@ neutron net-list-on-dhcp-agent
 .. code-block:: console
 
    usage: neutron net-list-on-dhcp-agent [-h]
-                                         [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                         [-f {csv,html,json,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
                                          [--request-format {json}] [-D]
                                          [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                          [--sort-dir {asc,desc}]
-                                         dhcp_agent
+                                         [--tenant-id TENANT_ID] [--name NAME]
+                                         [--admin-state-up {True,False}]
+                                         [--status STATUS]
+                                         [--shared {True,False}]
+                                         [--router:external {True,False}]
+                                         [--tags TAG] [--tags-any TAG]
+                                         [--not-tags TAG] [--not-tags-any TAG]
+                                         DHCP_AGENT
 
 List the networks on a DHCP agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``dhcp_agent``
+``DHCP_AGENT``
   ID of the DHCP agent.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4575,7 +5549,7 @@ neutron net-show
 
 .. code-block:: console
 
-   usage: neutron net-show [-h] [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron net-show [-h] [-f {html,json,shell,table,value,yaml}]
                            [-c COLUMN] [--max-width <integer>] [--noindent]
                            [--prefix PREFIX] [--request-format {json}] [-D]
                            [-F FIELD]
@@ -4583,14 +5557,12 @@ neutron net-show
 
 Show information of a given network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NETWORK``
   ID or name of network to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4614,18 +5586,17 @@ neutron net-update
 
    usage: neutron net-update [-h] [--request-format {json}]
                              [--qos-policy QOS_POLICY | --no-qos-policy]
+                             [--dns-domain DNS_DOMAIN | --no-dns-domain]
                              NETWORK
 
 Update network's information.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NETWORK``
   ID or name of network to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4639,6 +5610,14 @@ Optional arguments
 ``--no-qos-policy``
   Detach QoS policy from the resource.
 
+``--dns-domain DNS_DOMAIN``
+  Assign DNS domain to the network (requires DNS
+  integration extension.)
+
+``--no-dns-domain``
+  Unassign DNS domain from the network (requires DNS
+  integration extension.)
+
 .. _neutron_port-create:
 
 neutron port-create
@@ -4646,8 +5625,7 @@ neutron port-create
 
 .. code-block:: console
 
-   usage: neutron port-create [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron port-create [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX] [--request-format {json}]
                               [--tenant-id TENANT_ID] [--name NAME]
@@ -4661,19 +5639,17 @@ neutron port-create
                               [--extra-dhcp-opt EXTRA_DHCP_OPTS]
                               [--qos-policy QOS_POLICY]
                               [--allowed-address-pair ip_address=IP_ADDR[,mac_address=MAC_ADDR]
-                              | --no-allowed-address-pairs]
+                              | --no-allowed-address-pairs] [--dns-name DNS_NAME]
                               NETWORK
 
 Create a port for a given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NETWORK``
   Network ID or name this port belongs to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4734,6 +5710,10 @@ Optional arguments
 ``--no-allowed-address-pairs``
   Associate no allowed address pairs with the port.
 
+``--dns-name DNS_NAME``
+  Assign DNS name to the port (requires DNS integration
+  extension)
+
 .. _neutron_port-delete:
 
 neutron port-delete
@@ -4745,14 +5725,12 @@ neutron port-delete
 
 Delete a given port.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``PORT``
   ID or name of port to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4767,8 +5745,7 @@ neutron port-show
 
 .. code-block:: console
 
-   usage: neutron port-show [-h]
-                            [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron port-show [-h] [-f {html,json,shell,table,value,yaml}]
                             [-c COLUMN] [--max-width <integer>] [--noindent]
                             [--prefix PREFIX] [--request-format {json}] [-D]
                             [-F FIELD]
@@ -4776,14 +5753,12 @@ neutron port-show
 
 Show information of a given port.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``PORT``
   ID or name of port to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4815,18 +5790,17 @@ neutron port-update
                               [--qos-policy QOS_POLICY | --no-qos-policy]
                               [--allowed-address-pair ip_address=IP_ADDR[,mac_address=MAC_ADDR]
                               | --no-allowed-address-pairs]
+                              [--dns-name DNS_NAME | --no-dns-name]
                               PORT
 
 Update port's information.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``PORT``
   ID or name of port to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4878,6 +5852,37 @@ Optional arguments
 ``--no-allowed-address-pairs``
   Associate no allowed address pairs with the port.
 
+``--dns-name DNS_NAME``
+  Assign DNS name to the port (requires DNS integration
+  extension.)
+
+``--no-dns-name``
+  Unassign DNS name from the port (requires DNS
+  integration extension.)
+
+.. _neutron_purge:
+
+neutron purge
+~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: neutron purge [-h] [--request-format {json}] TENANT
+
+
+**Positional arguments:**
+
+``TENANT``
+  ID of Tenant owning the resources to be deleted.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
 .. _neutron_qos-bandwidth-limit-rule-create:
 
 neutron qos-bandwidth-limit-rule-create
@@ -4886,7 +5891,7 @@ neutron qos-bandwidth-limit-rule-create
 .. code-block:: console
 
    usage: neutron qos-bandwidth-limit-rule-create [-h]
-                                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                                  [-f {html,json,shell,table,value,yaml}]
                                                   [-c COLUMN]
                                                   [--max-width <integer>]
                                                   [--noindent] [--prefix PREFIX]
@@ -4898,14 +5903,12 @@ neutron qos-bandwidth-limit-rule-create
 
 Create a qos bandwidth limit rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``QOS_POLICY``
   ID or name of the QoS policy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4934,8 +5937,7 @@ neutron qos-bandwidth-limit-rule-delete
 
 Delete a given qos bandwidth limit rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``BANDWIDTH_LIMIT_RULE``
   ID of bandwidth_limit_rule to delete.
@@ -4943,8 +5945,7 @@ Positional arguments
 ``QOS_POLICY``
   ID or name of the QoS policy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4960,7 +5961,7 @@ neutron qos-bandwidth-limit-rule-list
 .. code-block:: console
 
    usage: neutron qos-bandwidth-limit-rule-list [-h]
-                                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                                [-f {csv,html,json,table,value,yaml}]
                                                 [-c COLUMN]
                                                 [--max-width <integer>]
                                                 [--noindent]
@@ -4973,14 +5974,12 @@ neutron qos-bandwidth-limit-rule-list
 
 List all qos bandwidth limit rules belonging to the specified policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``QOS_POLICY``
   ID or name of the QoS policy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5018,7 +6017,7 @@ neutron qos-bandwidth-limit-rule-show
 .. code-block:: console
 
    usage: neutron qos-bandwidth-limit-rule-show [-h]
-                                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                                [-f {html,json,shell,table,value,yaml}]
                                                 [-c COLUMN]
                                                 [--max-width <integer>]
                                                 [--noindent] [--prefix PREFIX]
@@ -5028,8 +6027,7 @@ neutron qos-bandwidth-limit-rule-show
 
 Show information about the given qos bandwidth limit rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``BANDWIDTH_LIMIT_RULE``
   ID of bandwidth_limit_rule to look up.
@@ -5037,8 +6035,7 @@ Positional arguments
 ``QOS_POLICY``
   ID or name of the QoS policy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5067,8 +6064,7 @@ neutron qos-bandwidth-limit-rule-update
 
 Update the given qos bandwidth limit rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``BANDWIDTH_LIMIT_RULE``
   ID of bandwidth_limit_rule to update.
@@ -5076,8 +6072,7 @@ Positional arguments
 ``QOS_POLICY``
   ID or name of the QoS policy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5098,8 +6093,7 @@ neutron qos-policy-create
 
 .. code-block:: console
 
-   usage: neutron qos-policy-create [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron qos-policy-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     [--request-format {json}]
@@ -5109,14 +6103,12 @@ neutron qos-policy-create
 
 Create a qos policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name of QoS policy to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5145,14 +6137,12 @@ neutron qos-policy-delete
 
 Delete a given qos policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POLICY``
   ID or name of policy to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5167,8 +6157,7 @@ neutron qos-policy-show
 
 .. code-block:: console
 
-   usage: neutron qos-policy-show [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron qos-policy-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   [--request-format {json}] [-D] [-F FIELD]
@@ -5176,14 +6165,12 @@ neutron qos-policy-show
 
 Show information of a given qos policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POLICY``
   ID or name of policy to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5211,14 +6198,12 @@ neutron qos-policy-update
 
 Update a given qos policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``POLICY``
   ID or name of policy to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5243,8 +6228,7 @@ neutron queue-create
 
 .. code-block:: console
 
-   usage: neutron queue-create [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron queue-create [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX] [--request-format {json}]
                                [--tenant-id TENANT_ID] [--min MIN] [--max MAX]
@@ -5254,14 +6238,12 @@ neutron queue-create
 
 Create a queue.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name of queue.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5299,14 +6281,12 @@ neutron queue-delete
 
 Delete a given queue.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``QOS_QUEUE``
   ID or name of qos_queue to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5321,8 +6301,7 @@ neutron queue-show
 
 .. code-block:: console
 
-   usage: neutron queue-show [-h]
-                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron queue-show [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--prefix PREFIX] [--request-format {json}] [-D]
                              [-F FIELD]
@@ -5330,14 +6309,12 @@ neutron queue-show
 
 Show information of a given queue.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``QOS_QUEUE``
   ID or name of qos_queue to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5359,25 +6336,22 @@ neutron rbac-create
 
 .. code-block:: console
 
-   usage: neutron rbac-create [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron rbac-create [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX] [--request-format {json}]
-                              [--tenant-id TENANT_ID] --type {network}
+                              [--tenant-id TENANT_ID] --type {qos-policy,network}
                               [--target-tenant TARGET_TENANT] --action
                               {access_as_external,access_as_shared}
                               RBAC_OBJECT
 
 Create a RBAC policy for a given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``RBAC_OBJECT``
   ID or name of the RBAC object.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5388,7 +6362,7 @@ Optional arguments
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
-``--type {network}``
+``--type {qos-policy,network}``
   Type of the object that RBAC policy affects.
 
 ``--target-tenant TARGET_TENANT``
@@ -5409,14 +6383,12 @@ neutron rbac-delete
 
 Delete a RBAC policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``RBAC_POLICY``
   ID of rbac_policy to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5431,8 +6403,7 @@ neutron rbac-show
 
 .. code-block:: console
 
-   usage: neutron rbac-show [-h]
-                            [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron rbac-show [-h] [-f {html,json,shell,table,value,yaml}]
                             [-c COLUMN] [--max-width <integer>] [--noindent]
                             [--prefix PREFIX] [--request-format {json}] [-D]
                             [-F FIELD]
@@ -5440,14 +6411,12 @@ neutron rbac-show
 
 Show information of a given RBAC policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``RBAC_POLICY``
   ID of rbac_policy to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5475,14 +6444,12 @@ neutron rbac-update
 
 Update RBAC policy for given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``RBAC_POLICY``
   ID of rbac_policy to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5501,8 +6468,7 @@ neutron router-create
 
 .. code-block:: console
 
-   usage: neutron router-create [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron router-create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--request-format {json}]
                                 [--tenant-id TENANT_ID] [--admin-state-down]
@@ -5512,14 +6478,12 @@ neutron router-create
 
 Create a router for a given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name of router to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5555,14 +6519,12 @@ neutron router-delete
 
 Delete a given router.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ROUTER``
   ID or name of router to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5581,14 +6543,12 @@ neutron router-gateway-clear
 
 Remove an external network gateway from a router.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ROUTER``
   ID or name of the router.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5604,13 +6564,13 @@ neutron router-gateway-set
 .. code-block:: console
 
    usage: neutron router-gateway-set [-h] [--request-format {json}]
-                                     [--disable-snat] [--fixed-ip FIXED_IP]
+                                     [--disable-snat]
+                                     [--fixed-ip subnet_id=SUBNET,ip_address=IP_ADDR]
                                      ROUTER EXTERNAL-NETWORK
 
 Set the external network gateway for a router.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ROUTER``
   ID or name of the router.
@@ -5618,8 +6578,7 @@ Positional arguments
 ``EXTERNAL-NETWORK``
   ID or name of the external network for the gateway.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5630,10 +6589,12 @@ Optional arguments
 ``--disable-snat``
   Disable source NAT on the router gateway.
 
-``--fixed-ip FIXED_IP``
+``--fixed-ip``
+  subnet_id=SUBNET,ip_address=IP_ADDR
   Desired IP and/or subnet on external network:
-  subnet_id=<name_or_id>,ip_address=<ip>. You can repeat
-  this option.
+  subnet_id=<name_or_id>,ip_address=<ip>. You can
+  specify both of subnet_id and ip_address or specify
+  one of them as well. You can repeat this option.
 
 .. _neutron_router-interface-add:
 
@@ -5647,8 +6608,7 @@ neutron router-interface-add
 
 Add an internal network interface to a router.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ROUTER``
   ID or name of the router.
@@ -5659,8 +6619,7 @@ Positional arguments
   are accepted as SUBNET or PORT. Note that "subnet="
   can be omitted when specifying a subnet.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5680,8 +6639,7 @@ neutron router-interface-delete
 
 Remove an internal network interface from a router.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ROUTER``
   ID or name of the router.
@@ -5692,8 +6650,7 @@ Positional arguments
   are accepted as SUBNET or PORT. Note that "subnet="
   can be omitted when specifying a subnet.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5709,24 +6666,22 @@ neutron router-list-on-l3-agent
 .. code-block:: console
 
    usage: neutron router-list-on-l3-agent [-h]
-                                          [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                          [-f {csv,html,json,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
                                           [--request-format {json}] [-D]
                                           [-F FIELD]
-                                          l3_agent
+                                          L3_AGENT
 
 List the routers on a L3 agent.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``l3_agent``
+``L3_AGENT``
   ID of the L3 agent to query.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5748,26 +6703,23 @@ neutron router-port-list
 
 .. code-block:: console
 
-   usage: neutron router-port-list [-h]
-                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: neutron router-port-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
                                    [--request-format {json}] [-D] [-F FIELD]
                                    [-P SIZE] [--sort-key FIELD]
                                    [--sort-dir {asc,desc}]
-                                   router
+                                   ROUTER
 
 List ports that belong to a given tenant, with specified router.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``router``
+``ROUTER``
   ID or name of router to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5804,8 +6756,7 @@ neutron router-show
 
 .. code-block:: console
 
-   usage: neutron router-show [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron router-show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX] [--request-format {json}] [-D]
                               [-F FIELD]
@@ -5813,14 +6764,12 @@ neutron router-show
 
 Show information of a given router.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ROUTER``
   ID or name of router to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5850,14 +6799,12 @@ neutron router-update
 
 Update router's information.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ROUTER``
   ID or name of router to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5892,7 +6839,7 @@ neutron security-group-create
 .. code-block:: console
 
    usage: neutron security-group-create [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                        [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent] [--prefix PREFIX]
                                         [--request-format {json}]
@@ -5902,14 +6849,12 @@ neutron security-group-create
 
 Create a security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name of security group.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5935,14 +6880,12 @@ neutron security-group-delete
 
 Delete a given security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SECURITY_GROUP``
   ID or name of security_group to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5958,7 +6901,7 @@ neutron security-group-rule-create
 .. code-block:: console
 
    usage: neutron security-group-rule-create [-h]
-                                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                             [-f {html,json,shell,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
                                              [--noindent] [--prefix PREFIX]
                                              [--request-format {json}]
@@ -5974,14 +6917,12 @@ neutron security-group-rule-create
 
 Create a security group rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SECURITY_GROUP``
   Security group name or ID to add rule.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6026,14 +6967,12 @@ neutron security-group-rule-delete
 
 Delete a given security group rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SECURITY_GROUP_RULE``
   ID of security_group_rule to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6049,7 +6988,7 @@ neutron security-group-rule-show
 .. code-block:: console
 
    usage: neutron security-group-rule-show [-h]
-                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                           [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--noindent] [--prefix PREFIX]
                                            [--request-format {json}] [-D]
@@ -6058,14 +6997,12 @@ neutron security-group-rule-show
 
 Show information of a given security group rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SECURITY_GROUP_RULE``
   ID of security_group_rule to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6088,7 +7025,7 @@ neutron security-group-show
 .. code-block:: console
 
    usage: neutron security-group-show [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                      [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent] [--prefix PREFIX]
                                       [--request-format {json}] [-D] [-F FIELD]
@@ -6096,14 +7033,12 @@ neutron security-group-show
 
 Show information of a given security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SECURITY_GROUP``
   ID or name of security_group to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6131,14 +7066,12 @@ neutron security-group-update
 
 Update a given security group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SECURITY_GROUP``
   ID or name of security_group to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6159,8 +7092,7 @@ neutron subnet-create
 
 .. code-block:: console
 
-   usage: neutron subnet-create [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron subnet-create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--request-format {json}]
                                 [--tenant-id TENANT_ID] [--name NAME]
@@ -6173,13 +7105,13 @@ neutron subnet-create
                                 [--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
                                 [--ipv6-address-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
                                 [--subnetpool SUBNETPOOL]
+                                [--use-default-subnetpool]
                                 [--prefixlen PREFIX_LENGTH]
                                 NETWORK [CIDR]
 
 Create a subnet for a given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NETWORK``
   Network ID or name this subnet belongs to.
@@ -6187,8 +7119,7 @@ Positional arguments
 ``CIDR``
   CIDR of subnet to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6242,6 +7173,9 @@ Optional arguments
   ID or name of subnetpool from which this subnet will
   obtain a CIDR.
 
+``--use-default-subnetpool``
+  Use default subnetpool for ip_version, if it exists.
+
 ``--prefixlen PREFIX_LENGTH``
   Prefix length for subnet allocation from subnetpool.
 
@@ -6256,14 +7190,12 @@ neutron subnet-delete
 
 Delete a given subnet.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SUBNET``
   ID or name of subnet to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6278,8 +7210,7 @@ neutron subnet-show
 
 .. code-block:: console
 
-   usage: neutron subnet-show [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron subnet-show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX] [--request-format {json}] [-D]
                               [-F FIELD]
@@ -6287,14 +7218,12 @@ neutron subnet-show
 
 Show information of a given subnet.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SUBNET``
   ID or name of subnet to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6326,14 +7255,12 @@ neutron subnet-update
 
 Update subnet's information.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SUBNET``
   ID or name of subnet to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6376,8 +7303,7 @@ neutron subnetpool-create
 
 .. code-block:: console
 
-   usage: neutron subnetpool-create [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron subnetpool-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     [--request-format {json}]
@@ -6385,20 +7311,19 @@ neutron subnetpool-create
                                     [--min-prefixlen MIN_PREFIXLEN]
                                     [--max-prefixlen MAX_PREFIXLEN]
                                     [--default-prefixlen DEFAULT_PREFIXLEN]
-                                    [--pool-prefix PREFIXES] [--shared]
+                                    [--pool-prefix PREFIXES]
+                                    [--is-default {True,False}] [--shared]
                                     [--address-scope ADDRSCOPE]
-                                    name
+                                    NAME
 
 Create a subnetpool for a given tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``name``
+``NAME``
   Name of subnetpool to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6421,6 +7346,10 @@ Optional arguments
 ``--pool-prefix PREFIXES``
   Subnetpool prefixes (This option can be repeated).
 
+``--is-default {True,False}``
+  Specify whether this should be the default subnetpool
+  (True meaning default).
+
 ``--shared``
   Set the subnetpool as shared.
 
@@ -6440,14 +7369,12 @@ neutron subnetpool-delete
 
 Delete a given subnetpool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SUBNETPOOL``
   ID or name of subnetpool to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6462,8 +7389,7 @@ neutron subnetpool-show
 
 .. code-block:: console
 
-   usage: neutron subnetpool-show [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron subnetpool-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   [--request-format {json}] [-D] [-F FIELD]
@@ -6471,14 +7397,12 @@ neutron subnetpool-show
 
 Show information of a given subnetpool.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SUBNETPOOL``
   ID or name of subnetpool to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6504,20 +7428,19 @@ neutron subnetpool-update
                                     [--min-prefixlen MIN_PREFIXLEN]
                                     [--max-prefixlen MAX_PREFIXLEN]
                                     [--default-prefixlen DEFAULT_PREFIXLEN]
-                                    [--pool-prefix PREFIXES] [--name NAME]
+                                    [--pool-prefix PREFIXES]
+                                    [--is-default {True,False}] [--name NAME]
                                     [--address-scope ADDRSCOPE | --no-address-scope]
                                     SUBNETPOOL
 
 Update subnetpool's information.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``SUBNETPOOL``
   ID or name of subnetpool to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6536,6 +7459,10 @@ Optional arguments
 
 ``--pool-prefix PREFIXES``
   Subnetpool prefixes (This option can be repeated).
+
+``--is-default {True,False}``
+  Specify whether this should be the default subnetpool
+  (True meaning default).
 
 ``--name NAME``
   Name of subnetpool to update.
@@ -6560,14 +7487,12 @@ neutron vpn-endpoint-group-delete
 
 Delete a given VPN endpoint group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ENDPOINT_GROUP``
   ID or name of endpoint_group to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6583,7 +7508,7 @@ neutron vpn-endpoint-group-show
 .. code-block:: console
 
    usage: neutron vpn-endpoint-group-show [-h]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                          [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           [--request-format {json}] [-D]
@@ -6592,14 +7517,12 @@ neutron vpn-endpoint-group-show
 
 Show a specific VPN endpoint group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ENDPOINT_GROUP``
   ID or name of endpoint_group to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6628,14 +7551,12 @@ neutron vpn-endpoint-group-update
 
 Update a given VPN endpoint group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ENDPOINT_GROUP``
   ID or name of endpoint_group to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6657,7 +7578,7 @@ neutron vpn-ikepolicy-create
 .. code-block:: console
 
    usage: neutron vpn-ikepolicy-create [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        [--request-format {json}]
@@ -6673,14 +7594,12 @@ neutron vpn-ikepolicy-create
 
 Create an IKE policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name of the IKE policy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6726,14 +7645,12 @@ neutron vpn-ikepolicy-delete
 
 Delete a given IKE policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``IKEPOLICY``
-  ID or name of ikepolicy to delete.
+  ID or name of IKE policy to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6748,8 +7665,7 @@ neutron vpn-ikepolicy-show
 
 .. code-block:: console
 
-   usage: neutron vpn-ikepolicy-show [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron vpn-ikepolicy-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      [--request-format {json}] [-D] [-F FIELD]
@@ -6757,14 +7673,12 @@ neutron vpn-ikepolicy-show
 
 Show information of a given IKE policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``IKEPOLICY``
-  ID or name of ikepolicy to look up.
+  ID or name of IKE policy to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6792,14 +7706,12 @@ neutron vpn-ikepolicy-update
 
 Update a given IKE policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``IKEPOLICY``
-  ID or name of ikepolicy to update.
+  ID or name of IKE policy to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6821,7 +7733,7 @@ neutron vpn-ipsecpolicy-create
 .. code-block:: console
 
    usage: neutron vpn-ipsecpolicy-create [-h]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                         [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
                                          [--request-format {json}]
@@ -6837,14 +7749,12 @@ neutron vpn-ipsecpolicy-create
 
 Create an IPsec policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``NAME``
   Name of the IPsec policy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6891,14 +7801,12 @@ neutron vpn-ipsecpolicy-delete
 
 Delete a given IPsec policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``IPSECPOLICY``
-  ID or name of ipsecpolicy to delete.
+  ID or name of IPsec policy to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6914,7 +7822,7 @@ neutron vpn-ipsecpolicy-show
 .. code-block:: console
 
    usage: neutron vpn-ipsecpolicy-show [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        [--request-format {json}] [-D] [-F FIELD]
@@ -6922,14 +7830,12 @@ neutron vpn-ipsecpolicy-show
 
 Show information of a given IPsec policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``IPSECPOLICY``
-  ID or name of ipsecpolicy to look up.
+  ID or name of IPsec policy to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6957,14 +7863,12 @@ neutron vpn-ipsecpolicy-update
 
 Update a given IPsec policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``IPSECPOLICY``
-  ID or name of ipsecpolicy to update.
+  ID or name of IPsec policy to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6985,8 +7889,7 @@ neutron vpn-service-create
 
 .. code-block:: console
 
-   usage: neutron vpn-service-create [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron vpn-service-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      [--request-format {json}]
@@ -6996,8 +7899,7 @@ neutron vpn-service-create
 
 Create a VPN service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``ROUTER``
   Router unique identifier for the VPN service.
@@ -7006,8 +7908,7 @@ Positional arguments
   [**DEPRECATED** in Mitaka] Unique identifier for the local
   private subnet.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -7038,14 +7939,12 @@ neutron vpn-service-delete
 
 Delete a given VPN service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``VPNSERVICE``
-  ID or name of vpnservice to delete.
+  ID or name of VPN service to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -7060,8 +7959,7 @@ neutron vpn-service-show
 
 .. code-block:: console
 
-   usage: neutron vpn-service-show [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: neutron vpn-service-show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    [--request-format {json}] [-D] [-F FIELD]
@@ -7069,14 +7967,12 @@ neutron vpn-service-show
 
 Show information of a given VPN service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``VPNSERVICE``
-  ID or name of vpnservice to look up.
+  ID or name of VPN service to look up.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -7102,14 +7998,12 @@ neutron vpn-service-update
 
 Update a given VPN service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``VPNSERVICE``
-  ID or name of vpnservice to update.
+  ID or name of VPN service to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
