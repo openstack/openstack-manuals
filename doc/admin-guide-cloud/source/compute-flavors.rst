@@ -145,7 +145,7 @@ CPU limits
               --property quota:cpu_quota=10000 \
               --property quota:cpu_period=20000
 
-       In this example, the instance of ``m1.low_cpu`` can only consume
+       In this example, an instance of ``FLAVOR-NAME`` can only consume
        a maximum of 50% CPU of a physical CPU computing capability.
 
 Memory limits
