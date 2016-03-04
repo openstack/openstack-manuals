@@ -35,11 +35,31 @@ following actions:
       tintri_server_password = {password}
 
       # API version for the storage system (string value)
-      #tintri_api_version = v310
+      # tintri_api_version = v310
 
       # Following options needed for NFS configuration
       # File with the list of available nfs shares (string value)
-      #nfs_shares_config = /etc/cinder/nfs_shares
+      # nfs_shares_config = /etc/cinder/nfs_shares
+
+      # Tintri driver will clean up unused image snapshots. With the following
+      # option, users can configure how long unused image snapshots are
+      # retained. Default retention policy is 30 days
+      # tintri_image_cache_expiry_days = 30
+
+      # Path to NFS shares file storing images.
+      # Users can store Glance images in the NFS share of the same VMstore
+      # mentioned in the following file. These images need to have additional
+      # metadata ``provider_location`` configured in Glance, which should point
+      # to the NFS share path of the image.
+      # This option will enable Tintri driver to directly clone from Glance
+      # image stored on same VMstore (rather than downloading image
+      # from Glance)
+      # tintri_image_shares_config = <Path to image NFS share>
+      #
+      # For example:
+      # Glance image metadata
+      # provider_location =>
+      # nfs://<data_ip>/tintri/glance/84829294-c48b-4e16-a878-8b2581efd505
 
 #. Edit the ``/etc/nova/nova.conf`` file and set the ``nfs_mount_options``:
 
