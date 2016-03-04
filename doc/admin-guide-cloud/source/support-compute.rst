@@ -47,9 +47,9 @@ Guru Meditation reports
 -----------------------
 
 A Guru Meditation report is sent by the Compute service upon receipt of the
-``SIGUSR1`` signal. This report is a general-purpose error report,
-including a complete report of the service's current state, and is sent to
-``stderr``.
+``SIGUSR2`` signal (``SIGUSR1`` before Mitaka). This report is a
+general-purpose error report that includes details about the current state
+of the service. The error report is sent to ``stderr``.
 
 For example, if you redirect error output to ``nova-api-err.log``
 using :command:`nova-api 2>/var/log/nova/nova-api-err.log`,
@@ -57,7 +57,7 @@ resulting in the process ID 8675, you can then run:
 
 .. code-block:: console
 
-   # kill -USR1 8675
+   # kill -USR2 8675
 
 This command triggers the Guru Meditation report to be printed to
 ``/var/log/nova/nova-api-err.log``.
