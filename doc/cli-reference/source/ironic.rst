@@ -9,7 +9,7 @@ Bare Metal service command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.1.0``.
+This chapter documents :command:`ironic` version ``1.2.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -26,21 +26,21 @@ ironic usage
 
    usage: ironic [--insecure] [--os-cacert <ca-certificate>]
                  [--os-cert <certificate>] [--os-key <key>] [--timeout <seconds>]
+                 [--version] [--debug] [--json] [-v] [--cert-file OS_CERT]
+                 [--key-file OS_KEY] [--ca-file OS_CACERT]
+                 [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
+                 [--os-tenant-id OS_TENANT_ID] [--os-tenant-name OS_TENANT_NAME]
+                 [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
+                 [--os-auth-token OS_AUTH_TOKEN] [--ironic-url IRONIC_URL]
+                 [--ironic-api-version IRONIC_API_VERSION]
+                 [--os-service-type OS_SERVICE_TYPE] [--os-endpoint IRONIC_URL]
+                 [--os-endpoint-type OS_ENDPOINT_TYPE]
                  [--os-user-domain-id OS_USER_DOMAIN_ID]
                  [--os-user-domain-name OS_USER_DOMAIN_NAME]
                  [--os-project-id OS_PROJECT_ID]
                  [--os-project-name OS_PROJECT_NAME]
                  [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
-                 [--os-project-domain-name OS_PROJECT_DOMAIN_NAME] [--version]
-                 [--debug] [-v] [--cert-file OS_CERT] [--key-file OS_KEY]
-                 [--ca-file OS_CACERT] [--os-username OS_USERNAME]
-                 [--os-password OS_PASSWORD] [--os-tenant-id OS_TENANT_ID]
-                 [--os-tenant-name OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL]
-                 [--os-region-name OS_REGION_NAME]
-                 [--os-auth-token OS_AUTH_TOKEN] [--ironic-url IRONIC_URL]
-                 [--ironic-api-version IRONIC_API_VERSION]
-                 [--os-service-type OS_SERVICE_TYPE] [--os-endpoint OS_ENDPOINT]
-                 [--os-endpoint-type OS_ENDPOINT_TYPE]
+                 [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
                  [--max-retries MAX_RETRIES] [--retry-interval RETRY_INTERVAL]
                  <subcommand> ...
 
@@ -106,6 +106,9 @@ Subcommands
 ``node-set-provision-state``
   Initiate a provisioning state change for a node.
 
+``node-set-target-raid-config``
+  Set target RAID config on a node.
+
 ``node-show``
   Show detailed information about a node.
 
@@ -145,6 +148,9 @@ Subcommands
 ``driver-properties``
   Get properties of a driver.
 
+``driver-raid-logical-disk-properties``
+  Get RAID logical disk properties for a driver.
+
 ``driver-show``
   Show information about a driver.
 
@@ -164,53 +170,14 @@ Subcommands
 ironic optional arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``--insecure``
-  Explicitly allow client to perform "insecure" TLS
-  (https) requests. The server's certificate will not be
-  verified against any certificate authorities. This
-  option should be used with caution.
-
-``--os-cacert <ca-certificate>``
-  Specify a CA bundle file to use in verifying a TLS
-  (https) server certificate. Defaults to
-  ``env[OS_CACERT]``.
-
-``--os-cert <certificate>``
-  Defaults to ``env[OS_CERT]``.
-
-``--os-key <key>``
-  Defaults to ``env[OS_KEY]``.
-
-``--timeout <seconds>``
-  Set request timeout (in seconds).
-
-``--os-user-domain-id OS_USER_DOMAIN_ID``
-  Defaults to ``env[OS_USER_DOMAIN_ID]``.
-
-``--os-user-domain-name OS_USER_DOMAIN_NAME``
-  Defaults to ``env[OS_USER_DOMAIN_NAME]``.
-
-``--os-project-id OS_PROJECT_ID``
-  Another way to specify tenant ID. This option is
-  mutually exclusive with :option:`--os-tenant-id`. Defaults to
-  ``env[OS_PROJECT_ID]``.
-
-``--os-project-name OS_PROJECT_NAME``
-  Another way to specify tenant name. This option is
-  mutually exclusive with :option:`--os-tenant-name`. Defaults to
-  ``env[OS_PROJECT_NAME]``.
-
-``--os-project-domain-id OS_PROJECT_DOMAIN_ID``
-  Defaults to ``env[OS_PROJECT_DOMAIN_ID]``.
-
-``--os-project-domain-name OS_PROJECT_DOMAIN_NAME``
-  Defaults to ``env[OS_PROJECT_DOMAIN_NAME]``.
-
 ``--version``
   show program's version number and exit
 
 ``--debug``
   Defaults to ``env[IRONICCLIENT_DEBUG]``
+
+``--json``
+  Print JSON response without formatting.
 
 ``-v, --verbose``
   Print more verbose output
@@ -255,13 +222,35 @@ ironic optional arguments
 ``--os-service-type OS_SERVICE_TYPE``
   Defaults to ``env[OS_SERVICE_TYPE]`` or "baremetal"
 
-``--os-endpoint OS_ENDPOINT``
+``--os-endpoint IRONIC_URL``
   Specify an endpoint to use instead of retrieving one
   from the service catalog (via authentication).
   Defaults to ``env[OS_SERVICE_ENDPOINT]``.
 
 ``--os-endpoint-type OS_ENDPOINT_TYPE``
   Defaults to ``env[OS_ENDPOINT_TYPE]`` or "publicURL"
+
+``--os-user-domain-id OS_USER_DOMAIN_ID``
+  Defaults to ``env[OS_USER_DOMAIN_ID]``.
+
+``--os-user-domain-name OS_USER_DOMAIN_NAME``
+  Defaults to ``env[OS_USER_DOMAIN_NAME]``.
+
+``--os-project-id OS_PROJECT_ID``
+  Another way to specify tenant ID. This option is
+  mutually exclusive with :option:`--os-tenant-id`. Defaults to
+  ``env[OS_PROJECT_ID]``.
+
+``--os-project-name OS_PROJECT_NAME``
+  Another way to specify tenant name. This option is
+  mutually exclusive with :option:`--os-tenant-name`. Defaults to
+  ``env[OS_PROJECT_NAME]``.
+
+``--os-project-domain-id OS_PROJECT_DOMAIN_ID``
+  Defaults to ``env[OS_PROJECT_DOMAIN_ID]``.
+
+``--os-project-domain-name OS_PROJECT_DOMAIN_NAME``
+  Defaults to ``env[OS_PROJECT_DOMAIN_NAME]``.
 
 ``--max-retries MAX_RETRIES``
   Maximum number of retries in case of conflict error
@@ -513,6 +502,30 @@ Optional arguments
   Wrap the output to a specified length. Positive number can
   realize wrap functionality. 0 is default for disabled.
 
+.. _ironic_driver-raid-logical-disk-properties:
+
+ironic driver-raid-logical-disk-properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: ironic driver-raid-logical-disk-properties [--wrap <integer>] <driver>
+
+Get RAID logical disk properties for a driver.
+
+Positional arguments
+--------------------
+
+``<driver>``
+  Name of the driver.
+
+Optional arguments
+------------------
+
+``--wrap <integer>``
+  Wrap the output to a specified length. Positive number can
+  realize wrap functionality. 0 is default for disabled.
+
 .. _ironic_driver-show:
 
 ironic driver-show
@@ -615,7 +628,8 @@ ironic node-delete
 
    usage: ironic node-delete <node> [<node> ...]
 
-Unregister node(s) from the Ironic service.
+Unregister node(s) from the Ironic service. :raises: ClientException, if error
+happens during the delete
 
 Positional arguments
 --------------------
@@ -701,7 +715,8 @@ ironic node-list
    usage: ironic node-list [--limit <limit>] [--marker <node>]
                            [--sort-key <field>] [--sort-dir <direction>]
                            [--maintenance <boolean>] [--associated <boolean>]
-                           [--provision-state <provision-state>] [--detail]
+                           [--provision-state <provision-state>]
+                           [--driver <driver>] [--detail]
                            [--fields <field> [<field> ...]]
 
 List the nodes which are registered with the Ironic service.
@@ -733,6 +748,9 @@ Optional arguments
 
 ``--provision-state <provision-state>``
   List nodes in specified provision state.
+
+``--driver <driver>``
+  List nodes using specified driver.
 
 ``--detail``
   Show detailed information about the nodes.
@@ -891,6 +909,7 @@ ironic node-set-provision-state
 .. code-block:: console
 
    usage: ironic node-set-provision-state [--config-drive <config-drive>]
+                                          [--clean-steps <clean-steps>]
                                           <node> <provision-state>
 
 Initiate a provisioning state change for a node.
@@ -903,7 +922,7 @@ Positional arguments
 
 ``<provision-state>``
   Supported states: 'active', 'deleted', 'rebuild',
-  'inspect', 'provide', 'manage' or 'abort'
+  'inspect', 'provide', 'manage', 'clean' or 'abort'.
 
 Optional arguments
 ------------------
@@ -913,8 +932,44 @@ Optional arguments
   OR the path to the configuration drive file OR the
   path to a directory containing the config drive files.
   In case it's a directory, a config drive will be
-  generated from it. This parameter is only valid when
-  setting provision state to 'active'.
+  generated from it. This argument is only valid when
+  setting provision-state to 'active'.
+
+``--clean-steps <clean-steps>``
+  The clean steps in JSON format. May be the path to a
+  file containing the clean steps; OR '-', with the
+  clean steps being read from standard input; OR a
+  string. The value should be a list of clean-step
+  dictionaries; each dictionary should have keys
+  'interface' and 'step', and optional key 'args'. This
+  argument must be specified (and is only valid) when
+  setting provision-state to 'clean'.
+
+.. _ironic_node-set-target-raid-config:
+
+ironic node-set-target-raid-config
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: ironic node-set-target-raid-config <node> <target-raid-config>
+
+Set target RAID config on a node.
+
+Positional arguments
+--------------------
+
+``<node>``
+  Name or UUID of the node.
+
+``<target-raid-config>``
+  A file containing JSON data of the desired RAID
+  configuration. Use '-' to read the contents from
+  standard input. It also accepts the valid json string
+  as input if file/standard input are not used for
+  providing input. The input can be an empty dictionary
+  too which unsets the node.target_raid_config on the
+  node.
 
 .. _ironic_node-show:
 
