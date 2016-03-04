@@ -9,7 +9,7 @@ Data Processing service command-line client
 The sahara client is the command-line interface (CLI) for
 the Data Processing service API and its extensions.
 
-This chapter documents :command:`sahara` version ``0.12.0``.
+This chapter documents :command:`sahara` version ``0.13.0``.
 
 For help on a specific :command:`sahara` command, enter:
 
@@ -46,8 +46,7 @@ sahara usage
                  [--os-password OS_PASSWORD]
                  <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``cluster-create``
   Create a cluster.
@@ -290,8 +289,7 @@ sahara cluster-create
 
 Create a cluster.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--json JSON``
   JSON representation of cluster.
@@ -310,8 +308,7 @@ sahara cluster-delete
 
 Delete a cluster.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the cluster.
@@ -341,8 +338,7 @@ sahara cluster-scale
 
 Scale a cluster.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the cluster.
@@ -365,8 +361,7 @@ sahara cluster-show
 
 Show details of a cluster.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the cluster.
@@ -391,8 +386,7 @@ sahara cluster-template-create
 
 Create a cluster template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--json JSON``
   JSON representation of cluster template.
@@ -408,8 +402,7 @@ sahara cluster-template-delete
 
 Delete a cluster template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the cluster template.
@@ -440,8 +433,7 @@ sahara cluster-template-show
 
 Show details of a cluster template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the cluster template.
@@ -464,8 +456,7 @@ sahara cluster-template-update
 
 Update a cluster template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the cluster template to update.
@@ -489,8 +480,7 @@ sahara data-source-create
 
 Create a data source that provides job input or receives job output.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the data source.
@@ -521,8 +511,7 @@ sahara data-source-delete
 
 Delete a data source.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the data source.
@@ -552,8 +541,7 @@ sahara data-source-show
 
 Show details of a data source.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the data source.
@@ -572,8 +560,7 @@ sahara data-source-update
 
 Update a data source.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the data source to update.
@@ -595,8 +582,7 @@ sahara image-add-tag
 
 Add a tag to an image.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the image.
@@ -630,8 +616,7 @@ sahara image-register
 
 Register an image from the Image index.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--id <image_id>``
   ID of image, run "glance image-list" to see all IDs.
@@ -653,8 +638,7 @@ sahara image-remove-tag
 
 Remove a tag from an image.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the image.
@@ -676,8 +660,7 @@ sahara image-show
 
 Show details of an image.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the image.
@@ -696,8 +679,7 @@ sahara image-unregister
 
 Unregister an image.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the image.
@@ -718,8 +700,7 @@ sahara job-binary-create
 
 Record a job binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the job binary.
@@ -748,8 +729,7 @@ sahara job-binary-data-create
 Store data in the internal DB. Use 'swift upload' instead of this command. Use
 this command only if Swift is not available.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--file FILE``
   Data to store.
@@ -768,8 +748,7 @@ sahara job-binary-data-delete
 
 Delete an internally stored job binary data.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--id ID``
   ID of internally stored job binary data.
@@ -796,8 +775,7 @@ sahara job-binary-delete
 
 Delete a job binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the job binary.
@@ -827,8 +805,7 @@ sahara job-binary-show
 
 Show details of a job binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the job binary.
@@ -848,8 +825,7 @@ sahara job-binary-update
 
 Update a job binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the job binary to update.
@@ -874,8 +850,7 @@ sahara job-create
 
 Create a job.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--job-template JOB_TEMPLATE``
   ID of the job template to run.
@@ -912,8 +887,7 @@ sahara job-delete
 
 Delete a job.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--id ID``
   ID of a job.
@@ -940,8 +914,7 @@ sahara job-show
 
 Show details of a job.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--id ID``
   ID of the job.
@@ -959,8 +932,7 @@ sahara job-template-create
 
 Create a job template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the job template.
@@ -991,8 +963,7 @@ sahara job-template-delete
 
 Delete a job template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the job template.
@@ -1022,8 +993,7 @@ sahara job-template-show
 
 Show details of a job template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the job template.
@@ -1043,8 +1013,7 @@ sahara job-type-list
 
 Show supported job types.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--type <job_type>``
   Report only on this job type.
@@ -1067,8 +1036,7 @@ sahara node-group-template-create
 
 Create a node group template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--json JSON``
   JSON representation of node group template.
@@ -1084,8 +1052,7 @@ sahara node-group-template-delete
 
 Delete a node group template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the node group template.
@@ -1116,8 +1083,7 @@ sahara node-group-template-show
 
 Show details of a node group template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the node group template.
@@ -1140,8 +1106,7 @@ sahara node-group-template-update
 
 Update a node group template.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name NAME``
   Name of the node group template to update.
@@ -1174,8 +1139,7 @@ sahara plugin-show
 
 Show details of a plugin.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <plugin>``
   Name of the plugin.
