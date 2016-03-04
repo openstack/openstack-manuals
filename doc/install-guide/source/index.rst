@@ -94,6 +94,7 @@ Contents
       neutron.rst
       horizon.rst
       cinder.rst
+      manila.rst
       swift.rst
       heat.rst
       ceilometer.rst
@@ -117,6 +118,7 @@ Contents
       neutron.rst
       horizon.rst
       cinder.rst
+      manila.rst
       swift.rst
       heat.rst
       ceilometer.rst
