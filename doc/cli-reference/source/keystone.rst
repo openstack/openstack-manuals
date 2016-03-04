@@ -17,7 +17,7 @@ Identity service command-line client
 The keystone client is the command-line interface (CLI) for
 the Identity service API and its extensions.
 
-This chapter documents :command:`keystone` version ``2.1.2``.
+This chapter documents :command:`keystone` version ``2.3.1``.
 
 For help on a specific :command:`keystone` command, enter:
 
@@ -45,8 +45,7 @@ keystone usage
                    [--os-key <key>] [--timeout <seconds>]
                    <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``catalog``
   List service catalog, possibly filtered by
@@ -270,8 +269,7 @@ keystone bootstrap
 
 Grants a new role to a new user on a new tenant, after creating each.
 
-Arguments
----------
+**Arguments:**
 
 ``--user-name <user-name>``
   The name of the user to be created (default="admin").
@@ -298,8 +296,7 @@ keystone catalog
 
 List service catalog, possibly filtered by service.
 
-Arguments
----------
+**Arguments:**
 
 ``--service <service-type>``
   Service type to return.
@@ -327,8 +324,7 @@ keystone ec2-credentials-create
 
 Create EC2-compatible credentials for user per tenant.
 
-Arguments
----------
+**Arguments:**
 
 ``--user-id <user-id>``
   User ID for which to create credentials. If not
@@ -350,8 +346,7 @@ keystone ec2-credentials-delete
 
 Delete EC2-compatible credentials.
 
-Arguments
----------
+**Arguments:**
 
 ``--user-id <user-id>``
   User ID.
@@ -371,8 +366,7 @@ keystone ec2-credentials-get
 
 Display EC2-compatible credentials.
 
-Arguments
----------
+**Arguments:**
 
 ``--user-id <user-id>``
   User ID.
@@ -391,8 +385,7 @@ keystone ec2-credentials-list
 
 List EC2-compatible credentials for a user.
 
-Arguments
----------
+**Arguments:**
 
 ``--user-id <user-id>``
   User ID.
@@ -411,8 +404,7 @@ keystone endpoint-create
 
 Create a new endpoint associated with a service.
 
-Arguments
----------
+**Arguments:**
 
 ``--region <endpoint-region>``
   Endpoint region.
@@ -440,8 +432,7 @@ keystone endpoint-delete
 
 Delete a service endpoint.
 
-Arguments
----------
+**Arguments:**
 
 ``<endpoint-id>``
   ID of endpoint to delete.
@@ -459,8 +450,7 @@ keystone endpoint-get
 
 Find endpoint filtered by a specific attribute or service type.
 
-Arguments
----------
+**Arguments:**
 
 ``--service <service-type>``
   Service type to select.
@@ -497,8 +487,7 @@ keystone password-update
 
 Update own password.
 
-Arguments
----------
+**Arguments:**
 
 ``--current-password <current-password>``
   Current password, Defaults to the password as set by
@@ -518,8 +507,7 @@ keystone role-create
 
 Create new role.
 
-Arguments
----------
+**Arguments:**
 
 ``--name <role-name>``
   Name of new role.
@@ -535,8 +523,7 @@ keystone role-delete
 
 Delete role.
 
-Arguments
----------
+**Arguments:**
 
 ``<role>``
   Name or ID of role to delete.
@@ -552,8 +539,7 @@ keystone role-get
 
 Display role details.
 
-Arguments
----------
+**Arguments:**
 
 ``<role>``
   Name or ID of role to display.
@@ -581,8 +567,7 @@ keystone service-create
 
 Add service to Service Catalog.
 
-Arguments
----------
+**Arguments:**
 
 ``--type <type>``
   Service type (one of: identity, compute, network,
@@ -606,8 +591,7 @@ keystone service-delete
 
 Delete service from Service Catalog.
 
-Arguments
----------
+**Arguments:**
 
 ``<service>``
   Name or ID of service to delete.
@@ -623,8 +607,7 @@ keystone service-get
 
 Display service from Service Catalog.
 
-Arguments
----------
+**Arguments:**
 
 ``<service>``
   Name or ID of service to display.
@@ -653,8 +636,7 @@ keystone tenant-create
 
 Create new tenant.
 
-Arguments
----------
+**Arguments:**
 
 ``--name <tenant-name>``
   New tenant name (must be unique).
@@ -676,8 +658,7 @@ keystone tenant-delete
 
 Delete tenant.
 
-Arguments
----------
+**Arguments:**
 
 ``<tenant>``
   Name or ID of tenant to delete.
@@ -693,8 +674,7 @@ keystone tenant-get
 
 Display tenant details.
 
-Arguments
----------
+**Arguments:**
 
 ``<tenant>``
   Name or ID of tenant to display.
@@ -724,8 +704,7 @@ keystone tenant-update
 
 Update tenant name, description, enabled status.
 
-Arguments
----------
+**Arguments:**
 
 ``--name <tenant_name>``
   Desired new name of tenant.
@@ -750,8 +729,7 @@ keystone token-get
 
 Display the current user token.
 
-Arguments
----------
+**Arguments:**
 
 ``--wrap <integer>``
   Wrap PKI tokens to a specified length, or 0 to disable.
@@ -769,8 +747,7 @@ keystone user-create
 
 Create new user.
 
-Arguments
----------
+**Arguments:**
 
 ``--name <user-name>``
   New user name (must be unique).
@@ -798,8 +775,7 @@ keystone user-delete
 
 Delete user.
 
-Arguments
----------
+**Arguments:**
 
 ``<user>``
   Name or ID of user to delete.
@@ -815,8 +791,7 @@ keystone user-get
 
 Display user details.
 
-Arguments
----------
+**Arguments:**
 
 ``<user>``
   Name or ID of user to display.
@@ -832,8 +807,7 @@ keystone user-list
 
 List users.
 
-Arguments
----------
+**Arguments:**
 
 ``--tenant <tenant>, --tenant-id <tenant>``
   Tenant; lists all users if not specified.
@@ -849,8 +823,7 @@ keystone user-password-update
 
 Update user password.
 
-Arguments
----------
+**Arguments:**
 
 ``--pass <password>``
   Desired new password.
@@ -869,8 +842,7 @@ keystone user-role-add
 
 Add role to user.
 
-Arguments
----------
+**Arguments:**
 
 ``--user <user>, --user-id <user>, --user_id <user>``
   Name or ID of user.
@@ -892,8 +864,7 @@ keystone user-role-list
 
 List roles granted to a user.
 
-Arguments
----------
+**Arguments:**
 
 ``--user <user>, --user-id <user>``
   List roles granted to specified user.
@@ -913,8 +884,7 @@ keystone user-role-remove
 
 Remove role from user.
 
-Arguments
----------
+**Arguments:**
 
 ``--user <user>, --user-id <user>, --user_id <user>``
   Name or ID of user.
@@ -938,8 +908,7 @@ keystone user-update
 
 Update user's name, email, and enabled status.
 
-Arguments
----------
+**Arguments:**
 
 ``--name <user-name>``
   Desired new user name.
