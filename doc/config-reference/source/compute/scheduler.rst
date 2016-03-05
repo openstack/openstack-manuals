@@ -680,9 +680,6 @@ the scheduler from retrying that host for the service request.
 This filter is only useful if the ``scheduler_max_attempts``
 configuration option is set to a value greater than zero.
 
-If there are multiple force hosts/nodes, this filter helps
-to retry on the force hosts/nodes if a VM fails to boot.
-
 SameHostFilter
 --------------
 
