@@ -20,6 +20,7 @@ Advanced configuration
    adv-config-sriov.rst
    adv-config-ipam.rst
    adv-config-availability-zone.rst
+   adv-config-bgp-dynamic-routing.rst
    adv-config-dns.rst
    adv-config-net-ip-availability.rst
    adv-config-tag.rst
