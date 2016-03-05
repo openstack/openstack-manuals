@@ -1,3 +1,5 @@
+.. _deployment-scenarios:
+
 ====================
 Deployment scenarios
 ====================
