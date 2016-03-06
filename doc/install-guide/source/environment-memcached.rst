@@ -30,7 +30,7 @@ Install and configure components
 
 .. only:: ubuntu
 
-   2. Edit the ``/etc/memcache/memcached.conf`` file and configure the
+   2. Edit the ``/etc/memcached.conf`` file and configure the
       service to use the management IP address of the controller node
       to enable access by other nodes via the management network:
 
