@@ -417,3 +417,35 @@ CPU pinning policy
        architecture, then it is not used. If the host has an SMT architecture,
        but not enough cores with free thread siblings are available, then
        scheduling fails.
+
+
+Large pages allocation
+    You can configure the size of large pages used to back the VMs.
+
+    .. code:: console
+
+       $ openstack flavor set FLAVOR-NAME \
+           --property hw:mem_page_size=PAGE_SIZE
+
+    Valid ``PAGE_SIZE`` values are:
+
+    -  ``small``: (default) The smallest page size is used.
+       Example: 4 KB on x86.
+    -  ``large``: Only use larger page sizes for guest RAM.
+       Example: either 2 MB or 1 GB on x86.
+    -  ``any``: It is left up to the compute driver to decide. In this case,
+       the libvirt driver might try to find large pages, but fall back to small
+       pages. Other drivers may choose alternate policies for ``any``.
+    -  pagesize: (string) An explicit page size can be set if the workload has
+       specific requirements. This value can be an integer value for the page
+       size in KB, or can use any standard suffix.
+       Example: ``4KB``, ``2MB``, ``2048``, ``1GB``.
+
+    .. note::
+
+        Large pages can be enabled for guest RAM without any regard to whether
+        the guest OS will use them or not. If the guest OS chooses not to
+        use huge pages, it will merely see small pages as before. Conversely,
+        if a guest OS does intend to use huge pages, it is very important that
+        the guest RAM be backed by huge pages. Otherwise, the guest OS will not
+        be getting the performance benefit it is expecting.
