@@ -178,9 +178,10 @@ rotation and key distribution.
             repository and performing another rotation at this point will
             result in tokens that cannot be validated across certain hosts.
             Specifically, the hosts that did not get the latest key set. You
-            should be able to distribe keys until it is successful. If certain
-            nodes have issues syncing, it could be permission or network issues
-            and those should be resolved before subsequent rotations.
+            should be able to distribute keys until it is successful. If
+            certain nodes have issues syncing, it could be permission or
+            network issues and those should be resolved before subsequent
+            rotations.
 
 How long should I keep my keys around?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
