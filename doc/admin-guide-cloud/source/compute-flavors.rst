@@ -104,34 +104,34 @@ CPU limits
     intervals for runtime quotas, and a quota for maximum allowed
     bandwidth:
 
-    -  ``cpu_shares``. Specifies the proportional weighted share for the
+    -  ``cpu_shares``: Specifies the proportional weighted share for the
        domain. If this element is omitted, the service defaults to the
        OS provided defaults. There is no unit for the value; it is a
        relative measure based on the setting of other VMs. For example,
        a VM configured with value 2048 gets twice as much CPU time as a
        VM configured with value 1024.
 
-    -  ``cpu_shares_level``. On VMware, specifies the allocation level. Can
+    -  ``cpu_shares_level``: On VMware, specifies the allocation level. Can
        be ``custom``, ``high``, ``normal``, or ``low``. If you choose
        ``custom``, set the number of shares using ``cpu_shares_share``.
 
-    -  ``cpu_period``. Specifies the enforcement interval (unit:
+    -  ``cpu_period``: Specifies the enforcement interval (unit:
        microseconds) for QEMU and LXC hypervisors. Within a period, each
        VCPU of the domain is not allowed to consume more than the quota
        worth of runtime. The value should be in range ``[1000, 1000000]``.
        A period with value 0 means no value.
 
-    -  ``cpu_limit``. Specifies the upper limit for VMware machine CPU
+    -  ``cpu_limit``: Specifies the upper limit for VMware machine CPU
        allocation in MHz. This parameter ensures that a machine never
        uses more than the defined amount of CPU time. It can be used to
        enforce a limit on the machine's CPU performance.
 
-    -  ``cpu_reservation``. Specifies the guaranteed minimum CPU
+    -  ``cpu_reservation``: Specifies the guaranteed minimum CPU
        reservation in MHz for VMware. This means that if needed, the
        machine will definitely get allocated the reserved amount of CPU
        cycles.
 
-    -  ``cpu_quota``. Specifies the maximum allowed bandwidth (unit:
+    -  ``cpu_quota``: Specifies the maximum allowed bandwidth (unit:
        microseconds). A domain with a negative-value quota indicates
        that the domain has infinite bandwidth, which means that it is
        not bandwidth controlled. The value should be in range ``[1000,
@@ -333,9 +333,9 @@ Random-number generator
 
     Where:
 
-    -  RATE-BYTES: (Integer) Allowed amount of bytes that the guest can
+    -  RATE-BYTES: (integer) Allowed amount of bytes that the guest can
        read from the host's entropy per period.
-    -  RATE-PERIOD: (Integer) Duration of the read period in seconds.
+    -  RATE-PERIOD: (integer) Duration of the read period in seconds.
 
 CPU topology
     For the libvirt driver, you can define the topology of the processors
