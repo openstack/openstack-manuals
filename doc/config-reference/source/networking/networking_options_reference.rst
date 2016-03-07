@@ -74,8 +74,12 @@ Modular Layer 2 (ml2) configuration options
 
 The Modular Layer 2 (ml2) plug-in has two components:
 network types and mechanisms. You can configure these
-components separately. This section describes these
-configuration options.
+components separately. The ml2 plugin also allows administrators to
+perform a partial specification, where some options are specified
+explicitly in the configuration, and the remainder is allowed to be chosen
+automatically by the Compute service.
+
+This section describes the available configuration options.
 
 .. note::
 
