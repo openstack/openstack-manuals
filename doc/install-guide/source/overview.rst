@@ -118,7 +118,7 @@ follows:
 * Networking agents reside on the controller node instead of one or more
   dedicated network nodes.
 
-* Overlay (tunnel) traffic for private networks traverses the management
+* Overlay (tunnel) traffic for self-service networks traverses the management
   network instead of a dedicated network.
 
 For more information on production architectures, see the
@@ -205,7 +205,7 @@ IP address information to instances.
 
 .. note::
 
-   This option lacks support for self-service private networks, layer-3
+   This option lacks support for self-service (private) networks, layer-3
    (routing) services, and advanced services such as :term:`LBaaS` and
    :term:`FWaaS`. Consider the self-service networks option if you
    desire these features.

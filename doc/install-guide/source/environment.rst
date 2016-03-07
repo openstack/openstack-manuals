@@ -64,7 +64,7 @@ of nested VMs.
 .. note::
 
    If you choose to install on VMs, make sure your hypervisor provides
-   a way to disable MAC address filtering on the ``public`` network
+   a way to disable MAC address filtering on the provider network
    interface.
 
 For more information about system requirements, see the `OpenStack
