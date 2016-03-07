@@ -110,7 +110,7 @@ formerly known as Nicira NVP.
 
       core_plugin = vmware
 
-   Example ``neutron.conf``: file for NSX-mh integration:
+   Example ``neutron.conf`` file for NSX-mh integration:
 
    .. code-block:: ini
 
