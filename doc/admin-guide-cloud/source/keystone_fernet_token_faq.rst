@@ -71,8 +71,8 @@ across a keystone deployment is best handled through configuration management
 tooling. Use :command:`keystone-manage fernet_rotate` to rotate the key
 repository.
 
-Do fernet tokens still expires?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Do fernet tokens still expire?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Yes, fernet tokens can expire just like any other keystone token formats.
 
@@ -147,41 +147,47 @@ distribution should be an operation that can run in succession until it
 succeeds. The following might help illustrate the isolation between key
 rotation and key distribution.
 
-1. Ensure all keystone nodes in the deployment have the same key repository.
-2. Pick a keystone node in the cluster to rotate from.
-3. Rotate keys.
-    a) Was is successful?
-        i) If no, investigate issues with the particular keystone node you
-           rotated keys on. Fernet keys are small and the operation for
-           rotation is trivial. There should not be much room for error in key
-           rotation. It is possible that the user does not have the ability to
-           write new keys to the key repository. Log output from
-           ``keystone-manage fernet_rotate`` should give more information into
-           specific failures.
-        ii) If yes, you should see a new staged key. The old staged key should
-            be the new primary. Depending on the ``max_active_keys`` limit you
-            might have secondary keys that were pruned. At this point, the node
-            that you rotated on will be creating fernet tokens with a primary
-            key that all other nodes should have as the staged key. This is why
-            we checked the state of all key repositories in Step one. All other
-            nodes in the cluster should be able to decrypt tokens created with
-            the new primary key. At this point, we are ready to distribute the
-            new key set.
-4. Distribute the new key repository.
-    a) Was it successful?
-        i) If yes, you should be able to confirm that all nodes in the cluster
-           have the same key repository that was introduced in Step 3.  All
-           nodes in the cluster will be creating tokens with the primary key
-           that was promoted in Step 3. No further action is required until the
-           next schedule key rotation.
-        ii) If no, try distributing again. Remember that we already rotated the
-            repository and performing another rotation at this point will
-            result in tokens that cannot be validated across certain hosts.
-            Specifically, the hosts that did not get the latest key set. You
-            should be able to distribute keys until it is successful. If
-            certain nodes have issues syncing, it could be permission or
-            network issues and those should be resolved before subsequent
-            rotations.
+#. Ensure all keystone nodes in the deployment have the same key repository.
+#. Pick a keystone node in the cluster to rotate from.
+#. Rotate keys.
+
+   #. Was it successful?
+
+      #.  If no, investigate issues with the particular keystone node you
+          rotated keys on. Fernet keys are small and the operation for
+          rotation is trivial. There should not be much room for error in key
+          rotation. It is possible that the user does not have the ability to
+          write new keys to the key repository. Log output from
+          ``keystone-manage fernet_rotate`` should give more information into
+          specific failures.
+
+      #.  If yes, you should see a new staged key. The old staged key should
+          be the new primary. Depending on the ``max_active_keys`` limit you
+          might have secondary keys that were pruned. At this point, the node
+          that you rotated on will be creating fernet tokens with a primary
+          key that all other nodes should have as the staged key. This is why
+          we checked the state of all key repositories in Step one. All other
+          nodes in the cluster should be able to decrypt tokens created with
+          the new primary key. At this point, we are ready to distribute the
+          new key set.
+
+#. Distribute the new key repository.
+
+   #. Was it successful?
+
+      #.  If yes, you should be able to confirm that all nodes in the cluster
+          have the same key repository that was introduced in Step 3.  All
+          nodes in the cluster will be creating tokens with the primary key
+          that was promoted in Step 3. No further action is required until the
+          next schedule key rotation.
+
+      #.  If no, try distributing again. Remember that we already rotated the
+          repository and performing another rotation at this point will
+          result in tokens that cannot be validated across certain hosts.
+          Specifically, the hosts that did not get the latest key set. You
+          should be able to distribe keys until it is successful. If certain
+          nodes have issues syncing, it could be permission or network issues
+          and those should be resolved before subsequent rotations.
 
 How long should I keep my keys around?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
