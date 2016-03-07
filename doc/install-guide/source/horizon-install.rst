@@ -118,28 +118,41 @@ Install and configure components
 
            Comment out any other session storage configuration.
 
+      * Enable the Identity API version 3:
+
+        .. code-block:: ini
+
+           OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
+
+      * Enable support for domains:
+
+        .. code-block:: ini
+
+           OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
+
+      * Configure API versions:
+
+        .. code-block:: ini
+
+           OPENSTACK_API_VERSIONS = {
+               "identity": 3,
+               "image": 2,
+               "volume": 2,
+           }
+
+      * Configure ``default`` as the default domain for users that you create
+        via the dashboard:
+
+        .. code-block:: ini
+
+           OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
+
       * Configure ``user`` as the default role for
         users that you create via the dashboard:
 
         .. code-block:: ini
 
            OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
-
-      * Enable the multi-domain model:
-
-        .. code-block:: ini
-
-           OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
-
-      * Configure the service API version so that you can log into
-        the dashboard by the Keystone V3 API:
-
-        .. code-block:: ini
-
-           OPENSTACK_API_VERSIONS = {
-               "identity": 3,
-               "volume": 2,
-           }
 
       * If you chose networking option 1, disable support for layer-3
         networking services:
@@ -202,28 +215,41 @@ Install and configure components
 
            Comment out any other session storage configuration.
 
+      * Enable the Identity API version 3:
+
+        .. code-block:: ini
+
+           OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
+
+      * Enable support for domains:
+
+        .. code-block:: ini
+
+           OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
+
+      * Configure API versions:
+
+        .. code-block:: ini
+
+           OPENSTACK_API_VERSIONS = {
+               "identity": 3,
+               "image": 2,
+               "volume": 2,
+           }
+
+      * Configure ``default`` as the default domain for users that you create
+        via the dashboard:
+
+        .. code-block:: ini
+
+           OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
+
       * Configure ``user`` as the default role for
         users that you create via the dashboard:
 
         .. code-block:: ini
 
            OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
-
-      * Enable the multi-domain model:
-
-        .. code-block:: ini
-
-           OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
-
-      * Configure the service API version so that you can log into
-        the dashboard by the Keystone V3 API:
-
-        .. code-block:: ini
-
-           OPENSTACK_API_VERSIONS = {
-               "identity": 3,
-               "volume": 2,
-           }
 
       * If you chose networking option 1, disable support for layer-3
         networking services:
@@ -286,28 +312,41 @@ Install and configure components
 
            Comment out any other session storage configuration.
 
+      * Enable the Identity API version 3:
+
+        .. code-block:: ini
+
+           OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
+
+      * Enable support for domains:
+
+        .. code-block:: ini
+
+           OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
+
+      * Configure API versions:
+
+        .. code-block:: ini
+
+           OPENSTACK_API_VERSIONS = {
+               "identity": 3,
+               "image": 2,
+               "volume": 2,
+           }
+
+      * Configure ``default`` as the default domain for users that you create
+        via the dashboard:
+
+        .. code-block:: ini
+
+           OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
+
       * Configure ``user`` as the default role for
         users that you create via the dashboard:
 
         .. code-block:: ini
 
            OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
-
-      * Enable the multi-domain model:
-
-        .. code-block:: ini
-
-           OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
-
-      * Configure the service API version so that you can log into
-        the dashboard by the Keystone V3 API:
-
-        .. code-block:: ini
-
-           OPENSTACK_API_VERSIONS = {
-               "identity": 3,
-               "volume": 2,
-           }
 
       * If you chose networking option 1, disable support for layer-3
         networking services:
