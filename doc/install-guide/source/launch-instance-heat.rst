@@ -60,26 +60,26 @@ Create a stack using the ``demo-template.yml`` template.
 
    .. code-block:: console
 
-      $ neutron net-list
-      +--------------------------------------+---------+-----------------------------------------------------+
-      | id                                   | name    | subnets                                             |
-      +--------------------------------------+---------+-----------------------------------------------------+
-      | 9c13da20-4c4f-486f-a4e9-692e9ea397f1 | public  | 85140549-1f54-4bc6-a2c5-f08428de3f7a 203.0.113.0/24 |
-      | 303a9aaf-40fd-4fc8-9213-39bff933467b | private | ddeba0b1-21eb-471a-8f31-10f0e290cc36 172.16.1.0/24  |
-      +--------------------------------------+---------+-----------------------------------------------------+
+      $ openstack network list
+      +--------------------------------------+-------------+--------------------------------------+
+      | ID                                   | Name        | Subnets                              |
+      +--------------------------------------+-------------+--------------------------------------+
+      | 4716ddfe-6e60-40e7-b2a8-42e57bf3c31c | selfservice | 2112d5eb-f9d6-45fd-906e-7cabd38b7c7c |
+      | b5b6993c-ddf9-40e7-91d0-86806a42edb8 | provider    | 310911f6-acf0-4a47-824e-3032916582ff |
+      +--------------------------------------+-------------+--------------------------------------+
 
    .. note::
 
       This output may differ from your environment.
 
 #. Set the ``NET_ID`` environment variable to reflect the ID of a network.
-   For example, using the ``public`` network:
+   For example, using the provider network:
 
    .. code-block:: console
 
-      $ export NET_ID=$(neutron net-list | awk '/ public / { print $2 }')
+      $ export NET_ID=$(openstack network list | awk '/ provider / { print $2 }')
 
-#. Create a stack of one CirrOS instance on the public network:
+#. Create a stack of one CirrOS instance on the provider network:
 
    .. code-block:: console
 
@@ -102,7 +102,7 @@ Create a stack using the ``demo-template.yml`` template.
       +--------------------------------------+------------+-----------------+---------------------+--------------+
 
 #. Show the name and IP address of the instance and compare with the output
-   of the ``nova`` command:
+   of the OpenStack client:
 
    .. code-block:: console
 
@@ -120,12 +120,14 @@ Create a stack using the ``demo-template.yml`` template.
         }
       ]
 
-      $ nova list
-      +--------------------------------------+---------------------------+--------+------------+-------------+---------------------------------+
-      | ID                                   | Name                      | Status | Task State | Power State | Networks                        |
-      +--------------------------------------+---------------------------+--------+------------+-------------+---------------------------------+
-      | 0fc2af0c-ae79-4d22-8f36-9e860c257da5 | stack-server-3nzfyfofu6d4 | ACTIVE | -          | Running     | public=10.4.31.106              |
-      +--------------------------------------+---------------------------+--------+------------+-------------+---------------------------------+
+   .. code-block:: console
+
+      $ openstack server list
+      +--------------------------------------+---------------------------+--------+---------------------------------+
+      | ID                                   | Name                      | Status | Networks                        |
+      +--------------------------------------+---------------------------+--------+---------------------------------+
+      | 0fc2af0c-ae79-4d22-8f36-9e860c257da5 | stack-server-3nzfyfofu6d4 | ACTIVE | public=10.4.31.106              |
+      +--------------------------------------+---------------------------+--------+---------------------------------+
 
 #. Delete the stack.
 
