@@ -58,7 +58,8 @@ Before you can launch an instance, gather the following parameters:
    :doc:`cli_manage_ip_addresses`.
 
 After you gather the parameters that you need to launch an instance,
-you can launch it from an image_ or a :ref:`volume`. You can launch an
+you can launch it from an :doc:`image<cli_nova_launch_instance_from_image>`
+or a :doc:`volume<cli_nova_launch_instance_from_volume>`. You can launch an
 instance directly from one of the available OpenStack images or from
 an image that you have copied to a persistent volume. The OpenStack
 Image service provides a pool of images that are accessible to members
@@ -150,8 +151,6 @@ Before you begin, source the OpenStack RC file.
    .. code-block:: console
 
       $ nova keypair-list
-
-.. _image:
 
 Launch an instance
 ~~~~~~~~~~~~~~~~~~
