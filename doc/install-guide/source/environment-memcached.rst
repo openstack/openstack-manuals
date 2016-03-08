@@ -51,7 +51,7 @@ Finalize installation
 
      .. code-block:: console
 
-        # service memcache restart
+        # service memcached restart
 
 .. only:: rdo or obs
 
