@@ -165,8 +165,8 @@ happen, you must configure the following items in the ``nova.conf`` file
 
    * - Attribute name
      - Required
-   * - ``[DEFAULT] network_api_class``
-     - Modify from the default to ``nova.network.neutronv2.api.API``, to
+   * - ``[DEFAULT] use_neutron``
+     - Modify from the default to ``True`` to
        indicate that Networking should be used rather than the traditional
        nova-network networking model.
    * - ``[neutron] url``
@@ -209,9 +209,6 @@ values in the ``nova.conf`` file:
 | ``firewall_driver``   | Update to ``nova.virt.firewall.NoopFirewallDriver``,|
 |                       | so that nova-compute does not perform               |
 |                       | iptables-based filtering itself.                    |
-+-----------------------+-----------------------------------------------------+
-| ``security_group_api``| Update to ``neutron``, so that all security group   |
-|                       | requests are proxied to the Network Service.        |
 +-----------------------+-----------------------------------------------------+
 
 Configure metadata
@@ -266,8 +263,7 @@ running Compute and Networking with an IP address of 192.168.1.2:
 .. code-block:: ini
 
    [DEFAULT]
-   security_group_api=neutron
-   network_api_class=nova.network.neutronv2.api.API
+   use_neutron = True
    firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
    [neutron]
