@@ -311,8 +311,7 @@ Install and configure components
 
         [DEFAULT]
         ...
-        network_api_class = nova.network.neutronv2.api.API
-        security_group_api = neutron
+        use_neutron = True
         firewall_driver = nova.virt.firewall.NoopFirewallDriver
 
      .. note::

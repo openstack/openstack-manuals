@@ -111,7 +111,7 @@ Configuration
    .. code-block:: ini
 
       [DEFAULT]
-      network_api_class=nova.network.neutronv2.api.API
+      use_neutron=True
       firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
       [neutron]

@@ -358,7 +358,7 @@ OpenStack on Hyper-V. Below is a sample ``nova.conf`` for Windows:
    logfile = nova-compute.log
    instance_usage_audit = true
    instance_usage_audit_period = hour
-   network_api_class = nova.network.neutronv2.api.API
+   use_neutron = True
    [neutron]
    url = http://IP_ADDRESS:9696
    auth_strategy = keystone
