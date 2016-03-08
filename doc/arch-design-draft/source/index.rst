@@ -23,7 +23,6 @@ Contents
    :maxdepth: 2
 
    common/conventions.rst
-
    introduction.rst
    identifying-stakeholders.rst
    functional-requirements.rst
@@ -34,9 +33,7 @@ Contents
    security-requirements.rst
    legal-requirements.rst
    example-architectures.rst
-
    common/app_support.rst
-
    common/glossary.rst
 
 Search in this guide

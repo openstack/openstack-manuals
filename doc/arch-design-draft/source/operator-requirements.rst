@@ -11,7 +11,6 @@ Operator requirements
    operator-requirements-licensing.rst
    operator-requirements-support-maintenance.rst
    operator-requirements-ops-access.rst
-   operator-requirements-capacity-planning.rst
    operator-requirements-quota-management.rst
    operator-requirements-policy-management.rst
    operator-requirements-hardware-selection.rst
