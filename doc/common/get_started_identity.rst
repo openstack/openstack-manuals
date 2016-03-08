@@ -2,7 +2,7 @@
 OpenStack Identity
 ==================
 
-The OpenStack :term:`Identity service <Identity>` provides a single point of
+The OpenStack :term:`Identity service` provides a single point of
 integration for managing authentication, authorization, and service catalog
 services. Other OpenStack services use the Identity service as a common
 unified API. Additionally, services that provide information about users
