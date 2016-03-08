@@ -407,7 +407,7 @@ version using the pip python package installer:
 
 For more information about python-novaclient and other command-line
 tools, see the `OpenStack End User
-Guide <http://docs.openstack.org/user-guide/index.html>`__.
+Guide <http://docs.openstack.org/user-guide/cli.html>`__.
 
 
 Control where instances run
