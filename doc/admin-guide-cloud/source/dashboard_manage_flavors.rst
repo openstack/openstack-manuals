@@ -31,6 +31,10 @@ Create flavors
 #. In the :guilabel:`Create Flavor` window, enter or select the
    parameters for the flavor in the :guilabel:`Flavor Information` tab.
 
+   .. figure:: figures/create_flavor.png
+
+   **Dashboard — Create Flavor**
+
    =========================  =======================================
     **Name**                   Enter the flavor name.
     **ID**                     Unique ID (integer or UUID) for the
