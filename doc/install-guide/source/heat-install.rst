@@ -318,7 +318,7 @@ Install and configure components
       .. code-block:: console
 
          # zypper install openstack-heat-api openstack-heat-api-cfn \
-           openstack-heat-engine python-heatclient
+           openstack-heat-engine
 
 .. only:: rdo
 
@@ -327,7 +327,7 @@ Install and configure components
       .. code-block:: console
 
          # yum install openstack-heat-api openstack-heat-api-cfn \
-           openstack-heat-engine python-heatclient
+           openstack-heat-engine
 
 .. only:: ubuntu
 
@@ -335,8 +335,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install heat-api heat-api-cfn heat-engine \
-           python-heatclient
+         # apt-get install heat-api heat-api-cfn heat-engine
 
 .. only:: obs or rdo or ubuntu
 
@@ -392,7 +391,7 @@ Install and configure components
 
            [trustee]
            ...
-           auth_type = password
+           auth_plugin = password
            auth_url = http://controller:35357
            username = heat
            password = HEAT_PASS
@@ -400,7 +399,7 @@ Install and configure components
 
            [clients_keystone]
            ...
-           auth_uri = http://controller:5000
+           auth_uri = http://controller:35357
 
            [ec2authtoken]
            ...
@@ -432,15 +431,6 @@ Install and configure components
 
         Replace ``HEAT_DOMAIN_PASS`` with the password you chose for the
         ``heat_domain_admin`` user in the Identity service.
-
-      * (Optional) To assist with troubleshooting, enable verbose
-        logging in the ``[DEFAULT]`` section:
-
-        .. code-block:: ini
-
-           [DEFAULT]
-           ...
-           verbose = True
 
    3. Populate the Orchestration database:
 
