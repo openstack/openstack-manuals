@@ -146,7 +146,7 @@ with this kind of script as parameter:
 
 .. note::
 
-   In a Debian image, the login account is ``admin``.
+   In a Debian image, the login account is ``debian``.
 
 Official images from other Linux distributions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
