@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-23 06:08+0000\n"
+"POT-Creation-Date: 2016-03-08 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1233,8 +1233,8 @@ msgstr ""
 
 # #-#-#-#-#  blockstorage.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  dashboard_set_quotas.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../blockstorage.rst:5 ../dashboard_set_quotas.rst:39
-#: ../dashboard_set_quotas.rst:65 ../dashboard_set_quotas.rst:71
+#: ../blockstorage.rst:5 ../dashboard_set_quotas.rst:40
+#: ../dashboard_set_quotas.rst:66 ../dashboard_set_quotas.rst:72
 msgid "Block Storage"
 msgstr ""
 
@@ -2706,30 +2706,46 @@ msgid ""
 "file:"
 msgstr ""
 
-#: ../blockstorage_volume_backed_image.rst:62
-msgid "Creating a Volume-backed image"
+#: ../blockstorage_volume_backed_image.rst:60
+msgid ""
+"To make the Image-Volume in the internal tenant accessible from the Image "
+"service, set the following options in the ``glance_store`` section of the "
+"``glance-api.conf`` file:"
 msgstr ""
 
 #: ../blockstorage_volume_backed_image.rst:64
+msgid "``cinder_store_auth_address``"
+msgstr ""
+
+#: ../blockstorage_volume_backed_image.rst:65
+msgid "``cinder_store_user_name``"
+msgstr ""
+
+#: ../blockstorage_volume_backed_image.rst:66
+msgid "``cinder_store_password``"
+msgstr ""
+
+#: ../blockstorage_volume_backed_image.rst:67
+msgid "``cinder_store_project_name``"
+msgstr ""
+
+#: ../blockstorage_volume_backed_image.rst:70
+msgid "Creating a Volume-backed image"
+msgstr ""
+
+#: ../blockstorage_volume_backed_image.rst:72
 msgid ""
 "To register an existing volume as a new Volume-backed image, use the "
 "following commands:"
 msgstr ""
 
-#: ../blockstorage_volume_backed_image.rst:73
+#: ../blockstorage_volume_backed_image.rst:81
 msgid ""
 "If the ``image_upload_use_cinder_backend`` option is enabled, the following "
 "command creates a new Image-Volume by cloning the specified volume and then "
 "registers its location to a new image. The disk format and the container "
 "format must be raw and bare (default). Otherwise, the image is uploaded to "
 "the default store of the Image service."
-msgstr ""
-
-#: ../blockstorage_volume_backed_image.rst:85
-msgid ""
-"Currently, the cinder store of the Image services does not support uploading "
-"and downloading of image data. By this limitation, Volume-backed images can "
-"only be used to create a new volume."
 msgstr ""
 
 #: ../blockstorage_volume_backups.rst:5
@@ -3975,7 +3991,7 @@ msgstr ""
 # #-#-#-#-#  dashboard_manage_flavors.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  dashboard_set_quotas.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../compute-flavors.rst:53 ../dashboard_manage_flavors.rst:12
-#: ../dashboard_set_quotas.rst:68
+#: ../dashboard_set_quotas.rst:69
 msgid "VCPUs"
 msgstr ""
 
@@ -4093,7 +4109,7 @@ msgstr ""
 
 #: ../compute-flavors.rst:148
 msgid ""
-"In this example, the instance of ``m1.low_cpu`` can only consume a maximum "
+"In this example, an instance of ``FLAVOR-NAME`` can only consume a maximum "
 "of 50% CPU of a physical CPU computing capability."
 msgstr ""
 
@@ -4416,23 +4432,39 @@ msgstr ""
 #: ../compute-flavors.rst:365
 msgid ""
 "For the libvirt driver, you can pin the virtual CPUs (vCPUs) of instances to "
-"the host's physical CPU cores (pCPUs) using properties. This will result in "
-"improved instance determinism and performance. Host aggregates should be "
-"used to separate these \"pinned\" instances from unpinned instances as the "
-"latter will not respect the resourcing requirements of the former."
+"the host's physical CPU cores (pCPUs) using properties. You can further "
+"refine this by stating how hardware CPU threads in a simultaneous "
+"multithreading-based (SMT) architecture be used. These configurations will "
+"result in improved per-instance determinism and performance."
 msgstr ""
 
-#: ../compute-flavors.rst:376
+#: ../compute-flavors.rst:373
+msgid ""
+"SMT-based architectures include Intel processors with Hyper-Threading "
+"technology. In these architectures, processor cores share a number of "
+"components with one or more other cores. Cores in such architectures are "
+"commonly referred to as hardware threads, while the cores that a given core "
+"share components with are known as thread siblings."
+msgstr ""
+
+#: ../compute-flavors.rst:381
+msgid ""
+"Host aggregates should be used to separate these pinned instances from "
+"unpinned instances as the latter will not respect the resourcing "
+"requirements of the former."
+msgstr ""
+
+#: ../compute-flavors.rst:391
 msgid "Valid CPU-POLICY values are:"
 msgstr ""
 
-#: ../compute-flavors.rst:378
+#: ../compute-flavors.rst:393
 msgid ""
 "``shared``: (default) The guest vCPUs will be allowed to freely float across "
 "host pCPUs, albeit potentially constrained by NUMA policy."
 msgstr ""
 
-#: ../compute-flavors.rst:380
+#: ../compute-flavors.rst:395
 msgid ""
 "``dedicated``: The guest vCPUs will be strictly pinned to a set of host "
 "pCPUs. In the absence of an explicit vCPU topology request, the drivers "
@@ -4444,7 +4476,36 @@ msgid ""
 "socket, one core, threads threads."
 msgstr ""
 
-#: ../compute-flavors.rst:386
+#: ../compute-flavors.rst:404
+msgid "Valid CPU-THREAD-POLICY values are:"
+msgstr ""
+
+#: ../compute-flavors.rst:406
+msgid ""
+"``prefer``: (default) The host may or may not have an SMT architecture. "
+"Where an SMT architecture is present, thread siblings are preferred."
+msgstr ""
+
+#: ../compute-flavors.rst:408
+msgid ""
+"``isolate``: The host must not have an SMT architecture or must emulate a "
+"non-SMT architecture. If the host does not have an SMT architecture, each "
+"vCPU is placed on a different core as expected. If the host does have an SMT "
+"architecture - that is, one or more cores have thread siblings - then each "
+"vCPU is placed on a different physical core. No vCPUs from other guests are "
+"placed on the same core. All but one thread sibling on each utilized core is "
+"therefore guaranteed to be unusable."
+msgstr ""
+
+#: ../compute-flavors.rst:415
+msgid ""
+"``require``: The host must have an SMT architecture. Each vCPU is allocated "
+"on thread siblings. If the host does not have an SMT architecture, then it "
+"is not used. If the host has an SMT architecture, but not enough cores with "
+"free thread siblings are available, then scheduling fails."
+msgstr ""
+
+#: ../compute-flavors.rst:418
 msgid "CPU pinning policy"
 msgstr ""
 
@@ -5694,7 +5755,7 @@ msgstr ""
 # #-#-#-#-#  networking_use.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../compute-manage-volumes.rst:13 ../networking_adv-features.rst:207
 #: ../networking_adv-features.rst:375 ../networking_adv-features.rst:510
-#: ../networking_adv-features.rst:802 ../networking_config-agents.rst:469
+#: ../networking_adv-features.rst:802 ../networking_config-agents.rst:460
 #: ../networking_use.rst:47 ../networking_use.rst:123
 #: ../networking_use.rst:183 ../networking_use.rst:241
 msgid "Command"
@@ -8607,11 +8668,11 @@ msgstr ""
 # #-#-#-#-#  compute.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  dashboard_set_quotas.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  networking_config-identity.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute.rst:3 ../dashboard_set_quotas.rst:42
-#: ../dashboard_set_quotas.rst:45 ../dashboard_set_quotas.rst:48
-#: ../dashboard_set_quotas.rst:51 ../dashboard_set_quotas.rst:53
-#: ../dashboard_set_quotas.rst:56 ../dashboard_set_quotas.rst:59
-#: ../dashboard_set_quotas.rst:62 ../dashboard_set_quotas.rst:68
+#: ../compute.rst:3 ../dashboard_set_quotas.rst:43
+#: ../dashboard_set_quotas.rst:46 ../dashboard_set_quotas.rst:49
+#: ../dashboard_set_quotas.rst:52 ../dashboard_set_quotas.rst:54
+#: ../dashboard_set_quotas.rst:57 ../dashboard_set_quotas.rst:60
+#: ../dashboard_set_quotas.rst:63 ../dashboard_set_quotas.rst:69
 #: ../networking_config-identity.rst:123
 msgid "Compute"
 msgstr ""
@@ -9529,16 +9590,18 @@ msgstr ""
 
 #: ../dashboard_admin_manage_stacks.rst:22
 msgid ""
-"administrative tasks on the command-line, see :doc:`cli_admin_manage_stacks`."
+"administrative tasks on the command-line, see the `OpenStack Admin User "
+"Guide <http://docs.openstack.org/user-guide-admin/cli_admin_manage_stacks."
+"html>`__."
 msgstr ""
 
-#: ../dashboard_admin_manage_stacks.rst:27
+#: ../dashboard_admin_manage_stacks.rst:28
 msgid ""
 "There are no administration-specific tasks that can be done through the "
 "Dashboard."
 msgstr ""
 
-#: ../dashboard_admin_manage_stacks.rst:30
+#: ../dashboard_admin_manage_stacks.rst:31
 msgid ""
 "the basic creation and deletion of Orchestration stacks, refer to the "
 "`OpenStack End User Guide <http://docs.openstack.org/user-guide/"
@@ -11184,168 +11247,170 @@ msgstr ""
 msgid ""
 "Using the command-line interface, you can manage quotas for the OpenStack "
 "Compute service, the OpenStack Block Storage service, and the OpenStack "
-"Networking service (see :doc:`cli_set_quotas`). Additionally, you can update "
+"Networking service (see `OpenStack Admin User Guide <http://docs.openstack."
+"org/user-guide-admin/cli_set_quotas.html>`_). Additionally, you can update "
 "Compute service quotas for tenant users."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:30
+#: ../dashboard_set_quotas.rst:31
 msgid ""
 "The following table describes the Compute and Block Storage service quotas:"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:34
+#: ../dashboard_set_quotas.rst:35
 msgid "**Quota Descriptions**"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:37
+#: ../dashboard_set_quotas.rst:38
 msgid "Defines the number of"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:37
+#: ../dashboard_set_quotas.rst:38
 msgid "Quota Name"
 msgstr ""
 
 # #-#-#-#-#  dashboard_set_quotas.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  identity_concepts.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../dashboard_set_quotas.rst:37 ../identity_concepts.rst:72
+#: ../dashboard_set_quotas.rst:38 ../identity_concepts.rst:72
 msgid "Service"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:39
+#: ../dashboard_set_quotas.rst:40
 msgid "Gigabytes"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:39
+#: ../dashboard_set_quotas.rst:40
 msgid "Volume gigabytes allowed for each project."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:42
+#: ../dashboard_set_quotas.rst:43
 msgid "Instances"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:42
+#: ../dashboard_set_quotas.rst:43
 msgid "Instances allowed for each project."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:45
+#: ../dashboard_set_quotas.rst:46
 msgid "Injected Files"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:45
+#: ../dashboard_set_quotas.rst:46
 msgid "Injected files allowed for each project."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:48
+#: ../dashboard_set_quotas.rst:49
 msgid "Content bytes allowed for each injected file."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:48
+#: ../dashboard_set_quotas.rst:49
 msgid "Injected File Content Bytes"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:51
+#: ../dashboard_set_quotas.rst:52
 msgid "Keypairs"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:51
+#: ../dashboard_set_quotas.rst:52
 msgid "Number of keypairs."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:53
+#: ../dashboard_set_quotas.rst:54
 msgid "Metadata Items"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:53
+#: ../dashboard_set_quotas.rst:54
 msgid "Metadata items allowed for each instance."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:56
+#: ../dashboard_set_quotas.rst:57
 msgid "RAM (MB)"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:56
+#: ../dashboard_set_quotas.rst:57
 msgid "RAM megabytes allowed for each instance."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:59
+#: ../dashboard_set_quotas.rst:60
 msgid "Security Groups"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:59
+#: ../dashboard_set_quotas.rst:60
 msgid "Security groups allowed for each project."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:62
+#: ../dashboard_set_quotas.rst:63
 msgid "Rules allowed for each security group."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:62
+#: ../dashboard_set_quotas.rst:63
 msgid "Security Group Rules"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:65
+#: ../dashboard_set_quotas.rst:66
 msgid "Snapshots"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:65
+#: ../dashboard_set_quotas.rst:66
 msgid "Volume snapshots allowed for each project."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:68
+#: ../dashboard_set_quotas.rst:69
 msgid "Instance cores allowed for each project."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:71
+#: ../dashboard_set_quotas.rst:72
 msgid "Volumes"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:71
+#: ../dashboard_set_quotas.rst:72
 msgid "Volumes allowed for each project."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:78
+#: ../dashboard_set_quotas.rst:79
 msgid "View default project quotas"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:80 ../dashboard_set_quotas.rst:97
+#: ../dashboard_set_quotas.rst:81 ../dashboard_set_quotas.rst:98
 msgid "Log in to the OpenStack dashboard."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:82 ../dashboard_set_quotas.rst:99
+#: ../dashboard_set_quotas.rst:83 ../dashboard_set_quotas.rst:100
 msgid ""
 "On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click the :"
 "guilabel:`Defaults` category."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:85
+#: ../dashboard_set_quotas.rst:86
 msgid "The default quota values are displayed."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:89
+#: ../dashboard_set_quotas.rst:90
 msgid ""
 "You can sort the table by clicking on either the :guilabel:`Quota Name` or :"
 "guilabel:`Limit` column headers."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:95
+#: ../dashboard_set_quotas.rst:96
 msgid "Update project quotas"
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:102 ../dashboard_set_quotas.rst:107
+#: ../dashboard_set_quotas.rst:103 ../dashboard_set_quotas.rst:108
 msgid "Click the :guilabel:`Update Defaults` button."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:104
+#: ../dashboard_set_quotas.rst:105
 msgid ""
 "In the :guilabel:`Update Default Quotas` window, you can edit the default "
 "quota values."
 msgstr ""
 
-#: ../dashboard_set_quotas.rst:111
+#: ../dashboard_set_quotas.rst:112
 msgid ""
 "The dashboard does not show all possible project quotas. To view and update "
-"the quotas for a service, use its command-line client. See :doc:"
-"`cli_set_quotas`."
+"the quotas for a service, use its command-line client. See `OpenStack Admin "
+"User Guide <http://docs.openstack.org/user-guide-admin/cli_set_quotas."
+"html>`_."
 msgstr ""
 
 #: ../dashboard_view_cloud_resources.rst:3
@@ -13850,25 +13915,25 @@ msgid ""
 "If no, try distributing again. Remember that we already rotated the "
 "repository and performing another rotation at this point will result in "
 "tokens that cannot be validated across certain hosts. Specifically, the "
-"hosts that did not get the latest key set. You should be able to distribe "
+"hosts that did not get the latest key set. You should be able to distribute "
 "keys until it is successful. If certain nodes have issues syncing, it could "
 "be permission or network issues and those should be resolved before "
 "subsequent rotations."
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:183
+#: ../keystone_fernet_token_faq.rst:184
 msgid "Distribute the new key repository."
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:183
+#: ../keystone_fernet_token_faq.rst:184
 msgid "Was it successful?"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:186
+#: ../keystone_fernet_token_faq.rst:187
 msgid "How long should I keep my keys around?"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:188
+#: ../keystone_fernet_token_faq.rst:189
 msgid ""
 "The fernet tokens that keystone creates are only secure as the keys creating "
 "them. With staged keys the penalty of key rotation is low, allowing you to "
@@ -13877,11 +13942,11 @@ msgid ""
 "``AES256`` key and a ``SHA256 HMAC``."
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:195
+#: ../keystone_fernet_token_faq.rst:196
 msgid "Is a fernet token still a bearer token?"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:197
+#: ../keystone_fernet_token_faq.rst:198
 msgid ""
 "Yes, and they follow exactly the same validation path as UUID tokens, with "
 "the exception of being written to, and read from, a back end. If someone "
@@ -13889,11 +13954,11 @@ msgid ""
 "you are allowed to do."
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:203
+#: ../keystone_fernet_token_faq.rst:204
 msgid "What if I need to revoke all my tokens?"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:205
+#: ../keystone_fernet_token_faq.rst:206
 msgid ""
 "To invalidate every token issued from keystone and start fresh, remove the "
 "current key repository, create a new key set, and redistribute it to all "
@@ -13902,12 +13967,12 @@ msgid ""
 "re-authenticate, the new token will have been created with a new fernet key."
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:212
+#: ../keystone_fernet_token_faq.rst:213
 msgid ""
 "What can an attacker do if they compromise a fernet key in my deployment?"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:214
+#: ../keystone_fernet_token_faq.rst:215
 msgid ""
 "If any key used in the key repository is compromised, an attacker will be "
 "able to build their own tokens. If they know the ID of an administrator on a "
@@ -13916,11 +13981,11 @@ msgid ""
 "removed from from the repository."
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:221
+#: ../keystone_fernet_token_faq.rst:222
 msgid "I rotated keys and now tokens are invalidating early, what did I do?"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:223
+#: ../keystone_fernet_token_faq.rst:224
 msgid ""
 "Using fernet tokens requires some awareness around token expiration and the "
 "key lifecycle. You do not want to rotate so often that secondary keys are "
@@ -13930,7 +13995,7 @@ msgid ""
 "used to encrypt or decrypt tokens."
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:230
+#: ../keystone_fernet_token_faq.rst:231
 msgid ""
 "For example, your token is valid for 24 hours and we want to rotate keys "
 "every six hours. We will need to make sure tokens that were created at 08:00 "
@@ -13941,14 +14006,14 @@ msgid ""
 "but keeps the key repository limited to only the keys that are needed."
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:238
+#: ../keystone_fernet_token_faq.rst:239
 msgid ""
 "The number of ``max_active_keys`` for a deployment can be determined by "
 "dividing the token lifetime, in hours, by the frequency of rotation in hours "
 "and adding two. Better illustrated as::"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:246
+#: ../keystone_fernet_token_faq.rst:247
 msgid ""
 "The reason for adding two additional keys to the count is to include the "
 "staged key and a buffer key. This can be shown based on the previous "
@@ -13956,13 +14021,13 @@ msgid ""
 "initial state looks like:"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:259
+#: ../keystone_fernet_token_faq.rst:260
 msgid ""
 "All tokens created after 6:00 AM are encrypted with key ``1``. At 12:00 PM "
 "we will rotate keys again, resulting in,"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:271
+#: ../keystone_fernet_token_faq.rst:272
 msgid ""
 "We are still able to validate tokens created between 6:00 - 11:59 AM because "
 "the ``1`` key still exists as a secondary key. All tokens issued after 12:00 "
@@ -13970,7 +14035,7 @@ msgid ""
 "resulting in:"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:286
+#: ../keystone_fernet_token_faq.rst:287
 msgid ""
 "It is still possible to validate tokens issued from 6:00 AM - 5:59 PM "
 "because keys ``1`` and ``2`` exist as secondary keys. Every token issued "
@@ -13978,7 +14043,7 @@ msgid ""
 "next rotation:"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:301
+#: ../keystone_fernet_token_faq.rst:302
 msgid ""
 "Just like before, we can still validate tokens issued from 6:00 AM the "
 "previous day until 5:59 AM today because keys ``1`` - ``4`` are present. At "
@@ -13986,7 +14051,7 @@ msgid ""
 "our next scheduled rotation:"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:318
+#: ../keystone_fernet_token_faq.rst:319
 msgid ""
 "Tokens will naturally expire after 6:00 AM, but we will not be able to "
 "remove key ``1`` until the next rotation because it encrypted all tokens "
@@ -13994,7 +14059,7 @@ msgid ""
 "is at 12:00 PM, the ``1`` key will be pruned from the repository:"
 msgstr ""
 
-#: ../keystone_fernet_token_faq.rst:335
+#: ../keystone_fernet_token_faq.rst:336
 msgid ""
 "If keystone were to receive a token that was created between 6:00 AM and "
 "12:00 PM the day before, encrypted with the ``1`` key, it would not be valid "
@@ -15256,7 +15321,7 @@ msgstr ""
 # #-#-#-#-#  networking_use.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../networking_adv-features.rst:206 ../networking_adv-features.rst:374
 #: ../networking_adv-features.rst:509 ../networking_adv-features.rst:801
-#: ../networking_config-agents.rst:469 ../networking_use.rst:47
+#: ../networking_config-agents.rst:460 ../networking_use.rst:47
 #: ../networking_use.rst:123 ../networking_use.rst:241
 msgid "Operation"
 msgstr ""
@@ -16963,21 +17028,13 @@ msgid ""
 "``service_provider`` parameter to enable Octavia:"
 msgstr ""
 
-#: ../networking_config-agents.rst:342
-msgid ""
-"The ``service_provider`` option is already defined in the ``/usr/share/"
-"neutron/neutron-dist.conf`` file on Red Hat based systems. Do not define it "
-"in ``neutron_lbaas.conf`` otherwise the Networking services will fail to "
-"restart."
-msgstr ""
-
-#: ../networking_config-agents.rst:348
+#: ../networking_config-agents.rst:341
 msgid ""
 "Edit the ``/etc/neutron/neutron.conf`` file and add the ``service_plugins`` "
 "parameter to enable the load-balancing plug-in:"
 msgstr ""
 
-#: ../networking_config-agents.rst:356
+#: ../networking_config-agents.rst:348
 msgid ""
 "If this option is already defined, add the load-balancing plug-in to the "
 "list using a comma as a separator. For example:"
@@ -16985,40 +17042,40 @@ msgstr ""
 
 # #-#-#-#-#  networking_config-agents.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  networking_introduction.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../networking_config-agents.rst:366 ../networking_introduction.rst:203
+#: ../networking_config-agents.rst:357 ../networking_introduction.rst:203
 msgid "Create the required tables in the database:"
 msgstr ""
 
-#: ../networking_config-agents.rst:372
+#: ../networking_config-agents.rst:363
 msgid "Restart the ``neutron-server`` service."
 msgstr ""
 
-#: ../networking_config-agents.rst:375
+#: ../networking_config-agents.rst:366
 msgid "Enable load balancing in the Project section of the dashboard."
 msgstr ""
 
-#: ../networking_config-agents.rst:379
+#: ../networking_config-agents.rst:370
 msgid ""
 "Horizon panels are enabled only for LBaaSV1. LBaaSV2 panels are still being "
 "developed."
 msgstr ""
 
-#: ../networking_config-agents.rst:382
+#: ../networking_config-agents.rst:373
 msgid ""
 "Change the ``enable_lb`` option to ``True`` in the `local_settings.py` file"
 msgstr ""
 
-#: ../networking_config-agents.rst:392
+#: ../networking_config-agents.rst:383
 msgid ""
 "Apply the settings by restarting the web server. You can now view the Load "
 "Balancer management options in the Project view in the dashboard."
 msgstr ""
 
-#: ../networking_config-agents.rst:396
+#: ../networking_config-agents.rst:387
 msgid "Configure Hyper-V L2 agent"
 msgstr ""
 
-#: ../networking_config-agents.rst:398
+#: ../networking_config-agents.rst:389
 msgid ""
 "Before you install the OpenStack Networking Hyper-V L2 agent on a Hyper-V "
 "compute node, ensure the compute node has been configured correctly using "
@@ -17026,24 +17083,24 @@ msgid ""
 "content/ hyper-v-virtualization-platform.html>`__."
 msgstr ""
 
-#: ../networking_config-agents.rst:404
+#: ../networking_config-agents.rst:395
 msgid ""
 "**To install the OpenStack Networking Hyper-V agent and configure the node**"
 msgstr ""
 
-#: ../networking_config-agents.rst:406
+#: ../networking_config-agents.rst:397
 msgid "Download the OpenStack Networking code from the repository:"
 msgstr ""
 
-#: ../networking_config-agents.rst:413
+#: ../networking_config-agents.rst:404
 msgid "Install the OpenStack Networking Hyper-V Agent:"
 msgstr ""
 
-#: ../networking_config-agents.rst:420
+#: ../networking_config-agents.rst:411
 msgid "Copy the ``policy.json`` file:"
 msgstr ""
 
-#: ../networking_config-agents.rst:426
+#: ../networking_config-agents.rst:417
 msgid ""
 "Create the ``C:\\etc\\neutron-hyperv-agent.conf`` file and add the proper "
 "configuration options and the `Hyper-V related options <http://docs."
@@ -17051,60 +17108,60 @@ msgid ""
 "hyperv_agent.html>`__. Here is a sample config file:"
 msgstr ""
 
-#: ../networking_config-agents.rst:455
+#: ../networking_config-agents.rst:446
 msgid "Start the OpenStack Networking Hyper-V agent:"
 msgstr ""
 
-#: ../networking_config-agents.rst:463
+#: ../networking_config-agents.rst:454
 msgid "Basic operations on agents"
 msgstr ""
 
-#: ../networking_config-agents.rst:465
+#: ../networking_config-agents.rst:456
 msgid ""
 "This table shows examples of Networking commands that enable you to complete "
 "basic operations on agents:"
 msgstr ""
 
-#: ../networking_config-agents.rst:471
+#: ../networking_config-agents.rst:462
 msgid "List all available agents."
 msgstr ""
 
-#: ../networking_config-agents.rst:473
+#: ../networking_config-agents.rst:464
 msgid "``$ neutron agent-list``"
 msgstr ""
 
-#: ../networking_config-agents.rst:475
+#: ../networking_config-agents.rst:466
 msgid "Show information of a given agent."
 msgstr ""
 
-#: ../networking_config-agents.rst:478
+#: ../networking_config-agents.rst:469
 msgid "``$ neutron agent-show AGENT_ID``"
 msgstr ""
 
-#: ../networking_config-agents.rst:480
+#: ../networking_config-agents.rst:471
 msgid ""
 "Update the admin status and description for a specified agent. The command "
 "can be used to enable and disable agents by using :option:`--admin-state-up` "
 "parameter set to ``False`` or ``True``."
 msgstr ""
 
-#: ../networking_config-agents.rst:487
+#: ../networking_config-agents.rst:478
 msgid "``$ neutron agent-update --admin`` ``-state-up False AGENT_ID``"
 msgstr ""
 
-#: ../networking_config-agents.rst:490
+#: ../networking_config-agents.rst:481
 msgid "Delete a given agent. Consider disabling the agent before deletion."
 msgstr ""
 
-#: ../networking_config-agents.rst:493
+#: ../networking_config-agents.rst:484
 msgid "``$ neutron agent-delete AGENT_ID``"
 msgstr ""
 
-#: ../networking_config-agents.rst:496
+#: ../networking_config-agents.rst:487
 msgid "**Basic operations on Networking agents**"
 msgstr ""
 
-#: ../networking_config-agents.rst:498
+#: ../networking_config-agents.rst:489
 msgid ""
 "See the `OpenStack Command-Line Interface Reference <http://docs.openstack."
 "org/cli-reference/neutron.html>`__ for more information on Networking "
@@ -17559,7 +17616,7 @@ msgid "Edit the ``/etc/neutron/neutron.conf`` file and set this line:"
 msgstr ""
 
 #: ../networking_config-plugins.rst:113
-msgid "Example ``neutron.conf``: file for NSX-mh integration:"
+msgid "Example ``neutron.conf`` file for NSX-mh integration:"
 msgstr ""
 
 #: ../networking_config-plugins.rst:121
@@ -23459,8 +23516,9 @@ msgstr ""
 #: ../support-compute.rst:49
 msgid ""
 "A Guru Meditation report is sent by the Compute service upon receipt of the "
-"``SIGUSR1`` signal. This report is a general-purpose error report, including "
-"a complete report of the service's current state, and is sent to ``stderr``."
+"``SIGUSR2`` signal (``SIGUSR1`` before Mitaka). This report is a general-"
+"purpose error report that includes details about the current state of the "
+"service. The error report is sent to ``stderr``."
 msgstr ""
 
 #: ../support-compute.rst:54
