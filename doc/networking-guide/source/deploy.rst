@@ -7,6 +7,7 @@ Deployment scenarios
 
    scenario-classic-ovs.rst
    scenario-classic-lb.rst
+   scenario-classic-mt.rst
    scenario-dvr-ovs.rst
    scenario-l3ha-ovs.rst
    scenario-l3ha-lb.rst
