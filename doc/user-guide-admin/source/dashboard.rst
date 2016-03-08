@@ -19,7 +19,7 @@ Guide <http://docs.openstack.org/user-guide/>`__.
    dashboard_manage_flavors.rst
    dashboard_manage_volumes.rst
    dashboard_manage_shares.rst
-   dashboard_set_quotas
+   dashboard_set_quotas.rst
    dashboard_manage_resources.rst
    dashboard_manage_host_aggregates.rst
    dashboard_admin_manage_stacks.rst
