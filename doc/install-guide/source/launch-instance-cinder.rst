@@ -17,44 +17,42 @@ Create a volume
 
    .. code-block:: console
 
-      $ cinder create --display-name volume1 1
-      +---------------------------------------+--------------------------------------+
-      |                Property               |                Value                 |
-      +---------------------------------------+--------------------------------------+
-      |              attachments              |                  []                  |
-      |           availability_zone           |                 nova                 |
-      |                bootable               |                false                 |
-      |          consistencygroup_id          |                 None                 |
-      |               created_at              |      2015-10-12T16:02:29.000000      |
-      |              description              |                 None                 |
-      |               encrypted               |                False                 |
-      |                   id                  | 09e3743e-192a-4ada-b8ee-d35352fa65c4 |
-      |                metadata               |                  {}                  |
-      |              multiattach              |                False                 |
-      |                  name                 |               volume1                |
-      |      os-vol-tenant-attr:tenant_id     |   ed0b60bf607743088218b0a533d5943f   |
-      |   os-volume-replication:driver_data   |                 None                 |
-      | os-volume-replication:extended_status |                 None                 |
-      |           replication_status          |               disabled               |
-      |                  size                 |                  1                   |
-      |              snapshot_id              |                 None                 |
-      |              source_volid             |                 None                 |
-      |                 status                |               creating               |
-      |                user_id                |   58126687cbcc4888bfa9ab73a2256f27   |
-      |              volume_type              |                 None                 |
-      +---------------------------------------+--------------------------------------+
+      $ openstack volume create --size 1 volume1
+      +---------------------+--------------------------------------+
+      | Field               | Value                                |
+      +---------------------+--------------------------------------+
+      | attachments         | []                                   |
+      | availability_zone   | nova                                 |
+      | bootable            | false                                |
+      | consistencygroup_id | None                                 |
+      | created_at          | 2016-03-08T14:30:48.391027           |
+      | description         | None                                 |
+      | encrypted           | False                                |
+      | id                  | a1e8be72-a395-4a6f-8e07-856a57c39524 |
+      | multiattach         | False                                |
+      | name                | volume1                              |
+      | properties          |                                      |
+      | replication_status  | disabled                             |
+      | size                | 1                                    |
+      | snapshot_id         | None                                 |
+      | source_volid        | None                                 |
+      | status              | creating                             |
+      | type                | None                                 |
+      | updated_at          | None                                 |
+      | user_id             | 684286a9079845359882afc3aa5011fb     |
+      +---------------------+--------------------------------------+
 
 #. After a short time, the volume status should change from ``creating``
    to ``available``:
 
    .. code-block:: console
 
-      $ cinder list
-      +--------------------------------------+-----------+---------+------+-------------+----------+-------------+-------------+
-      |                  ID                  |   Status  |   Name  | Size | Volume Type | Bootable | Multiattach | Attached to |
-      +--------------------------------------+-----------+---------+------+-------------+----------+-------------+-------------+
-      | 09e3743e-192a-4ada-b8ee-d35352fa65c4 | available | volume1 |  1   |      -      |  false   |    False    |             |
-      +--------------------------------------+-----------+---------+------+-------------+----------+-------------+-------------+
+      $ openstack volume list
+      +--------------------------------------+--------------+-----------+------+-------------+
+      | ID                                   | Display Name | Status    | Size | Attached to |
+      +--------------------------------------+--------------+-----------+------+-------------+
+      | a1e8be72-a395-4a6f-8e07-856a57c39524 | volume1      | available |    1 |             |
+      +--------------------------------------+--------------+-----------+------+-------------+
 
 Attach the volume to an instance
 --------------------------------
@@ -63,38 +61,33 @@ Attach the volume to an instance
 
    .. code-block:: console
 
-      $ nova volume-attach INSTANCE_NAME VOLUME_ID
+      $ openstack server add volume INSTANCE_NAME VOLUME_NAME
 
-   Replace ``INSTANCE_NAME`` with the name of the instance and ``VOLUME_ID``
-   with the ID of the volume you want to attach to it.
+   Replace ``INSTANCE_NAME`` with the name of the instance and ``VOLUME_NAME``
+   with the name of the volume you want to attach to it.
 
    **Example**
 
-   Attach the ``09e3743e-192a-4ada-b8ee-d35352fa65c4`` volume to the
-   ``public-instance`` instance:
+   Attach the ``volume1`` volume to the ``provider-instance`` instance:
 
    .. code-block:: console
 
-      $ nova volume-attach public-instance 09e3743e-192a-4ada-b8ee-d35352fa65c4
-      +----------+--------------------------------------+
-      | Property | Value                                |
-      +----------+--------------------------------------+
-      | device   | /dev/vdb                             |
-      | id       | 158bea89-07db-4ac2-8115-66c0d6a4bb48 |
-      | serverId | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf |
-      | volumeId | 09e3743e-192a-4ada-b8ee-d35352fa65c4 |
-      +----------+--------------------------------------+
+      $ openstack server add volume provider-instance volume1
+
+   .. note::
+
+      This command provides no output.
 
 #. List volumes:
 
    .. code-block:: console
 
-      $ nova volume-list
-      +--------------------------------------+-----------+--------------+------+-------------+--------------------------------------+
-      | ID                                   | Status    | Display Name | Size | Volume Type | Attached to                          |
-      +--------------------------------------+-----------+--------------+------+-------------+--------------------------------------+
-      | 09e3743e-192a-4ada-b8ee-d35352fa65c4 | in-use    |              | 1    | -           | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf |
-      +--------------------------------------+-----------+--------------+------+-------------+--------------------------------------+
+      $ openstack volume list
+      +--------------------------------------+--------------+--------+------+--------------------------------------------+
+      | ID                                   | Display Name | Status | Size | Attached to                                |
+      +--------------------------------------+--------------+--------+------+--------------------------------------------+
+      | a1e8be72-a395-4a6f-8e07-856a57c39524 | volume1      | in-use |    1 | Attached to provider-instance on /dev/vdb  |
+      +--------------------------------------+--------------+--------+------+--------------------------------------------+
 
 #. Access your instance using SSH and use the ``fdisk`` command to verify
    presence of the volume as the ``/dev/vdb`` block storage device:
