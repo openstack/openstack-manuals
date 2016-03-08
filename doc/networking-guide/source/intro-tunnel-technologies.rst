@@ -2,22 +2,29 @@
 Tunnel technologies
 ===================
 
-Tunneling allows one network protocol to encapsulate another payload
-protocol such that packets from the payload protocol are passed as
-data on the delivery protocol. For example, this can be used to pass
-data securely over an untrusted network.
+Tunneling is a mechanism that makes transfer of payloads feasible over an
+incompatible delivery network. It allows the network user to gain access to
+denied or insecure networks. Data encryption may be employed to transport the
+payload, ensuring that the encapsulated user network data appears as public
+even though it is private and can easily pass the conflicting network.
+
 
 Generic routing encapsulation (GRE)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-GRE carries IP packets with private IP addresses over the Internet
-using delivery packets with public IP addresses.
+Generic routing encapsulation (GRE) is a protocol that runs over IP and is
+employed when delivery and payload protocols are compatible but payload
+addresses are incompatible. For instance, a payload might think it is running
+on a datalink layer but it is actually running over a transport layer using
+datagram protocol over IP. GRE creates a private point-to-point connection
+and works by encapsulating a payload. GRE is a foundation protocol for other
+tunnel protocols but the GRE tunnels provide only weak authentication.
 
 .. _VXLAN:
 
 Virtual extensible local area network (VXLAN)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A VXLAN, virtual extensible local area network, allows the creation of
-a logical network for virtual machines across various networks. VXLAN
-encapsulates layer-2 Ethernet frames over layer-4 UDP packets.
+The purpose of VXLAN is to provide scalable network isolation. VXLAN underlay
+can spread over two or more layer-3 network domains. It allows an overlay
+layer-2 network to spread across multiple underlay layer-3 network domains.
