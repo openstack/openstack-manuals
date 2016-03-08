@@ -12,7 +12,7 @@ Install the components
 
       # apt-get install neutron-server neutron-plugin-ml2 \
         neutron-plugin-linuxbridge-agent neutron-dhcp-agent \
-        neutron-metadata-agent python-neutronclient conntrack
+        neutron-metadata-agent conntrack
 
 .. only:: debian
 
@@ -42,7 +42,7 @@ Install the components
    .. code-block:: console
 
       # yum install openstack-neutron openstack-neutron-ml2 \
-        openstack-neutron-linuxbridge python-neutronclient ebtables ipset
+        openstack-neutron-linuxbridge ebtables
 
 .. only:: obs
 
@@ -50,8 +50,7 @@ Install the components
 
       # zypper install --no-recommends openstack-neutron \
         openstack-neutron-server openstack-neutron-linuxbridge-agent \
-        openstack-neutron-dhcp-agent openstack-neutron-metadata-agent \
-        ipset
+        openstack-neutron-dhcp-agent openstack-neutron-metadata-agent
 
 .. only:: debian
 
@@ -78,7 +77,6 @@ Install the components
            ...
            notify_nova_on_port_status_changes = True
            notify_nova_on_port_data_changes = True
-           nova_url = http://controller:8774/v2
 
            [nova]
            ...
@@ -185,7 +183,6 @@ Install the components
           ...
           notify_nova_on_port_status_changes = True
           notify_nova_on_port_data_changes = True
-          nova_url = http://controller:8774/v2
 
           [nova]
           ...
@@ -211,15 +208,6 @@ Install the components
              ...
              lock_path = /var/lib/neutron/tmp
 
-     * (Optional) To assist with troubleshooting, enable verbose logging in
-       the ``[DEFAULT]`` section:
-
-       .. code-block:: ini
-
-          [DEFAULT]
-          ...
-          verbose = True
-
 Configure the Modular Layer 2 (ML2) plug-in
 -------------------------------------------
 
@@ -237,7 +225,7 @@ and switching) virtual networking infrastructure for instances.
        ...
        type_drivers = flat,vlan
 
-  * In the ``[ml2]`` section, disable project (private) networks:
+  * In the ``[ml2]`` section, disable self-service networks:
 
     .. code-block:: ini
 
@@ -266,14 +254,14 @@ and switching) virtual networking infrastructure for instances.
        ...
        extension_drivers = port_security
 
-  * In the ``[ml2_type_flat]`` section, configure the public flat provider
-    network:
+  * In the ``[ml2_type_flat]`` section, configure the provider virtual
+    network as a flat network:
 
     .. code-block:: ini
 
        [ml2_type_flat]
        ...
-       flat_networks = public
+       flat_networks = provider
 
   * In the ``[securitygroup]`` section, enable :term:`ipset` to increase
     efficiency of security group rules:
@@ -288,22 +276,22 @@ Configure the Linux bridge agent
 --------------------------------
 
 The Linux bridge agent builds layer-2 (bridging and switching) virtual
-networking infrastructure for instances including VXLAN tunnels for private
-networks and handles security groups.
+networking infrastructure for instances and handles security groups.
 
 * Edit the ``/etc/neutron/plugins/ml2/linuxbridge_agent.ini`` file and
   complete the following actions:
 
-  * In the ``[linux_bridge]`` section, map the public virtual network to the
-    public physical network interface:
+  * In the ``[linux_bridge]`` section, map the provider virtual network to the
+    provider physical network interface:
 
     .. code-block:: ini
 
       [linux_bridge]
-      physical_interface_mappings = public:PUBLIC_INTERFACE_NAME
+      physical_interface_mappings = provider:PROVIDER_INTERFACE_NAME
 
-    Replace ``PUBLIC_INTERFACE_NAME`` with the name of the underlying physical
-    public network interface.
+    Replace ``PROVIDER_INTERFACE_NAME`` with the name of the underlying
+    provider physical network interface. See :ref:`environment-networking`
+    for more information.
 
   * In the ``[vxlan]`` section, disable VXLAN overlay networks:
 
@@ -311,14 +299,6 @@ networks and handles security groups.
 
        [vxlan]
        enable_vxlan = False
-
-  * In the ``[agent]`` section, enable ARP spoofing protection:
-
-    .. code-block:: ini
-
-       [agent]
-       ...
-       prevent_arp_spoofing = True
 
   * In the ``[securitygroup]`` section, enable security groups and
     configure the Linux bridge :term:`iptables` firewall driver:
@@ -339,7 +319,7 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
   actions:
 
   * In the ``[DEFAULT]`` section, configure the Linux bridge interface driver,
-    Dnsmasq DHCP driver, and enable isolated metadata so instances on public
+    Dnsmasq DHCP driver, and enable isolated metadata so instances on provider
     networks can access metadata over the network:
 
     .. code-block:: ini
@@ -349,15 +329,6 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
        interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
        dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
        enable_isolated_metadata = True
-
-  * (Optional) To assist with troubleshooting, enable verbose logging in the
-    ``[DEFAULT]`` section:
-
-    .. code-block:: ini
-
-       [DEFAULT]
-       ...
-       verbose = True
 
 Return to
 :ref:`Networking controller node configuration

@@ -147,20 +147,29 @@ You can deploy the Networking service using one of two architectures
 represented by options 1 and 2.
 
 Option 1 deploys the simplest possible architecture that only supports
-attaching instances to public (provider) networks. No self-service
+attaching instances to provider (external) networks. No self-service (private)
 networks, routers, or floating IP addresses. Only the ``admin`` or other
 privileged user can manage provider networks.
 
 Option 2 augments option 1 with layer-3 services that support attaching
-instances to self-service (private) networks. The ``demo`` or other
-unprivileged user can manage self-service networks including routers that
-provide connectivity between self-service and provider networks. Additionally,
+instances to self-service networks. The ``demo`` or other unprivileged
+user can manage self-service networks including routers that provide
+connectivity between self-service and provider networks. Additionally,
 floating IP addresses provide connectivity to instances using self-service
 networks from external networks such as the Internet.
 
+Self-service networks typically use overlay networks. Overlay network
+protocols such as VXLAN include additional headers that increase overhead
+and decrease space available for the payload or user data. Without knowledge
+of the virtual network infrastructure, instances attempt to send packets
+using the default Ethernet :term:`maximum transmission unit (MTU)` of 1500
+bytes. The Networking service automatically provides the correct MTU value
+to instances via DHCP. However, some cloud images do not use DHCP or ignore
+the DHCP MTU option and require configuration using metadata or a script.
+
 .. note::
 
-   Option 2 also supports attaching instances to public (provider) networks.
+   Option 2 also supports attaching instances to provider networks.
 
 Choose one of the following networking options to configure services
 specific to it. Afterwards, return here and proceed to
@@ -183,52 +192,17 @@ such as credentials to instances.
 * Edit the ``/etc/neutron/metadata_agent.ini`` file and complete the following
   actions:
 
-  * In the ``[DEFAULT]`` section, configure access parameters:
-
-    .. code-block:: ini
-
-       [DEFAULT]
-       ...
-       auth_uri = http://controller:5000
-       auth_url = http://controller:35357
-       auth_region = RegionOne
-       auth_type = password
-       project_domain_id = default
-       user_domain_id = default
-       project_name = service
-       username = neutron
-       password = NEUTRON_PASS
-
-    Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
-    user in the Identity service.
-
-  * In the ``[DEFAULT]`` section, configure the metadata host:
-
-    .. code-block:: ini
-
-       [DEFAULT]
-       ...
-       nova_metadata_ip = controller
-
-  * In the ``[DEFAULT]`` section, configure the metadata proxy shared
+  * In the ``[DEFAULT]`` section, configure the metadata host and shared
     secret:
 
     .. code-block:: ini
 
        [DEFAULT]
        ...
+       nova_metadata_ip = controller
        metadata_proxy_shared_secret = METADATA_SECRET
 
     Replace ``METADATA_SECRET`` with a suitable secret for the metadata proxy.
-
-  * (Optional) To assist with troubleshooting, enable verbose logging in the
-    ``[DEFAULT]`` section:
-
-    .. code-block:: ini
-
-       [DEFAULT]
-       ...
-       verbose = True
 
 Configure Compute to use Networking
 -----------------------------------
