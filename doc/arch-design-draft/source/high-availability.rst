@@ -1,3 +1,5 @@
+.. _high-availability:
+
 =================
 High availability
 =================
@@ -186,4 +188,3 @@ for applications to perform well.
 
    When running embedded object store methods, ensure that you do not
    instigate extra data replication as this may cause performance issues.
-

@@ -1,3 +1,5 @@
+.. _security-requirements:
+
 =====================
 Security requirements
 =====================
