@@ -107,6 +107,8 @@ Install and configure components
 
         .. code-block:: ini
 
+           SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
            CACHES = {
                'default': {
                     'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -191,6 +193,8 @@ Install and configure components
 
         .. code-block:: ini
 
+           SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
            CACHES = {
                'default': {
                     'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
@@ -274,6 +278,8 @@ Install and configure components
       * Configure the ``memcached`` session storage service:
 
         .. code-block:: ini
+
+           SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
            CACHES = {
                'default': {
