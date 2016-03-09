@@ -344,21 +344,21 @@ A general purpose OpenStack cloud design should incorporate the core
 OpenStack services to provide a wide range of services to end-users. The
 OpenStack core services recommended in a general purpose cloud are:
 
-* :term:`Compute` (:term:`nova`)
+* :term:`Compute service` (:term:`nova`)
 
-* :term:`Networking` (:term:`neutron`)
+* :term:`Networking service` (:term:`neutron`)
 
 * :term:`Image service` (:term:`glance`)
 
-* :term:`Identity` (:term:`keystone`)
+* :term:`Identity service` (:term:`keystone`)
 
-* :term:`Dashboard<dashboard>` (:term:`horizon`)
+* :term:`Dashboard` (:term:`horizon`)
 
-* :term:`Telemetry` (:term:`ceilometer`)
+* :term:`Telemetry service` (:term:`ceilometer`)
 
-A general purpose cloud may also include :term:`Object Storage`
-(:term:`swift`). :term:`Block Storage` (:term:`cinder`). These may be
-selected to provide storage to applications and instances.
+A general purpose cloud may also include :term:`Object Storage service`
+(:term:`swift`). :term:`Block Storage service` (:term:`cinder`).
+These may be selected to provide storage to applications and instances.
 
 Supplemental software
 ~~~~~~~~~~~~~~~~~~~~~

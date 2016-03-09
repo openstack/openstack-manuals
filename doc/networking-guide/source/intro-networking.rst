@@ -2,7 +2,7 @@
 Introduction to networking
 ==========================
 
-The OpenStack :term:`Networking` service provides an API that allows users
+The OpenStack :term:`Networking service` provides an API that allows users
 to set up and define network connectivity and addressing in the
 cloud. The project code-name for Networking services is neutron.
 OpenStack Networking handles the creation and management of a virtual
@@ -24,13 +24,13 @@ to that specific host instead.
 OpenStack Networking integrates with various OpenStack
 components:
 
-* OpenStack :term:`Identity` (keystone) is used for authentication and
-  authorization of API requests.
+* OpenStack :term:`Identity service` (keystone) is used for authentication
+  and authorization of API requests.
 
-* OpenStack :term:`Compute` (nova) is used to plug each virtual
+* OpenStack :term:`Compute service` (nova) is used to plug each virtual
   NIC on the VM into a particular network.
 
-* OpenStack :term:`dashboard` (horizon) is used by administrators and tenant
+* OpenStack :term:`Dashboard` (horizon) is used by administrators and tenant
   users to create and manage network services through a web-based graphical
   interface.
 
