@@ -32,7 +32,7 @@ Contents
    high-availability.rst
    security-requirements.rst
    legal-requirements.rst
-   example-architectures.rst
+   arch-examples.rst
    common/app_support.rst
    common/glossary.rst
 
