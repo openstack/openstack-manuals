@@ -139,7 +139,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper install openstack-cinder-volume tgt python-PyMySQL
+         # zypper install openstack-cinder-volume tgt
 
 .. only:: rdo
 
@@ -147,7 +147,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install openstack-cinder targetcli python-oslo-policy
+         # yum install openstack-cinder targetcli
 
 .. only:: ubuntu
 
@@ -155,7 +155,7 @@ Install and configure components
 
       .. code-block:: console
 
-        # apt-get install cinder-volume python-mysqldb
+        # apt-get install cinder-volume
 
 2. Edit the ``/etc/cinder/cinder.conf`` file
    and complete the following actions:
@@ -275,13 +275,13 @@ Install and configure components
         uses the name of the driver as the name of the back end.
 
    * In the ``[DEFAULT]`` section, configure the location of the
-     Image service:
+     Image service API:
 
      .. code-block:: ini
 
         [DEFAULT]
         ...
-        glance_host = controller
+        glance_api_servers = http://controller:9292
 
    * In the ``[oslo_concurrency]`` section, configure the lock path:
 
@@ -290,15 +290,6 @@ Install and configure components
         [oslo_concurrency]
         ...
         lock_path = /var/lib/cinder/tmp
-
-   * (Optional) To assist with troubleshooting, enable verbose logging
-     in the ``[DEFAULT]`` section:
-
-     .. code-block:: ini
-
-        [DEFAULT]
-        ...
-        verbose = True
 
 Finalize installation
 ---------------------

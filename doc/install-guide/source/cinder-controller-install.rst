@@ -229,7 +229,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper install openstack-cinder-api openstack-cinder-scheduler python-cinderclient
+         # zypper install openstack-cinder-api openstack-cinder-scheduler
 
 .. only:: rdo
 
@@ -237,7 +237,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install openstack-cinder python-cinderclient
+         # yum install openstack-cinder
 
 .. only:: ubuntu or debian
 
@@ -245,7 +245,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install cinder-api cinder-scheduler python-cinderclient
+         # apt-get install cinder-api cinder-scheduler
 
       .. only:: debian
 
@@ -336,15 +336,6 @@ Install and configure components
            [oslo_concurrency]
            ...
            lock_path = /var/lib/cinder/tmp
-
-   * (Optional) To assist with troubleshooting, enable verbose
-     logging in the ``[DEFAULT]`` section:
-
-     .. code-block:: ini
-
-        [DEFAULT]
-        ...
-        verbose = True
 
 .. only:: obs or rdo or ubuntu
 
