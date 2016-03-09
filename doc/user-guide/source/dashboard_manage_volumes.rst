@@ -69,7 +69,7 @@ You can attach a volume to one instance at a time.
    click :guilabel:`Volumes` category.
 
 #. Select the volume to add to an instance and click
-   :guilabel:`Edit Attachments`.
+   :guilabel:`Manage Attachments`.
 
 #. In the :guilabel:`Manage Volume Attachments` dialog box, select an instance.
 
@@ -101,7 +101,7 @@ Detach a volume from an instance
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click the :guilabel:`Volumes` category.
 
-#. Select the volume and click :guilabel:`Edit Attachments`.
+#. Select the volume and click :guilabel:`Manage Attachments`.
 
 #. Click :guilabel:`Detach Volume` and confirm your changes.
 
