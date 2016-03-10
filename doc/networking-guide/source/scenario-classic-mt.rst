@@ -54,9 +54,28 @@ Known limitations
   resources like DHCP, Routers and others is not supported. Therefore run
   either OVS or linux bridge in VLAN or flat mode on the controller node.
 
-* Live Migration requires the same physical_interface_mapping configuration on
-  each host. It is not possible that physnet1 uses eth1 on host1, but eth2
-  on host2.
+* Migration requires the same ``physical_interface_mapping`` configuration on
+  each host. It is not recommended to use different mappings, like
+  node1 uses ``physnet1:eth1`` but node2 uses ``physnet1:eth2``. Having
+  different mappings could
+
+  * cause migration to fail, if the interface configured on the source node
+    does not exist on the target node
+
+  * result in an instance placed on the wrong physical network, if the
+    interface used on the source node exists on the target node, but is used
+    by another physical network or not used at all by OpenStack. Such an
+    instance does not have access to its configured networks anymore.
+    It then has layer 2 connectivity to either another OpenStack network, or
+    one of the hosts networks.
+
+  .. note::
+
+     To get around those problems, make sure that your
+     ``physical_interface_mapping`` is in sync between all nodes using the
+     macvtap agent. This `bug
+     <https://bugs.launchpad.net/neutron/+bug/1550400>`_ tracks the progress
+     on overcoming this limitation.
 
 * Only centralized routing on the network node is supported (using either
   the Open vSwitch or the Linux bridge agent). DVR is NOT supported.
@@ -103,12 +122,6 @@ require an IP address range because it only handles layer-2 connectivity.
 
 .. image:: figures/scenario-classic-mt-services.png
    :alt: Service layout
-
-.. note::
-
-   For VLAN external and project networks, the physical network infrastructure
-   must support VLAN tagging.
-
 
 OpenStack services - controller node
 ------------------------------------
