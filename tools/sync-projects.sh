@@ -81,6 +81,7 @@ case "$PROJECT_DIR" in
         ;;
     operations-guide)
         copy_glossary_xml "doc/glossary" "openstack-ops" "figures"
+        copy_rst doc/common
         ;;
     security-doc)
         copy_rst common
