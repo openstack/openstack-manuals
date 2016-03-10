@@ -18,3 +18,4 @@ Advanced configuration
    adv-config-sriov.rst
    adv-config-ipam.rst
    adv-config-availability-zone.rst
+   adv-config-dns.rst
