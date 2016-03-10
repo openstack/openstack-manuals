@@ -46,13 +46,15 @@ To highlight the importance of network separation, the example architectures
 use `private address space <https://tools.ietf.org/html/rfc1918>`__ for the
 management network and assume that the physical network infrastructure
 provides Internet access via :term:`NAT` or other method. The example
-architectures use routable IP address space for the public network and
-assume that the physical network infrastructure provides direct Internet
-access. In the provider networks architecture, all instances attach directly
-to the public network. In the self-service networks architecture, instances
-can attach to a private or public network. Private networks can reside
-entirely within OpenStack or provide some level of public network access
-using :term:`NAT`.
+architectures use routable IP address space for the provider (external)
+network and assume that the physical network infrastructure provides direct
+Internet access.
+
+In the provider networks architecture, all instances attach directly
+to the provider network. In the self-service (private) networks architecture,
+instances can attach to a self-service or provider network. Self-service
+networks can reside entirely within OpenStack or provide some level of external
+network access using :term:`NAT` through the provider network.
 
 .. _figure-networklayout:
 
@@ -67,7 +69,7 @@ The example architectures assume use of the following networks:
   nodes for administrative purposes such as package installation,
   security updates, :term:`DNS`, and :term:`NTP`.
 
-* Public on 203.0.113.0/24 with gateway 203.0.113.1
+* Provider on 203.0.113.0/24 with gateway 203.0.113.1
 
   This network requires a gateway to provide Internet access to
   instances in your OpenStack environment.

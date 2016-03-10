@@ -12,8 +12,8 @@ Configure network interfaces
 
    Default gateway: 10.0.0.1
 
-#. The public interface uses a special configuration without an IP
-   address assigned to it. Configure the second interface as the public
+#. The provider interface uses a special configuration without an IP
+   address assigned to it. Configure the second interface as the provider
    interface:
 
    Replace ``INTERFACE_NAME`` with the actual interface name. For example,
@@ -25,9 +25,9 @@ Configure network interfaces
 
         .. code-block:: ini
 
-           # The public network interface
+           # The provider network interface
            auto INTERFACE_NAME
-           iface  INTERFACE_NAME inet manual
+           iface INTERFACE_NAME inet manual
            up ip link set dev $IFACE up
            down ip link set dev $IFACE down
 
