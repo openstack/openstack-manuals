@@ -991,6 +991,22 @@ and string concatenation:
      volume: payload.metrics[?(@.name='cpu.idle.percent')].value * 100
      resource_id: $.payload.host + "_" + $.payload.nodename
 
+You can use the ``timedelta`` plug-in to evaluate the difference in seconds
+between two ``datetime`` fields from one notification.
+
+.. code-block:: yaml
+
+   ---
+   metric:
+   - name: 'compute.instance.booting.time'
+     event_type: 'compute.instance.create.end'
+    type: 'gauge'
+    unit: 'sec'
+    volume:
+      fields: [$.payload.created_at, $.payload.launched_at]
+      plugin: 'timedelta'
+    project_id: $.payload.tenant_id
+    resource_id: $.payload.instance_id
 
 You will find some existence meters in the ``meter.yaml``. These
 meters have a ``volume`` as ``1`` and are at the bottom of the yaml file
