@@ -55,7 +55,7 @@ subset of rules supported by all active mechanism drivers.
    The list of supported rule types reported by core plug-in is not
    enforced when accessing QoS rule resources. This is mostly because
    then we would not be able to create any rules while at least one ml2
-   driver lacks support for QoS (at the moment of writing, linuxbridge
+   driver lacks support for QoS (at the moment of writing, only macvtap
    is such a driver).
 
 
@@ -71,14 +71,14 @@ On server side:
   (``messaging`` is the default).
 * For ml2, add ``qos`` to ``extension_drivers`` in ``[ml2]`` section.
 
-On agent side (OVS):
+On agent side:
 
 * Add ``qos`` to extensions in ``[agent]`` section.
 
 .. note::
 
-   QoS currently works with ml2 only (SR-IOV and Open vSwitch are the only
-   drivers that are enabled for QoS in Liberty release).
+   QoS currently works with ml2 only (SR-IOV, Open vSwitch, and linuxbridge are
+   drivers that are enabled for QoS in Mitaka release).
 
 Trusted tenants policy.json configuration
 -----------------------------------------
