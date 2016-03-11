@@ -254,16 +254,14 @@ the default set of quotas are enforced for all tenants, so no
       | subnet     | 5     |
       +------------+-------+
 
-   To update the limits for an L3 resource such as, router
-   or floating IP, you must define new values for the quotas
-   after the ``--`` directive.
-
-   This example updates the limit of the number of floating
-   IPs for the specified tenant.
+   To update the limits for an L3 resource such as router
+   or floating IP, you must define new values for the quotas.
+   For example, update the limit of the number of floating
+   IPs for the specified tenant:
 
    .. code-block:: console
 
-      $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 -- --floatingip 20
+      $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --floatingip 20
       +------------+-------+
       | Field      | Value |
       +------------+-------+
@@ -275,12 +273,12 @@ the default set of quotas are enforced for all tenants, so no
       +------------+-------+
 
    You can update the limits of multiple resources by
-   including L2 resources and L3 resource through one
+   including L2 resources and L3 resources through one
    command:
 
    .. code-block:: console
 
-      $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 3 --subnet 3 --port 3 -- --floatingip 3 --router 3
+      $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 3 --subnet 3 --port 3 --floatingip 3 --router 3
       +------------+-------+
       | Field      | Value |
       +------------+-------+
