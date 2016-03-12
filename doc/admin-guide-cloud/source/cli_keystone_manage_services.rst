@@ -7,7 +7,7 @@ follows:
 
 - Service catalog template. The Identity service acts
   as a service catalog of endpoints for other OpenStack
-  services. The ``/etc/default_catalog.templates``
+  services. The ``/etc/keystone/default_catalog.templates``
   template file defines the endpoints for services. When
   the Identity service uses a template file back end,
   any changes that are made to the endpoints are cached.
