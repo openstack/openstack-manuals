@@ -10,8 +10,8 @@ Because many of the images disable SSH password authentication
 by default, boot the image with an injected key pair.
 You can ``SSH`` into the instance with the private key and default
 login account. See the `OpenStack End User Guide
-<http://docs.openstack.org/user-guide>`_ for more information
-on how to create and inject key pairs with OpenStack.
+<http://docs.openstack.org/user-guide/configure_access_and_security_for_instances.html>`_
+for more information on how to create and inject key pairs with OpenStack.
 
 CentOS images
 ~~~~~~~~~~~~~
