@@ -358,8 +358,8 @@ DHCP agent and remove one from it.
 
    .. code-block:: console
 
-      $ neutron dhcp-agent-network-remove a0c1c21c-d4f4-4577-9ec7-908f2d48622d
-      net2
+      $ neutron dhcp-agent-network-remove a0c1c21c-d4f4-4577-9ec7-908f2d48622d \
+        net2
       Removed network net2 to dhcp agent
       $ neutron dhcp-agent-list-hosting-net net2
 
@@ -456,8 +456,8 @@ To run the following commands, you must stop the DHCP agent on HostA.
 
 .. code-block:: console
 
-   $ neutron agent-update --admin-state-up False a0c1c21c-d4f4-4577
-     -9ec7-908f2d48622d
+   $ neutron agent-update --admin-state-up False \
+     a0c1c21c-d4f4-4577-9ec7-908f2d48622d
    $ neutron agent-list
 
    +--------------------------------------+--------------------+-------+-------+----------------+
