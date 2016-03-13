@@ -45,19 +45,19 @@ Configure Identity service for Networking
 
       .. code-block:: console
 
-         $ keystone endpoint-create --region $REGION --service-id
+         $ keystone endpoint-create --region $REGION --service-id \
            $NEUTRON_SERVICE_ID \
-          --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/'
+          --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' \
           --internalurl 'http://$IP:9696/'
 
       For example:
 
       .. code-block:: console
 
-         $ keystone endpoint-create --region myregion --service-id
+         $ keystone endpoint-create --region myregion --service-id \
            $NEUTRON_SERVICE_ID \
-          --publicurl "http://10.211.55.17:9696/" --adminurl
-          "http://10.211.55.17:9696/" --internalurl
+          --publicurl "http://10.211.55.17:9696/" --adminurl \
+          "http://10.211.55.17:9696/" --internalurl \
           "http://10.211.55.17:9696/"
 
    -  If you are using the ``template driver``, specify the following
@@ -112,7 +112,7 @@ Configure Identity service for Networking
 
       .. code-block:: console
 
-         $ keystone user-role-add --user_id $NEUTRON_USER
+         $ keystone user-role-add --user_id $NEUTRON_USER \
          --role_id $ADMIN_ROLE --tenant_id $SERVICE_TENANT
 
 For information about how to create service entries and users, see the
