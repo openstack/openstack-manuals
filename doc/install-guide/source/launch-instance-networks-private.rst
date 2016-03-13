@@ -105,7 +105,7 @@ Create the private project network
 
    .. code-block:: console
 
-      $ neutron subnet-create private 172.16.1.0/24 --name private
+      $ neutron subnet-create private 172.16.1.0/24 --name private \
         --dns-nameserver 8.8.4.4 --gateway 172.16.1.1
       Created a new subnet:
       +-------------------+------------------------------------------------+
