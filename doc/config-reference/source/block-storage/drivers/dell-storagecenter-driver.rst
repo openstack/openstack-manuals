@@ -14,7 +14,6 @@ Prerequisite: Dell Enterprise Manager 2015 R1 or later must be used.
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
-
 The Dell Storage Center volume driver provides the following Cinder
 volume operations:
 
@@ -25,12 +24,17 @@ volume operations:
 -  Copy a volume to an image.
 -  Clone a volume.
 -  Extend a volume.
+-  Create, delete, list and update a consistency group.
+-  Create, delete, and list consistency group snapshots.
+-  Manage an existing volume.
+-  Failover-host for replicated back ends.
 
 Extra spec options
 ~~~~~~~~~~~~~~~~~~
 
-Volume type extra specs can be used to select different Storage
-Profiles.
+Volume type extra specs can be used to enable a variety of Dell Storage
+Center options. Selecting Storage Profiles, Replay Profiles, enabling
+replication and enabling replication of the Active Replay.
 
 Storage Profiles control how Storage Center manages volume data. For a
 given volume, the selected Storage Profile dictates which disk tier
@@ -56,6 +60,59 @@ the ``High Priority`` and ``Low Priority`` Storage Profiles:
     $ cinder type-create "BronzeVolumeType"
     $ cinder type-key "BronzeVolumeType" set storagetype:storageprofile=lowpriority
 
+Replay Profiles control how often the Storage Center takes a replay of a
+given volume and how long those replays are kept. The default profile is
+the ``daily`` profile that sets the replay to occur once a day and to
+persist for one week.
+
+The extra spec key ``storagetype:replayprofiles`` with the value of the
+name of the Replay Profile or profiles on the Storage Center can be set
+to allow to use Replay Profiles other than the default ``daily`` profile.
+
+As an example, here is how to define a volume type using the ``hourly``
+Replay Profile and another specifying both ``hourly`` and the default
+``daily`` profile:
+
+.. code-block:: console
+
+    $ cinder type-create "HourlyType"
+    $ cinder type-key "HourlyType" set storagetype:replayprofile=hourly
+    $ cinder type-create "HourlyAndDailyType"
+    $ cinder type-key "HourlyAndDailyType" set storagetype:replayprofiles=hourly,daily
+
+Note the comma separated string for the ``HourlyAndDailyType``.
+
+Replication for a given volume type is enabled via the extra spec
+``replication_enabled``.
+
+To create a volume type that specifies only replication enabled back ends:
+
+.. code-block:: console
+
+    $ cinder type-create "ReplicationType"
+    $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
+
+Extra specs can be used to configure replication. In addition to the Replay
+Profiles above, ``replication:activereplay`` can be set to enable replication
+of the volume's active replay. And the replication type can be changed to
+synchronous via the ``replication_type`` extra spec can be set.
+
+To create a volume type that enables replication of the active replay:
+
+.. code-block:: console
+
+    $ cinder type-create "ReplicationType"
+    $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
+    $ cinder type-key "ReplicationType" set replication:activereplay='<is> True'
+
+To create a volume type that enables synchronous replication :
+
+.. code-block:: console
+
+    $ cinder type-create "ReplicationType"
+    $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
+    $ cinder type-key "ReplicationType" set replication_type='<in> sync'
+
 iSCSI configuration
 ~~~~~~~~~~~~~~~~~~~
 
@@ -67,7 +124,7 @@ Use the following instructions to update the configuration file for iSCSI:
     enabled_backends = delliscsi
 
     [delliscsi]
-    # Name to give this storage backend
+    # Name to give this storage back-end
     volume_backend_name = delliscsi
     # The iSCSI driver to load
     volume_driver = cinder.volume.drivers.dell.dell_storagecenter_iscsi.DellStorageCenterISCSIDriver
@@ -83,6 +140,7 @@ Use the following instructions to update the configuration file for iSCSI:
     dell_sc_ssn = 64702
 
     # ==Optional settings==
+
     # The Enterprise Manager API port
     dell_sc_api_port = 3033
     # Server folder to place new server definitions
@@ -104,7 +162,7 @@ channel:
     enabled_backends = dellfc
 
     [dellfc]
-    # Name to give this storage backend
+    # Name to give this storage back-end
     volume_backend_name = dellfc
     # The FC driver to load
     volume_driver = cinder.volume.drivers.dell.dell_storagecenter_fc.DellStorageCenterFCDriver
@@ -117,7 +175,7 @@ channel:
     # The Storage Center serial number to use
     dell_sc_ssn = 64702
 
-    # Optional settings
+    # ==Optional settings==
 
     # The Enterprise Manager API port
     dell_sc_api_port = 3033
@@ -125,6 +183,26 @@ channel:
     dell_sc_server_folder = devstacksrv
     # Volume folder to place created volumes
     dell_sc_volume_folder = devstackvol/Cinder
+
+Replication configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add the following to the back-end specification to specify another Storage
+Center to replicate to.
+
+.. code-block:: ini
+
+    [dell]
+    replication_device = target_device_id: 65495, qosnode: cinderqos
+
+The ``target_device_id`` is the SSN of the remote Storage Center and the
+``qosnode`` is the QoS Node setup between the two Storage Centers.
+
+Note that more than one ``replication_device`` line can be added. This will
+slow things down, however.
+
+A volume is only replicated if the volume is of a volume-type that has
+the extra spec ``replication_enabled`` set to ``<is> True``.
 
 Driver options
 ~~~~~~~~~~~~~~
