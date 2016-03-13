@@ -6,7 +6,8 @@ The dashboard is generally installed on the controller node.
 
 #. Ask the cloud operator for the host name or public IP address from
    which you can access the dashboard, and for your user name and
-   password.
+   password. If the cloud supports multi-domain model, you also need to
+   ask for your domain name.
 
 #. Open a web browser that has JavaScript and cookies enabled.
 
@@ -30,7 +31,8 @@ The dashboard is generally installed on the controller node.
       exception in the browser to bypass the warning.
 
 #. On the Log In page, enter your user name and password, and click
-   :guilabel:`Sign In`.
+   :guilabel:`Sign In`. If the cloud supports multi-domain model, you also
+   need to enter your domain name.
 
    The top of the window displays your user name. You can also access the
    :guilabel:`Settings` tab (:ref:`dashboard-settings-tab`) or sign out
@@ -60,7 +62,8 @@ Within a project, a user creates and manages instances.
 
 From the :guilabel:`Project` tab, you can view and manage the resources in a
 selected project, including instances and images. You can select the project
-from the drop down menu at the top left.
+from the drop down menu at the top left. If the cloud supports multi-domain
+model, you can also select the domain from this menu.
 
 .. figure:: figures/dashboard_project_tab.png
    :width: 100%
