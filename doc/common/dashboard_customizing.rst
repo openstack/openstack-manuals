@@ -21,10 +21,6 @@ and feels to suit your own needs.
 
    This guide focuses on the ``local_settings.py`` file.
 
-This guide is adapted from
-`How To Custom Brand The OpenStack "Horizon" Dashboard
-<http://www.prestonlee.com/2012/05/09/how-to-custom-brand-the-openstack-horizon-dashboard/>`_.
-
 The following can easily be customized:
 
 * Logo
