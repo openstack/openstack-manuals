@@ -31,7 +31,6 @@ methods:
         is False
       # verbose = False
 
-      # log_format = %(asctime)s %(levelname)8s [%(name)s] %(message)s
       # log_date_format = %Y-%m-%d %H:%M:%S
 
       # use_syslog = False

@@ -104,8 +104,6 @@ New, updated, and deprecated options in Mitaka for OpenStack Block Storage
      - ``[DEFAULT] hpe3par_snapshot_retention``
    * - ``[DEFAULT] hp3par_username``
      - ``[DEFAULT] hpe3par_username``
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] osapi_max_request_body_size``
      - ``[oslo_middleware] max_request_body_size``
    * - ``[DEFAULT] use_syslog``

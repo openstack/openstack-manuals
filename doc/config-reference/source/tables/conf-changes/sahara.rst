@@ -24,8 +24,6 @@ New, updated, and deprecated options in Mitaka for Data Processing service
 
    * - Deprecated option
      - New Option
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] use_syslog``
      - ``None``
 

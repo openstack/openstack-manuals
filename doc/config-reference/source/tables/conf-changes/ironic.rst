@@ -46,8 +46,6 @@ New, updated, and deprecated options in Mitaka for Bare metal service
 
    * - Deprecated option
      - New Option
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] use_syslog``
      - ``None``
    * - ``[agent] agent_pxe_append_params``

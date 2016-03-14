@@ -97,8 +97,6 @@ New, updated, and deprecated options in Mitaka for Database service
      - ``[mysql] ignore_users``
    * - ``[DEFAULT] ignore_users``
      - ``[mariadb] ignore_users``
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] max_backups_per_user``
      - ``[DEFAULT] max_backups_per_tenant``
    * - ``[DEFAULT] max_instances_per_user``

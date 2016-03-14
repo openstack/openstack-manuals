@@ -66,8 +66,6 @@ New, updated, and deprecated options in Mitaka for Shared File Systems service
      - ``[DEFAULT] hpe3par_share_ip_address``
    * - ``[DEFAULT] hp3par_username``
      - ``[DEFAULT] hpe3par_username``
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] sql_idle_timeout``
      - ``[database] idle_timeout``
    * - ``[DEFAULT] sql_max_retries``

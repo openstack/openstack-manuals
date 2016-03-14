@@ -72,8 +72,6 @@ New, updated, and deprecated options in Mitaka for OpenStack Image service
 
    * - Deprecated option
      - New Option
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] use_syslog``
      - ``None``
    * - ``[glance_store] vmware_datacenter_path``

@@ -42,8 +42,6 @@ New, updated, and deprecated options in Mitaka for OpenStack Compute
      - ``None``
    * - ``[DEFAULT] compute_resources``
      - ``None``
-   * - ``[DEFAULT] log_format``
-     - ``None``
    * - ``[DEFAULT] network_device_mtu``
      - ``None``
    * - ``[DEFAULT] osapi_compute_ext_list``
