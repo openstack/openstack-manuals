@@ -527,7 +527,7 @@ After installing Dibbler, edit the ``/etc/dibbler/server.conf`` file:
 
     iface "br-ex" {
         pd-class {
-            pd-pool 2222:2222:2222::/48
+            pd-pool 2001:db8:2222::/48
             pd-length 64
         }
     }
@@ -671,12 +671,12 @@ to all ports:
     +-------------------+-------------------------------------------------+
     | Field             | Value                                           |
     +-------------------+-------------------------------------------------+
-    | allocation_pools  | {"start": "2222:2222:2222:6977::2",             |
-    |                   | "end":"2222:2222:2222:6977:ffff:ffff:ffff:fffe"}|
-    | cidr              | 2222:2222:2222:6977::/64                        |
+    | allocation_pools  | {"start": "2001:db8:2222:6977::2",              |
+    |                   | "end":"2001:db8:2222:6977:ffff:ffff:ffff:fffe"} |
+    | cidr              | 2001:db8:2222:6977::/64                         |
     | dns_nameservers   |                                                 |
     | enable_dhcp       | True                                            |
-    | gateway_ip        | 2222:2222:2222:6977::1                          |
+    | gateway_ip        | 2001:db8:2222:6977::1                           |
     | host_routes       |                                                 |
     | id                | ea139dcd-17a3-4f0a-8cca-dff8b4e03f8a            |
     | ip_version        | 6                                               |
