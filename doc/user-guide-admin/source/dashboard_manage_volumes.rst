@@ -57,6 +57,8 @@ Create an encrypted volume type
 
 #. Click :guilabel:`Create Volume Type Encryption`.
 
+.. figure:: figures/create_volume_type_encryption.png
+
 **Encryption Options**
 
 The table below provides a few alternatives available for creating encrypted
