@@ -213,7 +213,7 @@ basic L3 operations:
    * - Lists external networks.
      - .. code-block:: console
 
-          $ neutron net-list -- --router:external True
+          $ neutron net-list --router:external True
    * - Creates an internal-only router that connects to multiple L2 networks privately.
      - .. code-block:: console
 
@@ -261,7 +261,7 @@ basic L3 operations:
        IP should map.
      - .. code-block:: console
 
-          $ neutron port-list -c id -c fixed_ips -- --device_id INSTANCE_ID
+          $ neutron port-list -c id -c fixed_ips --device_id INSTANCE_ID
 
        This port must be on an Networking subnet that is attached to
        a router uplinked to the external network used to create the floating
@@ -295,7 +295,7 @@ basic L3 operations:
    * - Finds floating IP for a specified VM port.
      - .. code-block:: console
 
-          $ neutron floatingip-list -- --port_id ZZZ
+          $ neutron floatingip-list --port_id ZZZ
    * - Disassociates a floating IP address.
      - .. code-block:: console
 
