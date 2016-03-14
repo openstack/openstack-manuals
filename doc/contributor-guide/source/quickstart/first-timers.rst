@@ -1,9 +1,8 @@
+.. _first_timers:
 
-.. _first_timers_quickstart:
-
-==========
-Quickstart
-==========
+============
+First timers
+============
 
 One of the best ways to start contributing to OpenStack documentation
 is to walk through the Installation guide and complete it by hand.
@@ -25,7 +24,7 @@ Other good first-time documentation tasks are bug triaging and bug fixing:
 
 The following diagram shows the basic setup workflow:
 
-.. image:: figures/workflow-diagram.png
+.. image:: ../figures/workflow-diagram.png
       :alt: Workflow diagram
 
 .. _setting_up_for_contribution:

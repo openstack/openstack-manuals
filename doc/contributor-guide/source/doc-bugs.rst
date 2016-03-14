@@ -24,7 +24,7 @@ Bugs differ depending on:
 .. note::
 
    To work on documentation bugs, join the openstack-doc-bugs team on
-   Launchpad. For more information, see :ref:`first_timers_quickstart`.
+   Launchpad. For more information, see :ref:`first_timers`.
 
 Go through the triaging process and look for possible duplicate bugs
 before working on a bug. Do not work on a documentation bug until it is set to
