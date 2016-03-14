@@ -75,7 +75,7 @@ stack and the :command:`ceilometer` client to measure resources.
 
    .. code-block:: console
 
-      $ heat mystack resource-list
+      $ heat resource-list mystack
 
       +--------------------------+-----------------------------------------+----------------+----------------------+
       | resource_name            | resource_type                           |resource_status | updated_time         |
