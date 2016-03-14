@@ -113,7 +113,7 @@ On some deployments, the default port used by a service may fall within
 the defined local port range of a host. To check a host's local port
 range:
 
-::
+.. code-block:: console
 
     $ sysctl net.ipv4.ip_local_port_range
 
@@ -121,7 +121,7 @@ If a service's default port falls within this range, run the following
 program to check if the port has already been assigned to another
 application:
 
-::
+.. code-block:: console
 
     $ lsof -i :PORT
 
