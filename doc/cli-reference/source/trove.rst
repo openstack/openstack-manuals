@@ -9,7 +9,7 @@ Database service command-line client
 The trove client is the command-line interface (CLI) for
 the Database service API and its extensions.
 
-This chapter documents :command:`trove` version ``2.1.0``.
+This chapter documents :command:`trove` version ``2.1.1``.
 
 For help on a specific :command:`trove` command, enter:
 
@@ -30,7 +30,7 @@ trove usage
                 [--database-service-name <database-service-name>]
                 [--endpoint-type <endpoint-type>]
                 [--os-database-api-version <database-api-ver>]
-                [--retries <retries>] [--json] [--insecure]
+                [--retries <retries>] [--json] [--profile HMAC_KEY] [--insecure]
                 [--os-cacert <ca-certificate>] [--os-cert <certificate>]
                 [--os-key <key>] [--timeout <seconds>]
                 [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
@@ -81,6 +81,10 @@ trove usage
 
 ``cluster-list``
   Lists all the clusters.
+
+``cluster-modules``
+  Lists all modules for each instance of a
+  cluster.
 
 ``cluster-show``
   Shows details of a cluster.
@@ -225,20 +229,41 @@ trove usage
 ``metadata-update``
   Updates metadata, this is destructive.
 
+``module-apply``
+  Apply modules to an instance.
+
 ``module-create``
   Create a module.
 
 ``module-delete``
   Delete a module.
 
+``module-instances``
+  Lists the instances that have a particular
+  module applied.
+
 ``module-list``
   Lists the modules available.
+
+``module-list-instance``
+  Lists the modules that have been applied to
+  an instance.
+
+``module-query``
+  Query the status of the modules on an
+  instance.
+
+``module-remove``
+  Remove a module from an instance.
+
+``module-retrieve``
+  Retrieve module contents from an instance.
 
 ``module-show``
   Shows details of a module.
 
 ``module-update``
-  Create a module.
+  Update a module.
 
 ``promote-to-replica-source``
   Promotes a replica to be the new replica
@@ -359,6 +384,17 @@ trove optional arguments
 ``--json, --os-json-output``
   Output JSON instead of prettyprint. Defaults
   to ``env[OS_JSON_OUTPUT]``.
+
+``--profile HMAC_KEY``
+  HMAC key used to encrypt context data when
+  profiling the performance of an operation.
+  This key should be set to one of the HMAC
+  keys configured in Trove (they are found in
+  api-paste.ini, typically in /etc/trove).
+  Without the key, profiling will not be
+  triggered even if it is enabled on the
+  server side. Defaults to
+  ``env[OS_PROFILE_HMACKEY]``.
 
 ``--insecure``
   Explicitly allow client to perform
@@ -583,7 +619,7 @@ trove cluster-create
 .. code-block:: console
 
    usage: trove cluster-create <name> <datastore> <datastore_version>
-                               [--instance "<opt=value,opt=value,...>"]
+                               [--instance "opt=<value>[,opt=<value> ...] "]
 
 Creates a new cluster.
 
@@ -600,16 +636,18 @@ Creates a new cluster.
 
 **Optional arguments:**
 
-``--instance "<opt=value,opt=value,...>"``
+``--instance "opt=<value>[,opt=<value> ...] "``
   Create an instance for the cluster. Specify
   multiple times to create multiple instances.
-  Valid options are: flavor=flavor_name_or_id,
-  volume=disk_size_in_GB, volume_type=type,
-  nic='net-id=net-uuid,v4-fixed-ip=ip-addr
-  ,port-id=port-uuid' (where net-
-  id=network_id, v4-fixed-
+  Valid options are:
+  flavor=<flavor_name_or_id>,
+  volume=<disk_size_in_GB>,
+  volume_type=<type>, nic='<net-id=<net-uuid>,
+  v4-fixed-ip=<ip-addr>, port-id=<port-uuid>>'
+  (where net-id=network_id, v4-fixed-
   ip=IPv4r_fixed_address, port-id=port_id),
-  availability_zone=AZ_hint_for_Nova.
+  availability_zone=<AZ_hint_for_Nova>,
+  module=<module_name_or_id>.
 
 .. _trove_cluster-delete:
 
@@ -635,7 +673,7 @@ trove cluster-grow
 .. code-block:: console
 
    usage: trove cluster-grow <cluster>
-                             [--instance <name=name,flavor=flavor_name_or_id,volume=volume>]
+                             [--instance "opt=<value>[,opt=<value> ...] "]
 
 Adds more instances to a cluster.
 
@@ -646,9 +684,12 @@ Adds more instances to a cluster.
 
 **Optional arguments:**
 
-``--instance <name=name,flavor=flavor_name_or_id,volume=volume>``
+``--instance "opt=<value>[,opt=<value> ...] "``
   Add an instance to the cluster. Specify
   multiple times to create multiple instances.
+  Valid options are: name=<name>,
+  flavor=<flavor_name_or_id>, volume=<volume>,
+  module=<module_name_or_id>.
 
 .. _trove_cluster-instances:
 
@@ -686,6 +727,22 @@ Lists all the clusters.
   Begin displaying the results for IDs greater than the
   specified marker. When used with :option:`--limit,` set this to the
   last ID displayed in the previous run.
+
+.. _trove_cluster-modules:
+
+trove cluster-modules
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: trove cluster-modules <cluster>
+
+Lists all modules for each instance of a cluster.
+
+**Positional arguments:**
+
+``<cluster>``
+  ID or name of the cluster.
 
 .. _trove_cluster-show:
 
@@ -981,14 +1038,16 @@ trove create
 
    usage: trove create <name> <flavor>
                        [--size <size>] [--volume_type <volume_type>]
-                       [--databases <databases> [<databases> ...]]
-                       [--users <users> [<users> ...]] [--backup <backup>]
+                       [--databases <database> [<database> ...]]
+                       [--users <user:password> [<user:password> ...]]
+                       [--backup <backup>]
                        [--availability_zone <availability_zone>]
                        [--datastore <datastore>]
                        [--datastore_version <datastore_version>]
-                       [--nic <net-id=net-uuid,v4-fixed-ip=ip-addr,port-id=port-uuid>]
+                       [--nic <net-id=<net-uuid>,v4-fixed-ip=<ip-addr>,port-id=<port-uuid>>]
                        [--configuration <configuration>]
                        [--replica_of <source_instance>] [--replica_count <count>]
+                       [--module <module>]
 
 Creates a new instance.
 
@@ -1010,18 +1069,17 @@ Creates a new instance.
   Volume type. Optional when volume support is
   enabled.
 
-``--databases <databases> [<databases> ...]``
+``--databases <database> [<database> ...]``
   Optional list of databases.
 
-``--users <users> [<users> ...]``
-  Optional list of users in the form
-  user:password.
+``--users <user:password> [<user:password> ...]``
+  Optional list of users.
 
 ``--backup <backup>``
   A backup ID.
 
 ``--availability_zone <availability_zone>``
-  The Zone hint to give to nova.
+  The Zone hint to give to Nova.
 
 ``--datastore <datastore>``
   A datastore name or ID.
@@ -1029,9 +1087,7 @@ Creates a new instance.
 ``--datastore_version <datastore_version>``
   A datastore version name or ID.
 
-``--nic <net-id=net-uuid,``
-
-``v4-fixed-ip=ip-addr,port-id=port-uuid>``
+``--nic <net-id=<net-uuid>,v4-fixed-ip=<ip-addr>,port-id=<port-uuid>>``
   Create a NIC on the instance. Specify option
   multiple times to create multiple NICs. net-
   id: attach NIC to network with this ID
@@ -1052,6 +1108,10 @@ Creates a new instance.
 ``--replica_count <count>``
   Number of replicas to create (defaults to
   1).
+
+``--module <module>``
+  ID or name of the module to apply. Specify
+  multiple times to apply multiple modules.
 
 .. _trove_database-create:
 
@@ -1285,7 +1345,7 @@ trove list
 
 .. code-block:: console
 
-   usage: trove list [--limit <limit>] [--marker <ID>] [--include-clustered]
+   usage: trove list [--limit <limit>] [--marker <ID>] [--include_clustered]
 
 Lists all the instances.
 
@@ -1295,13 +1355,16 @@ Lists all the instances.
   Limit the number of results displayed.
 
 ``--marker <ID>``
-  Begin displaying the results for IDs greater than the
-  specified marker. When used with :option:`--limit,` set this to
-  the last ID displayed in the previous run.
+  Begin displaying the results for IDs greater
+  than the specified marker. When used with
+  :option:`--limit,` set this to the last ID displayed
+  in the previous run.
 
-``--include-clustered``
-  Include instances that are part of a cluster (default
-  false).
+``--include_clustered, --include-clustered``
+  Include instances that are part of a cluster
+  (default False). :option:`--include-clustered` may be
+  deprecated in the future, retaining just
+  :option:`--include_clustered`.
 
 .. _trove_log-disable:
 
@@ -1604,6 +1667,25 @@ Updates metadata, this is destructive.
 ``<value>``
   Value to assign to <newkey>.
 
+.. _trove_module-apply:
+
+trove module-apply
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: trove module-apply <instance> <module> [<module> ...]
+
+Apply modules to an instance.
+
+**Positional arguments:**
+
+``<instance>``
+  ID or name of the instance.
+
+``<module>``
+  ID or name of the module.
+
 .. _trove_module-create:
 
 trove module-create
@@ -1676,6 +1758,38 @@ Delete a module.
 ``<module>``
   ID or name of the module.
 
+.. _trove_module-instances:
+
+trove module-instances
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: trove module-instances <module>
+                                 [--include_clustered] [--limit <limit>]
+                                 [--marker <ID>]
+
+Lists the instances that have a particular module applied.
+
+**Positional arguments:**
+
+``<module>``
+  ID or name of the module.
+
+**Optional arguments:**
+
+``--include_clustered``
+  Include instances that are part of a cluster (default
+  False).
+
+``--limit <limit>``
+  Return up to N number of the most recent results.
+
+``--marker <ID>``
+  Begin displaying the results for IDs greater than the
+  specified marker. When used with :option:`--limit,` set this to
+  the last ID displayed in the previous run.
+
 .. _trove_module-list:
 
 trove module-list
@@ -1690,7 +1804,88 @@ Lists the modules available.
 **Optional arguments:**
 
 ``--datastore <datastore>``
-  Name or ID of datastore to list modules for.
+  Name or ID of datastore to list modules for. Use
+  'all' to list modules that apply to all datastores.
+
+.. _trove_module-list-instance:
+
+trove module-list-instance
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: trove module-list-instance <instance>
+
+Lists the modules that have been applied to an instance.
+
+**Positional arguments:**
+
+``<instance>``
+  ID or name of the instance.
+
+.. _trove_module-query:
+
+trove module-query
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: trove module-query <instance>
+
+Query the status of the modules on an instance.
+
+**Positional arguments:**
+
+``<instance>``
+  ID or name of the instance.
+
+.. _trove_module-remove:
+
+trove module-remove
+~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: trove module-remove <instance> <module>
+
+Remove a module from an instance.
+
+**Positional arguments:**
+
+``<instance>``
+  ID or name of the instance.
+
+``<module>``
+  ID or name of the module.
+
+.. _trove_module-retrieve:
+
+trove module-retrieve
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: trove module-retrieve <instance>
+                                [--directory <directory>]
+                                [--prefix <filename_prefix>]
+
+Retrieve module contents from an instance.
+
+**Positional arguments:**
+
+``<instance>``
+  ID or name of the instance.
+
+**Optional arguments:**
+
+``--directory <directory>``
+  Directory to write module content files in. It
+  will be created if it does not exist. Defaults
+  to the current directory.
+
+``--prefix <filename_prefix>``
+  Prefix to prepend to generated filename for each
+  module.
 
 .. _trove_module-show:
 
@@ -1725,7 +1920,7 @@ trove module-update
                               [--no_all_tenants] [--live_update]
                               [--no_live_update]
 
-Create a module.
+Update a module.
 
 **Positional arguments:**
 
@@ -2017,7 +2212,7 @@ trove update
 
    usage: trove update <instance>
                        [--name <name>] [--configuration <configuration>]
-                       [--detach-replica-source] [--remove_configuration]
+                       [--detach_replica_source] [--remove_configuration]
 
 Updates an instance: Edits name, configuration, or replica source.
 
@@ -2034,9 +2229,11 @@ Updates an instance: Edits name, configuration, or replica source.
 ``--configuration <configuration>``
   ID of the configuration reference to attach.
 
-``--detach-replica-source``
+``--detach_replica_source, --detach-replica-source``
   Detach the replica instance from its
-  replication source.
+  replication source. :option:`--detach-replica-source`
+  may be deprecated in the future in favor of
+  just :option:`--detach_replica_source`
 
 ``--remove_configuration``
   Drops the current configuration reference.
