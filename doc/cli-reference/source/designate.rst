@@ -24,7 +24,7 @@ designate usage
 
 .. code-block:: console
 
-   usage: designate [--version] [-v] [--log-file LOG_FILE] [-q] [-h] [--debug]
+   usage: designate [--version] [-v | -q] [--log-file LOG_FILE] [-h] [--debug]
                     [--os-username OS_USERNAME] [--os-user-id OS_USER_ID]
                     [--os-user-domain-id OS_USER_DOMAIN_ID]
                     [--os-user-domain-name OS_USER_DOMAIN_NAME]
@@ -52,11 +52,11 @@ designate optional arguments
 ``-v, --verbose``
   Increase verbosity of output. Can be repeated.
 
-``--log-file LOG_FILE``
-  Specify a file to log output. Disabled by default.
-
 ``-q, --quiet``
   Suppress output except warnings and errors.
+
+``--log-file LOG_FILE``
+  Specify a file to log output. Disabled by default.
 
 ``-h, --help``
   Show this help message and exit.
@@ -155,16 +155,14 @@ designate diagnostics-ping
 
 .. code-block:: console
 
-   usage: designate diagnostics-ping [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate diagnostics-ping [-h] [-f {json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX] --service
                                      SERVICE --host HOST
 
 Ping a service on a given host
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -182,8 +180,7 @@ designate domain-create
 
 .. code-block:: console
 
-   usage: designate domain-create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate domain-create [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] --name NAME
                                   --email EMAIL [--ttl TTL]
@@ -191,8 +188,7 @@ designate domain-create
 
 Create Domain
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -216,22 +212,19 @@ designate domain-delete
 
 .. code-block:: console
 
-   usage: designate domain-delete [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate domain-delete [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   id
 
 Delete Domain
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Domain ID or name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -243,22 +236,19 @@ designate domain-get
 
 .. code-block:: console
 
-   usage: designate domain-get [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate domain-get [-h] [-f {json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                id
 
 Get Domain
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Domain ID or name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -270,15 +260,13 @@ designate domain-list
 
 .. code-block:: console
 
-   usage: designate domain-list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: designate domain-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                                [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
 List Domains
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -290,8 +278,7 @@ designate domain-servers-list
 
 .. code-block:: console
 
-   usage: designate domain-servers-list [-h]
-                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: designate domain-servers-list [-h] [-f {csv,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
@@ -299,14 +286,12 @@ designate domain-servers-list
 
 List Domain Servers
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Domain ID or name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -318,8 +303,7 @@ designate domain-update
 
 .. code-block:: console
 
-   usage: designate domain-update [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate domain-update [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] [--name NAME]
                                   [--email EMAIL] [--ttl TTL]
@@ -328,14 +312,12 @@ designate domain-update
 
 Update Domain
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Domain ID or name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -361,22 +343,19 @@ designate quota-get
 
 .. code-block:: console
 
-   usage: designate quota-get [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: designate quota-get [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
+                              [--max-width <integer>] [--noindent]
                               [--prefix PREFIX]
                               tenant_id
 
 Get Quota
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``tenant_id``
   Tenant ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -388,22 +367,19 @@ designate quota-reset
 
 .. code-block:: console
 
-   usage: designate quota-reset [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate quota-reset [-h] [-f {json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 tenant_id
 
 Reset Quota
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``tenant_id``
   Tenant ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -415,8 +391,7 @@ designate quota-update
 
 .. code-block:: console
 
-   usage: designate quota-update [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate quota-update [-h] [-f {json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX] [--domains DOMAINS]
                                  [--domain-recordsets DOMAIN_RECORDSETS]
@@ -427,14 +402,12 @@ designate quota-update
 
 Update Quota
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``tenant_id``
   Tenant ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -461,8 +434,7 @@ designate record-create
 
 .. code-block:: console
 
-   usage: designate record-create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate record-create [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] --name NAME
                                   --type TYPE --data DATA [--ttl TTL]
@@ -472,14 +444,12 @@ designate record-create
 
 Create Record
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``domain_id``
   Domain ID or name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -509,16 +479,14 @@ designate record-delete
 
 .. code-block:: console
 
-   usage: designate record-delete [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate record-delete [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   domain_id id
 
 Delete Record
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``domain_id``
   Domain ID or name.
@@ -526,8 +494,7 @@ Positional arguments
 ``id``
   Record ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -539,16 +506,14 @@ designate record-get
 
 .. code-block:: console
 
-   usage: designate record-get [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate record-get [-h] [-f {json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                domain_id id
 
 Get Record
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``domain_id``
   Domain ID or name.
@@ -556,8 +521,7 @@ Positional arguments
 ``id``
   Record ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -569,22 +533,19 @@ designate record-list
 
 .. code-block:: console
 
-   usage: designate record-list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: designate record-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                                [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 domain_id
 
 List Records
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``domain_id``
   Domain ID or name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -596,8 +557,7 @@ designate record-update
 
 .. code-block:: console
 
-   usage: designate record-update [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate record-update [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] [--name NAME]
                                   [--type TYPE] [--data DATA]
@@ -608,8 +568,7 @@ designate record-update
 
 Update Record
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``domain_id``
   Domain ID or name.
@@ -617,8 +576,7 @@ Positional arguments
 ``id``
   Record ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -654,15 +612,13 @@ designate report-count-all
 
 .. code-block:: console
 
-   usage: designate report-count-all [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate report-count-all [-h] [-f {json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
 
 Get count totals for all tenants, domains and records
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -674,15 +630,13 @@ designate report-count-domains
 
 .. code-block:: console
 
-   usage: designate report-count-domains [-h]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate report-count-domains [-h] [-f {json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
 
 Get counts for total domains
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -694,15 +648,13 @@ designate report-count-records
 
 .. code-block:: console
 
-   usage: designate report-count-records [-h]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate report-count-records [-h] [-f {json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
 
 Get counts for total records
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -714,15 +666,13 @@ designate report-count-tenants
 
 .. code-block:: console
 
-   usage: designate report-count-tenants [-h]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate report-count-tenants [-h] [-f {json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
 
 Get counts for total tenants
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -734,8 +684,7 @@ designate report-tenant-domains
 
 .. code-block:: console
 
-   usage: designate report-tenant-domains [-h]
-                                          [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: designate report-tenant-domains [-h] [-f {csv,json,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
@@ -743,8 +692,7 @@ designate report-tenant-domains
 
 Get a list of domains for given tenant
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -759,16 +707,14 @@ designate report-tenants-all
 
 .. code-block:: console
 
-   usage: designate report-tenants-all [-h]
-                                       [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: designate report-tenants-all [-h] [-f {csv,json,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]
 
 Get list of tenants and domain count for each
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -780,15 +726,13 @@ designate server-create
 
 .. code-block:: console
 
-   usage: designate server-create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate server-create [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] --name NAME
 
 Create Server
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -803,22 +747,19 @@ designate server-delete
 
 .. code-block:: console
 
-   usage: designate server-delete [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate server-delete [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   id
 
 Delete Server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Server ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -830,22 +771,19 @@ designate server-get
 
 .. code-block:: console
 
-   usage: designate server-get [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate server-get [-h] [-f {json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                id
 
 Get Server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Server ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -857,15 +795,13 @@ designate server-list
 
 .. code-block:: console
 
-   usage: designate server-list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: designate server-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                                [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
 List Servers
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -877,22 +813,19 @@ designate server-update
 
 .. code-block:: console
 
-   usage: designate server-update [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate server-update [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] [--name NAME]
                                   id
 
 Update Server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Server ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -907,15 +840,13 @@ designate sync-all
 
 .. code-block:: console
 
-   usage: designate sync-all [-h]
-                             [-f {html,json,json,shell,table,value,yaml,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: designate sync-all [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
+                             [--max-width <integer>] [--noindent]
                              [--prefix PREFIX]
 
 Sync Everything
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -927,22 +858,19 @@ designate sync-domain
 
 .. code-block:: console
 
-   usage: designate sync-domain [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate sync-domain [-h] [-f {json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 domain_id
 
 Sync a single Domain
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``domain_id``
   Domain ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -954,16 +882,14 @@ designate sync-record
 
 .. code-block:: console
 
-   usage: designate sync-record [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate sync-record [-h] [-f {json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 domain_id record_id
 
 Sync a single Record
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``domain_id``
   Domain ID
@@ -971,8 +897,7 @@ Positional arguments
 ``record_id``
   Record ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -984,22 +909,19 @@ designate touch-domain
 
 .. code-block:: console
 
-   usage: designate touch-domain [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: designate touch-domain [-h] [-f {json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX]
                                  domain_id
 
 Touch a single Domain
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``domain_id``
   Domain ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit

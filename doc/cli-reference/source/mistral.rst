@@ -109,22 +109,20 @@ mistral action-create
 
 .. code-block:: console
 
-   usage: mistral action-create [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral action-create [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                                [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--public]
                                 definition
 
 Create new action.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``definition``
   Action definition file
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -143,14 +141,12 @@ mistral action-delete
 
 Delete action.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Name of action(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -166,14 +162,12 @@ mistral action-execution-delete
 
 Delete action execution.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Id of action execution identifier(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -185,22 +179,19 @@ mistral action-execution-get
 
 .. code-block:: console
 
-   usage: mistral action-execution-get [-h]
-                                       [-f {html,json,shell,table,value,yaml}]
+   usage: mistral action-execution-get [-h] [-f {json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        id
 
 Show specific Action execution.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Action execution ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -216,14 +207,12 @@ mistral action-execution-get-input
 
 Show Action execution input data.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Action execution ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -239,14 +228,12 @@ mistral action-execution-get-output
 
 Show Action execution output data.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Action execution ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -258,8 +245,7 @@ mistral action-execution-list
 
 .. code-block:: console
 
-   usage: mistral action-execution-list [-h]
-                                        [-f {csv,html,json,table,value,yaml}]
+   usage: mistral action-execution-list [-h] [-f {csv,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
@@ -267,14 +253,12 @@ mistral action-execution-list
 
 List all Action executions.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``task_execution_id``
   Task execution ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -286,8 +270,7 @@ mistral action-execution-update
 
 .. code-block:: console
 
-   usage: mistral action-execution-update [-h]
-                                          [-f {html,json,shell,table,value,yaml}]
+   usage: mistral action-execution-update [-h] [-f {json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           [--state {IDLE,RUNNING,SUCCESS,ERROR}]
@@ -296,14 +279,12 @@ mistral action-execution-update
 
 Update specific Action execution.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Action execution ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -321,21 +302,19 @@ mistral action-get
 
 .. code-block:: console
 
-   usage: mistral action-get [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral action-get [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
+                             [--max-width <integer>] [--noindent]
                              [--prefix PREFIX]
                              name
 
 Show specific action.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Action name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -351,14 +330,12 @@ mistral action-get-definition
 
 Show action definition.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Action name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -370,14 +347,13 @@ mistral action-list
 
 .. code-block:: console
 
-   usage: mistral action-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral action-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                              [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
 
 List all actions.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -389,22 +365,20 @@ mistral action-update
 
 .. code-block:: console
 
-   usage: mistral action-update [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral action-update [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                                [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--public]
                                 definition
 
 Update action.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``definition``
   Action definition file
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -419,8 +393,7 @@ mistral cron-trigger-create
 
 .. code-block:: console
 
-   usage: mistral cron-trigger-create [-h]
-                                      [-f {html,json,shell,table,value,yaml}]
+   usage: mistral cron-trigger-create [-h] [-f {json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent] [--prefix PREFIX]
                                       [--params PARAMS] [--pattern <* * * * *>]
@@ -430,8 +403,7 @@ mistral cron-trigger-create
 
 Create new trigger.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Cron trigger name
@@ -442,8 +414,7 @@ Positional arguments
 ``workflow_input``
   Workflow input
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -471,14 +442,12 @@ mistral cron-trigger-delete
 
 Delete trigger.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Name of cron trigger(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -490,21 +459,19 @@ mistral cron-trigger-get
 
 .. code-block:: console
 
-   usage: mistral cron-trigger-get [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral cron-trigger-get [-h] [-f {json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    name
 
 Show specific cron trigger.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Cron trigger name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -516,15 +483,14 @@ mistral cron-trigger-list
 
 .. code-block:: console
 
-   usage: mistral cron-trigger-list [-h] [-f {csv,html,json,table,value,yaml}]
+   usage: mistral cron-trigger-list [-h] [-f {csv,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
 
 List all cron triggers.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -536,21 +502,19 @@ mistral environment-create
 
 .. code-block:: console
 
-   usage: mistral environment-create [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral environment-create [-h] [-f {json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      file
 
 Create new environment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``file``
   Environment configuration file in JSON or YAML
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -566,14 +530,12 @@ mistral environment-delete
 
 Delete environment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Name of environment(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -585,21 +547,19 @@ mistral environment-get
 
 .. code-block:: console
 
-   usage: mistral environment-get [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral environment-get [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   name
 
 Show specific environment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Environment name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -611,15 +571,14 @@ mistral environment-list
 
 .. code-block:: console
 
-   usage: mistral environment-list [-h] [-f {csv,html,json,table,value,yaml}]
+   usage: mistral environment-list [-h] [-f {csv,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
 
 List all environments.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -631,21 +590,19 @@ mistral environment-update
 
 .. code-block:: console
 
-   usage: mistral environment-update [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral environment-update [-h] [-f {json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      file
 
 Update environment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``file``
   Environment configuration file in JSON or YAML
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -657,7 +614,7 @@ mistral execution-create
 
 .. code-block:: console
 
-   usage: mistral execution-create [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral execution-create [-h] [-f {json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    [-d DESCRIPTION]
@@ -665,8 +622,7 @@ mistral execution-create
 
 Create new execution.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``workflow_identifier``
   Workflow ID or name. Workflow name will be deprecated
@@ -678,8 +634,7 @@ Positional arguments
 ``params``
   Workflow additional parameters
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -698,14 +653,12 @@ mistral execution-delete
 
 Delete execution.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Id of execution identifier(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -717,21 +670,19 @@ mistral execution-get
 
 .. code-block:: console
 
-   usage: mistral execution-get [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral execution-get [-h] [-f {json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 id
 
 Show specific execution.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Execution identifier
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -747,14 +698,12 @@ mistral execution-get-input
 
 Show execution input data.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Execution ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -770,14 +719,12 @@ mistral execution-get-output
 
 Show execution output data.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Execution ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -789,7 +736,7 @@ mistral execution-list
 
 .. code-block:: console
 
-   usage: mistral execution-list [-h] [-f {csv,html,json,table,value,yaml}]
+   usage: mistral execution-list [-h] [-f {csv,json,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--marker [MARKER]] [--limit [LIMIT]]
@@ -798,8 +745,7 @@ mistral execution-list
 
 List all executions.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -829,7 +775,7 @@ mistral execution-update
 
 .. code-block:: console
 
-   usage: mistral execution-update [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral execution-update [-h] [-f {json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    [-s {RUNNING,PAUSED,SUCCESS,ERROR}] [-e ENV]
@@ -838,14 +784,12 @@ mistral execution-update
 
 Update execution.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Execution identifier
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -866,15 +810,14 @@ mistral member-create
 
 .. code-block:: console
 
-   usage: mistral member-create [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral member-create [-h] [-f {json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 resource_id resource_type member_id
 
 Shares a resource to another tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``resource_id``
   Resource ID to be shared.
@@ -885,8 +828,7 @@ Positional arguments
 ``member_id``
   Project ID to whom the resource is shared to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -902,8 +844,7 @@ mistral member-delete
 
 Delete a resource sharing relationship.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``resource_id``
   Resource ID to be shared.
@@ -914,8 +855,7 @@ Positional arguments
 ``member_id``
   Project ID to whom the resource is shared to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -927,15 +867,14 @@ mistral member-get
 
 .. code-block:: console
 
-   usage: mistral member-get [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral member-get [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
+                             [--max-width <integer>] [--noindent]
                              [--prefix PREFIX] [-m MEMBER_ID]
                              resource_id resource_type
 
 Show specific member information.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``resource_id``
   Resource ID to be shared.
@@ -943,8 +882,7 @@ Positional arguments
 ``resource_type``
   Resource type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -960,15 +898,14 @@ mistral member-list
 
 .. code-block:: console
 
-   usage: mistral member-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral member-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                              [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               resource_id resource_type
 
 List all members.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``resource_id``
   Resource id to be shared.
@@ -976,8 +913,7 @@ Positional arguments
 ``resource_type``
   Resource type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -989,7 +925,7 @@ mistral member-update
 
 .. code-block:: console
 
-   usage: mistral member-update [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral member-update [-h] [-f {json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [-m MEMBER_ID]
                                 [-s {pending,accepted,rejected}]
@@ -997,8 +933,7 @@ mistral member-update
 
 Update resource sharing status.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``resource_id``
   Resource ID to be shared.
@@ -1006,8 +941,7 @@ Positional arguments
 ``resource_type``
   Resource type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1026,15 +960,14 @@ mistral run-action
 
 .. code-block:: console
 
-   usage: mistral run-action [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral run-action [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
+                             [--max-width <integer>] [--noindent]
                              [--prefix PREFIX] [-s] [-t TARGET]
                              name [input]
 
 Create new Action execution or just run specific action.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Action name to execute.
@@ -1042,8 +975,7 @@ Positional arguments
 ``input``
   Action input.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1061,14 +993,13 @@ mistral service-list
 
 .. code-block:: console
 
-   usage: mistral service-list [-h] [-f {csv,html,json,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral service-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                               [--max-width <integer>] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
 
 List all services.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1080,21 +1011,18 @@ mistral task-get
 
 .. code-block:: console
 
-   usage: mistral task-get [-h] [-f {html,json,shell,table,value,yaml}]
-                           [-c COLUMN] [--max-width <integer>] [--noindent]
-                           [--prefix PREFIX]
+   usage: mistral task-get [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
+                           [--max-width <integer>] [--noindent] [--prefix PREFIX]
                            id
 
 Show specific task.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Task identifier
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1110,14 +1038,12 @@ mistral task-get-published
 
 Show task published variables.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Task ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1133,14 +1059,12 @@ mistral task-get-result
 
 Show task output data.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Task ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1152,21 +1076,19 @@ mistral task-list
 
 .. code-block:: console
 
-   usage: mistral task-list [-h] [-f {csv,html,json,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral task-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                            [--max-width <integer>] [--noindent]
                             [--quote {all,minimal,none,nonnumeric}]
                             [workflow_execution]
 
 List all tasks.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``workflow_execution``
   Workflow execution ID associated with list of Tasks.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1178,21 +1100,19 @@ mistral task-rerun
 
 .. code-block:: console
 
-   usage: mistral task-rerun [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral task-rerun [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
+                             [--max-width <integer>] [--noindent]
                              [--prefix PREFIX] [--resume] [-e ENV]
                              id
 
 Rerun an existing task.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   Task identifier
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1211,21 +1131,19 @@ mistral workbook-create
 
 .. code-block:: console
 
-   usage: mistral workbook-create [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral workbook-create [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   definition
 
 Create new workbook.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``definition``
   Workbook definition file
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1241,14 +1159,12 @@ mistral workbook-delete
 
 Delete workbook.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Name of workbook(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1260,21 +1176,19 @@ mistral workbook-get
 
 .. code-block:: console
 
-   usage: mistral workbook-get [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral workbook-get [-h] [-f {json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                name
 
 Show specific workbook.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Workbook name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1290,14 +1204,12 @@ mistral workbook-get-definition
 
 Show workbook definition.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Workbook name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1309,14 +1221,13 @@ mistral workbook-list
 
 .. code-block:: console
 
-   usage: mistral workbook-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral workbook-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                                [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
 List all workbooks.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1328,21 +1239,19 @@ mistral workbook-update
 
 .. code-block:: console
 
-   usage: mistral workbook-update [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral workbook-update [-h] [-f {json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   definition
 
 Update workbook.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``definition``
   Workbook definition file
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1354,21 +1263,19 @@ mistral workbook-validate
 
 .. code-block:: console
 
-   usage: mistral workbook-validate [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral workbook-validate [-h] [-f {json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     definition
 
 Validate workbook.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``definition``
   Workbook definition file
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1380,7 +1287,7 @@ mistral workflow-create
 
 .. code-block:: console
 
-   usage: mistral workflow-create [-h] [-f {csv,html,json,table,value,yaml}]
+   usage: mistral workflow-create [-h] [-f {csv,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
@@ -1389,14 +1296,12 @@ mistral workflow-create
 
 Create new workflow.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``definition``
   Workflow definition file.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1415,14 +1320,12 @@ mistral workflow-delete
 
 Delete workflow.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``identifier``
   Name or ID of workflow(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1434,21 +1337,19 @@ mistral workflow-get
 
 .. code-block:: console
 
-   usage: mistral workflow-get [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral workflow-get [-h] [-f {json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                identifier
 
 Show specific workflow.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``identifier``
   Workflow ID or name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1464,14 +1365,12 @@ mistral workflow-get-definition
 
 Show workflow definition.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``identifier``
   Workflow ID or name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1483,14 +1382,13 @@ mistral workflow-list
 
 .. code-block:: console
 
-   usage: mistral workflow-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+   usage: mistral workflow-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                                [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
 List all workflows.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1502,7 +1400,7 @@ mistral workflow-update
 
 .. code-block:: console
 
-   usage: mistral workflow-update [-h] [-f {csv,html,json,table,value,yaml}]
+   usage: mistral workflow-update [-h] [-f {csv,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
@@ -1511,14 +1409,12 @@ mistral workflow-update
 
 Update workflow.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``definition``
   Workflow definition
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1536,21 +1432,19 @@ mistral workflow-validate
 
 .. code-block:: console
 
-   usage: mistral workflow-validate [-h] [-f {html,json,shell,table,value,yaml}]
+   usage: mistral workflow-validate [-h] [-f {json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     definition
 
 Validate workflow.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``definition``
   Workflow definition file
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
