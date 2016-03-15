@@ -182,8 +182,7 @@ monasca alarm-count
 
 Count alarms.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--alarm-definition-id <ALARM_DEFINITION_ID>``
   The ID of the alarm definition.
@@ -238,8 +237,7 @@ monasca alarm-definition-create
 
 Create an alarm definition.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_DEFINITION_NAME>``
   Name of the alarm definition to create.
@@ -247,8 +245,7 @@ Positional arguments
 ``<EXPRESSION>``
   The alarm expression to evaluate. Quoted.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--description <DESCRIPTION>``
   Description of the alarm.
@@ -287,8 +284,7 @@ monasca alarm-definition-delete
 
 Delete the alarm definition.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_DEFINITION_ID>``
   The ID of the alarm definition.
@@ -308,8 +304,7 @@ monasca alarm-definition-list
 
 List alarm definitions for this tenant.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <ALARM_DEFINITION_NAME>``
   Name of the alarm definition.
@@ -354,14 +349,12 @@ monasca alarm-definition-patch
 
 Patch the alarm definition.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_DEFINITION_ID>``
   The ID of the alarm definition.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <ALARM_DEFINITION_NAME>``
   Name of the alarm definition.
@@ -402,8 +395,7 @@ monasca alarm-definition-show
 
 Describe the alarm definition.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_DEFINITION_ID>``
   The ID of the alarm definition.
@@ -427,8 +419,7 @@ monasca alarm-definition-update
 
 Update the alarm definition.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_DEFINITION_ID>``
   The ID of the alarm definition.
@@ -478,8 +469,7 @@ monasca alarm-delete
 
 Delete the alarm.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   The ID of the alarm.
@@ -497,14 +487,12 @@ monasca alarm-history
 
 Alarm state transition history.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   The ID of the alarm.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--offset <OFFSET LOCATION>``
   The offset used to paginate the return data.
@@ -528,8 +516,7 @@ monasca alarm-history-list
 
 List alarms state history.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--dimensions <KEY1=VALUE1,KEY2=VALUE2...>``
   key value pair used to specify a metric dimension.
@@ -573,8 +560,7 @@ monasca alarm-list
 
 List alarms for this tenant.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--alarm-definition-id <ALARM_DEFINITION_ID>``
   The ID of the alarm definition.
@@ -632,14 +618,12 @@ monasca alarm-patch
 
 Patch the alarm state.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   The ID of the alarm.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <ALARM_STATE>``
   ALARM_STATE is one of [UNDETERMINED, OK, ALARM].
@@ -662,8 +646,7 @@ monasca alarm-show
 
 Describe the alarm.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   The ID of the alarm.
@@ -679,8 +662,7 @@ monasca alarm-update
 
 Update the alarm state.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   The ID of the alarm.
@@ -710,8 +692,7 @@ monasca measurement-list
 
 List measurements for the specified metric.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<METRIC_NAME>``
   Name of the metric to list measurements.
@@ -721,8 +702,7 @@ Positional arguments
   2014-01-01T00:00:00Z. OR Format: -120 (previous 120
   minutes
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--dimensions <KEY1=VALUE1,KEY2=VALUE2...>``
   key value pair used to specify a metric dimension.
@@ -760,8 +740,7 @@ monasca metric-create
 
 Create metric.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<METRIC_NAME>``
   Name of the metric to create.
@@ -769,8 +748,7 @@ Positional arguments
 ``<METRIC_VALUE>``
   Metric value.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--dimensions <KEY1=VALUE1,KEY2=VALUE2...>``
   key value pair used to create a metric dimension. This
@@ -805,8 +783,7 @@ monasca metric-create-raw
 
 Create metric from raw json body.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<JSON_BODY>``
   The raw JSON body in single quotes. See api doc.
@@ -827,8 +804,7 @@ monasca metric-list
 
 List metrics for this tenant.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <METRIC_NAME>``
   Name of the metric to list.
@@ -872,8 +848,7 @@ monasca metric-statistics
 
 List measurement statistics for the specified metric.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<METRIC_NAME>``
   Name of the metric to report measurement statistics.
@@ -887,8 +862,7 @@ Positional arguments
   2014-01-01T00:00:00Z. OR Format: -120 (previous 120
   minutes
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--dimensions <KEY1=VALUE1,KEY2=VALUE2...>``
   key value pair used to specify a metric dimension.
@@ -925,8 +899,7 @@ monasca notification-create
 
 Create notification.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NOTIFICATION_NAME>``
   Name of the notification to create.
@@ -949,8 +922,7 @@ monasca notification-delete
 
 Delete notification.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NOTIFICATION_ID>``
   The ID of the notification.
@@ -967,8 +939,7 @@ monasca notification-list
 
 List notifications for this tenant.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--offset <OFFSET LOCATION>``
   The offset used to paginate the return data.
@@ -988,8 +959,7 @@ monasca notification-show
 
 Describe the notification.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NOTIFICATION_ID>``
   The ID of the notification. If not specified returns all.
@@ -1006,8 +976,7 @@ monasca notification-update
 
 Update notification.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NOTIFICATION_ID>``
   The ID of the notification.

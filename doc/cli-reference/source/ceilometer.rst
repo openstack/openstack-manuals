@@ -47,8 +47,7 @@ ceilometer usage
                      [--os-auth-url <auth-url>]
                      <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``alarm-combination-create``
   Create a new alarm based on state of other
@@ -305,8 +304,7 @@ ceilometer alarm-combination-create
 
 Create a new alarm based on state of other alarms.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -396,14 +394,12 @@ ceilometer alarm-combination-update
 
 Update an existing alarm based on state of other alarms.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -481,8 +477,7 @@ ceilometer alarm-delete
 
 Delete an alarm.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm to delete.
@@ -509,8 +504,7 @@ ceilometer alarm-event-create
 
 Create a new alarm based on events.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -598,14 +592,12 @@ ceilometer alarm-event-update
 
 Update an existing alarm based on events.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -689,8 +681,7 @@ ceilometer alarm-gnocchi-aggregation-by-metrics-threshold-create
 
 Create a new alarm based on computed statistics.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -811,14 +802,12 @@ ceilometer alarm-gnocchi-aggregation-by-metrics-threshold-update
 
 Update an existing alarm based on computed statistics.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -941,8 +930,7 @@ ceilometer alarm-gnocchi-aggregation-by-resources-threshold-create
 
 Create a new alarm based on computed statistics.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -1071,14 +1059,12 @@ ceilometer alarm-gnocchi-aggregation-by-resources-threshold-update
 
 Update an existing alarm based on computed statistics.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -1219,8 +1205,7 @@ ceilometer alarm-gnocchi-resources-threshold-create
 
 Create a new alarm based on computed statistics.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -1357,14 +1342,12 @@ ceilometer alarm-gnocchi-resources-threshold-update
 
 Update an existing alarm based on computed statistics.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -1483,14 +1466,12 @@ ceilometer alarm-history
 
 Display the change history of an alarm.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm for which history is shown.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-q <QUERY>, --query <QUERY>``
   key[op]data_type::value; list. data_type is
@@ -1508,8 +1489,7 @@ ceilometer alarm-list
 
 List the user's alarms.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-q <QUERY>, --query <QUERY>``
   key[op]data_type::value; list. data_type is
@@ -1527,8 +1507,7 @@ ceilometer alarm-show
 
 Show an alarm.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm to show.
@@ -1544,8 +1523,7 @@ ceilometer alarm-state-get
 
 Get the state of an alarm.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm state to show.
@@ -1561,14 +1539,12 @@ ceilometer alarm-state-set
 
 Set the state of an alarm.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm state to set.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <STATE>``
   State of the alarm, one of: ['ok', 'alarm', 'insufficient
@@ -1601,8 +1577,7 @@ ceilometer alarm-threshold-create
 
 Create a new alarm based on computed statistics.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -1715,14 +1690,12 @@ ceilometer alarm-threshold-update
 
 Update an existing alarm based on computed statistics.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ALARM_ID>``
   ID of the alarm to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of the alarm (must be unique per tenant).
@@ -1830,8 +1803,7 @@ ceilometer event-list
 
 List events.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-q <QUERY>, --query <QUERY>``
   key[op]data_type::value; list. data_type is
@@ -1858,8 +1830,7 @@ ceilometer event-show
 
 Show a particular event.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<message_id>``
   The ID of the event. Should be a UUID.
@@ -1886,8 +1857,7 @@ ceilometer meter-list
 
 List the user's meters.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-q <QUERY>, --query <QUERY>``
   key[op]data_type::value; list. data_type is
@@ -1912,8 +1882,7 @@ ceilometer query-alarm-history
 
 Query Alarm History.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <FILTER>, --filter <FILTER>``
   {complex_op: [{simple_op: {field_name:
@@ -1944,8 +1913,7 @@ ceilometer query-alarms
 
 Query Alarms.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <FILTER>, --filter <FILTER>``
   {complex_op: [{simple_op: {field_name:
@@ -1975,8 +1943,7 @@ ceilometer query-samples
 
 Query samples.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <FILTER>, --filter <FILTER>``
   {complex_op: [{simple_op: {field_name:
@@ -2007,8 +1974,7 @@ ceilometer resource-list
 
 List the resources.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-q <QUERY>, --query <QUERY>``
   key[op]data_type::value; list. data_type is
@@ -2033,8 +1999,7 @@ ceilometer resource-show
 
 Show the resource.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<RESOURCE_ID>``
   ID of the resource to show.
@@ -2056,8 +2021,7 @@ ceilometer sample-create
 
 Create a sample.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--project-id <SAMPLE_PROJECT_ID>``
   Tenant to associate with sample (configurable
@@ -2104,14 +2068,12 @@ ceilometer sample-create-list
 
 Create a sample list.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<SAMPLES_LIST>``
   Json array with samples to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--direct <DIRECT>``
   Post samples to storage directly. Defaults to False.
@@ -2127,8 +2089,7 @@ ceilometer sample-list
 
 List the samples (return OldSample objects if -m/:option:`--meter` is set).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-q <QUERY>, --query <QUERY>``
   key[op]data_type::value; list. data_type is
@@ -2156,8 +2117,7 @@ ceilometer sample-show
 
 Show a sample.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<SAMPLE_ID>``
   ID (aka message ID) of the sample to show.
@@ -2174,8 +2134,7 @@ ceilometer statistics
 
 List the statistics for a meter.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-q <QUERY>, --query <QUERY>``
   key[op]data_type::value; list. data_type is
@@ -2208,8 +2167,7 @@ ceilometer trait-description-list
 
 List trait info for an event type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-e <EVENT_TYPE>, --event_type <EVENT_TYPE>``
   Type of the event for which traits will be
@@ -2226,8 +2184,7 @@ ceilometer trait-list
 
 List all traits with name <trait_name> for Event Type <event_type>.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-e <EVENT_TYPE>, --event_type <EVENT_TYPE>``
   Type of the event for which traits will
