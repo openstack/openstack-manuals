@@ -44,8 +44,7 @@ ironic usage
                  [--max-retries MAX_RETRIES] [--retry-interval RETRY_INTERVAL]
                  <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``chassis-create``
   Create a new chassis.
@@ -273,8 +272,7 @@ ironic chassis-create
 
 Create a new chassis.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-d <description>, --description <description>``
   Description of the chassis.
@@ -297,8 +295,7 @@ ironic chassis-delete
 
 Delete a chassis.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<chassis>``
   UUID of the chassis.
@@ -316,8 +313,7 @@ ironic chassis-list
 
 List the chassis.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--detail``
   Show detailed information about the chassis.
@@ -360,14 +356,12 @@ ironic chassis-node-list
 
 List the nodes contained in a chassis.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<chassis>``
   UUID of the chassis.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--detail``
   Show detailed information about the nodes.
@@ -413,14 +407,12 @@ ironic chassis-show
 
 Show detailed information about a chassis.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<chassis>``
   UUID of the chassis.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--fields <field> [<field> ...]``
   One or more chassis fields. Only these fields will be
@@ -437,8 +429,7 @@ ironic chassis-update
 
 Update information about a chassis.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<chassis>``
   UUID of the chassis.
@@ -461,8 +452,7 @@ ironic driver-get-vendor-passthru-methods
 
 Get the vendor passthru methods for a driver.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<driver>``
   Name of the driver.
@@ -489,14 +479,12 @@ ironic driver-properties
 
 Get properties of a driver.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<driver>``
   Name of the driver.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--wrap <integer>``
   Wrap the output to a specified length. Positive number can
@@ -513,14 +501,12 @@ ironic driver-raid-logical-disk-properties
 
 Get RAID logical disk properties for a driver.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<driver>``
   Name of the driver.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--wrap <integer>``
   Wrap the output to a specified length. Positive number can
@@ -537,8 +523,7 @@ ironic driver-show
 
 Show information about a driver.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<driver>``
   Name of the driver.
@@ -556,8 +541,7 @@ ironic driver-vendor-passthru
 
 Call a vendor-passthru extension for a driver.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<driver>``
   Name of the driver.
@@ -569,8 +553,7 @@ Positional arguments
   Argument to be passed to the vendor-passthru method.
   Can be specified multiple times.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--http-method <http-method>``
   The HTTP method to use in the request. Valid HTTP
@@ -590,8 +573,7 @@ ironic node-create
 
 Register a new node with the Ironic service.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-c <chassis>, --chassis <chassis>``
   UUID of the chassis that this node belongs to.
@@ -631,8 +613,7 @@ ironic node-delete
 Unregister node(s) from the Ironic service. :raises: ClientException, if error
 happens during the delete
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -648,8 +629,7 @@ ironic node-get-boot-device
 
 Get the current boot device for a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -665,8 +645,7 @@ ironic node-get-console
 
 Get the connection information for a node's console, if enabled.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -682,8 +661,7 @@ ironic node-get-supported-boot-devices
 
 Get the supported boot devices for a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -699,8 +677,7 @@ ironic node-get-vendor-passthru-methods
 
 Get the vendor passthru methods for a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -721,8 +698,7 @@ ironic node-list
 
 List the nodes which are registered with the Ironic service.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--limit <limit>``
   Maximum number of nodes to return per request, 0 for
@@ -774,14 +750,12 @@ ironic node-port-list
 
 List the ports associated with a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--detail``
   Show detailed information about the ports.
@@ -818,8 +792,7 @@ ironic node-set-boot-device
 
 Set the boot device for a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -827,8 +800,7 @@ Positional arguments
 ``<boot-device>``
   'pxe', 'disk', 'cdrom', 'bios', or 'safe'.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--persistent``
   Make changes persistent for all future boots.
@@ -844,8 +816,7 @@ ironic node-set-console-mode
 
 Enable or disable serial console access for a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -865,8 +836,7 @@ ironic node-set-maintenance
 
 Enable or disable maintenance mode for a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -874,8 +844,7 @@ Positional arguments
 ``<maintenance-mode>``
   'true' or 'false'; 'on' or 'off'.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--reason <reason>``
   Reason for setting maintenance mode to 'true' or 'on';
@@ -892,8 +861,7 @@ ironic node-set-power-state
 
 Power a node on or off or reboot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -914,8 +882,7 @@ ironic node-set-provision-state
 
 Initiate a provisioning state change for a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -924,8 +891,7 @@ Positional arguments
   Supported states: 'active', 'deleted', 'rebuild',
   'inspect', 'provide', 'manage', 'clean' or 'abort'.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--config-drive <config-drive>``
   A gzipped, base64-encoded configuration drive string
@@ -956,8 +922,7 @@ ironic node-set-target-raid-config
 
 Set target RAID config on a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -982,15 +947,13 @@ ironic node-show
 
 Show detailed information about a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   Name or UUID of the node (or instance UUID if
   :option:`--instance` is specified).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--instance <id>``
   is an instance UUID.
@@ -1010,8 +973,7 @@ ironic node-show-states
 
 Show information about the node's states.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -1027,8 +989,7 @@ ironic node-update
 
 Update information about a registered node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -1051,8 +1012,7 @@ ironic node-validate
 
 Validate a node's driver interfaces.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -1070,8 +1030,7 @@ ironic node-vendor-passthru
 
 Call a vendor-passthru extension for a node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
@@ -1083,8 +1042,7 @@ Positional arguments
   Argument to be passed to the vendor-passthru method.
   Can be specified multiple times.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--http-method <http-method>``
   The HTTP method to use in the request. Valid HTTP
@@ -1102,8 +1060,7 @@ ironic port-create
 
 Create a new port.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-a <address>, --address <address>``
   MAC address for this port.
@@ -1129,8 +1086,7 @@ ironic port-delete
 
 Delete a port.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<port>``
   UUID of the port.
@@ -1149,8 +1105,7 @@ ironic port-list
 
 List the ports.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--detail``
   Show detailed information about ports.
@@ -1191,15 +1146,13 @@ ironic port-show
 
 Show detailed information about a port.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   UUID of the port (or MAC address if :option:`--address` is
   specified).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--address <id>``
   is the MAC address (instead of the UUID) of the
@@ -1220,8 +1173,7 @@ ironic port-update
 
 Update information about a port.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<port>``
   UUID of the port.
