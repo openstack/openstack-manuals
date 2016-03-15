@@ -58,6 +58,9 @@ developing cloud architecture design documents. The sections covered are:
 *  :doc:`Legal requirements<legal-requirements>`: The legal requirements you
    will need to consider for the different OpenStack scenarios.
 
-*  :doc:`Example architectures<example-architectures>`: An examination of some
+.. TODO(jaegerandi): Use below :doc:`Example
+   architectures<example-architectures>`
+
+*  Example architectures: An examination of some
    of the most common uses for OpenStack clouds, and explanations of the
    considerations for each use case.

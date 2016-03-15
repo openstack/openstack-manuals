@@ -32,12 +32,6 @@ TAG_OPT=""
 BUILD=""
 LINKCHECK=""
 
-if [ -x "$(command -v getconf)" ]; then
-    NUMBER_OF_CORES=$(getconf _NPROCESSORS_ONLN)
-else
-    NUMBER_OF_CORES=2
-fi
-
 while [[ $# > 0 ]] ; do
     option="$1"
     case $option in
@@ -91,13 +85,13 @@ fi
 if [ "$LINKCHECK" = "1" ] ; then
     # Show sphinx-build invocation for easy reproduction
     set -x
-    sphinx-build -j $NUMBER_OF_CORES -E -W -d $DOCTREES -b linkcheck \
+    sphinx-build -E -W -d $DOCTREES -b linkcheck \
         $TAG_OPT $DIRECTORY/source $BUILD_DIR
     set +x
 else
     # Show sphinx-build invocation for easy reproduction
     set -x
-    sphinx-build -j $NUMBER_OF_CORES -E -W -d $DOCTREES -b html \
+    sphinx-build -E -W -d $DOCTREES -b html \
         $TAG_OPT $DIRECTORY/source $BUILD_DIR
     set +x
 
