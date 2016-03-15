@@ -19,7 +19,7 @@ To insert a semantic markup into your document, use the syntax below.
 
 **Syntax**
 
-::
+.. code-block:: ini
 
   :markup:`inline text`
 
@@ -185,7 +185,7 @@ option.
 
    **Correct usage**
 
-   ::
+   .. code-block:: ini
 
      force_dhcp_release = True
      use_ipv6 = False
