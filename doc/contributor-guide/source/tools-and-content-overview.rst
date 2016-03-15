@@ -68,7 +68,8 @@ information about Speciality Teams, including how to get involved, see:
    such as the configuration option tables and the CLI reference information.
    You will see the following warning in the source file: **<!-- This file is
    automatically generated, do not edit -->**. When you see this, you can still
-   update the file using the :ref:`doc-tools` tool kit.
+   update the file using the :ref:`doc-tools` tool kit. Please see
+   `Generated files`_.
 
 .. list-table::
    :header-rows: 1
@@ -136,11 +137,126 @@ track bugs against the output in the openstack-manuals Launchpad project.
 
 The release notes are available in the Git repository.
 
+Generated files
+~~~~~~~~~~~~~~~
+
+Some documentation files are automatically generated and these should
+not be modified by hand. They contain a ``do not edit`` warning at
+the beginning of the file and should only be generated using
+the :ref:`doc-tools` tool kit.
+
+CLI reference
+-------------
+
+The ``doc/cli-reference`` directory contains documentation for
+the OpenStack command-line clients. See: `CLI-Reference`_.
+
+Most of these files are generated using the ``openstack-auto-commands``
+tool found in the ``openstack-doc-tools`` repository. See the repository
+file ``os_doc_tools/resources/clients.yaml`` for a list of supported
+clients. The generated files can be found in ``doc/cli-reference/source``.
+
+.. important::
+
+    Some files are still manually maintained. If unsure, look for the
+    warning at the top of the file before attempting to re-generate it.
+
+Automated generation
+^^^^^^^^^^^^^^^^^^^^
+
+Within the ``openstack-doc-tools`` repository, there is a script to
+automate submission of an update to a client CLI documentation file.
+The following instructions demonstrate how to use this script
+using nova as an example client CLI.
+
+Clone the tools repo.
+
+.. code-block:: console
+
+    $ git clone git://git.openstack.org/openstack/openstack-doc-tools
+    $ cd openstack-doc-tools/bin
+
+Run the automated script. This will generate a virtual environment.
+This will install the necessary software and run the tool to re-generate
+the file.
+
+.. code-block:: console
+
+    $ ./doc-tools-update-cli-reference nova
+
+The script will have cloned the ``openstack-manuals`` repo and created a
+commit with the newly generated file. Check that the file looks correct
+and if you are satisfied with it, submit it for review.
+
+.. code-block:: console
+
+    $ cd openstack-manuals
+    $ git status
+    $ git show
+    $ git review
+
+.. important::
+
+    If inspection of the generated file reveals typographical errors
+    or incorrect content, *do not fix these.*  They must be fixed
+    in the corresponding client repository (typically by adjusting
+    the help strings for the various commands). Once the change
+    has merged and a new client released, a new CLI documentation file
+    can be generated with the updated content.
+
+Manual generation
+^^^^^^^^^^^^^^^^^
+
+Sometimes it may be necessary to re-generate these files manually.
+To do this, you must have ``openstack-doc-tools`` installed.
+
+.. code-block:: console
+
+    $ pip install openstack-doc-tools
+
+To ensure that you have the latest tool changes, clone the repository.
+This is also necessary if you make changes to the tool in order to
+generate a proper file.
+
+.. code-block:: console
+
+    $ pushd <work_dir>
+    $ git clone git://git.openstack.org/openstack/openstack-doc-tools
+    $ cd openstack-doc-tools
+    $ pip install .
+    $ popd
+
+Change to the ``doc/cli-reference/source`` directory of your
+``openstack-manuals`` clone and run the ``openstack-auto-commands``
+command.
+
+.. code-block:: console
+
+    $ cd /path/to/openstack-manuals/doc/cli-reference/source
+    $ openstack-auto-commands --all
+
+To generate a specific CLI file, run:
+
+.. code-block:: console
+
+    $ openstack-auto-commands <client_name>
+
+To check a list of available options, run:
+
+.. code-block:: console
+
+    $ openstack-auto-commands --help
+
+Once you finish updating the generated files,
+submit them in a usual manner.
+
 .. Links:
 
 .. _`Doc Migration from DocBook to RST`: https://wiki.openstack.org/wiki/Documentation/Migrate
 .. _`development workflow`: http://docs.openstack.org/infra/manual/developers.html#development-workflow
 .. _`Speciality Teams`: https://wiki.openstack.org/wiki/Documentation/SpecialityTeams
+.. _`Generated files`: http://docs.openstack.org/contributor-guide/tools-and-content-overview.html#Generated-files
 .. _`documentation cross-project liaisons`: https://wiki.openstack.org/wiki/CrossProjectLiaisons#Documentation
 .. _`Sphinx documentation`: http://sphinx-doc.org/rest.html
 .. _`Transition Guide`: http://docbook.org/docs/howto/
+.. _`CLI-Reference`: http://docs.openstack.org/cli-reference/
