@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-08 06:09+0000\n"
+"POT-Creation-Date: 2016-03-15 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,13 +27,14 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  adv-config-availability-zone.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  adv-config-dns.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  adv-config-ipam.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  adv-config-ipv6.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  adv-config-qos.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  adv-config-sriov.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../adv-config-availability-zone.rst:10 ../adv-config-ipam.rst:12
-#: ../adv-config-ipv6.rst:12 ../adv-config-qos.rst:23
-#: ../adv-config-sriov.rst:11
+#: ../adv-config-availability-zone.rst:10 ../adv-config-dns.rst:17
+#: ../adv-config-ipam.rst:12 ../adv-config-ipv6.rst:12
+#: ../adv-config-qos.rst:23 ../adv-config-sriov.rst:11
 msgid "The basics"
 msgstr ""
 
@@ -125,7 +126,10 @@ msgstr ""
 msgid "RW(POST only)"
 msgstr ""
 
-#: ../adv-config-availability-zone.rst:145
+# #-#-#-#-#  adv-config-availability-zone.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  adv-config-dns.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../adv-config-availability-zone.rst:145 ../adv-config-dns.rst:32
+#: ../adv-config-dns.rst:34
 msgid "No"
 msgstr ""
 
@@ -353,6 +357,488 @@ msgstr ""
 msgid "Summary"
 msgstr ""
 
+#: ../adv-config-dns.rst:5
+msgid "DNS integration in OpenStack Networking"
+msgstr ""
+
+#: ../adv-config-dns.rst:7
+msgid ""
+"This page serves as a guide for how to use the DNS integration functionality "
+"of the Networking service. The functionality described covers DNS from two "
+"points of view:"
+msgstr ""
+
+#: ../adv-config-dns.rst:11
+msgid ""
+"The internal DNS functionality offered by the Networking service and its "
+"interaction with the Compute service."
+msgstr ""
+
+#: ../adv-config-dns.rst:13
+msgid ""
+"Integration of the Compute service and the Networking service with an "
+"external DNSaaS (DNS-as-a-Service)."
+msgstr ""
+
+#: ../adv-config-dns.rst:19
+msgid ""
+"Users can control the behavior of the Networking service in regards to DNS "
+"using two attributes associated with ports, networks, and floating IPs. The "
+"following table shows the attributes available for each one of these "
+"resources:"
+msgstr ""
+
+# #-#-#-#-#  adv-config-dns.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  intro-os-networking-features.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../adv-config-dns.rst:27 ../intro-os-networking-features.rst:171
+msgid "Resource"
+msgstr ""
+
+#: ../adv-config-dns.rst:28
+msgid "dns_name"
+msgstr ""
+
+#: ../adv-config-dns.rst:29
+msgid "dns_domain"
+msgstr ""
+
+# #-#-#-#-#  adv-config-dns.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  intro-os-networking-overview.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  misc-neutron-purge.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../adv-config-dns.rst:30 ../intro-os-networking-overview.rst:114
+#: ../misc-neutron-purge.rst:13
+msgid "Ports"
+msgstr ""
+
+#: ../adv-config-dns.rst:31 ../adv-config-dns.rst:35 ../adv-config-dns.rst:37
+#: ../adv-config-dns.rst:38
+msgid "Yes"
+msgstr ""
+
+# #-#-#-#-#  adv-config-dns.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  misc-neutron-purge.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../adv-config-dns.rst:33 ../misc-neutron-purge.rst:11
+msgid "Networks"
+msgstr ""
+
+# #-#-#-#-#  adv-config-dns.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  misc-neutron-purge.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../adv-config-dns.rst:36 ../misc-neutron-purge.rst:16
+msgid "Floating IPs"
+msgstr ""
+
+#: ../adv-config-dns.rst:43
+msgid "The Networking service internal DNS resolution"
+msgstr ""
+
+#: ../adv-config-dns.rst:45
+msgid ""
+"The Networking service enables users to control the name assigned to ports "
+"by the internal DNS. To enable this functionality, do the following:"
+msgstr ""
+
+#: ../adv-config-dns.rst:48
+msgid ""
+"Edit the ``/etc/neutron.conf`` file and assign a value different to "
+"``openstacklocal`` (its default value) to the ``dns_domain`` parameter in "
+"the ``[default]`` section. As an example:"
+msgstr ""
+
+#: ../adv-config-dns.rst:56
+msgid ""
+"Add ``dns`` to ``extension_drivers`` in the ``[ml2]`` section of ``/etc/"
+"neutron/plugins/ml2/ml2_conf.ini``. The following is an example:"
+msgstr ""
+
+#: ../adv-config-dns.rst:64
+msgid ""
+"After re-starting the ``neutron-server``, users will be able to assign a "
+"``dns_name`` attribute to their ports."
+msgstr ""
+
+#: ../adv-config-dns.rst:68
+msgid ""
+"The enablement of this functionality is prerequisite for the enablement of "
+"the Networking service integration with an external DNS service, which is "
+"described in detail in :ref:`adv-config-dns-int-ext-serv`."
+msgstr ""
+
+#: ../adv-config-dns.rst:72
+msgid ""
+"The following illustrates the creation of a port with ``my-port`` in its "
+"``dns_name`` attribute."
+msgstr ""
+
+#: ../adv-config-dns.rst:76
+msgid ""
+"The name assigned to the port by the Networking service internal DNS is now "
+"visible in the response in the ``dns_assignment`` attribute."
+msgstr ""
+
+#: ../adv-config-dns.rst:104
+msgid ""
+"When this functionality is enabled, it is leveraged by the Compute service "
+"when creating instances. When allocating ports for an instace during boot, "
+"the Compute service populates the ``dns_name`` attributes of these ports "
+"with the ``hostname`` attribute of the instance, which is a DNS sanitized "
+"version of its display name. As a consequence, at the end of the boot "
+"process, the allocated ports will be known in the dnsmasq associated to "
+"their networks by their instance ``hostname``."
+msgstr ""
+
+#: ../adv-config-dns.rst:112
+msgid ""
+"The following is an example of an instance creation, showing how its "
+"``hostname`` populates the ``dns_name`` attribute of the allocated port:"
+msgstr ""
+
+#: ../adv-config-dns.rst:184
+msgid "In the above example notice that:"
+msgstr ""
+
+#: ../adv-config-dns.rst:186
+msgid ""
+"The name given to the instance by the user, ``my_vm``, is sanitized by the "
+"Compute service and becomes ``my-vm`` as the port's ``dns_name``."
+msgstr ""
+
+#: ../adv-config-dns.rst:188
+msgid ""
+"The port's ``dns_assignment`` attribute shows that its :term:`FQDN` is ``my-"
+"vm.my-domain.org.`` in the Networking service internal DNS, which is the "
+"result of concatenating the port's ``dns_name`` with the value configured in "
+"the ``dns_domain`` parameter in ``neutron.conf``, as explained previously."
+msgstr ""
+
+#: ../adv-config-dns.rst:192
+msgid ""
+"The ``dns_assignment`` attribute also shows that the port's ``hostname`` in "
+"the Networking service internal DNS is ``my-vm``."
+msgstr ""
+
+#: ../adv-config-dns.rst:194
+msgid ""
+"Instead of having the Compute service create the port for the instance, the "
+"user might have created it and assigned a value to its ``dns_name`` "
+"attribute. In this case, the value assigned to the ``dns_name`` attribute "
+"must be equal to the value that Compute service will assign to the "
+"instance's ``hostname``, in this example ``my-vm``. Otherwise, the instance "
+"boot will fail."
+msgstr ""
+
+#: ../adv-config-dns.rst:202
+msgid "Integration with an external DNS service"
+msgstr ""
+
+#: ../adv-config-dns.rst:204
+msgid ""
+"Users can also integrate the Networking and Compute services with an "
+"external DNS. To accomplish this, the users have to:"
+msgstr ""
+
+#: ../adv-config-dns.rst:207
+msgid ""
+"Enable the functionality described in :ref:`adv-config-dns-int-dns-"
+"resolution`."
+msgstr ""
+
+#: ../adv-config-dns.rst:209
+msgid ""
+"Configure an external DNS driver. The Networking service provides a driver "
+"reference implementation based on the OpenStack DNS service. It is expected "
+"that third party vendors will provide other implementations in the future. "
+"For detailed configuration instructions, see :ref:`adv-config-dns-int-ext-"
+"serv`."
+msgstr ""
+
+#: ../adv-config-dns.rst:215
+msgid ""
+"Once the ``neutron-server`` has been configured and restarted, users will "
+"have functionality that covers three use cases, described in the following "
+"sections. In each of the use cases described below:"
+msgstr ""
+
+#: ../adv-config-dns.rst:219
+msgid "The examples assume the OpenStack DNS service as the external DNS."
+msgstr ""
+
+#: ../adv-config-dns.rst:220
+msgid "A, AAAA and PTR records will be created in the DNS service."
+msgstr ""
+
+#: ../adv-config-dns.rst:221
+msgid ""
+"Before executing any of the use cases, the user must create in the DNS "
+"service under his project a DNS zone where the A and AAAA records will be "
+"created. For the description of the use cases below, it is assumed the zone "
+"``my-domain.org.`` was created previously."
+msgstr ""
+
+#: ../adv-config-dns.rst:225
+msgid ""
+"The PTR records will be created in zones owned by a project with admin "
+"privileges. See :ref:`adv-config-dns-int-ext-serv` for more details."
+msgstr ""
+
+#: ../adv-config-dns.rst:231
+msgid "Use case 1: Ports are published directly in the external DNS service"
+msgstr ""
+
+#: ../adv-config-dns.rst:233
+msgid ""
+"In this case, the user is creating ports or booting instances on a network "
+"that is accessible externally. The steps to publish the port in the external "
+"DNS service are the following:"
+msgstr ""
+
+#: ../adv-config-dns.rst:237 ../adv-config-dns.rst:417
+msgid ""
+"Assign a valid domain name to the network's ``dns_domain`` attribute. This "
+"name must end with a ``.``."
+msgstr ""
+
+#: ../adv-config-dns.rst:239
+msgid ""
+"Boot an instance specifying the externally accessible network. "
+"Alternatively, create a port on the externally accessible network specifying "
+"a valid value to its ``dns_name`` attribute. If the port is going to be used "
+"for an instance boot, the value assigned to ``dns_name`` must be equal to "
+"the ``hostname`` that the Compute service will assign to the instance. "
+"Otherwise, the boot will fail."
+msgstr ""
+
+#: ../adv-config-dns.rst:246
+msgid ""
+"Once these steps are executed, the port's DNS data will be published in the "
+"external DNS service. This is an example:"
+msgstr ""
+
+#: ../adv-config-dns.rst:374
+msgid ""
+"In this example the port is created manually by the user and then used to "
+"boot an instance. Notice that:"
+msgstr ""
+
+#: ../adv-config-dns.rst:377
+msgid ""
+"The port's data was visible in the DNS service as soon as it was created."
+msgstr ""
+
+#: ../adv-config-dns.rst:378
+msgid ""
+"See :ref:`adv-config-dns-performance-considerations` for an explanation of "
+"the potential performance impact associated with this use case."
+msgstr ""
+
+#: ../adv-config-dns.rst:381
+msgid ""
+"Following are the PTR records created for this example. Note that for IPv4, "
+"the value of ipv4_ptr_zone_prefix_size is 24. In the case of IPv6, the value "
+"of ipv6_ptr_zone_prefix_size is 116. For more details, see :ref:`adv-config-"
+"dns-int-ext-serv`:"
+msgstr ""
+
+#: ../adv-config-dns.rst:406
+msgid ""
+"See :ref:`adv-config-dns-int-ext-serv` for detailed instructions on how to "
+"create the externally accessible network."
+msgstr ""
+
+#: ../adv-config-dns.rst:410
+msgid ""
+"Use case 2: Floating IPs are published with associated port DNS attributes"
+msgstr ""
+
+#: ../adv-config-dns.rst:412
+msgid ""
+"In this use case, the address of a floating IP is published in the external "
+"DNS service in conjunction with the ``dns_name`` of its associated port and "
+"the ``dns_domain`` of the port's network. The steps to execute in this use "
+"case are the following:"
+msgstr ""
+
+#: ../adv-config-dns.rst:419
+msgid ""
+"Boot an instance or alternatively, create a port specifying a valid value to "
+"its ``dns_name`` attribute. If the port is going to be used for an instance "
+"boot, the value assigned to ``dns_name`` must be equal to the ``hostname`` "
+"that the Compute service will assign to the instance. Otherwise, the boot "
+"will fail."
+msgstr ""
+
+#: ../adv-config-dns.rst:424
+msgid "Create a floating IP and associate it to the port."
+msgstr ""
+
+#: ../adv-config-dns.rst:426
+msgid "Following is an example of these steps:"
+msgstr ""
+
+#: ../adv-config-dns.rst:562
+msgid ""
+"In this example, notice that the data is published in the DNS service when "
+"the floating IP is associated to the port."
+msgstr ""
+
+#: ../adv-config-dns.rst:565 ../adv-config-dns.rst:733
+msgid ""
+"Following are the PTR records created for this example. Note that for IPv4, "
+"the value of ipv4_ptr_zone_prefix_size is 24. For more details, see :ref:"
+"`adv-config-dns-int-ext-serv`:"
+msgstr ""
+
+#: ../adv-config-dns.rst:582
+msgid "Use case 3: Floating IPs are published in the external DNS service"
+msgstr ""
+
+#: ../adv-config-dns.rst:584
+msgid ""
+"In this use case, the user assigns ``dns_name`` and ``dns_domain`` "
+"attributes to a floating IP when it is created. The floating IP data becomes "
+"visible in the external DNS service as soon as it is created. The floating "
+"IP can be associated with a port on creation or later on. The following "
+"example shows a user booting an instance and then creating a floating IP "
+"associated to the port allocated for the instance:"
+msgstr ""
+
+#: ../adv-config-dns.rst:722
+msgid "Note that in this use case:"
+msgstr ""
+
+#: ../adv-config-dns.rst:724
+msgid ""
+"The ``dns_name`` and ``dns_domain`` attributes of a floating IP must be "
+"specified together on creation. They cannot be assigned to the floating IP "
+"separately."
+msgstr ""
+
+#: ../adv-config-dns.rst:727
+msgid ""
+"The ``dns_name`` and ``dns_domain`` of a floating IP have precedence, for "
+"purposes of being published in the external DNS service, over the "
+"``dns_name`` of its associated port and the ``dns_domain`` of the port's "
+"network, whether they are specified or not. Only the ``dns_name`` and the "
+"``dns_domain`` of the floating IP are published in the external DNS service."
+msgstr ""
+
+#: ../adv-config-dns.rst:751
+msgid "Performance considerations"
+msgstr ""
+
+#: ../adv-config-dns.rst:753
+msgid ""
+"Only for :ref:`adv-config-dns-use-case-1`, if the port binding extension is "
+"enabled in the Networking service, the Compute service will execute one "
+"additional port update operation when allocating the port for the instance "
+"during the boot process. This may have a noticeable adverse effect in the "
+"performance of the boot process that must be evaluated before adoption of "
+"this use case."
+msgstr ""
+
+#: ../adv-config-dns.rst:763
+msgid ""
+"Configuring OpenStack Networking for integration with an external DNS service"
+msgstr ""
+
+#: ../adv-config-dns.rst:765
+msgid ""
+"The first step to configure the integration with an external DNS service is "
+"to enable the functionality described in :ref:`adv-config-dns-int-dns-"
+"resolution`. Once this is done, the user has to take the following steps and "
+"restart ``neutron-server``."
+msgstr ""
+
+#: ../adv-config-dns.rst:770
+msgid ""
+"Edit the ``[default]`` section of ``/etc/neutron/neutron.conf`` and specify "
+"the external DNS service driver to be used in parameter "
+"``external_dns_driver``. The valid options are defined in namespace "
+"``neutron.services.external_dns_drivers``. The following example shows how "
+"to set up the driver for the OpenStack DNS service:"
+msgstr ""
+
+#: ../adv-config-dns.rst:780
+msgid ""
+"If the OpenStack DNS service is the target external DNS, the ``[designate]`` "
+"section of ``/etc/neutron/neutron.conf`` must define the following "
+"parameters:"
+msgstr ""
+
+#: ../adv-config-dns.rst:784
+msgid "``url``: the OpenStack DNS service public endpoint URL."
+msgstr ""
+
+#: ../adv-config-dns.rst:785
+msgid ""
+"``allow_reverse_dns_lookup``: a boolean value specifying whether to enable "
+"or not the creation of reverse lookup (PTR) records."
+msgstr ""
+
+#: ../adv-config-dns.rst:787
+msgid ""
+"``admin_auth_url``: the Identity service admin authorization endpoint url. "
+"This endpoint will be used by the Networking service to authenticate as an "
+"admin user to create and update reverse lookup (PTR) zones."
+msgstr ""
+
+#: ../adv-config-dns.rst:790
+msgid ""
+"``admin_username``: the admin user to be used by the Networking service to "
+"create and update reverse lookup (PTR) zones."
+msgstr ""
+
+#: ../adv-config-dns.rst:792
+msgid ""
+"``admin_password``: the password of the admin user to be used by Networking "
+"service to create and update reverse lookup (PTR) zones."
+msgstr ""
+
+#: ../adv-config-dns.rst:794
+msgid ""
+"``admin_tenant_name``: the project of the admin user to be used by the "
+"Networking service to create and update reverse lookup (PTR) zones."
+msgstr ""
+
+#: ../adv-config-dns.rst:796
+msgid ""
+"``ipv4_ptr_zone_prefix_size``: the size in bits of the prefix for the IPv4 "
+"reverse lookup (PTR) zones."
+msgstr ""
+
+#: ../adv-config-dns.rst:798
+msgid ""
+"``ipv6_ptr_zone_prefix_size``: the size in bits of the prefix for the IPv6 "
+"reverse lookup (PTR) zones."
+msgstr ""
+
+#: ../adv-config-dns.rst:801
+msgid "The following is an example:"
+msgstr ""
+
+#: ../adv-config-dns.rst:816
+msgid "Configuration of the externally accessible network for use case 1"
+msgstr ""
+
+#: ../adv-config-dns.rst:818
+msgid ""
+"In :ref:`adv-config-dns-use-case-1`, the externally accessible network must "
+"meet the following requirements:"
+msgstr ""
+
+#: ../adv-config-dns.rst:821
+msgid "The network cannot have attribute ``router:external`` set to ``True``."
+msgstr ""
+
+#: ../adv-config-dns.rst:822
+msgid "The network type can be FLAT, VLAN, GRE, VXLAN or GENEVE."
+msgstr ""
+
+#: ../adv-config-dns.rst:823
+msgid ""
+"For network types VLAN, GRE, VXLAN or GENEVE, the segmentation ID must be "
+"outside the ranges assigned to tenant networks."
+msgstr ""
+
 # #-#-#-#-#  adv-config-fwaas.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  adv-config-ipv6.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../adv-config-fwaas.rst:3 ../adv-config-ipv6.rst:401
@@ -435,7 +921,9 @@ msgstr ""
 
 # #-#-#-#-#  adv-config-ipam.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  adv-config-sriov.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../adv-config-ipam.rst:38 ../adv-config-sriov.rst:66
+#: ../scenario-classic-mt.rst:46
 msgid "Known limitations"
 msgstr ""
 
@@ -1965,7 +2453,7 @@ msgid ""
 "The list of supported rule types reported by core plug-in is not enforced "
 "when accessing QoS rule resources. This is mostly because then we would not "
 "be able to create any rules while at least one ml2 driver lacks support for "
-"QoS (at the moment of writing, linuxbridge is such a driver)."
+"QoS (at the moment of writing, only macvtap is such a driver)."
 msgstr ""
 
 # #-#-#-#-#  adv-config-qos.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -1997,7 +2485,7 @@ msgid "For ml2, add ``qos`` to ``extension_drivers`` in ``[ml2]`` section."
 msgstr ""
 
 #: ../adv-config-qos.rst:74
-msgid "On agent side (OVS):"
+msgid "On agent side:"
 msgstr ""
 
 #: ../adv-config-qos.rst:76
@@ -2006,8 +2494,8 @@ msgstr ""
 
 #: ../adv-config-qos.rst:80
 msgid ""
-"QoS currently works with ml2 only (SR-IOV and Open vSwitch are the only "
-"drivers that are enabled for QoS in Liberty release)."
+"QoS currently works with ml2 only (SR-IOV, Open vSwitch, and linuxbridge are "
+"drivers that are enabled for QoS in Mitaka release)."
 msgstr ""
 
 #: ../adv-config-qos.rst:84
@@ -2551,6 +3039,7 @@ msgstr ""
 # #-#-#-#-#  config-ml2-plug-in.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  config-server.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -2558,10 +3047,10 @@ msgstr ""
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../config-ml2-plug-in.rst:9 ../config-server.rst:6
-#: ../scenario-classic-lb.rst:147 ../scenario-classic-ovs.rst:161
-#: ../scenario-dvr-ovs.rst:117 ../scenario-l3ha-lb.rst:125
-#: ../scenario-l3ha-ovs.rst:134 ../scenario-provider-lb.rst:109
-#: ../scenario-provider-ovs.rst:115
+#: ../scenario-classic-lb.rst:147 ../scenario-classic-mt.rst:157
+#: ../scenario-classic-ovs.rst:161 ../scenario-dvr-ovs.rst:117
+#: ../scenario-l3ha-lb.rst:125 ../scenario-l3ha-ovs.rst:134
+#: ../scenario-provider-lb.rst:109 ../scenario-provider-ovs.rst:115
 msgid "Architecture"
 msgstr ""
 
@@ -2717,6 +3206,7 @@ msgstr ""
 # #-#-#-#-#  config-server.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  intro-os-networking-service.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -2724,10 +3214,10 @@ msgstr ""
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../config-server.rst:3 ../intro-os-networking-service.rst:6
-#: ../scenario-classic-lb.rst:589 ../scenario-classic-ovs.rst:693
-#: ../scenario-dvr-ovs.rst:546 ../scenario-l3ha-lb.rst:257
-#: ../scenario-l3ha-ovs.rst:271 ../scenario-provider-lb.rst:449
-#: ../scenario-provider-ovs.rst:497
+#: ../scenario-classic-lb.rst:589 ../scenario-classic-mt.rst:419
+#: ../scenario-classic-ovs.rst:693 ../scenario-dvr-ovs.rst:546
+#: ../scenario-l3ha-lb.rst:257 ../scenario-l3ha-ovs.rst:271
+#: ../scenario-provider-lb.rst:449 ../scenario-provider-ovs.rst:497
 msgid "Server"
 msgstr ""
 
@@ -3666,7 +4156,7 @@ msgstr ""
 
 #: ../intro-networking.rst:5
 msgid ""
-"The OpenStack :term:`Networking` service provides an API that allows users "
+"The OpenStack :term:`Networking service` provides an API that allows users "
 "to set up and define network connectivity and addressing in the cloud. The "
 "project code-name for Networking services is neutron. OpenStack Networking "
 "handles the creation and management of a virtual networking infrastructure, "
@@ -3698,19 +4188,19 @@ msgstr ""
 
 #: ../intro-networking.rst:27
 msgid ""
-"OpenStack :term:`Identity` (keystone) is used for authentication and "
+"OpenStack :term:`Identity service` (keystone) is used for authentication and "
 "authorization of API requests."
 msgstr ""
 
 #: ../intro-networking.rst:30
 msgid ""
-"OpenStack :term:`Compute` (nova) is used to plug each virtual NIC on the VM "
-"into a particular network."
+"OpenStack :term:`Compute service` (nova) is used to plug each virtual NIC on "
+"the VM into a particular network."
 msgstr ""
 
 #: ../intro-networking.rst:33
 msgid ""
-"OpenStack :term:`dashboard` (horizon) is used by administrators and tenant "
+"OpenStack :term:`Dashboard` (horizon) is used by administrators and tenant "
 "users to create and manage network services through a web-based graphical "
 "interface."
 msgstr ""
@@ -3850,10 +4340,6 @@ msgstr ""
 
 #: ../intro-os-networking-features.rst:171
 msgid "Name"
-msgstr ""
-
-#: ../intro-os-networking-features.rst:171
-msgid "Resource"
 msgstr ""
 
 #: ../intro-os-networking-features.rst:173
@@ -4014,7 +4500,9 @@ msgstr ""
 msgid "GRE and VXLAN"
 msgstr ""
 
-#: ../intro-os-networking-overview.rst:88
+# #-#-#-#-#  intro-os-networking-overview.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../intro-os-networking-overview.rst:88 ../scenario-classic-mt.rst:25
 msgid "Provider networks"
 msgstr ""
 
@@ -4047,12 +4535,6 @@ msgid ""
 "known as the native IPAM (IP Address Management) provided by the networking "
 "service for both tenant and provider networks. Subnets are used to allocate "
 "IP addresses when new ports are created on a network."
-msgstr ""
-
-# #-#-#-#-#  intro-os-networking-overview.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  misc-neutron-purge.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../intro-os-networking-overview.rst:114 ../misc-neutron-purge.rst:13
-msgid "Ports"
 msgstr ""
 
 #: ../intro-os-networking-overview.rst:116
@@ -4300,6 +4782,7 @@ msgstr ""
 
 # #-#-#-#-#  migration-classic-to-l3ha.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -4308,6 +4791,7 @@ msgstr ""
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../migration-classic-to-l3ha.rst:55 ../migration-classic-to-l3ha.rst:132
 #: ../scenario-classic-lb.rst:727 ../scenario-classic-lb.rst:750
+#: ../scenario-classic-mt.rst:460 ../scenario-classic-mt.rst:483
 #: ../scenario-classic-ovs.rst:825 ../scenario-classic-ovs.rst:848
 #: ../scenario-dvr-ovs.rst:712 ../scenario-dvr-ovs.rst:739
 #: ../scenario-dvr-ovs.rst:921 ../scenario-l3ha-lb.rst:399
@@ -4878,16 +5362,8 @@ msgstr ""
 msgid "The resources currently supported by this feature are:"
 msgstr ""
 
-#: ../misc-neutron-purge.rst:11
-msgid "Networks"
-msgstr ""
-
 #: ../misc-neutron-purge.rst:14
 msgid "Router Interfaces"
-msgstr ""
-
-#: ../misc-neutron-purge.rst:16
-msgid "Floating IPs"
 msgstr ""
 
 #: ../misc-neutron-purge.rst:17
@@ -4934,8 +5410,10 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:10 ../scenario-classic-ovs.rst:10
+#: ../scenario-classic-lb.rst:10 ../scenario-classic-mt.rst:10
+#: ../scenario-classic-ovs.rst:10
 msgid ""
 "The classic implementation contributes the networking portion of self-"
 "service virtual data center infrastructure by providing a method for regular "
@@ -4944,8 +5422,10 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:15 ../scenario-classic-ovs.rst:15
+#: ../scenario-classic-lb.rst:15 ../scenario-classic-mt.rst:15
+#: ../scenario-classic-ovs.rst:15
 msgid "Project (tenant) networks"
 msgstr ""
 
@@ -5027,24 +5507,26 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:66 ../scenario-classic-ovs.rst:65
-#: ../scenario-dvr-ovs.rst:25 ../scenario-l3ha-lb.rst:42
-#: ../scenario-l3ha-ovs.rst:36 ../scenario-provider-lb.rst:50
-#: ../scenario-provider-ovs.rst:43
+#: ../scenario-classic-lb.rst:66 ../scenario-classic-mt.rst:87
+#: ../scenario-classic-ovs.rst:65 ../scenario-dvr-ovs.rst:25
+#: ../scenario-l3ha-lb.rst:42 ../scenario-l3ha-ovs.rst:36
+#: ../scenario-provider-lb.rst:50 ../scenario-provider-ovs.rst:43
 msgid "Prerequisites"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:68 ../scenario-classic-ovs.rst:67
-#: ../scenario-dvr-ovs.rst:27
+#: ../scenario-classic-lb.rst:68 ../scenario-classic-mt.rst:89
+#: ../scenario-classic-ovs.rst:67 ../scenario-dvr-ovs.rst:27
 msgid ""
 "These prerequisites define the minimal physical infrastructure and immediate "
 "OpenStack service dependencies necessary to deploy this scenario. For "
@@ -5058,27 +5540,29 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:79 ../scenario-classic-ovs.rst:78
-#: ../scenario-dvr-ovs.rst:38 ../scenario-l3ha-lb.rst:56
-#: ../scenario-l3ha-ovs.rst:50 ../scenario-provider-lb.rst:65
-#: ../scenario-provider-ovs.rst:58
+#: ../scenario-classic-lb.rst:79 ../scenario-classic-mt.rst:100
+#: ../scenario-classic-ovs.rst:78 ../scenario-dvr-ovs.rst:38
+#: ../scenario-l3ha-lb.rst:56 ../scenario-l3ha-ovs.rst:50
+#: ../scenario-provider-lb.rst:65 ../scenario-provider-ovs.rst:58
 msgid "Infrastructure"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:81 ../scenario-classic-ovs.rst:80
-#: ../scenario-dvr-ovs.rst:40 ../scenario-l3ha-lb.rst:58
-#: ../scenario-l3ha-ovs.rst:52
+#: ../scenario-classic-lb.rst:81 ../scenario-classic-mt.rst:102
+#: ../scenario-classic-ovs.rst:80 ../scenario-dvr-ovs.rst:40
+#: ../scenario-l3ha-lb.rst:58 ../scenario-l3ha-ovs.rst:52
 msgid "One controller node with one network interface: management."
 msgstr ""
 
@@ -5094,7 +5578,9 @@ msgid ""
 "project tunnel networks, and VLAN project networks."
 msgstr ""
 
-#: ../scenario-classic-lb.rst:87
+# #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../scenario-classic-lb.rst:87 ../scenario-classic-mt.rst:108
 msgid ""
 "To improve understanding of network traffic flow, the network and compute "
 "nodes contain a separate network interface for VLAN project networks. In "
@@ -5126,16 +5612,17 @@ msgid "Using VXLAN project networks requires kernel 3.13 or newer."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:117 ../scenario-classic-ovs.rst:130
-#: ../scenario-dvr-ovs.rst:86 ../scenario-l3ha-lb.rst:95
-#: ../scenario-l3ha-ovs.rst:102 ../scenario-provider-lb.rst:86
-#: ../scenario-provider-ovs.rst:92
+#: ../scenario-classic-lb.rst:117 ../scenario-classic-mt.rst:127
+#: ../scenario-classic-ovs.rst:130 ../scenario-dvr-ovs.rst:86
+#: ../scenario-l3ha-lb.rst:95 ../scenario-l3ha-ovs.rst:102
+#: ../scenario-provider-lb.rst:86 ../scenario-provider-ovs.rst:92
 msgid "OpenStack services - controller node"
 msgstr ""
 
@@ -5221,10 +5708,11 @@ msgid "Neutron server service, ML2 plug-in, and any dependencies."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:130 ../scenario-classic-ovs.rst:144
-#: ../scenario-dvr-ovs.rst:99
+#: ../scenario-classic-lb.rst:130 ../scenario-classic-mt.rst:140
+#: ../scenario-classic-ovs.rst:144 ../scenario-dvr-ovs.rst:99
 msgid "OpenStack services - network node"
 msgstr ""
 
@@ -5237,16 +5725,17 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:138 ../scenario-classic-ovs.rst:152
-#: ../scenario-dvr-ovs.rst:107 ../scenario-l3ha-lb.rst:116
-#: ../scenario-l3ha-ovs.rst:124 ../scenario-provider-lb.rst:100
-#: ../scenario-provider-ovs.rst:106
+#: ../scenario-classic-lb.rst:138 ../scenario-classic-mt.rst:148
+#: ../scenario-classic-ovs.rst:152 ../scenario-dvr-ovs.rst:107
+#: ../scenario-l3ha-lb.rst:116 ../scenario-l3ha-ovs.rst:124
+#: ../scenario-provider-lb.rst:100 ../scenario-provider-ovs.rst:106
 msgid "OpenStack services - compute nodes"
 msgstr ""
 
@@ -5268,10 +5757,11 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:161 ../scenario-classic-ovs.rst:174
-#: ../scenario-dvr-ovs.rst:129
+#: ../scenario-classic-lb.rst:161 ../scenario-classic-mt.rst:171
+#: ../scenario-classic-ovs.rst:174 ../scenario-dvr-ovs.rst:129
 msgid "The network node contains the following network components:"
 msgstr ""
 
@@ -5317,14 +5807,16 @@ msgid "Metadata agent handling metadata operations for instances."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:180 ../scenario-classic-ovs.rst:193
-#: ../scenario-dvr-ovs.rst:155 ../scenario-l3ha-lb.rst:154
-#: ../scenario-provider-lb.rst:136 ../scenario-provider-ovs.rst:142
+#: ../scenario-classic-lb.rst:180 ../scenario-classic-mt.rst:176
+#: ../scenario-classic-ovs.rst:193 ../scenario-dvr-ovs.rst:155
+#: ../scenario-l3ha-lb.rst:154 ../scenario-provider-lb.rst:136
+#: ../scenario-provider-ovs.rst:142
 msgid "The compute nodes contain the following network components:"
 msgstr ""
 
@@ -5340,25 +5832,28 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:193 ../scenario-classic-ovs.rst:209
-#: ../scenario-dvr-ovs.rst:187 ../scenario-l3ha-lb.rst:169
-#: ../scenario-l3ha-ovs.rst:180 ../scenario-provider-lb.rst:154
-#: ../scenario-provider-ovs.rst:166
+#: ../scenario-classic-lb.rst:193 ../scenario-classic-mt.rst:189
+#: ../scenario-classic-ovs.rst:209 ../scenario-dvr-ovs.rst:187
+#: ../scenario-l3ha-lb.rst:169 ../scenario-l3ha-ovs.rst:180
+#: ../scenario-provider-lb.rst:154 ../scenario-provider-ovs.rst:166
 msgid "Packet flow"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:197 ../scenario-classic-ovs.rst:213
-#: ../scenario-provider-lb.rst:158 ../scenario-provider-ovs.rst:170
+#: ../scenario-classic-lb.rst:197 ../scenario-classic-mt.rst:193
+#: ../scenario-classic-ovs.rst:213 ../scenario-provider-lb.rst:158
+#: ../scenario-provider-ovs.rst:170
 msgid ""
 "*North-south* network traffic travels between an instance and external "
 "network, typically the Internet. *East-west* network traffic travels between "
@@ -5366,129 +5861,154 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:202 ../scenario-classic-ovs.rst:218
+#: ../scenario-classic-lb.rst:202 ../scenario-classic-mt.rst:198
+#: ../scenario-classic-ovs.rst:218
 msgid "Case 1: North-south for instances with a fixed IP address"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:204 ../scenario-classic-ovs.rst:220
+#: ../scenario-classic-lb.rst:204 ../scenario-classic-mt.rst:200
+#: ../scenario-classic-ovs.rst:220
 msgid ""
 "For instances with a fixed IP address, the network node routes *north-south* "
 "network traffic between project and external networks."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:207 ../scenario-classic-lb.rst:305
-#: ../scenario-classic-ovs.rst:223 ../scenario-classic-ovs.rst:316
-#: ../scenario-dvr-ovs.rst:196 ../scenario-dvr-ovs.rst:286
-#: ../scenario-provider-lb.rst:173 ../scenario-provider-ovs.rst:191
+#: ../scenario-classic-mt.rst:203 ../scenario-classic-ovs.rst:223
+#: ../scenario-classic-ovs.rst:316 ../scenario-dvr-ovs.rst:196
+#: ../scenario-dvr-ovs.rst:286 ../scenario-provider-lb.rst:173
+#: ../scenario-provider-ovs.rst:191
 msgid "External network"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:209 ../scenario-classic-lb.rst:307
-#: ../scenario-classic-ovs.rst:225 ../scenario-classic-ovs.rst:318
-#: ../scenario-dvr-ovs.rst:198 ../scenario-dvr-ovs.rst:288
-#: ../scenario-provider-lb.rst:175 ../scenario-provider-ovs.rst:193
+#: ../scenario-classic-mt.rst:205 ../scenario-classic-ovs.rst:225
+#: ../scenario-classic-ovs.rst:318 ../scenario-dvr-ovs.rst:198
+#: ../scenario-dvr-ovs.rst:288 ../scenario-provider-lb.rst:175
+#: ../scenario-provider-ovs.rst:193
 msgid "Network 203.0.113.0/24"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:210 ../scenario-classic-lb.rst:308
-#: ../scenario-classic-ovs.rst:226 ../scenario-classic-ovs.rst:319
+#: ../scenario-classic-mt.rst:206 ../scenario-classic-ovs.rst:226
+#: ../scenario-classic-ovs.rst:319
 msgid "IP address allocation from 203.0.113.101 to 203.0.113.200"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:211 ../scenario-classic-lb.rst:309
-#: ../scenario-classic-ovs.rst:227 ../scenario-classic-ovs.rst:320
-#: ../scenario-dvr-ovs.rst:201 ../scenario-dvr-ovs.rst:291
+#: ../scenario-classic-mt.rst:207 ../scenario-classic-ovs.rst:227
+#: ../scenario-classic-ovs.rst:320 ../scenario-dvr-ovs.rst:201
+#: ../scenario-dvr-ovs.rst:291
 msgid "Project network router interface 203.0.113.101 *TR*"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:213 ../scenario-classic-lb.rst:311
-#: ../scenario-classic-lb.rst:482 ../scenario-classic-ovs.rst:229
+#: ../scenario-classic-lb.rst:482 ../scenario-classic-mt.rst:209
+#: ../scenario-classic-mt.rst:325 ../scenario-classic-ovs.rst:229
 #: ../scenario-classic-ovs.rst:322 ../scenario-classic-ovs.rst:551
 #: ../scenario-dvr-ovs.rst:204 ../scenario-dvr-ovs.rst:293
 msgid "Project network"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:215 ../scenario-classic-lb.rst:313
-#: ../scenario-classic-ovs.rst:231 ../scenario-classic-ovs.rst:324
-#: ../scenario-dvr-ovs.rst:206 ../scenario-dvr-ovs.rst:295
-#: ../scenario-dvr-ovs.rst:385
+#: ../scenario-classic-mt.rst:211 ../scenario-classic-ovs.rst:231
+#: ../scenario-classic-ovs.rst:324 ../scenario-dvr-ovs.rst:206
+#: ../scenario-dvr-ovs.rst:295 ../scenario-dvr-ovs.rst:385
 msgid "Network 192.168.1.0/24"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:216 ../scenario-classic-lb.rst:314
-#: ../scenario-classic-ovs.rst:232 ../scenario-classic-ovs.rst:325
-#: ../scenario-dvr-ovs.rst:207 ../scenario-dvr-ovs.rst:296
+#: ../scenario-classic-mt.rst:212 ../scenario-classic-ovs.rst:232
+#: ../scenario-classic-ovs.rst:325 ../scenario-dvr-ovs.rst:207
+#: ../scenario-dvr-ovs.rst:296
 msgid "Gateway 192.168.1.1 with MAC address *TG*"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:218 ../scenario-classic-lb.rst:316
 #: ../scenario-classic-lb.rst:409 ../scenario-classic-lb.rst:486
-#: ../scenario-classic-ovs.rst:234 ../scenario-classic-ovs.rst:327
-#: ../scenario-classic-ovs.rst:420 ../scenario-classic-ovs.rst:555
-#: ../scenario-dvr-ovs.rst:209 ../scenario-dvr-ovs.rst:393
-#: ../scenario-provider-lb.rst:182 ../scenario-provider-lb.rst:236
-#: ../scenario-provider-lb.rst:302 ../scenario-provider-ovs.rst:200
-#: ../scenario-provider-ovs.rst:258 ../scenario-provider-ovs.rst:330
+#: ../scenario-classic-mt.rst:214 ../scenario-classic-mt.rst:274
+#: ../scenario-classic-mt.rst:329 ../scenario-classic-ovs.rst:234
+#: ../scenario-classic-ovs.rst:327 ../scenario-classic-ovs.rst:420
+#: ../scenario-classic-ovs.rst:555 ../scenario-dvr-ovs.rst:209
+#: ../scenario-dvr-ovs.rst:393 ../scenario-provider-lb.rst:182
+#: ../scenario-provider-lb.rst:236 ../scenario-provider-lb.rst:302
+#: ../scenario-provider-ovs.rst:200 ../scenario-provider-ovs.rst:258
+#: ../scenario-provider-ovs.rst:330
 msgid "Compute node 1"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:220 ../scenario-classic-ovs.rst:236
-#: ../scenario-dvr-ovs.rst:211 ../scenario-dvr-ovs.rst:395
+#: ../scenario-classic-lb.rst:220 ../scenario-classic-mt.rst:216
+#: ../scenario-classic-ovs.rst:236 ../scenario-dvr-ovs.rst:211
+#: ../scenario-dvr-ovs.rst:395
 msgid "Instance 1 192.168.1.11 with MAC address *I1*"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:222 ../scenario-classic-lb.rst:321
-#: ../scenario-classic-ovs.rst:238 ../scenario-classic-ovs.rst:332
-#: ../scenario-dvr-ovs.rst:214 ../scenario-dvr-ovs.rst:305
+#: ../scenario-classic-mt.rst:218 ../scenario-classic-ovs.rst:238
+#: ../scenario-classic-ovs.rst:332 ../scenario-dvr-ovs.rst:214
+#: ../scenario-dvr-ovs.rst:305
 msgid "Instance 1 resides on compute node 1 and uses a project network."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:223 ../scenario-classic-ovs.rst:239
-#: ../scenario-dvr-ovs.rst:215 ../scenario-provider-lb.rst:187
-#: ../scenario-provider-ovs.rst:205
+#: ../scenario-classic-lb.rst:223 ../scenario-classic-mt.rst:219
+#: ../scenario-classic-ovs.rst:239 ../scenario-dvr-ovs.rst:215
+#: ../scenario-provider-lb.rst:187 ../scenario-provider-ovs.rst:205
 msgid "The instance sends a packet to a host on the external network."
 msgstr ""
 
@@ -5499,17 +6019,20 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:230 ../scenario-classic-lb.rst:358
 #: ../scenario-classic-lb.rst:422 ../scenario-classic-lb.rst:500
-#: ../scenario-classic-ovs.rst:241 ../scenario-classic-ovs.rst:369
-#: ../scenario-classic-ovs.rst:433 ../scenario-classic-ovs.rst:569
-#: ../scenario-dvr-ovs.rst:223 ../scenario-dvr-ovs.rst:414
-#: ../scenario-provider-lb.rst:248 ../scenario-provider-lb.rst:315
-#: ../scenario-provider-ovs.rst:270 ../scenario-provider-ovs.rst:343
+#: ../scenario-classic-mt.rst:221 ../scenario-classic-mt.rst:287
+#: ../scenario-classic-mt.rst:343 ../scenario-classic-ovs.rst:241
+#: ../scenario-classic-ovs.rst:369 ../scenario-classic-ovs.rst:433
+#: ../scenario-classic-ovs.rst:569 ../scenario-dvr-ovs.rst:223
+#: ../scenario-dvr-ovs.rst:414 ../scenario-provider-lb.rst:248
+#: ../scenario-provider-lb.rst:315 ../scenario-provider-ovs.rst:270
+#: ../scenario-provider-ovs.rst:343
 msgid "The following steps involve compute node 1:"
 msgstr ""
 
@@ -5545,9 +6068,11 @@ msgid "The physical tunnel interface forwards the packet to the network node."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:245 ../scenario-classic-lb.rst:272
 #: ../scenario-classic-lb.rst:348 ../scenario-classic-lb.rst:372
+#: ../scenario-classic-mt.rst:223 ../scenario-classic-mt.rst:235
 #: ../scenario-classic-ovs.rst:252 ../scenario-classic-ovs.rst:272
 #: ../scenario-classic-ovs.rst:351 ../scenario-classic-ovs.rst:371
 #: ../scenario-classic-ovs.rst:444 ../scenario-classic-ovs.rst:464
@@ -5576,17 +6101,22 @@ msgid ""
 "interface and *sid* contains the project network segmentation ID."
 msgstr ""
 
-#: ../scenario-classic-lb.rst:256
+# #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../scenario-classic-lb.rst:256 ../scenario-classic-mt.rst:230
+#: ../scenario-classic-mt.rst:294
 msgid ""
 "The logical VLAN interface ``device.sid`` forwards the packet to the network "
 "node via the physical VLAN interface."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:259 ../scenario-classic-lb.rst:329
-#: ../scenario-classic-lb.rst:435 ../scenario-classic-ovs.rst:270
+#: ../scenario-classic-lb.rst:435 ../scenario-classic-mt.rst:233
+#: ../scenario-classic-mt.rst:297 ../scenario-classic-ovs.rst:270
 #: ../scenario-classic-ovs.rst:335 ../scenario-classic-ovs.rst:462
 #: ../scenario-dvr-ovs.rst:250
 msgid "The following steps involve the network node:"
@@ -5654,30 +6184,36 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:294 ../scenario-classic-lb.rst:387
 #: ../scenario-classic-lb.rst:470 ../scenario-classic-lb.rst:526
-#: ../scenario-classic-ovs.rst:305 ../scenario-classic-ovs.rst:398
-#: ../scenario-classic-ovs.rst:539 ../scenario-classic-ovs.rst:627
-#: ../scenario-dvr-ovs.rst:271 ../scenario-provider-lb.rst:215
-#: ../scenario-provider-lb.rst:287 ../scenario-provider-lb.rst:348
-#: ../scenario-provider-ovs.rst:237 ../scenario-provider-ovs.rst:315
-#: ../scenario-provider-ovs.rst:382
+#: ../scenario-classic-mt.rst:243 ../scenario-classic-mt.rst:313
+#: ../scenario-classic-mt.rst:363 ../scenario-classic-ovs.rst:305
+#: ../scenario-classic-ovs.rst:398 ../scenario-classic-ovs.rst:539
+#: ../scenario-classic-ovs.rst:627 ../scenario-dvr-ovs.rst:271
+#: ../scenario-provider-lb.rst:215 ../scenario-provider-lb.rst:287
+#: ../scenario-provider-lb.rst:348 ../scenario-provider-ovs.rst:237
+#: ../scenario-provider-ovs.rst:315 ../scenario-provider-ovs.rst:382
 msgid "Return traffic follows similar steps in reverse."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:300 ../scenario-classic-ovs.rst:311
+#: ../scenario-classic-lb.rst:300 ../scenario-classic-mt.rst:249
+#: ../scenario-classic-ovs.rst:311
 msgid "Case 2: North-south for instances with a floating IP address"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:302 ../scenario-classic-ovs.rst:313
+#: ../scenario-classic-lb.rst:302 ../scenario-classic-mt.rst:251
+#: ../scenario-classic-ovs.rst:313
 msgid ""
 "For instances with a floating IP address, the network node routes *north-"
 "south* network traffic between project and external networks."
@@ -5778,14 +6314,18 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:393 ../scenario-classic-ovs.rst:404
+#: ../scenario-classic-lb.rst:393 ../scenario-classic-mt.rst:258
+#: ../scenario-classic-ovs.rst:404
 msgid "Case 3: East-west for instances on different networks"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:395 ../scenario-classic-ovs.rst:406
+#: ../scenario-classic-lb.rst:395 ../scenario-classic-mt.rst:260
+#: ../scenario-classic-ovs.rst:406
 msgid ""
 "For instances with a fixed or floating IP address, the network node routes "
 "*east-west* network traffic among project networks using the same project "
@@ -5793,59 +6333,73 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:399 ../scenario-classic-ovs.rst:410
-#: ../scenario-dvr-ovs.rst:383
+#: ../scenario-classic-lb.rst:399 ../scenario-classic-mt.rst:264
+#: ../scenario-classic-ovs.rst:410 ../scenario-dvr-ovs.rst:383
 msgid "Project network 1"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:401 ../scenario-classic-lb.rst:484
+#: ../scenario-classic-mt.rst:266 ../scenario-classic-mt.rst:327
 #: ../scenario-classic-ovs.rst:412 ../scenario-classic-ovs.rst:553
 msgid "Network: 192.168.1.0/24"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:402 ../scenario-classic-ovs.rst:413
+#: ../scenario-classic-lb.rst:402 ../scenario-classic-mt.rst:267
+#: ../scenario-classic-ovs.rst:413
 msgid "Gateway: 192.168.1.1 with MAC address *TG1*"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:404 ../scenario-classic-ovs.rst:415
-#: ../scenario-dvr-ovs.rst:388
+#: ../scenario-classic-lb.rst:404 ../scenario-classic-mt.rst:269
+#: ../scenario-classic-ovs.rst:415 ../scenario-dvr-ovs.rst:388
 msgid "Project network 2"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:406 ../scenario-classic-ovs.rst:417
+#: ../scenario-classic-lb.rst:406 ../scenario-classic-mt.rst:271
+#: ../scenario-classic-ovs.rst:417
 msgid "Network: 192.168.2.0/24"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:407 ../scenario-classic-ovs.rst:418
+#: ../scenario-classic-lb.rst:407 ../scenario-classic-mt.rst:272
+#: ../scenario-classic-ovs.rst:418
 msgid "Gateway: 192.168.2.1 with MAC address *TG2*"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:411 ../scenario-classic-lb.rst:488
+#: ../scenario-classic-mt.rst:276 ../scenario-classic-mt.rst:331
 #: ../scenario-classic-ovs.rst:422 ../scenario-classic-ovs.rst:557
 msgid "Instance 1: 192.168.1.11 with MAC address *I1*"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:413 ../scenario-classic-lb.rst:490
+#: ../scenario-classic-mt.rst:278 ../scenario-classic-mt.rst:333
 #: ../scenario-classic-ovs.rst:424 ../scenario-classic-ovs.rst:559
 #: ../scenario-dvr-ovs.rst:398 ../scenario-provider-lb.rst:240
 #: ../scenario-provider-lb.rst:306 ../scenario-provider-ovs.rst:262
@@ -5854,8 +6408,10 @@ msgid "Compute node 2"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:415 ../scenario-classic-ovs.rst:426
+#: ../scenario-classic-lb.rst:415 ../scenario-classic-mt.rst:280
+#: ../scenario-classic-ovs.rst:426
 msgid "Instance 2: 192.168.2.11 with MAC address *I2*"
 msgstr ""
 
@@ -5863,22 +6419,28 @@ msgstr ""
 msgid "Instance 1 resides on compute node 1 and uses VXLAN project network 1."
 msgstr ""
 
-#: ../scenario-classic-lb.rst:418
+# #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../scenario-classic-lb.rst:418 ../scenario-classic-mt.rst:283
 msgid "Instance 2 resides on compute node 2 and uses VLAN project network 2."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:419 ../scenario-classic-ovs.rst:430
+#: ../scenario-classic-lb.rst:419 ../scenario-classic-mt.rst:284
+#: ../scenario-classic-ovs.rst:430
 msgid "Both project networks reside on the same router."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:420 ../scenario-classic-lb.rst:497
+#: ../scenario-classic-mt.rst:285 ../scenario-classic-mt.rst:340
 #: ../scenario-classic-ovs.rst:431 ../scenario-classic-ovs.rst:566
 #: ../scenario-dvr-ovs.rst:406 ../scenario-provider-lb.rst:246
 #: ../scenario-provider-lb.rst:313 ../scenario-provider-ovs.rst:268
@@ -5918,11 +6480,13 @@ msgid "The physical VLAN interface forwards the packet to compute node 2."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:456 ../scenario-classic-lb.rst:512
+#: ../scenario-classic-mt.rst:303 ../scenario-classic-mt.rst:353
 #: ../scenario-classic-ovs.rst:510 ../scenario-classic-ovs.rst:598
 #: ../scenario-dvr-ovs.rst:442 ../scenario-provider-lb.rst:272
 #: ../scenario-provider-lb.rst:333 ../scenario-provider-ovs.rst:298
@@ -5956,14 +6520,18 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:476 ../scenario-classic-ovs.rst:545
+#: ../scenario-classic-lb.rst:476 ../scenario-classic-mt.rst:319
+#: ../scenario-classic-ovs.rst:545
 msgid "Case 4: East-west for instances on the same network"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:478 ../scenario-classic-ovs.rst:547
+#: ../scenario-classic-lb.rst:478 ../scenario-classic-mt.rst:321
+#: ../scenario-classic-ovs.rst:547
 msgid ""
 "For instances with a fixed or floating IP address, the project network "
 "switches *east-west* network traffic among instances without using a project "
@@ -5971,26 +6539,32 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:492 ../scenario-classic-ovs.rst:561
+#: ../scenario-classic-lb.rst:492 ../scenario-classic-mt.rst:335
+#: ../scenario-classic-ovs.rst:561
 msgid "Instance 2: 192.168.1.12 with MAC address *I2*"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:494 ../scenario-classic-ovs.rst:563
-#: ../scenario-provider-lb.rst:310 ../scenario-provider-ovs.rst:338
+#: ../scenario-classic-lb.rst:494 ../scenario-classic-mt.rst:337
+#: ../scenario-classic-ovs.rst:563 ../scenario-provider-lb.rst:310
+#: ../scenario-provider-ovs.rst:338
 msgid "Instance 1 resides on compute node 1."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:495 ../scenario-classic-ovs.rst:564
-#: ../scenario-provider-lb.rst:311 ../scenario-provider-ovs.rst:339
+#: ../scenario-classic-lb.rst:495 ../scenario-classic-mt.rst:338
+#: ../scenario-classic-ovs.rst:564 ../scenario-provider-lb.rst:311
+#: ../scenario-provider-ovs.rst:339
 msgid "Instance 2 resides on compute node 2."
 msgstr ""
 
@@ -6026,50 +6600,54 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:532 ../scenario-classic-ovs.rst:633
-#: ../scenario-dvr-ovs.rst:473 ../scenario-l3ha-lb.rst:194
-#: ../scenario-l3ha-ovs.rst:205 ../scenario-provider-lb.rst:354
-#: ../scenario-provider-ovs.rst:388
+#: ../scenario-classic-lb.rst:532 ../scenario-classic-mt.rst:369
+#: ../scenario-classic-ovs.rst:633 ../scenario-dvr-ovs.rst:473
+#: ../scenario-l3ha-lb.rst:194 ../scenario-l3ha-ovs.rst:205
+#: ../scenario-provider-lb.rst:354 ../scenario-provider-ovs.rst:388
 msgid "Example configuration"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:534 ../scenario-classic-ovs.rst:635
-#: ../scenario-dvr-ovs.rst:475 ../scenario-l3ha-lb.rst:196
-#: ../scenario-l3ha-ovs.rst:207 ../scenario-provider-lb.rst:356
-#: ../scenario-provider-ovs.rst:390
+#: ../scenario-classic-lb.rst:534 ../scenario-classic-mt.rst:371
+#: ../scenario-classic-ovs.rst:635 ../scenario-dvr-ovs.rst:475
+#: ../scenario-l3ha-lb.rst:196 ../scenario-l3ha-ovs.rst:207
+#: ../scenario-provider-lb.rst:356 ../scenario-provider-ovs.rst:390
 msgid ""
 "Use the following example configuration as a template to deploy this "
 "scenario in your environment."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:538 ../scenario-classic-ovs.rst:639
-#: ../scenario-dvr-ovs.rst:483 ../scenario-l3ha-lb.rst:200
-#: ../scenario-l3ha-ovs.rst:211 ../scenario-provider-lb.rst:365
-#: ../scenario-provider-ovs.rst:399
+#: ../scenario-classic-lb.rst:538 ../scenario-classic-mt.rst:375
+#: ../scenario-classic-ovs.rst:639 ../scenario-dvr-ovs.rst:483
+#: ../scenario-l3ha-lb.rst:200 ../scenario-l3ha-ovs.rst:211
+#: ../scenario-provider-lb.rst:365 ../scenario-provider-ovs.rst:399
 msgid "Controller node"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -6077,7 +6655,8 @@ msgstr ""
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:540 ../scenario-classic-lb.rst:594
-#: ../scenario-classic-lb.rst:688 ../scenario-classic-ovs.rst:641
+#: ../scenario-classic-lb.rst:688 ../scenario-classic-mt.rst:377
+#: ../scenario-classic-mt.rst:430 ../scenario-classic-ovs.rst:641
 #: ../scenario-classic-ovs.rst:698 ../scenario-classic-ovs.rst:789
 #: ../scenario-dvr-ovs.rst:485 ../scenario-dvr-ovs.rst:551
 #: ../scenario-dvr-ovs.rst:645 ../scenario-l3ha-lb.rst:202
@@ -6090,14 +6669,16 @@ msgid "Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:550 ../scenario-classic-ovs.rst:651
-#: ../scenario-dvr-ovs.rst:503 ../scenario-l3ha-lb.rst:218
-#: ../scenario-l3ha-ovs.rst:229 ../scenario-provider-ovs.rst:419
+#: ../scenario-classic-lb.rst:550 ../scenario-classic-mt.rst:387
+#: ../scenario-classic-ovs.rst:651 ../scenario-dvr-ovs.rst:503
+#: ../scenario-l3ha-lb.rst:218 ../scenario-l3ha-ovs.rst:229
+#: ../scenario-provider-ovs.rst:419
 msgid ""
 "Configure the ML2 plug-in. Edit the ``/etc/neutron/plugins/ml2/ml2_conf."
 "ini`` file:"
@@ -6113,28 +6694,33 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:579 ../scenario-classic-ovs.rst:683
-#: ../scenario-l3ha-lb.rst:247 ../scenario-l3ha-ovs.rst:261
+#: ../scenario-classic-lb.rst:579 ../scenario-classic-mt.rst:409
+#: ../scenario-classic-ovs.rst:683 ../scenario-l3ha-lb.rst:247
+#: ../scenario-l3ha-ovs.rst:261
 msgid ""
 "The first value in the ``tenant_network_types`` option becomes the default "
 "project network type when a regular user creates a network."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:584 ../scenario-classic-ovs.rst:688
-#: ../scenario-l3ha-lb.rst:252 ../scenario-l3ha-ovs.rst:266
+#: ../scenario-classic-lb.rst:584 ../scenario-classic-mt.rst:414
+#: ../scenario-classic-ovs.rst:688 ../scenario-l3ha-lb.rst:252
+#: ../scenario-l3ha-ovs.rst:266
 msgid ""
 "The ``external`` value in the ``network_vlan_ranges`` option lacks VLAN ID "
 "ranges to support use of arbitrary VLAN IDs by administrative users."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -6142,7 +6728,8 @@ msgstr ""
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:587 ../scenario-classic-lb.rst:678
-#: ../scenario-classic-lb.rst:720 ../scenario-classic-ovs.rst:691
+#: ../scenario-classic-lb.rst:720 ../scenario-classic-mt.rst:417
+#: ../scenario-classic-mt.rst:453 ../scenario-classic-ovs.rst:691
 #: ../scenario-classic-ovs.rst:778 ../scenario-classic-ovs.rst:817
 #: ../scenario-dvr-ovs.rst:544 ../scenario-dvr-ovs.rst:634
 #: ../scenario-dvr-ovs.rst:702 ../scenario-l3ha-lb.rst:255
@@ -6155,10 +6742,11 @@ msgid "Start the following services:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:592 ../scenario-classic-ovs.rst:696
-#: ../scenario-dvr-ovs.rst:549
+#: ../scenario-classic-lb.rst:592 ../scenario-classic-mt.rst:422
+#: ../scenario-classic-ovs.rst:696 ../scenario-dvr-ovs.rst:549
 msgid "Network node"
 msgstr ""
 
@@ -6319,16 +6907,17 @@ msgid "Metadata agent"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:686 ../scenario-classic-ovs.rst:787
-#: ../scenario-dvr-ovs.rst:643 ../scenario-l3ha-lb.rst:358
-#: ../scenario-l3ha-ovs.rst:366 ../scenario-provider-lb.rst:454
-#: ../scenario-provider-ovs.rst:502
+#: ../scenario-classic-lb.rst:686 ../scenario-classic-mt.rst:428
+#: ../scenario-classic-ovs.rst:787 ../scenario-dvr-ovs.rst:643
+#: ../scenario-l3ha-lb.rst:358 ../scenario-l3ha-ovs.rst:366
+#: ../scenario-provider-lb.rst:454 ../scenario-provider-ovs.rst:502
 msgid "Compute nodes"
 msgstr ""
 
@@ -6341,44 +6930,47 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:725 ../scenario-classic-ovs.rst:823
-#: ../scenario-dvr-ovs.rst:710 ../scenario-l3ha-lb.rst:397
-#: ../scenario-l3ha-ovs.rst:402 ../scenario-provider-lb.rst:489
-#: ../scenario-provider-ovs.rst:551
+#: ../scenario-classic-lb.rst:725 ../scenario-classic-mt.rst:458
+#: ../scenario-classic-ovs.rst:823 ../scenario-dvr-ovs.rst:710
+#: ../scenario-l3ha-lb.rst:397 ../scenario-l3ha-ovs.rst:402
+#: ../scenario-provider-lb.rst:489 ../scenario-provider-ovs.rst:551
 msgid "Verify service operation"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:728 ../scenario-classic-ovs.rst:826
-#: ../scenario-dvr-ovs.rst:713 ../scenario-l3ha-lb.rst:400
-#: ../scenario-l3ha-ovs.rst:405 ../scenario-provider-lb.rst:492
-#: ../scenario-provider-ovs.rst:554
+#: ../scenario-classic-lb.rst:728 ../scenario-classic-mt.rst:461
+#: ../scenario-classic-ovs.rst:826 ../scenario-dvr-ovs.rst:713
+#: ../scenario-l3ha-lb.rst:400 ../scenario-l3ha-ovs.rst:405
+#: ../scenario-provider-lb.rst:492 ../scenario-provider-ovs.rst:554
 msgid "Verify presence and operation of the agents:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:746 ../scenario-classic-ovs.rst:844
-#: ../scenario-dvr-ovs.rst:735 ../scenario-l3ha-lb.rst:422
-#: ../scenario-l3ha-ovs.rst:427 ../scenario-provider-lb.rst:508
-#: ../scenario-provider-ovs.rst:570
+#: ../scenario-classic-lb.rst:746 ../scenario-classic-mt.rst:479
+#: ../scenario-classic-ovs.rst:844 ../scenario-dvr-ovs.rst:735
+#: ../scenario-l3ha-lb.rst:422 ../scenario-l3ha-ovs.rst:427
+#: ../scenario-provider-lb.rst:508 ../scenario-provider-ovs.rst:570
 msgid "Create initial networks"
 msgstr ""
 
@@ -6395,24 +6987,26 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:751 ../scenario-classic-ovs.rst:849
-#: ../scenario-dvr-ovs.rst:740 ../scenario-l3ha-lb.rst:427
-#: ../scenario-l3ha-ovs.rst:432
+#: ../scenario-classic-lb.rst:751 ../scenario-classic-mt.rst:484
+#: ../scenario-classic-ovs.rst:849 ../scenario-dvr-ovs.rst:740
+#: ../scenario-l3ha-lb.rst:427 ../scenario-l3ha-ovs.rst:432
 msgid "Create the external network:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:775 ../scenario-classic-ovs.rst:873
-#: ../scenario-dvr-ovs.rst:764 ../scenario-l3ha-lb.rst:451
-#: ../scenario-l3ha-ovs.rst:456
+#: ../scenario-classic-lb.rst:775 ../scenario-classic-mt.rst:508
+#: ../scenario-classic-ovs.rst:873 ../scenario-dvr-ovs.rst:764
+#: ../scenario-l3ha-lb.rst:451 ../scenario-l3ha-ovs.rst:456
 msgid "Create a subnet on the external network:"
 msgstr ""
 
@@ -6439,21 +7033,25 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:824 ../scenario-classic-ovs.rst:922
-#: ../scenario-dvr-ovs.rst:812 ../scenario-l3ha-ovs.rst:505
+#: ../scenario-classic-lb.rst:824 ../scenario-classic-mt.rst:535
+#: ../scenario-classic-ovs.rst:922 ../scenario-dvr-ovs.rst:812
+#: ../scenario-l3ha-ovs.rst:505
 msgid "Create the project network:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../scenario-classic-lb.rst:848 ../scenario-classic-lb.rst:955
+#: ../scenario-classic-mt.rst:537 ../scenario-classic-mt.rst:666
 #: ../scenario-classic-ovs.rst:946 ../scenario-classic-ovs.rst:1053
 #: ../scenario-l3ha-lb.rst:525 ../scenario-l3ha-ovs.rst:786
 #: ../scenario-provider-lb.rst:583 ../scenario-provider-ovs.rst:645
@@ -6463,81 +7061,93 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:850 ../scenario-classic-ovs.rst:948
-#: ../scenario-dvr-ovs.rst:837 ../scenario-l3ha-lb.rst:527
-#: ../scenario-l3ha-ovs.rst:532
+#: ../scenario-classic-lb.rst:850 ../scenario-classic-mt.rst:561
+#: ../scenario-classic-ovs.rst:948 ../scenario-dvr-ovs.rst:837
+#: ../scenario-l3ha-lb.rst:527 ../scenario-l3ha-ovs.rst:532
 msgid "Create a subnet on the project network:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:876 ../scenario-classic-ovs.rst:974
-#: ../scenario-l3ha-lb.rst:553 ../scenario-l3ha-ovs.rst:558
+#: ../scenario-classic-lb.rst:876 ../scenario-classic-mt.rst:587
+#: ../scenario-classic-ovs.rst:974 ../scenario-l3ha-lb.rst:553
+#: ../scenario-l3ha-ovs.rst:558
 msgid "Create a project router:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:894 ../scenario-classic-ovs.rst:993
-#: ../scenario-l3ha-ovs.rst:585
+#: ../scenario-classic-lb.rst:894 ../scenario-classic-mt.rst:605
+#: ../scenario-classic-ovs.rst:993 ../scenario-l3ha-ovs.rst:585
 msgid "Add the project subnet as an interface on the router:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:901 ../scenario-classic-ovs.rst:1000
-#: ../scenario-l3ha-lb.rst:587 ../scenario-l3ha-ovs.rst:592
+#: ../scenario-classic-lb.rst:901 ../scenario-classic-mt.rst:612
+#: ../scenario-classic-ovs.rst:1000 ../scenario-l3ha-lb.rst:587
+#: ../scenario-l3ha-ovs.rst:592
 msgid "Add a gateway to the external network on the router:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:909 ../scenario-classic-ovs.rst:1008
-#: ../scenario-dvr-ovs.rst:905 ../scenario-l3ha-lb.rst:595
-#: ../scenario-l3ha-ovs.rst:600 ../scenario-provider-lb.rst:570
-#: ../scenario-provider-ovs.rst:632
+#: ../scenario-classic-lb.rst:909 ../scenario-classic-mt.rst:620
+#: ../scenario-classic-ovs.rst:1008 ../scenario-dvr-ovs.rst:905
+#: ../scenario-l3ha-lb.rst:595 ../scenario-l3ha-ovs.rst:600
+#: ../scenario-provider-lb.rst:570 ../scenario-provider-ovs.rst:632
 msgid "Verify network operation"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:911 ../scenario-classic-ovs.rst:1010
+#: ../scenario-classic-lb.rst:911 ../scenario-classic-mt.rst:622
+#: ../scenario-classic-ovs.rst:1010
 msgid ""
 "On the network node, verify creation of the ``qrouter`` and ``qdhcp`` "
 "namespaces:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:922 ../scenario-classic-ovs.rst:1020
-#: ../scenario-provider-lb.rst:581 ../scenario-provider-ovs.rst:643
+#: ../scenario-classic-lb.rst:922 ../scenario-classic-mt.rst:633
+#: ../scenario-classic-ovs.rst:1020 ../scenario-provider-lb.rst:581
+#: ../scenario-provider-ovs.rst:643
 msgid "The ``qdhcp`` namespace might not exist until launching an instance."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:924 ../scenario-classic-ovs.rst:1022
-#: ../scenario-dvr-ovs.rst:922 ../scenario-l3ha-lb.rst:748
-#: ../scenario-l3ha-ovs.rst:753
+#: ../scenario-classic-lb.rst:924 ../scenario-classic-mt.rst:635
+#: ../scenario-classic-ovs.rst:1022 ../scenario-dvr-ovs.rst:922
+#: ../scenario-l3ha-lb.rst:748 ../scenario-l3ha-ovs.rst:753
 msgid ""
 "Determine the external network gateway IP address for the project network on "
 "the router, typically the lowest IP address in the external subnet IP "
@@ -6545,59 +7155,64 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:939 ../scenario-classic-ovs.rst:1037
-#: ../scenario-dvr-ovs.rst:936 ../scenario-l3ha-lb.rst:765
-#: ../scenario-l3ha-ovs.rst:770
+#: ../scenario-classic-lb.rst:939 ../scenario-classic-mt.rst:650
+#: ../scenario-classic-ovs.rst:1037 ../scenario-dvr-ovs.rst:936
+#: ../scenario-l3ha-lb.rst:765 ../scenario-l3ha-ovs.rst:770
 msgid ""
 "On the controller node or any host with access to the external network, ping "
 "the external network gateway IP address on the project router:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:957 ../scenario-classic-ovs.rst:1055
-#: ../scenario-dvr-ovs.rst:953
+#: ../scenario-classic-lb.rst:957 ../scenario-classic-mt.rst:668
+#: ../scenario-classic-ovs.rst:1055 ../scenario-dvr-ovs.rst:953
 msgid "Launch an instance with an interface on the project network."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:958 ../scenario-classic-ovs.rst:1056
-#: ../scenario-dvr-ovs.rst:962 ../scenario-l3ha-lb.rst:843
-#: ../scenario-l3ha-ovs.rst:848
+#: ../scenario-classic-lb.rst:958 ../scenario-classic-mt.rst:669
+#: ../scenario-classic-ovs.rst:1056 ../scenario-dvr-ovs.rst:962
+#: ../scenario-l3ha-lb.rst:843 ../scenario-l3ha-ovs.rst:848
 msgid "Obtain console access to the instance."
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:960 ../scenario-classic-ovs.rst:1058
-#: ../scenario-dvr-ovs.rst:964 ../scenario-l3ha-lb.rst:845
-#: ../scenario-l3ha-ovs.rst:850
+#: ../scenario-classic-lb.rst:960 ../scenario-classic-mt.rst:671
+#: ../scenario-classic-ovs.rst:1058 ../scenario-dvr-ovs.rst:964
+#: ../scenario-l3ha-lb.rst:845 ../scenario-l3ha-ovs.rst:850
 msgid "Test connectivity to the project router:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-provider-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:975 ../scenario-classic-ovs.rst:1073
-#: ../scenario-dvr-ovs.rst:979 ../scenario-l3ha-lb.rst:860
-#: ../scenario-l3ha-ovs.rst:865 ../scenario-provider-lb.rst:681
-#: ../scenario-provider-ovs.rst:743
+#: ../scenario-classic-lb.rst:975 ../scenario-classic-mt.rst:686
+#: ../scenario-classic-ovs.rst:1073 ../scenario-dvr-ovs.rst:979
+#: ../scenario-l3ha-lb.rst:860 ../scenario-l3ha-ovs.rst:865
+#: ../scenario-provider-lb.rst:681 ../scenario-provider-ovs.rst:743
 msgid "Test connectivity to the Internet:"
 msgstr ""
 
@@ -6618,49 +7233,334 @@ msgid ""
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:1011 ../scenario-classic-ovs.rst:1107
-#: ../scenario-dvr-ovs.rst:1015 ../scenario-l3ha-lb.rst:875
-#: ../scenario-l3ha-ovs.rst:880
+#: ../scenario-classic-lb.rst:1011 ../scenario-classic-mt.rst:701
+#: ../scenario-classic-ovs.rst:1107 ../scenario-dvr-ovs.rst:1015
+#: ../scenario-l3ha-lb.rst:875 ../scenario-l3ha-ovs.rst:880
 msgid "Create a floating IP address on the external network:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:1030 ../scenario-classic-ovs.rst:1125
-#: ../scenario-dvr-ovs.rst:1035 ../scenario-l3ha-lb.rst:895
-#: ../scenario-l3ha-ovs.rst:900
+#: ../scenario-classic-lb.rst:1030 ../scenario-classic-mt.rst:720
+#: ../scenario-classic-ovs.rst:1125 ../scenario-dvr-ovs.rst:1035
+#: ../scenario-l3ha-lb.rst:895 ../scenario-l3ha-ovs.rst:900
 msgid "Associate the floating IP address with the instance:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:1036 ../scenario-classic-ovs.rst:1131
-#: ../scenario-dvr-ovs.rst:1041 ../scenario-l3ha-lb.rst:901
-#: ../scenario-l3ha-ovs.rst:906
+#: ../scenario-classic-lb.rst:1036 ../scenario-classic-mt.rst:726
+#: ../scenario-classic-ovs.rst:1131 ../scenario-dvr-ovs.rst:1041
+#: ../scenario-l3ha-lb.rst:901 ../scenario-l3ha-ovs.rst:906
 msgid "Verify addition of the floating IP address to the instance:"
 msgstr ""
 
 # #-#-#-#-#  scenario-classic-lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario-classic-mt.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-classic-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-dvr-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario-l3ha-ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario-classic-lb.rst:1048 ../scenario-classic-ovs.rst:1142
-#: ../scenario-dvr-ovs.rst:1061 ../scenario-l3ha-lb.rst:913
-#: ../scenario-l3ha-ovs.rst:918
+#: ../scenario-classic-lb.rst:1048 ../scenario-classic-mt.rst:738
+#: ../scenario-classic-ovs.rst:1142 ../scenario-dvr-ovs.rst:1061
+#: ../scenario-l3ha-lb.rst:913 ../scenario-l3ha-ovs.rst:918
 msgid ""
 "On the controller node or any host with access to the external network, ping "
 "the floating IP address associated with the instance:"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:5
+msgid "Scenario: Classic with Macvtap"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:7
+msgid ""
+"This scenario describes a classic implementation of the OpenStack Networking "
+"service using the ML2 plug-in with Macvtap."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:17
+msgid ""
+"Project networks provide connectivity to instances for a particular project. "
+"Regular (non-privileged) users can manage project networks within the "
+"allocation that an administrator or operator defines for them. Project "
+"networks can use VLAN transport methods. Project networks generally use "
+"private IP address ranges (RFC1918) and lack connectivity to external "
+"networks such as the Internet. Networking refers to IP addresses on project "
+"networks as *fixed* IP addresses."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:27
+msgid ""
+"Provider networks provide connectivity like project networks. But only "
+"administrative (privileged) users can manage those networks because they "
+"interface with the physical network infrastructure. Provider networks can "
+"use flat or VLAN transport methods depending on the physical network "
+"infrastructure. Like project networks, provider networks typically use "
+"private IP address ranges."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:36
+msgid ""
+"A flat network essentially uses the untagged or native VLAN. Similar to "
+"layer-2 properties of physical networks, only one flat network can exist per "
+"external bridge. In most cases, production deployments should use VLAN "
+"transport for provider networks."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:41
+msgid ""
+"The example configuration creates one flat external network and one VLAN "
+"project network. However, this configuration also supports VLAN external "
+"networks. The Macvtap agent does not support VXLAN and GRE project networks."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:48
+msgid ""
+"Security Group is not supported. You must configure the NoopFirewallDriver "
+"as described below."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:51
+msgid "Address Resolution Protocol (ARP) spoofing filtering is not supported."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:53
+msgid ""
+"Only compute resources can be attached via macvtap. Attaching other "
+"resources like DHCP, Routers and others is not supported. Therefore run "
+"either OVS or linux bridge in VLAN or flat mode on the controller node."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:57
+msgid ""
+"Migration requires the same ``physical_interface_mapping`` configuration on "
+"each host. It is not recommended to use different mappings, like node1 uses "
+"``physnet1:eth1`` but node2 uses ``physnet1:eth2``. Having different "
+"mappings could"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:62
+msgid ""
+"cause migration to fail, if the interface configured on the source node does "
+"not exist on the target node"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:65
+msgid ""
+"result in an instance placed on the wrong physical network, if the interface "
+"used on the source node exists on the target node, but is used by another "
+"physical network or not used at all by OpenStack. Such an instance does not "
+"have access to its configured networks anymore. It then has layer 2 "
+"connectivity to either another OpenStack network, or one of the hosts "
+"networks."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:74
+msgid ""
+"To get around those problems, make sure that your "
+"``physical_interface_mapping`` is in sync between all nodes using the "
+"macvtap agent. This `bug <https://bugs.launchpad.net/neutron/+bug/1550400>`_ "
+"tracks the progress on overcoming this limitation."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:80
+msgid ""
+"Only centralized routing on the network node is supported (using either the "
+"Open vSwitch or the Linux bridge agent). DVR is NOT supported."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:83
+msgid ""
+"GRE (Generic Routing Encapsulation) and VXLAN (Virtual Extensible LAN) are "
+"not supported."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:103
+msgid ""
+"One network node with three network interfaces: management, VLAN project "
+"networks, and external (typically the Internet)."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:105
+msgid ""
+"At least one compute node with two network interfaces: management, and VLAN "
+"project networks."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:113
+msgid ""
+"In the example configuration, the management network uses 10.0.0.0/24, and "
+"the external network uses 203.0.113.0/24. The VLAN network does not require "
+"an IP address range because it only handles layer-2 connectivity."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:129
+msgid ""
+"Operational SQL server with ``neutron`` database and appropriate "
+"configuration in the ``/etc/neutron/neutron.conf`` file"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:131
+msgid ""
+"Operational message queue service with appropriate configuration in the ``/"
+"etc/neutron/neutron.conf`` file"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:133 ../scenario-classic-mt.rst:142
+#: ../scenario-classic-mt.rst:150
+msgid ""
+"Operational OpenStack Identity service with appropriate configuration in the "
+"``/etc/neutron/neutron.conf`` file"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:135 ../scenario-classic-mt.rst:152
+msgid ""
+"Operational OpenStack Compute controller/management service with appropriate "
+"configuration to use neutron in the ``/etc/nova/nova.conf`` file"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:137
+msgid "Neutron server service, ML2 plug-in, and any dependencies"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:144
+msgid ""
+"Linux bridge or Open vSwitch agent, L3 agent, DHCP agent, metadata agent, "
+"and any dependencies"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:154
+msgid "Macvtap agent and any dependencies"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:159
+msgid ""
+"The classic architecture provides basic virtual networking components in "
+"your environment. Routing among project and external networks resides "
+"completely on the network node. Although more simple to deploy than other "
+"architectures, performing all functions on the network node creates a single "
+"point of failure and potential performance issues. Consider deploying DVR or "
+"L3 HA architectures in production environments to provide redundancy and "
+"increase performance. Note that the DVR architecture requires Open vSwitch."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:173
+msgid "See :ref:`scenario-classic-ovs` or :ref:`scenario-classic-lb`"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:178
+msgid ""
+"Macvtap agent managing the virtual server attachments and interaction with "
+"underlying interfaces."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:225 ../scenario-classic-mt.rst:289
+msgid ""
+"The instance 1 ``macvtap`` interface forwards the packet to the logical VLAN "
+"interface ``device.sid`` where *device* references the underlying physical "
+"VLAN interface and *sid* contains the project network segmentation ID. The "
+"packet contains destination MAC address *TG* because the destination resides "
+"on another network."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:237 ../scenario-classic-mt.rst:299
+msgid ""
+"As the network node runs either the linuxbridge or the OVS agent, it is like "
+"a black box for macvtap. For more information on network node scenario see :"
+"ref:`scenario-classic-ovs` or :ref:`scenario-classic-lb`"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:254
+msgid ""
+"The network node runs either linuxbridge agent or OVS agent. Therefore, for "
+"macvtap, floating IP behaves like in the fixed IP address scenario (Case 1)."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:282
+msgid "Instance 1 resides on compute node 1 and uses VLAN project network 1."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:305 ../scenario-classic-mt.rst:355
+msgid ""
+"The physical VLAN interface forwards the packet to the logical VLAN "
+"interface ``vlan.sid`` where *sid* contains the project network segmentation "
+"ID."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:308 ../scenario-classic-mt.rst:358
+msgid ""
+"The logical VLAN interface ``vlan.sid`` forwards the packet to the "
+"``macvtap`` interface on instance 2."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:339
+msgid "Both instances use the same VLAN project network."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:341
+msgid "The Macvtap agent handles switching within the project network."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:345
+msgid ""
+"The instance 1 ``macvtap`` interface forwards the packet to the logical VLAN "
+"interface ``device.sid`` where *device* references the underlying physical "
+"VLAN interface and *sid* contains the project network segmentation ID. The "
+"packet contains destination MAC address *I2* because the destination resides "
+"the same network."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:350
+msgid ""
+"The logical VLAN interface ``device.sid`` forwards the packet to the compute "
+"node 2 via the physical VLAN interface."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:404
+msgid ""
+"Replace ``MIN_VLAN_ID`` and ``MAX_VLAN_ID`` with VLAN ID minimum and maximum "
+"values suitable for your environment."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:424
+msgid ""
+"The controller node runs either the linuxbridge or the OVS agent. For more "
+"information see :ref:`scenario-classic-ovs` or :ref:`scenario-classic-lb`"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:437
+msgid ""
+"Configure the Macvtap agent. Edit the ``/etc/neutron/plugins/ml2/"
+"macvtap_agent.ini`` file:"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:449
+msgid ""
+"Replace ``PROJECT_VLAN_INTERFACE`` with the name of the underlying interface "
+"that handles VLAN project networks and external networks, respectively."
+msgstr ""
+
+#: ../scenario-classic-mt.rst:455
+msgid "Macvtap agent"
+msgstr ""
+
+#: ../scenario-classic-mt.rst:481
+msgid ""
+"This example creates a flat external network and a VLAN project network."
 msgstr ""
 
 #: ../scenario-classic-ovs.rst:5
