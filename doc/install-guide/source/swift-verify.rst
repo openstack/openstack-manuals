@@ -7,13 +7,29 @@ Verify operation of the Object Storage service.
 
    Perform these steps on the controller node.
 
-#. In each client environment script, configure the Object Storage
-   service client to use the Identity API version 3:
+.. only:: rdo
 
-   .. code-block:: console
+   .. warning::
 
-      $ echo "export OS_AUTH_VERSION=3" \
-        | tee -a admin-openrc.sh demo-openrc.sh
+      If one or more of these steps do not work, check the
+      ``/var/log/audit/audit.log`` file for SELinux messages indicating denial
+      of actions for the ``swift`` processes. If present, change the security
+      context of the ``/srv/node`` directory to the lowest security level (s0)
+      for the ``swift_data_t`` type, ``object_r`` role and the ``system_u``
+      user:
+
+      .. code-block:: console
+
+         # chcon -R system_u:object_r:swift_data_t:s0 /srv/node
+
+#. Due to a
+   `bug <https://bugs.launchpad.net/python-swiftclient/+bug/1554885>`_,
+   you must add a version to the ``OS_AUTH_URL`` variable in the environment
+   scripts. For example:
+
+   .. code-block:: bash
+
+      export OS_AUTH_URL=http://controller:5000/v3
 
 #. Source the ``demo`` credentials:
 
@@ -39,29 +55,42 @@ Verify operation of the Object Storage service.
                          Content-Type: text/plain; charset=utf-8
                         Accept-Ranges: bytes
 
-#. Upload a test file:
+#. Upload a test file to the ``container1`` container:
 
    .. code-block:: console
 
-      $ swift upload container1 FILE
-      FILE
+      $ openstack object create container1 FILE
+      +--------+------------+----------------------------------+
+      | object | container  | etag                             |
+      +--------+------------+----------------------------------+
+      | FILE   | container1 | ee1eca47dc88f4879d8a229cc70a07c6 |
+      +--------+------------+----------------------------------+
 
    Replace ``FILE`` with the name of a local file to upload to the
    ``container1`` container.
 
-#. List containers:
+#. List files in the ``container1`` container:
 
    .. code-block:: console
 
-      $ swift list
-      container1
+      $ openstack object list container1
+      +------+
+      | Name |
+      +------+
+      | FILE |
+      +------+
 
-#. Download a test file:
+#. Download a test file from the ``container1`` container:
 
    .. code-block:: console
 
       $ swift download container1 FILE
-      FILE [auth 0.295s, headers 0.339s, total 0.339s, 0.005 MB/s]
+        FILE [auth 0.410s, headers 0.746s, total 1.001s, 22.494 MB/s]
 
    Replace ``FILE`` with the name of the file uploaded to the
    ``container1`` container.
+
+   .. note::
+
+      Due to a bug with the OpenStack client, you must use the conventional
+      ``swift`` client or other compatible client to download files.
