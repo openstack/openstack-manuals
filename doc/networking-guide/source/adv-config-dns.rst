@@ -185,7 +185,7 @@ In the above example notice that:
 
 * The name given to the instance by the user, ``my_vm``, is sanitized by the
   Compute service and becomes ``my-vm`` as the port's ``dns_name``.
-* The port's ``dns_assignment`` attribute shows that its :term:`FQDN` is
+* The port's ``dns_assignment`` attribute shows that its FQDN is
   ``my-vm.my-domain.org.`` in the Networking service internal DNS, which is
   the result of concatenating the port's ``dns_name`` with the value configured
   in the ``dns_domain`` parameter in ``neutron.conf``, as explained previously.
