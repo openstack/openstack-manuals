@@ -9,7 +9,7 @@ Application Catalog service command-line client
 The murano client is the command-line interface (CLI) for
 the Application Catalog service API and its extensions.
 
-This chapter documents :command:`murano` version ``0.8.2``.
+This chapter documents :command:`murano` version ``0.8.3``.
 
 For help on a specific :command:`murano` command, enter:
 
@@ -50,8 +50,7 @@ murano usage
                  [--os-password OS_PASSWORD]
                  <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``app-show``
   List applications, added to specified environment.
@@ -307,14 +306,12 @@ murano app-show
 
 List applications, added to specified environment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   Environment ID to show applications from.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-p <PATH>, --path <PATH>``
   Level of detalization to show. Leave empty to browse
@@ -351,14 +348,12 @@ repo. If \`FILE\` is a local file, treat names of packages in a bundle as file
 names, relative to location of the bundle file. Requirements are first
 searched in the same directory.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<FILE>``
   Bundle URL, bundle name, or path to the bundle file.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--is-public``
   Make packages available to users from other tenants.
@@ -378,14 +373,12 @@ murano bundle-save
 Save a bundle. This will download a bundle of packages with all dependencies
 to specified path. If path doesn't exist it will be created.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<BUNDLE>``
   Bundle URL, bundle name, or path to the bundle file.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-p <PATH>, --path <PATH>``
   Path to the directory to store packages. If not set
@@ -405,8 +398,7 @@ murano category-create
 
 Create a category.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CATEGORY_NAME>``
   Category name.
@@ -422,8 +414,7 @@ murano category-delete
 
 Delete a category.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of a category(ies) to delete.
@@ -450,8 +441,7 @@ murano category-show
 
 Display category details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of a category(s) to show.
@@ -467,8 +457,7 @@ murano deployment-list
 
 List deployments for an environment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   Environment ID for which to list deployments.
@@ -484,8 +473,7 @@ murano env-template-add-app
 
 Add application to the environment template.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ENV_TEMPLATE_ID>``
   Environment template ID.
@@ -504,8 +492,7 @@ murano env-template-clone
 
 Create a new template, cloned from template.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   Environment template ID.
@@ -524,14 +511,12 @@ murano env-template-create
 
 Create an environment template.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ENV_TEMPLATE_NAME>``
   Environment template name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--is-public``
   Make the template available for users from other
@@ -548,8 +533,7 @@ murano env-template-create-env
 
 Create a new environment from template.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   Environment template ID.
@@ -568,8 +552,7 @@ murano env-template-del-app
 
 Delete application from the environment template.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ENV_TEMPLATE_ID>``
   Environment template ID.
@@ -588,8 +571,7 @@ murano env-template-delete
 
 Delete an environment template.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of environment(s) template to delete.
@@ -616,8 +598,7 @@ murano env-template-show
 
 Display environment template details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   Environment template ID.
@@ -633,8 +614,7 @@ murano env-template-update
 
 Update an environment template.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   Environment template ID.
@@ -669,14 +649,12 @@ that executes the action. Actions can only be called on a \`deployed\`
 environment. To view actions available in a given environment use
 \`environment-show\` command.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``id``
   ID of Environment to call action against.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--action-id <ACTION>``
   ID of action to run.
@@ -695,14 +673,12 @@ murano environment-action-get-result
 
 Get result of \`TASK\` in environment \`ID\`.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of Environment where task is being executed.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--task-id <TASK>``
   ID of action to run.
@@ -723,8 +699,7 @@ jsonpatch, that describes changes to be made to environment's object-model. [
 Values '===id1===', '===id2===', etc. in the resulting object-model will be
 substituted with uuids. For more info on jsonpatch see RFC 6902
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of Environment to edit.
@@ -732,8 +707,7 @@ Positional arguments
 ``FILE``
   File to read jsonpatch from (defaults to stdin).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--session-id <SESSION_ID>``
   Id of a config session.
@@ -752,14 +726,12 @@ murano environment-create
 
 Create an environment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ENVIRONMENT_NAME>``
   Environment name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--join-net-id <NET_ID>``
   Network id to join.
@@ -781,14 +753,12 @@ murano environment-delete
 
 Delete an environment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Id or name of environment(s) to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--abandon``
   If set will abandon environment without deleting any of its
@@ -805,14 +775,12 @@ murano environment-deploy
 
 Start deployment of a murano environment session.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of Environment to deploy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--session-id <SESSION>``
   ID of configuration session to deploy.
@@ -828,8 +796,7 @@ murano environment-list
 
 List the environments.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants``
   Allows to list environments from all tenants (admin only).
@@ -845,8 +812,7 @@ murano environment-rename
 
 Rename an environment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Environment ID or name.
@@ -865,8 +831,7 @@ murano environment-session-create
 
 Creates a new configuration session for environment ID.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of Environment to add session to.
@@ -883,14 +848,12 @@ murano environment-show
 
 Display environment details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Environment ID or name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--session-id <SESSION_ID>``
   Id of a config session.
@@ -915,8 +878,7 @@ murano package-create
 
 Create an application package.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-t <HEAT_TEMPLATE>, --template <HEAT_TEMPLATE>``
   Path to the Heat template to import as an Application
@@ -967,8 +929,7 @@ murano package-delete
 
 Delete a package.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   Package ID to delete.
@@ -984,8 +945,7 @@ murano package-download
 
 Download a package to a filename or stdout.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   Package ID to download.
@@ -1022,15 +982,13 @@ have
 to
 be separated with a space and have to be already present in murano.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<FILE>``
   URL of the murano zip package, FQPN, or path to zip
   package.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-c [<CATEGORY> [<CATEGORY> ...]],``
 
@@ -1065,8 +1023,7 @@ murano package-list
 
 List available packages.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--limit LIMIT``
 
@@ -1111,14 +1068,12 @@ murano package-save
 Save a package. This will download package(s) with all dependencies to
 specified path. If path doesn't exist it will be created.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<PACKAGE>``
   Package URL or name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-p <PATH>, --path <PATH>``
   Path to the directory to store package. If not set
@@ -1142,8 +1097,7 @@ murano package-show
 
 Display details for a package.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   Package ID to show.
@@ -1163,14 +1117,12 @@ murano package-update
 
 Update an existing package.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   Package ID to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--is-public {true|false}``
   Make package available to users from other tenants.
