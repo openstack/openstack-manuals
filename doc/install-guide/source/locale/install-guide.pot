@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Installation Guide 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-15 06:09+0000\n"
+"POT-Creation-Date: 2016-03-16 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6964,7 +6964,7 @@ msgstr ""
 
 #: ../swift-finalize-installation.rst:84
 #: ../swift-finalize-installation.rst:112
-#: ../swift-finalize-installation.rst:158
+#: ../swift-finalize-installation.rst:149
 msgid "On all nodes, ensure proper ownership of the configuration directory:"
 msgstr ""
 
@@ -6986,7 +6986,7 @@ msgid ""
 msgstr ""
 
 #: ../swift-finalize-installation.rst:118
-#: ../swift-finalize-installation.rst:164
+#: ../swift-finalize-installation.rst:155
 msgid ""
 "On the controller node and any other nodes running the proxy service, start "
 "the Object Storage proxy service including its dependencies and configure "
@@ -6994,18 +6994,10 @@ msgid ""
 msgstr ""
 
 #: ../swift-finalize-installation.rst:127
-#: ../swift-finalize-installation.rst:173
+#: ../swift-finalize-installation.rst:164
 msgid ""
 "On the storage nodes, start the Object Storage services and configure them "
 "to start when the system boots:"
-msgstr ""
-
-#: ../swift-finalize-installation.rst:147
-msgid ""
-"If SELinux errors appear in the ``/var/log/audit/audit.log`` file, change "
-"the security context of the ``/srv/node`` directory to the lowest security "
-"level (``s0``) for the ``swift_data_t`` type, ``object_r`` role and the "
-"``system_u`` user:"
 msgstr ""
 
 #: ../swift-initial-rings.rst:2
@@ -7258,42 +7250,58 @@ msgstr ""
 msgid "Verify operation of the Object Storage service."
 msgstr ""
 
-#: ../swift-verify.rst:10
+#: ../swift-verify.rst:14
 msgid ""
-"In each client environment script, configure the Object Storage service "
-"client to use the Identity API version 3:"
+"If one or more of these steps do not work, check the ``/var/log/audit/audit."
+"log`` file for SELinux messages indicating denial of actions for the "
+"``swift`` processes. If present, change the security context of the ``/srv/"
+"node`` directory to the lowest security level (s0) for the ``swift_data_t`` "
+"type, ``object_r`` role and the ``system_u`` user:"
 msgstr ""
 
-#: ../swift-verify.rst:18
+#: ../swift-verify.rst:25
+msgid ""
+"Due to a `bug <https://bugs.launchpad.net/python-swiftclient/"
+"+bug/1554885>`_, you must add a version to the ``OS_AUTH_URL`` variable in "
+"the environment scripts. For example:"
+msgstr ""
+
+#: ../swift-verify.rst:34
 msgid "Source the ``demo`` credentials:"
 msgstr ""
 
-#: ../swift-verify.rst:24
+#: ../swift-verify.rst:40
 msgid "Show the service status:"
 msgstr ""
 
-#: ../swift-verify.rst:42
-msgid "Upload a test file:"
+#: ../swift-verify.rst:58
+msgid "Upload a test file to the ``container1`` container:"
 msgstr ""
 
-#: ../swift-verify.rst:49
+#: ../swift-verify.rst:69
 msgid ""
 "Replace ``FILE`` with the name of a local file to upload to the "
 "``container1`` container."
 msgstr ""
 
-#: ../swift-verify.rst:52
-msgid "List containers:"
+#: ../swift-verify.rst:72
+msgid "List files in the ``container1`` container:"
 msgstr ""
 
-#: ../swift-verify.rst:59
-msgid "Download a test file:"
+#: ../swift-verify.rst:83
+msgid "Download a test file from the ``container1`` container:"
 msgstr ""
 
-#: ../swift-verify.rst:66
+#: ../swift-verify.rst:90
 msgid ""
 "Replace ``FILE`` with the name of the file uploaded to the ``container1`` "
 "container."
+msgstr ""
+
+#: ../swift-verify.rst:95
+msgid ""
+"Due to a bug with the OpenStack client, you must use the conventional "
+"``swift`` client or other compatible client to download files."
 msgstr ""
 
 #: ../swift.rst:5
