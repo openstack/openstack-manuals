@@ -51,7 +51,7 @@ Based on the topic your request refers to, use the following tags:
   Training labs, Training guides
 
 [user-guides]
-  End User Guide, Admin User Guide, Cloud Administrator Guide
+  End User Guide, Administrator Guide
 
 [WIP]
   Commit is a work in progress
