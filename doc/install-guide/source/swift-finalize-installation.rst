@@ -144,15 +144,6 @@ Finalize installation
          # systemctl start openstack-swift-object.service openstack-swift-object-auditor.service \
            openstack-swift-object-replicator.service openstack-swift-object-updater.service
 
-   7. If SELinux errors appear in the ``/var/log/audit/audit.log`` file,
-      change the security context of the ``/srv/node`` directory to the lowest
-      security level (``s0``) for the ``swift_data_t`` type, ``object_r`` role and the
-      ``system_u`` user:
-
-      .. code-block:: console
-
-         # chcon -R system_u:object_r:swift_data_t:s0 /srv/node
-
 .. only:: obs
 
    3. On all nodes, ensure proper ownership of the configuration directory:
