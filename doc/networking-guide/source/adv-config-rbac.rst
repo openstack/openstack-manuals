@@ -1,19 +1,31 @@
-======================================
-Role-Based Access Control for networks
-======================================
+=========================
+Role-Based Access Control
+=========================
 
 A new policy framework was added in Liberty that allows both
 operators and users to grant access to resources for specific projects.
-Currently, the only access that can be granted using
-this feature is regular port creation permissions on networks.
+
+
+Supported objects for sharing with specific projects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Currently, the access that can be granted using this feature
+is supported by:
+
+* Regular port creation permissions on networks (since Liberty).
+* Binding QoS policies permissions to networks or ports (since Mitaka).
+
+
+Sharing an object with specific projects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sharing an object with a specific project is accomplished by creating
+a policy entry that permits the target project the ``access_as_shared``
+action on that object.
 
 
 Sharing a network with specific projects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sharing a network with a specific project is accomplished by creating
-a policy entry that permits the target project the ``access_as_shared``
-action on that network.
 
 Create a network to share:
 
@@ -40,7 +52,7 @@ Create a network to share:
    | tenant_id                 | de56db175c1d48b0bbe72f09a24a3b66     |
    +---------------------------+--------------------------------------+
 
-Create the policy entry using the :command:`rbac-create` command (In
+Create the policy entry using the :command:`rbac-create` command (in
 this example, the ID of the project we want to share with is
 ``e28769db97d9449da658bc6931fcb683``):
 
@@ -92,12 +104,88 @@ policy from being deleted until the ports have been deleted:
 This process can be repeated any number of times to share a network
 with an arbitrary number of projects.
 
+
+Sharing a QoS policy with specific projects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Create a QoS policy to share:
+
+.. code-block:: console
+
+   $ neutron qos-policy-create secret_policy
+
+   Created a new policy:
+   +-------------+--------------------------------------+
+   | Field       | Value                                |
+   +-------------+--------------------------------------+
+   | description |                                      |
+   | id          | e45e6917-3f3f-4835-ad54-d12c9151541d |
+   | name        | secret_policy                        |
+   | rules       |                                      |
+   | shared      | False                                |
+   | tenant_id   | 5b32b072f8354942ab13b6decb1294b3     |
+   +-------------+--------------------------------------+
+
+Create the RBAC policy entry using the :command:`rbac-create` command (in
+this example, the ID of the project we want to share with is
+``a6bf6cfbcd1f4e32a57d2138b6bd41d1``):
+
+.. code-block:: console
+
+   $ neutron rbac-create --target-tenant a6bf6cfbcd1f4e32a57d2138b6bd41d1 \
+     --action access_as_shared --type qos-policy e45e6917-3f3f-4835-ad54-d12c9151541d
+
+   Created a new rbac_policy:
+   +---------------+--------------------------------------+
+   | Field         | Value                                |
+   +---------------+--------------------------------------+
+   | action        | access_as_shared                     |
+   | id            | ec2e3db1-de5b-4043-9d95-156f582653d0 |
+   | object_id     | e45e6917-3f3f-4835-ad54-d12c9151541d |
+   | object_type   | qos_policy                           |
+   | target_tenant | a6bf6cfbcd1f4e32a57d2138b6bd41d1     |
+   | tenant_id     | 5b32b072f8354942ab13b6decb1294b3     |
+   +---------------+--------------------------------------+
+
+The ``target-tenant`` parameter specifies the project that requires
+access to the QoS policy. The ``action`` parameter specifies what
+the project is allowed to do. The ``type`` parameter says
+that the target object is a QoS policy. The final parameter is the ID of
+the QoS policy we are granting access to.
+
+Project ``a6bf6cfbcd1f4e32a57d2138b6bd41d1`` will now be able to see
+the QoS policy when running :command:`qos-policy-list` and :command:`qos-policy-show`
+and will also be able to bind it to its ports or networks. No other users
+(other than admins and the owner) will be able to see the QoS policy.
+
+To remove access for that project, delete the RBAC policy that allows
+it using the :command:`rbac-delete` command:
+
+.. code-block:: console
+
+   $ neutron rbac-delete e45e6917-3f3f-4835-ad54-d12c9151541d
+   Deleted rbac_policy: e45e6917-3f3f-4835-ad54-d12c9151541d
+
+If that project has ports or networks with the QoS policy applied to them,
+the server will not delete the RBAC policy from being deleted until
+the QoS policy is no longer in use:
+
+.. code-block:: console
+
+   $ neutron rbac-delete e45e6917-3f3f-4835-ad54-d12c9151541d
+   RBAC policy on object e45e6917-3f3f-4835-ad54-d12c9151541d
+   cannot be removed because other objects depend on it.
+
+This process can be repeated any number of times to share a qos-policy
+with an arbitrary number of projects.
+
+
 How the 'shared' flag relates to these entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As introduced in other guide entries, neutron provides a means of
-making a network available to every project. This is accomplished
-using the ``shared`` flag on the network:
+making an object (``network``, ``qos-policy``) available to every project.
+This is accomplished using the ``shared`` flag on the supported object:
 
 .. code-block:: console
 
@@ -131,11 +219,13 @@ network should be visible using the :command:`rbac-list` command:
 
    $ neutron rbac-list
 
-   +--------------------------------------+--------------------------------------+
-   | id                                   | object_id                            |
-   +--------------------------------------+--------------------------------------+
-   | fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55 | 9a4af544-7158-456d-b180-95f2e11eaa8c |
-   +--------------------------------------+--------------------------------------+
+   +--------------------------------------+-------------+--------------------------------------+
+   | id                                   | object_type | object_id                            |
+   +--------------------------------------+-------------+--------------------------------------+
+   | ec2e3db1-de5b-4043-9d95-156f582653d0 | qos_policy  | e45e6917-3f3f-4835-ad54-d12c9151541d |
+   | e7b7a4a7-8c3e-4003-9e15-5a9464c1ecea | network     | fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55 |
+   +--------------------------------------+-------------+--------------------------------------+
+
 
 Use the :command:`rbac-show` command to see the details:
 
@@ -165,19 +255,20 @@ wildcard entry.
 
 When you run :command:`net-list` or :command:`net-show`, the
 ``shared`` flag is calculated by the server based on the calling
-project and the RBAC entries for each network. If there is a
-wildcard entry, the ``shared`` flag is always set to ``True``.
+project and the RBAC entries for each network. For QoS objects
+use :command:`qos-policy-list` or :command:`qos-policy-show` respectively.
+If there is a wildcard entry, the ``shared`` flag is always set to ``True``.
 If there are only entries that share with specific projects, only
-the projects the network is shared to will see the flag as ``True``
+the projects the object is shared to will see the flag as ``True``
 and the rest will see the flag as ``False``.
 
 
-Preventing regular users from sharing networks with each other
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Preventing regular users from sharing objects with each other
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The default ``policy.json`` file will not allow regular
-users to share networks with every other project using a wildcard;
-however, it will allow them to share networks with specific project
+users to share objects with every other project using a wildcard;
+however, it will allow them to share objects with specific project
 IDs.
 
 If an operator wants to prevent normal users from doing this, the
