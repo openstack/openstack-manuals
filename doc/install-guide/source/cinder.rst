@@ -9,6 +9,7 @@ Block Storage service
    common/get_started_block_storage.rst
    cinder-controller-install.rst
    cinder-storage-install.rst
+   cinder-backup-install.rst
    cinder-verify.rst
    cinder-next-steps.rst
 
@@ -25,7 +26,3 @@ on controllers, compute nodes, or standalone storage nodes.
 For more information, see the
 `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/block-storage/volume-drivers.html>`__.
 
-.. note::
-
-   This chapter omits the backup manager because it depends on the
-   Object Storage service.
