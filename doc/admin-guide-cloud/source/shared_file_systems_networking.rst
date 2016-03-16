@@ -5,12 +5,11 @@ Networking
 ==========
 
 Unlike the OpenStack Block Storage service, the Shared File Systems service
-must connect to the Networking service. First of all, it is because
-the share services require the option to self-manage share servers. Also, for
-authentication and authorization of the clients, the Shared File Systems
-service can be optionally configured to work with different network
-authentication services, like LDAP, Kerberos protocols, or Microsoft Active
-Directory.
+must connect to the Networking service. The share service requires the
+option to self-manage share servers. For client authentication and
+authorization, you can configure the Shared File Systems service to
+work with different network authentication services, like LDAP, Kerberos
+protocols, or Microsoft Active Directory.
 
 .. toctree::
 

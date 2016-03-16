@@ -9,7 +9,7 @@ Share
 
 In the Shared File Systems service ``share`` is the fundamental resource unit
 allocated by the Shared File System service. It represents an allocation of a
-persistent, readable, and writable filesystem. Compute instances access these
+persistent, readable, and writable filesystems. Compute instances access these
 filesystems. Depending on the deployment configuration, clients outside of
 OpenStack can also access the filesystem.
 
@@ -25,15 +25,16 @@ Snapshot
 A ``snapshot`` is a point-in-time, read-only copy of a ``share``. You can
 create ``Snapshots`` from an existing, operational ``share`` regardless
 of whether a client has mounted the file system. A ``snapshot``
-can serve as the content source for a new ``share`` when the ``share``
-is created with the create from snapshot option specified.
+can serve as the content source for a new ``share``. Specify the
+**Create from snapshot** option when creating a new ``share`` on the
+dashboard.
 
 Storage Pools
 ~~~~~~~~~~~~~
 
 With the Kilo release of OpenStack, Shared File Systems can use
 ``storage pools``. The storage may present one or more logical storage
-resource pools from which the Shared File Systems service
+resource pools that the Shared File Systems service
 will select as a storage location when provisioning ``shares``.
 
 Share Type
@@ -58,19 +59,19 @@ IP networks in CIDR notation.
 Security Services
 ~~~~~~~~~~~~~~~~~
 
-``Security services``allow granular client access rules for cloud
+``Security services``allow granular client access rules for
 administrators. They can declare rules for authentication or
 authorization to access ``share`` content. External services including LDAP,
-Active Directory, Kerberos can be declared as resources. Examine and consult
-these resources when making an access decision for a particular ``share``.
-You can associate ``Shares`` with multiple security services, but only one
-service per one type.
+Active Directory, and Kerberos can be declared as resources. Examine and
+consult these resources when making an access decision for a
+particular ``share``. You can associate ``Shares`` with multiple
+security services, but only one service per one type.
 
 Share Networks
 ~~~~~~~~~~~~~~
 
 A ``share network`` is an object that defines a relationship between a
-tenant's network and subnet, as defined in an OpenStack Networking service or
+tenant network and subnet, as defined in an OpenStack Networking service or
 Compute service. The ``share network`` is also defined in ``shares``
 created by the same tenant. A tenant may find it desirable to
 provision ``shares`` such that only instances connected to a particular

@@ -24,10 +24,8 @@ command-line client.
    keystone_fernet_token_faq.rst
    keystone_use_trusts.rst
    keystone_caching_layer.rst
-   identity_user_crud.rst
-   identity_logging.rst
    identity_start.rst
-   identity_example_usage.rst
+   identity_keystone_usage_and_features.rst
    identity_auth_token_middleware.rst
    identity_service_api_protection.rst
    identity_troubleshoot.rst

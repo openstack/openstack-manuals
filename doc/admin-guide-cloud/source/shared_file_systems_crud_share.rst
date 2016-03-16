@@ -7,7 +7,8 @@ Share basic operations
 General concepts
 ----------------
 
-As general concepts, to create a file share and access it you need to:
+To create a file share, and access it, the following general concepts
+are prerequisite knowledge:
 
 #. To create a share, use :command:`manila create` command and
    specify the required arguments: the size of the share and the shared file

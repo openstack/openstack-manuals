@@ -35,11 +35,11 @@ To see the absolute limits, run:
 Rate limits control the frequency at which users can issue specific API
 requests. Administrators use rate limiting to configure limits on the type and
 number of API calls that can be made in a specific time interval. For example,
-a rate limit can control the number of GET requests that can be processed
+a rate limit can control the number of ``GET`` requests processed
 during a one-minute period.
 
-To set the API rate limits, add configuration to the
-``etc/manila/api-paste.ini`` file that is a part of the WSGI pipeline and
+To set the API rate limits, modify the
+``etc/manila/api-paste.ini`` file, which is a part of the WSGI pipeline and
 defines the actual limits. You need to restart ``manila-api`` service after
 you edit the ``etc/manila/api-paste.ini`` file.
 
@@ -49,7 +49,7 @@ you edit the ``etc/manila/api-paste.ini`` file.
    paste.filter_factory = manila.api.v1.limits:RateLimitingMiddleware.factory
    limits = (POST, "*/shares", ^/shares, 120, MINUTE);(PUT, "*/shares", .*, 120, MINUTE);(DELETE, "*", .*, 120, MINUTE)
 
-Also, add ``ratelimit`` to ``noauth``, ``keystone``, ``keystone_nolimit``
+Also, add the ``ratelimit`` to ``noauth``, ``keystone``, ``keystone_nolimit``
 parameters in the ``[composite:openstack_share_api]`` group.
 
 .. code-block:: ini
@@ -75,7 +75,7 @@ To see the rate limits, run:
 Quotas
 ~~~~~~
 
-Quota sets provide quotas management support.
+Quota sets provide quota management support.
 
 To list the quotas for a tenant or user, use the :command:`manila quota-show`
 command. If you specify the optional :option:`--user` parameter, you get the
@@ -112,8 +112,8 @@ the :command:`manila quota-defaults` command:
    | share_networks     | 10    |
    +--------------------+-------+
 
-The administrator can update the quotas for a specified tenant or for a
-specified user by providing both the ``--tenant`` and ``--user`` optional
+The administrator can update the quotas for a specific tenant, or for a
+specific user by providing both the ``--tenant`` and ``--user`` optional
 arguments. It is possible to update the ``snapshots``, ``gigabytes``,
 ``snapshot-gigabytes``, and ``share-networks`` quotas.
 
@@ -122,8 +122,8 @@ arguments. It is possible to update the ``snapshots``, ``gigabytes``,
    $ manila quota-update demo --user demo --shares 49 --snapshots 49
 
 As administrator, you can also permit or deny the force-update of a quota that
-is already used and the requested value exceeds the configured quota. To
-force-update a quota, use ``force`` optional key.
+is already used, or if the requested value exceeds the configured quota limit.
+To force-update a quota, use ``force`` optional key.
 
 .. code-block:: console
 

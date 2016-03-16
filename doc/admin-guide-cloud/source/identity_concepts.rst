@@ -4,11 +4,11 @@ Identity concepts
 
 Authentication
     The process of confirming the identity of a user. To confirm an incoming
-    request, OpenStack Identity validates a set of credentials that the user
-    supplies. Initially, these credentials are a user name and password or a
+    request, OpenStack Identity validates a set of credentials users
+    supply. Initially, these credentials are a user name and password, or a
     user name and API key. When OpenStack Identity validates user credentials,
-    it issues an authentication token that the user provides in subsequent
-    requests.
+    it issues an authentication token. Users provide the token in
+    subsequent requests.
 
 Credentials
     Data that confirms the identity of the user. For example, user
@@ -16,10 +16,10 @@ Credentials
     token that the Identity service provides.
 
 Domain
-    An Identity service API v3 entity. Represents a collection of
-    projects and users that defines administrative boundaries for the
-    management of Identity entities. A domain, which can represent an
-    individual, company, or operator-owned space, exposes
+    An Identity service API v3 entity. Domains are a collection of
+    projects and users that define administrative boundaries for
+    managing Identity entities. Domains can represent an
+    individual, company, or operator-owned space. They expose
     administrative activities directly to system users. Users can be
     granted the administrator role for a domain. A domain
     administrator can create projects, users, and groups in a domain
@@ -32,18 +32,18 @@ Endpoint
     all consumable services that are available across the regions.
 
 Group
-    An Identity service API v3 entity. Represents a collection of
-    users that are owned by a domain. A group role granted to a domain
-    or project applies to all users in the group. Adding users to, or
-    removing users from, a group respectively grants, or revokes,
-    their role and authentication to the associated domain or project.
+    An Identity service API v3 entity. Groups are a collection of
+    users owned by a domain. A group role, granted to a domain
+    or project, applies to all users in the group. Adding or removing
+    users to or from a group grants or revokes their role and
+    authentication to the associated domain or project.
 
 OpenStackClient
     A command-line interface for several OpenStack services including
     the Identity API. For example, a user can run the
     :command:`openstack service create` and
     :command:`openstack endpoint create` commands to register services
-    in her OpenStack installation.
+    in their OpenStack installation.
 
 Project
     A container that groups or isolates resources or identity objects.
@@ -60,8 +60,8 @@ Region
 Role
     A personality with a defined set of user rights and privileges to
     perform a specific set of operations. The Identity service issues
-    a token that includes a list of roles to a user. When a user calls
-    a service, that service interprets the set of user roles and
+    a token to a user that includes a list of roles. When a user calls
+    a service, that service interprets the user role set, and
     determines to which operations or resources each role grants
     access.
 
