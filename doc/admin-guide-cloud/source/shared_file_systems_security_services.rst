@@ -11,11 +11,11 @@ Microsoft Active Directory.
 
 You can associate a share with one to three security service types:
 
-- ``ldap``. LDAP.
+- ``ldap``: LDAP.
 
-- ``kerberos``. Kerberos.
+- ``kerberos``: Kerberos.
 
-- ``active_directory``. Microsoft Active Directory.
+- ``active_directory``: Microsoft Active Directory.
 
 You can configure a security service with these options:
 
