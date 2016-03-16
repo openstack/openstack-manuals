@@ -56,8 +56,8 @@ configuration files, or in the Identity SQL database using API REST calls.
 
 .. note::
 
-    Storing and managing configuration options in an SQL database is
-    experimental in Kilo.
+   Storing and managing configuration options in an SQL database is
+   experimental in Kilo.
 
 Enable drivers for domain-specific configuration files
 ------------------------------------------------------
@@ -67,49 +67,14 @@ To enable domain-specific drivers, set these options in the
 
 .. code-block:: ini
 
-    [identity]
-    domain_specific_drivers_enabled = True
-    domain_config_dir = /etc/keystone/domains
+   [identity]
+   domain_specific_drivers_enabled = True
+   domain_config_dir = /etc/keystone/domains
 
 When you enable domain-specific drivers, Identity looks in the
 ``domain_config_dir`` directory for configuration files that are named as
-``keystone.DOMAIN_NAME.conf``. Any domain without a domain-specific
+``keystone.DOMAIN_NAME.conf``. A domain without a domain-specific
 configuration file uses options in the primary configuration file.
-
-Domain-specific configuration file
-----------------------------------
-
-Any options that you define in the domain-specific configuration file override
-options in the ``/etc/keystone/keystone.conf`` configuration file.
-
-Domains configured for the service user or project use the Identity API v3 to
-retrieve the service token.
-
-To configure the domain for the service user, set the following options in the
-[DEFAULT] section of the ``/etc/keystone/domains/keystone.DOMAIN_NAME.conf``
-file:
-
-.. code-block:: ini
-
-    admin_user_domain_id = USER_DOMAIN_ID
-    admin_user_domain_name = USER_DOMAIN_NAME
-
-Replace ``USER_DOMAIN_ID`` with the Identity service account user domain
-ID, and ``USER_DOMAIN_NAME`` with the Identity service account user domain
-name.
-
-To configure the domain for the project, set the following options in the
-``[DEFAULT]`` section of the
-``/etc/keystone/domains/keystone.DOMAIN_NAME.conf`` file:
-
-.. code-block:: ini
-
-    admin_project_domain_id = PROJECT_DOMAIN_ID
-    admin_project_domain_name = PROJECT_DOMAIN_NAME
-
-Replace ``PROJECT_DOMAIN_ID`` with the Identity service account project
-domain ID, and ``PROJECT_DOMAIN_NAME`` with the Identity service account
-project domain name.
 
 Enable drivers for storing configuration options in SQL database
 ----------------------------------------------------------------
@@ -119,9 +84,9 @@ To enable domain-specific drivers, set these options in the
 
 .. code-block:: ini
 
-    [identity]
-    domain_specific_drivers_enabled = True
-    domain_configurations_from_database = True
+   [identity]
+   domain_specific_drivers_enabled = True
+   domain_configurations_from_database = True
 
 Any domain-specific configuration options specified through the Identity v3 API
 will override domain-specific configuration files in the
@@ -135,11 +100,11 @@ domain-specific configuration files to the SQL database:
 
 .. code-block:: console
 
-    # keystone-manage domain_config_upload --all
+   # keystone-manage domain_config_upload --all
 
 To upload options from a specific domain-configuration file, specify the domain
 name:
 
 .. code-block:: console
 
-    # keystone-manage domain_config_upload --domain-name DOMAIN_NAME
+   # keystone-manage domain_config_upload --domain-name DOMAIN_NAME
