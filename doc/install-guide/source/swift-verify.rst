@@ -35,7 +35,7 @@ Verify operation of the Object Storage service.
 
    .. code-block:: console
 
-      $ source demo-openrc.sh
+      $ . demo-openrc
 
 #. Show the service status:
 

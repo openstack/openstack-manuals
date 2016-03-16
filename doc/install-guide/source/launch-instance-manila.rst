@@ -22,7 +22,7 @@ Determine the configuration of the share server
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. Create a default share type before running manila-share service:
 
@@ -85,7 +85,7 @@ Determine the configuration of the share server
 
    .. code-block:: console
 
-      $ source demo-openrc.sh
+      $ . demo-openrc
 
    .. code-block:: console
 

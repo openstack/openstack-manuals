@@ -54,7 +54,7 @@ Create a stack using the ``demo-template.yml`` template.
 
    .. code-block:: console
 
-      $ source demo-openrc.sh
+      $ . demo-openrc
 
 #. Determine available networks.
 

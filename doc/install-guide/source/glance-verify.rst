@@ -22,14 +22,14 @@ For information about how to manage images, see the
    .. code-block:: console
 
       $ echo "export OS_IMAGE_API_VERSION=2" \
-        | tee -a admin-openrc.sh demo-openrc.sh
+        | tee -a admin-openrc demo-openrc
 
 #. Source the ``admin`` credentials to gain access to
    admin-only CLI commands:
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. Download the source image:
 

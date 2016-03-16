@@ -41,7 +41,7 @@ Create the self-service network
 
    .. code-block:: console
 
-      $ source demo-openrc.sh
+      $ . demo-openrc
 
 #. Create the network:
 
@@ -146,7 +146,7 @@ to the existing ``provider`` provider network.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. Add the ``router: external`` option to the ``provider`` network:
 
@@ -159,7 +159,7 @@ to the existing ``provider`` provider network.
 
    .. code-block:: console
 
-      $ source demo-openrc.sh
+      $ . demo-openrc
 
 #. Create the router:
 
@@ -205,7 +205,7 @@ creation examples.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. List network namespaces. You should see one ``qrouter`` namespace and two
    ``qdhcp`` namespaces.

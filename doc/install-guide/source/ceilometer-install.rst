@@ -64,7 +64,7 @@ MongoDB before proceeding further.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 3. To create the service credentials, complete these steps:
 

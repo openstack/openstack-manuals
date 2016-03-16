@@ -35,7 +35,7 @@ Create the provider network
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. Create the network:
 

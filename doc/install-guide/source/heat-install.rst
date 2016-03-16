@@ -48,7 +48,7 @@ Orchestration service, code-named heat, on the controller node.
 
       .. code-block:: console
 
-         $ source admin-openrc.sh
+         $ . admin-openrc
 
    #. To create the service credentials, complete these steps:
 

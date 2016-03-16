@@ -47,7 +47,7 @@ must add a public key to the Compute service.
 
    .. code-block:: console
 
-      $ source demo-openrc.sh
+      $ . demo-openrc
 
 #. Generate and add a key pair:
 

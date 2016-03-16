@@ -50,7 +50,7 @@ Compute service, code-named nova, on the controller node.
 
       .. code-block:: console
 
-         $ source admin-openrc.sh
+         $ . admin-openrc
 
    #. To create the service credentials, complete these steps:
 
