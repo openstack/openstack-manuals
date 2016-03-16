@@ -15,8 +15,8 @@ For example:
 .. note::
 
    Behavior set using image properties overrides behavior set using flavors.
-   For more information, refer to the `OpenStack Cloud Administrator Guide
-   <http://docs.openstack.org/admin-guide-cloud/>`.
+   For more information, refer to the `OpenStack Administrator Guide
+   <http://docs.openstack.org/admin-guide/>`.
 
 .. list-table:: Image service property keys
    :widths: 15 35 50 90
