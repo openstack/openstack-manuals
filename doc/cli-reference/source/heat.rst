@@ -40,11 +40,10 @@ heat usage
                [--os-tenant-name OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL]
                [--os-region-name OS_REGION_NAME] [--os-auth-token OS_AUTH_TOKEN]
                [--os-service-type OS_SERVICE_TYPE]
-               [--os-endpoint-type OS_ENDPOINT_TYPE]
+               [--os-endpoint-type OS_ENDPOINT_TYPE] [--profile HMAC_KEY]
                <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``action-check``
   Check that stack resources are in expected states.
@@ -314,6 +313,15 @@ heat optional arguments
 ``--os-endpoint-type OS_ENDPOINT_TYPE``
   Defaults to ``env[OS_ENDPOINT_TYPE]``.
 
+``--profile HMAC_KEY``
+  HMAC key to use for encrypting context data for
+  performance profiling of operation. This key should be
+  the value of HMAC key configured in osprofiler
+  middleware in heat, it is specified in the paste
+  configuration (/etc/heat/api-paste.ini). Without the
+  key, profiling will not be triggered even if
+  osprofiler is enabled on server side.
+
 .. _heat_action-check:
 
 heat action-check
@@ -325,8 +333,7 @@ heat action-check
 
 Check that stack resources are in expected states.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to check.
@@ -342,8 +349,7 @@ heat action-resume
 
 Resume the stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to resume.
@@ -359,8 +365,7 @@ heat action-suspend
 
 Suspend the stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to suspend.
@@ -389,14 +394,12 @@ heat config-create
 
 Create a software configuration.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CONFIG_NAME>``
   Name of the configuration to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <FILE or URL>, --definition-file <FILE or URL>``
   Path to JSON/YAML containing map defining <inputs>,
@@ -420,8 +423,7 @@ heat config-delete
 
 Delete the software configuration(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of the configuration(s) to delete.
@@ -437,8 +439,7 @@ heat config-list
 
 List software configs.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-l <LIMIT>, --limit <LIMIT>``
   Limit the number of configs returned.
@@ -457,14 +458,12 @@ heat config-show
 
 View details of a software configuration.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of the config.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-c, --config-only``
   Only display the value of the <config> property.
@@ -484,8 +483,7 @@ heat deployment-create
 
 Create a software deployment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<DEPLOY_NAME>``
   Name of the derived config associated with this
@@ -493,8 +491,7 @@ Positional arguments
   list of configurations currently deployed to the
   server.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-i <KEY=VALUE>, --input-value <KEY=VALUE>``
   Input value to set on the deployment. This can be
@@ -537,8 +534,7 @@ heat deployment-delete
 
 Delete the software deployment(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of the deployment(s) to delete.
@@ -554,8 +550,7 @@ heat deployment-list
 
 List software deployments.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-s <SERVER>, --server <SERVER>``
   ID of the server to fetch deployments for.
@@ -571,8 +566,7 @@ heat deployment-metadata-show
 
 Get deployment configuration metadata for the specified server.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of the server to fetch deployments for.
@@ -588,8 +582,7 @@ heat deployment-output-show
 
 Show a specific deployment output.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID deployment to show the output for.
@@ -597,8 +590,7 @@ Positional arguments
 ``<OUTPUT NAME>``
   Name of an output to display.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-a, --all``
   Display all deployment outputs.
@@ -617,8 +609,7 @@ heat deployment-show
 
 Show the details of a software deployment.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ID>``
   ID of the deployment.
@@ -636,14 +627,12 @@ heat event-list
 
 List events for a stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to show the events for.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-r <RESOURCE>, --resource <RESOURCE>``
   Name of the resource to filter events by.
@@ -678,8 +667,7 @@ heat event-show
 
 Describe the event.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to show the events for.
@@ -702,8 +690,7 @@ heat hook-clear
 
 Clear hooks on a given stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of the stack these resources belong to.
@@ -715,8 +702,7 @@ Positional arguments
   match multiple stacks or resources:
   nested_stack/an\*/\*_resource
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--pre-create``
   Clear the pre-create hooks (optional)
@@ -735,14 +721,12 @@ heat hook-poll
 
 List resources with pending hook for a stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to show the pending hooks for.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n <DEPTH>, --nested-depth <DEPTH>``
   Depth of nested stacks from which to display hooks.
@@ -758,8 +742,7 @@ heat output-list
 
 Show available outputs.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to query.
@@ -776,8 +759,7 @@ heat output-show
 
 Show a specific stack output.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to query.
@@ -785,8 +767,7 @@ Positional arguments
 ``<OUTPUT NAME>``
   Name of an output to display.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-F <FORMAT>, --format <FORMAT>``
   The output value format, one of: json, raw.
@@ -810,14 +791,12 @@ heat resource-list
 
 Show list of resources belonging to a stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to show the resources for.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n <DEPTH>, --nested-depth <DEPTH>``
   Depth of nested stacks from which to display
@@ -844,8 +823,7 @@ heat resource-mark-unhealthy
 
 Set resource's health.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack the resource belongs to.
@@ -856,8 +834,7 @@ Positional arguments
 ``reason``
   Reason for state change.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--reset``
   Set the resource as healthy.
@@ -873,8 +850,7 @@ heat resource-metadata
 
 List resource metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to show the resource metadata for.
@@ -893,8 +869,7 @@ heat resource-show
 
 Describe the resource.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to show the resource for.
@@ -902,8 +877,7 @@ Positional arguments
 ``<RESOURCE>``
   Name of the resource to show the details for.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-a <ATTRIBUTE>, --with-attr <ATTRIBUTE>``
   Attribute to show, it can be specified multiple times.
@@ -919,8 +893,7 @@ heat resource-signal
 
 Send a signal to a resource.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack the resource belongs to.
@@ -928,8 +901,7 @@ Positional arguments
 ``<RESOURCE>``
   Name of the resource to signal.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-D <DATA>, --data <DATA>``
   JSON Data to send to the signal handler.
@@ -949,8 +921,7 @@ heat resource-type-list
 
 List the available resource types.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
   Filter parameters to apply on returned resource types.
@@ -969,8 +940,7 @@ heat resource-type-show
 
 Show the resource type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<RESOURCE_TYPE>``
   Resource type to get the details for.
@@ -987,14 +957,12 @@ heat resource-type-template
 
 Generate a template based on a resource type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<RESOURCE_TYPE>``
   Resource type to generate a template for.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-t <TEMPLATE_TYPE>, --template-type <TEMPLATE_TYPE>``
   Template type to generate, hot or cfn.
@@ -1024,8 +992,7 @@ heat snapshot-delete
 
 Delete a snapshot of a stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of the stack containing the snapshot.
@@ -1044,8 +1011,7 @@ heat snapshot-list
 
 List the snapshots of a stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of the stack containing the snapshots.
@@ -1061,8 +1027,7 @@ heat snapshot-show
 
 Show a snapshot of a stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of the stack containing the snapshot.
@@ -1083,14 +1048,12 @@ Abandon the stack. This will delete the record of the stack from Heat, but
 will not delete any of the underlying resources. Prints an adoptable JSON
 representation of the stack to stdout or a file on success.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to abandon.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-O <FILE>, --output-file <FILE>``
   file to output abandon result. If the option is
@@ -1110,14 +1073,12 @@ heat stack-adopt
 
 Adopt a stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<STACK_NAME>``
   Name of the stack to adopt.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-e <FILE or URL>, --environment-file <FILE or URL>``
   Path to the environment, it can be specified multiple
@@ -1152,8 +1113,7 @@ heat stack-cancel-update
 
 Cancel currently running update of the stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to cancel update for.
@@ -1174,14 +1134,12 @@ heat stack-create
 
 Create the stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<STACK_NAME>``
   Name of the stack to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <FILE>, --template-file <FILE>``
   Path to the template.
@@ -1243,14 +1201,12 @@ heat stack-delete
 
 Delete the stack(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack(s) to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-y, --yes``
   Skip yes/no prompt (assume yes).
@@ -1270,8 +1226,7 @@ heat stack-list
 
 List the user's stacks.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-s, --show-deleted``
   Include soft-deleted stacks in the stack listing.
@@ -1345,14 +1300,12 @@ heat stack-preview
 
 Preview the stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<STACK_NAME>``
   Name of the stack to preview.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <FILE>, --template-file <FILE>``
   Path to the template.
@@ -1400,8 +1353,7 @@ heat stack-restore
 
 Restore a snapshot of a stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of the stack containing the snapshot.
@@ -1420,14 +1372,12 @@ heat stack-show
 
 Describe the stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to describe.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--no-resolve-outputs``
   Do not resolve outputs of the stack.
@@ -1443,14 +1393,12 @@ heat stack-snapshot
 
 Make a snapshot of a stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n <NAME>, --name <NAME>``
   If specified, the name given to the snapshot.
@@ -1471,14 +1419,12 @@ heat stack-update
 
 Update the stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <FILE>, --template-file <FILE>``
   Path to the template.
@@ -1564,8 +1510,7 @@ heat template-function-list
 
 List the available functions.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<TEMPLATE_VERSION>``
   Template version to get the functions for.
@@ -1581,8 +1526,7 @@ heat template-show
 
 Get the template for the specified stack.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of stack to get the template for.
@@ -1601,8 +1545,7 @@ heat template-validate
 
 Validate a template with parameters.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-u <URL>, --template-url <URL>``
   URL of template.

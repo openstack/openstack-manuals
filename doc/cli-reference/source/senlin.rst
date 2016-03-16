@@ -41,11 +41,10 @@ senlin usage
                  [--os-api-name <service>=<name>]
                  [--os-api-region <service>=<region>]
                  [--os-api-version <service>=<version>]
-                 [--os-api-interface <service>=<interface>]
+                 [--os-api-interface <service>=<interface>] [--profile HMAC_KEY]
                  <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``action-list``
   List actions.
@@ -295,6 +294,15 @@ senlin optional arguments
 ``--os-api-interface <service>=<interface>``
   Desired API interface, defaults to ``env[OS_INTERFACE]``
 
+``--profile HMAC_KEY``
+  HMAC key to use for encrypting context data for
+  performance profiling of operation. This key should be
+  the value of HMAC key configured in osprofiler
+  middleware in senlin, it is specified in the paste
+  deploy configuration (/etc/senlin/api-paste.ini).
+  Without the key, profiling will not be triggered even
+  if osprofiler is enabled on server side.
+
 .. _senlin_action-list:
 
 senlin action-list
@@ -307,8 +315,7 @@ senlin action-list
 
 List actions.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
   Filter parameters to apply on returned actions. This
@@ -341,8 +348,7 @@ senlin action-show
 
 Show detailed info about the specified action.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ACTION>``
   Name or ID of the action to show the details for.
@@ -373,14 +379,12 @@ senlin cluster-create
 
 Create the cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER_NAME>``
   Name of the cluster to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-p <PROFILE>, --profile <PROFILE>``
   Profile Id used for this cluster.
@@ -415,8 +419,7 @@ senlin cluster-delete
 
 Delete the cluster(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   Name or ID of cluster(s) to delete.
@@ -433,8 +436,7 @@ senlin cluster-list
 
 List the user's clusters.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
   Filter parameters to apply on returned clusters. This
@@ -472,14 +474,12 @@ senlin cluster-node-add
 
 Add specified nodes to cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   Name or ID of cluster to operate on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n <NODES>, --nodes <NODES>``
   ID of nodes to be added; multiple nodes can be
@@ -496,14 +496,12 @@ senlin cluster-node-del
 
 Delete specified nodes from cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   Name or ID of cluster to operate on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n <NODES>, --nodes <NODES>``
   ID of nodes to be deleted; multiple nodes can be
@@ -522,14 +520,12 @@ senlin cluster-node-list
 
 List nodes from cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   Name or ID of cluster to nodes from.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
   Filter parameters to apply on returned nodes. This can
@@ -556,14 +552,12 @@ senlin cluster-policy-attach
 
 Attach policy to cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of cluster to operate on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-p <POLICY>, --policy <POLICY>``
   ID or name of policy to be attached.
@@ -583,14 +577,12 @@ senlin cluster-policy-detach
 
 Detach policy from cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of cluster to operate on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-p <POLICY>, --policy <POLICY>``
   ID or name of policy to be detached.
@@ -608,14 +600,12 @@ senlin cluster-policy-list
 
 List policies from cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   Name or ID of cluster to query on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
   Filter parameters to apply on returned results. This
@@ -641,14 +631,12 @@ senlin cluster-policy-show
 
 Show a specific policy that is bound to the specified cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   ID or name of the cluster to query on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-p <POLICY>, --policy <POLICY>``
   ID or name of the policy to query on.
@@ -664,14 +652,12 @@ senlin cluster-policy-update
 
 Update a policy's properties on a cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME or ID>``
   Name or ID of cluster to operate on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-p <POLICY>, --policy <POLICY>``
   ID or name of policy to be updated.
@@ -693,14 +679,12 @@ senlin cluster-resize
 
 Resize a cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   Name or ID of cluster to operate on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-c <CAPACITY>, --capacity <CAPACITY>``
   The desired number of nodes of the cluster.
@@ -741,14 +725,12 @@ senlin cluster-scale-in
 
 Scale in a cluster by the specified number of nodes.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   Name or ID of cluster to operate on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-c <COUNT>, --count <COUNT>``
   Number of nodes to be deleted from the specified
@@ -765,14 +747,12 @@ senlin cluster-scale-out
 
 Scale out a cluster by the specified number of nodes.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   Name or ID of cluster to operate on.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-c <COUNT>, --count <COUNT>``
   Number of nodes to be added to the specified cluster.
@@ -788,8 +768,7 @@ senlin cluster-show
 
 Show details of the cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   Name or ID of cluster to show.
@@ -807,14 +786,12 @@ senlin cluster-update
 
 Update the cluster.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<CLUSTER>``
   Name or ID of cluster to be updated.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-p <PROFILE>, --profile <PROFILE>``
   ID of new profile to use.
@@ -842,8 +819,7 @@ senlin event-list
 
 List events.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
   Filter parameters to apply on returned events. This
@@ -881,8 +857,7 @@ senlin event-show
 
 Describe the event.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<EVENT>``
   ID of event to display details for.
@@ -900,14 +875,12 @@ senlin node-create
 
 Create the node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NODE_NAME>``
   Name of the node to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-p <PROFILE>, --profile <PROFILE>``
   Profile Id used for this node.
@@ -934,8 +907,7 @@ senlin node-delete
 
 Delete the node(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NODE>``
   Name or ID of node(s) to delete.
@@ -952,8 +924,7 @@ senlin node-list
 
 Show list of nodes.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-c <CLUSTER>, --cluster <CLUSTER>``
   ID or name of cluster from which nodes are to be
@@ -994,14 +965,12 @@ senlin node-show
 
 Show detailed info about the specified node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NODE>``
   Name or ID of the node to show the details for.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-D, --details``
   Include physical object details.
@@ -1019,14 +988,12 @@ senlin node-update
 
 Update the node.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NODE>``
   Name or ID of node to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n <NAME>, --name <NAME>``
   New name for the node.
@@ -1053,14 +1020,12 @@ senlin policy-create
 
 Create a policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME>``
   Name of the policy to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-s <SPEC_FILE>, --spec-file <SPEC_FILE>``
   The spec file used to create the policy.
@@ -1076,8 +1041,7 @@ senlin policy-delete
 
 Delete policy(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<POLICY>``
   Name or ID of policy(s) to delete.
@@ -1094,8 +1058,7 @@ senlin policy-list
 
 List policies that meet the criteria.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
   Filter parameters to apply on returned policies. This
@@ -1132,8 +1095,7 @@ senlin policy-show
 
 Show the policy details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<POLICY>``
   Name of the policy to be updated.
@@ -1160,14 +1122,12 @@ senlin policy-type-show
 
 Get the details about a policy type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<TYPE_NAME>``
   Policy type to retrieve.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-F <FORMAT>, --format <FORMAT>``
   The template output format, one of: yaml, json.
@@ -1183,14 +1143,12 @@ senlin policy-update
 
 Update a policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<POLICY>``
   Name of the policy to be updated.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n <NAME>, --name <NAME>``
   New name of the policy to be updated.
@@ -1207,14 +1165,12 @@ senlin profile-create
 
 Create a profile.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<PROFILE_NAME>``
   Name of the profile to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-s <SPEC FILE>, --spec-file <SPEC FILE>``
   The spec file used to create the profile.
@@ -1235,8 +1191,7 @@ senlin profile-delete
 
 Delete profile(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<PROFILE>``
   Name or ID of profile(s) to delete.
@@ -1253,8 +1208,7 @@ senlin profile-list
 
 List profiles that meet the criteria.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
   Filter parameters to apply on returned profiles. This
@@ -1291,8 +1245,7 @@ senlin profile-show
 
 Show the profile details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<PROFILE>``
   Name or ID of profile to show.
@@ -1320,14 +1273,12 @@ senlin profile-type-show
 
 Get the details about a profile type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<TYPE_NAME>``
   Profile type to retrieve.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-F <FORMAT>, --format <FORMAT>``
   The template output format, one of: yaml, json.
@@ -1344,14 +1295,12 @@ senlin profile-update
 
 Update a profile.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<PROFILE_ID>``
   Name or ID of the profile to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-n <NAME>, --name <NAME>``
   The new name for the profile.
@@ -1374,14 +1323,12 @@ senlin receiver-create
 
 Create a receiver.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAME>``
   Name of the receiver to create.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-t <TYPE>, --type <TYPE>``
   Type of the receiver to create.
@@ -1407,8 +1354,7 @@ senlin receiver-delete
 
 Delete receiver(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<RECEIVER>``
   Name or ID of receiver(s) to delete.
@@ -1425,8 +1371,7 @@ senlin receiver-list
 
 List receivers that meet the criteria.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
   Filter parameters to apply on returned receivers. This
@@ -1463,8 +1408,7 @@ senlin receiver-show
 
 Show the receiver details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<RECEIVER>``
   Name or ID of the receiver to show.

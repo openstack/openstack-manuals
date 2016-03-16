@@ -26,9 +26,9 @@ glance usage
 
    usage: glance [--version] [-d] [-v] [--get-schema] [--no-ssl-compression] [-f]
                  [--os-image-url OS_IMAGE_URL]
-                 [--os-image-api-version OS_IMAGE_API_VERSION] [--insecure]
-                 [--os-cacert <ca-certificate>] [--os-cert <certificate>]
-                 [--os-key <key>] [--timeout <seconds>]
+                 [--os-image-api-version OS_IMAGE_API_VERSION]
+                 [--profile HMAC_KEY] [--insecure] [--os-cacert <ca-certificate>]
+                 [--os-cert <certificate>] [--os-key <key>] [--timeout <seconds>]
                  [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
                  [--os-domain-name OS_DOMAIN_NAME]
                  [--os-project-id OS_PROJECT_ID]
@@ -84,6 +84,16 @@ glance optional arguments
 
 ``--os-image-api-version OS_IMAGE_API_VERSION``
   Defaults to ``env[OS_IMAGE_API_VERSION]`` or 2.
+
+``--profile HMAC_KEY``
+  HMAC key to use for encrypting context data for
+  performance profiling of operation. This key should be
+  the value of HMAC key configured in osprofiler
+  middleware in glance, it is specified in paste
+  configuration file at /etc/glance/api-paste.ini and
+  /etc/glance/registry-paste.ini. Without key the
+  profiling will not be triggered even if osprofiler is
+  enabled on server side.
 
 ``--insecure``
   Explicitly allow client to perform "insecure" TLS
@@ -195,8 +205,7 @@ glance image-create (v1)
 
 Create a new image.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--id <IMAGE_ID>``
   ID of image to reserve.
@@ -278,8 +287,7 @@ glance image-delete (v1)
 
 Delete specified image(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE>``
   Name or ID of image(s) to delete.
@@ -295,14 +303,12 @@ glance image-download (v1)
 
 Download a specific image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE>``
   Name or ID of image to download.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--file <FILE>``
   Local file to save downloaded image data to. If this is not
@@ -331,8 +337,7 @@ glance image-list (v1)
 
 List images you can access.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Filter images to those that have this name.
@@ -406,14 +411,12 @@ glance image-show (v1)
 
 Describe a specific image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE>``
   Name or ID of image to describe.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--human-readable``
   Print image size in a human-friendly format.
@@ -442,14 +445,12 @@ glance image-update (v1)
 
 Update a specific image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE>``
   Name or ID of image to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Name of image.
@@ -531,8 +532,7 @@ glance member-create (v1)
 
 Share a specific image with a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE>``
   Image to add member to.
@@ -540,8 +540,7 @@ Positional arguments
 ``<TENANT_ID>``
   Tenant to add as member.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--can-share``
   Allow the specified tenant to share this image.
@@ -557,8 +556,7 @@ glance member-delete (v1)
 
 Remove a shared image from a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE>``
   Image from which to remove member.
@@ -577,8 +575,7 @@ glance member-list (v1)
 
 Describe sharing permissions by image or tenant.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--image-id <IMAGE_ID>``
   Filter results by an image ID.
@@ -609,8 +606,7 @@ glance explain (v2)
 
 Describe a specific model.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<MODEL>``
   Name of model to describe.
@@ -639,8 +635,7 @@ glance image-create (v2)
 
 Create a new image.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--architecture <ARCHITECTURE>``
   Operating system architecture as specified in
@@ -725,8 +720,7 @@ glance image-deactivate (v2)
 
 Deactivate specified image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of image to deactivate.
@@ -742,8 +736,7 @@ glance image-delete (v2)
 
 Delete specified image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of image(s) to delete.
@@ -759,14 +752,12 @@ glance image-download (v2)
 
 Download a specific image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of image to download.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--file <FILE>``
   Local file to save downloaded image data to. If this is not
@@ -793,8 +784,7 @@ glance image-list (v2)
 
 List images you can access.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--limit <LIMIT>``
   Maximum number of images to get.
@@ -846,8 +836,7 @@ glance image-reactivate (v2)
 
 Reactivate specified image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of image to reactivate.
@@ -864,14 +853,12 @@ glance image-show (v2)
 
 Describe a specific image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of image to describe.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--human-readable``
   Print image size in a human-friendly format.
@@ -890,8 +877,7 @@ glance image-tag-delete (v2)
 
 Delete the tag associated with the given image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of the image from which to delete tag.
@@ -910,8 +896,7 @@ glance image-tag-update (v2)
 
 Update an image with the given tag.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   Image to be updated with the given tag.
@@ -941,14 +926,12 @@ glance image-update (v2)
 
 Update an existing image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of image to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--architecture <ARCHITECTURE>``
   Operating system architecture as specified in
@@ -1024,14 +1007,12 @@ glance image-upload (v2)
 
 Upload data for a specific image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of image to upload data to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--file <FILE>``
   Local file that contains disk image to be uploaded.
@@ -1057,14 +1038,12 @@ glance location-add (v2)
 
 Add a location (and related metadata) to an image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of image to which the location is to be added.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--url <URL>``
   URL of location to add.
@@ -1084,14 +1063,12 @@ glance location-delete (v2)
 
 Remove locations (and related metadata) from an image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of image whose locations are to be removed.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--url <URL>``
   URL of location to remove. May be used multiple times.
@@ -1107,14 +1084,12 @@ glance location-update (v2)
 
 Update metadata of an image's location.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   ID of image whose location is to be updated.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--url <URL>``
   URL of location to update.
@@ -1134,8 +1109,7 @@ glance md-namespace-create (v2)
 
 Create a new metadata definitions namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of the namespace.
@@ -1155,8 +1129,7 @@ glance md-namespace-delete (v2)
 
 Delete specified metadata definitions namespace with its contents.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace to delete.
@@ -1172,8 +1145,7 @@ glance md-namespace-import (v2)
 
 Import a metadata definitions namespace from file or standard input.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--file <FILEPATH>``
   Path to file with namespace schema to import.
@@ -1193,8 +1165,7 @@ glance md-namespace-list (v2)
 
 List metadata definitions namespaces.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--resource-types <RESOURCE_TYPES>``
   Resource type to filter namespaces.
@@ -1217,8 +1188,7 @@ glance md-namespace-objects-delete (v2)
 
 Delete all metadata definitions objects inside a specific namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace.
@@ -1234,8 +1204,7 @@ glance md-namespace-properties-delete (v2)
 
 Delete all metadata definitions property inside a specific namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace.
@@ -1251,8 +1220,7 @@ glance md-namespace-resource-type-list (v2)
 
 List resource types associated to specific namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace.
@@ -1271,14 +1239,12 @@ glance md-namespace-show (v2)
 Describe a specific metadata definitions namespace. Lists also the namespace
 properties, objects and resource type associations.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace to describe.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--resource-type <RESOURCE_TYPE>``
   Applies prefix of given resource type associated to a
@@ -1298,8 +1264,7 @@ glance md-namespace-tags-delete (v2)
 
 Delete all metadata definitions tags inside a specific namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace.
@@ -1315,8 +1280,7 @@ glance md-namespace-update (v2)
 
 Update an existing metadata definitions namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace to update.
@@ -1336,14 +1300,12 @@ glance md-object-create (v2)
 
 Create a new metadata definitions object inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace the object will belong.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Internal name of an object.
@@ -1362,8 +1324,7 @@ glance md-object-delete (v2)
 
 Delete a specific metadata definitions object inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace the object belongs.
@@ -1382,8 +1343,7 @@ glance md-object-list (v2)
 
 List metadata definitions objects inside a specific namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace.
@@ -1400,8 +1360,7 @@ glance md-object-property-show (v2)
 
 Describe a specific metadata definitions property inside an object.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace the object belongs.
@@ -1412,8 +1371,7 @@ Positional arguments
 ``<PROPERTY>``
   Name of a property.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--max-column-width <integer>``
   The max column width of the printed table.
@@ -1430,8 +1388,7 @@ glance md-object-show (v2)
 
 Describe a specific metadata definitions object inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace the object belongs.
@@ -1439,8 +1396,7 @@ Positional arguments
 ``<OBJECT>``
   Name of an object.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--max-column-width <integer>``
   The max column width of the printed table.
@@ -1457,8 +1413,7 @@ glance md-object-update (v2)
 
 Update metadata definitions object inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace the object belongs.
@@ -1466,8 +1421,7 @@ Positional arguments
 ``<OBJECT>``
   Name of an object.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   New name of an object.
@@ -1488,14 +1442,12 @@ glance md-property-create (v2)
 
 Create a new metadata definitions property inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace the property will belong.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   Internal name of a property.
@@ -1517,8 +1469,7 @@ glance md-property-delete (v2)
 
 Delete a specific metadata definitions property inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace the property belongs.
@@ -1537,8 +1488,7 @@ glance md-property-list (v2)
 
 List metadata definitions properties inside a specific namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace.
@@ -1555,8 +1505,7 @@ glance md-property-show (v2)
 
 Describe a specific metadata definitions property inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace the property belongs.
@@ -1564,8 +1513,7 @@ Positional arguments
 ``<PROPERTY>``
   Name of a property.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--max-column-width <integer>``
   The max column width of the printed table.
@@ -1583,8 +1531,7 @@ glance md-property-update (v2)
 
 Update metadata definitions property inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace the property belongs.
@@ -1592,8 +1539,7 @@ Positional arguments
 ``<PROPERTY>``
   Name of a property.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   New name of a property.
@@ -1615,8 +1561,7 @@ glance md-resource-type-associate (v2)
 
 Associate resource type with a metadata definitions namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace.
@@ -1636,8 +1581,7 @@ glance md-resource-type-deassociate (v2)
 
 Deassociate resource type with a metadata definitions namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace.
@@ -1667,14 +1611,12 @@ glance md-tag-create (v2)
 
 Add a new metadata definitions tag inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of the namespace the tag will belong to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   The name of the new tag to add.
@@ -1691,14 +1633,12 @@ glance md-tag-create-multiple (v2)
 
 Create new metadata definitions tags inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of the namespace the tags will belong to.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--names <NAMES>``
   A comma separated list of tag names.
@@ -1718,8 +1658,7 @@ glance md-tag-delete (v2)
 
 Delete a specific metadata definitions tag inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of the namespace to which the tag belongs.
@@ -1738,8 +1677,7 @@ glance md-tag-list (v2)
 
 List metadata definitions tags inside a specific namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of namespace.
@@ -1755,8 +1693,7 @@ glance md-tag-show (v2)
 
 Describe a specific metadata definitions tag inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of the namespace to which the tag belongs.
@@ -1775,8 +1712,7 @@ glance md-tag-update (v2)
 
 Rename a metadata definitions tag inside a namespace.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<NAMESPACE>``
   Name of the namespace to which the tag belongs.
@@ -1784,8 +1720,7 @@ Positional arguments
 ``<TAG>``
   Name of the old tag.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <NAME>``
   New name of the new tag.
@@ -1801,8 +1736,7 @@ glance member-create (v2)
 
 Create member for a given image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   Image with which to create member.
@@ -1821,8 +1755,7 @@ glance member-delete (v2)
 
 Delete image member.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   Image from which to remove member.
@@ -1841,8 +1774,7 @@ glance member-list (v2)
 
 Describe sharing permissions by image.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--image-id <IMAGE_ID>``
   Image to display members of.
@@ -1858,8 +1790,7 @@ glance member-update (v2)
 
 Update the status of a member for a given image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<IMAGE_ID>``
   Image from which to update member.
@@ -1882,8 +1813,7 @@ glance task-create (v2)
 
 Create a new task.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--type <TYPE>``
   Type of Task. Please refer to Glance schema or
@@ -1905,8 +1835,7 @@ glance task-list (v2)
 
 List tasks you can access.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--sort-key {id,type,status}``
   Sort task list by specified field.
@@ -1934,8 +1863,7 @@ glance task-show (v2)
 
 Describe a specific task.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<TASK_ID>``
   ID of task to describe.
