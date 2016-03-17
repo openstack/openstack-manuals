@@ -1,5 +1,5 @@
 ===============
-Xen via Libvirt
+Xen via libvirt
 ===============
 
 OpenStack Compute supports the Xen Project Hypervisor (or Xen). Xen can be
@@ -11,22 +11,23 @@ This section describes how to set up OpenStack Compute with Xen and libvirt.
 For information on how to set up Xen with XAPI refer to
 :doc:`hypervisor-xen-api`.
 
-Installing Xen with Libvirt
+Installing Xen with libvirt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At this stage we recommend using the baseline that we use for the
 `Xen Project OpenStack CI Loop <http://wiki.xenproject.org/wiki/
 OpenStack_CI_Loop_for_Xen-Libvirt>`_, which contains the most recent
-stability fixes to both Xen and Libvirt.
+stability fixes to both Xen and libvirt.
 
 `Xen 4.5.1 <http://www.xenproject.org/downloads/xen-archives/xen-45-series/
-xen-451.html>`_ (or newer) and `Libvirt 1.2.15 <http://libvirt.org/sources/>`_
-(or newer) contain the most recent OpenStack improvements for Xen.
+xen-451.html>`_ (or newer) and `libvirt 1.2.15 <http://libvirt.org/sources/>`_
+(or newer) contain the minimum required OpenStack improvements for Xen.
+Although libvirt 1.2.15 works with Xen, libvirt 1.3.2 or newer is recommended.
 The necessary Xen changes have also been backported to the Xen 4.4.3 stable
-branch (not yet released at this stage). Please check with the Linux and
-FreeBSD distros you are intending to use as `Dom 0 <http://wiki.xenproject.org/
-wiki/Category:Host_Install>`_, whether the relevant version of Xen and
-Libvirt are available as installable packages.
+branch. Please check with the Linux and FreeBSD distros you are intending to
+use as `Dom 0 <http://wiki.xenproject.org/wiki/Category:Host_Install>`_,
+whether the relevant version of Xen and libvirt are available as installable
+packages.
 
 The latest releases of Xen and libvirt packages that fulfil the above
 minimum requirements for the various openSUSE distributions can always be
@@ -34,7 +35,7 @@ found and installed from the `Open Build Service <https://build.opensuse.org/
 project/show/Virtualization>`_ Virtualization project.
 To install these latest packages, add the Virtualization repository to your
 software management stack and get the newest packages from there.
-More information about the latest Xen and Libvirt packages are available
+More information about the latest Xen and libvirt packages are available
 `here <https://build.opensuse.org/package/show/Virtualization/xen>`__ and
 `here <https://build.opensuse.org/package/show/Virtualization/libvirt>`__.
 
@@ -52,7 +53,7 @@ For further information and latest developments, you may want to consult
 the Xen Project's `mailing lists for OpenStack related issues and questions
 <http://lists.xenproject.org/cgi-bin/mailman/listinfo/wg-openstack>`_.
 
-Configuring Xen with Libvirt
+Configuring Xen with libvirt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To enable Xen via libvirt, ensure the following options are set in
@@ -70,7 +71,7 @@ Additional configuration options
 
 Use the following as a guideline for configuring Xen for use in OpenStack:
 
-#. **Dom0 Memory**: Set it between 1GB and 4GB by adding the following
+#. **Dom0 memory**: Set it between 1GB and 4GB by adding the following
    parameter to the Xen Boot Options in the `grub.conf <http://
    xenbits.xen.org/docs/unstable/misc/xen-command-line.html>`_ file.
 
@@ -150,13 +151,13 @@ Use the following as a guideline for configuring Xen for use in OpenStack:
 
       The default for virtualization mode in nova is PV mode.
 
-#. **Image Formats**: Xen supports raw, qcow2 and vhd image formats.
+#. **Image formats**: Xen supports raw, qcow2 and vhd image formats.
    For more information on image formats, refer to the `OpenStack Virtual
    Image Guide <http://docs.openstack.org/image-guide/introduction.html>`__
    and the `Storage Options Guide on the Xen Project Wiki
    <http://wiki.xenproject.org/wiki/Storage_options>`_.
 
-#. **Image Metadata**: In addition to the ``vm_mode`` property discussed
+#. **Image metadata**: In addition to the ``vm_mode`` property discussed
    above, the ``hypervisor_type`` property is another important component
    of the image metadata, especially if your cloud contains mixed hypervisor
    compute nodes. Setting the ``hypervisor_type`` property allows the nova
@@ -178,13 +179,23 @@ Use the following as a guideline for configuring Xen for use in OpenStack:
    `OpenStack Virtual Image Guide <http://docs.openstack.org/image-guide/
    image-metadata.html>`__.
 
+#. **Libguestfs file injection**: OpenStack compute nodes can use `libguestfs
+   <http://libguestfs.org/>`_ to inject files into an instance's image prior
+   to launching the instance. libguestfs uses libvirt's QEMU driver to start a
+   qemu process, which is then used to inject files into the image. When using
+   libguestfs for file injection, the compute node must have the libvirt qemu
+   driver installed, in addition to the Xen driver. In RPM based distributions,
+   the qemu driver is provided by the ``libvirt-daemon-qemu`` package. In
+   Debian and Ubuntu, the qemu driver is provided by the ``libvirt-bin``
+   package.
+
 To customize the libvirt driver, use the configuration option settings
 documented in :ref:`nova-xen`.
 
-Troubleshoot Xen with Libvirt
+Troubleshoot Xen with libvirt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Important Log Files**: When an instance fails to start, or when you come
+**Important log files**: When an instance fails to start, or when you come
 across other issues, you should first consult the following log files:
 
 * ``/var/log/nova/compute.log``
@@ -207,9 +218,27 @@ Reporting_Bugs_against_Xen>`_ against Xen.
 Known issues
 ~~~~~~~~~~~~
 
-Xen via libvirt is currently only supported with nova-network.
-Fixes for a number of bugs are currently being worked on to make sure
-that Xen via libvirt will also work with Networking service.
+* **Networking**: Xen via libvirt is currently only supported with
+  nova-network. Fixes for a number of bugs are currently being worked on to
+  make sure that Xen via libvirt will also work with OpenStack Networking
+  (neutron).
+
+* **Live migration**: Live migration is supported in the libvirt libxl driver
+  since version 1.2.5. However, there were a number of issues when used with
+  OpenStack, in particular with libvirt migration protocol compatibility. It
+  is worth mentioning that libvirt 1.3.0 addresses most of these issues.
+  We do however recommend using libvirt 1.3.2, which is fully supported and
+  tested as part of the Xen Project CI loop. It addresses live migration
+  monitoring related issues and adds support for peer-to-peer migration mode,
+  which nova relies on.
+
+* **Live migration monitoring**: On compute nodes running Kilo or later, live
+  migration monitoring relies on libvirt APIs that are only implemented from
+  libvirt version 1.3.1 onwards. When attempting to live migrate, the migration
+  monitoring thread would crash and leave the instance state as "MIGRATING". If
+  you experience such an issue and you are running on a version released before
+  libvirt 1.3.1, make sure you backport libvirt commits ad71665 and b7b4391
+  from upstream.
 
 Additional information and resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
