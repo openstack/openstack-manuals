@@ -52,8 +52,9 @@ requirements for the compute host and image.
 
 -  An image built with a recent version of the cloud-init package can
    automatically access metadata passed through the configuration drive.
-   The cloud-init package version 0.7.1 works with Ubuntu and Fedora
-   based images, such as Red Hat Enterprise Linux.
+   The cloud-init package version 0.7.1 works with Ubuntu, Fedora
+   based images (such as Red Hat Enterprise Linux) and openSUSE based
+   images (such as SUSE Linux Enterprise Server).
 
 -  If an image does not have the cloud-init package installed, you must
    customize the image to run a script that mounts the configuration
