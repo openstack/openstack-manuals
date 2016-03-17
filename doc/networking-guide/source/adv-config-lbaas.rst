@@ -190,7 +190,7 @@ Building an LBaaS v2 load balancer
        | vip_address         | 192.168.1.22                                   |
        | vip_port_id         | 9f8f8a75-a731-4a34-b622-864907e1d556           |
        | vip_subnet_id       | f1e7827d-1bfe-40b6-b8f0-2d9fd946f59b           |
-        +---------------------+------------------------------------------------+
+       +---------------------+------------------------------------------------+
 
     This load balancer is active and ready to serve traffic on ``192.168.1.22``.
 
