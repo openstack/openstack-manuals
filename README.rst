@@ -58,9 +58,9 @@ On Fedora 20 and later::
 
     yum install maven
 
-On openSUSE 13.1 and later::
+On openSUSE Leap::
 
-    zypper ar http://download.opensuse.org/repositories/devel:/tools:/building/openSUSE_13.1/devel:tools:building.repo
+    zypper ar http://download.opensuse.org/repositories/devel:/tools:/building/openSUSE_Leap_42.1/devel:tools:building.repo
     zypper install maven
 
 To build the glossary, move to ``doc/glossary``,
