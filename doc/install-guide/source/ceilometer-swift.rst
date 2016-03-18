@@ -87,13 +87,10 @@ run the Object Storage proxy service.
 
   * In the ``[pipeline:main]`` section, add ``ceilometer``:
 
-    .. code-block:: ini
+   .. code-block:: ini
 
        [pipeline:main]
-       pipeline = catch_errors gatekeeper healthcheck proxy-logging cache
-       container_sync bulk ratelimit authtoken keystoneauth container-quotas
-       account-quotas slo dlo versioned_writes proxy-logging ceilometer
-       proxy-server
+       pipeline = ceilometer catch_errors gatekeeper healthcheck proxy-logging cache container_sync bulk ratelimit authtoken keystoneauth container-quotas account-quotas slo dlo versioned_writes proxy-logging proxy-server
 
   * In the ``[filter:ceilometer]`` section, configure notifications:
 
