@@ -21,11 +21,21 @@ an ANSI standard for storage management. It supports the VMAX storage system.
 System requirements
 ~~~~~~~~~~~~~~~~~~~
 
-EMC SMI-S Provider V4.6.2.8 and higher is required. You can download SMI-S from
-the `EMC's support <https://support.emc.com>`__ web site (login is required).
+The Cinder driver supports both VMAX-2 and VMAX-3 series.
+
+For VMAX-2 series, EMC SMI-S Provider V4.6.2.8 and higher is required.
+For OpenStack release Juno and later Openstack releases, minimum SMI-S
+version is V4.6.2.54.
+
+For VMAX-3 series, supported SMI-S version is 8.1.0.3 and above. However,
+these versions are compatible with VMAX-2 series also.
+
+You can download SMI-S from the EMC's support web site (login is required).
 See the EMC SMI-S Provider release notes for installation instructions.
 
-EMC storage VMAX Family is supported.
+Ensure that there is only one SMI-S (ECOM) server active on the same VMAX
+array.
+
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
@@ -40,12 +50,24 @@ VMAX drivers support these operations:
 -  Extend a volume.
 -  Retype a volume.
 -  Create a volume from a snapshot.
+-  Create and delete consistency groups.
+-  Create and delete consistency group snapshots.
+-  Modify consistency groups (add/remove volumes).
 
 VMAX drivers also support the following features:
-
--  FAST automated storage tiering policy.
 -  Dynamic masking view creation.
+-  Dynamic determination of the target iSCSI IP address.
+
+VMAX2
+-  FAST automated storage tiering policy.
 -  Striped volume creation.
+
+VMAX3
+-  SLO support.
+-  Dynamic masking view creation.
+-  SnapVX support.
+-  Extend volume and iSCSI support.
+
 
 Set up the VMAX drivers
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,7 +92,33 @@ Set up the VMAX drivers
 
          # yum install pywbem
 
-#. Download SMI-S from PowerLink and install it. Add your VMAX arrays to SMI-S.
+#. Install iSCSI Utilities (for iSCSI drivers only).
+
+   #. Download and configure the Cinder node as an iSCSI initiator.
+   #. Install the ``open-iscsi`` package.
+
+      -  On Ubuntu:
+
+         .. code-block:: console
+
+            # apt-get install open-iscsi
+
+      -  On openSUSE:
+
+         .. code-block:: console
+
+            # zypper install open-iscsi
+
+      -  On Red Hat Enterprise Linux, CentOS, and Fedora:
+
+         .. code-block:: console
+
+            # yum install scsi-target-utils.x86_64
+
+   #. Enable the iSCSI driver to start automatically.
+
+#. Download SMI-S from ``support.emc.com`` and install it. Add your VMAX arrays
+   to SMI-S.
 
    You can install SMI-S on a non-OpenStack host. Supported platforms include
    different flavors of Windows, Red Hat, and SUSE Linux. SMI-S can be
@@ -86,23 +134,22 @@ Set up the VMAX drivers
 
    SMI-S is usually installed at ``/opt/emc/ECIM/ECOM/bin`` on Linux and
    ``C:\Program Files\EMC\ECIM\ECOM\bin`` on Windows. After you install and
-   configure SMI-S, go to that directory and type ``TestSmiProvider.exe``.
+   configure SMI-S, go to that directory and type ``TestSmiProvider.exe``
+   for windows and ``./TestSmiProvider`` for linux
 
-   Use ``addsys`` in ``TestSmiProvider.exe`` to add an array. Use ``dv`` and
+   Use ``addsys`` in ``TestSmiProvider`` to add an array. Use ``dv`` and
    examine the output after the array is added. Make sure that the arrays are
    recognized by the SMI-S server before using the EMC VMAX drivers.
 
 #. Configure Block Storage
 
-   Add the following entries to ``/etc/cinder/cinder.conf``, where
-   ``10.10.61.45`` is the IP address of the VMAX iSCSI target:
+   Add the following entries to ``/etc/cinder/cinder.conf``:
 
    .. code-block:: ini
 
       enabled_backends = CONF_GROUP_ISCSI, CONF_GROUP_FC
 
       [CONF_GROUP_ISCSI]
-      iscsi_ip_address = 10.10.61.45
       volume_driver = cinder.volume.drivers.emc.emc_vmax_iscsi.EMCVMAXISCSIDriver
       cinder_emc_config_file = /etc/cinder/cinder_emc_config_CONF_GROUP_ISCSI.xml
       volume_backend_name = ISCSI_backend
@@ -140,21 +187,41 @@ Set up the VMAX drivers
 
    Add the following lines to the XML file:
 
-   .. code-block:: xml
+   VMAX2
+     .. code-block:: xml
 
        <?xml version="1.0" encoding="UTF-8" ?>
        <EMC>
-           <EcomServerIp>1.1.1.1</EcomServerIp>
-           <EcomServerPort>00</EcomServerPort>
-           <EcomUserName>user1</EcomUserName>
-           <EcomPassword>password1</EcomPassword>
-           <PortGroups>
-             <PortGroup>OS-PORTGROUP1-PG</PortGroup>
-             <PortGroup>OS-PORTGROUP2-PG</PortGroup>
-           </PortGroups>
-          <Array>111111111111</Array>
-          <Pool>FC_GOLD1</Pool>
-          <FastPolicy>GOLD1</FastPolicy>
+         <EcomServerIp>1.1.1.1</EcomServerIp>
+         <EcomServerPort>00</EcomServerPort>
+         <EcomUserName>user1</EcomUserName>
+         <EcomPassword>password1</EcomPassword>
+         <PortGroups>
+           <PortGroup>OS-PORTGROUP1-PG</PortGroup>
+           <PortGroup>OS-PORTGROUP2-PG</PortGroup>
+         </PortGroups>
+         <Array>111111111111</Array>
+         <Pool>FC_GOLD1</Pool>
+         <FastPolicy>GOLD1</FastPolicy>
+       </EMC>
+
+   VMAX3
+     .. code-block:: xml
+
+       <?xml version="1.0" encoding="UTF-8" ?>
+       <EMC>
+         <EcomServerIp>1.1.1.1</EcomServerIp>
+         <EcomServerPort>00</EcomServerPort>
+         <EcomUserName>user1</EcomUserName>
+         <EcomPassword>password1</EcomPassword>
+         <PortGroups>
+           <PortGroup>OS-PORTGROUP1-PG</PortGroup>
+           <PortGroup>OS-PORTGROUP2-PG</PortGroup>
+         </PortGroups>
+         <Array>111111111111</Array>
+         <Pool>SRP_1</Pool>
+         <Slo>Gold</Slo>
+         <Workload>OLTP</Workload>
        </EMC>
 
    Where:
@@ -189,10 +256,20 @@ Set up the VMAX drivers
     administrator. For back ends exposing FAST policy automated tiering, the
     pool is the bind pool to be used with the FAST policy.
 
-``FastPolicy``
+``VMAX2 FastPolicy``
     Name of the FAST Policy to be used. By including this tag, volumes managed
     by this back end are treated as under FAST control. Omitting the
     ``FastPolicy`` tag means FAST is not enabled on the provided storage pool.
+
+``VMAX3 Slo``
+    The Service Level Objective (SLO) that manages the underlying storage to
+    provide expected performance. Omitting the ``Slo`` tag means ``Optimised``
+    SLO will be used instead.
+
+``VMAX3 Workload``
+    When a workload type is added, the latency range is reduced due to the
+    added information. Omitting the ``Workload`` tag means the latency
+    range will be the widest for its SLO type.
 
 FC Zoning with VMAX
 ~~~~~~~~~~~~~~~~~~~
@@ -219,8 +296,11 @@ the following naming conventions:
 
 .. code-block:: none
 
-    OS-[shortHostName][poolName]-I-MV (for Masking Views using iSCSI)
-    OS-[shortHostName][poolName]-F-MV (for Masking Views using FC)
+   OS-[shortHostName]-[poolName]-I-MV (for Masking Views using iSCSI)
+   OS-[shortHostName]-[poolName]-F-MV (for Masking Views using FC)
+   or
+   OS-[shortHostName]-[fastPolicy]-I-MV (where FAST policy is used)
+   OS-[shortHostName]-[fastPolicy]-F-MV (where FAST policy is used)
 
 Initiator group names
 ---------------------
@@ -234,8 +314,8 @@ as required. Names are of the following format:
 
 .. code-block:: none
 
-    OS-[shortHostName]-I-IG (for iSCSI initiators)
-    OS-[shortHostName]-F-IG (for Fibre Channel initiators)
+   OS-[shortHostName]-I-IG (for iSCSI initiators)
+   OS-[shortHostName]-F-IG (for Fibre Channel initiators)
 
 .. note::
 
@@ -259,11 +339,14 @@ or FAST-controlled), attached to a single host, over a single connection type
 
 .. code-block:: none
 
-    OS-[shortHostName][poolName]-I-SG (attached over iSCSI)
-    OS-[shortHostName][poolName]-F-SG (attached over Fibre Channel)
+   OS-[shortHostName]-[poolName]-I-SG (attached over iSCSI)
+   OS-[shortHostName]-[poolName]-F-SG (attached over Fibre Channel
+   or
+   OS-[shortHostName]-[fastPolicy]-I-SG (where FAST policy is used)
+   OS-[shortHostName]-[fastPolicy]-F-SG (where FAST policy is used)
 
-Concatenated or striped volumes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+VMAX2 concatenated or striped volumes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to support later expansion of created volumes, the VMAX Block Storage
 drivers create concatenated volumes as the default layout. If later expansion
@@ -278,6 +361,6 @@ striped volume. The example below means that each volume created under the
 
 .. code-block:: console
 
-    $ cinder type-create GoldStriped
-    $ cinder type-key GoldStriped set volume_backend_name=GOLD_BACKEND
-    $ cinder type-key GoldStriped set storagetype:stripecount=4
+   $ cinder type-create GoldStriped
+   $ cinder type-key GoldStriped set volume_backend_name=GOLD_BACKEND
+   $ cinder type-key GoldStriped set storagetype:stripecount=4
