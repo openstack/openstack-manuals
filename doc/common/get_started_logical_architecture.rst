@@ -36,3 +36,4 @@ architecture for an OpenStack cloud:
 
 .. image:: figures/openstack-arch-kilo-logical-v1.png
    :alt: Logical architecture
+   :width: 100%
