@@ -6,9 +6,9 @@ Consistency groups
 
 Consistency groups enable you to create snapshots from multiple file system
 shares at the same point in time. For example, a database might place its
-tables, logs, and configuration on separate shares. To restore this database
-from a previous point in time, it makes sense to restore the logs, tables, and
-configuration together from the exact same point in time.
+tables, logs, and configurations on separate shares. Store logs, tables,
+and configurations at the same point in time to effectively restore a
+database.
 
 The Shared File System service allows you to create a snapshot of the
 consistency group and restore all shares that were associated with a
@@ -32,7 +32,7 @@ Consistency groups
    Before using consistency groups, make sure the Shared File System driver
    that you are running has consistency group support. You can check it in the
    ``manila-scheduler`` service reports. The ``consistency_group_support`` can
-   have such values:
+   have the following values:
 
    * ``pool`` or ``host``. Consistency groups are supported. Specifies the
      level of consistency groups support.
@@ -64,7 +64,7 @@ specifying two comma-separated share types:
    | name                 | cgroup1                              |
    +----------------------+--------------------------------------+
 
-Check that consistency group is in available status:
+Check that consistency group status is ``available``:
 
 .. code-block:: console
 
@@ -86,13 +86,14 @@ Check that consistency group is in available status:
    | name                 | cgroup1                              |
    +----------------------+--------------------------------------+
 
-To add a share to the consistency group create a share with a
+To add a share to the consistency group, create a share by adding the
 :option:`--consistency-group` option where you specify the ID of the consistency
 group in ``available`` status:
 
 .. code-block:: console
 
-   $ manila create nfs 1 --name "Share2" --description "My second share" --share-type default --share-network my_share_net --consistency-group cgroup1
+   $ manila create nfs 1 --name "Share2" --description "My second share"
+   --share-type default --share-network my_share_net --consistency-group cgroup1
    +-----------------------------+--------------------------------------+
    | Property                    | Value                                |
    +-----------------------------+--------------------------------------+
@@ -122,11 +123,11 @@ group in ``available`` status:
    +-----------------------------+--------------------------------------+
 
 Administrators can rename the consistency group, or change its
-description using :command:`manila cg-update` command. Delete the group
-with :command:`manila cg-delete` command.
+description using the :command:`manila cg-update` command. Delete the group
+with the :command:`manila cg-delete` command.
 
 As an administrator, you can also reset the state of a consistency group and
-force-delete a specified consistency group in any state. Use the
+force delete a specified consistency group in any state. Use the
 ``policy.json`` file to grant permissions for these actions to other roles.
 
 Use :command:`manila cg-reset-state [--state <state>] <consistency_group>`
@@ -163,10 +164,9 @@ to force-delete a specified consistency group in any state.
 Consistency group snapshots
 ---------------------------
 
-You can create snapshots of consistency groups. To create a snapshot,
-specify the ID or name of the consistency group. After creating a
-consistency group snapshot, it is possible to generate a consistency
-group from it.
+To create a snapshot, specify the ID or name of the consistency group.
+After creating a consistency group snapshot, it is possible to generate
+a new consistency group.
 
 Create a snapshot of consistency group ``cgroup1``:
 
@@ -202,7 +202,7 @@ Check the status of created consistency group snapshot:
    | description          | A snapshot of the first CG.          |
    +----------------------+--------------------------------------+
 
-Administrators can rename the consistency group snapshot, or change its
+Administrators can rename a consistency group snapshot, change its
 description using the :command:`cg-snapshot-update` command, or delete
 it with the :command:`cg-snapshot-delete` command.
 
@@ -210,7 +210,7 @@ A consistency group snapshot can have ``members``. To add a member,
 include the :option:`--consistency-group` optional parameter in the
 create share command. This ID must match the ID of the consistency group from
 which the consistency group snapshot was created. Then, while restoring data,
-for example, and operating with consistency group snapshots you can quickly
+and operating with consistency group snapshots, you can quickly
 find which shares belong to a specified consistency group.
 
 You created the share ``Share2`` in ``cgroup1`` consistency group. Since
@@ -227,7 +227,7 @@ group snapshot is ``Share2`` share:
    +--------------+------+----------------------------+----------------+--------------+--------------+
 
 After you create a consistency group snapshot, you can create a consistency
-group from it:
+group from the new snapshot:
 
 .. code-block:: console
 
@@ -316,7 +316,7 @@ Print detailed information about new share:
    +-----------------------------+---------------------------------------------------------------+
 
 As an administrator, you can also reset the state of a consistency group
-snapshot with :command:`cg-snapshot-reset-state` and force-delete a specified
-consistency group snapshot in any state using :command:`cg-snapshot-delete`
-with :option:`--force` key. Use the ``policy.json`` file to grant permissions for
+snapshot with the :command:`cg-snapshot-reset-state` command, and force delete a specified
+consistency group snapshot in any state using the :command:`cg-snapshot-delete` command
+with the :option:`--force` key. Use the ``policy.json`` file to grant permissions for
 these actions to other roles.

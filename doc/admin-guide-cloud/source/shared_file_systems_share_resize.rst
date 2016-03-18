@@ -4,19 +4,19 @@
 Resize share
 ============
 
-To change file share size, use :command:`manila extend` and
-:command:`manila shrink`. For most drivers it is safe operation. If you want to
-be sure that your data is safe, you can make a share back up by creating a
-snapshot of it.
+To change file share size, use the :command:`manila extend` command and
+the :command:`manila shrink` command. For most drivers it is safe
+operation. If you want to be sure that your data is safe, you can make
+a share back up by creating a snapshot of it.
 
 You can extend and shrink the share with the :command:`manila extend` and
-:command:`manila shrink` commands respectively and specifying the share
+:command:`manila shrink` commands respectively, and specify the share
 with the new size that does not exceed the quota. For details, see
 :ref:`Quotas and Limits <shared_file_systems_quotas>`. You also cannot shrink
-size to 0 or to a greater value than the current share size.
+share size to 0 or to a greater value than the current share size.
 
-While extending the share gets ``extending`` status that means that the
-increase share size request was issued successfully.
+While extending, the share has an ``extending`` status. This means that
+the increase share size request was issued successfully.
 
 To extend the share and check the result, run:
 
@@ -51,7 +51,7 @@ To extend the share and check the result, run:
    | metadata                    | {u'deadline': u'01/30/16'}                |
    +-----------------------------+-------------------------------------------+
 
-While shrinking the share gets ``shrinking`` status that means that the
+While shrinking, the share has a ``shrinking`` status. This means that the
 decrease share size request was issued successfully. To shrink the share and
 check the result, run:
 

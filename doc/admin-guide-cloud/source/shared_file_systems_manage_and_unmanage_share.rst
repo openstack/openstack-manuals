@@ -4,29 +4,32 @@
 Manage and unmanage share
 =========================
 
-To ``manage`` a share means that an administrator rather than a share driver
-manages the storage lifecycle. This approach is appropriate when an
+To ``manage`` a share means that an administrator, rather than a share
+driver, manages the storage lifecycle. This approach is appropriate when an
 administrator already has the custom non-manila share with its size, shared
-file system protocol, export path and so on, and administrator wants to
+file system protocol, and export path, and an administrator wants to
 register it in the Shared File System service.
 
 To ``unmanage`` a share means to unregister a specified share from the Shared
-File Systems service. An administrator can manage the custom share back.
+File Systems service. Administrators can revert an unmanaged share to managed
+status if needed.
 
 .. _unmanage_share:
 
-Unmanage share
---------------
-You can ``unmanage`` a share, to unregister it from the Shared File System
-service, and take manual control on share lifecycle. The ``unmanage``
-operation is not supported for shares that were created on top of share servers
-and created with share networks), so share service should have option
-``driver_handles_share_servers = False`` in its configuration. You can unmanage
-a share that has no dependent snapshots.
+Unmanage a share
+----------------
 
-To unmanage managed share, run :command:`manila unmanage <share>` command.
-Then try to print the information about it. The expected behavior is that
-Shared File Systems service won't find the share:
+The ``unmanage`` operation is not supported for shares that were
+created on top of share servers and created with share networks.
+The Share service should have the
+option ``driver_handles_share_servers = False``
+set in the ``manila.conf`` file. You can unmanage a share that has
+no dependent snapshots.
+
+To unmanage managed share, run the :command:`manila unmanage <share>`
+command. Then try to print the information about the share. The
+returned result should indicate that Shared File Systems service won't
+find the share:
 
 .. code-block:: console
 
@@ -36,10 +39,10 @@ Shared File Systems service won't find the share:
 
 .. _manage_share:
 
-Manage share
-------------
-To register the non-managed share in File System service you need to run
-:command:`manila manage` command which has such arguments:
+Manage a share
+--------------
+To register the non-managed share in the File System service, run the
+:command:`manila manage` command:
 
 .. code-block:: console
 
@@ -50,12 +53,13 @@ To register the non-managed share in File System service you need to run
 
 The positional arguments are:
 
-- service_host. The manage-share service host in this format:
-  ``host@backend#POOL`` which consists of the host name for the back end,
-  the name of the back end and the pool name for the back end.
+- service_host. The manage-share service host in
+  ``host@backend#POOL`` format, which consists of the host name for
+  the back end, the name of the back end, and the pool name for the
+  back end.
 
-- protocol. The Shared File Systems protocol of the share to manage. A valid
-  value is NFS, CIFS, GlusterFS, or HDFS.
+- protocol. The Shared File Systems protocol of the share to manage. Valid
+  values are NFS, CIFS, GlusterFS, or HDFS.
 
 - export_path. The share export path in the format appropriate for the
   protocol:
@@ -68,10 +72,10 @@ The positional arguments are:
 
   - GlusterFS. 10.0.0.1:/foo_volume.
 
-The ``driver_options`` is an optional set of one or more key and value pairs,
-that describe driver options. Note that the share type must have
-``driver_handles_share_servers = False`` option, so special share type named
-``for_managing`` was used in example.
+The ``driver_options`` is an optional set of one or more key and value pairs
+that describe driver options. Note that the share type must have the
+``driver_handles_share_servers = False`` option. As a result, a special share
+type named ``for_managing`` was used in example.
 
 To manage share, run:
 

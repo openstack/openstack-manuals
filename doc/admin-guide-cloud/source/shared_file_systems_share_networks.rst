@@ -7,12 +7,12 @@ Share networks
 Share network is an entity that encapsulates interaction with the OpenStack
 Networking service. If the share driver that you selected runs in a mode
 requiring Networking service interaction, specify the share network when
-creating a share network.
+creating a new share network.
 
 How to create share network
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-List networks in a tenant, run:
+To list networks in a tenant, run:
 
 .. code-block:: console
 
@@ -60,7 +60,8 @@ To create a share network with private network and subnetwork, run:
 
 .. code-block:: console
 
-   $ manila share-network-create --neutron-net-id 5ed5a854-21dc-4ed3-870a-117b7064eb21 --neutron-subnet-id 74dcfb5a-b4d7-4855-86f5-a669729428dc --name my_share_net --description "My first share network"
+   $ manila share-network-create --neutron-net-id 5ed5a854-21dc-4ed3-870a-117b7064eb21
+   --neutron-subnet-id 74dcfb5a-b4d7-4855-86f5-a669729428dc --name my_share_net --description "My first share network"
    +-------------------+--------------------------------------+
    | Property          | Value                                |
    +-------------------+--------------------------------------+
@@ -83,7 +84,7 @@ The ``segmentation_id``, ``cidr``, ``ip_version``, and ``network_type``
 share network attributes are automatically set to the values determined by the
 network provider.
 
-Check network list, run:
+To check the network list, run:
 
 .. code-block:: console
 
@@ -94,10 +95,11 @@ Check network list, run:
    | 5c3cbabb-f4da-465f-bc7f-fadbe047b85a | my_share_net |
    +--------------------------------------+--------------+
 
-If you configured the Generic driver with ``driver_handles_share_servers =
-True`` (with the share servers) and had already some operations in the Shared
+If you configured the generic driver with ``driver_handles_share_servers =
+True`` (with the share servers) and already had previous operations in the Shared
 File Systems service, you can see ``manila_service_network`` in the neutron
-list of networks. This network was created by Generic driver for inner usage.
+list of networks. This network was created by the generic driver for internal
+use.
 
 .. code-block:: console
 
@@ -113,7 +115,7 @@ list of networks. This network was created by Generic driver for inner usage.
    +--------------+------------------------+------------------------------------+
 
 You also can see detailed information about the share network including
-``network_type``, ``segmentation_id`` fields:
+``network_type``, and ``segmentation_id`` fields:
 
 .. code-block:: console
 
@@ -136,5 +138,5 @@ You also can see detailed information about the share network including
    | tenant_id                 | 24c6491074e942309a908c674606f598     |
    +---------------------------+--------------------------------------+
 
-You also can add and remove the security services to the share network. For
-details, see :ref:`shared_file_systems_security_services`.
+You also can add and remove the security services from the share network.
+For more detail, see :ref:`shared_file_systems_security_services`.
