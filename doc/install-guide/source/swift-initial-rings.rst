@@ -4,9 +4,9 @@ Create and distribute initial rings
 Before starting the Object Storage services, you must create the initial
 account, container, and object rings. The ring builder creates configuration
 files that each node uses to determine and deploy the storage architecture.
-For simplicity, this guide uses one region and zone with 2^10 (1024) maximum
-partitions, 3 replicas of each object, and 1 hour minimum time between moving
-a partition more than once. For Object Storage, a partition indicates a
+For simplicity, this guide uses one region and two zones with 2^10 (1024)
+maximum partitions, 3 replicas of each object, and 1 hour minimum time between
+moving a partition more than once. For Object Storage, a partition indicates a
 directory on a storage device rather than a conventional partition table.
 For more information, see the
 `Deployment Guide <http://docs.openstack.org/developer/swift/deployment_guide.html>`__.
@@ -59,13 +59,13 @@ The account server uses the account ring to maintain lists of containers.
         --region 1 --zone 1 --ip 10.0.0.51 --port 6002 --device sdb --weight 100
       Device d0r1z1-10.0.0.51:6002R10.0.0.51:6002/sdb_"" with 100.0 weight got id 0
       # swift-ring-builder account.builder add \
-        --region 1 --zone 2 --ip 10.0.0.51 --port 6002 --device sdc --weight 100
+        --region 1 --zone 1 --ip 10.0.0.51 --port 6002 --device sdc --weight 100
       Device d1r1z2-10.0.0.51:6002R10.0.0.51:6002/sdc_"" with 100.0 weight got id 1
       # swift-ring-builder account.builder add \
-        --region 1 --zone 3 --ip 10.0.0.52 --port 6002 --device sdb --weight 100
+        --region 1 --zone 2 --ip 10.0.0.52 --port 6002 --device sdb --weight 100
       Device d2r1z3-10.0.0.52:6002R10.0.0.52:6002/sdb_"" with 100.0 weight got id 2
       # swift-ring-builder account.builder add \
-        --region 1 --zone 4 --ip 10.0.0.52 --port 6002 --device sdc --weight 100
+        --region 1 --zone 2 --ip 10.0.0.52 --port 6002 --device sdc --weight 100
       Device d3r1z4-10.0.0.52:6002R10.0.0.52:6002/sdc_"" with 100.0 weight got id 3
 
 #. Verify the ring contents:
@@ -74,14 +74,14 @@ The account server uses the account ring to maintain lists of containers.
 
       # swift-ring-builder account.builder
       account.builder, build version 4
-      1024 partitions, 3.000000 replicas, 1 regions, 4 zones, 4 devices, 100.00 balance, 0.00 dispersion
+      1024 partitions, 3.000000 replicas, 1 regions, 2 zones, 4 devices, 100.00 balance, 0.00 dispersion
       The minimum number of hours before a partition can be reassigned is 1
       The overload factor is 0.00% (0.000000)
       Devices:    id  region  zone      ip address  port  replication ip  replication port      name weight partitions balance meta
                    0       1     1       10.0.0.51  6002       10.0.0.51              6002      sdb  100.00          0 -100.00
-                   1       1     2       10.0.0.51  6002       10.0.0.51              6002      sdc  100.00          0 -100.00
-                   2       1     3       10.0.0.52  6002       10.0.0.52              6002      sdb  100.00          0 -100.00
-                   3       1     4       10.0.0.52  6002       10.0.0.52              6002      sdc  100.00          0 -100.00
+                   1       1     1       10.0.0.51  6002       10.0.0.51              6002      sdc  100.00          0 -100.00
+                   2       1     2       10.0.0.52  6002       10.0.0.52              6002      sdb  100.00          0 -100.00
+                   3       1     2       10.0.0.52  6002       10.0.0.52              6002      sdc  100.00          0 -100.00
 
 #. Rebalance the ring:
 
@@ -136,13 +136,13 @@ However, it does not track object locations.
         --region 1 --zone 1 --ip 10.0.0.51 --port 6001 --device sdb --weight 100
       Device d0r1z1-10.0.0.51:6001R10.0.0.51:6001/sdb_"" with 100.0 weight got id 0
       # swift-ring-builder container.builder add \
-        --region 1 --zone 2 --ip 10.0.0.51 --port 6001 --device sdc --weight 100
+        --region 1 --zone 1 --ip 10.0.0.51 --port 6001 --device sdc --weight 100
       Device d1r1z2-10.0.0.51:6001R10.0.0.51:6001/sdc_"" with 100.0 weight got id 1
       # swift-ring-builder container.builder add \
-        --region 1 --zone 3 --ip 10.0.0.52 --port 6001 --device sdb --weight 100
+        --region 1 --zone 2 --ip 10.0.0.52 --port 6001 --device sdb --weight 100
       Device d2r1z3-10.0.0.52:6001R10.0.0.52:6001/sdb_"" with 100.0 weight got id 2
       # swift-ring-builder container.builder add \
-        --region 1 --zone 4 --ip 10.0.0.52 --port 6001 --device sdc --weight 100
+        --region 1 --zone 2 --ip 10.0.0.52 --port 6001 --device sdc --weight 100
       Device d3r1z4-10.0.0.52:6001R10.0.0.52:6001/sdc_"" with 100.0 weight got id 3
 
 #. Verify the ring contents:
@@ -151,14 +151,14 @@ However, it does not track object locations.
 
       # swift-ring-builder container.builder
       container.builder, build version 4
-      1024 partitions, 3.000000 replicas, 1 regions, 4 zones, 4 devices, 100.00 balance, 0.00 dispersion
+      1024 partitions, 3.000000 replicas, 1 regions, 2 zones, 4 devices, 100.00 balance, 0.00 dispersion
       The minimum number of hours before a partition can be reassigned is 1
       The overload factor is 0.00% (0.000000)
       Devices:    id  region  zone      ip address  port  replication ip  replication port      name weight partitions balance meta
                    0       1     1       10.0.0.51  6001       10.0.0.51              6001      sdb  100.00          0 -100.00
-                   1       1     2       10.0.0.51  6001       10.0.0.51              6001      sdc  100.00          0 -100.00
-                   2       1     3       10.0.0.52  6001       10.0.0.52              6001      sdb  100.00          0 -100.00
-                   3       1     4       10.0.0.52  6001       10.0.0.52              6001      sdc  100.00          0 -100.00
+                   1       1     1       10.0.0.51  6001       10.0.0.51              6001      sdc  100.00          0 -100.00
+                   2       1     2       10.0.0.52  6001       10.0.0.52              6001      sdb  100.00          0 -100.00
+                   3       1     2       10.0.0.52  6001       10.0.0.52              6001      sdc  100.00          0 -100.00
 
 #. Rebalance the ring:
 
@@ -213,13 +213,13 @@ on local devices.
         --region 1 --zone 1 --ip 10.0.0.51 --port 6000 --device sdb --weight 100
       Device d0r1z1-10.0.0.51:6000R10.0.0.51:6000/sdb_"" with 100.0 weight got id 0
       # swift-ring-builder object.builder add \
-        --region 1 --zone 2 --ip 10.0.0.51 --port 6000 --device sdc --weight 100
+        --region 1 --zone 1 --ip 10.0.0.51 --port 6000 --device sdc --weight 100
       Device d1r1z2-10.0.0.51:6000R10.0.0.51:6000/sdc_"" with 100.0 weight got id 1
       # swift-ring-builder object.builder add \
-        --region 1 --zone 3 --ip 10.0.0.52 --port 6000 --device sdb --weight 100
+        --region 1 --zone 2 --ip 10.0.0.52 --port 6000 --device sdb --weight 100
       Device d2r1z3-10.0.0.52:6000R10.0.0.52:6000/sdb_"" with 100.0 weight got id 2
       # swift-ring-builder object.builder add \
-        --region 1 --zone 4 --ip 10.0.0.52 --port 6000 --device sdc --weight 100
+        --region 1 --zone 2 --ip 10.0.0.52 --port 6000 --device sdc --weight 100
       Device d3r1z4-10.0.0.52:6000R10.0.0.52:6000/sdc_"" with 100.0 weight got id 3
 
 #. Verify the ring contents:
@@ -228,14 +228,14 @@ on local devices.
 
       # swift-ring-builder object.builder
       object.builder, build version 4
-      1024 partitions, 3.000000 replicas, 1 regions, 4 zones, 4 devices, 100.00 balance, 0.00 dispersion
+      1024 partitions, 3.000000 replicas, 1 regions, 2 zones, 4 devices, 100.00 balance, 0.00 dispersion
       The minimum number of hours before a partition can be reassigned is 1
       The overload factor is 0.00% (0.000000)
       Devices:    id  region  zone      ip address  port  replication ip  replication port      name weight partitions balance meta
                    0       1     1       10.0.0.51  6000       10.0.0.51              6000      sdb  100.00          0 -100.00
-                   1       1     2       10.0.0.51  6000       10.0.0.51              6000      sdc  100.00          0 -100.00
-                   2       1     3       10.0.0.52  6000       10.0.0.52              6000      sdb  100.00          0 -100.00
-                   3       1     4       10.0.0.52  6000       10.0.0.52              6000      sdc  100.00          0 -100.00
+                   1       1     1       10.0.0.51  6000       10.0.0.51              6000      sdc  100.00          0 -100.00
+                   2       1     2       10.0.0.52  6000       10.0.0.52              6000      sdb  100.00          0 -100.00
+                   3       1     2       10.0.0.52  6000       10.0.0.52              6000      sdc  100.00          0 -100.00
 
 #. Rebalance the ring:
 
