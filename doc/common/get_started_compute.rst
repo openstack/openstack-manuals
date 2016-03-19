@@ -104,8 +104,7 @@ OpenStack Compute consists of the following areas and their components:
 The queue
   A central hub for passing messages between daemons. Usually
   implemented with `RabbitMQ <http://www.rabbitmq.com/>`__, but can be
-  implemented with an AMQP message queue, such as `Apache
-  Qpid <http://qpid.apache.org/>`__ or `Zero
+  implemented with an AMQP message queue, such as `Zero
   MQ <http://www.zeromq.org/>`__.
 
 SQL database

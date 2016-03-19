@@ -26,7 +26,7 @@ in the ``trove.conf`` file:
 Configure messaging
 ~~~~~~~~~~~~~~~~~~~
 
-Use these common options to configure the RabbitMQ, Qpid, and ZeroMq
+Use these common options to configure the RabbitMQ and ZeroMq
 messaging drivers in the ``trove.conf`` file:
 
 .. include:: ../tables/trove-amqp.rst

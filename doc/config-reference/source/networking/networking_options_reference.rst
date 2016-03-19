@@ -151,7 +151,7 @@ Configure the Oslo RPC messaging system
 OpenStack projects use an open standard for messaging middleware known
 as AMQP. This messaging middleware enables the OpenStack services that
 run on multiple servers to talk to each other. OpenStack Oslo RPC
-supports three implementations of AMQP: RabbitMQ, Qpid, and ZeroMQ.
+supports two implementations of AMQP: RabbitMQ and ZeroMQ.
 
 Configure RabbitMQ
 ------------------
@@ -190,7 +190,7 @@ the ``neutron.conf`` file.
 Configure messaging
 -------------------
 
-Use these common options to configure the RabbitMQ, Qpid, and ZeroMq
+Use these common options to configure the RabbitMQ and ZeroMq
 messaging drivers in the ``neutron.conf`` file.
 
 .. include:: ../tables/neutron-rpc.rst

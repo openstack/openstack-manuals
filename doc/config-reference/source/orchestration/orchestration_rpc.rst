@@ -44,7 +44,7 @@ must enable it by setting the ``rpc_backend`` option in the
 Configure messaging
 ~~~~~~~~~~~~~~~~~~~
 
-Use these common options to configure the RabbitMQ, Qpid, and ZeroMq
+Use these common options to configure the RabbitMQ and ZeroMq
 messaging drivers in the ``heat.conf`` file.
 
 .. include:: ../tables/heat-amqp.rst
