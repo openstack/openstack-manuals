@@ -19,22 +19,22 @@
    * - **[DEFAULT]**
      -
    * - ``capacity_weight_multiplier`` = ``1.0``
-     - (FloatOpt) Multiplier used for weighing share capacity. Negative numbers mean to stack vs spread.
+     - (Floating point) Multiplier used for weighing share capacity. Negative numbers mean to stack vs spread.
    * - ``pool_weight_multiplier`` = ``1.0``
-     - (FloatOpt) Multiplier used for weighing pools which have existing share servers. Negative numbers mean to spread vs stack.
-   * - ``scheduler_default_filters`` = ``AvailabilityZoneFilter, CapacityFilter, CapabilitiesFilter, ConsistencyGroupFilter``
-     - (ListOpt) Which filter class names to use for filtering hosts when not specified in the request.
+     - (Floating point) Multiplier used for weighing pools which have existing share servers. Negative numbers mean to spread vs stack.
+   * - ``scheduler_default_filters`` = ``AvailabilityZoneFilter, CapacityFilter, CapabilitiesFilter, ConsistencyGroupFilter, ShareReplicationFilter``
+     - (List) Which filter class names to use for filtering hosts when not specified in the request.
    * - ``scheduler_default_weighers`` = ``CapacityWeigher``
-     - (ListOpt) Which weigher class names to use for weighing hosts.
+     - (List) Which weigher class names to use for weighing hosts.
    * - ``scheduler_driver`` = ``manila.scheduler.drivers.filter.FilterScheduler``
-     - (StrOpt) Default scheduler driver to use.
+     - (String) Default scheduler driver to use.
    * - ``scheduler_host_manager`` = ``manila.scheduler.host_manager.HostManager``
-     - (StrOpt) The scheduler host manager class to use.
+     - (String) The scheduler host manager class to use.
    * - ``scheduler_json_config_location`` =
-     - (StrOpt) Absolute path to scheduler configuration JSON file.
+     - (String) Absolute path to scheduler configuration JSON file.
    * - ``scheduler_manager`` = ``manila.scheduler.manager.SchedulerManager``
-     - (StrOpt) Full class name for the scheduler manager.
+     - (String) Full class name for the scheduler manager.
    * - ``scheduler_max_attempts`` = ``3``
-     - (IntOpt) Maximum number of attempts to schedule a share.
+     - (Integer) Maximum number of attempts to schedule a share.
    * - ``scheduler_topic`` = ``manila-scheduler``
-     - (StrOpt) The topic scheduler nodes listen on.
+     - (String) The topic scheduler nodes listen on.

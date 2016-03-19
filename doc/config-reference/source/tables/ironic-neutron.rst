@@ -19,12 +19,12 @@
    * - **[neutron]**
      -
    * - ``auth_strategy`` = ``keystone``
-     - (StrOpt) Default authentication strategy to use when connecting to neutron. Can be either "keystone" or "noauth". Running neutron in noauth mode (related to but not affected by this setting) is insecure and should only be used for testing.
+     - (String) Default authentication strategy to use when connecting to neutron. Running neutron in noauth mode (related to but not affected by this setting) is insecure and should only be used for testing.
    * - ``cleaning_network_uuid`` = ``None``
-     - (StrOpt) UUID of the network to create Neutron ports on when booting to a ramdisk for cleaning/zapping using Neutron DHCP
+     - (String) UUID of the network to create Neutron ports on, when booting to a ramdisk for cleaning using Neutron DHCP.
    * - ``retries`` = ``3``
-     - (IntOpt) Client retries in the case of a failed request.
+     - (Integer) Client retries in the case of a failed request.
    * - ``url`` = ``http://$my_ip:9696``
-     - (StrOpt) URL for connecting to neutron.
+     - (String) URL for connecting to neutron.
    * - ``url_timeout`` = ``30``
-     - (IntOpt) Timeout value for connecting to neutron in seconds.
+     - (Integer) Timeout value for connecting to neutron in seconds.

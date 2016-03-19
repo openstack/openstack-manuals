@@ -19,4 +19,4 @@
    * - **[ml2_type_flat]**
      -
    * - ``flat_networks`` = ``*``
-     - (ListOpt) List of physical_network names with which flat networks can be created. Use default '*' to allow flat networks with arbitrary physical_network names. Use an empty list to disable flat networks.
+     - (List) List of physical_network names with which flat networks can be created. Use default '*' to allow flat networks with arbitrary physical_network names. Use an empty list to disable flat networks.

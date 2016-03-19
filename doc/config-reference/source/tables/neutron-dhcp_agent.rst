@@ -19,30 +19,30 @@
    * - **[DEFAULT]**
      -
    * - ``advertise_mtu`` = ``True``
-     - (BoolOpt) If True, advertise network MTU values if core plugin calculates them. MTU is advertised to running instances via DHCP and RA MTU options.
+     - (Boolean) If True, advertise network MTU values if core plugin calculates them. MTU is advertised to running instances via DHCP and RA MTU options.
    * - ``dhcp_driver`` = ``neutron.agent.linux.dhcp.Dnsmasq``
-     - (StrOpt) The driver used to manage the DHCP server.
+     - (String) The driver used to manage the DHCP server.
    * - ``dnsmasq_base_log_dir`` = ``None``
-     - (StrOpt) Base log dir for dnsmasq logging. The log contains DHCP and DNS log information and is useful for debugging issues with either DHCP or DNS. If this section is null, disable dnsmasq log.
+     - (String) Base log dir for dnsmasq logging. The log contains DHCP and DNS log information and is useful for debugging issues with either DHCP or DNS. If this section is null, disable dnsmasq log.
    * - ``dnsmasq_config_file`` =
-     - (StrOpt) Override the default dnsmasq settings with this file.
+     - (String) Override the default dnsmasq settings with this file.
    * - ``dnsmasq_dns_servers`` = ``None``
-     - (ListOpt) Comma-separated list of the DNS servers which will be used as forwarders.
+     - (List) Comma-separated list of the DNS servers which will be used as forwarders.
    * - ``dnsmasq_lease_max`` = ``16777216``
-     - (IntOpt) Limit number of leases to prevent a denial-of-service.
+     - (Integer) Limit number of leases to prevent a denial-of-service.
    * - ``dnsmasq_local_resolv`` = ``False``
-     - (BoolOpt) Enables the dnsmasq service to provide name resolution for instances via DNS resolvers on the host running the DHCP agent. Effectively removes the '--no-resolv' option from the dnsmasq process arguments. Adding custom DNS resolvers to the 'dnsmasq_dns_servers' option disables this feature.
+     - (Boolean) Enables the dnsmasq service to provide name resolution for instances via DNS resolvers on the host running the DHCP agent. Effectively removes the '--no-resolv' option from the dnsmasq process arguments. Adding custom DNS resolvers to the 'dnsmasq_dns_servers' option disables this feature.
    * - ``enable_isolated_metadata`` = ``False``
-     - (BoolOpt) The DHCP server can assist with providing metadata support on isolated networks. Setting this value to True will cause the DHCP server to append specific host routes to the DHCP request. The metadata service will only be activated when the subnet does not contain any router port. The guest instance must be configured to request host routes via DHCP (Option 121). This option doesn't have any effect when force_metadata is set to True.
+     - (Boolean) The DHCP server can assist with providing metadata support on isolated networks. Setting this value to True will cause the DHCP server to append specific host routes to the DHCP request. The metadata service will only be activated when the subnet does not contain any router port. The guest instance must be configured to request host routes via DHCP (Option 121). This option doesn't have any effect when force_metadata is set to True.
    * - ``enable_metadata_network`` = ``False``
-     - (BoolOpt) Allows for serving metadata requests coming from a dedicated metadata access network whose CIDR is 169.254.169.254/16 (or larger prefix), and is connected to a Neutron router from which the VMs send metadata:1 request. In this case DHCP Option 121 will not be injected in VMs, as they will be able to reach 169.254.169.254 through a router. This option requires enable_isolated_metadata = True.
+     - (Boolean) Allows for serving metadata requests coming from a dedicated metadata access network whose CIDR is 169.254.169.254/16 (or larger prefix), and is connected to a Neutron router from which the VMs send metadata:1 request. In this case DHCP Option 121 will not be injected in VMs, as they will be able to reach 169.254.169.254 through a router. This option requires enable_isolated_metadata = True.
    * - ``force_metadata`` = ``False``
-     - (BoolOpt) In some cases the Neutron router is not present to provide the metadata IP but the DHCP server can be used to provide this info. Setting this value will force the DHCP server to append specific host routes to the DHCP request. If this option is set, then the metadata service will be activated for all the networks.
+     - (Boolean) In some cases the Neutron router is not present to provide the metadata IP but the DHCP server can be used to provide this info. Setting this value will force the DHCP server to append specific host routes to the DHCP request. If this option is set, then the metadata service will be activated for all the networks.
    * - ``host`` = ``example.domain``
-     - (StrOpt) Hostname to be used by the Neutron server, agents and services running on this machine. All the agents and services running on this machine must use the same host value.
+     - (String) Hostname to be used by the Neutron server, agents and services running on this machine. All the agents and services running on this machine must use the same host value.
    * - ``interface_driver`` = ``None``
-     - (StrOpt) The driver used to manage the virtual interface.
+     - (String) The driver used to manage the virtual interface.
    * - ``num_sync_threads`` = ``4``
-     - (IntOpt) Number of threads to use during sync process. Should not exceed connection pool size configured on server.
+     - (Integer) Number of threads to use during sync process. Should not exceed connection pool size configured on server.
    * - ``resync_interval`` = ``5``
-     - (IntOpt) The DHCP agent will resync its state with Neutron to recover from any transient notification or RPC errors. The interval is number of seconds between attempts.
+     - (Integer) The DHCP agent will resync its state with Neutron to recover from any transient notification or RPC errors. The interval is number of seconds between attempts.

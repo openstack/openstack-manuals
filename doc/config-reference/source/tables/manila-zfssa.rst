@@ -19,30 +19,30 @@
    * - **[DEFAULT]**
      -
    * - ``zfssa_auth_password`` = ``None``
-     - (StrOpt) ZFSSA management authorized userpassword.
+     - (String) ZFSSA management authorized userpassword.
    * - ``zfssa_auth_user`` = ``None``
-     - (StrOpt) ZFSSA management authorized username.
+     - (String) ZFSSA management authorized username.
    * - ``zfssa_data_ip`` = ``None``
-     - (StrOpt) IP address for data.
+     - (String) IP address for data.
    * - ``zfssa_host`` = ``None``
-     - (StrOpt) ZFSSA management IP address.
+     - (String) ZFSSA management IP address.
    * - ``zfssa_nas_checksum`` = ``fletcher4``
-     - (StrOpt) Controls checksum used for data blocks.
+     - (String) Controls checksum used for data blocks.
    * - ``zfssa_nas_compression`` = ``off``
-     - (StrOpt) Data compression-off, lzjb, gzip-2, gzip, gzip-9.
+     - (String) Data compression-off, lzjb, gzip-2, gzip, gzip-9.
    * - ``zfssa_nas_logbias`` = ``latency``
-     - (StrOpt) Controls behavior when servicing synchronous writes.
+     - (String) Controls behavior when servicing synchronous writes.
    * - ``zfssa_nas_mountpoint`` =
-     - (StrOpt) Location of project in ZFS/SA.
+     - (String) Location of project in ZFS/SA.
    * - ``zfssa_nas_quota_snap`` = ``true``
-     - (StrOpt) Controls whether a share quota includes snapshot.
+     - (String) Controls whether a share quota includes snapshot.
    * - ``zfssa_nas_rstchown`` = ``true``
-     - (StrOpt) Controls whether file ownership can be changed.
+     - (String) Controls whether file ownership can be changed.
    * - ``zfssa_nas_vscan`` = ``false``
-     - (StrOpt) Controls whether the share is scanned for viruses.
+     - (String) Controls whether the share is scanned for viruses.
    * - ``zfssa_pool`` = ``None``
-     - (StrOpt) ZFSSA storage pool name.
+     - (String) ZFSSA storage pool name.
    * - ``zfssa_project`` = ``None``
-     - (StrOpt) ZFSSA project name.
+     - (String) ZFSSA project name.
    * - ``zfssa_rest_timeout`` = ``None``
-     - (StrOpt) REST connection timeout (in seconds).
+     - (String) REST connection timeout (in seconds).

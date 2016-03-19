@@ -19,20 +19,20 @@
    * - **[vmware]**
      -
    * - ``api_retry_count`` = ``10``
-     - (IntOpt) Number of times a VMware vSphere API may be retried.
+     - (Integer) Number of times a VMware vSphere API may be retried.
    * - ``ca_file`` = ``None``
-     - (StrOpt) CA bundle file to use in verifying the vCenter server certificate.
+     - (String) CA bundle file to use in verifying the vCenter server certificate.
    * - ``host_ip`` =
-     - (StrOpt) IP address of the VMware vSphere host.
+     - (String) IP address of the VMware vSphere host.
    * - ``host_password`` =
-     - (StrOpt) Password of VMware vSphere.
+     - (String) Password of VMware vSphere.
    * - ``host_port`` = ``443``
-     - (PortOpt) Port of the VMware vSphere host.
+     - (Unknown) Port of the VMware vSphere host.
    * - ``host_username`` =
-     - (StrOpt) Username of VMware vSphere.
+     - (String) Username of VMware vSphere.
    * - ``insecure`` = ``False``
-     - (BoolOpt) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "ca_file" is set.
+     - (Boolean) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "ca_file" is set.
    * - ``task_poll_interval`` = ``0.5``
-     - (FloatOpt) Sleep time in seconds for polling an ongoing async task.
+     - (Floating point) Sleep time in seconds for polling an ongoing async task.
    * - ``wsdl_location`` = ``None``
-     - (StrOpt) Optional vim service WSDL location e.g http://<server>/vimService.wsdl. Optional over-ride to default location for bug work-arounds.
+     - (String) Optional vim service WSDL location e.g http://<server>/vimService.wsdl. Optional over-ride to default location for bug work-arounds.

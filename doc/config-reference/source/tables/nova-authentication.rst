@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``auth_strategy`` = ``keystone``
-     - (StrOpt) The strategy to use for auth: keystone or noauth2. noauth2 is designed for testing only, as it does no actual credential checking. noauth2 provides administrative credentials only if 'admin' is specified as the username.
+     - (String) The strategy to use for auth: keystone or noauth2. noauth2 is designed for testing only, as it does no actual credential checking. noauth2 provides administrative credentials only if 'admin' is specified as the username.

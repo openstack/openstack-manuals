@@ -19,34 +19,40 @@
    * - **[glance]**
      -
    * - ``allowed_direct_url_schemes`` =
-     - (ListOpt) A list of URL schemes that can be downloaded directly via the direct_url. Currently supported schemes: [file].
+     - (List) A list of URL schemes that can be downloaded directly via the direct_url. Currently supported schemes: [file].
    * - ``auth_strategy`` = ``keystone``
-     - (StrOpt) Authentication strategy to use when connecting to glance. Only "keystone" and "noauth" are currently supported by ironic.
+     - (String) Authentication strategy to use when connecting to glance.
    * - ``glance_api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL (https) requests to glance.
+     - (Boolean) Allow to perform insecure SSL (https) requests to glance.
    * - ``glance_api_servers`` = ``None``
-     - (ListOpt) A list of the glance api servers available to ironic. Prefix with https:// for SSL-based glance API servers. Format is [hostname|IP]:port.
+     - (List) A list of the glance api servers available to ironic. Prefix with https:// for SSL-based glance API servers. Format is [hostname|IP]:port.
+   * - ``glance_cafile`` = ``None``
+     - (String) Optional path to a CA certificate bundle to be used to validate the SSL certificate served by glance. It is used when glance_api_insecure is set to False.
    * - ``glance_host`` = ``$my_ip``
-     - (StrOpt) Default glance hostname or IP address.
+     - (String) Default glance hostname or IP address.
    * - ``glance_num_retries`` = ``0``
-     - (IntOpt) Number of retries when downloading an image from glance.
+     - (Integer) Number of retries when downloading an image from glance.
    * - ``glance_port`` = ``9292``
-     - (PortOpt) Default glance port.
+     - (Unknown) Default glance port.
    * - ``glance_protocol`` = ``http``
-     - (StrOpt) Default protocol to use when connecting to glance. Set to https for SSL.
+     - (String) Default protocol to use when connecting to glance. Set to https for SSL.
    * - ``swift_account`` = ``None``
-     - (StrOpt) The account that Glance uses to communicate with Swift. The format is "AUTH_uuid". "uuid" is the UUID for the account configured in the glance-api.conf. Required for temporary URLs when Glance backend is Swift. For example: "AUTH_a422b2-91f3-2f46-74b7-d7c9e8958f5d30". Swift temporary URL format: "endpoint_url/api_version/[account/]container/object_id"
+     - (String) The account that Glance uses to communicate with Swift. The format is "AUTH_uuid". "uuid" is the UUID for the account configured in the glance-api.conf. Required for temporary URLs when Glance backend is Swift. For example: "AUTH_a422b2-91f3-2f46-74b7-d7c9e8958f5d30". Swift temporary URL format: "endpoint_url/api_version/[account/]container/object_id"
    * - ``swift_api_version`` = ``v1``
-     - (StrOpt) The Swift API version to create a temporary URL for. Defaults to "v1". Swift temporary URL format: "endpoint_url/api_version/[account/]container/object_id"
+     - (String) The Swift API version to create a temporary URL for. Defaults to "v1". Swift temporary URL format: "endpoint_url/api_version/[account/]container/object_id"
    * - ``swift_container`` = ``glance``
-     - (StrOpt) The Swift container Glance is configured to store its images in. Defaults to "glance", which is the default in glance-api.conf. Swift temporary URL format: "endpoint_url/api_version/[account/]container/object_id"
+     - (String) The Swift container Glance is configured to store its images in. Defaults to "glance", which is the default in glance-api.conf. Swift temporary URL format: "endpoint_url/api_version/[account/]container/object_id"
    * - ``swift_endpoint_url`` = ``None``
-     - (StrOpt) The "endpoint" (scheme, hostname, optional port) for the Swift URL of the form "endpoint_url/api_version/[account/]container/object_id". Do not include trailing "/". For example, use "https://swift.example.com". If using RADOS Gateway, endpoint may also contain /swift path; if it does not, it will be appended. Required for temporary URLs.
+     - (String) The "endpoint" (scheme, hostname, optional port) for the Swift URL of the form "endpoint_url/api_version/[account/]container/object_id". Do not include trailing "/". For example, use "https://swift.example.com". If using RADOS Gateway, endpoint may also contain /swift path; if it does not, it will be appended. Required for temporary URLs.
    * - ``swift_store_multiple_containers_seed`` = ``0``
-     - (IntOpt) This should match a config by the same name in the Glance configuration file. When set to 0, a single-tenant store will only use one container to store all images. When set to an integer value between 1 and 32, a single-tenant store will use multiple containers to store images, and this value will determine how many containers are created.
+     - (Integer) This should match a config by the same name in the Glance configuration file. When set to 0, a single-tenant store will only use one container to store all images. When set to an integer value between 1 and 32, a single-tenant store will use multiple containers to store images, and this value will determine how many containers are created.
+   * - ``swift_temp_url_cache_enabled`` = ``False``
+     - (Boolean) Whether to cache generated Swift temporary URLs. Setting it to true is only useful when an image caching proxy is used. Defaults to False.
    * - ``swift_temp_url_duration`` = ``1200``
-     - (IntOpt) The length of time in seconds that the temporary URL will be valid for. Defaults to 20 minutes. If some deploys get a 401 response code when trying to download from the temporary URL, try raising this duration.
+     - (Integer) The length of time in seconds that the temporary URL will be valid for. Defaults to 20 minutes. If some deploys get a 401 response code when trying to download from the temporary URL, try raising this duration. This value must be greater than or equal to the value for swift_temp_url_expected_download_start_delay
+   * - ``swift_temp_url_expected_download_start_delay`` = ``0``
+     - (Integer) This is the delay (in seconds) from the time of the deploy request (when the Swift temporary URL is generated) to when the IPA ramdisk starts up and URL is used for the image download. This value is used to check if the Swift temporary URL duration is large enough to let the image download begin. Also if temporary URL caching is enabled this will determine if a cached entry will still be valid when the download starts. swift_temp_url_duration value must be greater than or equal to this option's value. Defaults to 0.
    * - ``swift_temp_url_key`` = ``None``
-     - (StrOpt) The secret token given to Swift to allow temporary URL downloads. Required for temporary URLs.
+     - (String) The secret token given to Swift to allow temporary URL downloads. Required for temporary URLs.
    * - ``temp_url_endpoint_type`` = ``swift``
-     - (StrOpt) Type of endpoint to use for temporary URLs. If the Glance backend is Swift, use "swift"; if it is CEPH with RADOS gateway, use "radosgw".
+     - (String) Type of endpoint to use for temporary URLs. If the Glance backend is Swift, use "swift"; if it is CEPH with RADOS gateway, use "radosgw".

@@ -19,54 +19,62 @@
    * - **[DEFAULT]**
      -
    * - ``rpc_backend`` = ``rabbit``
-     - (StrOpt) The messaging driver to use, defaults to rabbit. Other drivers include qpid and zmq.
-   * - ``rpc_cast_timeout`` = ``30``
-     - (IntOpt) Seconds to wait before a cast expires (TTL). Only supported by impl_zmq.
+     - (String) The messaging driver to use, defaults to rabbit. Other drivers include amqp and zmq.
+   * - ``rpc_cast_timeout`` = ``-1``
+     - (Integer) Seconds to wait before a cast expires (TTL). The default value of -1 specifies an infinite linger period. The value of 0 specifies no linger period. Pending messages shall be discarded immediately when the socket is closed. Only supported by impl_zmq.
    * - ``rpc_conn_pool_size`` = ``30``
-     - (IntOpt) Size of RPC connection pool.
+     - (Integer) Size of RPC connection pool.
    * - ``rpc_poll_timeout`` = ``1``
-     - (IntOpt) The default number of seconds that poll should wait. Poll raises timeout exception when timeout expired.
+     - (Integer) The default number of seconds that poll should wait. Poll raises timeout exception when timeout expired.
    * - ``rpc_response_timeout`` = ``60``
-     - (IntOpt) Seconds to wait for a response from a call.
+     - (Integer) Seconds to wait for a response from a call.
    * - ``share_topic`` = ``manila-share``
-     - (StrOpt) The topic share nodes listen on.
+     - (String) The topic share nodes listen on.
    * - **[oslo_concurrency]**
      -
    * - ``disable_process_locking`` = ``False``
-     - (BoolOpt) Enables or disables inter-process locks.
+     - (Boolean) Enables or disables inter-process locks.
    * - ``lock_path`` = ``None``
-     - (StrOpt) Directory to use for lock files. For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.
+     - (String) Directory to use for lock files. For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.
    * - **[oslo_messaging_amqp]**
      -
    * - ``allow_insecure_clients`` = ``False``
-     - (BoolOpt) Accept clients using either SSL or plain TCP
+     - (Boolean) Accept clients using either SSL or plain TCP
    * - ``broadcast_prefix`` = ``broadcast``
-     - (StrOpt) address prefix used when broadcasting to all servers
+     - (String) address prefix used when broadcasting to all servers
    * - ``container_name`` = ``None``
-     - (StrOpt) Name for the AMQP container
+     - (String) Name for the AMQP container
    * - ``group_request_prefix`` = ``unicast``
-     - (StrOpt) address prefix when sending to any server in group
+     - (String) address prefix when sending to any server in group
    * - ``idle_timeout`` = ``0``
-     - (IntOpt) Timeout for inactive connections (in seconds)
+     - (Integer) Timeout for inactive connections (in seconds)
    * - ``password`` =
-     - (StrOpt) Password for message broker authentication
+     - (String) Password for message broker authentication
    * - ``sasl_config_dir`` =
-     - (StrOpt) Path to directory that contains the SASL configuration
+     - (String) Path to directory that contains the SASL configuration
    * - ``sasl_config_name`` =
-     - (StrOpt) Name of configuration file (without .conf suffix)
+     - (String) Name of configuration file (without .conf suffix)
    * - ``sasl_mechanisms`` =
-     - (StrOpt) Space separated list of acceptable SASL mechanisms
+     - (String) Space separated list of acceptable SASL mechanisms
    * - ``server_request_prefix`` = ``exclusive``
-     - (StrOpt) address prefix used when sending to a specific server
+     - (String) address prefix used when sending to a specific server
    * - ``ssl_ca_file`` =
-     - (StrOpt) CA certificate PEM file to verify server certificate
+     - (String) CA certificate PEM file to verify server certificate
    * - ``ssl_cert_file`` =
-     - (StrOpt) Identifying certificate PEM file to present to clients
+     - (String) Identifying certificate PEM file to present to clients
    * - ``ssl_key_file`` =
-     - (StrOpt) Private key PEM file used to sign cert_file certificate
+     - (String) Private key PEM file used to sign cert_file certificate
    * - ``ssl_key_password`` = ``None``
-     - (StrOpt) Password for decrypting ssl_key_file (if encrypted)
+     - (String) Password for decrypting ssl_key_file (if encrypted)
    * - ``trace`` = ``False``
-     - (BoolOpt) Debug: dump AMQP frames to stdout
+     - (Boolean) Debug: dump AMQP frames to stdout
    * - ``username`` =
-     - (StrOpt) User name for message broker authentication
+     - (String) User name for message broker authentication
+   * - **[oslo_messaging_notifications]**
+     -
+   * - ``driver`` = ``[]``
+     - (Multi-valued) The Drivers(s) to handle sending notifications. Possible values are messaging, messagingv2, routing, log, test, noop
+   * - ``topics`` = ``notifications``
+     - (List) AMQP topic used for OpenStack notifications.
+   * - ``transport_url`` = ``None``
+     - (String) A URL representing the messaging driver to use for notifications. If not set, we fall back to the same configuration used for RPC.

@@ -19,4 +19,6 @@
    * - **[assignment]**
      -
    * - ``driver`` = ``None``
-     - (StrOpt) Entrypoint for the assignment backend driver in the keystone.assignment namespace. Supplied drivers are ldap and sql. If an assignment driver is not specified, the identity driver will choose the assignment driver.
+     - (String) Entrypoint for the assignment backend driver in the keystone.assignment namespace. Only an SQL driver is supplied. If an assignment driver is not specified, the identity driver will choose the assignment driver (driver selection based on `[identity]/driver` option is deprecated and will be removed in the "O" release).
+   * - ``prohibited_implied_role`` = ``admin``
+     - (List) A list of role names which are prohibited from being an implied role.

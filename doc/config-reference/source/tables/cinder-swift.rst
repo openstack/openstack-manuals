@@ -19,6 +19,6 @@
    * - **[DEFAULT]**
      -
    * - ``backup_swift_auth_insecure`` = ``False``
-     - (BoolOpt) Bypass verification of server certificate when making SSL connection to Swift.
+     - (Boolean) Bypass verification of server certificate when making SSL connection to Swift.
    * - ``backup_swift_auth_url`` = ``None``
-     - (StrOpt) The URL of the Keystone endpoint
+     - (String) The URL of the Keystone endpoint

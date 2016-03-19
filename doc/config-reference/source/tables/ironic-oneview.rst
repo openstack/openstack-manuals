@@ -19,14 +19,14 @@
    * - **[oneview]**
      -
    * - ``allow_insecure_connections`` = ``False``
-     - (BoolOpt) Option to allow insecure connection with OneView
+     - (Boolean) Option to allow insecure connection with OneView
    * - ``manager_url`` = ``None``
-     - (StrOpt) URL where OneView is available
+     - (String) URL where OneView is available
    * - ``max_polling_attempts`` = ``12``
-     - (IntOpt) Max connection retries to check changes on OneView
+     - (Integer) Max connection retries to check changes on OneView
    * - ``password`` = ``None``
-     - (StrOpt) OneView password to be used
+     - (String) OneView password to be used
    * - ``tls_cacert_file`` = ``None``
-     - (StrOpt) Path to CA certificate
+     - (String) Path to CA certificate
    * - ``username`` = ``None``
-     - (StrOpt) OneView username to be used
+     - (String) OneView username to be used

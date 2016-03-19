@@ -19,18 +19,18 @@
    * - **[DEFAULT]**
      -
    * - ``args`` = ``None``
-     - (ListOpt) Arguments for the command
+     - (List) Arguments for the command
    * - ``chunksize`` = ``65536``
-     - (IntOpt) Amount of data to transfer per HTTP write.
+     - (Integer) Amount of data to transfer per HTTP write.
    * - ``command`` = ``None``
-     - (StrOpt) Command to be given to replicator
+     - (String) Command to be given to replicator
    * - ``dontreplicate`` = ``created_at date deleted_at location updated_at``
-     - (StrOpt) List of fields to not replicate.
+     - (String) List of fields to not replicate.
    * - ``mastertoken`` =
-     - (StrOpt) Pass in your authentication token if you have one. This is the token used for the master.
+     - (String) Pass in your authentication token if you have one. This is the token used for the master.
    * - ``metaonly`` = ``False``
-     - (BoolOpt) Only replicate metadata, not images.
+     - (Boolean) Only replicate metadata, not images.
    * - ``slavetoken`` =
-     - (StrOpt) Pass in your authentication token if you have one. This is the token used for the slave.
+     - (String) Pass in your authentication token if you have one. This is the token used for the slave.
    * - ``token`` =
-     - (StrOpt) Pass in your authentication token if you have one. If you use this option the same token is used for both the master and the slave.
+     - (String) Pass in your authentication token if you have one. If you use this option the same token is used for both the master and the slave.

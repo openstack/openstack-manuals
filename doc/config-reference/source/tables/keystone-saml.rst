@@ -19,38 +19,38 @@
    * - **[saml]**
      -
    * - ``assertion_expiration_time`` = ``3600``
-     - (IntOpt) Default TTL, in seconds, for any generated SAML assertion created by Keystone.
+     - (Integer) Default TTL, in seconds, for any generated SAML assertion created by Keystone.
    * - ``certfile`` = ``/etc/keystone/ssl/certs/signing_cert.pem``
-     - (StrOpt) Path of the certfile for SAML signing. For non-production environments, you may be interested in using `keystone-manage pki_setup` to generate self-signed certificates. Note, the path cannot contain a comma.
+     - (String) Path of the certfile for SAML signing. For non-production environments, you may be interested in using `keystone-manage pki_setup` to generate self-signed certificates. Note, the path cannot contain a comma.
    * - ``idp_contact_company`` = ``None``
-     - (StrOpt) Company of contact person.
+     - (String) Company of contact person.
    * - ``idp_contact_email`` = ``None``
-     - (StrOpt) Email address of contact person.
+     - (String) Email address of contact person.
    * - ``idp_contact_name`` = ``None``
-     - (StrOpt) Given name of contact person
+     - (String) Given name of contact person
    * - ``idp_contact_surname`` = ``None``
-     - (StrOpt) Surname of contact person.
+     - (String) Surname of contact person.
    * - ``idp_contact_telephone`` = ``None``
-     - (StrOpt) Telephone number of contact person.
+     - (String) Telephone number of contact person.
    * - ``idp_contact_type`` = ``other``
-     - (StrOpt) The contact type describing the main point of contact for the identity provider.
+     - (String) The contact type describing the main point of contact for the identity provider.
    * - ``idp_entity_id`` = ``None``
-     - (StrOpt) Entity ID value for unique Identity Provider identification. Usually FQDN is set with a suffix. A value is required to generate IDP Metadata. For example: https://keystone.example.com/v3/OS-FEDERATION/saml2/idp
+     - (String) Entity ID value for unique Identity Provider identification. Usually FQDN is set with a suffix. A value is required to generate IDP Metadata. For example: https://keystone.example.com/v3/OS-FEDERATION/saml2/idp
    * - ``idp_lang`` = ``en``
-     - (StrOpt) Language used by the organization.
+     - (String) Language used by the organization.
    * - ``idp_metadata_path`` = ``/etc/keystone/saml2_idp_metadata.xml``
-     - (StrOpt) Path to the Identity Provider Metadata file. This file should be generated with the keystone-manage saml_idp_metadata command.
+     - (String) Path to the Identity Provider Metadata file. This file should be generated with the keystone-manage saml_idp_metadata command.
    * - ``idp_organization_display_name`` = ``None``
-     - (StrOpt) Organization name to be displayed.
+     - (String) Organization name to be displayed.
    * - ``idp_organization_name`` = ``None``
-     - (StrOpt) Organization name the installation belongs to.
+     - (String) Organization name the installation belongs to.
    * - ``idp_organization_url`` = ``None``
-     - (StrOpt) URL of the organization.
+     - (String) URL of the organization.
    * - ``idp_sso_endpoint`` = ``None``
-     - (StrOpt) Identity Provider Single-Sign-On service value, required in the Identity Provider's metadata. A value is required to generate IDP Metadata. For example: https://keystone.example.com/v3/OS-FEDERATION/saml2/sso
+     - (String) Identity Provider Single-Sign-On service value, required in the Identity Provider's metadata. A value is required to generate IDP Metadata. For example: https://keystone.example.com/v3/OS-FEDERATION/saml2/sso
    * - ``keyfile`` = ``/etc/keystone/ssl/private/signing_key.pem``
-     - (StrOpt) Path of the keyfile for SAML signing. Note, the path cannot contain a comma.
+     - (String) Path of the keyfile for SAML signing. Note, the path cannot contain a comma.
    * - ``relay_state_prefix`` = ``ss:mem:``
-     - (StrOpt) The prefix to use for the RelayState SAML attribute, used when generating ECP wrapped assertions.
+     - (String) The prefix to use for the RelayState SAML attribute, used when generating ECP wrapped assertions.
    * - ``xmlsec1_binary`` = ``xmlsec1``
-     - (StrOpt) Binary to be called for XML signing. Install the appropriate package, specify absolute path or adjust your PATH environment variable if the binary cannot be found.
+     - (String) Binary to be called for XML signing. Install the appropriate package, specify absolute path or adjust your PATH environment variable if the binary cannot be found.

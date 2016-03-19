@@ -19,20 +19,20 @@
    * - **[service_credentials]**
      -
    * - ``auth_section`` = ``None``
-     - (Opt) Config Section from which to load plugin specific options
+     - (Unknown) Config Section from which to load plugin specific options
    * - ``auth_type`` = ``None``
-     - (Opt) Authentication type to load
+     - (Unknown) Authentication type to load
    * - ``cafile`` = ``None``
-     - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``certfile`` = ``None``
-     - (StrOpt) PEM encoded client certificate cert file
+     - (String) PEM encoded client certificate cert file
    * - ``insecure`` = ``False``
-     - (BoolOpt) Verify HTTPS connections.
+     - (Boolean) Verify HTTPS connections.
    * - ``interface`` = ``public``
-     - (StrOpt) Type of endpoint in Identity service catalog to use for communication with OpenStack services.
+     - (String) Type of endpoint in Identity service catalog to use for communication with OpenStack services.
    * - ``keyfile`` = ``None``
-     - (StrOpt) PEM encoded client certificate key file
+     - (String) PEM encoded client certificate key file
    * - ``region_name`` = ``None``
-     - (StrOpt) Region name to use for OpenStack service endpoints.
+     - (String) Region name to use for OpenStack service endpoints.
    * - ``timeout`` = ``None``
-     - (IntOpt) Timeout value for http requests
+     - (Integer) Timeout value for http requests

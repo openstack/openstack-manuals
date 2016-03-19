@@ -19,4 +19,4 @@
    * - **[swift]**
      -
    * - ``swift_max_retries`` = ``2``
-     - (IntOpt) Maximum number of times to retry a Swift request, before failing.
+     - (Integer) Maximum number of times to retry a Swift request, before failing.

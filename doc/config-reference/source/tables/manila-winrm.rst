@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``winrm_cert_key_pem_path`` = ``~/.ssl/key.pem``
-     - (StrOpt) Path to the x509 certificate key.
+     - (String) Path to the x509 certificate key.
    * - ``winrm_cert_pem_path`` = ``~/.ssl/cert.pem``
-     - (StrOpt) Path to the x509 certificate used for accessing the serviceinstance.
+     - (String) Path to the x509 certificate used for accessing the serviceinstance.
    * - ``winrm_conn_timeout`` = ``60``
-     - (IntOpt) WinRM connection timeout.
+     - (Integer) WinRM connection timeout.
    * - ``winrm_operation_timeout`` = ``60``
-     - (IntOpt) WinRM operation timeout.
+     - (Integer) WinRM operation timeout.
    * - ``winrm_retry_count`` = ``3``
-     - (IntOpt) WinRM retry count.
+     - (Integer) WinRM retry count.
    * - ``winrm_retry_interval`` = ``5``
-     - (IntOpt) WinRM retry interval in seconds
+     - (Integer) WinRM retry interval in seconds
    * - ``winrm_use_cert_based_auth`` = ``False``
-     - (BoolOpt) Use x509 certificates in order to authenticate to theservice instance.
+     - (Boolean) Use x509 certificates in order to authenticate to theservice instance.

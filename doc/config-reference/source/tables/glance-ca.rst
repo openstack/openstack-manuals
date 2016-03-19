@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``ca_file`` = ``None``
-     - (StrOpt) CA certificate file to use to verify connecting clients.
+     - (String) CA certificate file to use to verify connecting clients.
    * - ``cert_file`` = ``None``
-     - (StrOpt) Certificate file to use when starting API server securely.
+     - (String) Certificate file to use when starting API server securely.
    * - ``key_file`` = ``None``
-     - (StrOpt) Private key file to use when starting API server securely.
+     - (String) Private key file to use when starting API server securely.

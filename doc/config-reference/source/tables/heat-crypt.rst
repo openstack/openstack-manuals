@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``auth_encryption_key`` = ``notgood but just long enough i t``
-     - (StrOpt) Key used to encrypt authentication info in the database. Length of this key must be 32 characters.
+     - (String) Key used to encrypt authentication info in the database. Length of this key must be 32 characters.

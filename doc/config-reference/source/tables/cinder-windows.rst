@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``windows_iscsi_lun_path`` = ``C:\iSCSIVirtualDisks``
-     - (StrOpt) Path to store VHD backed volumes
+     - (String) Path to store VHD backed volumes

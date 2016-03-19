@@ -19,14 +19,14 @@
    * - **[federation]**
      -
    * - ``assertion_prefix`` =
-     - (StrOpt) Value to be used when filtering assertion parameters from the environment.
+     - (String) Value to be used when filtering assertion parameters from the environment.
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for the federation backend driver in the keystone.federation namespace.
+     - (String) Entrypoint for the federation backend driver in the keystone.federation namespace.
    * - ``federated_domain_name`` = ``Federated``
-     - (StrOpt) A domain name that is reserved to allow federated ephemeral users to have a domain concept. Note that an admin will not be able to create a domain with this name or update an existing domain to this name. You are not advised to change this value unless you really have to.
+     - (String) A domain name that is reserved to allow federated ephemeral users to have a domain concept. Note that an admin will not be able to create a domain with this name or update an existing domain to this name. You are not advised to change this value unless you really have to.
    * - ``remote_id_attribute`` = ``None``
-     - (StrOpt) Value to be used to obtain the entity ID of the Identity Provider from the environment (e.g. if using the mod_shib plugin this value is `Shib-Identity-Provider`).
+     - (String) Value to be used to obtain the entity ID of the Identity Provider from the environment (e.g. if using the mod_shib plugin this value is `Shib-Identity-Provider`).
    * - ``sso_callback_template`` = ``/etc/keystone/sso_callback_template.html``
-     - (StrOpt) Location of Single Sign-On callback handler, will return a token to a trusted dashboard host.
+     - (String) Location of Single Sign-On callback handler, will return a token to a trusted dashboard host.
    * - ``trusted_dashboard`` = ``[]``
-     - (MultiStrOpt) A list of trusted dashboard hosts. Before accepting a Single Sign-On request to return a token, the origin host must be a member of the trusted_dashboard list. This configuration option may be repeated for multiple values. For example: trusted_dashboard=http://acme.com/auth/websso trusted_dashboard=http://beta.com/auth/websso
+     - (Multi-valued) A list of trusted dashboard hosts. Before accepting a Single Sign-On request to return a token, the origin host must be a member of the trusted_dashboard list. This configuration option may be repeated for multiple values. For example: trusted_dashboard=http://acme.com/auth/websso trusted_dashboard=http://beta.com/auth/websso

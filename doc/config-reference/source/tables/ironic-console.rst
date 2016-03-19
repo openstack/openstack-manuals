@@ -19,12 +19,12 @@
    * - **[console]**
      -
    * - ``subprocess_checking_interval`` = ``1``
-     - (IntOpt) Time interval (in seconds) for checking the status of console subprocess.
+     - (Integer) Time interval (in seconds) for checking the status of console subprocess.
    * - ``subprocess_timeout`` = ``10``
-     - (IntOpt) Time (in seconds) to wait for the console subprocess to start.
+     - (Integer) Time (in seconds) to wait for the console subprocess to start.
    * - ``terminal`` = ``shellinaboxd``
-     - (StrOpt) Path to serial console terminal program
+     - (String) Path to serial console terminal program
    * - ``terminal_cert_dir`` = ``None``
-     - (StrOpt) Directory containing the terminal SSL cert(PEM) for serial console access
+     - (String) Directory containing the terminal SSL cert(PEM) for serial console access
    * - ``terminal_pid_dir`` = ``None``
-     - (StrOpt) Directory for holding terminal pid files. If not specified, the temporary directory will be used.
+     - (String) Directory for holding terminal pid files. If not specified, the temporary directory will be used.

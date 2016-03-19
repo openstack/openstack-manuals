@@ -19,4 +19,4 @@
    * - **[drivers:management_store:sqlalchemy]**
      -
    * - ``uri`` = ``sqlite:///:memory:``
-     - (StrOpt) An sqlalchemy URL
+     - (String) An sqlalchemy URL

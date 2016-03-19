@@ -19,18 +19,18 @@
    * - **[DEFAULT]**
      -
    * - ``smbfs_allocation_info_file_path`` = ``$state_path/allocation_data``
-     - (StrOpt) The path of the automatically generated file containing information about volume disk space allocation.
+     - (String) The path of the automatically generated file containing information about volume disk space allocation.
    * - ``smbfs_default_volume_format`` = ``qcow2``
-     - (StrOpt) Default format that will be used when creating volumes if no volume format is specified.
+     - (String) Default format that will be used when creating volumes if no volume format is specified.
    * - ``smbfs_mount_options`` = ``noperm,file_mode=0775,dir_mode=0775``
-     - (StrOpt) Mount options passed to the smbfs client. See mount.cifs man page for details.
+     - (String) Mount options passed to the smbfs client. See mount.cifs man page for details.
    * - ``smbfs_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Base dir containing mount points for smbfs shares.
+     - (String) Base dir containing mount points for smbfs shares.
    * - ``smbfs_oversub_ratio`` = ``1.0``
-     - (FloatOpt) This will compare the allocated to available space on the volume destination. If the ratio exceeds this number, the destination will no longer be valid.
+     - (Floating point) This will compare the allocated to available space on the volume destination. If the ratio exceeds this number, the destination will no longer be valid.
    * - ``smbfs_shares_config`` = ``/etc/cinder/smbfs_shares``
-     - (StrOpt) File with the list of available smbfs shares.
+     - (String) File with the list of available smbfs shares.
    * - ``smbfs_sparsed_volumes`` = ``True``
-     - (BoolOpt) Create volumes as sparsed files which take no space rather than regular files when using raw format, in which case volume creation takes lot of time.
+     - (Boolean) Create volumes as sparsed files which take no space rather than regular files when using raw format, in which case volume creation takes lot of time.
    * - ``smbfs_used_ratio`` = ``0.95``
-     - (FloatOpt) Percent of ACTUAL usage of the underlying volume before no new volumes can be allocated to the volume destination.
+     - (Floating point) Percent of ACTUAL usage of the underlying volume before no new volumes can be allocated to the volume destination.

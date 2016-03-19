@@ -19,22 +19,22 @@
    * - **[service_auth]**
      -
    * - ``admin_password`` = ``password``
-     - (StrOpt) The service admin password
+     - (String) The service admin password
    * - ``admin_project_domain`` = ``admin``
-     - (StrOpt) The admin project domain name
+     - (String) The admin project domain name
    * - ``admin_tenant_name`` = ``admin``
-     - (StrOpt) The service admin tenant name
+     - (String) The service admin tenant name
    * - ``admin_user`` = ``admin``
-     - (StrOpt) The service admin user name
+     - (String) The service admin user name
    * - ``admin_user_domain`` = ``admin``
-     - (StrOpt) The admin user domain name
+     - (String) The admin user domain name
    * - ``auth_url`` = ``http://127.0.0.1:5000/v2.0``
-     - (StrOpt) Authentication endpoint
+     - (String) Authentication endpoint
    * - ``auth_version`` = ``2``
-     - (StrOpt) The auth version used to authenticate
+     - (String) The auth version used to authenticate
    * - ``endpoint_type`` = ``public``
-     - (StrOpt) The endpoint_type to be used
+     - (String) The endpoint_type to be used
    * - ``region`` = ``RegionOne``
-     - (StrOpt) The deployment region
+     - (String) The deployment region
    * - ``service_name`` = ``lbaas``
-     - (StrOpt) The name of the service
+     - (String) The name of the service

@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``wakeup_time`` = ``300``
-     - (IntOpt) Loop time between checking for new items to schedule for delete.
+     - (Integer) Loop time between checking for new items to schedule for delete.

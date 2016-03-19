@@ -19,50 +19,52 @@
    * - **[api]**
      -
    * - ``api_workers`` = ``None``
-     - (IntOpt) Number of workers for OpenStack Ironic API service. The default is equal to the number of CPUs available if that can be determined, else a default worker count of 1 is returned.
+     - (Integer) Number of workers for OpenStack Ironic API service. The default is equal to the number of CPUs available if that can be determined, else a default worker count of 1 is returned.
+   * - ``enable_ssl_api`` = ``False``
+     - (Boolean) Enable the integrated stand-alone API to service requests via HTTPS instead of HTTP. If there is a front-end service performing HTTPS offloading from the service, this option should be False; note, you will want to change public API endpoint to represent SSL termination URL with 'public_endpoint' option.
    * - ``host_ip`` = ``0.0.0.0``
-     - (StrOpt) The IP address on which ironic-api listens.
+     - (String) The IP address on which ironic-api listens.
    * - ``max_limit`` = ``1000``
-     - (IntOpt) The maximum number of items returned in a single response from a collection resource.
+     - (Integer) The maximum number of items returned in a single response from a collection resource.
    * - ``port`` = ``6385``
-     - (PortOpt) The TCP port on which ironic-api listens.
+     - (Unknown) The TCP port on which ironic-api listens.
    * - ``public_endpoint`` = ``None``
-     - (StrOpt) Public URL to use when building the links to the API resources (for example, "https://ironic.rocks:6384"). If None the links will be built using the request's host URL. If the API is operating behind a proxy, you will want to change this to represent the proxy's URL. Defaults to None.
+     - (String) Public URL to use when building the links to the API resources (for example, "https://ironic.rocks:6384"). If None the links will be built using the request's host URL. If the API is operating behind a proxy, you will want to change this to represent the proxy's URL. Defaults to None.
    * - **[cors]**
      -
    * - ``allow_credentials`` = ``True``
-     - (BoolOpt) Indicate that the actual request can include user credentials
+     - (Boolean) Indicate that the actual request can include user credentials
    * - ``allow_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which header field names may be used during the actual request.
+     - (List) Indicate which header field names may be used during the actual request.
    * - ``allow_methods`` = ``GET, POST, PUT, DELETE, OPTIONS``
-     - (ListOpt) Indicate which methods can be used during the actual request.
+     - (List) Indicate which methods can be used during the actual request.
    * - ``allowed_origin`` = ``None``
-     - (ListOpt) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
+     - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
    * - ``expose_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
+     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
    * - ``max_age`` = ``3600``
-     - (IntOpt) Maximum cache age of CORS preflight requests.
+     - (Integer) Maximum cache age of CORS preflight requests.
    * - **[cors.subdomain]**
      -
    * - ``allow_credentials`` = ``True``
-     - (BoolOpt) Indicate that the actual request can include user credentials
+     - (Boolean) Indicate that the actual request can include user credentials
    * - ``allow_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which header field names may be used during the actual request.
+     - (List) Indicate which header field names may be used during the actual request.
    * - ``allow_methods`` = ``GET, POST, PUT, DELETE, OPTIONS``
-     - (ListOpt) Indicate which methods can be used during the actual request.
+     - (List) Indicate which methods can be used during the actual request.
    * - ``allowed_origin`` = ``None``
-     - (ListOpt) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
+     - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
    * - ``expose_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
+     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
    * - ``max_age`` = ``3600``
-     - (IntOpt) Maximum cache age of CORS preflight requests.
+     - (Integer) Maximum cache age of CORS preflight requests.
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``
-     - (IntOpt) The maximum body size for each request, in bytes.
+     - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
    * - **[oslo_versionedobjects]**
      -
    * - ``fatal_exception_format_errors`` = ``False``
-     - (BoolOpt) Make exception message format errors fatal
+     - (Boolean) Make exception message format errors fatal

@@ -19,4 +19,4 @@
    * - **[AGENT]**
      -
    * - ``polling_interval`` = ``2``
-     - (IntOpt) The number of seconds the agent will wait between polling for local device changes.
+     - (Integer) The number of seconds the agent will wait between polling for local device changes.

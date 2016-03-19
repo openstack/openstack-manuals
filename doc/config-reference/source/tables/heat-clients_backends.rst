@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``cloud_backend`` = ``heat.engine.clients.OpenStackClients``
-     - (StrOpt) Fully qualified class name to use as a client backend.
+     - (String) Fully qualified class name to use as a client backend.

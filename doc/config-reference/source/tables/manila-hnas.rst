@@ -8,15 +8,15 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _cinder-zoning_manager:
+.. _manila-hnas:
 
-.. list-table:: Description of zoning manager configuration options
+.. list-table:: Description of hnas configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[fc-zone-manager]**
+   * - **[DEFAULT]**
      -
-   * - ``brcd_sb_connector`` = ``cinder.zonemanager.drivers.brocade.brcd_fc_zone_client_cli.BrcdFCZoneClientCLI``
-     - (StrOpt) Southbound connector for zoning operation
+   * - ``hds_hnas_driver_helper`` = ``manila.share.drivers.hitachi.ssh.HNASSSHBackend``
+     - (String) Python class to be used for driver helper.

@@ -19,22 +19,22 @@
    * - **[DEFAULT]**
      -
    * - ``gpfs_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Base folder where exported shares are located.
+     - (String) Base folder where exported shares are located.
    * - ``gpfs_nfs_server_list`` = ``None``
-     - (ListOpt) A list of the fully qualified NFS server names that make up the OpenStack Manila configuration.
+     - (List) A list of the fully qualified NFS server names that make up the OpenStack Manila configuration.
    * - ``gpfs_nfs_server_type`` = ``KNFS``
-     - (StrOpt) NFS Server type. Valid choices are "KNFS" (kernel NFS) or "GNFS" (Ganesha NFS).
+     - (String) NFS Server type. Valid choices are "KNFS" (kernel NFS) or "GNFS" (Ganesha NFS).
    * - ``gpfs_share_export_ip`` = ``None``
-     - (StrOpt) IP to be added to GPFS export string.
+     - (String) IP to be added to GPFS export string.
    * - ``gpfs_share_helpers`` = ``KNFS=manila.share.drivers.ibm.gpfs.KNFSHelper, GNFS=manila.share.drivers.ibm.gpfs.GNFSHelper``
-     - (ListOpt) Specify list of share export helpers.
+     - (List) Specify list of share export helpers.
    * - ``gpfs_ssh_login`` = ``None``
-     - (StrOpt) GPFS server SSH login name.
+     - (String) GPFS server SSH login name.
    * - ``gpfs_ssh_password`` = ``None``
-     - (StrOpt) GPFS server SSH login password. The password is not needed, if 'gpfs_ssh_private_key' is configured.
+     - (String) GPFS server SSH login password. The password is not needed, if 'gpfs_ssh_private_key' is configured.
    * - ``gpfs_ssh_port`` = ``22``
-     - (PortOpt) GPFS server SSH port.
+     - (Unknown) GPFS server SSH port.
    * - ``gpfs_ssh_private_key`` = ``None``
-     - (StrOpt) Path to GPFS server SSH private key for login.
+     - (String) Path to GPFS server SSH private key for login.
    * - ``knfs_export_options`` = ``rw,sync,no_root_squash,insecure,no_wdelay,no_subtree_check``
-     - (StrOpt) Options to use when exporting a share using kernel NFS server. Note that these defaults can be overridden when a share is created by passing metadata with key name export_options.
+     - (String) Options to use when exporting a share using kernel NFS server. Note that these defaults can be overridden when a share is created by passing metadata with key name export_options.

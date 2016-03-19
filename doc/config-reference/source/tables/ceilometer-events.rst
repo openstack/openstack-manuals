@@ -19,18 +19,18 @@
    * - **[event]**
      -
    * - ``definitions_cfg_file`` = ``event_definitions.yaml``
-     - (StrOpt) Configuration file for event definitions.
+     - (String) Configuration file for event definitions.
    * - ``drop_unmatched_notifications`` = ``False``
-     - (BoolOpt) Drop notifications if no event definition matches. (Otherwise, we convert them with just the default traits)
+     - (Boolean) Drop notifications if no event definition matches. (Otherwise, we convert them with just the default traits)
    * - ``store_raw`` = ``[]``
-     - (MultiStrOpt) Store the raw notification for select priority levels (info and/or error). By default, raw details are not captured.
+     - (Multi-valued) Store the raw notification for select priority levels (info and/or error). By default, raw details are not captured.
    * - **[notification]**
      -
    * - ``ack_on_event_error`` = ``True``
-     - (BoolOpt) Acknowledge message when event persistence fails.
+     - (Boolean) Acknowledge message when event persistence fails.
    * - ``store_events`` = ``False``
-     - (BoolOpt) Save event details.
+     - (Boolean) Save event details.
    * - ``workers`` = ``1``
-     - (IntOpt) Number of workers for notification service, default value is 1.
+     - (Integer) Number of workers for notification service, default value is 1.
    * - ``workload_partitioning`` = ``False``
-     - (BoolOpt) Enable workload partitioning, allowing multiple notification agents to be run simultaneously.
+     - (Boolean) Enable workload partitioning, allowing multiple notification agents to be run simultaneously.

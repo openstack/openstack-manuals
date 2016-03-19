@@ -19,12 +19,12 @@
    * - **[DEFAULT]**
      -
    * - ``dell_sc_api_port`` = ``3033``
-     - (PortOpt) Dell API port
+     - (Unknown) Dell API port
    * - ``dell_sc_server_folder`` = ``openstack``
-     - (StrOpt) Name of the server folder to use on the Storage Center
+     - (String) Name of the server folder to use on the Storage Center
    * - ``dell_sc_ssn`` = ``64702``
-     - (IntOpt) Storage Center System Serial Number
+     - (Integer) Storage Center System Serial Number
    * - ``dell_sc_verify_cert`` = ``False``
-     - (BoolOpt) Enable HTTPS SC certificate verification.
+     - (Boolean) Enable HTTPS SC certificate verification.
    * - ``dell_sc_volume_folder`` = ``openstack``
-     - (StrOpt) Name of the volume folder to use on the Storage Center
+     - (String) Name of the volume folder to use on the Storage Center

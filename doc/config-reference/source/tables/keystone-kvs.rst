@@ -19,10 +19,10 @@
    * - **[kvs]**
      -
    * - ``backends`` =
-     - (ListOpt) Extra dogpile.cache backend modules to register with the dogpile.cache library.
+     - (List) Extra dogpile.cache backend modules to register with the dogpile.cache library.
    * - ``config_prefix`` = ``keystone.kvs``
-     - (StrOpt) Prefix for building the configuration dictionary for the KVS region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name.
+     - (String) Prefix for building the configuration dictionary for the KVS region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name.
    * - ``default_lock_timeout`` = ``5``
-     - (IntOpt) Default lock timeout (in seconds) for distributed locking.
+     - (Integer) Default lock timeout (in seconds) for distributed locking.
    * - ``enable_key_mangler`` = ``True``
-     - (BoolOpt) Toggle to disable using a key-mangling function to ensure fixed length keys. This is toggle-able for debugging purposes, it is highly recommended to always leave this set to true.
+     - (Boolean) Toggle to disable using a key-mangling function to ensure fixed length keys. This is toggle-able for debugging purposes, it is highly recommended to always leave this set to true.

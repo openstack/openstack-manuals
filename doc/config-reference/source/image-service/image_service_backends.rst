@@ -17,6 +17,7 @@ The following tables detail the options available for each.
 
 .. include:: ../tables/glance-cinder.rst
 .. include:: ../tables/glance-filesystem.rst
+.. include:: ../tables/glance-http.rst
 .. include:: ../tables/glance-rbd.rst
 .. include:: ../tables/glance-s3.rst
 .. include:: ../tables/glance-sheepdog.rst

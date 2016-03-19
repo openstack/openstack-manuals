@@ -19,6 +19,6 @@
    * - **[openswan]**
      -
    * - ``ipsec_config_template`` = ``/usr/lib/python/site-packages/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/openswan/ipsec.conf.template``
-     - (StrOpt) Template file for ipsec configuration
+     - (String) Template file for ipsec configuration
    * - ``ipsec_secret_template`` = ``/usr/lib/python/site-packages/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/openswan/ipsec.secret.template``
-     - (StrOpt) Template file for ipsec secret configuration
+     - (String) Template file for ipsec secret configuration

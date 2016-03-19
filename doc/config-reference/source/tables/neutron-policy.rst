@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``allow_overlapping_ips`` = ``False``
-     - (BoolOpt) Allow overlapping IP support in Neutron. Attention: the following parameter MUST be set to False if Neutron is being used in conjunction with Nova security groups.
+     - (Boolean) Allow overlapping IP support in Neutron. Attention: the following parameter MUST be set to False if Neutron is being used in conjunction with Nova security groups.

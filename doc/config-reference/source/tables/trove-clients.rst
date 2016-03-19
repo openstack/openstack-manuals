@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``remote_cinder_client`` = ``trove.common.remote.cinder_client``
-     - (StrOpt) Client to send Cinder calls to.
+     - (String) Client to send Cinder calls to.
    * - ``remote_dns_client`` = ``trove.common.remote.dns_client``
-     - (StrOpt) Client to send DNS calls to.
+     - (String) Client to send DNS calls to.
    * - ``remote_guest_client`` = ``trove.common.remote.guest_client``
-     - (StrOpt) Client to send Guest Agent calls to.
+     - (String) Client to send Guest Agent calls to.
    * - ``remote_heat_client`` = ``trove.common.remote.heat_client``
-     - (StrOpt) Client to send Heat calls to.
+     - (String) Client to send Heat calls to.
    * - ``remote_neutron_client`` = ``trove.common.remote.neutron_client``
-     - (StrOpt) Client to send Neutron calls to.
+     - (String) Client to send Neutron calls to.
    * - ``remote_nova_client`` = ``trove.common.remote.nova_client``
-     - (StrOpt) Client to send Nova calls to.
+     - (String) Client to send Nova calls to.
    * - ``remote_swift_client`` = ``trove.common.remote.swift_client``
-     - (StrOpt) Client to send Swift calls to.
+     - (String) Client to send Swift calls to.

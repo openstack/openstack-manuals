@@ -19,6 +19,6 @@
    * - **[rgw_admin_credentials]**
      -
    * - ``access_key`` = ``None``
-     - (StrOpt) Access key for Radosgw Admin.
+     - (String) Access key for Radosgw Admin.
    * - ``secret_key`` = ``None``
-     - (StrOpt) Secret key for Radosgw Admin.
+     - (String) Secret key for Radosgw Admin.

@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``loadbalancer_template`` = ``None``
-     - (StrOpt) Custom template for the built-in loadbalancer nested stack.
+     - (String) Custom template for the built-in loadbalancer nested stack.

@@ -19,6 +19,6 @@
    * - **[seamicro]**
      -
    * - ``action_timeout`` = ``10``
-     - (IntOpt) Seconds to wait for power action to be completed
+     - (Integer) Seconds to wait for power action to be completed
    * - ``max_retry`` = ``3``
-     - (IntOpt) Maximum retries for SeaMicro operations
+     - (Integer) Maximum retries for SeaMicro operations

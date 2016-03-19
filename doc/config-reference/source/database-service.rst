@@ -35,4 +35,5 @@ configuration options.
 .. include:: tables/trove-swift.rst
 .. include:: tables/trove-taskmanager.rst
 .. include:: tables/trove-upgrades.rst
+.. include:: tables/trove-varmour.rst
 .. include:: tables/trove-volume.rst

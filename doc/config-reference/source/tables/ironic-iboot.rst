@@ -19,8 +19,8 @@
    * - **[iboot]**
      -
    * - ``max_retry`` = ``3``
-     - (IntOpt) Maximum retries for iBoot operations
+     - (Integer) Maximum retries for iBoot operations
    * - ``reboot_delay`` = ``5``
-     - (IntOpt) Time (in seconds) to sleep between when rebooting (powering off and on again).
+     - (Integer) Time (in seconds) to sleep between when rebooting (powering off and on again).
    * - ``retry_interval`` = ``1``
-     - (IntOpt) Time (in seconds) between retry attempts for iBoot operations
+     - (Integer) Time (in seconds) between retry attempts for iBoot operations

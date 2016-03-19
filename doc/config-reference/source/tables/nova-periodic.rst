@@ -19,6 +19,6 @@
    * - **[DEFAULT]**
      -
    * - ``periodic_enable`` = ``True``
-     - (BoolOpt) Enable periodic tasks
+     - (Boolean) Enable periodic tasks
    * - ``periodic_fuzzy_delay`` = ``60``
-     - (IntOpt) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
+     - (Integer) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)

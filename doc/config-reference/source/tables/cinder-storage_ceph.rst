@@ -19,26 +19,26 @@
    * - **[DEFAULT]**
      -
    * - ``rados_connect_timeout`` = ``-1``
-     - (IntOpt) Timeout value (in seconds) used when connecting to ceph cluster. If value < 0, no timeout is set and default librados value is used.
+     - (Integer) Timeout value (in seconds) used when connecting to ceph cluster. If value < 0, no timeout is set and default librados value is used.
    * - ``rados_connection_interval`` = ``5``
-     - (IntOpt) Interval value (in seconds) between connection retries to ceph cluster.
+     - (Integer) Interval value (in seconds) between connection retries to ceph cluster.
    * - ``rados_connection_retries`` = ``3``
-     - (IntOpt) Number of retries if connection to ceph cluster failed.
+     - (Integer) Number of retries if connection to ceph cluster failed.
    * - ``rbd_ceph_conf`` =
-     - (StrOpt) Path to the ceph configuration file
+     - (String) Path to the ceph configuration file
    * - ``rbd_cluster_name`` = ``ceph``
-     - (StrOpt) The name of ceph cluster
+     - (String) The name of ceph cluster
    * - ``rbd_flatten_volume_from_snapshot`` = ``False``
-     - (BoolOpt) Flatten volumes created from snapshots to remove dependency from volume to snapshot
+     - (Boolean) Flatten volumes created from snapshots to remove dependency from volume to snapshot
    * - ``rbd_max_clone_depth`` = ``5``
-     - (IntOpt) Maximum number of nested volume clones that are taken before a flatten occurs. Set to 0 to disable cloning.
+     - (Integer) Maximum number of nested volume clones that are taken before a flatten occurs. Set to 0 to disable cloning.
    * - ``rbd_pool`` = ``rbd``
-     - (StrOpt) The RADOS pool where rbd volumes are stored
+     - (String) The RADOS pool where rbd volumes are stored
    * - ``rbd_secret_uuid`` = ``None``
-     - (StrOpt) The libvirt uuid of the secret for the rbd_user volumes
+     - (String) The libvirt uuid of the secret for the rbd_user volumes
    * - ``rbd_store_chunk_size`` = ``4``
-     - (IntOpt) Volumes will be chunked into objects of this size (in megabytes).
+     - (Integer) Volumes will be chunked into objects of this size (in megabytes).
    * - ``rbd_user`` = ``None``
-     - (StrOpt) The RADOS client name for accessing rbd volumes - only set when using cephx authentication
+     - (String) The RADOS client name for accessing rbd volumes - only set when using cephx authentication
    * - ``volume_tmp_dir`` = ``None``
-     - (StrOpt) Directory where temporary image files are stored when the volume driver does not write them directly to the volume. Warning: this option is now deprecated, please use image_conversion_dir instead.
+     - (String) Directory where temporary image files are stored when the volume driver does not write them directly to the volume. Warning: this option is now deprecated, please use image_conversion_dir instead.

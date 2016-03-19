@@ -19,6 +19,6 @@
    * - **[DEFAULT]**
      -
    * - ``tegile_default_pool`` = ``None``
-     - (StrOpt) Create volumes in this pool
+     - (String) Create volumes in this pool
    * - ``tegile_default_project`` = ``None``
-     - (StrOpt) Create volumes in this project
+     - (String) Create volumes in this project

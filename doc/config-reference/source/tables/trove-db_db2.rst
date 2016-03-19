@@ -19,28 +19,30 @@
    * - **[db2]**
      -
    * - ``backup_incremental_strategy`` = ``{}``
-     - (DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
-   * - ``backup_namespace`` = ``None``
-     - (StrOpt) Namespace to load backup strategies from.
-   * - ``backup_strategy`` = ``None``
-     - (StrOpt) Default strategy to perform backups.
+     - (Dict) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
+   * - ``backup_namespace`` = ``trove.guestagent.strategies.backup.experimental.db2_impl``
+     - (String) Namespace to load backup strategies from.
+   * - ``backup_strategy`` = ``DB2Backup``
+     - (String) Default strategy to perform backups.
    * - ``device_path`` = ``/dev/vdb``
-     - (StrOpt) Device path for volume if volume support is enabled.
+     - (String) Device path for volume if volume support is enabled.
+   * - ``guest_log_exposed_logs`` =
+     - (String) List of Guest Logs to expose for publishing.
    * - ``ignore_users`` = ``PUBLIC, DB2INST1``
-     - (ListOpt) No help text available for this option.
+     - (List) No help text available for this option.
    * - ``mount_point`` = ``/home/db2inst1/db2inst1``
-     - (StrOpt) Filesystem path for mounting volumes if volume support is enabled.
+     - (String) Filesystem path for mounting volumes if volume support is enabled.
    * - ``replication_strategy`` = ``None``
-     - (StrOpt) Default strategy for replication.
-   * - ``restore_namespace`` = ``None``
-     - (StrOpt) Namespace to load restore strategies from.
+     - (String) Default strategy for replication.
+   * - ``restore_namespace`` = ``trove.guestagent.strategies.restore.experimental.db2_impl``
+     - (String) Namespace to load restore strategies from.
    * - ``root_controller`` = ``trove.extensions.common.service.DefaultRootController``
-     - (StrOpt) Root controller implementation for db2.
+     - (String) Root controller implementation for db2.
    * - ``root_on_create`` = ``False``
-     - (BoolOpt) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the 'password' field.
+     - (Boolean) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the 'password' field.
    * - ``tcp_ports`` = ``50000``
-     - (ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (List) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``udp_ports`` =
-     - (ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (List) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``volume_support`` = ``True``
-     - (BoolOpt) Whether to provision a Cinder volume for datadir.
+     - (Boolean) Whether to provision a Cinder volume for datadir.

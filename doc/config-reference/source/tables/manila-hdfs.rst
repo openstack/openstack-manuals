@@ -19,14 +19,14 @@
    * - **[DEFAULT]**
      -
    * - ``hdfs_namenode_ip`` = ``None``
-     - (StrOpt) The IP of the HDFS namenode.
+     - (String) The IP of the HDFS namenode.
    * - ``hdfs_namenode_port`` = ``9000``
-     - (PortOpt) The port of HDFS namenode service.
+     - (Unknown) The port of HDFS namenode service.
    * - ``hdfs_ssh_name`` = ``None``
-     - (StrOpt) HDFS namenode ssh login name.
+     - (String) HDFS namenode ssh login name.
    * - ``hdfs_ssh_port`` = ``22``
-     - (PortOpt) HDFS namenode SSH port.
+     - (Unknown) HDFS namenode SSH port.
    * - ``hdfs_ssh_private_key`` = ``None``
-     - (StrOpt) Path to HDFS namenode SSH private key for login.
+     - (String) Path to HDFS namenode SSH private key for login.
    * - ``hdfs_ssh_pw`` = ``None``
-     - (StrOpt) HDFS namenode SSH login password, This parameter is not necessary, if 'hdfs_ssh_private_key' is configured.
+     - (String) HDFS namenode SSH login password, This parameter is not necessary, if 'hdfs_ssh_private_key' is configured.

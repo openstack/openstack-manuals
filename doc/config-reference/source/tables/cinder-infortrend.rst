@@ -19,18 +19,18 @@
    * - **[DEFAULT]**
      -
    * - ``infortrend_cli_max_retries`` = ``5``
-     - (IntOpt) Maximum retry time for cli. Default is 5.
+     - (Integer) Maximum retry time for cli. Default is 5.
    * - ``infortrend_cli_path`` = ``/opt/bin/Infortrend/raidcmd_ESDS10.jar``
-     - (StrOpt) The Infortrend CLI absolute path. By default, it is at /opt/bin/Infortrend/raidcmd_ESDS10.jar
+     - (String) The Infortrend CLI absolute path. By default, it is at /opt/bin/Infortrend/raidcmd_ESDS10.jar
    * - ``infortrend_cli_timeout`` = ``30``
-     - (IntOpt) Default timeout for CLI copy operations in minutes. Support: migrate volume, create cloned volume and create volume from snapshot. By Default, it is 30 minutes.
+     - (Integer) Default timeout for CLI copy operations in minutes. Support: migrate volume, create cloned volume and create volume from snapshot. By Default, it is 30 minutes.
    * - ``infortrend_pools_name`` =
-     - (StrOpt) Infortrend raid pool name list. It is separated with comma.
+     - (String) Infortrend raid pool name list. It is separated with comma.
    * - ``infortrend_provisioning`` = ``full``
-     - (StrOpt) Let the volume use specific provisioning. By default, it is the full provisioning. The supported options are full or thin.
+     - (String) Let the volume use specific provisioning. By default, it is the full provisioning. The supported options are full or thin.
    * - ``infortrend_slots_a_channels_id`` = ``0,1,2,3,4,5,6,7``
-     - (StrOpt) Infortrend raid channel ID list on Slot A for OpenStack usage. It is separated with comma. By default, it is the channel 0~7.
+     - (String) Infortrend raid channel ID list on Slot A for OpenStack usage. It is separated with comma. By default, it is the channel 0~7.
    * - ``infortrend_slots_b_channels_id`` = ``0,1,2,3,4,5,6,7``
-     - (StrOpt) Infortrend raid channel ID list on Slot B for OpenStack usage. It is separated with comma. By default, it is the channel 0~7.
+     - (String) Infortrend raid channel ID list on Slot B for OpenStack usage. It is separated with comma. By default, it is the channel 0~7.
    * - ``infortrend_tiering`` = ``0``
-     - (StrOpt) Let the volume use specific tiering level. By default, it is the level 0. The supported levels are 0,2,3,4.
+     - (String) Let the volume use specific tiering level. By default, it is the level 0. The supported levels are 0,2,3,4.

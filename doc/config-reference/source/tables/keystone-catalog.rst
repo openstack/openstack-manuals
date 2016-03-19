@@ -19,12 +19,12 @@
    * - **[catalog]**
      -
    * - ``cache_time`` = ``None``
-     - (IntOpt) Time to cache catalog data (in seconds). This has no effect unless global and catalog caching are enabled.
+     - (Integer) Time to cache catalog data (in seconds). This has no effect unless global and catalog caching are enabled.
    * - ``caching`` = ``True``
-     - (BoolOpt) Toggle for catalog caching. This has no effect unless global caching is enabled.
+     - (Boolean) Toggle for catalog caching. This has no effect unless global caching is enabled.
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for the catalog backend driver in the keystone.catalog namespace. Supplied drivers are kvs, sql, templated, and endpoint_filter.sql
+     - (String) Entrypoint for the catalog backend driver in the keystone.catalog namespace. Supplied drivers are kvs, sql, templated, and endpoint_filter.sql
    * - ``list_limit`` = ``None``
-     - (IntOpt) Maximum number of entities that will be returned in a catalog collection.
+     - (Integer) Maximum number of entities that will be returned in a catalog collection.
    * - ``template_file`` = ``default_catalog.templates``
-     - (StrOpt) Catalog template file name for use with the template catalog backend.
+     - (String) Catalog template file name for use with the template catalog backend.

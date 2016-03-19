@@ -19,6 +19,6 @@
    * - **[memcache]**
      -
    * - ``servers`` = ``localhost:11211``
-     - (ListOpt) Memcache servers in the format of "host:port".
+     - (List) Memcache servers in the format of "host:port".
    * - ``socket_timeout`` = ``3``
-     - (IntOpt) Timeout in seconds for every call to a server. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Timeout in seconds for every call to a server. This is used by the key value store system (e.g. token pooled memcached persistence backend).

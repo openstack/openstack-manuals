@@ -19,12 +19,12 @@
    * - **[auth]**
      -
    * - ``external`` = ``None``
-     - (StrOpt) Entrypoint for the external (REMOTE_USER) auth plugin module in the keystone.auth.external namespace. Supplied drivers are DefaultDomain and Domain. The default driver is DefaultDomain.
+     - (String) Entrypoint for the external (REMOTE_USER) auth plugin module in the keystone.auth.external namespace. Supplied drivers are DefaultDomain and Domain. The default driver is DefaultDomain.
    * - ``methods`` = ``external, password, token, oauth1``
-     - (ListOpt) Allowed authentication methods.
+     - (List) Allowed authentication methods.
    * - ``oauth1`` = ``None``
-     - (StrOpt) Entrypoint for the oAuth1.0 auth plugin module in the keystone.auth.oauth1 namespace.
+     - (String) Entrypoint for the oAuth1.0 auth plugin module in the keystone.auth.oauth1 namespace.
    * - ``password`` = ``None``
-     - (StrOpt) Entrypoint for the password auth plugin module in the keystone.auth.password namespace.
+     - (String) Entrypoint for the password auth plugin module in the keystone.auth.password namespace.
    * - ``token`` = ``None``
-     - (StrOpt) Entrypoint for the token auth plugin module in the keystone.auth.token namespace.
+     - (String) Entrypoint for the token auth plugin module in the keystone.auth.token namespace.

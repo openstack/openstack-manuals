@@ -19,10 +19,10 @@
    * - **[osapi_v21]**
      -
    * - ``enabled`` = ``True``
-     - (BoolOpt) DEPRECATED: Whether the V2.1 API is enabled or not. This option will be removed in the near future.
+     - (Boolean) DEPRECATED: Whether the V2.1 API is enabled or not. This option will be removed in the near future.
    * - ``extensions_blacklist`` =
-     - (ListOpt) DEPRECATED: A list of v2.1 API extensions to never load. Specify the extension aliases here. This option will be removed in the near future. After that point you have to run all of the API.
+     - (List) DEPRECATED: A list of v2.1 API extensions to never load. Specify the extension aliases here. This option will be removed in the near future. After that point you have to run all of the API.
    * - ``extensions_whitelist`` =
-     - (ListOpt) DEPRECATED: If the list is not empty then a v2.1 API extension will only be loaded if it exists in this list. Specify the extension aliases here. This option will be removed in the near future. After that point you have to run all of the API.
+     - (List) DEPRECATED: If the list is not empty then a v2.1 API extension will only be loaded if it exists in this list. Specify the extension aliases here. This option will be removed in the near future. After that point you have to run all of the API.
    * - ``project_id_regex`` = ``None``
-     - (StrOpt) DEPRECATED: The validation regex for project_ids used in urls. This defaults to [0-9a-f\-]+ if not set, which matches normal uuids created by keystone.
+     - (String) DEPRECATED: The validation regex for project_ids used in urls. This defaults to [0-9a-f\-]+ if not set, which matches normal uuids created by keystone.

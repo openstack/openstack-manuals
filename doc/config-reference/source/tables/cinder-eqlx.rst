@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``eqlx_chap_login`` = ``admin``
-     - (StrOpt) Existing CHAP account name. Note that this option is deprecated in favour of "chap_username" as specified in cinder/volume/driver.py and will be removed in next release.
+     - (String) Existing CHAP account name. Note that this option is deprecated in favour of "chap_username" as specified in cinder/volume/driver.py and will be removed in next release.
    * - ``eqlx_chap_password`` = ``password``
-     - (StrOpt) Password for specified CHAP account name. Note that this option is deprecated in favour of "chap_password" as specified in cinder/volume/driver.py and will be removed in the next release
+     - (String) Password for specified CHAP account name. Note that this option is deprecated in favour of "chap_password" as specified in cinder/volume/driver.py and will be removed in the next release
    * - ``eqlx_cli_max_retries`` = ``5``
-     - (IntOpt) Maximum retry count for reconnection. Default is 5.
+     - (Integer) Maximum retry count for reconnection. Default is 5.
    * - ``eqlx_cli_timeout`` = ``30``
-     - (IntOpt) Timeout for the Group Manager cli command execution. Default is 30. Note that this option is deprecated in favour of "ssh_conn_timeout" as specified in cinder/volume/drivers/san/san.py and will be removed in M release.
+     - (Integer) Timeout for the Group Manager cli command execution. Default is 30. Note that this option is deprecated in favour of "ssh_conn_timeout" as specified in cinder/volume/drivers/san/san.py and will be removed in M release.
    * - ``eqlx_group_name`` = ``group-0``
-     - (StrOpt) Group name to use for creating volumes. Defaults to "group-0".
+     - (String) Group name to use for creating volumes. Defaults to "group-0".
    * - ``eqlx_pool`` = ``default``
-     - (StrOpt) Pool in which volumes will be created. Defaults to "default".
+     - (String) Pool in which volumes will be created. Defaults to "default".
    * - ``eqlx_use_chap`` = ``False``
-     - (BoolOpt) Use CHAP authentication for targets. Note that this option is deprecated in favour of "use_chap_auth" as specified in cinder/volume/driver.py and will be removed in next release.
+     - (Boolean) Use CHAP authentication for targets. Note that this option is deprecated in favour of "use_chap_auth" as specified in cinder/volume/driver.py and will be removed in next release.

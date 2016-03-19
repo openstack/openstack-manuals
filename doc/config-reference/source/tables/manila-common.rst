@@ -19,68 +19,82 @@
    * - **[DEFAULT]**
      -
    * - ``client_socket_timeout`` = ``900``
-     - (IntOpt) Timeout for client connections socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.
+     - (Integer) Timeout for client connections socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.
    * - ``compute_api_class`` = ``manila.compute.nova.API``
-     - (StrOpt) The full class name of the Compute API class to use.
+     - (String) The full class name of the Compute API class to use.
+   * - ``data_access_wait_access_rules_timeout`` = ``180``
+     - (Integer) Time to wait for access rules to be allowed/denied on backends when migrating a share (seconds).
+   * - ``data_manager`` = ``manila.data.manager.DataManager``
+     - (String) Full class name for the data manager.
+   * - ``data_node_access_cert`` = ``None``
+     - (String) The certificate installed in the data node in order to allow access to certificate authentication-based shares.
+   * - ``data_node_access_ip`` = ``None``
+     - (String) The IP of the node interface connected to the admin network. Used for allowing access to the mounting shares.
+   * - ``data_topic`` = ``manila-data``
+     - (String) The topic data nodes listen on.
    * - ``enable_new_services`` = ``True``
-     - (BoolOpt) Services to be added to the available pool on create.
+     - (Boolean) Services to be added to the available pool on create.
    * - ``host`` = ``localhost``
-     - (StrOpt) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address.
+     - (String) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address.
    * - ``max_over_subscription_ratio`` = ``20.0``
-     - (FloatOpt) Float representation of the over subscription ratio when thin provisioning is involved. Default ratio is 20.0, meaning provisioned capacity can be 20 times the total physical capacity. If the ratio is 10.5, it means provisioned capacity can be 10.5 times the total physical capacity. A ratio of 1.0 means provisioned capacity cannot exceed the total physical capacity. A ratio lower than 1.0 is invalid.
+     - (Floating point) Float representation of the over subscription ratio when thin provisioning is involved. Default ratio is 20.0, meaning provisioned capacity can be 20 times the total physical capacity. If the ratio is 10.5, it means provisioned capacity can be 10.5 times the total physical capacity. A ratio of 1.0 means provisioned capacity cannot exceed the total physical capacity. A ratio lower than 1.0 is invalid.
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
+     - (List) Memcached servers or None for in process cache.
    * - ``monkey_patch`` = ``False``
-     - (BoolOpt) Whether to log monkey patching.
+     - (Boolean) Whether to log monkey patching.
    * - ``monkey_patch_modules`` =
-     - (ListOpt) List of modules or decorators to monkey patch.
+     - (List) List of modules or decorators to monkey patch.
    * - ``my_ip`` = ``10.0.0.1``
-     - (StrOpt) IP address of this host.
+     - (String) IP address of this host.
    * - ``num_shell_tries`` = ``3``
-     - (IntOpt) Number of times to attempt to run flakey shell commands.
+     - (Integer) Number of times to attempt to run flakey shell commands.
    * - ``periodic_fuzzy_delay`` = ``60``
-     - (IntOpt) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
+     - (Integer) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
    * - ``periodic_hooks_interval`` = ``300.0``
-     - (FloatOpt) Interval in seconds between execution of periodic hooks. Used when option 'enable_periodic_hooks' is set to True. Default is 300.
+     - (Floating point) Interval in seconds between execution of periodic hooks. Used when option 'enable_periodic_hooks' is set to True. Default is 300.
    * - ``periodic_interval`` = ``60``
-     - (IntOpt) Seconds between running periodic tasks.
+     - (Integer) Seconds between running periodic tasks.
+   * - ``replica_state_update_interval`` = ``300``
+     - (Integer) This value, specified in seconds, determines how often the share manager will poll for the health (replica_state) of each replica instance.
+   * - ``replication_domain`` = ``None``
+     - (String) A string specifying the replication domain that the backend belongs to. This option needs to be specified the same in the configuration sections of all backends that support replication between each other. If this option is not specified in the group, it means that replication is not enabled on the backend.
    * - ``report_interval`` = ``10``
-     - (IntOpt) Seconds between nodes reporting state to datastore.
+     - (Integer) Seconds between nodes reporting state to datastore.
    * - ``reserved_share_percentage`` = ``0``
-     - (IntOpt) The percentage of backend capacity reserved.
+     - (Integer) The percentage of backend capacity reserved.
    * - ``rootwrap_config`` = ``None``
-     - (StrOpt) Path to the rootwrap configuration file to use for running commands as root.
+     - (String) Path to the rootwrap configuration file to use for running commands as root.
    * - ``service_down_time`` = ``60``
-     - (IntOpt) Maximum time since last check-in for up service.
+     - (Integer) Maximum time since last check-in for up service.
    * - ``smb_template_config_path`` = ``$state_path/smb.conf``
-     - (StrOpt) Path to smb config.
+     - (String) Path to smb config.
    * - ``sql_idle_timeout`` = ``3600``
-     - (IntOpt) Timeout before idle SQL connections are reaped.
+     - (Integer) Timeout before idle SQL connections are reaped.
    * - ``sql_max_retries`` = ``10``
-     - (IntOpt) Maximum database connection retries during startup. (setting -1 implies an infinite retry count).
+     - (Integer) Maximum database connection retries during startup. (setting -1 implies an infinite retry count).
    * - ``sql_retry_interval`` = ``10``
-     - (IntOpt) Interval between retries of opening a SQL connection.
+     - (Integer) Interval between retries of opening a SQL connection.
    * - ``sqlite_clean_db`` = ``clean.sqlite``
-     - (StrOpt) File name of clean sqlite database.
+     - (String) File name of clean sqlite database.
    * - ``sqlite_db`` = ``manila.sqlite``
-     - (StrOpt) The filename to use with sqlite.
+     - (String) The filename to use with sqlite.
    * - ``sqlite_synchronous`` = ``True``
-     - (BoolOpt) If passed, use synchronous mode for sqlite.
+     - (Boolean) If passed, use synchronous mode for sqlite.
    * - ``state_path`` = ``/var/lib/manila``
-     - (StrOpt) Top-level directory for maintaining manila's state.
+     - (String) Top-level directory for maintaining manila's state.
    * - ``storage_availability_zone`` = ``nova``
-     - (StrOpt) Availability zone of this node.
+     - (String) Availability zone of this node.
    * - ``tcp_keepalive`` = ``True``
-     - (BoolOpt) Sets the value of TCP_KEEPALIVE (True/False) for each server socket.
+     - (Boolean) Sets the value of TCP_KEEPALIVE (True/False) for each server socket.
    * - ``tcp_keepalive_count`` = ``None``
-     - (IntOpt) Sets the value of TCP_KEEPCNT for each server socket. Not supported on OS X.
+     - (Integer) Sets the value of TCP_KEEPCNT for each server socket. Not supported on OS X.
    * - ``tcp_keepalive_interval`` = ``None``
-     - (IntOpt) Sets the value of TCP_KEEPINTVL in seconds for each server socket. Not supported on OS X.
+     - (Integer) Sets the value of TCP_KEEPINTVL in seconds for each server socket. Not supported on OS X.
    * - ``tcp_keepidle`` = ``600``
-     - (IntOpt) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Not supported on OS X.
+     - (Integer) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Not supported on OS X.
    * - ``until_refresh`` = ``0``
-     - (IntOpt) Count of reservations until usage is refreshed.
+     - (Integer) Count of reservations until usage is refreshed.
    * - ``use_forwarded_for`` = ``False``
-     - (BoolOpt) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.
+     - (Boolean) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.
    * - ``wsgi_keep_alive`` = ``True``
-     - (BoolOpt) If False, closes the client socket connection explicitly. Setting it to True to maintain backward compatibility. Recommended setting is set it to False.
+     - (Boolean) If False, closes the client socket connection explicitly. Setting it to True to maintain backward compatibility. Recommended setting is set it to False.

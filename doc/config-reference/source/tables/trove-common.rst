@@ -19,36 +19,72 @@
    * - **[DEFAULT]**
      -
    * - ``configurations_page_size`` = ``20``
-     - (IntOpt) Page size for listing configurations.
+     - (Integer) Page size for listing configurations.
    * - ``databases_page_size`` = ``20``
-     - (IntOpt) Page size for listing databases.
+     - (Integer) Page size for listing databases.
    * - ``default_datastore`` = ``None``
-     - (StrOpt) The default datastore id or name to use if one is not provided by the user. If the default value is None, the field becomes required in the instance create request.
+     - (String) The default datastore id or name to use if one is not provided by the user. If the default value is None, the field becomes required in the instance create request.
    * - ``default_neutron_networks`` =
-     - (ListOpt) List of IDs for management networks which should be attached to the instance regardless of what NICs are specified in the create API call.
+     - (List) List of IDs for management networks which should be attached to the instance regardless of what NICs are specified in the create API call.
    * - ``default_password_length`` = ``36``
-     - (IntOpt) Character length of generated passwords.
+     - (Integer) Character length of generated passwords.
    * - ``executor_thread_pool_size`` = ``64``
-     - (IntOpt) Size of executor thread pool.
+     - (Integer) Size of executor thread pool.
    * - ``expected_filetype_suffixes`` = ``json``
-     - (ListOpt) Filetype endings not to be reattached to an ID by the utils method correct_id_with_req.
+     - (List) Filetype endings not to be reattached to an ID by the utils method correct_id_with_req.
    * - ``host`` = ``0.0.0.0``
-     - (IPOpt) Host to listen for RPC messages.
+     - (Unknown) Host to listen for RPC messages.
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
+     - (List) Memcached servers or None for in process cache.
+   * - ``module_aes_cbc_key`` = ``module_aes_cbc_key``
+     - (String) OpenSSL aes_cbc key for module encryption.
+   * - ``module_types`` = ``ping``
+     - (List) A list of module types supported. A module type corresponds to the name of a ModuleDriver.
+   * - ``modules_page_size`` = ``20``
+     - (Integer) Page size for listing modules.
    * - ``pybasedir`` = ``/usr/lib/python/site-packages/trove/trove``
-     - (StrOpt) Directory where the Trove python module is installed.
+     - (String) Directory where the Trove python module is installed.
    * - ``pydev_path`` = ``None``
-     - (StrOpt) Set path to pydevd library, used if pydevd is not found in python sys.path.
+     - (String) Set path to pydevd library, used if pydevd is not found in python sys.path.
+   * - ``quota_notification_interval`` = ``3600``
+     - (Integer) Seconds to wait between pushing events.
    * - ``taskmanager_queue`` = ``taskmanager``
-     - (StrOpt) Message queue name the Taskmanager will listen to.
+     - (String) Message queue name the Taskmanager will listen to.
    * - ``template_path`` = ``/etc/trove/templates/``
-     - (StrOpt) Path which leads to datastore templates.
+     - (String) Path which leads to datastore templates.
    * - ``timeout_wait_for_service`` = ``120``
-     - (IntOpt) Maximum time (in seconds) to wait for a service to become alive.
+     - (Integer) Maximum time (in seconds) to wait for a service to become alive.
    * - ``usage_timeout`` = ``900``
-     - (IntOpt) Maximum time (in seconds) to wait for a Guest to become active.
+     - (Integer) Maximum time (in seconds) to wait for a Guest to become active.
+   * - **[certificates]**
+     -
+   * - ``barbican_auth`` = ``barbican_acl_auth``
+     - (String) Name of the Barbican authentication method to use
+   * - ``cert_manager_type`` = ``barbican``
+     - (String) Certificate Manager plugin. Defaults to barbican.
    * - **[keystone_authtoken]**
      -
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
+     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
+   * - **[service_auth]**
+     -
+   * - ``admin_password`` = ``password``
+     - (String) The service admin password
+   * - ``admin_project_domain`` = ``admin``
+     - (String) The admin project domain name
+   * - ``admin_tenant_name`` = ``admin``
+     - (String) The service admin tenant name
+   * - ``admin_user`` = ``admin``
+     - (String) The service admin user name
+   * - ``admin_user_domain`` = ``admin``
+     - (String) The admin user domain name
+   * - ``auth_url`` = ``http://127.0.0.1:5000/v2.0``
+     - (String) Authentication endpoint
+   * - ``auth_version`` = ``2``
+     - (String) The auth version used to authenticate
+   * - ``endpoint_type`` = ``public``
+     - (String) The endpoint_type to be used
+   * - ``region`` = ``RegionOne``
+     - (String) The deployment region
+   * - ``service_name`` = ``lbaas``
+     - (String) The name of the service

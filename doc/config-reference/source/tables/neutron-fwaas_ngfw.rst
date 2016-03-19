@@ -19,8 +19,8 @@
    * - **[ngfw]**
      -
    * - ``smc_api_auth_key`` =
-     - (StrOpt) Authentication key to SMC API
+     - (String) Authentication key to SMC API
    * - ``smc_api_version`` =
-     - (StrOpt) verion of SMC API
+     - (String) verion of SMC API
    * - ``smc_url`` =
-     - (StrOpt) URL to contact SMC server
+     - (String) URL to contact SMC server

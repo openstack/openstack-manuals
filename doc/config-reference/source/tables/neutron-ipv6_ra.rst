@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``ra_confs`` = ``$state_path/ra``
-     - (StrOpt) Location to store IPv6 RA config files
+     - (String) Location to store IPv6 RA config files

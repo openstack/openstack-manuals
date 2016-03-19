@@ -19,10 +19,10 @@
    * - **[storage]**
      -
    * - ``claim_pipeline`` =
-     - (ListOpt) Pipeline to use for processing claim operations. This pipeline will be consumed before calling the storage driver's controller methods.
+     - (List) Pipeline to use for processing claim operations. This pipeline will be consumed before calling the storage driver's controller methods.
    * - ``message_pipeline`` =
-     - (ListOpt) Pipeline to use for processing message operations. This pipeline will be consumed before calling the storage driver's controller methods.
+     - (List) Pipeline to use for processing message operations. This pipeline will be consumed before calling the storage driver's controller methods.
    * - ``queue_pipeline`` =
-     - (ListOpt) Pipeline to use for processing queue operations. This pipeline will be consumed before calling the storage driver's controller methods.
+     - (List) Pipeline to use for processing queue operations. This pipeline will be consumed before calling the storage driver's controller methods.
    * - ``subscription_pipeline`` =
-     - (ListOpt) Pipeline to use for processing subscription operations. This pipeline will be consumed before calling the storage driver's controller methods.
+     - (List) Pipeline to use for processing subscription operations. This pipeline will be consumed before calling the storage driver's controller methods.

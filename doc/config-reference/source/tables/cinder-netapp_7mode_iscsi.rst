@@ -19,24 +19,24 @@
    * - **[DEFAULT]**
      -
    * - ``netapp_login`` = ``None``
-     - (StrOpt) Administrative user account name used to access the storage system or proxy server.
+     - (String) Administrative user account name used to access the storage system or proxy server.
    * - ``netapp_partner_backend_name`` = ``None``
-     - (StrOpt) The name of the config.conf stanza for a Data ONTAP (7-mode) HA partner. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode, and it is required if the storage protocol selected is FC.
+     - (String) The name of the config.conf stanza for a Data ONTAP (7-mode) HA partner. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode, and it is required if the storage protocol selected is FC.
    * - ``netapp_password`` = ``None``
-     - (StrOpt) Password for the administrative user account specified in the netapp_login option.
+     - (String) Password for the administrative user account specified in the netapp_login option.
    * - ``netapp_pool_name_search_pattern`` = ``(.+)``
-     - (StrOpt) This option is used to restrict provisioning to the specified pools. Specify the value of this option to be a regular expression which will be applied to the names of objects from the storage backend which represent pools in Cinder. This option is only utilized when the storage protocol is configured to use iSCSI or FC.
+     - (String) This option is used to restrict provisioning to the specified pools. Specify the value of this option to be a regular expression which will be applied to the names of objects from the storage backend which represent pools in Cinder. This option is only utilized when the storage protocol is configured to use iSCSI or FC.
    * - ``netapp_server_hostname`` = ``None``
-     - (StrOpt) The hostname (or IP address) for the storage system or proxy server.
+     - (String) The hostname (or IP address) for the storage system or proxy server.
    * - ``netapp_server_port`` = ``None``
-     - (IntOpt) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.
+     - (Integer) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.
    * - ``netapp_size_multiplier`` = ``1.2``
-     - (FloatOpt) The quantity to be multiplied by the requested volume size to ensure enough space is available on the virtual storage server (Vserver) to fulfill the volume creation request. Note: this option is deprecated and will be removed in favor of "reserved_percentage" in the Mitaka release.
+     - (Floating point) The quantity to be multiplied by the requested volume size to ensure enough space is available on the virtual storage server (Vserver) to fulfill the volume creation request. Note: this option is deprecated and will be removed in favor of "reserved_percentage" in the Mitaka release.
    * - ``netapp_storage_family`` = ``ontap_cluster``
-     - (StrOpt) The storage family type used on the storage system; valid values are ontap_7mode for using Data ONTAP operating in 7-Mode, ontap_cluster for using clustered Data ONTAP, or eseries for using E-Series.
+     - (String) The storage family type used on the storage system; valid values are ontap_7mode for using Data ONTAP operating in 7-Mode, ontap_cluster for using clustered Data ONTAP, or eseries for using E-Series.
    * - ``netapp_storage_protocol`` = ``None``
-     - (StrOpt) The storage protocol to be used on the data path with the storage system.
+     - (String) The storage protocol to be used on the data path with the storage system.
    * - ``netapp_transport_type`` = ``http``
-     - (StrOpt) The transport protocol used when communicating with the storage system or proxy server.
+     - (String) The transport protocol used when communicating with the storage system or proxy server.
    * - ``netapp_vfiler`` = ``None``
-     - (StrOpt) The vFiler unit on which provisioning of block storage volumes will be done. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode. Only use this option when utilizing the MultiStore feature on the NetApp storage system.
+     - (String) The vFiler unit on which provisioning of block storage volumes will be done. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode. Only use this option when utilizing the MultiStore feature on the NetApp storage system.

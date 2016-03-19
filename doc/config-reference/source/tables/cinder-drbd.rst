@@ -19,6 +19,18 @@
    * - **[DEFAULT]**
      -
    * - ``drbdmanage_devs_on_controller`` = ``True``
-     - (BoolOpt) If set, the c-vol node will receive a useable /dev/drbdX device, even if the actual data is stored on other nodes only. This is useful for debugging, maintenance, and to be able to do the iSCSI export from the c-vol node.
+     - (Boolean) If set, the c-vol node will receive a useable /dev/drbdX device, even if the actual data is stored on other nodes only. This is useful for debugging, maintenance, and to be able to do the iSCSI export from the c-vol node.
    * - ``drbdmanage_redundancy`` = ``1``
-     - (IntOpt) Number of nodes that should replicate the data.
+     - (Integer) Number of nodes that should replicate the data.
+   * - ``drbdmanage_resize_plugin`` = ``drbdmanage.plugins.plugins.wait_for.WaitForVolumeSize``
+     - (String) Volume resize completion wait plugin.
+   * - ``drbdmanage_resize_policy`` = ``{"timeout": "60"}``
+     - (String) Volume resize completion wait policy.
+   * - ``drbdmanage_resource_plugin`` = ``drbdmanage.plugins.plugins.wait_for.WaitForResource``
+     - (String) Resource deployment completion wait plugin.
+   * - ``drbdmanage_resource_policy`` = ``{"ratio": "0.51", "timeout": "60"}``
+     - (String) Resource deployment completion wait policy.
+   * - ``drbdmanage_snapshot_plugin`` = ``drbdmanage.plugins.plugins.wait_for.WaitForSnapshot``
+     - (String) Snapshot completion wait plugin.
+   * - ``drbdmanage_snapshot_policy`` = ``{"count": "1", "timeout": "60"}``
+     - (String) Snapshot completion wait policy.

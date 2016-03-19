@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``backup_container`` = ``None``
-     - (StrOpt) Custom directory to use for backups.
+     - (String) Custom directory to use for backups.
    * - ``backup_enable_progress_timer`` = ``True``
-     - (BoolOpt) Enable or Disable the timer to send the periodic progress notifications to Ceilometer when backing up the volume to the backend storage. The default value is True to enable the timer.
+     - (Boolean) Enable or Disable the timer to send the periodic progress notifications to Ceilometer when backing up the volume to the backend storage. The default value is True to enable the timer.
    * - ``backup_file_size`` = ``1999994880``
-     - (IntOpt) The maximum size in bytes of the files used to hold backups. If the volume being backed up exceeds this size, then it will be backed up into multiple files.backup_file_size must be a multiple of backup_sha_block_size_bytes.
+     - (Integer) The maximum size in bytes of the files used to hold backups. If the volume being backed up exceeds this size, then it will be backed up into multiple files.backup_file_size must be a multiple of backup_sha_block_size_bytes.
    * - ``backup_mount_options`` = ``None``
-     - (StrOpt) Mount options passed to the NFS client. See NFS man page for details.
+     - (String) Mount options passed to the NFS client. See NFS man page for details.
    * - ``backup_mount_point_base`` = ``$state_path/backup_mount``
-     - (StrOpt) Base dir containing mount point for NFS share.
+     - (String) Base dir containing mount point for NFS share.
    * - ``backup_sha_block_size_bytes`` = ``32768``
-     - (IntOpt) The size in bytes that changes are tracked for incremental backups. backup_file_size has to be multiple of backup_sha_block_size_bytes.
+     - (Integer) The size in bytes that changes are tracked for incremental backups. backup_file_size has to be multiple of backup_sha_block_size_bytes.
    * - ``backup_share`` = ``None``
-     - (StrOpt) NFS share in hostname:path, ipv4addr:path, or "[ipv6addr]:path" format.
+     - (String) NFS share in hostname:path, ipv4addr:path, or "[ipv6addr]:path" format.

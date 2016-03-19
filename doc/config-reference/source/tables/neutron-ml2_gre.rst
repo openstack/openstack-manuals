@@ -19,4 +19,4 @@
    * - **[ml2_type_gre]**
      -
    * - ``tunnel_id_ranges`` =
-     - (ListOpt) Comma-separated list of <tun_min>:<tun_max> tuples enumerating ranges of GRE tunnel IDs that are available for tenant network allocation
+     - (List) Comma-separated list of <tun_min>:<tun_max> tuples enumerating ranges of GRE tunnel IDs that are available for tenant network allocation

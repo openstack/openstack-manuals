@@ -19,78 +19,76 @@
    * - **[DEFAULT]**
      -
    * - ``api_rate_limit`` = ``True``
-     - (BoolOpt) Enables or disables rate limit of the API.
+     - (Boolean) Enables or disables rate limit of the API.
    * - ``az_cache_duration`` = ``3600``
-     - (IntOpt) Cache volume availability zones in memory for the provided duration in seconds
+     - (Integer) Cache volume availability zones in memory for the provided duration in seconds
    * - ``backend_host`` = ``None``
-     - (StrOpt) Backend override of host value.
+     - (String) Backend override of host value.
    * - ``default_timeout`` = ``525600``
-     - (IntOpt) Default timeout for CLI operations in minutes. For example, LUN migration is a typical long running operation, which depends on the LUN size and the load of the array. An upper bound in the specific deployment can be set to avoid unnecessary long wait. By default, it is 365 days long.
+     - (Integer) Default timeout for CLI operations in minutes. For example, LUN migration is a typical long running operation, which depends on the LUN size and the load of the array. An upper bound in the specific deployment can be set to avoid unnecessary long wait. By default, it is 365 days long.
    * - ``enable_v1_api`` = ``True``
-     - (BoolOpt) DEPRECATED: Deploy v1 of the Cinder API.
+     - (Boolean) DEPRECATED: Deploy v1 of the Cinder API.
    * - ``enable_v2_api`` = ``True``
-     - (BoolOpt) Deploy v2 of the Cinder API.
+     - (Boolean) DEPRECATED: Deploy v2 of the Cinder API.
+   * - ``enable_v3_api`` = ``True``
+     - (Boolean) Deploy v3 of the Cinder API.
    * - ``extra_capabilities`` = ``{}``
-     - (StrOpt) User defined capabilities, a JSON formatted string specifying key/value pairs. The key/value pairs can be used by the CapabilitiesFilter to select between backends when requests specify volume types. For example, specifying a service level or the geographical location of a backend, then creating a volume type to allow the user to select by these different properties.
+     - (String) User defined capabilities, a JSON formatted string specifying key/value pairs. The key/value pairs can be used by the CapabilitiesFilter to select between backends when requests specify volume types. For example, specifying a service level or the geographical location of a backend, then creating a volume type to allow the user to select by these different properties.
    * - ``ignore_pool_full_threshold`` = ``False``
-     - (BoolOpt) Force LUN creation even if the full threshold of pool is reached.
+     - (Boolean) Force LUN creation even if the full threshold of pool is reached.
    * - ``management_ips`` =
-     - (StrOpt) List of Management IP addresses (separated by commas)
+     - (String) List of Management IP addresses (separated by commas)
    * - ``osapi_max_limit`` = ``1000``
-     - (IntOpt) The maximum number of items that a collection resource returns in a single response
+     - (Integer) The maximum number of items that a collection resource returns in a single response
    * - ``osapi_max_request_body_size`` = ``114688``
-     - (IntOpt) Max size for body of a request
+     - (Integer) Max size for body of a request
    * - ``osapi_volume_base_URL`` = ``None``
-     - (StrOpt) Base URL that will be presented to users in links to the OpenStack Volume API
+     - (String) Base URL that will be presented to users in links to the OpenStack Volume API
    * - ``osapi_volume_ext_list`` =
-     - (ListOpt) Specify list of extensions to load when using osapi_volume_extension option with cinder.api.contrib.select_extensions
+     - (List) Specify list of extensions to load when using osapi_volume_extension option with cinder.api.contrib.select_extensions
    * - ``osapi_volume_extension`` = ``['cinder.api.contrib.standard_extensions']``
-     - (MultiStrOpt) osapi volume extension to load
+     - (Multi-valued) osapi volume extension to load
    * - ``osapi_volume_listen`` = ``0.0.0.0``
-     - (StrOpt) IP address on which OpenStack Volume API listens
+     - (String) IP address on which OpenStack Volume API listens
    * - ``osapi_volume_listen_port`` = ``8776``
-     - (PortOpt) Port on which OpenStack Volume API listens
+     - (Unknown) Port on which OpenStack Volume API listens
    * - ``osapi_volume_workers`` = ``None``
-     - (IntOpt) Number of workers for OpenStack Volume API service. The default is equal to the number of CPUs available.
-   * - ``password`` =
-     - (StrOpt) Password for Redis server (optional).
+     - (Integer) Number of workers for OpenStack Volume API service. The default is equal to the number of CPUs available.
    * - ``per_volume_size_limit`` = ``-1``
-     - (IntOpt) Max size allowed per volume, in gigabytes
-   * - ``port`` = ``6379``
-     - (PortOpt) Use this port to connect to redis host.
+     - (Integer) Max size allowed per volume, in gigabytes
    * - ``public_endpoint`` = ``None``
-     - (StrOpt) Public url to use for versions endpoint. The default is None, which will use the request's host_url attribute to populate the URL base. If Cinder is operating behind a proxy, you will want to change this to represent the proxy's URL.
+     - (String) Public url to use for versions endpoint. The default is None, which will use the request's host_url attribute to populate the URL base. If Cinder is operating behind a proxy, you will want to change this to represent the proxy's URL.
    * - ``query_volume_filters`` = ``name, status, metadata, availability_zone, bootable``
-     - (ListOpt) Volume filter options which non-admin user could use to query volumes. Default values are: ['name', 'status', 'metadata', 'availability_zone','bootable']
+     - (List) Volume filter options which non-admin user could use to query volumes. Default values are: ['name', 'status', 'metadata', 'availability_zone' ,'bootable']
    * - ``transfer_api_class`` = ``cinder.transfer.api.API``
-     - (StrOpt) The full class name of the volume transfer API class
+     - (String) The full class name of the volume transfer API class
    * - ``volume_api_class`` = ``cinder.volume.api.API``
-     - (StrOpt) The full class name of the volume API class to use
+     - (String) The full class name of the volume API class to use
    * - ``volume_name_prefix`` = ``openstack-``
-     - (StrOpt) Prefix before volume name to differenciate DISCO volume created through openstack and the other ones
+     - (String) Prefix before volume name to differenciate DISCO volume created through openstack and the other ones
    * - ``volume_name_template`` = ``volume-%s``
-     - (StrOpt) Template string to be used to generate volume names
+     - (String) Template string to be used to generate volume names
    * - ``volume_number_multiplier`` = ``-1.0``
-     - (FloatOpt) Multiplier used for weighing volume number. Negative numbers mean to spread vs stack.
+     - (Floating point) Multiplier used for weighing volume number. Negative numbers mean to spread vs stack.
    * - ``volume_transfer_key_length`` = ``16``
-     - (IntOpt) The number of characters in the autogenerated auth key.
+     - (Integer) The number of characters in the autogenerated auth key.
    * - ``volume_transfer_salt_length`` = ``8``
-     - (IntOpt) The number of characters in the salt.
+     - (Integer) The number of characters in the salt.
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``
-     - (IntOpt) The maximum body size for each request, in bytes.
+     - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
    * - **[oslo_policy]**
      -
    * - ``policy_default_rule`` = ``default``
-     - (StrOpt) Default rule. Enforced when a requested rule is not found.
+     - (String) Default rule. Enforced when a requested rule is not found.
    * - ``policy_dirs`` = ``['policy.d']``
-     - (MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
+     - (Multi-valued) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
    * - ``policy_file`` = ``policy.json``
-     - (StrOpt) The JSON file that defines policies.
+     - (String) The JSON file that defines policies.
    * - **[oslo_versionedobjects]**
      -
    * - ``fatal_exception_format_errors`` = ``False``
-     - (BoolOpt) Make exception message format errors fatal
+     - (Boolean) Make exception message format errors fatal

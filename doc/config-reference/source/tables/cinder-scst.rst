@@ -19,6 +19,6 @@
    * - **[DEFAULT]**
      -
    * - ``scst_target_driver`` = ``iscsi``
-     - (StrOpt) SCST target implementation can choose from multiple SCST target drivers.
+     - (String) SCST target implementation can choose from multiple SCST target drivers.
    * - ``scst_target_iqn_name`` = ``None``
-     - (StrOpt) Certain ISCSI targets have predefined target names, SCST target driver uses this name.
+     - (String) Certain ISCSI targets have predefined target names, SCST target driver uses this name.

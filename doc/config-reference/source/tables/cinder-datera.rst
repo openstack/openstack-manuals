@@ -19,14 +19,12 @@
    * - **[DEFAULT]**
      -
    * - ``datera_api_port`` = ``7717``
-     - (StrOpt) Datera API port.
-   * - ``datera_api_token`` = ``None``
-     - (StrOpt) DEPRECATED: This will be removed in the Liberty release. Use san_login and san_password instead. This directly sets the Datera API token.
-   * - ``datera_api_version`` = ``1``
-     - (StrOpt) Datera API version.
-   * - ``datera_num_replicas`` = ``3``
-     - (StrOpt) Number of replicas to create of an inode.
+     - (String) Datera API port.
+   * - ``datera_api_version`` = ``2``
+     - (String) Datera API version.
+   * - ``datera_num_replicas`` = ``1``
+     - (String) Number of replicas to create of an inode.
    * - ``driver_client_cert`` = ``None``
-     - (StrOpt) The path to the client certificate for verification, if the driver supports it.
+     - (String) The path to the client certificate for verification, if the driver supports it.
    * - ``driver_client_cert_key`` = ``None``
-     - (StrOpt) The path to the client certificate key for verification, if the driver supports it.
+     - (String) The path to the client certificate key for verification, if the driver supports it.

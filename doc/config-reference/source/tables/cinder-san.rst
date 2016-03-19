@@ -19,26 +19,26 @@
    * - **[DEFAULT]**
      -
    * - ``san_clustername`` =
-     - (StrOpt) Cluster name to use for creating volumes
+     - (String) Cluster name to use for creating volumes
    * - ``san_ip`` =
-     - (StrOpt) IP address of SAN controller
+     - (String) IP address of SAN controller
    * - ``san_is_local`` = ``False``
-     - (BoolOpt) Execute commands locally instead of over SSH; use if the volume service is running on the SAN device
+     - (Boolean) Execute commands locally instead of over SSH; use if the volume service is running on the SAN device
    * - ``san_login`` = ``admin``
-     - (StrOpt) Username for SAN controller
+     - (String) Username for SAN controller
    * - ``san_password`` =
-     - (StrOpt) Password for SAN controller
+     - (String) Password for SAN controller
    * - ``san_private_key`` =
-     - (StrOpt) Filename of private key to use for SSH authentication
+     - (String) Filename of private key to use for SSH authentication
    * - ``san_secondary_ip`` = ``None``
-     - (StrOpt) VNX secondary SP IP Address.
+     - (String) VNX secondary SP IP Address.
    * - ``san_ssh_port`` = ``22``
-     - (PortOpt) SSH port to use with SAN
+     - (Unknown) SSH port to use with SAN
    * - ``san_thin_provision`` = ``True``
-     - (BoolOpt) Use thin provisioning for SAN volumes?
+     - (Boolean) Use thin provisioning for SAN volumes?
    * - ``ssh_conn_timeout`` = ``30``
-     - (IntOpt) SSH connection timeout in seconds
+     - (Integer) SSH connection timeout in seconds
    * - ``ssh_max_pool_conn`` = ``5``
-     - (IntOpt) Maximum ssh connections in the pool
+     - (Integer) Maximum ssh connections in the pool
    * - ``ssh_min_pool_conn`` = ``1``
-     - (IntOpt) Minimum ssh connections in the pool
+     - (Integer) Minimum ssh connections in the pool

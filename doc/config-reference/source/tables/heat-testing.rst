@@ -19,8 +19,6 @@
    * - **[profiler]**
      -
    * - ``hmac_keys`` = ``SECRET_KEY``
-     - (StrOpt) Secret key to use to sign tracing messages.
-   * - ``profiler_enabled`` = ``False``
-     - (BoolOpt) If False fully disable profiling feature.
+     - (String) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project. Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
    * - ``trace_sqlalchemy`` = ``False``
-     - (BoolOpt) If False do not trace SQL requests.
+     - (Boolean) Enables SQL requests profiling in services. Default value is False (SQL requests won't be traced). Possible values: * True: Enables SQL requests profiling. Each SQL query will be part of the trace and can the be analyzed by how much time was spent for that. * False: Disables SQL requests profiling. The spent time is only shown on a higher level of operations. Single SQL queries cannot be analyzed this way.

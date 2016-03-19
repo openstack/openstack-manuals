@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``cloned_volume_same_az`` = ``True``
-     - (BoolOpt) Ensure that the new volumes are the same AZ as snapshot or source volume
+     - (Boolean) Ensure that the new volumes are the same AZ as snapshot or source volume

@@ -19,22 +19,22 @@
    * - **[designate]**
      -
    * - ``admin_auth_url`` = ``None``
-     - (StrOpt) Authorization URL for connecting to designate in admin context
+     - (String) Authorization URL for connecting to designate in admin context
    * - ``admin_password`` = ``None``
-     - (StrOpt) Password for connecting to designate in admin context
+     - (String) Password for connecting to designate in admin context
    * - ``admin_tenant_id`` = ``None``
-     - (StrOpt) Tenant id for connecting to designate in admin context
+     - (String) Tenant id for connecting to designate in admin context
    * - ``admin_tenant_name`` = ``None``
-     - (StrOpt) Tenant name for connecting to designate in admin context
+     - (String) Tenant name for connecting to designate in admin context
    * - ``admin_username`` = ``None``
-     - (StrOpt) Username for connecting to designate in admin context
+     - (String) Username for connecting to designate in admin context
    * - ``allow_reverse_dns_lookup`` = ``True``
-     - (BoolOpt) Allow the creation of PTR records
+     - (Boolean) Allow the creation of PTR records
    * - ``ipv4_ptr_zone_prefix_size`` = ``24``
-     - (IntOpt) Number of bits in an ipv4 PTR zone that will be considered network prefix. It has to align to byte boundary. Minimum value is 8. Maximum value is 24. As a consequence, range of values is 8, 16 and 24
+     - (Integer) Number of bits in an ipv4 PTR zone that will be considered network prefix. It has to align to byte boundary. Minimum value is 8. Maximum value is 24. As a consequence, range of values is 8, 16 and 24
    * - ``ipv6_ptr_zone_prefix_size`` = ``120``
-     - (IntOpt) Number of bits in an ipv6 PTR zone that will be considered network prefix. It has to align to nyble boundary. Minimum value is 4. Maximum value is 124. As a consequence, range of values is 4, 8, 12, 16,..., 124
+     - (Integer) Number of bits in an ipv6 PTR zone that will be considered network prefix. It has to align to nyble boundary. Minimum value is 4. Maximum value is 124. As a consequence, range of values is 4, 8, 12, 16,..., 124
    * - ``ptr_zone_email`` =
-     - (StrOpt) The email address to be used when creating PTR zones. If not specified, the email address will be admin@<dns_domain>
+     - (String) The email address to be used when creating PTR zones. If not specified, the email address will be admin@<dns_domain>
    * - ``url`` = ``None``
-     - (StrOpt) URL for connecting to designate
+     - (String) URL for connecting to designate

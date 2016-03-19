@@ -19,42 +19,42 @@
    * - **[DEFAULT]**
      -
    * - ``bandwidth_poll_interval`` = ``600``
-     - (IntOpt) Interval to pull network bandwidth usage info. Not supported on all hypervisors. Set to -1 to disable. Setting this to 0 will run at the default rate.
+     - (Integer) Interval to pull network bandwidth usage info. Not supported on all hypervisors. Set to -1 to disable. Setting this to 0 will run at the default rate.
    * - ``enable_network_quota`` = ``False``
-     - (BoolOpt) Enables or disables quota checking for tenant networks
+     - (Boolean) Enables or disables quota checking for tenant networks
    * - ``quota_cores`` = ``20``
-     - (IntOpt) Number of instance cores allowed per project
+     - (Integer) Number of instance cores allowed per project
    * - ``quota_driver`` = ``nova.quota.DbQuotaDriver``
-     - (StrOpt) Default driver to use for quota checks
+     - (String) Default driver to use for quota checks
    * - ``quota_fixed_ips`` = ``-1``
-     - (IntOpt) Number of fixed IPs allowed per project (this should be at least the number of instances allowed)
+     - (Integer) Number of fixed IPs allowed per project (this should be at least the number of instances allowed)
    * - ``quota_floating_ips`` = ``10``
-     - (IntOpt) Number of floating IPs allowed per project
+     - (Integer) Number of floating IPs allowed per project
    * - ``quota_injected_file_content_bytes`` = ``10240``
-     - (IntOpt) Number of bytes allowed per injected file
+     - (Integer) Number of bytes allowed per injected file
    * - ``quota_injected_file_path_length`` = ``255``
-     - (IntOpt) Length of injected file path
+     - (Integer) Length of injected file path
    * - ``quota_injected_files`` = ``5``
-     - (IntOpt) Number of injected files allowed
+     - (Integer) Number of injected files allowed
    * - ``quota_instances`` = ``10``
-     - (IntOpt) Number of instances allowed per project
+     - (Integer) Number of instances allowed per project
    * - ``quota_key_pairs`` = ``100``
-     - (IntOpt) Number of key pairs per user
+     - (Integer) Number of key pairs per user
    * - ``quota_metadata_items`` = ``128``
-     - (IntOpt) Number of metadata items allowed per instance
+     - (Integer) Number of metadata items allowed per instance
    * - ``quota_networks`` = ``3``
-     - (IntOpt) Number of private networks allowed per project
+     - (Integer) Number of private networks allowed per project
    * - ``quota_ram`` = ``51200``
-     - (IntOpt) Megabytes of instance RAM allowed per project
+     - (Integer) Megabytes of instance RAM allowed per project
    * - ``quota_security_group_rules`` = ``20``
-     - (IntOpt) Number of security rules per security group
+     - (Integer) Number of security rules per security group
    * - ``quota_security_groups`` = ``10``
-     - (IntOpt) Number of security groups per project
+     - (Integer) Number of security groups per project
    * - ``quota_server_group_members`` = ``10``
-     - (IntOpt) Number of servers per server group
+     - (Integer) Number of servers per server group
    * - ``quota_server_groups`` = ``10``
-     - (IntOpt) Number of server groups per project
+     - (Integer) Number of server groups per project
    * - **[cells]**
      -
    * - ``bandwidth_update_interval`` = ``600``
-     - (IntOpt) Bandwidth update interval Seconds between bandwidth usage cache updates for cells. Possible values: * Time in seconds. Services which consume this: * nova-compute Related options: * None
+     - (Integer) Bandwidth update interval Seconds between bandwidth usage cache updates for cells. Possible values: * Time in seconds. Services which consume this: * nova-compute Related options: * None

@@ -16,4 +16,3 @@ in the ``glance-api.conf`` and ``glance-registry.conf`` files:
 .. include:: ../tables/glance-amqp.rst
 .. include:: ../tables/glance-rpc.rst
 .. include:: ../tables/glance-rabbitmq.rst
-.. include:: ../tables/glance-qpid.rst

@@ -19,26 +19,26 @@
    * - **[DEFAULT]**
      -
    * - ``osapi_glance_link_prefix`` = ``None``
-     - (StrOpt) Base URL that will be presented to users in links to glance resources
+     - (String) Base URL that will be presented to users in links to glance resources
    * - **[glance]**
      -
    * - ``allowed_direct_url_schemes`` =
-     - (ListOpt) A list of url scheme that can be downloaded directly via the direct_url. Currently supported schemes: [file].
+     - (List) A list of url scheme that can be downloaded directly via the direct_url. Currently supported schemes: [file].
    * - ``api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL (https) requests to glance
+     - (Boolean) Allow to perform insecure SSL (https) requests to glance
    * - ``api_servers`` = ``None``
-     - (ListOpt) A list of the glance api servers endpoints available to nova. These should be fully qualified urls of the form "scheme://hostname:port[/path]" (i.e. "http://10.0.1.0:9292" or "https://my.glance.server/image")
+     - (List) A list of the glance api servers endpoints available to nova. These should be fully qualified urls of the form "scheme://hostname:port[/path]" (i.e. "http://10.0.1.0:9292" or "https://my.glance.server/image")
    * - ``host`` = ``$my_ip``
-     - (StrOpt) Glance server hostname or IP address
+     - (String) DEPRECATED: Glance server hostname or IP address. Use the "api_servers" option instead.
    * - ``num_retries`` = ``0``
-     - (IntOpt) Number of retries when uploading / downloading an image to / from glance.
+     - (Integer) Number of retries when uploading / downloading an image to / from glance.
    * - ``port`` = ``9292``
-     - (IntOpt) Glance server port
+     - (Integer) DEPRECATED: Glance server port. Use the "api_servers" option instead.
    * - ``protocol`` = ``http``
-     - (StrOpt) Protocol to use when connecting to glance. Set to https for SSL.
+     - (String) DEPRECATED: Protocol to use when connecting to glance. Set to https for SSL. Use the "api_servers" option instead.
    * - ``verify_glance_signatures`` = ``False``
-     - (BoolOpt) Require Nova to perform signature verification on each image downloaded from Glance.
+     - (Boolean) Require Nova to perform signature verification on each image downloaded from Glance.
    * - **[image_file_url]**
      -
    * - ``filesystems`` =
-     - (ListOpt) List of file systems that are configured in this file in the image_file_url:<list entry name> sections
+     - (List) List of file systems that are configured in this file in the image_file_url:<list entry name> sections

@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``dpl_pool`` =
-     - (StrOpt) DPL pool uuid in which DPL volumes are stored.
+     - (String) DPL pool uuid in which DPL volumes are stored.
    * - ``dpl_port`` = ``8357``
-     - (PortOpt) DPL port number.
+     - (Unknown) DPL port number.
    * - ``iscsi_port`` = ``3260``
-     - (PortOpt) The port that the iSCSI daemon is listening on
+     - (Unknown) The port that the iSCSI daemon is listening on
    * - ``san_ip`` =
-     - (StrOpt) IP address of SAN controller
+     - (String) IP address of SAN controller
    * - ``san_login`` = ``admin``
-     - (StrOpt) Username for SAN controller
+     - (String) Username for SAN controller
    * - ``san_password`` =
-     - (StrOpt) Password for SAN controller
+     - (String) Password for SAN controller
    * - ``san_thin_provision`` = ``True``
-     - (BoolOpt) Use thin provisioning for SAN volumes?
+     - (Boolean) Use thin provisioning for SAN volumes?

@@ -24,11 +24,6 @@ L2-in-L3 tunneling or OpenFlow. These sections
 detail the configuration options for the various
 plug-ins.
 
-Brocade configuration options
------------------------------
-
-.. include:: ../tables/neutron-brocade.rst
-
 CISCO configuration options
 ---------------------------
 
@@ -127,11 +122,6 @@ Modular Layer 2 (ml2) VXLAN Type configuration options
 ------------------------------------------------------
 
 .. include:: ../tables/neutron-ml2_vxlan.rst
-
-Modular Layer 2 (ml2) Brocade Mechanism configuration options
--------------------------------------------------------------
-
-.. include:: ../tables/neutron-ml2_brocade.rst
 
 Modular Layer 2 (ml2) Geneve Mechanism configuration options
 -------------------------------------------------------------
@@ -455,3 +445,9 @@ change security group settings.
    security group. The migration that introduces this table has a
    sanity check that verifies if a default security group is not
    duplicated in any tenant.
+
+Misc
+~~~~
+
+.. include:: ../tables/neutron-bgp.rst
+.. include:: ../tables/neutron-qos.rst

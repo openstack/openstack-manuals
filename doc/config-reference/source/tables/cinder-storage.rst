@@ -19,62 +19,62 @@
    * - **[DEFAULT]**
      -
    * - ``allocated_capacity_weight_multiplier`` = ``-1.0``
-     - (FloatOpt) Multiplier used for weighing volume capacity. Negative numbers mean to stack vs spread.
+     - (Floating point) Multiplier used for weighing allocated capacity. Positive numbers mean to stack vs spread.
    * - ``capacity_weight_multiplier`` = ``1.0``
-     - (FloatOpt) Multiplier used for weighing volume capacity. Negative numbers mean to stack vs spread.
+     - (Floating point) Multiplier used for weighing free capacity. Negative numbers mean to stack vs spread.
    * - ``enabled_backends`` = ``None``
-     - (ListOpt) A list of backend names to use. These backend names should be backed by a unique [CONFIG] group with its options
+     - (List) A list of backend names to use. These backend names should be backed by a unique [CONFIG] group with its options
    * - ``iscsi_helper`` = ``tgtadm``
-     - (StrOpt) iSCSI target user-land tool to use. tgtadm is default, use lioadm for LIO iSCSI support, scstadmin for SCST target support, iseradm for the ISER protocol, ietadm for iSCSI Enterprise Target, iscsictl for Chelsio iSCSI Target or fake for testing.
+     - (String) iSCSI target user-land tool to use. tgtadm is default, use lioadm for LIO iSCSI support, scstadmin for SCST target support, iseradm for the ISER protocol, ietadm for iSCSI Enterprise Target, iscsictl for Chelsio iSCSI Target or fake for testing.
    * - ``iscsi_iotype`` = ``fileio``
-     - (StrOpt) Sets the behavior of the iSCSI target to either perform blockio or fileio optionally, auto can be set and Cinder will autodetect type of backing device
+     - (String) Sets the behavior of the iSCSI target to either perform blockio or fileio optionally, auto can be set and Cinder will autodetect type of backing device
    * - ``iscsi_ip_address`` = ``$my_ip``
-     - (StrOpt) The IP address that the iSCSI daemon is listening on
+     - (String) The IP address that the iSCSI daemon is listening on
    * - ``iscsi_port`` = ``3260``
-     - (PortOpt) The port that the iSCSI daemon is listening on
+     - (Unknown) The port that the iSCSI daemon is listening on
    * - ``iscsi_protocol`` = ``iscsi``
-     - (StrOpt) Determines the iSCSI protocol for new iSCSI volumes, created with tgtadm or lioadm target helpers. In order to enable RDMA, this parameter should be set with the value "iser". The supported iSCSI protocol values are "iscsi" and "iser".
+     - (String) Determines the iSCSI protocol for new iSCSI volumes, created with tgtadm or lioadm target helpers. In order to enable RDMA, this parameter should be set with the value "iser". The supported iSCSI protocol values are "iscsi" and "iser".
    * - ``iscsi_target_flags`` =
-     - (StrOpt) Sets the target-specific flags for the iSCSI target. Only used for tgtadm to specify backing device flags using bsoflags option. The specified string is passed as is to the underlying tool.
+     - (String) Sets the target-specific flags for the iSCSI target. Only used for tgtadm to specify backing device flags using bsoflags option. The specified string is passed as is to the underlying tool.
    * - ``iscsi_target_prefix`` = ``iqn.2010-10.org.openstack:``
-     - (StrOpt) Prefix for iSCSI volumes
+     - (String) Prefix for iSCSI volumes
    * - ``iscsi_write_cache`` = ``on``
-     - (StrOpt) Sets the behavior of the iSCSI target to either perform write-back(on) or write-through(off). This parameter is valid if iscsi_helper is set to tgtadm or iseradm.
+     - (String) Sets the behavior of the iSCSI target to either perform write-back(on) or write-through(off). This parameter is valid if iscsi_helper is set to tgtadm or iseradm.
    * - ``iser_helper`` = ``tgtadm``
-     - (StrOpt) The name of the iSER target user-land tool to use
+     - (String) The name of the iSER target user-land tool to use
    * - ``iser_ip_address`` = ``$my_ip``
-     - (StrOpt) The IP address that the iSER daemon is listening on
+     - (String) The IP address that the iSER daemon is listening on
    * - ``iser_port`` = ``3260``
-     - (PortOpt) The port that the iSER daemon is listening on
+     - (Unknown) The port that the iSER daemon is listening on
    * - ``iser_target_prefix`` = ``iqn.2010-10.org.openstack:``
-     - (StrOpt) Prefix for iSER volumes
+     - (String) Prefix for iSER volumes
    * - ``migration_create_volume_timeout_secs`` = ``300``
-     - (IntOpt) Timeout for creating the volume to migrate to when performing volume migration (seconds)
+     - (Integer) Timeout for creating the volume to migrate to when performing volume migration (seconds)
    * - ``num_iser_scan_tries`` = ``3``
-     - (IntOpt) The maximum number of times to rescan iSER targetto find volume
+     - (Integer) The maximum number of times to rescan iSER targetto find volume
    * - ``num_volume_device_scan_tries`` = ``3``
-     - (IntOpt) The maximum number of times to rescan targets to find volume
+     - (Integer) The maximum number of times to rescan targets to find volume
    * - ``volume_backend_name`` = ``None``
-     - (StrOpt) The backend name for a given driver implementation
+     - (String) The backend name for a given driver implementation
    * - ``volume_clear`` = ``zero``
-     - (StrOpt) Method used to wipe old volumes
+     - (String) Method used to wipe old volumes
    * - ``volume_clear_ionice`` = ``None``
-     - (StrOpt) The flag to pass to ionice to alter the i/o priority of the process used to zero a volume after deletion, for example "-c3" for idle only priority.
+     - (String) The flag to pass to ionice to alter the i/o priority of the process used to zero a volume after deletion, for example "-c3" for idle only priority.
    * - ``volume_clear_size`` = ``0``
-     - (IntOpt) Size in MiB to wipe at start of old volumes. 0 => all
+     - (Integer) Size in MiB to wipe at start of old volumes. 0 => all
    * - ``volume_copy_blkio_cgroup_name`` = ``cinder-volume-copy``
-     - (StrOpt) The blkio cgroup name to be used to limit bandwidth of volume copy
+     - (String) The blkio cgroup name to be used to limit bandwidth of volume copy
    * - ``volume_copy_bps_limit`` = ``0``
-     - (IntOpt) The upper limit of bandwidth of volume copy. 0 => unlimited
+     - (Integer) The upper limit of bandwidth of volume copy. 0 => unlimited
    * - ``volume_dd_blocksize`` = ``1M``
-     - (StrOpt) The default block size used when copying/clearing volumes
+     - (String) The default block size used when copying/clearing volumes
    * - ``volume_driver`` = ``cinder.volume.drivers.lvm.LVMVolumeDriver``
-     - (StrOpt) Driver to use for volume creation
+     - (String) Driver to use for volume creation
    * - ``volume_manager`` = ``cinder.volume.manager.VolumeManager``
-     - (StrOpt) Full class name for the Manager for volume
+     - (String) Full class name for the Manager for volume
    * - ``volume_service_inithost_offload`` = ``False``
-     - (BoolOpt) Offload pending volume delete during volume service startup
+     - (Boolean) Offload pending volume delete during volume service startup
    * - ``volume_usage_audit_period`` = ``month``
-     - (StrOpt) Time period for which to generate volume usages. The options are hour, day, month, or year.
+     - (String) Time period for which to generate volume usages. The options are hour, day, month, or year.
    * - ``volumes_dir`` = ``$state_path/volumes``
-     - (StrOpt) Volume configuration file storage directory
+     - (String) Volume configuration file storage directory

@@ -19,20 +19,20 @@
    * - **[DEFAULT]**
      -
    * - ``emc_nas_login`` = ``None``
-     - (StrOpt) User name for the EMC server.
+     - (String) User name for the EMC server.
    * - ``emc_nas_password`` = ``None``
-     - (StrOpt) Password for the EMC server.
-   * - ``emc_nas_pool_name`` = ``None``
-     - (StrOpt) EMC pool name.
+     - (String) Password for the EMC server.
+   * - ``emc_nas_pool_names`` = ``None``
+     - (String) EMC pool names.
    * - ``emc_nas_root_dir`` = ``None``
-     - (StrOpt) The root directory where shares will be located.
+     - (String) The root directory where shares will be located.
    * - ``emc_nas_server`` = ``None``
-     - (StrOpt) EMC server hostname or IP address.
+     - (String) EMC server hostname or IP address.
    * - ``emc_nas_server_container`` = ``server_2``
-     - (StrOpt) Container of share servers.
+     - (String) Container of share servers.
    * - ``emc_nas_server_port`` = ``8080``
-     - (PortOpt) Port number for the EMC server.
+     - (Unknown) Port number for the EMC server.
    * - ``emc_nas_server_secure`` = ``True``
-     - (BoolOpt) Use secure connection to server.
+     - (Boolean) Use secure connection to server.
    * - ``emc_share_backend`` = ``None``
-     - (StrOpt) Share backend.
+     - (String) Share backend.

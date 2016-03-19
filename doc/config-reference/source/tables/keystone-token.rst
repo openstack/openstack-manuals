@@ -19,22 +19,24 @@
    * - **[token]**
      -
    * - ``allow_rescope_scoped_token`` = ``True``
-     - (BoolOpt) Allow rescoping of scoped token. Setting allow_rescoped_scoped_token to false prevents a user from exchanging a scoped token for any other token.
+     - (Boolean) Allow rescoping of scoped token. Setting allow_rescoped_scoped_token to false prevents a user from exchanging a scoped token for any other token.
    * - ``bind`` =
-     - (ListOpt) External auth mechanisms that should add bind information to token, e.g., kerberos,x509.
+     - (List) External auth mechanisms that should add bind information to token, e.g., kerberos,x509.
    * - ``cache_time`` = ``None``
-     - (IntOpt) Time to cache tokens (in seconds). This has no effect unless global and token caching are enabled.
+     - (Integer) Time to cache tokens (in seconds). This has no effect unless global and token caching are enabled.
    * - ``caching`` = ``True``
-     - (BoolOpt) Toggle for token system caching. This has no effect unless global caching is enabled.
+     - (Boolean) Toggle for token system caching. This has no effect unless global caching is enabled.
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for the token persistence backend driver in the keystone.token.persistence namespace. Supplied drivers are kvs, memcache, memcache_pool, and sql.
+     - (String) Entrypoint for the token persistence backend driver in the keystone.token.persistence namespace. Supplied drivers are kvs, memcache, memcache_pool, and sql.
    * - ``enforce_token_bind`` = ``permissive``
-     - (StrOpt) Enforcement policy on tokens presented to Keystone with bind information. One of disabled, permissive, strict, required or a specifically required bind mode, e.g., kerberos or x509 to require binding to that authentication.
+     - (String) Enforcement policy on tokens presented to Keystone with bind information. One of disabled, permissive, strict, required or a specifically required bind mode, e.g., kerberos or x509 to require binding to that authentication.
    * - ``expiration`` = ``3600``
-     - (IntOpt) Amount of time a token should remain valid (in seconds).
+     - (Integer) Amount of time a token should remain valid (in seconds).
    * - ``hash_algorithm`` = ``md5``
-     - (StrOpt) The hash algorithm to use for PKI tokens. This can be set to any algorithm that hashlib supports. WARNING: Before changing this value, the auth_token middleware must be configured with the hash_algorithms, otherwise token revocation will not be processed correctly.
+     - (String) DEPRECATED: The hash algorithm to use for PKI tokens. This can be set to any algorithm that hashlib supports. WARNING: Before changing this value, the auth_token middleware must be configured with the hash_algorithms, otherwise token revocation will not be processed correctly. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
+   * - ``infer_roles`` = ``True``
+     - (Boolean) Add roles to token that are not explicitly added, but that are linked implicitly to other roles.
    * - ``provider`` = ``uuid``
-     - (StrOpt) Controls the token construction, validation, and revocation operations. Entrypoint in the keystone.token.provider namespace. Core providers are [fernet|pkiz|pki|uuid].
+     - (String) Controls the token construction, validation, and revocation operations. Entrypoint in the keystone.token.provider namespace. Core providers are [fernet|pkiz|pki|uuid].
    * - ``revoke_by_id`` = ``True``
-     - (BoolOpt) Revoke token by token identifier. Setting revoke_by_id to true enables various forms of enumerating tokens, e.g. `list tokens for user`. These enumerations are processed to determine the list of tokens to revoke. Only disable if you are switching to using the Revoke extension with a backend other than KVS, which stores events in memory.
+     - (Boolean) Revoke token by token identifier. Setting revoke_by_id to true enables various forms of enumerating tokens, e.g. `list tokens for user`. These enumerations are processed to determine the list of tokens to revoke. Only disable if you are switching to using the Revoke extension with a backend other than KVS, which stores events in memory.

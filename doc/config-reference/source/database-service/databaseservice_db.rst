@@ -7,6 +7,7 @@ Use the options to configure the used databases:
 .. include:: ../tables/trove-database.rst
 .. include:: ../tables/trove-db_cassandra.rst
 .. include:: ../tables/trove-db_couchbase.rst
+.. include:: ../tables/trove-db_couchdb.rst
 .. include:: ../tables/trove-db_db2.rst
 .. include:: ../tables/trove-db_mariadb.rst
 .. include:: ../tables/trove-db_mongodb.rst

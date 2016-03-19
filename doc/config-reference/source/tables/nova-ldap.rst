@@ -19,22 +19,22 @@
    * - **[DEFAULT]**
      -
    * - ``ldap_dns_base_dn`` = ``ou=hosts,dc=example,dc=org``
-     - (StrOpt) Base DN for DNS entries in LDAP
+     - (String) Base DN for DNS entries in LDAP
    * - ``ldap_dns_password`` = ``password``
-     - (StrOpt) Password for LDAP DNS
+     - (String) Password for LDAP DNS
    * - ``ldap_dns_servers`` = ``['dns.example.org']``
-     - (MultiStrOpt) DNS Servers for LDAP DNS driver
+     - (Multi-valued) DNS Servers for LDAP DNS driver
    * - ``ldap_dns_soa_expiry`` = ``86400``
-     - (StrOpt) Expiry interval (in seconds) for LDAP DNS driver Statement of Authority
+     - (String) Expiry interval (in seconds) for LDAP DNS driver Statement of Authority
    * - ``ldap_dns_soa_hostmaster`` = ``hostmaster@example.org``
-     - (StrOpt) Hostmaster for LDAP DNS driver Statement of Authority
+     - (String) Hostmaster for LDAP DNS driver Statement of Authority
    * - ``ldap_dns_soa_minimum`` = ``7200``
-     - (StrOpt) Minimum interval (in seconds) for LDAP DNS driver Statement of Authority
+     - (String) Minimum interval (in seconds) for LDAP DNS driver Statement of Authority
    * - ``ldap_dns_soa_refresh`` = ``1800``
-     - (StrOpt) Refresh interval (in seconds) for LDAP DNS driver Statement of Authority
+     - (String) Refresh interval (in seconds) for LDAP DNS driver Statement of Authority
    * - ``ldap_dns_soa_retry`` = ``3600``
-     - (StrOpt) Retry interval (in seconds) for LDAP DNS driver Statement of Authority
+     - (String) Retry interval (in seconds) for LDAP DNS driver Statement of Authority
    * - ``ldap_dns_url`` = ``ldap://ldap.example.com:389``
-     - (StrOpt) URL for LDAP server which will store DNS entries
+     - (String) URL for LDAP server which will store DNS entries
    * - ``ldap_dns_user`` = ``uid=admin,ou=people,dc=example,dc=org``
-     - (StrOpt) User for LDAP DNS
+     - (String) User for LDAP DNS

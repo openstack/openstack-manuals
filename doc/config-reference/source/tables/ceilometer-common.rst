@@ -19,46 +19,48 @@
    * - **[DEFAULT]**
      -
    * - ``batch_polled_samples`` = ``True``
-     - (BoolOpt) To reduce polling agent load, samples are sent to the notification agent in a batch. To gain higher throughput at the cost of load set this to False.
+     - (Boolean) To reduce polling agent load, samples are sent to the notification agent in a batch. To gain higher throughput at the cost of load set this to False.
    * - ``executor_thread_pool_size`` = ``64``
-     - (IntOpt) Size of executor thread pool.
+     - (Integer) Size of executor thread pool.
    * - ``host`` = ``localhost``
-     - (StrOpt) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.
+     - (String) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.
    * - ``http_timeout`` = ``600``
-     - (IntOpt) Timeout seconds for HTTP requests. Set it to None to disable timeout.
+     - (Integer) Timeout seconds for HTTP requests. Set it to None to disable timeout.
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
+     - (List) Memcached servers or None for in process cache.
    * - ``polling_namespaces`` = ``['compute', 'central']``
-     - (MultiChoicesOpt) Polling namespace(s) to be used while resource polling
+     - (Unknown) Polling namespace(s) to be used while resource polling
    * - ``pollster_list`` = ``[]``
-     - (MultiChoicesOpt) List of pollsters (or wildcard templates) to be used while polling
+     - (Unknown) List of pollsters (or wildcard templates) to be used while polling
    * - ``rootwrap_config`` = ``/etc/ceilometer/rootwrap.conf``
-     - (StrOpt) Path to the rootwrap configuration file touse for running commands as root
+     - (String) Path to the rootwrap configuration file touse for running commands as root
    * - ``shuffle_time_before_polling_task`` = ``0``
-     - (IntOpt) To reduce large requests at same time to Nova or other components from different compute agents, shuffle start time of polling task.
+     - (Integer) To reduce large requests at same time to Nova or other components from different compute agents, shuffle start time of polling task.
    * - ``sql_expire_samples_only`` = ``False``
-     - (BoolOpt) Indicates if expirer expires only samples. If set true, expired samples will be deleted, but residual resource and meter definition data will remain.
+     - (Boolean) Indicates if expirer expires only samples. If set true, expired samples will be deleted, but residual resource and meter definition data will remain.
    * - **[compute]**
      -
+   * - ``resource_update_interval`` = ``0``
+     - (Integer) New instances will be discovered periodically based on this option (in seconds). By default, the agent discovers instances according to pipeline polling interval. If option is greater than 0, the instance list to poll will be updated based on this option's interval. Measurements relating to the instances will match intervals defined in pipeline.
    * - ``workload_partitioning`` = ``False``
-     - (BoolOpt) Enable work-load partitioning, allowing multiple compute agents to be run simultaneously.
+     - (Boolean) Enable work-load partitioning, allowing multiple compute agents to be run simultaneously.
    * - **[coordination]**
      -
    * - ``backend_url`` = ``None``
-     - (StrOpt) The backend URL to use for distributed coordination. If left empty, per-deployment central agent and per-host compute agent won't do workload partitioning and will only function correctly if a single instance of that service is running.
+     - (String) The backend URL to use for distributed coordination. If left empty, per-deployment central agent and per-host compute agent won't do workload partitioning and will only function correctly if a single instance of that service is running.
    * - ``check_watchers`` = ``10.0``
-     - (FloatOpt) Number of seconds between checks to see if group membership has changed
+     - (Floating point) Number of seconds between checks to see if group membership has changed
    * - ``heartbeat`` = ``1.0``
-     - (FloatOpt) Number of seconds between heartbeats for distributed coordination.
+     - (Floating point) Number of seconds between heartbeats for distributed coordination.
    * - **[keystone_authtoken]**
      -
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
+     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
    * - **[meter]**
      -
    * - ``meter_definitions_cfg_file`` = ``meters.yaml``
-     - (StrOpt) Configuration file for defining meter notifications.
+     - (String) Configuration file for defining meter notifications.
    * - **[polling]**
      -
    * - ``partitioning_group_prefix`` = ``None``
-     - (StrOpt) Work-load partitioning group prefix. Use only if you want to run multiple polling agents with different config files. For each sub-group of the agent pool with the same partitioning_group_prefix a disjoint subset of pollsters should be loaded.
+     - (String) Work-load partitioning group prefix. Use only if you want to run multiple polling agents with different config files. For each sub-group of the agent pool with the same partitioning_group_prefix a disjoint subset of pollsters should be loaded.

@@ -19,4 +19,4 @@
    * - **[AGENT]**
      -
    * - ``dont_fragment`` = ``True``
-     - (BoolOpt) Set or un-set the don't fragment (DF) bit on outgoing IP packet carrying GRE/VXLAN tunnel.
+     - (Boolean) Set or un-set the don't fragment (DF) bit on outgoing IP packet carrying GRE/VXLAN tunnel.

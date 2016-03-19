@@ -19,10 +19,10 @@
    * - **[hardware]**
      -
    * - ``meter_definitions_file`` = ``snmp.yaml``
-     - (StrOpt) Configuration file for defining hardware snmp meters.
+     - (String) Configuration file for defining hardware snmp meters.
    * - ``readonly_user_name`` = ``ro_snmp_user``
-     - (StrOpt) SNMPd user name of all nodes running in the cloud.
+     - (String) SNMPd user name of all nodes running in the cloud.
    * - ``readonly_user_password`` = ``password``
-     - (StrOpt) SNMPd password of all the nodes running in the cloud.
+     - (String) SNMPd password of all the nodes running in the cloud.
    * - ``url_scheme`` = ``snmp://``
-     - (StrOpt) URL scheme to use for hardware nodes.
+     - (String) URL scheme to use for hardware nodes.

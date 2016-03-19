@@ -19,74 +19,74 @@
    * - **[DEFAULT]**
      -
    * - ``block_device_allocate_retries`` = ``60``
-     - (IntOpt) Number of times to retry block device allocation on failures. Starting with Liberty, Cinder can use image volume cache. This may help with block device allocation performance. Look at the cinder image_volume_cache_enabled configuration option.
+     - (Integer) Number of times to retry block device allocation on failures. Starting with Liberty, Cinder can use image volume cache. This may help with block device allocation performance. Look at the cinder image_volume_cache_enabled configuration option.
    * - ``block_device_allocate_retries_interval`` = ``3``
-     - (IntOpt) Waiting time interval (seconds) between block device allocation retries on failures
+     - (Integer) Waiting time interval (seconds) between block device allocation retries on failures
    * - ``my_block_storage_ip`` = ``$my_ip``
-     - (StrOpt) Block storage IP address of this host
+     - (String) Block storage IP address of this host
    * - ``volume_api_class`` = ``nova.volume.cinder.API``
-     - (StrOpt) The full class name of the volume API class to use
+     - (String) DEPRECATED: The full class name of the volume API class to use
    * - ``volume_usage_poll_interval`` = ``0``
-     - (IntOpt) Interval in seconds for gathering volume usages
+     - (Integer) Interval in seconds for gathering volume usages
    * - **[cinder]**
      -
    * - ``cafile`` = ``None``
-     - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``catalog_info`` = ``volumev2:cinderv2:publicURL``
-     - (StrOpt) Info to match when looking for cinder in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type>
+     - (String) Info to match when looking for cinder in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type>
    * - ``certfile`` = ``None``
-     - (StrOpt) PEM encoded client certificate cert file
+     - (String) PEM encoded client certificate cert file
    * - ``cross_az_attach`` = ``True``
-     - (BoolOpt) Allow attach between instance and volume in different availability zones. If False, volumes attached to an instance must be in the same availability zone in Cinder as the instance availability zone in Nova. This also means care should be taken when booting an instance from a volume where source is not "volume" because Nova will attempt to create a volume using the same availability zone as what is assigned to the instance. If that AZ is not in Cinder (or allow_availability_zone_fallback=False in cinder.conf), the volume create request will fail and the instance will fail the build request.
+     - (Boolean) Allow attach between instance and volume in different availability zones. If False, volumes attached to an instance must be in the same availability zone in Cinder as the instance availability zone in Nova. This also means care should be taken when booting an instance from a volume where source is not "volume" because Nova will attempt to create a volume using the same availability zone as what is assigned to the instance. If that AZ is not in Cinder (or allow_availability_zone_fallback=False in cinder.conf), the volume create request will fail and the instance will fail the build request.
    * - ``endpoint_template`` = ``None``
-     - (StrOpt) Override service catalog lookup with template for cinder endpoint e.g. http://localhost:8776/v1/%(project_id)s
+     - (String) Override service catalog lookup with template for cinder endpoint e.g. http://localhost:8776/v1/%(project_id)s
    * - ``http_retries`` = ``3``
-     - (IntOpt) Number of cinderclient retries on failed http calls
+     - (Integer) Number of cinderclient retries on failed http calls
    * - ``insecure`` = ``False``
-     - (BoolOpt) Verify HTTPS connections.
+     - (Boolean) Verify HTTPS connections.
    * - ``keyfile`` = ``None``
-     - (StrOpt) PEM encoded client certificate key file
+     - (String) PEM encoded client certificate key file
    * - ``os_region_name`` = ``None``
-     - (StrOpt) Region name of this node
+     - (String) Region name of this node
    * - ``timeout`` = ``None``
-     - (IntOpt) Timeout value for http requests
+     - (Integer) Timeout value for http requests
    * - **[hyperv]**
      -
    * - ``force_volumeutils_v1`` = ``False``
-     - (BoolOpt) Force V1 volume utility class
+     - (Boolean) DEPRECATED: Force V1 volume utility class
    * - ``volume_attach_retry_count`` = ``10``
-     - (IntOpt) The number of times to retry to attach a volume
+     - (Integer) The number of times to retry to attach a volume
    * - ``volume_attach_retry_interval`` = ``5``
-     - (IntOpt) Interval between volume attachment attempts, in seconds
+     - (Integer) Interval between volume attachment attempts, in seconds
    * - **[libvirt]**
      -
    * - ``glusterfs_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Directory where the glusterfs volume is mounted on the compute node
+     - (String) Directory where the glusterfs volume is mounted on the compute node
    * - ``nfs_mount_options`` = ``None``
-     - (StrOpt) Mount options passed to the NFS client. See section of the nfs man page for details
+     - (String) Mount options passed to the NFS client. See section of the nfs man page for details
    * - ``nfs_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Directory where the NFS volume is mounted on the compute node
+     - (String) Directory where the NFS volume is mounted on the compute node
    * - ``num_aoe_discover_tries`` = ``3``
-     - (IntOpt) Number of times to rediscover AoE target to find volume
+     - (Integer) Number of times to rediscover AoE target to find volume
    * - ``num_iscsi_scan_tries`` = ``5``
-     - (IntOpt) Number of times to rescan iSCSI target to find volume
+     - (Integer) Number of times to rescan iSCSI target to find volume
    * - ``num_iser_scan_tries`` = ``5``
-     - (IntOpt) Number of times to rescan iSER target to find volume
+     - (Integer) Number of times to rescan iSER target to find volume
    * - ``qemu_allowed_storage_drivers`` =
-     - (ListOpt) Protocols listed here will be accessed directly from QEMU. Currently supported protocols: [gluster]
+     - (List) Protocols listed here will be accessed directly from QEMU. Currently supported protocols: [gluster]
    * - ``rbd_secret_uuid`` = ``None``
-     - (StrOpt) The libvirt UUID of the secret for the rbd_uservolumes
+     - (String) The libvirt UUID of the secret for the rbd_uservolumes
    * - ``rbd_user`` = ``None``
-     - (StrOpt) The RADOS client name for accessing rbd volumes
+     - (String) The RADOS client name for accessing rbd volumes
    * - ``scality_sofs_config`` = ``None``
-     - (StrOpt) Path or URL to Scality SOFS configuration file
+     - (String) Path or URL to Scality SOFS configuration file
    * - ``scality_sofs_mount_point`` = ``$state_path/scality``
-     - (StrOpt) Base dir where Scality SOFS shall be mounted
+     - (String) Base dir where Scality SOFS shall be mounted
    * - ``smbfs_mount_options`` =
-     - (StrOpt) Mount options passed to the SMBFS client. See mount.cifs man page for details. Note that the libvirt-qemu uid and gid must be specified.
+     - (String) Mount options passed to the SMBFS client. See mount.cifs man page for details. Note that the libvirt-qemu uid and gid must be specified.
    * - ``smbfs_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Directory where the SMBFS shares are mounted on the compute node
+     - (String) Directory where the SMBFS shares are mounted on the compute node
    * - **[xenserver]**
      -
    * - ``block_device_creation_timeout`` = ``10``
-     - (IntOpt) Time to wait for a block device to be created
+     - (Integer) Time to wait for a block device to be created

@@ -19,16 +19,6 @@
    * - **[DEFAULT]**
      -
    * - ``control_exchange`` = ``openstack``
-     - (StrOpt) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
-   * - ``notification_driver`` = ``[]``
-     - (MultiStrOpt) The Drivers(s) to handle sending notifications. Possible values are messaging, messagingv2, routing, log, test, noop
-   * - ``notification_level`` = ``INFO``
-     - (StrOpt) Notification level for outgoing notifications
-   * - ``notification_publisher_id`` = ``None``
-     - (StrOpt) Notification publisher_id for outgoing notifications
-   * - ``notification_topics`` = ``notifications``
-     - (ListOpt) AMQP topic used for OpenStack notifications.
-   * - ``notification_transport_url`` = ``None``
-     - (StrOpt) A URL representing the messaging driver to use for notifications. If not set, we fall back to the same configuration used for RPC.
+     - (String) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
    * - ``transport_url`` = ``None``
-     - (StrOpt) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.
+     - (String) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.

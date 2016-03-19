@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``glance_page_size`` = ``0``
-     - (IntOpt) Number of items to request in each paginated Glance API request (parameter used by glancecelient). If this is less than or equal to 0, page size is not specified (default value in glanceclient is used).
+     - (Integer) Number of items to request in each paginated Glance API request (parameter used by glancecelient). If this is less than or equal to 0, page size is not specified (default value in glanceclient is used).

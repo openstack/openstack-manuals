@@ -19,46 +19,50 @@
    * - **[mongodb]**
      -
    * - ``add_members_timeout`` = ``300``
-     - (IntOpt) Maximum time to wait (in seconds) for a replica set initialization process to complete.
+     - (Integer) Maximum time to wait (in seconds) for a replica set initialization process to complete.
    * - ``api_strategy`` = ``trove.common.strategies.cluster.experimental.mongodb.api.MongoDbAPIStrategy``
-     - (StrOpt) Class that implements datastore-specific API logic.
+     - (String) Class that implements datastore-specific API logic.
    * - ``backup_incremental_strategy`` = ``{}``
-     - (DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
+     - (Dict) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
    * - ``backup_namespace`` = ``trove.guestagent.strategies.backup.experimental.mongo_impl``
-     - (StrOpt) Namespace to load backup strategies from.
+     - (String) Namespace to load backup strategies from.
    * - ``backup_strategy`` = ``MongoDump``
-     - (StrOpt) Default strategy to perform backups.
+     - (String) Default strategy to perform backups.
+   * - ``cluster_secure`` = ``True``
+     - (Boolean) Create secure clusters. If False then the Role-Based Access Control will be disabled.
    * - ``cluster_support`` = ``True``
-     - (BoolOpt) Enable clusters to be created and managed.
+     - (Boolean) Enable clusters to be created and managed.
    * - ``configsvr_port`` = ``27019``
-     - (PortOpt) Port for instances running as config servers.
+     - (Unknown) Port for instances running as config servers.
    * - ``device_path`` = ``/dev/vdb``
-     - (StrOpt) Device path for volume if volume support is enabled.
+     - (String) Device path for volume if volume support is enabled.
+   * - ``guest_log_exposed_logs`` =
+     - (String) List of Guest Logs to expose for publishing.
    * - ``guestagent_strategy`` = ``trove.common.strategies.cluster.experimental.mongodb.guestagent.MongoDbGuestAgentStrategy``
-     - (StrOpt) Class that implements datastore-specific Guest Agent API logic.
+     - (String) Class that implements datastore-specific Guest Agent API logic.
    * - ``ignore_dbs`` = ``admin, local, config``
-     - (ListOpt) Databases to exclude when listing databases.
+     - (List) Databases to exclude when listing databases.
    * - ``ignore_users`` = ``admin.os_admin, admin.root``
-     - (ListOpt) Users to exclude when listing users.
+     - (List) Users to exclude when listing users.
    * - ``mongodb_port`` = ``27017``
-     - (PortOpt) Port for mongod and mongos instances.
+     - (Unknown) Port for mongod and mongos instances.
    * - ``mount_point`` = ``/var/lib/mongodb``
-     - (StrOpt) Filesystem path for mounting volumes if volume support is enabled.
+     - (String) Filesystem path for mounting volumes if volume support is enabled.
    * - ``num_config_servers_per_cluster`` = ``3``
-     - (IntOpt) The number of config servers to create per cluster.
+     - (Integer) The number of config servers to create per cluster.
    * - ``num_query_routers_per_cluster`` = ``1``
-     - (IntOpt) The number of query routers (mongos) to create per cluster.
+     - (Integer) The number of query routers (mongos) to create per cluster.
    * - ``replication_strategy`` = ``None``
-     - (StrOpt) Default strategy for replication.
+     - (String) Default strategy for replication.
    * - ``restore_namespace`` = ``trove.guestagent.strategies.restore.experimental.mongo_impl``
-     - (StrOpt) Namespace to load restore strategies from.
-   * - ``root_controller`` = ``trove.extensions.common.service.DefaultRootController``
-     - (StrOpt) Root controller implementation for mongodb.
+     - (String) Namespace to load restore strategies from.
+   * - ``root_controller`` = ``trove.extensions.mongodb.service.MongoDBRootController``
+     - (String) Root controller implementation for mongodb.
    * - ``taskmanager_strategy`` = ``trove.common.strategies.cluster.experimental.mongodb.taskmanager.MongoDbTaskManagerStrategy``
-     - (StrOpt) Class that implements datastore-specific task manager logic.
-   * - ``tcp_ports`` = ``2500, 27017``
-     - (ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (String) Class that implements datastore-specific task manager logic.
+   * - ``tcp_ports`` = ``2500, 27017, 27019``
+     - (List) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``udp_ports`` =
-     - (ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (List) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``volume_support`` = ``True``
-     - (BoolOpt) Whether to provision a Cinder volume for datadir.
+     - (Boolean) Whether to provision a Cinder volume for datadir.

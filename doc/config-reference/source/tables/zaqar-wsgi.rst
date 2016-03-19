@@ -19,6 +19,6 @@
    * - **[drivers:transport:wsgi]**
      -
    * - ``bind`` = ``127.0.0.1``
-     - (IPOpt) Address on which the self-hosting server will listen.
+     - (Unknown) Address on which the self-hosting server will listen.
    * - ``port`` = ``8888``
-     - (PortOpt) Port on which the self-hosting server will listen.
+     - (Unknown) Port on which the self-hosting server will listen.

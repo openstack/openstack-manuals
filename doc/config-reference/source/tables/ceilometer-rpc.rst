@@ -19,76 +19,100 @@
    * - **[DEFAULT]**
      -
    * - ``rpc_backend`` = ``rabbit``
-     - (StrOpt) The messaging driver to use, defaults to rabbit. Other drivers include amqp and zmq.
+     - (String) The messaging driver to use, defaults to rabbit. Other drivers include amqp and zmq.
    * - ``rpc_cast_timeout`` = ``-1``
-     - (IntOpt) Seconds to wait before a cast expires (TTL). The default value of -1 specifies an infinite linger period. The value of 0 specifies no linger period. Pending messages shall be discarded immediately when the socket is closed. Only supported by impl_zmq.
+     - (Integer) Seconds to wait before a cast expires (TTL). The default value of -1 specifies an infinite linger period. The value of 0 specifies no linger period. Pending messages shall be discarded immediately when the socket is closed. Only supported by impl_zmq.
    * - ``rpc_conn_pool_size`` = ``30``
-     - (IntOpt) Size of RPC connection pool.
+     - (Integer) Size of RPC connection pool.
    * - ``rpc_poll_timeout`` = ``1``
-     - (IntOpt) The default number of seconds that poll should wait. Poll raises timeout exception when timeout expired.
+     - (Integer) The default number of seconds that poll should wait. Poll raises timeout exception when timeout expired.
    * - ``rpc_response_timeout`` = ``60``
-     - (IntOpt) Seconds to wait for a response from a call.
+     - (Integer) Seconds to wait for a response from a call.
    * - **[notification]**
      -
    * - ``messaging_urls`` = ``[]``
-     - (MultiStrOpt) Messaging URLs to listen for notifications. Example: transport://user:pass@host1:port[,hostN:portN]/virtual_host (DEFAULT/transport_url is used if empty)
+     - (Multi-valued) Messaging URLs to listen for notifications. Example: transport://user:pass@host1:port[,hostN:portN]/virtual_host (DEFAULT/transport_url is used if empty)
    * - **[oslo_concurrency]**
      -
    * - ``disable_process_locking`` = ``False``
-     - (BoolOpt) Enables or disables inter-process locks.
+     - (Boolean) Enables or disables inter-process locks.
    * - ``lock_path`` = ``None``
-     - (StrOpt) Directory to use for lock files. For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.
+     - (String) Directory to use for lock files. For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.
    * - **[oslo_messaging_amqp]**
      -
    * - ``allow_insecure_clients`` = ``False``
-     - (BoolOpt) Accept clients using either SSL or plain TCP
+     - (Boolean) Accept clients using either SSL or plain TCP
    * - ``broadcast_prefix`` = ``broadcast``
-     - (StrOpt) address prefix used when broadcasting to all servers
+     - (String) address prefix used when broadcasting to all servers
    * - ``container_name`` = ``None``
-     - (StrOpt) Name for the AMQP container
+     - (String) Name for the AMQP container
    * - ``group_request_prefix`` = ``unicast``
-     - (StrOpt) address prefix when sending to any server in group
+     - (String) address prefix when sending to any server in group
    * - ``idle_timeout`` = ``0``
-     - (IntOpt) Timeout for inactive connections (in seconds)
+     - (Integer) Timeout for inactive connections (in seconds)
    * - ``password`` =
-     - (StrOpt) Password for message broker authentication
+     - (String) Password for message broker authentication
    * - ``sasl_config_dir`` =
-     - (StrOpt) Path to directory that contains the SASL configuration
+     - (String) Path to directory that contains the SASL configuration
    * - ``sasl_config_name`` =
-     - (StrOpt) Name of configuration file (without .conf suffix)
+     - (String) Name of configuration file (without .conf suffix)
    * - ``sasl_mechanisms`` =
-     - (StrOpt) Space separated list of acceptable SASL mechanisms
+     - (String) Space separated list of acceptable SASL mechanisms
    * - ``server_request_prefix`` = ``exclusive``
-     - (StrOpt) address prefix used when sending to a specific server
+     - (String) address prefix used when sending to a specific server
    * - ``ssl_ca_file`` =
-     - (StrOpt) CA certificate PEM file to verify server certificate
+     - (String) CA certificate PEM file to verify server certificate
    * - ``ssl_cert_file`` =
-     - (StrOpt) Identifying certificate PEM file to present to clients
+     - (String) Identifying certificate PEM file to present to clients
    * - ``ssl_key_file`` =
-     - (StrOpt) Private key PEM file used to sign cert_file certificate
+     - (String) Private key PEM file used to sign cert_file certificate
    * - ``ssl_key_password`` = ``None``
-     - (StrOpt) Password for decrypting ssl_key_file (if encrypted)
+     - (String) Password for decrypting ssl_key_file (if encrypted)
    * - ``trace`` = ``False``
-     - (BoolOpt) Debug: dump AMQP frames to stdout
+     - (Boolean) Debug: dump AMQP frames to stdout
    * - ``username`` =
-     - (StrOpt) User name for message broker authentication
+     - (String) User name for message broker authentication
    * - **[oslo_messaging_notifications]**
      -
    * - ``driver`` = ``[]``
-     - (MultiStrOpt) The Drivers(s) to handle sending notifications. Possible values are messaging, messagingv2, routing, log, test, noop
+     - (Multi-valued) The Drivers(s) to handle sending notifications. Possible values are messaging, messagingv2, routing, log, test, noop
    * - ``topics`` = ``notifications``
-     - (ListOpt) AMQP topic used for OpenStack notifications.
+     - (List) AMQP topic used for OpenStack notifications.
    * - ``transport_url`` = ``None``
-     - (StrOpt) A URL representing the messaging driver to use for notifications. If not set, we fall back to the same configuration used for RPC.
+     - (String) A URL representing the messaging driver to use for notifications. If not set, we fall back to the same configuration used for RPC.
+   * - **[oslo_messaging_rabbit]**
+     -
+   * - ``rpc_listener_prefetch_count`` = ``100``
+     - (Integer) Max number of not acknowledged message which RabbitMQ can send to rpc listener.
+   * - ``rpc_queue_expiration`` = ``60``
+     - (Integer) Time to live for rpc queues without consumers in seconds.
+   * - ``rpc_reply_exchange`` = ``${control_exchange}_rpc_reply``
+     - (String) Exchange name for receiving RPC replies
+   * - ``rpc_reply_listener_prefetch_count`` = ``100``
+     - (Integer) Max number of not acknowledged message which RabbitMQ can send to rpc reply listener.
+   * - ``rpc_reply_retry_attempts`` = ``-1``
+     - (Integer) Reconnecting retry count in case of connectivity problem during sending reply. -1 means infinite retry during rpc_timeout
+   * - ``rpc_reply_retry_delay`` = ``0.25``
+     - (Floating point) Reconnecting retry delay in case of connectivity problem during sending reply.
+   * - ``rpc_retry_delay`` = ``0.25``
+     - (Floating point) Reconnecting retry delay in case of connectivity problem during sending RPC message
+   * - ``socket_timeout`` = ``0.25``
+     - (Floating point) Set socket timeout in seconds for connection's socket
+   * - ``ssl`` = ``None``
+     - (Boolean) Enable SSL
+   * - ``ssl_options`` = ``None``
+     - (Dict) Arguments passed to ssl.wrap_socket
+   * - ``tcp_user_timeout`` = ``0.25``
+     - (Floating point) Set TCP_USER_TIMEOUT in seconds for connection's socket
    * - **[publisher]**
      -
    * - ``telemetry_secret`` = ``change this for valid signing``
-     - (StrOpt) Secret value for signing messages. Set value empty if signing is not required to avoid computational overhead.
+     - (String) Secret value for signing messages. Set value empty if signing is not required to avoid computational overhead.
    * - **[publisher_notifier]**
      -
    * - ``event_topic`` = ``event``
-     - (StrOpt) The topic that ceilometer uses for event notifications.
+     - (String) The topic that ceilometer uses for event notifications.
    * - ``metering_topic`` = ``metering``
-     - (StrOpt) The topic that ceilometer uses for metering notifications.
+     - (String) The topic that ceilometer uses for metering notifications.
    * - ``telemetry_driver`` = ``messagingv2``
-     - (StrOpt) The driver that ceilometer uses for metering notifications.
+     - (String) The driver that ceilometer uses for metering notifications.

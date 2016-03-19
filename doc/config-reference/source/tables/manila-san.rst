@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``ssh_conn_timeout`` = ``60``
-     - (IntOpt) Backend server SSH connection timeout.
+     - (Integer) Backend server SSH connection timeout.
    * - ``ssh_max_pool_conn`` = ``10``
-     - (IntOpt) Maximum number of connections in the SSH pool.
+     - (Integer) Maximum number of connections in the SSH pool.
    * - ``ssh_min_pool_conn`` = ``1``
-     - (IntOpt) Minimum number of connections in the SSH pool.
+     - (Integer) Minimum number of connections in the SSH pool.

@@ -19,8 +19,8 @@
    * - **[coordination]**
      -
    * - ``backend_url`` = ``None``
-     - (StrOpt) The backend URL to use for distributed coordination. If left empty, per-deployment central agent and per-host compute agent won't do workload partitioning and will only function correctly if a single instance of that service is running.
+     - (String) The backend URL to use for distributed coordination. If left empty, per-deployment central agent and per-host compute agent won't do workload partitioning and will only function correctly if a single instance of that service is running.
    * - ``check_watchers`` = ``10.0``
-     - (FloatOpt) Number of seconds between checks to see if group membership has changed
+     - (Floating point) Number of seconds between checks to see if group membership has changed
    * - ``heartbeat`` = ``1.0``
-     - (FloatOpt) Number of seconds between heartbeats for distributed coordination.
+     - (Floating point) Number of seconds between heartbeats for distributed coordination.

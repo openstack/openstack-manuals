@@ -19,14 +19,14 @@
    * - **[DEFAULT]**
      -
    * - ``lenovo_api_protocol`` = ``https``
-     - (StrOpt) Lenovo api interface protocol.
+     - (String) Lenovo api interface protocol.
    * - ``lenovo_backend_name`` = ``A``
-     - (StrOpt) Pool or Vdisk name to use for volume creation.
+     - (String) Pool or Vdisk name to use for volume creation.
    * - ``lenovo_backend_type`` = ``virtual``
-     - (StrOpt) linear (for VDisk) or virtual (for Pool).
+     - (String) linear (for VDisk) or virtual (for Pool).
    * - ``lenovo_iscsi_ips`` =
-     - (ListOpt) List of comma-separated target iSCSI IP addresses.
+     - (List) List of comma-separated target iSCSI IP addresses.
    * - ``lenovo_verify_certificate`` = ``False``
-     - (BoolOpt) Whether to verify Lenovo array SSL certificate.
+     - (Boolean) Whether to verify Lenovo array SSL certificate.
    * - ``lenovo_verify_certificate_path`` = ``None``
-     - (StrOpt) Lenovo array SSL certificate path.
+     - (String) Lenovo array SSL certificate path.

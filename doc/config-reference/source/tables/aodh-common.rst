@@ -19,44 +19,44 @@
    * - **[DEFAULT]**
      -
    * - ``alarm_max_actions`` = ``-1``
-     - (IntOpt) Maximum count of actions for each state of an alarm, non-positive number means no limit.
+     - (Integer) Maximum count of actions for each state of an alarm, non-positive number means no limit.
    * - ``evaluation_interval`` = ``60``
-     - (IntOpt) Period of evaluation cycle, should be >= than configured pipeline interval for collection of underlying meters.
+     - (Integer) Period of evaluation cycle, should be >= than configured pipeline interval for collection of underlying meters.
    * - ``event_alarm_cache_ttl`` = ``60``
-     - (IntOpt) TTL of event alarm caches, in seconds. Set to 0 to disable caching.
+     - (Integer) TTL of event alarm caches, in seconds. Set to 0 to disable caching.
    * - ``event_alarm_topic`` = ``alarm.all``
-     - (StrOpt) The topic that aodh uses for event alarm evaluation.
+     - (String) The topic that aodh uses for event alarm evaluation.
    * - ``executor_thread_pool_size`` = ``64``
-     - (IntOpt) Size of executor thread pool.
+     - (Integer) Size of executor thread pool.
    * - ``gnocchi_url`` = ``None``
-     - (StrOpt) URL to Gnocchi. default: autodetection
+     - (String) DEPRECATED: URL to Gnocchi. default: autodetection
    * - ``host`` = ``localhost``
-     - (StrOpt) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.
+     - (String) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.
    * - ``http_timeout`` = ``600``
-     - (IntOpt) Timeout seconds for HTTP requests. Set it to None to disable timeout.
+     - (Integer) Timeout seconds for HTTP requests. Set it to None to disable timeout.
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
+     - (List) Memcached servers or None for in process cache.
    * - ``notifier_rpc_topic`` = ``alarm_notifier``
-     - (StrOpt) The topic that aodh uses for alarm notifier messages.
+     - (String) The topic that aodh uses for alarm notifier messages.
    * - ``notifier_topic`` = ``alarming``
-     - (StrOpt) The topic that aodh uses for alarm notifier messages.
+     - (String) The topic that aodh uses for alarm notifier messages.
    * - ``project_alarm_quota`` = ``None``
-     - (IntOpt) Maximum number of alarms defined for a project.
+     - (Integer) Maximum number of alarms defined for a project.
    * - ``record_history`` = ``True``
-     - (BoolOpt) Record alarm change events.
+     - (Boolean) Record alarm change events.
    * - ``rest_notifier_certificate_file`` =
-     - (StrOpt) SSL Client certificate for REST notifier.
+     - (String) SSL Client certificate for REST notifier.
    * - ``rest_notifier_certificate_key`` =
-     - (StrOpt) SSL Client private key for REST notifier.
+     - (String) SSL Client private key for REST notifier.
    * - ``rest_notifier_max_retries`` = ``0``
-     - (IntOpt) Number of retries for REST notifier
+     - (Integer) Number of retries for REST notifier
    * - ``rest_notifier_ssl_verify`` = ``True``
-     - (BoolOpt) Whether to verify the SSL Server certificate when calling alarm action.
+     - (Boolean) Whether to verify the SSL Server certificate when calling alarm action.
    * - ``user_alarm_quota`` = ``None``
-     - (IntOpt) Maximum number of alarms defined for a user.
+     - (Integer) Maximum number of alarms defined for a user.
    * - **[service_credentials]**
      -
    * - ``interface`` = ``public``
-     - (StrOpt) Type of endpoint in Identity service catalog to use for communication with OpenStack services.
+     - (String) Type of endpoint in Identity service catalog to use for communication with OpenStack services.
    * - ``region_name`` = ``None``
-     - (StrOpt) Region name to use for OpenStack service endpoints.
+     - (String) Region name to use for OpenStack service endpoints.

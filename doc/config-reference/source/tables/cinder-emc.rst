@@ -19,36 +19,36 @@
    * - **[DEFAULT]**
      -
    * - ``check_max_pool_luns_threshold`` = ``False``
-     - (BoolOpt) Report free_capacity_gb as 0 when the limit to maximum number of pool LUNs is reached. By default, the value is False.
+     - (Boolean) Report free_capacity_gb as 0 when the limit to maximum number of pool LUNs is reached. By default, the value is False.
    * - ``cinder_emc_config_file`` = ``/etc/cinder/cinder_emc_config.xml``
-     - (StrOpt) use this file for cinder emc plugin config data
+     - (String) use this file for cinder emc plugin config data
    * - ``destroy_empty_storage_group`` = ``False``
-     - (BoolOpt) To destroy storage group when the last LUN is removed from it. By default, the value is False.
+     - (Boolean) To destroy storage group when the last LUN is removed from it. By default, the value is False.
    * - ``force_delete_lun_in_storagegroup`` = ``False``
-     - (BoolOpt) Delete a LUN even if it is in Storage Groups.
+     - (Boolean) Delete a LUN even if it is in Storage Groups.
    * - ``initiator_auto_deregistration`` = ``False``
-     - (BoolOpt) Automatically deregister initiators after the related storage group is destroyed. By default, the value is False.
+     - (Boolean) Automatically deregister initiators after the related storage group is destroyed. By default, the value is False.
    * - ``initiator_auto_registration`` = ``False``
-     - (BoolOpt) Automatically register initiators. By default, the value is False.
+     - (Boolean) Automatically register initiators. By default, the value is False.
    * - ``io_port_list`` = ``*``
-     - (StrOpt) Comma separated iSCSI or FC ports to be used in Nova or Cinder.
+     - (String) Comma separated iSCSI or FC ports to be used in Nova or Cinder.
    * - ``iscsi_initiators`` =
-     - (StrOpt) Mapping between hostname and its iSCSI initiator IP addresses.
+     - (String) Mapping between hostname and its iSCSI initiator IP addresses.
    * - ``max_luns_per_storage_group`` = ``255``
-     - (IntOpt) Default max number of LUNs in a storage group. By default, the value is 255.
+     - (Integer) Default max number of LUNs in a storage group. By default, the value is 255.
    * - ``naviseccli_path`` =
-     - (StrOpt) Naviseccli Path.
+     - (String) Naviseccli Path.
    * - ``storage_vnx_authentication_type`` = ``global``
-     - (StrOpt) VNX authentication scope type.
+     - (String) VNX authentication scope type.
    * - ``storage_vnx_pool_names`` = ``None``
-     - (StrOpt) Comma-separated list of storage pool names to be used.
+     - (String) Comma-separated list of storage pool names to be used.
    * - ``storage_vnx_security_file_dir`` = ``None``
-     - (StrOpt) Directory path that contains the VNX security file. Make sure the security file is generated first.
+     - (String) Directory path that contains the VNX security file. Make sure the security file is generated first.
    * - ``xtremio_array_busy_retry_count`` = ``5``
-     - (IntOpt) Number of retries in case array is busy
+     - (Integer) Number of retries in case array is busy
    * - ``xtremio_array_busy_retry_interval`` = ``5``
-     - (IntOpt) Interval between retries in case array is busy
+     - (Integer) Interval between retries in case array is busy
    * - ``xtremio_cluster_name`` =
-     - (StrOpt) XMS cluster id in multi-cluster environment
+     - (String) XMS cluster id in multi-cluster environment
    * - ``xtremio_volumes_per_glance_cache`` = ``100``
-     - (IntOpt) Number of volumes created from each cached glance image
+     - (Integer) Number of volumes created from each cached glance image

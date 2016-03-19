@@ -19,8 +19,8 @@
    * - **[oauth1]**
      -
    * - ``access_token_duration`` = ``86400``
-     - (IntOpt) Duration (in seconds) for the OAuth Access Token.
+     - (Integer) Duration (in seconds) for the OAuth Access Token.
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for the OAuth backend driver in the keystone.oauth1 namespace.
+     - (String) Entrypoint for the OAuth backend driver in the keystone.oauth1 namespace.
    * - ``request_token_duration`` = ``28800``
-     - (IntOpt) Duration (in seconds) for the OAuth Request Token.
+     - (Integer) Duration (in seconds) for the OAuth Request Token.

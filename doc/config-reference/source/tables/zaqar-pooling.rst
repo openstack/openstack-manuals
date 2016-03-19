@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``pooling`` = ``False``
-     - (BoolOpt) Enable pooling across multiple storage backends. If pooling is enabled, the storage driver configuration is used to determine where the catalogue/control plane data is kept.
+     - (Boolean) Enable pooling across multiple storage backends. If pooling is enabled, the storage driver configuration is used to determine where the catalogue/control plane data is kept.
    * - **[pooling:catalog]**
      -
    * - ``enable_virtual_pool`` = ``False``
-     - (BoolOpt) If enabled, the message_store will be used as the storage for the virtual pool.
+     - (Boolean) If enabled, the message_store will be used as the storage for the virtual pool.

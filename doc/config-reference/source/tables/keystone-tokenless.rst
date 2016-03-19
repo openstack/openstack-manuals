@@ -19,8 +19,8 @@
    * - **[tokenless_auth]**
      -
    * - ``issuer_attribute`` = ``SSL_CLIENT_I_DN``
-     - (StrOpt) The issuer attribute that is served as an IdP ID for the X.509 tokenless authorization along with the protocol to look up its corresponding mapping. It is the environment variable in the WSGI environment that references to the issuer of the client certificate.
+     - (String) The issuer attribute that is served as an IdP ID for the X.509 tokenless authorization along with the protocol to look up its corresponding mapping. It is the environment variable in the WSGI environment that references to the issuer of the client certificate.
    * - ``protocol`` = ``x509``
-     - (StrOpt) The protocol name for the X.509 tokenless authorization along with the option issuer_attribute below can look up its corresponding mapping.
+     - (String) The protocol name for the X.509 tokenless authorization along with the option issuer_attribute below can look up its corresponding mapping.
    * - ``trusted_issuer`` = ``[]``
-     - (MultiStrOpt) The list of trusted issuers to further filter the certificates that are allowed to participate in the X.509 tokenless authorization. If the option is absent then no certificates will be allowed. The naming format for the attributes of a Distinguished Name(DN) must be separated by a comma and contain no spaces. This configuration option may be repeated for multiple values. For example: trusted_issuer=CN=john,OU=keystone,O=openstack trusted_issuer=CN=mary,OU=eng,O=abc
+     - (Multi-valued) The list of trusted issuers to further filter the certificates that are allowed to participate in the X.509 tokenless authorization. If the option is absent then no certificates will be allowed. The naming format for the attributes of a Distinguished Name(DN) must be separated by a comma and contain no spaces. This configuration option may be repeated for multiple values. For example: trusted_issuer=CN=john,OU=keystone,O=openstack trusted_issuer=CN=mary,OU=eng,O=abc

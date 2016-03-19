@@ -19,22 +19,22 @@
    * - **[DEFAULT]**
      -
    * - ``backup_aes_cbc_key`` = ``default_aes_cbc_key``
-     - (StrOpt) Default OpenSSL aes_cbc key.
+     - (String) Default OpenSSL aes_cbc key.
    * - ``backup_chunk_size`` = ``65536``
-     - (IntOpt) Chunk size (in bytes) to stream to the Swift container. This should be in multiples of 128 bytes, since this is the size of an md5 digest block allowing the process to update the file checksum during streaming. See: http://stackoverflow.com/questions/1131220/
+     - (Integer) Chunk size (in bytes) to stream to the Swift container. This should be in multiples of 128 bytes, since this is the size of an md5 digest block allowing the process to update the file checksum during streaming. See: http://stackoverflow.com/questions/1131220/
    * - ``backup_runner`` = ``trove.guestagent.backup.backup_types.InnoBackupEx``
-     - (StrOpt) Runner to use for backups.
+     - (String) Runner to use for backups.
    * - ``backup_runner_options`` = ``{}``
-     - (DictOpt) Additional options to be passed to the backup runner.
+     - (Dict) Additional options to be passed to the backup runner.
    * - ``backup_segment_max_size`` = ``2147483648``
-     - (IntOpt) Maximum size (in bytes) of each segment of the backup file.
+     - (Integer) Maximum size (in bytes) of each segment of the backup file.
    * - ``backup_swift_container`` = ``database_backups``
-     - (StrOpt) Swift container to put backups in.
+     - (String) Swift container to put backups in.
    * - ``backup_use_gzip_compression`` = ``True``
-     - (BoolOpt) Compress backups using gzip.
+     - (Boolean) Compress backups using gzip.
    * - ``backup_use_openssl_encryption`` = ``True``
-     - (BoolOpt) Encrypt backups using OpenSSL.
+     - (Boolean) Encrypt backups using OpenSSL.
    * - ``backup_use_snet`` = ``False``
-     - (BoolOpt) Send backup files over snet.
+     - (Boolean) Send backup files over snet.
    * - ``backups_page_size`` = ``20``
-     - (IntOpt) Page size for listing backups.
+     - (Integer) Page size for listing backups.

@@ -19,38 +19,38 @@
    * - **[DEFAULT]**
      -
    * - ``allowed_direct_url_schemes`` =
-     - (ListOpt) A list of url schemes that can be downloaded directly via the direct_url. Currently supported schemes: [file].
+     - (List) A list of url schemes that can be downloaded directly via the direct_url. Currently supported schemes: [file].
    * - ``glance_api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL (https) requests to glance
+     - (Boolean) Allow to perform insecure SSL (https) requests to glance
    * - ``glance_api_servers`` = ``$glance_host:$glance_port``
-     - (ListOpt) A list of the URLs of glance API servers available to cinder ([http[s]://][hostname|ip]:port). If protocol is not specified it defaults to http.
+     - (List) A list of the URLs of glance API servers available to cinder ([http[s]://][hostname|ip]:port). If protocol is not specified it defaults to http.
    * - ``glance_api_ssl_compression`` = ``False``
-     - (BoolOpt) Enables or disables negotiation of SSL layer compression. In some cases disabling compression can improve data throughput, such as when high network bandwidth is available and you use compressed image formats like qcow2.
+     - (Boolean) Enables or disables negotiation of SSL layer compression. In some cases disabling compression can improve data throughput, such as when high network bandwidth is available and you use compressed image formats like qcow2.
    * - ``glance_api_version`` = ``1``
-     - (IntOpt) Version of the glance API to use
+     - (Integer) Version of the glance API to use
    * - ``glance_ca_certificates_file`` = ``None``
-     - (StrOpt) Location of ca certificates file to use for glance client requests.
+     - (String) Location of ca certificates file to use for glance client requests.
    * - ``glance_core_properties`` = ``checksum, container_format, disk_format, image_name, image_id, min_disk, min_ram, name, size``
-     - (ListOpt) Default core properties of image
+     - (List) Default core properties of image
    * - ``glance_host`` = ``$my_ip``
-     - (StrOpt) Default glance host name or IP
+     - (String) Default glance host name or IP
    * - ``glance_num_retries`` = ``0``
-     - (IntOpt) Number retries when downloading an image from glance
+     - (Integer) Number retries when downloading an image from glance
    * - ``glance_port`` = ``9292``
-     - (IntOpt) Default glance port
+     - (Integer) Default glance port
    * - ``glance_request_timeout`` = ``None``
-     - (IntOpt) http/https timeout value for glance operations. If no value (None) is supplied here, the glanceclient default value is used.
+     - (Integer) http/https timeout value for glance operations. If no value (None) is supplied here, the glanceclient default value is used.
    * - ``image_conversion_dir`` = ``$state_path/conversion``
-     - (StrOpt) Directory used for temporary storage during image conversion
+     - (String) Directory used for temporary storage during image conversion
    * - ``image_upload_use_cinder_backend`` = ``False``
-     - (BoolOpt) If set to True, upload-to-image in raw format will create a cloned volume and register its location to the image service, instead of uploading the volume content. The cinder backend and locations support must be enabled in the image service, and glance_api_version must be set to 2.
+     - (Boolean) If set to True, upload-to-image in raw format will create a cloned volume and register its location to the image service, instead of uploading the volume content. The cinder backend and locations support must be enabled in the image service, and glance_api_version must be set to 2.
    * - ``image_upload_use_internal_tenant`` = ``False``
-     - (BoolOpt) If set to True, the image volume created by upload-to-image will be placed in the internal tenant. Otherwise, the image volume is created in the current context's tenant.
+     - (Boolean) If set to True, the image volume created by upload-to-image will be placed in the internal tenant. Otherwise, the image volume is created in the current context's tenant.
    * - ``image_volume_cache_enabled`` = ``False``
-     - (BoolOpt) Enable the image volume cache for this backend.
+     - (Boolean) Enable the image volume cache for this backend.
    * - ``image_volume_cache_max_count`` = ``0``
-     - (IntOpt) Max number of entries allowed in the image volume cache. 0 => unlimited.
+     - (Integer) Max number of entries allowed in the image volume cache. 0 => unlimited.
    * - ``image_volume_cache_max_size_gb`` = ``0``
-     - (IntOpt) Max size of the image volume cache for this backend in GB. 0 => unlimited.
+     - (Integer) Max size of the image volume cache for this backend in GB. 0 => unlimited.
    * - ``use_multipath_for_image_xfer`` = ``False``
-     - (BoolOpt) Do we attach/detach volumes in cinder using multipath for volume to image and image to volume transfers?
+     - (Boolean) Do we attach/detach volumes in cinder using multipath for volume to image and image to volume transfers?

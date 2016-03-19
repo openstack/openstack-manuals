@@ -19,24 +19,24 @@
    * - **[DEFAULT]**
      -
    * - ``gpfs_images_dir`` = ``None``
-     - (StrOpt) Specifies the path of the Image service repository in GPFS. Leave undefined if not storing images in GPFS.
+     - (String) Specifies the path of the Image service repository in GPFS. Leave undefined if not storing images in GPFS.
    * - ``gpfs_images_share_mode`` = ``None``
-     - (StrOpt) Specifies the type of image copy to be used. Set this when the Image service repository also uses GPFS so that image files can be transferred efficiently from the Image service to the Block Storage service. There are two valid values: "copy" specifies that a full copy of the image is made; "copy_on_write" specifies that copy-on-write optimization strategy is used and unmodified blocks of the image file are shared efficiently.
+     - (String) Specifies the type of image copy to be used. Set this when the Image service repository also uses GPFS so that image files can be transferred efficiently from the Image service to the Block Storage service. There are two valid values: "copy" specifies that a full copy of the image is made; "copy_on_write" specifies that copy-on-write optimization strategy is used and unmodified blocks of the image file are shared efficiently.
    * - ``gpfs_max_clone_depth`` = ``0``
-     - (IntOpt) Specifies an upper limit on the number of indirections required to reach a specific block due to snapshots or clones. A lengthy chain of copy-on-write snapshots or clones can have a negative impact on performance, but improves space utilization. 0 indicates unlimited clone depth.
+     - (Integer) Specifies an upper limit on the number of indirections required to reach a specific block due to snapshots or clones. A lengthy chain of copy-on-write snapshots or clones can have a negative impact on performance, but improves space utilization. 0 indicates unlimited clone depth.
    * - ``gpfs_mount_point_base`` = ``None``
-     - (StrOpt) Specifies the path of the GPFS directory where Block Storage volume and snapshot files are stored.
+     - (String) Specifies the path of the GPFS directory where Block Storage volume and snapshot files are stored.
    * - ``gpfs_sparse_volumes`` = ``True``
-     - (BoolOpt) Specifies that volumes are created as sparse files which initially consume no space. If set to False, the volume is created as a fully allocated file, in which case, creation may take a significantly longer time.
+     - (Boolean) Specifies that volumes are created as sparse files which initially consume no space. If set to False, the volume is created as a fully allocated file, in which case, creation may take a significantly longer time.
    * - ``gpfs_storage_pool`` = ``system``
-     - (StrOpt) Specifies the storage pool that volumes are assigned to. By default, the system storage pool is used.
+     - (String) Specifies the storage pool that volumes are assigned to. By default, the system storage pool is used.
    * - ``nas_ip`` =
-     - (StrOpt) IP address or Hostname of NAS system.
+     - (String) IP address or Hostname of NAS system.
    * - ``nas_login`` = ``admin``
-     - (StrOpt) User name to connect to NAS system.
+     - (String) User name to connect to NAS system.
    * - ``nas_password`` =
-     - (StrOpt) Password to connect to NAS system.
+     - (String) Password to connect to NAS system.
    * - ``nas_private_key`` =
-     - (StrOpt) Filename of private key to use for SSH authentication.
+     - (String) Filename of private key to use for SSH authentication.
    * - ``nas_ssh_port`` = ``22``
-     - (PortOpt) SSH port to use to connect to NAS system.
+     - (Unknown) SSH port to use to connect to NAS system.

@@ -19,10 +19,10 @@
    * - **[DEFAULT]**
      -
    * - ``network_driver`` = ``trove.network.nova.NovaNetwork``
-     - (StrOpt) Describes the actual network manager used for the management of network attributes (security groups, floating IPs, etc.).
+     - (String) Describes the actual network manager used for the management of network attributes (security groups, floating IPs, etc.).
    * - ``neutron_endpoint_type`` = ``publicURL``
-     - (StrOpt) Service endpoint type to use when searching catalog.
+     - (String) Service endpoint type to use when searching catalog.
    * - ``neutron_service_type`` = ``network``
-     - (StrOpt) Service type to use when searching catalog.
+     - (String) Service type to use when searching catalog.
    * - ``neutron_url`` = ``None``
-     - (StrOpt) URL without the tenant segment.
+     - (String) URL without the tenant segment.

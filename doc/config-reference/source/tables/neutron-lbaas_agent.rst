@@ -19,18 +19,18 @@
    * - **[DEFAULT]**
      -
    * - ``debug`` = ``False``
-     - (BoolOpt) If set to true, the logging level will be set to DEBUG instead of the default INFO level.
+     - (Boolean) If set to true, the logging level will be set to DEBUG instead of the default INFO level.
    * - ``device_driver`` = ``['neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver']``
-     - (MultiStrOpt) Drivers used to manage loadbalancing devices
+     - (Multi-valued) Drivers used to manage loadbalancing devices
    * - ``interface_driver`` = ``None``
-     - (StrOpt) The driver used to manage the virtual interface.
+     - (String) The driver used to manage the virtual interface.
    * - ``periodic_interval`` = ``40``
-     - (IntOpt) Seconds between running periodic tasks
+     - (Integer) Seconds between running periodic tasks
    * - **[haproxy]**
      -
    * - ``loadbalancer_state_path`` = ``$state_path/lbaas``
-     - (StrOpt) Location to store config and state files
+     - (String) Location to store config and state files
    * - ``send_gratuitous_arp`` = ``3``
-     - (IntOpt) When delete and re-add the same vip, send this many gratuitous ARPs to flush the ARP cache in the Router. Set it below or equal to 0 to disable this feature.
+     - (Integer) When delete and re-add the same vip, send this many gratuitous ARPs to flush the ARP cache in the Router. Set it below or equal to 0 to disable this feature.
    * - ``user_group`` = ``nogroup``
-     - (StrOpt) The user group
+     - (String) The user group

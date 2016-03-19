@@ -19,38 +19,38 @@
    * - **[DEFAULT]**
      -
    * - ``zfssa_initiator`` =
-     - (StrOpt) iSCSI initiator IQNs. (comma separated)
+     - (String) iSCSI initiator IQNs. (comma separated)
    * - ``zfssa_initiator_config`` =
-     - (StrOpt) iSCSI initiators configuration.
+     - (String) iSCSI initiators configuration.
    * - ``zfssa_initiator_group`` =
-     - (StrOpt) iSCSI initiator group.
+     - (String) iSCSI initiator group.
    * - ``zfssa_initiator_password`` =
-     - (StrOpt) Secret of the iSCSI initiator CHAP user.
+     - (String) Secret of the iSCSI initiator CHAP user.
    * - ``zfssa_initiator_user`` =
-     - (StrOpt) iSCSI initiator CHAP user (name).
+     - (String) iSCSI initiator CHAP user (name).
    * - ``zfssa_lun_compression`` = ``off``
-     - (StrOpt) Data compression.
+     - (String) Data compression.
    * - ``zfssa_lun_logbias`` = ``latency``
-     - (StrOpt) Synchronous write bias.
+     - (String) Synchronous write bias.
    * - ``zfssa_lun_sparse`` = ``False``
-     - (BoolOpt) Flag to enable sparse (thin-provisioned): True, False.
+     - (Boolean) Flag to enable sparse (thin-provisioned): True, False.
    * - ``zfssa_lun_volblocksize`` = ``8k``
-     - (StrOpt) Block size.
+     - (String) Block size.
    * - ``zfssa_pool`` = ``None``
-     - (StrOpt) Storage pool name.
+     - (String) Storage pool name.
    * - ``zfssa_project`` = ``None``
-     - (StrOpt) Project name.
+     - (String) Project name.
    * - ``zfssa_replication_ip`` =
-     - (StrOpt) IP address used for replication data. (maybe the same as data ip)
+     - (String) IP address used for replication data. (maybe the same as data ip)
    * - ``zfssa_rest_timeout`` = ``None``
-     - (IntOpt) REST connection timeout. (seconds)
+     - (Integer) REST connection timeout. (seconds)
    * - ``zfssa_target_group`` = ``tgt-grp``
-     - (StrOpt) iSCSI target group name.
+     - (String) iSCSI target group name.
    * - ``zfssa_target_interfaces`` = ``None``
-     - (StrOpt) Network interfaces of iSCSI targets. (comma separated)
+     - (String) Network interfaces of iSCSI targets. (comma separated)
    * - ``zfssa_target_password`` =
-     - (StrOpt) Secret of the iSCSI target CHAP user.
+     - (String) Secret of the iSCSI target CHAP user.
    * - ``zfssa_target_portal`` = ``None``
-     - (StrOpt) iSCSI target portal (Data-IP:Port, w.x.y.z:3260).
+     - (String) iSCSI target portal (Data-IP:Port, w.x.y.z:3260).
    * - ``zfssa_target_user`` =
-     - (StrOpt) iSCSI target CHAP user (name).
+     - (String) iSCSI target CHAP user (name).

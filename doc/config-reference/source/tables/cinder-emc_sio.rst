@@ -18,25 +18,23 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``sio_force_delete`` = ``False``
-     - (BoolOpt) Whether to allow force delete.
    * - ``sio_protection_domain_id`` = ``None``
-     - (StrOpt) Protection domain id.
+     - (String) Protection Domain ID.
    * - ``sio_protection_domain_name`` = ``None``
-     - (StrOpt) Protection domain name.
+     - (String) Protection Domain name.
    * - ``sio_rest_server_port`` = ``443``
-     - (StrOpt) REST server port.
+     - (String) REST server port.
    * - ``sio_round_volume_capacity`` = ``True``
-     - (BoolOpt) Whether to round volume capacity.
+     - (Boolean) Round up volume capacity.
    * - ``sio_server_certificate_path`` = ``None``
-     - (StrOpt) Server certificate path.
+     - (String) Server certificate path.
    * - ``sio_storage_pool_id`` = ``None``
-     - (StrOpt) Storage pool id.
+     - (String) Storage Pool ID.
    * - ``sio_storage_pool_name`` = ``None``
-     - (StrOpt) Storage pool name.
+     - (String) Storage Pool name.
    * - ``sio_storage_pools`` = ``None``
-     - (StrOpt) Storage pools.
+     - (String) Storage Pools.
    * - ``sio_unmap_volume_before_deletion`` = ``False``
-     - (BoolOpt) Whether to unmap volume before deletion.
+     - (Boolean) Unmap volume before deletion.
    * - ``sio_verify_server_certificate`` = ``False``
-     - (BoolOpt) Whether to verify server certificate.
+     - (Boolean) Verify server certificate.

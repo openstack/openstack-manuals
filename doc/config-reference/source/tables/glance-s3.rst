@@ -19,32 +19,32 @@
    * - **[glance_store]**
      -
    * - ``s3_store_access_key`` = ``None``
-     - (StrOpt) The S3 query token access key.
+     - (String) The S3 query token access key.
    * - ``s3_store_bucket`` = ``None``
-     - (StrOpt) The S3 bucket to be used to store the Glance data.
+     - (String) The S3 bucket to be used to store the Glance data.
    * - ``s3_store_bucket_url_format`` = ``subdomain``
-     - (StrOpt) The S3 calling format used to determine the bucket. Either subdomain or path can be used.
+     - (String) The S3 calling format used to determine the bucket. Either subdomain or path can be used.
    * - ``s3_store_create_bucket_on_put`` = ``False``
-     - (BoolOpt) A boolean to determine if the S3 bucket should be created on upload if it does not exist or if an error should be returned to the user.
+     - (Boolean) A boolean to determine if the S3 bucket should be created on upload if it does not exist or if an error should be returned to the user.
    * - ``s3_store_enable_proxy`` = ``False``
-     - (BoolOpt) Enable the use of a proxy.
+     - (Boolean) Enable the use of a proxy.
    * - ``s3_store_host`` = ``None``
-     - (StrOpt) The host where the S3 server is listening.
+     - (String) The host where the S3 server is listening.
    * - ``s3_store_large_object_chunk_size`` = ``10``
-     - (IntOpt) What multipart upload part size, in MB, should S3 use when uploading parts. The size must be greater than or equal to 5M.
+     - (Integer) What multipart upload part size, in MB, should S3 use when uploading parts. The size must be greater than or equal to 5M.
    * - ``s3_store_large_object_size`` = ``100``
-     - (IntOpt) What size, in MB, should S3 start chunking image files and do a multipart upload in S3.
+     - (Integer) What size, in MB, should S3 start chunking image files and do a multipart upload in S3.
    * - ``s3_store_object_buffer_dir`` = ``None``
-     - (StrOpt) The local directory where uploads will be staged before they are transferred into S3.
+     - (String) The local directory where uploads will be staged before they are transferred into S3.
    * - ``s3_store_proxy_host`` = ``None``
-     - (StrOpt) Address or hostname for the proxy server.
+     - (String) Address or hostname for the proxy server.
    * - ``s3_store_proxy_password`` = ``None``
-     - (StrOpt) The password to use when connecting over a proxy.
+     - (String) The password to use when connecting over a proxy.
    * - ``s3_store_proxy_port`` = ``8080``
-     - (IntOpt) The port to use when connecting over a proxy.
+     - (Integer) The port to use when connecting over a proxy.
    * - ``s3_store_proxy_user`` = ``None``
-     - (StrOpt) The username to connect to the proxy.
+     - (String) The username to connect to the proxy.
    * - ``s3_store_secret_key`` = ``None``
-     - (StrOpt) The S3 query token secret key.
+     - (String) The S3 query token secret key.
    * - ``s3_store_thread_pools`` = ``10``
-     - (IntOpt) The number of thread pools to perform a multipart upload in S3.
+     - (Integer) The number of thread pools to perform a multipart upload in S3.

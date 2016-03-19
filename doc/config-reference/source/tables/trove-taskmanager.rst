@@ -19,38 +19,38 @@
    * - **[DEFAULT]**
      -
    * - ``cloudinit_location`` = ``/etc/trove/cloudinit``
-     - (StrOpt) Path to folder with cloudinit scripts.
+     - (String) Path to folder with cloudinit scripts.
    * - ``datastore_manager`` = ``None``
-     - (StrOpt) Manager class in the Guest Agent, set up by the Taskmanager on instance provision.
+     - (String) Manager class in the Guest Agent, set up by the Taskmanager on instance provision.
    * - ``datastore_registry_ext`` = ``{}``
-     - (DictOpt) Extension for default datastore managers. Allows the use of custom managers for each of the datastores supported by Trove.
+     - (Dict) Extension for default datastore managers. Allows the use of custom managers for each of the datastores supported by Trove.
    * - ``exists_notification_interval`` = ``3600``
-     - (IntOpt) Seconds to wait between pushing events.
+     - (Integer) Seconds to wait between pushing events.
    * - ``exists_notification_transformer`` = ``None``
-     - (StrOpt) Transformer for exists notifications.
+     - (String) Transformer for exists notifications.
    * - ``reboot_time_out`` = ``120``
-     - (IntOpt) Maximum time (in seconds) to wait for a server reboot.
+     - (Integer) Maximum time (in seconds) to wait for a server reboot.
    * - ``resize_time_out`` = ``600``
-     - (IntOpt) Maximum time (in seconds) to wait for a server resize.
+     - (Integer) Maximum time (in seconds) to wait for a server resize.
    * - ``restore_usage_timeout`` = ``36000``
-     - (IntOpt) Maximum time (in seconds) to wait for a Guest instance restored from a backup to become active.
+     - (Integer) Maximum time (in seconds) to wait for a Guest instance restored from a backup to become active.
    * - ``revert_time_out`` = ``600``
-     - (IntOpt) Maximum time (in seconds) to wait for a server resize revert.
+     - (Integer) Maximum time (in seconds) to wait for a server resize revert.
    * - ``server_delete_time_out`` = ``60``
-     - (IntOpt) Maximum time (in seconds) to wait for a server delete.
+     - (Integer) Maximum time (in seconds) to wait for a server delete.
    * - ``state_change_poll_time`` = ``3``
-     - (IntOpt) Interval between state change poll requests (seconds).
+     - (Integer) Interval between state change poll requests (seconds).
    * - ``state_change_wait_time`` = ``180``
-     - (IntOpt) Maximum time (in seconds) to wait for a state change.
+     - (Integer) Maximum time (in seconds) to wait for a state change.
    * - ``update_status_on_fail`` = ``True``
-     - (BoolOpt) Set the service and instance task statuses to ERROR when an instance fails to become active within the configured usage_timeout.
+     - (Boolean) Set the service and instance task statuses to ERROR when an instance fails to become active within the configured usage_timeout.
    * - ``usage_sleep_time`` = ``5``
-     - (IntOpt) Time to sleep during the check for an active Guest.
+     - (Integer) Time to sleep during the check for an active Guest.
    * - ``use_heat`` = ``False``
-     - (BoolOpt) Use Heat for provisioning.
+     - (Boolean) Use Heat for provisioning.
    * - ``use_nova_server_config_drive`` = ``False``
-     - (BoolOpt) Use config drive for file injection when booting instance.
+     - (Boolean) Use config drive for file injection when booting instance.
    * - ``use_nova_server_volume`` = ``False``
-     - (BoolOpt) Whether to provision a Cinder volume for the Nova instance.
+     - (Boolean) Whether to provision a Cinder volume for the Nova instance.
    * - ``verify_swift_checksum_on_restore`` = ``True``
-     - (BoolOpt) Enable verification of Swift checksum before starting restore. Makes sure the checksum of original backup matches the checksum of the Swift backup file.
+     - (Boolean) Enable verification of Swift checksum before starting restore. Makes sure the checksum of original backup matches the checksum of the Swift backup file.

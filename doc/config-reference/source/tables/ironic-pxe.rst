@@ -19,36 +19,38 @@
    * - **[pxe]**
      -
    * - ``default_ephemeral_format`` = ``ext4``
-     - (StrOpt) Default file system format for ephemeral partition, if one is created.
+     - (String) Default file system format for ephemeral partition, if one is created.
    * - ``disk_devices`` = ``cciss/c0d0,sda,hda,vda``
-     - (StrOpt) The disk devices to scan while doing the deploy.
+     - (String) The disk devices to scan while doing the deploy.
    * - ``image_cache_size`` = ``20480``
-     - (IntOpt) Maximum size (in MiB) of cache for master images, including those in use.
+     - (Integer) Maximum size (in MiB) of cache for master images, including those in use.
    * - ``image_cache_ttl`` = ``10080``
-     - (IntOpt) Maximum TTL (in minutes) for old master images in cache.
+     - (Integer) Maximum TTL (in minutes) for old master images in cache.
    * - ``images_path`` = ``/var/lib/ironic/images/``
-     - (StrOpt) On the ironic-conductor node, directory where images are stored on disk.
+     - (String) On the ironic-conductor node, directory where images are stored on disk.
    * - ``instance_master_path`` = ``/var/lib/ironic/master_images``
-     - (StrOpt) On the ironic-conductor node, directory where master instance images are stored on disk.
+     - (String) On the ironic-conductor node, directory where master instance images are stored on disk. Setting to <None> disables image caching.
    * - ``ip_version`` = ``4``
-     - (StrOpt) The IP version that will be used for PXE booting. Can be either 4 or 6. Defaults to 4. EXPERIMENTAL
+     - (String) The IP version that will be used for PXE booting. Defaults to 4. EXPERIMENTAL
    * - ``ipxe_boot_script`` = ``$pybasedir/drivers/modules/boot.ipxe``
-     - (StrOpt) On ironic-conductor node, the path to the main iPXE script file.
+     - (String) On ironic-conductor node, the path to the main iPXE script file.
    * - ``ipxe_enabled`` = ``False``
-     - (BoolOpt) Enable iPXE boot.
+     - (Boolean) Enable iPXE boot.
+   * - ``ipxe_timeout`` = ``0``
+     - (Integer) Timeout value (in seconds) for downloading an image via iPXE. Defaults to 0 (no timeout)
    * - ``pxe_append_params`` = ``nofb nomodeset vga=normal``
-     - (StrOpt) Additional append parameters for baremetal PXE boot.
+     - (String) Additional append parameters for baremetal PXE boot.
    * - ``pxe_bootfile_name`` = ``pxelinux.0``
-     - (StrOpt) Bootfile DHCP parameter.
+     - (String) Bootfile DHCP parameter.
    * - ``pxe_config_template`` = ``$pybasedir/drivers/modules/pxe_config.template``
-     - (StrOpt) On ironic-conductor node, template file for PXE configuration.
+     - (String) On ironic-conductor node, template file for PXE configuration.
    * - ``tftp_master_path`` = ``/tftpboot/master_images``
-     - (StrOpt) On ironic-conductor node, directory where master TFTP images are stored on disk.
+     - (String) On ironic-conductor node, directory where master TFTP images are stored on disk. Setting to <None> disables image caching.
    * - ``tftp_root`` = ``/tftpboot``
-     - (StrOpt) ironic-conductor node's TFTP root path. The ironic-conductor must have read/write access to this path.
+     - (String) ironic-conductor node's TFTP root path. The ironic-conductor must have read/write access to this path.
    * - ``tftp_server`` = ``$my_ip``
-     - (StrOpt) IP address of ironic-conductor node's TFTP server.
+     - (String) IP address of ironic-conductor node's TFTP server.
    * - ``uefi_pxe_bootfile_name`` = ``elilo.efi``
-     - (StrOpt) Bootfile DHCP parameter for UEFI boot mode.
+     - (String) Bootfile DHCP parameter for UEFI boot mode.
    * - ``uefi_pxe_config_template`` = ``$pybasedir/drivers/modules/elilo_efi_pxe_config.template``
-     - (StrOpt) On ironic-conductor node, template file for PXE configuration for UEFI boot loader.
+     - (String) On ironic-conductor node, template file for PXE configuration for UEFI boot loader.

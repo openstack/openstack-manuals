@@ -19,8 +19,8 @@
    * - **[upgrade_levels]**
      -
    * - ``conductor`` = ``icehouse``
-     - (StrOpt) Set a version cap for messages sent to conductor services
+     - (String) Set a version cap for messages sent to conductor services
    * - ``guestagent`` = ``icehouse``
-     - (StrOpt) Set a version cap for messages sent to guestagent services
+     - (String) Set a version cap for messages sent to guestagent services
    * - ``taskmanager`` = ``icehouse``
-     - (StrOpt) Set a version cap for messages sent to taskmanager services
+     - (String) Set a version cap for messages sent to taskmanager services

@@ -19,34 +19,34 @@
    * - **[DEFAULT]**
      -
    * - ``dns_account_id`` =
-     - (StrOpt) Tenant ID for DNSaaS.
+     - (String) Tenant ID for DNSaaS.
    * - ``dns_auth_url`` =
-     - (StrOpt) Authentication URL for DNSaaS.
+     - (String) Authentication URL for DNSaaS.
    * - ``dns_domain_id`` =
-     - (StrOpt) Domain ID used for adding DNS entries.
+     - (String) Domain ID used for adding DNS entries.
    * - ``dns_domain_name`` =
-     - (StrOpt) Domain name used for adding DNS entries.
+     - (String) Domain name used for adding DNS entries.
    * - ``dns_driver`` = ``trove.dns.driver.DnsDriver``
-     - (StrOpt) Driver for DNSaaS.
+     - (String) Driver for DNSaaS.
    * - ``dns_endpoint_url`` = ``0.0.0.0``
-     - (StrOpt) Endpoint URL for DNSaaS.
+     - (String) Endpoint URL for DNSaaS.
    * - ``dns_hostname`` =
-     - (StrOpt) Hostname used for adding DNS entries.
+     - (String) Hostname used for adding DNS entries.
    * - ``dns_instance_entry_factory`` = ``trove.dns.driver.DnsInstanceEntryFactory``
-     - (StrOpt) Factory for adding DNS entries.
+     - (String) Factory for adding DNS entries.
    * - ``dns_management_base_url`` =
-     - (StrOpt) Management URL for DNSaaS.
+     - (String) Management URL for DNSaaS.
    * - ``dns_passkey`` =
-     - (StrOpt) Passkey for DNSaaS.
+     - (String) Passkey for DNSaaS.
    * - ``dns_region`` =
-     - (StrOpt) Region name for DNSaaS.
+     - (String) Region name for DNSaaS.
    * - ``dns_service_type`` =
-     - (StrOpt) Service Type for DNSaaS.
+     - (String) Service Type for DNSaaS.
    * - ``dns_time_out`` = ``120``
-     - (IntOpt) Maximum time (in seconds) to wait for a DNS entry add.
+     - (Integer) Maximum time (in seconds) to wait for a DNS entry add.
    * - ``dns_ttl`` = ``300``
-     - (IntOpt) Time (in seconds) before a refresh of DNS information occurs.
+     - (Integer) Time (in seconds) before a refresh of DNS information occurs.
    * - ``dns_username`` =
-     - (StrOpt) Username for DNSaaS.
+     - (String) Username for DNSaaS.
    * - ``trove_dns_support`` = ``False``
-     - (BoolOpt) Whether Trove should add DNS entries on create (using Designate DNSaaS).
+     - (Boolean) Whether Trove should add DNS entries on create (using Designate DNSaaS).

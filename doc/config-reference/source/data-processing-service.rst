@@ -23,9 +23,9 @@ service configuration options:
 .. include:: tables/sahara-logging.rst
 .. include:: tables/sahara-object_store_access.rst
 .. include:: tables/sahara-policy.rst
-.. include:: tables/sahara-qpid.rst
 .. include:: tables/sahara-rabbitmq.rst
 .. include:: tables/sahara-redis.rst
 .. include:: tables/sahara-rpc.rst
 .. include:: tables/sahara-timeouts.rst
+.. include:: tables/sahara-varmour.rst
 .. include:: tables/sahara-zeromq.rst

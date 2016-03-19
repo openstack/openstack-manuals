@@ -18,19 +18,21 @@
      - Description
    * - **[glance_store]**
      -
-   * - ``vmware_api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL requests to ESX/VC.
    * - ``vmware_api_retry_count`` = ``10``
-     - (IntOpt) Number of times VMware ESX/VC server API must be retried upon connection related issues.
+     - (Integer) Number of times VMware ESX/VC server API must be retried upon connection related issues.
+   * - ``vmware_ca_file`` = ``None``
+     - (String) Specify a CA bundle file to use in verifying the ESX/vCenter server certificate.
    * - ``vmware_datastores`` = ``None``
-     - (MultiStrOpt) A list of datastores where the image can be stored. This option may be specified multiple times for specifying multiple datastores. The datastore name should be specified after its datacenter path, seperated by ":". An optional weight may be given after the datastore name, seperated again by ":". Thus, the required format becomes <datacenter_path>:<datastore_name>:<optional_weight>. When adding an image, the datastore with highest weight will be selected, unless there is not enough free space available in cases where the image size is already known. If no weight is given, it is assumed to be zero and the directory will be considered for selection last. If multiple datastores have the same weight, then the one with the most free space available is selected.
+     - (Multi-valued) A list of datastores where the image can be stored. This option may be specified multiple times for specifying multiple datastores. The datastore name should be specified after its datacenter path, seperated by ":". An optional weight may be given after the datastore name, seperated again by ":". Thus, the required format becomes <datacenter_path>:<datastore_name>:<optional_weight>. When adding an image, the datastore with highest weight will be selected, unless there is not enough free space available in cases where the image size is already known. If no weight is given, it is assumed to be zero and the directory will be considered for selection last. If multiple datastores have the same weight, then the one with the most free space available is selected.
+   * - ``vmware_insecure`` = ``False``
+     - (Boolean) If true, the ESX/vCenter server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "vmware_ca_file" is set.
    * - ``vmware_server_host`` = ``None``
-     - (StrOpt) ESX/ESXi or vCenter Server target system. The server value can be an IP address or a DNS name.
+     - (String) ESX/ESXi or vCenter Server target system. The server value can be an IP address or a DNS name.
    * - ``vmware_server_password`` = ``None``
-     - (StrOpt) Password for authenticating with VMware ESX/VC server.
+     - (String) Password for authenticating with VMware ESX/VC server.
    * - ``vmware_server_username`` = ``None``
-     - (StrOpt) Username for authenticating with VMware ESX/VC server.
+     - (String) Username for authenticating with VMware ESX/VC server.
    * - ``vmware_store_image_dir`` = ``/openstack_glance``
-     - (StrOpt) The name of the directory where the glance images will be stored in the VMware datastore.
+     - (String) The name of the directory where the glance images will be stored in the VMware datastore.
    * - ``vmware_task_poll_interval`` = ``5``
-     - (IntOpt) The interval used for polling remote tasks invoked on VMware ESX/VC server.
+     - (Integer) The interval used for polling remote tasks invoked on VMware ESX/VC server.

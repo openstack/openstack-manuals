@@ -19,18 +19,12 @@
    * - **[DEFAULT]**
      -
    * - ``conductor_manager`` = ``trove.conductor.manager.Manager``
-     - (StrOpt) Qualified class name to use for conductor manager.
+     - (String) Qualified class name to use for conductor manager.
    * - ``conductor_queue`` = ``trove-conductor``
-     - (StrOpt) Message queue name the Conductor will listen on.
+     - (String) Message queue name the Conductor will listen on.
    * - ``control_exchange`` = ``openstack``
-     - (StrOpt) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
-   * - ``notification_driver`` = ``[]``
-     - (MultiStrOpt) The Drivers(s) to handle sending notifications. Possible values are messaging, messagingv2, routing, log, test, noop
+     - (String) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
    * - ``notification_service_id`` = ``{'mongodb': 'c8c907af-7375-456f-b929-b637ff9209ee', 'percona': 'fd1723f5-68d2-409c-994f-a4a197892a17', 'mysql': '2f3ff068-2bfb-4f70-9a9d-a6bb65bc084b', 'pxc': '75a628c3-f81b-4ffb-b10a-4087c26bc854', 'db2': 'e040cd37-263d-4869-aaa6-c62aa97523b5', 'cassandra': '459a230d-4e97-4344-9067-2a54a310b0ed', 'mariadb': '7a4f82cc-10d2-4bc6-aadc-d9aacc2a3cb5', 'postgresql': 'ac277e0d-4f21-40aa-b347-1ea31e571720', 'couchbase': 'fa62fe68-74d9-4779-a24e-36f19602c415', 'couchdb': 'f0a9ab7b-66f7-4352-93d7-071521d44c7c', 'redis': 'b216ffc5-1947-456c-a4cf-70f94c05f7d0', 'vertica': 'a8d805ae-a3b2-c4fd-gb23-b62cee5201ae'}``
-     - (DictOpt) Unique ID to tag notification events.
-   * - ``notification_topics`` = ``notifications``
-     - (ListOpt) AMQP topic used for OpenStack notifications.
-   * - ``notification_transport_url`` = ``None``
-     - (StrOpt) A URL representing the messaging driver to use for notifications. If not set, we fall back to the same configuration used for RPC.
+     - (Dict) Unique ID to tag notification events.
    * - ``transport_url`` = ``None``
-     - (StrOpt) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.
+     - (String) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.

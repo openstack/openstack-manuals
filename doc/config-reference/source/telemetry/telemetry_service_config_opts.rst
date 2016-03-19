@@ -19,13 +19,13 @@ configuration options.
 .. include:: ../tables/ceilometer-events.rst
 .. include:: ../tables/ceilometer-exchange.rst
 .. include:: ../tables/ceilometer-glance.rst
+.. include:: ../tables/ceilometer-hyperv.rst
 .. include:: ../tables/ceilometer-inspector.rst
 .. include:: ../tables/ceilometer-ipmi.rst
 .. include:: ../tables/ceilometer-logging.rst
 .. include:: ../tables/ceilometer-magnetodb.rst
 .. include:: ../tables/ceilometer-notification.rst
 .. include:: ../tables/ceilometer-policy.rst
-.. include:: ../tables/ceilometer-qpid.rst
 .. include:: ../tables/ceilometer-rabbitmq.rst
 .. include:: ../tables/ceilometer-redis.rst
 .. include:: ../tables/ceilometer-rgw.rst

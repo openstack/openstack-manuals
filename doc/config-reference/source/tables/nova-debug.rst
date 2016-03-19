@@ -19,4 +19,4 @@
    * - **[guestfs]**
      -
    * - ``debug`` = ``False``
-     - (BoolOpt) Enable guestfs debug
+     - (Boolean) Enable guestfs debug

@@ -19,58 +19,58 @@
    * - **[cinder]**
      -
    * - ``api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL requests to cinder.
+     - (Boolean) Allow to perform insecure SSL requests to cinder.
    * - ``api_version`` = ``2``
-     - (IntOpt) Version of the Cinder API to use.
+     - (Integer) Version of the Cinder API to use.
    * - ``ca_file`` = ``None``
-     - (StrOpt) Location of ca certificates file to use for cinder client requests.
+     - (String) Location of ca certificates file to use for cinder client requests.
    * - ``endpoint_type`` = ``internalURL``
-     - (StrOpt) Endpoint type for cinder client requests
+     - (String) Endpoint type for cinder client requests
    * - **[heat]**
      -
    * - ``api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL requests to heat.
+     - (Boolean) Allow to perform insecure SSL requests to heat.
    * - ``ca_file`` = ``None``
-     - (StrOpt) Location of ca certificates file to use for heat client requests.
+     - (String) Location of ca certificates file to use for heat client requests.
    * - ``endpoint_type`` = ``internalURL``
-     - (StrOpt) Endpoint type for heat client requests
+     - (String) Endpoint type for heat client requests
    * - **[keystone]**
      -
    * - ``api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL requests to keystone.
+     - (Boolean) Allow to perform insecure SSL requests to keystone.
    * - ``ca_file`` = ``None``
-     - (StrOpt) Location of ca certificates file to use for keystone client requests.
+     - (String) Location of ca certificates file to use for keystone client requests.
    * - ``endpoint_type`` = ``internalURL``
-     - (StrOpt) Endpoint type for keystone client requests
+     - (String) Endpoint type for keystone client requests
    * - **[manila]**
      -
    * - ``api_insecure`` = ``True``
-     - (BoolOpt) Allow to perform insecure SSL requests to manila.
+     - (Boolean) Allow to perform insecure SSL requests to manila.
    * - ``api_version`` = ``1``
-     - (IntOpt) Version of the manila API to use.
+     - (Integer) Version of the manila API to use.
    * - ``ca_file`` = ``None``
-     - (StrOpt) Location of ca certificates file to use for manila client requests.
+     - (String) Location of ca certificates file to use for manila client requests.
    * - **[neutron]**
      -
    * - ``api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL requests to neutron.
+     - (Boolean) Allow to perform insecure SSL requests to neutron.
    * - ``ca_file`` = ``None``
-     - (StrOpt) Location of ca certificates file to use for neutron client requests.
+     - (String) Location of ca certificates file to use for neutron client requests.
    * - ``endpoint_type`` = ``internalURL``
-     - (StrOpt) Endpoint type for neutron client requests
+     - (String) Endpoint type for neutron client requests
    * - **[nova]**
      -
    * - ``api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL requests to nova.
+     - (Boolean) Allow to perform insecure SSL requests to nova.
    * - ``ca_file`` = ``None``
-     - (StrOpt) Location of ca certificates file to use for nova client requests.
+     - (String) Location of ca certificates file to use for nova client requests.
    * - ``endpoint_type`` = ``internalURL``
-     - (StrOpt) Endpoint type for nova client requests
+     - (String) Endpoint type for nova client requests
    * - **[swift]**
      -
    * - ``api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL requests to swift.
+     - (Boolean) Allow to perform insecure SSL requests to swift.
    * - ``ca_file`` = ``None``
-     - (StrOpt) Location of ca certificates file to use for swift client requests.
+     - (String) Location of ca certificates file to use for swift client requests.
    * - ``endpoint_type`` = ``internalURL``
-     - (StrOpt) Endpoint type for swift client requests
+     - (String) Endpoint type for swift client requests

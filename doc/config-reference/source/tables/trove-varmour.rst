@@ -8,17 +8,21 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _ironic-drac:
+.. _trove-varmour:
 
-.. list-table:: Description of DRAC configuration options
+.. list-table:: Description of vArmour configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[drac]**
+   * - **[vArmour]**
      -
-   * - ``client_retry_count`` = ``5``
-     - (IntOpt) In case there is a communication failure, the DRAC client resends the request as many times as defined in this setting.
-   * - ``client_retry_delay`` = ``5``
-     - (IntOpt) In case there is a communication failure, the DRAC client waits for as many seconds as defined in this setting before resending the request.
+   * - ``director`` = ``localhost``
+     - (String) vArmour director ip
+   * - ``director_port`` = ``443``
+     - (String) vArmour director port
+   * - ``password`` = ``varmour``
+     - (String) vArmour director password
+   * - ``username`` = ``varmour``
+     - (String) vArmour director username

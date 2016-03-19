@@ -19,28 +19,28 @@
    * - **[DEFAULT]**
      -
    * - ``netapp_controller_ips`` = ``None``
-     - (StrOpt) This option is only utilized when the storage family is configured to eseries. This option is used to restrict provisioning to the specified controllers. Specify the value of this option to be a comma separated list of controller hostnames or IP addresses to be used for provisioning.
+     - (String) This option is only utilized when the storage family is configured to eseries. This option is used to restrict provisioning to the specified controllers. Specify the value of this option to be a comma separated list of controller hostnames or IP addresses to be used for provisioning.
    * - ``netapp_enable_multiattach`` = ``False``
-     - (BoolOpt) This option specifies whether the driver should allow operations that require multiple attachments to a volume. An example would be live migration of servers that have volumes attached. When enabled, this backend is limited to 256 total volumes in order to guarantee volumes can be accessed by more than one host.
+     - (Boolean) This option specifies whether the driver should allow operations that require multiple attachments to a volume. An example would be live migration of servers that have volumes attached. When enabled, this backend is limited to 256 total volumes in order to guarantee volumes can be accessed by more than one host.
    * - ``netapp_host_type`` = ``None``
-     - (StrOpt) This option defines the type of operating system for all initiators that can access a LUN. This information is used when mapping LUNs to individual hosts or groups of hosts.
+     - (String) This option defines the type of operating system for all initiators that can access a LUN. This information is used when mapping LUNs to individual hosts or groups of hosts.
    * - ``netapp_login`` = ``None``
-     - (StrOpt) Administrative user account name used to access the storage system or proxy server.
+     - (String) Administrative user account name used to access the storage system or proxy server.
    * - ``netapp_partner_backend_name`` = ``None``
-     - (StrOpt) The name of the config.conf stanza for a Data ONTAP (7-mode) HA partner. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode, and it is required if the storage protocol selected is FC.
+     - (String) The name of the config.conf stanza for a Data ONTAP (7-mode) HA partner. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode, and it is required if the storage protocol selected is FC.
    * - ``netapp_password`` = ``None``
-     - (StrOpt) Password for the administrative user account specified in the netapp_login option.
+     - (String) Password for the administrative user account specified in the netapp_login option.
    * - ``netapp_pool_name_search_pattern`` = ``(.+)``
-     - (StrOpt) This option is used to restrict provisioning to the specified pools. Specify the value of this option to be a regular expression which will be applied to the names of objects from the storage backend which represent pools in Cinder. This option is only utilized when the storage protocol is configured to use iSCSI or FC.
+     - (String) This option is used to restrict provisioning to the specified pools. Specify the value of this option to be a regular expression which will be applied to the names of objects from the storage backend which represent pools in Cinder. This option is only utilized when the storage protocol is configured to use iSCSI or FC.
    * - ``netapp_sa_password`` = ``None``
-     - (StrOpt) Password for the NetApp E-Series storage array.
+     - (String) Password for the NetApp E-Series storage array.
    * - ``netapp_server_hostname`` = ``None``
-     - (StrOpt) The hostname (or IP address) for the storage system or proxy server.
+     - (String) The hostname (or IP address) for the storage system or proxy server.
    * - ``netapp_server_port`` = ``None``
-     - (IntOpt) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.
+     - (Integer) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.
    * - ``netapp_storage_family`` = ``ontap_cluster``
-     - (StrOpt) The storage family type used on the storage system; valid values are ontap_7mode for using Data ONTAP operating in 7-Mode, ontap_cluster for using clustered Data ONTAP, or eseries for using E-Series.
+     - (String) The storage family type used on the storage system; valid values are ontap_7mode for using Data ONTAP operating in 7-Mode, ontap_cluster for using clustered Data ONTAP, or eseries for using E-Series.
    * - ``netapp_transport_type`` = ``http``
-     - (StrOpt) The transport protocol used when communicating with the storage system or proxy server.
+     - (String) The transport protocol used when communicating with the storage system or proxy server.
    * - ``netapp_webservice_path`` = ``/devmgr/v2``
-     - (StrOpt) This option is used to specify the path to the E-Series proxy application on a proxy server. The value is combined with the value of the netapp_transport_type, netapp_server_hostname, and netapp_server_port options to create the URL used by the driver to connect to the proxy application.
+     - (String) This option is used to specify the path to the E-Series proxy application on a proxy server. The value is combined with the value of the netapp_transport_type, netapp_server_hostname, and netapp_server_port options to create the URL used by the driver to connect to the proxy application.

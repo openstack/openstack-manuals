@@ -19,6 +19,6 @@
    * - **[rdp]**
      -
    * - ``enabled`` = ``False``
-     - (BoolOpt) Enable RDP related features
+     - (Boolean) Enable RDP related features
    * - ``html5_proxy_base_url`` = ``http://127.0.0.1:6083/``
-     - (StrOpt) Location of RDP html5 console proxy, in the form "http://127.0.0.1:6083/"
+     - (String) Location of RDP html5 console proxy, in the form "http://127.0.0.1:6083/"

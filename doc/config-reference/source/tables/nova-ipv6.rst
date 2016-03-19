@@ -19,10 +19,10 @@
    * - **[DEFAULT]**
      -
    * - ``fixed_range_v6`` = ``fd00::/48``
-     - (StrOpt) Fixed IPv6 address block
+     - (String) Fixed IPv6 address block
    * - ``gateway_v6`` = ``None``
-     - (StrOpt) Default IPv6 gateway
+     - (String) Default IPv6 gateway
    * - ``ipv6_backend`` = ``rfc2462``
-     - (StrOpt) Backend to use for IPv6 generation
+     - (String) Backend to use for IPv6 generation
    * - ``use_ipv6`` = ``False``
-     - (BoolOpt) Use IPv6
+     - (Boolean) Use IPv6

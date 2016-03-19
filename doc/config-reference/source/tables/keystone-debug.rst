@@ -19,12 +19,12 @@
    * - **[DEFAULT]**
      -
    * - ``pydev_debug_host`` = ``None``
-     - (StrOpt) Host to connect to for remote debugger.
+     - (String) Host to connect to for remote debugger.
    * - ``pydev_debug_port`` = ``None``
-     - (IntOpt) Port to connect to for remote debugger.
+     - (Unknown) Port to connect to for remote debugger.
    * - ``standard_threads`` = ``False``
-     - (BoolOpt) Do not monkey-patch threading system modules.
+     - (Boolean) Do not monkey-patch threading system modules.
    * - **[audit]**
      -
    * - ``namespace`` = ``openstack``
-     - (StrOpt) namespace prefix for generated id
+     - (String) namespace prefix for generated id

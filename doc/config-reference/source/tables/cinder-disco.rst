@@ -19,14 +19,14 @@
    * - **[DEFAULT]**
      -
    * - ``clone_check_timeout`` = ``3600``
-     - (IntOpt) How long we check whether a clone is finished before we give up
+     - (Integer) How long we check whether a clone is finished before we give up
    * - ``disco_client`` = ``127.0.0.1``
-     - (IPOpt) The IP of DMS client socket server
+     - (Unknown) The IP of DMS client socket server
    * - ``disco_client_port`` = ``9898``
-     - (PortOpt) The port to connect DMS client socket server
+     - (Unknown) The port to connect DMS client socket server
    * - ``disco_wsdl_path`` = ``/etc/cinder/DISCOService.wsdl``
-     - (StrOpt) Path to the wsdl file to communicate with DISCO request manager
+     - (String) Path to the wsdl file to communicate with DISCO request manager
    * - ``restore_check_timeout`` = ``3600``
-     - (IntOpt) How long we check whether a restore is finished before we give up
+     - (Integer) How long we check whether a restore is finished before we give up
    * - ``retry_interval`` = ``1``
-     - (IntOpt) How long we wait before retrying to get an item detail
+     - (Integer) How long we wait before retrying to get an item detail

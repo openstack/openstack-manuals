@@ -19,6 +19,6 @@
    * - **[libvirt]**
      -
    * - ``quobyte_client_cfg`` = ``None``
-     - (StrOpt) Path to a Quobyte Client configuration file.
+     - (String) Path to a Quobyte Client configuration file.
    * - ``quobyte_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Directory where the Quobyte volume is mounted on the compute node
+     - (String) Directory where the Quobyte volume is mounted on the compute node

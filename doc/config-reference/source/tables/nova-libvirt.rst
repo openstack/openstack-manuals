@@ -19,92 +19,92 @@
    * - **[DEFAULT]**
      -
    * - ``remove_unused_base_images`` = ``True``
-     - (BoolOpt) Should unused base images be removed?
+     - (Boolean) Should unused base images be removed?
    * - ``remove_unused_original_minimum_age_seconds`` = ``86400``
-     - (IntOpt) Unused unresized base images younger than this will not be removed
+     - (Integer) Unused unresized base images younger than this will not be removed
    * - **[libvirt]**
      -
    * - ``block_migration_flag`` = ``VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED, VIR_MIGRATE_NON_SHARED_INC``
-     - (StrOpt) Migration flags to be set for block migration
+     - (String) DEPRECATED: Migration flags to be set for block migration The correct block migration flags can be inferred from the new live_migration_tunnelled config option. block_migration_flag will be removed to avoid potential misconfiguration.
    * - ``checksum_base_images`` = ``False``
-     - (BoolOpt) Write a checksum for files in _base to disk
+     - (Boolean) Write a checksum for files in _base to disk
    * - ``checksum_interval_seconds`` = ``3600``
-     - (IntOpt) How frequently to checksum base images
+     - (Integer) How frequently to checksum base images
    * - ``connection_uri`` =
-     - (StrOpt) Override the default libvirt URI (which is dependent on virt_type)
+     - (String) Override the default libvirt URI (which is dependent on virt_type)
    * - ``cpu_mode`` = ``None``
-     - (StrOpt) Set to "host-model" to clone the host CPU feature flags; to "host-passthrough" to use the host CPU model exactly; to "custom" to use a named CPU model; to "none" to not set any CPU model. If virt_type="kvm|qemu", it will default to "host-model", otherwise it will default to "none"
+     - (String) Set to "host-model" to clone the host CPU feature flags; to "host-passthrough" to use the host CPU model exactly; to "custom" to use a named CPU model; to "none" to not set any CPU model. If virt_type="kvm|qemu", it will default to "host-model", otherwise it will default to "none"
    * - ``cpu_model`` = ``None``
-     - (StrOpt) Set to a named libvirt CPU model (see names listed in /usr/share/libvirt/cpu_map.xml). Only has effect if cpu_mode="custom" and virt_type="kvm|qemu"
+     - (String) Set to a named libvirt CPU model (see names listed in /usr/share/libvirt/cpu_map.xml). Only has effect if cpu_mode="custom" and virt_type="kvm|qemu"
    * - ``disk_cachemodes`` =
-     - (ListOpt) Specific cachemodes to use for different disk types e.g: file=directsync,block=none
+     - (List) Specific cachemodes to use for different disk types e.g: file=directsync,block=none
    * - ``disk_prefix`` = ``None``
-     - (StrOpt) Override the default disk prefix for the devices attached to a server, which is dependent on virt_type. (valid options are: sd, xvd, uvd, vd)
+     - (String) Override the default disk prefix for the devices attached to a server, which is dependent on virt_type. (valid options are: sd, xvd, uvd, vd)
    * - ``gid_maps`` =
-     - (ListOpt) List of guid targets and ranges.Syntax is guest-gid:host-gid:countMaximum of 5 allowed.
+     - (List) List of guid targets and ranges.Syntax is guest-gid:host-gid:countMaximum of 5 allowed.
    * - ``hw_disk_discard`` = ``None``
-     - (StrOpt) Discard option for nova managed disks. Need Libvirt(1.0.6) Qemu1.5 (raw format) Qemu1.6(qcow2 format)
+     - (String) Discard option for nova managed disks. Need Libvirt(1.0.6) Qemu1.5 (raw format) Qemu1.6(qcow2 format)
    * - ``hw_machine_type`` = ``None``
-     - (ListOpt) For qemu or KVM guests, set this option to specify a default machine type per host architecture. You can find a list of supported machine types in your environment by checking the output of the "virsh capabilities"command. The format of the value for this config option is host-arch=machine-type. For example: x86_64=machinetype1,armv7l=machinetype2
+     - (List) For qemu or KVM guests, set this option to specify a default machine type per host architecture. You can find a list of supported machine types in your environment by checking the output of the "virsh capabilities"command. The format of the value for this config option is host-arch=machine-type. For example: x86_64=machinetype1,armv7l=machinetype2
    * - ``image_info_filename_pattern`` = ``$instances_path/$image_cache_subdirectory_name/%(image)s.info``
-     - (StrOpt) Allows image information files to be stored in non-standard locations
+     - (String) Allows image information files to be stored in non-standard locations
    * - ``images_rbd_ceph_conf`` =
-     - (StrOpt) Path to the ceph configuration file to use
+     - (String) Path to the ceph configuration file to use
    * - ``images_rbd_pool`` = ``rbd``
-     - (StrOpt) The RADOS pool in which rbd volumes are stored
+     - (String) The RADOS pool in which rbd volumes are stored
    * - ``images_type`` = ``default``
-     - (StrOpt) VM Images format. If default is specified, then use_cow_images flag is used instead of this one.
+     - (String) VM Images format. If default is specified, then use_cow_images flag is used instead of this one.
    * - ``images_volume_group`` = ``None``
-     - (StrOpt) LVM Volume Group that is used for VM images, when you specify images_type=lvm.
+     - (String) LVM Volume Group that is used for VM images, when you specify images_type=lvm.
    * - ``inject_key`` = ``False``
-     - (BoolOpt) Inject the ssh public key at boot time
+     - (Boolean) Inject the ssh public key at boot time
    * - ``inject_partition`` = ``-2``
-     - (IntOpt) The partition to inject to : -2 => disable, -1 => inspect (libguestfs only), 0 => not partitioned, >0 => partition number
+     - (Integer) The partition to inject to : -2 => disable, -1 => inspect (libguestfs only), 0 => not partitioned, >0 => partition number
    * - ``inject_password`` = ``False``
-     - (BoolOpt) Inject the admin password at boot time, without an agent.
+     - (Boolean) Inject the admin password at boot time, without an agent.
    * - ``iscsi_iface`` = ``None``
-     - (StrOpt) The iSCSI transport iface to use to connect to target in case offload support is desired. Default format is of the form <transport_name>.<hwaddress> where <transport_name> is one of (be2iscsi, bnx2i, cxgb3i, cxgb4i, qla4xxx, ocs) and <hwaddress> is the MAC address of the interface and can be generated via the iscsiadm -m iface command. Do not confuse the iscsi_iface parameter to be provided here with the actual transport name.
+     - (String) The iSCSI transport iface to use to connect to target in case offload support is desired. Default format is of the form <transport_name>.<hwaddress> where <transport_name> is one of (be2iscsi, bnx2i, cxgb3i, cxgb4i, qla4xxx, ocs) and <hwaddress> is the MAC address of the interface and can be generated via the iscsiadm -m iface command. Do not confuse the iscsi_iface parameter to be provided here with the actual transport name.
    * - ``iscsi_use_multipath`` = ``False``
-     - (BoolOpt) Use multipath connection of the iSCSI or FC volume
+     - (Boolean) Use multipath connection of the iSCSI or FC volume
    * - ``iser_use_multipath`` = ``False``
-     - (BoolOpt) Use multipath connection of the iSER volume
+     - (Boolean) Use multipath connection of the iSER volume
    * - ``mem_stats_period_seconds`` = ``10``
-     - (IntOpt) A number of seconds to memory usage statistics period. Zero or negative value mean to disable memory usage statistics.
+     - (Integer) A number of seconds to memory usage statistics period. Zero or negative value mean to disable memory usage statistics.
    * - ``realtime_scheduler_priority`` = ``1``
-     - (IntOpt) In a realtime host context vCPUs for guest will run in that scheduling priority. Priority depends on the host kernel (usually 1-99)
+     - (Integer) In a realtime host context vCPUs for guest will run in that scheduling priority. Priority depends on the host kernel (usually 1-99)
    * - ``remove_unused_kernels`` = ``True``
-     - (BoolOpt) DEPRECATED: Should unused kernel images be removed? This is only safe to enable if all compute nodes have been updated to support this option (running Grizzly or newer level compute). This will be the default behavior in the 13.0.0 release.
+     - (Boolean) DEPRECATED: Should unused kernel images be removed? This is only safe to enable if all compute nodes have been updated to support this option (running Grizzly or newer level compute). This will be the default behavior in the 13.0.0 release.
    * - ``remove_unused_resized_minimum_age_seconds`` = ``3600``
-     - (IntOpt) Unused resized base images younger than this will not be removed
+     - (Integer) Unused resized base images younger than this will not be removed
    * - ``rescue_image_id`` = ``None``
-     - (StrOpt) Rescue ami image. This will not be used if an image id is provided by the user.
+     - (String) Rescue ami image. This will not be used if an image id is provided by the user.
    * - ``rescue_kernel_id`` = ``None``
-     - (StrOpt) Rescue aki image
+     - (String) Rescue aki image
    * - ``rescue_ramdisk_id`` = ``None``
-     - (StrOpt) Rescue ari image
+     - (String) Rescue ari image
    * - ``rng_dev_path`` = ``None``
-     - (StrOpt) A path to a device that will be used as source of entropy on the host. Permitted options are: /dev/random or /dev/hwrng
+     - (String) A path to a device that will be used as source of entropy on the host. Permitted options are: /dev/random or /dev/hwrng
    * - ``snapshot_compression`` = ``False``
-     - (BoolOpt) Compress snapshot images when possible. This currently applies exclusively to qcow2 images
+     - (Boolean) Compress snapshot images when possible. This currently applies exclusively to qcow2 images
    * - ``snapshot_image_format`` = ``None``
-     - (StrOpt) Snapshot image format. Defaults to same as source image
+     - (String) Snapshot image format. Defaults to same as source image
    * - ``snapshots_directory`` = ``$instances_path/snapshots``
-     - (StrOpt) Location where libvirt driver will store snapshots before uploading them to image service
+     - (String) Location where libvirt driver will store snapshots before uploading them to image service
    * - ``sparse_logical_volumes`` = ``False``
-     - (BoolOpt) Create sparse logical volumes (with virtualsize) if this flag is set to True.
+     - (Boolean) Create sparse logical volumes (with virtualsize) if this flag is set to True.
    * - ``sysinfo_serial`` = ``auto``
-     - (StrOpt) The data source used to the populate the host "serial" UUID exposed to guest in the virtual BIOS.
+     - (String) The data source used to the populate the host "serial" UUID exposed to guest in the virtual BIOS.
    * - ``uid_maps`` =
-     - (ListOpt) List of uid targets and ranges.Syntax is guest-uid:host-uid:countMaximum of 5 allowed.
+     - (List) List of uid targets and ranges.Syntax is guest-uid:host-uid:countMaximum of 5 allowed.
    * - ``use_usb_tablet`` = ``True``
-     - (BoolOpt) Sync virtual and real mouse cursors in Windows VMs
+     - (Boolean) Sync virtual and real mouse cursors in Windows VMs
    * - ``use_virtio_for_bridges`` = ``True``
-     - (BoolOpt) Use virtio for bridge interfaces with KVM/QEMU
+     - (Boolean) Use virtio for bridge interfaces with KVM/QEMU
    * - ``virt_type`` = ``kvm``
-     - (StrOpt) Libvirt domain type
+     - (String) Libvirt domain type
    * - ``volume_clear`` = ``zero``
-     - (StrOpt) Method used to wipe old volumes.
+     - (String) Method used to wipe old volumes.
    * - ``volume_clear_size`` = ``0``
-     - (IntOpt) Size in MiB to wipe at start of old volumes. 0 => all
+     - (Integer) Size in MiB to wipe at start of old volumes. 0 => all
    * - ``wait_soft_reboot_seconds`` = ``120``
-     - (IntOpt) Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.
+     - (Integer) Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.

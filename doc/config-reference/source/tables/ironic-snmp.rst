@@ -19,6 +19,6 @@
    * - **[snmp]**
      -
    * - ``power_timeout`` = ``10``
-     - (IntOpt) Seconds to wait for power action to be completed
+     - (Integer) Seconds to wait for power action to be completed
    * - ``reboot_delay`` = ``0``
-     - (IntOpt) Time (in seconds) to sleep between when rebooting (powering off and on again)
+     - (Integer) Time (in seconds) to sleep between when rebooting (powering off and on again)

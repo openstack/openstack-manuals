@@ -19,20 +19,20 @@
    * - **[identity]**
      -
    * - ``cache_time`` = ``600``
-     - (IntOpt) Time to cache identity data (in seconds). This has no effect unless global and identity caching are enabled.
+     - (Integer) Time to cache identity data (in seconds). This has no effect unless global and identity caching are enabled.
    * - ``caching`` = ``True``
-     - (BoolOpt) Toggle for identity caching. This has no effect unless global caching is enabled.
+     - (Boolean) Toggle for identity caching. This has no effect unless global caching is enabled.
    * - ``default_domain_id`` = ``default``
-     - (StrOpt) This references the domain to use for all Identity API v2 requests (which are not aware of domains). A domain with this ID will be created for you by keystone-manage db_sync in migration 008. The domain referenced by this ID cannot be deleted on the v3 API, to prevent accidentally breaking the v2 API. There is nothing special about this domain, other than the fact that it must exist to order to maintain support for your v2 clients.
+     - (String) This references the domain to use for all Identity API v2 requests (which are not aware of domains). A domain with this ID will be created for you by keystone-manage db_sync in migration 008. The domain referenced by this ID cannot be deleted on the v3 API, to prevent accidentally breaking the v2 API. There is nothing special about this domain, other than the fact that it must exist to order to maintain support for your v2 clients.
    * - ``domain_config_dir`` = ``/etc/keystone/domains``
-     - (StrOpt) Path for Keystone to locate the domain specific identity configuration files if domain_specific_drivers_enabled is set to true.
+     - (String) Path for Keystone to locate the domain specific identity configuration files if domain_specific_drivers_enabled is set to true.
    * - ``domain_configurations_from_database`` = ``False``
-     - (BoolOpt) Extract the domain specific configuration options from the resource backend where they have been stored with the domain data. This feature is disabled by default (in which case the domain specific options will be loaded from files in the domain configuration directory); set to true to enable.
+     - (Boolean) Extract the domain specific configuration options from the resource backend where they have been stored with the domain data. This feature is disabled by default (in which case the domain specific options will be loaded from files in the domain configuration directory); set to true to enable.
    * - ``domain_specific_drivers_enabled`` = ``False``
-     - (BoolOpt) A subset (or all) of domains can have their own identity driver, each with their own partial configuration options, stored in either the resource backend or in a file in a domain configuration directory (depending on the setting of domain_configurations_from_database). Only values specific to the domain need to be specified in this manner. This feature is disabled by default; set to true to enable.
+     - (Boolean) A subset (or all) of domains can have their own identity driver, each with their own partial configuration options, stored in either the resource backend or in a file in a domain configuration directory (depending on the setting of domain_configurations_from_database). Only values specific to the domain need to be specified in this manner. This feature is disabled by default; set to true to enable.
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for the identity backend driver in the keystone.identity namespace. Supplied drivers are ldap and sql.
+     - (String) Entrypoint for the identity backend driver in the keystone.identity namespace. Supplied drivers are ldap and sql.
    * - ``list_limit`` = ``None``
-     - (IntOpt) Maximum number of entities that will be returned in an identity collection.
+     - (Integer) Maximum number of entities that will be returned in an identity collection.
    * - ``max_password_length`` = ``4096``
-     - (IntOpt) Maximum supported length for user passwords; decrease to improve performance.
+     - (Integer) Maximum supported length for user passwords; decrease to improve performance.

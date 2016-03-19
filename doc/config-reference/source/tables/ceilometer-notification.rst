@@ -19,10 +19,10 @@
    * - **[notification]**
      -
    * - ``batch_size`` = ``1``
-     - (IntOpt) Number of notification messages to wait before publishing them
+     - (Integer) Number of notification messages to wait before publishing them
    * - ``batch_timeout`` = ``None``
-     - (IntOpt) Number of seconds to wait before publishing sampleswhen batch_size is not reached (None means indefinitely)
+     - (Integer) Number of seconds to wait before publishing sampleswhen batch_size is not reached (None means indefinitely)
    * - ``disable_non_metric_meters`` = ``True``
-     - (BoolOpt) WARNING: Ceilometer historically offered the ability to store events as meters. This usage is NOT advised as it can flood the metering database and cause performance degradation.
+     - (Boolean) WARNING: Ceilometer historically offered the ability to store events as meters. This usage is NOT advised as it can flood the metering database and cause performance degradation.
    * - ``pipeline_processing_queues`` = ``10``
-     - (IntOpt) Number of queues to parallelize workload across. This value should be larger than the number of active notification agents for optimal results.
+     - (Integer) Number of queues to parallelize workload across. This value should be larger than the number of active notification agents for optimal results.

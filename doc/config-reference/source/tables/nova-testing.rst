@@ -19,10 +19,10 @@
    * - **[DEFAULT]**
      -
    * - ``fake_call`` = ``False``
-     - (BoolOpt) If True, skip using the queue and make local calls
+     - (Boolean) If True, skip using the queue and make local calls
    * - ``fake_network`` = ``False``
-     - (BoolOpt) If passed, use fake network devices and addresses
+     - (Boolean) If passed, use fake network devices and addresses
    * - ``monkey_patch`` = ``False``
-     - (BoolOpt) Whether to apply monkey patching
+     - (Boolean) Whether to apply monkey patching
    * - ``monkey_patch_modules`` = ``nova.compute.api:nova.notifications.notify_decorator``
-     - (ListOpt) List of modules/decorators to monkey patch
+     - (List) List of modules/decorators to monkey patch

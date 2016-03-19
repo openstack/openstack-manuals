@@ -19,12 +19,12 @@
    * - **[cimc]**
      -
    * - ``action_interval`` = ``10``
-     - (IntOpt) Amount of time in seconds to wait in between power operations
+     - (Integer) Amount of time in seconds to wait in between power operations
    * - ``max_retry`` = ``6``
-     - (IntOpt) Number of times a power operation needs to be retried
+     - (Integer) Number of times a power operation needs to be retried
    * - **[cisco_ucs]**
      -
    * - ``action_interval`` = ``5``
-     - (IntOpt) Amount of time in seconds to wait in between power operations
+     - (Integer) Amount of time in seconds to wait in between power operations
    * - ``max_retry`` = ``6``
-     - (IntOpt) Number of times a power operation needs to be retried
+     - (Integer) Number of times a power operation needs to be retried

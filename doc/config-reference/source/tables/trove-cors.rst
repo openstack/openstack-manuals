@@ -19,28 +19,28 @@
    * - **[cors]**
      -
    * - ``allow_credentials`` = ``True``
-     - (BoolOpt) Indicate that the actual request can include user credentials
+     - (Boolean) Indicate that the actual request can include user credentials
    * - ``allow_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which header field names may be used during the actual request.
+     - (List) Indicate which header field names may be used during the actual request.
    * - ``allow_methods`` = ``GET, POST, PUT, DELETE, OPTIONS``
-     - (ListOpt) Indicate which methods can be used during the actual request.
+     - (List) Indicate which methods can be used during the actual request.
    * - ``allowed_origin`` = ``None``
-     - (ListOpt) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
+     - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
    * - ``expose_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
+     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
    * - ``max_age`` = ``3600``
-     - (IntOpt) Maximum cache age of CORS preflight requests.
+     - (Integer) Maximum cache age of CORS preflight requests.
    * - **[cors.subdomain]**
      -
    * - ``allow_credentials`` = ``True``
-     - (BoolOpt) Indicate that the actual request can include user credentials
+     - (Boolean) Indicate that the actual request can include user credentials
    * - ``allow_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which header field names may be used during the actual request.
+     - (List) Indicate which header field names may be used during the actual request.
    * - ``allow_methods`` = ``GET, POST, PUT, DELETE, OPTIONS``
-     - (ListOpt) Indicate which methods can be used during the actual request.
+     - (List) Indicate which methods can be used during the actual request.
    * - ``allowed_origin`` = ``None``
-     - (ListOpt) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
+     - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
    * - ``expose_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
+     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
    * - ``max_age`` = ``3600``
-     - (IntOpt) Maximum cache age of CORS preflight requests.
+     - (Integer) Maximum cache age of CORS preflight requests.

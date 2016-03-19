@@ -19,22 +19,22 @@
    * - **[DEFAULT]**
      -
    * - ``filter_function`` = ``None``
-     - (StrOpt) String representation for an equation that will be used to filter hosts. Only used when the driver filter is set to be used by the Cinder scheduler.
+     - (String) String representation for an equation that will be used to filter hosts. Only used when the driver filter is set to be used by the Cinder scheduler.
    * - ``goodness_function`` = ``None``
-     - (StrOpt) String representation for an equation that will be used to determine the goodness of a host. Only used when using the goodness weigher is set to be used by the Cinder scheduler.
+     - (String) String representation for an equation that will be used to determine the goodness of a host. Only used when using the goodness weigher is set to be used by the Cinder scheduler.
    * - ``scheduler_default_filters`` = ``AvailabilityZoneFilter, CapacityFilter, CapabilitiesFilter``
-     - (ListOpt) Which filter class names to use for filtering hosts when not specified in the request.
+     - (List) Which filter class names to use for filtering hosts when not specified in the request.
    * - ``scheduler_default_weighers`` = ``CapacityWeigher``
-     - (ListOpt) Which weigher class names to use for weighing hosts.
+     - (List) Which weigher class names to use for weighing hosts.
    * - ``scheduler_driver`` = ``cinder.scheduler.filter_scheduler.FilterScheduler``
-     - (StrOpt) Default scheduler driver to use
+     - (String) Default scheduler driver to use
    * - ``scheduler_host_manager`` = ``cinder.scheduler.host_manager.HostManager``
-     - (StrOpt) The scheduler host manager class to use
+     - (String) The scheduler host manager class to use
    * - ``scheduler_json_config_location`` =
-     - (StrOpt) Absolute path to scheduler configuration JSON file.
+     - (String) Absolute path to scheduler configuration JSON file.
    * - ``scheduler_manager`` = ``cinder.scheduler.manager.SchedulerManager``
-     - (StrOpt) Full class name for the Manager for scheduler
+     - (String) Full class name for the Manager for scheduler
    * - ``scheduler_max_attempts`` = ``3``
-     - (IntOpt) Maximum number of attempts to schedule a volume
+     - (Integer) Maximum number of attempts to schedule a volume
    * - ``scheduler_topic`` = ``cinder-scheduler``
-     - (StrOpt) The topic that scheduler nodes listen on
+     - (String) The topic that scheduler nodes listen on

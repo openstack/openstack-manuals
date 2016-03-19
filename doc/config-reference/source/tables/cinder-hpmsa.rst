@@ -19,14 +19,14 @@
    * - **[DEFAULT]**
      -
    * - ``hpmsa_api_protocol`` = ``https``
-     - (StrOpt) HPMSA API interface protocol.
+     - (String) HPMSA API interface protocol.
    * - ``hpmsa_backend_name`` = ``A``
-     - (StrOpt) Pool or Vdisk name to use for volume creation.
+     - (String) Pool or Vdisk name to use for volume creation.
    * - ``hpmsa_backend_type`` = ``virtual``
-     - (StrOpt) linear (for Vdisk) or virtual (for Pool).
+     - (String) linear (for Vdisk) or virtual (for Pool).
    * - ``hpmsa_iscsi_ips`` =
-     - (ListOpt) List of comma-separated target iSCSI IP addresses.
+     - (List) List of comma-separated target iSCSI IP addresses.
    * - ``hpmsa_verify_certificate`` = ``False``
-     - (BoolOpt) Whether to verify HPMSA array SSL certificate.
+     - (Boolean) Whether to verify HPMSA array SSL certificate.
    * - ``hpmsa_verify_certificate_path`` = ``None``
-     - (StrOpt) HPMSA array SSL certificate path.
+     - (String) HPMSA array SSL certificate path.

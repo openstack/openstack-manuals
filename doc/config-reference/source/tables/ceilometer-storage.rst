@@ -19,6 +19,6 @@
    * - **[storage]**
      -
    * - ``max_retries`` = ``10``
-     - (IntOpt) Maximum number of connection retries during startup. Set to -1 to specify an infinite retry count.
+     - (Integer) Maximum number of connection retries during startup. Set to -1 to specify an infinite retry count.
    * - ``retry_interval`` = ``10``
-     - (IntOpt) Interval (in seconds) between retries of connection.
+     - (Integer) Interval (in seconds) between retries of connection.

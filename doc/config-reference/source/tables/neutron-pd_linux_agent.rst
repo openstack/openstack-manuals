@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``pd_confs`` = ``$state_path/pd``
-     - (StrOpt) Location to store IPv6 PD files.
+     - (String) Location to store IPv6 PD files.
    * - ``pd_dhcp_driver`` = ``dibbler``
-     - (StrOpt) Service to handle DHCPv6 Prefix delegation.
+     - (String) Service to handle DHCPv6 Prefix delegation.
    * - ``vendor_pen`` = ``8888``
-     - (StrOpt) A decimal value as Vendor's Registered Private Enterprise Number as required by RFC3315 DUID-EN.
+     - (String) A decimal value as Vendor's Registered Private Enterprise Number as required by RFC3315 DUID-EN.

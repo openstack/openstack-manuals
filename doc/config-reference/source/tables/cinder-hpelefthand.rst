@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``hpelefthand_api_url`` = ``None``
-     - (StrOpt) HPE LeftHand WSAPI Server Url like https://<LeftHand ip>:8081/lhos
+     - (String) HPE LeftHand WSAPI Server Url like https://<LeftHand ip>:8081/lhos
    * - ``hpelefthand_clustername`` = ``None``
-     - (StrOpt) HPE LeftHand cluster name
+     - (String) HPE LeftHand cluster name
    * - ``hpelefthand_debug`` = ``False``
-     - (BoolOpt) Enable HTTP debugging to LeftHand
+     - (Boolean) Enable HTTP debugging to LeftHand
    * - ``hpelefthand_iscsi_chap_enabled`` = ``False``
-     - (BoolOpt) Configure CHAP authentication for iSCSI connections (Default: Disabled)
+     - (Boolean) Configure CHAP authentication for iSCSI connections (Default: Disabled)
    * - ``hpelefthand_password`` = ``None``
-     - (StrOpt) HPE LeftHand Super user password
+     - (String) HPE LeftHand Super user password
    * - ``hpelefthand_ssh_port`` = ``16022``
-     - (PortOpt) Port number of SSH service.
+     - (Unknown) Port number of SSH service.
    * - ``hpelefthand_username`` = ``None``
-     - (StrOpt) HPE LeftHand Super user username
+     - (String) HPE LeftHand Super user username

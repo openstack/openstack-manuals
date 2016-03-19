@@ -19,38 +19,38 @@
    * - **[eventlet_server_ssl]**
      -
    * - ``ca_certs`` = ``/etc/keystone/ssl/certs/ca.pem``
-     - (StrOpt) Path of the CA cert file for SSL.
+     - (String) DEPRECATED: Path of the CA cert file for SSL.
    * - ``cert_required`` = ``False``
-     - (BoolOpt) Require client certificate.
+     - (Boolean) DEPRECATED: Require client certificate.
    * - ``certfile`` = ``/etc/keystone/ssl/certs/keystone.pem``
-     - (StrOpt) Path of the certfile for SSL. For non-production environments, you may be interested in using `keystone-manage ssl_setup` to generate self-signed certificates.
+     - (String) DEPRECATED: Path of the certfile for SSL. For non-production environments, you may be interested in using `keystone-manage ssl_setup` to generate self-signed certificates.
    * - ``enable`` = ``False``
-     - (BoolOpt) Toggle for SSL support on the Keystone eventlet servers.
+     - (Boolean) DEPRECATED: Toggle for SSL support on the Keystone eventlet servers.
    * - ``keyfile`` = ``/etc/keystone/ssl/private/keystonekey.pem``
-     - (StrOpt) Path of the keyfile for SSL.
+     - (String) DEPRECATED: Path of the keyfile for SSL.
    * - **[signing]**
      -
    * - ``ca_certs`` = ``/etc/keystone/ssl/certs/ca.pem``
-     - (StrOpt) Path of the CA for token signing.
+     - (String) DEPRECATED: Path of the CA for token signing. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
    * - ``ca_key`` = ``/etc/keystone/ssl/private/cakey.pem``
-     - (StrOpt) Path of the CA key for token signing.
+     - (String) DEPRECATED: Path of the CA key for token signing. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
    * - ``cert_subject`` = ``/C=US/ST=Unset/L=Unset/O=Unset/CN=www.example.com``
-     - (StrOpt) Certificate subject (auto generated certificate) for token signing.
+     - (String) DEPRECATED: Certificate subject (auto generated certificate) for token signing. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
    * - ``certfile`` = ``/etc/keystone/ssl/certs/signing_cert.pem``
-     - (StrOpt) Path of the certfile for token signing. For non-production environments, you may be interested in using `keystone-manage pki_setup` to generate self-signed certificates.
+     - (String) DEPRECATED: Path of the certfile for token signing. For non-production environments, you may be interested in using `keystone-manage pki_setup` to generate self-signed certificates. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
    * - ``key_size`` = ``2048``
-     - (IntOpt) Key size (in bits) for token signing cert (auto generated certificate).
+     - (Integer) DEPRECATED: Key size (in bits) for token signing cert (auto generated certificate). PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
    * - ``keyfile`` = ``/etc/keystone/ssl/private/signing_key.pem``
-     - (StrOpt) Path of the keyfile for token signing.
+     - (String) DEPRECATED: Path of the keyfile for token signing. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
    * - ``valid_days`` = ``3650``
-     - (IntOpt) Days the token signing cert is valid for (auto generated certificate).
+     - (Integer) DEPRECATED: Days the token signing cert is valid for (auto generated certificate). PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
    * - **[ssl]**
      -
    * - ``ca_key`` = ``/etc/keystone/ssl/private/cakey.pem``
-     - (StrOpt) Path of the CA key file for SSL.
+     - (String) Path of the CA key file for SSL.
    * - ``cert_subject`` = ``/C=US/ST=Unset/L=Unset/O=Unset/CN=localhost``
-     - (StrOpt) SSL certificate subject (auto generated certificate).
+     - (String) SSL certificate subject (auto generated certificate).
    * - ``key_size`` = ``1024``
-     - (IntOpt) SSL key length (in bits) (auto generated certificate).
+     - (Integer) SSL key length (in bits) (auto generated certificate).
    * - ``valid_days`` = ``3650``
-     - (IntOpt) Days the certificate is valid for once signed (auto generated certificate).
+     - (Integer) Days the certificate is valid for once signed (auto generated certificate).

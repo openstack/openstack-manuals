@@ -19,12 +19,12 @@
    * - **[DEFAULT]**
      -
    * - ``max_events_per_stack`` = ``1000``
-     - (IntOpt) Maximum events that will be available per stack. Older events will be deleted when this is reached. Set to 0 for unlimited events per stack.
+     - (Integer) Maximum events that will be available per stack. Older events will be deleted when this is reached. Set to 0 for unlimited events per stack.
    * - ``max_nested_stack_depth`` = ``5``
-     - (IntOpt) Maximum depth allowed when using nested stacks.
+     - (Integer) Maximum depth allowed when using nested stacks.
    * - ``max_resources_per_stack`` = ``1000``
-     - (IntOpt) Maximum resources allowed per top-level stack. -1 stands for unlimited.
+     - (Integer) Maximum resources allowed per top-level stack. -1 stands for unlimited.
    * - ``max_stacks_per_tenant`` = ``100``
-     - (IntOpt) Maximum number of stacks any one tenant may have active at one time.
+     - (Integer) Maximum number of stacks any one tenant may have active at one time.
    * - ``max_template_size`` = ``524288``
-     - (IntOpt) Maximum raw byte size of any template.
+     - (Integer) Maximum raw byte size of any template.

@@ -19,4 +19,4 @@
    * - **[fwaas]**
      -
    * - ``driver`` =
-     - (StrOpt) Name of the FWaaS Driver
+     - (String) Name of the FWaaS Driver

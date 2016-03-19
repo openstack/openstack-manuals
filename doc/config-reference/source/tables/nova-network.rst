@@ -19,130 +19,132 @@
    * - **[DEFAULT]**
      -
    * - ``allow_same_net_traffic`` = ``True``
-     - (BoolOpt) Whether to allow network traffic from same network
+     - (Boolean) Determine whether to allow network traffic from same network. When set to true, hosts on the same subnet are not filtered and are allowed to pass all types of traffic between them. On a flat network, this allows all instances from all projects unfiltered communication. With VLAN networking, this allows access between instances within the same project. This option only applies when using the ``nova-network`` service. When using another networking services, such as Neutron, security groups or other approaches should be used. Possible values: * True: Network traffic should be allowed pass between all instances on the same network, regardless of their tenant and security policies * False: Network traffic should not be allowed pass between instances unless it is unblocked in a security group Services which consume this: * nova-network Interdependencies to other options: * ``use_neutron``: This must be set to ``False`` to enable ``nova-network`` networking * ``firewall_driver``: This must be set to ``nova.virt.libvirt.firewall.IptablesFirewallDriver`` to ensure the libvirt firewall driver is enabled.
    * - ``auto_assign_floating_ip`` = ``False``
-     - (BoolOpt) Autoassigning floating IP to VM
+     - (Boolean) Autoassigning floating IP to VM
    * - ``cnt_vpn_clients`` = ``0``
-     - (IntOpt) Number of addresses reserved for vpn clients
+     - (Integer) Number of addresses reserved for vpn clients
    * - ``create_unique_mac_address_attempts`` = ``5``
-     - (IntOpt) Number of attempts to create unique mac address
+     - (Integer) Number of attempts to create unique mac address
    * - ``default_access_ip_network_name`` = ``None``
-     - (StrOpt) Name of network to use to set access IPs for instances
+     - (String) Name of network to use to set access IPs for instances
    * - ``default_floating_pool`` = ``nova``
-     - (StrOpt) Default pool for floating IPs
+     - (String) Default pool for floating IPs
    * - ``defer_iptables_apply`` = ``False``
-     - (BoolOpt) Whether to batch up the application of IPTables rules during a host restart and apply all at the end of the init phase
+     - (Boolean) Whether to batch up the application of IPTables rules during a host restart and apply all at the end of the init phase
    * - ``dhcp_domain`` = ``novalocal``
-     - (StrOpt) Domain to use for building the hostnames
+     - (String) Domain to use for building the hostnames
    * - ``dhcp_lease_time`` = ``86400``
-     - (IntOpt) Lifetime of a DHCP lease in seconds
+     - (Integer) Lifetime of a DHCP lease in seconds
    * - ``dhcpbridge`` = ``$bindir/nova-dhcpbridge``
-     - (StrOpt) Location of nova-dhcpbridge
+     - (String) Location of nova-dhcpbridge
    * - ``dhcpbridge_flagfile`` = ``['/etc/nova/nova-dhcpbridge.conf']``
-     - (MultiStrOpt) Location of flagfiles for dhcpbridge
+     - (Multi-valued) Location of flagfiles for dhcpbridge
    * - ``dns_server`` = ``[]``
-     - (MultiStrOpt) If set, uses specific DNS server for dnsmasq. Can be specified multiple times.
+     - (Multi-valued) If set, uses specific DNS server for dnsmasq. Can be specified multiple times.
    * - ``dns_update_periodic_interval`` = ``-1``
-     - (IntOpt) Number of seconds to wait between runs of updates to DNS entries.
+     - (Integer) Number of seconds to wait between runs of updates to DNS entries.
    * - ``dnsmasq_config_file`` =
-     - (StrOpt) Override the default dnsmasq settings with this file
+     - (String) Override the default dnsmasq settings with this file
    * - ``ebtables_exec_attempts`` = ``3``
-     - (IntOpt) Number of times to retry ebtables commands on failure.
+     - (Integer) Number of times to retry ebtables commands on failure.
    * - ``ebtables_retry_interval`` = ``1.0``
-     - (FloatOpt) Number of seconds to wait between ebtables retries.
+     - (Floating point) Number of seconds to wait between ebtables retries.
    * - ``firewall_driver`` = ``None``
-     - (StrOpt) Firewall driver (defaults to hypervisor specific iptables driver)
+     - (String) Firewall driver to use with ``nova-network`` service. This option only applies when using the ``nova-network`` service. When using another networking services, such as Neutron, this should be to set to the ``NoopFirewallDriver``. If unset (the default), this will default to the hypervisor-specified default driver. Possible values: * nova.virt.firewall.IptablesFirewallDriver * nova.virt.firewall.NoopFirewallDriver * nova.virt.libvirt.firewall.IptablesFirewallDriver * [...] Services which consume this: * nova-network Interdependencies to other options: * ``use_neutron``: This must be set to ``False`` to enable ``nova-network`` networking
    * - ``fixed_ip_disassociate_timeout`` = ``600``
-     - (IntOpt) Seconds after which a deallocated IP is disassociated
+     - (Integer) Seconds after which a deallocated IP is disassociated
    * - ``flat_injected`` = ``False``
-     - (BoolOpt) Whether to attempt to inject network setup into guest
+     - (Boolean) Whether to attempt to inject network setup into guest
    * - ``flat_interface`` = ``None``
-     - (StrOpt) FlatDhcp will bridge into this interface if set
+     - (String) FlatDhcp will bridge into this interface if set
    * - ``flat_network_bridge`` = ``None``
-     - (StrOpt) Bridge for simple network instances
+     - (String) Bridge for simple network instances
    * - ``flat_network_dns`` = ``8.8.4.4``
-     - (StrOpt) DNS server for simple network
+     - (String) DNS server for simple network
    * - ``floating_ip_dns_manager`` = ``nova.network.noop_dns_driver.NoopDNSDriver``
-     - (StrOpt) Full class name for the DNS Manager for floating IPs
+     - (String) Full class name for the DNS Manager for floating IPs
    * - ``force_dhcp_release`` = ``True``
-     - (BoolOpt) If True, send a dhcp release on instance termination
+     - (Boolean) If True, send a dhcp release on instance termination
    * - ``force_snat_range`` = ``[]``
-     - (MultiStrOpt) Traffic to this range will always be snatted to the fallback IP, even if it would normally be bridged out of the node. Can be specified multiple times.
+     - (Multi-valued) Traffic to this range will always be snatted to the fallback IP, even if it would normally be bridged out of the node. Can be specified multiple times.
    * - ``forward_bridge_interface`` = ``['all']``
-     - (MultiStrOpt) An interface that bridges can forward to. If this is set to all then all traffic will be forwarded. Can be specified multiple times.
+     - (Multi-valued) An interface that bridges can forward to. If this is set to all then all traffic will be forwarded. Can be specified multiple times.
    * - ``gateway`` = ``None``
-     - (StrOpt) Default IPv4 gateway
+     - (String) Default IPv4 gateway
    * - ``injected_network_template`` = ``$pybasedir/nova/virt/interfaces.template``
-     - (StrOpt) Template file for injected network
+     - (String) Template file for injected network
    * - ``instance_dns_domain`` =
-     - (StrOpt) Full class name for the DNS Zone for instance IPs
+     - (String) Full class name for the DNS Zone for instance IPs
    * - ``instance_dns_manager`` = ``nova.network.noop_dns_driver.NoopDNSDriver``
-     - (StrOpt) Full class name for the DNS Manager for instance IPs
+     - (String) Full class name for the DNS Manager for instance IPs
    * - ``iptables_bottom_regex`` =
-     - (StrOpt) Regular expression to match the iptables rule that should always be on the bottom.
+     - (String) Regular expression to match the iptables rule that should always be on the bottom.
    * - ``iptables_drop_action`` = ``DROP``
-     - (StrOpt) The table that iptables to jump to when a packet is to be dropped.
+     - (String) The table that iptables to jump to when a packet is to be dropped.
    * - ``iptables_top_regex`` =
-     - (StrOpt) Regular expression to match the iptables rule that should always be on the top.
+     - (String) Regular expression to match the iptables rule that should always be on the top.
    * - ``l3_lib`` = ``nova.network.l3.LinuxNetL3``
-     - (StrOpt) Indicates underlying L3 management library
+     - (String) Indicates underlying L3 management library
    * - ``linuxnet_interface_driver`` = ``nova.network.linux_net.LinuxBridgeInterfaceDriver``
-     - (StrOpt) Driver used to create ethernet devices.
+     - (String) Driver used to create ethernet devices.
    * - ``linuxnet_ovs_integration_bridge`` = ``br-int``
-     - (StrOpt) Name of Open vSwitch bridge used with linuxnet
+     - (String) Name of Open vSwitch bridge used with linuxnet
    * - ``multi_host`` = ``False``
-     - (BoolOpt) Default value for multi_host in networks. Also, if set, some rpc network calls will be sent directly to host.
+     - (Boolean) Default value for multi_host in networks. Also, if set, some rpc network calls will be sent directly to host.
    * - ``network_allocate_retries`` = ``0``
-     - (IntOpt) Number of times to retry network allocation on failures
+     - (Integer) Number of times to retry network allocation on failures
    * - ``network_api_class`` = ``nova.network.api.API``
-     - (StrOpt) The full class name of the network API class to use
+     - (String) DEPRECATED: The full class name of the network API class to use. ``use_neutron`` should be used instead.
    * - ``network_device_mtu`` = ``None``
-     - (IntOpt) DEPRECATED: THIS VALUE SHOULD BE SET WHEN CREATING THE NETWORK. MTU setting for network interface.
+     - (Integer) DEPRECATED: THIS VALUE SHOULD BE SET WHEN CREATING THE NETWORK. MTU setting for network interface.
    * - ``network_driver`` = ``nova.network.linux_net``
-     - (StrOpt) Driver to use for network creation
+     - (String) Driver to use for network creation
    * - ``network_manager`` = ``nova.network.manager.VlanManager``
-     - (StrOpt) Full class name for the Manager for network
+     - (String) Full class name for the Manager for network
    * - ``network_size`` = ``256``
-     - (IntOpt) Number of addresses in each private subnet
+     - (Integer) Number of addresses in each private subnet
    * - ``network_topic`` = ``network``
-     - (StrOpt) The topic network nodes listen on
+     - (String) The topic network nodes listen on
    * - ``networks_path`` = ``$state_path/networks``
-     - (StrOpt) Location to keep network config files
+     - (String) Location to keep network config files
    * - ``num_networks`` = ``1``
-     - (IntOpt) Number of networks to support
+     - (Integer) Number of networks to support
    * - ``ovs_vsctl_timeout`` = ``120``
-     - (IntOpt) Amount of time, in seconds, that ovs_vsctl should wait for a response from the database. 0 is to wait forever.
+     - (Integer) Amount of time, in seconds, that ovs_vsctl should wait for a response from the database. 0 is to wait forever.
    * - ``public_interface`` = ``eth0``
-     - (StrOpt) Interface for public IP addresses
+     - (String) Interface for public IP addresses
    * - ``routing_source_ip`` = ``$my_ip``
-     - (StrOpt) Public IP of network host
+     - (String) Public IP of network host
    * - ``security_group_api`` = ``nova``
-     - (StrOpt) The full class name of the security API class
+     - (String) DEPRECATED: The full class name of the security API class
    * - ``send_arp_for_ha`` = ``False``
-     - (BoolOpt) Send gratuitous ARPs for HA setup
+     - (Boolean) Send gratuitous ARPs for HA setup
    * - ``send_arp_for_ha_count`` = ``3``
-     - (IntOpt) Send this many gratuitous ARPs for HA setup
+     - (Integer) Send this many gratuitous ARPs for HA setup
    * - ``share_dhcp_address`` = ``False``
-     - (BoolOpt) DEPRECATED: THIS VALUE SHOULD BE SET WHEN CREATING THE NETWORK. If True in multi_host mode, all compute hosts share the same dhcp address. The same IP address used for DHCP will be added on each nova-network node which is only visible to the vms on the same host.
+     - (Boolean) DEPRECATED: THIS VALUE SHOULD BE SET WHEN CREATING THE NETWORK. If True in multi_host mode, all compute hosts share the same dhcp address. The same IP address used for DHCP will be added on each nova-network node which is only visible to the vms on the same host.
    * - ``teardown_unused_network_gateway`` = ``False``
-     - (BoolOpt) If True, unused gateway devices (VLAN and bridge) are deleted in VLAN network mode with multi hosted networks
+     - (Boolean) If True, unused gateway devices (VLAN and bridge) are deleted in VLAN network mode with multi hosted networks
    * - ``update_dns_entries`` = ``False``
-     - (BoolOpt) If True, when a DNS entry must be updated, it sends a fanout cast to all network hosts to update their DNS entries in multi host mode
+     - (Boolean) If True, when a DNS entry must be updated, it sends a fanout cast to all network hosts to update their DNS entries in multi host mode
    * - ``use_network_dns_servers`` = ``False``
-     - (BoolOpt) If set, uses the dns1 and dns2 from the network ref. as dns servers.
+     - (Boolean) If set, uses the dns1 and dns2 from the network ref. as dns servers.
+   * - ``use_neutron`` = ``False``
+     - (Boolean) Whether to use Neutron or Nova Network as the back end for networking. Defaults to False (indicating Nova network). Set to True to use neutron.
    * - ``use_neutron_default_nets`` = ``False``
-     - (StrOpt) Control for checking for default networks
+     - (String) Control for checking for default networks
    * - ``use_single_default_gateway`` = ``False``
-     - (BoolOpt) Use single default gateway. Only first nic of vm will get default gateway from dhcp server
+     - (Boolean) Use single default gateway. Only first nic of vm will get default gateway from dhcp server
    * - ``vlan_interface`` = ``None``
-     - (StrOpt) VLANs will bridge into this interface if set
+     - (String) VLANs will bridge into this interface if set
    * - ``vlan_start`` = ``100``
-     - (IntOpt) First VLAN for private networks
+     - (Integer) First VLAN for private networks
    * - **[libvirt]**
      -
    * - ``remote_filesystem_transport`` = ``ssh``
-     - (StrOpt) Use ssh or rsync transport for creating, copying, removing files on the remote host.
+     - (String) Use ssh or rsync transport for creating, copying, removing files on the remote host.
    * - **[vmware]**
      -
    * - ``vlan_interface`` = ``vmnic0``
-     - (StrOpt) Physical ethernet adapter name for vlan networking
+     - (String) Physical ethernet adapter name for vlan networking

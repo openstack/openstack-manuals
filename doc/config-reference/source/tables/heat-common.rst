@@ -18,79 +18,87 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``client_retry_limit`` = ``2``
+     - (Integer) Number of times to retry when a client encounters an expected intermittent error. Set to 0 to disable retries.
    * - ``convergence_engine`` = ``False``
-     - (BoolOpt) Enables engine with convergence architecture. All stacks with this option will be created using convergence engine .
+     - (Boolean) Enables engine with convergence architecture. All stacks with this option will be created using convergence engine.
    * - ``default_deployment_signal_transport`` = ``CFN_SIGNAL``
-     - (StrOpt) Template default for how the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL (requires enabled heat-api-cfn). TEMP_URL_SIGNAL will create a Swift TempURL to be signaled via HTTP PUT (requires object-store endpoint which supports TempURL). HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. ZAQAR_SIGNAL will create a dedicated zaqar queue to be signaled using the provided keystone credentials.
+     - (String) Template default for how the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL (requires enabled heat-api-cfn). TEMP_URL_SIGNAL will create a Swift TempURL to be signaled via HTTP PUT (requires object-store endpoint which supports TempURL). HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. ZAQAR_SIGNAL will create a dedicated zaqar queue to be signaled using the provided keystone credentials.
    * - ``default_software_config_transport`` = ``POLL_SERVER_CFN``
-     - (StrOpt) Template default for how the server should receive the metadata required for software configuration. POLL_SERVER_CFN will allow calls to the cfn API action DescribeStackResource authenticated with the provided keypair (requires enabled heat-api-cfn). POLL_SERVER_HEAT will allow calls to the Heat API resource-show using the provided keystone credentials (requires keystone v3 API, and configured stack_user_* config options). POLL_TEMP_URL will create and populate a Swift TempURL with metadata for polling (requires object-store endpoint which supports TempURL).ZAQAR_MESSAGE will create a dedicated zaqar queue and post the metadata for polling.
+     - (String) Template default for how the server should receive the metadata required for software configuration. POLL_SERVER_CFN will allow calls to the cfn API action DescribeStackResource authenticated with the provided keypair (requires enabled heat-api-cfn). POLL_SERVER_HEAT will allow calls to the Heat API resource-show using the provided keystone credentials (requires keystone v3 API, and configured stack_user_* config options). POLL_TEMP_URL will create and populate a Swift TempURL with metadata for polling (requires object-store endpoint which supports TempURL).ZAQAR_MESSAGE will create a dedicated zaqar queue and post the metadata for polling.
    * - ``deferred_auth_method`` = ``trusts``
-     - (StrOpt) Select deferred auth method, stored password or trusts.
+     - (String) Select deferred auth method, stored password or trusts.
    * - ``environment_dir`` = ``/etc/heat/environment.d``
-     - (StrOpt) The directory to search for environment files.
+     - (String) The directory to search for environment files.
    * - ``error_wait_time`` = ``240``
-     - (IntOpt) Error wait time in seconds for stack action (ie. create or update).
+     - (Integer) Error wait time in seconds for stack action (ie. create or update).
    * - ``event_purge_batch_size`` = ``10``
-     - (IntOpt) Controls how many events will be pruned whenever a stack's events exceed max_events_per_stack. Set this lower to keep more events at the expense of more frequent purges.
+     - (Integer) Controls how many events will be pruned whenever a stack's events exceed max_events_per_stack. Set this lower to keep more events at the expense of more frequent purges.
    * - ``executor_thread_pool_size`` = ``64``
-     - (IntOpt) Size of executor thread pool.
+     - (Integer) Size of executor thread pool.
    * - ``host`` = ``localhost``
-     - (StrOpt) Name of the engine node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address.
+     - (String) Name of the engine node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address.
    * - ``keystone_backend`` = ``heat.common.heat_keystoneclient.KeystoneClientV3``
-     - (StrOpt) Fully qualified class name to use as a keystone backend.
+     - (String) Fully qualified class name to use as a keystone backend.
+   * - ``max_interface_check_attempts`` = ``10``
+     - (Integer) Number of times to check whether an interface has been attached or detached.
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
-   * - ``password`` =
-     - (StrOpt) Password for Redis server (optional).
+     - (List) Memcached servers or None for in process cache.
    * - ``periodic_interval`` = ``60``
-     - (IntOpt) Seconds between running periodic tasks.
+     - (Integer) Seconds between running periodic tasks.
    * - ``plugin_dirs`` = ``/usr/lib64/heat, /usr/lib/heat, /usr/local/lib/heat, /usr/local/lib64/heat``
-     - (ListOpt) List of directories to search for plug-ins.
-   * - ``port`` = ``6379``
-     - (IntOpt) Use this port to connect to redis host.
+     - (List) List of directories to search for plug-ins.
+   * - ``reauthentication_auth_method`` =
+     - (String) Allow reauthentication on token expiry, such that long-running tasks may complete. Note this defeats the expiry of any provided user tokens.
    * - ``watch_log_file`` = ``False``
-     - (BoolOpt) (Optional) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log-file option is specified and Linux platform is used. This option is ignored if log_config_append is set.
+     - (Boolean) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log_file option is specified and Linux platform is used. This option is ignored if log_config_append is set.
    * - **[cache]**
      -
    * - ``backend`` = ``dogpile.cache.null``
-     - (StrOpt) Dogpile.cache backend module. It is recommended that Memcache with pooling (oslo_cache.memcache_pool) or Redis (dogpile.cache.redis) be used in production deployments. Small workloads (single process) like devstack can use the dogpile.cache.memory backend.
+     - (String) Dogpile.cache backend module. It is recommended that Memcache with pooling (oslo_cache.memcache_pool) or Redis (dogpile.cache.redis) be used in production deployments. Small workloads (single process) like devstack can use the dogpile.cache.memory backend.
    * - ``backend_argument`` = ``[]``
-     - (MultiStrOpt) Arguments supplied to the backend module. Specify this option once per argument to be passed to the dogpile.cache backend. Example format: "<argname>:<value>".
+     - (Multi-valued) Arguments supplied to the backend module. Specify this option once per argument to be passed to the dogpile.cache backend. Example format: "<argname>:<value>".
    * - ``config_prefix`` = ``cache.oslo``
-     - (StrOpt) Prefix for building the configuration dictionary for the cache region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name.
+     - (String) Prefix for building the configuration dictionary for the cache region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name.
    * - ``debug_cache_backend`` = ``False``
-     - (BoolOpt) Extra debugging from the cache backend (cache keys, get/set/delete/etc calls). This is only really useful if you need to see the specific cache-backend get/set/delete calls with the keys/values. Typically this should be left set to false.
+     - (Boolean) Extra debugging from the cache backend (cache keys, get/set/delete/etc calls). This is only really useful if you need to see the specific cache-backend get/set/delete calls with the keys/values. Typically this should be left set to false.
    * - ``enabled`` = ``False``
-     - (BoolOpt) Global toggle for caching.
+     - (Boolean) Global toggle for caching.
    * - ``expiration_time`` = ``600``
-     - (IntOpt) Default TTL, in seconds, for any cached item in the dogpile.cache region. This applies to any cached method that doesn't have an explicit cache expiration time defined for it.
+     - (Integer) Default TTL, in seconds, for any cached item in the dogpile.cache region. This applies to any cached method that doesn't have an explicit cache expiration time defined for it.
    * - ``memcache_dead_retry`` = ``300``
-     - (IntOpt) Number of seconds memcached server is considered dead before it is tried again. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
+     - (Integer) Number of seconds memcached server is considered dead before it is tried again. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
    * - ``memcache_pool_connection_get_timeout`` = ``10``
-     - (IntOpt) Number of seconds that an operation will wait to get a memcache client connection.
+     - (Integer) Number of seconds that an operation will wait to get a memcache client connection.
    * - ``memcache_pool_maxsize`` = ``10``
-     - (IntOpt) Max total number of open connections to every memcached server. (oslo_cache.memcache_pool backend only).
+     - (Integer) Max total number of open connections to every memcached server. (oslo_cache.memcache_pool backend only).
    * - ``memcache_pool_unused_timeout`` = ``60``
-     - (IntOpt) Number of seconds a connection to memcached is held unused in the pool before it is closed. (oslo_cache.memcache_pool backend only).
+     - (Integer) Number of seconds a connection to memcached is held unused in the pool before it is closed. (oslo_cache.memcache_pool backend only).
    * - ``memcache_servers`` = ``localhost:11211``
-     - (ListOpt) Memcache servers in the format of "host:port". (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
+     - (List) Memcache servers in the format of "host:port". (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
    * - ``memcache_socket_timeout`` = ``3``
-     - (IntOpt) Timeout in seconds for every call to a server. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
+     - (Integer) Timeout in seconds for every call to a server. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
    * - ``proxies`` =
-     - (ListOpt) Proxy classes to import that will affect the way the dogpile.cache backend functions. See the dogpile.cache documentation on changing-backend-behavior.
+     - (List) Proxy classes to import that will affect the way the dogpile.cache backend functions. See the dogpile.cache documentation on changing-backend-behavior.
    * - **[constraint_validation_cache]**
      -
    * - ``caching`` = ``True``
-     - (BoolOpt) Toggle to enable/disable caching when Orchestration Engine validates property constraints of stack.During property validation with constraints Orchestration Engine caches requests to other OpenStack services. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
+     - (Boolean) Toggle to enable/disable caching when Orchestration Engine validates property constraints of stack.During property validation with constraints Orchestration Engine caches requests to other OpenStack services. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
    * - ``expiration_time`` = ``60``
-     - (IntOpt) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of validation constraints.
+     - (Integer) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of validation constraints.
+   * - **[resource_finder_cache]**
+     -
+   * - ``caching`` = ``True``
+     - (Boolean) Toggle to enable/disable caching when Orchestration Engine looks for other OpenStack service resources using name or id. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
+   * - ``expiration_time`` = ``3600``
+     - (Integer) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of OpenStack service finder functions.
    * - **[revision]**
      -
    * - ``heat_revision`` = ``unknown``
-     - (StrOpt) Heat build revision. If you would prefer to manage your build revision separately, you can move this section to a different file and add it as another config option.
+     - (String) Heat build revision. If you would prefer to manage your build revision separately, you can move this section to a different file and add it as another config option.
    * - **[service_extension_cache]**
      -
    * - ``caching`` = ``True``
-     - (BoolOpt) Toggle to enable/disable caching when Orchestration Engine retrieves extensions from other OpenStack services. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
+     - (Boolean) Toggle to enable/disable caching when Orchestration Engine retrieves extensions from other OpenStack services. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
    * - ``expiration_time`` = ``3600``
-     - (IntOpt) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of service extensions.
+     - (Integer) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of service extensions.
