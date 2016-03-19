@@ -24,7 +24,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper addrepo -f obs://server:database/openSUSE_42.1 Database
+         # zypper addrepo -f obs://server:database/openSUSE_Leap_42.1 Database
 
       On SLES:
 
