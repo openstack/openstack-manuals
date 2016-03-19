@@ -19,10 +19,10 @@
    * - **[DEFAULT]**
      -
    * - ``network_auto_schedule`` = ``True``
-     - (BoolOpt) Allow auto scheduling networks to DHCP agent.
+     - (Boolean) Allow auto scheduling networks to DHCP agent.
    * - ``network_scheduler_driver`` = ``neutron.scheduler.dhcp_agent_scheduler.WeightScheduler``
-     - (StrOpt) Driver to use for scheduling network to DHCP agent
+     - (String) Driver to use for scheduling network to DHCP agent
    * - ``router_auto_schedule`` = ``True``
-     - (BoolOpt) Allow auto scheduling of routers to L3 agent.
+     - (Boolean) Allow auto scheduling of routers to L3 agent.
    * - ``router_scheduler_driver`` = ``neutron.scheduler.l3_agent_scheduler.LeastRoutersScheduler``
-     - (StrOpt) Driver to use for scheduling router to a default L3 agent
+     - (String) Driver to use for scheduling router to a default L3 agent

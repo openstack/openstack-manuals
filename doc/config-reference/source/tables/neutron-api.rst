@@ -19,44 +19,44 @@
    * - **[DEFAULT]**
      -
    * - ``allow_bulk`` = ``True``
-     - (BoolOpt) Allow the usage of the bulk API
+     - (Boolean) Allow the usage of the bulk API
    * - ``allow_pagination`` = ``False``
-     - (BoolOpt) Allow the usage of the pagination
+     - (Boolean) Allow the usage of the pagination
    * - ``allow_sorting`` = ``False``
-     - (BoolOpt) Allow the usage of the sorting
+     - (Boolean) Allow the usage of the sorting
    * - ``api_extensions_path`` =
-     - (StrOpt) The path for API extensions. Note that this can be a colon-separated list of paths. For example: api_extensions_path = extensions:/path/to/more/exts:/even/more/exts. The __path__ of neutron.extensions is appended to this, so if your extensions are in there you don't need to specify them here.
+     - (String) The path for API extensions. Note that this can be a colon-separated list of paths. For example: api_extensions_path = extensions:/path/to/more/exts:/even/more/exts. The __path__ of neutron.extensions is appended to this, so if your extensions are in there you don't need to specify them here.
    * - ``api_paste_config`` = ``api-paste.ini``
-     - (StrOpt) File name for the paste.deploy config for api service
+     - (String) File name for the paste.deploy config for api service
    * - ``backlog`` = ``4096``
-     - (IntOpt) Number of backlog requests to configure the socket with
+     - (Integer) Number of backlog requests to configure the socket with
    * - ``client_socket_timeout`` = ``900``
-     - (IntOpt) Timeout for client connections' socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.
+     - (Integer) Timeout for client connections' socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.
    * - ``max_header_line`` = ``16384``
-     - (IntOpt) Maximum line size of message headers to be accepted. max_header_line may need to be increased when using large tokens (typically those generated when keystone is configured to use PKI tokens with big service catalogs).
+     - (Integer) Maximum line size of message headers to be accepted. max_header_line may need to be increased when using large tokens (typically those generated when keystone is configured to use PKI tokens with big service catalogs).
    * - ``pagination_max_limit`` = ``-1``
-     - (StrOpt) The maximum number of items returned in a single response, value was 'infinite' or negative integer means no limit
+     - (String) The maximum number of items returned in a single response, value was 'infinite' or negative integer means no limit
    * - ``retry_until_window`` = ``30``
-     - (IntOpt) Number of seconds to keep retrying to listen
+     - (Integer) Number of seconds to keep retrying to listen
    * - ``service_plugins`` =
-     - (ListOpt) The service plugins Neutron will use
+     - (List) The service plugins Neutron will use
    * - ``tcp_keepidle`` = ``600``
-     - (IntOpt) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Not supported on OS X.
+     - (Integer) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Not supported on OS X.
    * - ``wsgi_default_pool_size`` = ``100``
-     - (IntOpt) Size of the pool of greenthreads used by wsgi
+     - (Integer) Size of the pool of greenthreads used by wsgi
    * - ``wsgi_keep_alive`` = ``True``
-     - (BoolOpt) If False, closes the client socket connection explicitly.
+     - (Boolean) If False, closes the client socket connection explicitly.
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``
-     - (IntOpt) The maximum body size for each request, in bytes.
+     - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
    * - **[oslo_policy]**
      -
    * - ``policy_default_rule`` = ``default``
-     - (StrOpt) Default rule. Enforced when a requested rule is not found.
+     - (String) Default rule. Enforced when a requested rule is not found.
    * - ``policy_dirs`` = ``['policy.d']``
-     - (MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
+     - (Multi-valued) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
    * - ``policy_file`` = ``policy.json``
-     - (StrOpt) The JSON file that defines policies.
+     - (String) The JSON file that defines policies.

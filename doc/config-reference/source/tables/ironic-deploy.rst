@@ -18,17 +18,11 @@
      - Description
    * - **[deploy]**
      -
-   * - ``dd_block_size`` = ``1M``
-     - (StrOpt) Block size to use when writing to the nodes disk.
-   * - ``efi_system_partition_size`` = ``200``
-     - (IntOpt) Size of EFI system partition in MiB when configuring UEFI systems for local boot.
    * - ``erase_devices_iterations`` = ``1``
-     - (IntOpt) Number of iterations to be run for erasing devices.
+     - (Integer) Number of iterations to be run for erasing devices.
    * - ``erase_devices_priority`` = ``None``
-     - (IntOpt) Priority to run in-band erase devices via the Ironic Python Agent ramdisk. If unset, will use the priority set in the ramdisk (defaults to 10 for the GenericHardwareManager). If set to 0, will not run during cleaning.
+     - (Integer) Priority to run in-band erase devices via the Ironic Python Agent ramdisk. If unset, will use the priority set in the ramdisk (defaults to 10 for the GenericHardwareManager). If set to 0, will not run during cleaning.
    * - ``http_root`` = ``/httpboot``
-     - (StrOpt) ironic-conductor node's HTTP root path.
+     - (String) ironic-conductor node's HTTP root path.
    * - ``http_url`` = ``None``
-     - (StrOpt) ironic-conductor node's HTTP server URL. Example: http://192.1.2.3:8080
-   * - ``iscsi_verify_attempts`` = ``3``
-     - (IntOpt) Maximum attempts to verify an iSCSI connection is active, sleeping 1 second between attempts.
+     - (String) ironic-conductor node's HTTP server URL. Example: http://192.1.2.3:8080

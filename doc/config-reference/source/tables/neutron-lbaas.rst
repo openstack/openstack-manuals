@@ -19,8 +19,8 @@
    * - **[certificates]**
      -
    * - ``barbican_auth`` = ``barbican_acl_auth``
-     - (StrOpt) Name of the Barbican authentication method to use
+     - (String) Name of the Barbican authentication method to use
    * - ``cert_manager_type`` = ``barbican``
-     - (StrOpt) Certificate Manager plugin. Defaults to barbican.
+     - (String) Certificate Manager plugin. Defaults to barbican.
    * - ``storage_path`` = ``/var/lib/neutron-lbaas/certificates/``
-     - (StrOpt) Absolute path to the certificate storage directory. Defaults to env[OS_LBAAS_TLS_STORAGE].
+     - (String) Absolute path to the certificate storage directory. Defaults to env[OS_LBAAS_TLS_STORAGE].

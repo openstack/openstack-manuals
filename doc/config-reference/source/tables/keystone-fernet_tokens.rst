@@ -19,6 +19,6 @@
    * - **[fernet_tokens]**
      -
    * - ``key_repository`` = ``/etc/keystone/fernet-keys/``
-     - (StrOpt) Directory containing Fernet token keys.
+     - (String) Directory containing Fernet token keys.
    * - ``max_active_keys`` = ``3``
-     - (IntOpt) This controls how many keys are held in rotation by keystone-manage fernet_rotate before they are discarded. The default value of 3 means that keystone will maintain one staged key, one primary key, and one secondary key. Increasing this value means that additional secondary keys will be kept in the rotation.
+     - (Integer) This controls how many keys are held in rotation by keystone-manage fernet_rotate before they are discarded. The default value of 3 means that keystone will maintain one staged key, one primary key, and one secondary key. Increasing this value means that additional secondary keys will be kept in the rotation.

@@ -19,24 +19,24 @@
    * - **[collector]**
      -
    * - ``batch_size`` = ``1``
-     - (IntOpt) Number of notification messages to wait before dispatching them
+     - (Integer) Number of notification messages to wait before dispatching them
    * - ``batch_timeout`` = ``None``
-     - (IntOpt) Number of seconds to wait before dispatching sampleswhen batch_size is not reached (None means indefinitely)
+     - (Integer) Number of seconds to wait before dispatching sampleswhen batch_size is not reached (None means indefinitely)
    * - ``requeue_event_on_dispatcher_error`` = ``False``
-     - (BoolOpt) Requeue the event on the collector event queue when the collector fails to dispatch it.
+     - (Boolean) Requeue the event on the collector event queue when the collector fails to dispatch it.
    * - ``requeue_sample_on_dispatcher_error`` = ``False``
-     - (BoolOpt) Requeue the sample on the collector sample queue when the collector fails to dispatch it. This is only valid if the sample come from the notifier publisher.
+     - (Boolean) Requeue the sample on the collector sample queue when the collector fails to dispatch it. This is only valid if the sample come from the notifier publisher.
    * - ``udp_address`` = ``0.0.0.0``
-     - (StrOpt) Address to which the UDP socket is bound. Set to an empty string to disable.
+     - (String) Address to which the UDP socket is bound. Set to an empty string to disable.
    * - ``udp_port`` = ``4952``
-     - (PortOpt) Port to which the UDP socket is bound.
+     - (Unknown) Port to which the UDP socket is bound.
    * - ``workers`` = ``1``
-     - (IntOpt) Number of workers for collector service. default value is 1.
+     - (Integer) Number of workers for collector service. default value is 1.
    * - **[dispatcher_file]**
      -
    * - ``backup_count`` = ``0``
-     - (IntOpt) The max number of the files to keep.
+     - (Integer) The max number of the files to keep.
    * - ``file_path`` = ``None``
-     - (StrOpt) Name and the location of the file to record meters.
+     - (String) Name and the location of the file to record meters.
    * - ``max_bytes`` = ``0``
-     - (IntOpt) The max size of the file.
+     - (Integer) The max size of the file.

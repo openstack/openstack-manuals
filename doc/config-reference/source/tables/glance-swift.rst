@@ -19,56 +19,60 @@
    * - **[DEFAULT]**
      -
    * - ``default_swift_reference`` = ``ref1``
-     - (StrOpt) The reference to the default swift account/backing store parameters to use for adding new images.
+     - (String) The reference to the default swift account/backing store parameters to use for adding new images.
    * - ``swift_store_auth_address`` = ``None``
-     - (StrOpt) The address where the Swift authentication service is listening.(deprecated)
+     - (String) The address where the Swift authentication service is listening.(deprecated)
    * - ``swift_store_config_file`` = ``None``
-     - (StrOpt) The config file that has the swift account(s)configs.
+     - (String) The config file that has the swift account(s)configs.
    * - ``swift_store_key`` = ``None``
-     - (StrOpt) Auth key for the user authenticating against the Swift authentication service. (deprecated)
+     - (String) Auth key for the user authenticating against the Swift authentication service. (deprecated)
    * - ``swift_store_user`` = ``None``
-     - (StrOpt) The user to authenticate against the Swift authentication service (deprecated)
+     - (String) The user to authenticate against the Swift authentication service (deprecated)
    * - **[glance_store]**
      -
    * - ``default_swift_reference`` = ``ref1``
-     - (StrOpt) The reference to the default swift account/backing store parameters to use for adding new images.
+     - (String) The reference to the default swift account/backing store parameters to use for adding new images.
    * - ``swift_store_admin_tenants`` =
-     - (ListOpt) A list of tenants that will be granted read/write access on all Swift containers created by Glance in multi-tenant mode.
+     - (List) A list of tenants that will be granted read/write access on all Swift containers created by Glance in multi-tenant mode.
    * - ``swift_store_auth_address`` = ``None``
-     - (StrOpt) The address where the Swift authentication service is listening. (deprecated - use "auth_address" in swift_store_config_file)
+     - (String) The address where the Swift authentication service is listening. (deprecated - use "auth_address" in swift_store_config_file)
    * - ``swift_store_auth_insecure`` = ``False``
-     - (BoolOpt) If True, swiftclient won't check for a valid SSL certificate when authenticating.
+     - (Boolean) If True, swiftclient won't check for a valid SSL certificate when authenticating.
    * - ``swift_store_auth_version`` = ``2``
-     - (StrOpt) Version of the authentication service to use. Valid versions are 2 and 3 for keystone and 1 (deprecated) for swauth and rackspace. (deprecated - use "auth_version" in swift_store_config_file)
+     - (String) Version of the authentication service to use. Valid versions are 2 and 3 for keystone and 1 (deprecated) for swauth and rackspace. (deprecated - use "auth_version" in swift_store_config_file)
    * - ``swift_store_cacert`` = ``None``
-     - (StrOpt) A string giving the CA certificate file to use in SSL connections for verifying certs.
+     - (String) A string giving the CA certificate file to use in SSL connections for verifying certs.
    * - ``swift_store_config_file`` = ``None``
-     - (StrOpt) The config file that has the swift account(s)configs.
+     - (String) The config file that has the swift account(s)configs.
    * - ``swift_store_container`` = ``glance``
-     - (StrOpt) Container within the account that the account should use for storing images in Swift when using single container mode. In multiple container mode, this will be the prefix for all containers.
+     - (String) Container within the account that the account should use for storing images in Swift when using single container mode. In multiple container mode, this will be the prefix for all containers.
    * - ``swift_store_create_container_on_put`` = ``False``
-     - (BoolOpt) A boolean value that determines if we create the container if it does not exist.
+     - (Boolean) A boolean value that determines if we create the container if it does not exist.
    * - ``swift_store_endpoint`` = ``None``
-     - (StrOpt) If set, the configured endpoint will be used. If None, the storage url from the auth response will be used.
+     - (String) If set, the configured endpoint will be used. If None, the storage url from the auth response will be used.
    * - ``swift_store_endpoint_type`` = ``publicURL``
-     - (StrOpt) A string giving the endpoint type of the swift service to use (publicURL, adminURL or internalURL). This setting is only used if swift_store_auth_version is 2.
+     - (String) A string giving the endpoint type of the swift service to use (publicURL, adminURL or internalURL). This setting is only used if swift_store_auth_version is 2.
+   * - ``swift_store_expire_soon_interval`` = ``60``
+     - (Integer) The period of time (in seconds) before token expirationwhen glance_store will try to reques new user token. Default value 60 sec means that if token is going to expire in 1 min then glance_store request new user token.
    * - ``swift_store_key`` = ``None``
-     - (StrOpt) Auth key for the user authenticating against the Swift authentication service. (deprecated - use "key" in swift_store_config_file)
+     - (String) Auth key for the user authenticating against the Swift authentication service. (deprecated - use "key" in swift_store_config_file)
    * - ``swift_store_large_object_chunk_size`` = ``200``
-     - (IntOpt) The amount of data written to a temporary disk buffer during the process of chunking the image file.
+     - (Integer) The amount of data written to a temporary disk buffer during the process of chunking the image file.
    * - ``swift_store_large_object_size`` = ``5120``
-     - (IntOpt) The size, in MB, that Glance will start chunking image files and do a large object manifest in Swift.
+     - (Integer) The size, in MB, that Glance will start chunking image files and do a large object manifest in Swift.
    * - ``swift_store_multi_tenant`` = ``False``
-     - (BoolOpt) If set to True, enables multi-tenant storage mode which causes Glance images to be stored in tenant specific Swift accounts.
+     - (Boolean) If set to True, enables multi-tenant storage mode which causes Glance images to be stored in tenant specific Swift accounts.
    * - ``swift_store_multiple_containers_seed`` = ``0``
-     - (IntOpt) When set to 0, a single-tenant store will only use one container to store all images. When set to an integer value between 1 and 32, a single-tenant store will use multiple containers to store images, and this value will determine how many containers are created.Used only when swift_store_multi_tenant is disabled. The total number of containers that will be used is equal to 16^N, so if this config option is set to 2, then 16^2=256 containers will be used to store images.
+     - (Integer) When set to 0, a single-tenant store will only use one container to store all images. When set to an integer value between 1 and 32, a single-tenant store will use multiple containers to store images, and this value will determine how many containers are created.Used only when swift_store_multi_tenant is disabled. The total number of containers that will be used is equal to 16^N, so if this config option is set to 2, then 16^2=256 containers will be used to store images.
    * - ``swift_store_region`` = ``None``
-     - (StrOpt) The region of the swift endpoint to be used for single tenant. This setting is only necessary if the tenant has multiple swift endpoints.
+     - (String) The region of the swift endpoint to be used for single tenant. This setting is only necessary if the tenant has multiple swift endpoints.
    * - ``swift_store_retry_get_count`` = ``0``
-     - (IntOpt) The number of times a Swift download will be retried before the request fails.
+     - (Integer) The number of times a Swift download will be retried before the request fails.
    * - ``swift_store_service_type`` = ``object-store``
-     - (StrOpt) A string giving the service type of the swift service to use. This setting is only used if swift_store_auth_version is 2.
+     - (String) A string giving the service type of the swift service to use. This setting is only used if swift_store_auth_version is 2.
    * - ``swift_store_ssl_compression`` = ``True``
-     - (BoolOpt) If set to False, disables SSL layer compression of https swift requests. Setting to False may improve performance for images which are already in a compressed format, eg qcow2.
+     - (Boolean) If set to False, disables SSL layer compression of https swift requests. Setting to False may improve performance for images which are already in a compressed format, eg qcow2.
+   * - ``swift_store_use_trusts`` = ``True``
+     - (Boolean) If set to True create a trust for each add/get request to Multi-tenant store in order to prevent authentication token to be expired during uploading/downloading data. If set to False then user token is used for Swift connection (so no overhead on trust creation). Please note that this option is considered only and only if swift_store_multi_tenant=True
    * - ``swift_store_user`` = ``None``
-     - (StrOpt) The user to authenticate against the Swift authentication service (deprecated - use "user" in swift_store_config_file)
+     - (String) The user to authenticate against the Swift authentication service (deprecated - use "user" in swift_store_config_file)

@@ -19,10 +19,10 @@
    * - **[DEFAULT]**
      -
    * - ``heat_endpoint_type`` = ``publicURL``
-     - (StrOpt) Service endpoint type to use when searching catalog.
+     - (String) Service endpoint type to use when searching catalog.
    * - ``heat_service_type`` = ``orchestration``
-     - (StrOpt) Service type to use when searching catalog.
+     - (String) Service type to use when searching catalog.
    * - ``heat_time_out`` = ``60``
-     - (IntOpt) Maximum time (in seconds) to wait for a Heat request to complete.
+     - (Integer) Maximum time (in seconds) to wait for a Heat request to complete.
    * - ``heat_url`` = ``None``
-     - (StrOpt) URL without the tenant segment.
+     - (String) URL without the tenant segment.

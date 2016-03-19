@@ -19,12 +19,12 @@
    * - **[DEFAULT]**
      -
    * - ``notify_nova_on_port_data_changes`` = ``True``
-     - (BoolOpt) Send notification to nova when port data (fixed_ips/floatingip) changes so nova can update its cache.
+     - (Boolean) Send notification to nova when port data (fixed_ips/floatingip) changes so nova can update its cache.
    * - ``notify_nova_on_port_status_changes`` = ``True``
-     - (BoolOpt) Send notification to nova when port status changes
+     - (Boolean) Send notification to nova when port status changes
    * - ``nova_client_cert`` =
-     - (StrOpt) Client certificate for nova metadata api server.
+     - (String) Client certificate for nova metadata api server.
    * - ``nova_client_priv_key`` =
-     - (StrOpt) Private key of client certificate.
+     - (String) Private key of client certificate.
    * - ``send_events_interval`` = ``2``
-     - (IntOpt) Number of seconds between sending events to nova if there are any events to send.
+     - (Integer) Number of seconds between sending events to nova if there are any events to send.

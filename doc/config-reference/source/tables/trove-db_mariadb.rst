@@ -18,35 +18,49 @@
      - Description
    * - **[mariadb]**
      -
+   * - ``api_strategy`` = ``trove.common.strategies.cluster.experimental.galera_common.api.GaleraCommonAPIStrategy``
+     - (String) Class that implements datastore-specific API logic.
    * - ``backup_incremental_strategy`` = ``{'InnoBackupEx': 'InnoBackupExIncremental'}``
-     - (DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental backup, the runner will use the default full backup.
+     - (Dict) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental backup, the runner will use the default full backup.
    * - ``backup_namespace`` = ``trove.guestagent.strategies.backup.mysql_impl``
-     - (StrOpt) Namespace to load backup strategies from.
+     - (String) Namespace to load backup strategies from.
    * - ``backup_strategy`` = ``InnoBackupEx``
-     - (StrOpt) Default strategy to perform backups.
+     - (String) Default strategy to perform backups.
+   * - ``cluster_support`` = ``True``
+     - (Boolean) Enable clusters to be created and managed.
    * - ``device_path`` = ``/dev/vdb``
-     - (StrOpt) Device path for volume if volume support is enabled.
+     - (String) Device path for volume if volume support is enabled.
+   * - ``guest_log_exposed_logs`` = ``general,slow_query``
+     - (String) List of Guest Logs to expose for publishing.
+   * - ``guest_log_long_query_time`` = ``1000``
+     - (Integer) The time in milliseconds that a statement must take in in order to be logged in the slow_query log.
+   * - ``guestagent_strategy`` = ``trove.common.strategies.cluster.experimental.galera_common.guestagent.GaleraCommonGuestAgentStrategy``
+     - (String) Class that implements datastore-specific Guest Agent API logic.
    * - ``ignore_dbs`` = ``mysql, information_schema, performance_schema``
-     - (ListOpt) Databases to exclude when listing databases.
+     - (List) Databases to exclude when listing databases.
    * - ``ignore_users`` = ``os_admin, root``
-     - (ListOpt) Users to exclude when listing users.
+     - (List) Users to exclude when listing users.
+   * - ``min_cluster_member_count`` = ``3``
+     - (Integer) Minimum number of members in MariaDB cluster.
    * - ``mount_point`` = ``/var/lib/mysql``
-     - (StrOpt) Filesystem path for mounting volumes if volume support is enabled.
-   * - ``replication_namespace`` = ``trove.guestagent.strategies.replication.mysql_binlog``
-     - (StrOpt) Namespace to load replication strategies from.
-   * - ``replication_strategy`` = ``MysqlBinlogReplication``
-     - (StrOpt) Default strategy for replication.
+     - (String) Filesystem path for mounting volumes if volume support is enabled.
+   * - ``replication_namespace`` = ``trove.guestagent.strategies.replication.experimental.mariadb_gtid``
+     - (String) Namespace to load replication strategies from.
+   * - ``replication_strategy`` = ``MariaDBGTIDReplication``
+     - (String) Default strategy for replication.
    * - ``restore_namespace`` = ``trove.guestagent.strategies.restore.mysql_impl``
-     - (StrOpt) Namespace to load restore strategies from.
+     - (String) Namespace to load restore strategies from.
    * - ``root_controller`` = ``trove.extensions.common.service.DefaultRootController``
-     - (StrOpt) Root controller implementation for mysql.
+     - (String) Root controller implementation for mysql.
    * - ``root_on_create`` = ``False``
-     - (BoolOpt) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the 'password' field.
-   * - ``tcp_ports`` = ``3306``
-     - (ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (Boolean) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the 'password' field.
+   * - ``taskmanager_strategy`` = ``trove.common.strategies.cluster.experimental.galera_common.taskmanager.GaleraCommonTaskManagerStrategy``
+     - (String) Class that implements datastore-specific task manager logic.
+   * - ``tcp_ports`` = ``3306, 4444, 4567, 4568``
+     - (List) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``udp_ports`` =
-     - (ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (List) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``usage_timeout`` = ``400``
-     - (IntOpt) Maximum time (in seconds) to wait for a Guest to become active.
+     - (Integer) Maximum time (in seconds) to wait for a Guest to become active.
    * - ``volume_support`` = ``True``
-     - (BoolOpt) Whether to provision a Cinder volume for datadir.
+     - (Boolean) Whether to provision a Cinder volume for datadir.

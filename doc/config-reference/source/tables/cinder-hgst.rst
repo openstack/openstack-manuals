@@ -19,14 +19,14 @@
    * - **[DEFAULT]**
      -
    * - ``hgst_net`` = ``Net 1 (IPv4)``
-     - (StrOpt) Space network name to use for data transfer
+     - (String) Space network name to use for data transfer
    * - ``hgst_redundancy`` = ``0``
-     - (StrOpt) Should spaces be redundantly stored (1/0)
+     - (String) Should spaces be redundantly stored (1/0)
    * - ``hgst_space_group`` = ``disk``
-     - (StrOpt) Group to own created spaces
+     - (String) Group to own created spaces
    * - ``hgst_space_mode`` = ``0600``
-     - (StrOpt) UNIX mode for created spaces
+     - (String) UNIX mode for created spaces
    * - ``hgst_space_user`` = ``root``
-     - (StrOpt) User to own created spaces
+     - (String) User to own created spaces
    * - ``hgst_storage_servers`` = ``os:gbd0``
-     - (StrOpt) Comma separated list of Space storage servers:devices. ex: os1_stor:gbd0,os2_stor:gbd0
+     - (String) Comma separated list of Space storage servers:devices. ex: os1_stor:gbd0,os2_stor:gbd0

@@ -19,14 +19,16 @@
    * - **[service_types]**
      -
    * - ``glance`` = ``image``
-     - (StrOpt) Glance service type.
+     - (String) Glance service type.
    * - ``kwapi`` = ``energy``
-     - (StrOpt) Kwapi service type.
+     - (String) Kwapi service type.
    * - ``neutron`` = ``network``
-     - (StrOpt) Neutron service type.
+     - (String) Neutron service type.
+   * - ``neutron_lbaas_version`` = ``v2``
+     - (String) Neutron load balancer version.
    * - ``nova`` = ``compute``
-     - (StrOpt) Nova service type.
+     - (String) Nova service type.
    * - ``radosgw`` = ``object-store``
-     - (StrOpt) Radosgw service type.
+     - (String) Radosgw service type.
    * - ``swift`` = ``object-store``
-     - (StrOpt) Swift service type.
+     - (String) Swift service type.

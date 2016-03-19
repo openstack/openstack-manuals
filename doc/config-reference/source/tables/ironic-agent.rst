@@ -19,18 +19,20 @@
    * - **[agent]**
      -
    * - ``agent_api_version`` = ``v1``
-     - (StrOpt) API version to use for communicating with the ramdisk agent.
+     - (String) API version to use for communicating with the ramdisk agent.
    * - ``agent_pxe_append_params`` = ``nofb nomodeset vga=normal``
-     - (StrOpt) DEPRECATED. Additional append parameters for baremetal PXE boot. This option is deprecated and will be removed in Mitaka release. Please use [pxe]pxe_append_params instead.
+     - (String) DEPRECATED. Additional append parameters for baremetal PXE boot. This option is deprecated and will be removed in Mitaka release. Please use [pxe]pxe_append_params instead.
    * - ``agent_pxe_config_template`` = ``$pybasedir/drivers/modules/agent_config.template``
-     - (StrOpt) DEPRECATED. Template file for PXE configuration. This option is deprecated and will be removed in Mitaka release. Please use [pxe]pxe_config_template instead.
+     - (String) DEPRECATED. Template file for PXE configuration. This option is deprecated and will be removed in Mitaka release. Please use [pxe]pxe_config_template instead.
    * - ``heartbeat_timeout`` = ``300``
-     - (IntOpt) Maximum interval (in seconds) for agent heartbeats.
+     - (Integer) Maximum interval (in seconds) for agent heartbeats.
    * - ``manage_agent_boot`` = ``True``
-     - (BoolOpt) Whether Ironic will manage booting of the agent ramdisk. If set to False, you will need to configure your mechanism to allow booting the agent ramdisk.
+     - (Boolean) Whether Ironic will manage booting of the agent ramdisk. If set to False, you will need to configure your mechanism to allow booting the agent ramdisk.
    * - ``memory_consumed_by_agent`` = ``0``
-     - (IntOpt) The memory size in MiB consumed by agent when it is booted on a bare metal node. This is used for checking if the image can be downloaded and deployed on the bare metal node after booting agent ramdisk. This may be set according to the memory consumed by the agent ramdisk image.
+     - (Integer) The memory size in MiB consumed by agent when it is booted on a bare metal node. This is used for checking if the image can be downloaded and deployed on the bare metal node after booting agent ramdisk. This may be set according to the memory consumed by the agent ramdisk image.
    * - ``post_deploy_get_power_state_retries`` = ``6``
-     - (IntOpt) Number of times to retry getting power state to check if bare metal node has been powered off after a soft power off.
+     - (Integer) Number of times to retry getting power state to check if bare metal node has been powered off after a soft power off.
    * - ``post_deploy_get_power_state_retry_interval`` = ``5``
-     - (IntOpt) Amount of time (in seconds) to wait between polling power state after trigger soft poweroff.
+     - (Integer) Amount of time (in seconds) to wait between polling power state after trigger soft poweroff.
+   * - ``stream_raw_images`` = ``True``
+     - (Boolean) Whether the agent ramdisk should stream raw images directly onto the disk or not. By streaming raw images directly onto the disk the agent ramdisk will not spend time copying the image to a tmpfs partition (therefore consuming less memory) prior to writing it to the disk. Unless the disk where the image will be copied to is really slow, this option should be set to True. Defaults to True.

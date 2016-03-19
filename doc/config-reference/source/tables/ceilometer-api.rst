@@ -19,44 +19,44 @@
    * - **[DEFAULT]**
      -
    * - ``api_paste_config`` = ``api_paste.ini``
-     - (StrOpt) Configuration file for WSGI definition of API.
+     - (String) Configuration file for WSGI definition of API.
    * - ``event_pipeline_cfg_file`` = ``event_pipeline.yaml``
-     - (StrOpt) Configuration file for event pipeline definition.
+     - (String) Configuration file for event pipeline definition.
    * - ``pipeline_cfg_file`` = ``pipeline.yaml``
-     - (StrOpt) Configuration file for pipeline definition.
+     - (String) Configuration file for pipeline definition.
    * - ``pipeline_polling_interval`` = ``20``
-     - (IntOpt) Polling interval for pipeline file configuration in seconds.
+     - (Integer) Polling interval for pipeline file configuration in seconds.
    * - ``refresh_event_pipeline_cfg`` = ``False``
-     - (BoolOpt) Refresh Event Pipeline configuration on-the-fly.
+     - (Boolean) Refresh Event Pipeline configuration on-the-fly.
    * - ``refresh_pipeline_cfg`` = ``False``
-     - (BoolOpt) Refresh Pipeline configuration on-the-fly.
+     - (Boolean) Refresh Pipeline configuration on-the-fly.
    * - ``reserved_metadata_keys`` =
-     - (ListOpt) List of metadata keys reserved for metering use. And these keys are additional to the ones included in the namespace.
+     - (List) List of metadata keys reserved for metering use. And these keys are additional to the ones included in the namespace.
    * - ``reserved_metadata_length`` = ``256``
-     - (IntOpt) Limit on length of reserved metadata values.
+     - (Integer) Limit on length of reserved metadata values.
    * - ``reserved_metadata_namespace`` = ``metering.``
-     - (ListOpt) List of metadata prefixes reserved for metering use.
+     - (List) List of metadata prefixes reserved for metering use.
    * - **[api]**
      -
    * - ``aodh_is_enabled`` = ``None``
-     - (BoolOpt) Set True to redirect alarms URLs to aodh. Default autodetection by querying keystone.
+     - (Boolean) Set True to redirect alarms URLs to aodh. Default autodetection by querying keystone.
    * - ``aodh_url`` = ``None``
-     - (StrOpt) The endpoint of Aodh to redirect alarms URLs to Aodh API. Default autodetection by querying keystone.
+     - (String) The endpoint of Aodh to redirect alarms URLs to Aodh API. Default autodetection by querying keystone.
    * - ``default_api_return_limit`` = ``100``
-     - (IntOpt) Default maximum number of items returned by API request.
+     - (Integer) Default maximum number of items returned by API request.
    * - ``gnocchi_is_enabled`` = ``None``
-     - (BoolOpt) Set True to disable resource/meter/sample URLs. Default autodetection by querying keystone.
+     - (Boolean) Set True to disable resource/meter/sample URLs. Default autodetection by querying keystone.
    * - ``host`` = ``0.0.0.0``
-     - (StrOpt) The listen IP for the ceilometer API server.
+     - (String) The listen IP for the ceilometer API server.
    * - ``pecan_debug`` = ``False``
-     - (BoolOpt) Toggle Pecan Debug Middleware.
+     - (Boolean) Toggle Pecan Debug Middleware.
    * - ``port`` = ``8777``
-     - (PortOpt) The port for the ceilometer API server.
+     - (Unknown) The port for the ceilometer API server.
    * - ``workers`` = ``1``
-     - (IntOpt) Number of workers for api, default value is 1.
+     - (Integer) Number of workers for api, default value is 1.
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``
-     - (IntOpt) The maximum body size for each request, in bytes.
+     - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.

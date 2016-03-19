@@ -19,22 +19,22 @@
    * - **[DEFAULT]**
      -
    * - ``sf_account_prefix`` = ``None``
-     - (StrOpt) Create SolidFire accounts with this prefix. Any string can be used here, but the string "hostname" is special and will create a prefix using the cinder node hostname (previous default behavior). The default is NO prefix.
+     - (String) Create SolidFire accounts with this prefix. Any string can be used here, but the string "hostname" is special and will create a prefix using the cinder node hostname (previous default behavior). The default is NO prefix.
    * - ``sf_allow_template_caching`` = ``True``
-     - (BoolOpt) Create an internal cache of copy of images when a bootable volume is created to eliminate fetch from glance and qemu-conversion on subsequent calls.
+     - (Boolean) Create an internal cache of copy of images when a bootable volume is created to eliminate fetch from glance and qemu-conversion on subsequent calls.
    * - ``sf_allow_tenant_qos`` = ``False``
-     - (BoolOpt) Allow tenants to specify QOS on create
+     - (Boolean) Allow tenants to specify QOS on create
    * - ``sf_api_port`` = ``443``
-     - (PortOpt) SolidFire API port. Useful if the device api is behind a proxy on a different port.
+     - (Unknown) SolidFire API port. Useful if the device api is behind a proxy on a different port.
    * - ``sf_emulate_512`` = ``True``
-     - (BoolOpt) Set 512 byte emulation on volume creation;
+     - (Boolean) Set 512 byte emulation on volume creation;
    * - ``sf_enable_vag`` = ``False``
-     - (BoolOpt) Utilize volume access groups on a per-tenant basis.
+     - (Boolean) Utilize volume access groups on a per-tenant basis.
    * - ``sf_enable_volume_mapping`` = ``True``
-     - (BoolOpt) Create an internal mapping of volume IDs and account. Optimizes lookups and performance at the expense of memory, very large deployments may want to consider setting to False.
+     - (Boolean) Create an internal mapping of volume IDs and account. Optimizes lookups and performance at the expense of memory, very large deployments may want to consider setting to False.
    * - ``sf_svip`` = ``None``
-     - (StrOpt) Overrides default cluster SVIP with the one specified. This is required or deployments that have implemented the use of VLANs for iSCSI networks in their cloud.
+     - (String) Overrides default cluster SVIP with the one specified. This is required or deployments that have implemented the use of VLANs for iSCSI networks in their cloud.
    * - ``sf_template_account_name`` = ``openstack-vtemplate``
-     - (StrOpt) Account name on the SolidFire Cluster to use as owner of template/cache volumes (created if does not exist).
+     - (String) Account name on the SolidFire Cluster to use as owner of template/cache volumes (created if does not exist).
    * - ``sf_volume_prefix`` = ``UUID-``
-     - (StrOpt) Create SolidFire volumes with this prefix. Volume names are of the form <sf_volume_prefix><cinder-volume-id>. The default is to use a prefix of 'UUID-'.
+     - (String) Create SolidFire volumes with this prefix. Volume names are of the form <sf_volume_prefix><cinder-volume-id>. The default is to use a prefix of 'UUID-'.

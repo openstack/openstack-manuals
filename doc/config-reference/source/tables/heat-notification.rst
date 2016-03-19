@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``onready`` = ``None``
-     - (StrOpt) Deprecated.
+     - (String) Deprecated.

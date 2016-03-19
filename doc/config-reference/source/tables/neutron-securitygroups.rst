@@ -19,8 +19,8 @@
    * - **[SECURITYGROUP]**
      -
    * - ``enable_ipset`` = ``True``
-     - (BoolOpt) Use ipset to speed-up the iptables based security groups. Enabling ipset support requires that ipset is installed on L2 agent node.
+     - (Boolean) Use ipset to speed-up the iptables based security groups. Enabling ipset support requires that ipset is installed on L2 agent node.
    * - ``enable_security_group`` = ``True``
-     - (BoolOpt) Controls whether the neutron security group API is enabled in the server. It should be false when using no security groups or using the nova security group API.
+     - (Boolean) Controls whether the neutron security group API is enabled in the server. It should be false when using no security groups or using the nova security group API.
    * - ``firewall_driver`` = ``None``
-     - (StrOpt) Driver for security groups firewall in the L2 agent
+     - (String) Driver for security groups firewall in the L2 agent

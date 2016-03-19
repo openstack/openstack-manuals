@@ -19,14 +19,14 @@
    * - **[clients_keystone]**
      -
    * - ``auth_uri`` =
-     - (StrOpt) Unversioned keystone url in format like http://0.0.0.0:5000.
+     - (String) Unversioned keystone url in format like http://0.0.0.0:5000.
    * - ``ca_file`` = ``None``
-     - (StrOpt) Optional CA cert file to use in SSL connections.
+     - (String) Optional CA cert file to use in SSL connections.
    * - ``cert_file`` = ``None``
-     - (StrOpt) Optional PEM-formatted certificate chain file.
+     - (String) Optional PEM-formatted certificate chain file.
    * - ``endpoint_type`` = ``None``
-     - (StrOpt) Type of endpoint in Identity service catalog to use for communication with the OpenStack service.
+     - (String) Type of endpoint in Identity service catalog to use for communication with the OpenStack service.
    * - ``insecure`` = ``None``
-     - (BoolOpt) If set, then the server's certificate will not be verified.
+     - (Boolean) If set, then the server's certificate will not be verified.
    * - ``key_file`` = ``None``
-     - (StrOpt) Optional PEM-formatted file that contains the private key.
+     - (String) Optional PEM-formatted file that contains the private key.

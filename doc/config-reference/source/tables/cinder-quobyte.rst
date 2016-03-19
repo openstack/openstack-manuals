@@ -19,12 +19,12 @@
    * - **[DEFAULT]**
      -
    * - ``quobyte_client_cfg`` = ``None``
-     - (StrOpt) Path to a Quobyte Client configuration file.
+     - (String) Path to a Quobyte Client configuration file.
    * - ``quobyte_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Base dir containing the mount point for the Quobyte volume.
+     - (String) Base dir containing the mount point for the Quobyte volume.
    * - ``quobyte_qcow2_volumes`` = ``True``
-     - (BoolOpt) Create volumes as QCOW2 files rather than raw files.
+     - (Boolean) Create volumes as QCOW2 files rather than raw files.
    * - ``quobyte_sparsed_volumes`` = ``True``
-     - (BoolOpt) Create volumes as sparse files which take no space. If set to False, volume is created as regular file.In such case volume creation takes a lot of time.
+     - (Boolean) Create volumes as sparse files which take no space. If set to False, volume is created as regular file.In such case volume creation takes a lot of time.
    * - ``quobyte_volume_url`` = ``None``
-     - (StrOpt) URL to the Quobyte volume e.g., quobyte://<DIR host>/<volume name>
+     - (String) URL to the Quobyte volume e.g., quobyte://<DIR host>/<volume name>

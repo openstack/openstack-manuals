@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``manila_huawei_conf_file`` = ``/etc/manila/manila_huawei_conf.xml``
-     - (StrOpt) The configuration file for the Manila Huawei driver.
+     - (String) The configuration file for the Manila Huawei driver.

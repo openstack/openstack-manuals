@@ -19,4 +19,4 @@
    * - **[credential]**
      -
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for the credential backend driver in the keystone.credential namespace.
+     - (String) Entrypoint for the credential backend driver in the keystone.credential namespace.

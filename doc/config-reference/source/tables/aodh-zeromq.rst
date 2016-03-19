@@ -19,26 +19,26 @@
    * - **[DEFAULT]**
      -
    * - ``rpc_zmq_bind_address`` = ``*``
-     - (StrOpt) ZeroMQ bind address. Should be a wildcard (*), an ethernet interface, or IP. The "host" option should point or resolve to this address.
+     - (String) ZeroMQ bind address. Should be a wildcard (*), an ethernet interface, or IP. The "host" option should point or resolve to this address.
    * - ``rpc_zmq_bind_port_retries`` = ``100``
-     - (IntOpt) Number of retries to find free port number before fail with ZMQBindError.
+     - (Integer) Number of retries to find free port number before fail with ZMQBindError.
    * - ``rpc_zmq_concurrency`` = ``eventlet``
-     - (StrOpt) Type of concurrency used. Either "native" or "eventlet"
+     - (String) Type of concurrency used. Either "native" or "eventlet"
    * - ``rpc_zmq_contexts`` = ``1``
-     - (IntOpt) Number of ZeroMQ contexts, defaults to 1.
+     - (Integer) Number of ZeroMQ contexts, defaults to 1.
    * - ``rpc_zmq_host`` = ``localhost``
-     - (StrOpt) Name of this node. Must be a valid hostname, FQDN, or IP address. Must match "host" option, if running Nova.
+     - (String) Name of this node. Must be a valid hostname, FQDN, or IP address. Must match "host" option, if running Nova.
    * - ``rpc_zmq_ipc_dir`` = ``/var/run/openstack``
-     - (StrOpt) Directory for holding IPC sockets.
+     - (String) Directory for holding IPC sockets.
    * - ``rpc_zmq_matchmaker`` = ``redis``
-     - (StrOpt) MatchMaker driver.
+     - (String) MatchMaker driver.
    * - ``rpc_zmq_max_port`` = ``65536``
-     - (IntOpt) Maximal port number for random ports range.
+     - (Integer) Maximal port number for random ports range.
    * - ``rpc_zmq_min_port`` = ``49152``
-     - (PortOpt) Minimal port number for random ports range.
+     - (Unknown) Minimal port number for random ports range.
    * - ``rpc_zmq_topic_backlog`` = ``None``
-     - (IntOpt) Maximum number of ingress messages to locally buffer per topic. Default is unlimited.
+     - (Integer) Maximum number of ingress messages to locally buffer per topic. Default is unlimited.
    * - ``use_pub_sub`` = ``True``
-     - (BoolOpt) Use PUB/SUB pattern for fanout methods. PUB/SUB always uses proxy.
+     - (Boolean) Use PUB/SUB pattern for fanout methods. PUB/SUB always uses proxy.
    * - ``zmq_target_expire`` = ``120``
-     - (IntOpt) Expiration timeout in seconds of a name service record about existing target ( < 0 means no timeout).
+     - (Integer) Expiration timeout in seconds of a name service record about existing target ( < 0 means no timeout).

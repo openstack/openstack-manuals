@@ -19,112 +19,116 @@
    * - **[DEFAULT]**
      -
    * - ``allow_availability_zone_fallback`` = ``False``
-     - (BoolOpt) If the requested Cinder availability zone is unavailable, fall back to the value of default_availability_zone, then storage_availability_zone, instead of failing.
+     - (Boolean) If the requested Cinder availability zone is unavailable, fall back to the value of default_availability_zone, then storage_availability_zone, instead of failing.
    * - ``chap_password`` =
-     - (StrOpt) Password for specified CHAP account name.
+     - (String) Password for specified CHAP account name.
    * - ``chap_username`` =
-     - (StrOpt) CHAP user name.
+     - (String) CHAP user name.
    * - ``chiscsi_conf`` = ``/etc/chelsio-iscsi/chiscsi.conf``
-     - (StrOpt) Chiscsi (CXT) global defaults configuration file
+     - (String) Chiscsi (CXT) global defaults configuration file
    * - ``cinder_internal_tenant_project_id`` = ``None``
-     - (StrOpt) ID of the project which will be used as the Cinder internal tenant.
+     - (String) ID of the project which will be used as the Cinder internal tenant.
    * - ``cinder_internal_tenant_user_id`` = ``None``
-     - (StrOpt) ID of the user to be used in volume operations as the Cinder internal tenant.
+     - (String) ID of the user to be used in volume operations as the Cinder internal tenant.
    * - ``compute_api_class`` = ``cinder.compute.nova.API``
-     - (StrOpt) The full class name of the compute API class to use
+     - (String) The full class name of the compute API class to use
    * - ``consistencygroup_api_class`` = ``cinder.consistencygroup.api.API``
-     - (StrOpt) The full class name of the consistencygroup API class
+     - (String) The full class name of the consistencygroup API class
    * - ``default_availability_zone`` = ``None``
-     - (StrOpt) Default availability zone for new volumes. If not set, the storage_availability_zone option value is used as the default for new volumes.
+     - (String) Default availability zone for new volumes. If not set, the storage_availability_zone option value is used as the default for new volumes.
    * - ``default_volume_type`` = ``None``
-     - (StrOpt) Default volume type to use
+     - (String) Default volume type to use
    * - ``driver_data_namespace`` = ``None``
-     - (StrOpt) Namespace for driver private data values to be saved in.
+     - (String) Namespace for driver private data values to be saved in.
+   * - ``driver_ssl_cert_path`` = ``None``
+     - (String) Can be used to specify a non default path to a CA_BUNDLE file or directory with certificates of trusted CAs, which will be used to validate the backend
    * - ``driver_ssl_cert_verify`` = ``False``
-     - (BoolOpt) If set to True the http client will validate the SSL certificate of the backend endpoint.
+     - (Boolean) If set to True the http client will validate the SSL certificate of the backend endpoint.
    * - ``enable_force_upload`` = ``False``
-     - (BoolOpt) Enables the Force option on upload_to_image. This enables running upload_volume on in-use volumes for backends that support it.
+     - (Boolean) Enables the Force option on upload_to_image. This enables running upload_volume on in-use volumes for backends that support it.
    * - ``enable_new_services`` = ``True``
-     - (BoolOpt) Services to be added to the available pool on create
+     - (Boolean) Services to be added to the available pool on create
    * - ``end_time`` = ``None``
-     - (StrOpt) If this option is specified then the end time specified is used instead of the end time of the last completed audit period.
+     - (String) If this option is specified then the end time specified is used instead of the end time of the last completed audit period.
    * - ``enforce_multipath_for_image_xfer`` = ``False``
-     - (BoolOpt) If this is set to True, attachment of volumes for image transfer will be aborted when multipathd is not running. Otherwise, it will fallback to single path.
+     - (Boolean) If this is set to True, attachment of volumes for image transfer will be aborted when multipathd is not running. Otherwise, it will fallback to single path.
    * - ``executor_thread_pool_size`` = ``64``
-     - (IntOpt) Size of executor thread pool.
+     - (Integer) Size of executor thread pool.
    * - ``host`` = ``localhost``
-     - (StrOpt) Name of this node. This can be an opaque identifier. It is not necessarily a host name, FQDN, or IP address.
+     - (String) Name of this node. This can be an opaque identifier. It is not necessarily a host name, FQDN, or IP address.
    * - ``iet_conf`` = ``/etc/iet/ietd.conf``
-     - (StrOpt) IET configuration file
+     - (String) IET configuration file
    * - ``iscsi_secondary_ip_addresses`` =
-     - (ListOpt) The list of secondary IP addresses of the iSCSI daemon
+     - (List) The list of secondary IP addresses of the iSCSI daemon
    * - ``max_over_subscription_ratio`` = ``20.0``
-     - (FloatOpt) Float representation of the over subscription ratio when thin provisioning is involved. Default ratio is 20.0, meaning provisioned capacity can be 20 times of the total physical capacity. If the ratio is 10.5, it means provisioned capacity can be 10.5 times of the total physical capacity. A ratio of 1.0 means provisioned capacity cannot exceed the total physical capacity. A ratio lower than 1.0 will be ignored and the default value will be used instead.
+     - (Floating point) Float representation of the over subscription ratio when thin provisioning is involved. Default ratio is 20.0, meaning provisioned capacity can be 20 times of the total physical capacity. If the ratio is 10.5, it means provisioned capacity can be 10.5 times of the total physical capacity. A ratio of 1.0 means provisioned capacity cannot exceed the total physical capacity. The ratio has to be a minimum of 1.0.
+   * - ``memcached_servers`` = ``None``
+     - (List) Memcached servers or None for in process cache.
    * - ``monkey_patch`` = ``False``
-     - (BoolOpt) Enable monkey patching
+     - (Boolean) Enable monkey patching
    * - ``monkey_patch_modules`` =
-     - (ListOpt) List of modules/decorators to monkey patch
+     - (List) List of modules/decorators to monkey patch
    * - ``my_ip`` = ``10.0.0.1``
-     - (StrOpt) IP address of this host
+     - (String) IP address of this host
    * - ``no_snapshot_gb_quota`` = ``False``
-     - (BoolOpt) Whether snapshots count against gigabyte quota
+     - (Boolean) Whether snapshots count against gigabyte quota
    * - ``num_shell_tries`` = ``3``
-     - (IntOpt) Number of times to attempt to run flakey shell commands
+     - (Integer) Number of times to attempt to run flakey shell commands
    * - ``os_privileged_user_auth_url`` = ``None``
-     - (StrOpt) Auth URL associated with the OpenStack privileged account.
+     - (String) Auth URL associated with the OpenStack privileged account.
    * - ``os_privileged_user_name`` = ``None``
-     - (StrOpt) OpenStack privileged account username. Used for requests to other services (such as Nova) that require an account with special rights.
+     - (String) OpenStack privileged account username. Used for requests to other services (such as Nova) that require an account with special rights.
    * - ``os_privileged_user_password`` = ``None``
-     - (StrOpt) Password associated with the OpenStack privileged account.
+     - (String) Password associated with the OpenStack privileged account.
    * - ``os_privileged_user_tenant`` = ``None``
-     - (StrOpt) Tenant name associated with the OpenStack privileged account.
+     - (String) Tenant name associated with the OpenStack privileged account.
    * - ``periodic_fuzzy_delay`` = ``60``
-     - (IntOpt) Range, in seconds, to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
+     - (Integer) Range, in seconds, to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
    * - ``periodic_interval`` = ``60``
-     - (IntOpt) Interval, in seconds, between running periodic tasks
+     - (Integer) Interval, in seconds, between running periodic tasks
    * - ``replication_api_class`` = ``cinder.replication.api.API``
-     - (StrOpt) The full class name of the volume replication API class
+     - (String) The full class name of the volume replication API class
    * - ``replication_device`` = ``None``
-     - (MultiOpt) Multi opt of dictionaries to represent a replication target device. This option may be specified multiple times in a single config section to specify multiple replication target devices. Each entry takes the standard dict config form: replication_device = target_device_id:<required>,managed_backend_name:<host@backend_name>,key1:value1,key2:value2...
+     - (Unknown) Multi opt of dictionaries to represent a replication target device. This option may be specified multiple times in a single config section to specify multiple replication target devices. Each entry takes the standard dict config form: replication_device = target_device_id:<required>,key1:value1,key2:value2...
    * - ``report_discard_supported`` = ``False``
-     - (BoolOpt) Report to clients of Cinder that the backend supports discard (aka. trim/unmap). This will not actually change the behavior of the backend or the client directly, it will only notify that it can be used.
+     - (Boolean) Report to clients of Cinder that the backend supports discard (aka. trim/unmap). This will not actually change the behavior of the backend or the client directly, it will only notify that it can be used.
    * - ``report_interval`` = ``10``
-     - (IntOpt) Interval, in seconds, between nodes reporting state to datastore
+     - (Integer) Interval, in seconds, between nodes reporting state to datastore
    * - ``reserved_percentage`` = ``0``
-     - (IntOpt) The percentage of backend capacity is reserved
+     - (Integer) The percentage of backend capacity is reserved
    * - ``rootwrap_config`` = ``/etc/cinder/rootwrap.conf``
-     - (StrOpt) Path to the rootwrap configuration file to use for running commands as root
+     - (String) Path to the rootwrap configuration file to use for running commands as root
    * - ``send_actions`` = ``False``
-     - (BoolOpt) Send the volume and snapshot create and delete notifications generated in the specified period.
+     - (Boolean) Send the volume and snapshot create and delete notifications generated in the specified period.
    * - ``service_down_time`` = ``60``
-     - (IntOpt) Maximum time since last check-in for a service to be considered up
-   * - ``sqlite_clean_db`` = ``clean.sqlite``
-     - (StrOpt) File name of clean sqlite db
+     - (Integer) Maximum time since last check-in for a service to be considered up
    * - ``ssh_hosts_key_file`` = ``$state_path/ssh_known_hosts``
-     - (StrOpt) File containing SSH host keys for the systems with which Cinder needs to communicate. OPTIONAL: Default=$state_path/ssh_known_hosts
+     - (String) File containing SSH host keys for the systems with which Cinder needs to communicate. OPTIONAL: Default=$state_path/ssh_known_hosts
    * - ``start_time`` = ``None``
-     - (StrOpt) If this option is specified then the start time specified is used instead of the start time of the last completed audit period.
+     - (String) If this option is specified then the start time specified is used instead of the start time of the last completed audit period.
    * - ``state_path`` = ``/var/lib/cinder``
-     - (StrOpt) Top-level directory for maintaining cinder's state
+     - (String) Top-level directory for maintaining cinder's state
    * - ``storage_availability_zone`` = ``nova``
-     - (StrOpt) Availability zone of this node
+     - (String) Availability zone of this node
    * - ``strict_ssh_host_key_policy`` = ``False``
-     - (BoolOpt) Option to enable strict host key checking. When set to "True" Cinder will only connect to systems with a host key present in the configured "ssh_hosts_key_file". When set to "False" the host key will be saved upon first connection and used for subsequent connections. Default=False
+     - (Boolean) Option to enable strict host key checking. When set to "True" Cinder will only connect to systems with a host key present in the configured "ssh_hosts_key_file". When set to "False" the host key will be saved upon first connection and used for subsequent connections. Default=False
+   * - ``suppress_requests_ssl_warnings`` = ``False``
+     - (Boolean) Suppress requests library SSL certificate warnings.
    * - ``tcp_keepalive`` = ``True``
-     - (BoolOpt) Sets the value of TCP_KEEPALIVE (True/False) for each server socket.
+     - (Boolean) Sets the value of TCP_KEEPALIVE (True/False) for each server socket.
    * - ``tcp_keepalive_count`` = ``None``
-     - (IntOpt) Sets the value of TCP_KEEPCNT for each server socket. Not supported on OS X.
+     - (Integer) Sets the value of TCP_KEEPCNT for each server socket. Not supported on OS X.
    * - ``tcp_keepalive_interval`` = ``None``
-     - (IntOpt) Sets the value of TCP_KEEPINTVL in seconds for each server socket. Not supported on OS X.
+     - (Integer) Sets the value of TCP_KEEPINTVL in seconds for each server socket. Not supported on OS X.
    * - ``until_refresh`` = ``0``
-     - (IntOpt) Count of reservations until usage is refreshed
+     - (Integer) Count of reservations until usage is refreshed
    * - ``use_chap_auth`` = ``False``
-     - (BoolOpt) Option to enable/disable CHAP authentication for targets.
+     - (Boolean) Option to enable/disable CHAP authentication for targets.
    * - ``use_forwarded_for`` = ``False``
-     - (BoolOpt) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.
+     - (Boolean) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.
    * - ``watch_log_file`` = ``False``
-     - (BoolOpt) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log_file option is specified and Linux platform is used. This option is ignored if log_config_append is set.
+     - (Boolean) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log_file option is specified and Linux platform is used. This option is ignored if log_config_append is set.
    * - **[keystone_authtoken]**
      -
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
+     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.

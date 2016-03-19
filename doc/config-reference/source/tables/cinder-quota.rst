@@ -19,22 +19,22 @@
    * - **[DEFAULT]**
      -
    * - ``max_age`` = ``0``
-     - (IntOpt) Number of seconds between subsequent usage refreshes
+     - (Integer) Number of seconds between subsequent usage refreshes
    * - ``quota_backup_gigabytes`` = ``1000``
-     - (IntOpt) Total amount of storage, in gigabytes, allowed for backups per project
+     - (Integer) Total amount of storage, in gigabytes, allowed for backups per project
    * - ``quota_backups`` = ``10``
-     - (IntOpt) Number of volume backups allowed per project
+     - (Integer) Number of volume backups allowed per project
    * - ``quota_consistencygroups`` = ``10``
-     - (IntOpt) Number of consistencygroups allowed per project
+     - (Integer) Number of consistencygroups allowed per project
    * - ``quota_driver`` = ``cinder.quota.DbQuotaDriver``
-     - (StrOpt) Default driver to use for quota checks
+     - (String) Default driver to use for quota checks
    * - ``quota_gigabytes`` = ``1000``
-     - (IntOpt) Total amount of storage, in gigabytes, allowed for volumes and snapshots per project
+     - (Integer) Total amount of storage, in gigabytes, allowed for volumes and snapshots per project
    * - ``quota_snapshots`` = ``10``
-     - (IntOpt) Number of volume snapshots allowed per project
+     - (Integer) Number of volume snapshots allowed per project
    * - ``quota_volumes`` = ``10``
-     - (IntOpt) Number of volumes allowed per project
+     - (Integer) Number of volumes allowed per project
    * - ``reservation_expire`` = ``86400``
-     - (IntOpt) Number of seconds until a reservation expires
+     - (Integer) Number of seconds until a reservation expires
    * - ``use_default_quota_class`` = ``True``
-     - (BoolOpt) Enables or disables use of default quota class with default quota.
+     - (Boolean) Enables or disables use of default quota class with default quota.

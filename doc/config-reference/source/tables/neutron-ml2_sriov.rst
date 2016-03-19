@@ -19,4 +19,4 @@
    * - **[ml2_sriov]**
      -
    * - ``supported_pci_vendor_devs`` = ``15b3:1004, 8086:10ca``
-     - (ListOpt) Comma-separated list of supported PCI vendor devices, as defined by vendor_id:product_id according to the PCI ID Repository. Default enables support for Intel and Mellanox SR-IOV capable NICs.
+     - (List) Comma-separated list of supported PCI vendor devices, as defined by vendor_id:product_id according to the PCI ID Repository. Default enables support for Intel and Mellanox SR-IOV capable NICs.

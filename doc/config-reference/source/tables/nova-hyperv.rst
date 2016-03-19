@@ -19,24 +19,24 @@
    * - **[hyperv]**
      -
    * - ``dynamic_memory_ratio`` = ``1.0``
-     - (FloatOpt) Enables dynamic memory allocation (ballooning) when set to a value greater than 1. The value expresses the ratio between the total RAM assigned to an instance and its startup RAM amount. For example a ratio of 2.0 for an instance with 1024MB of RAM implies 512MB of RAM allocated at startup
+     - (Floating point) Enables dynamic memory allocation (ballooning) when set to a value greater than 1. The value expresses the ratio between the total RAM assigned to an instance and its startup RAM amount. For example a ratio of 2.0 for an instance with 1024MB of RAM implies 512MB of RAM allocated at startup
    * - ``enable_instance_metrics_collection`` = ``False``
-     - (BoolOpt) Enables metrics collections for an instance by using Hyper-V's metric APIs. Collected data can by retrieved by other apps and services, e.g.: Ceilometer. Requires Hyper-V / Windows Server 2012 and above
+     - (Boolean) Enables metrics collections for an instance by using Hyper-V's metric APIs. Collected data can by retrieved by other apps and services, e.g.: Ceilometer. Requires Hyper-V / Windows Server 2012 and above
    * - ``instances_path_share`` =
-     - (StrOpt) The name of a Windows share name mapped to the "instances_path" dir and used by the resize feature to copy files to the target host. If left blank, an administrative share will be used, looking for the same "instances_path" used locally
+     - (String) The name of a Windows share name mapped to the "instances_path" dir and used by the resize feature to copy files to the target host. If left blank, an administrative share will be used, looking for the same "instances_path" used locally
    * - ``limit_cpu_features`` = ``False``
-     - (BoolOpt) Required for live migration among hosts with different CPU features
+     - (Boolean) Required for live migration among hosts with different CPU features
    * - ``mounted_disk_query_retry_count`` = ``10``
-     - (IntOpt) The number of times to retry checking for a disk mounted via iSCSI.
+     - (Integer) The number of times to retry checking for a disk mounted via iSCSI.
    * - ``mounted_disk_query_retry_interval`` = ``5``
-     - (IntOpt) Interval between checks for a mounted iSCSI disk, in seconds.
+     - (Integer) Interval between checks for a mounted iSCSI disk, in seconds.
    * - ``power_state_check_timeframe`` = ``60``
-     - (IntOpt) The timeframe to be checked for instance power state changes.
+     - (Integer) The timeframe to be checked for instance power state changes.
    * - ``power_state_event_polling_interval`` = ``2``
-     - (IntOpt) Instance power state change event polling frequency.
+     - (Integer) Instance power state change event polling frequency.
    * - ``qemu_img_cmd`` = ``qemu-img.exe``
-     - (StrOpt) Path of qemu-img command which is used to convert between different image types
+     - (String) Path of qemu-img command which is used to convert between different image types
    * - ``vswitch_name`` = ``None``
-     - (StrOpt) External virtual switch Name, if not provided, the first external virtual switch is used
+     - (String) External virtual switch Name, if not provided, the first external virtual switch is used
    * - ``wait_soft_reboot_seconds`` = ``60``
-     - (IntOpt) Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.
+     - (Integer) Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.

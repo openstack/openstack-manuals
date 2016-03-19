@@ -19,26 +19,32 @@
    * - **[DEFAULT]**
      -
    * - ``agent_call_high_timeout`` = ``60``
-     - (IntOpt) Maximum time (in seconds) to wait for Guest Agent 'slow' requests (such as restarting the database).
+     - (Integer) Maximum time (in seconds) to wait for Guest Agent 'slow' requests (such as restarting the database).
    * - ``agent_call_low_timeout`` = ``5``
-     - (IntOpt) Maximum time (in seconds) to wait for Guest Agent 'quick'requests (such as retrieving a list of users or databases).
+     - (Integer) Maximum time (in seconds) to wait for Guest Agent 'quick'requests (such as retrieving a list of users or databases).
    * - ``agent_heartbeat_expiry`` = ``60``
-     - (IntOpt) Time (in seconds) after which a guest is considered unreachable
+     - (Integer) Time (in seconds) after which a guest is considered unreachable
    * - ``agent_heartbeat_time`` = ``10``
-     - (IntOpt) Maximum time (in seconds) for the Guest Agent to reply to a heartbeat request.
+     - (Integer) Maximum time (in seconds) for the Guest Agent to reply to a heartbeat request.
    * - ``agent_replication_snapshot_timeout`` = ``36000``
-     - (IntOpt) Maximum time (in seconds) to wait for taking a Guest Agent replication snapshot.
+     - (Integer) Maximum time (in seconds) to wait for taking a Guest Agent replication snapshot.
    * - ``guest_config`` = ``/etc/trove/trove-guestagent.conf``
-     - (StrOpt) Path to the Guest Agent config file to be injected during instance creation.
+     - (String) Path to the Guest Agent config file to be injected during instance creation.
    * - ``guest_id`` = ``None``
-     - (StrOpt) ID of the Guest Instance.
+     - (String) ID of the Guest Instance.
    * - ``guest_info`` = ``guest_info.conf``
-     - (StrOpt) The guest info filename found in the injected config location. If a full path is specified then it will be used as the path to the guest info file
+     - (String) The guest info filename found in the injected config location. If a full path is specified then it will be used as the path to the guest info file
+   * - ``guest_log_container_name`` = ``database_logs``
+     - (String) Name of container that stores guest log components.
+   * - ``guest_log_expiry`` = ``2592000``
+     - (Integer) Expiry (in seconds) of objects in guest log container.
+   * - ``guest_log_limit`` = ``1000000``
+     - (Integer) Maximum size of a chunk saved in guest log container.
    * - ``mount_options`` = ``defaults,noatime``
-     - (StrOpt) Options to use when mounting a volume.
-   * - ``storage_namespace`` = ``trove.guestagent.strategies.storage.swift``
-     - (StrOpt) Namespace to load the default storage strategy from.
+     - (String) Options to use when mounting a volume.
+   * - ``storage_namespace`` = ``trove.common.strategies.storage.swift``
+     - (String) Namespace to load the default storage strategy from.
    * - ``storage_strategy`` = ``SwiftStorage``
-     - (StrOpt) Default strategy to store backups.
+     - (String) Default strategy to store backups.
    * - ``usage_sleep_time`` = ``5``
-     - (IntOpt) Time to sleep during the check for an active Guest.
+     - (Integer) Time to sleep during the check for an active Guest.

@@ -19,10 +19,10 @@
    * - **[strongswan]**
      -
    * - ``default_config_area`` = ``/etc/strongswan.d``
-     - (StrOpt) The area where default StrongSwan configuration files are located.
+     - (String) The area where default StrongSwan configuration files are located.
    * - ``ipsec_config_template`` = ``/usr/lib/python/site-packages/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/strongswan/ipsec.conf.template``
-     - (StrOpt) Template file for ipsec configuration.
+     - (String) Template file for ipsec configuration.
    * - ``ipsec_secret_template`` = ``/usr/lib/python/site-packages/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/strongswan/ipsec.secret.template``
-     - (StrOpt) Template file for ipsec secret configuration.
+     - (String) Template file for ipsec secret configuration.
    * - ``strongswan_config_template`` = ``/usr/lib/python/site-packages/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/strongswan/strongswan.conf.template``
-     - (StrOpt) Template file for strongswan configuration.
+     - (String) Template file for strongswan configuration.

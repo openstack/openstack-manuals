@@ -19,14 +19,14 @@
    * - **[DEFAULT]**
      -
    * - ``driver_use_ssl`` = ``False``
-     - (BoolOpt) Tell driver to use SSL for connection to backend storage if the driver supports it.
+     - (Boolean) Tell driver to use SSL for connection to backend storage if the driver supports it.
    * - ``ise_completion_retries`` = ``30``
-     - (IntOpt) Number on retries to get completion status after issuing a command to ISE.
+     - (Integer) Number on retries to get completion status after issuing a command to ISE.
    * - ``ise_connection_retries`` = ``5``
-     - (IntOpt) Number of retries (per port) when establishing connection to ISE management port.
+     - (Integer) Number of retries (per port) when establishing connection to ISE management port.
    * - ``ise_raid`` = ``1``
-     - (IntOpt) Raid level for ISE volumes.
+     - (Integer) Raid level for ISE volumes.
    * - ``ise_retry_interval`` = ``1``
-     - (IntOpt) Interval (secs) between retries.
+     - (Integer) Interval (secs) between retries.
    * - ``ise_storage_pool`` = ``1``
-     - (IntOpt) Default storage pool for volumes.
+     - (Integer) Default storage pool for volumes.

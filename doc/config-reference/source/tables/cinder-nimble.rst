@@ -19,6 +19,6 @@
    * - **[DEFAULT]**
      -
    * - ``nimble_pool_name`` = ``default``
-     - (StrOpt) Nimble Controller pool name
+     - (String) Nimble Controller pool name
    * - ``nimble_subnet_label`` = ``*``
-     - (StrOpt) Nimble Subnet Label
+     - (String) Nimble Subnet Label

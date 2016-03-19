@@ -19,6 +19,6 @@
    * - **[keymgr]**
      -
    * - ``api_class`` = ``nova.keymgr.conf_key_mgr.ConfKeyManager``
-     - (StrOpt) The full class name of the key manager API class
+     - (String) The full class name of the key manager API class
    * - ``fixed_key`` = ``None``
-     - (StrOpt) Fixed key returned by key manager, specified in hex
+     - (String) Fixed key returned by key manager, specified in hex

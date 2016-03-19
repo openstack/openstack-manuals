@@ -19,8 +19,8 @@
    * - **[ssh]**
      -
    * - ``get_vm_name_attempts`` = ``3``
-     - (IntOpt) Number of attempts to try to get VM name used by the host that corresponds to a node's MAC address.
+     - (Integer) Number of attempts to try to get VM name used by the host that corresponds to a node's MAC address.
    * - ``get_vm_name_retry_interval`` = ``3``
-     - (IntOpt) Number of seconds to wait between attempts to get VM name used by the host that corresponds to a node's MAC address.
+     - (Integer) Number of seconds to wait between attempts to get VM name used by the host that corresponds to a node's MAC address.
    * - ``libvirt_uri`` = ``qemu:///system``
-     - (StrOpt) libvirt URI.
+     - (String) libvirt URI.

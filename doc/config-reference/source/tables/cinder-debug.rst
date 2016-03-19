@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``trace_flags`` = ``None``
-     - (ListOpt) List of options that control which trace info is written to the DEBUG log level to assist developers. Valid values are method and api.
+     - (List) List of options that control which trace info is written to the DEBUG log level to assist developers. Valid values are method and api.

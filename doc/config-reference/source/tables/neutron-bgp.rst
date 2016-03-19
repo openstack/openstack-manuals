@@ -8,25 +8,17 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _neutron-brocade:
+.. _neutron-bgp:
 
-.. list-table:: Description of Brocade configuration options
+.. list-table:: Description of BGP configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[PHYSICAL_INTERFACE]**
+   * - **[BGP]**
      -
-   * - ``physical_interface`` = ``eth0``
-     - (StrOpt) The network interface to use when creating a port
-   * - **[SWITCH]**
-     -
-   * - ``address`` =
-     - (StrOpt) The address of the host to SSH to
-   * - ``ostype`` = ``NOS``
-     - (StrOpt) Currently unused
-   * - ``password`` =
-     - (StrOpt) The SSH password to use
-   * - ``username`` =
-     - (StrOpt) The SSH username to use
+   * - ``bgp_router_id`` = ``None``
+     - (String) 32-bit BGP identifier, typically an IPv4 address owned by the system running the BGP DrAgent.
+   * - ``bgp_speaker_driver`` = ``None``
+     - (String) BGP speaker driver class to be instantiated.

@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``region_name_for_services`` = ``None``
-     - (StrOpt) Default region name used to get services endpoints.
+     - (String) Default region name used to get services endpoints.
    * - **[clients]**
      -
    * - ``ca_file`` = ``None``
-     - (StrOpt) Optional CA cert file to use in SSL connections.
+     - (String) Optional CA cert file to use in SSL connections.
    * - ``cert_file`` = ``None``
-     - (StrOpt) Optional PEM-formatted certificate chain file.
+     - (String) Optional PEM-formatted certificate chain file.
    * - ``endpoint_type`` = ``publicURL``
-     - (StrOpt) Type of endpoint in Identity service catalog to use for communication with the OpenStack service.
+     - (String) Type of endpoint in Identity service catalog to use for communication with the OpenStack service.
    * - ``insecure`` = ``False``
-     - (BoolOpt) If set, then the server's certificate will not be verified.
+     - (Boolean) If set, then the server's certificate will not be verified.
    * - ``key_file`` = ``None``
-     - (StrOpt) Optional PEM-formatted file that contains the private key.
+     - (String) Optional PEM-formatted file that contains the private key.

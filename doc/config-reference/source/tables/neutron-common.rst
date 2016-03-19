@@ -19,108 +19,110 @@
    * - **[DEFAULT]**
      -
    * - ``agent_down_time`` = ``75``
-     - (IntOpt) Seconds to regard the agent is down; should be at least twice report_interval, to be sure the agent is down for good.
+     - (Integer) Seconds to regard the agent is down; should be at least twice report_interval, to be sure the agent is down for good.
    * - ``api_workers`` = ``None``
-     - (IntOpt) Number of separate API worker processes for service. If not specified, the default is equal to the number of CPUs available for best performance.
+     - (Integer) Number of separate API worker processes for service. If not specified, the default is equal to the number of CPUs available for best performance.
    * - ``auth_ca_cert`` = ``None``
-     - (StrOpt) Certificate Authority public key (CA cert) file for ssl
+     - (String) Certificate Authority public key (CA cert) file for ssl
    * - ``auth_strategy`` = ``keystone``
-     - (StrOpt) The type of authentication to use
+     - (String) The type of authentication to use
    * - ``base_mac`` = ``fa:16:3e:00:00:00``
-     - (StrOpt) The base MAC address Neutron will use for VIFs. The first 3 octets will remain unchanged. If the 4th octet is not 00, it will also be used. The others will be randomly generated.
+     - (String) The base MAC address Neutron will use for VIFs. The first 3 octets will remain unchanged. If the 4th octet is not 00, it will also be used. The others will be randomly generated.
    * - ``bgp_drscheduler_driver`` = ``neutron.services.bgp.scheduler.bgp_dragent_scheduler.ChanceScheduler``
-     - (StrOpt) Driver used for scheduling BGP speakers to BGP DrAgent
+     - (String) Driver used for scheduling BGP speakers to BGP DrAgent
    * - ``bind_host`` = ``0.0.0.0``
-     - (StrOpt) The host IP to bind to
+     - (String) The host IP to bind to
    * - ``bind_port`` = ``9696``
-     - (PortOpt) The port to bind to
+     - (Unknown) The port to bind to
    * - ``core_plugin`` = ``None``
-     - (StrOpt) The core plugin Neutron will use
+     - (String) The core plugin Neutron will use
    * - ``default_availability_zones`` =
-     - (ListOpt) Default value of availability zone hints. The availability zone aware schedulers use this when the resources availability_zone_hints is empty. Multiple availability zones can be specified by a comma separated string. This value can be empty. In this case, even if availability_zone_hints for a resource is empty, availability zone is considered for high availability while scheduling the resource.
+     - (List) Default value of availability zone hints. The availability zone aware schedulers use this when the resources availability_zone_hints is empty. Multiple availability zones can be specified by a comma separated string. This value can be empty. In this case, even if availability_zone_hints for a resource is empty, availability zone is considered for high availability while scheduling the resource.
    * - ``default_ipv4_subnet_pool`` = ``None``
-     - (StrOpt) Default IPv4 subnet pool to be used for automatic subnet CIDR allocation. Specifies by UUID the pool to be used in case where creation of a subnet is being called without a subnet pool ID. If not set then no pool will be used unless passed explicitly to the subnet create. If no pool is used, then a CIDR must be passed to create a subnet and that subnet will not be allocated from any pool; it will be considered part of the tenant's private address space. This option is deprecated for removal in the N release.
+     - (String) DEPRECATED: Default IPv4 subnet pool to be used for automatic subnet CIDR allocation. Specifies by UUID the pool to be used in case where creation of a subnet is being called without a subnet pool ID. If not set then no pool will be used unless passed explicitly to the subnet create. If no pool is used, then a CIDR must be passed to create a subnet and that subnet will not be allocated from any pool; it will be considered part of the tenant's private address space. This option is deprecated for removal in the N release.
    * - ``default_ipv6_subnet_pool`` = ``None``
-     - (StrOpt) Default IPv6 subnet pool to be used for automatic subnet CIDR allocation. Specifies by UUID the pool to be used in case where creation of a subnet is being called without a subnet pool ID. See the description for default_ipv4_subnet_pool for more information. This option is deprecated for removal in the N release.
+     - (String) DEPRECATED: Default IPv6 subnet pool to be used for automatic subnet CIDR allocation. Specifies by UUID the pool to be used in case where creation of a subnet is being called without a subnet pool ID. See the description for default_ipv4_subnet_pool for more information. This option is deprecated for removal in the N release.
    * - ``dhcp_agent_notification`` = ``True``
-     - (BoolOpt) Allow sending resource operation notification to DHCP agent
+     - (Boolean) Allow sending resource operation notification to DHCP agent
    * - ``dhcp_agents_per_network`` = ``1``
-     - (IntOpt) Number of DHCP agents scheduled to host a tenant network. If this number is greater than 1, the scheduler automatically assigns multiple DHCP agents for a given tenant network, providing high availability for DHCP service.
+     - (Integer) Number of DHCP agents scheduled to host a tenant network. If this number is greater than 1, the scheduler automatically assigns multiple DHCP agents for a given tenant network, providing high availability for DHCP service.
    * - ``dhcp_broadcast_reply`` = ``False``
-     - (BoolOpt) Use broadcast in DHCP replies.
+     - (Boolean) Use broadcast in DHCP replies.
    * - ``dhcp_confs`` = ``$state_path/dhcp``
-     - (StrOpt) Location to store DHCP server config files.
+     - (String) Location to store DHCP server config files.
    * - ``dhcp_domain`` = ``openstacklocal``
-     - (StrOpt) Domain to use for building the hostnames. This option is deprecated. It has been moved to neutron.conf as dns_domain. It will be removed in a future release.
+     - (String) DEPRECATED: Domain to use for building the hostnames. This option is deprecated. It has been moved to neutron.conf as dns_domain. It will be removed in a future release.
    * - ``dhcp_lease_duration`` = ``86400``
-     - (IntOpt) DHCP lease duration (in seconds). Use -1 to tell dnsmasq to use infinite lease times.
+     - (Integer) DHCP lease duration (in seconds). Use -1 to tell dnsmasq to use infinite lease times.
    * - ``dhcp_load_type`` = ``networks``
-     - (StrOpt) Representing the resource type whose load is being reported by the agent. This can be "networks", "subnets" or "ports". When specified (Default is networks), the server will extract particular load sent as part of its agent configuration object from the agent report state, which is the number of resources being consumed, at every report_interval.dhcp_load_type can be used in combination with network_scheduler_driver = neutron.scheduler.dhcp_agent_scheduler.WeightScheduler When the network_scheduler_driver is WeightScheduler, dhcp_load_type can be configured to represent the choice for the resource being balanced. Example: dhcp_load_type=networks
+     - (String) Representing the resource type whose load is being reported by the agent. This can be "networks", "subnets" or "ports". When specified (Default is networks), the server will extract particular load sent as part of its agent configuration object from the agent report state, which is the number of resources being consumed, at every report_interval.dhcp_load_type can be used in combination with network_scheduler_driver = neutron.scheduler.dhcp_agent_scheduler.WeightScheduler When the network_scheduler_driver is WeightScheduler, dhcp_load_type can be configured to represent the choice for the resource being balanced. Example: dhcp_load_type=networks
    * - ``dns_domain`` = ``openstacklocal``
-     - (StrOpt) Domain to use for building the hostnames
+     - (String) Domain to use for building the hostnames
    * - ``enable_new_agents`` = ``True``
-     - (BoolOpt) Agent starts with admin_state_up=False when enable_new_agents=False. In the case, user's resources will not be scheduled automatically to the agent until admin changes admin_state_up to True.
+     - (Boolean) Agent starts with admin_state_up=False when enable_new_agents=False. In the case, user's resources will not be scheduled automatically to the agent until admin changes admin_state_up to True.
    * - ``enable_services_on_agents_with_admin_state_down`` = ``False``
-     - (BoolOpt) Enable services on an agent with admin_state_up False. If this option is False, when admin_state_up of an agent is turned False, services on it will be disabled. Agents with admin_state_up False are not selected for automatic scheduling regardless of this option. But manual scheduling to such agents is available if this option is True.
+     - (Boolean) Enable services on an agent with admin_state_up False. If this option is False, when admin_state_up of an agent is turned False, services on it will be disabled. Agents with admin_state_up False are not selected for automatic scheduling regardless of this option. But manual scheduling to such agents is available if this option is True.
    * - ``executor_thread_pool_size`` = ``64``
-     - (IntOpt) Size of executor thread pool.
+     - (Integer) Size of executor thread pool.
    * - ``external_dns_driver`` = ``None``
-     - (StrOpt) Driver for external DNS integration.
+     - (String) Driver for external DNS integration.
    * - ``force_gateway_on_subnet`` = ``True``
-     - (BoolOpt) Ensure that configured gateway is on subnet. For IPv6, validate only if gateway is not a link local address. Deprecated, to be removed during the Newton release, at which point the gateway will not be forced on to subnet.
+     - (Boolean) DEPRECATED: Ensure that configured gateway is on subnet. For IPv6, validate only if gateway is not a link local address. Deprecated, to be removed during the Newton release, at which point the gateway will not be forced on to subnet.
+   * - ``global_physnet_mtu`` = ``1500``
+     - (Integer) MTU of the underlying physical network. Neutron uses this value to calculate MTU for all virtual network components. For flat and VLAN networks, neutron uses this value without modification. For overlay networks such as VXLAN, neutron automatically subtracts the overlay protocol overhead from this value. Defaults to 1500, the standard value for Ethernet.
    * - ``ip_lib_force_root`` = ``False``
-     - (BoolOpt) Force ip_lib calls to use the root helper
+     - (Boolean) Force ip_lib calls to use the root helper
    * - ``ipam_driver`` = ``None``
-     - (StrOpt) Neutron IPAM (IP address management) driver to use. If ipam_driver is not set (default behavior), no IPAM driver is used. In order to use the reference implementation of Neutron IPAM driver, use 'internal'.
+     - (String) Neutron IPAM (IP address management) driver to use. If ipam_driver is not set (default behavior), no IPAM driver is used. In order to use the reference implementation of Neutron IPAM driver, use 'internal'.
    * - ``mac_generation_retries`` = ``16``
-     - (IntOpt) How many times Neutron will retry MAC generation
+     - (Integer) How many times Neutron will retry MAC generation
    * - ``max_allowed_address_pair`` = ``10``
-     - (IntOpt) Maximum number of allowed address pairs
+     - (Integer) Maximum number of allowed address pairs
    * - ``max_dns_nameservers`` = ``5``
-     - (IntOpt) Maximum number of DNS nameservers per subnet
+     - (Integer) Maximum number of DNS nameservers per subnet
    * - ``max_fixed_ips_per_port`` = ``5``
-     - (IntOpt) Maximum number of fixed ips per port. This option is deprecated and will be removed in the N release.
+     - (Integer) DEPRECATED: Maximum number of fixed ips per port. This option is deprecated and will be removed in the N release.
    * - ``max_rtr_adv_interval`` = ``100``
-     - (IntOpt) MaxRtrAdvInterval setting for radvd.conf
+     - (Integer) MaxRtrAdvInterval setting for radvd.conf
    * - ``max_subnet_host_routes`` = ``20``
-     - (IntOpt) Maximum number of host routes per subnet
+     - (Integer) Maximum number of host routes per subnet
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
+     - (List) Memcached servers or None for in process cache.
    * - ``min_rtr_adv_interval`` = ``30``
-     - (IntOpt) MinRtrAdvInterval setting for radvd.conf
+     - (Integer) MinRtrAdvInterval setting for radvd.conf
    * - ``periodic_fuzzy_delay`` = ``5``
-     - (IntOpt) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
+     - (Integer) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
    * - ``periodic_interval`` = ``40``
-     - (IntOpt) Seconds between running periodic tasks
+     - (Integer) Seconds between running periodic tasks
    * - ``report_interval`` = ``300``
-     - (IntOpt) Interval between two metering reports
+     - (Integer) Interval between two metering reports
    * - ``state_path`` = ``/var/lib/neutron``
-     - (StrOpt) Where to store Neutron state files. This directory must be writable by the agent.
+     - (String) Where to store Neutron state files. This directory must be writable by the agent.
    * - ``vlan_transparent`` = ``False``
-     - (BoolOpt) If True, then allow plugins that support it to create VLAN transparent networks.
+     - (Boolean) If True, then allow plugins that support it to create VLAN transparent networks.
    * - ``web_framework`` = ``legacy``
-     - (StrOpt) This will choose the web framework in which to run the Neutron API server. 'pecan' is a new experiemental rewrite of the API server.
+     - (String) This will choose the web framework in which to run the Neutron API server. 'pecan' is a new experiemental rewrite of the API server.
    * - **[AGENT]**
      -
    * - ``check_child_processes_action`` = ``respawn``
-     - (StrOpt) Action to be executed when a child process dies
+     - (String) Action to be executed when a child process dies
    * - ``check_child_processes_interval`` = ``60``
-     - (IntOpt) Interval between checks of child process liveness (seconds), use 0 to disable
+     - (Integer) Interval between checks of child process liveness (seconds), use 0 to disable
    * - ``log_agent_heartbeats`` = ``False``
-     - (BoolOpt) Log agent heartbeats
+     - (Boolean) Log agent heartbeats
    * - ``root_helper`` = ``sudo``
-     - (StrOpt) Root helper application. Use 'sudo neutron-rootwrap /etc/neutron/rootwrap.conf' to use the real root filter facility. Change to 'sudo' to skip the filtering and just run the command directly.
+     - (String) Root helper application. Use 'sudo neutron-rootwrap /etc/neutron/rootwrap.conf' to use the real root filter facility. Change to 'sudo' to skip the filtering and just run the command directly.
    * - ``root_helper_daemon`` = ``None``
-     - (StrOpt) Root helper daemon application to use when possible.
+     - (String) Root helper daemon application to use when possible.
    * - **[keystone_authtoken]**
      -
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
+     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
    * - **[qos]**
      -
    * - ``notification_drivers`` = ``message_queue``
-     - (ListOpt) Drivers list to use to send the update notification
+     - (List) Drivers list to use to send the update notification
    * - **[service_providers]**
      -
    * - ``service_provider`` = ``[]``
-     - (MultiStrOpt) Defines providers for advanced services using the format: <service_type>:<name>:<driver>[:default]
+     - (Multi-valued) Defines providers for advanced services using the format: <service_type>:<name>:<driver>[:default]

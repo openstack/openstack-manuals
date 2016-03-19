@@ -19,6 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``pure_api_token`` = ``None``
-     - (StrOpt) REST API authorization token.
+     - (String) REST API authorization token.
    * - ``pure_automatic_max_oversubscription_ratio`` = ``True``
-     - (BoolOpt) Automatically determine an oversubscription ratio based on the current total data reduction values. If used this calculated value will override the max_over_subscription_ratio config option.
+     - (Boolean) Automatically determine an oversubscription ratio based on the current total data reduction values. If used this calculated value will override the max_over_subscription_ratio config option.
+   * - ``pure_eradicate_on_delete`` = ``False``
+     - (Boolean) When enabled, all Pure volumes, snapshots, and protection groups will be eradicated at the time of deletion in Cinder. Data will NOT be recoverable after a delete with this set to True! When disabled, volumes and snapshots will go into pending eradication state and can be recovered.
+   * - ``pure_replica_interval_default`` = ``900``
+     - (Integer) Snapshot replication interval in seconds.
+   * - ``pure_replica_retention_long_term_default`` = ``7``
+     - (Integer) Retain snapshots per day on target for this time (in days.)
+   * - ``pure_replica_retention_long_term_per_day_default`` = ``3``
+     - (Integer) Retain how many snapshots for each day.
+   * - ``pure_replica_retention_short_term_default`` = ``14400``
+     - (Integer) Retain all snapshots on target for this time (in seconds.)

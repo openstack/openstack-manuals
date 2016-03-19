@@ -19,10 +19,10 @@
    * - **[DEFAULT]**
      -
    * - ``driver`` = ``neutron.services.metering.drivers.noop.noop_driver.NoopMeteringDriver``
-     - (StrOpt) Metering driver
+     - (String) Metering driver
    * - ``measure_interval`` = ``30``
-     - (IntOpt) Interval between two metering measures
+     - (Integer) Interval between two metering measures
    * - **[AGENT]**
      -
    * - ``report_interval`` = ``30``
-     - (FloatOpt) Seconds between nodes reporting state to server; should be less than agent_down_time, best if it is half or less than agent_down_time.
+     - (Floating point) Seconds between nodes reporting state to server; should be less than agent_down_time, best if it is half or less than agent_down_time.

@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``violin_request_timeout`` = ``300``
-     - (IntOpt) Global backend request timeout, in seconds.
+     - (Integer) Global backend request timeout, in seconds.

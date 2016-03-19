@@ -19,32 +19,32 @@
    * - **[DEFAULT]**
      -
    * - ``backup_swift_auth`` = ``per_user``
-     - (StrOpt) Swift authentication mechanism
+     - (String) Swift authentication mechanism
    * - ``backup_swift_auth_version`` = ``1``
-     - (StrOpt) Swift authentication version. Specify "1" for auth 1.0, or "2" for auth 2.0
+     - (String) Swift authentication version. Specify "1" for auth 1.0, or "2" for auth 2.0
    * - ``backup_swift_block_size`` = ``32768``
-     - (IntOpt) The size in bytes that changes are tracked for incremental backups. backup_swift_object_size has to be multiple of backup_swift_block_size.
+     - (Integer) The size in bytes that changes are tracked for incremental backups. backup_swift_object_size has to be multiple of backup_swift_block_size.
    * - ``backup_swift_ca_cert_file`` = ``None``
-     - (StrOpt) Location of the CA certificate file to use for swift client requests.
+     - (String) Location of the CA certificate file to use for swift client requests.
    * - ``backup_swift_container`` = ``volumebackups``
-     - (StrOpt) The default Swift container to use
+     - (String) The default Swift container to use
    * - ``backup_swift_enable_progress_timer`` = ``True``
-     - (BoolOpt) Enable or Disable the timer to send the periodic progress notifications to Ceilometer when backing up the volume to the Swift backend storage. The default value is True to enable the timer.
+     - (Boolean) Enable or Disable the timer to send the periodic progress notifications to Ceilometer when backing up the volume to the Swift backend storage. The default value is True to enable the timer.
    * - ``backup_swift_key`` = ``None``
-     - (StrOpt) Swift key for authentication
+     - (String) Swift key for authentication
    * - ``backup_swift_object_size`` = ``52428800``
-     - (IntOpt) The size in bytes of Swift backup objects
+     - (Integer) The size in bytes of Swift backup objects
    * - ``backup_swift_retry_attempts`` = ``3``
-     - (IntOpt) The number of retries to make for Swift operations
+     - (Integer) The number of retries to make for Swift operations
    * - ``backup_swift_retry_backoff`` = ``2``
-     - (IntOpt) The backoff time in seconds between Swift retries
+     - (Integer) The backoff time in seconds between Swift retries
    * - ``backup_swift_tenant`` = ``None``
-     - (StrOpt) Swift tenant/account name. Required when connecting to an auth 2.0 system
+     - (String) Swift tenant/account name. Required when connecting to an auth 2.0 system
    * - ``backup_swift_url`` = ``None``
-     - (StrOpt) The URL of the Swift endpoint
+     - (String) The URL of the Swift endpoint
    * - ``backup_swift_user`` = ``None``
-     - (StrOpt) Swift user name
+     - (String) Swift user name
    * - ``keystone_catalog_info`` = ``identity:Identity Service:publicURL``
-     - (StrOpt) Info to match when looking for keystone in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> - Only used if backup_swift_auth_url is unset
+     - (String) Info to match when looking for keystone in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> - Only used if backup_swift_auth_url is unset
    * - ``swift_catalog_info`` = ``object-store:swift:publicURL``
-     - (StrOpt) Info to match when looking for swift in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> - Only used if backup_swift_url is unset
+     - (String) Info to match when looking for swift in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> - Only used if backup_swift_url is unset

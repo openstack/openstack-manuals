@@ -19,28 +19,28 @@
    * - **[ilo]**
      -
    * - ``clean_priority_clear_secure_boot_keys`` = ``0``
-     - (IntOpt) Priority for clear_secure_boot_keys clean step. This step is not enabled by default. It can be enabled to to clear all secure boot keys enrolled with iLO.
+     - (Integer) Priority for clear_secure_boot_keys clean step. This step is not enabled by default. It can be enabled to to clear all secure boot keys enrolled with iLO.
    * - ``clean_priority_erase_devices`` = ``None``
-     - (IntOpt) Priority for erase devices clean step. If unset, it defaults to 10. If set to 0, the step will be disabled and will not run during cleaning.
+     - (Integer) Priority for erase devices clean step. If unset, it defaults to 10. If set to 0, the step will be disabled and will not run during cleaning.
    * - ``clean_priority_reset_bios_to_default`` = ``10``
-     - (IntOpt) Priority for reset_bios_to_default clean step.
-   * - ``clean_priority_reset_ilo`` = ``1``
-     - (IntOpt) Priority for reset_ilo clean step.
+     - (Integer) Priority for reset_bios_to_default clean step.
+   * - ``clean_priority_reset_ilo`` = ``0``
+     - (Integer) Priority for reset_ilo clean step.
    * - ``clean_priority_reset_ilo_credential`` = ``30``
-     - (IntOpt) Priority for reset_ilo_credential clean step. This step requires "ilo_change_password" parameter to be updated in nodes's driver_info with the new password.
+     - (Integer) Priority for reset_ilo_credential clean step. This step requires "ilo_change_password" parameter to be updated in nodes's driver_info with the new password.
    * - ``clean_priority_reset_secure_boot_keys_to_default`` = ``20``
-     - (IntOpt) Priority for reset_secure_boot_keys clean step. This step will reset the secure boot keys to manufacturing defaults.
+     - (Integer) Priority for reset_secure_boot_keys clean step. This step will reset the secure boot keys to manufacturing defaults.
    * - ``client_port`` = ``443``
-     - (PortOpt) Port to be used for iLO operations
+     - (Unknown) Port to be used for iLO operations
    * - ``client_timeout`` = ``60``
-     - (IntOpt) Timeout (in seconds) for iLO operations
+     - (Integer) Timeout (in seconds) for iLO operations
    * - ``power_retry`` = ``6``
-     - (IntOpt) Number of times a power operation needs to be retried
+     - (Integer) Number of times a power operation needs to be retried
    * - ``power_wait`` = ``2``
-     - (IntOpt) Amount of time in seconds to wait in between power operations
+     - (Integer) Amount of time in seconds to wait in between power operations
    * - ``swift_ilo_container`` = ``ironic_ilo_container``
-     - (StrOpt) The Swift iLO container to store data.
+     - (String) The Swift iLO container to store data.
    * - ``swift_object_expiry_timeout`` = ``900``
-     - (IntOpt) Amount of time in seconds for Swift objects to auto-expire.
+     - (Integer) Amount of time in seconds for Swift objects to auto-expire.
    * - ``use_web_server_for_images`` = ``False``
-     - (BoolOpt) Set this to True to use http web server to host floppy images and generated boot ISO. This requires http_root and http_url to be configured in the [deploy] section of the config file. If this is set to False, then Ironic will use Swift to host the floppy images and generated boot_iso.
+     - (Boolean) Set this to True to use http web server to host floppy images and generated boot ISO. This requires http_root and http_url to be configured in the [deploy] section of the config file. If this is set to False, then Ironic will use Swift to host the floppy images and generated boot_iso.

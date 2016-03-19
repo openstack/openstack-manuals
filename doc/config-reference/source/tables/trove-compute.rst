@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``ip_regex`` = ``None``
-     - (StrOpt) List IP addresses that match this regular expression.
-   * - ``nova_client_version`` = ``2``
-     - (IntOpt) The version of of the compute service client.
+     - (String) List IP addresses that match this regular expression.
+   * - ``nova_client_version`` = ``2.12``
+     - (String) The version of of the compute service client.
    * - ``nova_compute_endpoint_type`` = ``publicURL``
-     - (StrOpt) Service endpoint type to use when searching catalog.
+     - (String) Service endpoint type to use when searching catalog.
    * - ``nova_compute_service_type`` = ``compute``
-     - (StrOpt) Service type to use when searching catalog.
+     - (String) Service type to use when searching catalog.
    * - ``nova_compute_url`` = ``None``
-     - (StrOpt) URL without the tenant segment.
+     - (String) URL without the tenant segment.
    * - ``root_grant`` = ``ALL``
-     - (ListOpt) Permissions to grant to the 'root' user.
+     - (List) Permissions to grant to the 'root' user.
    * - ``root_grant_option`` = ``True``
-     - (BoolOpt) Assign the 'root' user GRANT permissions.
+     - (Boolean) Assign the 'root' user GRANT permissions.

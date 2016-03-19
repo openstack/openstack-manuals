@@ -19,8 +19,8 @@
    * - **[domain_config]**
      -
    * - ``cache_time`` = ``300``
-     - (IntOpt) TTL (in seconds) to cache domain config data. This has no effect unless domain config caching is enabled.
+     - (Integer) TTL (in seconds) to cache domain config data. This has no effect unless domain config caching is enabled.
    * - ``caching`` = ``True``
-     - (BoolOpt) Toggle for domain config caching. This has no effect unless global caching is enabled.
+     - (Boolean) Toggle for domain config caching. This has no effect unless global caching is enabled.
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for the domain config backend driver in the keystone.resource.domain_config namespace.
+     - (String) Entrypoint for the domain config backend driver in the keystone.resource.domain_config namespace.

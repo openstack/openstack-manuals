@@ -19,16 +19,18 @@
    * - **[DEFAULT]**
      -
    * - ``backlog`` = ``4096``
-     - (IntOpt) Number of backlog requests to configure the socket with
+     - (Integer) Number of backlog requests to configure the socket with
    * - ``pydev_debug`` = ``disabled``
-     - (StrOpt) Enable or disable pydev remote debugging. If value is 'auto' tries to connect to remote debugger server, but in case of error continues running with debugging disabled.
+     - (String) Enable or disable pydev remote debugging. If value is 'auto' tries to connect to remote debugger server, but in case of error continues running with debugging disabled.
    * - ``pydev_debug_host`` = ``None``
-     - (StrOpt) Pydev debug server host (localhost by default).
+     - (String) Pydev debug server host (localhost by default).
    * - ``pydev_debug_port`` = ``5678``
-     - (PortOpt) Pydev debug server port (5678 by default).
+     - (Unknown) Pydev debug server port (5678 by default).
    * - **[profiler]**
      -
    * - ``enabled`` = ``False``
-     - (BoolOpt) If False fully disable profiling feature.
-   * - ``trace_sqlalchemy`` = ``True``
-     - (BoolOpt) If False doesn't trace SQL requests.
+     - (Boolean) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature). Possible values: * True: Enables the feature * False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.
+   * - ``hmac_keys`` = ``SECRET_KEY``
+     - (String) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project. Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
+   * - ``trace_sqlalchemy`` = ``False``
+     - (Boolean) Enables SQL requests profiling in services. Default value is False (SQL requests won't be traced). Possible values: * True: Enables SQL requests profiling. Each SQL query will be part of the trace and can the be analyzed by how much time was spent for that. * False: Disables SQL requests profiling. The spent time is only shown on a higher level of operations. Single SQL queries cannot be analyzed this way.

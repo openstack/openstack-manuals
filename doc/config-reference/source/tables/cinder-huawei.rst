@@ -19,6 +19,6 @@
    * - **[DEFAULT]**
      -
    * - ``cinder_huawei_conf_file`` = ``/etc/cinder/cinder_huawei_conf.xml``
-     - (StrOpt) The configuration file for the Cinder Huawei driver.
+     - (String) The configuration file for the Cinder Huawei driver.
    * - ``hypermetro_devices`` = ``None``
-     - (StrOpt) The remote device hypermetro will use.
+     - (String) The remote device hypermetro will use.

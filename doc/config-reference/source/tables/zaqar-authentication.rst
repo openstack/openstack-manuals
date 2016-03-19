@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``auth_strategy`` =
-     - (StrOpt) Backend to use for authentication. For no auth, keep it empty. Existing strategies: keystone. See also the keystone_authtoken section below
+     - (String) Backend to use for authentication. For no auth, keep it empty. Existing strategies: keystone. See also the keystone_authtoken section below

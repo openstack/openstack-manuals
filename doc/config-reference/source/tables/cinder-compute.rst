@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``nova_api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL requests to nova
+     - (Boolean) Allow to perform insecure SSL requests to nova
    * - ``nova_ca_certificates_file`` = ``None``
-     - (StrOpt) Location of ca certificates file to use for nova client requests.
+     - (String) Location of ca certificates file to use for nova client requests.
    * - ``nova_catalog_admin_info`` = ``compute:Compute Service:adminURL``
-     - (StrOpt) Same as nova_catalog_info, but for admin endpoint.
+     - (String) Same as nova_catalog_info, but for admin endpoint.
    * - ``nova_catalog_info`` = ``compute:Compute Service:publicURL``
-     - (StrOpt) Match this value when searching for nova in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type>
+     - (String) Match this value when searching for nova in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type>
    * - ``nova_endpoint_admin_template`` = ``None``
-     - (StrOpt) Same as nova_endpoint_template, but for admin endpoint.
+     - (String) Same as nova_endpoint_template, but for admin endpoint.
    * - ``nova_endpoint_template`` = ``None``
-     - (StrOpt) Override service catalog lookup with template for nova endpoint e.g. http://localhost:8774/v2/%(project_id)s
+     - (String) Override service catalog lookup with template for nova endpoint e.g. http://localhost:8774/v2/%(project_id)s
    * - ``os_region_name`` = ``None``
-     - (StrOpt) Region name of this node
+     - (String) Region name of this node

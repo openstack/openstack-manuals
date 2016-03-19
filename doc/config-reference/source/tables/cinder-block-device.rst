@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``available_devices`` =
-     - (ListOpt) List of all available devices
+     - (List) List of all available devices

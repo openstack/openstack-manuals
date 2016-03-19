@@ -18,5 +18,5 @@
      - Description
    * - **[os_inherit]**
      -
-   * - ``enabled`` = ``False``
-     - (BoolOpt) role-assignment inheritance to projects from owning domain or from projects higher in the hierarchy can be optionally enabled.
+   * - ``enabled`` = ``True``
+     - (Boolean) DEPRECATED: role-assignment inheritance to projects from owning domain or from projects higher in the hierarchy can be optionally disabled. In the future, this option will be removed and the hierarchy will be always enabled. The option to enable the OS-INHERIT extension has been deprecated in the M release and will be removed in the O release. The OS-INHERIT extension will be enabled by default.

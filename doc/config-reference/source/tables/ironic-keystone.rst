@@ -19,4 +19,4 @@
    * - **[keystone]**
      -
    * - ``region_name`` = ``None``
-     - (StrOpt) The region used for getting endpoints of OpenStack services.
+     - (String) The region used for getting endpoints of OpenStack services.

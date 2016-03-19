@@ -19,6 +19,6 @@
    * - **[DEFAULT]**
      -
    * - ``sheepdog_store_address`` = ``127.0.0.1``
-     - (StrOpt) IP address of sheep daemon.
+     - (String) IP address of sheep daemon.
    * - ``sheepdog_store_port`` = ``7000``
-     - (PortOpt) Port of sheep daemon.
+     - (Unknown) Port of sheep daemon.

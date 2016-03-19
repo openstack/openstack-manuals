@@ -19,36 +19,40 @@
    * - **[vertica]**
      -
    * - ``api_strategy`` = ``trove.common.strategies.cluster.experimental.vertica.api.VerticaAPIStrategy``
-     - (StrOpt) Class that implements datastore-specific API logic.
+     - (String) Class that implements datastore-specific API logic.
    * - ``backup_incremental_strategy`` = ``{}``
-     - (DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
+     - (Dict) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
    * - ``backup_namespace`` = ``None``
-     - (StrOpt) Namespace to load backup strategies from.
+     - (String) Namespace to load backup strategies from.
    * - ``backup_strategy`` = ``None``
-     - (StrOpt) Default strategy to perform backups.
+     - (String) Default strategy to perform backups.
    * - ``cluster_member_count`` = ``3``
-     - (IntOpt) Number of members in Vertica cluster.
+     - (Integer) Number of members in Vertica cluster.
    * - ``cluster_support`` = ``True``
-     - (BoolOpt) Enable clusters to be created and managed.
+     - (Boolean) Enable clusters to be created and managed.
    * - ``device_path`` = ``/dev/vdb``
-     - (StrOpt) Device path for volume if volume support is enabled.
+     - (String) Device path for volume if volume support is enabled.
+   * - ``guest_log_exposed_logs`` =
+     - (String) List of Guest Logs to expose for publishing.
    * - ``guestagent_strategy`` = ``trove.common.strategies.cluster.experimental.vertica.guestagent.VerticaGuestAgentStrategy``
-     - (StrOpt) Class that implements datastore-specific Guest Agent API logic.
+     - (String) Class that implements datastore-specific Guest Agent API logic.
+   * - ``min_ksafety`` = ``0``
+     - (Integer) Minimum k-safety setting permitted for vertica clusters
    * - ``mount_point`` = ``/var/lib/vertica``
-     - (StrOpt) Filesystem path for mounting volumes if volume support is enabled.
+     - (String) Filesystem path for mounting volumes if volume support is enabled.
    * - ``readahead_size`` = ``2048``
-     - (IntOpt) Size(MB) to be set as readahead_size for data volume
+     - (Integer) Size(MB) to be set as readahead_size for data volume
    * - ``replication_strategy`` = ``None``
-     - (StrOpt) Default strategy for replication.
+     - (String) Default strategy for replication.
    * - ``restore_namespace`` = ``None``
-     - (StrOpt) Namespace to load restore strategies from.
+     - (String) Namespace to load restore strategies from.
    * - ``root_controller`` = ``trove.extensions.vertica.service.VerticaRootController``
-     - (StrOpt) Root controller implementation for Vertica.
+     - (String) Root controller implementation for Vertica.
    * - ``taskmanager_strategy`` = ``trove.common.strategies.cluster.experimental.vertica.taskmanager.VerticaTaskManagerStrategy``
-     - (StrOpt) Class that implements datastore-specific task manager logic.
+     - (String) Class that implements datastore-specific task manager logic.
    * - ``tcp_ports`` = ``5433, 5434, 22, 5444, 5450, 4803``
-     - (ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (List) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``udp_ports`` = ``5433, 4803, 4804, 6453``
-     - (ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (List) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``volume_support`` = ``True``
-     - (BoolOpt) Whether to provision a Cinder volume for datadir.
+     - (Boolean) Whether to provision a Cinder volume for datadir.

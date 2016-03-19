@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``executor_thread_pool_size`` = ``64``
-     - (IntOpt) Size of executor thread pool.
+     - (Integer) Size of executor thread pool.
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
+     - (List) Memcached servers or None for in process cache.
    * - **[keystone_authtoken]**
      -
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
+     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
    * - **[oslo_concurrency]**
      -
    * - ``disable_process_locking`` = ``False``
-     - (BoolOpt) Enables or disables inter-process locks.
+     - (Boolean) Enables or disables inter-process locks.
    * - ``lock_path`` = ``None``
-     - (StrOpt) Directory to use for lock files. For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.
+     - (String) Directory to use for lock files. For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.

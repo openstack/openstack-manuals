@@ -19,32 +19,32 @@
    * - **[DEFAULT]**
      -
    * - ``ceilometer_control_exchange`` = ``ceilometer``
-     - (StrOpt) Exchange name for ceilometer notifications.
+     - (String) Exchange name for ceilometer notifications.
    * - ``cinder_control_exchange`` = ``cinder``
-     - (StrOpt) Exchange name for Cinder notifications.
+     - (String) Exchange name for Cinder notifications.
    * - ``dns_control_exchange`` = ``central``
-     - (StrOpt) Exchange name for DNS notifications.
+     - (String) Exchange name for DNS service notifications.
    * - ``glance_control_exchange`` = ``glance``
-     - (StrOpt) Exchange name for Glance notifications.
+     - (String) Exchange name for Glance notifications.
    * - ``heat_control_exchange`` = ``heat``
-     - (StrOpt) Exchange name for Heat notifications
+     - (String) Exchange name for Heat notifications
    * - ``http_control_exchanges`` = ``['nova', 'glance', 'neutron', 'cinder']``
-     - (MultiStrOpt) Exchanges name to listen for notifications.
+     - (Multi-valued) Exchanges name to listen for notifications.
    * - ``ironic_exchange`` = ``ironic``
-     - (StrOpt) Exchange name for Ironic notifications.
+     - (String) Exchange name for Ironic notifications.
    * - ``keystone_control_exchange`` = ``keystone``
-     - (StrOpt) Exchange name for Keystone notifications.
+     - (String) Exchange name for Keystone notifications.
    * - ``magnum_control_exchange`` = ``magnum``
-     - (StrOpt) Exchange name for Magnum notifications.
+     - (String) Exchange name for Magnum notifications.
    * - ``neutron_control_exchange`` = ``neutron``
-     - (StrOpt) Exchange name for Neutron notifications.
+     - (String) Exchange name for Neutron notifications.
    * - ``nova_control_exchange`` = ``nova``
-     - (StrOpt) Exchange name for Nova notifications.
+     - (String) Exchange name for Nova notifications.
    * - ``sahara_control_exchange`` = ``sahara``
-     - (StrOpt) Exchange name for Data Processing notifications.
+     - (String) Exchange name for Data Processing notifications.
    * - ``sample_source`` = ``openstack``
-     - (StrOpt) Source for samples emitted on this instance.
+     - (String) Source for samples emitted on this instance.
    * - ``swift_control_exchange`` = ``swift``
-     - (StrOpt) Exchange name for Swift notifications.
+     - (String) Exchange name for Swift notifications.
    * - ``trove_control_exchange`` = ``trove``
-     - (StrOpt) Exchange name for DBaaS notifications.
+     - (String) Exchange name for DBaaS notifications.

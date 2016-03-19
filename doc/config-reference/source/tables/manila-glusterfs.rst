@@ -19,24 +19,24 @@
    * - **[DEFAULT]**
      -
    * - ``glusterfs_ganesha_server_ip`` = ``None``
-     - (StrOpt) Remote Ganesha server node's IP address.
+     - (String) Remote Ganesha server node's IP address.
    * - ``glusterfs_ganesha_server_password`` = ``None``
-     - (StrOpt) Remote Ganesha server node's login password. This is not required if 'glusterfs_path_to_private_key' is configured.
+     - (String) Remote Ganesha server node's login password. This is not required if 'glusterfs_path_to_private_key' is configured.
    * - ``glusterfs_ganesha_server_username`` = ``root``
-     - (StrOpt) Remote Ganesha server node's username.
+     - (String) Remote Ganesha server node's username.
    * - ``glusterfs_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Base directory containing mount points for Gluster volumes.
+     - (String) Base directory containing mount points for Gluster volumes.
    * - ``glusterfs_nfs_server_type`` = ``Gluster``
-     - (StrOpt) Type of NFS server that mediate access to the Gluster volumes (Gluster or Ganesha).
+     - (String) Type of NFS server that mediate access to the Gluster volumes (Gluster or Ganesha).
    * - ``glusterfs_path_to_private_key`` = ``None``
-     - (StrOpt) Path of Manila host's private SSH key file.
+     - (String) Path of Manila host's private SSH key file.
    * - ``glusterfs_server_password`` = ``None``
-     - (StrOpt) Remote GlusterFS server node's login password. This is not required if 'glusterfs_path_to_private_key' is configured.
+     - (String) Remote GlusterFS server node's login password. This is not required if 'glusterfs_path_to_private_key' is configured.
    * - ``glusterfs_servers`` =
-     - (ListOpt) List of GlusterFS servers that can be used to create shares. Each GlusterFS server should be of the form [remoteuser@]<volserver>, and they are assumed to belong to distinct Gluster clusters.
+     - (List) List of GlusterFS servers that can be used to create shares. Each GlusterFS server should be of the form [remoteuser@]<volserver>, and they are assumed to belong to distinct Gluster clusters.
    * - ``glusterfs_share_layout`` = ``None``
-     - (StrOpt) Specifies GlusterFS share layout, that is, the method of associating backing GlusterFS resources to shares.
+     - (String) Specifies GlusterFS share layout, that is, the method of associating backing GlusterFS resources to shares.
    * - ``glusterfs_target`` = ``None``
-     - (StrOpt) Specifies the GlusterFS volume to be mounted on the Manila host. It is of the form [remoteuser@]<volserver>:<volid>.
+     - (String) Specifies the GlusterFS volume to be mounted on the Manila host. It is of the form [remoteuser@]<volserver>:<volid>.
    * - ``glusterfs_volume_pattern`` = ``None``
-     - (StrOpt) Regular expression template used to filter GlusterFS volumes for share creation. The regex template can optionally (ie. with support of the GlusterFS backend) contain the #{size} parameter which matches an integer (sequence of digits) in which case the value shall be interpreted as size of the volume in GB. Examples: "manila-share-volume-\d+$", "manila-share-volume-#{size}G-\d+$"; with matching volume names, respectively: "manila-share-volume-12", "manila-share-volume-3G-13". In latter example, the number that matches "#{size}", that is, 3, is an indication that the size of volume is 3G.
+     - (String) Regular expression template used to filter GlusterFS volumes for share creation. The regex template can optionally (ie. with support of the GlusterFS backend) contain the #{size} parameter which matches an integer (sequence of digits) in which case the value shall be interpreted as size of the volume in GB. Examples: "manila-share-volume-\d+$", "manila-share-volume-#{size}G-\d+$"; with matching volume names, respectively: "manila-share-volume-12", "manila-share-volume-3G-13". In latter example, the number that matches "#{size}", that is, 3, is an indication that the size of volume is 3G.

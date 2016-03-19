@@ -19,76 +19,76 @@
    * - **[keystone_authtoken]**
      -
    * - ``admin_password`` = ``None``
-     - (StrOpt) Service user password.
+     - (String) Service user password.
    * - ``admin_tenant_name`` = ``admin``
-     - (StrOpt) Service tenant name.
+     - (String) Service tenant name.
    * - ``admin_token`` = ``None``
-     - (StrOpt) This option is deprecated and may be removed in a future release. Single shared secret with the Keystone configuration used for bootstrapping a Keystone installation, or otherwise bypassing the normal authentication process. This option should not be used, use `admin_user` and `admin_password` instead.
+     - (String) This option is deprecated and may be removed in a future release. Single shared secret with the Keystone configuration used for bootstrapping a Keystone installation, or otherwise bypassing the normal authentication process. This option should not be used, use `admin_user` and `admin_password` instead.
    * - ``admin_user`` = ``None``
-     - (StrOpt) Service username.
+     - (String) Service username.
    * - ``auth_admin_prefix`` =
-     - (StrOpt) Prefix to prepend at the beginning of the path. Deprecated, use identity_uri.
+     - (String) Prefix to prepend at the beginning of the path. Deprecated, use identity_uri.
    * - ``auth_host`` = ``127.0.0.1``
-     - (StrOpt) Host providing the admin Identity API endpoint. Deprecated, use identity_uri.
-   * - ``auth_plugin`` = ``None``
-     - (StrOpt) Name of the plugin to load
+     - (String) Host providing the admin Identity API endpoint. Deprecated, use identity_uri.
    * - ``auth_port`` = ``35357``
-     - (IntOpt) Port of the admin Identity API endpoint. Deprecated, use identity_uri.
+     - (Integer) Port of the admin Identity API endpoint. Deprecated, use identity_uri.
    * - ``auth_protocol`` = ``https``
-     - (StrOpt) Protocol of the admin Identity API endpoint (http or https). Deprecated, use identity_uri.
+     - (String) Protocol of the admin Identity API endpoint. Deprecated, use identity_uri.
    * - ``auth_section`` = ``None``
-     - (StrOpt) Config Section from which to load plugin specific options
+     - (Unknown) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Unknown) Authentication type to load
    * - ``auth_uri`` = ``None``
-     - (StrOpt) Complete public Identity API endpoint.
+     - (String) Complete public Identity API endpoint.
    * - ``auth_version`` = ``None``
-     - (StrOpt) API version of the admin Identity API endpoint.
+     - (String) API version of the admin Identity API endpoint.
    * - ``cache`` = ``None``
-     - (StrOpt) Env key for the swift cache.
+     - (String) Env key for the swift cache.
    * - ``cafile`` = ``None``
-     - (StrOpt) A PEM encoded Certificate Authority to use when verifying HTTPs connections. Defaults to system CAs.
+     - (String) A PEM encoded Certificate Authority to use when verifying HTTPs connections. Defaults to system CAs.
    * - ``certfile`` = ``None``
-     - (StrOpt) Required if identity server requires client certificate
+     - (String) Required if identity server requires client certificate
    * - ``check_revocations_for_cached`` = ``False``
-     - (BoolOpt) If true, the revocation list will be checked for cached tokens. This requires that PKI tokens are configured on the identity server.
+     - (Boolean) If true, the revocation list will be checked for cached tokens. This requires that PKI tokens are configured on the identity server.
    * - ``delay_auth_decision`` = ``False``
-     - (BoolOpt) Do not handle authorization requests within the middleware, but delegate the authorization decision to downstream WSGI components.
+     - (Boolean) Do not handle authorization requests within the middleware, but delegate the authorization decision to downstream WSGI components.
    * - ``enforce_token_bind`` = ``permissive``
-     - (StrOpt) Used to control the use and type of token binding. Can be set to: "disabled" to not check token binding. "permissive" (default) to validate binding information if the bind type is of a form known to the server and ignore it if not. "strict" like "permissive" but if the bind type is unknown the token will be rejected. "required" any form of token binding is needed to be allowed. Finally the name of a binding method that must be present in tokens.
+     - (String) Used to control the use and type of token binding. Can be set to: "disabled" to not check token binding. "permissive" (default) to validate binding information if the bind type is of a form known to the server and ignore it if not. "strict" like "permissive" but if the bind type is unknown the token will be rejected. "required" any form of token binding is needed to be allowed. Finally the name of a binding method that must be present in tokens.
    * - ``hash_algorithms`` = ``md5``
-     - (ListOpt) Hash algorithms to use for hashing PKI tokens. This may be a single algorithm or multiple. The algorithms are those supported by Python standard hashlib.new(). The hashes will be tried in the order given, so put the preferred one first for performance. The result of the first hash will be stored in the cache. This will typically be set to multiple values only while migrating from a less secure algorithm to a more secure one. Once all the old tokens are expired this option should be set to a single value for better performance.
+     - (List) Hash algorithms to use for hashing PKI tokens. This may be a single algorithm or multiple. The algorithms are those supported by Python standard hashlib.new(). The hashes will be tried in the order given, so put the preferred one first for performance. The result of the first hash will be stored in the cache. This will typically be set to multiple values only while migrating from a less secure algorithm to a more secure one. Once all the old tokens are expired this option should be set to a single value for better performance.
    * - ``http_connect_timeout`` = ``None``
-     - (IntOpt) Request timeout value for communicating with Identity API server.
+     - (Integer) Request timeout value for communicating with Identity API server.
    * - ``http_request_max_retries`` = ``3``
-     - (IntOpt) How many times are we trying to reconnect when communicating with Identity API Server.
+     - (Integer) How many times are we trying to reconnect when communicating with Identity API Server.
    * - ``identity_uri`` = ``None``
-     - (StrOpt) Complete admin Identity API endpoint. This should specify the unversioned root endpoint e.g. https://localhost:35357/
+     - (String) Complete admin Identity API endpoint. This should specify the unversioned root endpoint e.g. https://localhost:35357/
    * - ``include_service_catalog`` = ``True``
-     - (BoolOpt) (Optional) Indicate whether to set the X-Service-Catalog header. If False, middleware will not ask for service catalog on token validation and will not set the X-Service-Catalog header.
+     - (Boolean) (Optional) Indicate whether to set the X-Service-Catalog header. If False, middleware will not ask for service catalog on token validation and will not set the X-Service-Catalog header.
    * - ``insecure`` = ``False``
-     - (BoolOpt) Verify HTTPS connections.
+     - (Boolean) Verify HTTPS connections.
    * - ``keyfile`` = ``None``
-     - (StrOpt) Required if identity server requires client certificate
+     - (String) Required if identity server requires client certificate
    * - ``memcache_pool_conn_get_timeout`` = ``10``
-     - (IntOpt) (Optional) Number of seconds that an operation will wait to get a memcached client connection from the pool.
+     - (Integer) (Optional) Number of seconds that an operation will wait to get a memcached client connection from the pool.
    * - ``memcache_pool_dead_retry`` = ``300``
-     - (IntOpt) (Optional) Number of seconds memcached server is considered dead before it is tried again.
+     - (Integer) (Optional) Number of seconds memcached server is considered dead before it is tried again.
    * - ``memcache_pool_maxsize`` = ``10``
-     - (IntOpt) (Optional) Maximum total number of open connections to every memcached server.
+     - (Integer) (Optional) Maximum total number of open connections to every memcached server.
    * - ``memcache_pool_socket_timeout`` = ``3``
-     - (IntOpt) (Optional) Socket timeout in seconds for communicating with a memcached server.
+     - (Integer) (Optional) Socket timeout in seconds for communicating with a memcached server.
    * - ``memcache_pool_unused_timeout`` = ``60``
-     - (IntOpt) (Optional) Number of seconds a connection to memcached is held unused in the pool before it is closed.
+     - (Integer) (Optional) Number of seconds a connection to memcached is held unused in the pool before it is closed.
    * - ``memcache_secret_key`` = ``None``
-     - (StrOpt) (Optional, mandatory if memcache_security_strategy is defined) This string is used for key derivation.
+     - (String) (Optional, mandatory if memcache_security_strategy is defined) This string is used for key derivation.
    * - ``memcache_security_strategy`` = ``None``
-     - (StrOpt) (Optional) If defined, indicate whether token data should be authenticated or authenticated and encrypted. Acceptable values are MAC or ENCRYPT. If MAC, token data is authenticated (with HMAC) in the cache. If ENCRYPT, token data is encrypted and authenticated in the cache. If the value is not one of these options or empty, auth_token will raise an exception on initialization.
+     - (String) (Optional) If defined, indicate whether token data should be authenticated or authenticated and encrypted. If MAC, token data is authenticated (with HMAC) in the cache. If ENCRYPT, token data is encrypted and authenticated in the cache. If the value is not one of these options or empty, auth_token will raise an exception on initialization.
    * - ``memcache_use_advanced_pool`` = ``False``
-     - (BoolOpt) (Optional) Use the advanced (eventlet safe) memcached client pool. The advanced pool will only work under python 2.x.
+     - (Boolean) (Optional) Use the advanced (eventlet safe) memcached client pool. The advanced pool will only work under python 2.x.
    * - ``region_name`` = ``None``
-     - (StrOpt) The region in which the identity server can be found.
+     - (String) The region in which the identity server can be found.
    * - ``revocation_cache_time`` = ``10``
-     - (IntOpt) Determines the frequency at which the list of revoked tokens is retrieved from the Identity service (in seconds). A high number of revocation events combined with a low cache duration may significantly reduce performance.
+     - (Integer) Determines the frequency at which the list of revoked tokens is retrieved from the Identity service (in seconds). A high number of revocation events combined with a low cache duration may significantly reduce performance.
    * - ``signing_dir`` = ``None``
-     - (StrOpt) Directory used to cache files related to PKI tokens.
+     - (String) Directory used to cache files related to PKI tokens.
    * - ``token_cache_time`` = ``300``
-     - (IntOpt) In order to prevent excessive effort spent validating tokens, the middleware caches previously-seen tokens for a configurable duration (in seconds). Set to -1 to disable caching completely.
+     - (Integer) In order to prevent excessive effort spent validating tokens, the middleware caches previously-seen tokens for a configurable duration (in seconds). Set to -1 to disable caching completely.

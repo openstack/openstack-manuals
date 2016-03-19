@@ -19,44 +19,44 @@
    * - **[vmware]**
      -
    * - ``api_retry_count`` = ``10``
-     - (IntOpt) The number of times we retry on failures, e.g., socket error, etc.
+     - (Integer) The number of times we retry on failures, e.g., socket error, etc.
    * - ``ca_file`` = ``None``
-     - (StrOpt) Specify a CA bundle file to use in verifying the vCenter server certificate.
+     - (String) Specify a CA bundle file to use in verifying the vCenter server certificate.
    * - ``cache_prefix`` = ``None``
-     - (StrOpt) The prefix for where cached images are stored. This is NOT the full path - just a folder prefix. This should only be used when a datastore cache should be shared between compute nodes. Note: this should only be used when the compute nodes have a shared file system.
+     - (String) The prefix for where cached images are stored. This is NOT the full path - just a folder prefix. This should only be used when a datastore cache should be shared between compute nodes. Note: this should only be used when the compute nodes have a shared file system.
    * - ``cluster_name`` = ``None``
-     - (StrOpt) Name of a VMware Cluster ComputeResource.
+     - (String) Name of a VMware Cluster ComputeResource.
    * - ``console_delay_seconds`` = ``None``
-     - (IntOpt) Set this value if affected by an increased network latency causing repeated characters when typing in a remote console.
+     - (Integer) Set this value if affected by an increased network latency causing repeated characters when typing in a remote console.
    * - ``datastore_regex`` = ``None``
-     - (StrOpt) Regex to match the name of a datastore.
+     - (String) Regex to match the name of a datastore.
    * - ``host_ip`` = ``None``
-     - (StrOpt) Hostname or IP address for connection to VMware vCenter host.
+     - (String) Hostname or IP address for connection to VMware vCenter host.
    * - ``host_password`` = ``None``
-     - (StrOpt) Password for connection to VMware vCenter host.
+     - (String) Password for connection to VMware vCenter host.
    * - ``host_port`` = ``443``
-     - (PortOpt) Port for connection to VMware vCenter host.
+     - (Unknown) Port for connection to VMware vCenter host.
    * - ``host_username`` = ``None``
-     - (StrOpt) Username for connection to VMware vCenter host.
+     - (String) Username for connection to VMware vCenter host.
    * - ``insecure`` = ``False``
-     - (BoolOpt) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "ca_file" is set.
+     - (Boolean) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "ca_file" is set.
    * - ``integration_bridge`` = ``None``
-     - (StrOpt) This option should be configured only when using the NSX-MH Neutron plugin. This is the name of the integration bridge on the ESXi. This should not be set for any other Neutron plugin. Hence the default value is not set.
+     - (String) This option should be configured only when using the NSX-MH Neutron plugin. This is the name of the integration bridge on the ESXi. This should not be set for any other Neutron plugin. Hence the default value is not set.
    * - ``maximum_objects`` = ``100``
-     - (IntOpt) The maximum number of ObjectContent data objects that should be returned in a single result. A positive value will cause the operation to suspend the retrieval when the count of objects reaches the specified maximum. The server may still limit the count to something less than the configured value. Any remaining objects may be retrieved with additional requests.
+     - (Integer) The maximum number of ObjectContent data objects that should be returned in a single result. A positive value will cause the operation to suspend the retrieval when the count of objects reaches the specified maximum. The server may still limit the count to something less than the configured value. Any remaining objects may be retrieved with additional requests.
    * - ``pbm_default_policy`` = ``None``
-     - (StrOpt) The PBM default policy. If pbm_wsdl_location is set and there is no defined storage policy for the specific request then this policy will be used.
+     - (String) The PBM default policy. If pbm_wsdl_location is set and there is no defined storage policy for the specific request then this policy will be used.
    * - ``pbm_enabled`` = ``False``
-     - (BoolOpt) The PBM status.
+     - (Boolean) The PBM status.
    * - ``pbm_wsdl_location`` = ``None``
-     - (StrOpt) PBM service WSDL file location URL. e.g. file:///opt/SDK/spbm/wsdl/pbmService.wsdl Not setting this will disable storage policy based placement of instances.
+     - (String) PBM service WSDL file location URL. e.g. file:///opt/SDK/spbm/wsdl/pbmService.wsdl Not setting this will disable storage policy based placement of instances.
    * - ``serial_port_proxy_uri`` = ``None``
-     - (StrOpt) Identifies a proxy service that provides network access to the serial_port_service_uri. This option is ignored if serial_port_service_uri is not specified.
+     - (String) Identifies a proxy service that provides network access to the serial_port_service_uri. This option is ignored if serial_port_service_uri is not specified.
    * - ``serial_port_service_uri`` = ``None``
-     - (StrOpt) Identifies the remote system that serial port traffic will be sent to. If this is not set, no serial ports will be added to the created VMs.
+     - (String) Identifies the remote system that serial port traffic will be sent to. If this is not set, no serial ports will be added to the created VMs.
    * - ``task_poll_interval`` = ``0.5``
-     - (FloatOpt) The interval used for polling of remote tasks.
+     - (Floating point) The interval used for polling of remote tasks.
    * - ``use_linked_clone`` = ``True``
-     - (BoolOpt) Whether to use linked clone
+     - (Boolean) Whether to use linked clone
    * - ``wsdl_location`` = ``None``
-     - (StrOpt) Optional VIM Service WSDL Location e.g http://<server>/vimService.wsdl. Optional over-ride to default location for bug work-arounds
+     - (String) Optional VIM Service WSDL Location e.g http://<server>/vimService.wsdl. Optional over-ride to default location for bug work-arounds

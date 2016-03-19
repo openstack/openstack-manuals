@@ -18,35 +18,37 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``storwize_san_secondary_ip`` = ``None``
+     - (String) Specifies secondary management IP or hostname to be used if san_ip is invalid or becomes inaccessible.
    * - ``storwize_svc_allow_tenant_qos`` = ``False``
-     - (BoolOpt) Allow tenants to specify QOS on create
+     - (Boolean) Allow tenants to specify QOS on create
    * - ``storwize_svc_flashcopy_rate`` = ``50``
-     - (IntOpt) Specifies the Storwize FlashCopy copy rate to be used when creating a full volume copy. The default is rate is 50, and the valid rates are 1-100.
+     - (Integer) Specifies the Storwize FlashCopy copy rate to be used when creating a full volume copy. The default is rate is 50, and the valid rates are 1-100.
    * - ``storwize_svc_flashcopy_timeout`` = ``120``
-     - (IntOpt) Maximum number of seconds to wait for FlashCopy to be prepared.
+     - (Integer) Maximum number of seconds to wait for FlashCopy to be prepared.
    * - ``storwize_svc_iscsi_chap_enabled`` = ``True``
-     - (BoolOpt) Configure CHAP authentication for iSCSI connections (Default: Enabled)
+     - (Boolean) Configure CHAP authentication for iSCSI connections (Default: Enabled)
    * - ``storwize_svc_multihostmap_enabled`` = ``True``
-     - (BoolOpt) This option no longer has any affect. It is deprecated and will be removed in the next release.
+     - (Boolean) DEPRECATED: This option no longer has any affect. It is deprecated and will be removed in the next release.
    * - ``storwize_svc_multipath_enabled`` = ``False``
-     - (BoolOpt) Connect with multipath (FC only; iSCSI multipath is controlled by Nova)
+     - (Boolean) Connect with multipath (FC only; iSCSI multipath is controlled by Nova)
    * - ``storwize_svc_stretched_cluster_partner`` = ``None``
-     - (StrOpt) If operating in stretched cluster mode, specify the name of the pool in which mirrored copies are stored.Example: "pool2"
+     - (String) If operating in stretched cluster mode, specify the name of the pool in which mirrored copies are stored.Example: "pool2"
    * - ``storwize_svc_vol_autoexpand`` = ``True``
-     - (BoolOpt) Storage system autoexpand parameter for volumes (True/False)
+     - (Boolean) Storage system autoexpand parameter for volumes (True/False)
    * - ``storwize_svc_vol_compression`` = ``False``
-     - (BoolOpt) Storage system compression option for volumes
+     - (Boolean) Storage system compression option for volumes
    * - ``storwize_svc_vol_easytier`` = ``True``
-     - (BoolOpt) Enable Easy Tier for volumes
+     - (Boolean) Enable Easy Tier for volumes
    * - ``storwize_svc_vol_grainsize`` = ``256``
-     - (IntOpt) Storage system grain size parameter for volumes (32/64/128/256)
+     - (Integer) Storage system grain size parameter for volumes (32/64/128/256)
    * - ``storwize_svc_vol_iogrp`` = ``0``
-     - (IntOpt) The I/O group in which to allocate volumes
+     - (Integer) The I/O group in which to allocate volumes
    * - ``storwize_svc_vol_nofmtdisk`` = ``False``
-     - (BoolOpt) Specifies that the volume not be formatted during creation.
+     - (Boolean) Specifies that the volume not be formatted during creation.
    * - ``storwize_svc_vol_rsize`` = ``2``
-     - (IntOpt) Storage system space-efficiency parameter for volumes (percentage)
+     - (Integer) Storage system space-efficiency parameter for volumes (percentage)
    * - ``storwize_svc_vol_warning`` = ``0``
-     - (IntOpt) Storage system threshold for volume capacity warnings (percentage)
+     - (Integer) Storage system threshold for volume capacity warnings (percentage)
    * - ``storwize_svc_volpool_name`` = ``volpool``
-     - (StrOpt) Storage system storage pool for volumes
+     - (List) Comma separated list of storage system storage pools for volumes.

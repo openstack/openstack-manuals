@@ -19,8 +19,8 @@
    * - **[glance_store]**
      -
    * - ``sheepdog_store_address`` = ``localhost``
-     - (StrOpt) IP address of sheep daemon.
+     - (String) IP address of sheep daemon.
    * - ``sheepdog_store_chunk_size`` = ``64``
-     - (IntOpt) Images will be chunked into objects of this size (in megabytes). For best performance, this should be a power of two.
+     - (Integer) Images will be chunked into objects of this size (in megabytes). For best performance, this should be a power of two.
    * - ``sheepdog_store_port`` = ``7000``
-     - (IntOpt) Port of sheep daemon.
+     - (Integer) Port of sheep daemon.

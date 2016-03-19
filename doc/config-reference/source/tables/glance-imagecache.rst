@@ -19,18 +19,18 @@
    * - **[DEFAULT]**
      -
    * - ``delayed_delete`` = ``False``
-     - (BoolOpt) Turn on/off delayed delete.
+     - (Boolean) Turn on/off delayed delete.
    * - ``image_cache_dir`` = ``None``
-     - (StrOpt) Base directory that the image cache uses.
+     - (String) Base directory that the image cache uses.
    * - ``image_cache_driver`` = ``sqlite``
-     - (StrOpt) The driver to use for image cache management.
+     - (String) The driver to use for image cache management.
    * - ``image_cache_max_size`` = ``10737418240``
-     - (IntOpt) The upper limit (the maximum size of accumulated cache in bytes) beyond which the cache pruner, if running, starts cleaning the image cache.
+     - (Integer) The upper limit (the maximum size of accumulated cache in bytes) beyond which the cache pruner, if running, starts cleaning the image cache.
    * - ``image_cache_sqlite_db`` = ``cache.db``
-     - (StrOpt) The path to the sqlite file database that will be used for image cache management.
+     - (String) The path to the sqlite file database that will be used for image cache management.
    * - ``image_cache_stall_time`` = ``86400``
-     - (IntOpt) The amount of time to let an incomplete image remain in the cache, before the cache cleaner, if running, will remove the incomplete image.
+     - (Integer) The amount of time to let an incomplete image remain in the cache, before the cache cleaner, if running, will remove the incomplete image.
    * - ``scrub_pool_size`` = ``1``
-     - (IntOpt) The size of thread pool to be used for scrubbing images. The default is one, which signifies serial scrubbing. Any value above one indicates the max number of images that may be scrubbed in parallel.
+     - (Integer) The size of thread pool to be used for scrubbing images. The default is one, which signifies serial scrubbing. Any value above one indicates the max number of images that may be scrubbed in parallel.
    * - ``scrub_time`` = ``0``
-     - (IntOpt) The amount of time in seconds to delay before performing a delete.
+     - (Integer) The amount of time in seconds to delay before performing a delete.

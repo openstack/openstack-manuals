@@ -19,4 +19,4 @@
    * - **[fwaas]**
      -
    * - ``enabled`` = ``False``
-     - (BoolOpt) Enable FWaaS
+     - (Boolean) Enable FWaaS

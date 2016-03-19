@@ -19,18 +19,42 @@
    * - **[BRCD_FABRIC_EXAMPLE]**
      -
    * - ``fc_fabric_address`` =
-     - (StrOpt) Management IP of fabric
+     - (String) Management IP of fabric.
    * - ``fc_fabric_password`` =
-     - (StrOpt) Password for user
+     - (String) Password for user.
    * - ``fc_fabric_port`` = ``22``
-     - (PortOpt) Connecting port
+     - (Unknown) Connecting port
+   * - ``fc_fabric_ssh_cert_path`` =
+     - (String) Local SSH certificate Path.
    * - ``fc_fabric_user`` =
-     - (StrOpt) Fabric user ID
+     - (String) Fabric user ID.
+   * - ``fc_southbound_protocol`` = ``HTTP``
+     - (String) South bound connector for the fabric.
+   * - ``fc_virtual_fabric_id`` = ``None``
+     - (String) Virtual Fabric ID.
    * - ``principal_switch_wwn`` = ``None``
-     - (StrOpt) Principal switch WWN of the fabric
+     - (String) DEPRECATED: Principal switch WWN of the fabric. This option is not used anymore.
    * - ``zone_activate`` = ``True``
-     - (BoolOpt) overridden zoning activation state
-   * - ``zone_name_prefix`` = ``None``
-     - (StrOpt) overridden zone name prefix
+     - (Boolean) Overridden zoning activation state.
+   * - ``zone_name_prefix`` = ``openstack``
+     - (String) Overridden zone name prefix.
    * - ``zoning_policy`` = ``initiator-target``
-     - (StrOpt) overridden zoning policy
+     - (String) Overridden zoning policy.
+   * - **[CISCO_FABRIC_EXAMPLE]**
+     -
+   * - ``cisco_fc_fabric_address`` =
+     - (String) Management IP of fabric
+   * - ``cisco_fc_fabric_password`` =
+     - (String) Password for user
+   * - ``cisco_fc_fabric_port`` = ``22``
+     - (Unknown) Connecting port
+   * - ``cisco_fc_fabric_user`` =
+     - (String) Fabric user ID
+   * - ``cisco_zone_activate`` = ``True``
+     - (Boolean) overridden zoning activation state
+   * - ``cisco_zone_name_prefix`` = ``None``
+     - (String) overridden zone name prefix
+   * - ``cisco_zoning_policy`` = ``initiator-target``
+     - (String) overridden zoning policy
+   * - ``cisco_zoning_vsan`` = ``None``
+     - (String) VSAN of the Fabric

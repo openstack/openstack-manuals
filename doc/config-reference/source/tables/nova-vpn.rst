@@ -19,20 +19,20 @@
    * - **[DEFAULT]**
      -
    * - ``boot_script_template`` = ``$pybasedir/nova/cloudpipe/bootscript.template``
-     - (StrOpt) Template for cloudpipe instance boot script
+     - (String) Template for cloudpipe instance boot script
    * - ``dmz_cidr`` =
-     - (ListOpt) A list of dmz ranges that should be accepted
+     - (List) A list of dmz ranges that should be accepted
    * - ``dmz_mask`` = ``255.255.255.0``
-     - (StrOpt) Netmask to push into openvpn config
+     - (String) Netmask to push into openvpn config
    * - ``dmz_net`` = ``10.0.0.0``
-     - (StrOpt) Network to push into openvpn config
+     - (String) Network to push into openvpn config
    * - ``vpn_flavor`` = ``m1.tiny``
-     - (StrOpt) Flavor for vpn instances
+     - (String) Flavor for vpn instances
    * - ``vpn_image_id`` = ``0``
-     - (StrOpt) Image ID used when starting up a cloudpipe vpn server
+     - (String) Image ID used when starting up a cloudpipe vpn server
    * - ``vpn_ip`` = ``$my_ip``
-     - (StrOpt) Public IP for the cloudpipe VPN servers
+     - (String) Public IP for the cloudpipe VPN servers
    * - ``vpn_key_suffix`` = ``-vpn``
-     - (StrOpt) Suffix to add to project name for vpn key and secgroups
+     - (String) Suffix to add to project name for vpn key and secgroups
    * - ``vpn_start`` = ``1000``
-     - (IntOpt) First Vpn port for private networks
+     - (Integer) First Vpn port for private networks

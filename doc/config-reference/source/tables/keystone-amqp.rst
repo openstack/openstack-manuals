@@ -19,16 +19,12 @@
    * - **[DEFAULT]**
      -
    * - ``control_exchange`` = ``keystone``
-     - (StrOpt) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
+     - (String) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
    * - ``default_publisher_id`` = ``None``
-     - (StrOpt) Default publisher_id for outgoing notifications
-   * - ``notification_driver`` = ``[]``
-     - (MultiStrOpt) The Drivers(s) to handle sending notifications. Possible values are messaging, messagingv2, routing, log, test, noop
+     - (String) Default publisher_id for outgoing notifications
    * - ``notification_format`` = ``basic``
-     - (StrOpt) Define the notification format for Identity Service events. A "basic" notification has information about the resource being operated on. A "cadf" notification has the same information, as well as information about the initiator of the event.
-   * - ``notification_topics`` = ``notifications``
-     - (ListOpt) AMQP topic used for OpenStack notifications.
-   * - ``notification_transport_url`` = ``None``
-     - (StrOpt) A URL representing the messaging driver to use for notifications. If not set, we fall back to the same configuration used for RPC.
+     - (String) Define the notification format for Identity Service events. A "basic" notification has information about the resource being operated on. A "cadf" notification has the same information, as well as information about the initiator of the event.
+   * - ``notification_opt_out`` = ``[]``
+     - (Multi-valued) Define the notification options to opt-out from. The value expected is: identity.<resource_type>.<operation>. This field can be set multiple times in order to add more notifications to opt-out from. For example: notification_opt_out=identity.user.created notification_opt_out=identity.authenticate.success
    * - ``transport_url`` = ``None``
-     - (StrOpt) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.
+     - (String) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.

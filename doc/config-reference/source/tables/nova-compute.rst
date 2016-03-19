@@ -19,74 +19,74 @@
    * - **[DEFAULT]**
      -
    * - ``compute_available_monitors`` = ``None``
-     - (MultiStrOpt) Monitor classes available to the compute which may be specified more than once. This option is DEPRECATED and no longer used. Use setuptools entry points to list available monitor plugins.
+     - (Multi-valued) DEPRECATED: Monitor classes available to the compute which may be specified more than once. This option is DEPRECATED and no longer used. Use setuptools entry points to list available monitor plugins.
    * - ``compute_driver`` = ``None``
-     - (StrOpt) Defines which driver to use for controlling virtualization. Possible values: * ``libvirt.LibvirtDriver`` * ``xenapi.XenAPIDriver`` * ``fake.FakeDriver`` * ``ironic.IronicDriver`` * ``vmwareapi.VMwareVCDriver`` * ``hyperv.HyperVDriver`` Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
+     - (String) Defines which driver to use for controlling virtualization. Possible values: * ``libvirt.LibvirtDriver`` * ``xenapi.XenAPIDriver`` * ``fake.FakeDriver`` * ``ironic.IronicDriver`` * ``vmwareapi.VMwareVCDriver`` * ``hyperv.HyperVDriver`` Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
    * - ``compute_manager`` = ``nova.compute.manager.ComputeManager``
-     - (StrOpt) Full class name for the Manager for compute
+     - (String) DEPRECATED: Full class name for the Manager for compute
    * - ``compute_monitors`` =
-     - (ListOpt) A list of monitors that can be used for getting compute metrics. You can use the alias/name from the setuptools entry points for nova.compute.monitors.* namespaces. If no namespace is supplied, the "cpu." namespace is assumed for backwards-compatibility. An example value that would enable both the CPU and NUMA memory bandwidth monitors that used the virt driver variant: ["cpu.virt_driver", "numa_mem_bw.virt_driver"]
+     - (List) A list of monitors that can be used for getting compute metrics. You can use the alias/name from the setuptools entry points for nova.compute.monitors.* namespaces. If no namespace is supplied, the "cpu." namespace is assumed for backwards-compatibility. An example value that would enable both the CPU and NUMA memory bandwidth monitors that used the virt driver variant: ["cpu.virt_driver", "numa_mem_bw.virt_driver"]
    * - ``compute_resources`` =
-     - (ListOpt) DEPRECATED: The names of the extra resources to track. The Extensible Resource Tracker is deprecated and will be removed in the 14.0.0 release. If you use this functionality and have custom resources that are managed by the Extensible Resource Tracker, please contact the Nova development team by posting to the openstack-dev mailing list. There is no future planned support for the tracking of custom resources.
+     - (List) DEPRECATED: The names of the extra resources to track. The Extensible Resource Tracker is deprecated and will be removed in the 14.0.0 release. If you use this functionality and have custom resources that are managed by the Extensible Resource Tracker, please contact the Nova development team by posting to the openstack-dev mailing list. There is no future planned support for the tracking of custom resources.
    * - ``compute_stats_class`` = ``nova.compute.stats.Stats``
-     - (StrOpt) Class that will manage stats for the local compute host
+     - (String) DEPRECATED: Class that will manage stats for the local compute host
    * - ``console_host`` = ``localhost``
-     - (StrOpt) Console proxy host to use to connect to instances on this host.
+     - (String) Console proxy host to use to connect to instances on this host.
    * - ``console_manager`` = ``nova.console.manager.ConsoleProxyManager``
-     - (StrOpt) Full class name for the Manager for console proxy
+     - (String) DEPRECATED: Full class name for the Manager for console proxy
    * - ``default_flavor`` = ``m1.small``
-     - (StrOpt) Default flavor to use for the EC2 API only. The Nova API does not support a default flavor.
+     - (String) Default flavor to use for the EC2 API only. The Nova API does not support a default flavor.
    * - ``default_notification_level`` = ``INFO``
-     - (StrOpt) Default notification level for outgoing notifications
+     - (String) Default notification level for outgoing notifications
    * - ``enable_instance_password`` = ``True``
-     - (BoolOpt) Enables returning of the instance password by the relevant server API calls such as create, rebuild or rescue, If the hypervisor does not support password injection then the password returned will not be correct
+     - (Boolean) Enables returning of the instance password by the relevant server API calls such as create, rebuild or rescue, If the hypervisor does not support password injection then the password returned will not be correct
    * - ``heal_instance_info_cache_interval`` = ``60``
-     - (IntOpt) Number of seconds between instance network information cache updates
+     - (Integer) Number of seconds between instance network information cache updates
    * - ``image_cache_manager_interval`` = ``2400``
-     - (IntOpt) Number of seconds to wait between runs of the image cache manager. Set to -1 to disable. Setting this to 0 will run at the default rate.
+     - (Integer) Number of seconds to wait between runs of the image cache manager. Set to -1 to disable. Setting this to 0 will run at the default rate.
    * - ``image_cache_subdirectory_name`` = ``_base``
-     - (StrOpt) Where cached images are stored under $instances_path. This is NOT the full path - just a folder name. For per-compute-host cached images, set to _base_$my_ip
+     - (String) Where cached images are stored under $instances_path. This is NOT the full path - just a folder name. For per-compute-host cached images, set to _base_$my_ip
    * - ``instance_build_timeout`` = ``0``
-     - (IntOpt) Amount of time in seconds an instance can be in BUILD before going into ERROR status. Set to 0 to disable.
+     - (Integer) Amount of time in seconds an instance can be in BUILD before going into ERROR status. Set to 0 to disable.
    * - ``instance_delete_interval`` = ``300``
-     - (IntOpt) Interval in seconds for retrying failed instance file deletes. Set to -1 to disable. Setting this to 0 will run at the default rate.
+     - (Integer) Interval in seconds for retrying failed instance file deletes. Set to -1 to disable. Setting this to 0 will run at the default rate.
    * - ``instance_usage_audit`` = ``False``
-     - (BoolOpt) Generate periodic compute.instance.exists notifications
+     - (Boolean) Generate periodic compute.instance.exists notifications
    * - ``instance_usage_audit_period`` = ``month``
-     - (StrOpt) Time period to generate instance usages for. Time period must be hour, day, month or year
+     - (String) Time period to generate instance usages for. Time period must be hour, day, month or year
    * - ``instances_path`` = ``$state_path/instances``
-     - (StrOpt) Where instances are stored on disk
+     - (String) Where instances are stored on disk
    * - ``max_concurrent_builds`` = ``10``
-     - (IntOpt) Maximum number of instance builds to run concurrently
+     - (Integer) Maximum number of instance builds to run concurrently
    * - ``maximum_instance_delete_attempts`` = ``5``
-     - (IntOpt) The number of times to attempt to reap an instance's files.
+     - (Integer) The number of times to attempt to reap an instance's files.
    * - ``reboot_timeout`` = ``0``
-     - (IntOpt) Automatically hard reboot an instance if it has been stuck in a rebooting state longer than N seconds. Set to 0 to disable.
+     - (Integer) Automatically hard reboot an instance if it has been stuck in a rebooting state longer than N seconds. Set to 0 to disable.
    * - ``reclaim_instance_interval`` = ``0``
-     - (IntOpt) Interval in seconds for reclaiming deleted instances. It takes effect only when value is greater than 0.
+     - (Integer) Interval in seconds for reclaiming deleted instances. It takes effect only when value is greater than 0.
    * - ``rescue_timeout`` = ``0``
-     - (IntOpt) Automatically unrescue an instance after N seconds. Set to 0 to disable.
+     - (Integer) Automatically unrescue an instance after N seconds. Set to 0 to disable.
    * - ``resize_confirm_window`` = ``0``
-     - (IntOpt) Automatically confirm resizes after N seconds. Set to 0 to disable.
+     - (Integer) Automatically confirm resizes and cold migrations after N seconds. Set to 0 to disable.
    * - ``resume_guests_state_on_host_boot`` = ``False``
-     - (BoolOpt) Whether to start guests that were running before the host rebooted
+     - (Boolean) Whether to start guests that were running before the host rebooted
    * - ``running_deleted_instance_action`` = ``reap``
-     - (StrOpt) Action to take if a running deleted instance is detected.Set to 'noop' to take no action.
+     - (String) Action to take if a running deleted instance is detected.Set to 'noop' to take no action.
    * - ``running_deleted_instance_poll_interval`` = ``1800``
-     - (IntOpt) Number of seconds to wait between runs of the cleanup task.
+     - (Integer) Number of seconds to wait between runs of the cleanup task.
    * - ``running_deleted_instance_timeout`` = ``0``
-     - (IntOpt) Number of seconds after being deleted when a running instance should be considered eligible for cleanup.
+     - (Integer) Number of seconds after being deleted when a running instance should be considered eligible for cleanup.
    * - ``shelved_offload_time`` = ``0``
-     - (IntOpt) Time in seconds before a shelved instance is eligible for removing from a host. -1 never offload, 0 offload immediately when shelved
+     - (Integer) Time in seconds before a shelved instance is eligible for removing from a host. -1 never offload, 0 offload immediately when shelved
    * - ``shelved_poll_interval`` = ``3600``
-     - (IntOpt) Interval in seconds for polling shelved instances to offload. Set to -1 to disable.Setting this to 0 will run at the default rate.
+     - (Integer) Interval in seconds for polling shelved instances to offload. Set to -1 to disable.Setting this to 0 will run at the default rate.
    * - ``shutdown_timeout`` = ``60``
-     - (IntOpt) Total amount of time to wait in seconds for an instance to perform a clean shutdown.
+     - (Integer) Total amount of time to wait in seconds for an instance to perform a clean shutdown.
    * - ``sync_power_state_interval`` = ``600``
-     - (IntOpt) Interval to sync power states between the database and the hypervisor. Set to -1 to disable. Setting this to 0 will run at the default rate.
+     - (Integer) Interval to sync power states between the database and the hypervisor. Set to -1 to disable. Setting this to 0 will run at the default rate.
    * - ``update_resources_interval`` = ``0``
-     - (IntOpt) Interval in seconds for updating compute resources. A number less than 0 means to disable the task completely. Leaving this at the default of 0 will cause this to run at the default periodic interval. Setting it to any positive value will cause it to run at approximately that number of seconds.
+     - (Integer) Interval in seconds for updating compute resources. A number less than 0 means to disable the task completely. Leaving this at the default of 0 will cause this to run at the default periodic interval. Setting it to any positive value will cause it to run at approximately that number of seconds.
    * - ``vif_plugging_is_fatal`` = ``True``
-     - (BoolOpt) Determine if instance should boot or fail on VIF plugging timeout. Nova sends a port update to Neutron after an instance has been scheduled, providing Neutron with the necessary information to finish setup of the port. Once completed, Neutron notifies Nova that it has finished setting up the port, at which point Nova resumes the boot of the instance since network connectivity is now supposed to be present. A timeout will occur if the reply is not received after a given interval. This option determines what Nova does when the VIF plugging timeout event happens. When enabled, the instance will error out. When disabled, the instance will continue to boot on the assumption that the port is ready. Possible values: * True: Instances should fail after VIF plugging timeout * False: Instances should continue booting after VIF plugging timeout Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
+     - (Boolean) Determine if instance should boot or fail on VIF plugging timeout. Nova sends a port update to Neutron after an instance has been scheduled, providing Neutron with the necessary information to finish setup of the port. Once completed, Neutron notifies Nova that it has finished setting up the port, at which point Nova resumes the boot of the instance since network connectivity is now supposed to be present. A timeout will occur if the reply is not received after a given interval. This option determines what Nova does when the VIF plugging timeout event happens. When enabled, the instance will error out. When disabled, the instance will continue to boot on the assumption that the port is ready. Possible values: * True: Instances should fail after VIF plugging timeout * False: Instances should continue booting after VIF plugging timeout Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
    * - ``vif_plugging_timeout`` = ``300``
-     - (IntOpt) Timeout for Neutron VIF plugging event message arrival. Number of seconds to wait for Neutron vif plugging events to arrive before continuing or failing (see 'vif_plugging_is_fatal'). If this is set to zero and 'vif_plugging_is_fatal' is False, events should not be expected to arrive at all. Possible values: * A time interval in seconds Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
+     - (Integer) Timeout for Neutron VIF plugging event message arrival. Number of seconds to wait for Neutron vif plugging events to arrive before continuing or failing (see 'vif_plugging_is_fatal'). If this is set to zero and 'vif_plugging_is_fatal' is False, events should not be expected to arrive at all. Possible values: * A time interval in seconds Services which consume this: * ``nova-compute`` Interdependencies to other options: * None

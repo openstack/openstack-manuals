@@ -19,6 +19,14 @@
    * - **[disk_partitioner]**
      -
    * - ``check_device_interval`` = ``1``
-     - (IntOpt) After Ironic has completed creating the partition table, it continues to check for activity on the attached iSCSI device status at this interval prior to copying the image to the node, in seconds
+     - (Integer) After Ironic has completed creating the partition table, it continues to check for activity on the attached iSCSI device status at this interval prior to copying the image to the node, in seconds
    * - ``check_device_max_retries`` = ``20``
-     - (IntOpt) The maximum number of times to check that the device is not accessed by another process. If the device is still busy after that, the disk partitioning will be treated as having failed.
+     - (Integer) The maximum number of times to check that the device is not accessed by another process. If the device is still busy after that, the disk partitioning will be treated as having failed.
+   * - **[disk_utils]**
+     -
+   * - ``dd_block_size`` = ``1M``
+     - (String) Block size to use when writing to the nodes disk.
+   * - ``efi_system_partition_size`` = ``200``
+     - (Integer) Size of EFI system partition in MiB when configuring UEFI systems for local boot.
+   * - ``iscsi_verify_attempts`` = ``3``
+     - (Integer) Maximum attempts to verify an iSCSI connection is active, sleeping 1 second between attempts.

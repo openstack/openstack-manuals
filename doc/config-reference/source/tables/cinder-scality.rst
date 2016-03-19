@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``scality_sofs_config`` = ``None``
-     - (StrOpt) Path or URL to Scality SOFS configuration file
+     - (String) Path or URL to Scality SOFS configuration file
    * - ``scality_sofs_mount_point`` = ``$state_path/scality``
-     - (StrOpt) Base dir where Scality SOFS shall be mounted
+     - (String) Base dir where Scality SOFS shall be mounted
    * - ``scality_sofs_volume_dir`` = ``cinder/volumes``
-     - (StrOpt) Path from Scality SOFS root to volume dir
+     - (String) Path from Scality SOFS root to volume dir

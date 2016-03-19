@@ -19,8 +19,8 @@
    * - **[inspector]**
      -
    * - ``enabled`` = ``False``
-     - (BoolOpt) whether to enable inspection using ironic-inspector
+     - (Boolean) whether to enable inspection using ironic-inspector
    * - ``service_url`` = ``None``
-     - (StrOpt) ironic-inspector HTTP endpoint. If this is not set, the ironic-inspector client default (http://127.0.0.1:5050) will be used.
+     - (String) ironic-inspector HTTP endpoint. If this is not set, the ironic-inspector client default (http://127.0.0.1:5050) will be used.
    * - ``status_check_period`` = ``60``
-     - (IntOpt) period (in seconds) to check status of nodes on inspection
+     - (Integer) period (in seconds) to check status of nodes on inspection

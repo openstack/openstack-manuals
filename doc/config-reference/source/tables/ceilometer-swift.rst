@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``reseller_prefix`` = ``AUTH_``
-     - (StrOpt) Swift reseller prefix. Must be on par with reseller_prefix in proxy-server.conf.
+     - (String) Swift reseller prefix. Must be on par with reseller_prefix in proxy-server.conf.

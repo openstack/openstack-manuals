@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``crypt_strength`` = ``10000``
-     - (IntOpt) The value passed as the keyword "rounds" to passlib's encrypt method.
+     - (Integer) The value passed as the keyword "rounds" to passlib's encrypt method.

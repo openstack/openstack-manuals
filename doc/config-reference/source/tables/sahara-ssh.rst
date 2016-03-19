@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``ssh_timeout_common`` = ``300``
-     - (IntOpt) Overrides timeout for common ssh operations, in seconds
+     - (Integer) Overrides timeout for common ssh operations, in seconds
    * - ``ssh_timeout_files`` = ``120``
-     - (IntOpt) Overrides timeout for ssh operations with files, in seconds
+     - (Integer) Overrides timeout for ssh operations with files, in seconds
    * - ``ssh_timeout_interactive`` = ``1800``
-     - (IntOpt) Overrides timeout for interactive ssh operations, in seconds
+     - (Integer) Overrides timeout for interactive ssh operations, in seconds

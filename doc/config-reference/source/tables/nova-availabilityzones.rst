@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``default_availability_zone`` = ``nova``
-     - (StrOpt) Default compute node availability_zone
+     - (String) Default compute node availability_zone
    * - ``default_schedule_zone`` = ``None``
-     - (StrOpt) Availability zone to use when user doesn't specify one
+     - (String) Availability zone to use when user doesn't specify one
    * - ``internal_service_availability_zone`` = ``internal``
-     - (StrOpt) The availability_zone to show internal services under
+     - (String) The availability_zone to show internal services under

@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``zaqar_control_exchange`` = ``zaqar``
-     - (StrOpt) Exchange name for Messaging service notifications.
+     - (String) Exchange name for Messaging service notifications.

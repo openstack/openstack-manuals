@@ -19,18 +19,18 @@
    * - **[DEFAULT]**
      -
    * - ``quobyte_api_ca`` = ``None``
-     - (StrOpt) The X.509 CA file to verify the server cert.
+     - (String) The X.509 CA file to verify the server cert.
    * - ``quobyte_api_password`` = ``quobyte``
-     - (StrOpt) Password for Quobyte API server
+     - (String) Password for Quobyte API server
    * - ``quobyte_api_url`` = ``None``
-     - (StrOpt) URL of the Quobyte API server (http or https)
+     - (String) URL of the Quobyte API server (http or https)
    * - ``quobyte_api_username`` = ``admin``
-     - (StrOpt) Username for Quobyte API server.
+     - (String) Username for Quobyte API server.
    * - ``quobyte_default_volume_group`` = ``root``
-     - (StrOpt) Default owning group for new volumes.
+     - (String) Default owning group for new volumes.
    * - ``quobyte_default_volume_user`` = ``root``
-     - (StrOpt) Default owning user for new volumes.
+     - (String) Default owning user for new volumes.
    * - ``quobyte_delete_shares`` = ``False``
-     - (BoolOpt) Actually deletes shares (vs. unexport)
+     - (Boolean) Actually deletes shares (vs. unexport)
    * - ``quobyte_volume_configuration`` = ``BASE``
-     - (StrOpt) Name of volume configuration used for new shares.
+     - (String) Name of volume configuration used for new shares.

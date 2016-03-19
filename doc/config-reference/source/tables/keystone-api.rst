@@ -19,80 +19,92 @@
    * - **[DEFAULT]**
      -
    * - ``admin_endpoint`` = ``None``
-     - (StrOpt) The base admin endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. E.g. a request to http://server:35357/v3/users will default to http://server:35357. You should only need to set this value if the base URL contains a path (e.g. /prefix/v3) or the endpoint should be found on a different server.
-   * - ``admin_token`` = ``ADMIN``
-     - (StrOpt) A "shared secret" that can be used to bootstrap Keystone. This "token" does not represent a user, and carries no explicit authorization. To disable in production (highly recommended), remove AdminTokenAuthMiddleware from your paste application pipelines (for example, in keystone-paste.ini).
+     - (String) The base admin endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. E.g. a request to http://server:35357/v3/users will default to http://server:35357. You should only need to set this value if the base URL contains a path (e.g. /prefix/v3) or the endpoint should be found on a different server.
+   * - ``admin_token`` = ``None``
+     - (String) A "shared secret" that can be used to bootstrap Keystone. This "token" does not represent a user, and carries no explicit authorization. If set to `None`, the value is ignored and the `admin_token` log in mechanism is effectively disabled. To completely disable `admin_token` in production (highly recommended), remove AdminTokenAuthMiddleware from your paste application pipelines (for example, in keystone-paste.ini).
    * - ``domain_id_immutable`` = ``True``
-     - (BoolOpt) Set this to false if you want to enable the ability for user, group and project entities to be moved between domains by updating their domain_id. Allowing such movement is not recommended if the scope of a domain admin is being restricted by use of an appropriate policy file (see policy.v3cloudsample as an example).
+     - (Boolean) DEPRECATED: Set this to false if you want to enable the ability for user, group and project entities to be moved between domains by updating their domain_id. Allowing such movement is not recommended if the scope of a domain admin is being restricted by use of an appropriate policy file (see policy.v3cloudsample as an example). This ability is deprecated and will be removed in a future release.
    * - ``list_limit`` = ``None``
-     - (IntOpt) The maximum number of entities that will be returned in a collection, with no limit set by default. This global limit may be then overridden for a specific driver, by specifying a list_limit in the appropriate section (e.g. [assignment]).
+     - (Integer) The maximum number of entities that will be returned in a collection, with no limit set by default. This global limit may be then overridden for a specific driver, by specifying a list_limit in the appropriate section (e.g. [assignment]).
    * - ``max_param_size`` = ``64``
-     - (IntOpt) Limit the sizes of user & project ID/names.
+     - (Integer) Limit the sizes of user & project ID/names.
    * - ``max_project_tree_depth`` = ``5``
-     - (IntOpt) Maximum depth of the project hierarchy. WARNING: setting it to a large value may adversely impact performance.
+     - (Integer) Maximum depth of the project hierarchy, excluding the project acting as a domain at the top of the hierarchy. WARNING: setting it to a large value may adversely impact performance.
    * - ``max_token_size`` = ``8192``
-     - (IntOpt) Similar to max_param_size, but provides an exception for token values.
+     - (Integer) Similar to max_param_size, but provides an exception for token values.
    * - ``member_role_id`` = ``9fe2ff9ee4384b1894a90878d3e92bab``
-     - (StrOpt) Similar to the member_role_name option, this represents the default role ID used to associate users with their default projects in the v2 API. This will be used as the explicit role where one is not specified by the v2 API.
+     - (String) Similar to the member_role_name option, this represents the default role ID used to associate users with their default projects in the v2 API. This will be used as the explicit role where one is not specified by the v2 API.
    * - ``member_role_name`` = ``_member_``
-     - (StrOpt) This is the role name used in combination with the member_role_id option; see that option for more detail.
+     - (String) This is the role name used in combination with the member_role_id option; see that option for more detail.
    * - ``public_endpoint`` = ``None``
-     - (StrOpt) The base public endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. E.g. a request to http://server:5000/v3/users will default to http://server:5000. You should only need to set this value if the base URL contains a path (e.g. /prefix/v3) or the endpoint should be found on a different server.
-   * - ``secure_proxy_ssl_header`` = ``None``
-     - (StrOpt) The HTTP header used to determine the scheme for the original request, even if it was removed by an SSL terminating proxy. Typical value is "HTTP_X_FORWARDED_PROTO".
+     - (String) The base public endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. E.g. a request to http://server:5000/v3/users will default to http://server:5000. You should only need to set this value if the base URL contains a path (e.g. /prefix/v3) or the endpoint should be found on a different server.
+   * - ``secure_proxy_ssl_header`` = ``HTTP_X_FORWARDED_PROTO``
+     - (String) The HTTP header used to determine the scheme for the original request, even if it was removed by an SSL terminating proxy.
    * - ``strict_password_check`` = ``False``
-     - (BoolOpt) If set to true, strict password length checking is performed for password manipulation. If a password exceeds the maximum length, the operation will fail with an HTTP 403 Forbidden error. If set to false, passwords are automatically truncated to the maximum length.
+     - (Boolean) If set to true, strict password length checking is performed for password manipulation. If a password exceeds the maximum length, the operation will fail with an HTTP 403 Forbidden error. If set to false, passwords are automatically truncated to the maximum length.
    * - **[endpoint_filter]**
      -
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for the endpoint filter backend driver in the keystone.endpoint_filter namespace.
+     - (String) Entrypoint for the endpoint filter backend driver in the keystone.endpoint_filter namespace.
    * - ``return_all_endpoints_if_no_filter`` = ``True``
-     - (BoolOpt) Toggle to return all active endpoints if no filter exists.
+     - (Boolean) Toggle to return all active endpoints if no filter exists.
    * - **[endpoint_policy]**
      -
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for the endpoint policy backend driver in the keystone.endpoint_policy namespace.
+     - (String) Entrypoint for the endpoint policy backend driver in the keystone.endpoint_policy namespace.
    * - ``enabled`` = ``True``
-     - (BoolOpt) Enable endpoint_policy functionality.
+     - (Boolean) DEPRECATED: Enable endpoint_policy functionality. The option to enable the OS-ENDPOINT-POLICY extension has been deprecated in the M release and will be removed in the O release. The OS-ENDPOINT-POLICY extension will be enabled by default.
    * - **[eventlet_server]**
      -
    * - ``admin_bind_host`` = ``0.0.0.0``
-     - (StrOpt) The IP address of the network interface for the admin service to listen on.
+     - (String) DEPRECATED: The IP address of the network interface for the admin service to listen on.
    * - ``admin_port`` = ``35357``
-     - (IntOpt) The port number which the admin service listens on.
+     - (Unknown) DEPRECATED: The port number which the admin service listens on.
    * - ``admin_workers`` = ``None``
-     - (IntOpt) The number of worker processes to serve the admin eventlet application. Defaults to number of CPUs (minimum of 2).
+     - (Integer) DEPRECATED: The number of worker processes to serve the admin eventlet application. Defaults to number of CPUs (minimum of 2).
    * - ``client_socket_timeout`` = ``900``
-     - (IntOpt) Timeout for socket operations on a client connection. If an incoming connection is idle for this number of seconds it will be closed. A value of "0" means wait forever.
+     - (Integer) Timeout for socket operations on a client connection. If an incoming connection is idle for this number of seconds it will be closed. A value of "0" means wait forever.
    * - ``public_bind_host`` = ``0.0.0.0``
-     - (StrOpt) The IP address of the network interface for the public service to listen on.
+     - (String) DEPRECATED: The IP address of the network interface for the public service to listen on.
    * - ``public_port`` = ``5000``
-     - (IntOpt) The port number which the public service listens on.
+     - (Unknown) DEPRECATED: The port number which the public service listens on.
    * - ``public_workers`` = ``None``
-     - (IntOpt) The number of worker processes to serve the public eventlet application. Defaults to number of CPUs (minimum of 2).
+     - (Integer) DEPRECATED: The number of worker processes to serve the public eventlet application. Defaults to number of CPUs (minimum of 2).
    * - ``tcp_keepalive`` = ``False``
-     - (BoolOpt) Set this to true if you want to enable TCP_KEEPALIVE on server sockets, i.e. sockets used by the Keystone wsgi server for client connections.
+     - (Boolean) DEPRECATED: Set this to true if you want to enable TCP_KEEPALIVE on server sockets, i.e. sockets used by the Keystone wsgi server for client connections.
    * - ``tcp_keepidle`` = ``600``
-     - (IntOpt) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Only applies if tcp_keepalive is true.
+     - (Integer) DEPRECATED: Sets the value of TCP_KEEPIDLE in seconds for each server socket. Only applies if tcp_keepalive is true. Ignored if system does not support it.
    * - ``wsgi_keep_alive`` = ``True``
-     - (BoolOpt) If set to false, disables keepalives on the server; all connections will be closed after serving one request.
+     - (Boolean) If set to false, disables keepalives on the server; all connections will be closed after serving one request.
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``
-     - (IntOpt) The maximum body size for each request, in bytes.
+     - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
    * - **[paste_deploy]**
      -
    * - ``config_file`` = ``keystone-paste.ini``
-     - (StrOpt) Name of the paste configuration file that defines the available pipelines.
+     - (String) Name of the paste configuration file that defines the available pipelines.
    * - **[resource]**
      -
+   * - ``admin_project_domain_name`` = ``None``
+     - (String) Name of the domain that owns the `admin_project_name`. Defaults to None.
+   * - ``admin_project_name`` = ``None``
+     - (String) Special project for performing administrative operations on remote services. Tokens scoped to this project will contain the key/value `is_admin_project=true`. Defaults to None.
    * - ``cache_time`` = ``None``
-     - (IntOpt) TTL (in seconds) to cache resource data. This has no effect unless global caching is enabled.
+     - (Integer) TTL (in seconds) to cache resource data. This has no effect unless global caching is enabled.
    * - ``caching`` = ``True``
-     - (BoolOpt) Toggle for resource caching. This has no effect unless global caching is enabled.
+     - (Boolean) Toggle for resource caching. This has no effect unless global caching is enabled.
+   * - ``domain_name_url_safe`` = ``off``
+     - (String) Whether the names of domains are restricted from containing url reserved characters. If set to new, attempts to create or update a domain with a url unsafe name will return an error. In addition, if set to strict, attempts to scope a token using a domain name which is unsafe will return an error.
    * - ``driver`` = ``None``
-     - (StrOpt) Entrypoint for the resource backend driver in the keystone.resource namespace. Supplied drivers are ldap and sql. If a resource driver is not specified, the assignment driver will choose the resource driver.
+     - (String) Entrypoint for the resource backend driver in the keystone.resource namespace. Only an SQL driver is supplied. If a resource driver is not specified, the assignment driver will choose the resource driver.
    * - ``list_limit`` = ``None``
-     - (IntOpt) Maximum number of entities that will be returned in a resource collection.
+     - (Integer) Maximum number of entities that will be returned in a resource collection.
+   * - ``project_name_url_safe`` = ``off``
+     - (String) Whether the names of projects are restricted from containing url reserved characters. If set to new, attempts to create or update a project with a url unsafe name will return an error. In addition, if set to strict, attempts to scope a token using an unsafe project name will return an error.
+   * - **[shadow_users]**
+     -
+   * - ``driver`` = ``sql``
+     - (String) Entrypoint for the shadow users backend driver in the keystone.identity.shadow_users namespace.

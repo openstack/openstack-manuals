@@ -19,8 +19,8 @@
    * - **[drivers:transport:websocket]**
      -
    * - ``bind`` = ``127.0.0.1``
-     - (IPOpt) Address on which the self-hosting server will listen.
+     - (Unknown) Address on which the self-hosting server will listen.
    * - ``external_port`` = ``None``
-     - (PortOpt) Port on which the service is provided to the user.
+     - (Unknown) Port on which the service is provided to the user.
    * - ``port`` = ``9000``
-     - (PortOpt) Port on which the self-hosting server will listen.
+     - (Unknown) Port on which the self-hosting server will listen.

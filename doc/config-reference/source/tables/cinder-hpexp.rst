@@ -19,38 +19,38 @@
    * - **[DEFAULT]**
      -
    * - ``hpexp_async_copy_check_interval`` = ``10``
-     - (IntOpt) Interval to check copy asynchronously
+     - (Integer) Interval to check copy asynchronously
    * - ``hpexp_compute_target_ports`` = ``None``
-     - (ListOpt) Target port names of compute node for host group or iSCSI target
+     - (List) Target port names of compute node for host group or iSCSI target
    * - ``hpexp_copy_check_interval`` = ``3``
-     - (IntOpt) Interval to check copy
+     - (Integer) Interval to check copy
    * - ``hpexp_copy_speed`` = ``3``
-     - (IntOpt) Copy speed of storage system
+     - (Integer) Copy speed of storage system
    * - ``hpexp_default_copy_method`` = ``FULL``
-     - (StrOpt) Default copy method of storage system. There are two valid values: "FULL" specifies that a full copy; "THIN" specifies that a thin copy. Default value is "FULL"
+     - (String) Default copy method of storage system. There are two valid values: "FULL" specifies that a full copy; "THIN" specifies that a thin copy. Default value is "FULL"
    * - ``hpexp_group_request`` = ``False``
-     - (BoolOpt) Request for creating host group or iSCSI target
+     - (Boolean) Request for creating host group or iSCSI target
    * - ``hpexp_horcm_add_conf`` = ``True``
-     - (BoolOpt) Add to HORCM configuration
+     - (Boolean) Add to HORCM configuration
    * - ``hpexp_horcm_name_only_discovery`` = ``False``
-     - (BoolOpt) Only discover a specific name of host group or iSCSI target
+     - (Boolean) Only discover a specific name of host group or iSCSI target
    * - ``hpexp_horcm_numbers`` = ``200, 201``
-     - (ListOpt) Instance numbers for HORCM
+     - (List) Instance numbers for HORCM
    * - ``hpexp_horcm_resource_name`` = ``meta_resource``
-     - (StrOpt) Resource group name of storage system for HORCM
+     - (String) Resource group name of storage system for HORCM
    * - ``hpexp_horcm_user`` = ``None``
-     - (StrOpt) Username of storage system for HORCM
+     - (String) Username of storage system for HORCM
    * - ``hpexp_ldev_range`` = ``None``
-     - (StrOpt) Logical device range of storage system
+     - (String) Logical device range of storage system
    * - ``hpexp_pool`` = ``None``
-     - (StrOpt) Pool of storage system
+     - (String) Pool of storage system
    * - ``hpexp_storage_cli`` = ``None``
-     - (StrOpt) Type of storage command line interface
+     - (String) Type of storage command line interface
    * - ``hpexp_storage_id`` = ``None``
-     - (StrOpt) ID of storage system
+     - (String) ID of storage system
    * - ``hpexp_target_ports`` = ``None``
-     - (ListOpt) Target port names for host group or iSCSI target
+     - (List) Target port names for host group or iSCSI target
    * - ``hpexp_thin_pool`` = ``None``
-     - (StrOpt) Thin pool of storage system
+     - (String) Thin pool of storage system
    * - ``hpexp_zoning_request`` = ``False``
-     - (BoolOpt) Request for FC Zone creating host group
+     - (Boolean) Request for FC Zone creating host group

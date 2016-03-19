@@ -19,10 +19,10 @@
    * - **[DEFAULT]**
      -
    * - ``flashsystem_connection_protocol`` = ``FC``
-     - (StrOpt) Connection protocol should be FC. (Default is FC.)
+     - (String) Connection protocol should be FC. (Default is FC.)
    * - ``flashsystem_iscsi_portid`` = ``0``
-     - (IntOpt) Default iSCSI Port ID of FlashSystem. (Default port is 0.)
+     - (Integer) Default iSCSI Port ID of FlashSystem. (Default port is 0.)
    * - ``flashsystem_multihostmap_enabled`` = ``True``
-     - (BoolOpt) Allows vdisk to multi host mapping. (Default is True)
+     - (Boolean) Allows vdisk to multi host mapping. (Default is True)
    * - ``flashsystem_multipath_enabled`` = ``False``
-     - (BoolOpt) This option no longer has any affect. It is deprecated and will be removed in the next release.
+     - (Boolean) DEPRECATED: This option no longer has any affect. It is deprecated and will be removed in the next release.

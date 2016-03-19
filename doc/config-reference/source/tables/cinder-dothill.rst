@@ -19,14 +19,14 @@
    * - **[DEFAULT]**
      -
    * - ``dothill_api_protocol`` = ``https``
-     - (StrOpt) DotHill API interface protocol.
+     - (String) DotHill API interface protocol.
    * - ``dothill_backend_name`` = ``A``
-     - (StrOpt) Pool or Vdisk name to use for volume creation.
+     - (String) Pool or Vdisk name to use for volume creation.
    * - ``dothill_backend_type`` = ``virtual``
-     - (StrOpt) linear (for Vdisk) or virtual (for Pool).
+     - (String) linear (for Vdisk) or virtual (for Pool).
    * - ``dothill_iscsi_ips`` =
-     - (ListOpt) List of comma-separated target iSCSI IP addresses.
+     - (List) List of comma-separated target iSCSI IP addresses.
    * - ``dothill_verify_certificate`` = ``False``
-     - (BoolOpt) Whether to verify DotHill array SSL certificate.
+     - (Boolean) Whether to verify DotHill array SSL certificate.
    * - ``dothill_verify_certificate_path`` = ``None``
-     - (StrOpt) DotHill array SSL certificate path.
+     - (String) DotHill array SSL certificate path.

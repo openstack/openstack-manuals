@@ -19,8 +19,8 @@
    * - **[xenapi]**
      -
    * - ``connection_password`` = ``None``
-     - (StrOpt) Password for connection to XenServer/Xen Cloud Platform.
+     - (String) Password for connection to XenServer/Xen Cloud Platform.
    * - ``connection_url`` = ``None``
-     - (StrOpt) URL for connection to XenServer/Xen Cloud Platform.
+     - (String) URL for connection to XenServer/Xen Cloud Platform.
    * - ``connection_username`` = ``root``
-     - (StrOpt) Username for connection to XenServer/Xen Cloud Platform.
+     - (String) Username for connection to XenServer/Xen Cloud Platform.

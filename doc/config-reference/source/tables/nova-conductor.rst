@@ -19,14 +19,14 @@
    * - **[DEFAULT]**
      -
    * - ``migrate_max_retries`` = ``-1``
-     - (IntOpt) Number of times to retry live-migration before failing. If == -1, try until out of hosts. If == 0, only try once, no retries.
+     - (Integer) Number of times to retry live-migration before failing. If == -1, try until out of hosts. If == 0, only try once, no retries.
    * - **[conductor]**
      -
    * - ``manager`` = ``nova.conductor.manager.ConductorManager``
-     - (StrOpt) Full class name for the Manager for conductor
+     - (String) DEPRECATED: Full class name for the Manager for conductor. Removal in 14.0
    * - ``topic`` = ``conductor``
-     - (StrOpt) The topic on which conductor nodes listen
+     - (String) The topic on which conductor nodes listen
    * - ``use_local`` = ``False``
-     - (BoolOpt) DEPRECATED: Perform nova-conductor operations locally. This legacy mode was introduced to bridge a gap during the transition to the conductor service. It no longer represents a reasonable alternative for deployers. Removal may be as early as 14.0
+     - (Boolean) DEPRECATED: Perform nova-conductor operations locally. This legacy mode was introduced to bridge a gap during the transition to the conductor service. It no longer represents a reasonable alternative for deployers. Removal may be as early as 14.0
    * - ``workers`` = ``None``
-     - (IntOpt) Number of workers for OpenStack Conductor service. The default will be the number of CPUs available.
+     - (Integer) Number of workers for OpenStack Conductor service. The default will be the number of CPUs available.

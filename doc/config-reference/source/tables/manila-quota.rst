@@ -19,20 +19,20 @@
    * - **[DEFAULT]**
      -
    * - ``max_age`` = ``0``
-     - (IntOpt) Number of seconds between subsequent usage refreshes.
+     - (Integer) Number of seconds between subsequent usage refreshes.
    * - ``max_gigabytes`` = ``10000``
-     - (IntOpt) Maximum number of volume gigabytes to allow per host.
+     - (Integer) Maximum number of volume gigabytes to allow per host.
    * - ``quota_driver`` = ``manila.quota.DbQuotaDriver``
-     - (StrOpt) Default driver to use for quota checks.
+     - (String) Default driver to use for quota checks.
    * - ``quota_gigabytes`` = ``1000``
-     - (IntOpt) Number of share gigabytes allowed per project.
+     - (Integer) Number of share gigabytes allowed per project.
    * - ``quota_share_networks`` = ``10``
-     - (IntOpt) Number of share-networks allowed per project.
+     - (Integer) Number of share-networks allowed per project.
    * - ``quota_shares`` = ``50``
-     - (IntOpt) Number of shares allowed per project.
+     - (Integer) Number of shares allowed per project.
    * - ``quota_snapshot_gigabytes`` = ``1000``
-     - (IntOpt) Number of snapshot gigabytes allowed per project.
+     - (Integer) Number of snapshot gigabytes allowed per project.
    * - ``quota_snapshots`` = ``50``
-     - (IntOpt) Number of share snapshots allowed per project.
+     - (Integer) Number of share snapshots allowed per project.
    * - ``reservation_expire`` = ``86400``
-     - (IntOpt) Number of seconds until a reservation expires.
+     - (Integer) Number of seconds until a reservation expires.

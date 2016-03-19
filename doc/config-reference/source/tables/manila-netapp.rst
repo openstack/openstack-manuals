@@ -19,30 +19,34 @@
    * - **[DEFAULT]**
      -
    * - ``netapp_aggregate_name_search_pattern`` = ``(.*)``
-     - (StrOpt) Pattern for searching available aggregates for provisioning.
+     - (String) Pattern for searching available aggregates for provisioning.
    * - ``netapp_lif_name_template`` = ``os_%(net_allocation_id)s``
-     - (StrOpt) Logical interface (LIF) name template
+     - (String) Logical interface (LIF) name template
    * - ``netapp_login`` = ``None``
-     - (StrOpt) Administrative user account name used to access the storage system.
+     - (String) Administrative user account name used to access the storage system.
    * - ``netapp_password`` = ``None``
-     - (StrOpt) Password for the administrative user account specified in the netapp_login option.
+     - (String) Password for the administrative user account specified in the netapp_login option.
    * - ``netapp_port_name_search_pattern`` = ``(.*)``
-     - (StrOpt) Pattern for overriding the selection of network ports on which to create Vserver LIFs.
+     - (String) Pattern for overriding the selection of network ports on which to create Vserver LIFs.
    * - ``netapp_root_volume`` = ``root``
-     - (StrOpt) Root volume name.
+     - (String) Root volume name.
    * - ``netapp_root_volume_aggregate`` = ``None``
-     - (StrOpt) Name of aggregate to create Vserver root volumes on. This option only applies when the option driver_handles_share_servers is set to True.
+     - (String) Name of aggregate to create Vserver root volumes on. This option only applies when the option driver_handles_share_servers is set to True.
    * - ``netapp_server_hostname`` = ``None``
-     - (StrOpt) The hostname (or IP address) for the storage system.
+     - (String) The hostname (or IP address) for the storage system.
    * - ``netapp_server_port`` = ``None``
-     - (PortOpt) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS.
+     - (Unknown) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS.
+   * - ``netapp_snapmirror_quiesce_timeout`` = ``3600``
+     - (Integer) The maximum time in seconds to wait for existing snapmirror transfers to complete before aborting when promoting a replica.
    * - ``netapp_storage_family`` = ``ontap_cluster``
-     - (StrOpt) The storage family type used on the storage system; valid values include ontap_cluster for using clustered Data ONTAP.
+     - (String) The storage family type used on the storage system; valid values include ontap_cluster for using clustered Data ONTAP.
    * - ``netapp_trace_flags`` = ``None``
-     - (StrOpt) Comma-separated list of options that control which trace info is written to the debug logs. Values include method and api.
+     - (String) Comma-separated list of options that control which trace info is written to the debug logs. Values include method and api.
    * - ``netapp_transport_type`` = ``http``
-     - (StrOpt) The transport protocol used when communicating with the storage system or proxy server. Valid values are http or https.
+     - (String) The transport protocol used when communicating with the storage system or proxy server. Valid values are http or https.
    * - ``netapp_volume_name_template`` = ``share_%(share_id)s``
-     - (StrOpt) NetApp volume name template.
+     - (String) NetApp volume name template.
+   * - ``netapp_volume_snapshot_reserve_percent`` = ``5``
+     - (Integer) The percentage of share space set aside as reserve for snapshot usage; valid values range from 0 to 90.
    * - ``netapp_vserver_name_template`` = ``os_%s``
-     - (StrOpt) Name template to use for new Vserver.
+     - (String) Name template to use for new Vserver.

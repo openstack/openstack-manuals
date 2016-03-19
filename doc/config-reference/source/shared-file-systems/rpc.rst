@@ -14,5 +14,4 @@ middleware for the Shared File System service:
 .. include:: ../tables/manila-amqp.rst
 .. include:: ../tables/manila-rpc.rst
 .. include:: ../tables/manila-rabbitmq.rst
-.. include:: ../tables/manila-qpid.rst
 .. include:: ../tables/manila-zeromq.rst

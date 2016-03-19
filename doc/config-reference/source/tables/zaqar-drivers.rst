@@ -19,8 +19,8 @@
    * - **[drivers]**
      -
    * - ``management_store`` = ``mongodb``
-     - (StrOpt) Storage driver to use as the management store.
+     - (String) Storage driver to use as the management store.
    * - ``message_store`` = ``mongodb``
-     - (StrOpt) Storage driver to use as the messaging store.
+     - (String) Storage driver to use as the messaging store.
    * - ``transport`` = ``wsgi``
-     - (StrOpt) Transport driver to use.
+     - (String) Transport driver to use.

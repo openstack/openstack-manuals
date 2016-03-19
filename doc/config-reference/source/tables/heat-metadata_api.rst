@@ -18,5 +18,5 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``heat_metadata_server_url`` =
-     - (StrOpt) URL of the Heat metadata server.
+   * - ``heat_metadata_server_url`` = ``None``
+     - (String) URL of the Heat metadata server. NOTE: Setting this is only needed if you require instances to use a different endpoint than in the keystone catalog

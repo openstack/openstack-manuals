@@ -19,50 +19,50 @@
    * - **[drivers:management_store:mongodb]**
      -
    * - ``database`` = ``zaqar``
-     - (StrOpt) Database name.
+     - (String) Database name.
    * - ``max_attempts`` = ``1000``
-     - (IntOpt) Maximum number of times to retry a failed operation. Currently only used for retrying a message post.
+     - (Integer) Maximum number of times to retry a failed operation. Currently only used for retrying a message post.
    * - ``max_reconnect_attempts`` = ``10``
-     - (IntOpt) Maximum number of times to retry an operation that failed due to a primary node failover.
+     - (Integer) Maximum number of times to retry an operation that failed due to a primary node failover.
    * - ``max_retry_jitter`` = ``0.005``
-     - (FloatOpt) Maximum jitter interval, to be added to the sleep interval, in order to decrease probability that parallel requests will retry at the same instant.
+     - (Floating point) Maximum jitter interval, to be added to the sleep interval, in order to decrease probability that parallel requests will retry at the same instant.
    * - ``max_retry_sleep`` = ``0.1``
-     - (FloatOpt) Maximum sleep interval between retries (actual sleep time increases linearly according to number of attempts performed).
+     - (Floating point) Maximum sleep interval between retries (actual sleep time increases linearly according to number of attempts performed).
    * - ``reconnect_sleep`` = ``0.02``
-     - (FloatOpt) Base sleep interval between attempts to reconnect after a primary node failover. The actual sleep time increases exponentially (power of 2) each time the operation is retried.
+     - (Floating point) Base sleep interval between attempts to reconnect after a primary node failover. The actual sleep time increases exponentially (power of 2) each time the operation is retried.
    * - ``ssl_ca_certs`` = ``None``
-     - (StrOpt) The ca_certs file contains a set of concatenated "certification authority" certificates, which are used to validate certificates passed from the other end of the connection.
+     - (String) The ca_certs file contains a set of concatenated "certification authority" certificates, which are used to validate certificates passed from the other end of the connection.
    * - ``ssl_cert_reqs`` = ``CERT_REQUIRED``
-     - (StrOpt) Specifies whether a certificate is required from the other side of the connection, and whether it will be validated if provided. It must be one of the three values ``CERT_NONE``(certificates ignored), ``CERT_OPTIONAL``(not required, but validated if provided), or ``CERT_REQUIRED``(required and validated). If the value of this parameter is not ``CERT_NONE``, then the ``ssl_ca_cert`` parameter must point to a file of CA certificates.
+     - (String) Specifies whether a certificate is required from the other side of the connection, and whether it will be validated if provided. It must be one of the three values ``CERT_NONE``(certificates ignored), ``CERT_OPTIONAL``(not required, but validated if provided), or ``CERT_REQUIRED``(required and validated). If the value of this parameter is not ``CERT_NONE``, then the ``ssl_ca_cert`` parameter must point to a file of CA certificates.
    * - ``ssl_certfile`` = ``None``
-     - (StrOpt) The certificate file used to identify the local connection against mongod.
+     - (String) The certificate file used to identify the local connection against mongod.
    * - ``ssl_keyfile`` = ``None``
-     - (StrOpt) The private keyfile used to identify the local connection against mongod. If included with the ``certifle`` then only the ``ssl_certfile`` is needed.
+     - (String) The private keyfile used to identify the local connection against mongod. If included with the ``certifle`` then only the ``ssl_certfile`` is needed.
    * - ``uri`` = ``None``
-     - (StrOpt) Mongodb Connection URI. If ssl connection enabled, then ``ssl_keyfile``, ``ssl_certfile``, ``ssl_cert_reqs``, ``ssl_ca_certs`` need to be set accordingly.
+     - (String) Mongodb Connection URI. If ssl connection enabled, then ``ssl_keyfile``, ``ssl_certfile``, ``ssl_cert_reqs``, ``ssl_ca_certs`` need to be set accordingly.
    * - **[drivers:message_store:mongodb]**
      -
    * - ``database`` = ``zaqar``
-     - (StrOpt) Database name.
+     - (String) Database name.
    * - ``max_attempts`` = ``1000``
-     - (IntOpt) Maximum number of times to retry a failed operation. Currently only used for retrying a message post.
+     - (Integer) Maximum number of times to retry a failed operation. Currently only used for retrying a message post.
    * - ``max_reconnect_attempts`` = ``10``
-     - (IntOpt) Maximum number of times to retry an operation that failed due to a primary node failover.
+     - (Integer) Maximum number of times to retry an operation that failed due to a primary node failover.
    * - ``max_retry_jitter`` = ``0.005``
-     - (FloatOpt) Maximum jitter interval, to be added to the sleep interval, in order to decrease probability that parallel requests will retry at the same instant.
+     - (Floating point) Maximum jitter interval, to be added to the sleep interval, in order to decrease probability that parallel requests will retry at the same instant.
    * - ``max_retry_sleep`` = ``0.1``
-     - (FloatOpt) Maximum sleep interval between retries (actual sleep time increases linearly according to number of attempts performed).
+     - (Floating point) Maximum sleep interval between retries (actual sleep time increases linearly according to number of attempts performed).
    * - ``partitions`` = ``2``
-     - (IntOpt) Number of databases across which to partition message data, in order to reduce writer lock %. DO NOT change this setting after initial deployment. It MUST remain static. Also, you should not need a large number of partitions to improve performance, esp. if deploying MongoDB on SSD storage.
+     - (Integer) Number of databases across which to partition message data, in order to reduce writer lock %. DO NOT change this setting after initial deployment. It MUST remain static. Also, you should not need a large number of partitions to improve performance, esp. if deploying MongoDB on SSD storage.
    * - ``reconnect_sleep`` = ``0.02``
-     - (FloatOpt) Base sleep interval between attempts to reconnect after a primary node failover. The actual sleep time increases exponentially (power of 2) each time the operation is retried.
+     - (Floating point) Base sleep interval between attempts to reconnect after a primary node failover. The actual sleep time increases exponentially (power of 2) each time the operation is retried.
    * - ``ssl_ca_certs`` = ``None``
-     - (StrOpt) The ca_certs file contains a set of concatenated "certification authority" certificates, which are used to validate certificates passed from the other end of the connection.
+     - (String) The ca_certs file contains a set of concatenated "certification authority" certificates, which are used to validate certificates passed from the other end of the connection.
    * - ``ssl_cert_reqs`` = ``CERT_REQUIRED``
-     - (StrOpt) Specifies whether a certificate is required from the other side of the connection, and whether it will be validated if provided. It must be one of the three values ``CERT_NONE``(certificates ignored), ``CERT_OPTIONAL``(not required, but validated if provided), or ``CERT_REQUIRED``(required and validated). If the value of this parameter is not ``CERT_NONE``, then the ``ssl_ca_cert`` parameter must point to a file of CA certificates.
+     - (String) Specifies whether a certificate is required from the other side of the connection, and whether it will be validated if provided. It must be one of the three values ``CERT_NONE``(certificates ignored), ``CERT_OPTIONAL``(not required, but validated if provided), or ``CERT_REQUIRED``(required and validated). If the value of this parameter is not ``CERT_NONE``, then the ``ssl_ca_cert`` parameter must point to a file of CA certificates.
    * - ``ssl_certfile`` = ``None``
-     - (StrOpt) The certificate file used to identify the local connection against mongod.
+     - (String) The certificate file used to identify the local connection against mongod.
    * - ``ssl_keyfile`` = ``None``
-     - (StrOpt) The private keyfile used to identify the local connection against mongod. If included with the ``certifle`` then only the ``ssl_certfile`` is needed.
+     - (String) The private keyfile used to identify the local connection against mongod. If included with the ``certifle`` then only the ``ssl_certfile`` is needed.
    * - ``uri`` = ``None``
-     - (StrOpt) Mongodb Connection URI. If ssl connection enabled, then ``ssl_keyfile``, ``ssl_certfile``, ``ssl_cert_reqs``, ``ssl_ca_certs`` need to be set accordingly.
+     - (String) Mongodb Connection URI. If ssl connection enabled, then ``ssl_keyfile``, ``ssl_certfile``, ``ssl_cert_reqs``, ``ssl_ca_certs`` need to be set accordingly.

@@ -19,62 +19,62 @@
    * - **[DEFAULT]**
      -
    * - ``nexenta_blocksize`` = ``4096``
-     - (StrOpt) Block size for datasets
+     - (Integer) Block size for datasets
    * - ``nexenta_chunksize`` = ``16384``
-     - (StrOpt) NexentaEdge iSCSI LUN object chunk size
+     - (Integer) NexentaEdge iSCSI LUN object chunk size
    * - ``nexenta_client_address`` =
-     - (StrOpt) NexentaEdge iSCSI Gateway client address for non-VIP service
+     - (String) NexentaEdge iSCSI Gateway client address for non-VIP service
    * - ``nexenta_dataset_compression`` = ``on``
-     - (StrOpt) Compression value for new ZFS folders.
+     - (String) Compression value for new ZFS folders.
    * - ``nexenta_dataset_dedup`` = ``off``
-     - (StrOpt) Deduplication value for new ZFS folders.
+     - (String) Deduplication value for new ZFS folders.
    * - ``nexenta_dataset_description`` =
-     - (StrOpt) Human-readable description for the folder.
+     - (String) Human-readable description for the folder.
    * - ``nexenta_host`` =
-     - (StrOpt) IP address of Nexenta SA
+     - (String) IP address of Nexenta SA
    * - ``nexenta_iscsi_service`` =
-     - (StrOpt) NexentaEdge iSCSI service name
+     - (String) NexentaEdge iSCSI service name
    * - ``nexenta_iscsi_target_portal_port`` = ``3260``
-     - (IntOpt) Nexenta target portal port
+     - (Integer) Nexenta target portal port
    * - ``nexenta_lun_container`` =
-     - (StrOpt) NexentaEdge logical path of bucket for LUNs
+     - (String) NexentaEdge logical path of bucket for LUNs
    * - ``nexenta_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Base directory that contains NFS share mount points
+     - (String) Base directory that contains NFS share mount points
    * - ``nexenta_nms_cache_volroot`` = ``True``
-     - (BoolOpt) If set True cache NexentaStor appliance volroot option value.
+     - (Boolean) If set True cache NexentaStor appliance volroot option value.
    * - ``nexenta_ns5_blocksize`` = ``32``
-     - (IntOpt) Block size for datasets
+     - (Integer) Block size for datasets
    * - ``nexenta_password`` = ``nexenta``
-     - (StrOpt) Password to connect to Nexenta SA
+     - (String) Password to connect to Nexenta SA
    * - ``nexenta_rest_address`` =
-     - (StrOpt) IP address of NexentaEdge management REST API endpoint
+     - (String) IP address of NexentaEdge management REST API endpoint
    * - ``nexenta_rest_password`` = ``nexenta``
-     - (StrOpt) Password to connect to NexentaEdge
+     - (String) Password to connect to NexentaEdge
    * - ``nexenta_rest_port`` = ``8080``
-     - (IntOpt) HTTP port to connect to Nexenta REST API server
+     - (Integer) HTTP port to connect to Nexenta REST API server
    * - ``nexenta_rest_protocol`` = ``auto``
-     - (StrOpt) Use http or https for REST connection (default auto)
+     - (String) Use http or https for REST connection (default auto)
    * - ``nexenta_rest_user`` = ``admin``
-     - (StrOpt) User name to connect to NexentaEdge
+     - (String) User name to connect to NexentaEdge
    * - ``nexenta_rrmgr_compression`` = ``0``
-     - (IntOpt) Enable stream compression, level 1..9. 1 - gives best speed; 9 - gives best compression.
+     - (Integer) Enable stream compression, level 1..9. 1 - gives best speed; 9 - gives best compression.
    * - ``nexenta_rrmgr_connections`` = ``2``
-     - (IntOpt) Number of TCP connections.
+     - (Integer) Number of TCP connections.
    * - ``nexenta_rrmgr_tcp_buf_size`` = ``4096``
-     - (IntOpt) TCP Buffer size in KiloBytes.
+     - (Integer) TCP Buffer size in KiloBytes.
    * - ``nexenta_shares_config`` = ``/etc/cinder/nfs_shares``
-     - (StrOpt) File with the list of available nfs shares
+     - (String) File with the list of available nfs shares
    * - ``nexenta_sparse`` = ``False``
-     - (BoolOpt) Enables or disables the creation of sparse datasets
+     - (Boolean) Enables or disables the creation of sparse datasets
    * - ``nexenta_sparsed_volumes`` = ``True``
-     - (BoolOpt) Enables or disables the creation of volumes as sparsed files that take no space. If disabled (False), volume is created as a regular file, which takes a long time.
+     - (Boolean) Enables or disables the creation of volumes as sparsed files that take no space. If disabled (False), volume is created as a regular file, which takes a long time.
    * - ``nexenta_target_group_prefix`` = ``cinder/``
-     - (StrOpt) Prefix for iSCSI target groups on SA
+     - (String) Prefix for iSCSI target groups on SA
    * - ``nexenta_target_prefix`` = ``iqn.1986-03.com.sun:02:cinder-``
-     - (StrOpt) IQN prefix for iSCSI targets
+     - (String) IQN prefix for iSCSI targets
    * - ``nexenta_user`` = ``admin``
-     - (StrOpt) User name to connect to Nexenta SA
+     - (String) User name to connect to Nexenta SA
    * - ``nexenta_volume`` = ``cinder``
-     - (StrOpt) SA Pool that holds all volumes
+     - (String) SA Pool that holds all volumes
    * - ``nexenta_volume_group`` = ``iscsi``
-     - (StrOpt) Volume group for ns5
+     - (String) Volume group for ns5

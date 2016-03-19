@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``ganesha_config_dir`` = ``/etc/ganesha``
-     - (StrOpt) Directory where Ganesha config files are stored.
+     - (String) Directory where Ganesha config files are stored.
    * - ``ganesha_config_path`` = ``$ganesha_config_dir/ganesha.conf``
-     - (StrOpt) Path to main Ganesha config file.
+     - (String) Path to main Ganesha config file.
    * - ``ganesha_db_path`` = ``$state_path/manila-ganesha.db``
-     - (StrOpt) Location of Ganesha database file. (Ganesha module only.)
+     - (String) Location of Ganesha database file. (Ganesha module only.)
    * - ``ganesha_export_dir`` = ``$ganesha_config_dir/export.d``
-     - (StrOpt) Path to directory containing Ganesha export configuration. (Ganesha module only.)
+     - (String) Path to directory containing Ganesha export configuration. (Ganesha module only.)
    * - ``ganesha_export_template_dir`` = ``/etc/manila/ganesha-export-templ.d``
-     - (StrOpt) Path to directory containing Ganesha export block templates. (Ganesha module only.)
+     - (String) Path to directory containing Ganesha export block templates. (Ganesha module only.)
    * - ``ganesha_nfs_export_options`` = ``maxread = 65536, prefread = 65536``
-     - (StrOpt) Options to use when exporting a share using ganesha NFS server. Note that these defaults can be overridden when a share is created by passing metadata with key name export_options. Also note the complete set of default ganesha export options is specified in ganesha_utils. (GPFS only.)
+     - (String) Options to use when exporting a share using ganesha NFS server. Note that these defaults can be overridden when a share is created by passing metadata with key name export_options. Also note the complete set of default ganesha export options is specified in ganesha_utils. (GPFS only.)
    * - ``ganesha_service_name`` = ``ganesha.nfsd``
-     - (StrOpt) Name of the ganesha nfs service.
+     - (String) Name of the ganesha nfs service.

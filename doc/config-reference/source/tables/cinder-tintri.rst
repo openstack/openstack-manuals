@@ -19,10 +19,14 @@
    * - **[DEFAULT]**
      -
    * - ``tintri_api_version`` = ``v310``
-     - (StrOpt) API version for the storage system
+     - (String) API version for the storage system
+   * - ``tintri_image_cache_expiry_days`` = ``30``
+     - (Integer) Delete unused image snapshots older than mentioned days
+   * - ``tintri_image_shares_config`` = ``None``
+     - (String) Path to image nfs shares file
    * - ``tintri_server_hostname`` = ``None``
-     - (StrOpt) The hostname (or IP address) for the storage system
+     - (String) The hostname (or IP address) for the storage system
    * - ``tintri_server_password`` = ``None``
-     - (StrOpt) Password for the storage system
+     - (String) Password for the storage system
    * - ``tintri_server_username`` = ``None``
-     - (StrOpt) User name for the storage system
+     - (String) User name for the storage system

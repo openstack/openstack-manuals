@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``cinder_eternus_config_file`` = ``/etc/cinder/cinder_fujitsu_eternus_dx.xml``
-     - (StrOpt) config file for cinder eternus_dx volume driver
+     - (String) config file for cinder eternus_dx volume driver

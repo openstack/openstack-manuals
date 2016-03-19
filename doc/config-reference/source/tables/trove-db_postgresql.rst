@@ -19,28 +19,34 @@
    * - **[postgresql]**
      -
    * - ``backup_incremental_strategy`` = ``{}``
-     - (DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
+     - (Dict) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
    * - ``backup_namespace`` = ``trove.guestagent.strategies.backup.experimental.postgresql_impl``
-     - (StrOpt) Namespace to load backup strategies from.
+     - (String) Namespace to load backup strategies from.
    * - ``backup_strategy`` = ``PgDump``
-     - (StrOpt) Default strategy to perform backups.
+     - (String) Default strategy to perform backups.
    * - ``device_path`` = ``/dev/vdb``
-     - (StrOpt) No help text available for this option.
+     - (String) No help text available for this option.
+   * - ``guest_log_exposed_logs`` = ``general``
+     - (String) List of Guest Logs to expose for publishing.
+   * - ``guest_log_long_query_time`` = ``0``
+     - (Integer) The time in milliseconds that a statement must take in in order to be logged in the 'general' log. A value of '0' logs all statements, while '-1' turns off statement logging.
    * - ``ignore_dbs`` = ``postgres``
-     - (ListOpt) No help text available for this option.
+     - (List) No help text available for this option.
    * - ``ignore_users`` = ``os_admin, postgres, root``
-     - (ListOpt) No help text available for this option.
+     - (List) No help text available for this option.
    * - ``mount_point`` = ``/var/lib/postgresql``
-     - (StrOpt) Filesystem path for mounting volumes if volume support is enabled.
+     - (String) Filesystem path for mounting volumes if volume support is enabled.
+   * - ``postgresql_port`` = ``5432``
+     - (Unknown) The TCP port the server listens on.
    * - ``restore_namespace`` = ``trove.guestagent.strategies.restore.experimental.postgresql_impl``
-     - (StrOpt) Namespace to load restore strategies from.
+     - (String) Namespace to load restore strategies from.
    * - ``root_controller`` = ``trove.extensions.common.service.DefaultRootController``
-     - (StrOpt) Root controller implementation for postgresql.
+     - (String) Root controller implementation for postgresql.
    * - ``root_on_create`` = ``False``
-     - (BoolOpt) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the 'password' field.
+     - (Boolean) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the 'password' field.
    * - ``tcp_ports`` = ``5432``
-     - (ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (List) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``udp_ports`` =
-     - (ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (List) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``volume_support`` = ``True``
-     - (BoolOpt) Whether to provision a Cinder volume for datadir.
+     - (Boolean) Whether to provision a Cinder volume for datadir.

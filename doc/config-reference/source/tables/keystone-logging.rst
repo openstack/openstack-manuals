@@ -19,44 +19,44 @@
    * - **[DEFAULT]**
      -
    * - ``debug`` = ``False``
-     - (BoolOpt) Print debugging output (set logging level to DEBUG instead of default INFO level).
-   * - ``default_log_levels`` = ``amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, requests.packages.urllib3.util.retry=WARN, urllib3.util.retry=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN, taskflow=WARN``
-     - (ListOpt) List of logger=LEVEL pairs. This option is ignored if log_config_append is set.
+     - (Boolean) If set to true, the logging level will be set to DEBUG instead of the default INFO level.
+   * - ``default_log_levels`` = ``amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, requests.packages.urllib3.util.retry=WARN, urllib3.util.retry=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN, taskflow=WARN, keystoneauth=WARN, oslo.cache=INFO, dogpile.core.dogpile=INFO``
+     - (List) List of package logging levels in logger=LEVEL pairs. This option is ignored if log_config_append is set.
    * - ``fatal_deprecations`` = ``False``
-     - (BoolOpt) Enables or disables fatal status of deprecations.
+     - (Boolean) Enables or disables fatal status of deprecations.
+   * - ``insecure_debug`` = ``False``
+     - (Boolean) If set to true the server will return information in the response that may allow an unauthenticated or authenticated user to get more information than normal, such as why authentication failed. This may be useful for debugging but is insecure.
    * - ``instance_format`` = ``"[instance: %(uuid)s] "``
-     - (StrOpt) The format for an instance that is passed with the log message.
+     - (String) The format for an instance that is passed with the log message.
    * - ``instance_uuid_format`` = ``"[instance: %(uuid)s] "``
-     - (StrOpt) The format for an instance UUID that is passed with the log message.
+     - (String) The format for an instance UUID that is passed with the log message.
    * - ``log_config_append`` = ``None``
-     - (StrOpt) The name of a logging configuration file. This file is appended to any existing logging configuration files. For details about logging configuration files, see the Python logging module documentation. Note that when logging configuration files are used then all logging configuration is set in the configuration file and other logging configuration options are ignored.
+     - (String) The name of a logging configuration file. This file is appended to any existing logging configuration files. For details about logging configuration files, see the Python logging module documentation. Note that when logging configuration files are used then all logging configuration is set in the configuration file and other logging configuration options are ignored (for example, logging_context_format_string).
    * - ``log_date_format`` = ``%Y-%m-%d %H:%M:%S``
-     - (StrOpt) Format string for %%(asctime)s in log records. Default: %(default)s . This option is ignored if log_config_append is set.
+     - (String) Defines the format string for %%(asctime)s in log records. Default: %(default)s . This option is ignored if log_config_append is set.
    * - ``log_dir`` = ``None``
-     - (StrOpt) (Optional) The base directory used for relative --log-file paths. This option is ignored if log_config_append is set.
+     - (String) (Optional) The base directory used for relative log_file paths. This option is ignored if log_config_append is set.
    * - ``log_file`` = ``None``
-     - (StrOpt) (Optional) Name of log file to output to. If no default is set, logging will go to stdout. This option is ignored if log_config_append is set.
+     - (String) (Optional) Name of log file to send logging output to. If no default is set, logging will go to stderr as defined by use_stderr. This option is ignored if log_config_append is set.
    * - ``logging_context_format_string`` = ``%(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user_identity)s] %(instance)s%(message)s``
-     - (StrOpt) Format string to use for log messages with context.
+     - (String) Format string to use for log messages with context.
    * - ``logging_debug_format_suffix`` = ``%(funcName)s %(pathname)s:%(lineno)d``
-     - (StrOpt) Data to append to log format when level is DEBUG.
+     - (String) Additional data to append to log message when logging level for the message is DEBUG.
    * - ``logging_default_format_string`` = ``%(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s``
-     - (StrOpt) Format string to use for log messages without context.
+     - (String) Format string to use for log messages when context is undefined.
    * - ``logging_exception_prefix`` = ``%(asctime)s.%(msecs)03d %(process)d ERROR %(name)s %(instance)s``
-     - (StrOpt) Prefix each line of exception output with this format.
+     - (String) Prefix each line of exception output with this format.
    * - ``logging_user_identity_format`` = ``%(user)s %(tenant)s %(domain)s %(user_domain)s %(project_domain)s``
-     - (StrOpt) Format string for user_identity field of the logging_context_format_string
+     - (String) Defines the format string for %(user_identity)s that is used in logging_context_format_string.
    * - ``publish_errors`` = ``False``
-     - (BoolOpt) Enables or disables publication of error events.
+     - (Boolean) Enables or disables publication of error events.
    * - ``syslog_log_facility`` = ``LOG_USER``
-     - (StrOpt) Syslog facility to receive log lines. This option is ignored if log_config_append is set.
+     - (String) Syslog facility to receive log lines. This option is ignored if log_config_append is set.
    * - ``use_stderr`` = ``True``
-     - (BoolOpt) Log output to standard error. This option is ignored if log_config_append is set.
+     - (Boolean) Log output to standard error. This option is ignored if log_config_append is set.
    * - ``use_syslog`` = ``False``
-     - (BoolOpt) Use syslog for logging. Existing syslog format is DEPRECATED and will be changed later to honor RFC5424. This option is ignored if log_config_append is set.
-   * - ``use_syslog_rfc_format`` = ``True``
-     - (BoolOpt) (Optional) Enables or disables syslog rfc5424 format for logging. If enabled, prefixes the MSG part of the syslog message with APP-NAME (RFC5424). The format without the APP-NAME is deprecated in Kilo, and will be removed in Mitaka, along with this option. This option is ignored if log_config_append is set.
+     - (Boolean) Use syslog for logging. Existing syslog format is DEPRECATED and will be changed later to honor RFC5424. This option is ignored if log_config_append is set.
    * - ``verbose`` = ``True``
-     - (BoolOpt) If set to false, will disable INFO logging level, making WARNING the default.
+     - (Boolean) DEPRECATED: If set to false, the logging level will be set to WARNING instead of the default INFO level.
    * - ``watch_log_file`` = ``False``
-     - (BoolOpt) (Optional) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log-file option is specified and Linux platform is used. This option is ignored if log_config_append is set.
+     - (Boolean) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log_file option is specified and Linux platform is used. This option is ignored if log_config_append is set.

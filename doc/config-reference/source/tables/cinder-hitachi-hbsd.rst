@@ -19,46 +19,46 @@
    * - **[DEFAULT]**
      -
    * - ``hitachi_add_chap_user`` = ``False``
-     - (BoolOpt) Add CHAP user
+     - (Boolean) Add CHAP user
    * - ``hitachi_async_copy_check_interval`` = ``10``
-     - (IntOpt) Interval to check copy asynchronously
+     - (Integer) Interval to check copy asynchronously
    * - ``hitachi_auth_method`` = ``None``
-     - (StrOpt) iSCSI authentication method
+     - (String) iSCSI authentication method
    * - ``hitachi_auth_password`` = ``HBSD-CHAP-password``
-     - (StrOpt) iSCSI authentication password
+     - (String) iSCSI authentication password
    * - ``hitachi_auth_user`` = ``HBSD-CHAP-user``
-     - (StrOpt) iSCSI authentication username
+     - (String) iSCSI authentication username
    * - ``hitachi_copy_check_interval`` = ``3``
-     - (IntOpt) Interval to check copy
+     - (Integer) Interval to check copy
    * - ``hitachi_copy_speed`` = ``3``
-     - (IntOpt) Copy speed of storage system
+     - (Integer) Copy speed of storage system
    * - ``hitachi_default_copy_method`` = ``FULL``
-     - (StrOpt) Default copy method of storage system
+     - (String) Default copy method of storage system
    * - ``hitachi_group_range`` = ``None``
-     - (StrOpt) Range of group number
+     - (String) Range of group number
    * - ``hitachi_group_request`` = ``False``
-     - (BoolOpt) Request for creating HostGroup or iSCSI Target
+     - (Boolean) Request for creating HostGroup or iSCSI Target
    * - ``hitachi_horcm_add_conf`` = ``True``
-     - (BoolOpt) Add to HORCM configuration
+     - (Boolean) Add to HORCM configuration
    * - ``hitachi_horcm_numbers`` = ``200,201``
-     - (StrOpt) Instance numbers for HORCM
+     - (String) Instance numbers for HORCM
    * - ``hitachi_horcm_password`` = ``None``
-     - (StrOpt) Password of storage system for HORCM
+     - (String) Password of storage system for HORCM
    * - ``hitachi_horcm_resource_lock_timeout`` = ``600``
-     - (IntOpt) Timeout until a resource lock is released, in seconds. The value must be between 0 and 7200.
+     - (Integer) Timeout until a resource lock is released, in seconds. The value must be between 0 and 7200.
    * - ``hitachi_horcm_user`` = ``None``
-     - (StrOpt) Username of storage system for HORCM
+     - (String) Username of storage system for HORCM
    * - ``hitachi_ldev_range`` = ``None``
-     - (StrOpt) Range of logical device of storage system
+     - (String) Range of logical device of storage system
    * - ``hitachi_pool_id`` = ``None``
-     - (IntOpt) Pool ID of storage system
+     - (Integer) Pool ID of storage system
    * - ``hitachi_serial_number`` = ``None``
-     - (StrOpt) Serial number of storage system
+     - (String) Serial number of storage system
    * - ``hitachi_target_ports`` = ``None``
-     - (StrOpt) Control port names for HostGroup or iSCSI Target
+     - (String) Control port names for HostGroup or iSCSI Target
    * - ``hitachi_thin_pool_id`` = ``None``
-     - (IntOpt) Thin pool ID of storage system
+     - (Integer) Thin pool ID of storage system
    * - ``hitachi_unit_name`` = ``None``
-     - (StrOpt) Name of an array unit
+     - (String) Name of an array unit
    * - ``hitachi_zoning_request`` = ``False``
-     - (BoolOpt) Request for FC Zone creating HostGroup
+     - (Boolean) Request for FC Zone creating HostGroup

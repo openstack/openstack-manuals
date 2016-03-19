@@ -19,8 +19,8 @@
    * - **[ephemeral_storage_encryption]**
      -
    * - ``cipher`` = ``aes-xts-plain64``
-     - (StrOpt) The cipher and mode to be used to encrypt ephemeral storage. Which ciphers are available ciphers depends on kernel support. See /proc/crypto for the list of available options.
+     - (String) The cipher and mode to be used to encrypt ephemeral storage. Which ciphers are available ciphers depends on kernel support. See /proc/crypto for the list of available options.
    * - ``enabled`` = ``False``
-     - (BoolOpt) Whether to encrypt ephemeral storage
+     - (Boolean) Whether to encrypt ephemeral storage
    * - ``key_size`` = ``512``
-     - (IntOpt) The bit length of the encryption key to be used to encrypt ephemeral storage (in XTS mode only half of the bits are used for encryption key)
+     - (Integer) The bit length of the encryption key to be used to encrypt ephemeral storage (in XTS mode only half of the bits are used for encryption key)

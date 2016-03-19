@@ -19,10 +19,10 @@
    * - **[revoke]**
      -
    * - ``cache_time`` = ``3600``
-     - (IntOpt) Time to cache the revocation list and the revocation events (in seconds). This has no effect unless global and token caching are enabled.
+     - (Integer) Time to cache the revocation list and the revocation events (in seconds). This has no effect unless global and token caching are enabled.
    * - ``caching`` = ``True``
-     - (BoolOpt) Toggle for revocation event caching. This has no effect unless global caching is enabled.
+     - (Boolean) Toggle for revocation event caching. This has no effect unless global caching is enabled.
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for an implementation of the backend for persisting revocation events in the keystone.revoke namespace. Supplied drivers are kvs and sql.
+     - (String) Entrypoint for an implementation of the backend for persisting revocation events in the keystone.revoke namespace. Supplied drivers are kvs and sql.
    * - ``expiration_buffer`` = ``1800``
-     - (IntOpt) This value (calculated in seconds) is added to token expiration before a revocation event may be removed from the backend.
+     - (Integer) This value (calculated in seconds) is added to token expiration before a revocation event may be removed from the backend.

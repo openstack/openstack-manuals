@@ -19,172 +19,120 @@
    * - **[ldap]**
      -
    * - ``alias_dereferencing`` = ``default``
-     - (StrOpt) The LDAP dereferencing option for queries. The "default" option falls back to using default dereferencing configured by your ldap.conf.
+     - (String) The LDAP dereferencing option for queries. The "default" option falls back to using default dereferencing configured by your ldap.conf.
    * - ``allow_subtree_delete`` = ``False``
-     - (BoolOpt) Delete subtrees using the subtree delete control. Only enable this option if your LDAP server supports subtree deletion.
+     - (Boolean) Delete subtrees using the subtree delete control. Only enable this option if your LDAP server supports subtree deletion.
    * - ``auth_pool_connection_lifetime`` = ``60``
-     - (IntOpt) End user auth connection lifetime in seconds.
+     - (Integer) End user auth connection lifetime in seconds.
    * - ``auth_pool_size`` = ``100``
-     - (IntOpt) End user auth connection pool size.
+     - (Integer) End user auth connection pool size.
    * - ``chase_referrals`` = ``None``
-     - (BoolOpt) Override the system's default referral chasing behavior for queries.
+     - (Boolean) Override the system's default referral chasing behavior for queries.
    * - ``debug_level`` = ``None``
-     - (IntOpt) Sets the LDAP debugging level for LDAP calls. A value of 0 means that debugging is not enabled. This value is a bitmask, consult your LDAP documentation for possible values.
+     - (Integer) Sets the LDAP debugging level for LDAP calls. A value of 0 means that debugging is not enabled. This value is a bitmask, consult your LDAP documentation for possible values.
    * - ``dumb_member`` = ``cn=dumb,dc=nonexistent``
-     - (StrOpt) DN of the "dummy member" to use when "use_dumb_member" is enabled.
+     - (String) DN of the "dummy member" to use when "use_dumb_member" is enabled.
    * - ``group_additional_attribute_mapping`` =
-     - (ListOpt) Additional attribute mappings for groups. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
+     - (List) Additional attribute mappings for groups. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
    * - ``group_allow_create`` = ``True``
-     - (BoolOpt) Allow group creation in LDAP backend.
+     - (Boolean) DEPRECATED: Allow group creation in LDAP backend. Write support for Identity LDAP backends has been deprecated in the M release and will be removed in the O release.
    * - ``group_allow_delete`` = ``True``
-     - (BoolOpt) Allow group deletion in LDAP backend.
+     - (Boolean) DEPRECATED: Allow group deletion in LDAP backend. Write support for Identity LDAP backends has been deprecated in the M release and will be removed in the O release.
    * - ``group_allow_update`` = ``True``
-     - (BoolOpt) Allow group update in LDAP backend.
+     - (Boolean) DEPRECATED: Allow group update in LDAP backend. Write support for Identity LDAP backends has been deprecated in the M release and will be removed in the O release.
    * - ``group_attribute_ignore`` =
-     - (ListOpt) List of attributes stripped off the group on update.
+     - (List) List of attributes stripped off the group on update.
    * - ``group_desc_attribute`` = ``description``
-     - (StrOpt) LDAP attribute mapped to group description.
+     - (String) LDAP attribute mapped to group description.
    * - ``group_filter`` = ``None``
-     - (StrOpt) LDAP search filter for groups.
+     - (String) LDAP search filter for groups.
    * - ``group_id_attribute`` = ``cn``
-     - (StrOpt) LDAP attribute mapped to group id.
+     - (String) LDAP attribute mapped to group id.
    * - ``group_member_attribute`` = ``member``
-     - (StrOpt) LDAP attribute mapped to show group membership.
+     - (String) LDAP attribute mapped to show group membership.
+   * - ``group_members_are_ids`` = ``False``
+     - (Boolean) If the members of the group objectclass are user IDs rather than DNs, set this to true. This is the case when using posixGroup as the group objectclass and OpenDirectory.
    * - ``group_name_attribute`` = ``ou``
-     - (StrOpt) LDAP attribute mapped to group name.
+     - (String) LDAP attribute mapped to group name.
    * - ``group_objectclass`` = ``groupOfNames``
-     - (StrOpt) LDAP objectclass for groups.
+     - (String) LDAP objectclass for groups.
    * - ``group_tree_dn`` = ``None``
-     - (StrOpt) Search base for groups. Defaults to the suffix value.
+     - (String) Search base for groups. Defaults to the suffix value.
    * - ``page_size`` = ``0``
-     - (IntOpt) Maximum results per page; a value of zero ("0") disables paging.
+     - (Integer) Maximum results per page; a value of zero ("0") disables paging.
    * - ``password`` = ``None``
-     - (StrOpt) Password for the BindDN to query the LDAP server.
+     - (String) Password for the BindDN to query the LDAP server.
    * - ``pool_connection_lifetime`` = ``600``
-     - (IntOpt) Connection lifetime in seconds.
+     - (Integer) Connection lifetime in seconds.
    * - ``pool_connection_timeout`` = ``-1``
-     - (IntOpt) Connector timeout in seconds. Value -1 indicates indefinite wait for response.
+     - (Integer) Connector timeout in seconds. Value -1 indicates indefinite wait for response.
    * - ``pool_retry_delay`` = ``0.1``
-     - (FloatOpt) Time span in seconds to wait between two reconnect trials.
+     - (Floating point) Time span in seconds to wait between two reconnect trials.
    * - ``pool_retry_max`` = ``3``
-     - (IntOpt) Maximum count of reconnect trials.
+     - (Integer) Maximum count of reconnect trials.
    * - ``pool_size`` = ``10``
-     - (IntOpt) Connection pool size.
-   * - ``project_additional_attribute_mapping`` =
-     - (ListOpt) Additional attribute mappings for projects. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
-   * - ``project_allow_create`` = ``True``
-     - (BoolOpt) Allow project creation in LDAP backend.
-   * - ``project_allow_delete`` = ``True``
-     - (BoolOpt) Allow project deletion in LDAP backend.
-   * - ``project_allow_update`` = ``True``
-     - (BoolOpt) Allow project update in LDAP backend.
-   * - ``project_attribute_ignore`` =
-     - (ListOpt) List of attributes stripped off the project on update.
-   * - ``project_desc_attribute`` = ``description``
-     - (StrOpt) LDAP attribute mapped to project description.
-   * - ``project_domain_id_attribute`` = ``businessCategory``
-     - (StrOpt) LDAP attribute mapped to project domain_id.
-   * - ``project_enabled_attribute`` = ``enabled``
-     - (StrOpt) LDAP attribute mapped to project enabled.
-   * - ``project_enabled_emulation`` = ``False``
-     - (BoolOpt) If true, Keystone uses an alternative method to determine if a project is enabled or not by checking if they are a member of the "project_enabled_emulation_dn" group.
-   * - ``project_enabled_emulation_dn`` = ``None``
-     - (StrOpt) DN of the group entry to hold enabled projects when using enabled emulation.
-   * - ``project_enabled_emulation_use_group_config`` = ``False``
-     - (BoolOpt) Use the "group_member_attribute" and "group_objectclass" settings to determine membership in the emulated enabled group.
-   * - ``project_filter`` = ``None``
-     - (StrOpt) LDAP search filter for projects.
-   * - ``project_id_attribute`` = ``cn``
-     - (StrOpt) LDAP attribute mapped to project id.
-   * - ``project_member_attribute`` = ``member``
-     - (StrOpt) LDAP attribute mapped to project membership for user.
-   * - ``project_name_attribute`` = ``ou``
-     - (StrOpt) LDAP attribute mapped to project name.
-   * - ``project_objectclass`` = ``groupOfNames``
-     - (StrOpt) LDAP objectclass for projects.
-   * - ``project_tree_dn`` = ``None``
-     - (StrOpt) Search base for projects. Defaults to the suffix value.
+     - (Integer) Connection pool size.
    * - ``query_scope`` = ``one``
-     - (StrOpt) The LDAP scope for queries, "one" represents oneLevel/singleLevel and "sub" represents subtree/wholeSubtree options.
-   * - ``role_additional_attribute_mapping`` =
-     - (ListOpt) Additional attribute mappings for roles. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
-   * - ``role_allow_create`` = ``True``
-     - (BoolOpt) Allow role creation in LDAP backend.
-   * - ``role_allow_delete`` = ``True``
-     - (BoolOpt) Allow role deletion in LDAP backend.
-   * - ``role_allow_update`` = ``True``
-     - (BoolOpt) Allow role update in LDAP backend.
-   * - ``role_attribute_ignore`` =
-     - (ListOpt) List of attributes stripped off the role on update.
-   * - ``role_filter`` = ``None``
-     - (StrOpt) LDAP search filter for roles.
-   * - ``role_id_attribute`` = ``cn``
-     - (StrOpt) LDAP attribute mapped to role id.
-   * - ``role_member_attribute`` = ``roleOccupant``
-     - (StrOpt) LDAP attribute mapped to role membership.
-   * - ``role_name_attribute`` = ``ou``
-     - (StrOpt) LDAP attribute mapped to role name.
-   * - ``role_objectclass`` = ``organizationalRole``
-     - (StrOpt) LDAP objectclass for roles.
-   * - ``role_tree_dn`` = ``None``
-     - (StrOpt) Search base for roles. Defaults to the suffix value.
+     - (String) The LDAP scope for queries, "one" represents oneLevel/singleLevel and "sub" represents subtree/wholeSubtree options.
    * - ``suffix`` = ``cn=example,cn=com``
-     - (StrOpt) LDAP server suffix
+     - (String) LDAP server suffix
    * - ``tls_cacertdir`` = ``None``
-     - (StrOpt) CA certificate directory path for communicating with LDAP servers.
+     - (String) CA certificate directory path for communicating with LDAP servers.
    * - ``tls_cacertfile`` = ``None``
-     - (StrOpt) CA certificate file path for communicating with LDAP servers.
+     - (String) CA certificate file path for communicating with LDAP servers.
    * - ``tls_req_cert`` = ``demand``
-     - (StrOpt) Specifies what checks to perform on client certificates in an incoming TLS session.
+     - (String) Specifies what checks to perform on client certificates in an incoming TLS session.
    * - ``url`` = ``ldap://localhost``
-     - (StrOpt) URL for connecting to the LDAP server.
-   * - ``use_auth_pool`` = ``False``
-     - (BoolOpt) Enable LDAP connection pooling for end user authentication. If use_pool is disabled, then this setting is meaningless and is not used at all.
+     - (String) URL(s) for connecting to the LDAP server. Multiple LDAP URLs may be specified as a comma separated string. The first URL to successfully bind is used for the connection.
+   * - ``use_auth_pool`` = ``True``
+     - (Boolean) Enable LDAP connection pooling for end user authentication. If use_pool is disabled, then this setting is meaningless and is not used at all.
    * - ``use_dumb_member`` = ``False``
-     - (BoolOpt) If true, will add a dummy member to groups. This is required if the objectclass for groups requires the "member" attribute.
-   * - ``use_pool`` = ``False``
-     - (BoolOpt) Enable LDAP connection pooling.
+     - (Boolean) If true, will add a dummy member to groups. This is required if the objectclass for groups requires the "member" attribute.
+   * - ``use_pool`` = ``True``
+     - (Boolean) Enable LDAP connection pooling.
    * - ``use_tls`` = ``False``
-     - (BoolOpt) Enable TLS for communicating with LDAP servers.
+     - (Boolean) Enable TLS for communicating with LDAP servers.
    * - ``user`` = ``None``
-     - (StrOpt) User BindDN to query the LDAP server.
+     - (String) User BindDN to query the LDAP server.
    * - ``user_additional_attribute_mapping`` =
-     - (ListOpt) List of additional LDAP attributes used for mapping additional attribute mappings for users. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
+     - (List) List of additional LDAP attributes used for mapping additional attribute mappings for users. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
    * - ``user_allow_create`` = ``True``
-     - (BoolOpt) Allow user creation in LDAP backend.
+     - (Boolean) DEPRECATED: Allow user creation in LDAP backend. Write support for Identity LDAP backends has been deprecated in the M release and will be removed in the O release.
    * - ``user_allow_delete`` = ``True``
-     - (BoolOpt) Allow user deletion in LDAP backend.
+     - (Boolean) DEPRECATED: Allow user deletion in LDAP backend. Write support for Identity LDAP backends has been deprecated in the M release and will be removed in the O release.
    * - ``user_allow_update`` = ``True``
-     - (BoolOpt) Allow user updates in LDAP backend.
+     - (Boolean) DEPRECATED: Allow user updates in LDAP backend. Write support for Identity LDAP backends has been deprecated in the M release and will be removed in the O release.
    * - ``user_attribute_ignore`` = ``default_project_id``
-     - (ListOpt) List of attributes stripped off the user on update.
+     - (List) List of attributes stripped off the user on update.
    * - ``user_default_project_id_attribute`` = ``None``
-     - (StrOpt) LDAP attribute mapped to default_project_id for users.
+     - (String) LDAP attribute mapped to default_project_id for users.
+   * - ``user_description_attribute`` = ``description``
+     - (String) LDAP attribute mapped to user description.
    * - ``user_enabled_attribute`` = ``enabled``
-     - (StrOpt) LDAP attribute mapped to user enabled flag.
+     - (String) LDAP attribute mapped to user enabled flag.
    * - ``user_enabled_default`` = ``True``
-     - (StrOpt) Default value to enable users. This should match an appropriate int value if the LDAP server uses non-boolean (bitmask) values to indicate if a user is enabled or disabled. If this is not set to "True" the typical value is "512". This is typically used when "user_enabled_attribute = userAccountControl".
+     - (String) Default value to enable users. This should match an appropriate int value if the LDAP server uses non-boolean (bitmask) values to indicate if a user is enabled or disabled. If this is not set to "True" the typical value is "512". This is typically used when "user_enabled_attribute = userAccountControl".
    * - ``user_enabled_emulation`` = ``False``
-     - (BoolOpt) If true, Keystone uses an alternative method to determine if a user is enabled or not by checking if they are a member of the "user_enabled_emulation_dn" group.
+     - (Boolean) If true, Keystone uses an alternative method to determine if a user is enabled or not by checking if they are a member of the "user_enabled_emulation_dn" group.
    * - ``user_enabled_emulation_dn`` = ``None``
-     - (StrOpt) DN of the group entry to hold enabled users when using enabled emulation.
+     - (String) DN of the group entry to hold enabled users when using enabled emulation.
    * - ``user_enabled_emulation_use_group_config`` = ``False``
-     - (BoolOpt) Use the "group_member_attribute" and "group_objectclass" settings to determine membership in the emulated enabled group.
+     - (Boolean) Use the "group_member_attribute" and "group_objectclass" settings to determine membership in the emulated enabled group.
    * - ``user_enabled_invert`` = ``False``
-     - (BoolOpt) Invert the meaning of the boolean enabled values. Some LDAP servers use a boolean lock attribute where "true" means an account is disabled. Setting "user_enabled_invert = true" will allow these lock attributes to be used. This setting will have no effect if "user_enabled_mask" or "user_enabled_emulation" settings are in use.
+     - (Boolean) Invert the meaning of the boolean enabled values. Some LDAP servers use a boolean lock attribute where "true" means an account is disabled. Setting "user_enabled_invert = true" will allow these lock attributes to be used. This setting will have no effect if "user_enabled_mask" or "user_enabled_emulation" settings are in use.
    * - ``user_enabled_mask`` = ``0``
-     - (IntOpt) Bitmask integer to indicate the bit that the enabled value is stored in if the LDAP server represents "enabled" as a bit on an integer rather than a boolean. A value of "0" indicates the mask is not used. If this is not set to "0" the typical value is "2". This is typically used when "user_enabled_attribute = userAccountControl".
+     - (Integer) Bitmask integer to indicate the bit that the enabled value is stored in if the LDAP server represents "enabled" as a bit on an integer rather than a boolean. A value of "0" indicates the mask is not used. If this is not set to "0" the typical value is "2". This is typically used when "user_enabled_attribute = userAccountControl".
    * - ``user_filter`` = ``None``
-     - (StrOpt) LDAP search filter for users.
+     - (String) LDAP search filter for users.
    * - ``user_id_attribute`` = ``cn``
-     - (StrOpt) LDAP attribute mapped to user id. WARNING: must not be a multivalued attribute.
+     - (String) LDAP attribute mapped to user id. WARNING: must not be a multivalued attribute.
    * - ``user_mail_attribute`` = ``mail``
-     - (StrOpt) LDAP attribute mapped to user email.
+     - (String) LDAP attribute mapped to user email.
    * - ``user_name_attribute`` = ``sn``
-     - (StrOpt) LDAP attribute mapped to user name.
+     - (String) LDAP attribute mapped to user name.
    * - ``user_objectclass`` = ``inetOrgPerson``
-     - (StrOpt) LDAP objectclass for users.
+     - (String) LDAP objectclass for users.
    * - ``user_pass_attribute`` = ``userPassword``
-     - (StrOpt) LDAP attribute mapped to password.
+     - (String) LDAP attribute mapped to password.
    * - ``user_tree_dn`` = ``None``
-     - (StrOpt) Search base for users. Defaults to the suffix value.
+     - (String) Search base for users. Defaults to the suffix value.

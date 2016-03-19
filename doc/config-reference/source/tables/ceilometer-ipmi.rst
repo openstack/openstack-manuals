@@ -19,6 +19,6 @@
    * - **[ipmi]**
      -
    * - ``node_manager_init_retry`` = ``3``
-     - (IntOpt) Number of retries upon Intel Node Manager initialization failure
+     - (Integer) Number of retries upon Intel Node Manager initialization failure
    * - ``polling_retry`` = ``3``
-     - (IntOpt) Tolerance of IPMI/NM polling failures before disable this pollster. Negative indicates retrying forever.
+     - (Integer) Tolerance of IPMI/NM polling failures before disable this pollster. Negative indicates retrying forever.

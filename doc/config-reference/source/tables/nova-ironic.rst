@@ -19,22 +19,22 @@
    * - **[ironic]**
      -
    * - ``admin_auth_token`` = ``None``
-     - (StrOpt) Ironic keystone auth token.DEPRECATED: use admin_username, admin_password, and admin_tenant_name instead
+     - (String) DEPRECATED: Ironic keystone auth token.DEPRECATED: use admin_username, admin_password, and admin_tenant_name instead
    * - ``admin_password`` = ``None``
-     - (StrOpt) Ironic keystone admin password.
+     - (String) Ironic keystone admin password.
    * - ``admin_tenant_name`` = ``None``
-     - (StrOpt) Ironic keystone tenant name.
+     - (String) Ironic keystone tenant name.
    * - ``admin_url`` = ``None``
-     - (StrOpt) Keystone public API endpoint.
+     - (String) Keystone public API endpoint.
    * - ``admin_username`` = ``None``
-     - (StrOpt) Ironic keystone admin name
+     - (String) Ironic keystone admin name
    * - ``api_endpoint`` = ``None``
-     - (StrOpt) URL for Ironic API endpoint.
+     - (String) URL for Ironic API endpoint.
    * - ``api_max_retries`` = ``60``
-     - (IntOpt) How many retries when a request does conflict. If <= 0, only try once, no retries.
+     - (Integer) How many retries when a request does conflict. If <= 0, only try once, no retries.
    * - ``api_retry_interval`` = ``2``
-     - (IntOpt) How often to retry in seconds when a request does conflict
+     - (Integer) How often to retry in seconds when a request does conflict
    * - ``api_version`` = ``1``
-     - (IntOpt) Version of Ironic API service endpoint. DEPRECATED: Setting the API version is not possible anymore.
+     - (Integer) DEPRECATED: Version of Ironic API service endpoint. DEPRECATED: Setting the API version is not possible anymore.
    * - ``client_log_level`` = ``None``
-     - (StrOpt) Log level override for ironicclient. Set this in order to override the global "default_log_levels", "verbose", and "debug" settings. DEPRECATED: use standard logging configuration.
+     - (String) DEPRECATED: Log level override for ironicclient. Set this in order to override the global "default_log_levels", "verbose", and "debug" settings. DEPRECATED: use standard logging configuration.

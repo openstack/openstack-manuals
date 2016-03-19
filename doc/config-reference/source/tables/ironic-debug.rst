@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``pecan_debug`` = ``False``
-     - (BoolOpt) Enable pecan debug mode. WARNING: this is insecure and should not be used in a production environment.
+     - (Boolean) Enable pecan debug mode. WARNING: this is insecure and should not be used in a production environment.

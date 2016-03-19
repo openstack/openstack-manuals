@@ -19,38 +19,38 @@
    * - **[cache]**
      -
    * - ``backend`` = ``dogpile.cache.null``
-     - (StrOpt) Dogpile.cache backend module. It is recommended that Memcache with pooling (oslo_cache.memcache_pool) or Redis (dogpile.cache.redis) be used in production deployments. Small workloads (single process) like devstack can use the dogpile.cache.memory backend.
+     - (String) Dogpile.cache backend module. It is recommended that Memcache with pooling (oslo_cache.memcache_pool) or Redis (dogpile.cache.redis) be used in production deployments. Small workloads (single process) like devstack can use the dogpile.cache.memory backend.
    * - ``backend_argument`` = ``[]``
-     - (MultiStrOpt) Arguments supplied to the backend module. Specify this option once per argument to be passed to the dogpile.cache backend. Example format: "<argname>:<value>".
+     - (Multi-valued) Arguments supplied to the backend module. Specify this option once per argument to be passed to the dogpile.cache backend. Example format: "<argname>:<value>".
    * - ``config_prefix`` = ``cache.oslo``
-     - (StrOpt) Prefix for building the configuration dictionary for the cache region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name.
+     - (String) Prefix for building the configuration dictionary for the cache region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name.
    * - ``debug_cache_backend`` = ``False``
-     - (BoolOpt) Extra debugging from the cache backend (cache keys, get/set/delete/etc calls). This is only really useful if you need to see the specific cache-backend get/set/delete calls with the keys/values. Typically this should be left set to false.
+     - (Boolean) Extra debugging from the cache backend (cache keys, get/set/delete/etc calls). This is only really useful if you need to see the specific cache-backend get/set/delete calls with the keys/values. Typically this should be left set to false.
    * - ``enabled`` = ``False``
-     - (BoolOpt) Global toggle for caching.
+     - (Boolean) Global toggle for caching.
    * - ``expiration_time`` = ``600``
-     - (IntOpt) Default TTL, in seconds, for any cached item in the dogpile.cache region. This applies to any cached method that doesn't have an explicit cache expiration time defined for it.
+     - (Integer) Default TTL, in seconds, for any cached item in the dogpile.cache region. This applies to any cached method that doesn't have an explicit cache expiration time defined for it.
    * - ``memcache_dead_retry`` = ``300``
-     - (IntOpt) Number of seconds memcached server is considered dead before it is tried again. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
+     - (Integer) Number of seconds memcached server is considered dead before it is tried again. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
    * - ``memcache_pool_connection_get_timeout`` = ``10``
-     - (IntOpt) Number of seconds that an operation will wait to get a memcache client connection.
+     - (Integer) Number of seconds that an operation will wait to get a memcache client connection.
    * - ``memcache_pool_maxsize`` = ``10``
-     - (IntOpt) Max total number of open connections to every memcached server. (oslo_cache.memcache_pool backend only).
+     - (Integer) Max total number of open connections to every memcached server. (oslo_cache.memcache_pool backend only).
    * - ``memcache_pool_unused_timeout`` = ``60``
-     - (IntOpt) Number of seconds a connection to memcached is held unused in the pool before it is closed. (oslo_cache.memcache_pool backend only).
+     - (Integer) Number of seconds a connection to memcached is held unused in the pool before it is closed. (oslo_cache.memcache_pool backend only).
    * - ``memcache_servers`` = ``localhost:11211``
-     - (ListOpt) Memcache servers in the format of "host:port". (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
+     - (List) Memcache servers in the format of "host:port". (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
    * - ``memcache_socket_timeout`` = ``3``
-     - (IntOpt) Timeout in seconds for every call to a server. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
+     - (Integer) Timeout in seconds for every call to a server. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
    * - ``proxies`` =
-     - (ListOpt) Proxy classes to import that will affect the way the dogpile.cache backend functions. See the dogpile.cache documentation on changing-backend-behavior.
+     - (List) Proxy classes to import that will affect the way the dogpile.cache backend functions. See the dogpile.cache documentation on changing-backend-behavior.
    * - **[memcache]**
      -
    * - ``dead_retry`` = ``300``
-     - (IntOpt) Number of seconds memcached server is considered dead before it is tried again. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Number of seconds memcached server is considered dead before it is tried again. This is used by the key value store system (e.g. token pooled memcached persistence backend).
    * - ``pool_connection_get_timeout`` = ``10``
-     - (IntOpt) Number of seconds that an operation will wait to get a memcache client connection. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Number of seconds that an operation will wait to get a memcache client connection. This is used by the key value store system (e.g. token pooled memcached persistence backend).
    * - ``pool_maxsize`` = ``10``
-     - (IntOpt) Max total number of open connections to every memcached server. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Max total number of open connections to every memcached server. This is used by the key value store system (e.g. token pooled memcached persistence backend).
    * - ``pool_unused_timeout`` = ``60``
-     - (IntOpt) Number of seconds a connection to memcached is held unused in the pool before it is closed. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Number of seconds a connection to memcached is held unused in the pool before it is closed. This is used by the key value store system (e.g. token pooled memcached persistence backend).

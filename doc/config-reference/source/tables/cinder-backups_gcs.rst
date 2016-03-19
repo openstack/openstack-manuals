@@ -19,28 +19,28 @@
    * - **[DEFAULT]**
      -
    * - ``backup_gcs_block_size`` = ``32768``
-     - (IntOpt) The size in bytes that changes are tracked for incremental backups. backup_gcs_object_size has to be multiple of backup_gcs_block_size.
+     - (Integer) The size in bytes that changes are tracked for incremental backups. backup_gcs_object_size has to be multiple of backup_gcs_block_size.
    * - ``backup_gcs_bucket`` = ``None``
-     - (StrOpt) The GCS bucket to use.
+     - (String) The GCS bucket to use.
    * - ``backup_gcs_bucket_location`` = ``US``
-     - (StrOpt) Location of GCS bucket.
+     - (String) Location of GCS bucket.
    * - ``backup_gcs_credential_file`` = ``None``
-     - (StrOpt) Absolute path of GCS service account credential file.
+     - (String) Absolute path of GCS service account credential file.
    * - ``backup_gcs_enable_progress_timer`` = ``True``
-     - (BoolOpt) Enable or Disable the timer to send the periodic progress notifications to Ceilometer when backing up the volume to the GCS backend storage. The default value is True to enable the timer.
+     - (Boolean) Enable or Disable the timer to send the periodic progress notifications to Ceilometer when backing up the volume to the GCS backend storage. The default value is True to enable the timer.
    * - ``backup_gcs_num_retries`` = ``3``
-     - (IntOpt) Number of times to retry.
+     - (Integer) Number of times to retry.
    * - ``backup_gcs_object_size`` = ``52428800``
-     - (IntOpt) The size in bytes of GCS backup objects.
+     - (Integer) The size in bytes of GCS backup objects.
    * - ``backup_gcs_project_id`` = ``None``
-     - (StrOpt) Owner project id for GCS bucket.
+     - (String) Owner project id for GCS bucket.
    * - ``backup_gcs_reader_chunk_size`` = ``2097152``
-     - (IntOpt) GCS object will be downloaded in chunks of bytes.
+     - (Integer) GCS object will be downloaded in chunks of bytes.
    * - ``backup_gcs_retry_error_codes`` = ``429``
-     - (ListOpt) List of GCS error codes.
+     - (List) List of GCS error codes.
    * - ``backup_gcs_storage_class`` = ``NEARLINE``
-     - (StrOpt) Storage class of GCS bucket.
+     - (String) Storage class of GCS bucket.
    * - ``backup_gcs_user_agent`` = ``gcscinder``
-     - (StrOpt) Http user-agent string for gcs api.
+     - (String) Http user-agent string for gcs api.
    * - ``backup_gcs_writer_chunk_size`` = ``2097152``
-     - (IntOpt) GCS object will be uploaded in chunks of bytes. Pass in a value of -1 if the file is to be uploaded as a single chunk.
+     - (Integer) GCS object will be uploaded in chunks of bytes. Pass in a value of -1 if the file is to be uploaded as a single chunk.

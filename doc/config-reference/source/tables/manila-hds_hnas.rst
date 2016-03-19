@@ -19,24 +19,24 @@
    * - **[hnas1]**
      -
    * - ``hds_hnas_cluster_admin_ip0`` = ``None``
-     - (StrOpt) The IP of the clusters admin node. Only set in HNAS multinode clusters.
+     - (String) The IP of the clusters admin node. Only set in HNAS multinode clusters.
    * - ``hds_hnas_evs_id`` = ``None``
-     - (StrOpt) Specify which EVS this backend is assigned to.
+     - (Integer) Specify which EVS this backend is assigned to.
    * - ``hds_hnas_evs_ip`` = ``None``
-     - (StrOpt) Specify IP for mounting shares.
+     - (String) Specify IP for mounting shares.
    * - ``hds_hnas_file_system_name`` = ``None``
-     - (StrOpt) Specify file-system name for creating shares.
+     - (String) Specify file-system name for creating shares.
    * - ``hds_hnas_ip`` = ``None``
-     - (StrOpt) HNAS management interface IP for communication between Manila controller and HNAS.
+     - (String) HNAS management interface IP for communication between Manila controller and HNAS.
    * - ``hds_hnas_password`` = ``None``
-     - (StrOpt) HNAS user password. Required only if private key is not provided.
+     - (String) HNAS user password. Required only if private key is not provided.
    * - ``hds_hnas_ssh_private_key`` = ``None``
-     - (StrOpt) RSA/DSA private key value used to connect into HNAS. Required only if password is not provided.
+     - (String) RSA/DSA private key value used to connect into HNAS. Required only if password is not provided.
    * - ``hds_hnas_stalled_job_timeout`` = ``30``
-     - (IntOpt) The time (in seconds) to wait for stalled HNAS jobs before aborting.
+     - (Integer) The time (in seconds) to wait for stalled HNAS jobs before aborting.
    * - ``hds_hnas_user`` = ``None``
-     - (StrOpt) HNAS username Base64 String in order to perform tasks such as create file-systems and network interfaces.
+     - (String) HNAS username Base64 String in order to perform tasks such as create file-systems and network interfaces.
    * - ``share_backend_name`` = ``None``
-     - (StrOpt) The backend name for a given driver implementation.
+     - (String) The backend name for a given driver implementation.
    * - ``share_driver`` = ``manila.share.drivers.generic.GenericShareDriver``
-     - (StrOpt) Driver to use for share creation.
+     - (String) Driver to use for share creation.

@@ -19,12 +19,12 @@
    * - **[DEFAULT]**
      -
    * - ``glusterfs_backup_mount_point`` = ``$state_path/backup_mount``
-     - (StrOpt) Base dir containing mount point for gluster share.
+     - (String) Base dir containing mount point for gluster share.
    * - ``glusterfs_backup_share`` = ``None``
-     - (StrOpt) GlusterFS share in <hostname|ipv4addr|ipv6addr>:<gluster_vol_name> format. Eg: 1.2.3.4:backup_vol
+     - (String) GlusterFS share in <hostname|ipv4addr|ipv6addr>:<gluster_vol_name> format. Eg: 1.2.3.4:backup_vol
    * - ``glusterfs_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Base dir containing mount points for gluster shares.
+     - (String) Base dir containing mount points for gluster shares.
    * - ``glusterfs_shares_config`` = ``/etc/cinder/glusterfs_shares``
-     - (StrOpt) File with the list of available gluster shares
+     - (String) File with the list of available gluster shares
    * - ``nas_volume_prov_type`` = ``thin``
-     - (StrOpt) Provisioning type that will be used when creating volumes.
+     - (String) Provisioning type that will be used when creating volumes.

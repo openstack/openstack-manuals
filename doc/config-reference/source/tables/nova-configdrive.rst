@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``config_drive_format`` = ``iso9660``
-     - (StrOpt) Config drive format.
+     - (String) Config drive format.
    * - ``config_drive_skip_versions`` = ``1.0 2007-01-19 2007-03-01 2007-08-29 2007-10-10 2007-12-15 2008-02-01 2008-09-01``
-     - (StrOpt) List of metadata versions to skip placing into the config drive
+     - (String) List of metadata versions to skip placing into the config drive
    * - ``force_config_drive`` = ``False``
-     - (BoolOpt) Force injection to take place on a config drive
+     - (Boolean) Force injection to take place on a config drive
    * - ``mkisofs_cmd`` = ``genisoimage``
-     - (StrOpt) Name and optionally path of the tool used for ISO image creation
+     - (String) Name and optionally path of the tool used for ISO image creation
    * - **[hyperv]**
      -
    * - ``config_drive_cdrom`` = ``False``
-     - (BoolOpt) Attaches the Config Drive image as a cdrom drive instead of a disk drive
+     - (Boolean) Attaches the Config Drive image as a cdrom drive instead of a disk drive
    * - ``config_drive_inject_password`` = ``False``
-     - (BoolOpt) Sets the admin password in the config drive image
+     - (Boolean) Sets the admin password in the config drive image

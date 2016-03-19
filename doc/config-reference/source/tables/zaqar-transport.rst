@@ -19,28 +19,30 @@
    * - **[transport]**
      -
    * - ``default_claim_grace`` = ``60``
-     - (IntOpt) Defines the message grace period in seconds.
+     - (Integer) Defines the message grace period in seconds.
    * - ``default_claim_ttl`` = ``300``
-     - (IntOpt) Defines how long a message will be in claimed state.
+     - (Integer) Defines how long a message will be in claimed state.
    * - ``default_message_ttl`` = ``3600``
-     - (IntOpt) Defines how long a message will be accessible.
+     - (Integer) Defines how long a message will be accessible.
+   * - ``default_subscription_ttl`` = ``3600``
+     - (Integer) Defines how long a subscription will be available.
    * - ``max_claim_grace`` = ``43200``
-     - (IntOpt) Defines the maximum message grace period in seconds.
+     - (Integer) Defines the maximum message grace period in seconds.
    * - ``max_claim_ttl`` = ``43200``
-     - (IntOpt) Maximum length of a message in claimed state.
+     - (Integer) Maximum length of a message in claimed state.
    * - ``max_message_ttl`` = ``1209600``
-     - (IntOpt) Maximum amount of time a message will be available.
+     - (Integer) Maximum amount of time a message will be available.
    * - ``max_messages_per_claim_or_pop`` = ``20``
-     - (IntOpt) The maximum number of messages that can be claimed (OR) popped in a single request
+     - (Integer) The maximum number of messages that can be claimed (OR) popped in a single request
    * - ``max_messages_per_page`` = ``20``
-     - (IntOpt) Defines the maximum number of messages per page.
+     - (Integer) Defines the maximum number of messages per page.
    * - ``max_messages_post_size`` = ``262144``
-     - (IntOpt) Defines the maximum size of message posts.
+     - (Integer) Defines the maximum size of message posts.
    * - ``max_queue_metadata`` = ``65536``
-     - (IntOpt) Defines the maximum amount of metadata in a queue.
+     - (Integer) Defines the maximum amount of metadata in a queue.
    * - ``max_queues_per_page`` = ``20``
-     - (IntOpt) Defines the maximum number of queues per page.
+     - (Integer) Defines the maximum number of queues per page.
    * - ``max_subscriptions_per_page`` = ``20``
-     - (IntOpt) Defines the maximum number of subscriptions per page.
+     - (Integer) Defines the maximum number of subscriptions per page.
    * - ``subscriber_types`` = ``http, https, mailto``
-     - (ListOpt) Defines supported subscriber types.
+     - (List) Defines supported subscriber types.

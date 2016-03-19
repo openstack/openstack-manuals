@@ -19,10 +19,10 @@
    * - **[keymgr]**
      -
    * - ``api_class`` = ``cinder.keymgr.conf_key_mgr.ConfKeyManager``
-     - (StrOpt) The full class name of the key manager API class
+     - (String) The full class name of the key manager API class
    * - ``encryption_api_url`` = ``http://localhost:9311/v1``
-     - (StrOpt) Url for encryption service.
+     - (String) Url for encryption service.
    * - ``encryption_auth_url`` = ``http://localhost:5000/v3``
-     - (StrOpt) Authentication url for encryption service.
+     - (String) Authentication url for encryption service.
    * - ``fixed_key`` = ``None``
-     - (StrOpt) Fixed key returned by key manager, specified in hex
+     - (String) Fixed key returned by key manager, specified in hex

@@ -19,10 +19,10 @@
    * - **[vArmour]**
      -
    * - ``director`` = ``localhost``
-     - (StrOpt) vArmour director ip
+     - (String) vArmour director ip
    * - ``director_port`` = ``443``
-     - (StrOpt) vArmour director port
+     - (String) vArmour director port
    * - ``password`` = ``varmour``
-     - (StrOpt) vArmour director password
+     - (String) vArmour director password
    * - ``username`` = ``varmour``
-     - (StrOpt) vArmour director username
+     - (String) vArmour director username

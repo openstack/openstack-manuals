@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``heat_waitcondition_server_url`` = ``None``
-     - (StrOpt) URL of the Heat waitcondition server.
+     - (String) URL of the Heat waitcondition server.

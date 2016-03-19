@@ -18,25 +18,39 @@
      - Description
    * - **[cassandra]**
      -
+   * - ``api_strategy`` = ``trove.common.strategies.cluster.experimental.cassandra.api.CassandraAPIStrategy``
+     - (String) Class that implements datastore-specific API logic.
    * - ``backup_incremental_strategy`` = ``{}``
-     - (DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
-   * - ``backup_namespace`` = ``None``
-     - (StrOpt) Namespace to load backup strategies from.
-   * - ``backup_strategy`` = ``None``
-     - (StrOpt) Default strategy to perform backups.
+     - (Dict) Incremental strategy based on the default backup strategy. For strategies that do not implement incremental backups, the runner performs full backup instead.
+   * - ``backup_namespace`` = ``trove.guestagent.strategies.backup.experimental.cassandra_impl``
+     - (String) Namespace to load backup strategies from.
+   * - ``backup_strategy`` = ``NodetoolSnapshot``
+     - (String) Default strategy to perform backups.
+   * - ``cluster_support`` = ``True``
+     - (Boolean) Enable clusters to be created and managed.
    * - ``device_path`` = ``/dev/vdb``
-     - (StrOpt) Device path for volume if volume support is enabled.
+     - (String) Device path for volume if volume support is enabled.
+   * - ``guest_log_exposed_logs`` =
+     - (String) List of Guest Logs to expose for publishing.
+   * - ``guestagent_strategy`` = ``trove.common.strategies.cluster.experimental.cassandra.guestagent.CassandraGuestAgentStrategy``
+     - (String) Class that implements datastore-specific Guest Agent API logic.
+   * - ``ignore_dbs`` = ``system, system_auth, system_traces``
+     - (List) Databases to exclude when listing databases.
+   * - ``ignore_users`` = ``os_admin``
+     - (List) Users to exclude when listing users.
    * - ``mount_point`` = ``/var/lib/cassandra``
-     - (StrOpt) Filesystem path for mounting volumes if volume support is enabled.
+     - (String) Filesystem path for mounting volumes if volume support is enabled.
    * - ``replication_strategy`` = ``None``
-     - (StrOpt) Default strategy for replication.
-   * - ``restore_namespace`` = ``None``
-     - (StrOpt) Namespace to load restore strategies from.
-   * - ``root_controller`` = ``trove.extensions.common.service.DefaultRootController``
-     - (StrOpt) Root controller implementation for cassandra.
-   * - ``tcp_ports`` = ``7000, 7001, 9042, 9160``
-     - (ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (String) Default strategy for replication.
+   * - ``restore_namespace`` = ``trove.guestagent.strategies.restore.experimental.cassandra_impl``
+     - (String) Namespace to load restore strategies from.
+   * - ``root_controller`` = ``trove.extensions.cassandra.service.CassandraRootController``
+     - (String) Root controller implementation for Cassandra.
+   * - ``taskmanager_strategy`` = ``trove.common.strategies.cluster.experimental.cassandra.taskmanager.CassandraTaskManagerStrategy``
+     - (String) Class that implements datastore-specific task manager logic.
+   * - ``tcp_ports`` = ``7000, 7001, 7199, 9042, 9160``
+     - (List) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``udp_ports`` =
-     - (ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
+     - (List) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``volume_support`` = ``True``
-     - (BoolOpt) Whether to provision a Cinder volume for datadir.
+     - (Boolean) Whether to provision a Cinder volume for datadir.

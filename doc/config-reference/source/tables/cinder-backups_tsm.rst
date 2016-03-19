@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``backup_tsm_compression`` = ``True``
-     - (BoolOpt) Enable or Disable compression for backups
+     - (Boolean) Enable or Disable compression for backups
    * - ``backup_tsm_password`` = ``password``
-     - (StrOpt) TSM password for the running username
+     - (String) TSM password for the running username
    * - ``backup_tsm_volume_prefix`` = ``backup``
-     - (StrOpt) Volume prefix for the backup id when backing up to TSM
+     - (String) Volume prefix for the backup id when backing up to TSM

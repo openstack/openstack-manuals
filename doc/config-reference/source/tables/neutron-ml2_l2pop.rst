@@ -19,4 +19,4 @@
    * - **[l2pop]**
      -
    * - ``agent_boot_time`` = ``180``
-     - (IntOpt) Delay within which agent is expected to update existing ports whent it restarts
+     - (Integer) Delay within which agent is expected to update existing ports whent it restarts

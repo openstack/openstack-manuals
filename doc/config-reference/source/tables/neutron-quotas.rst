@@ -19,50 +19,50 @@
    * - **[DEFAULT]**
      -
    * - ``max_routes`` = ``30``
-     - (IntOpt) Maximum number of routes per router
+     - (Integer) Maximum number of routes per router
    * - **[QUOTAS]**
      -
    * - ``default_quota`` = ``-1``
-     - (IntOpt) Default number of resource allowed per tenant. A negative value means unlimited.
+     - (Integer) Default number of resource allowed per tenant. A negative value means unlimited.
    * - ``quota_driver`` = ``neutron.db.quota.driver.DbQuotaDriver``
-     - (StrOpt) Default driver to use for quota checks
-   * - ``quota_firewall`` = ``1``
-     - (IntOpt) Number of firewalls allowed per tenant. A negative value means unlimited.
-   * - ``quota_firewall_policy`` = ``1``
-     - (IntOpt) Number of firewall policies allowed per tenant. A negative value means unlimited.
+     - (String) Default driver to use for quota checks
+   * - ``quota_firewall`` = ``10``
+     - (Integer) Number of firewalls allowed per tenant. A negative value means unlimited.
+   * - ``quota_firewall_policy`` = ``10``
+     - (Integer) Number of firewall policies allowed per tenant. A negative value means unlimited.
    * - ``quota_firewall_rule`` = ``100``
-     - (IntOpt) Number of firewall rules allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of firewall rules allowed per tenant. A negative value means unlimited.
    * - ``quota_floatingip`` = ``50``
-     - (IntOpt) Number of floating IPs allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of floating IPs allowed per tenant. A negative value means unlimited.
    * - ``quota_health_monitor`` = ``-1``
-     - (IntOpt) Number of health monitors allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of health monitors allowed per tenant. A negative value means unlimited.
    * - ``quota_healthmonitor`` = ``-1``
-     - (IntOpt) Number of health monitors allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of health monitors allowed per tenant. A negative value means unlimited.
    * - ``quota_items`` = ``network, subnet, port``
-     - (ListOpt) Resource name(s) that are supported in quota features. This option is now deprecated for removal.
+     - (List) DEPRECATED: Resource name(s) that are supported in quota features. This option is now deprecated for removal.
    * - ``quota_listener`` = ``-1``
-     - (IntOpt) Number of Loadbalancer Listeners allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of Loadbalancer Listeners allowed per tenant. A negative value means unlimited.
    * - ``quota_loadbalancer`` = ``10``
-     - (IntOpt) Number of LoadBalancers allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of LoadBalancers allowed per tenant. A negative value means unlimited.
    * - ``quota_member`` = ``-1``
-     - (IntOpt) Number of pool members allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of pool members allowed per tenant. A negative value means unlimited.
    * - ``quota_network`` = ``10``
-     - (IntOpt) Number of networks allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of networks allowed per tenant. A negative value means unlimited.
    * - ``quota_pool`` = ``10``
-     - (IntOpt) Number of pools allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of pools allowed per tenant. A negative value means unlimited.
    * - ``quota_port`` = ``50``
-     - (IntOpt) Number of ports allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of ports allowed per tenant. A negative value means unlimited.
    * - ``quota_rbac_policy`` = ``10``
-     - (IntOpt) Default number of RBAC entries allowed per tenant. A negative value means unlimited.
+     - (Integer) Default number of RBAC entries allowed per tenant. A negative value means unlimited.
    * - ``quota_router`` = ``10``
-     - (IntOpt) Number of routers allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of routers allowed per tenant. A negative value means unlimited.
    * - ``quota_security_group`` = ``10``
-     - (IntOpt) Number of security groups allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of security groups allowed per tenant. A negative value means unlimited.
    * - ``quota_security_group_rule`` = ``100``
-     - (IntOpt) Number of security rules allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of security rules allowed per tenant. A negative value means unlimited.
    * - ``quota_subnet`` = ``10``
-     - (IntOpt) Number of subnets allowed per tenant, A negative value means unlimited.
+     - (Integer) Number of subnets allowed per tenant, A negative value means unlimited.
    * - ``quota_vip`` = ``10``
-     - (IntOpt) Number of vips allowed per tenant. A negative value means unlimited.
+     - (Integer) Number of vips allowed per tenant. A negative value means unlimited.
    * - ``track_quota_usage`` = ``True``
-     - (BoolOpt) Keep in track in the database of current resourcequota usage. Plugins which do not leverage the neutron database should set this flag to False
+     - (Boolean) Keep in track in the database of current resourcequota usage. Plugins which do not leverage the neutron database should set this flag to False

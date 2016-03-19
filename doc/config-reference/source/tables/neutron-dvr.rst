@@ -19,6 +19,6 @@
    * - **[DEFAULT]**
      -
    * - ``dvr_base_mac`` = ``fa:16:3f:00:00:00``
-     - (StrOpt) The base mac address used for unique DVR instances by Neutron. The first 3 octets will remain unchanged. If the 4th octet is not 00, it will also be used. The others will be randomly generated. The 'dvr_base_mac' *must* be different from 'base_mac' to avoid mixing them up with MAC's allocated for tenant ports. A 4 octet example would be dvr_base_mac = fa:16:3f:4f:00:00. The default is 3 octet
+     - (String) The base mac address used for unique DVR instances by Neutron. The first 3 octets will remain unchanged. If the 4th octet is not 00, it will also be used. The others will be randomly generated. The 'dvr_base_mac' *must* be different from 'base_mac' to avoid mixing them up with MAC's allocated for tenant ports. A 4 octet example would be dvr_base_mac = fa:16:3f:4f:00:00. The default is 3 octet
    * - ``router_distributed`` = ``False``
-     - (BoolOpt) System-wide flag to determine the type of router that tenants can create. Only admin can override.
+     - (Boolean) System-wide flag to determine the type of router that tenants can create. Only admin can override.

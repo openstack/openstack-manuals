@@ -19,8 +19,10 @@
    * - **[amt]**
      -
    * - ``action_wait`` = ``10``
-     - (IntOpt) Amount of time (in seconds) to wait, before retrying an AMT operation
+     - (Integer) Amount of time (in seconds) to wait, before retrying an AMT operation
+   * - ``awake_interval`` = ``60``
+     - (Integer) Time interval (in seconds) for successive awake call to AMT interface, this depends on the IdleTimeout setting on AMT interface. AMT Interface will go to sleep after 60 seconds of inactivity by default. IdleTimeout=0 means AMT will not go to sleep at all. Setting awake_interval=0 will disable awake call.
    * - ``max_attempts`` = ``3``
-     - (IntOpt) Maximum number of times to attempt an AMT operation, before failing
+     - (Integer) Maximum number of times to attempt an AMT operation, before failing
    * - ``protocol`` = ``http``
-     - (StrOpt) Protocol used for AMT endpoint, support http/https
+     - (String) Protocol used for AMT endpoint

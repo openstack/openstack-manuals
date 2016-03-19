@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``control_exchange`` = ``openstack``
-     - (StrOpt) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
+     - (String) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.

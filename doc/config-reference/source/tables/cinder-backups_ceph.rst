@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``backup_ceph_chunk_size`` = ``134217728``
-     - (IntOpt) The chunk size, in bytes, that a backup is broken into before transfer to the Ceph object store.
+     - (Integer) The chunk size, in bytes, that a backup is broken into before transfer to the Ceph object store.
    * - ``backup_ceph_conf`` = ``/etc/ceph/ceph.conf``
-     - (StrOpt) Ceph configuration file to use.
+     - (String) Ceph configuration file to use.
    * - ``backup_ceph_pool`` = ``backups``
-     - (StrOpt) The Ceph pool where volume backups are stored.
+     - (String) The Ceph pool where volume backups are stored.
    * - ``backup_ceph_stripe_count`` = ``0``
-     - (IntOpt) RBD stripe count to use when creating a backup image.
+     - (Integer) RBD stripe count to use when creating a backup image.
    * - ``backup_ceph_stripe_unit`` = ``0``
-     - (IntOpt) RBD stripe unit to use when creating a backup image.
+     - (Integer) RBD stripe unit to use when creating a backup image.
    * - ``backup_ceph_user`` = ``cinder``
-     - (StrOpt) The Ceph user to connect with. Default here is to use the same user as for Cinder volumes. If not using cephx this should be set to None.
+     - (String) The Ceph user to connect with. Default here is to use the same user as for Cinder volumes. If not using cephx this should be set to None.
    * - ``restore_discard_excess_bytes`` = ``True``
-     - (BoolOpt) If True, always discard excess bytes when restoring volumes i.e. pad with zeroes.
+     - (Boolean) If True, always discard excess bytes when restoring volumes i.e. pad with zeroes.

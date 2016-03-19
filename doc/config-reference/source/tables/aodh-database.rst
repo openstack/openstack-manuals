@@ -19,46 +19,46 @@
    * - **[database]**
      -
    * - ``alarm_connection`` = ``None``
-     - (StrOpt) The connection string used to connect to the alarm database - rather use ${database.connection}
+     - (String) DEPRECATED: The connection string used to connect to the alarm database - rather use ${database.connection}
    * - ``alarm_history_time_to_live`` = ``-1``
-     - (IntOpt) Number of seconds that alarm histories are kept in the database for (<= 0 means forever).
+     - (Integer) Number of seconds that alarm histories are kept in the database for (<= 0 means forever).
    * - ``backend`` = ``sqlalchemy``
-     - (StrOpt) The back end to use for the database.
+     - (String) The back end to use for the database.
    * - ``connection`` = ``None``
-     - (StrOpt) The SQLAlchemy connection string to use to connect to the database.
+     - (String) The SQLAlchemy connection string to use to connect to the database.
    * - ``connection_debug`` = ``0``
-     - (IntOpt) Verbosity of SQL debugging information: 0=None, 100=Everything.
+     - (Integer) Verbosity of SQL debugging information: 0=None, 100=Everything.
    * - ``connection_trace`` = ``False``
-     - (BoolOpt) Add Python stack traces to SQL as comment strings.
+     - (Boolean) Add Python stack traces to SQL as comment strings.
    * - ``db_inc_retry_interval`` = ``True``
-     - (BoolOpt) If True, increases the interval between retries of a database operation up to db_max_retry_interval.
+     - (Boolean) If True, increases the interval between retries of a database operation up to db_max_retry_interval.
    * - ``db_max_retries`` = ``20``
-     - (IntOpt) Maximum retries in case of connection error or deadlock error before error is raised. Set to -1 to specify an infinite retry count.
+     - (Integer) Maximum retries in case of connection error or deadlock error before error is raised. Set to -1 to specify an infinite retry count.
    * - ``db_max_retry_interval`` = ``10``
-     - (IntOpt) If db_inc_retry_interval is set, the maximum seconds between retries of a database operation.
+     - (Integer) If db_inc_retry_interval is set, the maximum seconds between retries of a database operation.
    * - ``db_retry_interval`` = ``1``
-     - (IntOpt) Seconds between retries of a database transaction.
+     - (Integer) Seconds between retries of a database transaction.
    * - ``idle_timeout`` = ``3600``
-     - (IntOpt) Timeout before idle SQL connections are reaped.
-   * - ``max_overflow`` = ``None``
-     - (IntOpt) If set, use this value for max_overflow with SQLAlchemy.
+     - (Integer) Timeout before idle SQL connections are reaped.
+   * - ``max_overflow`` = ``50``
+     - (Integer) If set, use this value for max_overflow with SQLAlchemy.
    * - ``max_pool_size`` = ``None``
-     - (IntOpt) Maximum number of SQL connections to keep open in a pool.
+     - (Integer) Maximum number of SQL connections to keep open in a pool.
    * - ``max_retries`` = ``10``
-     - (IntOpt) Maximum number of database connection retries during startup. Set to -1 to specify an infinite retry count.
+     - (Integer) Maximum number of database connection retries during startup. Set to -1 to specify an infinite retry count.
    * - ``min_pool_size`` = ``1``
-     - (IntOpt) Minimum number of SQL connections to keep open in a pool.
+     - (Integer) Minimum number of SQL connections to keep open in a pool.
    * - ``mysql_sql_mode`` = ``TRADITIONAL``
-     - (StrOpt) The SQL mode to be used for MySQL sessions. This option, including the default, overrides any server-set SQL mode. To use whatever SQL mode is set by the server configuration, set this to no value. Example: mysql_sql_mode=
+     - (String) The SQL mode to be used for MySQL sessions. This option, including the default, overrides any server-set SQL mode. To use whatever SQL mode is set by the server configuration, set this to no value. Example: mysql_sql_mode=
    * - ``pool_timeout`` = ``None``
-     - (IntOpt) If set, use this value for pool_timeout with SQLAlchemy.
+     - (Integer) If set, use this value for pool_timeout with SQLAlchemy.
    * - ``retry_interval`` = ``10``
-     - (IntOpt) Interval between retries of opening a SQL connection.
+     - (Integer) Interval between retries of opening a SQL connection.
    * - ``slave_connection`` = ``None``
-     - (StrOpt) The SQLAlchemy connection string to use to connect to the slave database.
+     - (String) The SQLAlchemy connection string to use to connect to the slave database.
    * - ``sqlite_db`` = ``oslo.sqlite``
-     - (StrOpt) The file name to use with SQLite.
+     - (String) The file name to use with SQLite.
    * - ``sqlite_synchronous`` = ``True``
-     - (BoolOpt) If True, SQLite uses synchronous mode.
+     - (Boolean) If True, SQLite uses synchronous mode.
    * - ``use_db_reconnect`` = ``False``
-     - (BoolOpt) Enable the experimental use of database reconnect on connection lost.
+     - (Boolean) Enable the experimental use of database reconnect on connection lost.

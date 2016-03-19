@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``cluster_delete_time_out`` = ``180``
-     - (IntOpt) Maximum time (in seconds) to wait for a cluster delete.
+     - (Integer) Maximum time (in seconds) to wait for a cluster delete.
    * - ``cluster_usage_timeout`` = ``36000``
-     - (IntOpt) Maximum time (in seconds) to wait for a cluster to become active.
+     - (Integer) Maximum time (in seconds) to wait for a cluster to become active.
    * - ``clusters_page_size`` = ``20``
-     - (IntOpt) Page size for listing clusters.
+     - (Integer) Page size for listing clusters.

@@ -19,12 +19,12 @@
    * - **[DEFAULT]**
      -
    * - ``vzstorage_mount_options`` = ``None``
-     - (ListOpt) Mount options passed to the vzstorage client. See section of the pstorage-mount man page for details.
+     - (List) Mount options passed to the vzstorage client. See section of the pstorage-mount man page for details.
    * - ``vzstorage_mount_point_base`` = ``$state_path/mnt``
-     - (StrOpt) Base dir containing mount points for vzstorage shares.
+     - (String) Base dir containing mount points for vzstorage shares.
    * - ``vzstorage_shares_config`` = ``/etc/cinder/vzstorage_shares``
-     - (StrOpt) File with the list of available vzstorage shares.
+     - (String) File with the list of available vzstorage shares.
    * - ``vzstorage_sparsed_volumes`` = ``True``
-     - (BoolOpt) Create volumes as sparsed files which take no space rather than regular files when using raw format, in which case volume creation takes lot of time.
+     - (Boolean) Create volumes as sparsed files which take no space rather than regular files when using raw format, in which case volume creation takes lot of time.
    * - ``vzstorage_used_ratio`` = ``0.95``
-     - (FloatOpt) Percent of ACTUAL usage of the underlying volume before no new volumes can be allocated to the volume destination.
+     - (Floating point) Percent of ACTUAL usage of the underlying volume before no new volumes can be allocated to the volume destination.

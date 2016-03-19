@@ -39,7 +39,6 @@ service options.
 .. include:: ../tables/keystone-trust.rst
 .. include:: ../tables/keystone-rpc.rst
 .. include:: ../tables/keystone-amqp.rst
-.. include:: ../tables/keystone-qpid.rst
 .. include:: ../tables/keystone-rabbitmq.rst
 .. include:: ../tables/keystone-zeromq.rst
 .. include:: ../tables/keystone-redis.rst

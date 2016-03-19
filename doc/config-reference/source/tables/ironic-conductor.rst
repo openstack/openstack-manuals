@@ -19,44 +19,44 @@
    * - **[conductor]**
      -
    * - ``api_url`` = ``None``
-     - (StrOpt) URL of Ironic API service. If not set ironic can get the current value from the keystone service catalog.
+     - (String) URL of Ironic API service. If not set ironic can get the current value from the keystone service catalog.
+   * - ``automated_clean`` = ``True``
+     - (Boolean) Enables or disables automated cleaning. Automated cleaning is a configurable set of steps, such as erasing disk drives, that are performed on the node to ensure it is in a baseline state and ready to be deployed to. This is done after instance deletion as well as during the transition from a "manageable" to "available" state. When enabled, the particular steps performed to clean a node depend on which driver that node is managed by; see the individual driver's documentation for details. NOTE: The introduction of the cleaning operation causes instance deletion to take significantly longer. In an environment where all tenants are trusted (eg, because there is only one tenant), this option could be safely disabled.
    * - ``check_provision_state_interval`` = ``60``
-     - (IntOpt) Interval between checks of provision timeouts, in seconds.
+     - (Integer) Interval between checks of provision timeouts, in seconds.
    * - ``clean_callback_timeout`` = ``1800``
-     - (IntOpt) Timeout (seconds) to wait for a callback from the ramdisk doing the cleaning. If the timeout is reached the node will be put in the "clean failed" provision state. Set to 0 to disable timeout.
-   * - ``clean_nodes`` = ``True``
-     - (BoolOpt) Cleaning is a configurable set of steps, such as erasing disk drives, that are performed on the node to ensure it is in a baseline state and ready to be deployed to. This is done after instance deletion, and during the transition from a "managed" to "available" state. When enabled, the particular steps performed to clean a node depend on which driver that node is managed by; see the individual driver's documentation for details. NOTE: The introduction of the cleaning operation causes instance deletion to take significantly longer. In an environment where all tenants are trusted (eg, because there is only one tenant), this option could be safely disabled.
+     - (Integer) Timeout (seconds) to wait for a callback from the ramdisk doing the cleaning. If the timeout is reached the node will be put in the "clean failed" provision state. Set to 0 to disable timeout.
    * - ``configdrive_swift_container`` = ``ironic_configdrive_container``
-     - (StrOpt) Name of the Swift container to store config drive data. Used when configdrive_use_swift is True.
+     - (String) Name of the Swift container to store config drive data. Used when configdrive_use_swift is True.
    * - ``configdrive_use_swift`` = ``False``
-     - (BoolOpt) Whether to upload the config drive to Swift.
+     - (Boolean) Whether to upload the config drive to Swift.
    * - ``deploy_callback_timeout`` = ``1800``
-     - (IntOpt) Timeout (seconds) to wait for a callback from a deploy ramdisk. Set to 0 to disable timeout.
+     - (Integer) Timeout (seconds) to wait for a callback from a deploy ramdisk. Set to 0 to disable timeout.
    * - ``force_power_state_during_sync`` = ``True``
-     - (BoolOpt) During sync_power_state, should the hardware power state be set to the state recorded in the database (True) or should the database be updated based on the hardware state (False).
+     - (Boolean) During sync_power_state, should the hardware power state be set to the state recorded in the database (True) or should the database be updated based on the hardware state (False).
    * - ``heartbeat_interval`` = ``10``
-     - (IntOpt) Seconds between conductor heart beats.
+     - (Integer) Seconds between conductor heart beats.
    * - ``heartbeat_timeout`` = ``60``
-     - (IntOpt) Maximum time (in seconds) since the last check-in of a conductor. A conductor is considered inactive when this time has been exceeded.
+     - (Integer) Maximum time (in seconds) since the last check-in of a conductor. A conductor is considered inactive when this time has been exceeded.
    * - ``inspect_timeout`` = ``1800``
-     - (IntOpt) Timeout (seconds) for waiting for node inspection. 0 - unlimited.
+     - (Integer) Timeout (seconds) for waiting for node inspection. 0 - unlimited.
    * - ``node_locked_retry_attempts`` = ``3``
-     - (IntOpt) Number of attempts to grab a node lock.
+     - (Integer) Number of attempts to grab a node lock.
    * - ``node_locked_retry_interval`` = ``1``
-     - (IntOpt) Seconds to sleep between node lock attempts.
+     - (Integer) Seconds to sleep between node lock attempts.
    * - ``periodic_max_workers`` = ``8``
-     - (IntOpt) Maximum number of worker threads that can be started simultaneously by a periodic task. Should be less than RPC thread pool size.
+     - (Integer) Maximum number of worker threads that can be started simultaneously by a periodic task. Should be less than RPC thread pool size.
    * - ``power_state_sync_max_retries`` = ``3``
-     - (IntOpt) During sync_power_state failures, limit the number of times Ironic should try syncing the hardware node power state with the node power state in DB
+     - (Integer) During sync_power_state failures, limit the number of times Ironic should try syncing the hardware node power state with the node power state in DB
    * - ``send_sensor_data`` = ``False``
-     - (BoolOpt) Enable sending sensor data message via the notification bus
+     - (Boolean) Enable sending sensor data message via the notification bus
    * - ``send_sensor_data_interval`` = ``600``
-     - (IntOpt) Seconds between conductor sending sensor data message to ceilometer via the notification bus.
+     - (Integer) Seconds between conductor sending sensor data message to ceilometer via the notification bus.
    * - ``send_sensor_data_types`` = ``ALL``
-     - (ListOpt) List of comma separated meter types which need to be sent to Ceilometer. The default value, "ALL", is a special value meaning send all the sensor data.
+     - (List) List of comma separated meter types which need to be sent to Ceilometer. The default value, "ALL", is a special value meaning send all the sensor data.
    * - ``sync_local_state_interval`` = ``180``
-     - (IntOpt) When conductors join or leave the cluster, existing conductors may need to update any persistent local state as nodes are moved around the cluster. This option controls how often, in seconds, each conductor will check for nodes that it should "take over". Set it to a negative value to disable the check entirely.
+     - (Integer) When conductors join or leave the cluster, existing conductors may need to update any persistent local state as nodes are moved around the cluster. This option controls how often, in seconds, each conductor will check for nodes that it should "take over". Set it to a negative value to disable the check entirely.
    * - ``sync_power_state_interval`` = ``60``
-     - (IntOpt) Interval between syncing the node power state to the database, in seconds.
+     - (Integer) Interval between syncing the node power state to the database, in seconds.
    * - ``workers_pool_size`` = ``100``
-     - (IntOpt) The size of the workers greenthread pool.
+     - (Integer) The size of the workers greenthread pool. Note that 2 threads will be reserved by the conductor itself for handling heart beats and periodic tasks.

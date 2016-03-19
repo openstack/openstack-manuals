@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``nova_http_log_debug`` = ``False``
-     - (BoolOpt) Allow novaclient's debug log output. (Use default_log_levels instead)
+     - (Boolean) DEPRECATED: Allow novaclient's debug log output. (Use default_log_levels instead)

@@ -19,12 +19,34 @@
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``
-     - (IntOpt) The maximum body size for each request, in bytes.
+     - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
    * - **[retries]**
      -
    * - ``retries_number`` = ``5``
-     - (IntOpt) Number of times to retry the request to client before failing
+     - (Integer) Number of times to retry the request to client before failing
    * - ``retry_after`` = ``10``
-     - (IntOpt) Time between the retries to client (in seconds).
+     - (Integer) Time between the retries to client (in seconds).
+   * - **[service_auth]**
+     -
+   * - ``admin_password`` = ``password``
+     - (String) The service admin password
+   * - ``admin_project_domain`` = ``admin``
+     - (String) The admin project domain name
+   * - ``admin_tenant_name`` = ``admin``
+     - (String) The service admin tenant name
+   * - ``admin_user`` = ``admin``
+     - (String) The service admin user name
+   * - ``admin_user_domain`` = ``admin``
+     - (String) The admin user domain name
+   * - ``auth_url`` = ``http://127.0.0.1:5000/v2.0``
+     - (String) Authentication endpoint
+   * - ``auth_version`` = ``2``
+     - (String) The auth version used to authenticate
+   * - ``endpoint_type`` = ``public``
+     - (String) The endpoint_type to be used
+   * - ``region`` = ``RegionOne``
+     - (String) The deployment region
+   * - ``service_name`` = ``lbaas``
+     - (String) The name of the service

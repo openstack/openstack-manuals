@@ -19,4 +19,4 @@
    * - **[agent]**
      -
    * - ``extensions`` =
-     - (ListOpt) Extensions list to use
+     - (List) Extensions list to use

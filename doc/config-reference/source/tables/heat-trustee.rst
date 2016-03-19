@@ -19,6 +19,6 @@
    * - **[trustee]**
      -
    * - ``auth_plugin`` = ``None``
-     - (StrOpt) Name of the plugin to load
+     - (String) Name of the plugin to load
    * - ``auth_section`` = ``None``
-     - (StrOpt) Config Section from which to load plugin specific options
+     - (String) Config Section from which to load plugin specific options

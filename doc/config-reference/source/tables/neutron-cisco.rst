@@ -19,4 +19,4 @@
    * - **[cisco_csr_ipsec]**
      -
    * - ``status_check_interval`` = ``60``
-     - (IntOpt) Status check interval for Cisco CSR IPSec connections
+     - (Integer) Status check interval for Cisco CSR IPSec connections

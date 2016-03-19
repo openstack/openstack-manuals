@@ -19,30 +19,32 @@
    * - **[DEFAULT]**
      -
    * - ``backup_api_class`` = ``cinder.backup.api.API``
-     - (StrOpt) The full class name of the volume backup API class
+     - (String) The full class name of the volume backup API class
    * - ``backup_compression_algorithm`` = ``zlib``
-     - (StrOpt) Compression algorithm (None to disable)
+     - (String) Compression algorithm (None to disable)
    * - ``backup_driver`` = ``cinder.backup.drivers.swift``
-     - (StrOpt) Driver to use for backups.
+     - (String) Driver to use for backups.
    * - ``backup_manager`` = ``cinder.backup.manager.BackupManager``
-     - (StrOpt) Full class name for the Manager for volume backup
+     - (String) Full class name for the Manager for volume backup
    * - ``backup_metadata_version`` = ``2``
-     - (IntOpt) Backup metadata version to be used when backing up volume metadata. If this number is bumped, make sure the service doing the restore supports the new version.
+     - (Integer) Backup metadata version to be used when backing up volume metadata. If this number is bumped, make sure the service doing the restore supports the new version.
    * - ``backup_name_template`` = ``backup-%s``
-     - (StrOpt) Template string to be used to generate backup names
+     - (String) Template string to be used to generate backup names
    * - ``backup_object_number_per_notification`` = ``10``
-     - (IntOpt) The number of chunks or objects, for which one Ceilometer notification will be sent
+     - (Integer) The number of chunks or objects, for which one Ceilometer notification will be sent
    * - ``backup_posix_path`` = ``$state_path/backup``
-     - (StrOpt) Path specifying where to store backups.
+     - (String) Path specifying where to store backups.
    * - ``backup_service_inithost_offload`` = ``False``
-     - (BoolOpt) Offload pending backup delete during backup service startup.
+     - (Boolean) Offload pending backup delete during backup service startup.
    * - ``backup_timer_interval`` = ``120``
-     - (IntOpt) Interval, in seconds, between two progress notifications reporting the backup status
+     - (Integer) Interval, in seconds, between two progress notifications reporting the backup status
    * - ``backup_topic`` = ``cinder-backup``
-     - (StrOpt) The topic that volume backup nodes listen on
+     - (String) The topic that volume backup nodes listen on
+   * - ``backup_use_same_host`` = ``False``
+     - (Boolean) Backup services use same backend.
    * - ``snapshot_check_timeout`` = ``3600``
-     - (IntOpt) How long we check whether a snapshot is finished before we give up
+     - (Integer) How long we check whether a snapshot is finished before we give up
    * - ``snapshot_name_template`` = ``snapshot-%s``
-     - (StrOpt) Template string to be used to generate snapshot names
+     - (String) Template string to be used to generate snapshot names
    * - ``snapshot_same_host`` = ``True``
-     - (BoolOpt) Create volume from snapshot at the host where snapshot resides
+     - (Boolean) Create volume from snapshot at the host where snapshot resides

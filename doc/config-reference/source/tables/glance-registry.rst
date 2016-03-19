@@ -19,30 +19,30 @@
    * - **[DEFAULT]**
      -
    * - ``admin_password`` = ``None``
-     - (StrOpt) The administrators password. If "use_user_token" is not in effect, then admin credentials can be specified.
+     - (String) DEPRECATED: The administrators password. If "use_user_token" is not in effect, then admin credentials can be specified. This option was considered harmful and has been deprecated in M release. It will be removed in O release. For more information read OSSN-0060. Related functionality with uploading big images has been implemented with Keystone trusts support.
    * - ``admin_tenant_name`` = ``None``
-     - (StrOpt) The tenant name of the administrative user. If "use_user_token" is not in effect, then admin tenant name can be specified.
+     - (String) DEPRECATED: The tenant name of the administrative user. If "use_user_token" is not in effect, then admin tenant name can be specified. This option was considered harmful and has been deprecated in M release. It will be removed in O release. For more information read OSSN-0060. Related functionality with uploading big images has been implemented with Keystone trusts support.
    * - ``admin_user`` = ``None``
-     - (StrOpt) The administrators user name. If "use_user_token" is not in effect, then admin credentials can be specified.
+     - (String) DEPRECATED: The administrators user name. If "use_user_token" is not in effect, then admin credentials can be specified. This option was considered harmful and has been deprecated in M release. It will be removed in O release. For more information read OSSN-0060. Related functionality with uploading big images has been implemented with Keystone trusts support.
    * - ``auth_region`` = ``None``
-     - (StrOpt) The region for the authentication service. If "use_user_token" is not in effect and using keystone auth, then region name can be specified.
+     - (String) DEPRECATED: The region for the authentication service. If "use_user_token" is not in effect and using keystone auth, then region name can be specified. This option was considered harmful and has been deprecated in M release. It will be removed in O release. For more information read OSSN-0060. Related functionality with uploading big images has been implemented with Keystone trusts support.
    * - ``auth_strategy`` = ``noauth``
-     - (StrOpt) The strategy to use for authentication. If "use_user_token" is not in effect, then auth strategy can be specified.
+     - (String) DEPRECATED: The strategy to use for authentication. If "use_user_token" is not in effect, then auth strategy can be specified. This option was considered harmful and has been deprecated in M release. It will be removed in O release. For more information read OSSN-0060. Related functionality with uploading big images has been implemented with Keystone trusts support.
    * - ``auth_url`` = ``None``
-     - (StrOpt) The URL to the keystone service. If "use_user_token" is not in effect and using keystone auth, then URL of keystone can be specified.
+     - (String) DEPRECATED: The URL to the keystone service. If "use_user_token" is not in effect and using keystone auth, then URL of keystone can be specified. This option was considered harmful and has been deprecated in M release. It will be removed in O release. For more information read OSSN-0060. Related functionality with uploading big images has been implemented with Keystone trusts support.
    * - ``registry_client_ca_file`` = ``None``
-     - (StrOpt) The path to the certifying authority cert file to use in SSL connections to the registry server, if any. Alternately, you may set the GLANCE_CLIENT_CA_FILE environment variable to a filepath of the CA cert file.
+     - (String) The path to the certifying authority cert file to use in SSL connections to the registry server, if any. Alternately, you may set the GLANCE_CLIENT_CA_FILE environment variable to a filepath of the CA cert file.
    * - ``registry_client_cert_file`` = ``None``
-     - (StrOpt) The path to the cert file to use in SSL connections to the registry server, if any. Alternately, you may set the GLANCE_CLIENT_CERT_FILE environment variable to a filepath of the CA cert file
+     - (String) The path to the cert file to use in SSL connections to the registry server, if any. Alternately, you may set the GLANCE_CLIENT_CERT_FILE environment variable to a filepath of the CA cert file
    * - ``registry_client_insecure`` = ``False``
-     - (BoolOpt) When using SSL in connections to the registry server, do not require validation via a certifying authority. This is the registry's equivalent of specifying --insecure on the command line using glanceclient for the API.
+     - (Boolean) When using SSL in connections to the registry server, do not require validation via a certifying authority. This is the registry's equivalent of specifying --insecure on the command line using glanceclient for the API.
    * - ``registry_client_key_file`` = ``None``
-     - (StrOpt) The path to the key file to use in SSL connections to the registry server, if any. Alternately, you may set the GLANCE_CLIENT_KEY_FILE environment variable to a filepath of the key file
+     - (String) The path to the key file to use in SSL connections to the registry server, if any. Alternately, you may set the GLANCE_CLIENT_KEY_FILE environment variable to a filepath of the key file
    * - ``registry_client_protocol`` = ``http``
-     - (StrOpt) The protocol to use for communication with the registry server. Either http or https.
+     - (String) The protocol to use for communication with the registry server. Either http or https.
    * - ``registry_client_timeout`` = ``600``
-     - (IntOpt) The period of time, in seconds, that the API server will wait for a registry request to complete. A value of 0 implies no timeout.
+     - (Integer) The period of time, in seconds, that the API server will wait for a registry request to complete. A value of 0 implies no timeout.
    * - ``registry_host`` = ``0.0.0.0``
-     - (StrOpt) Address to find the registry server.
+     - (String) Address to find the registry server.
    * - ``registry_port`` = ``9191``
-     - (PortOpt) Port the registry server is listening on.
+     - (Unknown) Port the registry server is listening on.

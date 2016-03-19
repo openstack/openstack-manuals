@@ -19,24 +19,34 @@
    * - **[DEFAULT]**
      -
    * - ``hpe3par_api_url`` =
-     - (StrOpt) 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1
+     - (String) 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1
+   * - ``hpe3par_cifs_admin_access_domain`` = ``LOCAL_CLUSTER``
+     - (String) File system domain for the CIFS admin user.
+   * - ``hpe3par_cifs_admin_access_password`` =
+     - (String) File system admin password for CIFS.
+   * - ``hpe3par_cifs_admin_access_username`` =
+     - (String) File system admin user name for CIFS.
    * - ``hpe3par_debug`` = ``False``
-     - (BoolOpt) Enable HTTP debugging to 3PAR
+     - (Boolean) Enable HTTP debugging to 3PAR
    * - ``hpe3par_fpg`` = ``OpenStack``
-     - (StrOpt) The File Provisioning Group (FPG) to use
+     - (String) The File Provisioning Group (FPG) to use
    * - ``hpe3par_fstore_per_share`` = ``False``
-     - (BoolOpt) Use one filestore per share
+     - (Boolean) Use one filestore per share
    * - ``hpe3par_password`` =
-     - (StrOpt) 3PAR password for the user specified in hpe3par_username
+     - (String) 3PAR password for the user specified in hpe3par_username
+   * - ``hpe3par_require_cifs_ip`` = ``False``
+     - (Boolean) Require IP access rules for CIFS (in addition to user)
    * - ``hpe3par_san_ip`` =
-     - (StrOpt) IP address of SAN controller
+     - (String) IP address of SAN controller
    * - ``hpe3par_san_login`` =
-     - (StrOpt) Username for SAN controller
+     - (String) Username for SAN controller
    * - ``hpe3par_san_password`` =
-     - (StrOpt) Password for SAN controller
+     - (String) Password for SAN controller
    * - ``hpe3par_san_ssh_port`` = ``22``
-     - (PortOpt) SSH port to use with SAN
+     - (Unknown) SSH port to use with SAN
    * - ``hpe3par_share_ip_address`` =
-     - (StrOpt) The IP address for shares not using a share server
+     - (String) The IP address for shares not using a share server
+   * - ``hpe3par_share_mount_path`` = ``/mnt/``
+     - (String) The path where shares will be mounted when deleting nested file trees.
    * - ``hpe3par_username`` =
-     - (StrOpt) 3PAR username with the 'edit' role
+     - (String) 3PAR username with the 'edit' role

@@ -19,14 +19,18 @@
    * - **[DEFAULT]**
      -
    * - ``zoning_mode`` = ``None``
-     - (StrOpt) FC Zoning mode configured
+     - (String) FC Zoning mode configured
    * - **[fc-zone-manager]**
      -
+   * - ``brcd_sb_connector`` = ``HTTP``
+     - (String) South bound connector for zoning operation
+   * - ``cisco_sb_connector`` = ``cinder.zonemanager.drivers.cisco.cisco_fc_zone_client_cli.CiscoFCZoneClientCLI``
+     - (String) Southbound connector for zoning operation
    * - ``fc_fabric_names`` = ``None``
-     - (StrOpt) Comma separated list of Fibre Channel fabric names. This list of names is used to retrieve other SAN credentials for connecting to each SAN fabric
+     - (String) Comma separated list of Fibre Channel fabric names. This list of names is used to retrieve other SAN credentials for connecting to each SAN fabric
    * - ``fc_san_lookup_service`` = ``cinder.zonemanager.drivers.brocade.brcd_fc_san_lookup_service.BrcdFCSanLookupService``
-     - (StrOpt) FC SAN Lookup Service
+     - (String) FC SAN Lookup Service
    * - ``zone_driver`` = ``cinder.zonemanager.drivers.brocade.brcd_fc_zone_driver.BrcdFCZoneDriver``
-     - (StrOpt) FC Zone Driver responsible for zone management
+     - (String) FC Zone Driver responsible for zone management
    * - ``zoning_policy`` = ``initiator-target``
-     - (StrOpt) Zoning policy configured by user; valid values include "initiator-target" or "initiator"
+     - (String) Zoning policy configured by user; valid values include "initiator-target" or "initiator"

@@ -19,22 +19,22 @@
    * - **[DEFAULT]**
      -
    * - ``block_device_mapping`` = ``vdb``
-     - (StrOpt) Block device to map onto the created instance.
+     - (String) Block device to map onto the created instance.
    * - ``cinder_endpoint_type`` = ``publicURL``
-     - (StrOpt) Service endpoint type to use when searching catalog.
+     - (String) Service endpoint type to use when searching catalog.
    * - ``cinder_service_type`` = ``volumev2``
-     - (StrOpt) Service type to use when searching catalog.
+     - (String) Service type to use when searching catalog.
    * - ``cinder_url`` = ``None``
-     - (StrOpt) URL without the tenant segment.
+     - (String) URL without the tenant segment.
    * - ``cinder_volume_type`` = ``None``
-     - (StrOpt) Volume type to use when provisioning a Cinder volume.
+     - (String) Volume type to use when provisioning a Cinder volume.
    * - ``device_path`` = ``/dev/vdb``
-     - (StrOpt) Device path for volume if volume support is enabled.
+     - (String) Device path for volume if volume support is enabled.
    * - ``trove_volume_support`` = ``True``
-     - (BoolOpt) Whether to provision a Cinder volume for datadir.
+     - (Boolean) Whether to provision a Cinder volume for datadir.
    * - ``volume_format_timeout`` = ``120``
-     - (IntOpt) Maximum time (in seconds) to wait for a volume format.
+     - (Integer) Maximum time (in seconds) to wait for a volume format.
    * - ``volume_fstype`` = ``ext3``
-     - (StrOpt) File system type used to format a volume.
+     - (String) File system type used to format a volume.
    * - ``volume_time_out`` = ``60``
-     - (IntOpt) Maximum time (in seconds) to wait for a volume attach.
+     - (Integer) Maximum time (in seconds) to wait for a volume attach.

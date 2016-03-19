@@ -18,17 +18,11 @@
      - Description
    * - **[timeouts]**
      -
-   * - ``await_attach_volumes`` = ``10``
-     - (IntOpt) Wait for attaching volumes to instances, in seconds
-   * - ``await_for_instances_active`` = ``10800``
-     - (IntOpt) Wait for instances to become active, in seconds
    * - ``delete_instances_timeout`` = ``10800``
-     - (IntOpt) Wait for instances to be deleted, in seconds
+     - (Integer) Wait for instances to be deleted, in seconds
    * - ``detach_volume_timeout`` = ``300``
-     - (IntOpt) Timeout for detaching volumes from instance, in seconds
+     - (Integer) Timeout for detaching volumes from instance, in seconds
    * - ``ips_assign_timeout`` = ``10800``
-     - (IntOpt) Assign IPs timeout, in seconds
-   * - ``volume_available_timeout`` = ``10800``
-     - (IntOpt) Wait for volumes to become available, in seconds
+     - (Integer) Assign IPs timeout, in seconds
    * - ``wait_until_accessible`` = ``10800``
-     - (IntOpt) Wait for instance accessibility, in seconds
+     - (Integer) Wait for instance accessibility, in seconds

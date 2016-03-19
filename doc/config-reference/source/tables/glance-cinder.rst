@@ -19,12 +19,24 @@
    * - **[glance_store]**
      -
    * - ``cinder_api_insecure`` = ``False``
-     - (BoolOpt) Allow to perform insecure SSL requests to cinder
+     - (Boolean) Allow to perform insecure SSL requests to cinder
    * - ``cinder_ca_certificates_file`` = ``None``
-     - (StrOpt) Location of ca certicates file to use for cinder client requests.
-   * - ``cinder_catalog_info`` = ``volume:cinder:publicURL``
-     - (StrOpt) Info to match when looking for cinder in the service catalog. Format is : separated values of the form: <service_type>:<service_name>:<endpoint_type>
+     - (String) Location of ca certicates file to use for cinder client requests.
+   * - ``cinder_catalog_info`` = ``volumev2::publicURL``
+     - (String) Info to match when looking for cinder in the service catalog. Format is : separated values of the form: <service_type>:<service_name>:<endpoint_type>
    * - ``cinder_endpoint_template`` = ``None``
-     - (StrOpt) Override service catalog lookup with template for cinder endpoint e.g. http://localhost:8776/v1/%(project_id)s
+     - (String) Override service catalog lookup with template for cinder endpoint e.g. http://localhost:8776/v2/%(tenant)s
    * - ``cinder_http_retries`` = ``3``
-     - (IntOpt) Number of cinderclient retries on failed http calls
+     - (Integer) Number of cinderclient retries on failed http calls
+   * - ``cinder_os_region_name`` = ``None``
+     - (String) Region name of this node. If specified, it will be used to locate OpenStack services for stores.
+   * - ``cinder_state_transition_timeout`` = ``300``
+     - (Integer) Time period of time in seconds to wait for a cinder volume transition to complete.
+   * - ``cinder_store_auth_address`` = ``None``
+     - (String) The address where the Cinder authentication service is listening. If <None>, the cinder endpoint in the service catalog is used.
+   * - ``cinder_store_password`` = ``None``
+     - (String) Password for the user authenticating against Cinder. If <None>, the current context auth token is used.
+   * - ``cinder_store_project_name`` = ``None``
+     - (String) Project name where the image is stored in Cinder. If <None>, the project in current context is used.
+   * - ``cinder_store_user_name`` = ``None``
+     - (String) User name to authenticate against Cinder. If <None>, the user of current context is used.

@@ -19,26 +19,28 @@
    * - **[DEFAULT]**
      -
    * - ``zfssa_cache_directory`` = ``os-cinder-cache``
-     - (StrOpt) Name of directory inside zfssa_nfs_share where cache volumes are stored.
+     - (String) Name of directory inside zfssa_nfs_share where cache volumes are stored.
    * - ``zfssa_cache_project`` = ``os-cinder-cache``
-     - (StrOpt) Name of ZFSSA project where cache volumes are stored.
+     - (String) Name of ZFSSA project where cache volumes are stored.
    * - ``zfssa_data_ip`` = ``None``
-     - (StrOpt) Data path IP address
+     - (String) Data path IP address
    * - ``zfssa_enable_local_cache`` = ``True``
-     - (BoolOpt) Flag to enable local caching: True, False.
+     - (Boolean) Flag to enable local caching: True, False.
    * - ``zfssa_https_port`` = ``443``
-     - (StrOpt) HTTPS port number
+     - (String) HTTPS port number
+   * - ``zfssa_manage_policy`` = ``loose``
+     - (String) Driver policy for volume manage.
    * - ``zfssa_nfs_mount_options`` =
-     - (StrOpt) Options to be passed while mounting share over nfs
+     - (String) Options to be passed while mounting share over nfs
    * - ``zfssa_nfs_pool`` =
-     - (StrOpt) Storage pool name.
+     - (String) Storage pool name.
    * - ``zfssa_nfs_project`` = ``NFSProject``
-     - (StrOpt) Project name.
+     - (String) Project name.
    * - ``zfssa_nfs_share`` = ``nfs_share``
-     - (StrOpt) Share name.
+     - (String) Share name.
    * - ``zfssa_nfs_share_compression`` = ``off``
-     - (StrOpt) Data compression.
+     - (String) Data compression.
    * - ``zfssa_nfs_share_logbias`` = ``latency``
-     - (StrOpt) Synchronous write bias-latency, throughput.
+     - (String) Synchronous write bias-latency, throughput.
    * - ``zfssa_rest_timeout`` = ``None``
-     - (IntOpt) REST connection timeout. (seconds)
+     - (Integer) REST connection timeout. (seconds)

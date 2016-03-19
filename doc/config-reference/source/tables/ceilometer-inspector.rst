@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``hypervisor_inspector`` = ``libvirt``
-     - (StrOpt) Inspector to use for inspecting the hypervisor layer. Known inspectors are libvirt, hyperv, vmware, xenapi and powervm.
+     - (String) Inspector to use for inspecting the hypervisor layer. Known inspectors are libvirt, hyperv, vmware, xenapi and powervm.
    * - ``libvirt_type`` = ``kvm``
-     - (StrOpt) Libvirt domain type.
+     - (String) Libvirt domain type.
    * - ``libvirt_uri`` =
-     - (StrOpt) Override the default libvirt URI (which is dependent on libvirt_type).
+     - (String) Override the default libvirt URI (which is dependent on libvirt_type).

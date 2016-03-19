@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``magnetodb_control_exchange`` = ``magnetodb``
-     - (StrOpt) Exchange name for Magnetodb notifications.
+     - (String) Exchange name for Magnetodb notifications.

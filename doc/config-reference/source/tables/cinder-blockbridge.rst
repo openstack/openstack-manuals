@@ -19,18 +19,18 @@
    * - **[DEFAULT]**
      -
    * - ``blockbridge_api_host`` = ``None``
-     - (StrOpt) IP address/hostname of Blockbridge API.
+     - (String) IP address/hostname of Blockbridge API.
    * - ``blockbridge_api_port`` = ``None``
-     - (IntOpt) Override HTTPS port to connect to Blockbridge API server.
+     - (Integer) Override HTTPS port to connect to Blockbridge API server.
    * - ``blockbridge_auth_password`` = ``None``
-     - (StrOpt) Blockbridge API password (for auth scheme 'password')
+     - (String) Blockbridge API password (for auth scheme 'password')
    * - ``blockbridge_auth_scheme`` = ``token``
-     - (StrOpt) Blockbridge API authentication scheme (token or password)
+     - (String) Blockbridge API authentication scheme (token or password)
    * - ``blockbridge_auth_token`` = ``None``
-     - (StrOpt) Blockbridge API token (for auth scheme 'token')
+     - (String) Blockbridge API token (for auth scheme 'token')
    * - ``blockbridge_auth_user`` = ``None``
-     - (StrOpt) Blockbridge API user (for auth scheme 'password')
+     - (String) Blockbridge API user (for auth scheme 'password')
    * - ``blockbridge_default_pool`` = ``None``
-     - (StrOpt) Default pool name if unspecified.
+     - (String) Default pool name if unspecified.
    * - ``blockbridge_pools`` = ``{'OpenStack': '+openstack'}``
-     - (DictOpt) Defines the set of exposed pools and their associated backend query strings
+     - (Dict) Defines the set of exposed pools and their associated backend query strings

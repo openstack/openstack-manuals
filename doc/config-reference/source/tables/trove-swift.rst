@@ -19,8 +19,8 @@
    * - **[DEFAULT]**
      -
    * - ``swift_endpoint_type`` = ``publicURL``
-     - (StrOpt) Service endpoint type to use when searching catalog.
+     - (String) Service endpoint type to use when searching catalog.
    * - ``swift_service_type`` = ``object-store``
-     - (StrOpt) Service type to use when searching catalog.
+     - (String) Service type to use when searching catalog.
    * - ``swift_url`` = ``None``
-     - (StrOpt) URL ending in AUTH\_.
+     - (String) URL ending in ``AUTH_``.

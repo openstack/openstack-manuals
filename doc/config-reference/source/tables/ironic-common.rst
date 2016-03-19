@@ -19,42 +19,48 @@
    * - **[DEFAULT]**
      -
    * - ``bindir`` = ``/usr/local/bin``
-     - (StrOpt) Directory where ironic binaries are installed.
+     - (String) Directory where ironic binaries are installed.
    * - ``enabled_drivers`` = ``pxe_ipmitool``
-     - (ListOpt) Specify the list of drivers to load during service initialization. Missing drivers, or drivers which fail to initialize, will prevent the conductor service from starting. The option default is a recommended set of production-oriented drivers. A complete list of drivers present on your system may be found by enumerating the "ironic.drivers" entrypoint. An example may be found in the developer documentation online.
+     - (List) Specify the list of drivers to load during service initialization. Missing drivers, or drivers which fail to initialize, will prevent the conductor service from starting. The option default is a recommended set of production-oriented drivers. A complete list of drivers present on your system may be found by enumerating the "ironic.drivers" entrypoint. An example may be found in the developer documentation online.
    * - ``executor_thread_pool_size`` = ``64``
-     - (IntOpt) Size of executor thread pool.
+     - (Integer) Size of executor thread pool.
    * - ``fatal_deprecations`` = ``False``
-     - (BoolOpt) Enables or disables fatal status of deprecations.
+     - (Boolean) Enables or disables fatal status of deprecations.
    * - ``force_raw_images`` = ``True``
-     - (BoolOpt) If True, convert backing images to "raw" disk image format.
+     - (Boolean) If True, convert backing images to "raw" disk image format.
    * - ``grub_config_template`` = ``$pybasedir/common/grub_conf.template``
-     - (StrOpt) Template file for grub configuration file.
+     - (String) Template file for grub configuration file.
    * - ``hash_distribution_replicas`` = ``1``
-     - (IntOpt) [Experimental Feature] Number of hosts to map onto each hash partition. Setting this to more than one will cause additional conductor services to prepare deployment environments and potentially allow the Ironic cluster to recover more quickly if a conductor instance is terminated.
+     - (Integer) [Experimental Feature] Number of hosts to map onto each hash partition. Setting this to more than one will cause additional conductor services to prepare deployment environments and potentially allow the Ironic cluster to recover more quickly if a conductor instance is terminated.
    * - ``hash_partition_exponent`` = ``5``
-     - (IntOpt) Exponent to determine number of hash partitions to use when distributing load across conductors. Larger values will result in more even distribution of load and less load when rebalancing the ring, but more memory usage. Number of partitions per conductor is (2^hash_partition_exponent). This determines the granularity of rebalancing: given 10 hosts, and an exponent of the 2, there are 40 partitions in the ring.A few thousand partitions should make rebalancing smooth in most cases. The default is suitable for up to a few hundred conductors. Too many partitions has a CPU impact.
+     - (Integer) Exponent to determine number of hash partitions to use when distributing load across conductors. Larger values will result in more even distribution of load and less load when rebalancing the ring, but more memory usage. Number of partitions per conductor is (2^hash_partition_exponent). This determines the granularity of rebalancing: given 10 hosts, and an exponent of the 2, there are 40 partitions in the ring.A few thousand partitions should make rebalancing smooth in most cases. The default is suitable for up to a few hundred conductors. Too many partitions has a CPU impact.
    * - ``hash_ring_reset_interval`` = ``180``
-     - (IntOpt) Interval (in seconds) between hash ring resets.
+     - (Integer) Interval (in seconds) between hash ring resets.
    * - ``host`` = ``localhost``
-     - (StrOpt) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address.
+     - (String) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address.
    * - ``isolinux_bin`` = ``/usr/lib/syslinux/isolinux.bin``
-     - (StrOpt) Path to isolinux binary file.
+     - (String) Path to isolinux binary file.
    * - ``isolinux_config_template`` = ``$pybasedir/common/isolinux_config.template``
-     - (StrOpt) Template file for isolinux configuration file.
+     - (String) Template file for isolinux configuration file.
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
+     - (List) Memcached servers or None for in process cache.
    * - ``my_ip`` = ``10.0.0.1``
-     - (StrOpt) IP address of this host. If unset, will determine the IP programmatically. If unable to do so, will use "127.0.0.1".
+     - (String) IP address of this host. If unset, will determine the IP programmatically. If unable to do so, will use "127.0.0.1".
    * - ``parallel_image_downloads`` = ``False``
-     - (BoolOpt) Run image downloads and raw format conversions in parallel.
+     - (Boolean) Run image downloads and raw format conversions in parallel.
    * - ``periodic_interval`` = ``60``
-     - (IntOpt) Seconds between running periodic tasks.
+     - (Integer) DEPRECATED: Default interval (in seconds) for running driver periodic tasks.
    * - ``pybasedir`` = ``/usr/lib/python/site-packages/ironic/ironic``
-     - (StrOpt) Directory where the ironic python module is installed.
+     - (String) Directory where the ironic python module is installed.
    * - ``rootwrap_config`` = ``/etc/ironic/rootwrap.conf``
-     - (StrOpt) Path to the rootwrap configuration file to use for running commands as root.
+     - (String) Path to the rootwrap configuration file to use for running commands as root.
    * - ``state_path`` = ``$pybasedir``
-     - (StrOpt) Top-level directory for maintaining ironic's state.
+     - (String) Top-level directory for maintaining ironic's state.
    * - ``tempdir`` = ``/tmp``
-     - (StrOpt) Temporary working directory, default is Python temp dir.
+     - (String) Temporary working directory, default is Python temp dir.
+   * - **[ironic_lib]**
+     -
+   * - ``fatal_exception_format_errors`` = ``False``
+     - (Boolean) Make exception message format errors fatal.
+   * - ``root_helper`` = ``sudo ironic-rootwrap /etc/ironic/rootwrap.conf``
+     - (String) Command that is prefixed to commands that are run as root. If not specified, no commands are run as root.

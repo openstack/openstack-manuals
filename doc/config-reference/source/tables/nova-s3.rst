@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``image_decryption_dir`` = ``/tmp``
-     - (StrOpt) Parent directory for tempdir used for image decryption
+     - (String) Parent directory for tempdir used for image decryption
    * - ``s3_access_key`` = ``notchecked``
-     - (StrOpt) Access key to use for S3 server for images
+     - (String) Access key to use for S3 server for images
    * - ``s3_affix_tenant`` = ``False``
-     - (BoolOpt) Whether to affix the tenant id to the access key when downloading from S3
+     - (Boolean) Whether to affix the tenant id to the access key when downloading from S3
    * - ``s3_host`` = ``$my_ip``
-     - (StrOpt) Hostname or IP for OpenStack to use when accessing the S3 api
+     - (String) Hostname or IP for OpenStack to use when accessing the S3 api
    * - ``s3_port`` = ``3333``
-     - (IntOpt) Port used when accessing the S3 api
+     - (Integer) Port used when accessing the S3 api
    * - ``s3_secret_key`` = ``notchecked``
-     - (StrOpt) Secret key to use for S3 server for images
+     - (String) Secret key to use for S3 server for images
    * - ``s3_use_ssl`` = ``False``
-     - (BoolOpt) Whether to use SSL when talking to S3
+     - (Boolean) Whether to use SSL when talking to S3

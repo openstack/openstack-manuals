@@ -19,10 +19,10 @@
    * - **[role]**
      -
    * - ``cache_time`` = ``None``
-     - (IntOpt) TTL (in seconds) to cache role data. This has no effect unless global caching is enabled.
+     - (Integer) TTL (in seconds) to cache role data. This has no effect unless global caching is enabled.
    * - ``caching`` = ``True``
-     - (BoolOpt) Toggle for role caching. This has no effect unless global caching is enabled.
+     - (Boolean) Toggle for role caching. This has no effect unless global caching is enabled.
    * - ``driver`` = ``None``
-     - (StrOpt) Entrypoint for the role backend driver in the keystone.role namespace. Supplied drivers are ldap and sql.
+     - (String) Entrypoint for the role backend driver in the keystone.role namespace. Supplied drivers are ldap and sql.
    * - ``list_limit`` = ``None``
-     - (IntOpt) Maximum number of entities that will be returned in a role collection.
+     - (Integer) Maximum number of entities that will be returned in a role collection.

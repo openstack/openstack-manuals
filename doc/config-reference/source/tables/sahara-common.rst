@@ -19,84 +19,108 @@
    * - **[DEFAULT]**
      -
    * - ``admin_project_domain_name`` = ``default``
-     - (StrOpt) The name of the domain for the service project(ex. tenant).
+     - (String) The name of the domain for the service project(ex. tenant).
    * - ``admin_user_domain_name`` = ``default``
-     - (StrOpt) The name of the domain to which the admin user belongs.
+     - (String) The name of the domain to which the admin user belongs.
    * - ``api_workers`` = ``1``
-     - (IntOpt) Number of workers for Sahara API service (0 means all-in-one-thread configuration).
+     - (Integer) Number of workers for Sahara API service (0 means all-in-one-thread configuration).
    * - ``cleanup_time_for_incomplete_clusters`` = ``0``
-     - (IntOpt) Maximal time (in hours) for clusters allowed to be in states other than "Active", "Deleting" or "Error". If a cluster is not in "Active", "Deleting" or "Error" state and last update of it was longer than "cleanup_time_for_incomplete_clusters" hours ago then it will be deleted automatically. (0 value means that automatic clean up is disabled).
-   * - ``cluster_operation_trust_expiration_hours`` = ``24``
-     - (IntOpt) Defines the period of time (in hours) after which trusts created to allow sahara to create or scale a cluster will expire. Note that this value should be significantly larger than the value of the cleanup_time_for_incomplete_clusters configuration key if use of the cluster cleanup feature is desired (the trust must last at least as long as a cluster could validly take to stall in its creation, plus the timeout value set in that key, plus one hour for the period of the cleanup job).
+     - (Integer) Maximal time (in hours) for clusters allowed to be in states other than "Active", "Deleting" or "Error". If a cluster is not in "Active", "Deleting" or "Error" state and last update of it was longer than "cleanup_time_for_incomplete_clusters" hours ago then it will be deleted automatically. (0 value means that automatic clean up is disabled).
    * - ``cluster_remote_threshold`` = ``70``
-     - (IntOpt) The same as global_remote_threshold, but for a single cluster.
+     - (Integer) The same as global_remote_threshold, but for a single cluster.
    * - ``compute_topology_file`` = ``etc/sahara/compute.topology``
-     - (StrOpt) File with nova compute topology. It should contain mapping between nova computes and racks.
+     - (String) File with nova compute topology. It should contain mapping between nova computes and racks.
+   * - ``coordinator_heartbeat_interval`` = ``1``
+     - (Integer) Interval size between heartbeat execution in seconds. Heartbeats are executed to make sure that connection to the coordination server is active.
    * - ``default_ntp_server`` = ``pool.ntp.org``
-     - (StrOpt) Default ntp server for time sync
+     - (String) Default ntp server for time sync
    * - ``disable_event_log`` = ``False``
-     - (BoolOpt) Disables event log feature.
+     - (Boolean) Disables event log feature.
    * - ``enable_data_locality`` = ``False``
-     - (BoolOpt) Enables data locality for hadoop cluster. Also enables data locality for Swift used by hadoop. If enabled, 'compute_topology' and 'swift_topology' configuration parameters should point to OpenStack and Swift topology correspondingly.
+     - (Boolean) Enables data locality for hadoop cluster. Also enables data locality for Swift used by hadoop. If enabled, 'compute_topology' and 'swift_topology' configuration parameters should point to OpenStack and Swift topology correspondingly.
    * - ``enable_hypervisor_awareness`` = ``True``
-     - (BoolOpt) Enables four-level topology for data locality. Works only if corresponding plugin supports such mode.
-   * - ``enable_notifications`` = ``False``
-     - (BoolOpt) Enables sending notifications to Ceilometer
+     - (Boolean) Enables four-level topology for data locality. Works only if corresponding plugin supports such mode.
    * - ``executor_thread_pool_size`` = ``64``
-     - (IntOpt) Size of executor thread pool.
+     - (Integer) Size of executor thread pool.
    * - ``global_remote_threshold`` = ``100``
-     - (IntOpt) Maximum number of remote operations that will be running at the same time. Note that each remote operation requires its own process to run.
+     - (Integer) Maximum number of remote operations that will be running at the same time. Note that each remote operation requires its own process to run.
+   * - ``hash_ring_replicas_count`` = ``40``
+     - (Integer) Number of points that belongs to each member on a hash ring. The larger number leads to a better distribution.
+   * - ``heat_enable_wait_condition`` = ``True``
+     - (Boolean) Enable wait condition feature to reduce polling during cluster creation
    * - ``heat_stack_tags`` = ``data-processing-cluster``
-     - (ListOpt) List of tags to be used during operating with stack.
+     - (List) List of tags to be used during operating with stack.
    * - ``infrastructure_engine`` = ``heat``
-     - (StrOpt) An engine which will be used to provision infrastructure for Hadoop cluster.
+     - (String) DEPRECATED: An engine which will be used to provision infrastructure for Hadoop cluster.
    * - ``job_binary_max_KB`` = ``5120``
-     - (IntOpt) Maximum length of job binary data in kilobytes that may be stored or retrieved in a single operation.
+     - (Integer) Maximum length of job binary data in kilobytes that may be stored or retrieved in a single operation.
    * - ``job_canceling_timeout`` = ``300``
-     - (IntOpt) Timeout for canceling job execution (in seconds). Sahara will try to cancel job execution during this time.
+     - (Integer) Timeout for canceling job execution (in seconds). Sahara will try to cancel job execution during this time.
    * - ``job_workflow_postfix`` =
-     - (StrOpt) Postfix for storing jobs in hdfs. Will be added to '/user/<hdfs user>/' path.
+     - (String) Postfix for storing jobs in hdfs. Will be added to '/user/<hdfs user>/' path.
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Memcached servers or None for in process cache.
+     - (List) Memcached servers or None for in process cache.
    * - ``min_transient_cluster_active_time`` = ``30``
-     - (IntOpt) Minimal "lifetime" in seconds for a transient cluster. Cluster is guaranteed to be "alive" within this time period.
+     - (Integer) Minimal "lifetime" in seconds for a transient cluster. Cluster is guaranteed to be "alive" within this time period.
    * - ``node_domain`` = ``novalocal``
-     - (StrOpt) The suffix of the node's FQDN. In nova-network that is the dhcp_domain config parameter.
+     - (String) The suffix of the node's FQDN. In nova-network that is the dhcp_domain config parameter.
    * - ``os_region_name`` = ``None``
-     - (StrOpt) Region name used to get services endpoints.
+     - (String) Region name used to get services endpoints.
+   * - ``periodic_coordinator_backend_url`` = ``None``
+     - (String) The backend URL to use for distributed periodic tasks coordination.
    * - ``periodic_enable`` = ``True``
-     - (BoolOpt) Enable periodic tasks.
+     - (Boolean) Enable periodic tasks.
    * - ``periodic_fuzzy_delay`` = ``60``
-     - (IntOpt) Range in seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0).
+     - (Integer) Range in seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0).
    * - ``periodic_interval_max`` = ``60``
-     - (IntOpt) Max interval size between periodic tasks execution in seconds.
-   * - ``plugins`` = ``vanilla, hdp, spark, cdh``
-     - (ListOpt) List of plugins to be loaded. Sahara preserves the order of the list when returning it.
+     - (Integer) Max interval size between periodic tasks execution in seconds.
+   * - ``periodic_workers_number`` = ``1``
+     - (Integer) Number of threads to run periodic tasks.
+   * - ``plugins`` = ``vanilla, spark, cdh, ambari``
+     - (List) List of plugins to be loaded. Sahara preserves the order of the list when returning it.
    * - ``proxy_command`` =
-     - (StrOpt) Proxy command used to connect to instances. If set, this command should open a netcat socket, that Sahara will use for SSH and HTTP connections. Use {host} and {port} to describe the destination. Other available keywords: {tenant_id}, {network_id}, {router_id}.
+     - (String) Proxy command used to connect to instances. If set, this command should open a netcat socket, that Sahara will use for SSH and HTTP connections. Use {host} and {port} to describe the destination. Other available keywords: {tenant_id}, {network_id}, {router_id}.
    * - ``remote`` = ``ssh``
-     - (StrOpt) A method for Sahara to execute commands on VMs.
+     - (String) A method for Sahara to execute commands on VMs.
    * - ``rootwrap_command`` = ``sudo sahara-rootwrap /etc/sahara/rootwrap.conf``
-     - (StrOpt) Rootwrap command to leverage. Use in conjunction with use_rootwrap=True
+     - (String) Rootwrap command to leverage. Use in conjunction with use_rootwrap=True
    * - ``swift_topology_file`` = ``etc/sahara/swift.topology``
-     - (StrOpt) File with Swift topology.It should contain mapping between Swift nodes and racks.
-   * - ``use_external_key_manager`` = ``False``
-     - (BoolOpt) Enable Sahara to use an external key manager service provided by the identity service catalog. Sahara will store all keys with the manager service.
+     - (String) File with Swift topology.It should contain mapping between Swift nodes and racks.
+   * - ``use_barbican_key_manager`` = ``False``
+     - (Boolean) Enable the usage of the OpenStack Key Management service provided by barbican.
    * - ``use_floating_ips`` = ``True``
-     - (BoolOpt) If set to True, Sahara will use floating IPs to communicate with instances. To make sure that all instances have floating IPs assigned in Nova Network set "auto_assign_floating_ip=True" in nova.conf. If Neutron is used for networking, make sure that all Node Groups have "floating_ip_pool" parameter defined.
+     - (Boolean) If set to True, Sahara will use floating IPs to communicate with instances. To make sure that all instances have floating IPs assigned in Nova Network set "auto_assign_floating_ip=True" in nova.conf. If Neutron is used for networking, make sure that all Node Groups have "floating_ip_pool" parameter defined.
    * - ``use_identity_api_v3`` = ``True``
-     - (BoolOpt) Enables Sahara to use Keystone API v3. If that flag is disabled, per-job clusters will not be terminated automatically.
+     - (Boolean) Enables Sahara to use Keystone API v3. If that flag is disabled, per-job clusters will not be terminated automatically.
    * - ``use_namespaces`` = ``False``
-     - (BoolOpt) Use network namespaces for communication (only valid to use in conjunction with use_neutron=True).
+     - (Boolean) Use network namespaces for communication (only valid to use in conjunction with use_neutron=True).
    * - ``use_neutron`` = ``False``
-     - (BoolOpt) Use Neutron Networking (False indicates the use of Nova networking).
+     - (Boolean) Use Neutron Networking (False indicates the use of Nova networking).
    * - ``use_rootwrap`` = ``False``
-     - (BoolOpt) Use rootwrap facility to allow non-root users to run the sahara-all server instance and access private network IPs (only valid to use in conjunction with use_namespaces=True)
+     - (Boolean) Use rootwrap facility to allow non-root users to run the sahara-all server instance and access private network IPs (only valid to use in conjunction with use_namespaces=True)
+   * - **[castellan]**
+     -
+   * - ``barbican_api_endpoint`` = ``None``
+     - (String) The endpoint to use for connecting to the barbican api controller. By default, castellan will use the URL from the service catalog.
+   * - ``barbican_api_version`` = ``v1``
+     - (String) Version of the barbican API, for example: "v1"
+   * - **[certificates]**
+     -
+   * - ``barbican_auth`` = ``barbican_acl_auth``
+     - (String) Name of the Barbican authentication method to use
+   * - ``cert_manager_type`` = ``barbican``
+     - (String) Certificate Manager plugin. Defaults to barbican.
+   * - **[cluster_verifications]**
+     -
+   * - ``verification_enable`` = ``True``
+     - (Boolean) Option to enable verifications for all clusters
+   * - ``verification_periodic_interval`` = ``600``
+     - (Integer) Interval between two consecutive periodic tasks forverifications, in seconds.
    * - **[conductor]**
      -
    * - ``use_local`` = ``True``
-     - (BoolOpt) Perform sahara-conductor operations locally.
+     - (Boolean) Perform sahara-conductor operations locally.
    * - **[keystone_authtoken]**
      -
    * - ``memcached_servers`` = ``None``
-     - (ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
+     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.

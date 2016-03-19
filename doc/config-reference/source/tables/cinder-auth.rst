@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``auth_strategy`` = ``keystone``
-     - (StrOpt) The strategy to use for auth. Supports noauth or keystone.
+     - (String) The strategy to use for auth. Supports noauth or keystone.

@@ -19,24 +19,32 @@
    * - **[irmc]**
      -
    * - ``auth_method`` = ``basic``
-     - (StrOpt) Authentication method to be used for iRMC operations, either "basic" or "digest"
+     - (String) Authentication method to be used for iRMC operations
    * - ``client_timeout`` = ``60``
-     - (IntOpt) Timeout (in seconds) for iRMC operations
+     - (Integer) Timeout (in seconds) for iRMC operations
    * - ``port`` = ``443``
-     - (PortOpt) Port to be used for iRMC operations, either 80 or 443
+     - (Unknown) Port to be used for iRMC operations
    * - ``remote_image_server`` = ``None``
-     - (StrOpt) IP of remote image server
+     - (String) IP of remote image server
    * - ``remote_image_share_name`` = ``share``
-     - (StrOpt) share name of remote_image_server
+     - (String) share name of remote_image_server
    * - ``remote_image_share_root`` = ``/remote_image_share_root``
-     - (StrOpt) Ironic conductor node's "NFS" or "CIFS" root path
+     - (String) Ironic conductor node's "NFS" or "CIFS" root path
    * - ``remote_image_share_type`` = ``CIFS``
-     - (StrOpt) Share type of virtual media, either "NFS" or "CIFS"
+     - (String) Share type of virtual media
    * - ``remote_image_user_domain`` =
-     - (StrOpt) Domain name of remote_image_user_name
+     - (String) Domain name of remote_image_user_name
    * - ``remote_image_user_name`` = ``None``
-     - (StrOpt) User name of remote_image_server
+     - (String) User name of remote_image_server
    * - ``remote_image_user_password`` = ``None``
-     - (StrOpt) Password of remote_image_user_name
+     - (String) Password of remote_image_user_name
    * - ``sensor_method`` = ``ipmitool``
-     - (StrOpt) Sensor data retrieval method, either "ipmitool" or "scci"
+     - (String) Sensor data retrieval method.
+   * - ``snmp_community`` = ``public``
+     - (String) SNMP community. Required for versions "v1" and "v2c"
+   * - ``snmp_port`` = ``161``
+     - (Unknown) SNMP port
+   * - ``snmp_security`` = ``None``
+     - (String) SNMP security name. Required for version "v3"
+   * - ``snmp_version`` = ``v2c``
+     - (String) SNMP protocol version

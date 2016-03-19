@@ -19,18 +19,24 @@
    * - **[barbican]**
      -
    * - ``cafile`` = ``None``
-     - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``catalog_info`` = ``key-manager:barbican:public``
-     - (StrOpt) Info to match when looking for barbican in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type>
+     - (String) Info to match when looking for barbican in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type>
    * - ``certfile`` = ``None``
-     - (StrOpt) PEM encoded client certificate cert file
+     - (String) PEM encoded client certificate cert file
    * - ``endpoint_template`` = ``None``
-     - (StrOpt) Override service catalog lookup with template for barbican endpoint e.g. http://localhost:9311/v1/%(project_id)s
+     - (String) Override service catalog lookup with template for barbican endpoint e.g. http://localhost:9311/v1/%(project_id)s
    * - ``insecure`` = ``False``
-     - (BoolOpt) Verify HTTPS connections.
+     - (Boolean) Verify HTTPS connections.
    * - ``keyfile`` = ``None``
-     - (StrOpt) PEM encoded client certificate key file
+     - (String) PEM encoded client certificate key file
    * - ``os_region_name`` = ``None``
-     - (StrOpt) Region name of this node
+     - (String) Region name of this node
    * - ``timeout`` = ``None``
-     - (IntOpt) Timeout value for http requests
+     - (Integer) Timeout value for http requests
+   * - **[certificates]**
+     -
+   * - ``barbican_auth`` = ``barbican_acl_auth``
+     - (String) Name of the Barbican authentication method to use
+   * - ``cert_manager_type`` = ``barbican``
+     - (String) Certificate Manager plugin. Defaults to barbican.

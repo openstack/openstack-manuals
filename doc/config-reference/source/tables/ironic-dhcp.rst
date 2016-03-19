@@ -19,4 +19,4 @@
    * - **[dhcp]**
      -
    * - ``dhcp_provider`` = ``neutron``
-     - (StrOpt) DHCP provider to use. "neutron" uses Neutron, and "none" uses a no-op provider.
+     - (String) DHCP provider to use. "neutron" uses Neutron, and "none" uses a no-op provider.

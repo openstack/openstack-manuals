@@ -19,16 +19,16 @@
    * - **[ipsec]**
      -
    * - ``config_base_dir`` = ``$state_path/ipsec``
-     - (StrOpt) Location to store ipsec server config files
+     - (String) Location to store ipsec server config files
    * - ``enable_detailed_logging`` = ``False``
-     - (BoolOpt) Enable detail logging for ipsec pluto process. If the flag set to True, the detailed logging will be written into config_base_dir/<pid>/log. Note: This setting applies to OpenSwan and LibreSwan only. StrongSwan logs to syslog.
+     - (Boolean) Enable detail logging for ipsec pluto process. If the flag set to True, the detailed logging will be written into config_base_dir/<pid>/log. Note: This setting applies to OpenSwan and LibreSwan only. StrongSwan logs to syslog.
    * - ``ipsec_status_check_interval`` = ``60``
-     - (IntOpt) Interval for checking ipsec status
+     - (Integer) Interval for checking ipsec status
    * - **[pluto]**
      -
    * - ``shutdown_check_back_off`` = ``1.5``
-     - (FloatOpt) A factor to increase the retry interval for each retry
+     - (Floating point) A factor to increase the retry interval for each retry
    * - ``shutdown_check_retries`` = ``5``
-     - (IntOpt) The maximum number of retries for checking for pluto daemon shutdown
+     - (Integer) The maximum number of retries for checking for pluto daemon shutdown
    * - ``shutdown_check_timeout`` = ``1``
-     - (IntOpt) Initial interval in seconds for checking if pluto daemon is shutdown
+     - (Integer) Initial interval in seconds for checking if pluto daemon is shutdown

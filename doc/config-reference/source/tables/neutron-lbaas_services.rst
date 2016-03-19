@@ -19,130 +19,126 @@
    * - **[DEFAULT]**
      -
    * - ``loadbalancer_pool_scheduler_driver`` = ``neutron_lbaas.services.loadbalancer.agent_scheduler.ChanceScheduler``
-     - (StrOpt) Driver to use for scheduling pool to a default loadbalancer agent
+     - (String) Driver to use for scheduling pool to a default loadbalancer agent
    * - ``loadbalancer_scheduler_driver`` = ``neutron_lbaas.agent_scheduler.ChanceScheduler``
-     - (StrOpt) Driver to use for scheduling to a default loadbalancer agent
+     - (String) Driver to use for scheduling to a default loadbalancer agent
    * - **[haproxy]**
      -
-   * - ``interface_driver`` = ``None``
-     - (StrOpt) The driver used to manage the virtual interface.
    * - ``jinja_config_template`` = ``/usr/lib/python/site-packages/neutron-lbaas/neutron_lbaas/services/loadbalancer/drivers/haproxy/templates/haproxy.loadbalancer.j2``
-     - (StrOpt) Jinja template file for haproxy configuration
-   * - ``periodic_interval`` = ``10``
-     - (IntOpt) Seconds between periodic task runs
+     - (String) Jinja template file for haproxy configuration
    * - **[netscaler_driver]**
      -
    * - ``is_synchronous`` = ``True``
-     - (StrOpt) Setting for option to enable synchronous operationsNetScaler Control Center Server.
+     - (String) Setting for option to enable synchronous operationsNetScaler Control Center Server.
    * - ``netscaler_ncc_cleanup_mode`` = ``None``
-     - (StrOpt) Setting to enable/disable cleanup mode for NetScaler Control Center Server
+     - (String) Setting to enable/disable cleanup mode for NetScaler Control Center Server
    * - ``netscaler_ncc_password`` = ``None``
-     - (StrOpt) Password to login to the NetScaler Control Center Server.
+     - (String) Password to login to the NetScaler Control Center Server.
    * - ``netscaler_ncc_uri`` = ``None``
-     - (StrOpt) The URL to reach the NetScaler Control Center Server.
+     - (String) The URL to reach the NetScaler Control Center Server.
    * - ``netscaler_ncc_username`` = ``None``
-     - (StrOpt) Username to login to the NetScaler Control Center Server.
+     - (String) Username to login to the NetScaler Control Center Server.
    * - ``netscaler_status_collection`` = ``True,300``
-     - (StrOpt) Setting for member status collection fromNetScaler Control Center Server.
+     - (String) Setting for member status collection fromNetScaler Control Center Server.
    * - ``periodic_task_interval`` = ``2``
-     - (StrOpt) Setting for periodic task collection interval fromNetScaler Control Center Server..
+     - (String) Setting for periodic task collection interval fromNetScaler Control Center Server..
    * - **[octavia]**
      -
    * - ``allocates_vip`` = ``False``
-     - (BoolOpt) True if Octavia will be responsible for allocating the VIP. False if neutron-lbaas will allocate it and pass to Octavia.
+     - (Boolean) True if Octavia will be responsible for allocating the VIP. False if neutron-lbaas will allocate it and pass to Octavia.
    * - ``base_url`` = ``http://127.0.0.1:9876``
-     - (StrOpt) URL of Octavia controller root
+     - (String) URL of Octavia controller root
    * - ``request_poll_interval`` = ``3``
-     - (IntOpt) Interval in seconds to poll octavia when an entity is created, updated, or deleted.
+     - (Integer) Interval in seconds to poll octavia when an entity is created, updated, or deleted.
    * - ``request_poll_timeout`` = ``100``
-     - (IntOpt) Time to stop polling octavia when a status of an entity does not change.
+     - (Integer) Time to stop polling octavia when a status of an entity does not change.
    * - **[radware]**
      -
    * - ``actions_to_skip`` = ``setup_l2_l3``
-     - (ListOpt) List of actions that are not pushed to the completion queue.
+     - (List) List of actions that are not pushed to the completion queue.
    * - ``ha_secondary_address`` = ``None``
-     - (StrOpt) IP address of secondary vDirect server.
+     - (String) IP address of secondary vDirect server.
    * - ``l2_l3_ctor_params`` = ``{'ha_network_name': 'HA-Network', 'service': '_REPLACE_', 'ha_ip_pool_name': 'default', 'twoleg_enabled': '_REPLACE_', 'allocate_ha_ips': True, 'allocate_ha_vrrp': True}``
-     - (DictOpt) Parameter for l2_l3 workflow constructor.
+     - (Dict) Parameter for l2_l3 workflow constructor.
    * - ``l2_l3_setup_params`` = ``{'data_ip_address': '192.168.200.99', 'data_port': 1, 'gateway': '192.168.200.1', 'ha_port': 2, 'data_ip_mask': '255.255.255.0'}``
-     - (DictOpt) Parameter for l2_l3 workflow setup.
+     - (Dict) Parameter for l2_l3 workflow setup.
    * - ``l2_l3_workflow_name`` = ``openstack_l2_l3``
-     - (StrOpt) Name of l2_l3 workflow. Default: openstack_l2_l3.
+     - (String) Name of l2_l3 workflow. Default: openstack_l2_l3.
    * - ``l4_action_name`` = ``BaseCreate``
-     - (StrOpt) Name of the l4 workflow action. Default: BaseCreate.
+     - (String) Name of the l4 workflow action. Default: BaseCreate.
    * - ``l4_workflow_name`` = ``openstack_l4``
-     - (StrOpt) Name of l4 workflow. Default: openstack_l4.
+     - (String) Name of l4 workflow. Default: openstack_l4.
    * - ``service_adc_type`` = ``VA``
-     - (StrOpt) Service ADC type. Default: VA.
+     - (String) Service ADC type. Default: VA.
    * - ``service_adc_version`` =
-     - (StrOpt) Service ADC version.
+     - (String) Service ADC version.
    * - ``service_cache`` = ``20``
-     - (IntOpt) Size of service cache. Default: 20.
+     - (Integer) Size of service cache. Default: 20.
    * - ``service_compression_throughput`` = ``100``
-     - (IntOpt) Service compression throughput. Default: 100.
+     - (Integer) Service compression throughput. Default: 100.
    * - ``service_ha_pair`` = ``False``
-     - (BoolOpt) Enables or disables the Service HA pair. Default: False.
+     - (Boolean) Enables or disables the Service HA pair. Default: False.
    * - ``service_isl_vlan`` = ``-1``
-     - (IntOpt) A required VLAN for the interswitch link to use.
+     - (Integer) A required VLAN for the interswitch link to use.
    * - ``service_resource_pool_ids`` =
-     - (ListOpt) Resource pool IDs.
+     - (List) Resource pool IDs.
    * - ``service_session_mirroring_enabled`` = ``False``
-     - (BoolOpt) Enable or disable Alteon interswitch link for stateful session failover. Default: False.
+     - (Boolean) Enable or disable Alteon interswitch link for stateful session failover. Default: False.
    * - ``service_ssl_throughput`` = ``100``
-     - (IntOpt) Service SSL throughput. Default: 100.
+     - (Integer) Service SSL throughput. Default: 100.
    * - ``service_throughput`` = ``1000``
-     - (IntOpt) Service throughput. Default: 1000.
+     - (Integer) Service throughput. Default: 1000.
    * - ``vdirect_address`` = ``None``
-     - (StrOpt) IP address of vDirect server.
+     - (String) IP address of vDirect server.
    * - ``vdirect_password`` = ``radware``
-     - (StrOpt) vDirect user password.
+     - (String) vDirect user password.
    * - ``vdirect_user`` = ``vDirect``
-     - (StrOpt) vDirect user name.
+     - (String) vDirect user name.
    * - **[radwarev2]**
      -
    * - ``child_workflow_template_names`` = ``manage_l3``
-     - (ListOpt) Name of child workflow templates used.Default: manage_l3
+     - (List) Name of child workflow templates used.Default: manage_l3
    * - ``ha_secondary_address`` = ``None``
-     - (StrOpt) IP address of secondary vDirect server.
+     - (String) IP address of secondary vDirect server.
    * - ``service_adc_type`` = ``VA``
-     - (StrOpt) Service ADC type. Default: VA.
+     - (String) Service ADC type. Default: VA.
    * - ``service_adc_version`` =
-     - (StrOpt) Service ADC version.
+     - (String) Service ADC version.
    * - ``service_cache`` = ``20``
-     - (IntOpt) Size of service cache. Default: 20.
+     - (Integer) Size of service cache. Default: 20.
    * - ``service_compression_throughput`` = ``100``
-     - (IntOpt) Service compression throughput. Default: 100.
+     - (Integer) Service compression throughput. Default: 100.
    * - ``service_ha_pair`` = ``False``
-     - (BoolOpt) Enables or disables the Service HA pair. Default: False.
+     - (Boolean) Enables or disables the Service HA pair. Default: False.
    * - ``service_isl_vlan`` = ``-1``
-     - (IntOpt) A required VLAN for the interswitch link to use.
+     - (Integer) A required VLAN for the interswitch link to use.
    * - ``service_resource_pool_ids`` =
-     - (ListOpt) Resource pool IDs.
+     - (List) Resource pool IDs.
    * - ``service_session_mirroring_enabled`` = ``False``
-     - (BoolOpt) Enable or disable Alteon interswitch link for stateful session failover. Default: False.
+     - (Boolean) Enable or disable Alteon interswitch link for stateful session failover. Default: False.
    * - ``service_ssl_throughput`` = ``100``
-     - (IntOpt) Service SSL throughput. Default: 100.
+     - (Integer) Service SSL throughput. Default: 100.
    * - ``service_throughput`` = ``1000``
-     - (IntOpt) Service throughput. Default: 1000.
+     - (Integer) Service throughput. Default: 1000.
    * - ``stats_action_name`` = ``stats``
-     - (StrOpt) Name of the workflow action for statistics. Default: stats.
+     - (String) Name of the workflow action for statistics. Default: stats.
    * - ``vdirect_address`` = ``None``
-     - (StrOpt) IP address of vDirect server.
+     - (String) IP address of vDirect server.
    * - ``vdirect_password`` = ``radware``
-     - (StrOpt) vDirect user password.
+     - (String) vDirect user password.
    * - ``vdirect_user`` = ``vDirect``
-     - (StrOpt) vDirect user name.
+     - (String) vDirect user name.
    * - ``workflow_action_name`` = ``apply``
-     - (StrOpt) Name of the workflow action. Default: apply.
+     - (String) Name of the workflow action. Default: apply.
    * - ``workflow_params`` = ``{'data_ip_address': '192.168.200.99', 'ha_network_name': 'HA-Network', 'ha_port': 2, 'allocate_ha_ips': True, 'ha_ip_pool_name': 'default', 'allocate_ha_vrrp': True, 'data_port': 1, 'gateway': '192.168.200.1', 'twoleg_enabled': '_REPLACE_', 'data_ip_mask': '255.255.255.0'}``
-     - (DictOpt) Parameter for l2_l3 workflow constructor.
+     - (Dict) Parameter for l2_l3 workflow constructor.
    * - ``workflow_template_name`` = ``os_lb_v2``
-     - (StrOpt) Name of the workflow template. Default: os_lb_v2.
+     - (String) Name of the workflow template. Default: os_lb_v2.
    * - **[radwarev2_debug]**
      -
    * - ``configure_l3`` = ``True``
-     - (BoolOpt) Configule ADC with L3 parameters?
+     - (Boolean) Configule ADC with L3 parameters?
    * - ``configure_l4`` = ``True``
-     - (BoolOpt) Configule ADC with L4 parameters?
+     - (Boolean) Configule ADC with L4 parameters?
    * - ``provision_service`` = ``True``
-     - (BoolOpt) Provision ADC service?
+     - (Boolean) Provision ADC service?

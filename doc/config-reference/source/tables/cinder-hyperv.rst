@@ -19,4 +19,4 @@
    * - **[hyperv]**
      -
    * - ``force_volumeutils_v1`` = ``False``
-     - (BoolOpt) Force V1 volume utility class
+     - (Boolean) DEPRECATED: Force V1 volume utility class

@@ -19,10 +19,10 @@
    * - **[trust]**
      -
    * - ``allow_redelegation`` = ``False``
-     - (BoolOpt) Enable redelegation feature.
+     - (Boolean) Enable redelegation feature.
    * - ``driver`` = ``sql``
-     - (StrOpt) Entrypoint for the trust backend driver in the keystone.trust namespace.
+     - (String) Entrypoint for the trust backend driver in the keystone.trust namespace.
    * - ``enabled`` = ``True``
-     - (BoolOpt) Delegation and impersonation features can be optionally disabled.
+     - (Boolean) Delegation and impersonation features can be optionally disabled.
    * - ``max_redelegation_count`` = ``3``
-     - (IntOpt) Maximum depth of trust redelegation.
+     - (Integer) Maximum depth of trust redelegation.

@@ -19,30 +19,30 @@
    * - **[DEFAULT]**
      -
    * - ``vmware_api_retry_count`` = ``10``
-     - (IntOpt) Number of times VMware vCenter server API must be retried upon connection related issues.
+     - (Integer) Number of times VMware vCenter server API must be retried upon connection related issues.
    * - ``vmware_ca_file`` = ``None``
-     - (StrOpt) CA bundle file to use in verifying the vCenter server certificate.
+     - (String) CA bundle file to use in verifying the vCenter server certificate.
    * - ``vmware_cluster_name`` = ``None``
-     - (MultiStrOpt) Name of a vCenter compute cluster where volumes should be created.
+     - (Multi-valued) Name of a vCenter compute cluster where volumes should be created.
    * - ``vmware_host_ip`` = ``None``
-     - (StrOpt) IP address for connecting to VMware vCenter server.
+     - (String) IP address for connecting to VMware vCenter server.
    * - ``vmware_host_password`` = ``None``
-     - (StrOpt) Password for authenticating with VMware vCenter server.
+     - (String) Password for authenticating with VMware vCenter server.
    * - ``vmware_host_username`` = ``None``
-     - (StrOpt) Username for authenticating with VMware vCenter server.
+     - (String) Username for authenticating with VMware vCenter server.
    * - ``vmware_host_version`` = ``None``
-     - (StrOpt) Optional string specifying the VMware vCenter server version. The driver attempts to retrieve the version from VMware vCenter server. Set this configuration only if you want to override the vCenter server version.
+     - (String) Optional string specifying the VMware vCenter server version. The driver attempts to retrieve the version from VMware vCenter server. Set this configuration only if you want to override the vCenter server version.
    * - ``vmware_image_transfer_timeout_secs`` = ``7200``
-     - (IntOpt) Timeout in seconds for VMDK volume transfer between Cinder and Glance.
+     - (Integer) Timeout in seconds for VMDK volume transfer between Cinder and Glance.
    * - ``vmware_insecure`` = ``False``
-     - (BoolOpt) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "vmware_ca_file" is set.
+     - (Boolean) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "vmware_ca_file" is set.
    * - ``vmware_max_objects_retrieval`` = ``100``
-     - (IntOpt) Max number of objects to be retrieved per batch. Query results will be obtained in batches from the server and not in one shot. Server may still limit the count to something less than the configured value.
+     - (Integer) Max number of objects to be retrieved per batch. Query results will be obtained in batches from the server and not in one shot. Server may still limit the count to something less than the configured value.
    * - ``vmware_task_poll_interval`` = ``0.5``
-     - (FloatOpt) The interval (in seconds) for polling remote tasks invoked on VMware vCenter server.
+     - (Floating point) The interval (in seconds) for polling remote tasks invoked on VMware vCenter server.
    * - ``vmware_tmp_dir`` = ``/tmp``
-     - (StrOpt) Directory where virtual disks are stored during volume backup and restore.
+     - (String) Directory where virtual disks are stored during volume backup and restore.
    * - ``vmware_volume_folder`` = ``Volumes``
-     - (StrOpt) Name of the vCenter inventory folder that will contain Cinder volumes. This folder will be created under "OpenStack/<project_folder>", where project_folder is of format "Project (<volume_project_id>)".
+     - (String) Name of the vCenter inventory folder that will contain Cinder volumes. This folder will be created under "OpenStack/<project_folder>", where project_folder is of format "Project (<volume_project_id>)".
    * - ``vmware_wsdl_location`` = ``None``
-     - (StrOpt) Optional VIM service WSDL Location e.g http://<server>/vimService.wsdl. Optional over-ride to default location for bug work-arounds.
+     - (String) Optional VIM service WSDL Location e.g http://<server>/vimService.wsdl. Optional over-ride to default location for bug work-arounds.

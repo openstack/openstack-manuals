@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``san_clustername`` =
-     - (StrOpt) Cluster name to use for creating volumes
+     - (String) Cluster name to use for creating volumes
    * - ``san_ip`` =
-     - (StrOpt) IP address of SAN controller
+     - (String) IP address of SAN controller
    * - ``san_login`` = ``admin``
-     - (StrOpt) Username for SAN controller
+     - (String) Username for SAN controller
    * - ``san_password`` =
-     - (StrOpt) Password for SAN controller
+     - (String) Password for SAN controller
    * - ``xiv_chap`` = ``disabled``
-     - (StrOpt) CHAP authentication mode, effective only for iscsi (disabled|enabled)
+     - (String) CHAP authentication mode, effective only for iscsi (disabled|enabled)
    * - ``xiv_ds8k_connection_type`` = ``iscsi``
-     - (StrOpt) Connection type to the IBM Storage Array
+     - (String) Connection type to the IBM Storage Array
    * - ``xiv_ds8k_proxy`` = ``xiv_ds8k_openstack.nova_proxy.XIVDS8KNovaProxy``
-     - (StrOpt) Proxy driver that connects to the IBM Storage Array
+     - (String) Proxy driver that connects to the IBM Storage Array
