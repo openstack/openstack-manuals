@@ -5,7 +5,7 @@ Configure the Oslo RPC messaging system
 OpenStack projects use AMQP, an open standard for messaging middleware.
 This messaging middleware enables the OpenStack services that run on
 multiple servers to talk to each other. OpenStack Oslo RPC supports
-three implementations of AMQP: ``RabbitMQ``, ``Qpid``, and ``ZeroMQ``.
+two implementations of AMQP: RabbitMQ and ZeroMQ.
 
 Configure RabbitMQ
 ~~~~~~~~~~~~~~~~~~
@@ -31,58 +31,6 @@ number of seconds from zero to sixty.
 
 .. include:: ../tables/nova-rabbitmq.rst
 
-Configure Qpid
-~~~~~~~~~~~~~~
-
-Use these options to configure the ``Qpid`` messaging system for
-OpenStack Oslo RPC. ``Qpid`` is not the default messaging system,
-so you must enable it by setting the ``rpc_backend`` option in the
-``nova.conf`` file.
-
-.. code-block:: ini
-
-   rpc_backend=qpid
-
-.. warning::
-
-   The Qpid driver has been deprecated.
-   The driver is planned to be removed during the Mitaka development cycle.
-
-This critical option points the compute nodes to the ``Qpid`` broker (server).
-Set ``qpid_hostname`` to the host name where the broker runs in the
-``nova.conf`` file.
-
-.. note::
-
-   The :option:`--qpid_hostname` parameter accepts a host name or IP address value.
-
-.. code-block:: ini
-
-   qpid_hostname=hostname.example.com
-
-If the ``Qpid`` broker listens on a port other than the AMQP default of
-``5672``, you must set the ``qpid_port`` option to that value:
-
-.. code-block:: ini
-
-   qpid_port=12345
-
-If you configure the ``Qpid`` broker to require authentication,
-you must add a user name and password to the configuration:
-
-.. code-block:: ini
-
-   qpid_username=username
-   qpid_password=password
-
-By default, TCP is used as the transport.
-To enable SSL, set the ``qpid_protocol`` option:
-
-.. code-block:: ini
-
-   qpid_protocol=ssl
-
-
 Configure ZeroMQ
 ~~~~~~~~~~~~~~~~
 
@@ -95,8 +43,8 @@ it by setting the ``rpc_backend`` option in the ``nova.conf`` file.
 Configure messaging
 ~~~~~~~~~~~~~~~~~~~
 
-Use these options to configure the ``RabbitMQ`` and ``Qpid``
-messaging drivers in the ``nova.conf`` file.
+Use these options to configure the ``RabbitMQ`` messaging driver in the
+``nova.conf`` file.
 
 .. include:: ../tables/nova-amqp.rst
 .. include:: ../tables/nova-rpc.rst

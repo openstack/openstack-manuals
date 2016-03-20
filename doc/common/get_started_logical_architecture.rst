@@ -20,7 +20,7 @@ distinct processes.
 For communication between the processes of one service, an AMQP message
 broker is used. The service's state is stored in a database. When
 deploying and configuring your OpenStack cloud, you can choose among
-several message broker and database solutions, such as RabbitMQ, Qpid,
+several message broker and database solutions, such as RabbitMQ,
 MySQL, MariaDB, and SQLite.
 
 Users can access OpenStack via the web-based user interface implemented

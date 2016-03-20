@@ -260,7 +260,7 @@ The ``transport_url`` has the following form:
 
    rabbit://USERNAME:PASSWORD@HOSTNAME:PORT/VIRTUAL_HOST
 
-The scheme can be either ``qpid`` or ``rabbit``, as shown previously.
+The scheme can only be ``rabbit``.
 The following sample shows this optional configuration:
 
 .. code-block:: json
