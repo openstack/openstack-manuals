@@ -8,6 +8,7 @@ Telemetry
    telemetry/alarming_service_config_opts.rst
    telemetry/logs.rst
    telemetry/sample-configuration-files.rst
+   tables/conf-changes/aodh.rst
    tables/conf-changes/ceilometer.rst
 
 The Telemetry service collects measurements within OpenStack. Its
