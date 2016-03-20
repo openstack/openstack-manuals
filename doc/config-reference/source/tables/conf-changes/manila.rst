@@ -12,8 +12,42 @@ New, updated, and deprecated options in Mitaka for Shared File Systems service
 
    * - Option = default value
      - (Type) Help string
+   * - ``[DEFAULT] admin_network_config_group = None``
+     - ``(StrOpt) If share driver requires to setup admin network for share, then define network plugin config options in some separate config group and set its name here. Used only with another option 'driver_handles_share_servers' set to 'True'.``
+   * - ``[DEFAULT] admin_network_id = None``
+     - ``(StrOpt) ID of neutron network used to communicate with admin network, to create additional admin export locations on.``
+   * - ``[DEFAULT] admin_subnet_id = None``
+     - ``(StrOpt) ID of neutron subnet used to communicate with admin network, to create additional admin export locations on. Related to 'admin_network_id'.``
+   * - ``[DEFAULT] cephfs_auth_id = manila``
+     - ``(StrOpt) The name of the ceph auth identity to use.``
+   * - ``[DEFAULT] cephfs_cluster_name = None``
+     - ``(StrOpt) The name of the cluster in use, if it is not the default ('ceph').``
+   * - ``[DEFAULT] cephfs_conf_path =``
+     - ``(StrOpt) Fully qualified path to the ceph.conf file.``
+   * - ``[DEFAULT] cephfs_enable_snapshots = False``
+     - ``(BoolOpt) Whether to enable snapshots in this driver.``
+   * - ``[DEFAULT] data_access_wait_access_rules_timeout = 180``
+     - ``(IntOpt) Time to wait for access rules to be allowed/denied on backends when migrating a share (seconds).``
+   * - ``[DEFAULT] data_manager = manila.data.manager.DataManager``
+     - ``(StrOpt) Full class name for the data manager.``
+   * - ``[DEFAULT] data_node_access_cert = None``
+     - ``(StrOpt) The certificate installed in the data node in order to allow access to certificate authentication-based shares.``
+   * - ``[DEFAULT] data_node_access_ip = None``
+     - ``(StrOpt) The IP of the node interface connected to the admin network. Used for allowing access to the mounting shares.``
+   * - ``[DEFAULT] data_topic = manila-data``
+     - ``(StrOpt) The topic data nodes listen on.``
+   * - ``[DEFAULT] emc_nas_pool_names = None``
+     - ``(StrOpt) EMC pool names.``
+   * - ``[DEFAULT] hds_hnas_driver_helper = manila.share.drivers.hitachi.ssh.HNASSSHBackend``
+     - ``(StrOpt) Python class to be used for driver helper.``
    * - ``[DEFAULT] hpe3par_api_url =``
      - ``(StrOpt) 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1``
+   * - ``[DEFAULT] hpe3par_cifs_admin_access_domain = LOCAL_CLUSTER``
+     - ``(StrOpt) File system domain for the CIFS admin user.``
+   * - ``[DEFAULT] hpe3par_cifs_admin_access_password =``
+     - ``(StrOpt) File system admin password for CIFS.``
+   * - ``[DEFAULT] hpe3par_cifs_admin_access_username =``
+     - ``(StrOpt) File system admin user name for CIFS.``
    * - ``[DEFAULT] hpe3par_debug = False``
      - ``(BoolOpt) Enable HTTP debugging to 3PAR``
    * - ``[DEFAULT] hpe3par_fpg = OpenStack``
@@ -22,6 +56,8 @@ New, updated, and deprecated options in Mitaka for Shared File Systems service
      - ``(BoolOpt) Use one filestore per share``
    * - ``[DEFAULT] hpe3par_password =``
      - ``(StrOpt) 3PAR password for the user specified in hpe3par_username``
+   * - ``[DEFAULT] hpe3par_require_cifs_ip = False``
+     - ``(BoolOpt) Require IP access rules for CIFS (in addition to user)``
    * - ``[DEFAULT] hpe3par_san_ip =``
      - ``(StrOpt) IP address of SAN controller``
    * - ``[DEFAULT] hpe3par_san_login =``
@@ -32,9 +68,141 @@ New, updated, and deprecated options in Mitaka for Shared File Systems service
      - ``(PortOpt) SSH port to use with SAN``
    * - ``[DEFAULT] hpe3par_share_ip_address =``
      - ``(StrOpt) The IP address for shares not using a share server``
+   * - ``[DEFAULT] hpe3par_share_mount_path = /mnt/``
+     - ``(StrOpt) The path where shares will be mounted when deleting nested file trees.``
    * - ``[DEFAULT] hpe3par_username =``
      - ``(StrOpt) 3PAR username with the 'edit' role``
+   * - ``[DEFAULT] lvm_share_export_ip = None``
+     - ``(StrOpt) IP to be added to export string.``
+   * - ``[DEFAULT] lvm_share_export_root = $state_path/mnt``
+     - ``(StrOpt) Base folder where exported shares are located.``
+   * - ``[DEFAULT] lvm_share_helpers = CIFS=manila.share.drivers.helpers.CIFSHelperUserAccess, NFS=manila.share.drivers.helpers.NFSHelper``
+     - ``(ListOpt) Specify list of share export helpers.``
+   * - ``[DEFAULT] lvm_share_mirrors = 0``
+     - ``(IntOpt) If set, create LVMs with multiple mirrors. Note that this requires lvm_mirrors + 2 PVs with available space.``
+   * - ``[DEFAULT] lvm_share_volume_group = lvm-shares``
+     - ``(StrOpt) Name for the VG that will contain exported shares.``
+   * - ``[DEFAULT] migration_readonly_rules_support = True``
+     - ``(BoolOpt) Specify whether read only access rule mode is supported in this backend.``
+   * - ``[DEFAULT] netapp_snapmirror_quiesce_timeout = 3600``
+     - ``(IntOpt) The maximum time in seconds to wait for existing snapmirror transfers to complete before aborting when promoting a replica.``
+   * - ``[DEFAULT] netapp_volume_snapshot_reserve_percent = 5``
+     - ``(IntOpt) The percentage of share space set aside as reserve for snapshot usage; valid values range from 0 to 90.``
+   * - ``[DEFAULT] replica_state_update_interval = 300``
+     - ``(IntOpt) This value, specified in seconds, determines how often the share manager will poll for the health (replica_state) of each replica instance.``
+   * - ``[DEFAULT] replication_domain = None``
+     - ``(StrOpt) A string specifying the replication domain that the backend belongs to. This option needs to be specified the same in the configuration sections of all backends that support replication between each other. If this option is not specified in the group, it means that replication is not enabled on the backend.``
+   * - ``[DEFAULT] share_mount_template = mount -vt %(proto)s %(export)s %(path)s``
+     - ``(StrOpt) The template for mounting shares for this backend. Must specify the executable with all necessary parameters for the protocol supported. 'proto' template element may not be required if included in the command. 'export' and 'path' template elements are required. It is advisable to separate different commands per backend.``
+   * - ``[DEFAULT] share_unmount_template = umount -v %(path)s``
+     - ``(StrOpt) The template for unmounting shares for this backend. Must specify the executable with all necessary parameters for the protocol supported. 'path' template element is required. It is advisable to separate different commands per backend.``
+   * - ``[DEFAULT] tegile_default_project = None``
+     - ``(StrOpt) Create shares in this project``
+   * - ``[DEFAULT] tegile_nas_login = None``
+     - ``(StrOpt) User name for the Tegile NAS server.``
+   * - ``[DEFAULT] tegile_nas_password = None``
+     - ``(StrOpt) Password for the Tegile NAS server.``
+   * - ``[DEFAULT] tegile_nas_server = None``
+     - ``(StrOpt) Tegile NAS server hostname or IP address.``
+   * - ``[DEFAULT] zfs_dataset_creation_options = None``
+     - ``(ListOpt) Define here list of options that should be applied for each dataset creation if needed. Example: compression=gzip,dedup=off. Note that, for secondary replicas option 'readonly' will be set to 'on' and for active replicas to 'off' in any way. Also, 'quota' will be equal to share size. Optional.``
+   * - ``[DEFAULT] zfs_dataset_name_prefix = manila_share_``
+     - ``(StrOpt) Prefix to be used in each dataset name. Optional.``
+   * - ``[DEFAULT] zfs_dataset_snapshot_name_prefix = manila_share_snapshot_``
+     - ``(StrOpt) Prefix to be used in each dataset snapshot name. Optional.``
+   * - ``[DEFAULT] zfs_replica_snapshot_prefix = tmp_snapshot_for_replication_``
+     - ``(StrOpt) Set snapshot prefix for usage in ZFS replication. Required.``
+   * - ``[DEFAULT] zfs_service_ip = None``
+     - ``(StrOpt) IP to be added to admin-facing export location. Required.``
+   * - ``[DEFAULT] zfs_share_export_ip = None``
+     - ``(StrOpt) IP to be added to user-facing export location. Required.``
+   * - ``[DEFAULT] zfs_share_helpers = NFS=manila.share.drivers.zfsonlinux.utils.NFSviaZFSHelper``
+     - ``(ListOpt) Specify list of share export helpers for ZFS storage. It should look like following: 'FOO_protocol=foo.FooClass,BAR_protocol=bar.BarClass'. Required.``
+   * - ``[DEFAULT] zfs_ssh_private_key_path = None``
+     - ``(StrOpt) Path to SSH private key that should be used for SSH'ing ZFS storage host. Not used for replication operations. Optional.``
+   * - ``[DEFAULT] zfs_ssh_user_password = None``
+     - ``(StrOpt) Password for user that is used for SSH'ing ZFS storage host. Not used for replication operations. They require passwordless SSH access. Optional.``
+   * - ``[DEFAULT] zfs_ssh_username = None``
+     - ``(StrOpt) SSH user that will be used in 2 cases: 1) By manila-share service in case it is located on different host than its ZFS storage. 2) By manila-share services with other ZFS backends that perform replication. It is expected that SSH'ing will be key-based, passwordless. This user should be passwordless sudoer. Optional.``
+   * - ``[DEFAULT] zfs_use_ssh = False``
+     - ``(BoolOpt) Remote ZFS storage hostname that should be used for SSH'ing. Optional.``
+   * - ``[DEFAULT] zfs_zpool_list = None``
+     - ``(ListOpt) Specify list of zpools that are allowed to be used by backend. Can contain nested datasets. Examples: Without nested dataset: 'zpool_name'. With nested dataset: 'zpool_name/nested_dataset_name'. Required.``
+   * - ``[cinder] api_insecure = False``
+     - ``(BoolOpt) Allow to perform insecure SSL requests to cinder.``
+   * - ``[cinder] auth_section = None``
+     - ``(Opt) Config Section from which to load plugin specific options``
+   * - ``[cinder] auth_type = None``
+     - ``(Opt) Authentication type to load``
+   * - ``[cinder] ca_certificates_file = None``
+     - ``(StrOpt) Location of CA certificates file to use for cinder client requests.``
+   * - ``[cinder] cafile = None``
+     - ``(StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.``
+   * - ``[cinder] certfile = None``
+     - ``(StrOpt) PEM encoded client certificate cert file``
+   * - ``[cinder] cross_az_attach = True``
+     - ``(BoolOpt) Allow attaching between instances and volumes in different availability zones.``
+   * - ``[cinder] http_retries = 3``
+     - ``(IntOpt) Number of cinderclient retries on failed HTTP calls.``
+   * - ``[cinder] insecure = False``
+     - ``(BoolOpt) Verify HTTPS connections.``
+   * - ``[cinder] keyfile = None``
+     - ``(StrOpt) PEM encoded client certificate key file``
+   * - ``[cinder] timeout = None``
+     - ``(IntOpt) Timeout value for http requests``
+   * - ``[neutron] cafile = None``
+     - ``(StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.``
+   * - ``[neutron] certfile = None``
+     - ``(StrOpt) PEM encoded client certificate cert file``
+   * - ``[neutron] insecure = False``
+     - ``(BoolOpt) Verify HTTPS connections.``
+   * - ``[neutron] keyfile = None``
+     - ``(StrOpt) PEM encoded client certificate key file``
+   * - ``[neutron] timeout = None``
+     - ``(IntOpt) Timeout value for http requests``
+   * - ``[nova] api_insecure = False``
+     - ``(BoolOpt) Allow to perform insecure SSL requests to nova.``
+   * - ``[nova] api_microversion = 2.10``
+     - ``(StrOpt) Version of Nova API to be used.``
+   * - ``[nova] auth_section = None``
+     - ``(Opt) Config Section from which to load plugin specific options``
+   * - ``[nova] auth_type = None``
+     - ``(Opt) Authentication type to load``
+   * - ``[nova] ca_certificates_file = None``
+     - ``(StrOpt) Location of CA certificates file to use for nova client requests.``
+   * - ``[nova] cafile = None``
+     - ``(StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.``
+   * - ``[nova] certfile = None``
+     - ``(StrOpt) PEM encoded client certificate cert file``
+   * - ``[nova] insecure = False``
+     - ``(BoolOpt) Verify HTTPS connections.``
+   * - ``[nova] keyfile = None``
+     - ``(StrOpt) PEM encoded client certificate key file``
+   * - ``[nova] timeout = None``
+     - ``(IntOpt) Timeout value for http requests``
 
+.. list-table:: New default values
+   :header-rows: 1
+   :class: config-ref-table
+
+   * - Option
+     - Previous default value
+     - New default value
+   * - ``[DEFAULT] migration_wait_access_rules_timeout``
+     - ``90``
+     - ``180``
+   * - ``[DEFAULT] osapi_share_extension``
+     - ``['manila.api.contrib.standard_extensions']``
+     - ``manila.api.contrib.standard_extensions``
+   * - ``[DEFAULT] scheduler_default_filters``
+     - ``AvailabilityZoneFilter, CapacityFilter, CapabilitiesFilter, ConsistencyGroupFilter``
+     - ``AvailabilityZoneFilter, CapacityFilter, CapabilitiesFilter, ConsistencyGroupFilter, ShareReplicationFilter``
+   * - ``[DEFAULT] scheduler_driver``
+     - ``manila.scheduler.filter_scheduler.FilterScheduler``
+     - ``manila.scheduler.drivers.filter.FilterScheduler``
+   * - ``[DEFAULT] share_helpers``
+     - ``CIFS=manila.share.drivers.generic.CIFSHelper, NFS=manila.share.drivers.generic.NFSHelper``
+     - ``CIFS=manila.share.drivers.helpers.CIFSHelperIPAccess, NFS=manila.share.drivers.helpers.NFSHelper``
 
 .. list-table:: Deprecated options
    :header-rows: 1
@@ -42,8 +210,18 @@ New, updated, and deprecated options in Mitaka for Shared File Systems service
 
    * - Deprecated option
      - New Option
+   * - ``[DEFAULT] cinder_api_insecure``
+     - ``[cinder] api_insecure``
+   * - ``[DEFAULT] cinder_ca_certificates_file``
+     - ``[cinder] ca_certificates_file``
+   * - ``[DEFAULT] cinder_cross_az_attach``
+     - ``[cinder] cross_az_attach``
+   * - ``[DEFAULT] cinder_http_retries``
+     - ``[cinder] http_retries``
    * - ``[DEFAULT] db_backend``
      - ``[database] backend``
+   * - ``[DEFAULT] emc_nas_pool_name``
+     - ``[DEFAULT] emc_nas_pool_names``
    * - ``[DEFAULT] hp3par_api_url``
      - ``[DEFAULT] hpe3par_api_url``
    * - ``[DEFAULT] hp3par_debug``
@@ -66,6 +244,14 @@ New, updated, and deprecated options in Mitaka for Shared File Systems service
      - ``[DEFAULT] hpe3par_share_ip_address``
    * - ``[DEFAULT] hp3par_username``
      - ``[DEFAULT] hpe3par_username``
+   * - ``[DEFAULT] migration_readonly_support``
+     - ``[DEFAULT] migration_readonly_rules_support``
+   * - ``[DEFAULT] nova_api_insecure``
+     - ``[nova] api_insecure``
+   * - ``[DEFAULT] nova_api_microversion``
+     - ``[nova] api_microversion``
+   * - ``[DEFAULT] nova_ca_certificates_file``
+     - ``[nova] ca_certificates_file``
    * - ``[DEFAULT] sql_idle_timeout``
      - ``[database] idle_timeout``
    * - ``[DEFAULT] sql_max_retries``

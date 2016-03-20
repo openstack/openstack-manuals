@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Mitaka for Bare metal service
+New, updated, and deprecated options in Mitaka for Bare Metal service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
@@ -12,12 +12,48 @@ New, updated, and deprecated options in Mitaka for Bare metal service
 
    * - Option = default value
      - (Type) Help string
+   * - ``[DEFAULT] debug_tracebacks_in_api = False``
+     - ``(BoolOpt) Return server tracebacks in the API response for any error responses. WARNING: this is insecure and should not be used in a production environment.``
    * - ``[DEFAULT] hash_ring_reset_interval = 180``
      - ``(IntOpt) Interval (in seconds) between hash ring resets.``
+   * - ``[agent] stream_raw_images = True``
+     - ``(BoolOpt) Whether the agent ramdisk should stream raw images directly onto the disk or not. By streaming raw images directly onto the disk the agent ramdisk will not spend time copying the image to a tmpfs partition (therefore consuming less memory) prior to writing it to the disk. Unless the disk where the image will be copied to is really slow, this option should be set to True. Defaults to True.``
+   * - ``[amt] awake_interval = 60``
+     - ``(IntOpt) Time interval (in seconds) for successive awake call to AMT interface, this depends on the IdleTimeout setting on AMT interface. AMT Interface will go to sleep after 60 seconds of inactivity by default. IdleTimeout=0 means AMT will not go to sleep at all. Setting awake_interval=0 will disable awake call.``
+   * - ``[api] api_workers = None``
+     - ``(IntOpt) Number of workers for OpenStack Ironic API service. The default is equal to the number of CPUs available if that can be determined, else a default worker count of 1 is returned.``
+   * - ``[api] enable_ssl_api = False``
+     - ``(BoolOpt) Enable the integrated stand-alone API to service requests via HTTPS instead of HTTP. If there is a front-end service performing HTTPS offloading from the service, this option should be False; note, you will want to change public API endpoint to represent SSL termination URL with 'public_endpoint' option.``
+   * - ``[conductor] automated_clean = True``
+     - ``(BoolOpt) Enables or disables automated cleaning. Automated cleaning is a configurable set of steps, such as erasing disk drives, that are performed on the node to ensure it is in a baseline state and ready to be deployed to. This is done after instance deletion as well as during the transition from a "manageable" to "available" state. When enabled, the particular steps performed to clean a node depend on which driver that node is managed by; see the individual driver's documentation for details. NOTE: The introduction of the cleaning operation causes instance deletion to take significantly longer. In an environment where all tenants are trusted (eg, because there is only one tenant), this option could be safely disabled.``
+   * - ``[disk_utils] dd_block_size = 1M``
+     - ``(StrOpt) Block size to use when writing to the nodes disk.``
+   * - ``[disk_utils] efi_system_partition_size = 200``
+     - ``(IntOpt) Size of EFI system partition in MiB when configuring UEFI systems for local boot.``
+   * - ``[disk_utils] iscsi_verify_attempts = 3``
+     - ``(IntOpt) Maximum attempts to verify an iSCSI connection is active, sleeping 1 second between attempts.``
+   * - ``[glance] glance_cafile = None``
+     - ``(StrOpt) Optional path to a CA certificate bundle to be used to validate the SSL certificate served by glance. It is used when glance_api_insecure is set to False.``
+   * - ``[glance] swift_temp_url_cache_enabled = False``
+     - ``(BoolOpt) Whether to cache generated Swift temporary URLs. Setting it to true is only useful when an image caching proxy is used. Defaults to False.``
+   * - ``[glance] swift_temp_url_expected_download_start_delay = 0``
+     - ``(IntOpt) This is the delay (in seconds) from the time of the deploy request (when the Swift temporary URL is generated) to when the IPA ramdisk starts up and URL is used for the image download. This value is used to check if the Swift temporary URL duration is large enough to let the image download begin. Also if temporary URL caching is enabled this will determine if a cached entry will still be valid when the download starts. swift_temp_url_duration value must be greater than or equal to this option's value. Defaults to 0.``
    * - ``[glance] temp_url_endpoint_type = swift``
      - ``(StrOpt) Type of endpoint to use for temporary URLs. If the Glance backend is Swift, use "swift"; if it is CEPH with RADOS gateway, use "radosgw".``
    * - ``[iboot] reboot_delay = 5``
      - ``(IntOpt) Time (in seconds) to sleep between when rebooting (powering off and on again).``
+   * - ``[irmc] snmp_community = public``
+     - ``(StrOpt) SNMP community. Required for versions "v1" and "v2c"``
+   * - ``[irmc] snmp_port = 161``
+     - ``(PortOpt) SNMP port``
+   * - ``[irmc] snmp_security = None``
+     - ``(StrOpt) SNMP security name. Required for version "v3"``
+   * - ``[irmc] snmp_version = v2c``
+     - ``(StrOpt) SNMP protocol version``
+   * - ``[ironic_lib] fatal_exception_format_errors = False``
+     - ``(BoolOpt) Make exception message format errors fatal.``
+   * - ``[ironic_lib] root_helper = sudo ironic-rootwrap /etc/ironic/rootwrap.conf``
+     - ``(StrOpt) Command that is prefixed to commands that are run as root. If not specified, no commands are run as root.``
    * - ``[oneview] allow_insecure_connections = False``
      - ``(BoolOpt) Option to allow insecure connection with OneView``
    * - ``[oneview] manager_url = None``
@@ -31,7 +67,9 @@ New, updated, and deprecated options in Mitaka for Bare metal service
    * - ``[oneview] username = None``
      - ``(StrOpt) OneView username to be used``
    * - ``[pxe] ip_version = 4``
-     - ``(StrOpt) The IP version that will be used for PXE booting. Can be either 4 or 6. Defaults to 4. EXPERIMENTAL``
+     - ``(StrOpt) The IP version that will be used for PXE booting. Defaults to 4. EXPERIMENTAL``
+   * - ``[pxe] ipxe_timeout = 0``
+     - ``(IntOpt) Timeout value (in seconds) for downloading an image via iPXE. Defaults to 0 (no timeout)``
    * - ``[snmp] reboot_delay = 0``
      - ``(IntOpt) Time (in seconds) to sleep between when rebooting (powering off and on again)``
    * - ``[ssh] get_vm_name_attempts = 3``
