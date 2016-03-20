@@ -17,7 +17,7 @@ includes the following components:
   Project networks provide connectivity to instances for a particular
   project. Regular (non-privileged) users can manage project networks
   within the allocation that an administrator or operator defines for
-  for them. Project networks can use VLAN or VXLAN transport methods
+  them. Project networks can use VLAN or VXLAN transport methods
   depending on the allocation. Project networks generally use private
   IP address ranges (RFC1918) and lack connectivity to external networks
   such as the Internet. Networking refers to IP addresses on project
