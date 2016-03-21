@@ -152,7 +152,7 @@ HTTP server to handle requests.
               ...
               verbose = True
 
-   .. only:: obs or rdo or ubuntu
+   .. only:: rdo or ubuntu
 
       4. Populate the Identity service database:
 
