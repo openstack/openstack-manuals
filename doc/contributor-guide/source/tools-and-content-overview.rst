@@ -68,7 +68,7 @@ information about Speciality Teams, including how to get involved, see:
    such as the configuration option tables and the CLI reference information.
    You will see the following warning in the source file: **<!-- This file is
    automatically generated, do not edit -->**. When you see this, you can still
-   update the file using the `openstack-doc-tools`_ tool kit.
+   update the file using the :ref:`doc-tools` tool kit.
 
 .. list-table::
    :header-rows: 1
@@ -142,6 +142,5 @@ The release notes are available in the Git repository.
 .. _`development workflow`: http://docs.openstack.org/infra/manual/developers.html#development-workflow
 .. _`Speciality Teams`: https://wiki.openstack.org/wiki/Documentation/SpecialityTeams
 .. _`documentation cross-project liaisons`: https://wiki.openstack.org/wiki/CrossProjectLiaisons#Documentation
-.. _`openstack-doc-tools`: http://git.openstack.org/cgit/openstack/openstack-doc-tools/tree/README.rst
 .. _`Sphinx documentation`: http://sphinx-doc.org/rest.html
 .. _`Transition Guide`: http://docbook.org/docs/howto/

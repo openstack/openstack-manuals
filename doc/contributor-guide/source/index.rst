@@ -34,6 +34,7 @@ Contents
    blueprints-and-specs.rst
    json-conventions.rst
    ui-text-guidelines.rst
+   doc-tools.rst
    common/glossary.rst
 
 Search in this guide
