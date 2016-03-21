@@ -233,13 +233,13 @@ Install and configure components
            default_store = file
            filesystem_store_datadir = /var/lib/glance/images/
 
-      * In the ``[DEFAULT]`` section, configure the ``noop``
+      * In the ``[oslo_messaging_rabbit]`` section, configure the ``noop``
         notification driver to disable notifications because
         they only pertain to the optional Telemetry service:
 
         .. code-block:: ini
 
-           [DEFAULT]
+           [oslo_messaging_rabbit]
            ...
            driver = noop
 
