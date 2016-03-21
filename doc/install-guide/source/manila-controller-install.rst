@@ -5,7 +5,7 @@ Install and configure controller node
 
 This section describes how to install and configure the Shared File Systems
 service, code-named manila, on the controller node. This service requires at
-least one additional share node that manages file storage back-ends.
+least one additional share node that manages file storage drivers.
 
 Prerequisites
 -------------
@@ -225,7 +225,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper install openstack-manila-api openstack-manila-scheduler python-manilaclient
+         # zypper install openstack-manila-api openstack-manila-scheduler
 
 .. only:: rdo
 
@@ -233,7 +233,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install openstack-manila python-manilaclient
+         # yum install openstack-manila
 
 .. only:: ubuntu or debian
 
@@ -241,7 +241,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install manila-api manila-scheduler python-manilaclient
+         # apt-get install manila-api manila-scheduler
 
       .. only:: debian
 
@@ -272,7 +272,7 @@ Install and configure components
 
               [database]
               ...
-              connection = mysql+pymysql://manila:manila_DBPASS@controller/manila
+              connection = mysql+pymysql://manila:MANILA_DBPASS@controller/manila
 
         Replace ``MANILA_DBPASS`` with the password you chose for the
         Share File System database.
@@ -302,9 +302,7 @@ Install and configure components
            [DEFAULT]
            ...
            default_share_type = default_share_type
-           share_name_template = share-%s
            rootwrap_config = /etc/manila/rootwrap.conf
-           api_paste_config = /etc/manila/api-paste.ini
 
       * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
         configure Identity service access:
@@ -317,9 +315,10 @@ Install and configure components
 
            [keystone_authtoken]
            ...
+           memcached_servers = controller:11211
            auth_uri = http://controller:5000
            auth_url = http://controller:35357
-           auth_plugin = password
+           auth_type = password
            project_domain_name = default
            user_domain_name = default
            project_name = service
@@ -346,7 +345,7 @@ Install and configure components
 
            [oslo_concurrency]
            ...
-           lock_path = /var/lock/manila
+           lock_path = /var/lib/manila/tmp
 
 .. only:: rdo or ubuntu
 
@@ -361,30 +360,30 @@ Finalize installation
 
 .. only:: obs or rdo
 
-   #. Start the Share File System services and configure them to start when
-      the system boots:
+   * Start the Share File System services and configure them to start when
+     the system boots:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # systemctl enable openstack-manila-api.service openstack-manila-scheduler.service
-         # systemctl start openstack-manila-api.service openstack-manila-scheduler.service
+        # systemctl enable openstack-manila-api.service openstack-manila-scheduler.service
+        # systemctl start openstack-manila-api.service openstack-manila-scheduler.service
 
 .. only:: ubuntu or debian
 
-   #. Restart the Share File Systems services:
+   * Restart the Share File Systems services:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # service manila-scheduler restart
-         # service manila-api restart
+        # service manila-scheduler restart
+        # service manila-api restart
 
 .. only:: ubuntu
 
-   3. By default, the Ubuntu packages create an SQLite database.
+   * By default, the Ubuntu packages create an SQLite database.
 
-      Because this configuration uses an SQL database server,
-      you can remove the SQLite database file:
+     Because this configuration uses an SQL database server,
+     you can remove the SQLite database file:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # rm -f /var/lib/manila/manila.sqlite
+        # rm -f /var/lib/manila/manila.sqlite
