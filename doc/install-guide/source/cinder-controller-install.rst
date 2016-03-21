@@ -337,7 +337,7 @@ Install and configure components
            ...
            lock_path = /var/lib/cinder/tmp
 
-.. only:: obs or rdo or ubuntu
+.. only:: rdo or ubuntu
 
    3. Populate the Block Storage database:
 
