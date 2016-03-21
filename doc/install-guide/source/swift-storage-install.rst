@@ -203,10 +203,3 @@ Install and configure components
       .. code-block:: console
 
          # chown -R root:swift /srv/node
-
-   6. Create the ``recon`` directory and ensure proper ownership of it:
-
-      .. code-block:: console
-
-         # mkdir -p /var/cache/swift
-         # chown -R root:swift /var/cache/swift
