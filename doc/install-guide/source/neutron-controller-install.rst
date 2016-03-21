@@ -290,15 +290,6 @@ Finalize installation
 
 .. only:: obs
 
-   #. The Networking service initialization scripts expect the variable
-      ``NEUTRON_PLUGIN_CONF`` in the ``/etc/sysconfig/neutron`` file to
-      reference the ML2 plug-in configuration file. Ensure that the
-      ``/etc/sysconfig/neutron`` file contains the following:
-
-      .. code-block:: console
-
-         NEUTRON_PLUGIN_CONF="/etc/neutron/plugins/ml2/ml2_conf.ini"
-
    #. Restart the Compute API service:
 
       .. code-block:: console
