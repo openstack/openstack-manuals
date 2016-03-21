@@ -2,6 +2,11 @@
 Create and manage object containers
 ===================================
 
+OpenStack Object Storage (swift) is used for redundant, scalable data storage
+using clusters of standardized servers to store petabytes of accessible data.
+It is a long-term storage system for large amounts of static data which can be
+retrieved and updated.
+
 OpenStack Object Storage provides a distributed, API-accessible storage
 platform that can be integrated directly into an application or used to
 store any type of file, including VM images, backups, archives, or media
