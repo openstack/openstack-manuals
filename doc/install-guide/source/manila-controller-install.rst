@@ -348,7 +348,7 @@ Install and configure components
            ...
            lock_path = /var/lock/manila
 
-.. only:: obs or rdo or ubuntu
+.. only:: rdo or ubuntu
 
    3. Populate the Share File System database:
 
