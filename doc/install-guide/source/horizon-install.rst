@@ -84,7 +84,7 @@ Install and configure components
 
          # cp /etc/apache2/conf.d/openstack-dashboard.conf.sample \
            /etc/apache2/conf.d/openstack-dashboard.conf
-         # a2enmod rewrite;a2enmod ssl;a2enmod wsgi
+         # a2enmod rewrite
 
    3. Edit the
       ``/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py``
