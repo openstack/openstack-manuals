@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: End User Guide 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-15 06:09+0000\n"
+"POT-Creation-Date: 2016-03-21 06:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -968,11 +968,12 @@ msgstr ""
 msgid ""
 "An image built with a recent version of the cloud-init package can "
 "automatically access metadata passed through the configuration drive. The "
-"cloud-init package version 0.7.1 works with Ubuntu and Fedora based images, "
-"such as Red Hat Enterprise Linux."
+"cloud-init package version 0.7.1 works with Ubuntu, Fedora based images "
+"(such as Red Hat Enterprise Linux) and openSUSE based images (such as SUSE "
+"Linux Enterprise Server)."
 msgstr ""
 
-#: ../cli_config_drive.rst:58
+#: ../cli_config_drive.rst:59
 msgid ""
 "If an image does not have the cloud-init package installed, you must "
 "customize the image to run a script that mounts the configuration drive on "
@@ -981,24 +982,24 @@ msgid ""
 "data is organized on the configuration drive."
 msgstr ""
 
-#: ../cli_config_drive.rst:64
+#: ../cli_config_drive.rst:65
 msgid ""
 "If you use Xen with a configuration drive, use the ``xenapi_disable_agent`` "
 "configuration parameter to disable the agent."
 msgstr ""
 
-#: ../cli_config_drive.rst:68
+#: ../cli_config_drive.rst:69
 msgid "**Guidelines**"
 msgstr ""
 
-#: ../cli_config_drive.rst:70
+#: ../cli_config_drive.rst:71
 msgid ""
 "Do not rely on the presence of the EC2 metadata in the configuration drive, "
 "because this content might be removed in a future release. For example, do "
 "not rely on files in the ``ec2`` directory."
 msgstr ""
 
-#: ../cli_config_drive.rst:74
+#: ../cli_config_drive.rst:75
 msgid ""
 "When you create images that access configuration drive data and multiple "
 "directories are under the ``openstack`` directory, always select the highest "
@@ -1008,36 +1009,36 @@ msgid ""
 "present."
 msgstr ""
 
-#: ../cli_config_drive.rst:82
+#: ../cli_config_drive.rst:83
 msgid "Enable and access the configuration drive"
 msgstr ""
 
-#: ../cli_config_drive.rst:84
+#: ../cli_config_drive.rst:85
 msgid ""
 "To enable the configuration drive, pass the ``--config-drive true`` "
 "parameter to the :command:`nova boot` command."
 msgstr ""
 
-#: ../cli_config_drive.rst:87
+#: ../cli_config_drive.rst:88
 msgid ""
 "The following example enables the configuration drive and passes user data, "
 "two files, and two key/value metadata pairs, all of which are accessible "
 "from the configuration drive:"
 msgstr ""
 
-#: ../cli_config_drive.rst:99
+#: ../cli_config_drive.rst:100
 msgid ""
 "You can also configure the Compute service to always create a configuration "
 "drive by setting the following option in the ``/etc/nova/nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:109
+#: ../cli_config_drive.rst:110
 msgid ""
 "If a user passes the ``--config-drive true`` flag to the :command:`nova "
 "boot` command, an administrator cannot disable the configuration drive."
 msgstr ""
 
-#: ../cli_config_drive.rst:113
+#: ../cli_config_drive.rst:114
 msgid ""
 "If your guest operating system supports accessing disk by label, you can "
 "mount the configuration drive as the ``/dev/disk/by-label/"
@@ -1045,56 +1046,56 @@ msgid ""
 "configuration drive has the ``config-2`` volume label:"
 msgstr ""
 
-#: ../cli_config_drive.rst:126
+#: ../cli_config_drive.rst:127
 msgid ""
 "Ensure that you use at least version 0.3.1 of CirrOS for configuration drive "
 "support."
 msgstr ""
 
-#: ../cli_config_drive.rst:129
+#: ../cli_config_drive.rst:130
 msgid ""
 "If your guest operating system does not use ``udev``, the ``/dev/disk/by-"
 "label`` directory is not present."
 msgstr ""
 
-#: ../cli_config_drive.rst:132
+#: ../cli_config_drive.rst:133
 msgid ""
 "You can use the :command:`blkid` command to identify the block device that "
 "corresponds to the configuration drive. For example, when you boot the "
 "CirrOS image with the ``m1.tiny`` flavor, the device is ``/dev/vdb``:"
 msgstr ""
 
-#: ../cli_config_drive.rst:145
+#: ../cli_config_drive.rst:146
 msgid "Once identified, you can mount the device:"
 msgstr ""
 
-#: ../cli_config_drive.rst:153
+#: ../cli_config_drive.rst:154
 msgid "Configuration drive contents"
 msgstr ""
 
-#: ../cli_config_drive.rst:155
+#: ../cli_config_drive.rst:156
 msgid ""
 "In this example, the contents of the configuration drive are as follows::"
 msgstr ""
 
-#: ../cli_config_drive.rst:169
+#: ../cli_config_drive.rst:170
 msgid ""
 "The files that appear on the configuration drive depend on the arguments "
 "that you pass to the :command:`nova boot` command."
 msgstr ""
 
-#: ../cli_config_drive.rst:173
+#: ../cli_config_drive.rst:174
 msgid "OpenStack metadata format"
 msgstr ""
 
-#: ../cli_config_drive.rst:175
+#: ../cli_config_drive.rst:176
 msgid ""
 "The following example shows the contents of the ``openstack/2012-08-10/"
 "meta_data.json`` and ``openstack/latest/meta_data.json`` files. These files "
 "are identical. The file contents are formatted for readability."
 msgstr ""
 
-#: ../cli_config_drive.rst:207
+#: ../cli_config_drive.rst:208
 msgid ""
 "Note the effect of the ``--file /etc/network/interfaces=/home/myuser/"
 "instance-interfaces`` argument that was passed to the :command:`nova boot` "
@@ -1103,22 +1104,22 @@ msgid ""
 "``/etc/network/interfaces`` in the ``meta_data.json`` file."
 msgstr ""
 
-#: ../cli_config_drive.rst:215
+#: ../cli_config_drive.rst:216
 msgid "EC2 metadata format"
 msgstr ""
 
-#: ../cli_config_drive.rst:217
+#: ../cli_config_drive.rst:218
 msgid ""
 "The following example shows the contents of the ``ec2/2009-04-04/meta-data."
 "json`` and the ``ec2/latest/meta-data.json`` files. These files are "
 "identical. The file contents are formatted to improve readability."
 msgstr ""
 
-#: ../cli_config_drive.rst:259
+#: ../cli_config_drive.rst:260
 msgid "User data"
 msgstr ""
 
-#: ../cli_config_drive.rst:261
+#: ../cli_config_drive.rst:262
 msgid ""
 "The ``openstack/2012-08-10/user_data``, ``openstack/latest/user_data``, "
 "``ec2/2009-04-04/user-data``, and ``ec2/latest/user-data`` file are present "
@@ -1126,25 +1127,25 @@ msgid ""
 "passed to the :command:`nova boot` command."
 msgstr ""
 
-#: ../cli_config_drive.rst:267
+#: ../cli_config_drive.rst:268
 msgid "Configuration drive format"
 msgstr ""
 
-#: ../cli_config_drive.rst:269
+#: ../cli_config_drive.rst:270
 msgid ""
 "The default format of the configuration drive as an ISO 9660 file system. To "
 "explicitly specify the ISO 9660 format, add the following line to the ``/etc/"
 "nova/nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:277
+#: ../cli_config_drive.rst:278
 msgid ""
 "By default, you cannot attach the configuration drive image as a CD drive "
 "instead of as a disk drive. To attach a CD drive, add the following line to "
 "the ``/etc/nova/nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:285
+#: ../cli_config_drive.rst:286
 msgid ""
 "For legacy reasons, you can configure the configuration drive to use VFAT "
 "format instead of ISO 9660. It is unlikely that you would require VFAT "
@@ -1153,11 +1154,11 @@ msgid ""
 "nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:295
+#: ../cli_config_drive.rst:296
 msgid "If you choose VFAT, the configuration drive is 64 MB."
 msgstr ""
 
-#: ../cli_config_drive.rst:299
+#: ../cli_config_drive.rst:300
 msgid ""
 "In current version (Liberty) of OpenStack Compute, live migration with "
 "``config_drive`` on local disk is forbidden due to the bug in libvirt of "

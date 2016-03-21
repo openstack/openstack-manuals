@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-16 06:09+0000\n"
+"POT-Creation-Date: 2016-03-21 06:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2213,152 +2213,34 @@ msgid ""
 "free floating IP address to the load balancer using ``floatingip-associate``:"
 msgstr ""
 
-#: ../adv-config-network-rbac.rst:3
-msgid "Role-Based Access Control for networks"
+#: ../adv-config-net-ip-availability.rst:3
+msgid "Network IP Availability plug-in extension"
 msgstr ""
 
-#: ../adv-config-network-rbac.rst:5
+#: ../adv-config-net-ip-availability.rst:5
 msgid ""
-"A new policy framework was added in Liberty that allows both operators and "
-"users to grant access to resources for specific projects. Currently, the "
-"only access that can be granted using this feature is regular port creation "
-"permissions on networks."
+"Network IP Availability is an information-only API extension that allows a "
+"user or process to determine the number of IP addresses that are consumed "
+"across networks and the allocation pools of their subnets. This extension "
+"was added to neutron in the Mitaka release."
 msgstr ""
 
-#: ../adv-config-network-rbac.rst:12
-msgid "Sharing a network with specific projects"
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:14
+#: ../adv-config-net-ip-availability.rst:10
 msgid ""
-"Sharing a network with a specific project is accomplished by creating a "
-"policy entry that permits the target project the ``access_as_shared`` action "
-"on that network."
+"This section illustrates how you can get the Network IP address availability "
+"through the command-line interface."
 msgstr ""
 
-#: ../adv-config-network-rbac.rst:18
-msgid "Create a network to share:"
+#: ../adv-config-net-ip-availability.rst:13
+msgid "Get Network IP address availability for all IPv4 networks:"
 msgstr ""
 
-#: ../adv-config-network-rbac.rst:43
-msgid ""
-"Create the policy entry using the :command:`rbac-create` command (In this "
-"example, the ID of the project we want to share with is "
-"``e28769db97d9449da658bc6931fcb683``):"
+#: ../adv-config-net-ip-availability.rst:26
+msgid "Get Network IP address availability for all IPv6 networks:"
 msgstr ""
 
-#: ../adv-config-network-rbac.rst:64
-msgid ""
-"The ``target-tenant`` parameter specifies the project that requires access "
-"to the network. The ``action`` parameter specifies what the project is "
-"allowed to do. The ``type`` parameter says that the target object is a "
-"network. The final parameter is the ID of the network we are granting access "
-"to."
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:70
-msgid ""
-"Project ``e28769db97d9449da658bc6931fcb683`` will now be able to see the "
-"network when running :command:`net-list` and :command:`net-show` and will "
-"also be able to create ports on that network. No other users (other than "
-"admins and the owner) will be able to see the network."
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:75
-msgid ""
-"To remove access for that project, delete the policy that allows it using "
-"the :command:`rbac-delete` command:"
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:83
-msgid ""
-"If that project has ports on the network, the server will prevent the policy "
-"from being deleted until the ports have been deleted:"
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:92
-msgid ""
-"This process can be repeated any number of times to share a network with an "
-"arbitrary number of projects."
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:96
-msgid "How the 'shared' flag relates to these entries"
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:98
-msgid ""
-"As introduced in other guide entries, neutron provides a means of making a "
-"network available to every project. This is accomplished using the "
-"``shared`` flag on the network:"
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:125
-msgid ""
-"This is the equivalent of creating a policy on the network that permits "
-"every project to perform the action ``access_as_shared`` on that network. "
-"Neutron treats them as the same thing, so the policy entry for that network "
-"should be visible using the :command:`rbac-list` command:"
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:140
-msgid "Use the :command:`rbac-show` command to see the details:"
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:157
-msgid ""
-"The output shows that the entry allows the action ``access_as_shared`` on "
-"object ``9a4af544-7158-456d-b180-95f2e11eaa8c`` of type ``network`` to "
-"target_tenant ``*``, which is a wildcard that represents all projects."
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:161
-msgid ""
-"Currently, the ``shared`` flag is just a mapping to the underlying RBAC "
-"policies for a network. Setting the flag to ``True`` on a network creates a "
-"wildcard RBAC entry. Setting it to ``False`` removes the wildcard entry."
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:166
-msgid ""
-"When you run :command:`net-list` or :command:`net-show`, the ``shared`` flag "
-"is calculated by the server based on the calling project and the RBAC "
-"entries for each network. If there is a wildcard entry, the ``shared`` flag "
-"is always set to ``True``. If there are only entries that share with "
-"specific projects, only the projects the network is shared to will see the "
-"flag as ``True`` and the rest will see the flag as ``False``."
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:176
-msgid "Preventing regular users from sharing networks with each other"
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:178
-msgid ""
-"The default ``policy.json`` file will not allow regular users to share "
-"networks with every other project using a wildcard; however, it will allow "
-"them to share networks with specific project IDs."
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:183
-msgid ""
-"If an operator wants to prevent normal users from doing this, the ``"
-"\"create_rbac_policy\":`` entry in ``policy.json`` can be adjusted from ``"
-"\"\"`` to ``\"rule:admin_only\"``."
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:189
-msgid "Limitations"
-msgstr ""
-
-#: ../adv-config-network-rbac.rst:191
-msgid ""
-"A non-admin user that shares a network with another project using this "
-"feature will not be able to see or delete the ports created under the other "
-"project. This is because the neutron database operations automatically limit "
-"database queries to objects owned by the requesting user's project unless "
-"that user is an admin or a service user. This issue is being tracked by the "
-"following bug: https://bugs.launchpad.net/neutron/+bug/1498790"
+#: ../adv-config-net-ip-availability.rst:39
+msgid "Get Network IP address availability statistics for a specific network:"
 msgstr ""
 
 #: ../adv-config-operational.rst:3
@@ -2586,6 +2468,225 @@ msgstr ""
 msgid ""
 "You can modify rules at runtime. Rule modifications will be propagated to "
 "any attached port."
+msgstr ""
+
+#: ../adv-config-rbac.rst:3
+msgid "Role-Based Access Control"
+msgstr ""
+
+#: ../adv-config-rbac.rst:5
+msgid ""
+"A new policy framework was added in Liberty that allows both operators and "
+"users to grant access to resources for specific projects."
+msgstr ""
+
+#: ../adv-config-rbac.rst:10
+msgid "Supported objects for sharing with specific projects"
+msgstr ""
+
+#: ../adv-config-rbac.rst:12
+msgid ""
+"Currently, the access that can be granted using this feature is supported by:"
+msgstr ""
+
+#: ../adv-config-rbac.rst:15
+msgid "Regular port creation permissions on networks (since Liberty)."
+msgstr ""
+
+#: ../adv-config-rbac.rst:16
+msgid "Binding QoS policies permissions to networks or ports (since Mitaka)."
+msgstr ""
+
+#: ../adv-config-rbac.rst:20
+msgid "Sharing an object with specific projects"
+msgstr ""
+
+#: ../adv-config-rbac.rst:22
+msgid ""
+"Sharing an object with a specific project is accomplished by creating a "
+"policy entry that permits the target project the ``access_as_shared`` action "
+"on that object."
+msgstr ""
+
+#: ../adv-config-rbac.rst:28
+msgid "Sharing a network with specific projects"
+msgstr ""
+
+#: ../adv-config-rbac.rst:30
+msgid "Create a network to share:"
+msgstr ""
+
+#: ../adv-config-rbac.rst:55
+msgid ""
+"Create the policy entry using the :command:`rbac-create` command (in this "
+"example, the ID of the project we want to share with is "
+"``e28769db97d9449da658bc6931fcb683``):"
+msgstr ""
+
+#: ../adv-config-rbac.rst:76
+msgid ""
+"The ``target-tenant`` parameter specifies the project that requires access "
+"to the network. The ``action`` parameter specifies what the project is "
+"allowed to do. The ``type`` parameter says that the target object is a "
+"network. The final parameter is the ID of the network we are granting access "
+"to."
+msgstr ""
+
+#: ../adv-config-rbac.rst:82
+msgid ""
+"Project ``e28769db97d9449da658bc6931fcb683`` will now be able to see the "
+"network when running :command:`net-list` and :command:`net-show` and will "
+"also be able to create ports on that network. No other users (other than "
+"admins and the owner) will be able to see the network."
+msgstr ""
+
+#: ../adv-config-rbac.rst:87
+msgid ""
+"To remove access for that project, delete the policy that allows it using "
+"the :command:`rbac-delete` command:"
+msgstr ""
+
+#: ../adv-config-rbac.rst:95
+msgid ""
+"If that project has ports on the network, the server will prevent the policy "
+"from being deleted until the ports have been deleted:"
+msgstr ""
+
+#: ../adv-config-rbac.rst:104
+msgid ""
+"This process can be repeated any number of times to share a network with an "
+"arbitrary number of projects."
+msgstr ""
+
+#: ../adv-config-rbac.rst:109
+msgid "Sharing a QoS policy with specific projects"
+msgstr ""
+
+#: ../adv-config-rbac.rst:111
+msgid "Create a QoS policy to share:"
+msgstr ""
+
+#: ../adv-config-rbac.rst:129
+msgid ""
+"Create the RBAC policy entry using the :command:`rbac-create` command (in "
+"this example, the ID of the project we want to share with is "
+"``a6bf6cfbcd1f4e32a57d2138b6bd41d1``):"
+msgstr ""
+
+#: ../adv-config-rbac.rst:150
+msgid ""
+"The ``target-tenant`` parameter specifies the project that requires access "
+"to the QoS policy. The ``action`` parameter specifies what the project is "
+"allowed to do. The ``type`` parameter says that the target object is a QoS "
+"policy. The final parameter is the ID of the QoS policy we are granting "
+"access to."
+msgstr ""
+
+#: ../adv-config-rbac.rst:156
+msgid ""
+"Project ``a6bf6cfbcd1f4e32a57d2138b6bd41d1`` will now be able to see the QoS "
+"policy when running :command:`qos-policy-list` and :command:`qos-policy-"
+"show` and will also be able to bind it to its ports or networks. No other "
+"users (other than admins and the owner) will be able to see the QoS policy."
+msgstr ""
+
+#: ../adv-config-rbac.rst:161
+msgid ""
+"To remove access for that project, delete the RBAC policy that allows it "
+"using the :command:`rbac-delete` command:"
+msgstr ""
+
+#: ../adv-config-rbac.rst:169
+msgid ""
+"If that project has ports or networks with the QoS policy applied to them, "
+"the server will not delete the RBAC policy from being deleted until the QoS "
+"policy is no longer in use:"
+msgstr ""
+
+#: ../adv-config-rbac.rst:179
+msgid ""
+"This process can be repeated any number of times to share a qos-policy with "
+"an arbitrary number of projects."
+msgstr ""
+
+#: ../adv-config-rbac.rst:184
+msgid "How the 'shared' flag relates to these entries"
+msgstr ""
+
+#: ../adv-config-rbac.rst:186
+msgid ""
+"As introduced in other guide entries, neutron provides a means of making an "
+"object (``network``, ``qos-policy``) available to every project. This is "
+"accomplished using the ``shared`` flag on the supported object:"
+msgstr ""
+
+#: ../adv-config-rbac.rst:213
+msgid ""
+"This is the equivalent of creating a policy on the network that permits "
+"every project to perform the action ``access_as_shared`` on that network. "
+"Neutron treats them as the same thing, so the policy entry for that network "
+"should be visible using the :command:`rbac-list` command:"
+msgstr ""
+
+#: ../adv-config-rbac.rst:230
+msgid "Use the :command:`rbac-show` command to see the details:"
+msgstr ""
+
+#: ../adv-config-rbac.rst:247
+msgid ""
+"The output shows that the entry allows the action ``access_as_shared`` on "
+"object ``9a4af544-7158-456d-b180-95f2e11eaa8c`` of type ``network`` to "
+"target_tenant ``*``, which is a wildcard that represents all projects."
+msgstr ""
+
+#: ../adv-config-rbac.rst:251
+msgid ""
+"Currently, the ``shared`` flag is just a mapping to the underlying RBAC "
+"policies for a network. Setting the flag to ``True`` on a network creates a "
+"wildcard RBAC entry. Setting it to ``False`` removes the wildcard entry."
+msgstr ""
+
+#: ../adv-config-rbac.rst:256
+msgid ""
+"When you run :command:`net-list` or :command:`net-show`, the ``shared`` flag "
+"is calculated by the server based on the calling project and the RBAC "
+"entries for each network. For QoS objects use :command:`qos-policy-list` or :"
+"command:`qos-policy-show` respectively. If there is a wildcard entry, the "
+"``shared`` flag is always set to ``True``. If there are only entries that "
+"share with specific projects, only the projects the object is shared to will "
+"see the flag as ``True`` and the rest will see the flag as ``False``."
+msgstr ""
+
+#: ../adv-config-rbac.rst:267
+msgid "Preventing regular users from sharing objects with each other"
+msgstr ""
+
+#: ../adv-config-rbac.rst:269
+msgid ""
+"The default ``policy.json`` file will not allow regular users to share "
+"objects with every other project using a wildcard; however, it will allow "
+"them to share objects with specific project IDs."
+msgstr ""
+
+#: ../adv-config-rbac.rst:274
+msgid ""
+"If an operator wants to prevent normal users from doing this, the ``"
+"\"create_rbac_policy\":`` entry in ``policy.json`` can be adjusted from ``"
+"\"\"`` to ``\"rule:admin_only\"``."
+msgstr ""
+
+#: ../adv-config-rbac.rst:280
+msgid "Limitations"
+msgstr ""
+
+#: ../adv-config-rbac.rst:282
+msgid ""
+"A non-admin user that shares a network with another project using this "
+"feature will not be able to see or delete the ports created under the other "
+"project. This is because the neutron database operations automatically limit "
+"database queries to objects owned by the requesting user's project unless "
+"that user is an admin or a service user. This issue is being tracked by the "
+"following bug: https://bugs.launchpad.net/neutron/+bug/1498790"
 msgstr ""
 
 #: ../adv-config-service-chaining.rst:3
@@ -5433,7 +5534,7 @@ msgstr ""
 msgid ""
 "Project networks provide connectivity to instances for a particular project. "
 "Regular (non-privileged) users can manage project networks within the "
-"allocation that an administrator or operator defines for for them. Project "
+"allocation that an administrator or operator defines for them. Project "
 "networks can use VLAN or VXLAN transport methods depending on the "
 "allocation. Project networks generally use private IP address ranges "
 "(RFC1918) and lack connectivity to external networks such as the Internet. "
