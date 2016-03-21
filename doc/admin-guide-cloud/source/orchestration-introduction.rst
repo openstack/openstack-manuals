@@ -4,13 +4,13 @@ Introduction
 
 The OpenStack Orchestration service, a tool for orchestrating clouds,
 automatically configures and deploys resources in stacks. The deployments can
-be simple, such as deploying WordPress on Ubuntu with an SQL back end. They can
-also be complex, such as starting a group of servers that auto scale by
-starting and stopping based on real-time CPU loading information from the
+be simple, such as deploying WordPress on Ubuntu with an SQL back end, or
+complex, such as starting a server group that auto scales by
+starting and stopping using real-time CPU loading information from the
 Telemetry service.
 
 Orchestration stacks are defined with templates, which are non-procedural
-documents that describe tasks in terms of resources, parameters, inputs,
+documents. Templates describe tasks in terms of resources, parameters, inputs,
 constraints, and dependencies. When the Orchestration service was originally
 introduced, it worked with AWS CloudFormation templates, which are in the JSON
 format.
