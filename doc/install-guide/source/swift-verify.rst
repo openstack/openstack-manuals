@@ -55,6 +55,17 @@ Verify operation of the Object Storage service.
                          Content-Type: text/plain; charset=utf-8
                         Accept-Ranges: bytes
 
+#. Create ``container1`` container:
+
+   .. code-block:: console
+
+      $ openstack container create container1
+      +---------------------------------------+------------+------------------------------------+
+      | account                               | container  | x-trans-id                         |
+      +---------------------------------------+------------+------------------------------------+
+      | AUTH_ed0b60bf607743088218b0a533d5943f | container1 | tx8c4034dc306c44dd8cd68-0056f00a4a |
+      +---------------------------------------+------------+------------------------------------+
+
 #. Upload a test file to the ``container1`` container:
 
    .. code-block:: console
