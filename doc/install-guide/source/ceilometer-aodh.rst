@@ -252,8 +252,8 @@ Install and configure components
         os_username = aodh
         os_tenant_name = service
         os_password = AODH_PASS
-        os_endpoint_type = internalURL
-        os_region_name = RegionOne
+        interface = internalURL
+        region_name = RegionOne
 
      Replace ``AODH_PASS`` with the password you chose for
      the ``aodh`` user in the Identity service.
