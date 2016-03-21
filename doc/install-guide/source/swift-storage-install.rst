@@ -202,4 +202,4 @@ Install and configure components
 
       .. code-block:: console
 
-         # chown -R root:swift /srv/node
+         # chown -R swift:swift /srv/node
