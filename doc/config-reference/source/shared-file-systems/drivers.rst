@@ -17,6 +17,7 @@ Share drivers
    drivers/lvm-driver.rst
    drivers/netapp-cluster-mode-driver.rst
    drivers/quobyte-driver.rst
+   drivers/zfs-on-linux-driver.rst
 
 
 To use different share drivers for the Shared File Systems service, use the
