@@ -85,7 +85,7 @@ MongoDB before proceeding further.
         +-----------+----------------------------------+
         | Field     | Value                            |
         +-----------+----------------------------------+
-        | domain_id | default                          |
+        | domain_id | e0353a670a9e496da891347c589539e9 |
         | enabled   | True                             |
         | id        | c859c96f57bd4989a8ea1a0b1d8ff7cd |
         | name      | ceilometer                       |

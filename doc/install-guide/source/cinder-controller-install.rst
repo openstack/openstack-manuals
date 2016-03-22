@@ -63,7 +63,7 @@ volumes to instances.
            +-----------+----------------------------------+
            | Field     | Value                            |
            +-----------+----------------------------------+
-           | domain_id | default                          |
+           | domain_id | e0353a670a9e496da891347c589539e9 |
            | enabled   | True                             |
            | id        | bb279f8ffc444637af38811a5e1f0562 |
            | name      | cinder                           |

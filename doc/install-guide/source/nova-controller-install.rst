@@ -65,7 +65,7 @@ Compute service, code-named nova, on the controller node.
            +-----------+----------------------------------+
            | Field     | Value                            |
            +-----------+----------------------------------+
-           | domain_id | default                          |
+           | domain_id | e0353a670a9e496da891347c589539e9 |
            | enabled   | True                             |
            | id        | 8c46e4760902464b889293a74a0c90a8 |
            | name      | nova                             |

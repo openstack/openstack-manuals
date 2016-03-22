@@ -59,7 +59,7 @@ must create a database, service credentials, and API endpoints.
         +-----------+----------------------------------+
         | Field     | Value                            |
         +-----------+----------------------------------+
-        | domain_id | default                          |
+        | domain_id | e0353a670a9e496da891347c589539e9 |
         | enabled   | True                             |
         | id        | 83a3990fc2144100ba0e2e23886d8acc |
         | name      | manila                           |

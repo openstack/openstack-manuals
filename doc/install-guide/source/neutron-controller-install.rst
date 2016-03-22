@@ -55,7 +55,7 @@ Install and configure controller node
            +-----------+----------------------------------+
            | Field     | Value                            |
            +-----------+----------------------------------+
-           | domain_id | default                          |
+           | domain_id | e0353a670a9e496da891347c589539e9 |
            | enabled   | True                             |
            | id        | b20a6692f77b4258926881bf831eb683 |
            | name      | neutron                          |
