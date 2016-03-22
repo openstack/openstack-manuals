@@ -19,16 +19,22 @@ command parameters.
 Debug PKI middleware
 ~~~~~~~~~~~~~~~~~~~~
 
+Problem
+-------
+
 If you receive an ``Invalid OpenStack Identity Credentials`` message when
-you talk to an OpenStack service, it might be caused by the changeover from
-UUID tokens to PKI tokens in the Grizzly release. Learn how to troubleshoot
-this error.
+you accessing and reaching an OpenStack service, it might be caused by
+the changeover from UUID tokens to PKI tokens in the Grizzly release.
 
 The PKI-based token validation scheme relies on certificates from
 Identity that are fetched through HTTP and stored in a local directory.
 The location for this directory is specified by the ``signing_dir``
-configuration option. In your services configuration file, look for a
-section like this:
+configuration option.
+
+Solution
+--------
+
+In your services configuration file, look for a section like this:
 
 .. code-block:: ini
 
@@ -138,19 +144,25 @@ different role for the operation.
 Debug signing key file errors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Problem
+-------
+
 If an error occurs when the signing key file opens, it is possible that
 the person who ran the :command:`keystone-manage pki_setup` command to
-generate certificates and keys did not use the correct user. When you
-run the :command:`keystone-manage pki_setup` command, Identity generates
-a set of certificates and keys in ``/etc/keystone/ssl*``, which is owned by
-``root:root``.
+generate certificates and keys did not use the correct user.
 
-This can present a problem when you run the Identity daemon under the
-keystone user account (nologin) when you try to run PKI. Unless you run
-the :command:`chown` command against the files ``keystone:keystone``, or run
-the :command:`keystone-manage pki_setup` command with the
-:option:`--keystone-user` and :option:`--keystone-group` parameters, you
-will get an error. For example:
+Solution
+--------
+
+When you run the :command:`keystone-manage pki_setup` command, Identity
+generates a set of certificates and keys in ``/etc/keystone/ssl*``, which
+is owned by ``root:root``. This can present a problem when you run the
+Identity daemon under the keystone user account (nologin) when you try
+to run PKI. Unless you run the :command:`chown` command against the
+files ``keystone:keystone``, or run the :command:`keystone-manage pki_setup`
+command with the :option:`--keystone-user` and
+:option:`--keystone-group` parameters, you will get an error.
+For example:
 
 .. code-block:: console
 
@@ -164,8 +176,16 @@ will get an error. For example:
 Flush expired tokens from the token database table
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Problem
+-------
+
 As you generate tokens, the token database table on the Identity server
-grows. To clear the token table, an administrative user must run the
+grows.
+
+Solution
+--------
+
+To clear the token table, an administrative user must run the
 :command:`keystone-manage token_flush` command to flush the tokens. When you
 flush tokens, expired tokens are deleted and traceability is eliminated.
 

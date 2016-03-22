@@ -90,6 +90,9 @@ Troubleshooting
 No valid host found error
 -------------------------
 
+Problem
+-------
+
 Sometimes ``/var/log/nova/nova-conductor.log`` contains the following error:
 
 .. code-block:: console
@@ -103,6 +106,9 @@ instance.
 This means there will be some mismatch between resources that the Compute
 service expects to find and resources that Bare Metal service advertised to
 the Compute service.
+
+Solution
+--------
 
 If you get this message, check the following:
 

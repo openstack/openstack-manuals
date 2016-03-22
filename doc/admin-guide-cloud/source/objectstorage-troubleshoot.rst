@@ -10,6 +10,14 @@ customization of logging, such as ``log_name``, ``log_facility``, and
 Drive failure
 ~~~~~~~~~~~~~
 
+Problem
+-------
+
+Drive failure can prevent Object Storage performing replication.
+
+Solution
+--------
+
 In the event that a drive has failed, the first step is to make sure the
 drive is unmounted. This will make it easier for Object Storage to work
 around the failure until it has been resolved. If the drive is going to
@@ -22,11 +30,20 @@ replicas that were on that drive to be replicated elsewhere until the
 drive is replaced. Once the drive is replaced, it can be re-added to the
 ring.
 
-You can look at error messages in the ``/var/log/kern.log`` file for hints of
-drive failure.
+You can look at error messages in the ``/var/log/kern.log`` file for
+hints of drive failure.
 
 Server failure
 ~~~~~~~~~~~~~~
+
+Problem
+-------
+
+The server is potentially offline, and may have failed, or require a
+reboot.
+
+Solution
+--------
 
 If a server is having hardware issues, it is a good idea to make sure
 the Object Storage services are not running. This will allow Object
@@ -47,6 +64,15 @@ different set of partitions than before.
 
 Detect failed drives
 ~~~~~~~~~~~~~~~~~~~~
+
+Problem
+-------
+
+When drives fail, it can be difficult to detect that a drive has failed,
+and the details of the failure.
+
+Solution
+--------
 
 It has been our experience that when a drive is about to fail, error
 messages appear in the ``/var/log/kern.log`` file. There is a script called
@@ -94,6 +120,15 @@ the following settings:
 
 Emergency recovery of ring builder files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Problem
+-------
+
+An emergency might prevent a successful backup from restoring the
+cluster to operational status.
+
+Solution
+--------
 
 You should always keep a backup of swift ring builder files. However, if
 an emergency occurs, this procedure may assist in returning your cluster

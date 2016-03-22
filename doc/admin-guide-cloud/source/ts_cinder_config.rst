@@ -96,75 +96,108 @@ assist in troubleshooting your Block Storage configuration.
    # syslog_log_facility=LOG_USER
    # log_config=<None>
 
-These common issues might occur during configuration. To correct, use
-these suggested solutions.
+These common issues might occur during configuration, and the following
+potential solutions describe how to address the issues.
 
--  Issues with ``state_path`` and ``volumes_dir`` settings.
+Issues with ``state_path`` and ``volumes_dir`` settings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   The OpenStack Block Storage uses ``tgtd`` as the default iSCSI helper
-   and implements persistent targets. This means that in the case of a
-   ``tgt`` restart or even a node reboot your existing volumes on that node
-   will be restored automatically with their original :term:`IQN`.
+Problem
+-------
 
-   In order to make this possible the iSCSI target information needs to
-   be stored in a file on creation that can be queried in case of
-   restart of the ``tgt daemon``. By default, Block Storage uses a
-   ``state_path`` variable, which if installing with Yum or APT should
-   be set to ``/var/lib/cinder/``. The next part is the ``volumes_dir``
-   variable, by default this just simply appends a ``volumes``
-   directory to the ``state_path``. The result is a file-tree
-   ``/var/lib/cinder/volumes/``.
+The OpenStack Block Storage uses ``tgtd`` as the default iSCSI helper
+and implements persistent targets. This means that in the case of a
+``tgt`` restart, or even a node reboot, your existing volumes on that
+node will be restored automatically with their original :term:`IQN`.
 
-   While the installer should handle all this, it can go wrong. If you have
-   trouble creating volumes and this directory does not exist you should
-   see an error message in the ``cinder-volume`` log indicating that the
-   ``volumes_dir`` does not exist, and it should provide information about
-   which path it was looking for.
+By default, Block Storage uses a ``state_path`` variable, which if
+installing with Yum or APT should be set to ``/var/lib/cinder/``.
+The next part is the ``volumes_dir`` variable, by default this appends
+a ``volumes`` directory to the ``state_path``. The result is a
+file-tree: ``/var/lib/cinder/volumes/``.
 
--  The persistent tgt include file.
+Solution
+--------
 
-   Along with the ``volumes_dir`` option, the iSCSI target driver also
-   needs to be configured to look in the correct place for the persistent
-   files. This is a simple entry in the ``/etc/tgt/conf.d`` file that you
-   should have set when you installed OpenStack. If issues occur, verify
-   that you have a ``/etc/tgt/conf.d/cinder.conf`` file.
+In order to ensure nodes are restored to their original :term:`IQN`,
+the iSCSI target information needs to be stored in a file on creation
+that can be queried in case of restart of the ``tgt daemon``. While the
+installer should handle all this, it can go wrong.
 
-   If the file is not present, create it with this command
+If you have trouble creating volumes and this directory does not exist
+you should see an error message in the ``cinder-volume`` log indicating
+that the ``volumes_dir`` does not exist, and it should provide
+information about which path it was looking for.
 
-   .. code-block:: console
+The persistent tgt include file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-      # echo 'include /var/lib/cinder/volumes/ *' >> /etc/tgt/conf.d/cinder.conf
+Problem
+-------
 
--  No sign of attach call in the ``cinder-api`` log.
+The Block Storage service may have issues locating the persistent
+``tgt include`` file. Along with the ``volumes_dir`` option, the
+iSCSI target driver also needs to be configured to look in the correct
+place for the persistent ``tgt include `` file. This is an entry
+in the ``/etc/tgt/conf.d`` file that should have been set during the
+OpenStack installation.
 
-   This is most likely going to be a minor adjustment to your ``nova.conf``
-   file. Make sure that your ``nova.conf`` has this entry:
+Solution
+--------
 
-   .. code-block:: ini
+If issues occur, verify that you have a ``/etc/tgt/conf.d/cinder.conf``
+file. If the file is not present, create it with:
 
-      volume_api_class=nova.volume.cinder.API
+.. code-block:: console
 
--  Failed to create iscsi target error in the ``cinder-volume.log`` file.
+   # echo 'include /var/lib/cinder/volumes/ *' >> /etc/tgt/conf.d/cinder.conf
 
-   .. code-block:: console
+No sign of attach call in the ``cinder-api`` log
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-      2013-03-12 01:35:43 1248 TRACE cinder.openstack.common.rpc.amqp \
-      ISCSITargetCreateFailed: \
-      Failed to create iscsi target for volume \
-      volume-137641b2-af72-4a2f-b243-65fdccd38780.
+Problem
+-------
 
-   You might see this error in ``cinder-volume.log`` after trying to
-   create a volume that is 1 GB. To fix this issue:
+The attach call is unavailble, or not appearing in the ``cinder-api`` log.
 
-   Change contents of the ``/etc/tgt/targets.conf`` from
-   ``include /etc/tgt/conf.d/*.conf`` to ``include /etc/tgt/conf.d/cinder_tgt.conf``,
-   as follows:
+Solution
+--------
 
-   .. code-block:: ini
+Adjust the ``nova.conf`` file, and make sure that your ``nova.conf``
+has this entry:
 
-      include /etc/tgt/conf.d/cinder_tgt.conf
-      include /etc/tgt/conf.d/cinder.conf
-      default-driver iscsi
+.. code-block:: ini
 
-   Restart ``tgt`` and ``cinder-*`` services so they pick up the new
-   configuration.
+   volume_api_class=nova.volume.cinder.API
+
+Failed to create iscsi target error in the ``cinder-volume.log`` file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Problem
+-------
+
+.. code-block:: console
+
+   2013-03-12 01:35:43 1248 TRACE cinder.openstack.common.rpc.amqp \
+   ISCSITargetCreateFailed: \
+   Failed to create iscsi target for volume \
+   volume-137641b2-af72-4a2f-b243-65fdccd38780.
+
+You might see this error in ``cinder-volume.log`` after trying to
+create a volume that is 1 GB.
+
+Solution
+--------
+
+To fix this issue, change the content of the ``/etc/tgt/targets.conf``
+file from ``include /etc/tgt/conf.d/*.conf`` to
+``include /etc/tgt/conf.d/cinder_tgt.conf``, as follows:
+
+.. code-block:: ini
+
+   include /etc/tgt/conf.d/cinder_tgt.conf
+   include /etc/tgt/conf.d/cinder.conf
+   default-driver iscsi
+
+Restart ``tgt`` and ``cinder-*`` services, so they pick up the new
+configuration.
