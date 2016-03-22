@@ -432,6 +432,8 @@ Install and configure components
         Replace ``HEAT_DOMAIN_PASS`` with the password you chose for the
         ``heat_domain_admin`` user in the Identity service.
 
+.. only:: rdo or ubuntu
+
    3. Populate the Orchestration database:
 
       .. code-block:: console
