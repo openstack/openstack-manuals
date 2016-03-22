@@ -229,8 +229,8 @@ Finalize installation
 
        .. code-block:: console
 
-          # systemctl enable openstack-manila-volume.service tgtd.service
-          # systemctl start openstack-manila-volume.service tgtd.service
+          # systemctl enable openstack-manila-share.service tgtd.service
+          # systemctl start openstack-manila-share.service tgtd.service
 
    .. only:: rdo
 
