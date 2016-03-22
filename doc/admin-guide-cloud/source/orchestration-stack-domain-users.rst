@@ -8,11 +8,11 @@ Stack domain users allow the Orchestration service to
 authorize and start the following operations within booted virtual
 machines:
 
-* Provide metadata to agents inside instances, which poll for changes
+* Provide metadata to agents inside instances. Agents poll for changes
   and apply the configuration that is expressed in the metadata to the
   instance.
 
-* Detect when an action is complete, typically software configuration
+* Detect when an action is complete. Typically, software configuration
   on a virtual machine after it is booted. Compute moves
   the VM state to "Active" as soon as it creates it, not when the
   Orchestration service has fully configured it.
@@ -25,22 +25,25 @@ The Orchestration service provides APIs that enable all of these
 operations, but all of those APIs require authentication.
 For example, credentials to access the instance that the agent
 is running upon. The heat-cfntools agents use signed requests,
-which require an ec2 key pair that is created through Identity.
-Then, the key pair is used to sign requests to the Orchestration
+which require an ec2 key pair created through Identity.
+The key pair is then used to sign requests to the Orchestration
 CloudFormation and CloudWatch compatible APIs, which are
 authenticated through signature validation. Signature validation
-uses the Identity ec2tokens extension. Stack domain users encapsulate
-all stack-defined users (users who are created as a result of data
-that is contained in an Orchestration template) in a separate domain.
-The separate domain is created specifically to contain data that is
-related to the Orchestration stacks only. A user is created which is
-the *domain admin*, and Orchestration uses that user to manage the
-lifecycle of the users in the stack *user domain*.
+uses the Identity ec2tokens extension.
+
+Stack domain users encapsulate all stack-defined users (users who are
+created as a result of data that is contained in an
+Orchestration template) in a separate domain.
+The separate domain is created specifically to contain data
+related to the Orchestration stacks only. A user is created, which is
+the *domain admin*, and Orchestration uses the *domain admin* to manage
+the lifecycle of the users in the stack *user domain*.
 
 Stack domain users configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To configure stack domain users, the following steps occur:
+To configure stack domain user, the Orchestration service completes the
+following tasks:
 
 #. A special OpenStack Identity service domain is created. For
    example, a domain that is called ``heat`` and the ID is set with the
@@ -122,7 +125,7 @@ The following steps are run during stack creation:
    documentation <identity_management>`.
 
 #. When API requests are processed, the Orchestration service performs
-   an internal lookup and allows stack details for a given stack to be
+   an internal lookup, and allows stack details for a given stack to be
    retrieved. Details are retrieved from the database for
    both the stack owner's project (the default
    API path to the stack) and the stack domain project, subject to the

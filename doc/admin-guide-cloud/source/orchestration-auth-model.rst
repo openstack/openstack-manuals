@@ -8,10 +8,10 @@ Orchestration authorization model
 The Orchestration authorization model defines the
 authorization process for requests during deferred operations.
 A common example is an auto-scaling group update. During
-the operation, the Orchestration service requests resources
-of other components (such as servers from Compute or networks
-from Networking) to extend or reduce the capacity of an
-auto-scaling group.
+the auto-scaling update operation, the Orchestration service
+requests resources of other components (such as servers from
+Compute or networks from Networking) to extend or reduce the
+capacity of an auto-scaling group.
 
 The Orchestration service provides the following authorization models:
 
@@ -24,14 +24,14 @@ Password authorization
 
 The Orchestration service supports password authorization.
 Password authorization requires that a user pass a
-username/password to the service. The Orchestration service
-stores the encrypted password in the database and uses it
-for deferred operations.
+username and password to the Orchestration service. Encrypted
+password are stored in the database, and used for deferred
+operations.
 
 Password authorization involves the following steps:
 
 #. A user requests stack creation, by providing a token and
-   username/password. The Dashboard or
+   username and password. The Dashboard or
    python-heatclient requests the token on the user's behalf.
 
 #. If the stack contains any resources that require deferred
@@ -41,7 +41,7 @@ Password authorization involves the following steps:
 #. The username/password are encrypted and stored in the Orchestration
    database.
 
-#. The stack is created.
+#. Orchestration creates a stack.
 
 #. Later, the Orchestration service retrieves the credentials and
    requests another token on behalf of the user. The token is not
@@ -63,15 +63,15 @@ with the following information:
 * The ID of the *trustee* (who you want to delegate to, in this case,
   the Orchestration service user).
 
-* The roles to be delegated. The roles are configurable through
-  the ``heat.conf`` file, but it must contain whatever roles
-  are required to perform the deferred operations on the user's behalf.
-  For example, launching an OpenStack Compute instance in response
-  to an auto-scaling event.
+* The roles to be delegated. Configure roles through
+  the ``heat.conf`` file. Ensure the configuration contains whatever
+  roles are required to perform the deferred operations on the
+  user's behalf. For example, launching an OpenStack Compute
+  instance in response to an auto-scaling event.
 
 * Whether to enable impersonation.
 
-Then, the OpenStack Identity service provides a *trust id*,
+The OpenStack Identity service provides a *trust id*,
 which is consumed by *only* the trustee to obtain a
 *trust scoped token*. This token is limited in scope,
 such that the trustee has limited access to those
