@@ -2,26 +2,26 @@
 Components
 ==========
 
-The components that enable Object Storage to deliver high availability,
-high durability, and high concurrency are:
+Object Storage uses the following components to deliver high
+availability, high durability, and high concurrency:
 
--  **Proxy servers.** Handle all of the incoming API requests.
+-  **Proxy servers** - Handle all of the incoming API requests.
 
--  **Rings.** Map logical names of data to locations on particular
+-  **Rings** - Map logical names of data to locations on particular
    disks.
 
--  **Zones.** Isolate data from other zones. A failure in one zone
-   doesn't impact the rest of the cluster because data is replicated
+-  **Zones** - Isolate data from other zones. A failure in one zone
+   does not impact the rest of the cluster as data replicates
    across zones.
 
--  **Accounts and containers.** Each account and container are
+-  **Accounts and containers** - Each account and container are
    individual databases that are distributed across the cluster. An
    account database contains the list of containers in that account. A
    container database contains the list of objects in that container.
 
--  **Objects.** The data itself.
+-  **Objects** - The data itself.
 
--  **Partitions.** A partition stores objects, account databases, and
+-  **Partitions** - A partition stores objects, account databases, and
    container databases and helps manage locations where data lives in
    the cluster.
 
@@ -38,7 +38,7 @@ Proxy servers
 
 Proxy servers are the public face of Object Storage and handle all of
 the incoming API requests. Once a proxy server receives a request, it
-determines the storage node based on the object's URL, for example,
+determines the storage node based on the object's URL, for example:
 https://swift.example.com/v1/account/container/object. Proxy servers
 also coordinate responses, handle failures, and coordinate timestamps.
 
@@ -47,14 +47,14 @@ needed based on projected workloads. A minimum of two proxy servers
 should be deployed for redundancy. If one proxy server fails, the others
 take over.
 
-For more information concerning proxy server configuration, please see the
+For more information concerning proxy server configuration, see
 `Configuration Reference
-<http://docs.openstack.org/liberty/config-reference/content/proxy-server-configuration.html>`__.
+<http://docs.openstack.org/liberty/config-reference/content/proxy-server-configuration.html>`_.
 
 Rings
 -----
 
-A ring represents a mapping between the names of entities stored on disk
+A ring represents a mapping between the names of entities stored on disks
 and their physical locations. There are separate rings for accounts,
 containers, and objects. When other components need to perform any
 operation on an object, container, or account, they need to interact
@@ -90,15 +90,14 @@ The ring is used by the proxy server and several background processes
 
 .. figure:: figures/objectstorage-ring.png
 
+These rings are externally managed. The server processes themselves
+do not modify the rings, they are instead given new rings modified by
+other tools.
 
-These rings are externally managed, in that the server processes
-themselves do not modify the rings, they are instead given new rings
-modified by other tools.
-
-The ring uses a configurable number of bits from an MD5 hash for a path
+The ring uses a configurable number of bits from an ``MD5`` hash for a path
 as a partition index that designates a device. The number of bits kept
 from the hash is known as the partition power, and 2 to the partition
-power indicates the partition count. Partitioning the full MD5 hash ring
+power indicates the partition count. Partitioning the full ``MD5`` hash ring
 allows other parts of the cluster to work in batches of items at once
 which ends up either more efficient or at least less complex than
 working with each item separately or the entire cluster all at once.
@@ -115,20 +114,13 @@ Zones
 -----
 
 Object Storage allows configuring zones in order to isolate failure
-boundaries. Each data replica resides in a separate zone, if possible.
+boundaries. If possible, each data replica resides in a separate zone.
 At the smallest level, a zone could be a single drive or a grouping of a
 few drives. If there were five object storage servers, then each server
 would represent its own zone. Larger deployments would have an entire
 rack (or multiple racks) of object servers, each representing a zone.
 The goal of zones is to allow the cluster to tolerate significant
 outages of storage servers without losing all replicas of the data.
-
-As mentioned earlier, everything in Object Storage is stored, by
-default, three times. Swift will place each replica
-"as-uniquely-as-possible" to ensure both high availability and high
-durability. This means that when choosing a replica location, Object
-Storage chooses a server in an unused zone before an unused server in a
-zone that already has a replica of the data.
 
 
 .. _objectstorage-zones-figure:
@@ -137,9 +129,6 @@ zone that already has a replica of the data.
 
 .. figure:: figures/objectstorage-zones.png
 
-
-When a disk fails, replica data is automatically distributed to the
-other zones to ensure there are three copies of the data.
 
 Accounts and containers
 -----------------------
@@ -164,7 +153,7 @@ database references each object.
 Partitions
 ----------
 
-A partition is a collection of stored data, including account databases,
+A partition is a collection of stored data. This includes account databases,
 container databases, and objects. Partitions are core to the replication
 system.
 
