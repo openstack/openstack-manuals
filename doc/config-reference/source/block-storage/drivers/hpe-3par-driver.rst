@@ -28,7 +28,7 @@ the HPE 3PAR storage system:
 
     * HPE 3PAR Operating System software version 3.2.1 MU2 or higher.
 
-    * python-3parclient version 4.1.0 or newer.
+    * python-3parclient version 4.2.0 or newer.
 
     * Array must have the Adaptive Flash Cache license installed.
 
@@ -54,7 +54,7 @@ the HPE 3PAR storage system:
 
 * One Common Provisioning Group (CPG).
 
-* Additionally, you must install the ``python-3parclient`` version 4.0.0 or
+* Additionally, you must install the ``python-3parclient`` version 4.2.0 or
   newer from the Python standard library on the system with the enabled Block
   Storage service volume drivers.
 
@@ -83,9 +83,11 @@ Supported operations
 
 * Manage and unmanage a snapshot.
 
-* Replicate volumes to managed and unmanaged targets.
+* Replicate host volumes.
 
-* Fail-over volumes to managed and unmanaged targets.
+* Fail-over host volumes.
+
+* Fail-back host volumes.
 
 * Create, delete, update, snapshot, and clone consistency groups.
 
