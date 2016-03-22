@@ -62,7 +62,7 @@ The process is:
   names using these reports:
 
   - http://russellbryant.net/openstack-stats/docs-reviewers-30.txt
-  - http://russellbryant.net/openstack-stats/docs-reviewers-90.txt and
+  - http://russellbryant.net/openstack-stats/docs-reviewers-90.txt
   - http://stackalytics.com/?module=openstack-manuals&metric=commits
 
 - The PTL then consults the existing core team with a list of names to be
@@ -96,7 +96,7 @@ done, follow the steps below to submit a patch review.
 #. Click *Reply* to vote and enter any comments about your review,
    then click *Post*.
 
-.. note:: The patch with WorkInProgress (WIP) status needs additional work
+.. note:: A patch with WorkInProgress (WIP) status needs additional work
           before it gets merged. Therefore, you may skip such a patch and
           review once it is ready. For more information, see
           `Work In Progress`_.
