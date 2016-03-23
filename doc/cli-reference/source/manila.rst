@@ -9,7 +9,7 @@ Shared file systems command-line client
 The manila client is the command-line interface (CLI) for
 the Shared file systems API and its extensions.
 
-This chapter documents :command:`manila` version ``1.8.0``.
+This chapter documents :command:`manila` version ``1.8.1``.
 
 For help on a specific :command:`manila` command, enter:
 
@@ -44,8 +44,7 @@ manila usage
                  [--os-cert <certificate>]
                  <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``absolute-limits``
   Print a list of absolute limits for a user.
@@ -509,8 +508,7 @@ manila access-allow
 
 Allow access to the share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the NAS share to modify.
@@ -522,8 +520,7 @@ Positional arguments
 ``<access_to>``
   Value that defines access.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--access-level <access_level>, --access_level <access_level>``
   Share access level ("rw" and "ro" access levels are
@@ -540,8 +537,7 @@ manila access-deny
 
 Deny access to a share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the NAS share to modify.
@@ -560,14 +556,12 @@ manila access-list
 
 Show access list for share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
@@ -598,8 +592,7 @@ manila cg-create
 
 Creates a new consistency group (Experimental).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Optional consistency group name. (Default=None)
@@ -631,14 +624,12 @@ manila cg-delete
 
 Remove one or more consistency groups (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistency_group>``
   Name or ID of the consistency group(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force``
   Attempt to force delete the consistency group
@@ -656,8 +647,7 @@ manila cg-list
 
 List consistency groups with filters (Experimental).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Display information from all tenants (Admin only).
@@ -684,14 +674,12 @@ manila cg-reset-state
 
 Explicitly update the state of a consistency group (Admin only, Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistency_group>``
   Name or ID of the consistency group state to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   Indicate which state to assign the consistency group.
@@ -710,8 +698,7 @@ manila cg-show
 
 Show details about a consistency group (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistency_group>``
   Name or ID of the consistency group.
@@ -728,14 +715,12 @@ manila cg-snapshot-create
 
 Creates a new consistency group snapshot (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistency_group>``
   Name or ID of the consistency group.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Optional consistency group snapshot name.
@@ -756,14 +741,12 @@ manila cg-snapshot-delete
 
 Remove one or more consistency group snapshots (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<cg_snapshot>``
   Name or ID of the consistency group snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force``
   Attempt to force delete the cg snapshot(s) (Default=False)
@@ -782,8 +765,7 @@ manila cg-snapshot-list
 
 List consistency group snapshots with filters (Experimental).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Display information from all tenants (Admin only).
@@ -814,14 +796,12 @@ manila cg-snapshot-members
 
 Get member details for a consistency group snapshot (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<cg_snapshot>``
   Name or ID of the consistency group snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--limit <limit>``
   Maximum number of shares to return. (Default=None)
@@ -840,14 +820,12 @@ manila cg-snapshot-reset-state
 
 Explicitly update the state of a consistency group (Admin only, Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<cg_snapshot>``
   Name or ID of the consistency group snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   Indicate which state to assign the consistency group.
@@ -866,8 +844,7 @@ manila cg-snapshot-show
 
 Show details about a consistency group snapshot (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<cg_snapshot>``
   Name or ID of the consistency group snapshot.
@@ -884,14 +861,12 @@ manila cg-snapshot-update
 
 Update a consistency group snapshot (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<cg_snapshot>``
   Name or ID of the cg snapshot to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Optional new name for the cg snapshot. (Default=None
@@ -911,14 +886,12 @@ manila cg-update
 
 Update a consistency group (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistency_group>``
   Name or ID of the consistency group to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Optional new name for the consistency group.
@@ -944,8 +917,7 @@ manila create
 
 Creates a new share (NFS, CIFS, CephFS, GlusterFS or HDFS).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share_protocol>``
   Share type (NFS, CIFS, CephFS, GlusterFS or HDFS).
@@ -953,8 +925,7 @@ Positional arguments
 ``<size>``
   Share size in GiB.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--snapshot-id <snapshot-id>``
   Optional snapshot ID to create the share from.
@@ -1024,14 +995,12 @@ manila delete
 
 Remove one or more shares.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share(s).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--consistency-group <consistency-group>,``
 
@@ -1063,8 +1032,7 @@ manila extend
 
 Increases the size of an existing share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of share to extend.
@@ -1083,8 +1051,7 @@ manila extra-specs-list
 
 Print a list of current 'share types and extra specs' (Admin Only).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
@@ -1101,8 +1068,7 @@ manila force-delete
 
 Attempt force-delete of share, regardless of state (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share(s) to force delete.
@@ -1128,8 +1094,7 @@ manila list
 
 List NAS shares with filters.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Display information from all tenants (Admin only).
@@ -1256,8 +1221,7 @@ manila manage
 
 Manage share not handled by Manila (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<service_host>``
   manage-share service host: some.host@driver#pool
@@ -1270,8 +1234,7 @@ Positional arguments
   10.0.0.1:/example_path, CIFS share such as:
   \\\\10.0.0.1\\example_cifs_share
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Optional share name. (Default=None)
@@ -1304,8 +1267,7 @@ manila metadata
 
 Set or delete metadata on a share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share to update metadata on.
@@ -1327,8 +1289,7 @@ manila metadata-show
 
 Show metadata of given share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share.
@@ -1344,8 +1305,7 @@ manila metadata-update-all
 
 Update all metadata of a share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share to update metadata on.
@@ -1364,8 +1324,7 @@ manila migration-cancel
 
 Cancels migration of a given share when copying (Admin only, Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of share to cancel migration.
@@ -1381,8 +1340,7 @@ manila migration-complete
 
 Completes migration for a given share (Admin only, Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of share to complete migration.
@@ -1399,8 +1357,7 @@ manila migration-get-progress
 Gets migration progress of a given share when copying (Admin only,
 Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share to get share migration progress
@@ -1419,8 +1376,7 @@ manila migration-start
 
 Migrates share to a new host (Admin only, Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of share to migrate.
@@ -1428,8 +1384,7 @@ Positional arguments
 ``<host#pool>``
   Destination host and pool.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force-host-copy <True|False>, --force_host_copy <True|False>``
   Enables or disables generic host-based force-
@@ -1452,8 +1407,7 @@ manila pool-list
 
 List all backend storage pools known to the scheduler (Admin only).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--host <host>``
   Filter results by host name. Regular expressions are
@@ -1482,8 +1436,7 @@ manila quota-class-show
 
 List the quotas for a quota class.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<class>``
   Name of quota class to list the quotas for.
@@ -1503,14 +1456,12 @@ manila quota-class-update
 
 Update the quotas for a quota class (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<class-name>``
   Name of quota class to set the quotas for.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--shares <shares>``
   New value for the "shares" quota.
@@ -1540,8 +1491,7 @@ manila quota-defaults
 
 List the default quotas for a tenant.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--tenant <tenant-id>``
   ID of tenant to list the default quotas for.
@@ -1558,8 +1508,7 @@ manila quota-delete
 Delete quota for a tenant/user. The quota will revert back to default (Admin
 only).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--tenant <tenant-id>``
   ID of tenant to delete quota for.
@@ -1578,8 +1527,7 @@ manila quota-show
 
 List the quotas for a tenant/user.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--tenant <tenant-id>``
   ID of tenant to list the quotas for.
@@ -1602,14 +1550,12 @@ manila quota-update
 
 Update the quotas for a tenant/user (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   UUID of tenant to set the quotas for.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--user <user-id>``
   ID of user to set the quotas for.
@@ -1646,8 +1592,7 @@ manila rate-limits
 
 Print a list of rate limits for a user.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
@@ -1664,14 +1609,12 @@ manila reset-state
 
 Explicitly update the state of a share (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   Indicate which state to assign the share. Options include
@@ -1689,14 +1632,12 @@ manila reset-task-state
 
 Explicitly update the task state of a share (Admin only, Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--task-state <task_state>, --task_state <task_state>, --state <task_state>``
   Indicate which task state to assign the share. Options
@@ -1725,15 +1666,13 @@ manila security-service-create
 
 Create security service used by tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<type>``
   Security service type: 'ldap', 'kerberos' or
   'active_directory'.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--dns-ip <dns_ip>``
   DNS IP address used inside tenant's network.
@@ -1767,8 +1706,7 @@ manila security-service-delete
 
 Delete security service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<security-service>``
   Security service name or ID to delete.
@@ -1791,8 +1729,7 @@ manila security-service-list
 
 Get a list of security services.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Display information from all tenants (Admin only).
@@ -1848,8 +1785,7 @@ manila security-service-show
 
 Show security service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<security-service>``
   Security service name or ID to show.
@@ -1869,14 +1805,12 @@ manila security-service-update
 
 Update security service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<security-service>``
   Security service name or ID to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--dns-ip <dns-ip>``
   DNS IP address used inside tenant's network.
@@ -1910,8 +1844,7 @@ manila service-disable
 
 Disables 'manila-share' or 'manila-scheduler' services (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name as 'example_host@example_backend'.
@@ -1930,8 +1863,7 @@ manila service-enable
 
 Enables 'manila-share' or 'manila-scheduler' services (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name as 'example_host@example_backend'.
@@ -1952,8 +1884,7 @@ manila service-list
 
 List all services (Admin only).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--host <hostname>``
   Name of host.
@@ -1985,14 +1916,12 @@ manila share-export-location-list
 
 List export locations of a given share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
@@ -2009,8 +1938,7 @@ manila share-export-location-show
 
 Show export location of the share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share.
@@ -2030,14 +1958,12 @@ manila share-instance-export-location-list
 
 List export locations of a given share instance.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<instance>``
   Name or ID of the share instance.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
@@ -2054,8 +1980,7 @@ manila share-instance-export-location-show
 
 Show export location for the share instance.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<instance>``
   Name or ID of the share instance.
@@ -2074,8 +1999,7 @@ manila share-instance-force-delete
 
 Force-delete the share instance, regardless of state (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<instance>``
   Name or ID of the instance(s) to force delete.
@@ -2092,8 +2016,7 @@ manila share-instance-list
 
 List share instances (Admin only).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--share-id <share_id>, --share_id <share_id>``
   Filter results by share ID.
@@ -2113,14 +2036,12 @@ manila share-instance-reset-state
 
 Explicitly update the state of a share instance (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<instance>``
   Name or ID of the share instance to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   Indicate which state to assign the instance. Options
@@ -2139,8 +2060,7 @@ manila share-instance-show
 
 Show details about a share instance (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<instance>``
   Name or ID of the share instance.
@@ -2160,8 +2080,7 @@ manila share-network-create
 
 Create description for network used by the tenant.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--nova-net-id <nova-net-id>,``
 
@@ -2210,8 +2129,7 @@ manila share-network-delete
 
 Delete share network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share-network>``
   Name or ID of share network to be deleted.
@@ -2239,8 +2157,7 @@ manila share-network-list
 
 Get a list of network info.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Display information from all tenants (Admin only).
@@ -2325,8 +2242,7 @@ manila share-network-security-service-add
 
 Associate security service with share network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share-network>``
   Share network name or ID.
@@ -2346,14 +2262,12 @@ manila share-network-security-service-list
 
 Get list of security services associated with a given share network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share-network>``
   Share network name or ID.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
@@ -2371,8 +2285,7 @@ manila share-network-security-service-remove
 
 Dissociate security service from share network.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share-network>``
   Share network name or ID.
@@ -2391,8 +2304,7 @@ manila share-network-show
 
 Get a description for network used by the tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share-network>``
   Name or ID of the share network to show.
@@ -2413,14 +2325,12 @@ manila share-network-update
 
 Update share network data.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share-network>``
   Name or ID of share network to update.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--nova-net-id <nova-net-id>,``
 
@@ -2471,14 +2381,12 @@ manila share-replica-create
 
 Create a share replica (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share to replicate.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--availability-zone <availability-zone>,``
 
@@ -2502,14 +2410,12 @@ manila share-replica-delete
 
 Remove one or more share replicas (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<replica>``
   ID of the share replica.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force``
   Attempt to force deletion of a replica on its backend. Using this
@@ -2527,8 +2433,7 @@ manila share-replica-list
 
 List share replicas (Experimental).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--share-id <share_id>, --share_id <share_id>, --si <share_id>``
   List replicas belonging to share.
@@ -2544,8 +2449,7 @@ manila share-replica-promote
 
 Promote specified replica to 'active' replica_state (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<replica>``
   ID of the share replica.
@@ -2563,14 +2467,12 @@ manila share-replica-reset-replica-state
 
 Explicitly update the 'replica_state' of a share replica (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<replica>``
   ID of the share replica to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--replica-state <replica_state>,``
 
@@ -2592,14 +2494,12 @@ manila share-replica-reset-state
 
 Explicitly update the 'status' of a share replica (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<replica>``
   ID of the share replica to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   Indicate which state to assign the replica. Options include
@@ -2617,8 +2517,7 @@ manila share-replica-resync
 
 Attempt to update the share replica with its 'active' mirror (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<replica>``
   ID of the share replica to resync.
@@ -2634,8 +2533,7 @@ manila share-replica-show
 
 Show details about a replica (Experimental).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<replica>``
   ID of the share replica.
@@ -2651,8 +2549,7 @@ manila share-server-delete
 
 Delete share server (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of share server.
@@ -2668,8 +2565,7 @@ manila share-server-details
 
 Show share server details (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of share server.
@@ -2688,8 +2584,7 @@ manila share-server-list
 
 List all share servers (Admin only).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--host <hostname>``
   Filter results by name of host.
@@ -2718,8 +2613,7 @@ manila share-server-show
 
 Show share server info (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of share server.
@@ -2735,8 +2629,7 @@ manila show
 
 Show details about a NAS share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the NAS share.
@@ -2752,8 +2645,7 @@ manila shrink
 
 Decreases the size of an existing share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of share to shrink.
@@ -2774,14 +2666,12 @@ manila snapshot-create
 
 Add a new snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share to snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force <True|False>``
   Optional flag to indicate whether to snapshot a share
@@ -2804,8 +2694,7 @@ manila snapshot-delete
 
 Remove a snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of the snapshot to delete.
@@ -2821,8 +2710,7 @@ manila snapshot-force-delete
 
 Attempt force-delete of snapshot, regardless of state (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of the snapshot to force delete.
@@ -2842,8 +2730,7 @@ manila snapshot-list
 
 List all the snapshots.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Display information from all tenants (Admin only).
@@ -2895,8 +2782,7 @@ manila snapshot-manage
 
 Manage share snapshot not handled by Manila (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share.
@@ -2904,8 +2790,7 @@ Positional arguments
 ``<provider_location>``
   Provider location of the snapshot on the backend.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Optional snapshot name (Default=None).
@@ -2931,8 +2816,7 @@ manila snapshot-rename
 
 Rename a snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of the snapshot to rename.
@@ -2940,8 +2824,7 @@ Positional arguments
 ``<name>``
   New name for the snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--description <description>``
   Optional snapshot description. (Default=None)
@@ -2957,14 +2840,12 @@ manila snapshot-reset-state
 
 Explicitly update the state of a snapshot (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of the snapshot to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   Indicate which state to assign the snapshot. Options
@@ -2983,8 +2864,7 @@ manila snapshot-show
 
 Show details about a snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of the snapshot.
@@ -3000,8 +2880,7 @@ manila snapshot-unmanage
 
 Unmanage one or more share snapshots (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of the snapshot(s).
@@ -3017,8 +2896,7 @@ manila type-access-add
 
 Adds share type access for the given project (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share_type>``
   Share type name or ID to add access for the given project.
@@ -3037,8 +2915,7 @@ manila type-access-list
 
 Print access information about the given share type (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share_type>``
   Filter results by share type name or ID.
@@ -3054,8 +2931,7 @@ manila type-access-remove
 
 Removes share type access for the given project (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share_type>``
   Share type name or ID to remove access for the given project.
@@ -3076,8 +2952,7 @@ manila type-create
 
 Create a new share type (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Name of the new share type.
@@ -3086,8 +2961,7 @@ Positional arguments
   Required extra specification. Valid values are
   'true'/'1' and 'false'/'0'
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--snapshot_support <snapshot_support>,``
 
@@ -3110,8 +2984,7 @@ manila type-delete
 
 Delete a specific share type (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   Name or ID of the share type to delete.
@@ -3127,8 +3000,7 @@ manila type-key
 
 Set or unset extra_spec for a share type (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<stype>``
   Name or ID of the share type.
@@ -3150,8 +3022,7 @@ manila type-list
 
 Print a list of available 'share types'.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all``
   Display all share types (Admin only).
@@ -3171,8 +3042,7 @@ manila unmanage
 
 Unmanage share (Admin only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share(s).
@@ -3190,14 +3060,12 @@ manila update
 
 Rename a share.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<share>``
   Name or ID of the share to rename.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   New name for the share.
