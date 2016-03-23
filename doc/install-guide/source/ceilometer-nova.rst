@@ -87,8 +87,8 @@ Install and configure components
         os_username = ceilometer
         os_tenant_name = service
         os_password = CEILOMETER_PASS
-        os_endpoint_type = internalURL
-        os_region_name = RegionOne
+        interface = internalURL
+        region_name = RegionOne
 
      Replace ``CEILOMETER_PASS`` with the password you chose for
      the ``ceilometer`` user in the Identity service.
