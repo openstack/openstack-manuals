@@ -53,5 +53,8 @@ Based on the topic your request refers to, use the following tags:
 [user-guides]
   End User Guide, Admin User Guide, Cloud Administrator Guide
 
+[WIP]
+  Commit is a work in progress
+
 [www]
   Web page contents
