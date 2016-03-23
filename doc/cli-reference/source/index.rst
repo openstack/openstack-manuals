@@ -25,9 +25,9 @@ Contents
    senlin
    nova
    magnum
+   sahara
    trove
    trove-misc
-   sahara
    designate
    keystone
    glance
