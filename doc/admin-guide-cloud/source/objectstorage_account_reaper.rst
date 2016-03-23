@@ -2,12 +2,11 @@
 Account reaper
 ==============
 
-In the background, the account reaper removes data from the deleted
-accounts.
+The purpose of the account reaper is to remove data from the deleted accounts.
 
 A reseller marks an account for deletion by issuing a ``DELETE`` request
 on the account's storage URL. This action sets the ``status`` column of
-the account\_stat table in the account database and replicas to
+the account_stat table in the account database and replicas to
 ``DELETED``, marking the account's data for deletion.
 
 Typically, a specific retention time or undelete are not provided.
@@ -15,8 +14,8 @@ However, you can set a ``delay_reaping`` value in the
 ``[account-reaper]`` section of the ``account-server.conf`` file to
 delay the actual deletion of data. At this time, to undelete you have to update
 the account database replicas directly, set the status column to an
-empty string and update the put\_timestamp to be greater than the
-delete\_timestamp.
+empty string and update the put_timestamp to be greater than the
+delete_timestamp.
 
 .. note::
 

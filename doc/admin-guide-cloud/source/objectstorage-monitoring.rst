@@ -2,8 +2,11 @@
 Object Storage monitoring
 =========================
 
-Excerpted from a blog post by `Darrell
-Bishop <http://swiftstack.com/blog/2012/04/11/swift-monitoring-with-statsd>`__
+.. note::
+
+   This section was excerpted from a blog post by `Darrell
+   Bishop <http://swiftstack.com/blog/2012/04/11/swift-monitoring-with-statsd>`_ and
+   has since been edited.
 
 An OpenStack Object Storage cluster is a collection of many daemons that
 work together across many nodes. With so many different components, you
@@ -11,30 +14,22 @@ must be able to tell what is going on inside the cluster. Tracking
 server-level meters like CPU utilization, load, memory consumption, disk
 usage and utilization, and so on is necessary, but not sufficient.
 
-What are different daemons are doing on each server? What is the volume
-of object replication on node8? How long is it taking? Are there errors?
-If so, when did they happen?
-
-In such a complex ecosystem, you can use multiple approaches to get the
-answers to these questions. This section describes several approaches.
-
 Swift Recon
 ~~~~~~~~~~~
 
 The Swift Recon middleware (see
-http://swift.openstack.org/admin_guide.html#cluster-telemetry-and-monitoring)
+`Defining Storage Policies <http://swift.openstack.org/admin_guide.html#cluster-telemetry-and-monitoring>`_)
 provides general machine statistics, such as load average, socket
-statistics, ``/proc/meminfo`` contents, and so on, as well as
-Swift-specific meters:
+statistics, ``/proc/meminfo`` contents, as well as Swift-specific meters:
 
--  The MD5 sum of each ring file.
+-  The ``MD5`` sum of each ring file.
 
 -  The most recent object replication time.
 
 -  Count of each type of quarantined file: Account, container, or
    object.
 
--  Count of "async\_pendings" (deferred container updates) on disk.
+-  Count of "async_pendings" (deferred container updates) on disk.
 
 Swift Recon is middleware that is installed in the object servers
 pipeline and takes one required option: A local cache directory. To
@@ -43,24 +38,23 @@ each object server. You access data by either sending HTTP requests
 directly to the object server or using the ``swift-recon`` command-line
 client.
 
-There are some good Object Storage cluster statistics but the general
+There are Object Storage cluster statistics but the typical
 server meters overlap with existing server monitoring systems. To get
 the Swift-specific meters into a monitoring system, they must be polled.
-Swift Recon essentially acts as a middleware meters collector. The
+Swift Recon acts as a middleware meters collector. The
 process that feeds meters to your statistics system, such as
-``collectd`` and ``gmond``, probably already runs on the storage node.
-So, you can choose to either talk to Swift Recon or collect the meters
+``collectd`` and ``gmond``, should already run on the storage node.
+You can choose to either talk to Swift Recon or collect the meters
 directly.
 
 Swift-Informant
 ~~~~~~~~~~~~~~~
 
-Florian Hines developed the Swift-Informant middleware (see
-https://github.com/pandemicsyn/swift-informant) to get real-time
-visibility into Object Storage client requests. It sits in the pipeline
-for the proxy server, and after each request to the proxy server, sends
-three meters to a StatsD server (see
-http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/):
+Swift-Informant middleware (see
+`swift-informant <https://github.com/pandemicsyn/swift-informant>_`) has
+real-time visibility into Object Storage client requests. It sits in the
+pipeline for the proxy server, and after each request to the proxy server it
+sends three meters to a ``StatsD`` server:
 
 -  A counter increment for a meter like ``obj.GET.200`` or
    ``cont.PUT.404``.
@@ -77,26 +71,24 @@ http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/):
 -  A counter increase by the bytes transferred for a meter like
    ``tfer.obj.PUT.201``.
 
-This is good for getting a feel for the quality of service clients are
-experiencing with the timing meters, as well as getting a feel for the
-volume of the various permutations of request server type, command, and
-response code. Swift-Informant also requires no change to core Object
+This is used for receiving information on the quality of service clients
+experience with the timing meters, as well as sensing the volume of the
+various modifications of a request server type, command, and response
+code. Swift-Informant requires no change to core Object
 Storage code because it is implemented as middleware. However, it gives
-you no insight into the workings of the cluster past the proxy server.
+no insight into the workings of the cluster past the proxy server.
 If the responsiveness of one storage node degrades, you can only see
-that some of your requests are bad, either as high latency or error
-status codes. You do not know exactly why or where that request tried to
-go. Maybe the container server in question was on a good node but the
-object server was on a different, poorly-performing node.
+that some of the requests are bad, either as high latency or error
+status codes.
 
 Statsdlog
 ~~~~~~~~~
 
-Florian's `Statsdlog <https://github.com/pandemicsyn/statsdlog>`__
+The `Statsdlog <https://github.com/pandemicsyn/statsdlog>`_
 project increments StatsD counters based on logged events. Like
-Swift-Informant, it is also non-intrusive, but statsdlog can track
+Swift-Informant, it is also non-intrusive, however statsdlog can track
 events from all Object Storage daemons, not just proxy-server. The
-daemon listens to a UDP stream of syslog messages and StatsD counters
+daemon listens to a UDP stream of syslog messages, and StatsD counters
 are incremented when a log line matches a regular expression. Meter
 names are mapped to regex match patterns in a JSON file, allowing
 flexible configuration of what meters are extracted from the log stream.
@@ -123,7 +115,7 @@ Swift StatsD logging
 
 StatsD (see
 http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/)
-was designed for application code to be deeply instrumented; meters are
+was designed for application code to be deeply instrumented. Meters are
 sent in real-time by the code that just noticed or did something. The
 overhead of sending a meter is extremely low: a ``sendto`` of one UDP
 packet. If that overhead is still too high, the StatsD client library
@@ -133,10 +125,10 @@ actual number when flushing meters upstream.
 To avoid the problems inherent with middleware-based monitoring and
 after-the-fact log processing, the sending of StatsD meters is
 integrated into Object Storage itself. The submitted change set (see
-https://review.openstack.org/#change,6058) currently reports 124 meters
+`<https://review.openstack.org/#change,6058>`_) currently reports 124 meters
 across 15 Object Storage daemons and the tempauth middleware. Details of
 the meters tracked are in the `Administrator's
-Guide <http://docs.openstack.org/developer/swift/admin_guide.html>`__.
+Guide <http://docs.openstack.org/developer/swift/admin_guide.html>`_.
 
 The sending of meters is integrated with the logging framework. To
 enable, configure ``log_statsd_host`` in the relevant config file. You
@@ -144,7 +136,7 @@ can also specify the port and a default sample rate. The specified
 default sample rate is used unless a specific call to a statsd logging
 method (see the list below) overrides it. Currently, no logging calls
 override the sample rate, but it is conceivable that some meters may
-require accuracy (sample\_rate == 1) while others may not.
+require accuracy (sample_rate == 1) while others may not.
 
 .. code-block:: ini
 
@@ -184,63 +176,53 @@ in ``self.logger``, has these new methods:
    Convenience method to record a timing meter whose value is "now"
    minus an existing timestamp.
 
-Note that these logging methods may safely be called anywhere you have a
-logger object. If StatsD logging has not been configured, the methods
-are no-ops. This avoids messy conditional logic each place a meter is
-recorded. These example usages show the new logging methods:
+.. note::
 
-.. code-block:: python
+   These logging methods may safely be called anywhere you have a
+   logger object. If StatsD logging has not been configured, the methods
+   are no-ops. This avoids messy conditional logic each place a meter is
+   recorded. These example usages show the new logging methods:
 
-   # swift/obj/replicator.py
-   def update(self, job):
-       # ...
-       begin = time.time()
-       try:
-           hashed, local_hash = tpool.execute(tpooled_get_hashes, job['path'],
-                   do_listdir=(self.replication_count % 10) == 0,
-                   reclaim_age=self.reclaim_age)
-           # See tpooled_get_hashes "Hack".
-           if isinstance(hashed, BaseException):
-               raise hashed
-           self.suffix_hash += hashed
-           self.logger.update_stats('suffix.hashes', hashed)
+   .. code-block:: python
+
+      # swift/obj/replicator.py
+      def update(self, job):
            # ...
-       finally:
-           self.partition_times.append(time.time() - begin)
-           self.logger.timing_since('partition.update.timing', begin)
+          begin = time.time()
+          try:
+              hashed, local_hash = tpool.execute(tpooled_get_hashes, job['path'],
+                      do_listdir=(self.replication_count % 10) == 0,
+                      reclaim_age=self.reclaim_age)
+              # See tpooled_get_hashes "Hack".
+              if isinstance(hashed, BaseException):
+                  raise hashed
+              self.suffix_hash += hashed
+              self.logger.update_stats('suffix.hashes', hashed)
+              # ...
+          finally:
+              self.partition_times.append(time.time() - begin)
+              self.logger.timing_since('partition.update.timing', begin)
 
-.. code-block:: python
+   .. code-block:: python
 
-   # swift/container/updater.py
-   def process_container(self, dbfile):
-       # ...
-       start_time = time.time()
-       # ...
-           for event in events:
-               if 200 <= event.wait() < 300:
-                   successes += 1
-               else:
-                   failures += 1
-           if successes > failures:
-               self.logger.increment('successes')
-               # ...
-           else:
-               self.logger.increment('failures')
-               # ...
-           # Only track timing data for attempted updates:
-           self.logger.timing_since('timing', start_time)
-       else:
-           self.logger.increment('no_changes')
-           self.no_changes += 1
-
-The development team of StatsD wanted to use the
-`pystatsd <https://github.com/sivy/py-statsd>`__ client library (not to
-be confused with a `similar-looking
-project <https://github.com/sivy/py-statsd>`__ also hosted on GitHub),
-but the released version on PyPI was missing two desired features the
-latest version in GitHub had: the ability to configure a meters prefix
-in the client object and a convenience method for sending timing data
-between ``now`` and a ``start`` timestamp you already have. So they just
-implemented a simple StatsD client library from scratch with the same
-interface. This has the nice fringe benefit of not introducing another
-external library dependency into Object Storage.
+      # swift/container/updater.py
+      def process_container(self, dbfile):
+          # ...
+          start_time = time.time()
+          # ...
+              for event in events:
+                  if 200 <= event.wait() < 300:
+                      successes += 1
+                  else:
+                      failures += 1
+              if successes > failures:
+                self.logger.increment('successes')
+                  # ...
+              else:
+                  self.logger.increment('failures')
+                  # ...
+              # Only track timing data for attempted updates:
+              self.logger.timing_since('timing', start_time)
+          else:
+              self.logger.increment('no_changes')
+              self.no_changes += 1
