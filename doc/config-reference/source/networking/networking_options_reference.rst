@@ -332,6 +332,23 @@ agent.
 
 .. include:: ../tables/neutron-l3_agent.rst
 
+Load Balancing service (octavia)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use the following options to configure the octavia service:
+
+.. include:: ../tables/octavia-api.rst
+.. include:: ../tables/octavia-auth_token.rst
+.. include:: ../tables/octavia-cache.rst
+.. include:: ../tables/octavia-common.rst
+.. include:: ../tables/octavia-cors.rst
+.. include:: ../tables/octavia-database.rst
+.. include:: ../tables/octavia-logging.rst
+.. include:: ../tables/octavia-rabbitmq.rst
+.. include:: ../tables/octavia-redis.rst
+.. include:: ../tables/octavia-rpc.rst
+.. include:: ../tables/octavia-zeromq.rst
+
 Logging
 ~~~~~~~
 
