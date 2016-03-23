@@ -40,7 +40,7 @@ function copy_to_branch {
         for f in $(find publish-docs/$BRANCH -name "*.html"); do
             sed -i -e "s|/draft/|/$BRANCH/|g" $f
         done
-        # Debian Install Guide for Liberty is not ready
+        # Debian Install Guide for Mitaka is not ready
         rm -rf publish-docs/$BRANCH/install-guide-debian
     fi
 }
@@ -72,7 +72,7 @@ fi
 if [ "$PUBLISH" = "publish" ] ; then
     openstack-doc-test --check-build --publish
     # For publishing to both /draft and /BRANCH
-    #copy_to_branch mitaka
+    copy_to_branch mitaka
 else
     openstack-doc-test --check-build
 fi
