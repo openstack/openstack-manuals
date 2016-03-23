@@ -40,29 +40,48 @@ these procedures on all nodes.
 
    .. warning::
 
-      It is recommended to disable EPEL when using RDO packages due to
-      some updates in EPEL breaking backwards compatibility. Or preferably
-      pin packages versions using the yum-versionlock plugin
+      We recommend disabling EPEL when using RDO packages due to updates
+      in EPEL breaking backwards compatibility. Or, preferably pin package
+      versions using the ``yum-versionlock`` plugin.
 
-   #. On RHEL, enable additional repositories using the subscription
-      manager:
+   .. note::
+
+      CentOS does not require the following steps.
+
+   #. On RHEL, register your system with Red Hat Subscription Management, using
+      your Customer Portal user name and password:
 
       .. code-block:: console
 
-         # subscription-manager repos --enable=rhel-7-server-optional-rpms
-         # subscription-manager repos --enable=rhel-7-server-extras-rpms
+         # subscription-manager register --username="USERNAME" --password="PASSWORD"
 
-      .. note::
+   #. Find entitlement pools containing the channels for your RHEL system:
 
-         CentOS does not require these repositories.
+      .. code-block:: console
+
+         # subscription-manager list --available
+
+   #. Use the pool identifiers found in the previous step to attach your RHEL
+      entitlements:
+
+      .. code-block:: console
+
+         # subscription-manager attach --pool="POOLID"
+
+   #. Enable required repositories:
+
+      .. code-block:: console
+
+         # subscription-manager repos --enable=rhel-7-server-optional-rpms \
+           --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms
 
 .. only:: rdo
 
    Enable the OpenStack repository
    -------------------------------
 
-   * On CentOS, the *extras* repository provides the RPM that enables the
-     OpenStack repository. CentOS includes the *extras* repository by
+   * On CentOS, the ``extras`` repository provides the RPM that enables the
+     OpenStack repository. CentOS includes the ``extras`` repository by
      default, so you can simply install the package to enable the OpenStack
      repository.
 
@@ -75,17 +94,21 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # yum install https://rdoproject.org/repos/openstack-liberty/rdo-release-mitaka.rpm
+        # yum install https://rdoproject.org/repos/rdo-release.rpm
 
    .. note::
 
-      For pre-release testing on CentOS or RHEL, use the delorean repositories:
+      For pre-release testing on CentOS or RHEL, install the
+      ``yum-plugin-priorities`` package so that the Delorean repository takes
+      precedence over the main RDO repositories, and use the Delorean
+      repositories:
 
       .. code-block:: console
 
          # yum install yum-plugin-priorities
-         # wget http://trunk.rdoproject.org/centos7/delorean-deps.repo
-         # wget http://trunk.rdoproject.org/centos7/current-passed-ci/delorean.repo
+         # cd /etc/yum.repos.d/
+         # curl -O http://trunk.rdoproject.org/centos7/delorean-deps.repo
+         # curl -O http://trunk.rdoproject.org/centos7/current-passed-ci/delorean.repo
 
 .. only:: obs
 
