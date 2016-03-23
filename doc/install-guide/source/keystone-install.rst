@@ -59,13 +59,11 @@ HTTP server to handle requests.
    .. include:: shared/note_configuration_vary_by_distribution.rst
 
    .. note::
-      In Kilo and newer releases, the keystone project deprecates eventlet
-      in favor of a separate web server with WSGI extensions. This guide uses
-      the Apache HTTP server with ``mod_wsgi`` to serve Identity service
-      requests on port 5000 and 35357. By default, the keystone service
-      still listens on ports 5000 and 35357. Therefore, this guide disables
-      the keystone service. The keystone project plans to remove eventlet
-      support in Mitaka.
+
+      This guide uses the Apache HTTP server with ``mod_wsgi`` to serve
+      Identity service requests on ports 5000 and 35357. By default, the
+      keystone service still listens on these ports. Therefore, this guide
+      manually disables the keystone service.
 
    .. only:: ubuntu
 
@@ -134,23 +132,6 @@ HTTP server to handle requests.
               [token]
               ...
               provider = fernet
-
-         * In the ``[revoke]`` section, configure the SQL revocation driver:
-
-           .. code-block:: ini
-
-              [revoke]
-              ...
-              driver = sql
-
-         * (Optional) To assist with troubleshooting, enable verbose logging in the
-           ``[DEFAULT]`` section:
-
-           .. code-block:: ini
-
-              [DEFAULT]
-              ...
-              verbose = True
 
    .. only:: rdo or ubuntu
 

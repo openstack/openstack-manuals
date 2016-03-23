@@ -39,7 +39,7 @@ services.
    .. code-block:: console
 
       $ openstack --os-auth-url http://controller:35357/v3 \
-        --os-project-domain-id default --os-user-domain-id default \
+        --os-project-domain-name default --os-user-domain-name default \
         --os-project-name admin --os-username admin token issue
       Password:
       +------------+-----------------------------------------------------------------+
@@ -62,7 +62,7 @@ services.
    .. code-block:: console
 
       $ openstack --os-auth-url http://controller:5000/v3 \
-        --os-project-domain-id default --os-user-domain-id default \
+        --os-project-domain-name default --os-user-domain-name default \
         --os-project-name demo --os-username demo token issue
       Password:
       +------------+-----------------------------------------------------------------+
