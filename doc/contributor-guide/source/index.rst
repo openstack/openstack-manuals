@@ -16,7 +16,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   first-timers-quickstart.rst
+   quickstart.rst
    additional-git-workflow.rst
    writing-style.rst
    topic-structure.rst
