@@ -845,7 +845,13 @@ Troubleshooting Networking
 Cannot reach floating IPs
 -------------------------
 
-If you cannot reach your instances through the floating IP address:
+Problem
+-------
+
+You cannot reach your instances through the floating IP address.
+
+Solution
+--------
 
 -  Check that the default security group allows ICMP (ping) and SSH
    (port 22), so that you can reach the instances:
@@ -910,18 +916,32 @@ If you cannot reach your instances through the floating IP address:
 Temporarily disable firewall
 ----------------------------
 
-To help debug networking issues with reaching VMs, you can disable the
-firewall by setting this option in ``/etc/nova/nova.conf``:
+Problem
+-------
+
+Networking issues prevent administrators accessing or reaching VM's
+through various pathways.
+
+Solution
+--------
+
+You can disable the firewall by setting this option
+in ``/etc/nova/nova.conf``:
 
 .. code-block:: ini
 
    firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
-We strongly recommend you remove this line to re-enable the firewall
-once your networking issues have been resolved.
+.. :warning:
+
+   We strongly recommend you remove this line to re-enable the firewall
+   once your networking issues have been resolved.
 
 Packet loss from instances to nova-network server (VLANManager mode)
 --------------------------------------------------------------------
+
+Problem
+-------
 
 If you can access your instances with ``SSH`` but the network to your instance
 is slow, or if you find that running certain operations are slower than
@@ -933,6 +953,9 @@ related to bridges. Certain settings can cause packets to be dropped
 between the VLAN interface (for example, ``vlan100``) and the associated
 bridge interface (for example, ``br100``) on the host running
 ``nova-network``.
+
+Solution
+--------
 
 One way to check whether this is the problem is to open three terminals
 and run the following commands:
@@ -988,8 +1011,15 @@ and run the following commands:
 KVM: Network connectivity works initially, then fails
 -----------------------------------------------------
 
+Problem
+-------
+
 With KVM hypervisors, instances running Ubuntu 12.04 sometimes lose
 network connectivity after functioning properly for a period of time.
+
+Solution
+--------
+
 Try loading the ``vhost_net`` kernel module as a workaround for this
 issue (see `bug
 #997978 <https://bugs.launchpad.net/ubuntu/+source/libvirt/+bug/997978/>`__)

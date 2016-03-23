@@ -124,22 +124,43 @@ The CORS middleware used by OpenStack provides verbose debug logging that
 should reveal most configuration problems. Here are some example log
 messages, and how to resolve them.
 
+Problem
+-------
+
 ``CORS request from origin 'http://example.com' not permitted.``
-  A request was received from the origin ``http://example.com``, however this
-  origin was not found in the permitted list. The cause may be a superfluous
-  port notation (ports 80 and 443 do not need to be specified). To correct,
-  ensure that the configuration property for this host is identical to the
-  host indicated in the log message.
+
+Solution
+--------
+
+A request was received from the origin ``http://example.com``, however this
+origin was not found in the permitted list. The cause may be a superfluous
+port notation (ports 80 and 443 do not need to be specified). To correct,
+ensure that the configuration property for this host is identical to the
+host indicated in the log message.
+
+Problem
+-------
 
 ``Request method 'DELETE' not in permitted list: GET,PUT,POST``
-  A user agent has requested permission to perform a DELETE request, however
-  the CORS configuration for the domain does not permit this. To correct, add
-  this method to the ``allow_methods`` configuration property.
+
+Solution
+--------
+
+A user agent has requested permission to perform a DELETE request, however
+the CORS configuration for the domain does not permit this. To correct, add
+this method to the ``allow_methods`` configuration property.
+
+Problem
+-------
 
 ``Request header 'X-Custom-Header' not in permitted list: X-Other-Header``
-  A request was received with the header ``X-Custom-Header``, which is not
-  permitted. Add this header to the ``allow_headers`` configuration
-  property.
+
+Solution
+--------
+
+A request was received with the header ``X-Custom-Header``, which is not
+permitted. Add this header to the ``allow_headers`` configuration
+property.
 
 Open your browser's console log
 -------------------------------

@@ -3,8 +3,9 @@
 
 .. _support-compute:
 
+====================
 Troubleshoot Compute
-~~~~~~~~~~~~~~~~~~~~
+====================
 
 Common problems for Compute typically involve misconfigured
 networking or credentials that are not sourced properly in the
@@ -18,7 +19,7 @@ This section shows you how to troubleshoot Compute.
 .. _log-files-for-openstack-compute:
 
 Compute service logging
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Compute stores a log file for each service in
 ``/var/log/nova``. For example, ``nova-compute.log``
@@ -44,7 +45,7 @@ configuration settings. In ``nova.conf``, include the
 .. _section_compute-GuruMed-reports:
 
 Guru Meditation reports
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 A Guru Meditation report is sent by the Compute service upon receipt of the
 ``SIGUSR2`` signal (``SIGUSR1`` before Mitaka). This report is a
@@ -82,7 +83,7 @@ For more information, see `Guru Meditation Reports <http://docs.openstack.org/de
 .. _compute-common-errors-and-fixes:
 
 Common errors and fixes for Compute
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The `ask.openstack.org <http://ask.openstack.org>`_ site offers a place to ask
 and answer questions, and you can also mark questions as frequently asked
@@ -90,10 +91,18 @@ questions. This section describes some errors people have posted previously.
 Bugs are constantly being fixed, so online resources are a great way to get
 the most up-to-date errors and fixes.
 
-**Credential errors, 401, and 403 forbidden errors**
+Credential errors, 401, and 403 forbidden errors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Missing credentials cause a ``403 forbidden`` error. To resolve
-this issue, use one of these methods:
+Problem
+-------
+
+Missing credentials cause a ``403 forbidden`` error.
+
+Solution
+--------
+
+To resolve this issue, use one of these methods:
 
 #. Manual method
     Gets the ``novarc`` file from the project ZIP file, saves existing
@@ -112,13 +121,22 @@ When your CA information is available, create your ZIP file.
 Also, check your HTTP proxy settings to see whether they cause problems with
 ``novarc`` creation.
 
-**Instance errors**
+Instance errors
+~~~~~~~~~~~~~~~
+
+Problem
+-------
 
 Sometimes a particular instance shows ``pending`` or you cannot SSH to
 it. Sometimes the image itself is the problem. For example, when you
 use flat manager networking, you do not have a DHCP server and certain
 images do not support interface injection; you cannot connect to
-them. The fix for this problem is to use an image that does support
+them.
+
+Solution
+--------
+
+To fix instance errors use an image that does support
 this method, such as Ubuntu, which obtains an IP address correctly
 with FlatManager network settings.
 
@@ -150,7 +168,11 @@ see if this command returns an error:
 
    # virsh create libvirt.xml
 
-**Empty log output for Linux instances**
+Empty log output for Linux instances
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Problem
+-------
 
 You can view the log output of running instances
 from either the :guilabel:`Log` tab of the dashboard or the output of
@@ -160,9 +182,13 @@ the `?` character).
 
 This occurs when the Compute service attempts to retrieve the log output
 of the instance via a serial console while the instance itself is not
-configured to send output to the console. To rectify this, append the
-following parameters to kernel arguments specified in the instance's boot
-loader:
+configured to send output to the console.
+
+Solution
+--------
+
+To rectify this, append the following parameters to kernel arguments
+specified in the instance's boot loader:
 
 .. code-block:: ini
 
@@ -175,12 +201,19 @@ service.
 .. _reset-state:
 
 Reset the state of an instance
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If an instance remains in an intermediate state, such as ``deleting``, you
-can use the :command:`nova reset-state` command to manually reset the state
-of an instance to an error state. You can then delete the instance. For
-example:
+Problem
+-------
+
+Instances can remain in an intermediate state, such as ``deleting``.
+
+Solution
+--------
+
+You can use the :command:`nova reset-state` command to manually reset
+the state of an instance to an error state. You can then delete the
+instance. For example:
 
 .. code-block:: console
 
@@ -198,9 +231,16 @@ to an active state instead of an error state. For example:
 .. _problems-with-injection:
 
 Injection problems
-------------------
+~~~~~~~~~~~~~~~~~~
 
-If instances do not boot or boot slowly, investigate file injection as a cause.
+Problem
+-------
+
+Instances may boot slowly, or do not boot. File injection can cause this
+problem.
+
+Solution
+--------
 
 To disable injection in libvirt, set the following in ``nova.conf``:
 
@@ -221,12 +261,17 @@ To disable injection in libvirt, set the following in ``nova.conf``:
 .. _live-snapshotting-fail:
 
 Disable live snapshotting
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you use libvirt version ``1.2.2``, you may experience problems with live
-snapshots creation. Occasionally, libvirt of the specified version fails
-to perform the live snapshotting under load that presupposes a concurrent
-creation of multiple snapshots.
+Problem
+-------
+
+Administrators using libverity version ``1.2.2`` may experience problems
+with live snapshot creation. Occasionally, libvirt version ``1.2.2`` fails
+to create live snapshots under the load of creating concurrent snapshot.
+
+Solution
+--------
 
 To effectively disable the libvirt live snapshotting, until the problem
 is resolved, configure the ``disable_libvirt_livesnapshot`` option.
