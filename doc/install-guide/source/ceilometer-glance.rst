@@ -11,15 +11,19 @@ Configure the Image service to use Telemetry
   ``/etc/glance/glance-registry.conf`` files and
   complete the following actions:
 
-  * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-    configure notifications and RabbitMQ message broker access:
+  * In the ``[DEFAULT]``, ``[oslo_messaging_notifications]``, and
+    ``[oslo_messaging_rabbit]`` sections, configure notifications and RabbitMQ
+    message broker access:
 
     .. code-block:: ini
 
        [DEFAULT]
        ...
-       notification_driver = messagingv2
        rpc_backend = rabbit
+
+       [oslo_messaging_notifications]
+       ...
+       driver = messagingv2
 
        [oslo_messaging_rabbit]
        ...
