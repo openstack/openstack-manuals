@@ -346,7 +346,7 @@ Finalize installation
       .. code-block:: console
 
          # service neutron-server restart
-         # service neutron-plugin-linuxbridge-agent restart
+         # service neutron-linuxbridge-agent restart
          # service neutron-dhcp-agent restart
          # service neutron-metadata-agent restart
 
