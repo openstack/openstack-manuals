@@ -206,6 +206,40 @@ capabilities:
       # ovs-vsctl add-br br-ex
       # ovs-vsctl add-port br-ex eth1
 
+   When the ``br-ex`` port is added to the ``eth1`` interface, external
+   communication is interrupted. To avoid this, edit the
+   ``/etc/network/interfaces`` file to contain the following information:
+
+   .. code-block:: ini
+
+      ## External bridge
+      auto br-ex
+      iface br-ex inet static
+      address 192.27.117.101
+      netmask 255.255.240.0
+      gateway 192.27.127.254
+      dns-nameservers 8.8.8.8
+
+      ## External network interface
+      auto eth1
+      iface eth1 inet manual
+      up ifconfig $IFACE 0.0.0.0 up
+      up ip link set $IFACE promisc on
+      down ip link set $IFACE promisc off
+      down ifconfig $IFACE down
+
+   .. note::
+
+      The external bridge configuration address is the external IP address.
+      This address and gateway should be configured in
+      ``/etc/network/interfaces``.
+
+   After editing the configuration, restart ``br-ex``:
+
+   .. code-block:: console
+
+      # ifdown br-ex && ifup br-ex
+
    Do not manually configure an IP address on the NIC connected to the
    external network for the node running ``neutron-l3-agent``. Rather, you
    must have a range of IP addresses from the external network that can be
