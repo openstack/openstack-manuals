@@ -20,3 +20,4 @@ Advanced configuration
    adv-config-availability-zone.rst
    adv-config-dns.rst
    adv-config-net-ip-availability.rst
+   adv-config-tag.rst
