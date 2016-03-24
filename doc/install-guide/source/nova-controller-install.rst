@@ -65,7 +65,7 @@ Compute service, code-named nova, on the controller node.
            +-----------+----------------------------------+
            | Field     | Value                            |
            +-----------+----------------------------------+
-           | domain_id | default                          |
+           | domain_id | e0353a670a9e496da891347c589539e9 |
            | enabled   | True                             |
            | id        | 8c46e4760902464b889293a74a0c90a8 |
            | name      | nova                             |
@@ -216,6 +216,15 @@ Install and configure components
 
 2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
+
+   * In the ``[DEFAULT]`` section, enable only the compute and metadata
+     APIs:
+
+     .. code-block:: ini
+
+        [DEFAULT]
+        ...
+        enabled_apis = osapi_compute,metadata
 
    .. only:: obs or rdo or ubuntu
 
@@ -370,16 +379,17 @@ Install and configure components
            ...
            lock_path = /var/lib/nova/tmp
 
-   * In the ``[DEFAULT]`` section, disable the EC2 API:
+   .. only:: ubuntu
 
-     .. code-block:: ini
+      .. todo:
 
-        [DEFAULT]
-        ...
-        enabled_apis=osapi_compute,metadata
+         https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1506667
 
-   * (Optional) To assist with troubleshooting, enable verbose
-     logging in the ``[DEFAULT]`` section:
+      * Due to a packaging bug, remove the ``logdir`` option from the
+        ``[DEFAULT]`` section.
+
+   * In the ``[DEFAULT]`` section, enable verbose mode to assist with
+     potential troubleshooting:
 
      .. code-block:: ini
 
