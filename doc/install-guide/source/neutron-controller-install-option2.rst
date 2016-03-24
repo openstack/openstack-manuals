@@ -121,8 +121,8 @@ Install the components
           auth_url = http://controller:35357
           memcached_servers = controller:11211
           auth_type = password
-          project_domain_id = default
-          user_domain_id = default
+          project_domain_name = default
+          user_domain_name = default
           project_name = service
           username = neutron
           password = NEUTRON_PASS
@@ -149,8 +149,8 @@ Install the components
           ...
           auth_url = http://controller:35357
           auth_type = password
-          project_domain_id = default
-          user_domain_id = default
+          project_domain_name = default
+          user_domain_name = default
           region_name = RegionOne
           project_name = service
           username = nova
