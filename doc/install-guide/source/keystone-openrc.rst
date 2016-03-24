@@ -21,8 +21,8 @@ scripts to load appropriate credentials for client operations.
 
    .. code-block:: bash
 
-      export OS_PROJECT_DOMAIN_ID=default
-      export OS_USER_DOMAIN_ID=default
+      export OS_PROJECT_DOMAIN_NAME=default
+      export OS_USER_DOMAIN_NAME=default
       export OS_PROJECT_NAME=admin
       export OS_USERNAME=admin
       export OS_PASSWORD=ADMIN_PASS
@@ -36,8 +36,8 @@ scripts to load appropriate credentials for client operations.
 
    .. code-block:: bash
 
-      export OS_PROJECT_DOMAIN_ID=default
-      export OS_USER_DOMAIN_ID=default
+      export OS_PROJECT_DOMAIN_NAME=default
+      export OS_USER_DOMAIN_NAME=default
       export OS_PROJECT_NAME=demo
       export OS_USERNAME=demo
       export OS_PASSWORD=DEMO_PASS
