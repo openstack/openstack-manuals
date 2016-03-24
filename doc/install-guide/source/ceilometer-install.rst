@@ -41,6 +41,13 @@ MongoDB before proceeding further.
 
       Replace ``CEILOMETER_DBPASS`` with a suitable password.
 
+      .. note::
+
+         If the command fails saying you are not authorized to insert a user,
+         you may need to temporarily comment out the ``auth`` option in
+         the ``/etc/mongodb.conf`` file, restart the MongoDB service using
+         ``systemctl restart mongodb``, and try calling the command again.
+
 .. only:: rdo
 
    1. Create the ``ceilometer`` database:
