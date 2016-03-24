@@ -11,7 +11,7 @@ Create a volume
 
    .. code-block:: console
 
-      $ source demo-openrc.sh
+      $ . demo-openrc
 
 #. Create a 1 GB volume:
 

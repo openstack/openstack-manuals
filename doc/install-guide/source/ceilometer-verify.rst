@@ -14,7 +14,7 @@ integration for additional services contain more meters.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. List available meters:
 

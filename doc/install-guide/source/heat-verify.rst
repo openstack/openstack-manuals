@@ -13,7 +13,7 @@ Verify operation of the Orchestration service.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. List service components to verify successful launch and
    registration of each process:

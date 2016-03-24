@@ -31,7 +31,7 @@ create service credentials and an API endpoint.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. To create the Identity service credentials, complete these steps:
 

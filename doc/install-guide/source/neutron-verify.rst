@@ -10,7 +10,7 @@ Verify operation
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. List loaded extensions to verify successful launch of the
    ``neutron-server`` process:

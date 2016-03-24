@@ -14,7 +14,7 @@ name, network, security group, key, and instance name.
 
    .. code-block:: console
 
-      $ source demo-openrc.sh
+      $ . demo-openrc
 
 #. A flavor specifies a virtual resource allocation profile which
    includes processor, memory, and storage.

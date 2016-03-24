@@ -14,7 +14,7 @@ Verify operation of the Shared File Systems service.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. List service components to verify successful launch of each process:
 

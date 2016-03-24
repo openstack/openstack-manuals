@@ -20,7 +20,7 @@ node.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. Create the ``ResellerAdmin`` role:
 

@@ -17,7 +17,7 @@ Create client environment scripts for the ``admin`` and ``demo``
 projects and users. Future portions of this guide reference these
 scripts to load appropriate credentials for client operations.
 
-#. Edit the ``admin-openrc.sh`` file and add the following content:
+#. Edit the ``admin-openrc`` file and add the following content:
 
    .. code-block:: bash
 
@@ -32,7 +32,7 @@ scripts to load appropriate credentials for client operations.
    Replace ``ADMIN_PASS`` with the password you chose
    for the ``admin`` user in the Identity service.
 
-#. Edit the ``demo-openrc.sh`` file and add the following content:
+#. Edit the ``demo-openrc`` file and add the following content:
 
    .. code-block:: bash
 
@@ -54,13 +54,13 @@ To run clients as a specific project and user, you can simply load
 the associated client environment script prior to running them.
 For example:
 
-#. Load the ``admin-openrc.sh`` file to populate
+#. Load the ``admin-openrc`` file to populate
    environment variables with the location of the Identity service
    and the ``admin`` project and user credentials:
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. Request an authentication token:
 
