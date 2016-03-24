@@ -60,7 +60,7 @@ configuration stores images on the local file system.
            +-----------+----------------------------------+
            | Field     | Value                            |
            +-----------+----------------------------------+
-           | domain_id | default                          |
+           | domain_id | e0353a670a9e496da891347c589539e9 |
            | enabled   | True                             |
            | id        | e38230eeff474607805b596c91fa15d9 |
            | name      | glance                           |
@@ -178,9 +178,8 @@ Install and configure components
 
 .. only:: obs or rdo or ubuntu
 
-   2. Edit the ``/etc/glance/glance-api.conf`` and
-      ``/etc/glance/glance-registry.conf`` files and complete
-      the following actions:
+   2. Edit the ``/etc/glance/glance-api.conf`` file and complete the
+      following actions:
 
       * In the ``[database]`` section, configure database access:
 
@@ -233,35 +232,52 @@ Install and configure components
            default_store = file
            filesystem_store_datadir = /var/lib/glance/images/
 
-      * In the ``[oslo_messaging_rabbit]`` section, configure the ``noop``
-        notification driver to disable notifications because
-        they only pertain to the optional Telemetry service:
+   3. Edit the ``/etc/glance/glance-registry.conf`` file and complete
+      the following actions:
+
+      * In the ``[database]`` section, configure database access:
 
         .. code-block:: ini
 
-           [oslo_messaging_rabbit]
+           [database]
            ...
-           driver = noop
+           connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
 
-        The Telemetry chapter provides an Image service configuration
-        that enables notifications.
+        Replace ``GLANCE_DBPASS`` with the password you chose for the
+        Image service database.
 
-      * (Optional) To assist with troubleshooting,
-        enable verbose logging in the ``[DEFAULT]`` section:
+      * In the ``[keystone_authtoken]`` and ``[paste_deploy]`` sections,
+        configure Identity service access:
 
         .. code-block:: ini
 
-           [DEFAULT]
+           [keystone_authtoken]
            ...
-           verbose = True
+           auth_uri = http://controller:5000
+           auth_url = http://controller:35357
+           memcached_servers = controller:11211
+           auth_type = password
+           project_domain_name = default
+           user_domain_name = default
+           project_name = service
+           username = glance
+           password = GLANCE_PASS
 
-      .. note::
+           [paste_deploy]
+           ...
+           flavor = keystone
 
-         Both files contain the same configuration options.
+        Replace ``GLANCE_PASS`` with the password you chose for the
+        ``glance`` user in the Identity service.
+
+        .. note::
+
+           Comment out or remove any other options in the
+           ``[keystone_authtoken]`` section.
 
 .. only:: rdo or ubuntu
 
-   3. Populate the Image service database:
+   4. Populate the Image service database:
 
       .. code-block:: console
 
