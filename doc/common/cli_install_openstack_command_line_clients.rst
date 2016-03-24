@@ -74,7 +74,7 @@ command-line clients, and provides installation instructions as needed.
 |                       | installer provided by Christoph Gohlke              |
 |                       | (http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip).   |
 |                       |                                                     |
-|                       | **Ubuntu and Debian**                               |
+|                       | **Ubuntu or Debian**                                |
 |                       |                                                     |
 |                       | .. code-block:: console                             |
 |                       |                                                     |
@@ -150,8 +150,8 @@ with ``pip``, which supports multiple services.
 
    # pip install python-openstackclient
 
-The following clients, while valid, are de-emphasized in favor of a common
-client. Instead of installing and learning all these clients, we recommend
+The following individual clients are deprecated in favor of a common client.
+Instead of installing and learning all these clients, we recommend
 installing and using the OpenStack client. You may need to install an
 individual project's client because coverage is not yet sufficient in the
 OpenStack client. If you need to install an individual client's project,
@@ -163,55 +163,30 @@ list below.
     # pip install python-<project>client
 
 *  ``barbican`` - Key Manager Service API
-
 *  ``ceilometer`` - Telemetry API
-
 *  ``cinder`` - Block Storage API and extensions
-
 *  ``cloudkitty`` - Rating service API
-
 *  ``designate`` - DNS service API
-
 *  ``fuel`` - Deployment service API
-
 *  ``glance`` - Image service API
-
 *  ``gnocchi`` - Telemetry API v3
-
 *  ``heat`` - Orchestration API
-
-*  ``magnum`` - Containers service API
-
-*  ``manila`` - Shared file systems API
-
-*  ``mistral`` - Workflow service API
-
-*  ``monasca`` - Monitoring API
-
-*  ``murano`` - Application catalog API
-
-*  ``neutron`` - Networking API
-
-*  ``nova`` - Compute API and extensions
-
-*  ``sahara`` - Data Processing API
-
-*  ``senlin`` - Clustering service API
-
-*  ``swift`` - Object Storage API
-
-*  ``trove`` - Database service API
-
-*  ``openstack`` - Common OpenStack client supporting multiple services
-
-The following CLIs are deprecated in favor of ``openstack``, the
-Common OpenStack client supporting multiple services:
-
 *  ``keystone`` - Identity service API and extensions
+*  ``magnum`` - Containers service API
+*  ``manila`` - Shared file systems API
+*  ``mistral`` - Workflow service API
+*  ``monasca`` - Monitoring API
+*  ``murano`` - Application catalog API
+*  ``neutron`` - Networking API
+*  ``nova`` - Compute API and extensions
+*  ``sahara`` - Data Processing API
+*  ``senlin`` - Clustering service API
+*  ``swift`` - Object Storage API
+*  ``trove`` - Database service API
 
 While you can install the ``keystone`` client for interacting with version 2.0
 of the service's API, you should use the ``openstack`` client for all Identity
-interactions.
+interactions. Identity API v2 is deprecated in the Mitaka release.
 
 Installing with pip
 -------------------
