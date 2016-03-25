@@ -239,11 +239,26 @@ Use a domain that fits your current setup.
       Alias /static /usr/share/openstack-dashboard/openstack_dashboard/static/
       <Directory /usr/share/openstack-dashboard/openstack_dashboard/wsgi>
       # For Apache http server 2.2 and earlier:
-      Order allow,deny
-      Allow from all
-
+          <ifVersion <2.4>
+              Order allow,deny
+              Allow from all
+          </ifVersion>
       # For Apache http server 2.4 and later:
-      # Require all granted
+          <ifVersion >=2.4>
+      #The following two lines have been added by bms for error "AH01630: client denied
+      #by server configuration:
+      #/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/cssa"
+              Options All
+              AllowOverride All
+              Require all granted
+          </ifVersion>
+      </Directory>
+      <Directory /usr/share/openstack-dashboard/static>
+          <ifVersion >=2.4>
+              Options All
+              AllowOverride All
+              Require all granted
+          </ifVersion>
       </Directory>
       </VirtualHost>
 
