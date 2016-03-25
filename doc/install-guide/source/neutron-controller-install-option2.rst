@@ -11,8 +11,8 @@ Install the components
    .. code-block:: console
 
       # apt-get install neutron-server neutron-plugin-ml2 \
-        neutron-plugin-linuxbridge-agent neutron-l3-agent neutron-dhcp-agent \
-        neutron-metadata-agent conntrack
+        neutron-linuxbridge-agent neutron-l3-agent neutron-dhcp-agent \
+        neutron-metadata-agent
 
 .. only:: rdo
 
