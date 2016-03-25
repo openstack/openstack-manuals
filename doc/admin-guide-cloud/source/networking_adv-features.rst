@@ -177,8 +177,9 @@ that API users can dynamically provision and configure. These Networking
 routers can connect multiple L2 Networking networks and can also provide
 a gateway that connects one or more private L2 networks to a shared
 external network. For example, a public network for access to the
-Internet. See the *OpenStack Configuration Reference* for details on
-common models of deploying Networking L3 routers.
+Internet. See the `OpenStack Configuration Reference <http://docs.
+openstack.org/liberty/config-reference/content>`_ for details on common
+models of deploying Networking L3 routers.
 
 The L3 router provides basic NAT capabilities on gateway ports that
 uplink the router to external networks. This router SNATs all traffic by
@@ -295,7 +296,7 @@ basic L3 operations:
    * - Finds floating IP for a specified VM port.
      - .. code-block:: console
 
-          $ neutron floatingip-list --port_id ZZZ
+          $ neutron floatingip-list --port_id INTERNAL_VM_PORT_ID
    * - Disassociates a floating IP address.
      - .. code-block:: console
 

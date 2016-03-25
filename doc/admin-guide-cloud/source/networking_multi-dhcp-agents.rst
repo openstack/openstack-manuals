@@ -349,7 +349,7 @@ DHCP agent and remove one from it.
       | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
       +--------------------------------------+-------+----------------+-------+
 
-    Both DHCP agents host the ``net2`` network.
+   Both DHCP agents host the ``net2`` network.
 
 #. Remove a network from a specified DHCP agent.
 

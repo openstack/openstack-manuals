@@ -253,8 +253,8 @@ complete advanced VM creation operations:
 |parameter in this case.              |                                      |
 |                                     |                                      |
 |                                     |``$ nova boot --image IMAGE --flavor``|
-|                                     | ``FLAVOR --nic net-id=NET-ID,``      |
-|                                     | ``v4-fixed-ip=IP-ADDR VM_NAME``      |
+|                                     |``FLAVOR --nic net-id=NET-ID,``       |
+|                                     |``v4-fixed-ip=IP-ADDR VM_NAME``       |
 +-------------------------------------+--------------------------------------+
 |Boots a VM that connects to all      |                                      |
 |networks that are accessible to the  |                                      |
