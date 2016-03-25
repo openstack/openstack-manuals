@@ -568,10 +568,10 @@ project router on the network node.
 
 The following steps involve compute node 1:
 
-#. The instance 1 ``tap`` interface (1) forwards the packet to the VLAN
+#. The instance 1 ``tap`` interface (1) forwards the packet to the Linux
    bridge ``qbr``. The packet contains destination MAC address *I2*
    because the destination resides on the same network.
-#. Security group rules (2) on the provider bridge ``qbr`` handle
+#. Security group rules (2) on the Linux bridge ``qbr`` handle
    state tracking for the packet.
 #. The Linux bridge ``qbr`` forwards the packet to the Open vSwitch
    integration bridge ``br-int``.
