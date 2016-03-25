@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-21 06:12+0000\n"
+"POT-Creation-Date: 2016-03-25 06:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1792,7 +1792,9 @@ msgstr ""
 
 # #-#-#-#-#  adv-config-ipv6.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  adv-config-qos.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  adv-config-tag.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../adv-config-ipv6.rst:601 ../adv-config-qos.rst:105
+#: ../adv-config-tag.rst:95
 msgid "User workflow"
 msgstr ""
 
@@ -2675,7 +2677,9 @@ msgid ""
 "\"\"`` to ``\"rule:admin_only\"``."
 msgstr ""
 
-#: ../adv-config-rbac.rst:280
+# #-#-#-#-#  adv-config-rbac.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  adv-config-tag.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../adv-config-rbac.rst:280 ../adv-config-tag.rst:255
 msgid "Limitations"
 msgstr ""
 
@@ -3123,6 +3127,200 @@ msgstr ""
 msgid ""
 "If ``ebrctl`` does not appear in any of the rootwrap files, add this to the "
 "``/etc/nova/rootwrap.d/compute.filters`` file in the ``[Filters]`` section."
+msgstr ""
+
+#: ../adv-config-tag.rst:3
+msgid "Tagging resources"
+msgstr ""
+
+#: ../adv-config-tag.rst:5
+msgid ""
+"This page serves as a guide for how to use the ``Tag`` functionality "
+"available in the Networking service as of the Mitaka release. The service "
+"supports networks only in the Mitaka release. The Networking service allows "
+"users to set tags on their resources. Tagging resources can be used by "
+"external systems or any other clients of the Networking service REST API "
+"(and NOT back-end drivers)."
+msgstr ""
+
+#: ../adv-config-tag.rst:13
+msgid "Use cases"
+msgstr ""
+
+#: ../adv-config-tag.rst:15
+msgid ""
+"The following use cases refer to adding tags to networks, but the same can "
+"be applicable to any other Networking service resource:"
+msgstr ""
+
+#: ../adv-config-tag.rst:18
+msgid ""
+"Ability to map different networks in different OpenStack locations to one "
+"logically same network (for multi-site OpenStack)."
+msgstr ""
+
+#: ../adv-config-tag.rst:21
+msgid ""
+"Ability to map IDs from different management/orchestration systems to "
+"OpenStack networks in mixed environments. For example, in the Kuryr project, "
+"the Docker network ID is mapped to the Neutron network ID."
+msgstr ""
+
+#: ../adv-config-tag.rst:25
+msgid "Ability to leverage tags by deployment tools."
+msgstr ""
+
+#: ../adv-config-tag.rst:27
+msgid ""
+"Ability to tag information about provider networks (for example, high-"
+"bandwith, low-latency, and so on)."
+msgstr ""
+
+#: ../adv-config-tag.rst:31
+msgid "Filtering with tags"
+msgstr ""
+
+#: ../adv-config-tag.rst:33
+msgid ""
+"The API allows searching/filtering of the ``GET /v2.0/networks`` API. The "
+"following query parameters are supported:"
+msgstr ""
+
+#: ../adv-config-tag.rst:36
+msgid "``tags``"
+msgstr ""
+
+#: ../adv-config-tag.rst:37
+msgid "``tags-any``"
+msgstr ""
+
+#: ../adv-config-tag.rst:38
+msgid "``not-tags``"
+msgstr ""
+
+#: ../adv-config-tag.rst:39
+msgid "``not-tags-any``"
+msgstr ""
+
+#: ../adv-config-tag.rst:41
+msgid ""
+"To request the list of networks that have a single tag, ``tags`` argument "
+"should be set to the desired tag name. Example::"
+msgstr ""
+
+#: ../adv-config-tag.rst:46
+msgid ""
+"To request the list of networks that have two or more tags, the ``tags`` "
+"argument should be set to the list of tags, separated by commas. In this "
+"case, the tags given must all be present for a network to be included in the "
+"query result. Example that returns networks that have the \"red\" and \"blue"
+"\" tags::"
+msgstr ""
+
+#: ../adv-config-tag.rst:53
+msgid ""
+"To request the list of networks that have one or more of a list of given "
+"tags, the ``tags-any`` argument should be set to the list of tags, separated "
+"by commas. In this case, as long as one of the given tags is present, the "
+"network will be included in the query result. Example that returns the "
+"networks that have the \"red\" or the \"blue\" tag::"
+msgstr ""
+
+#: ../adv-config-tag.rst:61
+msgid ""
+"To request the list of networks that do not have one or more tags, the ``not-"
+"tags`` argument should be set to the list of tags, separated by commas. In "
+"this case, only the networks that do not have any of the given tags will be "
+"included in the query results. Example that returns the networks that do not "
+"have either \"red\" or \"blue\" tag::"
+msgstr ""
+
+#: ../adv-config-tag.rst:69
+msgid ""
+"To request the list of networks that do not have at least one of a list of "
+"tags, the ``not-tags-any`` argument should be set to the list of tags, "
+"separated by commas. In this case, only the networks that do not have at "
+"least one of the given tags will be included in the query result. Example "
+"that returns the networks that do not have the \"red\" tag, or do not have "
+"the \"blue\" tag::"
+msgstr ""
+
+#: ../adv-config-tag.rst:78
+msgid ""
+"The ``tags``, ``tags-any``, ``not-tags``, and ``not-tags-any`` arguments can "
+"be combined to build more complex queries. Example::"
+msgstr ""
+
+#: ../adv-config-tag.rst:83
+msgid ""
+"The above example returns any networks that have the \"red\" and \"blue\" "
+"tags, plus at least one of \"green\" and \"orange\"."
+msgstr ""
+
+#: ../adv-config-tag.rst:86
+msgid "Complex queries may have contradictory parameters. Example::"
+msgstr ""
+
+#: ../adv-config-tag.rst:90
+msgid ""
+"In this case, we should let the Networking service find these networks. "
+"Obviously, there are no such networks and the service will return an empty "
+"list."
+msgstr ""
+
+#: ../adv-config-tag.rst:97
+msgid "Add a tag to a resource:"
+msgstr ""
+
+#: ../adv-config-tag.rst:123
+msgid "Remove a tag from a resource:"
+msgstr ""
+
+#: ../adv-config-tag.rst:149
+msgid "Replace all tags on the resource:"
+msgstr ""
+
+#: ../adv-config-tag.rst:176
+msgid "Clear tags from a resource:"
+msgstr ""
+
+#: ../adv-config-tag.rst:202
+msgid ""
+"Get list of resources with tag filters from networks. The networks are: test-"
+"net1 with \"red\" tag, test-net2 with \"red\" and \"blue\" tags, test-net3 "
+"with \"red\", \"blue\", and \"green\" tags, and test-net4 with \"green\" tag."
+msgstr ""
+
+#: ../adv-config-tag.rst:206
+msgid "Get list of resources with ``tags`` filter:"
+msgstr ""
+
+#: ../adv-config-tag.rst:218
+msgid "Get list of resources with ``tags-any`` filter:"
+msgstr ""
+
+#: ../adv-config-tag.rst:231
+msgid "Get list of resources with ``not-tags`` filter:"
+msgstr ""
+
+#: ../adv-config-tag.rst:243
+msgid "Get list of resources with ``not-tags-any`` filter:"
+msgstr ""
+
+#: ../adv-config-tag.rst:257
+msgid ""
+"Filtering resources with a tag whose name contains a comma is not supported. "
+"Thus, do not put such a tag name to resources."
+msgstr ""
+
+#: ../adv-config-tag.rst:261
+msgid "Future support"
+msgstr ""
+
+#: ../adv-config-tag.rst:263
+msgid ""
+"In future release, the Networking service will support setting tags to "
+"resources other than network."
 msgstr ""
 
 #: ../adv-config.rst:3
@@ -8510,7 +8708,7 @@ msgid ""
 "bridge ``br-int``."
 msgstr ""
 
-#: ../scenario-dvr-ovs.rst:243 ../scenario-dvr-ovs.rst:435
+#: ../scenario-dvr-ovs.rst:243
 msgid ""
 "The Open vSwitch tunnel bridge ``br-tun`` replaces the packet source MAC "
 "address *I1* with *D1*."
@@ -8740,6 +8938,12 @@ msgstr ""
 msgid ""
 "The Open vSwitch integration bridge ``br-int`` modifies the packet to "
 "contain the internal tag for project network 2."
+msgstr ""
+
+#: ../scenario-dvr-ovs.rst:435
+msgid ""
+"The Open vSwitch tunnel bridge ``br-tun`` replaces the packet source MAC "
+"address *TG2* with *D1*."
 msgstr ""
 
 #: ../scenario-dvr-ovs.rst:437
