@@ -17,7 +17,25 @@ OpenStack can also access the filesystem.
 
    A ``share`` is an abstract storage object that may or may not directly
    map to a "share" concept from the underlying storage provider.
+   See the description of ``share instance`` for more details.
 
+Share instance
+~~~~~~~~~~~~~~
+This concept is tied with ``share`` and represents created resource on specific
+back end, when ``share`` represents abstraction between end user and
+back-end storages. In common cases, it is one-to-one relation.
+One single ``share`` has more than one ``share instance`` in two cases:
+
+- When ``share migration`` is being applied
+
+- When ``share replication`` is enabled
+
+Therefore, each ``share instance`` stores information specific to real
+allocated resource on storage. And ``share`` represents the information
+that is common for ``share instances``.
+A user with ``member`` role will not be able to work with it directly. Only
+a user with ``admin`` role has rights to perform actions against specific
+share instances.
 
 Snapshot
 ~~~~~~~~

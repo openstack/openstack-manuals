@@ -33,9 +33,9 @@ find the share:
 
 .. code-block:: console
 
-   $ manila unmanage Share3
-   $ manila show Share3
-   ERROR: No share with a name or ID of 'Share3' exists.
+   $ manila unmanage share_for_docs
+   $ manila show share_for_docs
+   ERROR: No share with a name or ID of 'share_for_docs' exists.
 
 .. _manage_share:
 
@@ -81,63 +81,82 @@ To manage share, run:
 
 .. code-block:: console
 
-   $ manila manage manila@cannes#CANNES nfs 10.254.0.7:/shares/share-d1a66eed-a724-4cbb-a886-2f97926bd3b3 --name Share --description "We manage share." --share_type for_managing
-   +-----------------------------+---------------------------------------------------------------+
-   | Property                    | Value                                                         |
-   +-----------------------------+---------------------------------------------------------------+
-   | status                      | manage_starting                                               |
-   | share_type_name             | for_managing                                                  |
-   | description                 | We manage share.                                              |
-   | availability_zone           | None                                                          |
-   | share_network_id            | None                                                          |
-   | export_locations            | []                                                            |
-   | share_server_id             | None                                                          |
-   | host                        | manila@cannes#CANNES                                          |
-   | snapshot_id                 | None                                                          |
-   | is_public                   | False                                                         |
-   | task_state                  | None                                                          |
-   | snapshot_support            | True                                                          |
-   | id                          | 5c1f644a-6521-4699-b480-b03d17e2d21d                          |
-   | size                        | None                                                          |
-   | name                        | Share3                                                        |
-   | share_type                  | 1eafb65f-1987-44a9-9a98-20af91c95662                          |
-   | created_at                  | 2015-10-01T10:35:52.000000                                    |
-   | export_location             | 10.254.0.7:/shares/share-d1a66eed-a724-4cbb-a886-2f97926bd3b3 |
-   | share_proto                 | NFS                                                           |
-   | consistency_group_id        | None                                                          |
-   | source_cgsnapshot_member_id | None                                                          |
-   | project_id                  | 20787a7ba11946adad976463b57d8a2f                              |
-   | metadata                    | {}                                                            |
-   +-----------------------------+---------------------------------------------------------------+
+   $ manila manage \
+       manila@paris#shares \
+       nfs \
+       1.0.0.4:/shares/manila_share_6d2142d8_2b9b_4405_867f_8a48094c893f \
+       --name share_for_docs \
+       --description "We manage share." \
+       --share_type for_managing
+   +-----------------------------+--------------------------------------+
+   | Property                    | Value                                |
+   +-----------------------------+--------------------------------------+
+   | status                      | manage_starting                      |
+   | share_type_name             | for_managing                         |
+   | description                 | We manage share.                     |
+   | availability_zone           | None                                 |
+   | share_network_id            | None                                 |
+   | share_server_id             | None                                 |
+   | host                        | manila@paris#shares                  |
+   | access_rules_status         | active                               |
+   | snapshot_id                 | None                                 |
+   | is_public                   | False                                |
+   | task_state                  | None                                 |
+   | snapshot_support            | True                                 |
+   | id                          | ddfb1240-ed5e-4071-a031-b842035a834a |
+   | size                        | None                                 |
+   | name                        | share_for_docs                       |
+   | share_type                  | 14ee8575-aac2-44af-8392-d9c9d344f392 |
+   | has_replicas                | False                                |
+   | replication_type            | None                                 |
+   | created_at                  | 2016-03-25T15:22:43.000000           |
+   | share_proto                 | NFS                                  |
+   | consistency_group_id        | None                                 |
+   | source_cgsnapshot_member_id | None                                 |
+   | project_id                  | 907004508ef4447397ce6741a8f037c1     |
+   | metadata                    | {}                                   |
+   +-----------------------------+--------------------------------------+
 
 Check that the share is available:
 
 .. code-block:: console
 
-   $ manila show Share
-   +-----------------------------+---------------------------------------------------------------+
-   | Property                    | Value                                                         |
-   +-----------------------------+---------------------------------------------------------------+
-   | status                      | available                                                     |
-   | share_type_name             | for_managing                                                  |
-   | description                 | We manage share.                                              |
-   | availability_zone           | nova                                                          |
-   | share_network_id            | None                                                          |
-   | export_locations            | 10.254.0.7:/shares/share-d1a66eed-a724-4cbb-a886-2f97926bd3b3 |
-   | share_server_id             | None                                                          |
-   | host                        | manila@cannes#CANNES                                          |
-   | snapshot_id                 | None                                                          |
-   | is_public                   | False                                                         |
-   | task_state                  | None                                                          |
-   | snapshot_support            | True                                                          |
-   | id                          | 5c1f644a-6521-4699-b480-b03d17e2d21d                          |
-   | size                        | 1                                                             |
-   | name                        | Share3                                                        |
-   | share_type                  | 1eafb65f-1987-44a9-9a98-20af91c95662                          |
-   | created_at                  | 2015-10-01T10:35:52.000000                                    |
-   | share_proto                 | NFS                                                           |
-   | consistency_group_id        | None                                                          |
-   | source_cgsnapshot_member_id | None                                                          |
-   | project_id                  | 20787a7ba11946adad976463b57d8a2f                              |
-   | metadata                    | {}                                                            |
-   +-----------------------------+---------------------------------------------------------------+
+   $ manila show share_for_docs
+   +----------------------+--------------------------------------------------------------------------+
+   | Property             | Value                                                                    |
+   +----------------------+--------------------------------------------------------------------------+
+   | status               | available                                                                |
+   | share_type_name      | for_managing                                                             |
+   | description          | We manage share.                                                         |
+   | availability_zone    | None                                                                     |
+   | share_network_id     | None                                                                     |
+   | export_locations     |                                                                          |
+   |                      | path = 1.0.0.4:/shares/manila_share_6d2142d8_2b9b_4405_867f_8a48094c893f |
+   |                      | preferred = False                                                        |
+   |                      | is_admin_only = False                                                    |
+   |                      | id = d4d048bf-4159-4a94-8027-e567192b8d30                                |
+   |                      | share_instance_id = 4c8e3887-4f9a-4775-bab4-e5840a09c34e                 |
+   |                      | path = 2.0.0.3:/shares/manila_share_6d2142d8_2b9b_4405_867f_8a48094c893f |
+   |                      | preferred = False                                                        |
+   |                      | is_admin_only = True                                                     |
+   |                      | id = 1dd4f0a3-778d-486a-a851-b522f6e7cf5f                                |
+   |                      | share_instance_id = 4c8e3887-4f9a-4775-bab4-e5840a09c34e                 |
+   | share_server_id      | None                                                                     |
+   | host                 | manila@paris#shares                                                      |
+   | access_rules_status  | active                                                                   |
+   | snapshot_id          | None                                                                     |
+   | is_public            | False                                                                    |
+   | task_state           | None                                                                     |
+   | snapshot_support     | True                                                                     |
+   | id                   | ddfb1240-ed5e-4071-a031-b842035a834a                                     |
+   | size                 | 1                                                                        |
+   | name                 | share_for_docs                                                           |
+   | share_type           | 14ee8575-aac2-44af-8392-d9c9d344f392                                     |
+   | has_replicas         | False                                                                    |
+   | replication_type     | None                                                                     |
+   | created_at           | 2016-03-25T15:22:43.000000                                               |
+   | share_proto          | NFS                                                                      |
+   | consistency_group_id | None                                                                     |
+   | project_id           | 907004508ef4447397ce6741a8f037c1                                         |
+   | metadata             | {}                                                                       |
+   +----------------------+--------------------------------------------------------------------------+

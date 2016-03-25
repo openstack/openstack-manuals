@@ -75,13 +75,19 @@ Otherwise, the service may become unavailable.
 Solution
 --------
 
-Use :command:`keystone service-list` to get service
-type related to Shared File Systems service and then :command:`keystone
-service-list --service <share-service-type>` command. You will get the
-endpoints expected from running the Shared File Systems service. Make sure
-that these endpoints are updated.
-If it is not true, you need to delete the outdated endpoints and create
-new ones.
+#. To get the service type related to the Shared File Systems service, run:
+
+   .. code-block:: console
+
+     # openstack endpoint list
+
+     # openstack endpoint show <share-service-type>
+
+   You will get the endpoints expected from running the Shared File Systems
+   service.
+
+#. Make sure that these endpoints are updated. Otherwise, delete the outdated
+   endpoints and create new ones.
 
 Failures during management of internal resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
