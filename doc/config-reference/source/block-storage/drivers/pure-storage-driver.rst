@@ -43,6 +43,8 @@ Supported operations
 
 * Create a thin provisioned volume.
 
+* Replicate volumes to remote Pure Storage array(s).
+
 Configure OpenStack and Purity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -59,6 +61,14 @@ Configure the OpenStack Block Storage service
 In these steps, you will edit the ``cinder.conf`` file to configure the
 OpenStack Block Storage service to enable multipathing and to use the
 Pure Storage FlashArray as back-end storage.
+
+#. Install Pure Storage PyPI module.
+   A requirement for the Pure Storage driver is the installation of the
+   Pure Storage Python SDK version 1.4.0 or later from PyPI.
+
+   .. code-block:: console
+
+      $ pip install purestorage
 
 #. Retrieve an API token from Purity.
    The OpenStack Block Storage service configuration requires an API token
@@ -150,3 +160,160 @@ Pure Storage FlashArray as back-end storage.
 
    If using the PureFCDriver it is recommended to use the OpenStack
    Block Storage Fibre Channel Zone Manager.
+
+Volume auto-eradication
+~~~~~~~~~~~~~~~~~~~~~~~
+
+To enable auto-eradication of deleted volumes, snapshots, and consistency
+groups on deletion, modify the following option in the ``cinder.conf`` file:
+
+.. code-block:: ini
+
+   pure_eradicate_on_delete = true
+
+By default, auto-eradication is disabled and all deleted volumes, snapshots,
+and consistency groups are retained on the Pure Storage array in a recoverable
+state for 24 hours from time of deletion.
+
+SSL certification
+~~~~~~~~~~~~~~~~~
+
+To enable SSL certificate validation, modify the following option in the
+``cinder.conf`` file:
+
+.. code-block:: ini
+
+    driver_ssl_cert_verify = true
+
+By default, SSL certificate validation is disabled.
+
+To specify a non-default path to ``CA_Bundle`` file or directory with
+certificates of trusted CAs:
+
+
+.. code-block:: ini
+
+    driver_ssl_cert_path = Certificate path
+
+.. note::
+
+   This requires the use of Pure Storage Python SDK > 1.4.0.
+
+Replication configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add the following to the back-end specification to specify another Storage
+Center to replicate to:
+
+.. code-block:: ini
+
+    [puredriver-1]
+    replication_device = backend_id:PURE2_NAME,san_ip:IP_PURE2_MGMT,api_token:PURE2_API_TOKEN
+
+Where ``PURE2_NAME`` is the name of the remote Pure Storage system,
+``IP_PURE2_MGMT`` is the management IP address of the remote array,
+and ``PURE2_API_TOKEN`` is the Purity Authorization token
+of the remote array.
+
+Note that more than one ``replication_device`` line can be added to allow for
+multi-target device replication.
+
+A volume is only replicated if the volume is of a volume-type that has
+the extra spec ``replication_enabled`` set to ``<is> True``.
+
+To create a volume type that specifies replication to remote back ends:
+
+.. code-block:: console
+
+    $ cinder type-create "ReplicationType"
+    $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
+
+The following table contains the optional configuration parameters available
+for replication configuration with the Pure Storage array.
+
+==================================================== ============= ======
+Option                                               Description   Default
+==================================================== ============= ======
+``pure_replica_interval_default``                    Snapshot
+                                                     replication
+                                                     interval in
+                                                     seconds.      ``900``
+``pure_replica_retention_short_term_default``        Retain all
+                                                     snapshots on
+                                                     target for
+                                                     this time
+                                                     (in seconds). ``14400``
+``pure_replica_retention_long_term_per_day_default`` Retain how
+                                                     many
+                                                     snapshots
+                                                     for each
+                                                     day.          ``3``
+``pure_replica_retention_long_term_default``         Retain
+                                                     snapshots
+                                                     per day
+                                                     on target
+                                                     for this
+                                                     time (in
+                                                     days).         ``7``
+==================================================== ============= ======
+
+
+.. note::
+
+   ``replication-failover`` is only supported from the primary array to any of the
+   multiple secondary arrays, but subsequent ``replication-failover`` is only
+   supported back to the original primary array.
+
+Automatic thin-provisioning/oversubscription ratio
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To enable this feature where we calculate the array oversubscription ratio as
+(total provisioned/actual used), add the following option in the
+``cinder.conf`` file:
+
+.. code-block:: ini
+
+    [puredriver-1]
+    pure_automatic_max_oversubscription_ratio = True
+
+By default, this is disabled and we honor the hard-coded configuration option
+``max_over_subscription_ratio``.
+
+.. note::
+
+   Arrays with very good data reduction rates (compression/data deduplication/thin provisioning)
+   can get *very* large oversubscription rates applied.
+
+Scheduling metrics
+~~~~~~~~~~~~~~~~~~
+
+A large number of metrics are reported by the volume driver which can be useful
+in implementing more control over volume placement in multi-backend
+environments using the driver filter and weighter methods.
+
+Metrics reported include, but are not limited to:
+
+.. code-block:: ini
+
+   total_capacity_gb
+   free_capacity_gb
+   provisioned_capacity
+   total_volumes
+   total_snapshots
+   total_hosts
+   total_pgroups
+   writes_per_sec
+   reads_per_sec
+   input_per_sec
+   output_per_sec
+   usec_per_read_op
+   usec_per_read_op
+   queue_depth
+
+.. note::
+
+   All total metrics include non-OpenStack managed objects on the array.
+
+In conjunction with QOS extra-specs, you can create very complex algorithms to
+manage volume placement. More detailed documentation on this is available in
+other external documentation.
