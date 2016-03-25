@@ -47,8 +47,7 @@ cinder usage
                  [--os-cert <certificate>] [--os-key <key>] [--timeout <seconds>]
                  <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``absolute-limits``
   Lists absolute limits for a user.
@@ -490,53 +489,59 @@ cinder optional arguments
 ``--timeout <seconds>``
   Set request timeout (in seconds).
 
-Block Storage API v1 commands (DEPRECATED)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Block Storage API v2 commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can select an API version to use by adding the
+:option:`--os-volume-api-version` parameter or by
+setting the corresponding environment variable:
+
+.. code-block:: console
+
+   export OS_VOLUME_API_VERSION=2
 
 .. _cinder_absolute-limits:
 
 cinder absolute-limits
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder absolute-limits
+   usage: cinder --os-volume-api-version 2 absolute-limits
 
 Lists absolute limits for a user.
 
 .. _cinder_availability-zone-list:
 
 cinder availability-zone-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
-   usage: cinder availability-zone-list
+   usage: cinder --os-volume-api-version 2 availability-zone-list
 
 Lists all availability zones.
 
 .. _cinder_backup-create:
 
 cinder backup-create
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder backup-create [--container <container>] [--name <name>]
+   usage: cinder --os-volume-api-version 2 backup-create [--container <container>] [--name <name>]
                                [--description <description>] [--incremental]
                                [--force] [--snapshot-id <snapshot-id>]
                                <volume>
 
 Creates a volume backup.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to backup.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--container <container>``
   Backup container name. Default=None.
@@ -563,16 +568,15 @@ Optional arguments
 .. _cinder_backup-delete:
 
 cinder backup-delete
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder backup-delete <backup> [<backup> ...]
+   usage: cinder --os-volume-api-version 2 backup-delete <backup> [<backup> ...]
 
 Removes one or more backups.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   Name or ID of backup(s) to delete.
@@ -580,16 +584,15 @@ Positional arguments
 .. _cinder_backup-export:
 
 cinder backup-export
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder backup-export <backup>
+   usage: cinder --os-volume-api-version 2 backup-export <backup>
 
 Export backup metadata record.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   ID of the backup to export.
@@ -597,16 +600,15 @@ Positional arguments
 .. _cinder_backup-import:
 
 cinder backup-import
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder backup-import <backup_service> <backup_url>
+   usage: cinder --os-volume-api-version 2 backup-import <backup_service> <backup_url>
 
 Import backup metadata record.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup_service>``
   Backup service to use for importing the backup.
@@ -617,19 +619,18 @@ Positional arguments
 .. _cinder_backup-list:
 
 cinder backup-list
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: cinder backup-list [--all-tenants [<all_tenants>]] [--name <name>]
+   usage: cinder --os-volume-api-version 2 backup-list [--all-tenants [<all_tenants>]] [--name <name>]
                              [--status <status>] [--volume-id <volume-id>]
                              [--marker <marker>] [--limit <limit>]
                              [--sort <key>[:<direction>]]
 
 Lists all backups.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<all_tenants>]``
   Shows details for all tenants. Admin only.
@@ -660,22 +661,20 @@ Optional arguments
 .. _cinder_backup-reset-state:
 
 cinder backup-reset-state
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder backup-reset-state [--state <state>] <backup> [<backup> ...]
+   usage: cinder --os-volume-api-version 2 backup-reset-state [--state <state>] <backup> [<backup> ...]
 
 Explicitly updates the backup state.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   Name or ID of the backup to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   The state to assign to the backup. Valid values are
@@ -684,22 +683,20 @@ Optional arguments
 .. _cinder_backup-restore:
 
 cinder backup-restore
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: cinder backup-restore [--volume <volume>] <backup>
+   usage: cinder --os-volume-api-version 2 backup-restore [--volume <volume>] <backup>
 
 Restores a backup.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   ID of backup to restore.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volume <volume>``
   Name or ID of volume to which to restore. Default=None.
@@ -707,16 +704,15 @@ Optional arguments
 .. _cinder_backup-show:
 
 cinder backup-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: cinder backup-show <backup>
+   usage: cinder --os-volume-api-version 2 backup-show <backup>
 
 Shows backup details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   Name or ID of backup.
@@ -724,23 +720,21 @@ Positional arguments
 .. _cinder_cgsnapshot-create:
 
 cinder cgsnapshot-create
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: cinder cgsnapshot-create [--name <name>] [--description <description>]
+   usage: cinder --os-volume-api-version 2 cgsnapshot-create [--name <name>] [--description <description>]
                                    <consistencygroup>
 
 Creates a cgsnapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistencygroup>``
   Name or ID of a consistency group.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Cgsnapshot name. Default=None.
@@ -751,16 +745,15 @@ Optional arguments
 .. _cinder_cgsnapshot-delete:
 
 cinder cgsnapshot-delete
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: cinder cgsnapshot-delete <cgsnapshot> [<cgsnapshot> ...]
+   usage: cinder --os-volume-api-version 2 cgsnapshot-delete <cgsnapshot> [<cgsnapshot> ...]
 
 Removes one or more cgsnapshots.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<cgsnapshot>``
   Name or ID of one or more cgsnapshots to be deleted.
@@ -768,17 +761,16 @@ Positional arguments
 .. _cinder_cgsnapshot-list:
 
 cinder cgsnapshot-list
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder cgsnapshot-list [--all-tenants [<0|1>]] [--status <status>]
+   usage: cinder --os-volume-api-version 2 cgsnapshot-list [--all-tenants [<0|1>]] [--status <status>]
                                  [--consistencygroup-id <consistencygroup_id>]
 
 Lists all cgsnapshots.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
@@ -793,16 +785,15 @@ Optional arguments
 .. _cinder_cgsnapshot-show:
 
 cinder cgsnapshot-show
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder cgsnapshot-show <cgsnapshot>
+   usage: cinder --os-volume-api-version 2 cgsnapshot-show <cgsnapshot>
 
 Shows cgsnapshot details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<cgsnapshot>``
   Name or ID of cgsnapshot.
@@ -810,24 +801,22 @@ Positional arguments
 .. _cinder_consisgroup-create:
 
 cinder consisgroup-create
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder consisgroup-create [--name <name>] [--description <description>]
+   usage: cinder --os-volume-api-version 2 consisgroup-create [--name <name>] [--description <description>]
                                     [--availability-zone <availability-zone>]
                                     <volume-types>
 
 Creates a consistency group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume-types>``
   Volume types.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Name of a consistency group.
@@ -841,19 +830,18 @@ Optional arguments
 .. _cinder_consisgroup-create-from-src:
 
 cinder consisgroup-create-from-src
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
-   usage: cinder consisgroup-create-from-src [--cgsnapshot <cgsnapshot>]
+   usage: cinder --os-volume-api-version 2 consisgroup-create-from-src [--cgsnapshot <cgsnapshot>]
                                              [--source-cg <source-cg>]
                                              [--name <name>]
                                              [--description <description>]
 
 Creates a consistency group from a cgsnapshot or a source CG.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--cgsnapshot <cgsnapshot>``
   Name or ID of a cgsnapshot. Default=None.
@@ -870,24 +858,22 @@ Optional arguments
 .. _cinder_consisgroup-delete:
 
 cinder consisgroup-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder consisgroup-delete [--force]
+   usage: cinder --os-volume-api-version 2 consisgroup-delete [--force]
                                     <consistencygroup> [<consistencygroup> ...]
 
 Removes one or more consistency groups.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistencygroup>``
   Name or ID of one or more consistency groups to be
   deleted.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force``
   Allows or disallows consistency groups to be deleted. If
@@ -898,16 +884,15 @@ Optional arguments
 .. _cinder_consisgroup-list:
 
 cinder consisgroup-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder consisgroup-list [--all-tenants [<0|1>]]
+   usage: cinder --os-volume-api-version 2 consisgroup-list [--all-tenants [<0|1>]]
 
 Lists all consistencygroups.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
@@ -915,16 +900,15 @@ Optional arguments
 .. _cinder_consisgroup-show:
 
 cinder consisgroup-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder consisgroup-show <consistencygroup>
+   usage: cinder --os-volume-api-version 2 consisgroup-show <consistencygroup>
 
 Shows details of a consistency group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistencygroup>``
   Name or ID of a consistency group.
@@ -932,25 +916,23 @@ Positional arguments
 .. _cinder_consisgroup-update:
 
 cinder consisgroup-update
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder consisgroup-update [--name <name>] [--description <description>]
+   usage: cinder --os-volume-api-version 2 consisgroup-update [--name <name>] [--description <description>]
                                     [--add-volumes <uuid1,uuid2,......>]
                                     [--remove-volumes <uuid3,uuid4,......>]
                                     <consistencygroup>
 
 Updates a consistencygroup.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistencygroup>``
   Name or ID of a consistency group.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   New name for consistency group. Default=None.
@@ -969,11 +951,11 @@ Optional arguments
 .. _cinder_create:
 
 cinder create
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
-   usage: cinder create [--consisgroup-id <consistencygroup-id>]
+   usage: cinder --os-volume-api-version 2 create [--consisgroup-id <consistencygroup-id>]
                         [--snapshot-id <snapshot-id>]
                         [--source-volid <source-volid>]
                         [--source-replica <source-replica>]
@@ -987,15 +969,13 @@ cinder create
 
 Creates a volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<size>``
   Size of volume, in GiBs. (Required unless snapshot-id
   /source-volid is specified).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--consisgroup-id <consistencygroup-id>``
   ID of a consistency group where the new volume belongs
@@ -1043,27 +1023,26 @@ Optional arguments
 .. _cinder_credentials:
 
 cinder credentials
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: cinder credentials
+   usage: cinder --os-volume-api-version 2 credentials
 
 Shows user credentials returned from auth.
 
 .. _cinder_delete:
 
 cinder delete
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
-   usage: cinder delete <volume> [<volume> ...]
+   usage: cinder --os-volume-api-version 2 delete <volume> [<volume> ...]
 
 Removes one or more volumes.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume or volumes to delete.
@@ -1071,19 +1050,18 @@ Positional arguments
 .. _cinder_encryption-type-create:
 
 cinder encryption-type-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
-   usage: cinder encryption-type-create [--cipher <cipher>]
+   usage: cinder --os-volume-api-version 2 encryption-type-create [--cipher <cipher>]
                                         [--key_size <key_size>]
                                         [--control_location <control_location>]
                                         <volume_type> <provider>
 
 Creates encryption type for a volume type. Admin only.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume_type>``
   Name or ID of volume type.
@@ -1092,8 +1070,7 @@ Positional arguments
   The class that provides encryption support. For
   example, LuksEncryptor.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--cipher <cipher>``
   The encryption algorithm or mode. For example, aes-
@@ -1111,16 +1088,15 @@ Optional arguments
 .. _cinder_encryption-type-delete:
 
 cinder encryption-type-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
-   usage: cinder encryption-type-delete <volume_type>
+   usage: cinder --os-volume-api-version 2 encryption-type-delete <volume_type>
 
 Deletes encryption type for a volume type. Admin only.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume_type>``
   Name or ID of volume type.
@@ -1128,27 +1104,26 @@ Positional arguments
 .. _cinder_encryption-type-list:
 
 cinder encryption-type-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder encryption-type-list
+   usage: cinder --os-volume-api-version 2 encryption-type-list
 
 Shows encryption type details for volume types. Admin only.
 
 .. _cinder_encryption-type-show:
 
 cinder encryption-type-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder encryption-type-show <volume_type>
+   usage: cinder --os-volume-api-version 2 encryption-type-show <volume_type>
 
 Shows encryption type details for a volume type. Admin only.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume_type>``
   Name or ID of volume type.
@@ -1156,11 +1131,11 @@ Positional arguments
 .. _cinder_encryption-type-update:
 
 cinder encryption-type-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
-   usage: cinder encryption-type-update [--provider <provider>]
+   usage: cinder --os-volume-api-version 2 encryption-type-update [--provider <provider>]
                                         [--cipher [<cipher>]]
                                         [--key-size [<key-size>]]
                                         [--control-location <control-location>]
@@ -1168,14 +1143,12 @@ cinder encryption-type-update
 
 Update encryption type information for a volume type (Admin Only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume-type>``
   Name or ID of the volume type
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--provider <provider>``
   Class providing encryption support (e.g.
@@ -1199,27 +1172,26 @@ Optional arguments
 .. _cinder_endpoints:
 
 cinder endpoints
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
-   usage: cinder endpoints
+   usage: cinder --os-volume-api-version 2 endpoints
 
 Discovers endpoints registered by authentication service.
 
 .. _cinder_extend:
 
 cinder extend
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
-   usage: cinder extend <volume> <new_size>
+   usage: cinder --os-volume-api-version 2 extend <volume> <new_size>
 
 Attempts to extend size of an existing volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to extend.
@@ -1230,32 +1202,30 @@ Positional arguments
 .. _cinder_extra-specs-list:
 
 cinder extra-specs-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder extra-specs-list
+   usage: cinder --os-volume-api-version 2 extra-specs-list
 
 Lists current volume types and extra specs.
 
 .. _cinder_failover-host:
 
 cinder failover-host
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder failover-host [--backend_id <backend-id>] <hostname>
+   usage: cinder --os-volume-api-version 2 failover-host [--backend_id <backend-id>] <hostname>
 
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--backend_id <backend-id>``
   ID of backend to failover to (Default=None)
@@ -1263,16 +1233,15 @@ Optional arguments
 .. _cinder_force-delete:
 
 cinder force-delete
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: cinder force-delete <volume> [<volume> ...]
+   usage: cinder --os-volume-api-version 2 force-delete <volume> [<volume> ...]
 
 Attempts force-delete of volume, regardless of state.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume or volumes to delete.
@@ -1280,15 +1249,14 @@ Positional arguments
 .. _cinder_freeze-host:
 
 cinder freeze-host
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: cinder freeze-host <hostname>
+   usage: cinder --os-volume-api-version 2 freeze-host <hostname>
 
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name.
@@ -1296,16 +1264,15 @@ Positional arguments
 .. _cinder_get-capabilities:
 
 cinder get-capabilities
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder get-capabilities <host>
+   usage: cinder --os-volume-api-version 2 get-capabilities <host>
 
 Show backend volume stats and properties. Admin only.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<host>``
   Cinder host to show backend volume stats and properties; takes the
@@ -1314,16 +1281,15 @@ Positional arguments
 .. _cinder_get-pools:
 
 cinder get-pools
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
-   usage: cinder get-pools [--detail]
+   usage: cinder --os-volume-api-version 2 get-pools [--detail]
 
 Show pool information for backends. Admin only.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--detail``
   Show detailed information about pools.
@@ -1331,16 +1297,15 @@ Optional arguments
 .. _cinder_image-metadata:
 
 cinder image-metadata
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: cinder image-metadata <volume> <action> <key=value> [<key=value> ...]
+   usage: cinder --os-volume-api-version 2 image-metadata <volume> <action> <key=value> [<key=value> ...]
 
 Sets or deletes volume image metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume for which to update metadata.
@@ -1355,16 +1320,15 @@ Positional arguments
 .. _cinder_image-metadata-show:
 
 cinder image-metadata-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: cinder image-metadata-show <volume>
+   usage: cinder --os-volume-api-version 2 image-metadata-show <volume>
 
 Shows volume image metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of volume.
@@ -1372,11 +1336,11 @@ Positional arguments
 .. _cinder_list:
 
 cinder list
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
-   usage: cinder list [--all-tenants [<0|1>]] [--name <name>] [--status <status>]
+   usage: cinder --os-volume-api-version 2 list [--all-tenants [<0|1>]] [--name <name>] [--status <status>]
                       [--bootable [<True|true|False|false>]]
                       [--migration_status <migration_status>]
                       [--metadata [<key=value> [<key=value> ...]]]
@@ -1385,8 +1349,7 @@ cinder list
 
 Lists all volumes.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
@@ -1434,22 +1397,22 @@ Optional arguments
 .. _cinder_list-extensions:
 
 cinder list-extensions
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder list-extensions
+   usage: cinder --os-volume-api-version 2 list-extensions
 
 Lists all available os-api extensions.
 
 .. _cinder_manage:
 
 cinder manage
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
-   usage: cinder manage [--id-type <id-type>] [--name <name>]
+   usage: cinder --os-volume-api-version 2 manage [--id-type <id-type>] [--name <name>]
                         [--description <description>]
                         [--volume-type <volume-type>]
                         [--availability-zone <availability-zone>]
@@ -1458,8 +1421,7 @@ cinder manage
 
 Manage an existing volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<host>``
   Cinder host on which the existing volume resides;
@@ -1468,8 +1430,7 @@ Positional arguments
 ``<identifier>``
   Name or other Identifier for existing volume
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--id-type <id-type>``
   Type of backend device identifier provided, typically
@@ -1497,16 +1458,15 @@ Optional arguments
 .. _cinder_metadata:
 
 cinder metadata
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
-   usage: cinder metadata <volume> <action> <key=value> [<key=value> ...]
+   usage: cinder --os-volume-api-version 2 metadata <volume> <action> <key=value> [<key=value> ...]
 
 Sets or deletes volume metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume for which to update metadata.
@@ -1521,16 +1481,15 @@ Positional arguments
 .. _cinder_metadata-show:
 
 cinder metadata-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder metadata-show <volume>
+   usage: cinder --os-volume-api-version 2 metadata-show <volume>
 
 Shows volume metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of volume.
@@ -1538,16 +1497,15 @@ Positional arguments
 .. _cinder_metadata-update-all:
 
 cinder metadata-update-all
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: cinder metadata-update-all <volume> <key=value> [<key=value> ...]
+   usage: cinder --os-volume-api-version 2 metadata-update-all <volume> <key=value> [<key=value> ...]
 
 Updates volume metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of volume for which to update metadata.
@@ -1558,18 +1516,17 @@ Positional arguments
 .. _cinder_migrate:
 
 cinder migrate
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
-   usage: cinder migrate [--force-host-copy [<True|False>]]
+   usage: cinder --os-volume-api-version 2 migrate [--force-host-copy [<True|False>]]
                          [--lock-volume [<True|False>]]
                          <volume> <host>
 
 Migrates volume to a new host.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of volume to migrate.
@@ -1578,8 +1535,7 @@ Positional arguments
   Destination host. Takes the form: host@backend-
   name#pool
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force-host-copy [<True|False>]``
   Enables or disables generic host-based force-
@@ -1599,16 +1555,15 @@ Optional arguments
 .. _cinder_qos-associate:
 
 cinder qos-associate
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder qos-associate <qos_specs> <volume_type_id>
+   usage: cinder --os-volume-api-version 2 qos-associate <qos_specs> <volume_type_id>
 
 Associates qos specs with specified volume type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications.
@@ -1620,16 +1575,15 @@ Positional arguments
 .. _cinder_qos-create:
 
 cinder qos-create
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
-   usage: cinder qos-create <name> <key=value> [<key=value> ...]
+   usage: cinder --os-volume-api-version 2 qos-create <name> <key=value> [<key=value> ...]
 
 Creates a qos specs.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Name of new QoS specifications.
@@ -1640,22 +1594,20 @@ Positional arguments
 .. _cinder_qos-delete:
 
 cinder qos-delete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
-   usage: cinder qos-delete [--force [<True|False>]] <qos_specs>
+   usage: cinder --os-volume-api-version 2 qos-delete [--force [<True|False>]] <qos_specs>
 
 Deletes a specified qos specs.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force [<True|False>]``
   Enables or disables deletion of in-use QoS
@@ -1664,16 +1616,15 @@ Optional arguments
 .. _cinder_qos-disassociate:
 
 cinder qos-disassociate
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder qos-disassociate <qos_specs> <volume_type_id>
+   usage: cinder --os-volume-api-version 2 qos-disassociate <qos_specs> <volume_type_id>
 
 Disassociates qos specs from specified volume type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications.
@@ -1685,16 +1636,15 @@ Positional arguments
 .. _cinder_qos-disassociate-all:
 
 cinder qos-disassociate-all
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder qos-disassociate-all <qos_specs>
+   usage: cinder --os-volume-api-version 2 qos-disassociate-all <qos_specs>
 
 Disassociates qos specs from all its associations.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications on which to operate.
@@ -1702,16 +1652,15 @@ Positional arguments
 .. _cinder_qos-get-association:
 
 cinder qos-get-association
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: cinder qos-get-association <qos_specs>
+   usage: cinder --os-volume-api-version 2 qos-get-association <qos_specs>
 
 Lists all associations for specified qos specs.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications.
@@ -1719,16 +1668,15 @@ Positional arguments
 .. _cinder_qos-key:
 
 cinder qos-key
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
-   usage: cinder qos-key <qos_specs> <action> key=value [key=value ...]
+   usage: cinder --os-volume-api-version 2 qos-key <qos_specs> <action> key=value [key=value ...]
 
 Sets or unsets specifications for a qos spec.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications.
@@ -1743,27 +1691,26 @@ Positional arguments
 .. _cinder_qos-list:
 
 cinder qos-list
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
-   usage: cinder qos-list
+   usage: cinder --os-volume-api-version 2 qos-list
 
 Lists qos specs.
 
 .. _cinder_qos-show:
 
 cinder qos-show
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
-   usage: cinder qos-show <qos_specs>
+   usage: cinder --os-volume-api-version 2 qos-show <qos_specs>
 
 Shows qos specs details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications to show.
@@ -1771,16 +1718,15 @@ Positional arguments
 .. _cinder_quota-class-show:
 
 cinder quota-class-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder quota-class-show <class>
+   usage: cinder --os-volume-api-version 2 quota-class-show <class>
 
 Lists quotas for a quota class.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<class>``
   Name of quota class for which to list quotas.
@@ -1788,11 +1734,11 @@ Positional arguments
 .. _cinder_quota-class-update:
 
 cinder quota-class-update
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder quota-class-update [--volumes <volumes>]
+   usage: cinder --os-volume-api-version 2 quota-class-update [--volumes <volumes>]
                                     [--snapshots <snapshots>]
                                     [--gigabytes <gigabytes>]
                                     [--volume-type <volume_type_name>]
@@ -1800,14 +1746,12 @@ cinder quota-class-update
 
 Updates quotas for a quota class.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<class_name>``
   Name of quota class for which to set quotas.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volumes <volumes>``
   The new "volumes" quota value. Default=None.
@@ -1824,16 +1768,15 @@ Optional arguments
 .. _cinder_quota-defaults:
 
 cinder quota-defaults
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: cinder quota-defaults <tenant_id>
+   usage: cinder --os-volume-api-version 2 quota-defaults <tenant_id>
 
 Lists default quotas for a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   ID of tenant for which to list quota defaults.
@@ -1841,16 +1784,15 @@ Positional arguments
 .. _cinder_quota-delete:
 
 cinder quota-delete
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: cinder quota-delete <tenant_id>
+   usage: cinder --os-volume-api-version 2 quota-delete <tenant_id>
 
 Delete the quotas for a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   UUID of tenant to delete the quotas for.
@@ -1858,16 +1800,15 @@ Positional arguments
 .. _cinder_quota-show:
 
 cinder quota-show
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
-   usage: cinder quota-show <tenant_id>
+   usage: cinder --os-volume-api-version 2 quota-show <tenant_id>
 
 Lists quotas for a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   ID of tenant for which to list quotas.
@@ -1875,11 +1816,11 @@ Positional arguments
 .. _cinder_quota-update:
 
 cinder quota-update
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: cinder quota-update [--volumes <volumes>] [--snapshots <snapshots>]
+   usage: cinder --os-volume-api-version 2 quota-update [--volumes <volumes>] [--snapshots <snapshots>]
                               [--gigabytes <gigabytes>] [--backups <backups>]
                               [--backup-gigabytes <backup_gigabytes>]
                               [--consistencygroups <consistencygroups>]
@@ -1889,14 +1830,12 @@ cinder quota-update
 
 Updates quotas for a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   ID of tenant for which to set quotas.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volumes <volumes>``
   The new "volumes" quota value. Default=None.
@@ -1925,16 +1864,15 @@ Optional arguments
 .. _cinder_quota-usage:
 
 cinder quota-usage
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: cinder quota-usage <tenant_id>
+   usage: cinder --os-volume-api-version 2 quota-usage <tenant_id>
 
 Lists quota usage for a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   ID of tenant for which to list quota usage.
@@ -1942,27 +1880,26 @@ Positional arguments
 .. _cinder_rate-limits:
 
 cinder rate-limits
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: cinder rate-limits
+   usage: cinder --os-volume-api-version 2 rate-limits
 
 Lists rate limits for a user.
 
 .. _cinder_readonly-mode-update:
 
 cinder readonly-mode-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder readonly-mode-update <volume> <True|true|False|false>
+   usage: cinder --os-volume-api-version 2 readonly-mode-update <volume> <True|true|False|false>
 
 Updates volume read-only access-mode flag.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of volume to update.
@@ -1974,16 +1911,15 @@ Positional arguments
 .. _cinder_rename:
 
 cinder rename
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
-   usage: cinder rename [--description <description>] <volume> [<name>]
+   usage: cinder --os-volume-api-version 2 rename [--description <description>] <volume> [<name>]
 
 Renames a volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to rename.
@@ -1991,8 +1927,7 @@ Positional arguments
 ``<name>``
   New name for volume.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--description <description>``
   Volume description. Default=None.
@@ -2000,16 +1935,15 @@ Optional arguments
 .. _cinder_replication-promote:
 
 cinder replication-promote
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: cinder replication-promote <volume>
+   usage: cinder --os-volume-api-version 2 replication-promote <volume>
 
 Promote a secondary volume to primary for a relationship.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of the volume to promote. The volume should have the
@@ -2018,16 +1952,15 @@ Positional arguments
 .. _cinder_replication-reenable:
 
 cinder replication-reenable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder replication-reenable <volume>
+   usage: cinder --os-volume-api-version 2 replication-reenable <volume>
 
 Sync the secondary volume with primary for a relationship.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of the volume to reenable replication. The replication-
@@ -2036,11 +1969,11 @@ Positional arguments
 .. _cinder_reset-state:
 
 cinder reset-state
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: cinder reset-state [--state <state>] [--attach-status <attach-status>]
+   usage: cinder --os-volume-api-version 2 reset-state [--state <state>] [--attach-status <attach-status>]
                              [--reset-migration-status]
                              <volume> [<volume> ...]
 
@@ -2051,14 +1984,12 @@ only, this has no impact on the true state of the volume and may not match the
 actual state. This can render a volume unusable in the case of change to the
 'available' state.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   The state to assign to the volume. Valid values are
@@ -2084,17 +2015,16 @@ Optional arguments
 .. _cinder_retype:
 
 cinder retype
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
-   usage: cinder retype [--migration-policy <never|on-demand>]
+   usage: cinder --os-volume-api-version 2 retype [--migration-policy <never|on-demand>]
                         <volume> <volume-type>
 
 Changes the volume type for a volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume for which to modify type.
@@ -2102,8 +2032,7 @@ Positional arguments
 ``<volume-type>``
   New volume type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--migration-policy <never|on-demand>``
   Migration policy during retype of volume.
@@ -2111,16 +2040,15 @@ Optional arguments
 .. _cinder_service-disable:
 
 cinder service-disable
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder service-disable [--reason <reason>] <hostname> <binary>
+   usage: cinder --os-volume-api-version 2 service-disable [--reason <reason>] <hostname> <binary>
 
 Disables the service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name.
@@ -2128,8 +2056,7 @@ Positional arguments
 ``<binary>``
   Service binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--reason <reason>``
   Reason for disabling service.
@@ -2137,16 +2064,15 @@ Optional arguments
 .. _cinder_service-enable:
 
 cinder service-enable
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: cinder service-enable <hostname> <binary>
+   usage: cinder --os-volume-api-version 2 service-enable <hostname> <binary>
 
 Enables the service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name.
@@ -2157,17 +2083,16 @@ Positional arguments
 .. _cinder_service-list:
 
 cinder service-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: cinder service-list [--host <hostname>] [--binary <binary>]
+   usage: cinder --os-volume-api-version 2 service-list [--host <hostname>] [--binary <binary>]
                               [--withreplication [<True|False>]]
 
 Lists all services. Filter by host and service binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--host <hostname>``
   Host name. Default=None.
@@ -2182,16 +2107,15 @@ Optional arguments
 .. _cinder_set-bootable:
 
 cinder set-bootable
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: cinder set-bootable <volume> <True|true|False|false>
+   usage: cinder --os-volume-api-version 2 set-bootable <volume> <True|true|False|false>
 
 Update bootable status of a volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of the volume to update.
@@ -2202,16 +2126,15 @@ Positional arguments
 .. _cinder_show:
 
 cinder show
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
-   usage: cinder show <volume>
+   usage: cinder --os-volume-api-version 2 show <volume>
 
 Shows volume details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume.
@@ -2219,25 +2142,23 @@ Positional arguments
 .. _cinder_snapshot-create:
 
 cinder snapshot-create
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-create [--force [<True|False>]] [--name <name>]
+   usage: cinder --os-volume-api-version 2 snapshot-create [--force [<True|False>]] [--name <name>]
                                  [--description <description>]
                                  [--metadata [<key=value> [<key=value> ...]]]
                                  <volume>
 
 Creates a snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force [<True|False>]``
   Allows or disallows snapshot of a volume when the
@@ -2258,16 +2179,15 @@ Optional arguments
 .. _cinder_snapshot-delete:
 
 cinder snapshot-delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-delete <snapshot> [<snapshot> ...]
+   usage: cinder --os-volume-api-version 2 snapshot-delete <snapshot> [<snapshot> ...]
 
 Removes one or more snapshots.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of the snapshot(s) to delete.
@@ -2275,19 +2195,18 @@ Positional arguments
 .. _cinder_snapshot-list:
 
 cinder snapshot-list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-list [--all-tenants [<0|1>]] [--name <name>]
+   usage: cinder --os-volume-api-version 2 snapshot-list [--all-tenants [<0|1>]] [--name <name>]
                                [--status <status>] [--volume-id <volume-id>]
                                [--marker <marker>] [--limit <limit>]
                                [--sort <key>[:<direction>]] [--tenant [<tenant>]]
 
 Lists all snapshots.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
@@ -2321,19 +2240,18 @@ Optional arguments
 .. _cinder_snapshot-manage:
 
 cinder snapshot-manage
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-manage [--id-type <id-type>] [--name <name>]
+   usage: cinder --os-volume-api-version 2 snapshot-manage [--id-type <id-type>] [--name <name>]
                                  [--description <description>]
                                  [--metadata [<key=value> [<key=value> ...]]]
                                  <volume> <identifier>
 
 Manage an existing snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Cinder volume already exists in volume backend
@@ -2341,8 +2259,7 @@ Positional arguments
 ``<identifier>``
   Name or other Identifier for existing snapshot
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--id-type <id-type>``
   Type of backend device identifier provided, typically
@@ -2360,17 +2277,16 @@ Optional arguments
 .. _cinder_snapshot-metadata:
 
 cinder snapshot-metadata
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-metadata <snapshot> <action> <key=value>
+   usage: cinder --os-volume-api-version 2 snapshot-metadata <snapshot> <action> <key=value>
                                    [<key=value> ...]
 
 Sets or deletes snapshot metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   ID of snapshot for which to update metadata.
@@ -2385,16 +2301,15 @@ Positional arguments
 .. _cinder_snapshot-metadata-show:
 
 cinder snapshot-metadata-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-metadata-show <snapshot>
+   usage: cinder --os-volume-api-version 2 snapshot-metadata-show <snapshot>
 
 Shows snapshot metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   ID of snapshot.
@@ -2402,17 +2317,16 @@ Positional arguments
 .. _cinder_snapshot-metadata-update-all:
 
 cinder snapshot-metadata-update-all
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-metadata-update-all <snapshot> <key=value>
+   usage: cinder --os-volume-api-version 2 snapshot-metadata-update-all <snapshot> <key=value>
                                               [<key=value> ...]
 
 Updates snapshot metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   ID of snapshot for which to update metadata.
@@ -2423,17 +2337,16 @@ Positional arguments
 .. _cinder_snapshot-rename:
 
 cinder snapshot-rename
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-rename [--description <description>]
+   usage: cinder --os-volume-api-version 2 snapshot-rename [--description <description>]
                                  <snapshot> [<name>]
 
 Renames a snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of snapshot.
@@ -2441,8 +2354,7 @@ Positional arguments
 ``<name>``
   New name for snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--description <description>``
   Snapshot description. Default=None.
@@ -2450,23 +2362,21 @@ Optional arguments
 .. _cinder_snapshot-reset-state:
 
 cinder snapshot-reset-state
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-reset-state [--state <state>]
+   usage: cinder --os-volume-api-version 2 snapshot-reset-state [--state <state>]
                                       <snapshot> [<snapshot> ...]
 
 Explicitly updates the snapshot state.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of snapshot to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   The state to assign to the snapshot. Valid values are
@@ -2479,16 +2389,15 @@ Optional arguments
 .. _cinder_snapshot-show:
 
 cinder snapshot-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-show <snapshot>
+   usage: cinder --os-volume-api-version 2 snapshot-show <snapshot>
 
 Shows snapshot details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of snapshot.
@@ -2496,16 +2405,15 @@ Positional arguments
 .. _cinder_snapshot-unmanage:
 
 cinder snapshot-unmanage
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: cinder snapshot-unmanage <snapshot>
+   usage: cinder --os-volume-api-version 2 snapshot-unmanage <snapshot>
 
 Stop managing a snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of the snapshot to unmanage.
@@ -2513,15 +2421,14 @@ Positional arguments
 .. _cinder_thaw-host:
 
 cinder thaw-host
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
-   usage: cinder thaw-host <hostname>
+   usage: cinder --os-volume-api-version 2 thaw-host <hostname>
 
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name.
@@ -2529,16 +2436,15 @@ Positional arguments
 .. _cinder_transfer-accept:
 
 cinder transfer-accept
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder transfer-accept <transfer> <auth_key>
+   usage: cinder --os-volume-api-version 2 transfer-accept <transfer> <auth_key>
 
 Accepts a volume transfer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<transfer>``
   ID of transfer to accept.
@@ -2549,22 +2455,20 @@ Positional arguments
 .. _cinder_transfer-create:
 
 cinder transfer-create
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder transfer-create [--name <name>] <volume>
+   usage: cinder --os-volume-api-version 2 transfer-create [--name <name>] <volume>
 
 Creates a volume transfer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to transfer.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Transfer name. Default=None.
@@ -2572,16 +2476,15 @@ Optional arguments
 .. _cinder_transfer-delete:
 
 cinder transfer-delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder transfer-delete <transfer>
+   usage: cinder --os-volume-api-version 2 transfer-delete <transfer>
 
 Undoes a transfer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<transfer>``
   Name or ID of transfer to delete.
@@ -2589,16 +2492,15 @@ Positional arguments
 .. _cinder_transfer-list:
 
 cinder transfer-list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder transfer-list [--all-tenants [<0|1>]]
+   usage: cinder --os-volume-api-version 2 transfer-list [--all-tenants [<0|1>]]
 
 Lists all transfers.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
@@ -2606,16 +2508,15 @@ Optional arguments
 .. _cinder_transfer-show:
 
 cinder transfer-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: cinder transfer-show <transfer>
+   usage: cinder --os-volume-api-version 2 transfer-show <transfer>
 
 Shows transfer details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<transfer>``
   Name or ID of transfer to accept.
@@ -2623,17 +2524,16 @@ Positional arguments
 .. _cinder_type-access-add:
 
 cinder type-access-add
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder type-access-add --volume-type <volume_type> --project-id
+   usage: cinder --os-volume-api-version 2 type-access-add --volume-type <volume_type> --project-id
                                  <project_id>
 
 Adds volume type access for the given project.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volume-type <volume_type>``
   Volume type name or ID to add access for the given
@@ -2645,16 +2545,15 @@ Optional arguments
 .. _cinder_type-access-list:
 
 cinder type-access-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder type-access-list --volume-type <volume_type>
+   usage: cinder --os-volume-api-version 2 type-access-list --volume-type <volume_type>
 
 Print access information about the given volume type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volume-type <volume_type>``
   Filter results by volume type name or ID.
@@ -2662,17 +2561,16 @@ Optional arguments
 .. _cinder_type-access-remove:
 
 cinder type-access-remove
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder type-access-remove --volume-type <volume_type> --project-id
+   usage: cinder --os-volume-api-version 2 type-access-remove --volume-type <volume_type> --project-id
                                     <project_id>
 
 Removes volume type access for the given project.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volume-type <volume_type>``
   Volume type name or ID to remove access for the given
@@ -2684,24 +2582,22 @@ Optional arguments
 .. _cinder_type-create:
 
 cinder type-create
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: cinder type-create [--description <description>]
+   usage: cinder --os-volume-api-version 2 type-create [--description <description>]
                              [--is-public <is-public>]
                              <name>
 
 Creates a volume type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Name of new volume type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--description <description>``
   Description of new volume type.
@@ -2712,27 +2608,26 @@ Optional arguments
 .. _cinder_type-default:
 
 cinder type-default
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: cinder type-default
+   usage: cinder --os-volume-api-version 2 type-default
 
 List the default volume type.
 
 .. _cinder_type-delete:
 
 cinder type-delete
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: cinder type-delete <id>
+   usage: cinder --os-volume-api-version 2 type-delete <id>
 
 Deletes a volume type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of volume type to delete.
@@ -2740,16 +2635,15 @@ Positional arguments
 .. _cinder_type-key:
 
 cinder type-key
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
-   usage: cinder type-key <vtype> <action> <key=value> [<key=value> ...]
+   usage: cinder --os-volume-api-version 2 type-key <vtype> <action> <key=value> [<key=value> ...]
 
 Sets or unsets extra_spec for a volume type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<vtype>``
   Name or ID of volume type.
@@ -2764,27 +2658,26 @@ Positional arguments
 .. _cinder_type-list:
 
 cinder type-list
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
-   usage: cinder type-list
+   usage: cinder --os-volume-api-version 2 type-list
 
 Lists available 'volume types'. (Admin only will see private types)
 
 .. _cinder_type-show:
 
 cinder type-show
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
-   usage: cinder type-show <volume_type>
+   usage: cinder --os-volume-api-version 2 type-show <volume_type>
 
 Show volume type details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume_type>``
   Name or ID of the volume type.
@@ -2792,24 +2685,22 @@ Positional arguments
 .. _cinder_type-update:
 
 cinder type-update
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: cinder type-update [--name <name>] [--description <description>]
+   usage: cinder --os-volume-api-version 2 type-update [--name <name>] [--description <description>]
                              [--is-public <is-public>]
                              <id>
 
 Updates volume type name, description, and/or is_public.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of the volume type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Name of the volume type.
@@ -2823,16 +2714,15 @@ Optional arguments
 .. _cinder_unmanage:
 
 cinder unmanage
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
-   usage: cinder unmanage <volume>
+   usage: cinder --os-volume-api-version 2 unmanage <volume>
 
 Stop managing a volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of the volume to unmanage.
@@ -2840,19 +2730,18 @@ Positional arguments
 .. _cinder_upload-to-image:
 
 cinder upload-to-image
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: cinder upload-to-image [--force [<True|False>]]
+   usage: cinder --os-volume-api-version 2 upload-to-image [--force [<True|False>]]
                                  [--container-format <container-format>]
                                  [--disk-format <disk-format>]
                                  <volume> <image-name>
 
 Uploads volume to Image Service as an image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to snapshot.
@@ -2860,8 +2749,7 @@ Positional arguments
 ``<image-name>``
   The new image name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force [<True|False>]``
   Enables or disables upload of a volume that is
@@ -2874,61 +2762,51 @@ Optional arguments
   Disk format type. Default is raw.
 
 
-Block Storage API v2 commands
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Block Storage API v1 commands (DEPRECATED)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can select an API version to use by adding the
-:option:`--os-volume-api-version` parameter or by
-setting the corresponding environment variable:
+.. _cinder_absolute-limits_v1:
 
-.. code-block:: console
-
-   export OS_VOLUME_API_VERSION=2
-
-.. _cinder_absolute-limits_v2:
-
-cinder absolute-limits (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder absolute-limits (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 absolute-limits
+   usage: cinder absolute-limits
 
 Lists absolute limits for a user.
 
-.. _cinder_availability-zone-list_v2:
+.. _cinder_availability-zone-list_v1:
 
-cinder availability-zone-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder availability-zone-list (v1)
+----------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 availability-zone-list
+   usage: cinder availability-zone-list
 
 Lists all availability zones.
 
-.. _cinder_backup-create_v2:
+.. _cinder_backup-create_v1:
 
-cinder backup-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder backup-create (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 backup-create [--container <container>] [--name <name>]
+   usage: cinder backup-create [--container <container>] [--name <name>]
                                [--description <description>] [--incremental]
                                [--force] [--snapshot-id <snapshot-id>]
                                <volume>
 
 Creates a volume backup.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to backup.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--container <container>``
   Backup container name. Default=None.
@@ -2952,53 +2830,50 @@ Optional arguments
 ``--snapshot-id <snapshot-id>``
   ID of snapshot to backup. Default=None.
 
-.. _cinder_backup-delete_v2:
+.. _cinder_backup-delete_v1:
 
-cinder backup-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder backup-delete (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 backup-delete <backup> [<backup> ...]
+   usage: cinder backup-delete <backup> [<backup> ...]
 
 Removes one or more backups.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   Name or ID of backup(s) to delete.
 
-.. _cinder_backup-export_v2:
+.. _cinder_backup-export_v1:
 
-cinder backup-export (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder backup-export (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 backup-export <backup>
+   usage: cinder backup-export <backup>
 
 Export backup metadata record.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   ID of the backup to export.
 
-.. _cinder_backup-import_v2:
+.. _cinder_backup-import_v1:
 
-cinder backup-import (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder backup-import (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 backup-import <backup_service> <backup_url>
+   usage: cinder backup-import <backup_service> <backup_url>
 
 Import backup metadata record.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup_service>``
   Backup service to use for importing the backup.
@@ -3006,22 +2881,21 @@ Positional arguments
 ``<backup_url>``
   Backup URL for importing the backup metadata.
 
-.. _cinder_backup-list_v2:
+.. _cinder_backup-list_v1:
 
-cinder backup-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+cinder backup-list (v1)
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 backup-list [--all-tenants [<all_tenants>]] [--name <name>]
+   usage: cinder backup-list [--all-tenants [<all_tenants>]] [--name <name>]
                              [--status <status>] [--volume-id <volume-id>]
                              [--marker <marker>] [--limit <limit>]
                              [--sort <key>[:<direction>]]
 
 Lists all backups.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<all_tenants>]``
   Shows details for all tenants. Admin only.
@@ -3049,90 +2923,83 @@ Optional arguments
   status, size, availability_zone, name, bootable,
   created_at. Default=None.
 
-.. _cinder_backup-reset-state_v2:
+.. _cinder_backup-reset-state_v1:
 
-cinder backup-reset-state (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder backup-reset-state (v1)
+------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 backup-reset-state [--state <state>] <backup> [<backup> ...]
+   usage: cinder backup-reset-state [--state <state>] <backup> [<backup> ...]
 
 Explicitly updates the backup state.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   Name or ID of the backup to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   The state to assign to the backup. Valid values are
   "available", "error". Default=available.
 
-.. _cinder_backup-restore_v2:
+.. _cinder_backup-restore_v1:
 
-cinder backup-restore (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder backup-restore (v1)
+--------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 backup-restore [--volume <volume>] <backup>
+   usage: cinder backup-restore [--volume <volume>] <backup>
 
 Restores a backup.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   ID of backup to restore.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volume <volume>``
   Name or ID of volume to which to restore. Default=None.
 
-.. _cinder_backup-show_v2:
+.. _cinder_backup-show_v1:
 
-cinder backup-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+cinder backup-show (v1)
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 backup-show <backup>
+   usage: cinder backup-show <backup>
 
 Shows backup details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   Name or ID of backup.
 
-.. _cinder_cgsnapshot-create_v2:
+.. _cinder_cgsnapshot-create_v1:
 
-cinder cgsnapshot-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder cgsnapshot-create (v1)
+-----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 cgsnapshot-create [--name <name>] [--description <description>]
+   usage: cinder cgsnapshot-create [--name <name>] [--description <description>]
                                    <consistencygroup>
 
 Creates a cgsnapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistencygroup>``
   Name or ID of a consistency group.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Cgsnapshot name. Default=None.
@@ -3140,37 +3007,35 @@ Optional arguments
 ``--description <description>``
   Cgsnapshot description. Default=None.
 
-.. _cinder_cgsnapshot-delete_v2:
+.. _cinder_cgsnapshot-delete_v1:
 
-cinder cgsnapshot-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder cgsnapshot-delete (v1)
+-----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 cgsnapshot-delete <cgsnapshot> [<cgsnapshot> ...]
+   usage: cinder cgsnapshot-delete <cgsnapshot> [<cgsnapshot> ...]
 
 Removes one or more cgsnapshots.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<cgsnapshot>``
   Name or ID of one or more cgsnapshots to be deleted.
 
-.. _cinder_cgsnapshot-list_v2:
+.. _cinder_cgsnapshot-list_v1:
 
-cinder cgsnapshot-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder cgsnapshot-list (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 cgsnapshot-list [--all-tenants [<0|1>]] [--status <status>]
+   usage: cinder cgsnapshot-list [--all-tenants [<0|1>]] [--status <status>]
                                  [--consistencygroup-id <consistencygroup_id>]
 
 Lists all cgsnapshots.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
@@ -3182,44 +3047,41 @@ Optional arguments
   Filters results by a consistency group ID.
   Default=None.
 
-.. _cinder_cgsnapshot-show_v2:
+.. _cinder_cgsnapshot-show_v1:
 
-cinder cgsnapshot-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder cgsnapshot-show (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 cgsnapshot-show <cgsnapshot>
+   usage: cinder cgsnapshot-show <cgsnapshot>
 
 Shows cgsnapshot details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<cgsnapshot>``
   Name or ID of cgsnapshot.
 
-.. _cinder_consisgroup-create_v2:
+.. _cinder_consisgroup-create_v1:
 
-cinder consisgroup-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder consisgroup-create (v1)
+------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 consisgroup-create [--name <name>] [--description <description>]
+   usage: cinder consisgroup-create [--name <name>] [--description <description>]
                                     [--availability-zone <availability-zone>]
                                     <volume-types>
 
 Creates a consistency group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume-types>``
   Volume types.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Name of a consistency group.
@@ -3230,22 +3092,21 @@ Optional arguments
 ``--availability-zone <availability-zone>``
   Availability zone for volume. Default=None.
 
-.. _cinder_consisgroup-create-from-src_v2:
+.. _cinder_consisgroup-create-from-src_v1:
 
-cinder consisgroup-create-from-src (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder consisgroup-create-from-src (v1)
+---------------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 consisgroup-create-from-src [--cgsnapshot <cgsnapshot>]
+   usage: cinder consisgroup-create-from-src [--cgsnapshot <cgsnapshot>]
                                              [--source-cg <source-cg>]
                                              [--name <name>]
                                              [--description <description>]
 
 Creates a consistency group from a cgsnapshot or a source CG.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--cgsnapshot <cgsnapshot>``
   Name or ID of a cgsnapshot. Default=None.
@@ -3259,27 +3120,25 @@ Optional arguments
 ``--description <description>``
   Description of a consistency group. Default=None.
 
-.. _cinder_consisgroup-delete_v2:
+.. _cinder_consisgroup-delete_v1:
 
-cinder consisgroup-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder consisgroup-delete (v1)
+------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 consisgroup-delete [--force]
+   usage: cinder consisgroup-delete [--force]
                                     <consistencygroup> [<consistencygroup> ...]
 
 Removes one or more consistency groups.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistencygroup>``
   Name or ID of one or more consistency groups to be
   deleted.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force``
   Allows or disallows consistency groups to be deleted. If
@@ -3287,62 +3146,58 @@ Optional arguments
   without the force flag. If the consistency group is not
   empty, the force flag is required for it to be deleted.
 
-.. _cinder_consisgroup-list_v2:
+.. _cinder_consisgroup-list_v1:
 
-cinder consisgroup-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder consisgroup-list (v1)
+----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 consisgroup-list [--all-tenants [<0|1>]]
+   usage: cinder consisgroup-list [--all-tenants [<0|1>]]
 
 Lists all consistencygroups.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
 
-.. _cinder_consisgroup-show_v2:
+.. _cinder_consisgroup-show_v1:
 
-cinder consisgroup-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder consisgroup-show (v1)
+----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 consisgroup-show <consistencygroup>
+   usage: cinder consisgroup-show <consistencygroup>
 
 Shows details of a consistency group.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistencygroup>``
   Name or ID of a consistency group.
 
-.. _cinder_consisgroup-update_v2:
+.. _cinder_consisgroup-update_v1:
 
-cinder consisgroup-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder consisgroup-update (v1)
+------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 consisgroup-update [--name <name>] [--description <description>]
+   usage: cinder consisgroup-update [--name <name>] [--description <description>]
                                     [--add-volumes <uuid1,uuid2,......>]
                                     [--remove-volumes <uuid3,uuid4,......>]
                                     <consistencygroup>
 
 Updates a consistencygroup.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<consistencygroup>``
   Name or ID of a consistency group.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   New name for consistency group. Default=None.
@@ -3358,14 +3213,14 @@ Optional arguments
   UUID of one or more volumes to be removed from the
   consistency group, separated by commas. Default=None.
 
-.. _cinder_create_v2:
+.. _cinder_create_v1:
 
-cinder create (v2)
-~~~~~~~~~~~~~~~~~~
+cinder create (v1)
+------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 create [--consisgroup-id <consistencygroup-id>]
+   usage: cinder create [--consisgroup-id <consistencygroup-id>]
                         [--snapshot-id <snapshot-id>]
                         [--source-volid <source-volid>]
                         [--source-replica <source-replica>]
@@ -3379,15 +3234,13 @@ cinder create (v2)
 
 Creates a volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<size>``
   Size of volume, in GiBs. (Required unless snapshot-id
   /source-volid is specified).
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--consisgroup-id <consistencygroup-id>``
   ID of a consistency group where the new volume belongs
@@ -3432,50 +3285,48 @@ Optional arguments
   Allow volume to be attached more than once.
   Default=False
 
-.. _cinder_credentials_v2:
+.. _cinder_credentials_v1:
 
-cinder credentials (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+cinder credentials (v1)
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 credentials
+   usage: cinder credentials
 
 Shows user credentials returned from auth.
 
-.. _cinder_delete_v2:
+.. _cinder_delete_v1:
 
-cinder delete (v2)
-~~~~~~~~~~~~~~~~~~
+cinder delete (v1)
+------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 delete <volume> [<volume> ...]
+   usage: cinder delete <volume> [<volume> ...]
 
 Removes one or more volumes.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume or volumes to delete.
 
-.. _cinder_encryption-type-create_v2:
+.. _cinder_encryption-type-create_v1:
 
-cinder encryption-type-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder encryption-type-create (v1)
+----------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 encryption-type-create [--cipher <cipher>]
+   usage: cinder encryption-type-create [--cipher <cipher>]
                                         [--key_size <key_size>]
                                         [--control_location <control_location>]
                                         <volume_type> <provider>
 
 Creates encryption type for a volume type. Admin only.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume_type>``
   Name or ID of volume type.
@@ -3484,8 +3335,7 @@ Positional arguments
   The class that provides encryption support. For
   example, LuksEncryptor.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--cipher <cipher>``
   The encryption algorithm or mode. For example, aes-
@@ -3500,59 +3350,57 @@ Optional arguments
   values are "front-end" or "back-end." For example,
   front-end=Nova. Default is "front-end."
 
-.. _cinder_encryption-type-delete_v2:
+.. _cinder_encryption-type-delete_v1:
 
-cinder encryption-type-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder encryption-type-delete (v1)
+----------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 encryption-type-delete <volume_type>
+   usage: cinder encryption-type-delete <volume_type>
 
 Deletes encryption type for a volume type. Admin only.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume_type>``
   Name or ID of volume type.
 
-.. _cinder_encryption-type-list_v2:
+.. _cinder_encryption-type-list_v1:
 
-cinder encryption-type-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder encryption-type-list (v1)
+--------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 encryption-type-list
+   usage: cinder encryption-type-list
 
 Shows encryption type details for volume types. Admin only.
 
-.. _cinder_encryption-type-show_v2:
+.. _cinder_encryption-type-show_v1:
 
-cinder encryption-type-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder encryption-type-show (v1)
+--------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 encryption-type-show <volume_type>
+   usage: cinder encryption-type-show <volume_type>
 
 Shows encryption type details for a volume type. Admin only.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume_type>``
   Name or ID of volume type.
 
-.. _cinder_encryption-type-update_v2:
+.. _cinder_encryption-type-update_v1:
 
-cinder encryption-type-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder encryption-type-update (v1)
+----------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 encryption-type-update [--provider <provider>]
+   usage: cinder encryption-type-update [--provider <provider>]
                                         [--cipher [<cipher>]]
                                         [--key-size [<key-size>]]
                                         [--control-location <control-location>]
@@ -3560,14 +3408,12 @@ cinder encryption-type-update (v2)
 
 Update encryption type information for a volume type (Admin Only).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume-type>``
   Name or ID of the volume type
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--provider <provider>``
   Class providing encryption support (e.g.
@@ -3588,30 +3434,29 @@ Optional arguments
   front-end=Nova). Values: 'front-end', 'back-end'
   (Optional)
 
-.. _cinder_endpoints_v2:
+.. _cinder_endpoints_v1:
 
-cinder endpoints (v2)
-~~~~~~~~~~~~~~~~~~~~~
+cinder endpoints (v1)
+---------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 endpoints
+   usage: cinder endpoints
 
 Discovers endpoints registered by authentication service.
 
-.. _cinder_extend_v2:
+.. _cinder_extend_v1:
 
-cinder extend (v2)
-~~~~~~~~~~~~~~~~~~
+cinder extend (v1)
+------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 extend <volume> <new_size>
+   usage: cinder extend <volume> <new_size>
 
 Attempts to extend size of an existing volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to extend.
@@ -3619,120 +3464,113 @@ Positional arguments
 ``<new_size>``
   New size of volume, in GiBs.
 
-.. _cinder_extra-specs-list_v2:
+.. _cinder_extra-specs-list_v1:
 
-cinder extra-specs-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder extra-specs-list (v1)
+----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 extra-specs-list
+   usage: cinder extra-specs-list
 
 Lists current volume types and extra specs.
 
-.. _cinder_failover-host_v2:
+.. _cinder_failover-host_v1:
 
-cinder failover-host (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder failover-host (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 failover-host [--backend_id <backend-id>] <hostname>
+   usage: cinder failover-host [--backend_id <backend-id>] <hostname>
 
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--backend_id <backend-id>``
   ID of backend to failover to (Default=None)
 
-.. _cinder_force-delete_v2:
+.. _cinder_force-delete_v1:
 
-cinder force-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+cinder force-delete (v1)
+------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 force-delete <volume> [<volume> ...]
+   usage: cinder force-delete <volume> [<volume> ...]
 
 Attempts force-delete of volume, regardless of state.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume or volumes to delete.
 
-.. _cinder_freeze-host_v2:
+.. _cinder_freeze-host_v1:
 
-cinder freeze-host (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+cinder freeze-host (v1)
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 freeze-host <hostname>
+   usage: cinder freeze-host <hostname>
 
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name.
 
-.. _cinder_get-capabilities_v2:
+.. _cinder_get-capabilities_v1:
 
-cinder get-capabilities (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder get-capabilities (v1)
+----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 get-capabilities <host>
+   usage: cinder get-capabilities <host>
 
 Show backend volume stats and properties. Admin only.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<host>``
   Cinder host to show backend volume stats and properties; takes the
   form: host@backend-name
 
-.. _cinder_get-pools_v2:
+.. _cinder_get-pools_v1:
 
-cinder get-pools (v2)
-~~~~~~~~~~~~~~~~~~~~~
+cinder get-pools (v1)
+---------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 get-pools [--detail]
+   usage: cinder get-pools [--detail]
 
 Show pool information for backends. Admin only.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--detail``
   Show detailed information about pools.
 
-.. _cinder_image-metadata_v2:
+.. _cinder_image-metadata_v1:
 
-cinder image-metadata (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder image-metadata (v1)
+--------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 image-metadata <volume> <action> <key=value> [<key=value> ...]
+   usage: cinder image-metadata <volume> <action> <key=value> [<key=value> ...]
 
 Sets or deletes volume image metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume for which to update metadata.
@@ -3744,31 +3582,30 @@ Positional arguments
   Metadata key and value pair to set or unset. For unset, specify
   only the key.
 
-.. _cinder_image-metadata-show_v2:
+.. _cinder_image-metadata-show_v1:
 
-cinder image-metadata-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder image-metadata-show (v1)
+-------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 image-metadata-show <volume>
+   usage: cinder image-metadata-show <volume>
 
 Shows volume image metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of volume.
 
-.. _cinder_list_v2:
+.. _cinder_list_v1:
 
-cinder list (v2)
-~~~~~~~~~~~~~~~~
+cinder list (v1)
+----------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 list [--all-tenants [<0|1>]] [--name <name>] [--status <status>]
+   usage: cinder list [--all-tenants [<0|1>]] [--name <name>] [--status <status>]
                       [--bootable [<True|true|False|false>]]
                       [--migration_status <migration_status>]
                       [--metadata [<key=value> [<key=value> ...]]]
@@ -3777,8 +3614,7 @@ cinder list (v2)
 
 Lists all volumes.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
@@ -3823,25 +3659,25 @@ Optional arguments
 ``--tenant [<tenant>]``
   Display information from single tenant (Admin only).
 
-.. _cinder_list-extensions_v2:
+.. _cinder_list-extensions_v1:
 
-cinder list-extensions (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder list-extensions (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 list-extensions
+   usage: cinder list-extensions
 
 Lists all available os-api extensions.
 
-.. _cinder_manage_v2:
+.. _cinder_manage_v1:
 
-cinder manage (v2)
-~~~~~~~~~~~~~~~~~~
+cinder manage (v1)
+------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 manage [--id-type <id-type>] [--name <name>]
+   usage: cinder manage [--id-type <id-type>] [--name <name>]
                         [--description <description>]
                         [--volume-type <volume-type>]
                         [--availability-zone <availability-zone>]
@@ -3850,8 +3686,7 @@ cinder manage (v2)
 
 Manage an existing volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<host>``
   Cinder host on which the existing volume resides;
@@ -3860,8 +3695,7 @@ Positional arguments
 ``<identifier>``
   Name or other Identifier for existing volume
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--id-type <id-type>``
   Type of backend device identifier provided, typically
@@ -3886,19 +3720,18 @@ Optional arguments
   Specifies that the newly created volume should be
   marked as bootable
 
-.. _cinder_metadata_v2:
+.. _cinder_metadata_v1:
 
-cinder metadata (v2)
-~~~~~~~~~~~~~~~~~~~~
+cinder metadata (v1)
+--------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 metadata <volume> <action> <key=value> [<key=value> ...]
+   usage: cinder metadata <volume> <action> <key=value> [<key=value> ...]
 
 Sets or deletes volume metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume for which to update metadata.
@@ -3910,36 +3743,34 @@ Positional arguments
   Metadata key and value pair to set or unset. For unset, specify
   only the key.
 
-.. _cinder_metadata-show_v2:
+.. _cinder_metadata-show_v1:
 
-cinder metadata-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder metadata-show (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 metadata-show <volume>
+   usage: cinder metadata-show <volume>
 
 Shows volume metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of volume.
 
-.. _cinder_metadata-update-all_v2:
+.. _cinder_metadata-update-all_v1:
 
-cinder metadata-update-all (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder metadata-update-all (v1)
+-------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 metadata-update-all <volume> <key=value> [<key=value> ...]
+   usage: cinder metadata-update-all <volume> <key=value> [<key=value> ...]
 
 Updates volume metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of volume for which to update metadata.
@@ -3947,21 +3778,20 @@ Positional arguments
 ``<key=value>``
   Metadata key and value pair or pairs to update.
 
-.. _cinder_migrate_v2:
+.. _cinder_migrate_v1:
 
-cinder migrate (v2)
-~~~~~~~~~~~~~~~~~~~
+cinder migrate (v1)
+-------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 migrate [--force-host-copy [<True|False>]]
+   usage: cinder migrate [--force-host-copy [<True|False>]]
                          [--lock-volume [<True|False>]]
                          <volume> <host>
 
 Migrates volume to a new host.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of volume to migrate.
@@ -3970,8 +3800,7 @@ Positional arguments
   Destination host. Takes the form: host@backend-
   name#pool
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force-host-copy [<True|False>]``
   Enables or disables generic host-based force-
@@ -3988,19 +3817,18 @@ Optional arguments
   migration to be aborted. The volume status is still in
   the original status. Default=False.
 
-.. _cinder_qos-associate_v2:
+.. _cinder_qos-associate_v1:
 
-cinder qos-associate (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder qos-associate (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 qos-associate <qos_specs> <volume_type_id>
+   usage: cinder qos-associate <qos_specs> <volume_type_id>
 
 Associates qos specs with specified volume type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications.
@@ -4009,19 +3837,18 @@ Positional arguments
   ID of volume type with which to associate QoS
   specifications.
 
-.. _cinder_qos-create_v2:
+.. _cinder_qos-create_v1:
 
-cinder qos-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~
+cinder qos-create (v1)
+----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 qos-create <name> <key=value> [<key=value> ...]
+   usage: cinder qos-create <name> <key=value> [<key=value> ...]
 
 Creates a qos specs.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Name of new QoS specifications.
@@ -4029,43 +3856,40 @@ Positional arguments
 ``<key=value>``
   QoS specifications.
 
-.. _cinder_qos-delete_v2:
+.. _cinder_qos-delete_v1:
 
-cinder qos-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~
+cinder qos-delete (v1)
+----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 qos-delete [--force [<True|False>]] <qos_specs>
+   usage: cinder qos-delete [--force [<True|False>]] <qos_specs>
 
 Deletes a specified qos specs.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications to delete.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force [<True|False>]``
   Enables or disables deletion of in-use QoS
   specifications. Default=False.
 
-.. _cinder_qos-disassociate_v2:
+.. _cinder_qos-disassociate_v1:
 
-cinder qos-disassociate (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder qos-disassociate (v1)
+----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 qos-disassociate <qos_specs> <volume_type_id>
+   usage: cinder qos-disassociate <qos_specs> <volume_type_id>
 
 Disassociates qos specs from specified volume type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications.
@@ -4074,53 +3898,50 @@ Positional arguments
   ID of volume type with which to associate QoS
   specifications.
 
-.. _cinder_qos-disassociate-all_v2:
+.. _cinder_qos-disassociate-all_v1:
 
-cinder qos-disassociate-all (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder qos-disassociate-all (v1)
+--------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 qos-disassociate-all <qos_specs>
+   usage: cinder qos-disassociate-all <qos_specs>
 
 Disassociates qos specs from all its associations.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications on which to operate.
 
-.. _cinder_qos-get-association_v2:
+.. _cinder_qos-get-association_v1:
 
-cinder qos-get-association (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder qos-get-association (v1)
+-------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 qos-get-association <qos_specs>
+   usage: cinder qos-get-association <qos_specs>
 
 Lists all associations for specified qos specs.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications.
 
-.. _cinder_qos-key_v2:
+.. _cinder_qos-key_v1:
 
-cinder qos-key (v2)
-~~~~~~~~~~~~~~~~~~~
+cinder qos-key (v1)
+-------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 qos-key <qos_specs> <action> key=value [key=value ...]
+   usage: cinder qos-key <qos_specs> <action> key=value [key=value ...]
 
 Sets or unsets specifications for a qos spec.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications.
@@ -4132,59 +3953,57 @@ Positional arguments
   Metadata key and value pair to set or unset. For unset, specify
   only the key.
 
-.. _cinder_qos-list_v2:
+.. _cinder_qos-list_v1:
 
-cinder qos-list (v2)
-~~~~~~~~~~~~~~~~~~~~
+cinder qos-list (v1)
+--------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 qos-list
+   usage: cinder qos-list
 
 Lists qos specs.
 
-.. _cinder_qos-show_v2:
+.. _cinder_qos-show_v1:
 
-cinder qos-show (v2)
-~~~~~~~~~~~~~~~~~~~~
+cinder qos-show (v1)
+--------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 qos-show <qos_specs>
+   usage: cinder qos-show <qos_specs>
 
 Shows qos specs details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<qos_specs>``
   ID of QoS specifications to show.
 
-.. _cinder_quota-class-show_v2:
+.. _cinder_quota-class-show_v1:
 
-cinder quota-class-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder quota-class-show (v1)
+----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 quota-class-show <class>
+   usage: cinder quota-class-show <class>
 
 Lists quotas for a quota class.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<class>``
   Name of quota class for which to list quotas.
 
-.. _cinder_quota-class-update_v2:
+.. _cinder_quota-class-update_v1:
 
-cinder quota-class-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder quota-class-update (v1)
+------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 quota-class-update [--volumes <volumes>]
+   usage: cinder quota-class-update [--volumes <volumes>]
                                     [--snapshots <snapshots>]
                                     [--gigabytes <gigabytes>]
                                     [--volume-type <volume_type_name>]
@@ -4192,14 +4011,12 @@ cinder quota-class-update (v2)
 
 Updates quotas for a quota class.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<class_name>``
   Name of quota class for which to set quotas.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volumes <volumes>``
   The new "volumes" quota value. Default=None.
@@ -4213,65 +4030,62 @@ Optional arguments
 ``--volume-type <volume_type_name>``
   Volume type. Default=None.
 
-.. _cinder_quota-defaults_v2:
+.. _cinder_quota-defaults_v1:
 
-cinder quota-defaults (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder quota-defaults (v1)
+--------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 quota-defaults <tenant_id>
+   usage: cinder quota-defaults <tenant_id>
 
 Lists default quotas for a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   ID of tenant for which to list quota defaults.
 
-.. _cinder_quota-delete_v2:
+.. _cinder_quota-delete_v1:
 
-cinder quota-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+cinder quota-delete (v1)
+------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 quota-delete <tenant_id>
+   usage: cinder quota-delete <tenant_id>
 
 Delete the quotas for a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   UUID of tenant to delete the quotas for.
 
-.. _cinder_quota-show_v2:
+.. _cinder_quota-show_v1:
 
-cinder quota-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~
+cinder quota-show (v1)
+----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 quota-show <tenant_id>
+   usage: cinder quota-show <tenant_id>
 
 Lists quotas for a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   ID of tenant for which to list quotas.
 
-.. _cinder_quota-update_v2:
+.. _cinder_quota-update_v1:
 
-cinder quota-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+cinder quota-update (v1)
+------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 quota-update [--volumes <volumes>] [--snapshots <snapshots>]
+   usage: cinder quota-update [--volumes <volumes>] [--snapshots <snapshots>]
                               [--gigabytes <gigabytes>] [--backups <backups>]
                               [--backup-gigabytes <backup_gigabytes>]
                               [--consistencygroups <consistencygroups>]
@@ -4281,14 +4095,12 @@ cinder quota-update (v2)
 
 Updates quotas for a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   ID of tenant for which to set quotas.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volumes <volumes>``
   The new "volumes" quota value. Default=None.
@@ -4314,47 +4126,45 @@ Optional arguments
 ``--per-volume-gigabytes <per_volume_gigabytes>``
   Set max volume size limit. Default=None.
 
-.. _cinder_quota-usage_v2:
+.. _cinder_quota-usage_v1:
 
-cinder quota-usage (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+cinder quota-usage (v1)
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 quota-usage <tenant_id>
+   usage: cinder quota-usage <tenant_id>
 
 Lists quota usage for a tenant.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<tenant_id>``
   ID of tenant for which to list quota usage.
 
-.. _cinder_rate-limits_v2:
+.. _cinder_rate-limits_v1:
 
-cinder rate-limits (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+cinder rate-limits (v1)
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 rate-limits
+   usage: cinder rate-limits
 
 Lists rate limits for a user.
 
-.. _cinder_readonly-mode-update_v2:
+.. _cinder_readonly-mode-update_v1:
 
-cinder readonly-mode-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder readonly-mode-update (v1)
+--------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 readonly-mode-update <volume> <True|true|False|false>
+   usage: cinder readonly-mode-update <volume> <True|true|False|false>
 
 Updates volume read-only access-mode flag.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of volume to update.
@@ -4363,19 +4173,18 @@ Positional arguments
   Enables or disables update of volume to read-only
   access mode.
 
-.. _cinder_rename_v2:
+.. _cinder_rename_v1:
 
-cinder rename (v2)
-~~~~~~~~~~~~~~~~~~
+cinder rename (v1)
+------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 rename [--description <description>] <volume> [<name>]
+   usage: cinder rename [--description <description>] <volume> [<name>]
 
 Renames a volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to rename.
@@ -4383,56 +4192,53 @@ Positional arguments
 ``<name>``
   New name for volume.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--description <description>``
   Volume description. Default=None.
 
-.. _cinder_replication-promote_v2:
+.. _cinder_replication-promote_v1:
 
-cinder replication-promote (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder replication-promote (v1)
+-------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 replication-promote <volume>
+   usage: cinder replication-promote <volume>
 
 Promote a secondary volume to primary for a relationship.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of the volume to promote. The volume should have the
   replica volume created with source-replica argument.
 
-.. _cinder_replication-reenable_v2:
+.. _cinder_replication-reenable_v1:
 
-cinder replication-reenable (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder replication-reenable (v1)
+--------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 replication-reenable <volume>
+   usage: cinder replication-reenable <volume>
 
 Sync the secondary volume with primary for a relationship.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of the volume to reenable replication. The replication-
   status of the volume should be inactive.
 
-.. _cinder_reset-state_v2:
+.. _cinder_reset-state_v1:
 
-cinder reset-state (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+cinder reset-state (v1)
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 reset-state [--state <state>] [--attach-status <attach-status>]
+   usage: cinder reset-state [--state <state>] [--attach-status <attach-status>]
                              [--reset-migration-status]
                              <volume> [<volume> ...]
 
@@ -4443,14 +4249,12 @@ only, this has no impact on the true state of the volume and may not match the
 actual state. This can render a volume unusable in the case of change to the
 'available' state.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   The state to assign to the volume. Valid values are
@@ -4473,20 +4277,19 @@ Optional arguments
   destination of volume migration, with no regard to the
   actual status.
 
-.. _cinder_retype_v2:
+.. _cinder_retype_v1:
 
-cinder retype (v2)
-~~~~~~~~~~~~~~~~~~
+cinder retype (v1)
+------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 retype [--migration-policy <never|on-demand>]
+   usage: cinder retype [--migration-policy <never|on-demand>]
                         <volume> <volume-type>
 
 Changes the volume type for a volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume for which to modify type.
@@ -4494,25 +4297,23 @@ Positional arguments
 ``<volume-type>``
   New volume type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--migration-policy <never|on-demand>``
   Migration policy during retype of volume.
 
-.. _cinder_service-disable_v2:
+.. _cinder_service-disable_v1:
 
-cinder service-disable (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder service-disable (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 service-disable [--reason <reason>] <hostname> <binary>
+   usage: cinder service-disable [--reason <reason>] <hostname> <binary>
 
 Disables the service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name.
@@ -4520,25 +4321,23 @@ Positional arguments
 ``<binary>``
   Service binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--reason <reason>``
   Reason for disabling service.
 
-.. _cinder_service-enable_v2:
+.. _cinder_service-enable_v1:
 
-cinder service-enable (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder service-enable (v1)
+--------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 service-enable <hostname> <binary>
+   usage: cinder service-enable <hostname> <binary>
 
 Enables the service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name.
@@ -4546,20 +4345,19 @@ Positional arguments
 ``<binary>``
   Service binary.
 
-.. _cinder_service-list_v2:
+.. _cinder_service-list_v1:
 
-cinder service-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+cinder service-list (v1)
+------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 service-list [--host <hostname>] [--binary <binary>]
+   usage: cinder service-list [--host <hostname>] [--binary <binary>]
                               [--withreplication [<True|False>]]
 
 Lists all services. Filter by host and service binary.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--host <hostname>``
   Host name. Default=None.
@@ -4571,19 +4369,18 @@ Optional arguments
   Enables or disables display of Replication info for
   c-vol services. Default=False.
 
-.. _cinder_set-bootable_v2:
+.. _cinder_set-bootable_v1:
 
-cinder set-bootable (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+cinder set-bootable (v1)
+------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 set-bootable <volume> <True|true|False|false>
+   usage: cinder set-bootable <volume> <True|true|False|false>
 
 Update bootable status of a volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   ID of the volume to update.
@@ -4591,45 +4388,42 @@ Positional arguments
 ``<True|true|False|false>``
   Flag to indicate whether volume is bootable.
 
-.. _cinder_show_v2:
+.. _cinder_show_v1:
 
-cinder show (v2)
-~~~~~~~~~~~~~~~~
+cinder show (v1)
+----------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 show <volume>
+   usage: cinder show <volume>
 
 Shows volume details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume.
 
-.. _cinder_snapshot-create_v2:
+.. _cinder_snapshot-create_v1:
 
-cinder snapshot-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-create (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-create [--force [<True|False>]] [--name <name>]
+   usage: cinder snapshot-create [--force [<True|False>]] [--name <name>]
                                  [--description <description>]
                                  [--metadata [<key=value> [<key=value> ...]]]
                                  <volume>
 
 Creates a snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force [<True|False>]``
   Allows or disallows snapshot of a volume when the
@@ -4647,39 +4441,37 @@ Optional arguments
 ``--metadata [<key=value> [<key=value> ...]]``
   Snapshot metadata key and value pairs. Default=None.
 
-.. _cinder_snapshot-delete_v2:
+.. _cinder_snapshot-delete_v1:
 
-cinder snapshot-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-delete (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-delete <snapshot> [<snapshot> ...]
+   usage: cinder snapshot-delete <snapshot> [<snapshot> ...]
 
 Removes one or more snapshots.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of the snapshot(s) to delete.
 
-.. _cinder_snapshot-list_v2:
+.. _cinder_snapshot-list_v1:
 
-cinder snapshot-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-list (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-list [--all-tenants [<0|1>]] [--name <name>]
+   usage: cinder snapshot-list [--all-tenants [<0|1>]] [--name <name>]
                                [--status <status>] [--volume-id <volume-id>]
                                [--marker <marker>] [--limit <limit>]
                                [--sort <key>[:<direction>]] [--tenant [<tenant>]]
 
 Lists all snapshots.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
@@ -4710,22 +4502,21 @@ Optional arguments
 ``--tenant [<tenant>]``
   Display information from single tenant (Admin only).
 
-.. _cinder_snapshot-manage_v2:
+.. _cinder_snapshot-manage_v1:
 
-cinder snapshot-manage (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-manage (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-manage [--id-type <id-type>] [--name <name>]
+   usage: cinder snapshot-manage [--id-type <id-type>] [--name <name>]
                                  [--description <description>]
                                  [--metadata [<key=value> [<key=value> ...]]]
                                  <volume> <identifier>
 
 Manage an existing snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Cinder volume already exists in volume backend
@@ -4733,8 +4524,7 @@ Positional arguments
 ``<identifier>``
   Name or other Identifier for existing snapshot
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--id-type <id-type>``
   Type of backend device identifier provided, typically
@@ -4749,20 +4539,19 @@ Optional arguments
 ``--metadata [<key=value> [<key=value> ...]]``
   Metadata key=value pairs (Default=None)
 
-.. _cinder_snapshot-metadata_v2:
+.. _cinder_snapshot-metadata_v1:
 
-cinder snapshot-metadata (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-metadata (v1)
+-----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-metadata <snapshot> <action> <key=value>
+   usage: cinder snapshot-metadata <snapshot> <action> <key=value>
                                    [<key=value> ...]
 
 Sets or deletes snapshot metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   ID of snapshot for which to update metadata.
@@ -4774,37 +4563,35 @@ Positional arguments
   Metadata key and value pair to set or unset. For unset, specify
   only the key.
 
-.. _cinder_snapshot-metadata-show_v2:
+.. _cinder_snapshot-metadata-show_v1:
 
-cinder snapshot-metadata-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-metadata-show (v1)
+----------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-metadata-show <snapshot>
+   usage: cinder snapshot-metadata-show <snapshot>
 
 Shows snapshot metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   ID of snapshot.
 
-.. _cinder_snapshot-metadata-update-all_v2:
+.. _cinder_snapshot-metadata-update-all_v1:
 
-cinder snapshot-metadata-update-all (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-metadata-update-all (v1)
+----------------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-metadata-update-all <snapshot> <key=value>
+   usage: cinder snapshot-metadata-update-all <snapshot> <key=value>
                                               [<key=value> ...]
 
 Updates snapshot metadata.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   ID of snapshot for which to update metadata.
@@ -4812,20 +4599,19 @@ Positional arguments
 ``<key=value>``
   Metadata key and value pair to update.
 
-.. _cinder_snapshot-rename_v2:
+.. _cinder_snapshot-rename_v1:
 
-cinder snapshot-rename (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-rename (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-rename [--description <description>]
+   usage: cinder snapshot-rename [--description <description>]
                                  <snapshot> [<name>]
 
 Renames a snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of snapshot.
@@ -4833,32 +4619,29 @@ Positional arguments
 ``<name>``
   New name for snapshot.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--description <description>``
   Snapshot description. Default=None.
 
-.. _cinder_snapshot-reset-state_v2:
+.. _cinder_snapshot-reset-state_v1:
 
-cinder snapshot-reset-state (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-reset-state (v1)
+--------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-reset-state [--state <state>]
+   usage: cinder snapshot-reset-state [--state <state>]
                                       <snapshot> [<snapshot> ...]
 
 Explicitly updates the snapshot state.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of snapshot to modify.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--state <state>``
   The state to assign to the snapshot. Valid values are
@@ -4868,69 +4651,65 @@ Optional arguments
   actual status, exercise caution when using.
   Default=available.
 
-.. _cinder_snapshot-show_v2:
+.. _cinder_snapshot-show_v1:
 
-cinder snapshot-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-show (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-show <snapshot>
+   usage: cinder snapshot-show <snapshot>
 
 Shows snapshot details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of snapshot.
 
-.. _cinder_snapshot-unmanage_v2:
+.. _cinder_snapshot-unmanage_v1:
 
-cinder snapshot-unmanage (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder snapshot-unmanage (v1)
+-----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 snapshot-unmanage <snapshot>
+   usage: cinder snapshot-unmanage <snapshot>
 
 Stop managing a snapshot.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<snapshot>``
   Name or ID of the snapshot to unmanage.
 
-.. _cinder_thaw-host_v2:
+.. _cinder_thaw-host_v1:
 
-cinder thaw-host (v2)
-~~~~~~~~~~~~~~~~~~~~~
+cinder thaw-host (v1)
+---------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 thaw-host <hostname>
+   usage: cinder thaw-host <hostname>
 
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hostname>``
   Host name.
 
-.. _cinder_transfer-accept_v2:
+.. _cinder_transfer-accept_v1:
 
-cinder transfer-accept (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder transfer-accept (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 transfer-accept <transfer> <auth_key>
+   usage: cinder transfer-accept <transfer> <auth_key>
 
 Accepts a volume transfer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<transfer>``
   ID of transfer to accept.
@@ -4938,94 +4717,88 @@ Positional arguments
 ``<auth_key>``
   Authentication key of transfer to accept.
 
-.. _cinder_transfer-create_v2:
+.. _cinder_transfer-create_v1:
 
-cinder transfer-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder transfer-create (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 transfer-create [--name <name>] <volume>
+   usage: cinder transfer-create [--name <name>] <volume>
 
 Creates a volume transfer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to transfer.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Transfer name. Default=None.
 
-.. _cinder_transfer-delete_v2:
+.. _cinder_transfer-delete_v1:
 
-cinder transfer-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder transfer-delete (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 transfer-delete <transfer>
+   usage: cinder transfer-delete <transfer>
 
 Undoes a transfer.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<transfer>``
   Name or ID of transfer to delete.
 
-.. _cinder_transfer-list_v2:
+.. _cinder_transfer-list_v1:
 
-cinder transfer-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder transfer-list (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 transfer-list [--all-tenants [<0|1>]]
+   usage: cinder transfer-list [--all-tenants [<0|1>]]
 
 Lists all transfers.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
 
-.. _cinder_transfer-show_v2:
+.. _cinder_transfer-show_v1:
 
-cinder transfer-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder transfer-show (v1)
+-------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 transfer-show <transfer>
+   usage: cinder transfer-show <transfer>
 
 Shows transfer details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<transfer>``
   Name or ID of transfer to accept.
 
-.. _cinder_type-access-add_v2:
+.. _cinder_type-access-add_v1:
 
-cinder type-access-add (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder type-access-add (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-access-add --volume-type <volume_type> --project-id
+   usage: cinder type-access-add --volume-type <volume_type> --project-id
                                  <project_id>
 
 Adds volume type access for the given project.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volume-type <volume_type>``
   Volume type name or ID to add access for the given
@@ -5034,37 +4807,35 @@ Optional arguments
 ``--project-id <project_id>``
   Project ID to add volume type access for.
 
-.. _cinder_type-access-list_v2:
+.. _cinder_type-access-list_v1:
 
-cinder type-access-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder type-access-list (v1)
+----------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-access-list --volume-type <volume_type>
+   usage: cinder type-access-list --volume-type <volume_type>
 
 Print access information about the given volume type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volume-type <volume_type>``
   Filter results by volume type name or ID.
 
-.. _cinder_type-access-remove_v2:
+.. _cinder_type-access-remove_v1:
 
-cinder type-access-remove (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder type-access-remove (v1)
+------------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-access-remove --volume-type <volume_type> --project-id
+   usage: cinder type-access-remove --volume-type <volume_type> --project-id
                                     <project_id>
 
 Removes volume type access for the given project.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--volume-type <volume_type>``
   Volume type name or ID to remove access for the given
@@ -5073,27 +4844,25 @@ Optional arguments
 ``--project-id <project_id>``
   Project ID to remove volume type access for.
 
-.. _cinder_type-create_v2:
+.. _cinder_type-create_v1:
 
-cinder type-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+cinder type-create (v1)
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-create [--description <description>]
+   usage: cinder type-create [--description <description>]
                              [--is-public <is-public>]
                              <name>
 
 Creates a volume type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Name of new volume type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--description <description>``
   Description of new volume type.
@@ -5101,47 +4870,45 @@ Optional arguments
 ``--is-public <is-public>``
   Make type accessible to the public (default true).
 
-.. _cinder_type-default_v2:
+.. _cinder_type-default_v1:
 
-cinder type-default (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+cinder type-default (v1)
+------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-default
+   usage: cinder type-default
 
 List the default volume type.
 
-.. _cinder_type-delete_v2:
+.. _cinder_type-delete_v1:
 
-cinder type-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+cinder type-delete (v1)
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-delete <id>
+   usage: cinder type-delete <id>
 
 Deletes a volume type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of volume type to delete.
 
-.. _cinder_type-key_v2:
+.. _cinder_type-key_v1:
 
-cinder type-key (v2)
-~~~~~~~~~~~~~~~~~~~~
+cinder type-key (v1)
+--------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-key <vtype> <action> <key=value> [<key=value> ...]
+   usage: cinder type-key <vtype> <action> <key=value> [<key=value> ...]
 
 Sets or unsets extra_spec for a volume type.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<vtype>``
   Name or ID of volume type.
@@ -5153,55 +4920,52 @@ Positional arguments
   The extra specs key and value pair to set or unset. For unset,
   specify only the key.
 
-.. _cinder_type-list_v2:
+.. _cinder_type-list_v1:
 
-cinder type-list (v2)
-~~~~~~~~~~~~~~~~~~~~~
+cinder type-list (v1)
+---------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-list
+   usage: cinder type-list
 
 Lists available 'volume types'. (Admin only will see private types)
 
-.. _cinder_type-show_v2:
+.. _cinder_type-show_v1:
 
-cinder type-show (v2)
-~~~~~~~~~~~~~~~~~~~~~
+cinder type-show (v1)
+---------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-show <volume_type>
+   usage: cinder type-show <volume_type>
 
 Show volume type details.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume_type>``
   Name or ID of the volume type.
 
-.. _cinder_type-update_v2:
+.. _cinder_type-update_v1:
 
-cinder type-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+cinder type-update (v1)
+-----------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-update [--name <name>] [--description <description>]
+   usage: cinder type-update [--name <name>] [--description <description>]
                              [--is-public <is-public>]
                              <id>
 
 Updates volume type name, description, and/or is_public.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of the volume type.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Name of the volume type.
@@ -5212,39 +4976,37 @@ Optional arguments
 ``--is-public <is-public>``
   Make type accessible to the public or not.
 
-.. _cinder_unmanage_v2:
+.. _cinder_unmanage_v1:
 
-cinder unmanage (v2)
-~~~~~~~~~~~~~~~~~~~~
+cinder unmanage (v1)
+--------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 unmanage <volume>
+   usage: cinder unmanage <volume>
 
 Stop managing a volume.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of the volume to unmanage.
 
-.. _cinder_upload-to-image_v2:
+.. _cinder_upload-to-image_v1:
 
-cinder upload-to-image (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cinder upload-to-image (v1)
+---------------------------
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 upload-to-image [--force [<True|False>]]
+   usage: cinder upload-to-image [--force [<True|False>]]
                                  [--container-format <container-format>]
                                  [--disk-format <disk-format>]
                                  <volume> <image-name>
 
 Uploads volume to Image Service as an image.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Name or ID of volume to snapshot.
@@ -5252,8 +5014,7 @@ Positional arguments
 ``<image-name>``
   The new image name.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--force [<True|False>]``
   Enables or disables upload of a volume that is
