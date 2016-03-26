@@ -9,7 +9,7 @@ Monitoring command-line client
 The monasca client is the command-line interface (CLI) for
 the Monitoring API and its extensions.
 
-This chapter documents :command:`monasca` version ``1.0.29``.
+This chapter documents :command:`monasca` version ``1.0.30``.
 
 For help on a specific :command:`monasca` command, enter:
 
@@ -167,14 +167,14 @@ monasca optional arguments
 .. _monasca_alarm-count:
 
 monasca alarm-count
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
    usage: monasca alarm-count [--alarm-definition-id <ALARM_DEFINITION_ID>]
                               [--metric-name <METRIC_NAME>]
                               [--metric-dimensions <KEY1=VALUE1,KEY2=VALUE2...>]
-                              [--state <ALARM_STATE>]
+                              [--state <ALARM_STATE>] [--severity <SEVERITY>]
                               [--lifecycle-state <LIFECYCLE_STATE>]
                               [--link <LINK>] [--group-by <GROUP_BY>]
                               [--offset <OFFSET LOCATION>]
@@ -200,18 +200,22 @@ Count alarms.
 ``--state <ALARM_STATE>``
   ALARM_STATE is one of [UNDETERMINED, OK, ALARM].
 
+``--severity <SEVERITY>``
+  Severity is one of ["LOW", "MEDIUM", "HIGH",
+  "CRITICAL"].
+
 ``--lifecycle-state <LIFECYCLE_STATE>``
-  The lifecycle state of the alarm
+  The lifecycle state of the alarm.
 
 ``--link <LINK>``
-  The link to external data associated with the alarm
+  The link to external data associated with the alarm.
 
 ``--group-by <GROUP_BY>``
   Comma separated list of one or more fields to group
-  the results by.Group by is one or more of
-  [alarm_definition_id, name, state,
-  link,lifecycle_state, metric_name, dimension_name,
-  dimension_value]
+  the results by. Group by is one or more of
+  [alarm_definition_id, name, state, link,
+  lifecycle_state, metric_name, dimension_name,
+  dimension_value].
 
 ``--offset <OFFSET LOCATION>``
   The offset used to paginate the return data.
@@ -223,7 +227,7 @@ Count alarms.
 .. _monasca_alarm-definition-create:
 
 monasca alarm-definition-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -276,7 +280,7 @@ Create an alarm definition.
 .. _monasca_alarm-definition-delete:
 
 monasca alarm-definition-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -292,12 +296,13 @@ Delete the alarm definition.
 .. _monasca_alarm-definition-list:
 
 monasca alarm-definition-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
    usage: monasca alarm-definition-list [--name <ALARM_DEFINITION_NAME>]
                                         [--dimensions <KEY1=VALUE1,KEY2=VALUE2...>]
+                                        [--severity <SEVERITY>]
                                         [--sort-by <SORT BY FIELDS>]
                                         [--offset <OFFSET LOCATION>]
                                         [--limit <RETURN LIMIT>]
@@ -316,6 +321,10 @@ List alarm definitions for this tenant.
   quoting when they contain special chars
   [&,(,),{,},>,<] that confuse the CLI parser.
 
+``--severity <SEVERITY>``
+  Severity is one of ["LOW", "MEDIUM", "HIGH",
+  "CRITICAL"].
+
 ``--sort-by <SORT BY FIELDS>``
   Fields to sort by as a comma separated list. Valid
   values are id, name, severity, updated_timestamp,
@@ -333,7 +342,7 @@ List alarm definitions for this tenant.
 .. _monasca_alarm-definition-patch:
 
 monasca alarm-definition-patch
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -379,7 +388,7 @@ Patch the alarm definition.
   times.
 
 ``--actions-enabled <ACTIONS-ENABLED>``
-  The actions-enabled boolean is one of [true,false]
+  The actions-enabled boolean is one of [true,false].
 
 ``--severity <SEVERITY>``
   Severity is one of [LOW, MEDIUM, HIGH, CRITICAL].
@@ -387,7 +396,7 @@ Patch the alarm definition.
 .. _monasca_alarm-definition-show:
 
 monasca alarm-definition-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -403,7 +412,7 @@ Describe the alarm definition.
 .. _monasca_alarm-definition-update:
 
 monasca alarm-definition-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -461,7 +470,7 @@ Update the alarm definition.
 .. _monasca_alarm-delete:
 
 monasca alarm-delete
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -477,7 +486,7 @@ Delete the alarm.
 .. _monasca_alarm-history:
 
 monasca alarm-history
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -504,7 +513,7 @@ Alarm state transition history.
 .. _monasca_alarm-history-list:
 
 monasca alarm-history-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -527,8 +536,8 @@ List alarms state history.
 
 ``--starttime <UTC_START_TIME>``
   measurements >= UTC time. format:
-  2014-01-01T00:00:00Z. OR format: -120 (for previous 2
-  hours)
+  2014-01-01T00:00:00Z. OR format: -120 (previous 120
+  minutes).
 
 ``--endtime <UTC_END_TIME>``
   measurements <= UTC time. format:
@@ -544,14 +553,14 @@ List alarms state history.
 .. _monasca_alarm-list:
 
 monasca alarm-list
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
    usage: monasca alarm-list [--alarm-definition-id <ALARM_DEFINITION_ID>]
                              [--metric-name <METRIC_NAME>]
                              [--metric-dimensions <KEY1=VALUE1,KEY2=VALUE2...>]
-                             [--state <ALARM_STATE>]
+                             [--state <ALARM_STATE>] [--severity <SEVERITY>]
                              [--state-updated-start-time <UTC_STATE_UPDATED_START>]
                              [--lifecycle-state <LIFECYCLE_STATE>]
                              [--link <LINK>] [--sort-by <SORT BY FIELDS>]
@@ -578,15 +587,19 @@ List alarms for this tenant.
 ``--state <ALARM_STATE>``
   ALARM_STATE is one of [UNDETERMINED, OK, ALARM].
 
+``--severity <SEVERITY>``
+  Severity is one of ["LOW", "MEDIUM", "HIGH",
+  "CRITICAL"].
+
 ``--state-updated-start-time <UTC_STATE_UPDATED_START>``
   Return all alarms whose state was updated on or after
-  the time specified
+  the time specified.
 
 ``--lifecycle-state <LIFECYCLE_STATE>``
-  The lifecycle state of the alarm
+  The lifecycle state of the alarm.
 
 ``--link <LINK>``
-  The link to external data associated with the alarm
+  The link to external data associated with the alarm.
 
 ``--sort-by <SORT BY FIELDS>``
   Fields to sort by as a comma separated list. Valid
@@ -607,7 +620,7 @@ List alarms for this tenant.
 .. _monasca_alarm-patch:
 
 monasca alarm-patch
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -629,16 +642,16 @@ Patch the alarm state.
   ALARM_STATE is one of [UNDETERMINED, OK, ALARM].
 
 ``--lifecycle-state <LIFECYCLE_STATE>``
-  The lifecycle state of the alarm
+  The lifecycle state of the alarm.
 
 ``--link <LINK>``
   A link to an external resource with information about
-  the alarm
+  the alarm.
 
 .. _monasca_alarm-show:
 
 monasca alarm-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -654,7 +667,7 @@ Describe the alarm.
 .. _monasca_alarm-update:
 
 monasca alarm-update
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -671,16 +684,16 @@ Update the alarm state.
   ALARM_STATE is one of [UNDETERMINED, OK, ALARM].
 
 ``<LIFECYCLE_STATE>``
-  The lifecycle state of the alarm
+  The lifecycle state of the alarm.
 
 ``<LINK>``
   A link to an external resource with information about the
-  alarm
+  alarm.
 
 .. _monasca_measurement-list:
 
 monasca measurement-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -700,7 +713,7 @@ List measurements for the specified metric.
 ``<UTC_START_TIME>``
   measurements >= UTC time. format:
   2014-01-01T00:00:00Z. OR Format: -120 (previous 120
-  minutes
+  minutes).
 
 **Optional arguments:**
 
@@ -728,7 +741,7 @@ List measurements for the specified metric.
 .. _monasca_metric-create:
 
 monasca metric-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -775,7 +788,7 @@ Create metric.
 .. _monasca_metric-create-raw:
 
 monasca metric-create-raw
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -791,7 +804,7 @@ Create metric from raw json body.
 .. _monasca_metric-list:
 
 monasca metric-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -819,7 +832,7 @@ List metrics for this tenant.
 ``--starttime <UTC_START_TIME>``
   measurements >= UTC time. format:
   2014-01-01T00:00:00Z. OR Format: -120 (previous 120
-  minutes
+  minutes).
 
 ``--endtime <UTC_END_TIME>``
   measurements <= UTC time. format:
@@ -835,7 +848,7 @@ List metrics for this tenant.
 .. _monasca_metric-statistics:
 
 monasca metric-statistics
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -860,7 +873,7 @@ List measurement statistics for the specified metric.
 ``<UTC_START_TIME>``
   measurements >= UTC time. format:
   2014-01-01T00:00:00Z. OR Format: -120 (previous 120
-  minutes
+  minutes).
 
 **Optional arguments:**
 
@@ -891,7 +904,7 @@ List measurement statistics for the specified metric.
 .. _monasca_notification-create:
 
 monasca notification-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -909,12 +922,12 @@ Create notification.
   PAGERDUTY.
 
 ``<ADDRESS>``
-  A valid EMAIL Address, URL, or SERVICE KEY
+  A valid EMAIL Address, URL, or SERVICE KEY.
 
 .. _monasca_notification-delete:
 
 monasca notification-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -930,7 +943,7 @@ Delete notification.
 .. _monasca_notification-list:
 
 monasca notification-list
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -951,7 +964,7 @@ List notifications for this tenant.
 .. _monasca_notification-show:
 
 monasca notification-show
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -967,7 +980,7 @@ Describe the notification.
 .. _monasca_notification-update:
 
 monasca notification-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -989,5 +1002,5 @@ Update notification.
   WEBHOOK, or PAGERDUTY.
 
 ``<ADDRESS>``
-  A valid EMAIL Address, URL, or SERVICE KEY
+  A valid EMAIL Address, URL, or SERVICE KEY.
 
