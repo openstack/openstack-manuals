@@ -8,7 +8,7 @@ OpenStack command-line client
 
 The openstack client is a common OpenStackcommand-line interface (CLI).
 
-This chapter documents :command:`openstack` version ``2.0.0``.
+This chapter documents :command:`openstack` version ``2.2.0``.
 
 For help on a specific :command:`openstack` command, enter:
 
@@ -23,7 +23,7 @@ openstack usage
 
 .. code-block:: console
 
-   usage: openstack [--version] [-v] [--log-file LOG_FILE] [-q] [-h] [--debug]
+   usage: openstack [--version] [-v | -q] [--log-file LOG_FILE] [-h] [--debug]
                     [--os-cloud <cloud-config-name>]
                     [--os-region-name <auth-region-name>]
                     [--os-cacert <ca-bundle-file>] [--verify | --insecure]
@@ -57,15 +57,17 @@ openstack usage
                     [--os-endpoint <auth-endpoint>] [--os-url <auth-url>]
                     [--os-token <auth-token>] [--os-project-id <auth-project-id>]
                     [--os-object-api-version <object-api-version>]
-                    [--os-queues-api-version <queues-api-version>]
-                    [--os-policy-api-version <policy-api-version>]
                     [--os-dns-api-version <dns-api-version>]
+                    [--os-key-manager-api-version <key-manager-api-version>]
                     [--os-mb-api-version <mb-api-version>]
-                    [--os-baremetal-api-version <baremetal-api-version>]
-                    [--os-management-api-version <management-api-version>]
+                    [--os-queues-api-version <queues-api-version>]
                     [--os-data-processing-api-version <data-processing-api-version>]
+                    [--os-data-processing-url OS_DATA_PROCESSING_URL]
+                    [--os-baremetal-api-version <baremetal-api-version>]
+                    [--os-orchestration-api-version <orchestration-api-version>]
                     [--inspector-api-version INSPECTOR_API_VERSION]
                     [--inspector-url INSPECTOR_URL]
+                    [--os-policy-api-version <policy-api-version>]
 
 .. _openstack_command_options:
 
@@ -78,11 +80,11 @@ openstack optional arguments
 ``-v, --verbose``
   Increase verbosity of output. Can be repeated.
 
-``--log-file LOG_FILE``
-  Specify a file to log output. Disabled by default.
-
 ``-q, --quiet``
   Suppress output except warnings and errors.
+
+``--log-file LOG_FILE``
+  Specify a file to log output. Disabled by default.
 
 ``-h, --help``
   Show help message and exit.
@@ -138,21 +140,21 @@ openstack optional arguments
 
 ``--os-auth-type <auth-type>``
   Select an authentication type. Available types:
-  osc_password, token_endpoint, v2token, admin_token,
-  v2password, v3password, v3scopedsaml, v3oidcpassword,
-  v3unscopedadfs, token, v3token, password,
-  v3unscopedsaml. Default: selected based on :option:`--os-`
+  v2token, admin_token, v2password, v3password,
+  v3scopedsaml, v3oidcpassword, v3unscopedadfs, token,
+  v3token, password, v3unscopedsaml, osc_password,
+  token_endpoint. Default: selected based on :option:`--os-`
   username/:option:`--os-token` (Env: OS_AUTH_TYPE)
 
 ``--os-project-domain-id <auth-project-domain-id>``
-  With osc_password: Domain ID containing project With
-  v3password: Domain ID containing project With
+  With v3password: Domain ID containing project With
   v3scopedsaml: Domain ID containing project With
   v3oidcpassword: Domain ID containing project With
   v3unscopedadfs: Domain ID containing project With
   token: Domain ID containing project With v3token:
   Domain ID containing project With password: Domain ID
   containing project With v3unscopedsaml: Domain ID
+  containing project With osc_password: Domain ID
   containing project (Env: OS_PROJECT_DOMAIN_ID)
 
 ``--os-protocol <auth-protocol>``
@@ -163,42 +165,43 @@ openstack optional arguments
   (Env: OS_PROTOCOL)
 
 ``--os-project-name <auth-project-name>``
-  With osc_password: Project name to scope to With
-  v3password: Project name to scope to With
+  With v3password: Project name to scope to With
   v3scopedsaml: Project name to scope to With
   v3oidcpassword: Project name to scope to With
   v3unscopedadfs: Project name to scope to With token:
   Project name to scope to With v3token: Project name to
   scope to With password: Project name to scope to With
-  v3unscopedsaml: Project name to scope to (Env:
+  v3unscopedsaml: Project name to scope to With
+  osc_password: Project name to scope to (Env:
   OS_PROJECT_NAME)
 
 ``--os-trust-id <auth-trust-id>``
-  With osc_password: Trust ID With v2token: Trust ID
-  With v2password: Trust ID With v3password: Trust ID
-  With v3scopedsaml: Trust ID With v3oidcpassword: Trust
-  ID With v3unscopedadfs: Trust ID With token: Trust ID
-  With v3token: Trust ID With password: Trust ID With
-  v3unscopedsaml: Trust ID (Env: OS_TRUST_ID)
+  With v2token: Trust ID With v2password: Trust ID With
+  v3password: Trust ID With v3scopedsaml: Trust ID With
+  v3oidcpassword: Trust ID With v3unscopedadfs: Trust ID
+  With token: Trust ID With v3token: Trust ID With
+  password: Trust ID With v3unscopedsaml: Trust ID With
+  osc_password: Trust ID (Env: OS_TRUST_ID)
 
 ``--os-service-provider-endpoint <auth-service-provider-endpoint>``
   With v3unscopedadfs: Service Provider's Endpoint (Env:
   OS_SERVICE_PROVIDER_ENDPOINT)
 
 ``--os-domain-name <auth-domain-name>``
-  With osc_password: Domain name to scope to With
-  v3password: Domain name to scope to With v3scopedsaml:
-  Domain name to scope to With v3oidcpassword: Domain
-  name to scope to With v3unscopedadfs: Domain name to
-  scope to With token: Domain name to scope to With
-  v3token: Domain name to scope to With password: Domain
-  name to scope to With v3unscopedsaml: Domain name to
-  scope to (Env: OS_DOMAIN_NAME)
+  With v3password: Domain name to scope to With
+  v3scopedsaml: Domain name to scope to With
+  v3oidcpassword: Domain name to scope to With
+  v3unscopedadfs: Domain name to scope to With token:
+  Domain name to scope to With v3token: Domain name to
+  scope to With password: Domain name to scope to With
+  v3unscopedsaml: Domain name to scope to With
+  osc_password: Domain name to scope to (Env:
+  OS_DOMAIN_NAME)
 
 ``--os-user-domain-id <auth-user-domain-id>``
-  With osc_password: User's domain id With v3password:
-  User's domain id With password: User's domain id (Env:
-  OS_USER_DOMAIN_ID)
+  With v3password: User's domain id With password:
+  User's domain id With osc_password: User's domain id
+  (Env: OS_USER_DOMAIN_ID)
 
 ``--os-identity-provider-url <auth-identity-provider-url>``
   With v3unscopedadfs: Identity Provider's URL With
@@ -210,28 +213,29 @@ openstack optional arguments
   Endpoint (Env: OS_ACCESS_TOKEN_ENDPOINT)
 
 ``--os-domain-id <auth-domain-id>``
-  With osc_password: Domain ID to scope to With
-  v3password: Domain ID to scope to With v3scopedsaml:
-  Domain ID to scope to With v3oidcpassword: Domain ID
-  to scope to With v3unscopedadfs: Domain ID to scope to
-  With token: Domain ID to scope to With v3token: Domain
-  ID to scope to With password: Domain ID to scope to
-  With v3unscopedsaml: Domain ID to scope to (Env:
+  With v3password: Domain ID to scope to With
+  v3scopedsaml: Domain ID to scope to With
+  v3oidcpassword: Domain ID to scope to With
+  v3unscopedadfs: Domain ID to scope to With token:
+  Domain ID to scope to With v3token: Domain ID to scope
+  to With password: Domain ID to scope to With
+  v3unscopedsaml: Domain ID to scope to With
+  osc_password: Domain ID to scope to (Env:
   OS_DOMAIN_ID)
 
 ``--os-user-domain-name <auth-user-domain-name>``
-  With osc_password: User's domain name With v3password:
-  User's domain name With password: User's domain name
-  (Env: OS_USER_DOMAIN_NAME)
+  With v3password: User's domain name With password:
+  User's domain name With osc_password: User's domain
+  name (Env: OS_USER_DOMAIN_NAME)
 
 ``--os-scope <auth-scope>``
   With v3oidcpassword: OpenID Connect scope that is
   requested from OP (Env: OS_SCOPE)
 
 ``--os-user-id <auth-user-id>``
-  With osc_password: User id With v2password: User ID to
-  login with With v3password: User ID With password:
-  User id (Env: OS_USER_ID)
+  With v2password: User ID to login with With
+  v3password: User ID With password: User id With
+  osc_password: User id (Env: OS_USER_ID)
 
 ``--os-identity-provider <auth-identity-provider>``
   With v3oidcpassword: Identity Provider's name With
@@ -240,21 +244,22 @@ openstack optional arguments
   OS_IDENTITY_PROVIDER)
 
 ``--os-username <auth-username>``
-  With osc_password: Username With v2password: Username
-  to login with With v3password: Username With
-  v3oidcpassword: Username With v3unscopedadfs: Username
-  With password: Username With v3unscopedsaml: Username
-  (Env: OS_USERNAME)
+  With v2password: Username to login with With
+  v3password: Username With v3oidcpassword: Username
+  With v3unscopedadfs: Username With password: Username
+  With v3unscopedsaml: Username With osc_password:
+  Username (Env: OS_USERNAME)
 
 ``--os-auth-url <auth-auth-url>``
-  With osc_password: Authentication URL With v2token:
-  Authentication URL With v2password: Authentication URL
-  With v3password: Authentication URL With v3scopedsaml:
-  Authentication URL With v3oidcpassword: Authentication
-  URL With v3unscopedadfs: Authentication URL With
-  token: Authentication URL With v3token: Authentication
-  URL With password: Authentication URL With
-  v3unscopedsaml: Authentication URL (Env: OS_AUTH_URL)
+  With v2token: Authentication URL With v2password:
+  Authentication URL With v3password: Authentication URL
+  With v3scopedsaml: Authentication URL With
+  v3oidcpassword: Authentication URL With
+  v3unscopedadfs: Authentication URL With token:
+  Authentication URL With v3token: Authentication URL
+  With password: Authentication URL With v3unscopedsaml:
+  Authentication URL With osc_password: Authentication
+  URL (Env: OS_AUTH_URL)
 
 ``--os-client-secret <auth-client-secret>``
   With v3oidcpassword: OAuth 2.0 Client Secret (Env:
@@ -265,80 +270,85 @@ openstack optional arguments
   OS_CLIENT_ID)
 
 ``--os-project-domain-name <auth-project-domain-name>``
-  With osc_password: Domain name containing project With
-  v3password: Domain name containing project With
+  With v3password: Domain name containing project With
   v3scopedsaml: Domain name containing project With
   v3oidcpassword: Domain name containing project With
   v3unscopedadfs: Domain name containing project With
   token: Domain name containing project With v3token:
   Domain name containing project With password: Domain
   name containing project With v3unscopedsaml: Domain
-  name containing project (Env: OS_PROJECT_DOMAIN_NAME)
+  name containing project With osc_password: Domain name
+  containing project (Env: OS_PROJECT_DOMAIN_NAME)
 
 ``--os-password <auth-password>``
-  With osc_password: User's password With v2password:
-  Password to use With v3password: User's password With
-  v3oidcpassword: Password With v3unscopedadfs: Password
-  With password: User's password With v3unscopedsaml:
-  Password (Env: OS_PASSWORD)
+  With v2password: Password to use With v3password:
+  User's password With v3oidcpassword: Password With
+  v3unscopedadfs: Password With password: User's
+  password With v3unscopedsaml: Password With
+  osc_password: User's password (Env: OS_PASSWORD)
 
 ``--os-endpoint <auth-endpoint>``
-  With token_endpoint: The endpoint that will always be
-  used With admin_token: The endpoint that will always
-  be used (Env: OS_ENDPOINT)
+  With admin_token: The endpoint that will always be
+  used With token_endpoint: The endpoint that will
+  always be used (Env: OS_ENDPOINT)
 
 ``--os-url <auth-url>``
   With token_endpoint: Specific service endpoint to use
   (Env: OS_URL)
 
 ``--os-token <auth-token>``
-  With token_endpoint: The token that will always be
-  used With token_endpoint: Authentication token to use
   With v2token: Token With admin_token: The token that
   will always be used With v3scopedsaml: Token to
   authenticate with With token: Token to authenticate
-  with With v3token: Token to authenticate with (Env:
+  with With v3token: Token to authenticate with With
+  token_endpoint: The token that will always be used
+  With token_endpoint: Authentication token to use (Env:
   OS_TOKEN)
 
 ``--os-project-id <auth-project-id>``
-  With osc_password: Project ID to scope to With
-  v3password: Project ID to scope to With v3scopedsaml:
-  Project ID to scope to With v3oidcpassword: Project ID
-  to scope to With v3unscopedadfs: Project ID to scope
-  to With token: Project ID to scope to With v3token:
-  Project ID to scope to With password: Project ID to
-  scope to With v3unscopedsaml: Project ID to scope to
-  (Env: OS_PROJECT_ID)
+  With v3password: Project ID to scope to With
+  v3scopedsaml: Project ID to scope to With
+  v3oidcpassword: Project ID to scope to With
+  v3unscopedadfs: Project ID to scope to With token:
+  Project ID to scope to With v3token: Project ID to
+  scope to With password: Project ID to scope to With
+  v3unscopedsaml: Project ID to scope to With
+  osc_password: Project ID to scope to (Env:
+  OS_PROJECT_ID)
 
 ``--os-object-api-version <object-api-version>``
   Object API version, default=1 (Env:
   OS_OBJECT_API_VERSION)
 
+``--os-dns-api-version <dns-api-version>``
+  DNS API version, default=2 (Env: OS_DNS_API_VERSION)
+
+``--os-key-manager-api-version <key-manager-api-version>``
+  Barbican API version, default=1 (Env:
+  OS_KEY_MANAGER_API_VERSION)
+
+``--os-mb-api-version <mb-api-version>``
+  MB API version, default=1 (Env: OS_MB_API_VERSION)
+
 ``--os-queues-api-version <queues-api-version>``
   Queues API version, default=1.1 (Env:
   OS_QUEUES_API_VERSION)
 
-``--os-policy-api-version <policy-api-version>``
-  Policy API version, default=1 (Env:
-  OS_POLICY_API_VERSION)
+``--os-data-processing-api-version <data-processing-api-version>``
+  Data processing API version, default=1.1 (Env:
+  OS_DATA_PROCESSING_API_VERSION)
 
-``--os-dns-api-version <dns-api-version>``
-  DNS API version, default=2 (Env: OS_DNS_API_VERSION)
-
-``--os-mb-api-version <mb-api-version>``
-  MB API version, default=1 (Env: OS_MB_API_VERSION)
+``--os-data-processing-url OS_DATA_PROCESSING_URL``
+  Data processing API URL, (Env:
+  OS_DATA_PROCESSING_API_URL)
 
 ``--os-baremetal-api-version <baremetal-api-version>``
   Baremetal API version, default=1.6 (Env:
   OS_BAREMETAL_API_VERSION)
 
-``--os-management-api-version <management-api-version>``
-  Management API version, default=2 (Env:
-  OS_MANAGEMENT_API_VERSION)
-
-``--os-data-processing-api-version <data-processing-api-version>``
-  Data processing API version, default=1.1 (Env:
-  OS_DATA_PROCESSING_API_VERSION)
+``--os-orchestration-api-version <orchestration-api-version>``
+  Orchestration API version, default=1 (Env:
+  OS_ORCHESTRATION_API_VERSION)
 
 ``--inspector-api-version INSPECTOR_API_VERSION``
   inspector API version, only 1 is supported now (env:
@@ -348,26 +358,246 @@ openstack optional arguments
   inspector URL, defaults to localhost (env:
   INSPECTOR_URL).
 
-OpenStack with Identity API v2 commands
+``--os-policy-api-version <policy-api-version>``
+  Policy API version, default=1 (Env:
+  OS_POLICY_API_VERSION)
+
+OpenStack with Identity API v3 commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. _openstack_aggregate_add_host_with_identity_api_v2:
+.. important::
 
-openstack aggregate add host
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   OpenStack Identity API v2 is deprecated in
+   the Mitaka release.
+
+   You can select the Identity API version to use
+   by adding the
+   :option:`--os-identity-api-version`
+   parameter or by setting the corresponding
+   environment variable:
+
+   .. code-block:: console
+
+      export OS_IDENTITY_API_VERSION=3
+
+.. _openstack_access_token_create_with_identity_api_v3:
+
+openstack access token create
+-----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate add host [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 access token create [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        --consumer-key <consumer-key>
+                                        --consumer-secret <consumer-secret>
+                                        --request-key <request-key>
+                                        --request-secret <request-secret>
+                                        --verifier <verifier>
+
+Create an access token
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--consumer-key <consumer-key>``
+  Consumer key (required)
+
+``--consumer-secret <consumer-secret>``
+  Consumer secret (required)
+
+``--request-key <request-key>``
+  Request token to exchange for access token (required)
+
+``--request-secret <request-secret>``
+  Secret associated with <request-key> (required)
+
+``--verifier <verifier>``
+  Verifier associated with <request-key> (required)
+
+.. _openstack_acl_delete_with_identity_api_v3:
+
+openstack acl delete
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 acl delete [-h] URI
+
+Delete ACLs for a secret or container as identified by its href.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the secret or container.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_acl_get_with_identity_api_v3:
+
+openstack acl get
+-----------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 acl get [-h] [-f {csv,html,json,table,value,yaml}]
+                            [-c COLUMN] [--max-width <integer>] [--noindent]
+                            [--quote {all,minimal,none,nonnumeric}]
+                            URI
+
+Retrieve ACLs for a secret or container by providing its href.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the secret or container.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_acl_submit_with_identity_api_v3:
+
+openstack acl submit
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 acl submit [-h] [-f {csv,html,json,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--quote {all,minimal,none,nonnumeric}]
+                               [--user [USERS]]
+                               [--project-access | --no-project-access]
+                               [--operation-type {read}]
+                               URI
+
+Submit ACL on a secret or container as identified by its href.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the secret or container.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--user [USERS], -u [USERS]``
+  Keystone userid(s) for ACL.
+
+``--project-access``
+  Flag to enable project access behavior.
+
+``--no-project-access``
+  Flag to disable project access behavior.
+
+``--operation-type {read}, -o {read}``
+  Type of Barbican operation ACL is set for
+
+.. _openstack_acl_user_add_with_identity_api_v3:
+
+openstack acl user add
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 acl user add [-h] [-f {csv,html,json,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--quote {all,minimal,none,nonnumeric}]
+                                 [--user [USERS]]
+                                 [--project-access | --no-project-access]
+                                 [--operation-type {read}]
+                                 URI
+
+Add ACL users to a secret or container as identified by its href.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the secret or container.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--user [USERS], -u [USERS]``
+  Keystone userid(s) for ACL.
+
+``--project-access``
+  Flag to enable project access behavior.
+
+``--no-project-access``
+  Flag to disable project access behavior.
+
+``--operation-type {read}, -o {read}``
+  Type of Barbican operation ACL is set for
+
+.. _openstack_acl_user_remove_with_identity_api_v3:
+
+openstack acl user remove
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 acl user remove [-h] [-f {csv,html,json,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent]
+                                    [--quote {all,minimal,none,nonnumeric}]
+                                    [--user [USERS]]
+                                    [--project-access | --no-project-access]
+                                    [--operation-type {read}]
+                                    URI
+
+Remove ACL users from a secret or container as identified by its href.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the secret or container.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--user [USERS], -u [USERS]``
+  Keystone userid(s) for ACL.
+
+``--project-access``
+  Flag to enable project access behavior.
+
+``--no-project-access``
+  Flag to disable project access behavior.
+
+``--operation-type {read}, -o {read}``
+  Type of Barbican operation ACL is set for
+
+.. _openstack_aggregate_add_host_with_identity_api_v3:
+
+openstack aggregate add host
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 aggregate add host [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        <aggregate> <host>
 
 Add host to aggregate
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Aggregate (name or ID)
@@ -375,21 +605,19 @@ Positional arguments
 ``<host>``
   Host to add to <aggregate>
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_aggregate_create_with_identity_api_v2:
+.. _openstack_aggregate_create_with_identity_api_v3:
 
 openstack aggregate create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate create [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 aggregate create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      [--zone <availability-zone>]
@@ -398,14 +626,12 @@ openstack aggregate create
 
 Create a new aggregate
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   New aggregate name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -417,38 +643,35 @@ Optional arguments
   Property to add to this aggregate (repeat option to
   set multiple properties)
 
-.. _openstack_aggregate_delete_with_identity_api_v2:
+.. _openstack_aggregate_delete_with_identity_api_v3:
 
 openstack aggregate delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate delete [-h] <aggregate>
+   usage: openstack --os-identity-api-version 3 aggregate delete [-h] <aggregate>
 
 Delete an existing aggregate
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Aggregate to delete (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_aggregate_list_with_identity_api_v2:
+.. _openstack_aggregate_list_with_identity_api_v3:
 
 openstack aggregate list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate list [-h]
-                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 aggregate list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
@@ -456,8 +679,7 @@ openstack aggregate list
 
 List all aggregates
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -465,23 +687,22 @@ Optional arguments
 ``--long``
   List additional fields in output
 
-.. _openstack_aggregate_remove_host_with_identity_api_v2:
+.. _openstack_aggregate_remove_host_with_identity_api_v3:
 
 openstack aggregate remove host
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate remove host [-h]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 aggregate remove host [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           <aggregate> <host>
 
 Remove host from aggregate
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Aggregate (name or ID)
@@ -489,37 +710,31 @@ Positional arguments
 ``<host>``
   Host to remove from <aggregate>
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_aggregate_set_with_identity_api_v2:
+.. _openstack_aggregate_set_with_identity_api_v3:
 
 openstack aggregate set
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate set [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                  [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX] [--name <name>]
+   usage: openstack --os-identity-api-version 3 aggregate set [-h] [--name <name>]
                                   [--zone <availability-zone>]
                                   [--property <key=value>]
                                   <aggregate>
 
 Set aggregate properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Aggregate to modify (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -534,89 +749,89 @@ Optional arguments
   Property to set on <aggregate> (repeat option to set
   multiple properties)
 
-.. _openstack_aggregate_show_with_identity_api_v2:
+.. _openstack_aggregate_show_with_identity_api_v3:
 
 openstack aggregate show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate show [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 aggregate show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    <aggregate>
 
 Display aggregate details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<aggregate>``
   Aggregate to display (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_availability_zone_list_with_identity_api_v2:
+.. _openstack_availability_zone_list_with_identity_api_v3:
 
 openstack availability zone list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 availability zone list [-h]
-                                           [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 availability zone list [-h]
+                                           [-f {csv,html,json,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
+                                           [--compute] [--network] [--volume]
                                            [--long]
 
 List availability zones and their status
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
+
+``--compute``
+  List compute availability zones
+
+``--network``
+  List network availability zones
+
+``--volume``
+  List volume availability zones
 
 ``--long``
   List additional fields in output
 
-.. _openstack_backup_create_with_identity_api_v2:
+.. _openstack_backup_create_with_identity_api_v3:
 
 openstack backup create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 backup create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 backup create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
-                                  [--container <container>] [--name <name>]
+                                  [--noindent] [--prefix PREFIX] --name <name>
                                   [--description <description>]
+                                  [--container <container>]
                                   <volume>
 
 Create new backup
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<volume>``
   Volume to backup (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
-
-``--container <container>``
-  Optional backup container name
 
 ``--name <name>``
   Name of the backup
@@ -624,45 +839,44 @@ Optional arguments
 ``--description <description>``
   Description of the backup
 
-.. _openstack_backup_delete_with_identity_api_v2:
+``--container <container>``
+  Optional backup container name
+
+.. _openstack_backup_delete_with_identity_api_v3:
 
 openstack backup delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 backup delete [-h] <backup> [<backup> ...]
+   usage: openstack --os-identity-api-version 3 backup delete [-h] <backup> [<backup> ...]
 
 Delete backup(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
-  Backup(s) to delete (ID only)
+  Backup(s) to delete (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_backup_list_with_identity_api_v2:
+.. _openstack_backup_list_with_identity_api_v3:
 
 openstack backup list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 backup list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 backup list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}] [--long]
 
 List backups
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -670,19 +884,21 @@ Optional arguments
 ``--long``
   List additional fields in output
 
-.. _openstack_backup_restore_with_identity_api_v2:
+.. _openstack_backup_restore_with_identity_api_v3:
 
 openstack backup restore
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 backup restore [-h] <backup> <volume>
+   usage: openstack --os-identity-api-version 3 backup restore [-h] [-f {html,json,shell,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent] [--prefix PREFIX]
+                                   <backup> <volume>
 
 Restore backup
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
   Backup to restore (ID only)
@@ -690,48 +906,43 @@ Positional arguments
 ``<volume>``
   Volume to restore to (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_backup_show_with_identity_api_v2:
+.. _openstack_backup_show_with_identity_api_v3:
 
 openstack backup show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 backup show [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 backup show [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 <backup>
 
 Display backup details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<backup>``
-  Backup to display (ID only)
+  Backup to display (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_baremetal_create_with_identity_api_v2:
+.. _openstack_baremetal_create_with_identity_api_v3:
 
 openstack baremetal create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal create [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 baremetal create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      [--chassis-uuid <chassis>] --driver <driver>
@@ -742,8 +953,7 @@ openstack baremetal create
 
 Register a new node with the baremetal service
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -774,84 +984,124 @@ Optional arguments
 ``--name <name>``
   Unique name for the node.
 
-.. _openstack_baremetal_delete_with_identity_api_v2:
+.. _openstack_baremetal_delete_with_identity_api_v3:
 
 openstack baremetal delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal delete [-h] <node>
+   usage: openstack --os-identity-api-version 3 baremetal delete [-h] <node>
 
 Unregister a baremetal node
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Node to delete (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_baremetal_introspection_rule_delete_with_identity_api_v2:
+.. _openstack_baremetal_introspection_abort_with_identity_api_v3:
 
-openstack baremetal introspection rule delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack baremetal introspection abort
+---------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule delete [-h] uuid
+   usage: openstack --os-identity-api-version 3 baremetal introspection abort [-h] uuid
+
+Abort running introspection for node.
+
+**Positional arguments:**
+
+``uuid``
+  baremetal node UUID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_introspection_data_save_with_identity_api_v3:
+
+openstack baremetal introspection data save
+-------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 baremetal introspection data save [-h] [--file <filename>]
+                                                      uuid
+
+Save or display raw introspection data.
+
+**Positional arguments:**
+
+``uuid``
+  baremetal node UUID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--file <filename>``
+  downloaded introspection data filename (default: stdout)
+
+.. _openstack_baremetal_introspection_rule_delete_with_identity_api_v3:
+
+openstack baremetal introspection rule delete
+---------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 baremetal introspection rule delete [-h] uuid
 
 Delete an introspection rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``uuid``
   rule UUID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_baremetal_introspection_rule_import_with_identity_api_v2:
+.. _openstack_baremetal_introspection_rule_import_with_identity_api_v3:
 
 openstack baremetal introspection rule import
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule import [-h] file
+   usage: openstack --os-identity-api-version 3 baremetal introspection rule import [-h] file
 
 Import one or several introspection rules from a json file.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``file``
   JSON file to import, may contain one or several rules
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_baremetal_introspection_rule_list_with_identity_api_v2:
+.. _openstack_baremetal_introspection_rule_list_with_identity_api_v3:
 
 openstack baremetal introspection rule list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule list [-h]
-                                                      [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 baremetal introspection rule list [-h]
+                                                      [-f {csv,html,json,table,value,yaml}]
                                                       [-c COLUMN]
                                                       [--max-width <integer>]
                                                       [--noindent]
@@ -859,38 +1109,36 @@ openstack baremetal introspection rule list
 
 List all introspection rules.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_baremetal_introspection_rule_purge_with_identity_api_v2:
+.. _openstack_baremetal_introspection_rule_purge_with_identity_api_v3:
 
 openstack baremetal introspection rule purge
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule purge [-h]
+   usage: openstack --os-identity-api-version 3 baremetal introspection rule purge [-h]
 
 Drop all introspection rules.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_baremetal_introspection_rule_show_with_identity_api_v2:
+.. _openstack_baremetal_introspection_rule_show_with_identity_api_v3:
 
 openstack baremetal introspection rule show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule show [-h]
-                                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 baremetal introspection rule show [-h]
+                                                      [-f {html,json,shell,table,value,yaml}]
                                                       [-c COLUMN]
                                                       [--max-width <integer>]
                                                       [--noindent]
@@ -899,40 +1147,42 @@ openstack baremetal introspection rule show
 
 Show an introspection rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``uuid``
   rule UUID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_baremetal_introspection_start_with_identity_api_v2:
+.. _openstack_baremetal_introspection_start_with_identity_api_v3:
 
 openstack baremetal introspection start
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection start [-h]
+   usage: openstack --os-identity-api-version 3 baremetal introspection start [-h]
+                                                  [-f {csv,html,json,table,value,yaml}]
+                                                  [-c COLUMN]
+                                                  [--max-width <integer>]
+                                                  [--noindent]
+                                                  [--quote {all,minimal,none,nonnumeric}]
                                                   [--new-ipmi-username NEW_IPMI_USERNAME]
                                                   [--new-ipmi-password NEW_IPMI_PASSWORD]
+                                                  [--wait]
                                                   uuid [uuid ...]
 
 Start the introspection.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``uuid``
   baremetal node UUID(s)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -945,15 +1195,19 @@ Optional arguments
   if set, \*Ironic Inspector\* will update IPMI password
   to this value
 
-.. _openstack_baremetal_introspection_status_with_identity_api_v2:
+``--wait``
+  wait for introspection to finish; the result will be
+  displayed in the end
+
+.. _openstack_baremetal_introspection_status_with_identity_api_v3:
 
 openstack baremetal introspection status
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection status [-h]
-                                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 baremetal introspection status [-h]
+                                                   [-f {html,json,shell,table,value,yaml}]
                                                    [-c COLUMN]
                                                    [--max-width <integer>]
                                                    [--noindent] [--prefix PREFIX]
@@ -961,27 +1215,24 @@ openstack baremetal introspection status
 
 Get introspection status.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``uuid``
   baremetal node UUID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_baremetal_list_with_identity_api_v2:
+.. _openstack_baremetal_list_with_identity_api_v3:
 
 openstack baremetal list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal list [-h]
-                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 baremetal list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
@@ -991,8 +1242,7 @@ openstack baremetal list
 
 List baremetal nodes
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1021,25 +1271,23 @@ Optional arguments
 ``--long``
   Show detailed information about the nodes.
 
-.. _openstack_baremetal_set_with_identity_api_v2:
+.. _openstack_baremetal_set_with_identity_api_v3:
 
 openstack baremetal set
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal set [-h] [--property <path=value>] <node>
+   usage: openstack --os-identity-api-version 3 baremetal set [-h] [--property <path=value>] <node>
 
 Set baremetal properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1048,15 +1296,14 @@ Optional arguments
   Property to add to this baremetal host (repeat option
   to set multiple properties)
 
-.. _openstack_baremetal_show_with_identity_api_v2:
+.. _openstack_baremetal_show_with_identity_api_v3:
 
 openstack baremetal show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal show [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 baremetal show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX] [--instance]
                                    [--long]
@@ -1064,15 +1311,13 @@ openstack baremetal show
 
 Show baremetal node details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node (or instance UUID if
   :option:`--instance` is specified)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1082,25 +1327,23 @@ Optional arguments
 
 ``--long``
 
-.. _openstack_baremetal_unset_with_identity_api_v2:
+.. _openstack_baremetal_unset_with_identity_api_v3:
 
 openstack baremetal unset
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal unset [-h] [--property <path>] <node>
+   usage: openstack --os-identity-api-version 3 baremetal unset [-h] [--property <path>] <node>
 
 Unset baremetal properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<node>``
   Name or UUID of the node.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1109,82 +1352,248 @@ Optional arguments
   Property to unset on this baremetal host (repeat option
   to unset multiple properties)
 
-.. _openstack_catalog_list_with_identity_api_v2:
+.. _openstack_ca_get_with_identity_api_v3:
 
-openstack catalog list
-~~~~~~~~~~~~~~~~~~~~~~
+openstack ca get
+----------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 catalog list [-h]
-                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 ca get [-h] [-f {html,json,shell,table,value,yaml}]
+                           [-c COLUMN] [--max-width <integer>] [--noindent]
+                           [--prefix PREFIX]
+                           URI
+
+Retrieve a CA by providing its URI.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the CA.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_ca_list_with_identity_api_v3:
+
+openstack ca list
+-----------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 ca list [-h] [-f {csv,html,json,table,value,yaml}]
+                            [-c COLUMN] [--max-width <integer>] [--noindent]
+                            [--quote {all,minimal,none,nonnumeric}]
+                            [--limit LIMIT] [--offset OFFSET] [--name NAME]
+
+List cas.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--limit LIMIT, -l LIMIT``
+  specify the limit to the number of items to list per
+  page (default: 10; maximum: 100)
+
+``--offset OFFSET, -o OFFSET``
+  specify the page offset (default: 0)
+
+``--name NAME, -n NAME``
+  specify the secret name (default: None)
+
+.. _openstack_catalog_list_with_identity_api_v3:
+
+openstack catalog list
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 catalog list [-h] [-f {csv,html,json,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
 
 List services in the service catalog
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_catalog_show_with_identity_api_v2:
+.. _openstack_catalog_show_with_identity_api_v3:
 
 openstack catalog show
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 catalog show [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 catalog show [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX]
                                  <service>
 
 Display service catalog details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<service>``
   Service to display (type or name)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_command_list_with_identity_api_v2:
+.. _openstack_claim_create_with_identity_api_v3:
 
-openstack command list
-~~~~~~~~~~~~~~~~~~~~~~
+openstack claim create
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 command list [-h]
-                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 claim create [-h] [-f {csv,html,json,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--quote {all,minimal,none,nonnumeric}]
+                                 [--ttl <ttl>] [--grace <grace>]
+                                 [--limit <limit>]
+                                 <queue_name>
+
+Create claim and return a list of claimed messages
+
+**Positional arguments:**
+
+``<queue_name>``
+  Name of the queue to be claim
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--ttl <ttl>``
+  Time to live in seconds for claim
+
+``--grace <grace>``
+  The message grace period in seconds
+
+``--limit <limit>``
+  Claims a set of messages, up to limit
+
+.. _openstack_claim_query_with_identity_api_v3:
+
+openstack claim query
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 claim query [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}]
+                                <queue_name> <claim_id>
+
+Display claim details
+
+**Positional arguments:**
+
+``<queue_name>``
+  Name of the claimed queue
+
+``<claim_id>``
+  ID of the claim
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_claim_release_with_identity_api_v3:
+
+openstack claim release
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 claim release [-h] <queue_name> <claim_id>
+
+Delete a claim
+
+**Positional arguments:**
+
+``<queue_name>``
+  Name of the claimed queue
+
+``<claim_id>``
+  Claim ID to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_claim_renew_with_identity_api_v3:
+
+openstack claim renew
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 claim renew [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}]
+                                [--ttl <ttl>] [--grace <grace>]
+                                <queue_name> <claim_id>
+
+Renew a claim
+
+**Positional arguments:**
+
+``<queue_name>``
+  Name of the claimed queue
+
+``<claim_id>``
+  Claim ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--ttl <ttl>``
+  Time to live in seconds for claim
+
+``--grace <grace>``
+  The message grace period in seconds
+
+.. _openstack_command_list_with_identity_api_v3:
+
+openstack command list
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 command list [-h] [-f {csv,html,json,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
 
 List recognized commands by group
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_compute_agent_create_with_identity_api_v2:
+.. _openstack_compute_agent_create_with_identity_api_v3:
 
 openstack compute agent create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 compute agent create [-h]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 compute agent create [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
                                          <os> <architecture> <version> <url>
@@ -1192,8 +1601,7 @@ openstack compute agent create
 
 Create compute agent command
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<os>``
   Type of OS
@@ -1213,44 +1621,40 @@ Positional arguments
 ``<hypervisor>``
   Type of hypervisor
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_compute_agent_delete_with_identity_api_v2:
+.. _openstack_compute_agent_delete_with_identity_api_v3:
 
 openstack compute agent delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 compute agent delete [-h] <id>
+   usage: openstack --os-identity-api-version 3 compute agent delete [-h] <id>
 
 Delete compute agent command
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of agent to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_compute_agent_list_with_identity_api_v2:
+.. _openstack_compute_agent_list_with_identity_api_v3:
 
 openstack compute agent list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 compute agent list [-h]
-                                       [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 compute agent list [-h] [-f {csv,html,json,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]
@@ -1258,8 +1662,7 @@ openstack compute agent list
 
 List compute agent command
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1267,23 +1670,18 @@ Optional arguments
 ``--hypervisor <hypervisor>``
   Type of hypervisor
 
-.. _openstack_compute_agent_set_with_identity_api_v2:
+.. _openstack_compute_agent_set_with_identity_api_v3:
 
 openstack compute agent set
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 compute agent set [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                      [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      <id> <version> <url> <md5hash>
+   usage: openstack --os-identity-api-version 3 compute agent set [-h] <id> <version> <url> <md5hash>
 
 Set compute agent command
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<id>``
   ID of the agent
@@ -1297,44 +1695,41 @@ Positional arguments
 ``<md5hash>``
   MD5 hash
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_compute_service_delete_with_identity_api_v2:
+.. _openstack_compute_service_delete_with_identity_api_v3:
 
 openstack compute service delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 compute service delete [-h] <service>
+   usage: openstack --os-identity-api-version 3 compute service delete [-h] <service>
 
 Delete service command
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<service>``
   Compute service to delete (ID only)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_compute_service_list_with_identity_api_v2:
+.. _openstack_compute_service_list_with_identity_api_v3:
 
 openstack compute service list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 compute service list [-h]
-                                         [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 compute service list [-h]
+                                         [-f {csv,html,json,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
@@ -1342,8 +1737,7 @@ openstack compute service list
 
 List service command
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1354,25 +1748,19 @@ Optional arguments
 ``--service <service>``
   Name of service
 
-.. _openstack_compute_service_set_with_identity_api_v2:
+.. _openstack_compute_service_set_with_identity_api_v3:
 
 openstack compute service set
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 compute service set [-h]
-                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                        [-c COLUMN] [--max-width <integer>]
-                                        [--noindent]
-                                        [--quote {all,minimal,none,nonnumeric}]
-                                        [--enable | --disable]
+   usage: openstack --os-identity-api-version 3 compute service set [-h] [--enable | --disable]
                                         <host> <service>
 
 Set service command
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<host>``
   Name of host
@@ -1380,35 +1768,33 @@ Positional arguments
 ``<service>``
   Name of service
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 ``--enable``
-  Enable a service
+  Enable a service (default)
 
 ``--disable``
   Disable a service
 
-.. _openstack_configuration_show_with_identity_api_v2:
+.. _openstack_configuration_show_with_identity_api_v3:
 
 openstack configuration show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 configuration show [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 configuration show [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        [--mask | --unmask]
 
 Display configuration details
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1419,15 +1805,15 @@ Optional arguments
 ``--unmask``
   Show password in clear text
 
-.. _openstack_congress_datasource_create_with_identity_api_v2:
+.. _openstack_congress_datasource_create_with_identity_api_v3:
 
 openstack congress datasource create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource create [-h]
-                                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress datasource create [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
                                                [--noindent] [--prefix PREFIX]
@@ -1438,8 +1824,7 @@ openstack congress datasource create
 
 Create a datasource.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<datasource-driver>``
   Selected datasource driver
@@ -1447,8 +1832,7 @@ Positional arguments
 ``<datasource-name>``
   Name you want to call the datasource
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1459,59 +1843,56 @@ Optional arguments
 ``--config <key=value>``
   config dictionary to pass in
 
-.. _openstack_congress_datasource_delete_with_identity_api_v2:
+.. _openstack_congress_datasource_delete_with_identity_api_v3:
 
 openstack congress datasource delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource delete [-h] <datasource-name>
+   usage: openstack --os-identity-api-version 3 congress datasource delete [-h] <datasource-name>
 
 Delete a datasource.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<datasource-name>``
   Name of the datasource to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_datasource_list_with_identity_api_v2:
+.. _openstack_congress_datasource_list_with_identity_api_v3:
 
 openstack congress datasource list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource list [-h]
-                                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress datasource list [-h]
+                                             [-f {csv,html,json,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
                                              [--noindent]
                                              [--quote {all,minimal,none,nonnumeric}]
 
 List Datasources.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_datasource_row_list_with_identity_api_v2:
+.. _openstack_congress_datasource_row_list_with_identity_api_v3:
 
 openstack congress datasource row list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource row list [-h]
-                                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress datasource row list [-h]
+                                                 [-f {csv,html,json,table,value,yaml}]
                                                  [-c COLUMN]
                                                  [--max-width <integer>]
                                                  [--noindent]
@@ -1520,8 +1901,7 @@ openstack congress datasource row list
 
 List datasource rows.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<datasource-name>``
   Name of the datasource to show
@@ -1529,21 +1909,20 @@ Positional arguments
 ``<table>``
   Table to get the datasource rows from
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_datasource_schema_show_with_identity_api_v2:
+.. _openstack_congress_datasource_schema_show_with_identity_api_v3:
 
 openstack congress datasource schema show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource schema show [-h]
-                                                    [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress datasource schema show [-h]
+                                                    [-f {csv,html,json,table,value,yaml}]
                                                     [-c COLUMN]
                                                     [--max-width <integer>]
                                                     [--noindent]
@@ -1552,27 +1931,25 @@ openstack congress datasource schema show
 
 Show schema for datasource.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<datasource-name>``
   Name of the datasource
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_datasource_status_show_with_identity_api_v2:
+.. _openstack_congress_datasource_status_show_with_identity_api_v3:
 
 openstack congress datasource status show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource status show [-h]
-                                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress datasource status show [-h]
+                                                    [-f {html,json,shell,table,value,yaml}]
                                                     [-c COLUMN]
                                                     [--max-width <integer>]
                                                     [--noindent]
@@ -1581,27 +1958,25 @@ openstack congress datasource status show
 
 List status for datasource.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<datasource-name>``
   Name of the datasource
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_datasource_table_list_with_identity_api_v2:
+.. _openstack_congress_datasource_table_list_with_identity_api_v3:
 
 openstack congress datasource table list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource table list [-h]
-                                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress datasource table list [-h]
+                                                   [-f {csv,html,json,table,value,yaml}]
                                                    [-c COLUMN]
                                                    [--max-width <integer>]
                                                    [--noindent]
@@ -1610,27 +1985,25 @@ openstack congress datasource table list
 
 List datasource tables.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<datasource-name>``
   Name of the datasource
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_datasource_table_schema_show_with_identity_api_v2:
+.. _openstack_congress_datasource_table_schema_show_with_identity_api_v3:
 
 openstack congress datasource table schema show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource table schema show [-h]
-                                                          [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress datasource table schema show [-h]
+                                                          [-f {csv,html,json,table,value,yaml}]
                                                           [-c COLUMN]
                                                           [--max-width <integer>]
                                                           [--noindent]
@@ -1640,8 +2013,7 @@ openstack congress datasource table schema show
 
 Show schema for datasource table.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<datasource-name>``
   Name of the datasource
@@ -1649,21 +2021,20 @@ Positional arguments
 ``<table-name>``
   Name of the table
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_datasource_table_show_with_identity_api_v2:
+.. _openstack_congress_datasource_table_show_with_identity_api_v3:
 
 openstack congress datasource table show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource table show [-h]
-                                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress datasource table show [-h]
+                                                   [-f {html,json,shell,table,value,yaml}]
                                                    [-c COLUMN]
                                                    [--max-width <integer>]
                                                    [--noindent] [--prefix PREFIX]
@@ -1671,8 +2042,7 @@ openstack congress datasource table show
 
 Show Datasource Table properties.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<datasource-name>``
   Name of datasource
@@ -1680,21 +2050,20 @@ Positional arguments
 ``<table-id>``
   Table id
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_driver_config_show_with_identity_api_v2:
+.. _openstack_congress_driver_config_show_with_identity_api_v3:
 
 openstack congress driver config show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress driver config show [-h]
-                                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress driver config show [-h]
+                                                [-f {html,json,shell,table,value,yaml}]
                                                 [-c COLUMN]
                                                 [--max-width <integer>]
                                                 [--noindent] [--prefix PREFIX]
@@ -1702,48 +2071,45 @@ openstack congress driver config show
 
 List driver tables.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<datasource-driver>``
   Name of the datasource driver
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_driver_list_with_identity_api_v2:
+.. _openstack_congress_driver_list_with_identity_api_v3:
 
 openstack congress driver list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress driver list [-h]
-                                         [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress driver list [-h]
+                                         [-f {csv,html,json,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
 
 List drivers.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_driver_schema_show_with_identity_api_v2:
+.. _openstack_congress_driver_schema_show_with_identity_api_v3:
 
 openstack congress driver schema show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress driver schema show [-h]
-                                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress driver schema show [-h]
+                                                [-f {csv,html,json,table,value,yaml}]
                                                 [-c COLUMN]
                                                 [--max-width <integer>]
                                                 [--noindent]
@@ -1752,27 +2118,25 @@ openstack congress driver schema show
 
 List datasource tables.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<datasource-driver>``
   Name of the datasource driver
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_policy_create_with_identity_api_v2:
+.. _openstack_congress_policy_create_with_identity_api_v3:
 
 openstack congress policy create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy create [-h]
-                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress policy create [-h]
+                                           [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--noindent] [--prefix PREFIX]
                                            [--description <description>]
@@ -1782,14 +2146,12 @@ openstack congress policy create
 
 Create a policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy_name>``
   Name of the policy
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1804,59 +2166,56 @@ Optional arguments
   Kind of policy: {nonrecursive, database, action,
   materialized}
 
-.. _openstack_congress_policy_delete_with_identity_api_v2:
+.. _openstack_congress_policy_delete_with_identity_api_v3:
 
 openstack congress policy delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy delete [-h] <policy>
+   usage: openstack --os-identity-api-version 3 congress policy delete [-h] <policy>
 
 Delete a policy.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy>``
   ID or name of the policy to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_policy_list_with_identity_api_v2:
+.. _openstack_congress_policy_list_with_identity_api_v3:
 
 openstack congress policy list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy list [-h]
-                                         [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress policy list [-h]
+                                         [-f {csv,html,json,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
 
 List Policy.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_policy_row_list_with_identity_api_v2:
+.. _openstack_congress_policy_row_list_with_identity_api_v3:
 
 openstack congress policy row list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy row list [-h]
-                                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress policy row list [-h]
+                                             [-f {csv,html,json,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
                                              [--noindent]
                                              [--quote {all,minimal,none,nonnumeric}]
@@ -1865,8 +2224,7 @@ openstack congress policy row list
 
 List policy rows.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy-name>``
   Name of the policy to show
@@ -1874,8 +2232,7 @@ Positional arguments
 ``<table>``
   Table to get the policy rows from
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1883,15 +2240,15 @@ Optional arguments
 ``--trace``
   Display explanation of result
 
-.. _openstack_congress_policy_rule_create_with_identity_api_v2:
+.. _openstack_congress_policy_rule_create_with_identity_api_v3:
 
 openstack congress policy rule create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy rule create [-h]
-                                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress policy rule create [-h]
+                                                [-f {html,json,shell,table,value,yaml}]
                                                 [-c COLUMN]
                                                 [--max-width <integer>]
                                                 [--noindent] [--prefix PREFIX]
@@ -1901,8 +2258,7 @@ openstack congress policy rule create
 
 Create a policy rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy-name>``
   Name or identifier of the policy
@@ -1910,8 +2266,7 @@ Positional arguments
 ``<rule>``
   Policy rule
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1922,20 +2277,19 @@ Optional arguments
 ``--comment COMMENT``
   Comment about policy rule
 
-.. _openstack_congress_policy_rule_delete_with_identity_api_v2:
+.. _openstack_congress_policy_rule_delete_with_identity_api_v3:
 
 openstack congress policy rule delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy rule delete [-h]
+   usage: openstack --os-identity-api-version 3 congress policy rule delete [-h]
                                                 <policy-name> <rule-id/rule-name>
 
 Delete a policy rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy-name>``
   Name of the policy to delete
@@ -1943,52 +2297,48 @@ Positional arguments
 ``<rule-id/rule-name>``
   ID/Name of the policy rule to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_policy_rule_list_with_identity_api_v2:
+.. _openstack_congress_policy_rule_list_with_identity_api_v3:
 
 openstack congress policy rule list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy rule list [-h] <policy-name>
+   usage: openstack --os-identity-api-version 3 congress policy rule list [-h] <policy-name>
 
 List policy rules.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy-name>``
   Name of the policy
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_policy_rule_show_with_identity_api_v2:
+.. _openstack_congress_policy_rule_show_with_identity_api_v3:
 
 openstack congress policy rule show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy rule show [-h]
-                                              [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress policy rule show [-h]
+                                              [-f {html,json,shell,table,value,yaml}]
                                               [-c COLUMN] [--max-width <integer>]
                                               [--noindent] [--prefix PREFIX]
                                               <policy-name> <rule-id/rule-name>
 
 Show a policy rule.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy-name>``
   Name or identifier of the policy
@@ -1996,54 +2346,50 @@ Positional arguments
 ``<rule-id/rule-name>``
   Policy rule id or rule name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_policy_show_with_identity_api_v2:
+.. _openstack_congress_policy_show_with_identity_api_v3:
 
 openstack congress policy show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy show [-h]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress policy show [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
                                          <policy-name>
 
 Show policy properties.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy-name>``
   Name of policy
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_policy_simulate_with_identity_api_v2:
+.. _openstack_congress_policy_simulate_with_identity_api_v3:
 
 openstack congress policy simulate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy simulate [-h] [--delta] [--trace]
+   usage: openstack --os-identity-api-version 3 congress policy simulate [-h] [--delta] [--trace]
                                              <policy> <query> <sequence>
                                              <action_policy>
 
 Show the result of simulation.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy>``
   Name of the policy
@@ -2057,8 +2403,7 @@ Positional arguments
 ``<action_policy>``
   Name of the policy with actions
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2069,15 +2414,15 @@ Optional arguments
 ``--trace``
   Include trace describing computation
 
-.. _openstack_congress_policy_table_list_with_identity_api_v2:
+.. _openstack_congress_policy_table_list_with_identity_api_v3:
 
 openstack congress policy table list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy table list [-h]
-                                               [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress policy table list [-h]
+                                               [-f {csv,html,json,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
                                                [--noindent]
@@ -2086,27 +2431,25 @@ openstack congress policy table list
 
 List policy tables.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy-name>``
   Name of the policy
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_congress_policy_table_show_with_identity_api_v2:
+.. _openstack_congress_policy_table_show_with_identity_api_v3:
 
 openstack congress policy table show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy table show [-h]
-                                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 congress policy table show [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
                                                [--noindent] [--prefix PREFIX]
@@ -2114,8 +2457,7 @@ openstack congress policy table show
 
 Show policy table properties.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<policy-name>``
   Name of policy
@@ -2123,31 +2465,28 @@ Positional arguments
 ``<table-id>``
   Table id
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_console_log_show_with_identity_api_v2:
+.. _openstack_console_log_show_with_identity_api_v3:
 
 openstack console log show
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 console log show [-h] [--lines <num-lines>] <server>
+   usage: openstack --os-identity-api-version 3 console log show [-h] [--lines <num-lines>] <server>
 
 Show server's console output
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server to show console log (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2156,15 +2495,14 @@ Optional arguments
   Number of lines to display from the end of the log
   (default=all)
 
-.. _openstack_console_url_show_with_identity_api_v2:
+.. _openstack_console_url_show_with_identity_api_v3:
 
 openstack console url show
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 console url show [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 console url show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
                                      [--novnc | --xvpvnc | --spice]
@@ -2172,14 +2510,12 @@ openstack console url show
 
 Show server's remote console URL
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server to show URL (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2193,15 +2529,124 @@ Optional arguments
 ``--spice``
   Show SPICE console URL
 
-.. _openstack_container_create_with_identity_api_v2:
+.. _openstack_consumer_create_with_identity_api_v3:
 
-openstack container create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack consumer create
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 container create [-h]
-                                     [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 consumer create [-h] [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent] [--prefix PREFIX]
+                                    [--description <description>]
+
+Create new consumer
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--description <description>``
+  New consumer description
+
+.. _openstack_consumer_delete_with_identity_api_v3:
+
+openstack consumer delete
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 consumer delete [-h] <consumer>
+
+Delete consumer
+
+**Positional arguments:**
+
+``<consumer>``
+  Consumer to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_consumer_list_with_identity_api_v3:
+
+openstack consumer list
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 consumer list [-h] [-f {csv,html,json,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent]
+                                  [--quote {all,minimal,none,nonnumeric}]
+
+List consumers
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_consumer_set_with_identity_api_v3:
+
+openstack consumer set
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 consumer set [-h] [--description <description>] <consumer>
+
+Set consumer properties
+
+**Positional arguments:**
+
+``<consumer>``
+  Consumer to modify
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--description <description>``
+  New consumer description
+
+.. _openstack_consumer_show_with_identity_api_v3:
+
+openstack consumer show
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 consumer show [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX]
+                                  <consumer>
+
+Display consumer details
+
+**Positional arguments:**
+
+``<consumer>``
+  Consumer to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_container_create_with_identity_api_v3:
+
+openstack container create
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 container create [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
@@ -2209,50 +2654,49 @@ openstack container create
 
 Create new container
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container-name>``
   New container name(s)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_container_delete_with_identity_api_v2:
+.. _openstack_container_delete_with_identity_api_v3:
 
 openstack container delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 container delete [-h] <container> [<container> ...]
+   usage: openstack --os-identity-api-version 3 container delete [-h] [--recursive]
+                                     <container> [<container> ...]
 
 Delete container
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Container(s) to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_container_list_with_identity_api_v2:
+``--recursive, -r``
+  Recursively delete objects and container
+
+.. _openstack_container_list_with_identity_api_v3:
 
 openstack container list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 container list [-h]
-                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 container list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
@@ -2262,8 +2706,7 @@ openstack container list
 
 List containers
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2286,48 +2729,44 @@ Optional arguments
 ``--all``
   List all containers (default is 10000)
 
-.. _openstack_container_save_with_identity_api_v2:
+.. _openstack_container_save_with_identity_api_v3:
 
 openstack container save
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 container save [-h] <container>
+   usage: openstack --os-identity-api-version 3 container save [-h] <container>
 
 Save container contents locally
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Container to save
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_container_set_with_identity_api_v2:
+.. _openstack_container_set_with_identity_api_v3:
 
 openstack container set
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 container set [-h] --property <key=value> <container>
+   usage: openstack --os-identity-api-version 3 container set [-h] --property <key=value> <container>
 
 Set container properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Container to modify
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2336,52 +2775,47 @@ Optional arguments
   Set a property on this container (repeat option to set
   multiple properties)
 
-.. _openstack_container_show_with_identity_api_v2:
+.. _openstack_container_show_with_identity_api_v3:
 
 openstack container show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 container show [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 container show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    <container>
 
 Display container details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Container to display
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_container_unset_with_identity_api_v2:
+.. _openstack_container_unset_with_identity_api_v3:
 
 openstack container unset
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 container unset [-h] --property <key> <container>
+   usage: openstack --os-identity-api-version 3 container unset [-h] --property <key> <container>
 
 Unset container properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Container to modify
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2390,15 +2824,684 @@ Optional arguments
   Property to remove from container (repeat option to remove
   multiple properties)
 
-.. _openstack_dataprocessing_data_source_create_with_identity_api_v2:
+.. _openstack_credential_create_with_identity_api_v3:
 
-openstack dataprocessing data source create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack credential create
+---------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing data source create [-h]
-                                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 credential create [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent] [--prefix PREFIX]
+                                      [--type <type>] [--project <project>]
+                                      <user> <data>
+
+Create credential command
+
+**Positional arguments:**
+
+``<user>``
+  Name or ID of user that owns the credential
+
+``<data>``
+  New credential data
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--type <type>``
+  New credential type
+
+``--project <project>``
+  Project name or ID which limits the scope of the
+  credential
+
+.. _openstack_credential_delete_with_identity_api_v3:
+
+openstack credential delete
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 credential delete [-h] <credential-id>
+
+Delete credential command
+
+**Positional arguments:**
+
+``<credential-id>``
+  ID of credential to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_credential_list_with_identity_api_v3:
+
+openstack credential list
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 credential list [-h] [-f {csv,html,json,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent]
+                                    [--quote {all,minimal,none,nonnumeric}]
+
+List credential command
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_credential_set_with_identity_api_v3:
+
+openstack credential set
+------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 credential set [-h] --user <user> --type <type> --data <data>
+                                   [--project <project>]
+                                   <credential-id>
+
+Set credential command
+
+**Positional arguments:**
+
+``<credential-id>``
+  ID of credential to change
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--user <user>``
+  Name or ID of user that owns the credential
+
+``--type <type>``
+  New credential type
+
+``--data <data>``
+  New credential data
+
+``--project <project>``
+  Project name or ID which limits the scope of the
+  credential
+
+.. _openstack_credential_show_with_identity_api_v3:
+
+openstack credential show
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 credential show [-h] [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent] [--prefix PREFIX]
+                                    <credential-id>
+
+Show credential command
+
+**Positional arguments:**
+
+``<credential-id>``
+  ID of credential to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_cluster_create_with_identity_api_v3:
+
+openstack dataprocessing cluster create
+---------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster create [-h]
+                                                  [-f {html,json,shell,table,value,yaml}]
+                                                  [-c COLUMN]
+                                                  [--max-width <integer>]
+                                                  [--noindent] [--prefix PREFIX]
+                                                  [--name <name>]
+                                                  [--cluster-template <cluster-template>]
+                                                  [--image <image>]
+                                                  [--description <description>]
+                                                  [--user-keypair <keypair>]
+                                                  [--neutron-network <network>]
+                                                  [--count <count>] [--public]
+                                                  [--protected] [--transient]
+                                                  [--json <filename>] [--wait]
+
+Creates cluster
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Name of the cluster [REQUIRED if JSON is not provided]
+
+``--cluster-template <cluster-template>``
+  Cluster template name or ID [REQUIRED if JSON is not
+  provided]
+
+``--image <image>``
+  Image that will be used for cluster deployment (Name
+  or ID) [REQUIRED if JSON is not provided]
+
+``--description <description>``
+  Description of the cluster
+
+``--user-keypair <keypair>``
+  User keypair to get acces to VMs after cluster
+  creation
+
+``--neutron-network <network>``
+  Instances of the cluster will get fixed IP addresses
+  in this network. (Name or ID should be provided)
+
+``--count <count>``
+  Number of clusters to be created
+
+``--public``
+  Make the cluster public (Visible from other tenants)
+
+``--protected``
+  Make the cluster protected
+
+``--transient``
+  Create transient cluster
+
+``--json <filename>``
+  JSON representation of the cluster. Other arguments
+  (except for :option:`--wait)` will not be taken into account if
+  this one is provided
+
+``--wait``
+  Wait for the cluster creation to complete
+
+.. _openstack_dataprocessing_cluster_delete_with_identity_api_v3:
+
+openstack dataprocessing cluster delete
+---------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster delete [-h] [--wait]
+                                                  <cluster> [<cluster> ...]
+
+Deletes cluster
+
+**Positional arguments:**
+
+``<cluster>``
+  Name(s) or id(s) of the cluster(s) to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--wait``
+  Wait for the cluster(s) delete to complete
+
+.. _openstack_dataprocessing_cluster_list_with_identity_api_v3:
+
+openstack dataprocessing cluster list
+-------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster list [-h]
+                                                [-f {csv,html,json,table,value,yaml}]
+                                                [-c COLUMN]
+                                                [--max-width <integer>]
+                                                [--noindent]
+                                                [--quote {all,minimal,none,nonnumeric}]
+                                                [--long] [--plugin <plugin>]
+                                                [--version <version>]
+                                                [--name <name-substring>]
+
+Lists clusters
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+``--plugin <plugin>``
+  List clusters with specific plugin
+
+``--version <version>``
+  List clusters with specific version of the plugin
+
+``--name <name-substring>``
+  List clusters with specific substring in the name
+
+.. _openstack_dataprocessing_cluster_scale_with_identity_api_v3:
+
+openstack dataprocessing cluster scale
+--------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster scale [-h]
+                                                 [-f {html,json,shell,table,value,yaml}]
+                                                 [-c COLUMN]
+                                                 [--max-width <integer>]
+                                                 [--noindent] [--prefix PREFIX]
+                                                 [--instances <node-group-template:instances_count> [<node-group-template:instances_count> ...]]
+                                                 [--json <filename>] [--wait]
+                                                 <cluster>
+
+Scales cluster
+
+**Positional arguments:**
+
+``<cluster>``
+  Name or ID of the cluster
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--instances <node-group-template:instances_count>``
+
+``[<node-group-template:instances_count> ...]``
+  Node group templates and number of their instances to
+  be scale to [REQUIRED if JSON is not provided]
+
+``--json <filename>``
+  JSON representation of the cluster scale object. Other
+  arguments (except for :option:`--wait)` will not be taken into
+  account if this one is provided
+
+``--wait``
+  Wait for the cluster scale to complete
+
+.. _openstack_dataprocessing_cluster_show_with_identity_api_v3:
+
+openstack dataprocessing cluster show
+-------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster show [-h]
+                                                [-f {html,json,shell,table,value,yaml}]
+                                                [-c COLUMN]
+                                                [--max-width <integer>]
+                                                [--noindent] [--prefix PREFIX]
+                                                [--verification]
+                                                <cluster>
+
+Display cluster details
+
+**Positional arguments:**
+
+``<cluster>``
+  Name or id of the cluster to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--verification``
+  List additional fields for verifications
+
+.. _openstack_dataprocessing_cluster_template_create_with_identity_api_v3:
+
+openstack dataprocessing cluster template create
+------------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster template create [-h]
+                                                           [-f {html,json,shell,table,value,yaml}]
+                                                           [-c COLUMN]
+                                                           [--max-width <integer>]
+                                                           [--noindent]
+                                                           [--prefix PREFIX]
+                                                           [--name <name>]
+                                                           [--node-groups <node-group:instances_count> [<node-group:instances_count> ...]]
+                                                           [--anti-affinity <anti-affinity> [<anti-affinity> ...]]
+                                                           [--description <description>]
+                                                           [--autoconfig]
+                                                           [--public]
+                                                           [--protected]
+                                                           [--json <filename>]
+                                                           [--shares <filename>]
+                                                           [--configs <filename>]
+
+Creates cluster template
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Name of the cluster template [REQUIRED if JSON is not
+  provided]
+
+``--node-groups <node-group:instances_count> [<node-group:instances_count> ...]``
+  List of the node groups(names or IDs) and numbers of
+  instances for each one of them [REQUIRED if JSON is
+  not provided]
+
+``--anti-affinity <anti-affinity> [<anti-affinity> ...]``
+  List of processes that should be added to an anti-
+  affinity group
+
+``--description <description>``
+  Description of the cluster template
+
+``--autoconfig``
+  If enabled, instances of the cluster will be
+  automatically configured
+
+``--public``
+  Make the cluster template public (Visible from other
+  tenants)
+
+``--protected``
+  Make the cluster template protected
+
+``--json <filename>``
+  JSON representation of the cluster template. Other
+  arguments will not be taken into account if this one
+  is provided
+
+``--shares <filename>``
+  JSON representation of the manila shares
+
+``--configs <filename>``
+  JSON representation of the cluster template configs
+
+.. _openstack_dataprocessing_cluster_template_delete_with_identity_api_v3:
+
+openstack dataprocessing cluster template delete
+------------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster template delete [-h]
+                                                           <cluster-template>
+                                                           [<cluster-template> ...]
+
+Deletes cluster template
+
+**Positional arguments:**
+
+``<cluster-template>``
+  Name(s) or id(s) of the cluster template(s) to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_cluster_template_list_with_identity_api_v3:
+
+openstack dataprocessing cluster template list
+----------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster template list [-h]
+                                                         [-f {csv,html,json,table,value,yaml}]
+                                                         [-c COLUMN]
+                                                         [--max-width <integer>]
+                                                         [--noindent]
+                                                         [--quote {all,minimal,none,nonnumeric}]
+                                                         [--long]
+                                                         [--plugin <plugin>]
+                                                         [--version <version>]
+                                                         [--name <name-substring>]
+
+Lists cluster templates
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+``--plugin <plugin>``
+  List cluster templates for specific plugin
+
+``--version <version>``
+  List cluster templates with specific version of the
+  plugin
+
+``--name <name-substring>``
+  List cluster templates with specific substring in the
+  name
+
+.. _openstack_dataprocessing_cluster_template_show_with_identity_api_v3:
+
+openstack dataprocessing cluster template show
+----------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster template show [-h]
+                                                         [-f {html,json,shell,table,value,yaml}]
+                                                         [-c COLUMN]
+                                                         [--max-width <integer>]
+                                                         [--noindent]
+                                                         [--prefix PREFIX]
+                                                         <cluster-template>
+
+Display cluster template details
+
+**Positional arguments:**
+
+``<cluster-template>``
+  Name or id of the cluster template to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_cluster_template_update_with_identity_api_v3:
+
+openstack dataprocessing cluster template update
+------------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster template update [-h]
+                                                           [-f {html,json,shell,table,value,yaml}]
+                                                           [-c COLUMN]
+                                                           [--max-width <integer>]
+                                                           [--noindent]
+                                                           [--prefix PREFIX]
+                                                           [--name <name>]
+                                                           [--node-groups <node-group:instances_count> [<node-group:instances_count> ...]]
+                                                           [--anti-affinity <anti-affinity> [<anti-affinity> ...]]
+                                                           [--description <description>]
+                                                           [--autoconfig-enable | --autoconfig-disable]
+                                                           [--public | --private]
+                                                           [--protected | --unprotected]
+                                                           [--json <filename>]
+                                                           [--shares <filename>]
+                                                           [--configs <filename>]
+                                                           <cluster-template>
+
+Updates cluster template
+
+**Positional arguments:**
+
+``<cluster-template>``
+  Name or ID of the cluster template [REQUIRED]
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  New name of the cluster template
+
+``--node-groups <node-group:instances_count> [<node-group:instances_count> ...]``
+  List of the node groups(names or IDs) and numbers
+  ofinstances for each one of them
+
+``--anti-affinity <anti-affinity> [<anti-affinity> ...]``
+  List of processes that should be added to an anti-
+  affinity group
+
+``--description <description>``
+  Description of the cluster template
+
+``--autoconfig-enable``
+  Instances of the cluster will be automatically
+  configured
+
+``--autoconfig-disable``
+  Instances of the cluster will not be automatically
+  configured
+
+``--public``
+  Make the cluster template public (Visible from other
+  tenants)
+
+``--private``
+  Make the cluster template private (Visible only from
+  this tenant)
+
+``--protected``
+  Make the cluster template protected
+
+``--unprotected``
+  Make the cluster template unprotected
+
+``--json <filename>``
+  JSON representation of the cluster template. Other
+  arguments will not be taken into account if this one
+  is provided
+
+``--shares <filename>``
+  JSON representation of the manila shares
+
+``--configs <filename>``
+  JSON representation of the cluster template configs
+
+.. _openstack_dataprocessing_cluster_update_with_identity_api_v3:
+
+openstack dataprocessing cluster update
+---------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster update [-h]
+                                                  [-f {html,json,shell,table,value,yaml}]
+                                                  [-c COLUMN]
+                                                  [--max-width <integer>]
+                                                  [--noindent] [--prefix PREFIX]
+                                                  [--name <name>]
+                                                  [--description <description>]
+                                                  [--shares <filename>]
+                                                  [--public | --private]
+                                                  [--protected | --unprotected]
+                                                  <cluster>
+
+Updates cluster
+
+**Positional arguments:**
+
+``<cluster>``
+  Name or ID of the cluster
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  New name of the cluster
+
+``--description <description>``
+  Description of the cluster
+
+``--shares <filename>``
+  JSON representation of the manila shares
+
+``--public``
+  Make the cluster public (Visible from other tenants)
+
+``--private``
+  Make the cluster private (Visible only from this
+  tenant)
+
+``--protected``
+  Make the cluster protected
+
+``--unprotected``
+  Make the cluster unprotected
+
+.. _openstack_dataprocessing_cluster_verification_with_identity_api_v3:
+
+openstack dataprocessing cluster verification
+---------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing cluster verification [-h]
+                                                        [-f {html,json,shell,table,value,yaml}]
+                                                        [-c COLUMN]
+                                                        [--max-width <integer>]
+                                                        [--noindent]
+                                                        [--prefix PREFIX]
+                                                        (--start | --show)
+                                                        <cluster>
+
+Updates cluster verifications
+
+**Positional arguments:**
+
+``<cluster>``
+  Name or ID of the cluster
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--start``
+  Start health verification for the cluster
+
+``--show``
+  Show health of the cluster
+
+.. _openstack_dataprocessing_data_source_create_with_identity_api_v3:
+
+openstack dataprocessing data source create
+-------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing data source create [-h]
+                                                      [-f {html,json,shell,table,value,yaml}]
                                                       [-c COLUMN]
                                                       [--max-width <integer>]
                                                       [--noindent]
@@ -2407,24 +3510,23 @@ openstack dataprocessing data source create
                                                       [--username <username>]
                                                       [--password <password>]
                                                       [--description <description>]
+                                                      [--public] [--protected]
                                                       <name>
 
 Creates data source
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   Name of the data source
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 ``--type <type>``
-  Type of the data source (swift, hdfs or maprfs)
+  Type of the data source (swift, hdfs, maprfs, manila)
   [REQUIRED]
 
 ``--url <url>``
@@ -2439,38 +3541,44 @@ Optional arguments
 ``--description <description>``
   Description of the data source
 
-.. _openstack_dataprocessing_data_source_delete_with_identity_api_v2:
+``--public``
+  Make the data source public
+
+``--protected``
+  Make the data source protected
+
+.. _openstack_dataprocessing_data_source_delete_with_identity_api_v3:
 
 openstack dataprocessing data source delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing data source delete [-h] <data-source>
+   usage: openstack --os-identity-api-version 3 dataprocessing data source delete [-h]
+                                                      <data-source>
+                                                      [<data-source> ...]
 
 Delete data source
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<data-source>``
-  Name or id of the data source to delete
+  Name(s) or id(s) of the data source(s) to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_dataprocessing_data_source_list_with_identity_api_v2:
+.. _openstack_dataprocessing_data_source_list_with_identity_api_v3:
 
 openstack dataprocessing data source list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing data source list [-h]
-                                                    [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 dataprocessing data source list [-h]
+                                                    [-f {csv,html,json,table,value,yaml}]
                                                     [-c COLUMN]
                                                     [--max-width <integer>]
                                                     [--noindent]
@@ -2479,8 +3587,7 @@ openstack dataprocessing data source list
 
 Lists data sources
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2489,18 +3596,18 @@ Optional arguments
   List additional fields in output
 
 ``--type <type>``
-  List data sources of specific type (swift, hdfs or
-  maprfs)
+  List data sources of specific type (swift, hdfs,
+  maprfs, manila)
 
-.. _openstack_dataprocessing_data_source_show_with_identity_api_v2:
+.. _openstack_dataprocessing_data_source_show_with_identity_api_v3:
 
 openstack dataprocessing data source show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing data source show [-h]
-                                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 dataprocessing data source show [-h]
+                                                    [-f {html,json,shell,table,value,yaml}]
                                                     [-c COLUMN]
                                                     [--max-width <integer>]
                                                     [--noindent]
@@ -2509,32 +3616,1368 @@ openstack dataprocessing data source show
 
 Display data source details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<data-source>``
   Name or id of the data source to display
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_dataprocessing_plugin_configs_get_with_identity_api_v2:
+.. _openstack_dataprocessing_data_source_update_with_identity_api_v3:
 
-openstack dataprocessing plugin configs get
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack dataprocessing data source update
+-------------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing plugin configs get [-h] [--file <file>]
+   usage: openstack --os-identity-api-version 3 dataprocessing data source update [-h]
+                                                      [-f {html,json,shell,table,value,yaml}]
+                                                      [-c COLUMN]
+                                                      [--max-width <integer>]
+                                                      [--noindent]
+                                                      [--prefix PREFIX]
+                                                      [--name <name>]
+                                                      [--type <type>]
+                                                      [--url <url>]
+                                                      [--username <username>]
+                                                      [--password <password>]
+                                                      [--description <description>]
+                                                      [--public | --private]
+                                                      [--protected | --unprotected]
+                                                      <data-source>
+
+Update data source
+
+**Positional arguments:**
+
+``<data-source>``
+  Name or id of the data source
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  New name of the data source
+
+``--type <type>``
+  Type of the data source (swift, hdfs, maprfs, manila)
+
+``--url <url>``
+  Url for the data source
+
+``--username <username>``
+  Username for accessing the data source url
+
+``--password <password>``
+  Password for accessing the data source url
+
+``--description <description>``
+  Description of the data source
+
+``--public``
+  Make the data source public (Visible from other
+  tenants)
+
+``--private``
+  Make the data source private (Visible only from this
+  tenant)
+
+``--protected``
+  Make the data source protected
+
+``--unprotected``
+  Make the data source unprotected
+
+.. _openstack_dataprocessing_image_list_with_identity_api_v3:
+
+openstack dataprocessing image list
+-----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing image list [-h]
+                                              [-f {csv,html,json,table,value,yaml}]
+                                              [-c COLUMN] [--max-width <integer>]
+                                              [--noindent]
+                                              [--quote {all,minimal,none,nonnumeric}]
+                                              [--long] [--name <name-regex>]
+                                              [--tags <tag> [<tag> ...]]
+                                              [--username <username>]
+
+Lists registered images
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+``--name <name-regex>``
+  Regular expression to match image name
+
+``--tags <tag> [<tag> ...]``
+  List images with specific tag(s)
+
+``--username <username>``
+  List images with specific username
+
+.. _openstack_dataprocessing_image_register_with_identity_api_v3:
+
+openstack dataprocessing image register
+---------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing image register [-h]
+                                                  [-f {html,json,shell,table,value,yaml}]
+                                                  [-c COLUMN]
+                                                  [--max-width <integer>]
+                                                  [--noindent] [--prefix PREFIX]
+                                                  --username <username>
+                                                  [--description <description>]
+                                                  <image>
+
+Register an image
+
+**Positional arguments:**
+
+``<image>``
+  Name or ID of the image to register
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--username <username>``
+  Username of privileged user in the image [REQUIRED]
+
+``--description <description>``
+  Description of the image. If not provided, description
+  of the image will be reset to empty
+
+.. _openstack_dataprocessing_image_show_with_identity_api_v3:
+
+openstack dataprocessing image show
+-----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing image show [-h]
+                                              [-f {html,json,shell,table,value,yaml}]
+                                              [-c COLUMN] [--max-width <integer>]
+                                              [--noindent] [--prefix PREFIX]
+                                              <image>
+
+Display image details
+
+**Positional arguments:**
+
+``<image>``
+  Name or id of the image to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_image_tags_add_with_identity_api_v3:
+
+openstack dataprocessing image tags add
+---------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing image tags add [-h]
+                                                  [-f {html,json,shell,table,value,yaml}]
+                                                  [-c COLUMN]
+                                                  [--max-width <integer>]
+                                                  [--noindent] [--prefix PREFIX]
+                                                  --tags <tag> [<tag> ...]
+                                                  <image>
+
+Add image tags
+
+**Positional arguments:**
+
+``<image>``
+  Name or id of the image
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--tags <tag> [<tag> ...]``
+  Tag(s) to add [REQUIRED]
+
+.. _openstack_dataprocessing_image_tags_remove_with_identity_api_v3:
+
+openstack dataprocessing image tags remove
+------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing image tags remove [-h]
+                                                     [-f {html,json,shell,table,value,yaml}]
+                                                     [-c COLUMN]
+                                                     [--max-width <integer>]
+                                                     [--noindent]
+                                                     [--prefix PREFIX]
+                                                     [--tags <tag> [<tag> ...] |
+                                                     --all]
+                                                     <image>
+
+Remove image tags
+
+**Positional arguments:**
+
+``<image>``
+  Name or id of the image
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--tags <tag> [<tag> ...]``
+  Tag(s) to remove
+
+``--all``
+  Remove all tags from image
+
+.. _openstack_dataprocessing_image_tags_set_with_identity_api_v3:
+
+openstack dataprocessing image tags set
+---------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing image tags set [-h]
+                                                  [-f {html,json,shell,table,value,yaml}]
+                                                  [-c COLUMN]
+                                                  [--max-width <integer>]
+                                                  [--noindent] [--prefix PREFIX]
+                                                  --tags <tag> [<tag> ...]
+                                                  <image>
+
+Set image tags (Replace current image tags with provided ones)
+
+**Positional arguments:**
+
+``<image>``
+  Name or id of the image
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--tags <tag> [<tag> ...]``
+  Tag(s) to set [REQUIRED]
+
+.. _openstack_dataprocessing_image_unregister_with_identity_api_v3:
+
+openstack dataprocessing image unregister
+-----------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing image unregister [-h] <image> [<image> ...]
+
+Unregister image(s)
+
+**Positional arguments:**
+
+``<image>``
+  Name(s) or id(s) of the image(s) to unregister
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_job_binary_create_with_identity_api_v3:
+
+openstack dataprocessing job binary create
+------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job binary create [-h]
+                                                     [-f {html,json,shell,table,value,yaml}]
+                                                     [-c COLUMN]
+                                                     [--max-width <integer>]
+                                                     [--noindent]
+                                                     [--prefix PREFIX]
+                                                     [--name <name>]
+                                                     [--data <file> | --url <url>]
+                                                     [--description <description>]
+                                                     [--username <username>]
+                                                     [--password <password> | --password-prompt]
+                                                     [--public] [--protected]
+                                                     [--json <filename>]
+
+Creates job binary
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Name of the job binary [REQUIRED if JSON is not
+  provided]
+
+``--data <file>``
+  File that will be stored in the internal DB [REQUIRED
+  if JSON and URL are not provided]
+
+``--url <url>``
+  URL for the job binary [REQUIRED if JSON and file are
+  not provided]
+
+``--description <description>``
+  Description of the job binary
+
+``--username <username>``
+  Username for accessing the job binary URL
+
+``--password <password>``
+  Password for accessing the job binary URL
+
+``--password-prompt``
+  Prompt interactively for password
+
+``--public``
+  Make the job binary public
+
+``--protected``
+  Make the job binary protected
+
+``--json <filename>``
+  JSON representation of the job binary. Other arguments
+  will not be taken into account if this one is provided
+
+.. _openstack_dataprocessing_job_binary_delete_with_identity_api_v3:
+
+openstack dataprocessing job binary delete
+------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job binary delete [-h]
+                                                     <job-binary>
+                                                     [<job-binary> ...]
+
+Deletes job binary
+
+**Positional arguments:**
+
+``<job-binary>``
+  Name(s) or id(s) of the job binary(ies) to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_job_binary_download_with_identity_api_v3:
+
+openstack dataprocessing job binary download
+--------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job binary download [-h] [--file <file>]
+                                                       <job-binary>
+
+Downloads job binary
+
+**Positional arguments:**
+
+``<job-binary>``
+  Name or ID of the job binary to download
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--file <file>``
+  Destination file (defaults to job binary name)
+
+.. _openstack_dataprocessing_job_binary_list_with_identity_api_v3:
+
+openstack dataprocessing job binary list
+----------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job binary list [-h]
+                                                   [-f {csv,html,json,table,value,yaml}]
+                                                   [-c COLUMN]
+                                                   [--max-width <integer>]
+                                                   [--noindent]
+                                                   [--quote {all,minimal,none,nonnumeric}]
+                                                   [--long]
+                                                   [--name <name-substring>]
+
+Lists job binaries
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+``--name <name-substring>``
+  List job binaries with specific substring in the name
+
+.. _openstack_dataprocessing_job_binary_show_with_identity_api_v3:
+
+openstack dataprocessing job binary show
+----------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job binary show [-h]
+                                                   [-f {html,json,shell,table,value,yaml}]
+                                                   [-c COLUMN]
+                                                   [--max-width <integer>]
+                                                   [--noindent] [--prefix PREFIX]
+                                                   <job-binary>
+
+Display job binary details
+
+**Positional arguments:**
+
+``<job-binary>``
+  Name or ID of the job binary to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_job_binary_update_with_identity_api_v3:
+
+openstack dataprocessing job binary update
+------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job binary update [-h]
+                                                     [-f {html,json,shell,table,value,yaml}]
+                                                     [-c COLUMN]
+                                                     [--max-width <integer>]
+                                                     [--noindent]
+                                                     [--prefix PREFIX]
+                                                     [--name <name>]
+                                                     [--url <url>]
+                                                     [--description <description>]
+                                                     [--username <username>]
+                                                     [--password <password> | --password-prompt]
+                                                     [--public | --private]
+                                                     [--protected | --unprotected]
+                                                     [--json <filename>]
+                                                     <job-binary>
+
+Updates job binary
+
+**Positional arguments:**
+
+``<job-binary>``
+  Name or ID of the job binary
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  New name of the job binary
+
+``--url <url>``
+  URL for the job binary [Internal DB URL can not be
+  updated]
+
+``--description <description>``
+  Description of the job binary
+
+``--username <username>``
+  Username for accessing the job binary URL
+
+``--password <password>``
+  Password for accessing the job binary URL
+
+``--password-prompt``
+  Prompt interactively for password
+
+``--public``
+  Make the job binary public (Visible from other
+  tenants)
+
+``--private``
+  Make the job binary private (Visible only from this
+  tenant)
+
+``--protected``
+  Make the job binary protected
+
+``--unprotected``
+  Make the job binary unprotected
+
+``--json <filename>``
+  JSON representation of the update object. Other
+  arguments will not be taken into account if this one
+  is provided
+
+.. _openstack_dataprocessing_job_delete_with_identity_api_v3:
+
+openstack dataprocessing job delete
+-----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job delete [-h] [--wait] <job> [<job> ...]
+
+Deletes job
+
+**Positional arguments:**
+
+``<job>``
+  ID(s) of the job(s) to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--wait``
+  Wait for the job(s) delete to complete
+
+.. _openstack_dataprocessing_job_execute_with_identity_api_v3:
+
+openstack dataprocessing job execute
+------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job execute [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width <integer>]
+                                               [--noindent] [--prefix PREFIX]
+                                               [--job-template <job-template>]
+                                               [--cluster <cluster>]
+                                               [--input <input>]
+                                               [--output <output>]
+                                               [--params <name:value> [<name:value> ...]]
+                                               [--args <argument> [<argument> ...]]
+                                               [--public] [--protected]
+                                               [--config-json <filename> | --configs <name:value> [<name:value> ...]]
+                                               [--interface <filename>]
+                                               [--json <filename>]
+
+Executes job
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--job-template <job-template>``
+  Name or ID of the job template [REQUIRED if JSON is
+  not provided]
+
+``--cluster <cluster>``
+  Name or ID of the cluster [REQUIRED if JSON is not
+  provided]
+
+``--input <input>``
+  Name or ID of the input data source
+
+``--output <output>``
+  Name or ID of the output data source
+
+``--params <name:value> [<name:value> ...]``
+  Parameters to add to the job
+
+``--args <argument> [<argument> ...]``
+  Arguments to add to the job
+
+``--public``
+  Make the job public
+
+``--protected``
+  Make the job protected
+
+``--config-json <filename>``
+  JSON representation of the job configs
+
+``--configs <name:value> [<name:value> ...]``
+  Configs to add to the job
+
+``--interface <filename>``
+  JSON representation of the interface
+
+``--json <filename>``
+  JSON representation of the job. Other arguments will
+  not be taken into account if this one is provided
+
+.. _openstack_dataprocessing_job_list_with_identity_api_v3:
+
+openstack dataprocessing job list
+---------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job list [-h]
+                                            [-f {csv,html,json,table,value,yaml}]
+                                            [-c COLUMN] [--max-width <integer>]
+                                            [--noindent]
+                                            [--quote {all,minimal,none,nonnumeric}]
+                                            [--long] [--status <status>]
+
+Lists jobs
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+``--status <status>``
+  List jobs with specific status
+
+.. _openstack_dataprocessing_job_show_with_identity_api_v3:
+
+openstack dataprocessing job show
+---------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job show [-h]
+                                            [-f {html,json,shell,table,value,yaml}]
+                                            [-c COLUMN] [--max-width <integer>]
+                                            [--noindent] [--prefix PREFIX]
+                                            <job>
+
+Display job details
+
+**Positional arguments:**
+
+``<job>``
+  ID of the job to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_job_template_create_with_identity_api_v3:
+
+openstack dataprocessing job template create
+--------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job template create [-h]
+                                                       [-f {html,json,shell,table,value,yaml}]
+                                                       [-c COLUMN]
+                                                       [--max-width <integer>]
+                                                       [--noindent]
+                                                       [--prefix PREFIX]
+                                                       [--name <name>]
+                                                       [--type <type>]
+                                                       [--mains <main> [<main> ...]]
+                                                       [--libs <lib> [<lib> ...]]
+                                                       [--description <description>]
+                                                       [--public] [--protected]
+                                                       [--interface <filename>]
+                                                       [--json <filename>]
+
+Creates job template
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Name of the job template [REQUIRED if JSON is not
+  provided]
+
+``--type <type>``
+  Type of the job (Hive, Java, MapReduce, Storm, Pig,
+  Shell, MapReduce.Streaming, Spark) [REQUIRED if JSON
+  is not provided]
+
+``--mains <main> [<main> ...]``
+  Name(s) or ID(s) for job's main job binary(s)
+
+``--libs <lib> [<lib> ...]``
+  Name(s) or ID(s) for job's lib job binary(s)
+
+``--description <description>``
+  Description of the job template
+
+``--public``
+  Make the job template public
+
+``--protected``
+  Make the job template protected
+
+``--interface <filename>``
+  JSON representation of the interface
+
+``--json <filename>``
+  JSON representation of the job template
+
+.. _openstack_dataprocessing_job_template_delete_with_identity_api_v3:
+
+openstack dataprocessing job template delete
+--------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job template delete [-h]
+                                                       <job-template>
+                                                       [<job-template> ...]
+
+Deletes job template
+
+**Positional arguments:**
+
+``<job-template>``
+  Name(s) or id(s) of the job template(s) to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_job_template_list_with_identity_api_v3:
+
+openstack dataprocessing job template list
+------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job template list [-h]
+                                                     [-f {csv,html,json,table,value,yaml}]
+                                                     [-c COLUMN]
+                                                     [--max-width <integer>]
+                                                     [--noindent]
+                                                     [--quote {all,minimal,none,nonnumeric}]
+                                                     [--long] [--type <type>]
+                                                     [--name <name-substring>]
+
+Lists job templates
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+``--type <type>``
+  List job templates of specific type
+
+``--name <name-substring>``
+  List job templates with specific substring in the name
+
+.. _openstack_dataprocessing_job_template_show_with_identity_api_v3:
+
+openstack dataprocessing job template show
+------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job template show [-h]
+                                                     [-f {html,json,shell,table,value,yaml}]
+                                                     [-c COLUMN]
+                                                     [--max-width <integer>]
+                                                     [--noindent]
+                                                     [--prefix PREFIX]
+                                                     <job-template>
+
+Display job template details
+
+**Positional arguments:**
+
+``<job-template>``
+  Name or ID of the job template to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_job_template_update_with_identity_api_v3:
+
+openstack dataprocessing job template update
+--------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job template update [-h]
+                                                       [-f {html,json,shell,table,value,yaml}]
+                                                       [-c COLUMN]
+                                                       [--max-width <integer>]
+                                                       [--noindent]
+                                                       [--prefix PREFIX]
+                                                       [--name <name>]
+                                                       [--description <description>]
+                                                       [--public | --private]
+                                                       [--protected | --unprotected]
+                                                       <job-template>
+
+Updates job template
+
+**Positional arguments:**
+
+``<job-template>``
+  Name or ID of the job template
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  New name of the job template
+
+``--description <description>``
+  Description of the job template
+
+``--public``
+  Make the job template public (Visible from other
+  tenants)
+
+``--private``
+  Make the job_template private (Visible only from this
+  tenant)
+
+``--protected``
+  Make the job template protected
+
+``--unprotected``
+  Make the job template unprotected
+
+.. _openstack_dataprocessing_job_type_configs_get_with_identity_api_v3:
+
+openstack dataprocessing job type configs get
+---------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job type configs get [-h] [--file <file>]
+                                                        <job-type>
+
+Get job type configs
+
+**Positional arguments:**
+
+``<job-type>``
+  Type of the job to provide config information about
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--file <file>``
+  Destination file (defaults to job type)
+
+.. _openstack_dataprocessing_job_type_list_with_identity_api_v3:
+
+openstack dataprocessing job type list
+--------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job type list [-h]
+                                                 [-f {csv,html,json,table,value,yaml}]
+                                                 [-c COLUMN]
+                                                 [--max-width <integer>]
+                                                 [--noindent]
+                                                 [--quote {all,minimal,none,nonnumeric}]
+                                                 [--type <type>]
+                                                 [--plugin <plugin>]
+                                                 [--version <version>]
+
+Lists job types supported by plugins
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--type <type>``
+  Get information about specific job type
+
+``--plugin <plugin>``
+  Get only job types supported by this plugin
+
+``--version <version>``
+  Get only job types supported by specific version of
+  the plugin. This parameter will be taken into account
+  only if plugin is provided
+
+.. _openstack_dataprocessing_job_update_with_identity_api_v3:
+
+openstack dataprocessing job update
+-----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing job update [-h]
+                                              [-f {html,json,shell,table,value,yaml}]
+                                              [-c COLUMN] [--max-width <integer>]
+                                              [--noindent] [--prefix PREFIX]
+                                              [--public | --private]
+                                              [--protected | --unprotected]
+                                              <job>
+
+Updates job
+
+**Positional arguments:**
+
+``<job>``
+  ID of the job to update
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--public``
+  Make the job public (Visible from other tenants)
+
+``--private``
+  Make the job private (Visible only from this tenant)
+
+``--protected``
+  Make the job protected
+
+``--unprotected``
+  Make the job unprotected
+
+.. _openstack_dataprocessing_node_group_template_create_with_identity_api_v3:
+
+openstack dataprocessing node group template create
+---------------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing node group template create [-h]
+                                                              [-f {html,json,shell,table,value,yaml}]
+                                                              [-c COLUMN]
+                                                              [--max-width <integer>]
+                                                              [--noindent]
+                                                              [--prefix PREFIX]
+                                                              [--name <name>]
+                                                              [--plugin <plugin>]
+                                                              [--version <version>]
+                                                              [--processes <processes> [<processes> ...]]
+                                                              [--flavor <flavor>]
+                                                              [--security-groups <security-groups> [<security-groups> ...]]
+                                                              [--auto-security-group]
+                                                              [--availability-zone <availability-zone>]
+                                                              [--floating-ip-pool <floating-ip-pool>]
+                                                              [--volumes-per-node <volumes-per-node>]
+                                                              [--volumes-size <volumes-size>]
+                                                              [--volumes-type <volumes-type>]
+                                                              [--volumes-availability-zone <volumes-availability-zone>]
+                                                              [--volumes-mount-prefix <volumes-mount-prefix>]
+                                                              [--volumes-locality]
+                                                              [--description <description>]
+                                                              [--autoconfig]
+                                                              [--proxy-gateway]
+                                                              [--public]
+                                                              [--protected]
+                                                              [--json <filename>]
+                                                              [--shares <filename>]
+                                                              [--configs <filename>]
+
+Creates node group template
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Name of the node group template [REQUIRED if JSON is
+  not provided]
+
+``--plugin <plugin>``
+  Name of the plugin [REQUIRED if JSON is not provided]
+
+``--version <version>``
+  Version of the plugin [REQUIRED if JSON is not
+  provided]
+
+``--processes <processes> [<processes> ...]``
+  List of the processes that will be launched on each
+  instance [REQUIRED if JSON is not provided]
+
+``--flavor <flavor>``
+  Name or ID of the flavor [REQUIRED if JSON is not
+  provided]
+
+``--security-groups <security-groups> [<security-groups> ...]``
+  List of the security groups for the instances in this
+  node group
+
+``--auto-security-group``
+  Indicates if an additional security group should be
+  created for the node group
+
+``--availability-zone <availability-zone>``
+  Name of the availability zone where instances will be
+  created
+
+``--floating-ip-pool <floating-ip-pool>``
+  ID of the floating IP pool
+
+``--volumes-per-node <volumes-per-node>``
+  Number of volumes attached to every node
+
+``--volumes-size <volumes-size>``
+  Size of volumes attached to node (GB). This parameter
+  will be taken into account only if volumes-per-node is
+  set and non-zero
+
+``--volumes-type <volumes-type>``
+  Type of the volumes. This parameter will be taken into
+  account only if volumes-per-node is set and non-zero
+
+``--volumes-availability-zone <volumes-availability-zone>``
+  Name of the availability zone where volumes will be
+  created. This parameter will be taken into account
+  only if volumes-per-node is set and non-zero
+
+``--volumes-mount-prefix <volumes-mount-prefix>``
+  Prefix for mount point directory. This parameter will
+  be taken into account only if volumes-per-node is set
+  and non-zero
+
+``--volumes-locality``
+  If enabled, instance and attached volumes will be
+  created on the same physical host. This parameter will
+  be taken into account only if volumes-per-node is set
+  and non-zero
+
+``--description <description>``
+  Description of the node group template
+
+``--autoconfig``
+  If enabled, instances of the node group will be
+  automatically configured
+
+``--proxy-gateway``
+  If enabled, instances of the node group will be used
+  to access other instances in the cluster
+
+``--public``
+  Make the node group template public (Visible from
+  other tenants)
+
+``--protected``
+  Make the node group template protected
+
+``--json <filename>``
+  JSON representation of the node group template. Other
+  arguments will not be taken into account if this one
+  is provided
+
+``--shares <filename>``
+  JSON representation of the manila shares
+
+``--configs <filename>``
+  JSON representation of the node group template configs
+
+.. _openstack_dataprocessing_node_group_template_delete_with_identity_api_v3:
+
+openstack dataprocessing node group template delete
+---------------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing node group template delete [-h]
+                                                              <node-group-template>
+                                                              [<node-group-template> ...]
+
+Deletes node group template
+
+**Positional arguments:**
+
+``<node-group-template>``
+  Name(s) or id(s) of the node group template(s) to
+  delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_node_group_template_list_with_identity_api_v3:
+
+openstack dataprocessing node group template list
+-------------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing node group template list [-h]
+                                                            [-f {csv,html,json,table,value,yaml}]
+                                                            [-c COLUMN]
+                                                            [--max-width <integer>]
+                                                            [--noindent]
+                                                            [--quote {all,minimal,none,nonnumeric}]
+                                                            [--long]
+                                                            [--plugin <plugin>]
+                                                            [--version <version>]
+                                                            [--name <name-substring>]
+
+Lists node group templates
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+``--plugin <plugin>``
+  List node group templates for specific plugin
+
+``--version <version>``
+  List node group templates with specific version of the
+  plugin
+
+``--name <name-substring>``
+  List node group templates with specific substring in
+  the name
+
+.. _openstack_dataprocessing_node_group_template_show_with_identity_api_v3:
+
+openstack dataprocessing node group template show
+-------------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing node group template show [-h]
+                                                            [-f {html,json,shell,table,value,yaml}]
+                                                            [-c COLUMN]
+                                                            [--max-width <integer>]
+                                                            [--noindent]
+                                                            [--prefix PREFIX]
+                                                            <node-group-template>
+
+Display node group template details
+
+**Positional arguments:**
+
+``<node-group-template>``
+  Name or id of the node group template to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dataprocessing_node_group_template_update_with_identity_api_v3:
+
+openstack dataprocessing node group template update
+---------------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing node group template update [-h]
+                                                              [-f {html,json,shell,table,value,yaml}]
+                                                              [-c COLUMN]
+                                                              [--max-width <integer>]
+                                                              [--noindent]
+                                                              [--prefix PREFIX]
+                                                              [--name <name>]
+                                                              [--plugin <plugin>]
+                                                              [--version <version>]
+                                                              [--processes <processes> [<processes> ...]]
+                                                              [--security-groups <security-groups> [<security-groups> ...]]
+                                                              [--auto-security-group-enable | --auto-security-group-disable]
+                                                              [--availability-zone <availability-zone>]
+                                                              [--flavor <flavor>]
+                                                              [--floating-ip-pool <floating-ip-pool>]
+                                                              [--volumes-per-node <volumes-per-node>]
+                                                              [--volumes-size <volumes-size>]
+                                                              [--volumes-type <volumes-type>]
+                                                              [--volumes-availability-zone <volumes-availability-zone>]
+                                                              [--volumes-mount-prefix <volumes-mount-prefix>]
+                                                              [--volumes-locality-enable | --volumes-locality-disable]
+                                                              [--description <description>]
+                                                              [--autoconfig-enable | --autoconfig-disable]
+                                                              [--proxy-gateway-enable | --proxy-gateway-disable]
+                                                              [--public | --private]
+                                                              [--protected | --unprotected]
+                                                              [--json <filename>]
+                                                              [--shares <filename>]
+                                                              [--configs <filename>]
+                                                              <node-group-template>
+
+Updates node group template
+
+**Positional arguments:**
+
+``<node-group-template>``
+  Name or ID of the node group template
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  New name of the node group template
+
+``--plugin <plugin>``
+  Name of the plugin
+
+``--version <version>``
+  Version of the plugin
+
+``--processes <processes> [<processes> ...]``
+  List of the processes that will be launched on each
+  instance
+
+``--security-groups <security-groups> [<security-groups> ...]``
+  List of the security groups for the instances in this
+  node group
+
+``--auto-security-group-enable``
+  Additional security group should be created for the
+  node group
+
+``--auto-security-group-disable``
+  Additional security group should not be created for
+  the node group
+
+``--availability-zone <availability-zone>``
+  Name of the availability zone where instances will be
+  created
+
+``--flavor <flavor>``
+  Name or ID of the flavor
+
+``--floating-ip-pool <floating-ip-pool>``
+  ID of the floating IP pool
+
+``--volumes-per-node <volumes-per-node>``
+  Number of volumes attached to every node
+
+``--volumes-size <volumes-size>``
+  Size of volumes attached to node (GB). This parameter
+  will be taken into account only if volumes-per-node is
+  set and non-zero
+
+``--volumes-type <volumes-type>``
+  Type of the volumes. This parameter will be taken into
+  account only if volumes-per-node is set and non-zero
+
+``--volumes-availability-zone <volumes-availability-zone>``
+  Name of the availability zone where volumes will be
+  created. This parameter will be taken into account
+  only if volumes-per-node is set and non-zero
+
+``--volumes-mount-prefix <volumes-mount-prefix>``
+  Prefix for mount point directory. This parameter will
+  be taken into account only if volumes-per-node is set
+  and non-zero
+
+``--volumes-locality-enable``
+  Instance and attached volumes will be created on the
+  same physical host. This parameter will be taken into
+  account only if volumes-per-node is set and non-zero
+
+``--volumes-locality-disable``
+  Instance and attached volumes creation on the same
+  physical host will not be regulated. This parameter
+  will be takeninto account only if volumes-per-node is
+  set and non-zero
+
+``--description <description>``
+  Description of the node group template
+
+``--autoconfig-enable``
+  Instances of the node group will be automatically
+  configured
+
+``--autoconfig-disable``
+  Instances of the node group will not be automatically
+  configured
+
+``--proxy-gateway-enable``
+  Instances of the node group will be used to access
+  other instances in the cluster
+
+``--proxy-gateway-disable``
+  Instances of the node group will not be used to access
+  other instances in the cluster
+
+``--public``
+  Make the node group template public (Visible from
+  other tenants)
+
+``--private``
+  Make the node group template private (Visible only
+  from this tenant)
+
+``--protected``
+  Make the node group template protected
+
+``--unprotected``
+  Make the node group template unprotected
+
+``--json <filename>``
+  JSON representation of the node group template update
+  fields. Other arguments will not be taken into account
+  if this one is provided
+
+``--shares <filename>``
+  JSON representation of the manila shares
+
+``--configs <filename>``
+  JSON representation of the node group template configs
+
+.. _openstack_dataprocessing_plugin_configs_get_with_identity_api_v3:
+
+openstack dataprocessing plugin configs get
+-------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 dataprocessing plugin configs get [-h] [--file <file>]
                                                       <plugin> <version>
 
 Get plugin configs
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<plugin>``
   Name of the plugin to provide config information about
@@ -2542,8 +4985,7 @@ Positional arguments
 ``<version>``
   Version of the plugin to provide config information about
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2551,15 +4993,15 @@ Optional arguments
 ``--file <file>``
   Destination file (defaults to plugin name)
 
-.. _openstack_dataprocessing_plugin_list_with_identity_api_v2:
+.. _openstack_dataprocessing_plugin_list_with_identity_api_v3:
 
 openstack dataprocessing plugin list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing plugin list [-h]
-                                               [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 dataprocessing plugin list [-h]
+                                               [-f {csv,html,json,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
                                                [--noindent]
@@ -2568,8 +5010,7 @@ openstack dataprocessing plugin list
 
 Lists plugins
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2577,51 +5018,190 @@ Optional arguments
 ``--long``
   List additional fields in output
 
-.. _openstack_dataprocessing_plugin_show_with_identity_api_v2:
+.. _openstack_dataprocessing_plugin_show_with_identity_api_v3:
 
 openstack dataprocessing plugin show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing plugin show [-h]
-                                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 dataprocessing plugin show [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
                                                [--noindent] [--prefix PREFIX]
+                                               [--version VERSION]
                                                <plugin>
 
 Display plugin details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<plugin>``
   Name of the plugin to display
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ec2_credentials_create_with_identity_api_v2:
+``--version VERSION``
+  Version of the plugin to display
 
-openstack ec2 credentials create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _openstack_domain_create_with_identity_api_v3:
+
+openstack domain create
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ec2 credentials create [-h]
-                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 domain create [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX]
+                                  [--description <description>]
+                                  [--enable | --disable] [--or-show]
+                                  <domain-name>
+
+Create new domain
+
+**Positional arguments:**
+
+``<domain-name>``
+  New domain name
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--description <description>``
+  New domain description
+
+``--enable``
+  Enable domain (default)
+
+``--disable``
+  Disable domain
+
+``--or-show``
+  Return existing domain
+
+.. _openstack_domain_delete_with_identity_api_v3:
+
+openstack domain delete
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 domain delete [-h] <domain>
+
+Delete domain
+
+**Positional arguments:**
+
+``<domain>``
+  Domain to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_domain_list_with_identity_api_v3:
+
+openstack domain list
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 domain list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}]
+
+List domains
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_domain_set_with_identity_api_v3:
+
+openstack domain set
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 domain set [-h] [--name <name>] [--description <description>]
+                               [--enable | --disable]
+                               <domain>
+
+Set domain properties
+
+**Positional arguments:**
+
+``<domain>``
+  Domain to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  New domain name
+
+``--description <description>``
+  New domain description
+
+``--enable``
+  Enable domain
+
+``--disable``
+  Disable domain
+
+.. _openstack_domain_show_with_identity_api_v3:
+
+openstack domain show
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 domain show [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX]
+                                <domain>
+
+Display domain details
+
+**Positional arguments:**
+
+``<domain>``
+  Domain to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_ec2_credentials_create_with_identity_api_v3:
+
+openstack ec2 credentials create
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 ec2 credentials create [-h]
+                                           [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--noindent] [--prefix PREFIX]
                                            [--project <project>] [--user <user>]
+                                           [--user-domain <user-domain>]
+                                           [--project-domain <project-domain>]
 
 Create EC2 credentials
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2634,25 +5214,34 @@ Optional arguments
   Create credentials for user (name or ID; default:
   current authenticated user)
 
-.. _openstack_ec2_credentials_delete_with_identity_api_v2:
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+.. _openstack_ec2_credentials_delete_with_identity_api_v3:
 
 openstack ec2 credentials delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ec2 credentials delete [-h] [--user <user>] <access-key>
+   usage: openstack --os-identity-api-version 3 ec2 credentials delete [-h] [--user <user>]
+                                           [--user-domain <user-domain>]
+                                           <access-key>
 
 Delete EC2 credentials
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<access-key>``
   Credentials access key
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2660,24 +5249,28 @@ Optional arguments
 ``--user <user>``
   Delete credentials for user (name or ID)
 
-.. _openstack_ec2_credentials_list_with_identity_api_v2:
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+.. _openstack_ec2_credentials_list_with_identity_api_v3:
 
 openstack ec2 credentials list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ec2 credentials list [-h]
-                                         [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 ec2 credentials list [-h]
+                                         [-f {csv,html,json,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
                                          [--user <user>]
+                                         [--user-domain <user-domain>]
 
 List EC2 credentials
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2685,30 +5278,33 @@ Optional arguments
 ``--user <user>``
   Filter list by user (name or ID)
 
-.. _openstack_ec2_credentials_show_with_identity_api_v2:
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+.. _openstack_ec2_credentials_show_with_identity_api_v3:
 
 openstack ec2 credentials show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ec2 credentials show [-h]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 ec2 credentials show [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
                                          [--user <user>]
+                                         [--user-domain <user-domain>]
                                          <access-key>
 
 Display EC2 credentials details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<access-key>``
   Credentials access key
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2716,131 +5312,177 @@ Optional arguments
 ``--user <user>``
   Show credentials for user (name or ID)
 
-.. _openstack_endpoint_create_with_identity_api_v2:
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+.. _openstack_endpoint_create_with_identity_api_v3:
 
 openstack endpoint create
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 endpoint create [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 endpoint create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX] --publicurl
-                                    <url> [--adminurl <url>]
-                                    [--internalurl <url>] [--region <region-id>]
-                                    <service>
+                                    [--noindent] [--prefix PREFIX]
+                                    [--region <region-id>] [--enable | --disable]
+                                    <service> <interface> <url>
 
 Create new endpoint
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<service>``
   New endpoint service (name or ID)
 
-Optional arguments
-------------------
+``<interface>``
+  New endpoint interface type (admin, public or
+  internal)
+
+``<url>``
+  New endpoint URL
+
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
-
-``--publicurl <url>``
-  New endpoint public URL (required)
-
-``--adminurl <url>``
-  New endpoint admin URL
-
-``--internalurl <url>``
-  New endpoint internal URL
 
 ``--region <region-id>``
   New endpoint region ID
 
-.. _openstack_endpoint_delete_with_identity_api_v2:
+``--enable``
+  Enable endpoint (default)
+
+``--disable``
+  Disable endpoint
+
+.. _openstack_endpoint_delete_with_identity_api_v3:
 
 openstack endpoint delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 endpoint delete [-h] <endpoint-id>
+   usage: openstack --os-identity-api-version 3 endpoint delete [-h] <endpoint-id>
 
 Delete endpoint
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<endpoint-id>``
   Endpoint ID to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_endpoint_list_with_identity_api_v2:
+.. _openstack_endpoint_list_with_identity_api_v3:
 
 openstack endpoint list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 endpoint list [-h]
-                                  [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 endpoint list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
-                                  [--long]
+                                  [--service <service>] [--interface <interface>]
+                                  [--region <region-id>]
 
 List endpoints
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-``--long``
-  List additional fields in output
+``--service <service>``
+  Filter by service
 
-.. _openstack_endpoint_show_with_identity_api_v2:
+``--interface <interface>``
+  Filter by interface type (admin, public or internal)
 
-openstack endpoint show
-~~~~~~~~~~~~~~~~~~~~~~~
+``--region <region-id>``
+  Filter by region ID
+
+.. _openstack_endpoint_set_with_identity_api_v3:
+
+openstack endpoint set
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 endpoint show [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 endpoint set [-h] [--region <region-id>]
+                                 [--interface <interface>] [--url <url>]
+                                 [--service <service>] [--enable | --disable]
+                                 <endpoint-id>
+
+Set endpoint properties
+
+**Positional arguments:**
+
+``<endpoint-id>``
+  Endpoint ID to modify
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--region <region-id>``
+  New endpoint region ID
+
+``--interface <interface>``
+  New endpoint interface type (admin, public or
+  internal)
+
+``--url <url>``
+  New endpoint URL
+
+``--service <service>``
+  New endpoint service (name or ID)
+
+``--enable``
+  Enable endpoint
+
+``--disable``
+  Disable endpoint
+
+.. _openstack_endpoint_show_with_identity_api_v3:
+
+openstack endpoint show
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 endpoint show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   <endpoint-id>
 
 Display endpoint details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<endpoint-id>``
   Endpoint ID to display
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_extension_list_with_identity_api_v2:
+.. _openstack_extension_list_with_identity_api_v3:
 
 openstack extension list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 extension list [-h]
-                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 extension list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
@@ -2849,8 +5491,7 @@ openstack extension list
 
 List API extensions
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2865,20 +5506,210 @@ Optional arguments
   List extensions for the Network API
 
 ``--volume``
-  List extensions for the Volume API
+  List extensions for the Block Storage API
 
 ``--long``
   List additional fields in output
 
-.. _openstack_flavor_create_with_identity_api_v2:
+.. _openstack_federation_domain_list_with_identity_api_v3:
 
-openstack flavor create
-~~~~~~~~~~~~~~~~~~~~~~~
+openstack federation domain list
+--------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 flavor create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 federation domain list [-h]
+                                           [-f {csv,html,json,table,value,yaml}]
+                                           [-c COLUMN] [--max-width <integer>]
+                                           [--noindent]
+                                           [--quote {all,minimal,none,nonnumeric}]
+
+List accessible domains
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_federation_project_list_with_identity_api_v3:
+
+openstack federation project list
+---------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 federation project list [-h]
+                                            [-f {csv,html,json,table,value,yaml}]
+                                            [-c COLUMN] [--max-width <integer>]
+                                            [--noindent]
+                                            [--quote {all,minimal,none,nonnumeric}]
+
+List accessible projects
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_federation_protocol_create_with_identity_api_v3:
+
+openstack federation protocol create
+------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 federation protocol create [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width <integer>]
+                                               [--noindent] [--prefix PREFIX]
+                                               --identity-provider
+                                               <identity-provider> --mapping
+                                               <mapping>
+                                               <name>
+
+Create new federation protocol
+
+**Positional arguments:**
+
+``<name>``
+  New federation protocol name (must be unique per
+  identity provider)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--identity-provider <identity-provider>``
+  Identity provider that will support the new federation
+  protocol (name or ID) (required)
+
+``--mapping <mapping>``
+  Mapping that is to be used (name or ID) (required)
+
+.. _openstack_federation_protocol_delete_with_identity_api_v3:
+
+openstack federation protocol delete
+------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 federation protocol delete [-h] --identity-provider
+                                               <identity-provider>
+                                               <federation-protocol>
+
+Delete federation protocol
+
+**Positional arguments:**
+
+``<federation-protocol>``
+  Federation protocol to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--identity-provider <identity-provider>``
+  Identity provider that supports <federation-protocol>
+  (name or ID) (required)
+
+.. _openstack_federation_protocol_list_with_identity_api_v3:
+
+openstack federation protocol list
+----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 federation protocol list [-h]
+                                             [-f {csv,html,json,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent]
+                                             [--quote {all,minimal,none,nonnumeric}]
+                                             --identity-provider
+                                             <identity-provider>
+
+List federation protocols
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--identity-provider <identity-provider>``
+  Identity provider to list (name or ID) (required)
+
+.. _openstack_federation_protocol_set_with_identity_api_v3:
+
+openstack federation protocol set
+---------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 federation protocol set [-h] --identity-provider
+                                            <identity-provider>
+                                            [--mapping <mapping>]
+                                            <name>
+
+Set federation protocol properties
+
+**Positional arguments:**
+
+``<name>``
+  Federation protocol to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--identity-provider <identity-provider>``
+  Identity provider that supports <federation-protocol>
+  (name or ID) (required)
+
+``--mapping <mapping>``
+  Mapping that is to be used (name or ID)
+
+.. _openstack_federation_protocol_show_with_identity_api_v3:
+
+openstack federation protocol show
+----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 federation protocol show [-h]
+                                             [-f {html,json,shell,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent] [--prefix PREFIX]
+                                             --identity-provider
+                                             <identity-provider>
+                                             <federation-protocol>
+
+Display federation protocol details
+
+**Positional arguments:**
+
+``<federation-protocol>``
+  Federation protocol to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--identity-provider <identity-provider>``
+  Identity provider that supports <federation-protocol>
+  (name or ID) (required)
+
+.. _openstack_flavor_create_with_identity_api_v3:
+
+openstack flavor create
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 flavor create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] [--id <id>]
                                   [--ram <size-mb>] [--disk <size-gb>]
@@ -2889,14 +5720,12 @@ openstack flavor create
 
 Create new flavor
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<flavor-name>``
   New flavor name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2929,38 +5758,35 @@ Optional arguments
 ``--private``
   Flavor is not available to other projects
 
-.. _openstack_flavor_delete_with_identity_api_v2:
+.. _openstack_flavor_delete_with_identity_api_v3:
 
 openstack flavor delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 flavor delete [-h] <flavor>
+   usage: openstack --os-identity-api-version 3 flavor delete [-h] <flavor>
 
 Delete flavor
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<flavor>``
   Flavor to delete (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_flavor_list_with_identity_api_v2:
+.. _openstack_flavor_list_with_identity_api_v3:
 
 openstack flavor list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 flavor list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 flavor list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--public | --private | --all] [--long]
@@ -2968,8 +5794,7 @@ openstack flavor list
 
 List flavors
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -2992,29 +5817,23 @@ Optional arguments
 ``--limit <limit>``
   Maximum number of flavors to display
 
-.. _openstack_flavor_set_with_identity_api_v2:
+.. _openstack_flavor_set_with_identity_api_v3:
 
 openstack flavor set
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 flavor set [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] [--property <key=value>]
-                               <flavor>
+   usage: openstack --os-identity-api-version 3 flavor set [-h] [--property <key=value>] <flavor>
 
 Set flavor properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<flavor>``
   Flavor to modify (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3023,56 +5842,47 @@ Optional arguments
   Property to add or modify for this flavor (repeat
   option to set multiple properties)
 
-.. _openstack_flavor_show_with_identity_api_v2:
+.. _openstack_flavor_show_with_identity_api_v3:
 
 openstack flavor show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 flavor show [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 flavor show [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 <flavor>
 
 Display flavor details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<flavor>``
   Flavor to display (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_flavor_unset_with_identity_api_v2:
+.. _openstack_flavor_unset_with_identity_api_v3:
 
 openstack flavor unset
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 flavor unset [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX] --property <key>
-                                 <flavor>
+   usage: openstack --os-identity-api-version 3 flavor unset [-h] --property <key> <flavor>
 
 Unset flavor properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<flavor>``
   Flavor to modify (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3081,23 +5891,273 @@ Optional arguments
   Property to remove from flavor (repeat option to unset
   multiple properties)
 
-.. _openstack_host_list_with_identity_api_v2:
+.. _openstack_group_add_user_with_identity_api_v3:
 
-openstack host list
-~~~~~~~~~~~~~~~~~~~
+openstack group add user
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 host list [-h]
-                              [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 group add user [-h] [--group-domain <group-domain>]
+                                   [--user-domain <user-domain>]
+                                   <group> <user>
+
+Add user to group
+
+**Positional arguments:**
+
+``<group>``
+  Group to contain <user> (name or ID)
+
+``<user>``
+  User to add to <group> (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--group-domain <group-domain>``
+  Domain the group belongs to (name or ID). This can be
+  used in case collisions between group names exist.
+
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+.. _openstack_group_contains_user_with_identity_api_v3:
+
+openstack group contains user
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 group contains user [-h] [--group-domain <group-domain>]
+                                        [--user-domain <user-domain>]
+                                        <group> <user>
+
+Check user membership in group
+
+**Positional arguments:**
+
+``<group>``
+  Group to check (name or ID)
+
+``<user>``
+  User to check (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--group-domain <group-domain>``
+  Domain the group belongs to (name or ID). This can be
+  used in case collisions between group names exist.
+
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+.. _openstack_group_create_with_identity_api_v3:
+
+openstack group create
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 group create [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--prefix PREFIX] [--domain <domain>]
+                                 [--description <description>] [--or-show]
+                                 <group-name>
+
+Create new group
+
+**Positional arguments:**
+
+``<group-name>``
+  New group name
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Domain to contain new group (name or ID)
+
+``--description <description>``
+  New group description
+
+``--or-show``
+  Return existing group
+
+.. _openstack_group_delete_with_identity_api_v3:
+
+openstack group delete
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 group delete [-h] [--domain <domain>] <group> [<group> ...]
+
+Delete group(s)
+
+**Positional arguments:**
+
+``<group>``
+  Group(s) to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Domain containing group(s) (name or ID)
+
+.. _openstack_group_list_with_identity_api_v3:
+
+openstack group list
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 group list [-h] [-f {csv,html,json,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--quote {all,minimal,none,nonnumeric}]
+                               [--domain <domain>] [--user <user>]
+                               [--user-domain <user-domain>] [--long]
+
+List groups
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Filter group list by <domain> (name or ID)
+
+``--user <user>``
+  Filter group list by <user> (name or ID)
+
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+``--long``
+  List additional fields in output
+
+.. _openstack_group_remove_user_with_identity_api_v3:
+
+openstack group remove user
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 group remove user [-h] [--group-domain <group-domain>]
+                                      [--user-domain <user-domain>]
+                                      <group> <user>
+
+Remove user from group
+
+**Positional arguments:**
+
+``<group>``
+  Group containing <user> (name or ID)
+
+``<user>``
+  User to remove from <group> (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--group-domain <group-domain>``
+  Domain the group belongs to (name or ID). This can be
+  used in case collisions between group names exist.
+
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+.. _openstack_group_set_with_identity_api_v3:
+
+openstack group set
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 group set [-h] [--domain <domain>] [--name <name>]
+                              [--description <description>]
+                              <group>
+
+Set group properties
+
+**Positional arguments:**
+
+``<group>``
+  Group to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Domain containing <group> (name or ID)
+
+``--name <name>``
+  New group name
+
+``--description <description>``
+  New group description
+
+.. _openstack_group_show_with_identity_api_v3:
+
+openstack group show
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 group show [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--prefix PREFIX] [--domain <domain>]
+                               <group>
+
+Display group details
+
+**Positional arguments:**
+
+``<group>``
+  Group to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Domain containing <group> (name or ID)
+
+.. _openstack_host_list_with_identity_api_v3:
+
+openstack host list
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 host list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--zone <zone>]
 
 List host command
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3105,42 +6165,38 @@ Optional arguments
 ``--zone <zone>``
   Only return hosts in the availability zone.
 
-.. _openstack_host_show_with_identity_api_v2:
+.. _openstack_host_show_with_identity_api_v3:
 
 openstack host show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 host show [-h]
-                              [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 host show [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               <host>
 
 Show host command
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<host>``
   Name of host
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_hypervisor_list_with_identity_api_v2:
+.. _openstack_hypervisor_list_with_identity_api_v3:
 
 openstack hypervisor list
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 hypervisor list [-h]
-                                    [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 hypervisor list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
@@ -3148,8 +6204,7 @@ openstack hypervisor list
 
 List hypervisors
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3157,62 +6212,210 @@ Optional arguments
 ``--matching <hostname>``
   Filter hypervisors using <hostname> substring
 
-.. _openstack_hypervisor_show_with_identity_api_v2:
+.. _openstack_hypervisor_show_with_identity_api_v3:
 
 openstack hypervisor show
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 hypervisor show [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 hypervisor show [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     <hypervisor>
 
 Display hypervisor details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<hypervisor>``
   Hypervisor to display (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_hypervisor_stats_show_with_identity_api_v2:
+.. _openstack_hypervisor_stats_show_with_identity_api_v3:
 
 openstack hypervisor stats show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 hypervisor stats show [-h]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 hypervisor stats show [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
 
 Display hypervisor stats details
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_image_add_project_with_identity_api_v2:
+.. _openstack_identity_provider_create_with_identity_api_v3:
 
-openstack image add project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack identity provider create
+----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 image add project [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 identity provider create [-h]
+                                             [-f {html,json,shell,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent] [--prefix PREFIX]
+                                             [--remote-id <remote-id> | --remote-id-file <file-name>]
+                                             [--description <description>]
+                                             [--enable | --disable]
+                                             <name>
+
+Create new identity provider
+
+**Positional arguments:**
+
+``<name>``
+  New identity provider name (must be unique)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--remote-id <remote-id>``
+  Remote IDs to associate with the Identity Provider
+  (repeat to provide multiple values)
+
+``--remote-id-file <file-name>``
+  Name of a file that contains many remote IDs to
+  associate with the identity provider, one per line
+
+``--description <description>``
+  New identity provider description
+
+``--enable``
+  Enable identity provider (default)
+
+``--disable``
+  Disable the identity provider
+
+.. _openstack_identity_provider_delete_with_identity_api_v3:
+
+openstack identity provider delete
+----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 identity provider delete [-h] <identity-provider>
+
+Delete identity provider
+
+**Positional arguments:**
+
+``<identity-provider>``
+  Identity provider to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_identity_provider_list_with_identity_api_v3:
+
+openstack identity provider list
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 identity provider list [-h]
+                                           [-f {csv,html,json,table,value,yaml}]
+                                           [-c COLUMN] [--max-width <integer>]
+                                           [--noindent]
+                                           [--quote {all,minimal,none,nonnumeric}]
+
+List identity providers
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_identity_provider_set_with_identity_api_v3:
+
+openstack identity provider set
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 identity provider set [-h] [--description <description>]
+                                          [--remote-id <remote-id> | --remote-id-file <file-name>]
+                                          [--enable | --disable]
+                                          <identity-provider>
+
+Set identity provider properties
+
+**Positional arguments:**
+
+``<identity-provider>``
+  Identity provider to modify
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--description <description>``
+  Set identity provider description
+
+``--remote-id <remote-id>``
+  Remote IDs to associate with the Identity Provider
+  (repeat to provide multiple values)
+
+``--remote-id-file <file-name>``
+  Name of a file that contains many remote IDs to
+  associate with the identity provider, one per line
+
+``--enable``
+  Enable the identity provider
+
+``--disable``
+  Disable the identity provider
+
+.. _openstack_identity_provider_show_with_identity_api_v3:
+
+openstack identity provider show
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 identity provider show [-h]
+                                           [-f {html,json,shell,table,value,yaml}]
+                                           [-c COLUMN] [--max-width <integer>]
+                                           [--noindent] [--prefix PREFIX]
+                                           <identity-provider>
+
+Display identity provider details
+
+**Positional arguments:**
+
+``<identity-provider>``
+  Identity provider to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_image_add_project_with_identity_api_v3:
+
+openstack image add project
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 image add project [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent] [--prefix PREFIX]
                                       [--project-domain <project-domain>]
@@ -3220,8 +6423,7 @@ openstack image add project
 
 Associate project with image
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<image>``
   Image to share (name or ID)
@@ -3229,8 +6431,7 @@ Positional arguments
 ``<project>``
   Project to associate with image (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3240,35 +6441,34 @@ Optional arguments
   be used in case collisions between project names
   exist.
 
-.. _openstack_image_create_with_identity_api_v2:
+.. _openstack_image_create_with_identity_api_v3:
 
 openstack image create
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 image create [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 image create [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX] [--id <id>]
                                  [--container-format <container-format>]
-                                 [--disk-format <disk-format>] [--owner <owner>]
+                                 [--disk-format <disk-format>]
                                  [--min-disk <disk-gb>] [--min-ram <ram-mb>]
-                                 [--file <file>] [--protected | --unprotected]
+                                 [--file <file>] [--volume <volume>] [--force]
+                                 [--protected | --unprotected]
                                  [--public | --private] [--property <key=value>]
-                                 [--tag <tag>]
+                                 [--tag <tag>] [--project <project>]
+                                 [--project-domain <project-domain>]
                                  <image-name>
 
 Create/upload an image
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<image-name>``
   New image name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3282,9 +6482,6 @@ Optional arguments
 ``--disk-format <disk-format>``
   Image disk format (default: raw)
 
-``--owner <owner>``
-  Image owner project name or ID
-
 ``--min-disk <disk-gb>``
   Minimum disk size needed to boot image, in gigabytes
 
@@ -3293,6 +6490,13 @@ Optional arguments
 
 ``--file <file>``
   Upload image from local file
+
+``--volume <volume>``
+  Create image from a volume
+
+``--force``
+  Force image creation if volume is in use (only
+  meaningful with :option:`--volume)`
 
 ``--protected``
   Prevent image from being deleted
@@ -3314,48 +6518,53 @@ Optional arguments
   Set a tag on this image (repeat option to set multiple
   tags)
 
-.. _openstack_image_delete_with_identity_api_v2:
+``--project <project>``
+  Set an alternate project on this image (name or ID)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+.. _openstack_image_delete_with_identity_api_v3:
 
 openstack image delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 image delete [-h] <image> [<image> ...]
+   usage: openstack --os-identity-api-version 3 image delete [-h] <image> [<image> ...]
 
 Delete image(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<image>``
   Image(s) to delete (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_image_list_with_identity_api_v2:
+.. _openstack_image_list_with_identity_api_v3:
 
 openstack image list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 image list [-h]
-                               [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 image list [-h] [-f {csv,html,json,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
                                [--public | --private | --shared]
                                [--property <key=value>] [--long]
-                               [--sort <key>[:<direction>]]
+                               [--sort <key>[:<direction>]] [--limit <limit>]
+                               [--marker <marker>]
 
 List available images
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3380,20 +6589,27 @@ Optional arguments
   desc) (default: asc), multiple keys and directions can
   be specified separated by comma
 
-.. _openstack_image_remove_project_with_identity_api_v2:
+``--limit <limit>``
+  Maximum number of images to display.
+
+``--marker <marker>``
+  The last image (name or ID) of the previous page.
+  Display list of images after marker. Display all
+  images if not specified.
+
+.. _openstack_image_remove_project_with_identity_api_v3:
 
 openstack image remove project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 image remove project [-h] [--project-domain <project-domain>]
+   usage: openstack --os-identity-api-version 3 image remove project [-h] [--project-domain <project-domain>]
                                          <image> <project>
 
 Disassociate project with image
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<image>``
   Image to unshare (name or ID)
@@ -3401,8 +6617,7 @@ Positional arguments
 ``<project>``
   Project to disassociate with image (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3412,25 +6627,23 @@ Optional arguments
   be used in case collisions between project names
   exist.
 
-.. _openstack_image_save_with_identity_api_v2:
+.. _openstack_image_save_with_identity_api_v3:
 
 openstack image save
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 image save [-h] [--file <filename>] <image>
+   usage: openstack --os-identity-api-version 3 image save [-h] [--file <filename>] <image>
 
 Save an image locally
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<image>``
   Image to save (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3438,15 +6651,15 @@ Optional arguments
 ``--file <filename>``
   Downloaded image save filename (default: stdout)
 
-.. _openstack_image_set_with_identity_api_v2:
+.. _openstack_image_set_with_identity_api_v3:
 
 openstack image set
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 image set [-h] [--name <name>] [--owner <project>]
-                              [--min-disk <disk-gb>] [--min-ram <ram-mb>]
+   usage: openstack --os-identity-api-version 3 image set [-h] [--name <name>] [--min-disk <disk-gb>]
+                              [--min-ram <ram-mb>]
                               [--container-format <container-format>]
                               [--disk-format <disk-format>]
                               [--protected | --unprotected]
@@ -3456,27 +6669,24 @@ openstack image set
                               [--kernel-id <kernel-id>] [--os-distro <os-distro>]
                               [--os-version <os-version>]
                               [--ramdisk-id <ramdisk-id>]
+                              [--deactivate | --activate] [--project <project>]
+                              [--project-domain <project-domain>]
                               <image>
 
 Set image properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<image>``
   Image to modify (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 ``--name <name>``
   New image name
-
-``--owner <project>``
-  New image owner project (name or ID)
 
 ``--min-disk <disk-gb>``
   Minimum disk size needed to boot image, in gigabytes
@@ -3528,46 +6738,56 @@ Optional arguments
 ``--ramdisk-id <ramdisk-id>``
   ID of ramdisk image used to boot this disk image
 
-.. _openstack_image_show_with_identity_api_v2:
+``--deactivate``
+  Deactivate the image
+
+``--activate``
+  Activate the image
+
+``--project <project>``
+  Set an alternate project on this image (name or ID)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+.. _openstack_image_show_with_identity_api_v3:
 
 openstack image show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 image show [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 image show [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                <image>
 
 Display image details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<image>``
   Image to display (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ip_fixed_add_with_identity_api_v2:
+.. _openstack_ip_fixed_add_with_identity_api_v3:
 
 openstack ip fixed add
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ip fixed add [-h] <network> <server>
+   usage: openstack --os-identity-api-version 3 ip fixed add [-h] <network> <server>
 
 Add fixed IP address to server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network>``
   Network to fetch an IP address from (name or ID)
@@ -3575,25 +6795,23 @@ Positional arguments
 ``<server>``
   Server to receive the IP address (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ip_fixed_remove_with_identity_api_v2:
+.. _openstack_ip_fixed_remove_with_identity_api_v3:
 
 openstack ip fixed remove
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ip fixed remove [-h] <ip-address> <server>
+   usage: openstack --os-identity-api-version 3 ip fixed remove [-h] <ip-address> <server>
 
 Remove fixed IP address from server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ip-address>``
   IP address to remove from server (name only)
@@ -3601,25 +6819,23 @@ Positional arguments
 ``<server>``
   Server to remove the IP address from (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ip_floating_add_with_identity_api_v2:
+.. _openstack_ip_floating_add_with_identity_api_v3:
 
 openstack ip floating add
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating add [-h] <ip-address> <server>
+   usage: openstack --os-identity-api-version 3 ip floating add [-h] <ip-address> <server>
 
 Add floating IP address to server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ip-address>``
   IP address to add to server (name only)
@@ -3627,117 +6843,108 @@ Positional arguments
 ``<server>``
   Server to receive the IP address (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ip_floating_create_with_identity_api_v2:
+.. _openstack_ip_floating_create_with_identity_api_v3:
 
 openstack ip floating create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating create [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 ip floating create [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        <pool>
 
 Create new floating IP address
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<pool>``
   Pool to fetch IP address from (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ip_floating_delete_with_identity_api_v2:
+.. _openstack_ip_floating_delete_with_identity_api_v3:
 
 openstack ip floating delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating delete [-h] <ip-address>
+   usage: openstack --os-identity-api-version 3 ip floating delete [-h] <floating-ip>
 
-Delete a floating IP address
+Delete floating IP
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``<ip-address>``
-  IP address to delete (ID only)
+``<floating-ip>``
+  Floating IP to delete (IP address or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ip_floating_list_with_identity_api_v2:
+.. _openstack_ip_floating_list_with_identity_api_v3:
 
 openstack ip floating list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating list [-h]
-                                     [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 ip floating list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
 
-List floating IP addresses
+List floating IP(s)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ip_floating_pool_list_with_identity_api_v2:
+.. _openstack_ip_floating_pool_list_with_identity_api_v3:
 
 openstack ip floating pool list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating pool list [-h]
-                                          [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 ip floating pool list [-h]
+                                          [-f {csv,html,json,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
 
 List pools of floating IP addresses
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ip_floating_remove_with_identity_api_v2:
+.. _openstack_ip_floating_remove_with_identity_api_v3:
 
 openstack ip floating remove
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating remove [-h] <ip-address> <server>
+   usage: openstack --os-identity-api-version 3 ip floating remove [-h] <ip-address> <server>
 
 Remove floating IP address from server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<ip-address>``
   IP address to remove from server (name only)
@@ -3745,21 +6952,43 @@ Positional arguments
 ``<server>``
   Server to remove the IP address from (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_keypair_create_with_identity_api_v2:
+.. _openstack_ip_floating_show_with_identity_api_v3:
 
-openstack keypair create
-~~~~~~~~~~~~~~~~~~~~~~~~
+openstack ip floating show
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 keypair create [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 ip floating show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     <floating-ip>
+
+Show floating IP details
+
+**Positional arguments:**
+
+``<floating-ip>``
+  Floating IP to display (IP address or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_keypair_create_with_identity_api_v3:
+
+openstack keypair create
+------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 keypair create [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    [--public-key <file>]
@@ -3767,14 +6996,12 @@ openstack keypair create
 
 Create new public key
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   New public key name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3782,72 +7009,65 @@ Optional arguments
 ``--public-key <file>``
   Filename for public key to add
 
-.. _openstack_keypair_delete_with_identity_api_v2:
+.. _openstack_keypair_delete_with_identity_api_v3:
 
 openstack keypair delete
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 keypair delete [-h] <key>
+   usage: openstack --os-identity-api-version 3 keypair delete [-h] <key>
 
 Delete public key
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<key>``
   Public key to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_keypair_list_with_identity_api_v2:
+.. _openstack_keypair_list_with_identity_api_v3:
 
 openstack keypair list
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 keypair list [-h]
-                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 keypair list [-h] [-f {csv,html,json,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
 
 List public key fingerprints
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_keypair_show_with_identity_api_v2:
+.. _openstack_keypair_show_with_identity_api_v3:
 
 openstack keypair show
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 keypair show [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 keypair show [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX] [--public-key]
                                  <key>
 
 Display public key details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<key>``
   Public key to display
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3855,24 +7075,22 @@ Optional arguments
 ``--public-key``
   Show only bare public key
 
-.. _openstack_limits_show_with_identity_api_v2:
+.. _openstack_limits_show_with_identity_api_v3:
 
 openstack limits show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 limits show [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 limits show [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 (--absolute | --rate) [--reserved]
                                 [--project <project>] [--domain <domain>]
 
-Show compute and volume limits
+Show compute and block storage limits
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -3895,450 +7113,280 @@ Optional arguments
   Domain that owns :option:`--project` (name or ID) [only valid
   with :option:`--absolute]`
 
-.. _openstack_management_plan_add_role_with_identity_api_v2:
+.. _openstack_mapping_create_with_identity_api_v3:
 
-openstack management plan add role
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack mapping create
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 management plan add role [-h]
-                                             [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                             [-c COLUMN] [--max-width <integer>]
-                                             [--noindent] [--prefix PREFIX]
+   usage: openstack --os-identity-api-version 3 mapping create [-h] [-f {html,json,shell,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent] [--prefix PREFIX] --rules
+                                   <filename>
+                                   <name>
 
-Add a Role to a Management Plan.
+Create new mapping
 
-Optional arguments
-------------------
+**Positional arguments:**
+
+``<name>``
+  New mapping name (must be unique)
+
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_management_plan_create_with_identity_api_v2:
+``--rules <filename>``
+  Filename that contains a set of mapping rules
+  (required)
 
-openstack management plan create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _openstack_mapping_delete_with_identity_api_v3:
+
+openstack mapping delete
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 management plan create [-h]
-                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                           [-c COLUMN] [--max-width <integer>]
-                                           [--noindent] [--prefix PREFIX]
-                                           [-d DESCRIPTION]
-                                           name
+   usage: openstack --os-identity-api-version 3 mapping delete [-h] <mapping>
 
-Create a Management Plan.
+Delete mapping
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``name``
-  Name of the plan being created.
+``<mapping>``
+  Mapping to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-``-d DESCRIPTION, --description DESCRIPTION``
-  A textual description of the plan.
+.. _openstack_mapping_list_with_identity_api_v3:
 
-.. _openstack_management_plan_delete_with_identity_api_v2:
-
-openstack management plan delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack mapping list
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 management plan delete [-h] plan_uuid
+   usage: openstack --os-identity-api-version 3 mapping list [-h] [-f {csv,html,json,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--quote {all,minimal,none,nonnumeric}]
 
-Delete a Management Plan.
+List mappings
 
-Positional arguments
---------------------
-
-``plan_uuid``
-  The UUID of the plan being deleted.
-
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_management_plan_download_with_identity_api_v2:
+.. _openstack_mapping_set_with_identity_api_v3:
 
-openstack management plan download
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack mapping set
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 management plan download [-h]
+   usage: openstack --os-identity-api-version 3 mapping set [-h] [--rules <filename>] <name>
 
-Download the a Management Plan.
+Set mapping properties
 
-Optional arguments
-------------------
+**Positional arguments:**
+
+``<name>``
+  Mapping to modify
+
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_management_plan_list_with_identity_api_v2:
+``--rules <filename>``
+  Filename that contains a new set of mapping rules
 
-openstack management plan list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _openstack_mapping_show_with_identity_api_v3:
+
+openstack mapping show
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 management plan list [-h]
-                                         [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                         [-c COLUMN] [--max-width <integer>]
-                                         [--noindent]
-                                         [--quote {all,minimal,none,nonnumeric}]
+   usage: openstack --os-identity-api-version 3 mapping show [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--prefix PREFIX]
+                                 <mapping>
 
-List the Management Plans.
+Display mapping details
 
-Optional arguments
-------------------
+**Positional arguments:**
+
+``<mapping>``
+  Mapping to display
+
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_management_plan_remove_role_with_identity_api_v2:
+.. _openstack_messaging_flavor_create_with_identity_api_v3:
 
-openstack management plan remove role
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 management plan remove role [-h]
-                                                [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                                [-c COLUMN]
-                                                [--max-width <integer>]
-                                                [--noindent] [--prefix PREFIX]
-
-Remove a Role from a Management Plan.
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_management_plan_set_with_identity_api_v2:
-
-openstack management plan set
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack messaging flavor create
+---------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 management plan set [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                        [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
-                                        [-P <KEY1=VALUE1>] [-F <ROLE=FLAVOR>]
-                                        [-S <ROLE=SCALE-COUNT>]
-                                        plan_uuid
-
-Update a Management Plans properties.
-
-Positional arguments
---------------------
-
-``plan_uuid``
-  The UUID of the plan being updated.
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``-P <KEY1=VALUE1>, --parameter <KEY1=VALUE1>``
-  Set a parameter in the Plan. This can be specified
-  multiple times.
-
-``-F <ROLE=FLAVOR>, --flavor <ROLE=FLAVOR>``
-  Set the flavor for a role in the Plan. This can be
-  specified multiple times.
-
-``-S <ROLE=SCALE-COUNT>, --scale <ROLE=SCALE-COUNT>``
-  Set the Scale count for a role in the Plan. This can
-  be specified multiple times.
-
-.. _openstack_management_plan_show_with_identity_api_v2:
-
-openstack management plan show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 management plan show [-h]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                         [-c COLUMN] [--max-width <integer>]
-                                         [--noindent] [--prefix PREFIX]
-
-Show a Management Plan.
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_management_role_list_with_identity_api_v2:
-
-openstack management role list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 management role list [-h]
-                                         [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                         [-c COLUMN] [--max-width <integer>]
-                                         [--noindent]
-                                         [--quote {all,minimal,none,nonnumeric}]
-
-List Roles.
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_message-broker_with_identity_api_v2:
-
-openstack message-broker
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   Command "message-broker" matches:
-  message-broker cluster create
-  message-broker cluster delete
-  message-broker cluster list
-  message-broker cluster set
-  message-broker cluster show
-
-
-.. _openstack_message-broker_cluster_with_identity_api_v2:
-
-openstack message-broker cluster
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   Command "message-broker cluster" matches:
-  message-broker cluster create
-  message-broker cluster delete
-  message-broker cluster list
-  message-broker cluster set
-  message-broker cluster show
-
-
-.. _openstack_message-broker_cluster_create_with_identity_api_v2:
-
-openstack message-broker cluster create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster create [-h]
-                                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                                  [-c COLUMN]
-                                                  [--max-width <integer>]
-                                                  [--noindent] [--prefix PREFIX]
-                                                  --name NAME --nic NIC --flavor
-                                                  FLAVOR --size SIZE
-                                                  [--volume_size VOLUME_SIZE]
-                                                  [--auth <type=type,user=user,pass=pass>]
-
-Create Cluster
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name NAME``
-  Cluster Name
-
-``--nic NIC``
-  Network to place nodes on
-
-``--flavor FLAVOR``
-  Flavor to use.
-
-``--size SIZE``
-  Number of nodes
-
-``--volume_size VOLUME_SIZE``
-  Volume size
-
-``--auth <type=type,user=user,pass=pass>``
-  broker authentication,type=type,user=user,pass=pass
-
-.. _openstack_message-broker_cluster_delete_with_identity_api_v2:
-
-openstack message-broker cluster delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster delete [-h] id
-
-Delete Cluster
-
-Positional arguments
---------------------
-
-``id``
-  Cluster ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_message-broker_cluster_list_with_identity_api_v2:
-
-openstack message-broker cluster list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster list [-h]
-                                                [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                                [-c COLUMN]
-                                                [--max-width <integer>]
-                                                [--noindent]
-                                                [--quote {all,minimal,none,nonnumeric}]
-
-List Clusters
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_message-broker_cluster_set_with_identity_api_v2:
-
-openstack message-broker cluster set
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster set [-h] [--name NAME] [--email EMAIL]
-                                               [--ttl TTL]
-                                               [--description DESCRIPTION | --no-description]
-                                               [--masters MASTERS [MASTERS ...]]
-                                               id
-
-Set Cluster
-
-Positional arguments
---------------------
-
-``id``
-  Cluster ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name NAME``
-  Cluster Name
-
-``--email EMAIL``
-  Cluster Email
-
-``--ttl TTL``
-  Time To Live (Seconds)
-
-``--description DESCRIPTION``
-  Description
-
-``--no-description``
-
-``--masters MASTERS [MASTERS ...]``
-  Cluster Masters
-
-.. _openstack_message-broker_cluster_show_with_identity_api_v2:
-
-openstack message-broker cluster show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster show [-h]
-                                                [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                                [-c COLUMN]
-                                                [--max-width <integer>]
-                                                [--noindent] [--prefix PREFIX]
-                                                id
-
-Show Cluster
-
-Positional arguments
---------------------
-
-``id``
-  Cluster ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_messaging_flavor_delete_with_identity_api_v2:
-
-openstack messaging flavor delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 messaging flavor delete [-h] <flavor_name>
-
-Delete a flavor.
-
-Positional arguments
---------------------
+   usage: openstack --os-identity-api-version 3 messaging flavor create [-h]
+                                            [-f {html,json,shell,table,value,yaml}]
+                                            [-c COLUMN] [--max-width <integer>]
+                                            [--noindent] [--prefix PREFIX]
+                                            [--capabilities <capabilities>]
+                                            <flavor_name> <pool_group>
+
+Create a pool flavor
+
+**Positional arguments:**
 
 ``<flavor_name>``
   Name of the flavor
 
-Optional arguments
-------------------
+``<pool_group>``
+  Pool group for flavor
+
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_module_list_with_identity_api_v2:
+``--capabilities <capabilities>``
+  Describes flavor-specific capabilities, This option is
+  only available in client api version < 2 .
 
-openstack module list
-~~~~~~~~~~~~~~~~~~~~~
+.. _openstack_messaging_flavor_delete_with_identity_api_v3:
+
+openstack messaging flavor delete
+---------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 module list [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 messaging flavor delete [-h] <flavor_name>
+
+Delete a flavor
+
+**Positional arguments:**
+
+``<flavor_name>``
+  Name of the flavor
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_messaging_flavor_list_with_identity_api_v3:
+
+openstack messaging flavor list
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 messaging flavor list [-h]
+                                          [-f {csv,html,json,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent]
+                                          [--quote {all,minimal,none,nonnumeric}]
+                                          [--marker <flavor_name>]
+                                          [--limit <limit>]
+                                          [--detailed <detailed>]
+
+List available flavors
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--marker <flavor_name>``
+  Flavor's paging marker
+
+``--limit <limit>``
+  Page size limit
+
+``--detailed <detailed>``
+  If show detailed capabilities of flavor
+
+.. _openstack_messaging_flavor_show_with_identity_api_v3:
+
+openstack messaging flavor show
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 messaging flavor show [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent] [--prefix PREFIX]
+                                          <flavor_name>
+
+Display flavor details
+
+**Positional arguments:**
+
+``<flavor_name>``
+  Flavor to display (name)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_messaging_flavor_update_with_identity_api_v3:
+
+openstack messaging flavor update
+---------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 messaging flavor update [-h]
+                                            [-f {html,json,shell,table,value,yaml}]
+                                            [-c COLUMN] [--max-width <integer>]
+                                            [--noindent] [--prefix PREFIX]
+                                            [--pool_group <pool_group>]
+                                            [--capabilities <capabilities>]
+                                            <flavor_name>
+
+Update a flavor's attributes
+
+**Positional arguments:**
+
+``<flavor_name>``
+  Name of the flavor
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--pool_group <pool_group>``
+  Pool group the flavor sits on
+
+``--capabilities <capabilities>``
+  Describes flavor-specific capabilities.
+
+.. _openstack_module_list_with_identity_api_v3:
+
+openstack module list
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 module list [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--all]
 
 List module versions
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4346,41 +7394,30 @@ Optional arguments
 ``--all``
   Show all modules that have version information
 
-.. _openstack_network_create_with_identity_api_v2:
+.. _openstack_network_create_with_identity_api_v3:
 
 openstack network create
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 network create [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 network create [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
-                                   [--enable | --disable] [--share | --no-share]
-                                   [--project <project>]
-                                   [--project-domain <project-domain>]
+                                   [--share | --no-share] [--subnet <subnet>]
                                    <name>
 
 Create new network
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   New network name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
-
-``--enable``
-  Enable network (default)
-
-``--disable``
-  Disable network
 
 ``--share``
   Share the network between projects
@@ -4388,54 +7425,45 @@ Optional arguments
 ``--no-share``
   Do not share the network between projects
 
-``--project <project>``
-  Owner's project (name or ID)
+``--subnet <subnet>``
+  IPv4 subnet for fixed IPs (in CIDR notation)
 
-``--project-domain <project-domain>``
-  Domain the project belongs to (name or ID). This can
-  be used in case collisions between project names
-  exist.
-
-.. _openstack_network_delete_with_identity_api_v2:
+.. _openstack_network_delete_with_identity_api_v3:
 
 openstack network delete
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 network delete [-h] <network> [<network> ...]
+   usage: openstack --os-identity-api-version 3 network delete [-h] <network> [<network> ...]
 
 Delete network(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network>``
-  Network to delete (name or ID)
+  Network(s) to delete (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_network_list_with_identity_api_v2:
+.. _openstack_network_list_with_identity_api_v3:
 
 openstack network list
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 network list [-h]
-                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 network list [-h] [-f {csv,html,json,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--external] [--long]
 
 List networks
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4446,27 +7474,25 @@ Optional arguments
 ``--long``
   List additional fields in output
 
-.. _openstack_network_set_with_identity_api_v2:
+.. _openstack_network_set_with_identity_api_v3:
 
 openstack network set
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 network set [-h] [--name <name>] [--enable | --disable]
+   usage: openstack --os-identity-api-version 3 network set [-h] [--name <name>] [--enable | --disable]
                                 [--share | --no-share]
                                 <network>
 
 Set network properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network>``
   Network to modify (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4486,42 +7512,38 @@ Optional arguments
 ``--no-share``
   Do not share the network between projects
 
-.. _openstack_network_show_with_identity_api_v2:
+.. _openstack_network_show_with_identity_api_v3:
 
 openstack network show
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 network show [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 network show [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX]
                                  <network>
 
 Show network details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<network>``
   Network to display (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_object_create_with_identity_api_v2:
+.. _openstack_object_create_with_identity_api_v3:
 
 openstack object create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 object create [-h]
-                                  [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 object create [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
@@ -4529,8 +7551,7 @@ openstack object create
 
 Upload object to container
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Container for new object
@@ -4538,25 +7559,23 @@ Positional arguments
 ``<filename>``
   Local filename(s) to upload
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_object_delete_with_identity_api_v2:
+.. _openstack_object_delete_with_identity_api_v3:
 
 openstack object delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 object delete [-h] <container> <object> [<object> ...]
+   usage: openstack --os-identity-api-version 3 object delete [-h] <container> <object> [<object> ...]
 
 Delete object from container
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Delete object(s) from <container>
@@ -4564,21 +7583,19 @@ Positional arguments
 ``<object>``
   Object(s) to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_object_list_with_identity_api_v2:
+.. _openstack_object_list_with_identity_api_v3:
 
 openstack object list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 object list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 object list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--prefix <prefix>] [--delimiter <delimiter>]
@@ -4588,14 +7605,12 @@ openstack object list
 
 List objects
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Container to list
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4621,19 +7636,18 @@ Optional arguments
 ``--all``
   List all objects in container (default is 10000)
 
-.. _openstack_object_save_with_identity_api_v2:
+.. _openstack_object_save_with_identity_api_v3:
 
 openstack object save
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 object save [-h] [--file <filename>] <container> <object>
+   usage: openstack --os-identity-api-version 3 object save [-h] [--file <filename>] <container> <object>
 
 Save object locally
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Download <object> from <container>
@@ -4641,8 +7655,7 @@ Positional arguments
 ``<object>``
   Object to save
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4650,19 +7663,18 @@ Optional arguments
 ``--file <filename>``
   Destination filename (defaults to object name)
 
-.. _openstack_object_set_with_identity_api_v2:
+.. _openstack_object_set_with_identity_api_v3:
 
 openstack object set
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 object set [-h] --property <key=value> <container> <object>
+   usage: openstack --os-identity-api-version 3 object set [-h] --property <key=value> <container> <object>
 
 Set object properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Modify <object> from <container>
@@ -4670,8 +7682,7 @@ Positional arguments
 ``<object>``
   Object to modify
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4680,23 +7691,21 @@ Optional arguments
   Set a property on this object (repeat option to set
   multiple properties)
 
-.. _openstack_object_show_with_identity_api_v2:
+.. _openstack_object_show_with_identity_api_v3:
 
 openstack object show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 object show [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 object show [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 <container> <object>
 
 Display object details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Display <object> from <container>
@@ -4704,25 +7713,23 @@ Positional arguments
 ``<object>``
   Object to display
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_object_store_account_set_with_identity_api_v2:
+.. _openstack_object_store_account_set_with_identity_api_v3:
 
 openstack object store account set
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 object store account set [-h] --property <key=value>
+   usage: openstack --os-identity-api-version 3 object store account set [-h] --property <key=value>
 
 Set account properties
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4731,39 +7738,37 @@ Optional arguments
   Set a property on this account (repeat option to set
   multiple properties)
 
-.. _openstack_object_store_account_show_with_identity_api_v2:
+.. _openstack_object_store_account_show_with_identity_api_v3:
 
 openstack object store account show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 object store account show [-h]
-                                              [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 object store account show [-h]
+                                              [-f {html,json,shell,table,value,yaml}]
                                               [-c COLUMN] [--max-width <integer>]
                                               [--noindent] [--prefix PREFIX]
 
 Display account details
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_object_store_account_unset_with_identity_api_v2:
+.. _openstack_object_store_account_unset_with_identity_api_v3:
 
 openstack object store account unset
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 object store account unset [-h] --property <key>
+   usage: openstack --os-identity-api-version 3 object store account unset [-h] --property <key>
 
 Unset account properties
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4772,19 +7777,18 @@ Optional arguments
   Property to remove from account (repeat option to remove
   multiple properties)
 
-.. _openstack_object_unset_with_identity_api_v2:
+.. _openstack_object_unset_with_identity_api_v3:
 
 openstack object unset
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 object unset [-h] --property <key> <container> <object>
+   usage: openstack --os-identity-api-version 3 object unset [-h] --property <key> <container> <object>
 
 Unset object properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   Modify <object> from <container>
@@ -4792,8 +7796,7 @@ Positional arguments
 ``<object>``
   Object to modify
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -4802,23 +7805,289 @@ Optional arguments
   Property to remove from object (repeat option to remove
   multiple properties)
 
-.. _openstack_pool_create_with_identity_api_v2:
+.. _openstack_orchestration_build_info_with_identity_api_v3:
 
-openstack pool create
-~~~~~~~~~~~~~~~~~~~~~
+openstack orchestration build info
+----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 pool create [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 orchestration build info [-h]
+                                             [-f {html,json,shell,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent] [--prefix PREFIX]
+
+Retrieve build information.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_orchestration_resource_type_list_with_identity_api_v3:
+
+openstack orchestration resource type list
+------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 orchestration resource type list [-h]
+                                                     [-f {csv,html,json,table,value,yaml}]
+                                                     [-c COLUMN]
+                                                     [--max-width <integer>]
+                                                     [--noindent]
+                                                     [--quote {all,minimal,none,nonnumeric}]
+                                                     [--filter <key=value>]
+
+List resource types.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--filter <key=value>``
+  Filter parameters to apply on returned resource types.
+  This can be specified multiple times. It can be any of
+  name, version or support_status
+
+.. _openstack_orchestration_resource_type_show_with_identity_api_v3:
+
+openstack orchestration resource type show
+------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 orchestration resource type show [-h]
+                                                     [-f {html,json,shell,table,value,yaml}]
+                                                     [-c COLUMN]
+                                                     [--max-width <integer>]
+                                                     [--noindent]
+                                                     [--prefix PREFIX]
+                                                     [--template-type <template-type>]
+                                                     <resource-type>
+
+Show details and optionally generate a template for a resource type.
+
+**Positional arguments:**
+
+``<resource-type>``
+  Resource type to show details for
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--template-type <template-type>``
+  Optional template type to generate, hot or cfn
+
+.. _openstack_orchestration_service_list_with_identity_api_v3:
+
+openstack orchestration service list
+------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 orchestration service list [-h]
+                                               [-f {csv,html,json,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width <integer>]
+                                               [--noindent]
+                                               [--quote {all,minimal,none,nonnumeric}]
+
+List the Heat engines.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_orchestration_template_function_list_with_identity_api_v3:
+
+openstack orchestration template function list
+----------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 orchestration template function list [-h]
+                                                         [-f {csv,html,json,table,value,yaml}]
+                                                         [-c COLUMN]
+                                                         [--max-width <integer>]
+                                                         [--noindent]
+                                                         [--quote {all,minimal,none,nonnumeric}]
+                                                         <template-version>
+
+List the available functions.
+
+**Positional arguments:**
+
+``<template-version>``
+  Template version to get the functions for
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_orchestration_template_version_list_with_identity_api_v3:
+
+openstack orchestration template version list
+---------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 orchestration template version list [-h]
+                                                        [-f {csv,html,json,table,value,yaml}]
+                                                        [-c COLUMN]
+                                                        [--max-width <integer>]
+                                                        [--noindent]
+                                                        [--quote {all,minimal,none,nonnumeric}]
+
+List the available template versions.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_policy_create_with_identity_api_v3:
+
+openstack policy create
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 policy create [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX] [--type <type>]
+                                  <filename>
+
+Create new policy
+
+**Positional arguments:**
+
+``<filename>``
+  New serialized policy rules file
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--type <type>``
+  New MIME type of the policy rules file (defaults to
+  application/json)
+
+.. _openstack_policy_delete_with_identity_api_v3:
+
+openstack policy delete
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 policy delete [-h] <policy>
+
+Delete policy
+
+**Positional arguments:**
+
+``<policy>``
+  Policy to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_policy_list_with_identity_api_v3:
+
+openstack policy list
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 policy list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}] [--long]
+
+List policies
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+.. _openstack_policy_set_with_identity_api_v3:
+
+openstack policy set
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 policy set [-h] [--type <type>] [--rules <filename>] <policy>
+
+Set policy properties
+
+**Positional arguments:**
+
+``<policy>``
+  Policy to modify
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--type <type>``
+  New MIME type of the policy rules file
+
+``--rules <filename>``
+  New serialized policy rules file
+
+.. _openstack_policy_show_with_identity_api_v3:
+
+openstack policy show
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 policy show [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
-                                <pool_name> <pool_uri> <pool_weight> <pool_group>
+                                <policy>
 
-Create a pool.
+Display policy details
 
-Positional arguments
---------------------
+**Positional arguments:**
+
+``<policy>``
+  Policy to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_pool_create_with_identity_api_v3:
+
+openstack pool create
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 pool create [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX] [--pool_group <pool_group>]
+                                [--pool_options <pool_options>]
+                                <pool_name> <pool_uri> <pool_weight>
+
+Create a pool
+
+**Positional arguments:**
 
 ``<pool_name>``
   Name of the pool
@@ -4829,26 +8098,188 @@ Positional arguments
 ``<pool_weight>``
   weight of the pool
 
-``<pool_group>``
-  Group of the pool
-
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_project_create_with_identity_api_v2:
+``--pool_group <pool_group>``
+  Group of the pool
 
-openstack project create
-~~~~~~~~~~~~~~~~~~~~~~~~
+``--pool_options <pool_options>``
+  An optional request component related to storage-
+  specific options
+
+.. _openstack_pool_delete_with_identity_api_v3:
+
+openstack pool delete
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 project create [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 pool delete [-h] <pool_name>
+
+Delete a pool
+
+**Positional arguments:**
+
+``<pool_name>``
+  Name of the pool
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_pool_list_with_identity_api_v3:
+
+openstack pool list
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 pool list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--quote {all,minimal,none,nonnumeric}]
+                              [--marker <pool_name>] [--limit <limit>]
+                              [--detailed <detailed>]
+
+List available Pools
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--marker <pool_name>``
+  Pool's paging marker
+
+``--limit <limit>``
+  Page size limit
+
+``--detailed <detailed>``
+  Detailed output
+
+.. _openstack_pool_show_with_identity_api_v3:
+
+openstack pool show
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 pool show [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--prefix PREFIX]
+                              <pool_name>
+
+Display pool details
+
+**Positional arguments:**
+
+``<pool_name>``
+  Pool to display (name)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_pool_update_with_identity_api_v3:
+
+openstack pool update
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 pool update [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX] [--pool_uri <pool_uri>]
+                                [--pool_weight <pool_weight>]
+                                [--pool_group <pool_group>]
+                                [--pool_options <pool_options>]
+                                <pool_name>
+
+Update a pool attribute
+
+**Positional arguments:**
+
+``<pool_name>``
+  Name of the pool
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--pool_uri <pool_uri>``
+  Storage engine URI
+
+``--pool_weight <pool_weight>``
+  Weight of the pool
+
+``--pool_group <pool_group>``
+  Group of the pool
+
+``--pool_options <pool_options>``
+  An optional request component related to storage-
+  specific options
+
+.. _openstack_port_delete_with_identity_api_v3:
+
+openstack port delete
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 port delete [-h] <port> [<port> ...]
+
+Delete port(s)
+
+**Positional arguments:**
+
+``<port>``
+  Port(s) to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_port_show_with_identity_api_v3:
+
+openstack port show
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 port show [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--prefix PREFIX]
+                              <port>
+
+Display port details
+
+**Positional arguments:**
+
+``<port>``
+  Port to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_project_create_with_identity_api_v3:
+
+openstack project create
+------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 project create [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
+                                   [--domain <domain>] [--parent <project>]
                                    [--description <description>]
                                    [--enable | --disable]
                                    [--property <key=value>] [--or-show]
@@ -4856,23 +8287,27 @@ openstack project create
 
 Create new project
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<project-name>``
   New project name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
+
+``--domain <domain>``
+  Domain owning the project (name or ID)
+
+``--parent <project>``
+  Parent of the project (name or ID)
 
 ``--description <description>``
   Project description
 
 ``--enable``
-  Enable project (default)
+  Enable project
 
 ``--disable``
   Disable project
@@ -4884,80 +8319,88 @@ Optional arguments
 ``--or-show``
   Return existing project
 
-.. _openstack_project_delete_with_identity_api_v2:
+.. _openstack_project_delete_with_identity_api_v3:
 
 openstack project delete
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 project delete [-h] <project> [<project> ...]
+   usage: openstack --os-identity-api-version 3 project delete [-h] [--domain <domain>]
+                                   <project> [<project> ...]
 
 Delete project(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<project>``
   Project(s) to delete (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_project_list_with_identity_api_v2:
+``--domain <domain>``
+  Domain owning <project> (name or ID)
+
+.. _openstack_project_list_with_identity_api_v3:
 
 openstack project list
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 project list [-h]
-                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 project list [-h] [-f {csv,html,json,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--quote {all,minimal,none,nonnumeric}] [--long]
+                                 [--quote {all,minimal,none,nonnumeric}]
+                                 [--domain <domain>] [--user <user>] [--long]
 
 List projects
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
+
+``--domain <domain>``
+  Filter projects by <domain> (name or ID)
+
+``--user <user>``
+  Filter projects by <user> (name or ID)
 
 ``--long``
   List additional fields in output
 
-.. _openstack_project_set_with_identity_api_v2:
+.. _openstack_project_set_with_identity_api_v3:
 
 openstack project set
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 project set [-h] [--name <name>]
+   usage: openstack --os-identity-api-version 3 project set [-h] [--name <name>] [--domain <domain>]
                                 [--description <description>]
                                 [--enable | --disable] [--property <key=value>]
                                 <project>
 
 Set project properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<project>``
   Project to modify (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 ``--name <name>``
   Set project name
+
+``--domain <domain>``
+  Domain owning <project> (name or ID)
 
 ``--description <description>``
   Set project description
@@ -4969,66 +8412,70 @@ Optional arguments
   Disable project
 
 ``--property <key=value>``
-  Set a project property (repeat option to set multiple
-  properties)
+  Set a property on <project> (repeat option to set
+  multiple properties)
 
-.. _openstack_project_show_with_identity_api_v2:
+.. _openstack_project_show_with_identity_api_v3:
 
 openstack project show
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 project show [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 project show [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX]
+                                 [--prefix PREFIX] [--domain <domain>]
+                                 [--parents] [--children]
                                  <project>
 
 Display project details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<project>``
   Project to display (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ptr_record_list_with_identity_api_v2:
+``--domain <domain>``
+  Domain owning <project> (name or ID)
+
+``--parents``
+  Show the project's parents as a list
+
+``--children``
+  Show project's subtree (children) as a list
+
+.. _openstack_ptr_record_list_with_identity_api_v3:
 
 openstack ptr record list
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record list [-h]
-                                    [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 ptr record list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
 
 List floatingip ptr records
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ptr_record_set_with_identity_api_v2:
+.. _openstack_ptr_record_set_with_identity_api_v3:
 
 openstack ptr record set
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record set [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 ptr record set [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    [--description DESCRIPTION | --no-description]
@@ -5037,8 +8484,7 @@ openstack ptr record set
 
 Set floatingip ptr record
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``floatingip_id``
   Floating IP ID
@@ -5046,8 +8492,7 @@ Positional arguments
 ``ptrdname``
   PTRD Name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5062,177 +8507,160 @@ Optional arguments
 
 ``--no-ttl``
 
-.. _openstack_ptr_record_show_with_identity_api_v2:
+.. _openstack_ptr_record_show_with_identity_api_v3:
 
 openstack ptr record show
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record show [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 ptr record show [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     floatingip_id
 
 Show floatingip ptr record details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``floatingip_id``
   Floating IP ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_ptr_record_unset_with_identity_api_v2:
+.. _openstack_ptr_record_unset_with_identity_api_v3:
 
 openstack ptr record unset
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record unset [-h] floatingip_id
+   usage: openstack --os-identity-api-version 3 ptr record unset [-h] floatingip_id
 
 Unset floatingip ptr record
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``floatingip_id``
   Floating IP ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_queue_create_with_identity_api_v2:
+.. _openstack_queue_create_with_identity_api_v3:
 
 openstack queue create
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 queue create [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 queue create [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX]
                                  <queue_name>
 
-Create a queue.
+Create a queue
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<queue_name>``
   Name of the queue
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_queue_delete_with_identity_api_v2:
+.. _openstack_queue_delete_with_identity_api_v3:
 
 openstack queue delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 queue delete [-h] <queue_name>
+   usage: openstack --os-identity-api-version 3 queue delete [-h] <queue_name>
 
-Delete a queue.
+Delete a queue
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<queue_name>``
   Name of the queue
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_queue_exists_with_identity_api_v2:
+.. _openstack_queue_exists_with_identity_api_v3:
 
 openstack queue exists
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 queue exists [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 queue exists [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX]
                                  <queue_name>
 
-Check queue existence.
+Check queue existence
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<queue_name>``
   Name of the queue
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_queue_get_metadata_with_identity_api_v2:
+.. _openstack_queue_get_metadata_with_identity_api_v3:
 
 openstack queue get metadata
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 queue get metadata [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 queue get metadata [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        <queue_name>
 
-Get queue metadata.
+Get queue metadata
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<queue_name>``
   Name of the queue
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_queue_list_with_identity_api_v2:
+.. _openstack_queue_list_with_identity_api_v3:
 
 openstack queue list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 queue list [-h]
-                               [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 queue list [-h] [-f {csv,html,json,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
                                [--marker <queue_id>] [--limit <limit>]
 
-List available queues.
+List available queues
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5243,19 +8671,18 @@ Optional arguments
 ``--limit <limit>``
   Page size limit
 
-.. _openstack_queue_set_metadata_with_identity_api_v2:
+.. _openstack_queue_set_metadata_with_identity_api_v3:
 
 openstack queue set metadata
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 queue set metadata [-h] <queue_name> <queue_metadata>
+   usage: openstack --os-identity-api-version 3 queue set metadata [-h] <queue_name> <queue_metadata>
 
-Set queue metadata.
+Set queue metadata
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<queue_name>``
   Name of the queue
@@ -5263,47 +8690,43 @@ Positional arguments
 ``<queue_metadata>``
   Queue metadata
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_queue_stats_with_identity_api_v2:
+.. _openstack_queue_stats_with_identity_api_v3:
 
 openstack queue stats
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 queue stats [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 queue stats [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 <queue_name>
 
-Get queue stats.
+Get queue stats
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<queue_name>``
   Name of the queue
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_quota_set_with_identity_api_v2:
+.. _openstack_quota_set_with_identity_api_v3:
 
 openstack quota set
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 quota set [-h] [--class] [--properties <properties>]
+   usage: openstack --os-identity-api-version 3 quota set [-h] [--class] [--properties <properties>]
                               [--ram <ram>] [--secgroup-rules <secgroup-rules>]
                               [--instances <instances>] [--key-pairs <key-pairs>]
                               [--fixed-ips <fixed-ips>] [--secgroups <secgroups>]
@@ -5319,14 +8742,12 @@ openstack quota set
 
 Set quotas for project or class
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<project/class>``
   Set quotas for this project or class (name/ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5382,29 +8803,26 @@ Optional arguments
 ``--volume-type <volume-type>``
   Set quotas for a specific <volume-type>
 
-.. _openstack_quota_show_with_identity_api_v2:
+.. _openstack_quota_show_with_identity_api_v3:
 
 openstack quota show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 quota show [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 quota show [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX] [--class | --default]
                                <project/class>
 
 Show quotas for project or class
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<project/class>``
   Show this project or class (name/ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5415,15 +8833,14 @@ Optional arguments
 ``--default``
   Show default quotas for <project>
 
-.. _openstack_recordset_create_with_identity_api_v2:
+.. _openstack_recordset_create_with_identity_api_v3:
 
 openstack recordset create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 recordset create [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 recordset create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX] --records
                                      RECORDS [RECORDS ...] --type TYPE
@@ -5432,8 +8849,7 @@ openstack recordset create
 
 Create new recordset
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``zone_id``
   Zone ID
@@ -5441,8 +8857,7 @@ Positional arguments
 ``name``
   RecordSet Name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5459,19 +8874,18 @@ Optional arguments
 ``--description DESCRIPTION``
   Description
 
-.. _openstack_recordset_delete_with_identity_api_v2:
+.. _openstack_recordset_delete_with_identity_api_v3:
 
 openstack recordset delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 recordset delete [-h] zone_id id
+   usage: openstack --os-identity-api-version 3 recordset delete [-h] zone_id id
 
 Delete recordset
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``zone_id``
   Zone ID
@@ -5479,21 +8893,19 @@ Positional arguments
 ``id``
   RecordSet ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_recordset_list_with_identity_api_v2:
+.. _openstack_recordset_list_with_identity_api_v3:
 
 openstack recordset list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 recordset list [-h]
-                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 recordset list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
@@ -5501,29 +8913,26 @@ openstack recordset list
 
 List recordsets
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``zone_id``
   Zone ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_recordset_set_with_identity_api_v2:
+.. _openstack_recordset_set_with_identity_api_v3:
 
 openstack recordset set
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 recordset set [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 recordset set [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX] [--name NAME]
+                                  [--noindent] [--prefix PREFIX]
                                   [--records RECORDS [RECORDS ...]]
                                   [--description DESCRIPTION | --no-description]
                                   [--ttl TTL | --no-ttl]
@@ -5531,8 +8940,7 @@ openstack recordset set
 
 Set recordset properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``zone_id``
   Zone ID
@@ -5540,14 +8948,10 @@ Positional arguments
 ``id``
   RecordSet ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
-
-``--name NAME``
-  RecordSet Name
 
 ``--records RECORDS [RECORDS ...]``
   Records
@@ -5562,23 +8966,21 @@ Optional arguments
 
 ``--no-ttl``
 
-.. _openstack_recordset_show_with_identity_api_v2:
+.. _openstack_recordset_show_with_identity_api_v3:
 
 openstack recordset show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 recordset show [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 recordset show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    zone_id id
 
 Show recordset details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``zone_id``
   Zone ID
@@ -5586,38 +8988,230 @@ Positional arguments
 ``id``
   RecordSet ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_role_add_with_identity_api_v2:
+.. _openstack_region_create_with_identity_api_v3:
 
-openstack role add
-~~~~~~~~~~~~~~~~~~
+openstack region create
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 role add [-h]
-                             [-f {html,json,json,shell,table,value,yaml,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] --project <project> --user <user>
-                             <role>
+   usage: openstack --os-identity-api-version 3 region create [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX]
+                                  [--parent-region <region-id>]
+                                  [--description <description>]
+                                  <region-id>
 
-Add role to project:user
+Create new region
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``<role>``
-  Role to add to <project>:<user> (name or ID)
+``<region-id>``
+  New region ID
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
+
+``--parent-region <region-id>``
+  Parent region ID
+
+``--description <description>``
+  New region description
+
+.. _openstack_region_delete_with_identity_api_v3:
+
+openstack region delete
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 region delete [-h] <region-id>
+
+Delete region
+
+**Positional arguments:**
+
+``<region-id>``
+  Region ID to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_region_list_with_identity_api_v3:
+
+openstack region list
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 region list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}]
+                                [--parent-region <region-id>]
+
+List regions
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--parent-region <region-id>``
+  Filter by parent region ID
+
+.. _openstack_region_set_with_identity_api_v3:
+
+openstack region set
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 region set [-h] [--parent-region <region-id>]
+                               [--description <description>]
+                               <region-id>
+
+Set region properties
+
+**Positional arguments:**
+
+``<region-id>``
+  Region to modify
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--parent-region <region-id>``
+  New parent region ID
+
+``--description <description>``
+  New region description
+
+.. _openstack_region_show_with_identity_api_v3:
+
+openstack region show
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 region show [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX]
+                                <region-id>
+
+Display region details
+
+**Positional arguments:**
+
+``<region-id>``
+  Region to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_request_token_authorize_with_identity_api_v3:
+
+openstack request token authorize
+---------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 request token authorize [-h]
+                                            [-f {html,json,shell,table,value,yaml}]
+                                            [-c COLUMN] [--max-width <integer>]
+                                            [--noindent] [--prefix PREFIX]
+                                            --request-key <request-key> --role
+                                            <role>
+
+Authorize a request token
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-key <request-key>``
+  Request token to authorize (ID only) (required)
+
+``--role <role>``
+  Roles to authorize (name or ID) (repeat to set
+  multiple values) (required)
+
+.. _openstack_request_token_create_with_identity_api_v3:
+
+openstack request token create
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 request token create [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
+                                         [-c COLUMN] [--max-width <integer>]
+                                         [--noindent] [--prefix PREFIX]
+                                         --consumer-key <consumer-key>
+                                         --consumer-secret <consumer-secret>
+                                         --project <project> [--domain <domain>]
+
+Create a request token
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--consumer-key <consumer-key>``
+  Consumer key (required)
+
+``--consumer-secret <consumer-secret>``
+  Consumer secret (required)
+
+``--project <project>``
+  Project that consumer wants to access (name or ID)
+  (required)
+
+``--domain <domain>``
+  Domain owning <project> (name or ID)
+
+.. _openstack_role_add_with_identity_api_v3:
+
+openstack role add
+------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 role add [-h] [--domain <domain> | --project <project>]
+                             [--user <user> | --group <group>]
+                             [--group-domain <group-domain>]
+                             [--project-domain <project-domain>]
+                             [--user-domain <user-domain>] [--inherited]
+                             <role>
+
+Adds a role to a user or group on a domain or project
+
+**Positional arguments:**
+
+``<role>``
+  Role to add to <user> (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Include <domain> (name or ID)
 
 ``--project <project>``
   Include <project> (name or ID)
@@ -5625,29 +9219,112 @@ Optional arguments
 ``--user <user>``
   Include <user> (name or ID)
 
-.. _openstack_role_create_with_identity_api_v2:
+``--group <group>``
+  Include <group> (name or ID)
 
-openstack role create
-~~~~~~~~~~~~~~~~~~~~~
+``--group-domain <group-domain>``
+  Domain the group belongs to (name or ID). This can be
+  used in case collisions between group names exist.
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+``--inherited``
+  Specifies if the role grant is inheritable to the sub
+  projects
+
+.. _openstack_role_assignment_list_with_identity_api_v3:
+
+openstack role assignment list
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 role create [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 role assignment list [-h]
+                                         [-f {csv,html,json,table,value,yaml}]
+                                         [-c COLUMN] [--max-width <integer>]
+                                         [--noindent]
+                                         [--quote {all,minimal,none,nonnumeric}]
+                                         [--effective] [--role <role>] [--names]
+                                         [--user <user>]
+                                         [--user-domain <user-domain>]
+                                         [--group <group>]
+                                         [--group-domain <group-domain>]
+                                         [--domain <domain> | --project <project>]
+                                         [--project-domain <project-domain>]
+                                         [--inherited]
+
+List role assignments
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--effective``
+  Returns only effective role assignments
+
+``--role <role>``
+  Role to filter (name or ID)
+
+``--names``
+  Display names instead of IDs
+
+``--user <user>``
+  User to filter (name or ID)
+
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+``--group <group>``
+  Group to filter (name or ID)
+
+``--group-domain <group-domain>``
+  Domain the group belongs to (name or ID). This can be
+  used in case collisions between group names exist.
+
+``--domain <domain>``
+  Domain to filter (name or ID)
+
+``--project <project>``
+  Project to filter (name or ID)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+``--inherited``
+  Specifies if the role grant is inheritable to the sub
+  projects
+
+.. _openstack_role_create_with_identity_api_v3:
+
+openstack role create
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 role create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--or-show]
-                                <name>
+                                <role-name>
 
 Create new role
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``<name>``
+``<role-name>``
   New role name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5655,78 +9332,52 @@ Optional arguments
 ``--or-show``
   Return existing role
 
-.. _openstack_role_delete_with_identity_api_v2:
+.. _openstack_role_delete_with_identity_api_v3:
 
 openstack role delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 role delete [-h] <role> [<role> ...]
+   usage: openstack --os-identity-api-version 3 role delete [-h] <role> [<role> ...]
 
 Delete role(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<role>``
   Role(s) to delete (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_role_list_with_identity_api_v2:
+.. _openstack_role_list_with_identity_api_v3:
 
 openstack role list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 role list [-h]
-                              [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 role list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
-                              [--project <project>] [--user <user>]
+                              [--domain <domain> | --project <project>]
+                              [--user <user> | --group <group>]
+                              [--group-domain <group-domain>]
+                              [--project-domain <project-domain>]
+                              [--user-domain <user-domain>] [--inherited]
 
 List roles
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-``--project <project>``
-  Filter roles by <project> (name or ID)
-
-``--user <user>``
-  Filter roles by <user> (name or ID)
-
-.. _openstack_role_remove_with_identity_api_v2:
-
-openstack role remove
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 role remove [-h] --project <project> --user <user> <role>
-
-Remove role from project : user
-
-Positional arguments
---------------------
-
-``<role>``
-  Role to remove (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
+``--domain <domain>``
+  Include <domain> (name or ID)
 
 ``--project <project>``
   Include <project> (name or ID)
@@ -5734,42 +9385,750 @@ Optional arguments
 ``--user <user>``
   Include <user> (name or ID)
 
-.. _openstack_role_show_with_identity_api_v2:
+``--group <group>``
+  Include <group> (name or ID)
 
-openstack role show
-~~~~~~~~~~~~~~~~~~~
+``--group-domain <group-domain>``
+  Domain the group belongs to (name or ID). This can be
+  used in case collisions between group names exist.
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+``--inherited``
+  Specifies if the role grant is inheritable to the sub
+  projects
+
+.. _openstack_role_remove_with_identity_api_v3:
+
+openstack role remove
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 role show [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 role remove [-h] [--domain <domain> | --project <project>]
+                                [--user <user> | --group <group>]
+                                [--group-domain <group-domain>]
+                                [--project-domain <project-domain>]
+                                [--user-domain <user-domain>] [--inherited]
+                                <role>
+
+Remove role from domain/project : user/group
+
+**Positional arguments:**
+
+``<role>``
+  Role to remove (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Include <domain> (name or ID)
+
+``--project <project>``
+  Include <project> (name or ID)
+
+``--user <user>``
+  Include <user> (name or ID)
+
+``--group <group>``
+  Include <group> (name or ID)
+
+``--group-domain <group-domain>``
+  Domain the group belongs to (name or ID). This can be
+  used in case collisions between group names exist.
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+``--inherited``
+  Specifies if the role grant is inheritable to the sub
+  projects
+
+.. _openstack_role_set_with_identity_api_v3:
+
+openstack role set
+------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 role set [-h] [--name <name>] <role>
+
+Set role properties
+
+**Positional arguments:**
+
+``<role>``
+  Role to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Set role name
+
+.. _openstack_role_show_with_identity_api_v3:
+
+openstack role show
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 role show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX]
                               <role>
 
 Display role details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<role>``
   Role to display (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_security_group_create_with_identity_api_v2:
+.. _openstack_router_create_with_identity_api_v3:
 
-openstack security group create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack router create
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 security group create [-h]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 router create [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX]
+                                  [--enable | --disable] [--distributed]
+                                  [--project <project>]
+                                  [--availability-zone-hint <availability-zone>]
+                                  [--project-domain <project-domain>]
+                                  <name>
+
+Create a new router
+
+**Positional arguments:**
+
+``<name>``
+  New router name
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--enable``
+  Enable router (default)
+
+``--disable``
+  Disable router
+
+``--distributed``
+  Create a distributed router
+
+``--project <project>``
+  Owner's project (name or ID)
+
+``--availability-zone-hint <availability-zone>``
+  Availability Zone in which to create this router
+  (requires the Router Availability Zone extension, this
+  option can be repeated).
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+.. _openstack_router_delete_with_identity_api_v3:
+
+openstack router delete
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 router delete [-h] <router> [<router> ...]
+
+Delete router(s)
+
+**Positional arguments:**
+
+``<router>``
+  Router(s) to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_router_list_with_identity_api_v3:
+
+openstack router list
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 router list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}] [--long]
+
+List routers
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+.. _openstack_router_set_with_identity_api_v3:
+
+openstack router set
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 router set [-h] [--name <name>] [--enable | --disable]
+                               [--distributed | --centralized]
+                               [--route destination=<subnet>,gateway=<ip-address> | --clear-routes]
+                               <router>
+
+Set router properties
+
+**Positional arguments:**
+
+``<router>``
+  Router to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Set router name
+
+``--enable``
+  Enable router
+
+``--disable``
+  Disable router
+
+``--distributed``
+  Set router to distributed mode (disabled router only)
+
+``--centralized``
+  Set router to centralized mode (disabled router only)
+
+``--route``
+  destination=<subnet>,gateway=<ip-address>
+  Routes associated with the router. Repeat this option
+  to set multiple routes. destination: destination
+  subnet (in CIDR notation). gateway: nexthop IP
+  address.
+
+``--clear-routes``
+  Clear routes associated with the router
+
+.. _openstack_router_show_with_identity_api_v3:
+
+openstack router show
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 router show [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX]
+                                <router>
+
+Display router details
+
+**Positional arguments:**
+
+``<router>``
+  Router to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_secret_container_create_with_identity_api_v3:
+
+openstack secret container create
+---------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret container create [-h]
+                                            [-f {html,json,shell,table,value,yaml}]
+                                            [-c COLUMN] [--max-width <integer>]
+                                            [--noindent] [--prefix PREFIX]
+                                            [--name NAME] [--type TYPE]
+                                            [--secret SECRET]
+
+Store a container in Barbican.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name NAME, -n NAME``
+  a human-friendly name.
+
+``--type TYPE``
+  type of container to create (default: generic).
+
+``--secret SECRET, -s SECRET``
+  one secret to store in a container (can be set
+  multiple times). Example: :option:`--secret`
+  "private_key=https://url.test/v1/secrets/1-2-3-4"
+
+.. _openstack_secret_container_delete_with_identity_api_v3:
+
+openstack secret container delete
+---------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret container delete [-h] URI
+
+Delete a container by providing its href.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the container
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_secret_container_get_with_identity_api_v3:
+
+openstack secret container get
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret container get [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
+                                         [-c COLUMN] [--max-width <integer>]
+                                         [--noindent] [--prefix PREFIX]
+                                         URI
+
+Retrieve a container by providing its URI.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the container.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_secret_container_list_with_identity_api_v3:
+
+openstack secret container list
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret container list [-h]
+                                          [-f {csv,html,json,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent]
+                                          [--quote {all,minimal,none,nonnumeric}]
+                                          [--limit LIMIT] [--offset OFFSET]
+                                          [--name NAME] [--type TYPE]
+
+List containers.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--limit LIMIT, -l LIMIT``
+  specify the limit to the number of items to list per
+  page (default: 10; maximum: 100)
+
+``--offset OFFSET, -o OFFSET``
+  specify the page offset (default: 0)
+
+``--name NAME, -n NAME``
+  specify the container name (default: None)
+
+``--type TYPE, -t TYPE``
+  specify the type filter for the list (default: None).
+
+.. _openstack_secret_delete_with_identity_api_v3:
+
+openstack secret delete
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret delete [-h] URI
+
+Delete a secret by providing its URI.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the secret
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_secret_get_with_identity_api_v3:
+
+openstack secret get
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret get [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--prefix PREFIX] [--decrypt] [--payload]
+                               [--payload_content_type PAYLOAD_CONTENT_TYPE]
+                               URI
+
+Retrieve a secret by providing its URI.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the secret.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--decrypt, -d``
+  if specified, retrieve the unencrypted secret data;
+  the data type can be specified with :option:`--payload-content-`
+  type.
+
+``--payload, -p``
+  if specified, retrieve the unencrypted secret data;
+  the data type can be specified with :option:`--payload-content-`
+  type. If the user wishes to only retrieve the value of
+  the payload they must add "-f value" to format
+  returning only the value of the payload
+
+``--payload_content_type PAYLOAD_CONTENT_TYPE, -t PAYLOAD_CONTENT_TYPE``
+  the content type of the decrypted secret (default:
+  text/plain.
+
+.. _openstack_secret_list_with_identity_api_v3:
+
+openstack secret list
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}]
+                                [--limit LIMIT] [--offset OFFSET] [--name NAME]
+                                [--algorithm ALGORITHM] [--bit-length BIT_LENGTH]
+                                [--mode MODE]
+
+List secrets.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--limit LIMIT, -l LIMIT``
+  specify the limit to the number of items to list per
+  page (default: 10; maximum: 100)
+
+``--offset OFFSET, -o OFFSET``
+  specify the page offset (default: 0)
+
+``--name NAME, -n NAME``
+  specify the secret name (default: None)
+
+``--algorithm ALGORITHM, -a ALGORITHM``
+  the algorithm filter for the list(default: None).
+
+``--bit-length BIT_LENGTH, -b BIT_LENGTH``
+  the bit length filter for the list (default: 0).
+
+``--mode MODE, -m MODE``
+  the algorithm mode filter for the list (default:
+  None).
+
+.. _openstack_secret_order_create_with_identity_api_v3:
+
+openstack secret order create
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret order create [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        [--name NAME] [--algorithm ALGORITHM]
+                                        [--bit-length BIT_LENGTH] [--mode MODE]
+                                        [--payload-content-type PAYLOAD_CONTENT_TYPE]
+                                        [--expiration EXPIRATION]
+                                        [--request-type REQUEST_TYPE]
+                                        [--subject-dn SUBJECT_DN]
+                                        [--source-container-ref SOURCE_CONTAINER_REF]
+                                        [--ca-id CA_ID] [--profile PROFILE]
+                                        [--request-file REQUEST_FILE]
+                                        type
+
+Create a new order.
+
+**Positional arguments:**
+
+``type``
+  the type of the order to create.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name NAME, -n NAME``
+  a human-friendly name.
+
+``--algorithm ALGORITHM, -a ALGORITHM``
+  the algorithm to be used with the requested key
+  (default: aes).
+
+``--bit-length BIT_LENGTH, -b BIT_LENGTH``
+  the bit length of the requested secret key (default:
+  256).
+
+``--mode MODE, -m MODE``
+  the algorithm mode to be used with the requested key
+  (default: cbc).
+
+``--payload-content-type PAYLOAD_CONTENT_TYPE, -t PAYLOAD_CONTENT_TYPE``
+  the type/format of the secret to be generated
+  (default: application/octet-stream).
+
+``--expiration EXPIRATION, -x EXPIRATION``
+  the expiration time for the secret in ISO 8601 format.
+
+``--request-type REQUEST_TYPE``
+  the type of the certificate request.
+
+``--subject-dn SUBJECT_DN``
+  the subject of the certificate.
+
+``--source-container-ref SOURCE_CONTAINER_REF``
+  the source of the certificate when using stored-key
+  requests.
+
+``--ca-id CA_ID``
+  the identifier of the CA to use for the certificate
+  request.
+
+``--profile PROFILE``
+  the profile of certificate to use.
+
+``--request-file REQUEST_FILE``
+  the file containing the CSR.
+
+.. _openstack_secret_order_delete_with_identity_api_v3:
+
+openstack secret order delete
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret order delete [-h] URI
+
+Delete an order by providing its href.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the order
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_secret_order_get_with_identity_api_v3:
+
+openstack secret order get
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret order get [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     URI
+
+Retrieve an order by providing its URI.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference order.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_secret_order_list_with_identity_api_v3:
+
+openstack secret order list
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret order list [-h] [-f {csv,html,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]
+                                      [--limit LIMIT] [--offset OFFSET]
+
+List orders.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--limit LIMIT, -l LIMIT``
+  specify the limit to the number of items to list per
+  page (default: 10; maximum: 100)
+
+``--offset OFFSET, -o OFFSET``
+  specify the page offset (default: 0)
+
+.. _openstack_secret_store_with_identity_api_v3:
+
+openstack secret store
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret store [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--prefix PREFIX] [--name NAME]
+                                 [--payload PAYLOAD] [--secret-type SECRET_TYPE]
+                                 [--payload-content-type PAYLOAD_CONTENT_TYPE]
+                                 [--payload-content-encoding PAYLOAD_CONTENT_ENCODING]
+                                 [--algorithm ALGORITHM]
+                                 [--bit-length BIT_LENGTH] [--mode MODE]
+                                 [--expiration EXPIRATION]
+
+Store a secret in Barbican.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name NAME, -n NAME``
+  a human-friendly name.
+
+``--payload PAYLOAD, -p PAYLOAD``
+  the unencrypted secret; if provided, you must also
+  provide a payload_content_type
+
+``--secret-type SECRET_TYPE, -s SECRET_TYPE``
+  the secret type; must be one of symmetric, public,
+  private, certificate, passphrase, opaque (default)
+
+``--payload-content-type PAYLOAD_CONTENT_TYPE, -t PAYLOAD_CONTENT_TYPE``
+  the type/format of the provided secret data;
+  "text/plain" is assumed to be UTF-8; required when
+  :option:`--payload` is supplied.
+
+``--payload-content-encoding PAYLOAD_CONTENT_ENCODING,``
+
+``-e PAYLOAD_CONTENT_ENCODING``
+  required if :option:`--payload-content-type` is "application
+  /octet-stream".
+
+``--algorithm ALGORITHM, -a ALGORITHM``
+  the algorithm (default: aes).
+
+``--bit-length BIT_LENGTH, -b BIT_LENGTH``
+  the bit length (default: 256).
+
+``--mode MODE, -m MODE``
+  the algorithm mode; used only for reference (default:
+  cbc)
+
+``--expiration EXPIRATION, -x EXPIRATION``
+  the expiration time for the secret in ISO 8601 format.
+
+.. _openstack_secret_update_with_identity_api_v3:
+
+openstack secret update
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 secret update [-h] URI payload
+
+Update a secret with no payload in Barbican.
+
+**Positional arguments:**
+
+``URI``
+  The URI reference for the secret.
+
+``payload``
+  the unencrypted secret
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_security_group_create_with_identity_api_v3:
+
+openstack security group create
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 security group create [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           [--description <description>]
@@ -5777,14 +10136,12 @@ openstack security group create
 
 Create a new security group
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   New security group name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5792,38 +10149,36 @@ Optional arguments
 ``--description <description>``
   Security group description
 
-.. _openstack_security_group_delete_with_identity_api_v2:
+.. _openstack_security_group_delete_with_identity_api_v3:
 
 openstack security group delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 security group delete [-h] <group>
+   usage: openstack --os-identity-api-version 3 security group delete [-h] <group>
 
 Delete a security group
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<group>``
   Security group to delete (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_security_group_list_with_identity_api_v2:
+.. _openstack_security_group_list_with_identity_api_v3:
 
 openstack security group list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 security group list [-h]
-                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 security group list [-h]
+                                        [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
@@ -5831,8 +10186,7 @@ openstack security group list
 
 List security groups
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5840,33 +10194,31 @@ Optional arguments
 ``--all-projects``
   Display information from all projects (admin only)
 
-.. _openstack_security_group_rule_create_with_identity_api_v2:
+.. _openstack_security_group_rule_create_with_identity_api_v3:
 
 openstack security group rule create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 security group rule create [-h]
-                                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 security group rule create [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
                                                [--noindent] [--prefix PREFIX]
                                                [--proto <proto>]
-                                               [--src-ip <ip-address>]
+                                               [--src-ip <ip-address> | --src-group <group>]
                                                [--dst-port <port-range>]
                                                <group>
 
 Create a new security group rule
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<group>``
   Create rule in this security group (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5875,88 +10227,107 @@ Optional arguments
   IP protocol (icmp, tcp, udp; default: tcp)
 
 ``--src-ip <ip-address>``
-  Source IP (may use CIDR notation; default: 0.0.0.0/0)
+  Source IP address block (may use CIDR notation;
+  default: 0.0.0.0/0)
+
+``--src-group <group>``
+  Source security group (ID only)
 
 ``--dst-port <port-range>``
   Destination port, may be a range: 137:139 (default: 0;
   only required for proto tcp and udp)
 
-.. _openstack_security_group_rule_delete_with_identity_api_v2:
+.. _openstack_security_group_rule_delete_with_identity_api_v3:
 
 openstack security group rule delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 security group rule delete [-h] <rule>
+   usage: openstack --os-identity-api-version 3 security group rule delete [-h] <rule>
 
 Delete a security group rule
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<rule>``
   Security group rule to delete (ID only)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_security_group_rule_list_with_identity_api_v2:
+.. _openstack_security_group_rule_list_with_identity_api_v3:
 
 openstack security group rule list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 security group rule list [-h]
-                                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 security group rule list [-h]
+                                             [-f {csv,html,json,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
                                              [--noindent]
                                              [--quote {all,minimal,none,nonnumeric}]
-                                             <group>
+                                             [<group>]
 
 List security group rules
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<group>``
   List all rules in this security group (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_security_group_set_with_identity_api_v2:
+.. _openstack_security_group_rule_show_with_identity_api_v3:
 
-openstack security group set
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack security group rule show
+----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 security group set [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                       [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
-                                       [--name <new-name>]
+   usage: openstack --os-identity-api-version 3 security group rule show [-h]
+                                             [-f {html,json,shell,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent] [--prefix PREFIX]
+                                             <rule>
+
+Display security group rule details
+
+**Positional arguments:**
+
+``<rule>``
+  Security group rule to display (ID only)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_security_group_set_with_identity_api_v3:
+
+openstack security group set
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 security group set [-h] [--name <new-name>]
                                        [--description <description>]
                                        <group>
 
 Set security group properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<group>``
   Security group to modify (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -5967,46 +10338,43 @@ Optional arguments
 ``--description <description>``
   New security group description
 
-.. _openstack_security_group_show_with_identity_api_v2:
+.. _openstack_security_group_show_with_identity_api_v3:
 
 openstack security group show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 security group show [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 security group show [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent] [--prefix PREFIX]
                                         <group>
 
 Display security group details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<group>``
   Security group to display (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_add_security_group_with_identity_api_v2:
+.. _openstack_server_add_security_group_with_identity_api_v3:
 
 openstack server add security group
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server add security group [-h] <server> <group>
+   usage: openstack --os-identity-api-version 3 server add security group [-h] <server> <group>
 
 Add security group to server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
@@ -6014,25 +10382,23 @@ Positional arguments
 ``<group>``
   Security group to add (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_add_volume_with_identity_api_v2:
+.. _openstack_server_add_volume_with_identity_api_v3:
 
 openstack server add volume
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server add volume [-h] [--device <device>] <server> <volume>
+   usage: openstack --os-identity-api-version 3 server add volume [-h] [--device <device>] <server> <volume>
 
 Add volume to server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
@@ -6040,8 +10406,7 @@ Positional arguments
 ``<volume>``
   Volume to add (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6049,15 +10414,14 @@ Optional arguments
 ``--device <device>``
   Server internal device name for volume
 
-.. _openstack_server_create_with_identity_api_v2:
+.. _openstack_server_create_with_identity_api_v3:
 
 openstack server create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 server create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   (--image <image> | --volume <volume>) --flavor
@@ -6077,30 +10441,28 @@ openstack server create
 
 Create a new server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server-name>``
   New server name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 ``--image <image>``
-  Create server from this image
+  Create server from this image (name or ID)
 
 ``--volume <volume>``
-  Create server from this volume
+  Create server from this volume (name or ID)
 
 ``--flavor <flavor>``
-  Create server with this flavor
+  Create server with this flavor (name or ID)
 
 ``--security-group <security-group-name>``
-  Security group to assign to this server (repeat for
-  multiple groups)
+  Security group to assign to this server (name or ID)
+  (repeat for multiple groups)
 
 ``--key-name <key-name>``
   Keypair to inject into this server (optional
@@ -6125,9 +10487,9 @@ Optional arguments
   <id>:<type>:<size(GB)>:<delete_on_terminate> (optional
   extension)
 
-``--nic <net-id=net-uuid,v4-fixed-ip=ip-addr,``
+``--nic <net-id=net-uuid,``
 
-``v6-fixed-ip=ip-addr,port-id=port-uuid>``
+``v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>``
   Create a NIC on the server. Specify option multiple
   times to create multiple NICs. Either net-id or port-
   id must be provided, but not both. net-id: attach NIC
@@ -6152,25 +10514,23 @@ Optional arguments
 ``--wait``
   Wait for build to complete
 
-.. _openstack_server_delete_with_identity_api_v2:
+.. _openstack_server_delete_with_identity_api_v3:
 
 openstack server delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server delete [-h] [--wait] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server delete [-h] [--wait] <server> [<server> ...]
 
 Delete server(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to delete (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6178,15 +10538,39 @@ Optional arguments
 ``--wait``
   Wait for delete to complete
 
-.. _openstack_server_image_create_with_identity_api_v2:
+.. _openstack_server_dump_create_with_identity_api_v3:
 
-openstack server image create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack server dump create
+----------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server image create [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 server dump create [-h] <server> [<server> ...]
+
+Create a dump file in server(s) Trigger crash dump in server(s) with features
+like kdump in Linux. It will create a dump file in the server(s) dumping the
+server(s)' memory, and also crash the server(s). OSC sees the dump file
+(server dump) as a kind of resource.
+
+**Positional arguments:**
+
+``<server>``
+  Server(s) to create dump file (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_server_image_create_with_identity_api_v3:
+
+openstack server image create
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 server image create [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent] [--prefix PREFIX]
                                         [--name <image-name>] [--wait]
@@ -6194,14 +10578,12 @@ openstack server image create
 
 Create a new disk image from a running server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6212,15 +10594,14 @@ Optional arguments
 ``--wait``
   Wait for image create to complete
 
-.. _openstack_server_list_with_identity_api_v2:
+.. _openstack_server_list_with_identity_api_v3:
 
 openstack server list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 server list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--reservation-id <reservation-id>]
@@ -6236,8 +10617,7 @@ openstack server list
 
 List servers
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6261,10 +10641,10 @@ Optional arguments
   Search by server status
 
 ``--flavor <flavor>``
-  Search by flavor
+  Search by flavor (name or ID)
 
 ``--image <image>``
-  Search by image
+  Search by image (name or ID)
 
 ``--host <hostname>``
   Search by hostname
@@ -6301,37 +10681,35 @@ Optional arguments
   than 'osapi_max_limit' option of Nova API,
   'osapi_max_limit' will be used instead.
 
-.. _openstack_server_lock_with_identity_api_v2:
+.. _openstack_server_lock_with_identity_api_v3:
 
 openstack server lock
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server lock [-h] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server lock [-h] <server> [<server> ...]
 
 Lock server(s). A non-admin user will not be able to execute actions
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to lock (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_migrate_with_identity_api_v2:
+.. _openstack_server_migrate_with_identity_api_v3:
 
 openstack server migrate
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server migrate [-h] [--live <hostname>]
+   usage: openstack --os-identity-api-version 3 server migrate [-h] [--live <hostname>]
                                    [--shared-migration | --block-migration]
                                    [--disk-overcommit | --no-disk-overcommit]
                                    [--wait]
@@ -6339,14 +10717,12 @@ openstack server migrate
 
 Migrate server to different host
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6370,48 +10746,44 @@ Optional arguments
 ``--wait``
   Wait for resize to complete
 
-.. _openstack_server_pause_with_identity_api_v2:
+.. _openstack_server_pause_with_identity_api_v3:
 
 openstack server pause
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server pause [-h] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server pause [-h] <server> [<server> ...]
 
 Pause server(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to pause (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_reboot_with_identity_api_v2:
+.. _openstack_server_reboot_with_identity_api_v3:
 
 openstack server reboot
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server reboot [-h] [--hard | --soft] [--wait] <server>
+   usage: openstack --os-identity-api-version 3 server reboot [-h] [--hard | --soft] [--wait] <server>
 
 Perform a hard or soft server reboot
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6425,36 +10797,35 @@ Optional arguments
 ``--wait``
   Wait for reboot to complete
 
-.. _openstack_server_rebuild_with_identity_api_v2:
+.. _openstack_server_rebuild_with_identity_api_v3:
 
 openstack server rebuild
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server rebuild [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 server rebuild [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX] --image <image>
-                                   [--password <password>] [--wait]
+                                   [--noindent] [--prefix PREFIX]
+                                   [--image <image>] [--password <password>]
+                                   [--wait]
                                    <server>
 
 Rebuild server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 ``--image <image>``
-  Recreate server from this image
+  Recreate server from the specified image (name or ID).
+  Defaults to the currently used one.
 
 ``--password <password>``
   Set the password on the rebuilt instance
@@ -6462,19 +10833,18 @@ Optional arguments
 ``--wait``
   Wait for rebuild to complete
 
-.. _openstack_server_remove_security_group_with_identity_api_v2:
+.. _openstack_server_remove_security_group_with_identity_api_v3:
 
 openstack server remove security group
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server remove security group [-h] <server> <group>
+   usage: openstack --os-identity-api-version 3 server remove security group [-h] <server> <group>
 
 Remove security group from server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Name or ID of server to use
@@ -6482,25 +10852,23 @@ Positional arguments
 ``<group>``
   Name or ID of security group to remove from server
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_remove_volume_with_identity_api_v2:
+.. _openstack_server_remove_volume_with_identity_api_v3:
 
 openstack server remove volume
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server remove volume [-h] <server> <volume>
+   usage: openstack --os-identity-api-version 3 server remove volume [-h] <server> <volume>
 
 Remove volume from server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
@@ -6508,60 +10876,54 @@ Positional arguments
 ``<volume>``
   Volume to remove (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_rescue_with_identity_api_v2:
+.. _openstack_server_rescue_with_identity_api_v3:
 
 openstack server rescue
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server rescue [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 server rescue [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   <server>
 
 Put server in rescue mode
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_resize_with_identity_api_v2:
+.. _openstack_server_resize_with_identity_api_v3:
 
 openstack server resize
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server resize [-h] [--flavor <flavor> | --confirm | --revert]
+   usage: openstack --os-identity-api-version 3 server resize [-h] [--flavor <flavor> | --confirm | --revert]
                                   [--wait]
                                   <server>
 
 Scale server to a new flavor
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6578,50 +10940,46 @@ Optional arguments
 ``--wait``
   Wait for resize to complete
 
-.. _openstack_server_resume_with_identity_api_v2:
+.. _openstack_server_resume_with_identity_api_v3:
 
 openstack server resume
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server resume [-h] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server resume [-h] <server> [<server> ...]
 
 Resume server(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to resume (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_set_with_identity_api_v2:
+.. _openstack_server_set_with_identity_api_v3:
 
 openstack server set
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server set [-h] [--name <new-name>] [--root-password]
+   usage: openstack --os-identity-api-version 3 server set [-h] [--name <new-name>] [--root-password]
                                [--property <key=value>]
                                <server>
 
 Set server properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6636,52 +10994,47 @@ Optional arguments
   Property to add/change for this server (repeat option
   to set multiple properties)
 
-.. _openstack_server_shelve_with_identity_api_v2:
+.. _openstack_server_shelve_with_identity_api_v3:
 
 openstack server shelve
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server shelve [-h] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server shelve [-h] <server> [<server> ...]
 
 Shelve server(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to shelve (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_show_with_identity_api_v2:
+.. _openstack_server_show_with_identity_api_v3:
 
 openstack server show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server show [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 server show [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--diagnostics]
                                 <server>
 
 Show server details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6689,14 +11042,14 @@ Optional arguments
 ``--diagnostics``
   Display server diagnostics information
 
-.. _openstack_server_ssh_with_identity_api_v2:
+.. _openstack_server_ssh_with_identity_api_v3:
 
 openstack server ssh
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server ssh [-h] [--login <login-name>] [--port <port>]
+   usage: openstack --os-identity-api-version 3 server ssh [-h] [--login <login-name>] [--port <port>]
                                [--identity <keyfile>] [--option <config-options>]
                                [-4 | -6]
                                [--public | --private | --address-type <address-type>]
@@ -6704,14 +11057,12 @@ openstack server ssh
 
 Ssh to server
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6743,163 +11094,149 @@ Optional arguments
 ``--address-type <address-type>``
   Use other IP address (public, private, etc)
 
-.. _openstack_server_start_with_identity_api_v2:
+.. _openstack_server_start_with_identity_api_v3:
 
 openstack server start
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server start [-h] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server start [-h] <server> [<server> ...]
 
 Start server(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to start (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_stop_with_identity_api_v2:
+.. _openstack_server_stop_with_identity_api_v3:
 
 openstack server stop
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server stop [-h] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server stop [-h] <server> [<server> ...]
 
 Stop server(s).
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to stop (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_suspend_with_identity_api_v2:
+.. _openstack_server_suspend_with_identity_api_v3:
 
 openstack server suspend
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server suspend [-h] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server suspend [-h] <server> [<server> ...]
 
 Suspend server(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to suspend (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_unlock_with_identity_api_v2:
+.. _openstack_server_unlock_with_identity_api_v3:
 
 openstack server unlock
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server unlock [-h] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server unlock [-h] <server> [<server> ...]
 
 Unlock server(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to unlock (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_unpause_with_identity_api_v2:
+.. _openstack_server_unpause_with_identity_api_v3:
 
 openstack server unpause
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server unpause [-h] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server unpause [-h] <server> [<server> ...]
 
 Unpause server(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to unpause (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_unrescue_with_identity_api_v2:
+.. _openstack_server_unrescue_with_identity_api_v3:
 
 openstack server unrescue
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server unrescue [-h] <server>
+   usage: openstack --os-identity-api-version 3 server unrescue [-h] <server>
 
 Restore server from rescue mode
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_server_unset_with_identity_api_v2:
+.. _openstack_server_unset_with_identity_api_v3:
 
 openstack server unset
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server unset [-h] [--property <key>] <server>
+   usage: openstack --os-identity-api-version 3 server unset [-h] [--property <key>] <server>
 
 Unset server properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6908,54 +11245,50 @@ Optional arguments
   Property key to remove from server (repeat to unset
   multiple values)
 
-.. _openstack_server_unshelve_with_identity_api_v2:
+.. _openstack_server_unshelve_with_identity_api_v3:
 
 openstack server unshelve
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 server unshelve [-h] <server> [<server> ...]
+   usage: openstack --os-identity-api-version 3 server unshelve [-h] <server> [<server> ...]
 
 Unshelve server(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<server>``
   Server(s) to unshelve (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_service_create_with_identity_api_v2:
+.. _openstack_service_create_with_identity_api_v3:
 
 openstack service create
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 service create [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 service create [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX] [--name <name>]
                                    [--description <description>]
+                                   [--enable | --disable]
                                    <type>
 
 Create new service
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<type>``
   New service type (compute, image, identity, volume,
   etc)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -6966,3556 +11299,63 @@ Optional arguments
 ``--description <description>``
   New service description
 
-.. _openstack_service_delete_with_identity_api_v2:
+``--enable``
+  Enable service (default)
+
+``--disable``
+  Disable service
+
+.. _openstack_service_delete_with_identity_api_v3:
 
 openstack service delete
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 service delete [-h] <service>
+   usage: openstack --os-identity-api-version 3 service delete [-h] <service>
 
 Delete service
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<service>``
-  Service to delete (name or ID)
+  Service to delete (type or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_service_list_with_identity_api_v2:
+.. _openstack_service_list_with_identity_api_v3:
 
 openstack service list
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 2 service list [-h]
-                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 service list [-h] [-f {csv,html,json,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}] [--long]
 
 List services
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 ``--long``
   List additional fields in output
-
-.. _openstack_service_show_with_identity_api_v2:
-
-openstack service show
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 service show [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX] [--catalog]
-                                 <service>
-
-Display service details
-
-Positional arguments
---------------------
-
-``<service>``
-  Service to display (type, name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--catalog``
-  Show service catalog information
-
-.. _openstack_snapshot_create_with_identity_api_v2:
-
-openstack snapshot create
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot create [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                    [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX] --name <name>
-                                    [--description <description>] [--force]
-                                    <volume>
-
-Create new snapshot
-
-Positional arguments
---------------------
-
-``<volume>``
-  Volume to snapshot (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name <name>``
-  Name of the snapshot
-
-``--description <description>``
-  Description of the snapshot
-
-``--force``
-  Create a snapshot attached to an instance. Default is
-  False
-
-.. _openstack_snapshot_delete_with_identity_api_v2:
-
-openstack snapshot delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot delete [-h] <snapshot> [<snapshot> ...]
-
-Delete snapshot(s)
-
-Positional arguments
---------------------
-
-``<snapshot>``
-  Snapshot(s) to delete (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_snapshot_list_with_identity_api_v2:
-
-openstack snapshot list
-~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot list [-h]
-                                  [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                  [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
-                                  [--quote {all,minimal,none,nonnumeric}]
-                                  [--all-projects] [--long]
-
-List snapshots
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--all-projects``
-  Include all projects (admin only)
-
-``--long``
-  List additional fields in output
-
-.. _openstack_snapshot_set_with_identity_api_v2:
-
-openstack snapshot set
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot set [-h] [--name <name>]
-                                 [--description <description>]
-                                 [--property <key=value>]
-                                 <snapshot>
-
-Set snapshot properties
-
-Positional arguments
---------------------
-
-``<snapshot>``
-  Snapshot to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name <name>``
-  New snapshot name
-
-``--description <description>``
-  New snapshot description
-
-``--property <key=value>``
-  Property to add/change for this snapshot (repeat
-  option to set multiple properties)
-
-.. _openstack_snapshot_show_with_identity_api_v2:
-
-openstack snapshot show
-~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot show [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                  [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
-                                  <snapshot>
-
-Display snapshot details
-
-Positional arguments
---------------------
-
-``<snapshot>``
-  Snapshot to display (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_snapshot_unset_with_identity_api_v2:
-
-openstack snapshot unset
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot unset [-h] --property <key> <snapshot>
-
-Unset snapshot properties
-
-Positional arguments
---------------------
-
-``<snapshot>``
-  Snapshot to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--property <key>``
-  Property to remove from snapshot (repeat to remove
-  multiple values)
-
-.. _openstack_tld_create_with_identity_api_v2:
-
-openstack tld create
-~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 tld create [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] --name NAME
-                               [--description DESCRIPTION]
-
-Create new tld
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name NAME``
-  TLD Name
-
-``--description DESCRIPTION``
-  Description
-
-.. _openstack_tld_delete_with_identity_api_v2:
-
-openstack tld delete
-~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 tld delete [-h] id
-
-Delete tld
-
-Positional arguments
---------------------
-
-``id``
-  TLD ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_tld_list_with_identity_api_v2:
-
-openstack tld list
-~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 tld list [-h] [-f {csv,html,json,json,table,value,yaml,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--quote {all,minimal,none,nonnumeric}]
-
-List tlds
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_tld_set_with_identity_api_v2:
-
-openstack tld set
-~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 tld set [-h]
-                            [-f {html,json,json,shell,table,value,yaml,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--prefix PREFIX] [--name NAME]
-                            [--description DESCRIPTION | --no-description]
-                            id
-
-Set tld properties
-
-Positional arguments
---------------------
-
-``id``
-  TLD ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name NAME``
-  TLD Name
-
-``--description DESCRIPTION``
-  Description
-
-``--no-description``
-
-.. _openstack_tld_show_with_identity_api_v2:
-
-openstack tld show
-~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 tld show [-h]
-                             [-f {html,json,json,shell,table,value,yaml,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX]
-                             id
-
-Show tld details
-
-Positional arguments
---------------------
-
-``id``
-  TLD ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_token_issue_with_identity_api_v2:
-
-openstack token issue
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 token issue [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
-
-Issue new token
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_token_revoke_with_identity_api_v2:
-
-openstack token revoke
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 token revoke [-h] <token>
-
-Revoke existing token
-
-Positional arguments
---------------------
-
-``<token>``
-  Token to be deleted
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_usage_list_with_identity_api_v2:
-
-openstack usage list
-~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 usage list [-h]
-                               [-f {csv,html,json,json,table,value,yaml,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--quote {all,minimal,none,nonnumeric}]
-                               [--start <start>] [--end <end>]
-
-List resource usage per project
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--start <start>``
-  Usage range start date, ex 2012-01-20 (default: 4
-  weeks ago)
-
-``--end <end>``
-  Usage range end date, ex 2012-01-20 (default:
-  tomorrow)
-
-.. _openstack_usage_show_with_identity_api_v2:
-
-openstack usage show
-~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 usage show [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] [--project <project>]
-                               [--start <start>] [--end <end>]
-
-Show resource usage for a single project
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--project <project>``
-  Name or ID of project to show usage for
-
-``--start <start>``
-  Usage range start date, ex 2012-01-20 (default: 4
-  weeks ago)
-
-``--end <end>``
-  Usage range end date, ex 2012-01-20 (default:
-  tomorrow)
-
-.. _openstack_user_create_with_identity_api_v2:
-
-openstack user create
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 user create [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--project <project>]
-                                [--password <password>] [--password-prompt]
-                                [--email <email-address>] [--enable | --disable]
-                                [--or-show]
-                                <name>
-
-Create new user
-
-Positional arguments
---------------------
-
-``<name>``
-  New user name
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--project <project>``
-  Default project (name or ID)
-
-``--password <password>``
-  Set user password
-
-``--password-prompt``
-  Prompt interactively for password
-
-``--email <email-address>``
-  Set user email address
-
-``--enable``
-  Enable user (default)
-
-``--disable``
-  Disable user
-
-``--or-show``
-  Return existing user
-
-.. _openstack_user_delete_with_identity_api_v2:
-
-openstack user delete
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 user delete [-h] <user> [<user> ...]
-
-Delete user(s)
-
-Positional arguments
---------------------
-
-``<user>``
-  User(s) to delete (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_user_list_with_identity_api_v2:
-
-openstack user list
-~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 user list [-h]
-                              [-f {csv,html,json,json,table,value,yaml,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--quote {all,minimal,none,nonnumeric}]
-                              [--project <project>] [--long]
-
-List users
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--project <project>``
-  Filter users by project (name or ID)
-
-``--long``
-  List additional fields in output
-
-.. _openstack_user_role_list_with_identity_api_v2:
-
-openstack user role list
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 user role list [-h]
-                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                   [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
-                                   [--quote {all,minimal,none,nonnumeric}]
-                                   [--project <project>]
-                                   [<user>]
-
-List user-role assignments
-
-Positional arguments
---------------------
-
-``<user>``
-  User to list (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--project <project>``
-  Filter users by <project> (name or ID)
-
-.. _openstack_user_set_with_identity_api_v2:
-
-openstack user set
-~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 user set [-h] [--name <name>] [--project <project>]
-                             [--password <user-password>] [--password-prompt]
-                             [--email <email-address>] [--enable | --disable]
-                             <user>
-
-Set user properties
-
-Positional arguments
---------------------
-
-``<user>``
-  User to change (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name <name>``
-  Set user name
-
-``--project <project>``
-  Set default project (name or ID)
-
-``--password <user-password>``
-  Set user password
-
-``--password-prompt``
-  Prompt interactively for password
-
-``--email <email-address>``
-  Set user email address
-
-``--enable``
-  Enable user (default)
-
-``--disable``
-  Disable user
-
-.. _openstack_user_show_with_identity_api_v2:
-
-openstack user show
-~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 user show [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX]
-                              <user>
-
-Display user details
-
-Positional arguments
---------------------
-
-``<user>``
-  User to display (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_volume_create_with_identity_api_v2:
-
-openstack volume create
-~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                  [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX] --size <size>
-                                  [--snapshot <snapshot>]
-                                  [--description <description>]
-                                  [--type <volume-type>] [--user <user>]
-                                  [--project <project>]
-                                  [--availability-zone <availability-zone>]
-                                  [--image <image>] [--source <volume>]
-                                  [--property <key=value>]
-                                  <name>
-
-Create new volume
-
-Positional arguments
---------------------
-
-``<name>``
-  New volume name
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--size <size>``
-  New volume size in GB
-
-``--snapshot <snapshot>``
-  Use <snapshot> as source of new volume
-
-``--description <description>``
-  New volume description
-
-``--type <volume-type>``
-  Use <volume-type> as the new volume type
-
-``--user <user>``
-  Specify an alternate user (name or ID)
-
-``--project <project>``
-  Specify an alternate project (name or ID)
-
-``--availability-zone <availability-zone>``
-  Create new volume in <availability-zone>
-
-``--image <image>``
-  Use <image> as source of new volume (name or ID)
-
-``--source <volume>``
-  Volume to clone (name or ID)
-
-``--property <key=value>``
-  Set a property on this volume (repeat option to set
-  multiple properties)
-
-.. _openstack_volume_delete_with_identity_api_v2:
-
-openstack volume delete
-~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume delete [-h] [--force] <volume> [<volume> ...]
-
-Delete volume(s)
-
-Positional arguments
---------------------
-
-``<volume>``
-  Volume(s) to delete (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--force``
-  Attempt forced removal of volume(s), regardless of state
-  (defaults to False)
-
-.. _openstack_volume_list_with_identity_api_v2:
-
-openstack volume list
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--quote {all,minimal,none,nonnumeric}]
-                                [--name <name>] [--status <status>]
-                                [--all-projects] [--long]
-
-List volumes
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name <name>``
-  Filter results by volume name
-
-``--status <status>``
-  Filter results by status
-
-``--all-projects``
-  Include all projects (admin only)
-
-``--long``
-  List additional fields in output
-
-.. _openstack_volume_qos_associate_with_identity_api_v2:
-
-openstack volume qos associate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos associate [-h] <qos-spec> <volume-type>
-
-Associate a QoS specification to a volume type
-
-Positional arguments
---------------------
-
-``<qos-spec>``
-  QoS specification to modify (name or ID)
-
-``<volume-type>``
-  Volume type to associate the QoS (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_volume_qos_create_with_identity_api_v2:
-
-openstack volume qos create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos create [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                      [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      [--consumer <consumer>]
-                                      [--property <key=value>]
-                                      <name>
-
-Create new QoS specification
-
-Positional arguments
---------------------
-
-``<name>``
-  New QoS specification name
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--consumer <consumer>``
-  Consumer of the QoS. Valid consumers: back-end, both,
-  front-end (defaults to 'both')
-
-``--property <key=value>``
-  Set a QoS specification property (repeat option to set
-  multiple properties)
-
-.. _openstack_volume_qos_delete_with_identity_api_v2:
-
-openstack volume qos delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos delete [-h] <qos-spec> [<qos-spec> ...]
-
-Delete QoS specification
-
-Positional arguments
---------------------
-
-``<qos-spec>``
-  QoS specification(s) to delete (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_volume_qos_disassociate_with_identity_api_v2:
-
-openstack volume qos disassociate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos disassociate [-h]
-                                            [--volume-type <volume-type> | --all]
-                                            <qos-spec>
-
-Disassociate a QoS specification from a volume type
-
-Positional arguments
---------------------
-
-``<qos-spec>``
-  QoS specification to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--volume-type <volume-type>``
-  Volume type to disassociate the QoS from (name or ID)
-
-``--all``
-  Disassociate the QoS from every volume type
-
-.. _openstack_volume_qos_list_with_identity_api_v2:
-
-openstack volume qos list
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos list [-h]
-                                    [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                    [-c COLUMN] [--max-width <integer>]
-                                    [--noindent]
-                                    [--quote {all,minimal,none,nonnumeric}]
-
-List QoS specifications
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_volume_qos_set_with_identity_api_v2:
-
-openstack volume qos set
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos set [-h] [--property <key=value>] <qos-spec>
-
-Set QoS specification properties
-
-Positional arguments
---------------------
-
-``<qos-spec>``
-  QoS specification to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--property <key=value>``
-  Property to add or modify for this QoS specification
-  (repeat option to set multiple properties)
-
-.. _openstack_volume_qos_show_with_identity_api_v2:
-
-openstack volume qos show
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos show [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                    [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
-                                    <qos-spec>
-
-Display QoS specification details
-
-Positional arguments
---------------------
-
-``<qos-spec>``
-  QoS specification to display (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_volume_qos_unset_with_identity_api_v2:
-
-openstack volume qos unset
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos unset [-h] [--property <key>] <qos-spec>
-
-Unset QoS specification properties
-
-Positional arguments
---------------------
-
-``<qos-spec>``
-  QoS specification to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--property <key>``
-  Property to remove from the QoS specification. (repeat
-  option to unset multiple properties)
-
-.. _openstack_volume_set_with_identity_api_v2:
-
-openstack volume set
-~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume set [-h] [--name <name>] [--description <description>]
-                               [--size <size>] [--property <key=value>]
-                               <volume>
-
-Set volume properties
-
-Positional arguments
---------------------
-
-``<volume>``
-  Volume to change (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name <name>``
-  New volume name
-
-``--description <description>``
-  New volume description
-
-``--size <size>``
-  Extend volume size in GB
-
-``--property <key=value>``
-  Property to add or modify for this volume (repeat
-  option to set multiple properties)
-
-.. _openstack_volume_show_with_identity_api_v2:
-
-openstack volume show
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume show [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
-                                <volume>
-
-Show volume details
-
-Positional arguments
---------------------
-
-``<volume>``
-  Volume to display (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_volume_type_create_with_identity_api_v2:
-
-openstack volume type create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume type create [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                       [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
-                                       [--property <key=value>]
-                                       <name>
-
-Create new volume type
-
-Positional arguments
---------------------
-
-``<name>``
-  New volume type name
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--property <key=value>``
-  Property to add for this volume type (repeat option to
-  set multiple properties)
-
-.. _openstack_volume_type_delete_with_identity_api_v2:
-
-openstack volume type delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume type delete [-h] <volume-type>
-
-Delete volume type
-
-Positional arguments
---------------------
-
-``<volume-type>``
-  Volume type to delete (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_volume_type_list_with_identity_api_v2:
-
-openstack volume type list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume type list [-h]
-                                     [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                     [-c COLUMN] [--max-width <integer>]
-                                     [--noindent]
-                                     [--quote {all,minimal,none,nonnumeric}]
-                                     [--long]
-
-List volume types
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--long``
-  List additional fields in output
-
-.. _openstack_volume_type_set_with_identity_api_v2:
-
-openstack volume type set
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume type set [-h] [--property <key=value>] <volume-type>
-
-Set volume type properties
-
-Positional arguments
---------------------
-
-``<volume-type>``
-  Volume type to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--property <key=value>``
-  Property to add or modify for this volume type (repeat
-  option to set multiple properties)
-
-.. _openstack_volume_type_show_with_identity_api_v2:
-
-openstack volume type show
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume type show [-h]
-                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                     [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
-                                     <volume-type>
-
-Display volume type details
-
-Positional arguments
---------------------
-
-``<volume-type>``
-  Volume type to display (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_volume_type_unset_with_identity_api_v2:
-
-openstack volume type unset
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume type unset [-h] --property <key> <volume-type>
-
-Unset volume type properties
-
-Positional arguments
---------------------
-
-``<volume-type>``
-  Volume type to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--property <key>``
-  Property to remove from volume type (repeat option to
-  remove multiple properties)
-
-.. _openstack_volume_unset_with_identity_api_v2:
-
-openstack volume unset
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 volume unset [-h] --property <key> <volume>
-
-Unset volume properties
-
-Positional arguments
---------------------
-
-``<volume>``
-  Volume to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--property <key>``
-  Property to remove from volume (repeat option to remove
-  multiple properties)
-
-.. _openstack_zone_abandon_with_identity_api_v2:
-
-openstack zone abandon
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone abandon [-h] id
-
-Abandon a zone
-
-Positional arguments
---------------------
-
-``id``
-  Zone ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_zone_axfr_with_identity_api_v2:
-
-openstack zone axfr
-~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone axfr [-h] id
-
-AXFR a zone
-
-Positional arguments
---------------------
-
-``id``
-  Zone ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_zone_blacklist_create_with_identity_api_v2:
-
-openstack zone blacklist create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist create [-h]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                          [-c COLUMN] [--max-width <integer>]
-                                          [--noindent] [--prefix PREFIX]
-                                          --pattern PATTERN
-                                          [--description DESCRIPTION]
-
-Create new blacklist
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--pattern PATTERN``
-  Blacklist pattern
-
-``--description DESCRIPTION``
-  Description
-
-.. _openstack_zone_blacklist_delete_with_identity_api_v2:
-
-openstack zone blacklist delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist delete [-h] id
-
-Delete blacklist
-
-Positional arguments
---------------------
-
-``id``
-  Blacklist ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_zone_blacklist_list_with_identity_api_v2:
-
-openstack zone blacklist list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist list [-h]
-                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                        [-c COLUMN] [--max-width <integer>]
-                                        [--noindent]
-                                        [--quote {all,minimal,none,nonnumeric}]
-
-List blacklists
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_zone_blacklist_set_with_identity_api_v2:
-
-openstack zone blacklist set
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist set [-h]
-                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                       [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX] --pattern
-                                       PATTERN
-                                       [--description DESCRIPTION | --no-description]
-                                       id
-
-Set blacklist properties
-
-Positional arguments
---------------------
-
-``id``
-  Blacklist ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--pattern PATTERN``
-  Blacklist pattern
-
-``--description DESCRIPTION``
-  Description
-
-``--no-description``
-
-.. _openstack_zone_blacklist_show_with_identity_api_v2:
-
-openstack zone blacklist show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist show [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                        [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
-                                        id
-
-Show blacklist details
-
-Positional arguments
---------------------
-
-``id``
-  Blacklist ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_zone_create_with_identity_api_v2:
-
-openstack zone create
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone create [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--email EMAIL] [--type TYPE]
-                                [--ttl TTL] [--description DESCRIPTION]
-                                [--masters MASTERS [MASTERS ...]]
-                                name
-
-Create new zone
-
-Positional arguments
---------------------
-
-``name``
-  Zone Name
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--email EMAIL``
-  Zone Email
-
-``--type TYPE``
-  Zone Type
-
-``--ttl TTL``
-  Time To Live (Seconds)
-
-``--description DESCRIPTION``
-  Description
-
-``--masters MASTERS [MASTERS ...]``
-  Zone Masters
-
-.. _openstack_zone_delete_with_identity_api_v2:
-
-openstack zone delete
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone delete [-h] id
-
-Delete zone
-
-Positional arguments
---------------------
-
-``id``
-  Zone ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_zone_list_with_identity_api_v2:
-
-openstack zone list
-~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone list [-h]
-                              [-f {csv,html,json,json,table,value,yaml,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--quote {all,minimal,none,nonnumeric}]
-                              [--type TYPE]
-
-List zones
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--type TYPE``
-  Zone Type
-
-.. _openstack_zone_set_with_identity_api_v2:
-
-openstack zone set
-~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone set [-h]
-                             [-f {html,json,json,shell,table,value,yaml,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [--name NAME] [--email EMAIL]
-                             [--ttl TTL]
-                             [--description DESCRIPTION | --no-description]
-                             [--masters MASTERS [MASTERS ...]]
-                             id
-
-Set zone properties
-
-Positional arguments
---------------------
-
-``id``
-  Zone ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name NAME``
-  Zone Name
-
-``--email EMAIL``
-  Zone Email
-
-``--ttl TTL``
-  Time To Live (Seconds)
-
-``--description DESCRIPTION``
-  Description
-
-``--no-description``
-
-``--masters MASTERS [MASTERS ...]``
-  Zone Masters
-
-.. _openstack_zone_show_with_identity_api_v2:
-
-openstack zone show
-~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone show [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX]
-                              id
-
-Show zone details
-
-Positional arguments
---------------------
-
-``id``
-  Zone ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_zone_transfer_accept_request_with_identity_api_v2:
-
-openstack zone transfer accept request
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer accept request [-h] --transfer-id TRANSFER_ID
-                                                 --key KEY
-
-Accept a Zone Transfer Request
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--transfer-id TRANSFER_ID``
-  Transfer ID
-
-``--key KEY``
-  Transfer Key
-
-.. _openstack_zone_transfer_accept_show_with_identity_api_v2:
-
-openstack zone transfer accept show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer accept show [-h]
-                                              [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                              [-c COLUMN] [--max-width <integer>]
-                                              [--noindent] [--prefix PREFIX]
-                                              id
-
-Show Zone Transfer Accept
-
-Positional arguments
---------------------
-
-``id``
-  Zone Tranfer Accept ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_zone_transfer_request_create_with_identity_api_v2:
-
-openstack zone transfer request create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer request create [-h]
-                                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                                 [-c COLUMN]
-                                                 [--max-width <integer>]
-                                                 [--noindent] [--prefix PREFIX]
-                                                 --target-project-id
-                                                 TARGET_PROJECT_ID
-                                                 [--description DESCRIPTION]
-                                                 zone_id
-
-Create new zone transfer request
-
-Positional arguments
---------------------
-
-``zone_id``
-  Zone ID to transfer.
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--target-project-id TARGET_PROJECT_ID``
-  Target Project ID to transfer to.
-
-``--description DESCRIPTION``
-  Description
-
-.. _openstack_zone_transfer_request_delete_with_identity_api_v2:
-
-openstack zone transfer request delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer request delete [-h] id
-
-
-Positional arguments
---------------------
-
-``id``
-  Zone Transfer ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_zone_transfer_request_list_with_identity_api_v2:
-
-openstack zone transfer request list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer request list [-h]
-                                               [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                               [-c COLUMN]
-                                               [--max-width <integer>]
-                                               [--noindent]
-                                               [--quote {all,minimal,none,nonnumeric}]
-
-List zone transfer requests
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_zone_transfer_request_set_with_identity_api_v2:
-
-openstack zone transfer request set
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer request set [-h]
-                                              [--description DESCRIPTION | --no-description]
-                                              id
-
-Set Transfer
-
-Positional arguments
---------------------
-
-``id``
-  Zone Transfer ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--description DESCRIPTION``
-  Description
-
-``--no-description``
-
-.. _openstack_zone_transfer_request_show_with_identity_api_v2:
-
-openstack zone transfer request show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer request show [-h]
-                                               [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                               [-c COLUMN]
-                                               [--max-width <integer>]
-                                               [--noindent] [--prefix PREFIX]
-                                               id
-
-Show zonet transfer details
-
-Positional arguments
---------------------
-
-``id``
-  Zone Tranfer ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-
-OpenStack with Identity API v3 commands (diff)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can select the Identity API version to use by
-adding the :option:`--os-identity-api-version`
-parameter or by setting the corresponding
-environment variable:
-
-.. code-block:: console
-
-   export OS_IDENTITY_API_VERSION=3
-
-This section documents only the difference in
-subcommands available for the openstack client
-when the Identity API version is changed from
-v2 to v3.
-
-.. _openstack_access_token_create_with_identity_api_v3:
-
-openstack access token create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 access token create [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                        [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
-                                        --consumer-key <consumer-key>
-                                        --consumer-secret <consumer-secret>
-                                        --request-key <request-key>
-                                        --request-secret <request-secret>
-                                        --verifier <verifier>
-
-Create an access token
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--consumer-key <consumer-key>``
-  Consumer key (required)
-
-``--consumer-secret <consumer-secret>``
-  Consumer secret (required)
-
-``--request-key <request-key>``
-  Request token to exchange for access token (required)
-
-``--request-secret <request-secret>``
-  Secret associated with <request-key> (required)
-
-``--verifier <verifier>``
-  Verifier associated with <request-key> (required)
-
-.. _openstack_consumer_create_with_identity_api_v3:
-
-openstack consumer create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 consumer create [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                    [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
-                                    [--description <description>]
-
-Create new consumer
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--description <description>``
-  New consumer description
-
-.. _openstack_consumer_delete_with_identity_api_v3:
-
-openstack consumer delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 consumer delete [-h] <consumer>
-
-Delete consumer
-
-Positional arguments
---------------------
-
-``<consumer>``
-  Consumer to delete
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_consumer_list_with_identity_api_v3:
-
-openstack consumer list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 consumer list [-h]
-                                  [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                  [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
-                                  [--quote {all,minimal,none,nonnumeric}]
-
-List consumers
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_consumer_set_with_identity_api_v3:
-
-openstack consumer set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 consumer set [-h] [--description <description>] <consumer>
-
-Set consumer properties
-
-Positional arguments
---------------------
-
-``<consumer>``
-  Consumer to modify
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--description <description>``
-  New consumer description
-
-.. _openstack_consumer_show_with_identity_api_v3:
-
-openstack consumer show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 consumer show [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                  [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
-                                  <consumer>
-
-Display consumer details
-
-Positional arguments
---------------------
-
-``<consumer>``
-  Consumer to display
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_credential_create_with_identity_api_v3:
-
-openstack credential create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 credential create [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                      [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      [--type <type>] [--project <project>]
-                                      <user> <data>
-
-Create credential command
-
-Positional arguments
---------------------
-
-``<user>``
-  Name or ID of user that owns the credential
-
-``<data>``
-  New credential data
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--type <type>``
-  New credential type
-
-``--project <project>``
-  Project name or ID which limits the scope of the
-  credential
-
-.. _openstack_credential_delete_with_identity_api_v3:
-
-openstack credential delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 credential delete [-h] <credential-id>
-
-Delete credential command
-
-Positional arguments
---------------------
-
-``<credential-id>``
-  ID of credential to delete
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_credential_list_with_identity_api_v3:
-
-openstack credential list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 credential list [-h]
-                                    [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                    [-c COLUMN] [--max-width <integer>]
-                                    [--noindent]
-                                    [--quote {all,minimal,none,nonnumeric}]
-
-List credential command
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_credential_set_with_identity_api_v3:
-
-openstack credential set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 credential set [-h] --user <user> --type <type> --data <data>
-                                   [--project <project>]
-                                   <credential-id>
-
-Set credential command
-
-Positional arguments
---------------------
-
-``<credential-id>``
-  ID of credential to change
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--user <user>``
-  Name or ID of user that owns the credential
-
-``--type <type>``
-  New credential type
-
-``--data <data>``
-  New credential data
-
-``--project <project>``
-  Project name or ID which limits the scope of the
-  credential
-
-.. _openstack_credential_show_with_identity_api_v3:
-
-openstack credential show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 credential show [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                    [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
-                                    <credential-id>
-
-Show credential command
-
-Positional arguments
---------------------
-
-``<credential-id>``
-  ID of credential to display
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_domain_create_with_identity_api_v3:
-
-openstack domain create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 domain create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                  [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
-                                  [--description <description>]
-                                  [--enable | --disable] [--or-show]
-                                  <domain-name>
-
-Create new domain
-
-Positional arguments
---------------------
-
-``<domain-name>``
-  New domain name
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--description <description>``
-  New domain description
-
-``--enable``
-  Enable domain (default)
-
-``--disable``
-  Disable domain
-
-``--or-show``
-  Return existing domain
-
-.. _openstack_domain_delete_with_identity_api_v3:
-
-openstack domain delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 domain delete [-h] <domain>
-
-Delete domain
-
-Positional arguments
---------------------
-
-``<domain>``
-  Domain to delete (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_domain_list_with_identity_api_v3:
-
-openstack domain list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 domain list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--quote {all,minimal,none,nonnumeric}]
-
-List domains
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_domain_set_with_identity_api_v3:
-
-openstack domain set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 domain set [-h] [--name <name>] [--description <description>]
-                               [--enable | --disable]
-                               <domain>
-
-Set domain properties
-
-Positional arguments
---------------------
-
-``<domain>``
-  Domain to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name <name>``
-  New domain name
-
-``--description <description>``
-  New domain description
-
-``--enable``
-  Enable domain
-
-``--disable``
-  Disable domain
-
-.. _openstack_domain_show_with_identity_api_v3:
-
-openstack domain show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 domain show [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
-                                <domain>
-
-Display domain details
-
-Positional arguments
---------------------
-
-``<domain>``
-  Domain to display (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_endpoint_set_with_identity_api_v3:
-
-openstack endpoint set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 endpoint set [-h] [--region <region-id>]
-                                 [--interface <interface>] [--url <url>]
-                                 [--service <service>] [--enable | --disable]
-                                 <endpoint-id>
-
-Set endpoint properties
-
-Positional arguments
---------------------
-
-``<endpoint-id>``
-  Endpoint ID to modify
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--region <region-id>``
-  New endpoint region ID
-
-``--interface <interface>``
-  New endpoint interface type (admin, public or
-  internal)
-
-``--url <url>``
-  New endpoint URL
-
-``--service <service>``
-  New endpoint service (name or ID)
-
-``--enable``
-  Enable endpoint
-
-``--disable``
-  Disable endpoint
-
-.. _openstack_federation_domain_list_with_identity_api_v3:
-
-openstack federation domain list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 federation domain list [-h]
-                                           [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                           [-c COLUMN] [--max-width <integer>]
-                                           [--noindent]
-                                           [--quote {all,minimal,none,nonnumeric}]
-
-List accessible domains
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_federation_project_list_with_identity_api_v3:
-
-openstack federation project list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 federation project list [-h]
-                                            [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                            [-c COLUMN] [--max-width <integer>]
-                                            [--noindent]
-                                            [--quote {all,minimal,none,nonnumeric}]
-
-List accessible projects
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_federation_protocol_create_with_identity_api_v3:
-
-openstack federation protocol create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 federation protocol create [-h]
-                                               [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                               [-c COLUMN]
-                                               [--max-width <integer>]
-                                               [--noindent] [--prefix PREFIX]
-                                               --identity-provider
-                                               <identity-provider> --mapping
-                                               <mapping>
-                                               <name>
-
-Create new federation protocol
-
-Positional arguments
---------------------
-
-``<name>``
-  New federation protocol name (must be unique per
-  identity provider)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--identity-provider <identity-provider>``
-  Identity provider that will support the new federation
-  protocol (name or ID) (required)
-
-``--mapping <mapping>``
-  Mapping that is to be used (name or ID) (required)
-
-.. _openstack_federation_protocol_delete_with_identity_api_v3:
-
-openstack federation protocol delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 federation protocol delete [-h] --identity-provider
-                                               <identity-provider>
-                                               <federation-protocol>
-
-Delete federation protocol
-
-Positional arguments
---------------------
-
-``<federation-protocol>``
-  Federation protocol to delete (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--identity-provider <identity-provider>``
-  Identity provider that supports <federation-protocol>
-  (name or ID) (required)
-
-.. _openstack_federation_protocol_list_with_identity_api_v3:
-
-openstack federation protocol list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 federation protocol list [-h]
-                                             [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                             [-c COLUMN] [--max-width <integer>]
-                                             [--noindent]
-                                             [--quote {all,minimal,none,nonnumeric}]
-                                             --identity-provider
-                                             <identity-provider>
-
-List federation protocols
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--identity-provider <identity-provider>``
-  Identity provider to list (name or ID) (required)
-
-.. _openstack_federation_protocol_set_with_identity_api_v3:
-
-openstack federation protocol set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 federation protocol set [-h] --identity-provider
-                                            <identity-provider>
-                                            [--mapping <mapping>]
-                                            <name>
-
-Set federation protocol properties
-
-Positional arguments
---------------------
-
-``<name>``
-  Federation protocol to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--identity-provider <identity-provider>``
-  Identity provider that supports <federation-protocol>
-  (name or ID) (required)
-
-``--mapping <mapping>``
-  Mapping that is to be used (name or ID)
-
-.. _openstack_federation_protocol_show_with_identity_api_v3:
-
-openstack federation protocol show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 federation protocol show [-h]
-                                             [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                             [-c COLUMN] [--max-width <integer>]
-                                             [--noindent] [--prefix PREFIX]
-                                             --identity-provider
-                                             <identity-provider>
-                                             <federation-protocol>
-
-Display federation protocol details
-
-Positional arguments
---------------------
-
-``<federation-protocol>``
-  Federation protocol to display (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--identity-provider <identity-provider>``
-  Identity provider that supports <federation-protocol>
-  (name or ID) (required)
-
-.. _openstack_group_add_user_with_identity_api_v3:
-
-openstack group add user (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 group add user [-h] [--group-domain <group-domain>]
-                                   [--user-domain <user-domain>]
-                                   <group> <user>
-
-Add user to group
-
-Positional arguments
---------------------
-
-``<group>``
-  Group to contain <user> (name or ID)
-
-``<user>``
-  User to add to <group> (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--group-domain <group-domain>``
-  Domain the group belongs to (name or ID). This can be
-  used in case collisions between group names exist.
-
-``--user-domain <user-domain>``
-  Domain the user belongs to (name or ID). This can be
-  used in case collisions between user names exist.
-
-.. _openstack_group_contains_user_with_identity_api_v3:
-
-openstack group contains user (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 group contains user [-h] [--group-domain <group-domain>]
-                                        [--user-domain <user-domain>]
-                                        <group> <user>
-
-Check user membership in group
-
-Positional arguments
---------------------
-
-``<group>``
-  Group to check (name or ID)
-
-``<user>``
-  User to check (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--group-domain <group-domain>``
-  Domain the group belongs to (name or ID). This can be
-  used in case collisions between group names exist.
-
-``--user-domain <user-domain>``
-  Domain the user belongs to (name or ID). This can be
-  used in case collisions between user names exist.
-
-.. _openstack_group_create_with_identity_api_v3:
-
-openstack group create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 group create [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX] [--domain <domain>]
-                                 [--description <description>] [--or-show]
-                                 <group-name>
-
-Create new group
-
-Positional arguments
---------------------
-
-``<group-name>``
-  New group name
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--domain <domain>``
-  Domain to contain new group (name or ID)
-
-``--description <description>``
-  New group description
-
-``--or-show``
-  Return existing group
-
-.. _openstack_group_delete_with_identity_api_v3:
-
-openstack group delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 group delete [-h] [--domain <domain>] <group> [<group> ...]
-
-Delete group(s)
-
-Positional arguments
---------------------
-
-``<group>``
-  Group(s) to delete (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--domain <domain>``
-  Domain containing group(s) (name or ID)
-
-.. _openstack_group_list_with_identity_api_v3:
-
-openstack group list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 group list [-h]
-                               [-f {csv,html,json,json,table,value,yaml,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--quote {all,minimal,none,nonnumeric}]
-                               [--domain <domain>] [--user <user>]
-                               [--user-domain <user-domain>] [--long]
-
-List groups
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--domain <domain>``
-  Filter group list by <domain> (name or ID)
-
-``--user <user>``
-  Filter group list by <user> (name or ID)
-
-``--user-domain <user-domain>``
-  Domain the user belongs to (name or ID). This can be
-  used in case collisions between user names exist.
-
-``--long``
-  List additional fields in output
-
-.. _openstack_group_remove_user_with_identity_api_v3:
-
-openstack group remove user (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 group remove user [-h] [--group-domain <group-domain>]
-                                      [--user-domain <user-domain>]
-                                      <group> <user>
-
-Remove user from group
-
-Positional arguments
---------------------
-
-``<group>``
-  Group containing <user> (name or ID)
-
-``<user>``
-  User to remove from <group> (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--group-domain <group-domain>``
-  Domain the group belongs to (name or ID). This can be
-  used in case collisions between group names exist.
-
-``--user-domain <user-domain>``
-  Domain the user belongs to (name or ID). This can be
-  used in case collisions between user names exist.
-
-.. _openstack_group_set_with_identity_api_v3:
-
-openstack group set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 group set [-h] [--domain <domain>] [--name <name>]
-                              [--description <description>]
-                              <group>
-
-Set group properties
-
-Positional arguments
---------------------
-
-``<group>``
-  Group to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--domain <domain>``
-  Domain containing <group> (name or ID)
-
-``--name <name>``
-  New group name
-
-``--description <description>``
-  New group description
-
-.. _openstack_group_show_with_identity_api_v3:
-
-openstack group show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 group show [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] [--domain <domain>]
-                               <group>
-
-Display group details
-
-Positional arguments
---------------------
-
-``<group>``
-  Group to display (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--domain <domain>``
-  Domain containing <group> (name or ID)
-
-.. _openstack_identity_provider_create_with_identity_api_v3:
-
-openstack identity provider create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 identity provider create [-h]
-                                             [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                             [-c COLUMN] [--max-width <integer>]
-                                             [--noindent] [--prefix PREFIX]
-                                             [--remote-id <remote-id> | --remote-id-file <file-name>]
-                                             [--description <description>]
-                                             [--enable | --disable]
-                                             <name>
-
-Create new identity provider
-
-Positional arguments
---------------------
-
-``<name>``
-  New identity provider name (must be unique)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--remote-id <remote-id>``
-  Remote IDs to associate with the Identity Provider
-  (repeat to provide multiple values)
-
-``--remote-id-file <file-name>``
-  Name of a file that contains many remote IDs to
-  associate with the identity provider, one per line
-
-``--description <description>``
-  New identity provider description
-
-``--enable``
-  Enable identity provider (default)
-
-``--disable``
-  Disable the identity provider
-
-.. _openstack_identity_provider_delete_with_identity_api_v3:
-
-openstack identity provider delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 identity provider delete [-h] <identity-provider>
-
-Delete identity provider
-
-Positional arguments
---------------------
-
-``<identity-provider>``
-  Identity provider to delete
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_identity_provider_list_with_identity_api_v3:
-
-openstack identity provider list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 identity provider list [-h]
-                                           [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                           [-c COLUMN] [--max-width <integer>]
-                                           [--noindent]
-                                           [--quote {all,minimal,none,nonnumeric}]
-
-List identity providers
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_identity_provider_set_with_identity_api_v3:
-
-openstack identity provider set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 identity provider set [-h] [--description <description>]
-                                          [--remote-id <remote-id> | --remote-id-file <file-name>]
-                                          [--enable | --disable]
-                                          <identity-provider>
-
-Set identity provider properties
-
-Positional arguments
---------------------
-
-``<identity-provider>``
-  Identity provider to modify
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--description <description>``
-  Set identity provider description
-
-``--remote-id <remote-id>``
-  Remote IDs to associate with the Identity Provider
-  (repeat to provide multiple values)
-
-``--remote-id-file <file-name>``
-  Name of a file that contains many remote IDs to
-  associate with the identity provider, one per line
-
-``--enable``
-  Enable the identity provider
-
-``--disable``
-  Disable the identity provider
-
-.. _openstack_identity_provider_show_with_identity_api_v3:
-
-openstack identity provider show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 identity provider show [-h]
-                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                           [-c COLUMN] [--max-width <integer>]
-                                           [--noindent] [--prefix PREFIX]
-                                           <identity-provider>
-
-Display identity provider details
-
-Positional arguments
---------------------
-
-``<identity-provider>``
-  Identity provider to display
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_mapping_create_with_identity_api_v3:
-
-openstack mapping create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 mapping create [-h]
-                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                   [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX] --rules
-                                   <filename>
-                                   <name>
-
-Create new mapping
-
-Positional arguments
---------------------
-
-``<name>``
-  New mapping name (must be unique)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--rules <filename>``
-  Filename that contains a set of mapping rules
-  (required)
-
-.. _openstack_mapping_delete_with_identity_api_v3:
-
-openstack mapping delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 mapping delete [-h] <mapping>
-
-Delete mapping
-
-Positional arguments
---------------------
-
-``<mapping>``
-  Mapping to delete
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_mapping_list_with_identity_api_v3:
-
-openstack mapping list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 mapping list [-h]
-                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--quote {all,minimal,none,nonnumeric}]
-
-List mappings
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_mapping_set_with_identity_api_v3:
-
-openstack mapping set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 mapping set [-h] [--rules <filename>] <name>
-
-Set mapping properties
-
-Positional arguments
---------------------
-
-``<name>``
-  Mapping to modify
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--rules <filename>``
-  Filename that contains a new set of mapping rules
-
-.. _openstack_mapping_show_with_identity_api_v3:
-
-openstack mapping show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 mapping show [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX]
-                                 <mapping>
-
-Display mapping details
-
-Positional arguments
---------------------
-
-``<mapping>``
-  Mapping to display
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_policy_create_with_identity_api_v3:
-
-openstack policy create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 policy create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                  [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX] [--type <type>]
-                                  <filename>
-
-Create new policy
-
-Positional arguments
---------------------
-
-``<filename>``
-  New serialized policy rules file
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--type <type>``
-  New MIME type of the policy rules file (defaults to
-  application/json)
-
-.. _openstack_policy_delete_with_identity_api_v3:
-
-openstack policy delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 policy delete [-h] <policy>
-
-Delete policy
-
-Positional arguments
---------------------
-
-``<policy>``
-  Policy to delete
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_policy_list_with_identity_api_v3:
-
-openstack policy list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 policy list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--quote {all,minimal,none,nonnumeric}] [--long]
-
-List policies
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--long``
-  List additional fields in output
-
-.. _openstack_policy_set_with_identity_api_v3:
-
-openstack policy set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 policy set [-h] [--type <type>] [--rules <filename>] <policy>
-
-Set policy properties
-
-Positional arguments
---------------------
-
-``<policy>``
-  Policy to modify
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--type <type>``
-  New MIME type of the policy rules file
-
-``--rules <filename>``
-  New serialized policy rules file
-
-.. _openstack_policy_show_with_identity_api_v3:
-
-openstack policy show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 policy show [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
-                                <policy>
-
-Display policy details
-
-Positional arguments
---------------------
-
-``<policy>``
-  Policy to display
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_region_create_with_identity_api_v3:
-
-openstack region create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 region create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                  [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
-                                  [--parent-region <region-id>]
-                                  [--description <description>]
-                                  <region-id>
-
-Create new region
-
-Positional arguments
---------------------
-
-``<region-id>``
-  New region ID
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--parent-region <region-id>``
-  Parent region ID
-
-``--description <description>``
-  New region description
-
-.. _openstack_region_delete_with_identity_api_v3:
-
-openstack region delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 region delete [-h] <region-id>
-
-Delete region
-
-Positional arguments
---------------------
-
-``<region-id>``
-  Region ID to delete
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_region_list_with_identity_api_v3:
-
-openstack region list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 region list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--quote {all,minimal,none,nonnumeric}]
-                                [--parent-region <region-id>]
-
-List regions
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--parent-region <region-id>``
-  Filter by parent region ID
-
-.. _openstack_region_set_with_identity_api_v3:
-
-openstack region set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 region set [-h] [--parent-region <region-id>]
-                               [--description <description>]
-                               <region-id>
-
-Set region properties
-
-Positional arguments
---------------------
-
-``<region-id>``
-  Region to modify
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--parent-region <region-id>``
-  New parent region ID
-
-``--description <description>``
-  New region description
-
-.. _openstack_region_show_with_identity_api_v3:
-
-openstack region show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 region show [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
-                                <region-id>
-
-Display region details
-
-Positional arguments
---------------------
-
-``<region-id>``
-  Region to display
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_request_token_authorize_with_identity_api_v3:
-
-openstack request token authorize (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 request token authorize [-h]
-                                            [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                            [-c COLUMN] [--max-width <integer>]
-                                            [--noindent] [--prefix PREFIX]
-                                            --request-key <request-key> --role
-                                            <role>
-
-Authorize a request token
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--request-key <request-key>``
-  Request token to authorize (ID only) (required)
-
-``--role <role>``
-  Roles to authorize (name or ID) (repeat to set
-  multiple values) (required)
-
-.. _openstack_request_token_create_with_identity_api_v3:
-
-openstack request token create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 request token create [-h]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                         [-c COLUMN] [--max-width <integer>]
-                                         [--noindent] [--prefix PREFIX]
-                                         --consumer-key <consumer-key>
-                                         --consumer-secret <consumer-secret>
-                                         --project <project> [--domain <domain>]
-
-Create a request token
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--consumer-key <consumer-key>``
-  Consumer key (required)
-
-``--consumer-secret <consumer-secret>``
-  Consumer secret (required)
-
-``--project <project>``
-  Project that consumer wants to access (name or ID)
-  (required)
-
-``--domain <domain>``
-  Domain owning <project> (name or ID)
-
-.. _openstack_role_assignment_list_with_identity_api_v3:
-
-openstack role assignment list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 role assignment list [-h]
-                                         [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                         [-c COLUMN] [--max-width <integer>]
-                                         [--noindent]
-                                         [--quote {all,minimal,none,nonnumeric}]
-                                         [--effective] [--role <role>]
-                                         [--user <user>]
-                                         [--user-domain <user-domain>]
-                                         [--group <group>]
-                                         [--group-domain <group-domain>]
-                                         [--domain <domain> | --project <project>]
-                                         [--project-domain <project-domain>]
-                                         [--inherited]
-
-List role assignments
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--effective``
-  Returns only effective role assignments
-
-``--role <role>``
-  Role to filter (name or ID)
-
-``--user <user>``
-  User to filter (name or ID)
-
-``--user-domain <user-domain>``
-  Domain the user belongs to (name or ID). This can be
-  used in case collisions between user names exist.
-
-``--group <group>``
-  Group to filter (name or ID)
-
-``--group-domain <group-domain>``
-  Domain the group belongs to (name or ID). This can be
-  used in case collisions between group names exist.
-
-``--domain <domain>``
-  Domain to filter (name or ID)
-
-``--project <project>``
-  Project to filter (name or ID)
-
-``--project-domain <project-domain>``
-  Domain the project belongs to (name or ID). This can
-  be used in case collisions between project names
-  exist.
-
-``--inherited``
-  Specifies if the role grant is inheritable to the sub
-  projects
-
-.. _openstack_role_set_with_identity_api_v3:
-
-openstack role set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: openstack --os-auth-type token --os-identity-api-version 3 role set [-h] [--name <name>] <role>
-
-Set role properties
-
-Positional arguments
---------------------
-
-``<role>``
-  Role to modify (name or ID)
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--name <name>``
-  Set role name
 
 .. _openstack_service_provider_create_with_identity_api_v3:
 
-openstack service provider create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack service provider create
+---------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 service provider create [-h]
-                                            [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 service provider create [-h]
+                                            [-f {html,json,shell,table,value,yaml}]
                                             [-c COLUMN] [--max-width <integer>]
                                             [--noindent] [--prefix PREFIX]
                                             --auth-url <auth-url>
@@ -10526,14 +11366,12 @@ openstack service provider create (Identity API v3)
 
 Create new service provider
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<name>``
   New service provider name (must be unique)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -10557,56 +11395,53 @@ Optional arguments
 
 .. _openstack_service_provider_delete_with_identity_api_v3:
 
-openstack service provider delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack service provider delete
+---------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 service provider delete [-h] <service-provider>
+   usage: openstack --os-identity-api-version 3 service provider delete [-h] <service-provider>
 
 Delete service provider
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<service-provider>``
   Service provider to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 .. _openstack_service_provider_list_with_identity_api_v3:
 
-openstack service provider list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack service provider list
+-------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 service provider list [-h]
-                                          [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 service provider list [-h]
+                                          [-f {csv,html,json,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
 
 List service providers
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 .. _openstack_service_provider_set_with_identity_api_v3:
 
-openstack service provider set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack service provider set
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 service provider set [-h] [--auth-url <auth-url>]
+   usage: openstack --os-identity-api-version 3 service provider set [-h] [--auth-url <auth-url>]
                                          [--description <description>]
                                          [--service-provider-url <sp-url>]
                                          [--enable | --disable]
@@ -10614,14 +11449,12 @@ openstack service provider set (Identity API v3)
 
 Set service provider properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<service-provider>``
   Service provider to modify
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -10645,53 +11478,49 @@ Optional arguments
 
 .. _openstack_service_provider_show_with_identity_api_v3:
 
-openstack service provider show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack service provider show
+-------------------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 service provider show [-h]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 service provider show [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           <service-provider>
 
 Display service provider details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<service-provider>``
   Service provider to display
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 .. _openstack_service_set_with_identity_api_v3:
 
-openstack service set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack service set
+---------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 service set [-h] [--type <type>] [--name <service-name>]
+   usage: openstack --os-identity-api-version 3 service set [-h] [--type <type>] [--name <service-name>]
                                 [--description <description>]
                                 [--enable | --disable]
                                 <service>
 
 Set service properties
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<service>``
   Service to update (type, name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -10712,15 +11541,1797 @@ Optional arguments
 ``--disable``
   Disable service
 
-.. _openstack_trust_create_with_identity_api_v3:
+.. _openstack_service_show_with_identity_api_v3:
 
-openstack trust create (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack service show
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 trust create [-h]
-                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 service show [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--prefix PREFIX]
+                                 <service>
+
+Display service details
+
+**Positional arguments:**
+
+``<service>``
+  Service to display (type, name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_snapshot_create_with_identity_api_v3:
+
+openstack snapshot create
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 snapshot create [-h] [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent] [--prefix PREFIX] --name <name>
+                                    [--description <description>] [--force]
+                                    <volume>
+
+Create new snapshot
+
+**Positional arguments:**
+
+``<volume>``
+  Volume to snapshot (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Name of the snapshot
+
+``--description <description>``
+  Description of the snapshot
+
+``--force``
+  Create a snapshot attached to an instance. Default is
+  False
+
+.. _openstack_snapshot_delete_with_identity_api_v3:
+
+openstack snapshot delete
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 snapshot delete [-h] <snapshot> [<snapshot> ...]
+
+Delete volume snapshot(s)
+
+**Positional arguments:**
+
+``<snapshot>``
+  Snapshot(s) to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_snapshot_list_with_identity_api_v3:
+
+openstack snapshot list
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 snapshot list [-h] [-f {csv,html,json,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent]
+                                  [--quote {all,minimal,none,nonnumeric}]
+                                  [--all-projects] [--long]
+
+List snapshots
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Include all projects (admin only)
+
+``--long``
+  List additional fields in output
+
+.. _openstack_snapshot_set_with_identity_api_v3:
+
+openstack snapshot set
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 snapshot set [-h] [--name <name>]
+                                 [--description <description>]
+                                 [--property <key=value>]
+                                 <snapshot>
+
+Set snapshot properties
+
+**Positional arguments:**
+
+``<snapshot>``
+  Snapshot to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  New snapshot name
+
+``--description <description>``
+  New snapshot description
+
+``--property <key=value>``
+  Property to add/change for this snapshot (repeat
+  option to set multiple properties)
+
+.. _openstack_snapshot_show_with_identity_api_v3:
+
+openstack snapshot show
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 snapshot show [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX]
+                                  <snapshot>
+
+Display snapshot details
+
+**Positional arguments:**
+
+``<snapshot>``
+  Snapshot to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_snapshot_unset_with_identity_api_v3:
+
+openstack snapshot unset
+------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 snapshot unset [-h] [--property <key>] <snapshot>
+
+Unset snapshot properties
+
+**Positional arguments:**
+
+``<snapshot>``
+  Snapshot to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--property <key>``
+  Property to remove from snapshot (repeat to remove
+  multiple values)
+
+.. _openstack_software_config_create_with_identity_api_v3:
+
+openstack software config create
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 software config create [-h]
+                                           [-f {html,json,shell,table,value,yaml}]
+                                           [-c COLUMN] [--max-width <integer>]
+                                           [--noindent] [--prefix PREFIX]
+                                           [--config-file <config-file>]
+                                           [--definition-file <destination-file>]
+                                           [--group <group>]
+                                           <config-name>
+
+Create software config
+
+**Positional arguments:**
+
+``<config-name>``
+  Name of the software config to create
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--config-file <config-file>``
+  Path to JSON/YAML containing map defining <inputs>,
+  <outputs>, and <options>
+
+``--definition-file <destination-file>``
+  Path to software config script/data
+
+``--group <group>``
+  Group name of tool expected by the software config
+
+.. _openstack_software_config_delete_with_identity_api_v3:
+
+openstack software config delete
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 software config delete [-h] <config> [<config> ...]
+
+Delete software configs
+
+**Positional arguments:**
+
+``<config>``
+  IDs of the software configs to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_software_config_list_with_identity_api_v3:
+
+openstack software config list
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 software config list [-h]
+                                         [-f {csv,html,json,table,value,yaml}]
+                                         [-c COLUMN] [--max-width <integer>]
+                                         [--noindent]
+                                         [--quote {all,minimal,none,nonnumeric}]
+                                         [--limit <limit>] [--marker <id>]
+
+List software configs
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--limit <limit>``
+  Limit the number of configs returned
+
+``--marker <id>``
+  Return configs that appear after the given config ID
+
+.. _openstack_software_config_show_with_identity_api_v3:
+
+openstack software config show
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 software config show [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
+                                         [-c COLUMN] [--max-width <integer>]
+                                         [--noindent] [--prefix PREFIX]
+                                         [--config-only]
+                                         <config>
+
+Show software config details
+
+**Positional arguments:**
+
+``<config>``
+  ID of the config
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--config-only``
+  Only display the value of the <config> property.
+
+.. _openstack_software_deployment_create_with_identity_api_v3:
+
+openstack software deployment create
+------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 software deployment create [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width <integer>]
+                                               [--noindent] [--prefix PREFIX]
+                                               [--input-value <key=value>]
+                                               [--action <action>]
+                                               [--config <config>] --server
+                                               <server>
+                                               [--signal-transport <signal-transport>]
+                                               [--container <container>]
+                                               [--timeout <timeout>]
+                                               <deployment-name>
+
+Create a software deployment.
+
+**Positional arguments:**
+
+``<deployment-name>``
+  Name of the derived config associated with this
+  deployment. This is used to apply a sort order to the
+  list of configurations currently deployed to the
+  server.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--input-value <key=value>``
+  Input value to set on the deployment. This can be
+  specified multiple times.
+
+``--action <action>``
+  Name of an action for this deployment. This can be a
+  custom action, or one of CREATE, UPDATE, DELETE,
+  SUSPEND, RESUME. Default is UPDATE
+
+``--config <config>``
+  ID of the configuration to deploy
+
+``--server <server>``
+  ID of the server being deployed to
+
+``--signal-transport <signal-transport>``
+  How the server should signal to heat with the
+  deployment output values. TEMP_URL_SIGNAL will create
+  a Swift TempURL to be signaled via HTTP PUT.
+  ZAQAR_SIGNAL will create a dedicated zaqar queue to be
+  signaled using the provided keystone
+  credentials.NO_SIGNAL will result in the resource
+  going to the COMPLETE state without waiting for any
+  signal
+
+``--container <container>``
+  Optional name of container to store TEMP_URL_SIGNAL
+  objects in. If not specified a container will be
+  created with a name derived from the DEPLOY_NAME
+
+``--timeout <timeout>``
+  Deployment timeout in minutes
+
+.. _openstack_software_deployment_delete_with_identity_api_v3:
+
+openstack software deployment delete
+------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 software deployment delete [-h]
+                                               <deployment> [<deployment> ...]
+
+Delete software deployment(s) and correlative config(s).
+
+**Positional arguments:**
+
+``<deployment>``
+  ID of the deployment(s) to delete.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_software_deployment_list_with_identity_api_v3:
+
+openstack software deployment list
+----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 software deployment list [-h]
+                                             [-f {csv,html,json,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent]
+                                             [--quote {all,minimal,none,nonnumeric}]
+                                             [--server <server>] [--long]
+
+List software deployments.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--server <server>``
+  ID of the server to fetch deployments for
+
+``--long``
+  List more fields in output
+
+.. _openstack_software_deployment_metadata_show_with_identity_api_v3:
+
+openstack software deployment metadata show
+-------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 software deployment metadata show [-h] <server>
+
+Get deployment configuration metadata for the specified server.
+
+**Positional arguments:**
+
+``<server>``
+  ID of the server to fetch deployments for
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_software_deployment_output_show_with_identity_api_v3:
+
+openstack software deployment output show
+-----------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 software deployment output show [-h] [--all] [--long]
+                                                    <deployment> [<output-name>]
+
+Show a specific deployment output.
+
+**Positional arguments:**
+
+``<deployment>``
+  ID of deployment to show the output for
+
+``<output-name>``
+  Name of an output to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all``
+  Display all deployment outputs
+
+``--long``
+  Show full deployment logs in output
+
+.. _openstack_software_deployment_show_with_identity_api_v3:
+
+openstack software deployment show
+----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 software deployment show [-h]
+                                             [-f {html,json,shell,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent] [--prefix PREFIX]
+                                             [--long]
+                                             <deployment>
+
+Show SoftwareDeployment Details.
+
+**Positional arguments:**
+
+``<deployment>``
+  ID of the deployment
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  Show more fields in output
+
+.. _openstack_stack_abandon_with_identity_api_v3:
+
+openstack stack abandon
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack abandon [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX]
+                                  [--output-file <output-file>]
+                                  <stack>
+
+Abandon stack and output results.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack to abandon
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--output-file <output-file>``
+  File to output abandon results
+
+.. _openstack_stack_adopt_with_identity_api_v3:
+
+openstack stack adopt
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack adopt [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX] [-e <environment>]
+                                [--timeout <timeout>] --adopt-file <adopt-file>
+                                [--enable-rollback] [--parameter <key=value>]
+                                [--wait]
+                                <stack-name>
+
+Adopt a stack.
+
+**Positional arguments:**
+
+``<stack-name>``
+  Name of the stack to adopt
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``-e <environment>, --environment <environment>``
+  Path to the environment. Can be specified multiple
+  times
+
+``--timeout <timeout>``
+  Stack creation timeout in minutes
+
+``--adopt-file <adopt-file>``
+  Path to adopt stack data file
+
+``--enable-rollback``
+  Enable rollback on create/update failure
+
+``--parameter <key=value>``
+  Parameter values used to create the stack. Can be
+  specified multiple times
+
+``--wait``
+  Wait until stack adopt completes
+
+.. _openstack_stack_cancel_with_identity_api_v3:
+
+openstack stack cancel
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack cancel [-h] [-f {csv,html,json,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--quote {all,minimal,none,nonnumeric}] [--wait]
+                                 <stack> [<stack> ...]
+
+Cancel current task for a stack. Supported tasks for cancellation: \* update
+
+**Positional arguments:**
+
+``<stack>``
+  Stack(s) to cancel (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--wait``
+  Wait for check to complete
+
+.. _openstack_stack_check_with_identity_api_v3:
+
+openstack stack check
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack check [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}] [--wait]
+                                <stack> [<stack> ...]
+
+Check a stack.
+
+**Positional arguments:**
+
+``<stack>``
+  Stack(s) to check update (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--wait``
+  Wait for check to complete
+
+.. _openstack_stack_create_with_identity_api_v3:
+
+openstack stack create
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack create [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--prefix PREFIX] -t <template>
+                                 [-e <environment>] [--timeout <timeout>]
+                                 [--pre-create <resource>] [--enable-rollback]
+                                 [--parameter <key=value>]
+                                 [--parameter-file <key=file>] [--wait]
+                                 [--tags <tag1,tag2...>] [--dry-run]
+                                 <stack-name>
+
+Create a stack.
+
+**Positional arguments:**
+
+``<stack-name>``
+  Name of the stack to create
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``-t <template>, --template <template>``
+  Path to the template
+
+``-e <environment>, --environment <environment>``
+  Path to the environment. Can be specified multiple
+  times
+
+``--timeout <timeout>``
+  Stack creating timeout in minutes
+
+``--pre-create <resource>``
+  Name of a resource to set a pre-create hook to.
+  Resources in nested stacks can be set using slash as a
+  separator: nested_stack/another/my_resource. You can
+  use wildcards to match multiple stacks or resources:
+  nested_stack/an\*/\*_resource. This can be specified
+  multiple times
+
+``--enable-rollback``
+  Enable rollback on create/update failure
+
+``--parameter <key=value>``
+  Parameter values used to create the stack. This can be
+  specified multiple times
+
+``--parameter-file <key=file>``
+  Parameter values from file used to create the stack.
+  This can be specified multiple times. Parameter values
+  would be the content of the file
+
+``--wait``
+  Wait until stack goes to CREATE_COMPLETE or
+  CREATE_FAILED
+
+``--tags <tag1,tag2...>``
+  A list of tags to associate with the stack
+
+``--dry-run``
+  Do not actually perform the stack create, but show
+  what would be created
+
+.. _openstack_stack_delete_with_identity_api_v3:
+
+openstack stack delete
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack delete [-h] [--yes] [--wait] <stack> [<stack> ...]
+
+Delete stack(s).
+
+**Positional arguments:**
+
+``<stack>``
+  Stack(s) to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--yes``
+  Skip yes/no prompt (assume yes)
+
+``--wait``
+  Wait for stack delete to complete
+
+.. _openstack_stack_event_list_with_identity_api_v3:
+
+openstack stack event list
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack event list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+                                     [--resource <resource>]
+                                     [--filter <key=value>] [--limit <limit>]
+                                     [--marker <id>] [--nested-depth <depth>]
+                                     [--sort <key>[:<direction>]] [--follow]
+                                     <stack>
+
+List events.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack to show events for
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--resource <resource>``
+  Name of resource to show events for. Note: this cannot
+  be specified with :option:`--nested-depth`
+
+``--filter <key=value>``
+  Filter parameters to apply on returned events
+
+``--limit <limit>``
+  Limit the number of events returned
+
+``--marker <id>``
+  Only return events that appear after the given ID
+
+``--nested-depth <depth>``
+  Depth of nested stacks from which to display events.
+  Note: this cannot be specified with :option:`--resource`
+
+``--sort <key>[:<direction>]``
+  Sort output by selected keys and directions (asc or
+  desc) (default: asc). Specify multiple times to sort
+  on multiple keys
+
+``--follow``
+  Print events until process is halted
+
+.. _openstack_stack_event_show_with_identity_api_v3:
+
+openstack stack event show
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack event show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     <stack> <resource> <event>
+
+Show event details.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack to show events for
+
+``<resource>``
+  Name of the resource event belongs to
+
+``<event>``
+  ID of event to display details for
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_stack_hook_clear_with_identity_api_v3:
+
+openstack stack hook clear
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack hook clear [-h] [--pre-create] [--pre-update]
+                                     <stack> <resource> [<resource> ...]
+
+Clear resource hooks on a given stack.
+
+**Positional arguments:**
+
+``<stack>``
+  Stack to display (name or ID)
+
+``<resource>``
+  Resource names with hooks to clear. Resources in nested stacks
+  can be set using slash as a separator:
+  nested_stack/another/my_resource. You can use wildcards to
+  match multiple stacks or resources:
+  nested_stack/an\*/\*_resource
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--pre-create``
+  Clear the pre-create hooks
+
+``--pre-update``
+  Clear the pre-update hooks
+
+.. _openstack_stack_hook_poll_with_identity_api_v3:
+
+openstack stack hook poll
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack hook poll [-h] [-f {csv,html,json,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent]
+                                    [--quote {all,minimal,none,nonnumeric}]
+                                    [--nested-depth <nested-depth>]
+                                    <stack>
+
+List resources with pending hook for a stack.
+
+**Positional arguments:**
+
+``<stack>``
+  Stack to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--nested-depth <nested-depth>``
+  Depth of nested stacks from which to display hooks
+
+.. _openstack_stack_list_with_identity_api_v3:
+
+openstack stack list
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack list [-h] [-f {csv,html,json,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--quote {all,minimal,none,nonnumeric}]
+                               [--deleted] [--nested] [--hidden]
+                               [--property <key=value>] [--tags <tag1,tag2...>]
+                               [--tag-mode <mode>] [--limit <limit>]
+                               [--marker <id>] [--sort <key>[:<direction>]]
+                               [--all-projects] [--short] [--long]
+
+List stacks.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--deleted``
+  Include soft-deleted stacks in the stack listing
+
+``--nested``
+  Include nested stacks in the stack listing
+
+``--hidden``
+  Include hidden stacks in the stack listing
+
+``--property <key=value>``
+  Filter properties to apply on returned stacks (repeat
+  to filter on multiple properties)
+
+``--tags <tag1,tag2...>``
+  List of tags to filter by. Can be combined with :option:`--tag-`
+  mode to specify how to filter tags
+
+``--tag-mode <mode>``
+  Method of filtering tags. Must be one of "any", "not",
+  or "not-any". If not specified, multiple tags will be
+  combined with the boolean AND expression
+
+``--limit <limit>``
+  The number of stacks returned
+
+``--marker <id>``
+  Only return stacks that appear after the given ID
+
+``--sort <key>[:<direction>]``
+  Sort output by selected keys and directions (asc or
+  desc) (default: asc). Specify multiple times to sort
+  on multiple properties
+
+``--all-projects``
+  Include all projects (admin only)
+
+``--short``
+  List fewer fields in output
+
+``--long``
+  List additional fields in output, this is implied by
+  :option:`--all-projects`
+
+.. _openstack_stack_output_list_with_identity_api_v3:
+
+openstack stack output list
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack output list [-h] [-f {csv,html,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]
+                                      <stack>
+
+List stack outputs.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack to query
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_stack_output_show_with_identity_api_v3:
+
+openstack stack output show
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack output show [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent] [--prefix PREFIX] [--all]
+                                      <stack> [<output>]
+
+Show stack output.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack to query
+
+``<output>``
+  Name of an output to display
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all``
+  Display all stack outputs
+
+.. _openstack_stack_resource_list_with_identity_api_v3:
+
+openstack stack resource list
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack resource list [-h]
+                                        [-f {csv,html,json,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent]
+                                        [--quote {all,minimal,none,nonnumeric}]
+                                        [--long] [-n <nested-depth>]
+                                        [--filter <key=value>]
+                                        <stack>
+
+List stack resources.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack to query
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  Enable detailed information presented for each
+  resource in resource list
+
+``-n <nested-depth>, --nested-depth <nested-depth>``
+  Depth of nested stacks from which to display resources
+
+``--filter <key=value>``
+  Filter parameters to apply on returned resources based
+  on their name, status, type, action, id and
+  physcial_resource_id
+
+.. _openstack_stack_resource_mark_unhealthy_with_identity_api_v3:
+
+openstack stack resource mark unhealthy
+---------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack resource mark unhealthy [-h] [--reset]
+                                                  <stack> <resource> [reason]
+
+Set resource's health.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack the resource belongs to
+
+``<resource>``
+  Name of the resource
+
+``reason``
+  Reason for state change
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--reset``
+  Set the resource as healthy
+
+.. _openstack_stack_resource_metadata_with_identity_api_v3:
+
+openstack stack resource metadata
+---------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack resource metadata [-h]
+                                            [-f {html,json,shell,table,value,yaml}]
+                                            [-c COLUMN] [--max-width <integer>]
+                                            [--noindent] [--prefix PREFIX]
+                                            <stack> <resource>
+
+Show resource metadata
+
+**Positional arguments:**
+
+``<stack>``
+  Stack to display (name or ID)
+
+``<resource>``
+  Name of the resource to show the metadata for
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_stack_resource_show_with_identity_api_v3:
+
+openstack stack resource show
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack resource show [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        [--with-attr <attribute>]
+                                        <stack> <resource>
+
+Display stack resource.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack to query
+
+``<resource>``
+  Name or ID of resource
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--with-attr <attribute>``
+  Attribute to show, can be specified multiple times
+
+.. _openstack_stack_resource_signal_with_identity_api_v3:
+
+openstack stack resource signal
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack resource signal [-h] [--data <data>]
+                                          [--data-file <data-file>]
+                                          <stack> <resource>
+
+Signal a resource with optional data.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack the resource belongs to
+
+``<resource>``
+  Name of the resoure to signal
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--data <data>``
+  JSON Data to send to the signal handler
+
+``--data-file <data-file>``
+  File containing JSON data to send to the signal
+  handler
+
+.. _openstack_stack_resume_with_identity_api_v3:
+
+openstack stack resume
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack resume [-h] [-f {csv,html,json,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--quote {all,minimal,none,nonnumeric}] [--wait]
+                                 <stack> [<stack> ...]
+
+Resume a stack.
+
+**Positional arguments:**
+
+``<stack>``
+  Stack(s) to resume (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--wait``
+  Wait for resume to complete
+
+.. _openstack_stack_show_with_identity_api_v3:
+
+openstack stack show
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack show [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--prefix PREFIX]
+                               <stack>
+
+Show stack details.
+
+**Positional arguments:**
+
+``<stack>``
+  Stack to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_stack_snapshot_create_with_identity_api_v3:
+
+openstack stack snapshot create
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack snapshot create [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent] [--prefix PREFIX]
+                                          [--name <name>]
+                                          <stack>
+
+Create stack snapshot.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Name of snapshot
+
+.. _openstack_stack_snapshot_delete_with_identity_api_v3:
+
+openstack stack snapshot delete
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack snapshot delete [-h] <stack> <snapshot>
+
+Delete stack snapshot.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack
+
+``<snapshot>``
+  ID of stack snapshot
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_stack_snapshot_list_with_identity_api_v3:
+
+openstack stack snapshot list
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack snapshot list [-h]
+                                        [-f {csv,html,json,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent]
+                                        [--quote {all,minimal,none,nonnumeric}]
+                                        <stack>
+
+List stack snapshots.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack containing the snapshots
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_stack_snapshot_restore_with_identity_api_v3:
+
+openstack stack snapshot restore
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack snapshot restore [-h] <stack> <snapshot>
+
+Restore stack snapshot
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack containing the snapshot
+
+``<snapshot>``
+  ID of the snapshot to restore
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_stack_snapshot_show_with_identity_api_v3:
+
+openstack stack snapshot show
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack snapshot show [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        <stack> <snapshot>
+
+Show stack snapshot.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack containing the snapshot
+
+``<snapshot>``
+  ID of the snapshot to show
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_stack_suspend_with_identity_api_v3:
+
+openstack stack suspend
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack suspend [-h] [-f {csv,html,json,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent]
+                                  [--quote {all,minimal,none,nonnumeric}]
+                                  [--wait]
+                                  <stack> [<stack> ...]
+
+Suspend a stack.
+
+**Positional arguments:**
+
+``<stack>``
+  Stack(s) to suspend (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--wait``
+  Wait for suspend to complete
+
+.. _openstack_stack_template_show_with_identity_api_v3:
+
+openstack stack template show
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack template show [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        <stack>
+
+Display stack template.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack to query
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_stack_update_with_identity_api_v3:
+
+openstack stack update
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 stack update [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--prefix PREFIX] [-t <template>]
+                                 [-e <environment>] [--pre-update <resource>]
+                                 [--timeout <timeout>] [--rollback <value>]
+                                 [--dry-run] [--parameter <key=value>]
+                                 [--parameter-file <key=file>] [--existing]
+                                 [--clear-parameter <parameter>]
+                                 [--tags <tag1,tag2...>] [--wait]
+                                 <stack>
+
+Update a stack.
+
+**Positional arguments:**
+
+``<stack>``
+  Name or ID of stack to update
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``-t <template>, --template <template>``
+  Path to the template
+
+``-e <environment>, --environment <environment>``
+  Path to the environment. Can be specified multiple
+  times
+
+``--pre-update <resource>``
+  Name of a resource to set a pre-update hook to.
+  Resources in nested stacks can be set using slash as a
+  separator: nested_stack/another/my_resource. You can
+  use wildcards to match multiple stacks or resources:
+  nested_stack/an\*/\*_resource. This can be specified
+  multiple times
+
+``--timeout <timeout>``
+  Stack update timeout in minutes
+
+``--rollback <value>``
+  Set rollback on update failure. Value "enabled" sets
+  rollback to enabled. Value "disabled" sets rollback to
+  disabled. Value "keep" uses the value of existing
+  stack to be updated (default)
+
+``--dry-run``
+  Do not actually perform the stack update, but show
+  what would be changed
+
+``--parameter <key=value>``
+  Parameter values used to create the stack. This can be
+  specified multiple times
+
+``--parameter-file <key=file>``
+  Parameter values from file used to create the stack.
+  This can be specified multiple times. Parameter value
+  would be the content of the file
+
+``--existing``
+  Re-use the template, parameters and environment of the
+  current stack. If the template argument is omitted
+  then the existing template is used. If no
+  :option:`--environment` is specified then the existing
+  environment is used. Parameters specified in
+  :option:`--parameter` will patch over the existing values in the
+  current stack. Parameters omitted will keep the
+  existing values
+
+``--clear-parameter <parameter>``
+  Remove the parameters from the set of parameters of
+  current stack for the stack-update. The default value
+  in the template will be used. This can be specified
+  multiple times
+
+``--tags <tag1,tag2...>``
+  An updated list of tags to associate with the stack
+
+``--wait``
+  Wait until stack goes to UPDATE_COMPLETE or
+  UPDATE_FAILED
+
+.. _openstack_subnet_delete_with_identity_api_v3:
+
+openstack subnet delete
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 subnet delete [-h] <subnet>
+
+Delete subnet
+
+**Positional arguments:**
+
+``<subnet>``
+  Subnet to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_subnet_list_with_identity_api_v3:
+
+openstack subnet list
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 subnet list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}] [--long]
+
+List subnets
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+.. _openstack_subnet_pool_delete_with_identity_api_v3:
+
+openstack subnet pool delete
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 subnet pool delete [-h] <subnet-pool>
+
+Delete subnet pool
+
+**Positional arguments:**
+
+``<subnet-pool>``
+  Subnet pool to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_subnet_pool_list_with_identity_api_v3:
+
+openstack subnet pool list
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 subnet pool list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+                                     [--long]
+
+List subnet pools
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+.. _openstack_subnet_pool_show_with_identity_api_v3:
+
+openstack subnet pool show
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 subnet pool show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     <subnet-pool>
+
+Display subnet pool details
+
+**Positional arguments:**
+
+``<subnet-pool>``
+  Subnet pool to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_subnet_show_with_identity_api_v3:
+
+openstack subnet show
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 subnet show [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX]
+                                <subnet>
+
+Show subnet details
+
+**Positional arguments:**
+
+``<subnet>``
+  Subnet to show (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_tld_create_with_identity_api_v3:
+
+openstack tld create
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 tld create [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--prefix PREFIX] --name NAME
+                               [--description DESCRIPTION]
+
+Create new tld
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name NAME``
+  TLD Name
+
+``--description DESCRIPTION``
+  Description
+
+.. _openstack_tld_delete_with_identity_api_v3:
+
+openstack tld delete
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 tld delete [-h] id
+
+Delete tld
+
+**Positional arguments:**
+
+``id``
+  TLD ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_tld_list_with_identity_api_v3:
+
+openstack tld list
+------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 tld list [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
+                             [--quote {all,minimal,none,nonnumeric}]
+
+List tlds
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_tld_set_with_identity_api_v3:
+
+openstack tld set
+-----------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 tld set [-h] [-f {html,json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width <integer>] [--noindent]
+                            [--prefix PREFIX] [--name NAME]
+                            [--description DESCRIPTION | --no-description]
+                            id
+
+Set tld properties
+
+**Positional arguments:**
+
+``id``
+  TLD ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name NAME``
+  TLD Name
+
+``--description DESCRIPTION``
+  Description
+
+``--no-description``
+
+.. _openstack_tld_show_with_identity_api_v3:
+
+openstack tld show
+------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 tld show [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
+                             [--prefix PREFIX]
+                             id
+
+Show tld details
+
+**Positional arguments:**
+
+``id``
+  TLD ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_token_issue_with_identity_api_v3:
+
+openstack token issue
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 token issue [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX]
+
+Issue new token
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_token_revoke_with_identity_api_v3:
+
+openstack token revoke
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 token revoke [-h] <token>
+
+Revoke existing token
+
+**Positional arguments:**
+
+``<token>``
+  Token to be deleted
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_trust_create_with_identity_api_v3:
+
+openstack trust create
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 trust create [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX] --project <project> --role
                                  <role> [--impersonate]
@@ -10732,8 +13343,7 @@ openstack trust create (Identity API v3)
 
 Create new trust
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<trustor-user>``
   User that is delegating authorization (name or ID)
@@ -10741,8 +13351,7 @@ Positional arguments
 ``<trustee-user>``
   User that is assuming authorization (name or ID)
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -10775,91 +13384,1519 @@ Optional arguments
 
 .. _openstack_trust_delete_with_identity_api_v3:
 
-openstack trust delete (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack trust delete
+----------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 trust delete [-h] <trust> [<trust> ...]
+   usage: openstack --os-identity-api-version 3 trust delete [-h] <trust> [<trust> ...]
 
 Delete trust(s)
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<trust>``
   Trust(s) to delete
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 .. _openstack_trust_list_with_identity_api_v3:
 
-openstack trust list (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack trust list
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 trust list [-h]
-                               [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 trust list [-h] [-f {csv,html,json,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
 
 List trusts
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 .. _openstack_trust_show_with_identity_api_v3:
 
-openstack trust show (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack trust show
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 trust show [-h]
-                               [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: openstack --os-identity-api-version 3 trust show [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                <trust>
 
 Display trust details
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<trust>``
   Trust to display
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_user_password_set_with_identity_api_v3:
+.. _openstack_usage_list_with_identity_api_v3:
 
-openstack user password set (Identity API v3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+openstack usage list
+--------------------
 
 .. code-block:: console
 
-   usage: openstack --os-auth-type token --os-identity-api-version 3 user password set [-h] [--password <new-password>]
+   usage: openstack --os-identity-api-version 3 usage list [-h] [-f {csv,html,json,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--quote {all,minimal,none,nonnumeric}]
+                               [--start <start>] [--end <end>]
+
+List resource usage per project
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--start <start>``
+  Usage range start date, ex 2012-01-20 (default: 4
+  weeks ago)
+
+``--end <end>``
+  Usage range end date, ex 2012-01-20 (default:
+  tomorrow)
+
+.. _openstack_usage_show_with_identity_api_v3:
+
+openstack usage show
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 usage show [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--prefix PREFIX] [--project <project>]
+                               [--start <start>] [--end <end>]
+
+Show resource usage for a single project
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--project <project>``
+  Name or ID of project to show usage for
+
+``--start <start>``
+  Usage range start date, ex 2012-01-20 (default: 4
+  weeks ago)
+
+``--end <end>``
+  Usage range end date, ex 2012-01-20 (default:
+  tomorrow)
+
+.. _openstack_user_create_with_identity_api_v3:
+
+openstack user create
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 user create [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX] [--domain <domain>]
+                                [--project <project>]
+                                [--project-domain <project-domain>]
+                                [--password <password>] [--password-prompt]
+                                [--email <email-address>]
+                                [--description <description>]
+                                [--enable | --disable] [--or-show]
+                                <name>
+
+Create new user
+
+**Positional arguments:**
+
+``<name>``
+  New user name
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Default domain (name or ID)
+
+``--project <project>``
+  Default project (name or ID)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+``--password <password>``
+  Set user password
+
+``--password-prompt``
+  Prompt interactively for password
+
+``--email <email-address>``
+  Set user email address
+
+``--description <description>``
+  User description
+
+``--enable``
+  Enable user (default)
+
+``--disable``
+  Disable user
+
+``--or-show``
+  Return existing user
+
+.. _openstack_user_delete_with_identity_api_v3:
+
+openstack user delete
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 user delete [-h] [--domain <domain>] <user> [<user> ...]
+
+Delete user(s)
+
+**Positional arguments:**
+
+``<user>``
+  User(s) to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Domain owning <user> (name or ID)
+
+.. _openstack_user_list_with_identity_api_v3:
+
+openstack user list
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 user list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--quote {all,minimal,none,nonnumeric}]
+                              [--domain <domain>]
+                              [--group <group> | --project <project>] [--long]
+
+List users
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Filter users by <domain> (name or ID)
+
+``--group <group>``
+  Filter users by <group> membership (name or ID)
+
+``--project <project>``
+  Filter users by <project> (name or ID)
+
+``--long``
+  List additional fields in output
+
+.. _openstack_user_password_set_with_identity_api_v3:
+
+openstack user password set
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 user password set [-h] [--password <new-password>]
+                                      [--original-password <original-password>]
 
 Change current user password
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
 ``--password <new-password>``
   New user password
+
+``--original-password <original-password>``
+  Original user password
+
+.. _openstack_user_set_with_identity_api_v3:
+
+openstack user set
+------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 user set [-h] [--name <name>] [--project <project>]
+                             [--project-domain <project-domain>]
+                             [--password <password>] [--password-prompt]
+                             [--email <email-address>]
+                             [--description <description>] [--enable | --disable]
+                             <user>
+
+Set user properties
+
+**Positional arguments:**
+
+``<user>``
+  User to change (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Set user name
+
+``--project <project>``
+  Set default project (name or ID)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+``--password <password>``
+  Set user password
+
+``--password-prompt``
+  Prompt interactively for password
+
+``--email <email-address>``
+  Set user email address
+
+``--description <description>``
+  Set user description
+
+``--enable``
+  Enable user (default)
+
+``--disable``
+  Disable user
+
+.. _openstack_user_show_with_identity_api_v3:
+
+openstack user show
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 user show [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--prefix PREFIX] [--domain <domain>]
+                              <user>
+
+Display user details
+
+**Positional arguments:**
+
+``<user>``
+  User to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--domain <domain>``
+  Domain owning <user> (name or ID)
+
+.. _openstack_volume_create_with_identity_api_v3:
+
+openstack volume create
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume create [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX] --size <size>
+                                  [--snapshot <snapshot>]
+                                  [--description <description>]
+                                  [--type <volume-type>] [--user <user>]
+                                  [--project <project>]
+                                  [--availability-zone <availability-zone>]
+                                  [--image <image>] [--source <volume>]
+                                  [--property <key=value>]
+                                  <name>
+
+Create new volume
+
+**Positional arguments:**
+
+``<name>``
+  New volume name
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--size <size>``
+  New volume size in GB
+
+``--snapshot <snapshot>``
+  Use <snapshot> as source of new volume (name or ID)
+
+``--description <description>``
+  New volume description
+
+``--type <volume-type>``
+  Use <volume-type> as the new volume type
+
+``--user <user>``
+  Specify an alternate user (name or ID)
+
+``--project <project>``
+  Specify an alternate project (name or ID)
+
+``--availability-zone <availability-zone>``
+  Create new volume in <availability_zone>
+
+``--image <image>``
+  Use <image> as source of new volume (name or ID)
+
+``--source <volume>``
+  Volume to clone (name or ID)
+
+``--property <key=value>``
+  Set a property to this volume (repeat option to set
+  multiple properties)
+
+.. _openstack_volume_delete_with_identity_api_v3:
+
+openstack volume delete
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume delete [-h] [--force] <volume> [<volume> ...]
+
+Delete volume(s)
+
+**Positional arguments:**
+
+``<volume>``
+  Volume(s) to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--force``
+  Attempt forced removal of volume(s), regardless of state
+  (defaults to False)
+
+.. _openstack_volume_list_with_identity_api_v3:
+
+openstack volume list
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}]
+                                [--project <project-id>]
+                                [--project-domain <project-domain>]
+                                [--user <user-id>] [--user-domain <user-domain>]
+                                [--name <name>] [--status <status>]
+                                [--all-projects] [--long]
+
+List volumes
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--project <project-id>``
+  Filter results by project (name or ID) (admin only)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+``--user <user-id>``
+  Filter results by user (name or ID) (admin only)
+
+``--user-domain <user-domain>``
+  Domain the user belongs to (name or ID). This can be
+  used in case collisions between user names exist.
+
+``--name <name>``
+  Filter results by volume name
+
+``--status <status>``
+  Filter results by status
+
+``--all-projects``
+  Include all projects (admin only)
+
+``--long``
+  List additional fields in output
+
+.. _openstack_volume_qos_associate_with_identity_api_v3:
+
+openstack volume qos associate
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume qos associate [-h] <qos-spec> <volume-type>
+
+Associate a QoS specification to a volume type
+
+**Positional arguments:**
+
+``<qos-spec>``
+  QoS specification to modify (name or ID)
+
+``<volume-type>``
+  Volume type to associate the QoS (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_volume_qos_create_with_identity_api_v3:
+
+openstack volume qos create
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume qos create [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent] [--prefix PREFIX]
+                                      [--consumer <consumer>]
+                                      [--property <key=value>]
+                                      <name>
+
+Create new QoS specification
+
+**Positional arguments:**
+
+``<name>``
+  New QoS specification name
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--consumer <consumer>``
+  Consumer of the QoS. Valid consumers: back-end, both,
+  front-end (defaults to 'both')
+
+``--property <key=value>``
+  Set a QoS specification property (repeat option to set
+  multiple properties)
+
+.. _openstack_volume_qos_delete_with_identity_api_v3:
+
+openstack volume qos delete
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume qos delete [-h] <qos-spec> [<qos-spec> ...]
+
+Delete QoS specification
+
+**Positional arguments:**
+
+``<qos-spec>``
+  QoS specification(s) to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_volume_qos_disassociate_with_identity_api_v3:
+
+openstack volume qos disassociate
+---------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume qos disassociate [-h]
+                                            [--volume-type <volume-type> | --all]
+                                            <qos-spec>
+
+Disassociate a QoS specification from a volume type
+
+**Positional arguments:**
+
+``<qos-spec>``
+  QoS specification to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--volume-type <volume-type>``
+  Volume type to disassociate the QoS from (name or ID)
+
+``--all``
+  Disassociate the QoS from every volume type
+
+.. _openstack_volume_qos_list_with_identity_api_v3:
+
+openstack volume qos list
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume qos list [-h] [-f {csv,html,json,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent]
+                                    [--quote {all,minimal,none,nonnumeric}]
+
+List QoS specifications
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_volume_qos_set_with_identity_api_v3:
+
+openstack volume qos set
+------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume qos set [-h] [--property <key=value>] <qos-spec>
+
+Set QoS specification properties
+
+**Positional arguments:**
+
+``<qos-spec>``
+  QoS specification to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--property <key=value>``
+  Property to add or modify for this QoS specification
+  (repeat option to set multiple properties)
+
+.. _openstack_volume_qos_show_with_identity_api_v3:
+
+openstack volume qos show
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume qos show [-h] [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent] [--prefix PREFIX]
+                                    <qos-spec>
+
+Display QoS specification details
+
+**Positional arguments:**
+
+``<qos-spec>``
+  QoS specification to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_volume_qos_unset_with_identity_api_v3:
+
+openstack volume qos unset
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume qos unset [-h] [--property <key>] <qos-spec>
+
+Unset QoS specification properties
+
+**Positional arguments:**
+
+``<qos-spec>``
+  QoS specification to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--property <key>``
+  Property to remove from the QoS specification. (repeat
+  option to unset multiple properties)
+
+.. _openstack_volume_set_with_identity_api_v3:
+
+openstack volume set
+--------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume set [-h] [--name <name>] [--description <description>]
+                               [--size <size>] [--property <key=value>]
+                               <volume>
+
+Set volume properties
+
+**Positional arguments:**
+
+``<volume>``
+  Volume to change (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  New volume name
+
+``--description <description>``
+  New volume description
+
+``--size <size>``
+  Extend volume size in GB
+
+``--property <key=value>``
+  Property to add or modify for this volume (repeat
+  option to set multiple properties)
+
+.. _openstack_volume_show_with_identity_api_v3:
+
+openstack volume show
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume show [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX]
+                                <volume-id>
+
+Display volume details
+
+**Positional arguments:**
+
+``<volume-id>``
+  Volume to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_volume_type_create_with_identity_api_v3:
+
+openstack volume type create
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume type create [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent] [--prefix PREFIX]
+                                       [--description <description>]
+                                       [--public | --private]
+                                       [--property <key=value>]
+                                       <name>
+
+Create new volume type
+
+**Positional arguments:**
+
+``<name>``
+  New volume type name
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--description <description>``
+  New volume type description
+
+``--public``
+  Volume type is accessible to the public
+
+``--private``
+  Volume type is not accessible to the public
+
+``--property <key=value>``
+  Property to add for this volume type(repeat option to
+  set multiple properties)
+
+.. _openstack_volume_type_delete_with_identity_api_v3:
+
+openstack volume type delete
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume type delete [-h] <volume-type>
+
+Delete volume type
+
+**Positional arguments:**
+
+``<volume-type>``
+  Volume type to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_volume_type_list_with_identity_api_v3:
+
+openstack volume type list
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume type list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+                                     [--long]
+
+List volume types
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+.. _openstack_volume_type_set_with_identity_api_v3:
+
+openstack volume type set
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume type set [-h] [--name <name>] [--description <name>]
+                                    [--property <key=value>]
+                                    <volume-type>
+
+Set volume type properties
+
+**Positional arguments:**
+
+``<volume-type>``
+  Volume type to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Set volume type name
+
+``--description <name>``
+  Set volume type description
+
+``--property <key=value>``
+  Property to add or modify for this volume type (repeat
+  option to set multiple properties)
+
+.. _openstack_volume_type_show_with_identity_api_v3:
+
+openstack volume type show
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume type show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     <volume-type>
+
+Display volume type details
+
+**Positional arguments:**
+
+``<volume-type>``
+  Volume type to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_volume_type_unset_with_identity_api_v3:
+
+openstack volume type unset
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume type unset [-h] --property <key> <volume-type>
+
+Unset volume type properties
+
+**Positional arguments:**
+
+``<volume-type>``
+  Volume type to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--property <key>``
+  Property to remove from volume type (repeat option to
+  remove multiple properties)
+
+.. _openstack_volume_unset_with_identity_api_v3:
+
+openstack volume unset
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 volume unset [-h] --property <key> <volume>
+
+Unset volume properties
+
+**Positional arguments:**
+
+``<volume>``
+  Volume to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--property <key>``
+  Property to remove from volume (repeat option to remove
+  multiple properties)
+
+.. _openstack_zone_abandon_with_identity_api_v3:
+
+openstack zone abandon
+----------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone abandon [-h] id
+
+Abandon a zone
+
+**Positional arguments:**
+
+``id``
+  Zone ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_zone_axfr_with_identity_api_v3:
+
+openstack zone axfr
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone axfr [-h] id
+
+AXFR a zone
+
+**Positional arguments:**
+
+``id``
+  Zone ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_zone_blacklist_create_with_identity_api_v3:
+
+openstack zone blacklist create
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone blacklist create [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent] [--prefix PREFIX]
+                                          --pattern PATTERN
+                                          [--description DESCRIPTION]
+
+Create new blacklist
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--pattern PATTERN``
+  Blacklist pattern
+
+``--description DESCRIPTION``
+  Description
+
+.. _openstack_zone_blacklist_delete_with_identity_api_v3:
+
+openstack zone blacklist delete
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone blacklist delete [-h] id
+
+Delete blacklist
+
+**Positional arguments:**
+
+``id``
+  Blacklist ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_zone_blacklist_list_with_identity_api_v3:
+
+openstack zone blacklist list
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone blacklist list [-h]
+                                        [-f {csv,html,json,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent]
+                                        [--quote {all,minimal,none,nonnumeric}]
+
+List blacklists
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_zone_blacklist_set_with_identity_api_v3:
+
+openstack zone blacklist set
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone blacklist set [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent] [--prefix PREFIX]
+                                       [--pattern PATTERN]
+                                       [--description DESCRIPTION | --no-description]
+                                       id
+
+Set blacklist properties
+
+**Positional arguments:**
+
+``id``
+  Blacklist ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--pattern PATTERN``
+  Blacklist pattern
+
+``--description DESCRIPTION``
+  Description
+
+``--no-description``
+
+.. _openstack_zone_blacklist_show_with_identity_api_v3:
+
+openstack zone blacklist show
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone blacklist show [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        id
+
+Show blacklist details
+
+**Positional arguments:**
+
+``id``
+  Blacklist ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_zone_create_with_identity_api_v3:
+
+openstack zone create
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone create [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX] [--email EMAIL] [--type TYPE]
+                                [--ttl TTL] [--description DESCRIPTION]
+                                [--masters MASTERS [MASTERS ...]]
+                                name
+
+Create new zone
+
+**Positional arguments:**
+
+``name``
+  Zone Name
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--email EMAIL``
+  Zone Email
+
+``--type TYPE``
+  Zone Type
+
+``--ttl TTL``
+  Time To Live (Seconds)
+
+``--description DESCRIPTION``
+  Description
+
+``--masters MASTERS [MASTERS ...]``
+  Zone Masters
+
+.. _openstack_zone_delete_with_identity_api_v3:
+
+openstack zone delete
+---------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone delete [-h] id
+
+Delete zone
+
+**Positional arguments:**
+
+``id``
+  Zone ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_zone_list_with_identity_api_v3:
+
+openstack zone list
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--quote {all,minimal,none,nonnumeric}]
+                              [--name NAME] [--email EMAIL] [--type TYPE]
+                              [--ttl TTL] [--description DESCRIPTION]
+                              [--status STATUS]
+
+List zones
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name NAME``
+  Zone Name
+
+``--email EMAIL``
+  Zone Email
+
+``--type TYPE``
+  Zone Type
+
+``--ttl TTL``
+  Time To Live (Seconds)
+
+``--description DESCRIPTION``
+  Description
+
+``--status STATUS``
+  Zone Status
+
+.. _openstack_zone_set_with_identity_api_v3:
+
+openstack zone set
+------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone set [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
+                             [--prefix PREFIX] [--email EMAIL] [--ttl TTL]
+                             [--description DESCRIPTION | --no-description]
+                             [--masters MASTERS [MASTERS ...]]
+                             id
+
+Set zone properties
+
+**Positional arguments:**
+
+``id``
+  Zone ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--email EMAIL``
+  Zone Email
+
+``--ttl TTL``
+  Time To Live (Seconds)
+
+``--description DESCRIPTION``
+  Description
+
+``--no-description``
+
+``--masters MASTERS [MASTERS ...]``
+  Zone Masters
+
+.. _openstack_zone_show_with_identity_api_v3:
+
+openstack zone show
+-------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone show [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--prefix PREFIX]
+                              id
+
+Show zone details
+
+**Positional arguments:**
+
+``id``
+  Zone ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_zone_transfer_accept_request_with_identity_api_v3:
+
+openstack zone transfer accept request
+--------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone transfer accept request [-h]
+                                                 [-f {html,json,shell,table,value,yaml}]
+                                                 [-c COLUMN]
+                                                 [--max-width <integer>]
+                                                 [--noindent] [--prefix PREFIX]
+                                                 --transfer-id TRANSFER_ID --key
+                                                 KEY
+
+Accept a Zone Transfer Request
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--transfer-id TRANSFER_ID``
+  Transfer ID
+
+``--key KEY``
+  Transfer Key
+
+.. _openstack_zone_transfer_accept_show_with_identity_api_v3:
+
+openstack zone transfer accept show
+-----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone transfer accept show [-h]
+                                              [-f {html,json,shell,table,value,yaml}]
+                                              [-c COLUMN] [--max-width <integer>]
+                                              [--noindent] [--prefix PREFIX]
+                                              id
+
+Show Zone Transfer Accept
+
+**Positional arguments:**
+
+``id``
+  Zone Tranfer Accept ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_zone_transfer_request_create_with_identity_api_v3:
+
+openstack zone transfer request create
+--------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone transfer request create [-h]
+                                                 [-f {html,json,shell,table,value,yaml}]
+                                                 [-c COLUMN]
+                                                 [--max-width <integer>]
+                                                 [--noindent] [--prefix PREFIX]
+                                                 [--target-project-id TARGET_PROJECT_ID]
+                                                 [--description DESCRIPTION]
+                                                 zone_id
+
+Create new zone transfer request
+
+**Positional arguments:**
+
+``zone_id``
+  Zone ID to transfer.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--target-project-id TARGET_PROJECT_ID``
+  Target Project ID to transfer to.
+
+``--description DESCRIPTION``
+  Description
+
+.. _openstack_zone_transfer_request_delete_with_identity_api_v3:
+
+openstack zone transfer request delete
+--------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone transfer request delete [-h] id
+
+Delete a Zone Transfer Request
+
+**Positional arguments:**
+
+``id``
+  Zone Transfer Request ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_zone_transfer_request_list_with_identity_api_v3:
+
+openstack zone transfer request list
+------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone transfer request list [-h]
+                                               [-f {csv,html,json,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width <integer>]
+                                               [--noindent]
+                                               [--quote {all,minimal,none,nonnumeric}]
+
+List Zone Transfer Requests
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_zone_transfer_request_set_with_identity_api_v3:
+
+openstack zone transfer request set
+-----------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone transfer request set [-h]
+                                              [-f {html,json,shell,table,value,yaml}]
+                                              [-c COLUMN] [--max-width <integer>]
+                                              [--noindent] [--prefix PREFIX]
+                                              [--description DESCRIPTION | --no-description]
+                                              id
+
+Set a Zone Transfer Request
+
+**Positional arguments:**
+
+``id``
+  Zone Transfer Request ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--description DESCRIPTION``
+  Description
+
+``--no-description``
+
+.. _openstack_zone_transfer_request_show_with_identity_api_v3:
+
+openstack zone transfer request show
+------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 3 zone transfer request show [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width <integer>]
+                                               [--noindent] [--prefix PREFIX]
+                                               id
+
+Show Zone Transfer Request Details
+
+**Positional arguments:**
+
+``id``
+  Zone Tranfer Request ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+
+OpenStack with Identity API v2 commands (diff)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This section documents only the difference in
+subcommands available for the openstack client
+when the Identity API version is changed from
+v3 to v2.
+
+.. _openstack_project_unset_with_identity_api_v2:
+
+openstack project unset (Identity API v2)
+-----------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 2 project unset [-h] --property <key> <project>
+
+Unset project properties
+
+**Positional arguments:**
+
+``<project>``
+  Project to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--property <key>``
+  Unset a project property (repeat option to unset multiple
+  properties)
+
+.. _openstack_user_role_list_with_identity_api_v2:
+
+openstack user role list (Identity API v2)
+------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack --os-identity-api-version 2 user role list [-h] [-f {csv,html,json,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent]
+                                   [--quote {all,minimal,none,nonnumeric}]
+                                   [--project <project>]
+                                   [<user>]
+
+List user-role assignments
+
+**Positional arguments:**
+
+``<user>``
+  User to list (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--project <project>``
+  Filter users by <project> (name or ID)
 
