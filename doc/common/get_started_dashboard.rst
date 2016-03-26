@@ -8,7 +8,8 @@ The OpenStack dashboard is a modular `Django web
 application <https://www.djangoproject.com/>`__ that provides a
 graphical interface to OpenStack services.
 
-.. image:: figures/horizon-screenshot.jpg
+.. image:: figures/horizon-screenshot.png
+   :width: 100%
 
 The dashboard is usually deployed through
 `mod_wsgi <http://code.google.com/p/modwsgi/>`__ in Apache. You can
