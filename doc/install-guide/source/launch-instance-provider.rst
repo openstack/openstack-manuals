@@ -34,7 +34,8 @@ name, network, security group, key, and instance name.
       | 5  | m1.xlarge | 16384 |  160 |         0 |     8 | True      |
       +----+-----------+-------+------+-----------+-------+-----------+
 
-   This instance uses the ``m1.tiny`` flavor.
+   This instance uses the ``m1.tiny`` flavor. If you created the optional
+   ``m1.nano`` flavor, use it instead of the ``m1.tiny`` flavor.
 
    .. note::
 

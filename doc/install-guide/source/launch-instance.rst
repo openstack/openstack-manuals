@@ -36,6 +36,33 @@ networks.
 After creating the appropriate networks for your environment, you can
 continue preparing the environment to launch an instance.
 
+Create m1.nano flavor
+---------------------
+
+The smallest default flavor consumes 512 MB memory per instance. For
+environments with compute nodes containing less than 4 GB memory, we
+recommend creating the ``m1.nano`` flavor that only requires 64 MB per
+instance. Only use this flavor with the CirrOS image for testing
+purposes.
+
+.. code-block:: console
+
+   $ openstack flavor create --id 0 --vcpus 1 --ram 64 --disk 1 m1.nano
+   +----------------------------+---------+
+   | Field                      | Value   |
+   +----------------------------+---------+
+   | OS-FLV-DISABLED:disabled   | False   |
+   | OS-FLV-EXT-DATA:ephemeral  | 0       |
+   | disk                       | 1       |
+   | id                         | 0       |
+   | name                       | m1.nano |
+   | os-flavor-access:is_public | True    |
+   | ram                        | 64      |
+   | rxtx_factor                | 1.0     |
+   | swap                       |         |
+   | vcpus                      | 1       |
+   +----------------------------+---------+
+
 Generate a key pair
 -------------------
 
