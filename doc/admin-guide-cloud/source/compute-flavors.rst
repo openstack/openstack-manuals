@@ -385,7 +385,7 @@ CPU pinning policy
     .. code:: console
 
        $ openstack flavor set FLAVOR-NAME \
-           --property hw:cpu_policy=CPU-POLICY
+           --property hw:cpu_policy=CPU-POLICY \
            --property hw:cpu_thread_policy=CPU-THREAD-POLICY
 
     Valid CPU-POLICY values are:
