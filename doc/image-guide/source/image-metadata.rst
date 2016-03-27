@@ -145,4 +145,4 @@ To export the definitions in JSON format:
 .. note::
 
    By default, files are loaded from and exported to the Image service's
-   ``/etc/metadefs`` directory.
+   ``/etc/glance/metadefs`` directory.
