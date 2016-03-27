@@ -217,6 +217,15 @@ Install and configure components
 2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
 
+   * In the ``[DEFAULT]`` section, enable only the compute and metadata
+     APIs:
+
+     .. code-block:: ini
+
+        [DEFAULT]
+        ...
+        enabled_apis = osapi_compute,metadata
+
    .. only:: obs or rdo or ubuntu
 
       * In the ``[api_database]`` and ``[database]`` sections, configure
@@ -370,16 +379,17 @@ Install and configure components
            ...
            lock_path = /var/lib/nova/tmp
 
-   * In the ``[DEFAULT]`` section, disable the EC2 API:
+   .. only:: ubuntu
 
-     .. code-block:: ini
+      .. todo:
 
-        [DEFAULT]
-        ...
-        enabled_apis=osapi_compute,metadata
+         https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1506667
 
-   * (Optional) To assist with troubleshooting, enable verbose
-     logging in the ``[DEFAULT]`` section:
+      * Due to a packaging bug, remove the ``logdir`` option from the
+        ``[DEFAULT]`` section.
+
+   * In the ``[DEFAULT]`` section, enable verbose mode to assist with
+     potential troubleshooting:
 
      .. code-block:: ini
 

@@ -212,8 +212,17 @@ Install and configure components
            ...
            lock_path = /var/lib/nova/tmp
 
-   * (Optional) To assist with troubleshooting,
-     enable verbose logging in the ``[DEFAULT]`` section:
+   .. only:: ubuntu
+
+      .. todo:
+
+         https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1506667
+
+      * Due to a packaging bug, remove the ``logdir`` option from the
+        ``[DEFAULT]`` section.
+
+   * In the ``[DEFAULT]`` section, enable verbose mode to assist with
+     potential troubleshooting:
 
      .. code-block:: ini
 
