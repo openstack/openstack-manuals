@@ -12,8 +12,9 @@ Internet.
 - By default, both administrative and end users can associate floating IP
   addresses with projects and instances. You can change user permissions for
   managing IP addresses by updating the ``/etc/nova/policy.json``
-  file. For basic floating-IP procedures, refer to the ``Manage IP
-  Addresses`` section in the `OpenStack End User Guide <http://docs.openstack.org/user-guide/>`_.
+  file. For basic floating-IP procedures, refer to the `Allocate a
+  floating address to an instance <http://docs.openstack.org/user-guide/configure_access_and_security_for_instances.html#allocate-a-floating-ip-address-to-an-instance>`_
+  section in the OpenStack End User Guide.
 
 - For details on creating public networks using OpenStack Networking
   (``neutron``), refer to `Advanced features through API extensions
