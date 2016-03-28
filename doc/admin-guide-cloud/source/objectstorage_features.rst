@@ -27,7 +27,7 @@ Features and benefits
      - A configurable number of accounts, containers and object copies
        for high availability.
    * - Easily add capacity (unlike RAID resize)
-     - Elastic data scaling with ease    .
+     - Elastic data scaling with ease.
    * - No central database
      - Higher performance, no bottlenecks.
    * - RAID not required

@@ -613,9 +613,9 @@ pick up the changes.
 
       dmz_cidr=x.x.x.x/y
 
-    The ``x.x.x.x/y`` value specifies the range of floating IPs for each
-    pool of floating IPs that you define. This configuration is also
-    required if the VMs in the source group have floating IPs.
+   The ``x.x.x.x/y`` value specifies the range of floating IPs for each
+   pool of floating IPs that you define. This configuration is also
+   required if the VMs in the source group have floating IPs.
 
 Enable IP forwarding
 --------------------

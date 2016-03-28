@@ -51,7 +51,7 @@ Swift-Informant
 ~~~~~~~~~~~~~~~
 
 Swift-Informant middleware (see
-`swift-informant <https://github.com/pandemicsyn/swift-informant>_`) has
+`swift-informant <https://github.com/pandemicsyn/swift-informant>`_) has
 real-time visibility into Object Storage client requests. It sits in the
 pipeline for the proxy server, and after each request to the proxy server it
 sends three meters to a ``StatsD`` server:
@@ -136,7 +136,7 @@ can also specify the port and a default sample rate. The specified
 default sample rate is used unless a specific call to a statsd logging
 method (see the list below) overrides it. Currently, no logging calls
 override the sample rate, but it is conceivable that some meters may
-require accuracy (sample_rate == 1) while others may not.
+require accuracy (``sample_rate=1``) while others may not.
 
 .. code-block:: ini
 
