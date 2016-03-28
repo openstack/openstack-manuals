@@ -9,7 +9,7 @@ creating and assigning new IP addresses).
 
 Networking in OpenStack is complex. This section provides the basic
 instructions for creating a network and a router. For detailed
-information about managing networks, refer to the `OpenStack Cloud
+information about managing networks, refer to the `OpenStack
 Administrator
 Guide <http://docs.openstack.org/admin-guide-cloud/networking.html>`__.
 
