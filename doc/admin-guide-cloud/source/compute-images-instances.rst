@@ -310,7 +310,7 @@ Image service will return a URL that links directly to the back-end store.
 You can download the image using this approach. Currently, the only store
 to support the direct download approach is the filesystem store.
 Configured the approach using the ``filesystems`` option in
-the ``image_file_url``section of the ``nova.conf`` file on
+the ``image_file_url`` section of the ``nova.conf`` file on
 compute nodes.
 
 Compute nodes also implement caching of images, meaning that if an image
