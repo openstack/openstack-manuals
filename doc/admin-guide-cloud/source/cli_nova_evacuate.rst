@@ -42,9 +42,8 @@ current VM host is not operational. Otherwise, the evacuation fails.
 
 #. To preserve the user disk data on the evacuated server, deploy Compute
    with a shared file system. To configure your system, see
-   `Configure migrations <http://docs.openstack.org/admin-guide-cloud/compute-configuring-migrations.html>`_
-   in the `OpenStack Cloud Administrator Guide`. The
-   following example does not change the password.
+   `Configure migrations <http://docs.openstack.org/admin-guide-cloud/compute-configuring-migrations.html>`_.
+   The following example does not change the password.
 
    .. code-block:: console
 
