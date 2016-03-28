@@ -304,7 +304,7 @@ If your image uses ``grub2`` as the boot loader,
 there should be a line in the grub configuration file.
 For example, ``/boot/grub/grub.cfg``, which looks something like this:
 
-::
+.. code-block:: console
 
    linux /boot/vmlinuz-3.2.0-49-virtual root=UUID=6d2231e4-0975-4f35-a94f-56738c1a8150 ro console=ttyS0
 
