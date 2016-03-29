@@ -8,10 +8,10 @@ Run the following command to discover the version number for a client:
 
    $ PROJECT --version
 
-For example, to see the version number for the ``nova`` client, run the
-following command:
+For example, to see the version number for the ``openstack`` client,
+run the following command:
 
 .. code-block:: console
 
-   $ nova --version
-   2.31.0
+   $ openstack --version
+   2.2.0
