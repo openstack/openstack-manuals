@@ -105,7 +105,7 @@ Create the provider network
    the host.
 
    Replace ``PROVIDER_NETWORK_GATEWAY`` with the gateway IP address on the
-   provider provider network, typically the ".1" IP address.
+   provider network, typically the ".1" IP address.
 
    **Example**
 
