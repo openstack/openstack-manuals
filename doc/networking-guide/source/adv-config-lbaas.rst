@@ -192,6 +192,45 @@ Building an LBaaS v2 load balancer
        | vip_subnet_id       | f1e7827d-1bfe-40b6-b8f0-2d9fd946f59b           |
        +---------------------+------------------------------------------------+
 
+#.  The security group must be updated to allow traffic to reach the load
+    balancer. Create a new security group along with ingress rules to allow
+    traffic into the new load balancer. The neutron port for the load balancer
+    is shown as ``vip_port_id`` above.
+
+    Create a security group and rules to allow TCP port 80, TCP port 443, and
+    all ICMP traffic:
+
+    .. code-block:: console
+
+       $ neutron security-group-create lbaas
+       $ neutron security-group-rule-create \
+         --direction ingress \
+         --protocol tcp \
+         --port-range-min 80 \
+         --port-range-max 80 \
+         --remote-ip-prefix 0.0.0.0/0 \
+         lbaas
+       $ neutron security-group-rule-create \
+         --direction ingress \
+         --protocol tcp \
+         --port-range-min 443 \
+         --port-range-max 443 \
+         --remote-ip-prefix 0.0.0.0/0 \
+         lbaas
+       $ security-group-rule-create \
+         --direction ingress \
+         --protocol icmp \
+         lbaas
+
+    Apply the security group to the load balancer's network port using
+    ``vip_port_id`` from the :command:`lbaas-loadbalancer-show` command:
+
+    .. code-block:: console
+
+       $ neutron port-update \
+         --security-group lbaas \
+         9f8f8a75-a731-4a34-b622-864907e1d556
+
     This load balancer is active and ready to serve traffic on ``192.168.1.22``.
 
 #.  Verify that the load balancer is responding to pings before moving further:
@@ -346,4 +385,17 @@ floating IP address to the load balancer using ``floatingip-associate``:
 
    $ neutron floatingip-associate FLOATINGIP_ID LOAD_BALANCER_PORT_ID
 
+Setting quotas for LBaaS v2
+---------------------------
 
+Quotas are available for limiting the number of load balancers and load
+balancer pools. By default, both quotas are set to 10.
+
+You can adjust quotas using the :command:`quota-update` command:
+
+.. code-block:: console
+
+   $ neutron quota-update --tenant-id TENANT_UUID --loadbalancer 25
+   $ neutron quota-update --tenant-id TENANT_UUID --pool 50
+
+A setting of ``-1`` disables the quota for a tenant.
