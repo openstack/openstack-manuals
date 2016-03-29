@@ -14,13 +14,13 @@ The Shared File System service allows you to create a snapshot of the
 consistency group and restore all shares that were associated with a
 consistency group.
 
-.. note::
+.. important::
 
    The **consistency groups and snapshots** are an **experimental**
    Shared File Systems API in the Liberty release.
    Contributors can change or remove the experimental part of the
    Shared File Systems API in further releases without maintaining
-   backward compatibility. The experimental API have an
+   backward compatibility. Experimental APIs have an
    ``X-OpenStack-Manila-API-Experimental: true`` header in
    their HTTP requests.
 

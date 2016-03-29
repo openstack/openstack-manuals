@@ -25,6 +25,7 @@ System (EFS) does.
    shared_file_systems_snapshots.rst
    shared_file_systems_security_services.rst
    shared_file_systems_cgroups.rst
+   shared_file_systems_share_replication.rst
    shared_file_systems_multi_backend.rst
    shared_file_systems_networking.rst
    shared_file_systems_troubleshoot.rst
