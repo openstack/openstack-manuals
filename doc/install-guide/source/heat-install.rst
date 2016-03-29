@@ -406,7 +406,7 @@ Install and configure components
            auth_uri = http://controller:5000
 
         Replace ``HEAT_PASS`` with the password you chose for the
-        ``heat`` user in the Identity service..
+        ``heat`` user in the Identity service.
 
       * In the ``[DEFAULT]`` section, configure the metadata and
         wait condition URLs:
