@@ -202,8 +202,8 @@ certificates of trusted CAs:
 Replication configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Add the following to the back-end specification to specify another Storage
-Center to replicate to:
+Add the following to the back-end specification to specify another Flash
+Array to replicate to:
 
 .. code-block:: ini
 
