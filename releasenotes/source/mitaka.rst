@@ -33,6 +33,7 @@ Installation Guide
 
 * Updated configuration for all services.
 * Added Shared File Systems (manila) content.
+* Added Database service (trove) content.
 
 Networking Guide
 ~~~~~~~~~~~~~~~~

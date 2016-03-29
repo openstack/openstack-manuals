@@ -41,6 +41,8 @@ This example is a high-level process flow for using Database services:
 
          $ mysql -u myuser -p -h TROVE_IP_ADDRESS mydb
 
+**Components**
+
 The Database service includes the following components:
 
 ``python-troveclient`` command-line client
