@@ -9,7 +9,7 @@ Telemetry service command-line client
 The ceilometer client is the command-line interface (CLI) for
 the Telemetry service API and its extensions.
 
-This chapter documents :command:`ceilometer` version ``2.3.0``.
+This chapter documents :command:`ceilometer` version ``2.4.0``.
 
 For help on a specific :command:`ceilometer` command, enter:
 
@@ -676,7 +676,7 @@ ceilometer alarm-gnocchi-aggregation-by-metrics-threshold-create
           [--insufficient-data-action <Webhook URL>]
           [--time-constraint <Time Constraint>] [--repeat-actions {True|False}]
           [--granularity <GRANULARITY>] [--evaluation-periods <COUNT>]
-          [--aggregation-method <AGGREATION>] [--comparison-operator <OPERATOR>]
+          --aggregation-method <AGGREATION> [--comparison-operator <OPERATOR>]
           --threshold <THRESHOLD> -m <METRICS>
 
 Create a new alarm based on computed statistics.
@@ -768,7 +768,7 @@ Create a new alarm based on computed statistics.
   '81pct', '82pct', '83pct', '84pct', '85pct',
   '86pct', '87pct', '88pct', '89pct', '90pct',
   '91pct', '92pct', '93pct', '94pct', '95pct',
-  '96pct', '97pct', '98pct', '99pct'].
+  '96pct', '97pct', '98pct', '99pct']. Required.
 
 ``--comparison-operator <OPERATOR>``
   Operator to compare with, one of: ['lt', 'le',
@@ -924,7 +924,7 @@ ceilometer alarm-gnocchi-aggregation-by-resources-threshold-create
           [--insufficient-data-action <Webhook URL>]
           [--time-constraint <Time Constraint>] [--repeat-actions {True|False}]
           [--granularity <GRANULARITY>] [--evaluation-periods <COUNT>]
-          [--aggregation-method <AGGREATION>] [--comparison-operator <OPERATOR>]
+          --aggregation-method <AGGREATION> [--comparison-operator <OPERATOR>]
           --threshold <THRESHOLD> -m <METRIC> --resource-type <RESOURCE_TYPE>
           --query <QUERY>
 
@@ -1017,7 +1017,7 @@ Create a new alarm based on computed statistics.
   '81pct', '82pct', '83pct', '84pct', '85pct',
   '86pct', '87pct', '88pct', '89pct', '90pct',
   '91pct', '92pct', '93pct', '94pct', '95pct',
-  '96pct', '97pct', '98pct', '99pct'].
+  '96pct', '97pct', '98pct', '99pct']. Required.
 
 ``--comparison-operator <OPERATOR>``
   Operator to compare with, one of: ['lt', 'le',
@@ -1193,7 +1193,8 @@ ceilometer alarm-gnocchi-resources-threshold-create
                                                               [--repeat-actions {True|False}]
                                                               [--granularity <GRANULARITY>]
                                                               [--evaluation-periods <COUNT>]
-                                                              [--aggregation-method <AGGREATION>]
+                                                              --aggregation-method
+                                                              <AGGREATION>
                                                               [--comparison-operator <OPERATOR>]
                                                               --threshold
                                                               <THRESHOLD> -m
@@ -1292,7 +1293,7 @@ Create a new alarm based on computed statistics.
   '81pct', '82pct', '83pct', '84pct', '85pct',
   '86pct', '87pct', '88pct', '89pct', '90pct',
   '91pct', '92pct', '93pct', '94pct', '95pct',
-  '96pct', '97pct', '98pct', '99pct'].
+  '96pct', '97pct', '98pct', '99pct']. Required.
 
 ``--comparison-operator <OPERATOR>``
   Operator to compare with, one of: ['lt', 'le',
@@ -1854,6 +1855,7 @@ ceilometer meter-list
 .. code-block:: console
 
    usage: ceilometer meter-list [-q <QUERY>] [-l <NUMBER>]
+                                [--unique {True|False}]
 
 List the user's meters.
 
@@ -1869,6 +1871,9 @@ List the user's meters.
   limits result to <default_api_return_limit>
   rows if no limit provided. Option is
   configured in ceilometer.conf [api] group
+
+``--unique {True|False}``
+  Retrieves unique list of meters.
 
 .. _ceilometer_query-alarm-history:
 
