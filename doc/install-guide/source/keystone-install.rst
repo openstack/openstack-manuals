@@ -133,7 +133,7 @@ HTTP server to handle requests.
               ...
               provider = fernet
 
-   .. only:: rdo or ubuntu
+   .. only:: rdo or ubuntu or obs
 
       4. Populate the Identity service database:
 
