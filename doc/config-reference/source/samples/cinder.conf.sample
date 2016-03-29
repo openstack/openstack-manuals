@@ -1075,6 +1075,11 @@
 # backend endpoint. (boolean value)
 #driver_ssl_cert_verify = false
 
+# Can be used to specify a non default path to a CA_BUNDLE file or directory
+# with certificates of trusted CAs, which will be used to validate the backend
+# (string value)
+#driver_ssl_cert_path = <None>
+
 # Swift authentication mechanism (string value)
 #backup_swift_auth = per_user
 
@@ -1134,6 +1139,29 @@
 # REST API authorization token. (string value)
 #pure_api_token = <None>
 
+# Automatically determine an oversubscription ratio based on the current total
+# data reduction values. If used this calculated value will override the
+# max_over_subscription_ratio config option. (boolean value)
+#pure_automatic_max_oversubscription_ratio = true
+
+# Snapshot replication interval in seconds. (integer value)
+#pure_replica_interval_default = 900
+
+# Retain all snapshots on target for this time (in seconds.) (integer value)
+#pure_replica_retention_short_term_default = 14400
+
+# Retain how many snapshots for each day. (integer value)
+#pure_replica_retention_long_term_per_day_default = 3
+
+# Retain snapshots per day on target for this time (in days.) (integer value)
+#pure_replica_retention_long_term_default = 7
+
+# When enabled, all Pure volumes, snapshots, and protection groups will be
+# eradicated at the time of deletion in Cinder. Data will NOT be recoverable
+# after a delete with this set to True! When disabled, volumes and snapshots
+# will go into pending eradication state and can be recovered. (boolean value)
+#pure_eradicate_on_delete = false
+
 # The backoff time in seconds between Swift retries (integer value)
 #backup_swift_retry_backoff = 2
 
@@ -1144,11 +1172,6 @@
 # Ceilometer when backing up the volume to the Swift backend storage. The
 # default value is True to enable the timer. (boolean value)
 #backup_swift_enable_progress_timer = true
-
-# Automatically determine an oversubscription ratio based on the current total
-# data reduction values. If used this calculated value will override the
-# max_over_subscription_ratio config option. (boolean value)
-#pure_automatic_max_oversubscription_ratio = true
 
 # Location of the CA certificate file to use for swift client requests. (string
 # value)
