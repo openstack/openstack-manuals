@@ -144,7 +144,7 @@ Create a private type:
 
    If you run :command:`manila type-list` only public share types appear.
    To see private share types, run :command:`manila type-list` with
-   :option:`-all` optional argument.
+   :option:`--all` optional argument.
 
 Grant access to created private type for a demo and alt_demo projects
 by providing their IDs:
