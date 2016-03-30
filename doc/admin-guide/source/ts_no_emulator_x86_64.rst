@@ -14,7 +14,6 @@ Solution
 On the KVM host, run :command:`cat /proc/cpuinfo`. Make sure the ``vmx`` or
 ``svm`` flags are set.
 
-Follow the instructions in the `enabling KVM
-section <http://docs.openstack.org/liberty/config-reference/content/kvm.html#section_kvm_enable>`__
-of the Configuration Reference to enable hardware virtualization support
-in your BIOS.
+Follow the instructions in the `Enable KVM
+<http://docs.openstack.org/mitaka/config-reference/compute/hypervisor-kvm.html#enable-kvm>`__ section in the OpenStack Configuration Reference to enable hardware
+virtualization support in your BIOS.

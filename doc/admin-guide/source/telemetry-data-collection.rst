@@ -75,7 +75,7 @@ each OpenStack service that are transformed to samples by Telemetry.
 |                    | image.upload           | found in `Configure the Image |
 |                    |                        | service for Telemetry section |
 |                    | image.delete           | <http://docs.openstack.org    |
-|                    |                        | /liberty/install-guide-ubuntu |
+|                    |                        | /mitaka/install-guide-ubuntu  |
 |                    | image.send             | /ceilometer-glance.html>`__   |
 |                    |                        | section in the OpenStack      |
 |                    |                        | Installation Guide            |
@@ -132,7 +132,7 @@ each OpenStack service that are transformed to samples by Telemetry.
 |                    | volume.create.\*       | be found in the `Add the      |
 |                    |                        | Block Storage service agent   |
 |                    | volume.delete.\*       | for Telemetry section <http:  |
-|                    |                        | //docs.openstack.org/liberty/ |
+|                    |                        | //docs.openstack.org/mitaka/  |
 |                    | volume.update.\*       | install-guide-ubuntu/         |
 |                    |                        | /ceilometer-cinder.html>`__   |
 |                    | volume.resize.\*       | section in the                |
@@ -172,7 +172,7 @@ administrators and users. Configuring ``nova_notifications`` in the
 rapidly. For more information on configuring notifications for the
 compute service, see
 `Telemetry services <http://docs.openstack.org/
-liberty/install-guide-ubuntu/ceilometer-nova.html>`__ in the
+mitaka/install-guide-ubuntu/ceilometer-nova.html>`__ in the
 OpenStack Installation Guide.
 
 .. note::
@@ -193,7 +193,7 @@ meters are listed in :ref:`telemetry-object-storage-meter`, marked with
 
 The instructions on how to install this middleware can be found in
 `Configure the Object Storage service for Telemetry
-<http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer-swift.html>`__
+<http://docs.openstack.org/mitaka/install-guide-ubuntu/ceilometer-swift.html>`__
 section in the OpenStack Installation Guide.
 
 Telemetry middleware
@@ -291,7 +291,7 @@ The following services can be polled with this agent:
    framework
 
 To install and configure this service use the `Add the Telemetry service
-<http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer.html>`__
+<http://docs.openstack.org/mitaka/install-guide-ubuntu/ceilometer.html>`__
 section in the OpenStack Installation Guide.
 
 The central agent does not need direct database connection. The samples
@@ -316,7 +316,7 @@ information.
 A compute agent instance has to be installed on each and every compute
 node, installation instructions can be found in the `Install the Compute
 agent for Telemetry
-<http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer-nova.html>`__
+<http://docs.openstack.org/mitaka/install-guide-ubuntu/ceilometer-nova.html>`__
 section in the OpenStack Installation Guide.
 
 Just like the central agent, this component also does not need a direct
@@ -399,7 +399,7 @@ Telemetry services.
 For information about the required configuration options that have to be
 set in the ``ceilometer.conf`` configuration file for both the central
 and compute agents, see the `Coordination section
-<http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
+<http://docs.openstack.org/mitaka/config-reference/telemetry/telemetry_service_config_opts.html>`__
 in the OpenStack Configuration Reference.
 
 Notification agent HA deployment
@@ -413,7 +413,7 @@ in a larger amount of load.
 To enable workload partitioning by notification agent, the ``backend_url``
 option must be set in the ``ceilometer.conf`` configuration file.
 Additionally, ``workload_partitioning`` should be enabled in the
-`Notification section <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__ in the OpenStack Configuration Reference.
+`Notification section <http://docs.openstack.org/mitaka/config-reference/telemetry/telemetry_service_config_opts.html>`__ in the OpenStack Configuration Reference.
 
 .. note::
 
@@ -451,7 +451,7 @@ central agent configuration also supports using different configuration
 files for groups of service instances of this type that are running in
 parallel. For enabling this configuration set a value for the
 ``partitioning_group_prefix`` option in the `Central section
-<http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
+<http://docs.openstack.org/mitaka/config-reference/telemetry/telemetry_service_config_opts.html>`__
 in the OpenStack Configuration Reference.
 
 .. warning::
@@ -466,7 +466,7 @@ in the OpenStack Configuration Reference.
 To enable the compute agent to run multiple instances simultaneously
 with workload partitioning, the ``workload_partitioning`` option has to
 be set to ``True`` under the `Compute section
-<http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
+<http://docs.openstack.org/mitaka/config-reference/telemetry/telemetry_service_config_opts.html>`__
 in the ``ceilometer.conf`` configuration file.
 
 
@@ -583,7 +583,7 @@ the ``ceilometer.conf`` file. The meter pipeline and event pipeline
 configuration files can be set by the ``pipeline_cfg_file`` and
 ``event_pipeline_cfg_file`` options listed in the `Description of
 configuration options for api table
-<http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
+<http://docs.openstack.org/mitaka/config-reference/telemetry/telemetry_service_config_opts.html>`__
 section in the OpenStack Configuration Reference respectively. Multiple
 pipelines can be defined in one pipeline configuration file.
 
@@ -1085,7 +1085,7 @@ Multiple ``ceilometer-collector`` processes can be run at a time. It is also
 supported to start multiple worker threads per collector process. The
 ``collector_workers`` configuration option has to be modified in the
 `Collector section
-<http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
+<http://docs.openstack.org/mitaka/config-reference/telemetry/telemetry_service_config_opts.html>`__
 of the ``ceilometer.conf`` configuration file.
 
 Database dispatcher
@@ -1138,7 +1138,7 @@ target. The samples are sent without any modification. To set this
 option as the collector's target, the ``dispatcher`` has to be changed
 to ``http`` in the ``ceilometer.conf`` configuration file. For the list
 of options that you need to set, see the see the `dispatcher_http
-section <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
+section <http://docs.openstack.org/mitaka/config-reference/telemetry/telemetry_service_config_opts.html>`__
 in the OpenStack Configuration Reference.
 
 File dispatcher
@@ -1147,7 +1147,7 @@ File dispatcher
 You can store samples in a file by setting the ``dispatcher`` option in the
 ``ceilometer.conf`` file. For the list of configuration options,
 see the `dispatcher_file section
-<http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
+<http://docs.openstack.org/mitaka/config-reference/telemetry/telemetry_service_config_opts.html>`__
 in the OpenStack Configuration Reference.
 
 Gnocchi dispatcher
@@ -1160,5 +1160,5 @@ configuration file.
 
 For the list of options that you need to set, see the
 `dispatcher_gnocchi section
-<http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
+<http://docs.openstack.org/mitaka/config-reference/telemetry/telemetry_service_config_opts.html>`__
 in the OpenStack Configuration Reference.

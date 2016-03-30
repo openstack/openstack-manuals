@@ -26,7 +26,7 @@ These workflows are possible for a migration:
 
       While most back-ends support this function, not all do. See the driver
       documentation in the `OpenStack Configuration Reference
-      <http://docs.openstack.org/liberty/config-reference/content/>`__ for more
+      <http://docs.openstack.org/mitaka/config-reference/>`__ for more
       details.
 
 #. If the volume is attached to a VM instance, the Block Storage creates a

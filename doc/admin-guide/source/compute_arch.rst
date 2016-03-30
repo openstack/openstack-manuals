@@ -72,7 +72,7 @@ availability zones. Compute supports the following hypervisors:
 -  `Xen <http://www.xen.org/support/documentation.html>`__
 
 For more information about hypervisors, see the
-`Hypervisors <http://docs.openstack.org/liberty/config-reference/content/section_compute-hypervisors.html>`__
+`Hypervisors <http://docs.openstack.org/mitaka/config-reference/compute/hypervisors.html>`__
 section in the OpenStack Configuration Reference.
 
 Tenants, users, and roles
@@ -139,7 +139,7 @@ ephemeral volume is defined by the flavor of an instance.
 
 In addition to the ephemeral root volume, all default types of flavors,
 except ``m1.tiny``, which is the smallest one, provide an additional
-ephemeral block device sized between 20 and 160 GB (a configurable value
+ephemeral block device sized between 20 and 160 GB (a configurable value
 to suit an environment). It is represented as a raw block device with no
 partition table or file system. A cloud-aware operating system can
 discover, format, and mount such a storage device. OpenStack Compute
@@ -179,7 +179,7 @@ case, the root file system can be on the persistent volume, and its
 state is maintained, even if the instance is shut down. For more
 information about this type of configuration, see the `OpenStack
 Configuration Reference
-<http://docs.openstack.org/liberty/config-reference/content/>`__.
+<http://docs.openstack.org/mitaka/config-reference/>`__.
 
 .. note::
 
@@ -194,10 +194,7 @@ EC2 compatibility API
 ~~~~~~~~~~~~~~~~~~~~~
 In addition to the native compute API, OpenStack provides an
 EC2-compatible API. This API allows EC2 legacy workflows built for EC2
-to work with OpenStack. For more information and configuration options
-about this compatibility API, see the `OpenStack Configuration
-Reference <http://docs.openstack.org/liberty/config-reference/content/
-configuring-ec2-api.html>`__.
+to work with OpenStack.
 
 .. warning::
 

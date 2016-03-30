@@ -3,8 +3,7 @@ Plug-in configurations
 ======================
 
 For configurations options, see `Networking configuration
-options <http://docs.openstack.org/liberty/config-reference
-/content/section_networking-options-reference.html>`__
+options <http://docs.openstack.org/mitaka/config-reference/networking/networking_options_reference.html>`__
 in Configuration Reference. These sections explain how to configure
 specific plug-ins.
 
@@ -32,8 +31,7 @@ Configure Big Switch (Floodlight REST Proxy) plug-in
       server = CONTROLLER_IP:PORT
 
    For database configuration, see `Install Networking
-   Services <http://docs.openstack.org/liberty/install-guide-ubuntu
-   /neutron-controller-install.html>`__
+   Services <http://docs.openstack.org/mitaka/install-guide-ubuntu/neutron-controller-install.html>`__
    in the Installation Guide in the `OpenStack Documentation
    index <http://docs.openstack.org>`__. (The link defaults to the Ubuntu
    version.)
@@ -80,8 +78,7 @@ Configure Brocade plug-in
       ostype   = NOS
 
    For database configuration, see `Install Networking
-   Services <http://docs.openstack.org/liberty/install-guide-ubuntu/
-   neutron-controller-install.html>`__
+   Services <http://docs.openstack.org/mitaka/install-guide-ubuntu/neutron-controller-install.html>`__
    in any of the Installation Guides in the `OpenStack Documentation
    index <http://docs.openstack.org>`__. (The link defaults to the Ubuntu
    version.)
@@ -177,8 +174,7 @@ formerly known as Nicira NVP.
             NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/vmware/nsx.ini
 
       For database configuration, see `Install Networking
-      Services <http://docs.openstack.org/liberty/install-guide-ubuntu/
-      neutron-controller-install.html>`__
+      Services <http://docs.openstack.org/mitaka/install-guide-ubuntu/neutron-controller-install.html>`__
       in the Installation Guide.
 
 #. Restart ``neutron-server`` to apply settings:
@@ -241,8 +237,7 @@ Configure PLUMgrid plug-in
       password = "PLUMgrid-director-admin-password"
 
    For database configuration, see `Install Networking
-   Services <http://docs.openstack.org/liberty/install-guide-ubuntu/
-   neutron-controller-install.html>`__
+   Services <http://docs.openstack.org/mitaka/install-guide-ubuntu/neutron-controller-install.html>`__
    in the Installation Guide.
 
 #. Restart the ``neutron-server`` service to apply the settings:

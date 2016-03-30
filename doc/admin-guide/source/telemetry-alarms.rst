@@ -116,7 +116,7 @@ information about this approach, see the section called
 To use this workload partitioning solution set the
 ``evaluation_service`` option to ``default``. For more
 information, see the alarm section in the
-`OpenStack Configuration Reference <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`_.
+`OpenStack Configuration Reference <http://docs.openstack.org/mitaka/config-reference/telemetry.html>`_.
 
 Using alarms
 ~~~~~~~~~~~~

@@ -23,7 +23,7 @@ configuration, patching, backups, restores, and monitoring.
 You can modify various cluster characteristics by editing the
 ``/etc/trove/trove.conf`` file. A comprehensive list of the Database
 service configuration options is described in the `Database service
-<http://docs.openstack.org/liberty/config-reference/content/ch_configuring-trove.html>`_
+<http://docs.openstack.org/mitaka/config-reference/database-service.html>`_
 chapter in the *Configuration Reference*.
 
 Create a data store

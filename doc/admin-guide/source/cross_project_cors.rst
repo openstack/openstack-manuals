@@ -25,7 +25,7 @@ security advisory below for more information.
    not covered by this document. For those, please refer to their respective
    implementations:
 
-   * `CORS in Object Storage <http://docs.openstack.org/liberty/config-reference/content/object-storage-cores.html>`_
+   * `CORS in Object Storage <http://docs.openstack.org/mitaka/config-reference/object-storage/cors.html>`_
    * `CORS in dashboard <http://docs.openstack.org/security-guide/dashboard/cross-origin-resource-sharing-cors.html>`_
 
 

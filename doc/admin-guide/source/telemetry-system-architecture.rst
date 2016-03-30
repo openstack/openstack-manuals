@@ -156,8 +156,8 @@ Users, roles, and tenants
 This service of OpenStack uses OpenStack Identity for authenticating and
 authorizing users. The required configuration options are listed in the
 `Telemetry
-section <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
-in the *OpenStack Configuration Reference*.
+section <http://docs.openstack.org/mitaka/config-reference/telemetry.html>`__
+in the OpenStack Configuration Reference.
 
 The system uses two roles:``admin`` and ``non-admin``. The authorization
 happens before processing each API request. The amount of returned data

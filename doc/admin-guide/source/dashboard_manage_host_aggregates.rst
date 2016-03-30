@@ -11,7 +11,7 @@ multiple aggregates.
 
 The scheduler uses this information to make scheduling decisions.
 For information, see
-`Scheduling <http://docs.openstack.org/liberty/config-reference/content/section_compute-scheduler.html>`__.
+`Scheduling <http://docs.openstack.org/mitaka/config-reference/compute/scheduler.html>`__.
 
 To create a host aggregate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

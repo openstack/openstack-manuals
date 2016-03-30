@@ -11,8 +11,8 @@ logging, the format of the log entries and the log levels.
 The log settings can be changed in ``ceilometer.conf``. The list of
 configuration options are listed in the logging configuration options
 table in the `Telemetry
-section <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
-in the *OpenStack Configuration Reference*.
+section <http://docs.openstack.org/mitaka/config-reference/telemetry.html>`__
+in the OpenStack Configuration Reference.
 
 By default ``stderr`` is used as standard output for the log messages.
 It can be changed to either a log file or syslog. The ``debug`` and

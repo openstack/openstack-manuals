@@ -79,10 +79,6 @@ node for the ZooKeeper driver:
    [zookeeper]
    address="192.168.2.1:2181,192.168.2.2:2181,192.168.2.3:2181"
 
-For Compute Service groups customization options, see the `OpenStack
-Configuration Reference Guide <http://docs.openstack.org/liberty/config-reference/
-content/list-of-compute-config-options.html#config_table_nova_zookeeper>`_.
-
 .. _memcache-servicegroup-driver:
 
 Memcache ServiceGroup driver
