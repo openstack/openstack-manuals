@@ -9,7 +9,7 @@ Key Manager service command-line client
 The barbican client is the command-line interface (CLI) for
 the Key Manager service API and its extensions.
 
-This chapter documents :command:`barbican` version ``4.0.0``.
+This chapter documents :command:`barbican` version ``4.0.1``.
 
 For help on a specific :command:`barbican` command, enter:
 
@@ -184,7 +184,7 @@ barbican acl get
 
 .. code-block:: console
 
-   usage: barbican acl get [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+   usage: barbican acl get [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
                            [--max-width <integer>] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            URI
@@ -208,8 +208,8 @@ barbican acl submit
 
 .. code-block:: console
 
-   usage: barbican acl submit [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                              [--max-width <integer>] [--noindent]
+   usage: barbican acl submit [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--user [USERS]]
                               [--project-access | --no-project-access]
@@ -247,8 +247,8 @@ barbican acl user add
 
 .. code-block:: console
 
-   usage: barbican acl user add [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                                [--max-width <integer>] [--noindent]
+   usage: barbican acl user add [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--user [USERS]]
                                 [--project-access | --no-project-access]
@@ -286,7 +286,7 @@ barbican acl user remove
 
 .. code-block:: console
 
-   usage: barbican acl user remove [-h] [-f {csv,json,table,value,yaml}]
+   usage: barbican acl user remove [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
@@ -326,8 +326,9 @@ barbican ca get
 
 .. code-block:: console
 
-   usage: barbican ca get [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                          [--max-width <integer>] [--noindent] [--prefix PREFIX]
+   usage: barbican ca get [-h] [-f {html,json,shell,table,value,yaml}]
+                          [-c COLUMN] [--max-width <integer>] [--noindent]
+                          [--prefix PREFIX]
                           URI
 
 Retrieve a CA by providing its URI.
@@ -349,7 +350,7 @@ barbican ca list
 
 .. code-block:: console
 
-   usage: barbican ca list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+   usage: barbican ca list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
                            [--max-width <integer>] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--limit LIMIT] [--offset OFFSET] [--name NAME]
@@ -379,7 +380,7 @@ barbican secret container create
 .. code-block:: console
 
    usage: barbican secret container create [-h]
-                                           [-f {json,shell,table,value,yaml}]
+                                           [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--noindent] [--prefix PREFIX]
                                            [--name NAME] [--type TYPE]
@@ -431,7 +432,8 @@ barbican secret container get
 
 .. code-block:: console
 
-   usage: barbican secret container get [-h] [-f {json,shell,table,value,yaml}]
+   usage: barbican secret container get [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent] [--prefix PREFIX]
                                         URI
@@ -455,7 +457,8 @@ barbican secret container list
 
 .. code-block:: console
 
-   usage: barbican secret container list [-h] [-f {csv,json,table,value,yaml}]
+   usage: barbican secret container list [-h]
+                                         [-f {csv,html,json,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
@@ -510,8 +513,8 @@ barbican secret get
 
 .. code-block:: console
 
-   usage: barbican secret get [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                              [--max-width <integer>] [--noindent]
+   usage: barbican secret get [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX] [--decrypt] [--payload]
                               [--payload_content_type PAYLOAD_CONTENT_TYPE]
                               URI
@@ -551,8 +554,8 @@ barbican secret list
 
 .. code-block:: console
 
-   usage: barbican secret list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                               [--max-width <integer>] [--noindent]
+   usage: barbican secret list [-h] [-f {csv,html,json,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
                                [--limit LIMIT] [--offset OFFSET] [--name NAME]
                                [--algorithm ALGORITHM] [--bit-length BIT_LENGTH]
@@ -592,7 +595,8 @@ barbican secret order create
 
 .. code-block:: console
 
-   usage: barbican secret order create [-h] [-f {json,shell,table,value,yaml}]
+   usage: barbican secret order create [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        [--name NAME] [--algorithm ALGORITHM]
@@ -688,7 +692,7 @@ barbican secret order get
 
 .. code-block:: console
 
-   usage: barbican secret order get [-h] [-f {json,shell,table,value,yaml}]
+   usage: barbican secret order get [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     URI
@@ -712,7 +716,7 @@ barbican secret order list
 
 .. code-block:: console
 
-   usage: barbican secret order list [-h] [-f {csv,json,table,value,yaml}]
+   usage: barbican secret order list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
@@ -739,7 +743,7 @@ barbican secret store
 
 .. code-block:: console
 
-   usage: barbican secret store [-h] [-f {json,shell,table,value,yaml}]
+   usage: barbican secret store [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--name NAME]
                                 [--payload PAYLOAD] [--secret-type SECRET_TYPE]
