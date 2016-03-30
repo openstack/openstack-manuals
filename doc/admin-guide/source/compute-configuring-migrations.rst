@@ -9,7 +9,7 @@ Configure migrations
 
 .. note::
 
-   Only cloud administrators can perform live migrations. If your cloud
+   Only administrators can perform live migrations. If your cloud
    is configured to use cells, you can perform live migration within
    but not between cells.
 

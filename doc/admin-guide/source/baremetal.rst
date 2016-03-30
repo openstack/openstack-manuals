@@ -25,7 +25,7 @@ System architecture
 The Bare Metal service is composed of the following components:
 
 #. An admin-only RESTful API service, by which privileged users, such
-   as cloud operators and other services within the cloud control
+   as operators and other services within the cloud control
    plane, may interact with the managed bare-metal servers.
 
 #. A conductor service, which conducts all activity related to

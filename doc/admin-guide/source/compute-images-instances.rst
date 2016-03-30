@@ -57,7 +57,7 @@ available vCPU, memory, and local disk resources. Additionally, the
 
 **The base image state with no running instances**
 
-.. figure:: ../../admin-guide-cloud/source/figures/instance-life-1.png
+.. figure:: figures/instance-life-1.png
 
 |
 
@@ -76,7 +76,7 @@ disk on this instance, ``vdc``.
 
 **Instance creation from an image**
 
-.. figure:: ../../admin-guide-cloud/source/figures/instance-life-2.png
+.. figure:: figures/instance-life-2.png
 
 |
 
@@ -117,7 +117,7 @@ process.
 
 **The end state of an image and volume after the instance exits**
 
-.. figure:: ../../admin-guide-cloud/source/figures/instance-life-3.png
+.. figure:: figures/instance-life-3.png
 
 |
 
@@ -125,22 +125,22 @@ process.
 Image properties and property protection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An image property is a key and value pair that the cloud administrator
+An image property is a key and value pair that the administrator
 or the image owner attaches to an OpenStack Image service image, as
 follows:
 
--  The cloud administrator defines core properties, such as the image
+-  The administrator defines core properties, such as the image
    name.
 
--  The cloud administrator and the image owner can define additional
+-  The administrator and the image owner can define additional
    properties, such as licensing and billing information.
 
-The cloud administrator can configure any property as protected, which
+The administrator can configure any property as protected, which
 limits which policies or user roles can perform CRUD operations on that
 property. Protected properties are generally additional properties to
-which only cloud administrators have access.
+which only administrators have access.
 
-For unprotected image properties, the cloud administrator can manage
+For unprotected image properties, the administrator can manage
 core properties and the image owner can manage additional properties.
 
 **To configure property protection**
@@ -436,7 +436,7 @@ make it their only format.
 **To configure UEFI environment**
 
 To successfully launch an instance from an UEFI image in QEMU/KVM
-environment, the cloud administrator has to install the following
+environment, the administrator has to install the following
 packages on compute node:
 
 -  OVMF, a port of Intel's tianocore firmware to QEMU virtual machine.
@@ -444,7 +444,7 @@ packages on compute node:
 -  libvirt, which has been supporting UEFI boot since version 1.2.9.
 
 Because default UEFI loader path is ``/usr/share/OVMF/OVMF_CODE.fd``, the
-cloud administrator must create one link to this location after UEFI package
+administrator must create one link to this location after UEFI package
 is installed.
 
 **To upload UEFI images**

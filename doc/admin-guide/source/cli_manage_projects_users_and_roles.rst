@@ -2,7 +2,7 @@
 Manage projects, users, and roles
 =================================
 
-As a cloud administrator, you manage projects, users, and
+As an administrator, you manage projects, users, and
 roles. Projects are organizational units in the cloud to which
 you can assign users. Projects are also known as *tenants* or
 *accounts*. Users can be members of one or more projects. Roles

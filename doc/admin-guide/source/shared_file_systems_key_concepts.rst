@@ -61,7 +61,7 @@ Share Type
 ``Share type`` is an abstract collection of criteria used to characterize
 ``shares``. They are most commonly used to create a hierarchy of functional
 capabilities. This hierarchy represents tiered storage services levels. For
-example, a cloud administrator might define a premium ``share type`` that
+example, an administrator might define a premium ``share type`` that
 indicates a greater level of performance than a basic ``share type``.
 Premium represents the best performance level.
 
@@ -70,7 +70,7 @@ Share Access Rules
 ~~~~~~~~~~~~~~~~~~
 
 ``Share access rules`` define which users can access a particular ``share``.
-For example, cloud administrators can declare rules for NFS shares by
+For example, administrators can declare rules for NFS shares by
 listing the valid IP networks which will access the ``share``. List the
 IP networks in CIDR notation.
 

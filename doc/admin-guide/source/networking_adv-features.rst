@@ -1,3 +1,5 @@
+.. _networking-adv-features:
+
 ========================================
 Advanced features through API extensions
 ========================================
@@ -16,8 +18,8 @@ networks are created with administrative credentials, specifying the
 details of how the network is physically realized, usually to match some
 existing network in the data center.
 
-Provider networks enable cloud administrators to create Networking
-networks that map directly to the physical networks in the data center.
+Provider networks enable administrators to create networks that map
+directly to the physical networks in the data center.
 This is commonly used to give tenants direct access to a public network
 that can be used to reach the Internet. It might also be used to
 integrate with VLANs in the network that already have a defined meaning

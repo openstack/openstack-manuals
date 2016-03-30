@@ -9,7 +9,7 @@ Data collection
 ---------------
 
 #. The Telemetry service collects a continuously growing set of data. Not
-   all the data will be relevant for a cloud administrator to monitor.
+   all the data will be relevant for an administrator to monitor.
 
    -  Based on your needs, you can edit the ``pipeline.yaml`` configuration
       file to include a selected number of meters while disregarding the

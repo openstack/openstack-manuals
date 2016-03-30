@@ -63,7 +63,7 @@ The Networking service:
    multi-tiered web applications and enabling migration of applications
    to the cloud without changing IP addresses.
 
--  Offers flexibility for the cloud administrator to customize network
+-  Offers flexibility for administrators to customize network
    offerings.
 
 -  Enables developers to extend the Networking API. Over time, the

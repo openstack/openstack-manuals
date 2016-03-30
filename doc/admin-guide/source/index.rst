@@ -1,11 +1,11 @@
-===================================
-OpenStack Cloud Administrator Guide
-===================================
+=============================
+OpenStack Administrator Guide
+=============================
 
 Abstract
 ~~~~~~~~
 
-OpenStack offers open source software for cloud administrators to
+OpenStack offers open source software for OpenStack administrators to
 manage and troubleshoot an OpenStack cloud.
 
 This guide documents OpenStack Mitaka, OpenStack Liberty, and OpenStack Kilo
