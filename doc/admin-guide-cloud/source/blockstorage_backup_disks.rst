@@ -122,7 +122,7 @@ You can apply this process to volumes of any size.
      instance. Without using the partitions created inside instances,
      you cannot see its content and create efficient backups.
 
-     .. code-block::console
+     .. code-block:: console
 
         # kpartx -av /dev/cinder-volumes/volume-00000001-snapshot
 
