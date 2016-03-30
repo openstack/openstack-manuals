@@ -107,3 +107,32 @@ Create a router
 
 You have successfully created the router. You can view the new topology
 from the :guilabel:`Network Topology` tab.
+
+Create a port
+~~~~~~~~~~~~~
+
+#. Log in to the dashboard.
+
+#. Select the appropriate project from the drop-down menu at the top left.
+
+#. On the :guilabel:`Admin` tab, click :guilabel:`Networks` category.
+
+#. Click on the :guilabel:`Network Name` of the network in which the port
+   has to be created.
+
+#. In the :guilabel:`Create Port` dialog box, specify the following values.
+
+    :guilabel:`Name`: Specify name to identify the port.
+
+    :guilabel:`Device ID`: Device ID attached to the port.
+
+    :guilabel:`Device Owner`: Device owner attached to the port.
+
+    :guilabel:`Binding Host`: The ID of the host where the port is allocated.
+
+    :guilabel:`Binding VNIC Type`: Select the VNIC type that is bound to the
+     neutron port.
+
+#. Click :guilabel:`Create Port`.
+
+   The new port is now displayed in the :guilabel:`Ports` list.
