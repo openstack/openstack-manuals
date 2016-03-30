@@ -62,7 +62,7 @@ router and floating IP. Add these lines to the
 
 OpenStack Networking also supports quotas for security group
 resources: number of security groups and the number of rules for
-each security group. Add these lines to the
+each tenant. Add these lines to the
 ``quotas`` section in the ``neutron.conf`` file:
 
 .. code-block:: ini
