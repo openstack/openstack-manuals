@@ -9,7 +9,7 @@ Clustering service command-line client
 The senlin client is the command-line interface (CLI) for
 the Clustering service API and its extensions.
 
-This chapter documents :command:`senlin` version ``0.4.0``.
+This chapter documents :command:`senlin` version ``0.4.1``.
 
 For help on a specific :command:`senlin` command, enter:
 
@@ -41,7 +41,7 @@ senlin usage
                  [--os-api-name <service>=<name>]
                  [--os-api-region <service>=<region>]
                  [--os-api-version <service>=<version>]
-                 [--os-api-interface <service>=<interface>] [--profile HMAC_KEY]
+                 [--os-api-interface <service>=<interface>]
                  <subcommand> ...
 
 **Subcommands:**
@@ -54,6 +54,9 @@ senlin usage
 
 ``build-info``
   Retrieve build information.
+
+``cluster-check``
+  Check the cluster(s).
 
 ``cluster-create``
   Create the cluster.
@@ -89,6 +92,9 @@ senlin usage
 ``cluster-policy-update``
   Update a policy's properties on a cluster.
 
+``cluster-recover``
+  Recover the cluster(s).
+
 ``cluster-resize``
   Resize a cluster.
 
@@ -110,6 +116,9 @@ senlin usage
 ``event-show``
   Describe the event.
 
+``node-check``
+  Check the node(s).
+
 ``node-create``
   Create the node.
 
@@ -118,6 +127,9 @@ senlin usage
 
 ``node-list``
   Show list of nodes.
+
+``node-recover``
+  Recover the node(s).
 
 ``node-show``
   Show detailed info about the specified node.
@@ -294,15 +306,6 @@ senlin optional arguments
 ``--os-api-interface <service>=<interface>``
   Desired API interface, defaults to ``env[OS_INTERFACE]``
 
-``--profile HMAC_KEY``
-  HMAC key to use for encrypting context data for
-  performance profiling of operation. This key should be
-  the value of HMAC key configured in osprofiler
-  middleware in senlin, it is specified in the paste
-  deploy configuration (/etc/senlin/api-paste.ini).
-  Without the key, profiling will not be triggered even
-  if osprofiler is enabled on server side.
-
 .. _senlin_action-list:
 
 senlin action-list
@@ -364,6 +367,22 @@ senlin build-info
 
 Retrieve build information. :param sc: Instance of senlinclient. :param args:
 Additional command line arguments, if any.
+
+.. _senlin_cluster-check:
+
+senlin cluster-check
+~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: senlin cluster-check <CLUSTER> [<CLUSTER> ...]
+
+Check the cluster(s).
+
+**Positional arguments:**
+
+``<CLUSTER>``
+  ID or name of cluster(s) to operate on.
 
 .. _senlin_cluster-create:
 
@@ -665,6 +684,22 @@ Update a policy's properties on a cluster.
 ``-e <BOOLEAN>, --enabled <BOOLEAN>``
   Whether the policy should be enabled.
 
+.. _senlin_cluster-recover:
+
+senlin cluster-recover
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: senlin cluster-recover <CLUSTER> [<CLUSTER> ...]
+
+Recover the cluster(s).
+
+**Positional arguments:**
+
+``<CLUSTER>``
+  ID or name of cluster(s) to operate on.
+
 .. _senlin_cluster-resize:
 
 senlin cluster-resize
@@ -862,6 +897,22 @@ Describe the event.
 ``<EVENT>``
   ID of event to display details for.
 
+.. _senlin_node-check:
+
+senlin node-check
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: senlin node-check <NODE> [<NODE> ...]
+
+Check the node(s).
+
+**Positional arguments:**
+
+``<NODE>``
+  ID of node(s) to check.
+
 .. _senlin_node-create:
 
 senlin node-create
@@ -953,6 +1004,22 @@ Show list of nodes.
 
 ``-F, --full-id``
   Print full IDs in list.
+
+.. _senlin_node-recover:
+
+senlin node-recover
+~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: senlin node-recover <NODE> [<NODE> ...]
+
+Recover the node(s).
+
+**Positional arguments:**
+
+``<NODE>``
+  ID of node(s) to recover.
 
 .. _senlin_node-show:
 
