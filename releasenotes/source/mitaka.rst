@@ -42,6 +42,11 @@ Command-Line Interface Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * Completed RST conversion.
+* Documented that individual CLIs are deprecated in favor of
+  the common OpenStack client.
+* Marked Identity API v2 as deprecated.
+* Added senlin, monasca, and cloudkitty clients.
+* Removed tuskar client because of retirement.
 
 Architecture Design Guide
 ~~~~~~~~~~~~~~~~~~~~~~~~~
