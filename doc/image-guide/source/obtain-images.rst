@@ -31,7 +31,7 @@ CirrOS (test) images
 CirrOS is a minimal Linux distribution that was designed for use
 as a test image on clouds such as OpenStack Compute.
 You can download a CirrOS image in various formats from the
-`CirrOS download page <https://download.cirros-cloud.net>`_.
+`CirrOS download page <http://download.cirros-cloud.net>`_.
 
 If your deployment uses QEMU or KVM, we recommend using the images
 in qcow2 format. The most recent 64-bit qcow2 image as of this
@@ -59,8 +59,8 @@ downloaded directly.
 If your deployment uses QEMU or KVM, we recommend using the images
 in qcow2 format.
 The most recent version of the 64-bit QCOW2 image for Ubuntu 14.04 is
-`trusty-server-cloudimg-amd64-disk1.img <http://uec-images.ubuntu.com/
-trusty/current/trusty-server-cloudimg-amd64-disk1.img>`_.
+`trusty-server-cloudimg-amd64-disk1.img
+<http://uec-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img>`_.
 
 .. note::
 
@@ -73,10 +73,10 @@ Red Hat maintains official Red Hat Enterprise Linux cloud images.
 A valid Red Hat Enterprise Linux subscription is required to
 download these images.
 
-* `Red Hat Enterprise Linux 7 KVM Guest Image <https://access.redhat.com/
-  downloads/content/69/ver=/rhel---7/7.0/x86_64/product-downloads>`_
-* `Red Hat Enterprise Linux 6 KVM Guest Image <https://rhn.redhat.com/
-  rhn/software/channel/downloads/Download.do?cid=16952>`_
+* `Red Hat Enterprise Linux 7 KVM Guest Image
+  <https://access.redhat.com/downloads/content/69/ver=/rhel---7/x86_64/product-downloads>`_
+* `Red Hat Enterprise Linux 6 KVM Guest Image
+  <https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=16952>`_
 
 .. note::
 
@@ -86,7 +86,7 @@ Official Fedora images
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The Fedora project maintains a list of official cloud images at
-https://getfedora.org/en/cloud/download/.
+https://getfedora.org/cloud/download/.
 
 .. note::
 
@@ -98,7 +98,7 @@ Official openSUSE and SLES images
 SUSE provides images for `openSUSE
 <http://download.opensuse.org/repositories/Cloud:/Images:/>`_.
 For SUSE Linux Enterprise Server (SLES), custom images can be built with
-a web-based tool called `SUSE Studio <http://susestudio.com>`_.
+a web-based tool called `SUSE Studio <https://susestudio.com>`_.
 SUSE Studio can also be used to build the custom openSUSE images.
 
 Official Debian images
@@ -109,40 +109,6 @@ Since January 2015, `Debian provides images for direct download
 They are now made at the same time as the CD and DVD images of Debian.
 Therefore, images are available on each point release of Debian. Also,
 weekly images of the testing distribution are available.
-
-If you wish to build your own images of Debian 7.0 (aka Wheezy, the
-old stable release of Debian), you can use the package which is
-used to build the official Debian images.
-It is named ``openstack-debian-images``, and it provides a simple
-script for building them.
-This package is available in Debian Unstable, Debian Jessie,
-and through the wheezy-backports repositories.
-To produce a Wheezy image, simply run:
-
-.. code-block:: console
-
-   # build-openstack-debian-image -r wheezy
-
-If building the image for Wheezy, packages like ``cloud-init``,
-``cloud-utils`` or ``cloud-initramfs-growroot`` will be pulled
-from wheezy-backports.
-Also, the current version of ``bootlogd`` in Wheezy does not support
-logging to multiple consoles, which is needed so that both the
-OpenStack Dashboard console and the ``nova console-log`` console works.
-However, a `fixed version is available from the non-official GPLHost
-repository <http://archive.gplhost.com/debian/pool/juno-backports/
-main/s/sysvinit/bootlogd_2.88dsf-41+deb7u2_amd64.deb>`_.
-To install it on top of the image, it is possible to use the
-``--hook-script`` option of the ``build-openstack-debian-image`` script,
-with this kind of script as parameter:
-
-.. code-block:: bash
-
-   #!/bin/sh
-
-   cp bootlogd_2.88dsf-41+deb7u2_amd64.deb ${BODI_CHROOT_PATH}
-   chroot ${BODI_CHROOT_PATH} dpkg -i bootlogd_2.88dsf-41+deb7u2_amd64.deb
-   rm ${BODI_CHROOT_PATH}/bootlogd_2.88dsf-41+deb7u2_amd64.deb
 
 .. note::
 
@@ -157,6 +123,6 @@ provide images for download.
 Microsoft Windows images
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Cloudbase Solutions hosts an `OpenStack Windows Server 2012
-Standard Evaluation image <http://www.cloudbase.it/ws2012r2/>`_
+Cloudbase Solutions hosts `Windows Cloud Images
+<https://cloudbase.it/windows-cloud-images/>`_
 that runs on Hyper-V, KVM, and XenServer/XCP.
