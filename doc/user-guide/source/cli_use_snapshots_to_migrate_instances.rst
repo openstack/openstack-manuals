@@ -121,7 +121,8 @@ In the new project or cloud environment, import the snapshot:
 
 .. code-block:: console
 
-   $ glance image-create --copy-from IMAGE_URL
+   $ glance --os-image-api-version 1 image-create \
+     --container-format bare --disk-format qcow2 --copy-from IMAGE_URL
 
 .. _Boot_a_new_instance_from_the_snapshot:
 
