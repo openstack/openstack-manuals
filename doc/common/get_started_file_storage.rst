@@ -14,6 +14,11 @@ manila-api
   A WSGI app that authenticates and routes requests throughout the Shared File
   Systems service. It supports the OpenStack APIs.
 
+manila-data
+  A standalone service whose purpose is to receive requests, process data
+  operations such as copying, share migration or backup, and send back a
+  response after an operation has been completed.
+
 manila-scheduler
   Schedules and routes requests to the appropriate share service. The
   scheduler uses configurable filters and weighers to route requests. The
