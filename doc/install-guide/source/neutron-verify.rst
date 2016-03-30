@@ -18,32 +18,42 @@ Verify operation
    .. code-block:: console
 
       $ neutron ext-list
-      +-----------------------+-----------------------------------------------+
-      | alias                 | name                                          |
-      +-----------------------+-----------------------------------------------+
-      | dns-integration       | DNS Integration                               |
-      | ext-gw-mode           | Neutron L3 Configurable external gateway mode |
-      | binding               | Port Binding                                  |
-      | agent                 | agent                                         |
-      | subnet_allocation     | Subnet Allocation                             |
-      | l3_agent_scheduler    | L3 Agent Scheduler                            |
-      | external-net          | Neutron external network                      |
-      | flavors               | Neutron Service Flavors                       |
-      | net-mtu               | Network MTU                                   |
-      | quotas                | Quota management support                      |
-      | l3-ha                 | HA Router extension                           |
-      | provider              | Provider Network                              |
-      | multi-provider        | Multi Provider Network                        |
-      | extraroute            | Neutron Extra Route                           |
-      | router                | Neutron L3 Router                             |
-      | extra_dhcp_opt        | Neutron Extra DHCP opts                       |
-      | security-group        | security-group                                |
-      | dhcp_agent_scheduler  | DHCP Agent Scheduler                          |
-      | rbac-policies         | RBAC Policies                                 |
-      | port-security         | Port Security                                 |
-      | allowed-address-pairs | Allowed Address Pairs                         |
-      | dvr                   | Distributed Virtual Router                    |
-      +-----------------------+-----------------------------------------------+
+      +---------------------------+-----------------------------------------------+
+      | alias                     | name                                          |
+      +---------------------------+-----------------------------------------------+
+      | default-subnetpools       | Default Subnetpools                           |
+      | network-ip-availability   | Network IP Availability                       |
+      | network_availability_zone | Network Availability Zone                     |
+      | auto-allocated-topology   | Auto Allocated Topology Services              |
+      | ext-gw-mode               | Neutron L3 Configurable external gateway mode |
+      | binding                   | Port Binding                                  |
+      | agent                     | agent                                         |
+      | subnet_allocation         | Subnet Allocation                             |
+      | l3_agent_scheduler        | L3 Agent Scheduler                            |
+      | tag                       | Tag support                                   |
+      | external-net              | Neutron external network                      |
+      | net-mtu                   | Network MTU                                   |
+      | availability_zone         | Availability Zone                             |
+      | quotas                    | Quota management support                      |
+      | l3-ha                     | HA Router extension                           |
+      | flavors                   | Neutron Service Flavors                       |
+      | provider                  | Provider Network                              |
+      | multi-provider            | Multi Provider Network                        |
+      | address-scope             | Address scope                                 |
+      | extraroute                | Neutron Extra Route                           |
+      | timestamp_core            | Time Stamp Fields addition for core resources |
+      | router                    | Neutron L3 Router                             |
+      | extra_dhcp_opt            | Neutron Extra DHCP opts                       |
+      | dns-integration           | DNS Integration                               |
+      | security-group            | security-group                                |
+      | dhcp_agent_scheduler      | DHCP Agent Scheduler                          |
+      | router_availability_zone  | Router Availability Zone                      |
+      | rbac-policies             | RBAC Policies                                 |
+      | standard-attr-description | standard-attr-description                     |
+      | port-security             | Port Security                                 |
+      | allowed-address-pairs     | Allowed Address Pairs                         |
+      | dvr                       | Distributed Virtual Router                    |
+      +---------------------------+-----------------------------------------------+
 
    .. note::
 
