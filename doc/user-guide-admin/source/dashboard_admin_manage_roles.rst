@@ -21,8 +21,8 @@ assumes that role inherits those rights and privileges.
 Create a role
 ~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project from
-   the :guilabel:`CURRENT PROJECT` drop-down list.
+#. Log in to the dashboard and select the :guilabel:`admin` project from the
+   drop-down list.
 #. On the :guilabel:`Admin` tab, click the :guilabel:`Roles` category.
 #. Click the :guilabel:`Create Role` button.
 
@@ -32,8 +32,8 @@ Create a role
 Edit a role
 ~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project from
-   the :guilabel:`CURRENT PROJECT` drop-down list.
+#. Log in to the dashboard and select the :guilabel:`admin` project from the
+   drop-down list.
 #. On the :guilabel:`Admin` tab, click the :guilabel:`Roles` category.
 #. Click the :guilabel:`Edit` button.
 
@@ -48,8 +48,8 @@ Edit a role
 Delete a role
 ~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project from
-   the :guilabel:`CURRENT PROJECT` drop-down list.
+#. Log in to the dashboard and select the :guilabel:`admin` project from the
+   drop-down list.
 #. On the :guilabel:`Admin` tab, click the :guilabel:`Roles` category.
 #. Select the role you want to delete and click the :guilabel:`Delete
    Roles` button.

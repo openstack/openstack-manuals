@@ -23,10 +23,8 @@ Create images
 For details about image creation, see the `Virtual Machine Image
 Guide <http://docs.openstack.org/image-guide/>`_.
 
-#. Log in to the dashboard.
-
-   Choose the :guilabel:`admin` project from the drop-down list
-   at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project from the
+   drop-down list.
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Images` category. The images that you
    can administer for cloud users appear on this page.
@@ -95,9 +93,8 @@ Guide <http://docs.openstack.org/image-guide/>`_.
 Update images
 ~~~~~~~~~~~~~
 
-#. Log in to the Dashboard.
-   Choose the :guilabel:`admin` project from the drop-down list
-   at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project from the
+   drop-down list.
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Images` category.
 #. Select the images that you want to edit. Click :guilabel:`Edit Image`.
@@ -112,9 +109,8 @@ Update images
 Delete images
 ~~~~~~~~~~~~~
 
-#. Log in to the Dashboard.
-   Choose the :guilabel:`admin` project from the drop-down list
-   at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project from the
+   drop-down list.
 #. On the :guilabel:`Admin tab`, open the :guilabel:`System` tab
    and click the :guilabel:`Images` category.
 #. Select the images that you want to delete.

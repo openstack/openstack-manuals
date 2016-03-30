@@ -16,10 +16,8 @@ For information, see
 To create a host aggregate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the Dashboard.
-
-   Choose the :guilabel:`admin` project from the drop-down list at the top
-   of the page.
+#. Log in to the Dashboard and select the :guilabel:`admin` project
+   from the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click
    the :guilabel:`Host Aggregates` category.
@@ -55,7 +53,7 @@ existing aggregate, edit the aggregate.
 To manage host aggregates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Choose the :guilabel:`admin` project from the drop-down list at the top
+#. Select the :guilabel:`admin` project from the drop-down list at the top
    of the page.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click

@@ -24,7 +24,8 @@ Compute) or by polling the infrastructure (for example, libvirt).
 View resource statistics
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the OpenStack dashboard as a user with Admin privileges.
+#. Log in to the dashboard and select the :guilabel:`admin` project
+   from the drop-down list.
 
 #. On the :guilabel:`Admin` tab, click the :guilabel:`Resource Usage` category.
 

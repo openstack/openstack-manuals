@@ -23,9 +23,11 @@ with the OpenStack services that run in the cloud.
 Download and source the OpenStack RC file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the OpenStack dashboard, choose the project for which you want
-   to download the OpenStack RC file, on the :guilabel:`Project` tab, open
-   the :guilabel:`Compute` tab and click :guilabel:`Access & Security`.
+#. Log in to the dashboard and from the drop-down list select the project
+   for which you want to download the OpenStack RC file.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Access & Security`.
 
 #. On the :guilabel:`API Access` tab, click :guilabel:`Download OpenStack
    RC File` and save the file. The filename will be of the form

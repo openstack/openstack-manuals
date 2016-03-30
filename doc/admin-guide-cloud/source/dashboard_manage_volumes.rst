@@ -18,8 +18,8 @@ outlined below.
 Create a volume type
 ~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin`
-   project from the drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin`
+   project from the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Volumes` category.
@@ -119,8 +119,8 @@ Delete volume types
 
 When you delete a volume type, volumes of that type are not deleted.
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project from
-   the drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project from
+   the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Volumes` category.
@@ -143,8 +143,8 @@ Delete volumes
 When you delete an instance, the data of its attached volumes is not
 destroyed.
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project
-   from the drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project
+   from the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Volumes` category.
