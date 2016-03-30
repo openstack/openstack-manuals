@@ -20,9 +20,7 @@ The following operations are supported:
 
   Note the following limitations for NFS shares:
 
-  - Only IP access type is supported.
-
-  - Access level (read-write or read-only) is ignored.
+  - IP access rules are required for NFS.
 
   - Shares created from snapshots are always read-only.
 
@@ -31,12 +29,10 @@ The following operations are supported:
 
   Note the following limitations for CIFS shares:
 
-  - Both IP and user access rules are required for CIFS share access.
+  - SMB shares require user access rules.
 
   - User access requires a 3PAR local user, since LDAP and AD is not yet
     supported.
-
-  - Access level (read-write or read-only) is ignored.
 
   - Shares created from snapshots are always read-only.
 
@@ -68,7 +64,7 @@ Requirements
 
 On the system running the manila-share service:
 
--  python-3parclient version 4.0.0 or newer from PyPI.
+-  python-3parclient version 4.2.0 or newer from PyPI.
 
 On the HPE 3PAR array:
 
@@ -233,6 +229,8 @@ The following HPE 3PAR extra-specs are used when creating NFS shares:
   creation. The HPE 3PAR will do additional validation at share
   creation time. Refer to the HPE 3PAR CLI help for more details.
 
+.. _manila_hpe_driver_option:
+
 Driver options
 ~~~~~~~~~~~~~~
 
@@ -240,3 +238,70 @@ The following table contains the configuration options specific to the
 share driver.
 
 .. include:: ../../tables/manila-hpe3par.rst
+
+Set up the HPE 3PAR environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Install the ``python-3parclient`` python package on the OpenStack Block
+   Storage system.
+
+   .. code-block:: console
+
+      $ pip install 'python-3parclient>=4.0,<5.0'
+
+
+#. Verify that the HPE 3PAR web services API server is enabled and running on
+   the HPE 3PAR storage system.
+
+   a. Log in to the HPE 3PAR storage system as an administrator.
+
+      .. code-block:: console
+
+         $ ssh 3paradm@<HPE 3PAR IP Address>
+
+   b. View the current state of the Web Services API Server.
+
+      .. code-block:: console
+
+         $ showwsapi
+         -Service- -State- -HTTP_State- HTTP_Port -HTTPS_State- HTTPS_Port -Version-
+         Enabled   Active Enabled       8008        Enabled       8080       1.1
+
+   c. If the web services API Server is disabled, start it.
+
+      .. code-block:: console
+
+         $ startwsapi
+
+#. If the HTTP or HTTPS state is disabled, enable one of them.
+
+   .. code-block:: console
+
+      $ setwsapi -http enable
+
+   or, for HTTPS
+
+   .. code-block:: console
+
+      $ setwsapi -https enable
+
+   .. note::
+
+      To stop the Web Services API Server, use the :command:`stopwsapi` command. For
+      other options, run the :command:`setwsapi –h` command.
+
+Delete nested shares
+~~~~~~~~~~~~~~~~~~~~
+
+When a nested share is deleted (nested shares will be created when
+``hpe_3par_fstore_per_share`` is set to ``False``), the file tree also
+attempts to be deleted.
+
+With NFS shares, there is no additional configuration that needs to be done.
+
+For CIFS shares, ``hpe3par_cifs_admin_access_username`` and
+``hpe3par_cifs_admin_access_password`` must be provided. If they are omitted,
+the original functionality is honored and the file tree remains untouched.
+``hpe3par_cifs_admin_access_domain`` and ``hpe3par_share_mount_path`` can also
+be specified to create further customization. For more information on these
+configuration values, see :ref:`manila_hpe_driver_option`.
