@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-25 06:14+0000\n"
+"POT-Creation-Date: 2016-03-30 06:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2112,50 +2112,70 @@ msgstr ""
 
 #: ../adv-config-lbaas.rst:195
 msgid ""
+"The security group must be updated to allow traffic to reach the load "
+"balancer. Create a new security group along with ingress rules to allow "
+"traffic into the new load balancer. The neutron port for the load balancer "
+"is shown as ``vip_port_id`` above."
+msgstr ""
+
+#: ../adv-config-lbaas.rst:200
+msgid ""
+"Create a security group and rules to allow TCP port 80, TCP port 443, and "
+"all ICMP traffic:"
+msgstr ""
+
+#: ../adv-config-lbaas.rst:225
+msgid ""
+"Apply the security group to the load balancer's network port using "
+"``vip_port_id`` from the :command:`lbaas-loadbalancer-show` command:"
+msgstr ""
+
+#: ../adv-config-lbaas.rst:234
+msgid ""
 "This load balancer is active and ready to serve traffic on ``192.168.1.22``."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:197
+#: ../adv-config-lbaas.rst:236
 msgid ""
 "Verify that the load balancer is responding to pings before moving further:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:213
+#: ../adv-config-lbaas.rst:252
 msgid "Adding an HTTP listener"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:215
+#: ../adv-config-lbaas.rst:254
 msgid ""
 "With the load balancer online, you can add a listener for plaintext HTTP "
 "traffic on port 80:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:226
+#: ../adv-config-lbaas.rst:265
 msgid ""
 "You can begin building a pool and adding members to the pool to serve HTTP "
 "content on port 80. For this example, the web servers are ``192.168.1.16`` "
 "and ``192.168.1.17``:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:248
+#: ../adv-config-lbaas.rst:287
 msgid ""
 "You can use ``curl`` to verify connectivity through the load balancers to "
 "your web servers:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:262
+#: ../adv-config-lbaas.rst:301
 msgid ""
 "In this example, the load balancer uses the round robin algorithm and the "
 "traffic alternates between the web servers on the backend."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:265
+#: ../adv-config-lbaas.rst:304
 msgid ""
 "You can add a health monitor so that unresponsive servers are removed from "
 "the pool:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:277
+#: ../adv-config-lbaas.rst:316
 msgid ""
 "In this example, the health monitor removes the server from the pool if it "
 "fails a health check at two five-second intervals. When the server recovers "
@@ -2163,35 +2183,35 @@ msgid ""
 "again."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:283
+#: ../adv-config-lbaas.rst:322
 msgid "Adding an HTTPS listener"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:285
+#: ../adv-config-lbaas.rst:324
 msgid ""
 "You can add another listener on port 443 for HTTPS traffic. LBaaS v2 offers "
 "SSL/TLS termination at the load balancer, but this example takes a simpler "
 "approach and allows encrypted connections to terminate at each member server."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:289
+#: ../adv-config-lbaas.rst:328
 msgid ""
 "Start by creating a listener, attaching a pool, and then adding members:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:314
+#: ../adv-config-lbaas.rst:353
 msgid "You can also add a health monitor for the HTTPS pool:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:325
+#: ../adv-config-lbaas.rst:364
 msgid "The load balancer now handles traffic on ports 80 and 443."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:328
+#: ../adv-config-lbaas.rst:367
 msgid "Associating a floating IP address"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:330
+#: ../adv-config-lbaas.rst:369
 msgid ""
 "Load balancers that are deployed on a public or provider network that are "
 "accessible to external clients do not need a floating IP address assigned. "
@@ -2199,7 +2219,7 @@ msgid ""
 "load balancers."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:335
+#: ../adv-config-lbaas.rst:374
 msgid ""
 "However, load balancers deployed onto private or isolated networks need a "
 "floating IP address assigned if they must be accessible to external clients. "
@@ -2207,12 +2227,30 @@ msgid ""
 "networks and an available floating IP address."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:340
+#: ../adv-config-lbaas.rst:379
 msgid ""
 "You can use the ``lbaas-loadbalancer-show`` command from the beginning of "
 "this section to locate the ``vip_port_id``. The ``vip_port_id`` is the ID of "
 "the network port that is assigned to the load balancer. You can associate a "
 "free floating IP address to the load balancer using ``floatingip-associate``:"
+msgstr ""
+
+#: ../adv-config-lbaas.rst:389
+msgid "Setting quotas for LBaaS v2"
+msgstr ""
+
+#: ../adv-config-lbaas.rst:391
+msgid ""
+"Quotas are available for limiting the number of load balancers and load "
+"balancer pools. By default, both quotas are set to 10."
+msgstr ""
+
+#: ../adv-config-lbaas.rst:394
+msgid "You can adjust quotas using the :command:`quota-update` command:"
+msgstr ""
+
+#: ../adv-config-lbaas.rst:401
+msgid "A setting of ``-1`` disables the quota for a tenant."
 msgstr ""
 
 #: ../adv-config-net-ip-availability.rst:3
