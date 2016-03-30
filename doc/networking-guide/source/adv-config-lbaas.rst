@@ -399,3 +399,28 @@ You can adjust quotas using the :command:`quota-update` command:
    $ neutron quota-update --tenant-id TENANT_UUID --pool 50
 
 A setting of ``-1`` disables the quota for a tenant.
+
+Retrieving load balancer statistics
+-----------------------------------
+
+The LBaaS v2 agent collects four types of statistics for each load balancer
+every six seconds. Users can query these statistics with the
+:command:`lbaas-loadbalancer-stats` command:
+
+.. code-block:: console
+
+   $ neutron lbaas-loadbalancer-stats test-lb
+   +--------------------+----------+
+   | Field              | Value    |
+   +--------------------+----------+
+   | active_connections | 0        |
+   | bytes_in           | 40264557 |
+   | bytes_out          | 71701666 |
+   | total_connections  | 384601   |
+   +--------------------+----------+
+
+The ``active_connections`` count is the total number of connections that were
+active at the time the agent polled the load balancer. The other three
+statistics are cumulative since the load balancer was last started. For
+example, if the load balancer restarts due to a system error or a configuration
+change, these statistics will be reset.
