@@ -25,7 +25,7 @@ openstack.org/developer/python-novaclient/api/novaclient.v1_1.keypairs
 
 The Python script output looks something like this:
 
-::
+.. code-block:: console
 
     -----BEGIN RSA PRIVATE KEY-----
     MIIEowIBAAKCAQEA8XkaMqInSPfy0hMfWO+OZRtIgrQAbQkNcaNHmv2GN2G6xZlb\nuBRux5Xk/6SZ
