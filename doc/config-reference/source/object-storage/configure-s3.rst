@@ -41,7 +41,7 @@ Alternatively, if you have configured the Ubuntu Cloud Archive, you may use:
 
 .. code-block:: console
 
-    # apt-get install swift-python-s3
+    # apt-get install swift-plugin-s3
 
 To add this middleware to your configuration, add the swift3 middleware in
 front of the swauth middleware, and before any other middleware that looks at
