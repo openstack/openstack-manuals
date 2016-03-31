@@ -42,7 +42,7 @@ or as connected entities.
 
    This guide will show you how to install OpenStack by using packages
    available on Red Hat Enterprise Linux 7 and its derivatives through
-   the EPEL repository.
+   the RDO repository.
 
 .. only:: ubuntu
 
