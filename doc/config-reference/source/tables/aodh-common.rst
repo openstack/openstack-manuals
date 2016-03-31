@@ -28,16 +28,12 @@
      - (String) The topic that aodh uses for event alarm evaluation.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
-   * - ``gnocchi_url`` = ``None``
-     - (String) DEPRECATED: URL to Gnocchi. default: autodetection
    * - ``host`` = ``localhost``
      - (String) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.
    * - ``http_timeout`` = ``600``
      - (Integer) Timeout seconds for HTTP requests. Set it to None to disable timeout.
    * - ``memcached_servers`` = ``None``
      - (List) Memcached servers or None for in process cache.
-   * - ``notifier_rpc_topic`` = ``alarm_notifier``
-     - (String) The topic that aodh uses for alarm notifier messages.
    * - ``notifier_topic`` = ``alarming``
      - (String) The topic that aodh uses for alarm notifier messages.
    * - ``project_alarm_quota`` = ``None``

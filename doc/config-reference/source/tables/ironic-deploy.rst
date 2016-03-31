@@ -26,3 +26,5 @@
      - (String) ironic-conductor node's HTTP root path.
    * - ``http_url`` = ``None``
      - (String) ironic-conductor node's HTTP server URL. Example: http://192.1.2.3:8080
+   * - ``power_off_after_deploy_failure`` = ``True``
+     - (Boolean) Whether to power off a node after deploy failure. Defaults to True.

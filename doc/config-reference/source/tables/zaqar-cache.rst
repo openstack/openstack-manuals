@@ -16,6 +16,10 @@
 
    * - Configuration option = Default value
      - Description
+   * - **[DEFAULT]**
+     -
+   * - ``memcached_servers`` = ``None``
+     - (List) Memcached servers or None for in process cache.
    * - **[cache]**
      -
    * - ``backend`` = ``dogpile.cache.null``

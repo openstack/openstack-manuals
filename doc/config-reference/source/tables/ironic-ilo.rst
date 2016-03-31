@@ -19,7 +19,7 @@
    * - **[ilo]**
      -
    * - ``clean_priority_clear_secure_boot_keys`` = ``0``
-     - (Integer) Priority for clear_secure_boot_keys clean step. This step is not enabled by default. It can be enabled to to clear all secure boot keys enrolled with iLO.
+     - (Integer) Priority for clear_secure_boot_keys clean step. This step is not enabled by default. It can be enabled to clear all secure boot keys enrolled with iLO.
    * - ``clean_priority_erase_devices`` = ``None``
      - (Integer) Priority for erase devices clean step. If unset, it defaults to 10. If set to 0, the step will be disabled and will not run during cleaning.
    * - ``clean_priority_reset_bios_to_default`` = ``10``

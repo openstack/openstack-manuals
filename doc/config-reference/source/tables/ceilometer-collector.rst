@@ -22,10 +22,6 @@
      - (Integer) Number of notification messages to wait before dispatching them
    * - ``batch_timeout`` = ``None``
      - (Integer) Number of seconds to wait before dispatching sampleswhen batch_size is not reached (None means indefinitely)
-   * - ``requeue_event_on_dispatcher_error`` = ``False``
-     - (Boolean) Requeue the event on the collector event queue when the collector fails to dispatch it.
-   * - ``requeue_sample_on_dispatcher_error`` = ``False``
-     - (Boolean) Requeue the sample on the collector sample queue when the collector fails to dispatch it. This is only valid if the sample come from the notifier publisher.
    * - ``udp_address`` = ``0.0.0.0``
      - (String) Address to which the UDP socket is bound. Set to an empty string to disable.
    * - ``udp_port`` = ``4952``

@@ -39,13 +39,13 @@
    * - **[xenserver]**
      -
    * - ``agent_path`` = ``usr/sbin/xe-update-networking``
-     - (String) Specifies the path in which the XenAPI guest agent should be located. If the agent is present, network configuration is not injected into the image. Used if compute_driver=xenapi.XenAPIDriver and flat_injected=True
+     - (String) Path to locate guest agent on the server. Specifies the path in which the XenAPI guest agent should be located. If the agent is present, network configuration is not injected into the image. Used if compute_driver=xenapi.XenAPIDriver and flat_injected=True. Services which consume this: * ``nova-compute`` Possible values: * A valid path Related options: * ``flat_injected`` * ``compute_driver``
    * - ``agent_resetnetwork_timeout`` = ``60``
-     - (Integer) Number of seconds to wait for agent reply to resetnetwork request
+     - (Integer) Number of seconds to wait for agent's reply to resetnetwork request. This indicates the amount of time xapi 'agent' plugin waits for the agent to respond to the 'resetnetwork' request specifically. The generic timeout for agent communication ``agent_timeout`` is ignored in this case. Services which consume this: * ``nova-compute`` Possible values: * Any positive integer Related options: * None
    * - ``agent_timeout`` = ``30``
-     - (Integer) Number of seconds to wait for agent reply
+     - (Integer) Number of seconds to wait for agent's reply to a request. Nova configures/performs certain administrative actions on a server with the help of an agent that's installed on the server. The communication between Nova and the agent is achieved via sharing messages, called records, over xenstore, a shared storage across all the domains on a Xenserver host. Operations performed by the agent on behalf of nova are: 'version',' key_init', 'password','resetnetwork','inject_file', and 'agentupdate'. To perform one of the above operations, the xapi 'agent' plugin writes the command and its associated parameters to a certain location known to the domain and awaits response. On being notified of the message, the agent performs appropriate actions on the server and writes the result back to xenstore. This result is then read by the xapi 'agent' plugin to determine the success/failure of the operation. This config option determines how long the xapi 'agent' plugin shall wait to read the response off of xenstore for a given request/command. If the agent on the instance fails to write the result in this time period, the operation is considered to have timed out. Services which consume this: * ``nova-compute`` Possible values: * Any positive integer Related options: * ``agent_version_timeout`` * ``agent_resetnetwork_timeout``
    * - ``agent_version_timeout`` = ``300``
-     - (Integer) Number of seconds to wait for agent to be fully operational
+     - (Integer) Number of seconds to wait for agent't reply to version request. This indicates the amount of time xapi 'agent' plugin waits for the agent to respond to the 'version' request specifically. The generic timeout for agent communication ``agent_timeout`` is ignored in this case. During the build process the 'version' request is used to determine if the agent is available/operational to perform other requests such as 'resetnetwork', 'password', 'key_init' and 'inject_file'. If the 'version' call fails, the other configuration is skipped. So, this configuration option can also be interpreted as time in which agent is expected to be fully operational. Services which consume this: * ``nova-compute`` Possible values: * Any positive integer Related options: * None
    * - ``cache_images`` = ``all``
      - (String) Cache glance images locally. `all` will cache all images, `some` will only cache images that have the image_property `cache_in_nova=True`, and `none` turns off caching entirely
    * - ``check_host`` = ``True``
@@ -61,7 +61,7 @@
    * - ``default_os_type`` = ``linux``
      - (String) Default OS type
    * - ``disable_agent`` = ``False``
-     - (Boolean) Disables the use of the XenAPI agent in any image regardless of what image properties are present.
+     - (Boolean) Disables the use of XenAPI agent. This configuration option suggests whether the use of agent should be enabled or not regardless of what image properties are present. Image properties have an effect only when this is set to ``True``. Read description of config option ``use_agent_default`` for more information. Services which consume this: * ``nova-compute`` Possible values: * True * False Related options: * ``use_agent_default``
    * - ``image_compression_level`` = ``None``
      - (Integer) Compression level for images, e.g., 9 for gzip -9. Range is 1-9, 9 being most compressed but most CPU intensive on dom0.
    * - ``image_upload_handler`` = ``nova.virt.xenapi.image.glance.GlanceStore``
@@ -119,7 +119,7 @@
    * - ``torrent_seed_duration`` = ``3600``
      - (Integer) Number of seconds after downloading an image via BitTorrent that it should be seeded for other peers.
    * - ``use_agent_default`` = ``False``
-     - (Boolean) Determines if the XenAPI agent should be used when the image used does not contain a hint to declare if the agent is present or not. The hint is a glance property "xenapi_use_agent" that has the value "True" or "False". Note that waiting for the agent when it is not present will significantly increase server boot times.
+     - (Boolean) Whether or not to use the agent by default when its usage is enabled but not indicated by the image. The use of XenAPI agent can be disabled altogether using the configuration option ``disable_agent``. However, if it is not disabled, the use of an agent can still be controlled by the image in use through one of its properties, ``xenapi_use_agent``. If this property is either not present or specified incorrectly on the image, the use of agent is determined by this configuration option. Note that if this configuration is set to ``True`` when the agent is not present, the boot times will increase significantly. Services which consume this: * ``nova-compute`` Possible values: * True * False Related options: * ``disable_agent``
    * - ``use_join_force`` = ``True``
      - (Boolean) To use for hosts with different CPUs
    * - ``vhd_coalesce_max_attempts`` = ``20``

@@ -24,6 +24,12 @@
      - (Boolean) Run Zaqar server in the background.
    * - ``unreliable`` = ``False``
      - (Boolean) Disable all reliability constraints.
+   * - **[certificates]**
+     -
+   * - ``barbican_auth`` = ``barbican_acl_auth``
+     - (String) Name of the Barbican authentication method to use
+   * - ``cert_manager_type`` = ``barbican``
+     - (String) Certificate Manager plugin. Defaults to barbican.
    * - **[notification]**
      -
    * - ``smtp_command`` = ``/usr/sbin/sendmail -t -oi``
@@ -36,6 +42,28 @@
      - (Multi-valued) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
    * - ``policy_file`` = ``policy.json``
      - (String) The JSON file that defines policies.
+   * - **[service_auth]**
+     -
+   * - ``admin_password`` = ``password``
+     - (String) The service admin password
+   * - ``admin_project_domain`` = ``admin``
+     - (String) The admin project domain name
+   * - ``admin_tenant_name`` = ``admin``
+     - (String) The service admin tenant name
+   * - ``admin_user`` = ``admin``
+     - (String) The service admin user name
+   * - ``admin_user_domain`` = ``admin``
+     - (String) The admin user domain name
+   * - ``auth_url`` = ``http://127.0.0.1:5000/v2.0``
+     - (String) Authentication endpoint
+   * - ``auth_version`` = ``2``
+     - (String) The auth version used to authenticate
+   * - ``endpoint_type`` = ``public``
+     - (String) The endpoint_type to be used
+   * - ``region`` = ``RegionOne``
+     - (String) The deployment region
+   * - ``service_name`` = ``lbaas``
+     - (String) The name of the service
    * - **[signed_url]**
      -
    * - ``secret_key`` = ``None``

@@ -21,7 +21,7 @@
    * - ``ip_regex`` = ``None``
      - (String) List IP addresses that match this regular expression.
    * - ``nova_client_version`` = ``2.12``
-     - (String) The version of of the compute service client.
+     - (String) The version of the compute service client.
    * - ``nova_compute_endpoint_type`` = ``publicURL``
      - (String) Service endpoint type to use when searching catalog.
    * - ``nova_compute_service_type`` = ``compute``

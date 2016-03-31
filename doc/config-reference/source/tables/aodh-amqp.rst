@@ -20,7 +20,5 @@
      -
    * - ``control_exchange`` = ``openstack``
      - (String) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
-   * - ``ipc_protocol`` = ``queue``
-     - (String) The protocol used to communicate between evaluator and notifier services.
    * - ``transport_url`` = ``None``
      - (String) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.

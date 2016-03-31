@@ -66,8 +66,6 @@
      - (Integer) Size of executor thread pool.
    * - ``external_dns_driver`` = ``None``
      - (String) Driver for external DNS integration.
-   * - ``force_gateway_on_subnet`` = ``True``
-     - (Boolean) DEPRECATED: Ensure that configured gateway is on subnet. For IPv6, validate only if gateway is not a link local address. Deprecated, to be removed during the Newton release, at which point the gateway will not be forced on to subnet.
    * - ``global_physnet_mtu`` = ``1500``
      - (Integer) MTU of the underlying physical network. Neutron uses this value to calculate MTU for all virtual network components. For flat and VLAN networks, neutron uses this value without modification. For overlay networks such as VXLAN, neutron automatically subtracts the overlay protocol overhead from this value. Defaults to 1500, the standard value for Ethernet.
    * - ``ip_lib_force_root`` = ``False``

@@ -36,12 +36,6 @@
      - (String) Where we keep our keys
    * - ``project_cert_subject`` = ``/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=project-ca-%.16s-%s``
      - (String) Subject for certificate for projects, %s for project, timestamp
-   * - ``ssl_ca_file`` = ``None``
-     - (String) CA certificate file to use to verify connecting clients
-   * - ``ssl_cert_file`` = ``None``
-     - (String) SSL certificate of API server
-   * - ``ssl_key_file`` = ``None``
-     - (String) SSL private key of API server
    * - ``use_project_ca`` = ``False``
      - (Boolean) Should we use a CA for each project?
    * - ``user_cert_subject`` = ``/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=%.16s-%.16s-%s``

@@ -36,5 +36,7 @@
      - (Integer) How often to retry in seconds when a request does conflict
    * - ``api_version`` = ``1``
      - (Integer) DEPRECATED: Version of Ironic API service endpoint. DEPRECATED: Setting the API version is not possible anymore.
+   * - ``cafile`` = ``None``
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``client_log_level`` = ``None``
      - (String) DEPRECATED: Log level override for ironicclient. Set this in order to override the global "default_log_levels", "verbose", and "debug" settings. DEPRECATED: use standard logging configuration.

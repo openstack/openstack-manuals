@@ -29,7 +29,7 @@
    * - **[VXLAN]**
      -
    * - ``arp_responder`` = ``False``
-     - (Boolean) Enable local ARP responder which provides local responses instead of performing ARP broadcast into the overlay. Enabling local ARP responder is not fullycompatible with the allowed-address-pairs extension.
+     - (Boolean) Enable local ARP responder which provides local responses instead of performing ARP broadcast into the overlay. Enabling local ARP responder is not fully compatible with the allowed-address-pairs extension.
    * - ``enable_vxlan`` = ``True``
      - (Boolean) Enable VXLAN on the agent. Can be enabled when agent is managed by ml2 plugin using linuxbridge mechanism driver
    * - ``l2_population`` = ``False``

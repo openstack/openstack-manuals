@@ -19,23 +19,15 @@
    * - **[DEFAULT]**
      -
    * - ``cinder_admin_auth_url`` = ``http://localhost:5000/v2.0``
-     - (String) Identity service URL.
+     - (String) DEPRECATED: Identity service URL. This option isn't used any longer. Please use [cinder] auth_url instead.
    * - ``cinder_admin_password`` = ``None``
-     - (String) Cinder admin password.
+     - (String) DEPRECATED: Cinder admin password. This option isn't used any longer. Please use [cinder] password instead.
    * - ``cinder_admin_tenant_name`` = ``service``
-     - (String) Cinder admin tenant name.
+     - (String) DEPRECATED: Cinder admin tenant name. This option isn't used any longer. Please use [cinder] tenant_name instead.
    * - ``cinder_admin_username`` = ``cinder``
-     - (String) Cinder admin username.
-   * - ``cinder_api_insecure`` = ``False``
-     - (Boolean) Allow to perform insecure SSL requests to cinder.
-   * - ``cinder_ca_certificates_file`` = ``None``
-     - (String) Location of CA certificates file to use for cinder client requests.
+     - (String) DEPRECATED: Cinder admin username. This option isn't used any longer. Please use [cinder] username instead.
    * - ``cinder_catalog_info`` = ``volume:cinder:publicURL``
-     - (String) Info to match when looking for cinder in the service catalog. Format is separated values of the form: <service_type>:<service_name>:<endpoint_type>
-   * - ``cinder_cross_az_attach`` = ``True``
-     - (Boolean) Allow attaching between instances and volumes in different availability zones.
-   * - ``cinder_http_retries`` = ``3``
-     - (Integer) Number of cinderclient retries on failed HTTP calls.
+     - (String) DEPRECATED: Info to match when looking for cinder in the service catalog. Format is separated values of the form: <service_type>:<service_name>:<endpoint_type> This option isn't used any longer.
    * - ``cinder_volume_type`` = ``None``
      - (String) Name or id of cinder volume type which will be used for all volumes created by driver.
    * - ``connect_share_server_to_tenant_network`` = ``False``
@@ -102,3 +94,61 @@
      - (String) Volume name template.
    * - ``volume_snapshot_name_template`` = ``manila-snapshot-%s``
      - (String) Volume snapshot name template.
+   * - **[cinder]**
+     -
+   * - ``api_insecure`` = ``False``
+     - (Boolean) Allow to perform insecure SSL requests to cinder.
+   * - ``auth_section`` = ``None``
+     - (Unknown) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Unknown) Authentication type to load
+   * - ``ca_certificates_file`` = ``None``
+     - (String) Location of CA certificates file to use for cinder client requests.
+   * - ``cafile`` = ``None``
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``certfile`` = ``None``
+     - (String) PEM encoded client certificate cert file
+   * - ``cross_az_attach`` = ``True``
+     - (Boolean) Allow attaching between instances and volumes in different availability zones.
+   * - ``http_retries`` = ``3``
+     - (Integer) Number of cinderclient retries on failed HTTP calls.
+   * - ``insecure`` = ``False``
+     - (Boolean) Verify HTTPS connections.
+   * - ``keyfile`` = ``None``
+     - (String) PEM encoded client certificate key file
+   * - ``timeout`` = ``None``
+     - (Integer) Timeout value for http requests
+   * - **[neutron]**
+     -
+   * - ``cafile`` = ``None``
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``certfile`` = ``None``
+     - (String) PEM encoded client certificate cert file
+   * - ``insecure`` = ``False``
+     - (Boolean) Verify HTTPS connections.
+   * - ``keyfile`` = ``None``
+     - (String) PEM encoded client certificate key file
+   * - ``timeout`` = ``None``
+     - (Integer) Timeout value for http requests
+   * - **[nova]**
+     -
+   * - ``api_insecure`` = ``False``
+     - (Boolean) Allow to perform insecure SSL requests to nova.
+   * - ``api_microversion`` = ``2.10``
+     - (String) Version of Nova API to be used.
+   * - ``auth_section`` = ``None``
+     - (Unknown) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Unknown) Authentication type to load
+   * - ``ca_certificates_file`` = ``None``
+     - (String) Location of CA certificates file to use for nova client requests.
+   * - ``cafile`` = ``None``
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``certfile`` = ``None``
+     - (String) PEM encoded client certificate cert file
+   * - ``insecure`` = ``False``
+     - (Boolean) Verify HTTPS connections.
+   * - ``keyfile`` = ``None``
+     - (String) PEM encoded client certificate key file
+   * - ``timeout`` = ``None``
+     - (Integer) Timeout value for http requests

@@ -50,6 +50,8 @@
      - (Boolean) When true, this option sets the owner of an image to be the tenant. Otherwise, the owner of the image will be the authenticated user issuing the request.
    * - ``public_endpoint`` = ``None``
      - (String) Public url to use for versions endpoint. The default is None, which will use the request's host_url attribute to populate the URL base. If Glance is operating behind a proxy, you will want to change this to represent the proxy's URL.
+   * - ``secure_proxy_ssl_header`` = ``None``
+     - (String) The HTTP header used to determine the scheme for the original request, even if it was removed by an SSL terminating proxy. Typical value is "HTTP_X_FORWARDED_PROTO".
    * - ``send_identity_headers`` = ``False``
      - (Boolean) Whether to pass through headers containing user and tenant information when making requests to the registry. This allows the registry to use the context middleware without keystonemiddleware's auth_token middleware, removing calls to the keystone auth service. It is recommended that when using this option, secure communication between glance api and glance registry is ensured by means other than auth_token middleware.
    * - ``show_multiple_locations`` = ``False``

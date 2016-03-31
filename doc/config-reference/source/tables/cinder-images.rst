@@ -22,7 +22,7 @@
      - (List) A list of url schemes that can be downloaded directly via the direct_url. Currently supported schemes: [file].
    * - ``glance_api_insecure`` = ``False``
      - (Boolean) Allow to perform insecure SSL (https) requests to glance
-   * - ``glance_api_servers`` = ``$glance_host:$glance_port``
+   * - ``glance_api_servers`` = ``None``
      - (List) A list of the URLs of glance API servers available to cinder ([http[s]://][hostname|ip]:port). If protocol is not specified it defaults to http.
    * - ``glance_api_ssl_compression`` = ``False``
      - (Boolean) Enables or disables negotiation of SSL layer compression. In some cases disabling compression can improve data throughput, such as when high network bandwidth is available and you use compressed image formats like qcow2.
@@ -30,14 +30,12 @@
      - (Integer) Version of the glance API to use
    * - ``glance_ca_certificates_file`` = ``None``
      - (String) Location of ca certificates file to use for glance client requests.
+   * - ``glance_catalog_info`` = ``image:glance:publicURL``
+     - (String) Info to match when looking for glance in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> - Only used if glance_api_servers are not provided.
    * - ``glance_core_properties`` = ``checksum, container_format, disk_format, image_name, image_id, min_disk, min_ram, name, size``
      - (List) Default core properties of image
-   * - ``glance_host`` = ``$my_ip``
-     - (String) Default glance host name or IP
    * - ``glance_num_retries`` = ``0``
      - (Integer) Number retries when downloading an image from glance
-   * - ``glance_port`` = ``9292``
-     - (Integer) Default glance port
    * - ``glance_request_timeout`` = ``None``
      - (Integer) http/https timeout value for glance operations. If no value (None) is supplied here, the glanceclient default value is used.
    * - ``image_conversion_dir`` = ``$state_path/conversion``

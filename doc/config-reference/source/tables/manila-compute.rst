@@ -19,22 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``nova_admin_auth_url`` = ``http://localhost:5000/v2.0``
-     - (String) Identity service URL.
+     - (String) DEPRECATED: Identity service URL. This option isn't used any longer. Please use [nova] url instead.
    * - ``nova_admin_password`` = ``None``
-     - (String) Nova admin password.
+     - (String) DEPRECATED: Nova admin password. This option isn't used any longer. Please use [nova] password instead.
    * - ``nova_admin_tenant_name`` = ``service``
-     - (String) Nova admin tenant name.
+     - (String) DEPRECATED: Nova admin tenant name. This option isn't used any longer. Please use [nova] tenant instead.
    * - ``nova_admin_username`` = ``nova``
-     - (String) Nova admin username.
-   * - ``nova_api_insecure`` = ``False``
-     - (Boolean) Allow to perform insecure SSL requests to nova.
-   * - ``nova_api_microversion`` = ``2.10``
-     - (String) Version of Nova API to be used.
-   * - ``nova_ca_certificates_file`` = ``None``
-     - (String) Location of CA certificates file to use for nova client requests.
+     - (String) DEPRECATED: Nova admin username. This option isn't used any longer. Please use [nova] username instead.
    * - ``nova_catalog_admin_info`` = ``compute:nova:adminURL``
-     - (String) Same as nova_catalog_info, but for admin endpoint.
+     - (String) DEPRECATED: Same as nova_catalog_info, but for admin endpoint. This option isn't used any longer.
    * - ``nova_catalog_info`` = ``compute:nova:publicURL``
-     - (String) Info to match when looking for nova in the service catalog. Format is separated values of the form: <service_type>:<service_name>:<endpoint_type>
+     - (String) DEPRECATED: Info to match when looking for nova in the service catalog. Format is separated values of the form: <service_type>:<service_name>:<endpoint_type> This option isn't used any longer.
    * - ``os_region_name`` = ``None``
      - (String) Region name of this node.
