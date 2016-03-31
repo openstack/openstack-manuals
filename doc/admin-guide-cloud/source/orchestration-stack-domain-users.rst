@@ -70,7 +70,7 @@ To set up stack domain users, complete the following steps:
    the IP address or resolvable name for the Identity
    service).
 
-   ::
+   .. code-block:: console
 
     $ openstack --os-token $OS_TOKEN --os-url=$KS_ENDPOINT_V3 --os-\
       identity-api-version=3 domain create heat --description "Owns \
@@ -79,7 +79,9 @@ To set up stack domain users, complete the following steps:
    The domain ID is returned by this command, and is referred to as
    ``$HEAT_DOMAIN_ID`` below.
 
-#. Create the user::
+#. Create the user:
+
+   .. code-block:: console
 
     $ openstack --os-token $OS_TOKEN --os-url=$KS_ENDPOINT_V3 --os-\
       identity-api-version=3 user create --password $PASSWORD --domain \
@@ -89,7 +91,9 @@ To set up stack domain users, complete the following steps:
    The user ID is returned by this command and is referred to as
    ``$DOMAIN_ADMIN_ID`` below.
 
-#. Make the user a domain admin::
+#. Make the user a domain admin:
+
+   .. code-block:: console
 
     $ openstack --os-token $OS_TOKEN --os-url=$KS_ENDPOINT_V3 --os-\
       identity-api-version=3 role add --user $DOMAIN_ADMIN_ID --domain \
