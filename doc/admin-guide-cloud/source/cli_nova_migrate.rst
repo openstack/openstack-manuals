@@ -6,7 +6,10 @@ When you want to move an instance from one compute host to another,
 you can use the :command:`nova migrate` command. The scheduler chooses the
 destination compute host based on its settings. This process does
 not assume that the instance has shared storage available on the
-target host.
+target host. If you are using SSH tunneling, you must ensure that
+each node is configured with SSH key authentication so that the
+Compute service can use SSH to move disks to other nodes.
+For more information, see :ref:`clinovamigratecfgssh`.
 
 #. To list the VMs you want to migrate, run:
 
@@ -73,6 +76,15 @@ target host.
 
    ``ERROR (Forbidden): Policy doesn't allow compute_extension:admin_actions:migrate
    to be performed. (HTTP 403)``
+
+.. note::
+
+   If you see an error similar to this message, SSH tunneling
+   was not set up between the compute nodes:
+
+   ``ProcessExecutionError: Unexpected error while running command.``
+
+   ``Stderr: u Host key verification failed.\r\n``
 
 The instance is booted from a new host, but preserves its configuration
 including its ID, name, any metadata, IP address, and other properties.
