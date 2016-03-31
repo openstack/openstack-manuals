@@ -92,7 +92,7 @@ group in ``available`` status:
 
 .. code-block:: console
 
-   $ manila create nfs 1 --name "Share2" --description "My second share"
+   $ manila create nfs 1 --name "Share2" --description "My second share" \
    --share-type default --share-network my_share_net --consistency-group cgroup1
    +-----------------------------+--------------------------------------+
    | Property                    | Value                                |

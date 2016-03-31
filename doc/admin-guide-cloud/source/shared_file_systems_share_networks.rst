@@ -60,7 +60,7 @@ To create a share network with private network and subnetwork, run:
 
 .. code-block:: console
 
-   $ manila share-network-create --neutron-net-id 5ed5a854-21dc-4ed3-870a-117b7064eb21
+   $ manila share-network-create --neutron-net-id 5ed5a854-21dc-4ed3-870a-117b7064eb21 \
    --neutron-subnet-id 74dcfb5a-b4d7-4855-86f5-a669729428dc --name my_share_net --description "My first share network"
    +-------------------+--------------------------------------+
    | Property          | Value                                |
