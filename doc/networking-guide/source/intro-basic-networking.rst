@@ -328,8 +328,8 @@ local network associated with the network interface eth0.
 Line 3 of the output specifies that IPs in the 192.168.27.0/24 subnet
 are on the local network associated with the network interface eth1.
 
-Line 4 of the output specifies that IPs in the 192.168.122/24 subnet are on the
-local network associated with the network interface virbr0.
+Line 4 of the output specifies that IPs in the 192.168.122.0/24 subnet are
+on the local network associated with the network interface virbr0.
 
 The output of the :command:`route -n` and :command:`netstat -rn` commands are
 formatted in a slightly different way. This example shows how the same
