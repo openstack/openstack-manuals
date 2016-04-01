@@ -17,12 +17,10 @@ in the `Heat developer documentation
   .. code-block:: yaml
 
      heat_template_version: 2015-10-15
-     description: Launch a basic instance using the ``m1.tiny`` flavor and one network.
+     description: Launch a basic instance with CirrOS image using the
+                  ``m1.tiny`` flavor, ``mykey`` key,  and one network.
 
      parameters:
-       ImageID:
-         type: string
-         description: Image to use for the instance.
        NetID:
          type: string
          description: Network ID to use for the instance.
@@ -31,8 +29,9 @@ in the `Heat developer documentation
        server:
          type: OS::Nova::Server
          properties:
-           image: { get_param: ImageID }
+           image: cirros
            flavor: m1.tiny
+           key_name: mykey
            networks:
            - network: { get_param: NetID }
 
@@ -83,7 +82,7 @@ Create a stack using the ``demo-template.yml`` template.
 
    .. code-block:: console
 
-      $ heat stack-create -f demo-template.yml -P "ImageID=cirros;NetID=$NET_ID" stack
+      $ heat stack-create -f demo-template.yml -P "NetID=$NET_ID" stack
       +--------------------------------------+------------+--------------------+---------------------+--------------+
       | id                                   | stack_name | stack_status       | creation_time       | updated_time |
       +--------------------------------------+------------+--------------------+---------------------+--------------+
