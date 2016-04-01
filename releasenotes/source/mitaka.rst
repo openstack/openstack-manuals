@@ -70,9 +70,17 @@ Architecture Design Guide
 API Guides
 ~~~~~~~~~~
 
-* Swagger files now built to http://developer.openstack.org/
+* New, cleaner `developer.openstack.org <http://developer.openstack.org>`_
+  landing page.
+* `API Quick Start <http://developer.openstack.org/api-guide/compute/>`_
+  converted to RST with theme styling to match.
+* `Compute API Guide <http://developer.openstack.org/api-guide/compute/>`_
+  now built from nova source tree.
+* Draft swagger files now built to http://developer.openstack.org/draft/swagger/
 * Created templates for writing API guides for projects teams available
   in projects repositories.
+* Released fairy-slipper, a migration tool for WADL to RST plus API reference
+  information.
 
 Training Guides
 ~~~~~~~~~~~~~~~
