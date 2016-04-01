@@ -74,10 +74,26 @@ API Guides
 * Created templates for writing API guides for projects teams available
   in projects repositories.
 
+Training Guides
+~~~~~~~~~~~~~~~
+
+* Added the `Upstream Training Archives <http://docs.openstack.org/upstream-training/upstream-archives.html>`_
+  (the list of past global and local Upstream Training events).
+* Added the bug report links to each slide and the landing page.
+* Enabled translation.
+
 Translations
 ~~~~~~~~~~~~
 
 * Japanese
 
   * Published the Networking Guide.
+  * Published the Upstream Training.
 
+* Korean
+
+  * Published the Upstream Training.
+
+* German
+
+  * Published the Upstream Training.
