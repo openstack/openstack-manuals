@@ -22,34 +22,46 @@ To extend the share and check the result, run:
 
 .. code-block:: console
 
-   $ manila extend Share1 2
-   $ manila show Share1
-   +-----------------------------+-------------------------------------------+
-   | Property                    | Value                                     |
-   +-----------------------------+-------------------------------------------+
-   | status                      | available                                 |
-   | share_type_name             | default                                   |
-   | description                 | My first share. Updated                   |
-   | availability_zone           | nova                                      |
-   | share_network_id            | 5c3cbabb-f4da-465f-bc7f-fadbe047b85a      |
-   | export_locations            | 10.254.0.3:/shares/share-2d5e2c0a-1f84-...|
-   | share_server_id             | 41b7829d-7f6b-4c96-aea5-d106c2959961      |
-   | host                        | manila@generic1#GENERIC1                  |
-   | snapshot_id                 | None                                      |
-   | is_public                   | False                                     |
-   | task_state                  | None                                      |
-   | snapshot_support            | True                                      |
-   | id                          | aca648eb-8c03-4394-a5cc-755066b7eb66      |
-   | size                        | 2                                         |
-   | name                        | Share1                                    |
-   | share_type                  | c0086582-30a6-4060-b096-a42ec9d66b86      |
-   | created_at                  | 2015-09-24T12:19:06.000000                |
-   | share_proto                 | NFS                                       |
-   | consistency_group_id        | None                                      |
-   | source_cgsnapshot_member_id | None                                      |
-   | project_id                  | 20787a7ba11946adad976463b57d8a2f          |
-   | metadata                    | {u'deadline': u'01/30/16'}                |
-   +-----------------------------+-------------------------------------------+
+   $ manila extend docs_resize 2
+   $ manila show docs_resize
+   +----------------------+--------------------------------------------------------------------------+
+   | Property             | Value                                                                    |
+   +----------------------+--------------------------------------------------------------------------+
+   | status               | available                                                                |
+   | share_type_name      | my_type                                                                  |
+   | description          | None                                                                     |
+   | availability_zone    | nova                                                                     |
+   | share_network_id     | None                                                                     |
+   | export_locations     |                                                                          |
+   |                      | path = 1.0.0.4:/shares/manila_share_b8afc508_8487_442b_b170_ea65b07074a8 |
+   |                      | preferred = False                                                        |
+   |                      | is_admin_only = False                                                    |
+   |                      | id = 3ffb76f4-92b9-4639-83fd-025bc3e302ff                                |
+   |                      | share_instance_id = b8afc508-8487-442b-b170-ea65b07074a8                 |
+   |                      | path = 2.0.0.3:/shares/manila_share_b8afc508_8487_442b_b170_ea65b07074a8 |
+   |                      | preferred = False                                                        |
+   |                      | is_admin_only = True                                                     |
+   |                      | id = 1f0e263f-370d-47d3-95f6-1be64088b9da                                |
+   |                      | share_instance_id = b8afc508-8487-442b-b170-ea65b07074a8                 |
+   | share_server_id      | None                                                                     |
+   | host                 | manila@paris#shares                                                      |
+   | access_rules_status  | active                                                                   |
+   | snapshot_id          | None                                                                     |
+   | is_public            | False                                                                    |
+   | task_state           | None                                                                     |
+   | snapshot_support     | True                                                                     |
+   | id                   | b07dbebe-a328-403c-b402-c8871c89e3d1                                     |
+   | size                 | 2                                                                        |
+   | name                 | docs_resize                                                              |
+   | share_type           | 14ee8575-aac2-44af-8392-d9c9d344f392                                     |
+   | has_replicas         | False                                                                    |
+   | replication_type     | None                                                                     |
+   | created_at           | 2016-03-25T15:33:18.000000                                               |
+   | share_proto          | NFS                                                                      |
+   | consistency_group_id | None                                                                     |
+   | project_id           | 907004508ef4447397ce6741a8f037c1                                         |
+   | metadata             | {}                                                                       |
+   +----------------------+--------------------------------------------------------------------------+
 
 While shrinking, the share has a ``shrinking`` status. This means that the
 decrease share size request was issued successfully. To shrink the share and
@@ -57,31 +69,43 @@ check the result, run:
 
 .. code-block:: console
 
-   $ manila shrink Share1 1
-   $ manila show Share1
-   +-----------------------------+-------------------------------------------+
-   | Property                    | Value                                     |
-   +-----------------------------+-------------------------------------------+
-   | status                      | available                                 |
-   | share_type_name             | default                                   |
-   | description                 | My first share. Updated                   |
-   | availability_zone           | nova                                      |
-   | share_network_id            | 5c3cbabb-f4da-465f-bc7f-fadbe047b85a      |
-   | export_locations            | 10.254.0.3:/shares/share-2d5e2c0a-1f84-...|
-   | share_server_id             | 41b7829d-7f6b-4c96-aea5-d106c2959961      |
-   | host                        | manila@generic1#GENERIC1                  |
-   | snapshot_id                 | None                                      |
-   | is_public                   | False                                     |
-   | task_state                  | None                                      |
-   | snapshot_support            | True                                      |
-   | id                          | aca648eb-8c03-4394-a5cc-755066b7eb66      |
-   | size                        | 1                                         |
-   | name                        | Share1                                    |
-   | share_type                  | c0086582-30a6-4060-b096-a42ec9d66b86      |
-   | created_at                  | 2015-09-24T12:19:06.000000                |
-   | share_proto                 | NFS                                       |
-   | consistency_group_id        | None                                      |
-   | source_cgsnapshot_member_id | None                                      |
-   | project_id                  | 20787a7ba11946adad976463b57d8a2f          |
-   | metadata                    | {u'deadline': u'01/30/16'}                |
-   +-----------------------------+-------------------------------------------+
+   $ manila shrink docs_resize 1
+   $ manila show docs_resize
+   +----------------------+--------------------------------------------------------------------------+
+   | Property             | Value                                                                    |
+   +----------------------+--------------------------------------------------------------------------+
+   | status               | available                                                                |
+   | share_type_name      | my_type                                                                  |
+   | description          | None                                                                     |
+   | availability_zone    | nova                                                                     |
+   | share_network_id     | None                                                                     |
+   | export_locations     |                                                                          |
+   |                      | path = 1.0.0.4:/shares/manila_share_b8afc508_8487_442b_b170_ea65b07074a8 |
+   |                      | preferred = False                                                        |
+   |                      | is_admin_only = False                                                    |
+   |                      | id = 3ffb76f4-92b9-4639-83fd-025bc3e302ff                                |
+   |                      | share_instance_id = b8afc508-8487-442b-b170-ea65b07074a8                 |
+   |                      | path = 2.0.0.3:/shares/manila_share_b8afc508_8487_442b_b170_ea65b07074a8 |
+   |                      | preferred = False                                                        |
+   |                      | is_admin_only = True                                                     |
+   |                      | id = 1f0e263f-370d-47d3-95f6-1be64088b9da                                |
+   |                      | share_instance_id = b8afc508-8487-442b-b170-ea65b07074a8                 |
+   | share_server_id      | None                                                                     |
+   | host                 | manila@paris#shares                                                      |
+   | access_rules_status  | active                                                                   |
+   | snapshot_id          | None                                                                     |
+   | is_public            | False                                                                    |
+   | task_state           | None                                                                     |
+   | snapshot_support     | True                                                                     |
+   | id                   | b07dbebe-a328-403c-b402-c8871c89e3d1                                     |
+   | size                 | 1                                                                        |
+   | name                 | docs_resize                                                              |
+   | share_type           | 14ee8575-aac2-44af-8392-d9c9d344f392                                     |
+   | has_replicas         | False                                                                    |
+   | replication_type     | None                                                                     |
+   | created_at           | 2016-03-25T15:33:18.000000                                               |
+   | share_proto          | NFS                                                                      |
+   | consistency_group_id | None                                                                     |
+   | project_id           | 907004508ef4447397ce6741a8f037c1                                         |
+   | metadata             | {}                                                                       |
+   +----------------------+--------------------------------------------------------------------------+

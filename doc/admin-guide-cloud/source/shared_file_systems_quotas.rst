@@ -50,14 +50,22 @@ you edit the ``etc/manila/api-paste.ini`` file.
    limits = (POST, "*/shares", ^/shares, 120, MINUTE);(PUT, "*/shares", .*, 120, MINUTE);(DELETE, "*", .*, 120, MINUTE)
 
 Also, add the ``ratelimit`` to ``noauth``, ``keystone``, ``keystone_nolimit``
-parameters in the ``[composite:openstack_share_api]`` group.
+parameters in the ``[composite:openstack_share_api]`` and
+``[composite:openstack_share_api_v2]`` groups.
 
 .. code-block:: ini
 
    [composite:openstack_share_api]
-   noauth = faultwrap ssl ratelimit sizelimit noauth api
-   keystone = faultwrap ssl ratelimit sizelimit authtoken keystonecontext api
-   keystone_nolimit = faultwrap ssl ratelimit sizelimit authtoken keystonecontext api
+   use = call:manila.api.middleware.auth:pipeline_factory
+   noauth = cors faultwrap ssl ratelimit sizelimit noauth api
+   keystone = cors faultwrap ssl ratelimit sizelimit authtoken keystonecontext api
+   keystone_nolimit = cors faultwrap ssl ratelimit sizelimit authtoken keystonecontext api
+
+   [composite:openstack_share_api_v2]
+   use = call:manila.api.middleware.auth:pipeline_factory
+   noauth = cors faultwrap ssl ratelimit sizelimit noauth apiv2
+   keystone = cors faultwrap ssl ratelimit sizelimit authtoken keystonecontext apiv2
+   keystone_nolimit = cors faultwrap ssl ratelimit sizelimit authtoken keystonecontext apiv2
 
 To see the rate limits, run:
 
@@ -82,9 +90,17 @@ command. If you specify the optional :option:`--user` parameter, you get the
 quotas for this user in the specified tenant. If you omit this parameter,
 you get the quotas for the specified project.
 
+.. note::
+
+   The Shared File Systems service does not perform mapping of usernames and
+   tenant/project names to IDs. Provide only ID values to get correct setup
+   of quotas. Setting it by names you set quota for nonexistent tenant/user.
+   In case quota is not set explicitly by tenant/user ID,
+   The Shared File Systems service just applies default quotas.
+
 .. code-block:: console
 
-   $ manila quota-show --tenant demo --user demo
+   $ manila quota-show --tenant %tenant_id% --user %user_id%
    +--------------------+-------+
    | Property           | Value |
    +--------------------+-------+
@@ -101,7 +117,7 @@ the :command:`manila quota-defaults` command:
 
 .. code-block:: console
 
-   $ manila quota-defaults --tenant demo
+   $ manila quota-defaults --tenant %tenant_id%
    +--------------------+-------+
    | Property           | Value |
    +--------------------+-------+
@@ -114,12 +130,12 @@ the :command:`manila quota-defaults` command:
 
 The administrator can update the quotas for a specific tenant, or for a
 specific user by providing both the ``--tenant`` and ``--user`` optional
-arguments. It is possible to update the ``snapshots``, ``gigabytes``,
-``snapshot-gigabytes``, and ``share-networks`` quotas.
+arguments. It is possible to update the ``shares``, ``snapshots``,
+``gigabytes``, ``snapshot-gigabytes``, and ``share-networks`` quotas.
 
 .. code-block:: console
 
-   $ manila quota-update demo --user demo --shares 49 --snapshots 49
+   $ manila quota-update %tenant_id% --user %user_id% --shares 49 --snapshots 49
 
 As administrator, you can also permit or deny the force-update of a quota that
 is already used, or if the requested value exceeds the configured quota limit.
@@ -127,10 +143,10 @@ To force-update a quota, use ``force`` optional key.
 
 .. code-block:: console
 
-   $ manila quota-update demo --shares 51 --snapshots 51 --force
+   $ manila quota-update %tenant_id% --shares 51 --snapshots 51 --force
 
 To revert quotas to default for a project or for a user, delete quotas:
 
 .. code-block:: console
 
-   $ manila quota-delete --tenant demo --user demo
+   $ manila quota-delete --tenant %tenant_id% --user %user_id%
