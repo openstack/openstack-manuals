@@ -28,6 +28,20 @@ High Availability Guide
 
 * Improved the `RabbitMQ section <http://docs.openstack.org/ha-guide/controller-ha-rabbitmq.html>`_.
 
+Installation Guide
+~~~~~~~~~~~~~~~~~~
+
+* Updated configuration for all services.
+* Added Shared File Systems (manila) content.
+
+Networking Guide
+~~~~~~~~~~~~~~~~
+
+* Documentation of some of the new features in Mitaka.
+* New content including documentation for LBaaS, DNS integration,
+  and macvtap ml2 driver.
+
+
 Operations Guide
 ~~~~~~~~~~~~~~~~
 
