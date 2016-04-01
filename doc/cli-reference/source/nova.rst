@@ -9,7 +9,7 @@ Compute command-line client
 The nova client is the command-line interface (CLI) for
 the OpenStack Compute API and its extensions.
 
-This chapter documents :command:`nova` version ``3.3.0``.
+This chapter documents :command:`nova` version ``3.3.1``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -2390,7 +2390,6 @@ nova host-evacuate-live
 .. code-block:: console
 
    usage: nova host-evacuate-live [--target-host <target_host>] [--block-migrate]
-                                  [--disk-over-commit]
                                   [--max-servers <max_servers>]
                                   <host>
 
@@ -2407,10 +2406,8 @@ Live migrate all instances of the specified host to other available hosts.
   Name of target host.
 
 ``--block-migrate``
-  Enable block migration.
-
-``--disk-over-commit``
-  Enable disk overcommit.
+  Enable block migration. (Default=auto)
+  (Supported by API versions '2.25' - '2.latest')
 
 ``--max-servers <max_servers>``
   Maximum number of servers to live migrate
