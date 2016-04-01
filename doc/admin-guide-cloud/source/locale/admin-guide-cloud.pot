@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-30 06:34+0000\n"
+"POT-Creation-Date: 2016-04-01 06:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5108,44 +5108,133 @@ msgid ""
 "When you want to move an instance from one compute host to another, you can "
 "use the :command:`nova migrate` command. The scheduler chooses the "
 "destination compute host based on its settings. This process does not assume "
-"that the instance has shared storage available on the target host."
+"that the instance has shared storage available on the target host. If you "
+"are using SSH tunneling, you must ensure that each node is configured with "
+"SSH key authentication so that the Compute service can use SSH to move disks "
+"to other nodes. For more information, see :ref:`clinovamigratecfgssh`."
 msgstr ""
 
-#: ../cli_nova_migrate.rst:11
+#: ../cli_nova_migrate.rst:14
 msgid "To list the VMs you want to migrate, run:"
 msgstr ""
 
-#: ../cli_nova_migrate.rst:17
+#: ../cli_nova_migrate.rst:20
 msgid ""
 "After selecting a VM from the list, run this command where :guilabel:`VM_ID` "
 "is set to the ID in the list returned in the previous step:"
 msgstr ""
 
-#: ../cli_nova_migrate.rst:24
+#: ../cli_nova_migrate.rst:27
 msgid "Use the :command:`nova migrate` command."
 msgstr ""
 
-#: ../cli_nova_migrate.rst:30
+#: ../cli_nova_migrate.rst:33
 msgid "To migrate an instance and watch the status, use this example script:"
 msgstr ""
 
-#: ../cli_nova_migrate.rst:69
+#: ../cli_nova_migrate.rst:72
 msgid ""
 "If you see this error, it means you are either trying the command with the "
 "wrong credentials, such as a non-admin user, or the ``policy.json`` file "
 "prevents migration for your user:"
 msgstr ""
 
-#: ../cli_nova_migrate.rst:74
+#: ../cli_nova_migrate.rst:77
 msgid ""
 "``ERROR (Forbidden): Policy doesn't allow compute_extension:admin_actions:"
 "migrate to be performed. (HTTP 403)``"
 msgstr ""
 
-#: ../cli_nova_migrate.rst:77
+#: ../cli_nova_migrate.rst:82
+msgid ""
+"If you see an error similar to this message, SSH tunneling was not set up "
+"between the compute nodes:"
+msgstr ""
+
+#: ../cli_nova_migrate.rst:85
+msgid "``ProcessExecutionError: Unexpected error while running command.``"
+msgstr ""
+
+#: ../cli_nova_migrate.rst:87
+msgid "``Stderr: u Host key verification failed.\\r\\n``"
+msgstr ""
+
+#: ../cli_nova_migrate.rst:89
 msgid ""
 "The instance is booted from a new host, but preserves its configuration "
 "including its ID, name, any metadata, IP address, and other properties."
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:5
+msgid "Configure SSH between compute nodes"
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:7
+msgid ""
+"If you are resizing or migrating an instance between hypervisors, you might "
+"encounter an SSH (Permission denied) error. Ensure that each node is "
+"configured with SSH key authentication so that the Compute service can use "
+"SSH to move disks to other nodes."
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:14
+msgid ""
+"To share a key pair between compute nodes, complete the following steps:"
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:17
+msgid ""
+"On the first node, obtain a key pair (public key and private key). Use the "
+"root key that is in the ``/root/.ssh/id_rsa`` and ``/root/.ssh/id_ras.pub`` "
+"directories or generate a new key pair."
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:23
+msgid "Run :command:`setenforce 0` to put SELinux into permissive mode."
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:26
+msgid "Enable login abilities for the nova user:"
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:32
+msgid "Switch to the nova account."
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:38
+msgid ""
+"As root, create the folder that is needed by SSH and place the private key "
+"that you obtained in step 1 into this folder:"
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:49
+msgid "Repeat steps 2-4 on each node."
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:53
+msgid ""
+"The nodes must share the same key pair, so do not generate a new key pair "
+"for any subsequent nodes."
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:56
+msgid "From the first node, where you created the SSH key, run:"
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:62
+msgid ""
+"This command installs your public key in a remote machine's "
+"``authorized_keys`` folder."
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:64
+msgid ""
+"Ensure that the nova user can now log in to each node without using a "
+"password:"
+msgstr ""
+
+#: ../cli_nova_migrate_cfg_ssh.rst:73
+msgid "As root on each node, restart both libvirt and the Compute services:"
 msgstr ""
 
 #: ../cli_nova_numa_libvirt.rst:3
@@ -23424,41 +23513,41 @@ msgid ""
 msgstr ""
 
 #: ../orchestration-stack-domain-users.rst:82
-msgid "Create the user::"
+msgid "Create the user:"
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:89
+#: ../orchestration-stack-domain-users.rst:91
 msgid ""
 "The user ID is returned by this command and is referred to as ``"
 "$DOMAIN_ADMIN_ID`` below."
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:92
-msgid "Make the user a domain admin::"
+#: ../orchestration-stack-domain-users.rst:94
+msgid "Make the user a domain admin:"
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:98
+#: ../orchestration-stack-domain-users.rst:102
 msgid ""
 "Then you must add the domain ID, username and password from these steps to "
 "the :file:`heat.conf` file:"
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:108
+#: ../orchestration-stack-domain-users.rst:112
 msgid "Usage workflow"
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:110
+#: ../orchestration-stack-domain-users.rst:114
 msgid "The following steps are run during stack creation:"
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:112
+#: ../orchestration-stack-domain-users.rst:116
 msgid ""
 "Orchestration creates a new *stack domain project* in the ``heat`` domain if "
 "the stack contains any resources that require creation of a *stack domain "
 "user*."
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:116
+#: ../orchestration-stack-domain-users.rst:120
 msgid ""
 "For any resources that require a user, the Orchestration service creates the "
 "user in the *stack domain project*. The *stack domain project* is associated "
@@ -23470,7 +23559,7 @@ msgid ""
 "`OpenStack Identity documentation <identity_management>`."
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:127
+#: ../orchestration-stack-domain-users.rst:131
 msgid ""
 "When API requests are processed, the Orchestration service performs an "
 "internal lookup, and allows stack details for a given stack to be retrieved. "
@@ -23479,18 +23568,18 @@ msgid ""
 "the :file:`policy.json` restrictions."
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:134
+#: ../orchestration-stack-domain-users.rst:138
 msgid ""
 "This means there are now two paths that can result in the same data being "
 "retrieved through the Orchestration API. The following example is for "
 "resource-metadata::"
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:141
+#: ../orchestration-stack-domain-users.rst:145
 msgid "or::"
 msgstr ""
 
-#: ../orchestration-stack-domain-users.rst:146
+#: ../orchestration-stack-domain-users.rst:150
 msgid ""
 "The stack owner uses the former (via ``heat resource-metadata {stack_name} "
 "{resource_name}``), and any agents in the instance use the latter."
