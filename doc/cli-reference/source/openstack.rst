@@ -8,7 +8,7 @@ OpenStack command-line client
 
 The openstack client is a common OpenStackcommand-line interface (CLI).
 
-This chapter documents :command:`openstack` version ``2.2.0``.
+This chapter documents :command:`openstack` version ``2.3.0``.
 
 For help on a specific :command:`openstack` command, enter:
 
@@ -28,7 +28,7 @@ openstack usage
                     [--os-region-name <auth-region-name>]
                     [--os-cacert <ca-bundle-file>] [--verify | --insecure]
                     [--os-default-domain <auth-domain>]
-                    [--os-interface <interface>] [--timing]
+                    [--os-interface <interface>] [--timing] [--profile hmac-key]
                     [--os-compute-api-version <compute-api-version>]
                     [--os-network-api-version <network-api-version>]
                     [--os-image-api-version <image-api-version>]
@@ -57,16 +57,16 @@ openstack usage
                     [--os-endpoint <auth-endpoint>] [--os-url <auth-url>]
                     [--os-token <auth-token>] [--os-project-id <auth-project-id>]
                     [--os-object-api-version <object-api-version>]
-                    [--os-dns-api-version <dns-api-version>]
-                    [--os-key-manager-api-version <key-manager-api-version>]
-                    [--os-mb-api-version <mb-api-version>]
-                    [--os-queues-api-version <queues-api-version>]
-                    [--os-data-processing-api-version <data-processing-api-version>]
-                    [--os-data-processing-url OS_DATA_PROCESSING_URL]
-                    [--os-baremetal-api-version <baremetal-api-version>]
-                    [--os-orchestration-api-version <orchestration-api-version>]
                     [--inspector-api-version INSPECTOR_API_VERSION]
                     [--inspector-url INSPECTOR_URL]
+                    [--os-data-processing-api-version <data-processing-api-version>]
+                    [--os-data-processing-url OS_DATA_PROCESSING_URL]
+                    [--os-dns-api-version <dns-api-version>]
+                    [--os-orchestration-api-version <orchestration-api-version>]
+                    [--os-mb-api-version <mb-api-version>]
+                    [--os-queues-api-version <queues-api-version>]
+                    [--os-key-manager-api-version <key-manager-api-version>]
+                    [--os-baremetal-api-version <baremetal-api-version>]
                     [--os-policy-api-version <policy-api-version>]
 
 .. _openstack_command_options:
@@ -118,6 +118,14 @@ openstack optional arguments
 ``--timing``
   Print API call timing info
 
+``--profile``
+  hmac-key    HMAC key to use for encrypting context data for
+  performance profiling of operation. This key should be
+  the value of one of the HMAC keys configured in
+  osprofiler middleware in the projects user would like
+  to profile. It needs to be specified in configuration
+  files of the required projects.
+
 ``--os-compute-api-version <compute-api-version>``
   Compute API version, default=2 (Env:
   OS_COMPUTE_API_VERSION)
@@ -140,21 +148,21 @@ openstack optional arguments
 
 ``--os-auth-type <auth-type>``
   Select an authentication type. Available types:
-  v2token, admin_token, v2password, v3password,
-  v3scopedsaml, v3oidcpassword, v3unscopedadfs, token,
-  v3token, password, v3unscopedsaml, osc_password,
-  token_endpoint. Default: selected based on :option:`--os-`
+  osc_password, token_endpoint, v2token, admin_token,
+  v2password, v3password, v3scopedsaml, v3oidcpassword,
+  v3unscopedadfs, token, v3token, password,
+  v3unscopedsaml. Default: selected based on :option:`--os-`
   username/:option:`--os-token` (Env: OS_AUTH_TYPE)
 
 ``--os-project-domain-id <auth-project-domain-id>``
-  With v3password: Domain ID containing project With
+  With osc_password: Domain ID containing project With
+  v3password: Domain ID containing project With
   v3scopedsaml: Domain ID containing project With
   v3oidcpassword: Domain ID containing project With
   v3unscopedadfs: Domain ID containing project With
   token: Domain ID containing project With v3token:
   Domain ID containing project With password: Domain ID
   containing project With v3unscopedsaml: Domain ID
-  containing project With osc_password: Domain ID
   containing project (Env: OS_PROJECT_DOMAIN_ID)
 
 ``--os-protocol <auth-protocol>``
@@ -165,43 +173,42 @@ openstack optional arguments
   (Env: OS_PROTOCOL)
 
 ``--os-project-name <auth-project-name>``
-  With v3password: Project name to scope to With
+  With osc_password: Project name to scope to With
+  v3password: Project name to scope to With
   v3scopedsaml: Project name to scope to With
   v3oidcpassword: Project name to scope to With
   v3unscopedadfs: Project name to scope to With token:
   Project name to scope to With v3token: Project name to
   scope to With password: Project name to scope to With
-  v3unscopedsaml: Project name to scope to With
-  osc_password: Project name to scope to (Env:
+  v3unscopedsaml: Project name to scope to (Env:
   OS_PROJECT_NAME)
 
 ``--os-trust-id <auth-trust-id>``
-  With v2token: Trust ID With v2password: Trust ID With
-  v3password: Trust ID With v3scopedsaml: Trust ID With
-  v3oidcpassword: Trust ID With v3unscopedadfs: Trust ID
-  With token: Trust ID With v3token: Trust ID With
-  password: Trust ID With v3unscopedsaml: Trust ID With
-  osc_password: Trust ID (Env: OS_TRUST_ID)
+  With osc_password: Trust ID With v2token: Trust ID
+  With v2password: Trust ID With v3password: Trust ID
+  With v3scopedsaml: Trust ID With v3oidcpassword: Trust
+  ID With v3unscopedadfs: Trust ID With token: Trust ID
+  With v3token: Trust ID With password: Trust ID With
+  v3unscopedsaml: Trust ID (Env: OS_TRUST_ID)
 
 ``--os-service-provider-endpoint <auth-service-provider-endpoint>``
   With v3unscopedadfs: Service Provider's Endpoint (Env:
   OS_SERVICE_PROVIDER_ENDPOINT)
 
 ``--os-domain-name <auth-domain-name>``
-  With v3password: Domain name to scope to With
-  v3scopedsaml: Domain name to scope to With
-  v3oidcpassword: Domain name to scope to With
-  v3unscopedadfs: Domain name to scope to With token:
-  Domain name to scope to With v3token: Domain name to
-  scope to With password: Domain name to scope to With
-  v3unscopedsaml: Domain name to scope to With
-  osc_password: Domain name to scope to (Env:
-  OS_DOMAIN_NAME)
+  With osc_password: Domain name to scope to With
+  v3password: Domain name to scope to With v3scopedsaml:
+  Domain name to scope to With v3oidcpassword: Domain
+  name to scope to With v3unscopedadfs: Domain name to
+  scope to With token: Domain name to scope to With
+  v3token: Domain name to scope to With password: Domain
+  name to scope to With v3unscopedsaml: Domain name to
+  scope to (Env: OS_DOMAIN_NAME)
 
 ``--os-user-domain-id <auth-user-domain-id>``
-  With v3password: User's domain id With password:
-  User's domain id With osc_password: User's domain id
-  (Env: OS_USER_DOMAIN_ID)
+  With osc_password: User's domain id With v3password:
+  User's domain id With password: User's domain id (Env:
+  OS_USER_DOMAIN_ID)
 
 ``--os-identity-provider-url <auth-identity-provider-url>``
   With v3unscopedadfs: Identity Provider's URL With
@@ -213,29 +220,28 @@ openstack optional arguments
   Endpoint (Env: OS_ACCESS_TOKEN_ENDPOINT)
 
 ``--os-domain-id <auth-domain-id>``
-  With v3password: Domain ID to scope to With
-  v3scopedsaml: Domain ID to scope to With
-  v3oidcpassword: Domain ID to scope to With
-  v3unscopedadfs: Domain ID to scope to With token:
-  Domain ID to scope to With v3token: Domain ID to scope
-  to With password: Domain ID to scope to With
-  v3unscopedsaml: Domain ID to scope to With
-  osc_password: Domain ID to scope to (Env:
+  With osc_password: Domain ID to scope to With
+  v3password: Domain ID to scope to With v3scopedsaml:
+  Domain ID to scope to With v3oidcpassword: Domain ID
+  to scope to With v3unscopedadfs: Domain ID to scope to
+  With token: Domain ID to scope to With v3token: Domain
+  ID to scope to With password: Domain ID to scope to
+  With v3unscopedsaml: Domain ID to scope to (Env:
   OS_DOMAIN_ID)
 
 ``--os-user-domain-name <auth-user-domain-name>``
-  With v3password: User's domain name With password:
-  User's domain name With osc_password: User's domain
-  name (Env: OS_USER_DOMAIN_NAME)
+  With osc_password: User's domain name With v3password:
+  User's domain name With password: User's domain name
+  (Env: OS_USER_DOMAIN_NAME)
 
 ``--os-scope <auth-scope>``
   With v3oidcpassword: OpenID Connect scope that is
   requested from OP (Env: OS_SCOPE)
 
 ``--os-user-id <auth-user-id>``
-  With v2password: User ID to login with With
-  v3password: User ID With password: User id With
-  osc_password: User id (Env: OS_USER_ID)
+  With osc_password: User id With v2password: User ID to
+  login with With v3password: User ID With password:
+  User id (Env: OS_USER_ID)
 
 ``--os-identity-provider <auth-identity-provider>``
   With v3oidcpassword: Identity Provider's name With
@@ -244,22 +250,21 @@ openstack optional arguments
   OS_IDENTITY_PROVIDER)
 
 ``--os-username <auth-username>``
-  With v2password: Username to login with With
-  v3password: Username With v3oidcpassword: Username
-  With v3unscopedadfs: Username With password: Username
-  With v3unscopedsaml: Username With osc_password:
-  Username (Env: OS_USERNAME)
+  With osc_password: Username With v2password: Username
+  to login with With v3password: Username With
+  v3oidcpassword: Username With v3unscopedadfs: Username
+  With password: Username With v3unscopedsaml: Username
+  (Env: OS_USERNAME)
 
 ``--os-auth-url <auth-auth-url>``
-  With v2token: Authentication URL With v2password:
-  Authentication URL With v3password: Authentication URL
-  With v3scopedsaml: Authentication URL With
-  v3oidcpassword: Authentication URL With
-  v3unscopedadfs: Authentication URL With token:
-  Authentication URL With v3token: Authentication URL
-  With password: Authentication URL With v3unscopedsaml:
-  Authentication URL With osc_password: Authentication
-  URL (Env: OS_AUTH_URL)
+  With osc_password: Authentication URL With v2token:
+  Authentication URL With v2password: Authentication URL
+  With v3password: Authentication URL With v3scopedsaml:
+  Authentication URL With v3oidcpassword: Authentication
+  URL With v3unscopedadfs: Authentication URL With
+  token: Authentication URL With v3token: Authentication
+  URL With password: Authentication URL With
+  v3unscopedsaml: Authentication URL (Env: OS_AUTH_URL)
 
 ``--os-client-secret <auth-client-secret>``
   With v3oidcpassword: OAuth 2.0 Client Secret (Env:
@@ -270,69 +275,62 @@ openstack optional arguments
   OS_CLIENT_ID)
 
 ``--os-project-domain-name <auth-project-domain-name>``
-  With v3password: Domain name containing project With
+  With osc_password: Domain name containing project With
+  v3password: Domain name containing project With
   v3scopedsaml: Domain name containing project With
   v3oidcpassword: Domain name containing project With
   v3unscopedadfs: Domain name containing project With
   token: Domain name containing project With v3token:
   Domain name containing project With password: Domain
   name containing project With v3unscopedsaml: Domain
-  name containing project With osc_password: Domain name
-  containing project (Env: OS_PROJECT_DOMAIN_NAME)
+  name containing project (Env: OS_PROJECT_DOMAIN_NAME)
 
 ``--os-password <auth-password>``
-  With v2password: Password to use With v3password:
-  User's password With v3oidcpassword: Password With
-  v3unscopedadfs: Password With password: User's
-  password With v3unscopedsaml: Password With
-  osc_password: User's password (Env: OS_PASSWORD)
+  With osc_password: User's password With v2password:
+  Password to use With v3password: User's password With
+  v3oidcpassword: Password With v3unscopedadfs: Password
+  With password: User's password With v3unscopedsaml:
+  Password (Env: OS_PASSWORD)
 
 ``--os-endpoint <auth-endpoint>``
-  With admin_token: The endpoint that will always be
-  used With token_endpoint: The endpoint that will
-  always be used (Env: OS_ENDPOINT)
+  With token_endpoint: The endpoint that will always be
+  used With admin_token: The endpoint that will always
+  be used (Env: OS_ENDPOINT)
 
 ``--os-url <auth-url>``
   With token_endpoint: Specific service endpoint to use
   (Env: OS_URL)
 
 ``--os-token <auth-token>``
+  With token_endpoint: The token that will always be
+  used With token_endpoint: Authentication token to use
   With v2token: Token With admin_token: The token that
   will always be used With v3scopedsaml: Token to
   authenticate with With token: Token to authenticate
-  with With v3token: Token to authenticate with With
-  token_endpoint: The token that will always be used
-  With token_endpoint: Authentication token to use (Env:
+  with With v3token: Token to authenticate with (Env:
   OS_TOKEN)
 
 ``--os-project-id <auth-project-id>``
-  With v3password: Project ID to scope to With
-  v3scopedsaml: Project ID to scope to With
-  v3oidcpassword: Project ID to scope to With
-  v3unscopedadfs: Project ID to scope to With token:
-  Project ID to scope to With v3token: Project ID to
-  scope to With password: Project ID to scope to With
-  v3unscopedsaml: Project ID to scope to With
-  osc_password: Project ID to scope to (Env:
-  OS_PROJECT_ID)
+  With osc_password: Project ID to scope to With
+  v3password: Project ID to scope to With v3scopedsaml:
+  Project ID to scope to With v3oidcpassword: Project ID
+  to scope to With v3unscopedadfs: Project ID to scope
+  to With token: Project ID to scope to With v3token:
+  Project ID to scope to With password: Project ID to
+  scope to With v3unscopedsaml: Project ID to scope to
+  (Env: OS_PROJECT_ID)
 
 ``--os-object-api-version <object-api-version>``
   Object API version, default=1 (Env:
   OS_OBJECT_API_VERSION)
 
-``--os-dns-api-version <dns-api-version>``
-  DNS API version, default=2 (Env: OS_DNS_API_VERSION)
+``--inspector-api-version INSPECTOR_API_VERSION``
+  inspector API version, only 1 is supported now (env:
+  INSPECTOR_VERSION).
 
-``--os-key-manager-api-version <key-manager-api-version>``
-  Barbican API version, default=1 (Env:
-  OS_KEY_MANAGER_API_VERSION)
-
-``--os-mb-api-version <mb-api-version>``
-  MB API version, default=1 (Env: OS_MB_API_VERSION)
-
-``--os-queues-api-version <queues-api-version>``
-  Queues API version, default=1.1 (Env:
-  OS_QUEUES_API_VERSION)
+``--inspector-url INSPECTOR_URL``
+  inspector URL, defaults to localhost (env:
+  INSPECTOR_URL).
 
 ``--os-data-processing-api-version <data-processing-api-version>``
   Data processing API version, default=1.1 (Env:
@@ -342,21 +340,27 @@ openstack optional arguments
   Data processing API URL, (Env:
   OS_DATA_PROCESSING_API_URL)
 
-``--os-baremetal-api-version <baremetal-api-version>``
-  Baremetal API version, default=1.6 (Env:
-  OS_BAREMETAL_API_VERSION)
+``--os-dns-api-version <dns-api-version>``
+  DNS API version, default=2 (Env: OS_DNS_API_VERSION)
 
 ``--os-orchestration-api-version <orchestration-api-version>``
   Orchestration API version, default=1 (Env:
   OS_ORCHESTRATION_API_VERSION)
 
-``--inspector-api-version INSPECTOR_API_VERSION``
-  inspector API version, only 1 is supported now (env:
-  INSPECTOR_VERSION).
+``--os-mb-api-version <mb-api-version>``
+  MB API version, default=1 (Env: OS_MB_API_VERSION)
 
-``--inspector-url INSPECTOR_URL``
-  inspector URL, defaults to localhost (env:
-  INSPECTOR_URL).
+``--os-queues-api-version <queues-api-version>``
+  Queues API version, default=1.1 (Env:
+  OS_QUEUES_API_VERSION)
+
+``--os-key-manager-api-version <key-manager-api-version>``
+  Barbican API version, default=1 (Env:
+  OS_KEY_MANAGER_API_VERSION)
+
+``--os-baremetal-api-version <baremetal-api-version>``
+  Baremetal API version, default=1.6 (Env:
+  OS_BAREMETAL_API_VERSION)
 
 ``--os-policy-api-version <policy-api-version>``
   Policy API version, default=1 (Env:
@@ -8909,6 +8913,9 @@ openstack recordset list
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
+                                   [--name NAME] [--type TYPE] [--data DATA]
+                                   [--ttl TTL] [--description DESCRIPTION]
+                                   [--status STATUS] [--action ACTION]
                                    zone_id
 
 List recordsets
@@ -8922,6 +8929,27 @@ List recordsets
 
 ``-h, --help``
   show this help message and exit
+
+``--name NAME``
+  RecordSet Name
+
+``--type TYPE``
+  RecordSet Type
+
+``--data DATA``
+  RecordSet Record Data
+
+``--ttl TTL``
+  Time To Live (Seconds)
+
+``--description DESCRIPTION``
+  Description
+
+``--status STATUS``
+  RecordSet Status
+
+``--action ACTION``
+  RecordSet Action
 
 .. _openstack_recordset_set_with_identity_api_v3:
 
@@ -13220,6 +13248,7 @@ openstack tld list
    usage: openstack --os-identity-api-version 3 tld list [-h] [-f {csv,html,json,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
+                             [--name NAME] [--description DESCRIPTION]
 
 List tlds
 
@@ -13227,6 +13256,12 @@ List tlds
 
 ``-h, --help``
   show this help message and exit
+
+``--name NAME``
+  TLD NAME
+
+``--description DESCRIPTION``
+  TLD Description
 
 .. _openstack_tld_set_with_identity_api_v3:
 
