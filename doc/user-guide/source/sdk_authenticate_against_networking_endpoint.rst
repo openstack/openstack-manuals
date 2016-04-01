@@ -3,7 +3,7 @@ Authenticate against a Networking endpoint
 ==========================================
 
 To authenticate against a Networking endpoint, instantiate a
-``neutronclient.v_2_0.client.Client`` object:
+``neutronclient.v2_0.client.Client`` object:
 
 .. code-block:: python
 
