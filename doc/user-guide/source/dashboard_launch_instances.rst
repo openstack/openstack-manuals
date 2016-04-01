@@ -138,6 +138,12 @@ Launch an instance
       To add a network to the instance, click the :guilabel:`+` in the
       :guilabel:`Available Networks` field.
 
+
+   :guilabel:`Network Ports` tab
+
+   Ports
+      Activate the ports that you want to assign to the instance.
+
    :guilabel:`Post-Creation` tab
 
    Customization Script Source
