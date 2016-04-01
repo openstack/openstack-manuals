@@ -192,10 +192,10 @@ Building an LBaaS v2 load balancer
        | vip_subnet_id       | f1e7827d-1bfe-40b6-b8f0-2d9fd946f59b           |
         +---------------------+------------------------------------------------+
 
-#.  The security group must be updated to allow traffic to reach the load
-    balancer. Create a new security group along with ingress rules to allow
-    traffic into the new load balancer. The neutron port for the load balancer
-    is shown as ``vip_port_id`` above.
+#.  Update the security group to allow traffic to reach the new load balancer.
+    Create a new security group along with ingress rules to allow traffic into
+    the new load balancer. The neutron port for the load balancer is shown as
+    ``vip_port_id`` above.
 
     Create a security group and rules to allow TCP port 80, TCP port 443, and
     all ICMP traffic:
