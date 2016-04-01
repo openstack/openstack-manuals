@@ -2,7 +2,7 @@
 Mitaka release
 ==============
 
-* Tracking of release notes in the ``doc/releasenotes/`` directory.
+* Tracking of release notes in the ``releasenotes`` directory.
 
 Configuration Reference
 ~~~~~~~~~~~~~~~~~~~~~~~
