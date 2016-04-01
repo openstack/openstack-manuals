@@ -1,8 +1,8 @@
 .. _volume_backups:
 
-===========================
-Back up and restore volumes
-===========================
+=========================================
+Back up and restore volumes and snapshots
+=========================================
 
 The ``cinder`` command-line interface provides the tools for creating a
 volume backup. You can restore a volume from a backup as long as the
@@ -163,3 +163,11 @@ Run this command to restore the state of a backup:
 .. code-block:: console
 
    $ cinder backup-reset-state [--state STATE] BACKUP_ID-1 BACKUP_ID-2 ...
+
+Run this command to create a backup of a snapshot:
+
+.. code-block:: console
+
+   $ cinder backup-create [--incremental] [--force] SNAPSHOT
+
+Where ``SNAPSHOT`` is the name or ID of the snapshot.
