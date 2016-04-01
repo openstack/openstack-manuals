@@ -3,12 +3,12 @@ Authenticate against a Compute endpoint
 =======================================
 
 To authenticate against a Compute endpoint, instantiate a
-`novaclient.v\_1\_1.client.Client <http://docs.openstack.org/developer/python-novaclient/api/novaclient.v1_1.client.html#novaclient.v1_1.client.Client>`__ object:
+`novaclient.v2.client.Client <http://docs.openstack.org/developer/python-novaclient/ref/v2/client.html>`__ object:
 
 .. code-block:: python
 
    from os import environ as env
-   import novaclient.v1_1.client as nvclient
+   import novaclient.v2.client as nvclient
    nova = nvclient.Client(auth_url=env['OS_AUTH_URL'],
                           username=env['OS_USERNAME'],
                           api_key=env['OS_PASSWORD'],
@@ -22,7 +22,7 @@ and pass the version number:
 
    from os import environ as env
    import novaclient.client
-   nova = novaclient.client.Client("1.1", auth_url=env['OS_AUTH_URL'],
+   nova = novaclient.client.Client("2.1", auth_url=env['OS_AUTH_URL'],
                                    username=env['OS_USERNAME'],
                                    api_key=env['OS_PASSWORD'],
                                    project_id=env['OS_TENANT_NAME'],
@@ -44,7 +44,7 @@ authenticate against the Rackspace custom authentication back end.
 .. code-block:: python
 
    import novaclient.auth_plugin
-   import novaclient.v1_1.client as nvclient
+   import novaclient.v2.client as nvclient
    from os import environ as env
    auth_system = 'rackspace'
    auth_plugin = novaclient.auth_plugin.load_plugin('rackspace')
@@ -63,7 +63,7 @@ custom authentication back end:
 .. code-block:: python
 
    import novaclient.auth_plugin
-   import novaclient.v1_1.client as nvclient
+   import novaclient.v2.client as nvclient
    from os import environ as env
    auth_system = env.get('OS_AUTH_SYSTEM', 'keystone')
    if auth_system != "keystone":
