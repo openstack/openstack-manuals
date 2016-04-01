@@ -33,6 +33,20 @@ Operations Guide
 
 * Added the Shared File Systems chapter.
 
+User Guides
+~~~~~~~~~~~
+
+* Reorganised the **Admin User Guide** content together with the
+  **Cloud Admin Guide** content to create a new
+  **Administrator Guide**.
+
+* Approximately one third of the **Administrator Guide** chapters
+  recieved a thorough edit for style and consistency, following the
+  contributor guide standard.
+
+* Troubleshooting chapters now have consistent formatting, which is
+  a step toward improved troubleshooting sections.
+
 Virtual Machine Image Guide
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -66,3 +80,4 @@ Translations
 * Japanese
 
   * Published the Networking Guide.
+
