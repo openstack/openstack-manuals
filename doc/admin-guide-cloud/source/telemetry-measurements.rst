@@ -1073,10 +1073,10 @@ The following meters are collected for SDN:
 These meters are available for OpenFlow based switches. In order to
 enable these meters, each driver needs to be properly configured.
 
-Load-Balancer-as-a-Service (LBaaS)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Load-Balancer-as-a-Service (LBaaS v1)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following meters are collected for LBaaS:
+The following meters are collected for LBaaS v1:
 
 +---------------+---------+---------+-----------+-----------+-----------------+
 | Name          | Type    | Unit    | Resource  | Origin    | Note            |
@@ -1107,12 +1107,12 @@ The following meters are collected for LBaaS:
 | ices.lb.acti\ |         | tion    |           |           | ons on a LB     |
 | ve.connections|         |         |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| network.serv\ | Cumula\ | B       | pool ID   | Pollster  | Number of incom\|
-| ices.lb.inco\ | tive    |         |           |           | ing Bytes       |
+| network.serv\ | Gauge   | B       | pool ID   | Pollster  | Number of incom\|
+| ices.lb.inco\ |         |         |           |           | ing Bytes       |
 | ming.bytes    |         |         |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| network.serv\ | Cumula\ | B       | pool ID   | Pollster  | Number of outgo\|
-| ices.lb.outg\ | tive    |         |           |           | ing Bytes       |
+| network.serv\ | Gauge   | B       | pool ID   | Pollster  | Number of outgo\|
+| ices.lb.outg\ |         |         |           |           | ing Bytes       |
 | oing.bytes    |         |         |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
 | **Meters added in the Kilo release**                                        |
@@ -1151,6 +1151,102 @@ The following meters are collected for LBaaS:
 | th_monitor.u\ |         | or      |           |           |                 |
 | pdate         |         |         |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
+
+Load-Balancer-as-a-Service (LBaaS v2)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following meters are collected for LBaaS v2. They are added in Mitaka
+release:
+
++---------------+---------+---------+-----------+-----------+-----------------+
+| Name          | Type    | Unit    | Resource  | Origin    | Note            |
++===============+=========+=========+===========+===========+=================+
+| network.serv\ | Gauge   | pool    | pool ID   | Notifica\ | Existence of a  |
+| ices.lb.pool  |         |         |           | tion, Po\ | LB pool         |
+|               |         |         |           | llster    |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Gauge   | listen\ | listener  | Notifica\ | Existence of a  |
+| ices.lb.list\ |         | er      | ID        | tion, Po\ | LB listener     |
+| ener          |         |         |           | llster    |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Gauge   | member  | member ID | Notifica\ | Existence of a  |
+| ices.lb.memb\ |         |         |           | tion, Po\ | LB member       |
+| er            |         |         |           | llster    |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Gauge   | health\ | monitor ID| Notifica\ | Existence of a  |
+| ices.lb.heal\ |         | _monit\ |           | tion, Po\ | LB health probe |
+| th_monitor    |         | or      |           | llster    |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Gauge   | loadba\ | loadbala\ | Notifica\ | Existence of a  |
+| ices.lb.load\ |         | lancer  | ncer ID   | tion, Po\ | LB loadbalancer |
+| balancer      |         |         |           | llster    |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Cumula\ | connec\ | pool ID   | Pollster  | Total connectio\|
+| ices.lb.tota\ | tive    | tion    |           |           | ns on a LB      |
+| l.connections |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Gauge   | connec\ | pool ID   | Pollster  | Active connecti\|
+| ices.lb.acti\ |         | tion    |           |           | ons on a LB     |
+| ve.connections|         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Gauge   | B       | pool ID   | Pollster  | Number of incom\|
+| ices.lb.inco\ |         |         |           |           | ing Bytes       |
+| ming.bytes    |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Gauge   | B       | pool ID   | Pollster  | Number of outgo\|
+| ices.lb.outg\ |         |         |           |           | ing Bytes       |
+| oing.bytes    |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Delta   | pool    | pool ID   | Notifica\ | LB pool was cre\|
+| ices.lb.pool\ |         |         |           | tion      | ated            |
+| .create       |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Delta   | pool    | pool ID   | Notifica\ | LB pool was upd\|
+| ices.lb.pool\ |         |         |           | tion      | ated            |
+| .update       |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Delta   | listen\ | listener  | Notifica\ | LB listener was |
+| ices.lb.list\ |         | er      | ID        | tion      | created         |
+| ener.create   |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Delta   | listen\ | listener  | Notifica\ | LB listener was |
+| ices.lb.list\ |         | er      | ID        | tion      | updated         |
+| ener.update   |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Delta   | member  | member ID | Notifica\ | LB member was c\|
+| ices.lb.memb\ |         |         |           | tion      | reated          |
+| er.create     |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Delta   | member  | member ID | Notifica\ | LB member was u\|
+| ices.lb.memb\ |         |         |           | tion      | pdated          |
+| er.update     |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Delta   | health\ | monitor ID| Notifica\ | LB health probe |
+| ices.lb.heal\ |         | _monit\ |           | tion      | was created     |
+| thmonitor.cr\ |         | or      |           |           |                 |
+| eate          |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Delta   | health\ | monitor ID| Notifica\ | LB health probe |
+| ices.lb.heal\ |         | _monit\ |           | tion      | was updated     |
+| thmonitor.up\ |         | or      |           |           |                 |
+| date          |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Delta   | loadba\ | loadbala\ | Notifica\ | LB loadbalancer |
+| ices.lb.load\ |         | lancer\ | ncer ID   | tion      | was created     |
+| balancer.cre\ |         |         |           |           |                 |
+| ate           |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Delta   | loadba\ | loadbala\ | Notifica\ | LB loadbalancer |
+| ices.lb.load\ |         | lancer\ | ncer ID   | tion      | was updated     |
+| balancer.upd\ |         |         |           |           |                 |
+| ate           |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+
+.. note::
+
+   The above meters are experimental and may generate a large load against the
+   Neutron APIs. The future enhancement will be implemented when Neutron
+   supports the new APIs.
 
 VPN-as-a-Service (VPNaaS)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
