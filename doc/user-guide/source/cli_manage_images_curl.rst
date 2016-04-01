@@ -72,7 +72,7 @@ Update the image
         "tags": ["ubuntu", "14.04", "trusty"],
         "login_user": "root",
         "created_at": "2016-03-11T12:25:32Z",
-        "updated_at": "2013-11-15T12:44:56Z",
+        "updated_at": "2016-03-11T12:44:56Z",
         "file": "/v2/images/7b97f37c-899d-44e8-aaa0-543edbc4eaad/file",
         "self": "/v2/images/7b97f37c-899d-44e8-aaa0-543edbc4eaad",
         "schema": "/v2/schemas/image"
