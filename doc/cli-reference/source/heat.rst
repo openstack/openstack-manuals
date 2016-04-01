@@ -9,7 +9,7 @@ Orchestration service command-line client
 The heat client is the command-line interface (CLI) for
 the Orchestration service API and its extensions.
 
-This chapter documents :command:`heat` version ``1.0.0``.
+This chapter documents :command:`heat` version ``1.1.0``.
 
 For help on a specific :command:`heat` command, enter:
 
@@ -325,7 +325,7 @@ heat optional arguments
 .. _heat_action-check:
 
 heat action-check
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -341,7 +341,7 @@ Check that stack resources are in expected states.
 .. _heat_action-resume:
 
 heat action-resume
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -357,7 +357,7 @@ Resume the stack.
 .. _heat_action-suspend:
 
 heat action-suspend
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -373,7 +373,7 @@ Suspend the stack.
 .. _heat_build-info:
 
 heat build-info
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -384,7 +384,7 @@ Retrieve build information.
 .. _heat_config-create:
 
 heat config-create
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -415,7 +415,7 @@ Create a software configuration.
 .. _heat_config-delete:
 
 heat config-delete
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -431,7 +431,7 @@ Delete the software configuration(s).
 .. _heat_config-list:
 
 heat config-list
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -450,7 +450,7 @@ List software configs.
 .. _heat_config-show:
 
 heat config-show
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -471,7 +471,7 @@ View details of a software configuration.
 .. _heat_deployment-create:
 
 heat deployment-create
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -526,7 +526,7 @@ Create a software deployment.
 .. _heat_deployment-delete:
 
 heat deployment-delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -542,7 +542,7 @@ Delete the software deployment(s).
 .. _heat_deployment-list:
 
 heat deployment-list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -558,7 +558,7 @@ List software deployments.
 .. _heat_deployment-metadata-show:
 
 heat deployment-metadata-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -574,7 +574,7 @@ Get deployment configuration metadata for the specified server.
 .. _heat_deployment-output-show:
 
 heat deployment-output-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -601,7 +601,7 @@ Show a specific deployment output.
 .. _heat_deployment-show:
 
 heat deployment-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -617,7 +617,7 @@ Show the details of a software deployment.
 .. _heat_event-list:
 
 heat event-list
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -659,7 +659,7 @@ List events for a stack.
 .. _heat_event-show:
 
 heat event-show
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -681,7 +681,7 @@ Describe the event.
 .. _heat_hook-clear:
 
 heat hook-clear
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -713,7 +713,7 @@ Clear hooks on a given stack.
 .. _heat_hook-poll:
 
 heat hook-poll
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
@@ -734,7 +734,7 @@ List resources with pending hook for a stack.
 .. _heat_output-list:
 
 heat output-list
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -750,7 +750,7 @@ Show available outputs.
 .. _heat_output-show:
 
 heat output-show
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -782,7 +782,7 @@ Show a specific stack output.
 .. _heat_resource-list:
 
 heat resource-list
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -815,7 +815,7 @@ Show list of resources belonging to a stack.
 .. _heat_resource-mark-unhealthy:
 
 heat resource-mark-unhealthy
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -842,7 +842,7 @@ Set resource's health.
 .. _heat_resource-metadata:
 
 heat resource-metadata
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -861,7 +861,7 @@ List resource metadata.
 .. _heat_resource-show:
 
 heat resource-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -885,7 +885,7 @@ Describe the resource.
 .. _heat_resource-signal:
 
 heat resource-signal
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -913,7 +913,7 @@ Send a signal to a resource.
 .. _heat_resource-type-list:
 
 heat resource-type-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -932,7 +932,7 @@ List the available resource types.
 .. _heat_resource-type-show:
 
 heat resource-type-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -948,7 +948,7 @@ Show the resource type.
 .. _heat_resource-type-template:
 
 heat resource-type-template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -973,7 +973,7 @@ Generate a template based on a resource type.
 .. _heat_service-list:
 
 heat service-list
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -984,7 +984,7 @@ List the Heat engines.
 .. _heat_snapshot-delete:
 
 heat snapshot-delete
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1003,7 +1003,7 @@ Delete a snapshot of a stack.
 .. _heat_snapshot-list:
 
 heat snapshot-list
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1019,7 +1019,7 @@ List the snapshots of a stack.
 .. _heat_snapshot-show:
 
 heat snapshot-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1038,7 +1038,7 @@ Show a snapshot of a stack.
 .. _heat_stack-abandon:
 
 heat stack-abandon
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1062,7 +1062,7 @@ representation of the stack to stdout or a file on success.
 .. _heat_stack-adopt:
 
 heat stack-adopt
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1105,7 +1105,7 @@ Adopt a stack.
 .. _heat_stack-cancel-update:
 
 heat stack-cancel-update
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1121,7 +1121,7 @@ Cancel currently running update of the stack.
 .. _heat_stack-create:
 
 heat stack-create
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -1193,7 +1193,7 @@ Create the stack.
 .. _heat_stack-delete:
 
 heat stack-delete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -1214,7 +1214,7 @@ Delete the stack(s).
 .. _heat_stack-list:
 
 heat stack-list
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -1288,7 +1288,7 @@ List the user's stacks.
 .. _heat_stack-preview:
 
 heat stack-preview
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1345,7 +1345,7 @@ Preview the stack.
 .. _heat_stack-restore:
 
 heat stack-restore
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1364,7 +1364,7 @@ Restore a snapshot of a stack.
 .. _heat_stack-show:
 
 heat stack-show
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -1385,7 +1385,7 @@ Describe the stack.
 .. _heat_stack-snapshot:
 
 heat stack-snapshot
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1406,7 +1406,7 @@ Make a snapshot of a stack.
 .. _heat_stack-update:
 
 heat stack-update
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -1502,7 +1502,7 @@ Update the stack.
 .. _heat_template-function-list:
 
 heat template-function-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -1518,7 +1518,7 @@ List the available functions.
 .. _heat_template-show:
 
 heat template-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1534,7 +1534,7 @@ Get the template for the specified stack.
 .. _heat_template-validate:
 
 heat template-validate
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -1574,7 +1574,7 @@ Validate a template with parameters.
 .. _heat_template-version-list:
 
 heat template-version-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
