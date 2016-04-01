@@ -1,3 +1,5 @@
+.. _legal-requirements:
+
 ==================
 Legal requirements
 ==================

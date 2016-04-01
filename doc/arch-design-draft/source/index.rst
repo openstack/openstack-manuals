@@ -26,7 +26,7 @@ Contents
    introduction.rst
    identifying-stakeholders.rst
    functional-requirements.rst
-   user-requirements.rst
+   customer-requirements.rst
    operator-requirements.rst
    capacity-planning-scaling.rst
    high-availability.rst
@@ -40,4 +40,3 @@ Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
 
 * :ref:`search`
-
