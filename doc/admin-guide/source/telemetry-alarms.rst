@@ -145,11 +145,11 @@ though it could alternatively be a webhook URL.
 .. note::
 
     Alarm names must be unique for the alarms associated with an
-    individual project.
-    The cloud administrator can limit the maximum resulting actions
-    for three different states, and the ability for a normal user to
-    create ``log://`` and ``test://`` notifiers is disabled. This prevents
-    unintentional consumption of disk and memory resources by the
+    individual project. Administrator can limit the maximum
+    resulting actions for three different states, and the
+    ability for a normal user to create ``log://`` and ``test://``
+    notifiers is disabled. This prevents unintentional
+    consumption of disk and memory resources by the
     Telemetry service.
 
 The sliding time window over which the alarm is evaluated is 30

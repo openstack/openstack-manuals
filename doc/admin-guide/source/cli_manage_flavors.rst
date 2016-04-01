@@ -12,8 +12,7 @@ that can be launched.
 
    Flavors can also determine on which compute host a flavor
    can be used to launch an instance. For information
-   about customizing flavors, refer to `Flavors
-   <http://docs.openstack.org/admin-guide-cloud/compute-flavors.html>`_.
+   about customizing flavors, refer to :ref:`compute-flavors`.
 
 A flavor consists of the following parameters:
 
@@ -132,7 +131,7 @@ Create a flavor
    ``Random-number generator``.
    For information about supporting metadata keys, see
    `Flavors
-   <http://docs.openstack.org/admin-guide-cloud/compute-flavors.html>`__.
+   <http://docs.openstack.org/admin-guide/compute-flavors.html>`__.
 
    For a list of optional parameters, run this command:
 

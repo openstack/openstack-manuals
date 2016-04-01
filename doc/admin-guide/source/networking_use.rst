@@ -16,8 +16,8 @@ Log files are in the ``/var/log/neutron`` directory.
 
 Configuration files are in the ``/etc/neutron`` directory.
 
-Cloud administrators and tenants can use OpenStack Networking to build
-rich network topologies. Cloud administrators can create network
+Administrators and tenants can use OpenStack Networking to build
+rich network topologies. Administrators can create network
 connectivity on behalf of tenants.
 
 Core Networking API features
@@ -90,7 +90,7 @@ basic network operations:
 Administrative operations
 -------------------------
 
-The cloud administrator can run any :command:`neutron` command on behalf of
+The administrator can run any :command:`neutron` command on behalf of
 tenants by specifying an Identity ``tenant_id`` in the command, as
 follows:
 

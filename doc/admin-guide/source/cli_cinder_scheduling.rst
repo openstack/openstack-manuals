@@ -9,8 +9,7 @@ that they are stored on the same back end, whereas anti-affinity
 means that they are stored on different back ends.
 
 For information on how to set up multiple back ends for Cinder,
-refer to the guide for `Configuring multiple-storage back ends
-<http://docs.openstack.org/admin-guide-cloud/blockstorage_multi_backend.html>`__.
+refer to :ref:`multi_backend`.
 
 Example Usages
 ~~~~~~~~~~~~~~

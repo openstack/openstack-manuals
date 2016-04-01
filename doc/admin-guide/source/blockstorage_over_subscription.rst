@@ -97,7 +97,7 @@ Volume replication extra specs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack Block Storage has the ability to create volume replicas.
-Cloud administrators can define a storage policy that includes
+Administrators can define a storage policy that includes
 replication by adjusting the cinder volume driver. Volume replication
 for OpenStack Block Storage helps safeguard OpenStack environments from
 data loss during disaster recovery.
@@ -117,11 +117,11 @@ At each data center, a cinder host supports the Block Storage service.
 Both data centers include storage back ends.
 
 Depending on the storage requirements, there can be one or two cinder
-hosts. The cloud administrator accesses the
+hosts. The administrator accesses the
 ``/etc/cinder/cinder.conf`` configuration file and sets
 ``capabilities:replication="<is> True"``.
 
-If one data center experiences a service failure, cloud administrators
+If one data center experiences a service failure, administrators
 can redeploy the VM. The VM will run using a replicated, backed up
 volume on a host in the second data center.
 

@@ -118,7 +118,7 @@ example of multi-domain configuration installations where a cloud
 provider wants to delegate administration of the contents of a domain
 to a particular ``admin domain``. This example policy file also
 shows the use of an ``admin_domain`` to allow a cloud provider to
-enable cloud administrators to have wider access across the APIs.
+enable administrators to have wider access across the APIs.
 
 A clean installation could start with the standard policy file, to
 allow creation of the ``admin_domain`` with the first users within

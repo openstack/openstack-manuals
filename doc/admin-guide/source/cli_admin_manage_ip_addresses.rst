@@ -17,8 +17,7 @@ Internet.
   section in the OpenStack End User Guide.
 
 - For details on creating public networks using OpenStack Networking
-  (``neutron``), refer to `Advanced features through API extensions
-  <http://docs.openstack.org/admin-guide-cloud/networking_adv-features.html>`_.
+  (``neutron``), refer to :ref:`networking-adv-features`.
   No floating IP addresses are created by default in OpenStack Networking.
 
 As an administrator using legacy networking (``nova-network``), you

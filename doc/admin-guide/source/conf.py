@@ -55,8 +55,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Cloud Administrator Guide'
-bug_tag = u'admin-guide-cloud'
+project = u'Administrator Guide'
+bug_tag = u'admin-guide'
 copyright = u'2015-2016, OpenStack contributors'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -73,7 +73,7 @@ release = '0.9'
 #   gitsha: The SHA checksum of the bug description. Automatically extracted from git log.
 #   bug_tag: Tag for categorizing the bug. Must be set manually.
 # These variables are passed to the logabug code via html_context.
-giturl = u'http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide-cloud/source'
+giturl = u'http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide/source'
 git_cmd = "/usr/bin/git log | head -n1 | cut -f2 -d' '"
 gitsha = os.popen(git_cmd).read().strip('\n')
 html_context = {"gitsha": gitsha, "bug_tag": bug_tag,
@@ -204,7 +204,7 @@ html_show_sourcelink = False
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'admin-guide-cloud'
+htmlhelp_basename = 'admin-guide'
 
 # If true, publish source files
 html_copy_source = False
@@ -230,7 +230,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'CloudAdminGuide.tex', u'Cloud Administrator Guide',
+    ('index', 'AdminGuide.tex', u'Administrator Guide',
      u'OpenStack contributors', 'manual'),
 ]
 
@@ -260,7 +260,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'cloudadminguide', u'Cloud Administrator Guide',
+    ('index', 'adminguide', u'Administrator Guide',
      [u'OpenStack contributors'], 1)
 ]
 
@@ -274,8 +274,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'CloudAdminGuide', u'Cloud Administrator Guide',
-     u'OpenStack contributors', 'CloudAdminGuide',
+    ('index', 'AdminGuidereview/joseph_robinson/bp/user-guides-reorganised',
+     u'Administrator Guide', u'OpenStack contributors', 'AdminGuide',
      'This guide shows OpenStack end users how to create and manage resources '
      'in an OpenStack cloud with the OpenStack dashboard and OpenStack client '
      'commands.', 'Miscellaneous'),
@@ -299,6 +299,6 @@ locale_dirs = ['locale/']
 # -- Options for PDF output --------------------------------------------------
 
 pdf_documents = [
-    ('index', u'CloudAdminGuide', u'Cloud Administrator Guide',
+    ('index', u'AdminGuide', u'Administrator Guide',
      u'OpenStack contributors')
 ]
