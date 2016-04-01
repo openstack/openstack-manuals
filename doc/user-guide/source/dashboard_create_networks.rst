@@ -122,16 +122,16 @@ Create a port
 
 #. In the :guilabel:`Create Port` dialog box, specify the following values.
 
-    :guilabel:`Name`: Specify name to identify the port.
+   :guilabel:`Name`: Specify name to identify the port.
 
-    :guilabel:`Device ID`: Device ID attached to the port.
+   :guilabel:`Device ID`: Device ID attached to the port.
 
-    :guilabel:`Device Owner`: Device owner attached to the port.
+   :guilabel:`Device Owner`: Device owner attached to the port.
 
-    :guilabel:`Binding Host`: The ID of the host where the port is allocated.
+   :guilabel:`Binding Host`: The ID of the host where the port is allocated.
 
-    :guilabel:`Binding VNIC Type`: Select the VNIC type that is bound to the
-     neutron port.
+   :guilabel:`Binding VNIC Type`: Select the VNIC type that is bound to the
+   neutron port.
 
 #. Click :guilabel:`Create Port`.
 
