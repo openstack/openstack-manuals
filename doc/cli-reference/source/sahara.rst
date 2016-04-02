@@ -9,7 +9,7 @@ Data Processing service command-line client
 The sahara client is the command-line interface (CLI) for
 the Data Processing service API and its extensions.
 
-This chapter documents :command:`sahara` version ``0.13.0``.
+This chapter documents :command:`sahara` version ``0.14.0``.
 
 For help on a specific :command:`sahara` command, enter:
 
@@ -281,7 +281,7 @@ sahara optional arguments
 .. _sahara_cluster-create:
 
 sahara cluster-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -300,7 +300,7 @@ Create a cluster.
 .. _sahara_cluster-delete:
 
 sahara cluster-delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -319,7 +319,7 @@ Delete a cluster.
 .. _sahara_cluster-list:
 
 sahara cluster-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -330,7 +330,7 @@ Print a list of available clusters.
 .. _sahara_cluster-scale:
 
 sahara cluster-scale
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -352,7 +352,7 @@ Scale a cluster.
 .. _sahara_cluster-show:
 
 sahara cluster-show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -378,7 +378,7 @@ Show details of a cluster.
 .. _sahara_cluster-template-create:
 
 sahara cluster-template-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -394,7 +394,7 @@ Create a cluster template.
 .. _sahara_cluster-template-delete:
 
 sahara cluster-template-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -413,7 +413,7 @@ Delete a cluster template.
 .. _sahara_cluster-template-list:
 
 sahara cluster-template-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -424,7 +424,7 @@ Print a list of available cluster templates.
 .. _sahara_cluster-template-show:
 
 sahara cluster-template-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -447,7 +447,7 @@ Show details of a cluster template.
 .. _sahara_cluster-template-update:
 
 sahara cluster-template-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -470,7 +470,7 @@ Update a cluster template.
 .. _sahara_data-source-create:
 
 sahara data-source-create
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -503,7 +503,7 @@ Create a data source that provides job input or receives job output.
 .. _sahara_data-source-delete:
 
 sahara data-source-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -522,7 +522,7 @@ Delete a data source.
 .. _sahara_data-source-list:
 
 sahara data-source-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -533,7 +533,7 @@ Print a list of available data sources.
 .. _sahara_data-source-show:
 
 sahara data-source-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -552,7 +552,7 @@ Show details of a data source.
 .. _sahara_data-source-update:
 
 sahara data-source-update
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -574,7 +574,7 @@ Update a data source.
 .. _sahara_image-add-tag:
 
 sahara image-add-tag
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -596,7 +596,7 @@ Add a tag to an image.
 .. _sahara_image-list:
 
 sahara image-list
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -607,7 +607,7 @@ Print a list of available images.
 .. _sahara_image-register:
 
 sahara image-register
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -630,7 +630,7 @@ Register an image from the Image index.
 .. _sahara_image-remove-tag:
 
 sahara image-remove-tag
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -652,7 +652,7 @@ Remove a tag from an image.
 .. _sahara_image-show:
 
 sahara image-show
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -671,7 +671,7 @@ Show details of an image.
 .. _sahara_image-unregister:
 
 sahara image-unregister
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -690,7 +690,7 @@ Unregister an image.
 .. _sahara_job-binary-create:
 
 sahara job-binary-create
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -720,7 +720,7 @@ Record a job binary.
 .. _sahara_job-binary-data-create:
 
 sahara job-binary-data-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -740,7 +740,7 @@ this command only if Swift is not available.
 .. _sahara_job-binary-data-delete:
 
 sahara job-binary-data-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -756,7 +756,7 @@ Delete an internally stored job binary data.
 .. _sahara_job-binary-data-list:
 
 sahara job-binary-data-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -767,7 +767,7 @@ Print a list of internally stored job binary data.
 .. _sahara_job-binary-delete:
 
 sahara job-binary-delete
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -786,7 +786,7 @@ Delete a job binary.
 .. _sahara_job-binary-list:
 
 sahara job-binary-list
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -797,7 +797,7 @@ Print a list of job binaries.
 .. _sahara_job-binary-show:
 
 sahara job-binary-show
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -816,7 +816,7 @@ Show details of a job binary.
 .. _sahara_job-binary-update:
 
 sahara job-binary-update
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -839,7 +839,7 @@ Update a job binary.
 .. _sahara_job-create:
 
 sahara job-create
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -879,7 +879,7 @@ Create a job.
 .. _sahara_job-delete:
 
 sahara job-delete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -895,7 +895,7 @@ Delete a job.
 .. _sahara_job-list:
 
 sahara job-list
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -906,7 +906,7 @@ Print a list of jobs.
 .. _sahara_job-show:
 
 sahara job-show
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -922,7 +922,7 @@ Show details of a job.
 .. _sahara_job-template-create:
 
 sahara job-template-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -955,7 +955,7 @@ Create a job template.
 .. _sahara_job-template-delete:
 
 sahara job-template-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -974,7 +974,7 @@ Delete a job template.
 .. _sahara_job-template-list:
 
 sahara job-template-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -985,7 +985,7 @@ Print a list of job templates.
 .. _sahara_job-template-show:
 
 sahara job-template-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1004,7 +1004,7 @@ Show details of a job template.
 .. _sahara_job-type-list:
 
 sahara job-type-list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1028,7 +1028,7 @@ Show supported job types.
 .. _sahara_node-group-template-create:
 
 sahara node-group-template-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -1044,7 +1044,7 @@ Create a node group template.
 .. _sahara_node-group-template-delete:
 
 sahara node-group-template-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -1063,7 +1063,7 @@ Delete a node group template.
 .. _sahara_node-group-template-list:
 
 sahara node-group-template-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -1074,7 +1074,7 @@ Print a list of available node group templates.
 .. _sahara_node-group-template-show:
 
 sahara node-group-template-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -1097,7 +1097,7 @@ Show details of a node group template.
 .. _sahara_node-group-template-update:
 
 sahara node-group-template-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -1120,7 +1120,7 @@ Update a node group template.
 .. _sahara_plugin-list:
 
 sahara plugin-list
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1131,7 +1131,7 @@ Print a list of available plugins.
 .. _sahara_plugin-show:
 
 sahara plugin-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
