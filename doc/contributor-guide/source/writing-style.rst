@@ -15,6 +15,7 @@ throughout all technical publications.
    writing-style/general-writing-guidelines.rst
    writing-style/word-choice.rst
    writing-style/punctuation.rst
+   writing-style/headings.rst
    writing-style/lists.rst
    writing-style/num_and_units_of_measure.rst
    writing-style/openstack-components.rst
