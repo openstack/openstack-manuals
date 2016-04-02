@@ -9,7 +9,7 @@ Application Catalog service command-line client
 The murano client is the command-line interface (CLI) for
 the Application Catalog service API and its extensions.
 
-This chapter documents :command:`murano` version ``0.8.3``.
+This chapter documents :command:`murano` version ``0.8.4``.
 
 For help on a specific :command:`murano` command, enter:
 
@@ -30,11 +30,12 @@ murano usage
                  [--os-region-name OS_REGION_NAME]
                  [--os-auth-token OS_AUTH_TOKEN] [--os-no-client-auth]
                  [--murano-url MURANO_URL] [--glance-url GLANCE_URL]
+                 [--glare-url GLARE_URL]
                  [--murano-api-version MURANO_API_VERSION]
                  [--os-service-type OS_SERVICE_TYPE]
                  [--os-endpoint-type OS_ENDPOINT_TYPE] [--include-password]
                  [--murano-repo-url MURANO_REPO_URL]
-                 [--murano-packages-service {murano,glance}] [--insecure]
+                 [--murano-packages-service {murano,glance,glare}] [--insecure]
                  [--os-cacert <ca-certificate>] [--os-cert <certificate>]
                  [--os-key <key>] [--timeout <seconds>]
                  [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
@@ -214,6 +215,9 @@ murano optional arguments
 ``--glance-url GLANCE_URL``
   Defaults to ``env[GLANCE_URL]``.
 
+``--glare-url GLARE_URL``
+  Defaults to ``env[GLARE_URL]``.
+
 ``--murano-api-version MURANO_API_VERSION``
   Defaults to ``env[MURANO_API_VERSION]`` or 1.
 
@@ -230,9 +234,9 @@ murano optional arguments
   Defaults to ``env[MURANO_REPO_URL]`` or
   http://apps.openstack.org/api/v1/murano_repo/liberty/
 
-``--murano-packages-service {murano,glance}``
+``--murano-packages-service {murano,glance,glare}``
   Specifies if murano-api ("murano") or Glance Artifact
-  Repository ("glance") should be used to store murano
+  Repository ("glare") should be used to store murano
   packages. Defaults to ``env[MURANO_PACKAGES_SERVICE]`` or
   to "murano"
 
@@ -298,7 +302,7 @@ murano optional arguments
 .. _murano_app-show:
 
 murano app-show
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -320,7 +324,7 @@ List applications, added to specified environment.
 .. _murano_bundle-import:
 
 murano bundle-import
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -364,7 +368,7 @@ searched in the same directory.
 .. _murano_bundle-save:
 
 murano bundle-save
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -390,7 +394,7 @@ to specified path. If path doesn't exist it will be created.
 .. _murano_category-create:
 
 murano category-create
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -406,7 +410,7 @@ Create a category.
 .. _murano_category-delete:
 
 murano category-delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -422,7 +426,7 @@ Delete a category.
 .. _murano_category-list:
 
 murano category-list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -433,7 +437,7 @@ List all available categories.
 .. _murano_category-show:
 
 murano category-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -449,7 +453,7 @@ Display category details.
 .. _murano_deployment-list:
 
 murano deployment-list
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -465,7 +469,7 @@ List deployments for an environment.
 .. _murano_env-template-add-app:
 
 murano env-template-add-app
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -484,7 +488,7 @@ Add application to the environment template.
 .. _murano_env-template-clone:
 
 murano env-template-clone
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -503,7 +507,7 @@ Create a new template, cloned from template.
 .. _murano_env-template-create:
 
 murano env-template-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -525,7 +529,7 @@ Create an environment template.
 .. _murano_env-template-create-env:
 
 murano env-template-create-env
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -544,7 +548,7 @@ Create a new environment from template.
 .. _murano_env-template-del-app:
 
 murano env-template-del-app
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -563,7 +567,7 @@ Delete application from the environment template.
 .. _murano_env-template-delete:
 
 murano env-template-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -579,7 +583,7 @@ Delete an environment template.
 .. _murano_env-template-list:
 
 murano env-template-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -590,7 +594,7 @@ List the environments templates.
 .. _murano_env-template-show:
 
 murano env-template-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -606,7 +610,7 @@ Display environment template details.
 .. _murano_env-template-update:
 
 murano env-template-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -625,7 +629,7 @@ Update an environment template.
 .. _murano_environment-action-call:
 
 murano environment-action-call
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -665,7 +669,7 @@ environment. To view actions available in a given environment use
 .. _murano_environment-action-get-result:
 
 murano environment-action-get-result
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
@@ -686,7 +690,7 @@ Get result of \`TASK\` in environment \`ID\`.
 .. _murano_environment-apps-edit:
 
 murano environment-apps-edit
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -715,7 +719,7 @@ substituted with uuids. For more info on jsonpatch see RFC 6902
 .. _murano_environment-create:
 
 murano environment-create
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -745,7 +749,7 @@ Create an environment.
 .. _murano_environment-delete:
 
 murano environment-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -767,7 +771,7 @@ Delete an environment.
 .. _murano_environment-deploy:
 
 murano environment-deploy
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -788,7 +792,7 @@ Start deployment of a murano environment session.
 .. _murano_environment-list:
 
 murano environment-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -804,7 +808,7 @@ List the environments.
 .. _murano_environment-rename:
 
 murano environment-rename
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -823,7 +827,7 @@ Rename an environment.
 .. _murano_environment-session-create:
 
 murano environment-session-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -839,7 +843,7 @@ Creates a new configuration session for environment ID.
 .. _murano_environment-show:
 
 murano environment-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -865,7 +869,7 @@ Display environment details.
 .. _murano_package-create:
 
 murano package-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -921,7 +925,7 @@ Create an application package.
 .. _murano_package-delete:
 
 murano package-delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -937,7 +941,7 @@ Delete a package.
 .. _murano_package-download:
 
 murano package-download
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -957,7 +961,7 @@ Download a package to a filename or stdout.
 .. _murano_package-import:
 
 murano package-import
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1009,7 +1013,7 @@ be separated with a space and have to be already present in murano.
 .. _murano_package-list:
 
 murano package-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1057,7 +1061,7 @@ List available packages.
 .. _murano_package-save:
 
 murano package-save
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1089,7 +1093,7 @@ specified path. If path doesn't exist it will be created.
 .. _murano_package-show:
 
 murano package-show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1105,7 +1109,7 @@ Display details for a package.
 .. _murano_package-update:
 
 murano package-update
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
