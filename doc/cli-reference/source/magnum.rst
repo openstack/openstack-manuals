@@ -9,7 +9,7 @@ Containers service command-line client
 The magnum client is the command-line interface (CLI) for
 the Containers service API and its extensions.
 
-This chapter documents :command:`magnum` version ``1.1.0``.
+This chapter documents :command:`magnum` version ``2.0.0``.
 
 For help on a specific :command:`magnum` command, enter:
 
@@ -27,17 +27,21 @@ magnum usage
    usage: magnum [--version] [--debug] [--os-cache]
                  [--os-region-name <region-name>]
                  [--os-tenant-id <auth-tenant-id>]
+                 [--os-user-domain-id <auth-user-domain-id>]
+                 [--os-user-domain-name <auth-user-domain-name>]
+                 [--os-project-domain-id <auth-project-domain-id>]
+                 [--os-project-domain-name <auth-project-domain-name>]
                  [--service-type <service-type>]
                  [--endpoint-type <endpoint-type>]
                  [--magnum-api-version <magnum-api-ver>]
                  [--os-cacert <ca-certificate>] [--bypass-url <bypass-url>]
-                 [--os-auth-system <auth-system>] [--os-username <username>]
-                 [--os-password <password>] [--os-tenant-name <tenant-name>]
-                 [--os-token <token>] [--os-auth-url <auth-url>]
+                 [--insecure] [--os-auth-system <auth-system>]
+                 [--os-username <username>] [--os-password <password>]
+                 [--os-tenant-name <tenant-name>] [--os-token <token>]
+                 [--os-auth-url <auth-url>]
                  <subcommand> ...
 
-Subcommands
------------
+**Subcommands:**
 
 ``baymodel-create``
   Create a baymodel.
@@ -111,12 +115,6 @@ Subcommands
 ``service-list``
   Print a list of magnum services.
 
-``node-create``
-  Create a node.
-
-``node-list``
-  Print a list of configured nodes.
-
 ``pod-create``
   Create a pod.
 
@@ -152,7 +150,7 @@ Subcommands
   Create a coe service.
 
 ``coe-service-delete``
-  Delete specified coe service(s).
+  Delete specified coe service.
 
 ``coe-service-list``
   Print a list of coe services.
@@ -194,11 +192,23 @@ magnum optional arguments
 ``--os-tenant-id <auth-tenant-id>``
   Defaults to ``env[OS_TENANT_ID]``.
 
+``--os-user-domain-id <auth-user-domain-id>``
+  Defaults to ``env[OS_USER_DOMAIN_ID]``.
+
+``--os-user-domain-name <auth-user-domain-name>``
+  Defaults to ``env[OS_USER_DOMAIN_NAME]``.
+
+``--os-project-domain-id <auth-project-domain-id>``
+  Defaults to ``env[OS_PROJECT_DOMAIN_ID]``.
+
+``--os-project-domain-name <auth-project-domain-name>``
+  Defaults to ``env[OS_PROJECT_DOMAIN_NAME]``.
+
 ``--service-type <service-type>``
   Defaults to container for all actions.
 
 ``--endpoint-type <endpoint-type>``
-  Defaults to ``env[MAGNUM_ENDPOINT_TYPE]`` or publicURL.
+  Defaults to ``env[OS_ENDPOINT_TYPE]`` or publicURL.
 
 ``--magnum-api-version <magnum-api-ver>``
   Accepts "api", defaults to ``env[MAGNUM_API_VERSION]``.
@@ -210,6 +220,9 @@ magnum optional arguments
 
 ``--bypass-url <bypass-url>``
   Use this API endpoint instead of the Service Catalog.
+
+``--insecure``
+  Do not verify https connections
 
 
 magnum.. _magnum_common_auth:
@@ -238,7 +251,7 @@ magnum common authentication arguments
 .. _magnum_bay-create:
 
 magnum bay-create
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -250,8 +263,7 @@ magnum bay-create
 
 Create a bay.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   Name of the bay to create.
@@ -275,7 +287,7 @@ Optional arguments
 .. _magnum_bay-delete:
 
 magnum bay-delete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -283,8 +295,7 @@ magnum bay-delete
 
 Delete specified bay.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<bay>``
   ID or name of the (bay)s to delete.
@@ -292,7 +303,7 @@ Positional arguments
 .. _magnum_bay-list:
 
 magnum bay-list
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -303,7 +314,7 @@ Print a list of available bays.
 .. _magnum_bay-show:
 
 magnum bay-show
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -311,8 +322,7 @@ magnum bay-show
 
 Show details about the given bay.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<bay>``
   ID or name of the bay to show.
@@ -320,7 +330,7 @@ Positional arguments
 .. _magnum_bay-update:
 
 magnum bay-update
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -328,8 +338,7 @@ magnum bay-update
 
 Update information about the given bay.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<bay>``
   UUID or name of bay
@@ -344,7 +353,7 @@ Positional arguments
 .. _magnum_baymodel-create:
 
 magnum baymodel-create
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -353,7 +362,7 @@ magnum baymodel-create
                                  <external-network-id> --coe <coe>
                                  [--fixed-network <fixed-network>]
                                  [--network-driver <network-driver>]
-                                 [--ssh-authorized-key <ssh-authorized-key>]
+                                 [--volume-driver <volume-driver>]
                                  [--dns-nameserver <dns-nameserver>]
                                  [--flavor-id <flavor-id>]
                                  [--master-flavor-id <master-flavor-id>]
@@ -362,15 +371,14 @@ magnum baymodel-create
                                  [--https-proxy <https-proxy>]
                                  [--no-proxy <no-proxy>]
                                  [--labels <KEY1=VALUE1,KEY2=VALUE2...>]
-                                 [--tls-disabled] [--public]
+                                 [--tls-disabled] [--public] [--registry-enabled]
 
 Create a baymodel.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
-  Name of the bay to create.
+  Name of the baymodel to create.
 
 ``--image-id <image-id>``
   The name or UUID of the base image to customize for
@@ -395,8 +403,9 @@ Optional arguments
   The network driver name for instantiating container
   networks.
 
-``--ssh-authorized-key <ssh-authorized-key>``
-  The SSH authorized key to use
+``--volume-driver <volume-driver>``
+  The volume driver name for instantiating container
+  volume.
 
 ``--dns-nameserver <dns-nameserver>``
   The DNS nameserver to use for this Bay.
@@ -431,10 +440,13 @@ Optional arguments
 ``--public``
   Make baymodel public.
 
+``--registry-enabled``
+  Enable docker registry in the Bay
+
 .. _magnum_baymodel-delete:
 
 magnum baymodel-delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -442,8 +454,7 @@ magnum baymodel-delete
 
 Delete specified baymodel.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<baymodels>``
   ID or name of the (baymodel)s to delete.
@@ -451,18 +462,30 @@ Positional arguments
 .. _magnum_baymodel-list:
 
 magnum baymodel-list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: magnum baymodel-list
+   usage: magnum baymodel-list [--limit <limit>] [--sort-key <sort-key>]
+                               [--sort-dir <sort-dir>]
 
 Print a list of bay models.
+
+**Optional arguments:**
+
+``--limit <limit>``
+  Maximum number of baymodels to return
+
+``--sort-key <sort-key>``
+  Column to sort results by
+
+``--sort-dir <sort-dir>``
+  Direction to sort. "asc" or "desc".
 
 .. _magnum_baymodel-show:
 
 magnum baymodel-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -470,8 +493,7 @@ magnum baymodel-show
 
 Show details about the given baymodel.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<baymodel>``
   ID of the baymodel to show.
@@ -479,7 +501,7 @@ Positional arguments
 .. _magnum_baymodel-update:
 
 magnum baymodel-update
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -487,8 +509,7 @@ magnum baymodel-update
 
 Updates one or more baymodel attributes.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<baymodel>``
   UUID or name of baymodel
@@ -503,7 +524,7 @@ Positional arguments
 .. _magnum_ca-show:
 
 magnum ca-show
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
@@ -511,8 +532,7 @@ magnum ca-show
 
 Show details about the CA certificate for a bay.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--bay <bay>``
   ID or name of the bay.
@@ -520,7 +540,7 @@ Optional arguments
 .. _magnum_ca-sign:
 
 magnum ca-sign
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
@@ -528,8 +548,7 @@ magnum ca-sign
 
 Generate the CA certificate for a bay.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--csr <csr>``
   File path of the csr file to send to Magnum to get signed.
@@ -540,7 +559,7 @@ Optional arguments
 .. _magnum_coe-service-create:
 
 magnum coe-service-create
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -549,11 +568,10 @@ magnum coe-service-create
 
 Create a coe service.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--manifest-url <manifest-url>``
-  Name/URL of the serivce file to use for creating
+  Name/URL of the service file to use for creating
   services.
 
 ``--manifest <manifest>``
@@ -566,80 +584,78 @@ Optional arguments
 .. _magnum_coe-service-delete:
 
 magnum coe-service-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: magnum coe-service-delete <services> [<services> ...] <bay>
+   usage: magnum coe-service-delete --bay <bay> <services> [<services> ...]
 
-Delete specified coe service(s).
+Delete specified coe service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<services>``
-  ID or name of the (service)s to delete.
+  ID or name of the service to delete.
 
-``<bay>``
+**Optional arguments:**
+
+``--bay <bay>``
   UUID or Name of Bay
 
 .. _magnum_coe-service-list:
 
 magnum coe-service-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: magnum coe-service-list <bay>
+   usage: magnum coe-service-list --bay <bay>
 
 Print a list of coe services.
 
-Positional arguments
---------------------
+**Optional arguments:**
 
-``<bay>``
+``--bay <bay>``
   UUID or Name of Bay
 
 .. _magnum_coe-service-show:
 
 magnum coe-service-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: magnum coe-service-show <service> <bay>
+   usage: magnum coe-service-show --bay <bay> <services>
 
 Show details about the given coe service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``<service>``
+``<services>``
   ID or name of the service to show.
 
-``<bay>``
+**Optional arguments:**
+
+``--bay <bay>``
   UUID or Name of Bay
 
 .. _magnum_coe-service-update:
 
 magnum coe-service-update
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: magnum coe-service-update <service> <bay> <op> <path=value>
+   usage: magnum coe-service-update --bay <bay>
+                                    <services> <op> <path=value>
                                     [<path=value> ...]
 
 Update information about the given coe service.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
-``<service>``
+``<services>``
   UUID or name of service
-
-``<bay>``
-  UUID or Name of Bay
 
 ``<op>``
   Operations: 'add', 'replace' or 'remove'
@@ -648,10 +664,15 @@ Positional arguments
   Attributes to add/replace or remove (only PATH is necessary on
   remove)
 
+**Optional arguments:**
+
+``--bay <bay>``
+  UUID or Name of Bay
+
 .. _magnum_container-create:
 
 magnum container-create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -660,8 +681,7 @@ magnum container-create
 
 Create a container.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--name <name>``
   name of the container
@@ -682,7 +702,7 @@ Optional arguments
 .. _magnum_container-delete:
 
 magnum container-delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -690,8 +710,7 @@ magnum container-delete
 
 Delete specified containers.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   ID or name of the (container)s to delete.
@@ -699,7 +718,7 @@ Positional arguments
 .. _magnum_container-exec:
 
 magnum container-exec
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -707,14 +726,12 @@ magnum container-exec
 
 Execute command in a container.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
-  ID or name of the container to start.
+  ID or name of the container to execute command in.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--command <command>``
   The command to execute
@@ -722,18 +739,23 @@ Optional arguments
 .. _magnum_container-list:
 
 magnum container-list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: magnum container-list
+   usage: magnum container-list [--bay <bay>]
 
 Print a list of available containers.
+
+**Optional arguments:**
+
+``--bay <bay>``
+  UUID or Name of Bay
 
 .. _magnum_container-logs:
 
 magnum container-logs
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -741,16 +763,15 @@ magnum container-logs
 
 Get logs of a container.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
-  ID or name of the container to start.
+  ID or name of the container to get logs for.
 
 .. _magnum_container-pause:
 
 magnum container-pause
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -758,16 +779,15 @@ magnum container-pause
 
 Pause specified containers.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
-  ID or name of the (container)s to start.
+  ID or name of the (container)s to pause.
 
 .. _magnum_container-reboot:
 
 magnum container-reboot
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -775,16 +795,15 @@ magnum container-reboot
 
 Reboot specified containers.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
-  ID or name of the (container)s to start.
+  ID or name of the (container)s to reboot.
 
 .. _magnum_container-show:
 
 magnum container-show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -792,14 +811,12 @@ magnum container-show
 
 Show details of a container.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   ID or name of the container to show.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--json``
   Print JSON representation of the container.
@@ -807,7 +824,7 @@ Optional arguments
 .. _magnum_container-start:
 
 magnum container-start
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -815,8 +832,7 @@ magnum container-start
 
 Start specified containers.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
   ID of the (container)s to start.
@@ -824,7 +840,7 @@ Positional arguments
 .. _magnum_container-stop:
 
 magnum container-stop
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -832,16 +848,15 @@ magnum container-stop
 
 Stop specified containers.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
-  ID or name of the (container)s to start.
+  ID or name of the (container)s to stop.
 
 .. _magnum_container-unpause:
 
 magnum container-unpause
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -849,48 +864,15 @@ magnum container-unpause
 
 Unpause specified containers.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<container>``
-  ID or name of the (container)s to start.
-
-.. _magnum_node-create:
-
-magnum node-create
-~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: magnum node-create [--type <type>] [--image-id <image-id>]
-
-Create a node.
-
-Optional arguments
-------------------
-
-``--type <type>``
-  Type of node to create (virt or bare).
-
-``--image-id <image-id>``
-  The name or UUID of the base image to use for the
-  node.
-
-.. _magnum_node-list:
-
-magnum node-list
-~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: magnum node-list
-
-Print a list of configured nodes.
+  ID or name of the (container)s to unpause.
 
 .. _magnum_pod-create:
 
 magnum pod-create
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -899,8 +881,7 @@ magnum pod-create
 
 Create a pod.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--manifest-url <manifest-url>``
   Name/URL of the pod file to use for creating PODs.
@@ -914,79 +895,77 @@ Optional arguments
 .. _magnum_pod-delete:
 
 magnum pod-delete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
-   usage: magnum pod-delete <pods> [<pods> ...] <bay>
+   usage: magnum pod-delete --bay <bay> <pods> [<pods> ...]
 
 Delete specified pod.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<pods>``
   ID or name of the (pod)s to delete.
 
-``<bay>``
+**Optional arguments:**
+
+``--bay <bay>``
   UUID or Name of Bay
 
 .. _magnum_pod-list:
 
 magnum pod-list
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
-   usage: magnum pod-list <bay>
+   usage: magnum pod-list --bay <bay>
 
 Print a list of registered pods.
 
-Positional arguments
---------------------
+**Optional arguments:**
 
-``<bay>``
+``--bay <bay>``
   UUID or Name of Bay
 
 .. _magnum_pod-show:
 
 magnum pod-show
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
-   usage: magnum pod-show <pod> <bay>
+   usage: magnum pod-show --bay <bay> <pod>
 
 Show details about the given pod.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<pod>``
   ID or name of the pod to show.
 
-``<bay>``
+**Optional arguments:**
+
+``--bay <bay>``
   UUID or Name of Bay
 
 .. _magnum_pod-update:
 
 magnum pod-update
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
-   usage: magnum pod-update <pod-id> <bay> <op> <path=value> [<path=value> ...]
+   usage: magnum pod-update --bay <bay>
+                            <pod-id> <op> <path=value> [<path=value> ...]
 
 Update information about the given pod.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<pod-id>``
   UUID or name of pod
-
-``<bay>``
-  UUID or Name of Bay
 
 ``<op>``
   Operations: 'add', 'replace' or 'remove'
@@ -995,10 +974,15 @@ Positional arguments
   Attributes to add/replace or remove (only PATH is necessary on
   remove)
 
+**Optional arguments:**
+
+``--bay <bay>``
+  UUID or Name of Bay
+
 .. _magnum_rc-create:
 
 magnum rc-create
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1007,8 +991,7 @@ magnum rc-create
 
 Create a replication controller.
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``--manifest-url <manifest-url>``
   Name/URL of the replication controller file to use for
@@ -1024,79 +1007,76 @@ Optional arguments
 .. _magnum_rc-delete:
 
 magnum rc-delete
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
-   usage: magnum rc-delete <rcs> [<rcs> ...] <bay>
+   usage: magnum rc-delete --bay <bay> <rcs> [<rcs> ...]
 
 Delete specified replication controller.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<rcs>``
   ID or name of the replication (controller)s to delete.
 
-``<bay>``
+**Optional arguments:**
+
+``--bay <bay>``
   UUID or Name of Bay
 
 .. _magnum_rc-list:
 
 magnum rc-list
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
-   usage: magnum rc-list <bay>
+   usage: magnum rc-list --bay <bay>
 
 Print a list of registered replication controllers.
 
-Positional arguments
---------------------
+**Optional arguments:**
 
-``<bay>``
+``--bay <bay>``
   UUID or Name of Bay
 
 .. _magnum_rc-show:
 
 magnum rc-show
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
-   usage: magnum rc-show <rc> <bay>
+   usage: magnum rc-show --bay <bay> <rc>
 
 Show details about the given replication controller.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<rc>``
   ID or name of the replication controller to show.
 
-``<bay>``
+**Optional arguments:**
+
+``--bay <bay>``
   UUID or Name of Bay
 
 .. _magnum_rc-update:
 
 magnum rc-update
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
-   usage: magnum rc-update <rc> <bay> <op> <path=value> [<path=value> ...]
+   usage: magnum rc-update --bay <bay> <rc> <op> <path=value> [<path=value> ...]
 
 Update information about the given replication controller.
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``<rc>``
   UUID or name of replication controller
-
-``<bay>``
-  UUID or Name of Bay
 
 ``<op>``
   Operations: 'add', 'replace' or 'remove'
@@ -1105,10 +1085,15 @@ Positional arguments
   Attributes to add/replace or remove (only PATH is necessary on
   remove)
 
+**Optional arguments:**
+
+``--bay <bay>``
+  UUID or Name of Bay
+
 .. _magnum_service-list:
 
 magnum service-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
