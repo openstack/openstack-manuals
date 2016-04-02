@@ -9,7 +9,7 @@ Bare Metal service command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.2.0``.
+This chapter documents :command:`ironic` version ``1.3.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -264,7 +264,7 @@ ironic optional arguments
 .. _ironic_chassis-create:
 
 ironic chassis-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -287,7 +287,7 @@ Create a new chassis.
 .. _ironic_chassis-delete:
 
 ironic chassis-delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -303,7 +303,7 @@ Delete a chassis.
 .. _ironic_chassis-list:
 
 ironic chassis-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -342,7 +342,7 @@ List the chassis.
 .. _ironic_chassis-node-list:
 
 ironic chassis-node-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -399,7 +399,7 @@ List the nodes contained in a chassis.
 .. _ironic_chassis-show:
 
 ironic chassis-show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -421,7 +421,7 @@ Show detailed information about a chassis.
 .. _ironic_chassis-update:
 
 ironic chassis-update
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -444,7 +444,7 @@ Update information about a chassis.
 .. _ironic_driver-get-vendor-passthru-methods:
 
 ironic driver-get-vendor-passthru-methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 .. code-block:: console
 
@@ -460,7 +460,7 @@ Get the vendor passthru methods for a driver.
 .. _ironic_driver-list:
 
 ironic driver-list
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -471,7 +471,7 @@ List the enabled drivers.
 .. _ironic_driver-properties:
 
 ironic driver-properties
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -493,7 +493,7 @@ Get properties of a driver.
 .. _ironic_driver-raid-logical-disk-properties:
 
 ironic driver-raid-logical-disk-properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 .. code-block:: console
 
@@ -515,7 +515,7 @@ Get RAID logical disk properties for a driver.
 .. _ironic_driver-show:
 
 ironic driver-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -531,7 +531,7 @@ Show information about a driver.
 .. _ironic_driver-vendor-passthru:
 
 ironic driver-vendor-passthru
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -563,7 +563,7 @@ Call a vendor-passthru extension for a driver.
 .. _ironic_node-create:
 
 ironic node-create
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -604,7 +604,7 @@ Register a new node with the Ironic service.
 .. _ironic_node-delete:
 
 ironic node-delete
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -621,7 +621,7 @@ happens during the delete
 .. _ironic_node-get-boot-device:
 
 ironic node-get-boot-device
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -637,7 +637,7 @@ Get the current boot device for a node.
 .. _ironic_node-get-console:
 
 ironic node-get-console
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -653,7 +653,7 @@ Get the connection information for a node's console, if enabled.
 .. _ironic_node-get-supported-boot-devices:
 
 ironic node-get-supported-boot-devices
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 .. code-block:: console
 
@@ -669,7 +669,7 @@ Get the supported boot devices for a node.
 .. _ironic_node-get-vendor-passthru-methods:
 
 ironic node-get-vendor-passthru-methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 .. code-block:: console
 
@@ -685,7 +685,7 @@ Get the vendor passthru methods for a node.
 .. _ironic_node-list:
 
 ironic node-list
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -739,7 +739,7 @@ List the nodes which are registered with the Ironic service.
 .. _ironic_node-port-list:
 
 ironic node-port-list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -784,7 +784,7 @@ List the ports associated with a node.
 .. _ironic_node-set-boot-device:
 
 ironic node-set-boot-device
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -808,7 +808,7 @@ Set the boot device for a node.
 .. _ironic_node-set-console-mode:
 
 ironic node-set-console-mode
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -827,7 +827,7 @@ Enable or disable serial console access for a node.
 .. _ironic_node-set-maintenance:
 
 ironic node-set-maintenance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -853,7 +853,7 @@ Enable or disable maintenance mode for a node.
 .. _ironic_node-set-power-state:
 
 ironic node-set-power-state
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -872,7 +872,7 @@ Power a node on or off or reboot.
 .. _ironic_node-set-provision-state:
 
 ironic node-set-provision-state
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -914,7 +914,7 @@ Initiate a provisioning state change for a node.
 .. _ironic_node-set-target-raid-config:
 
 ironic node-set-target-raid-config
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -939,7 +939,7 @@ Set target RAID config on a node.
 .. _ironic_node-show:
 
 ironic node-show
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -965,7 +965,7 @@ Show detailed information about a node.
 .. _ironic_node-show-states:
 
 ironic node-show-states
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -981,7 +981,7 @@ Show information about the node's states.
 .. _ironic_node-update:
 
 ironic node-update
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1004,7 +1004,7 @@ Update information about a registered node.
 .. _ironic_node-validate:
 
 ironic node-validate
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1020,7 +1020,7 @@ Validate a node's driver interfaces.
 .. _ironic_node-vendor-passthru:
 
 ironic node-vendor-passthru
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -1052,7 +1052,7 @@ Call a vendor-passthru extension for a node.
 .. _ironic_port-create:
 
 ironic port-create
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1078,7 +1078,7 @@ Create a new port.
 .. _ironic_port-delete:
 
 ironic port-delete
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1094,7 +1094,7 @@ Delete a port.
 .. _ironic_port-list:
 
 ironic port-list
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1138,7 +1138,7 @@ List the ports.
 .. _ironic_port-show:
 
 ironic port-show
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1165,7 +1165,7 @@ Show detailed information about a port.
 .. _ironic_port-update:
 
 ironic port-update
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
