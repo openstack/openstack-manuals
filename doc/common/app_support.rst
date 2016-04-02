@@ -31,38 +31,33 @@ bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`__.
 The following books explain how to install an OpenStack cloud and its
 associated components:
 
-*  `Installation Guide for openSUSE 13.2 and SUSE Linux Enterprise
-   Server 12
-   <http://docs.openstack.org/liberty/install-guide-obs/>`__
+*  `Installation Guide for openSUSE Leap 42.1 and SUSE Linux Enterprise
+   Server 12 SP1
+   <http://docs.openstack.org/mitaka/install-guide-obs/>`__
 
 *  `Installation Guide for Red Hat Enterprise Linux 7 and CentOS 7
-   <http://docs.openstack.org/liberty/install-guide-rdo/>`__
+   <http://docs.openstack.org/mitaka/install-guide-rdo/>`__
 
-*  `Installation Guide for Ubuntu
-   14.04 <http://docs.openstack.org/liberty/install-guide-ubuntu/>`__
+*  `Installation Guide for Ubuntu 14.04 (LTS)
+   <http://docs.openstack.org/mitaka/install-guide-ubuntu/>`__
 
 The following books explain how to configure and run an OpenStack cloud:
 
-*  `Architecture Design
-   Guide <http://docs.openstack.org/arch-design/>`__
+*  `Architecture Design Guide <http://docs.openstack.org/arch-design/>`__
 
-*  `Cloud Administrator
-   Guide <http://docs.openstack.org/admin-guide-cloud/>`__
+*  `Administrator Guide <http://docs.openstack.org/admin-guide/>`__
 
-*  `Configuration
-   Reference <http://docs.openstack.org/liberty/config-reference/content/>`__
+*  `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/>`__
 
 *  `Operations Guide <http://docs.openstack.org/ops/>`__
 
-*  `Networking Guide <http://docs.openstack.org/liberty/networking-guide>`__
+*  `Networking Guide <http://docs.openstack.org/mitaka/networking-guide>`__
 
-*  `High Availability
-   Guide <http://docs.openstack.org/ha-guide/>`__
+*  `High Availability Guide <http://docs.openstack.org/ha-guide/>`__
 
 *  `Security Guide <http://docs.openstack.org/sec/>`__
 
-*  `Virtual Machine Image
-   Guide <http://docs.openstack.org/image-guide/>`__
+*  `Virtual Machine Image Guide <http://docs.openstack.org/image-guide/>`__
 
 The following books explain how to use the OpenStack dashboard and
 command-line clients:
@@ -71,16 +66,15 @@ command-line clients:
 
 *  `End User Guide <http://docs.openstack.org/user-guide/>`__
 
-*  `Admin User
-   Guide <http://docs.openstack.org/user-guide-admin/>`__
+*  `Admin User Guide <http://docs.openstack.org/user-guide-admin/>`__
 
-*  `Command-Line Interface
-   Reference <http://docs.openstack.org/cli-reference/>`__
+*  `Command-Line Interface Reference
+   <http://docs.openstack.org/cli-reference/>`__
 
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
 
-*  `OpenStack API Complete Reference
+*  `API Complete Reference
    (HTML) <http://developer.openstack.org/api-ref.html>`__
 
 *  `API Complete Reference
@@ -88,7 +82,7 @@ for the OpenStack APIs:
 
 The following guide provides how to contribute to OpenStack documentation:
 
-*  `Documentation contributor guide <http://docs.openstack.org/contributor-guide/>`__
+*  `Documentation Contributor Guide <http://docs.openstack.org/contributor-guide/>`__
 
 ask.openstack.org
 ~~~~~~~~~~~~~~~~~
@@ -111,11 +105,9 @@ A great way to get answers and insights is to post your question or
 problematic scenario to the OpenStack mailing list. You can learn from
 and help others who might have similar issues. To subscribe or view the
 archives, go to
-http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack. You might
-be interested in the other mailing lists for specific projects or
-development, which you can find `on the
-wiki <https://wiki.openstack.org/wiki/MailingLists>`__. A description of all
-mailing lists is available at https://wiki.openstack.org/wiki/MailingLists.
+http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack. If you are
+interested in the other mailing lists for specific projects or development,
+refer to `Mailing Lists <https://wiki.openstack.org/wiki/Mailing_Lists>`__.
 
 The OpenStack wiki
 ~~~~~~~~~~~~~~~~~~
