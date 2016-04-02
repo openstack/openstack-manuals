@@ -31,7 +31,7 @@ Sample object server configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/object-server.conf-sample?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/swift/plain/etc/object-server.conf-sample?h=stable/mitaka
 
 Object expirer configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,7 +54,7 @@ Sample object expirer configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/object-expirer.conf-sample?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/swift/plain/etc/object-expirer.conf-sample?h=stable/mitaka
 
 Container server configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -80,7 +80,7 @@ Sample container server configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-server.conf-sample?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-server.conf-sample?h=stable/mitaka
 
 Container sync realms configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -99,7 +99,7 @@ Sample container sync realms configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-sync-realms.conf-sample?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-sync-realms.conf-sample?h=stable/mitaka
 
 Container reconciler configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -122,7 +122,7 @@ Sample container sync reconciler configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-reconciler.conf-sample?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-reconciler.conf-sample?h=stable/mitaka
 
 Account server configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -147,7 +147,7 @@ Sample account server configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/account-server.conf-sample?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/swift/plain/etc/account-server.conf-sample?h=stable/mitaka
 
 Proxy server configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,7 +179,7 @@ Sample proxy server configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/proxy-server.conf-sample?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/swift/plain/etc/proxy-server.conf-sample?h=stable/mitaka
 
 Proxy server memcache configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

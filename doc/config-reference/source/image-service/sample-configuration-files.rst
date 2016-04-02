@@ -15,7 +15,7 @@ This file must be modified after installation.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-api.conf?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-api.conf?h=stable/mitaka
 
 glance-registry.conf
 ~~~~~~~~~~~~~~~~~~~~
@@ -27,7 +27,7 @@ This file must be modified after installation.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-registry.conf?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-registry.conf?h=stable/mitaka
 
 glance-api-paste.ini
 ~~~~~~~~~~~~~~~~~~~~
@@ -39,7 +39,7 @@ You should not need to modify this file.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-api-paste.ini?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-api-paste.ini?h=stable/mitaka
 
 glance-manage.conf
 ~~~~~~~~~~~~~~~~~~
@@ -56,7 +56,7 @@ The Image service's custom logging options are found in the
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-manage.conf?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-manage.conf?h=stable/mitaka
 
 glance-registry-paste.ini
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -66,7 +66,7 @@ The Image service's middleware pipeline for its registry is found in the
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-registry-paste.ini?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-registry-paste.ini?h=stable/mitaka
 
 glance-scrubber.conf
 ~~~~~~~~~~~~~~~~~~~~
@@ -77,7 +77,7 @@ that have been deleted; its configuration is stored in the
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-scrubber.conf?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-scrubber.conf?h=stable/mitaka
 
 policy.json
 ~~~~~~~~~~~
@@ -87,4 +87,4 @@ apply to the Image service.
 
 .. remote-code-block:: json
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=stable/mitaka

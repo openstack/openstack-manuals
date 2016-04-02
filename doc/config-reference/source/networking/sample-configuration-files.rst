@@ -29,7 +29,7 @@ gateway interface (WSGI).
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/neutron/plain/etc/api-paste.ini?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/neutron/plain/etc/api-paste.ini?h=stable/mitaka
 
 policy.json
 ~~~~~~~~~~~
@@ -38,7 +38,7 @@ The ``policy.json`` defines API access policy.
 
 .. remote-code-block:: json
 
-   https://git.openstack.org/cgit/openstack/neutron/plain/etc/policy.json?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/neutron/plain/etc/policy.json?h=stable/mitaka
 
 rootwrap.conf
 ~~~~~~~~~~~~~
@@ -48,7 +48,7 @@ that require privilege escalation to execute.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/neutron/plain/etc/rootwrap.conf?h=stable/liberty
+   https://git.openstack.org/cgit/openstack/neutron/plain/etc/rootwrap.conf?h=stable/mitaka
 
 Reference architecture plug-ins and agents
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
