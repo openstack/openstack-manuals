@@ -156,6 +156,31 @@ the volume to boot an instance.
 
    Note the ID of the image that you want to use to create a volume.
 
+   If you want to create a volume to a specific storage backend, you need
+   to use an image which has *cinder_img_volume_type* property.
+   In this case, a new volume will be created as *storage_backend1* volume
+   type.
+
+   .. code-block:: console
+
+      $ nova image-show 98901246-af9...
+      +---------------------------------+--------------------------------------+
+      | Property                        | Value                                |
+      +---------------------------------+--------------------------------------+
+      | OS-EXT-IMG-SIZE:size            | 25165824                             |
+      | created                         | 2016-03-11T16:39:25Z                 |
+      | id                              | 98901246-af9...                      |
+      | metadata cinder_img_volume_type | storage_backend1                     |
+      | metadata kernel_id              | 759e3e20-83b...                      |
+      | metadata ramdisk_id             | 5a8b526f-d5c...                      |
+      | minDisk                         | 0                                    |
+      | minRam                          | 0                                    |
+      | name                            | cirros-0.3.4-x86_64-uec              |
+      | progress                        | 100                                  |
+      | status                          | ACTIVE                               |
+      | updated                         | 2016-03-17T22:55:03Z                 |
+      +---------------------------------+--------------------------------------+
+
 #. List the available flavors.
 
    .. code-block:: console
