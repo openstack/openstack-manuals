@@ -31,6 +31,9 @@ Volume drivers
    drivers/lvm-volume-driver.rst
    drivers/netapp-volume-driver.rst
    drivers/nimble-volume-driver.rst
+   drivers/nexentastor4-driver.rst
+   drivers/nexentastor5-driver.rst
+   drivers/nexentaedge-driver.rst
    drivers/nfs-volume-driver.rst
    drivers/prophetstor-dpl-driver.rst
    drivers/pure-storage-driver.rst
