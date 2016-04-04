@@ -419,8 +419,8 @@ services. See `Appendix B. Firewalls and default ports`_ of the
 various services involved in an OpenStack deployment.
 
 .. _registry of port numbers: http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
-.. _Appendix B. Firewalls and default ports: http://docs.openstack.org/liberty/config-reference/content/firewalls-default-ports.html
-.. _OpenStack Configuration Reference: http://docs.openstack.org/liberty/config-reference/content/index.html
+.. _Appendix B. Firewalls and default ports: http://docs.openstack.org/mitaka/config-reference/firewalls-default-ports.html
+.. _OpenStack Configuration Reference: http://docs.openstack.org/mitaka/config-reference/
 
 
 The most common application programming interface (API) for writing TCP-based

@@ -413,7 +413,7 @@ Controller node
       Networking service does not provide layer-3 services such as
       routing. However, this breaks portions of the dashboard that
       manage the Networking service. See the
-      `Installation Guide <http://docs.openstack.org/liberty/install-guide-ubuntu/horizon-install.html>`__
+      `Installation Guide <http://docs.openstack.org/mitaka/install-guide-ubuntu/horizon-install.html>`__
       for more information.
 
 #. Configure the ML2 plug-in. Edit the
