@@ -27,6 +27,4 @@ systems to object-storage systems like OpenStack Object Storage.
    several gigabytes of space available in this directory.
 
    For information on requirements for other back ends, see
-   `Configuration Reference <http://docs.openstack.org/liberty/
-   config-reference/content/
-   ch_configuring-openstack-image-service.html>`__.
+   `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/image-service.html>`__.

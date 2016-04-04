@@ -157,7 +157,7 @@ these procedures on all nodes.
    Enable the backports repository
    -------------------------------
 
-   The Liberty release is available directly through the official
+   The Mitaka release is available directly through the official
    Debian backports repository. To use this repository, follow
    the instruction from the official
    `Debian website <http://backports.debian.org/Instructions/>`_,
