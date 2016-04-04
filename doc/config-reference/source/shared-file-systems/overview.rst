@@ -12,6 +12,11 @@ manila-api
    throughout the Shared File Systems service. It supports the OpenStack
    APIs.
 
+manila-data
+  A standalone service whose purpose is to receive requests, process data
+  operations with potentially long running time such as copying, share
+  migration or backup.
+
 manila-scheduler
    Schedules and routes requests to the appropriate
    share service. The scheduler uses configurable filters and weighers
