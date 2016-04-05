@@ -9,7 +9,7 @@ service (neutron) using the :ref:`provider networks <network1>` or
 :ref:`self-service networks <network2>` option. For more information about
 the Networking service including virtual networking components, layout, and
 traffic flows, see the
-`Networking Guide <http://docs.openstack.org/liberty/networking-guide>`__.
+`Networking Guide <http://docs.openstack.org/mitaka/networking-guide/>`__.
 
 .. toctree::
    :maxdepth: 1
