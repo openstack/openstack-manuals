@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _cinder-nexenta:
+.. _cinder-nexenta5:
 
-.. list-table:: Description of NexentaStor 4.x driver configuration options
+.. list-table:: Description of NexentaStor 5.x driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,12 +18,6 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``nexenta_blocksize`` = ``4096``
-     - (Integer) Block size for datasets
-   * - ``nexenta_chunksize`` = ``16384``
-     - (Integer) NexentaEdge iSCSI LUN object chunk size
-   * - ``nexenta_client_address`` =
-     - (String) NexentaEdge iSCSI Gateway client address for non-VIP service
    * - ``nexenta_dataset_compression`` = ``on``
      - (String) Compression value for new ZFS folders.
    * - ``nexenta_dataset_dedup`` = ``off``
@@ -36,31 +30,19 @@
      - (Integer) Nexenta target portal port
    * - ``nexenta_mount_point_base`` = ``$state_path/mnt``
      - (String) Base directory that contains NFS share mount points
-   * - ``nexenta_nms_cache_volroot`` = ``True``
-     - (Boolean) If set True cache NexentaStor appliance volroot option value.
-   * - ``nexenta_password`` = ``nexenta``
-     - (String) Password to connect to Nexenta SA
+   * - ``nexenta_ns5_blocksize`` = ``32``
+     - (Integer) Block size for datasets
    * - ``nexenta_rest_port`` = ``8080``
      - (Integer) HTTP port to connect to Nexenta REST API server
    * - ``nexenta_rest_protocol`` = ``auto``
      - (String) Use http or https for REST connection (default auto)
-   * - ``nexenta_rrmgr_compression`` = ``0``
-     - (Integer) Enable stream compression, level 1..9. 1 - gives best speed; 9 - gives best compression.
-   * - ``nexenta_rrmgr_connections`` = ``2``
-     - (Integer) Number of TCP connections.
-   * - ``nexenta_rrmgr_tcp_buf_size`` = ``4096``
-     - (Integer) TCP Buffer size in KiloBytes.
-   * - ``nexenta_shares_config`` = ``/etc/cinder/nfs_shares``
-     - (String) File with the list of available nfs shares
    * - ``nexenta_sparse`` = ``False``
      - (Boolean) Enables or disables the creation of sparse datasets
    * - ``nexenta_sparsed_volumes`` = ``True``
      - (Boolean) Enables or disables the creation of volumes as sparsed files that take no space. If disabled (False), volume is created as a regular file, which takes a long time.
-   * - ``nexenta_target_group_prefix`` = ``cinder/``
-     - (String) Prefix for iSCSI target groups on SA
-   * - ``nexenta_target_prefix`` = ``iqn.1986-03.com.sun:02:cinder-``
-     - (String) IQN prefix for iSCSI targets
    * - ``nexenta_user`` = ``admin``
      - (String) User name to connect to Nexenta SA
    * - ``nexenta_volume`` = ``cinder``
      - (String) SA Pool that holds all volumes
+   * - ``nexenta_volume_group`` = ``iscsi``
+     - (String) Volume group for ns5
