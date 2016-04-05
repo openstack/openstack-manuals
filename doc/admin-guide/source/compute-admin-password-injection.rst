@@ -44,8 +44,9 @@ editing the ``/etc/shadow`` file inside the virtual machine instance.
    Users can only use :command:`ssh` to access the instance by using the admin
    password if the virtual machine image is a Linux distribution, and it has
    been configured to allow users to use :command:`ssh` as the root user. This
-   is not the case for `Ubuntu cloud images`_ which, by default, does not
-   allow users to use :command:`ssh` to access the root account.
+   is not the case for `Ubuntu cloud images <http://uec-images.ubuntu.com>`_
+   which, by default, does not allow users to use :command:`ssh` to access the
+   root account.
 
 **Password injection and XenAPI (XenServer/XCP)**
 
@@ -55,10 +56,6 @@ configured with the agent for password injection to work.
 
 **Password injection and Windows images (all hypervisors)**
 
-.. _Ubuntu cloud images: #
-
 For Windows virtual machines, configure the Windows image to retrieve
 the admin password on boot by installing an agent such as
-`cloudbase-init`_.
-
-.. _cloudbase-init: #
+`cloudbase-init <https://cloudbase.it/cloudbase-init>`_.
