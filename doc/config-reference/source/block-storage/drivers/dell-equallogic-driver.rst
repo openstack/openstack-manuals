@@ -157,4 +157,4 @@ In this example:
 
 For information on configuring multiple back ends, see `Configure a
 multiple-storage back
-end <http://docs.openstack.org/admin-guide-cloud/blockstorage_multi_backend.html>`__.
+end <http://docs.openstack.org/admin-guide/blockstorage_multi_backend.html>`__.

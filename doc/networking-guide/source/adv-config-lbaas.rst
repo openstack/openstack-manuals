@@ -33,8 +33,8 @@ details about how LBaaS v1 works and how to configure it:
 * `Load-Balancer-as-a-Service (LBaaS) overview`_
 * `Basic Load-Balancer-as-a-Service operations`_
 
-.. _Load-Balancer-as-a-Service (LBaaS) overview: http://docs.openstack.org/admin-guide-cloud/networking_introduction.html#load-balancer-as-a-service-lbaas-overview
-.. _Basic Load-Balancer-as-a-Service operations: http://docs.openstack.org/admin-guide-cloud/networking_adv-features.html#basic-load-balancer-as-a-service-operations
+.. _Load-Balancer-as-a-Service (LBaaS) overview: http://docs.openstack.org/admin-guide/networking_introduction.html#load-balancer-as-a-service-lbaas-overview
+.. _Basic Load-Balancer-as-a-Service operations: http://docs.openstack.org/admin-guide/networking_adv-features.html#basic-load-balancer-as-a-service-operations
 
 LBaaS v2
 ~~~~~~~~
