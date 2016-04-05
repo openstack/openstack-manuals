@@ -77,7 +77,7 @@ the volume.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc.sh
 
 #. Create the volume type:
 
@@ -121,7 +121,7 @@ type, ``unencrypted``, is used.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc.sh
 
 #. Create an unencrypted 1 GB test volume:
 

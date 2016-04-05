@@ -48,7 +48,7 @@ Download and source the OpenStack RC file
 
    .. code-block:: console
 
-      $ source demo-openrc.sh
+      $ . demo-openrc.sh
 
 #. When you are prompted for an OpenStack password, enter the password for
    the user who downloaded the ``PROJECT-openrc.sh`` file.
@@ -80,7 +80,7 @@ scratch, if you cannot download the file from the dashboard.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc.sh
 
 .. note::
 
