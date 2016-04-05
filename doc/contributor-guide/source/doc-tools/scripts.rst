@@ -7,7 +7,7 @@ openstack-doc-tools repository
 
 autogenerate_config_docs
   Generate configuration references published on
-  http://docs.openstack.org/liberty/config-reference/content/.
+  http://docs.openstack.org/mitaka/config-reference/.
 
 build_environment directory (deprecated)
   A Vagrant environment for working with the guides.
@@ -34,7 +34,7 @@ openstack-autohelp
 
 openstack-auto-commands
   Generate the command line reference published at
-  http://docs.openstack.org/cli-reference/content/. A helper script to use this
+  http://docs.openstack.org/cli-reference/. A helper script to use this
   tool is available at ``bin/doc-tools-update-cli-reference``.
 
 openstack-generate-docbook

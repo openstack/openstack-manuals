@@ -23,7 +23,6 @@ Installation Guides
 The OpenStack Installation Guide describes a manual install process for
 multiple distributions based on the following packaging systems:
 
-* Installation Guide for Debian - will be published with Liberty
 * `Installation Guide for openSUSE and SUSE Linux Enterprise Server`_
 * `Installation Guide for Red Hat Enterprise Linux and CentOS`_
 * `Installation Guide for Ubuntu`_
@@ -154,13 +153,13 @@ This guide has a review in place to get a license indicator in output:
 
 
 .. Links
-.. _`Installation Guide for openSUSE and SUSE Linux Enterprise Server`: http://docs.openstack.org/liberty/install-guide-obs/
-.. _`Installation Guide for Red Hat Enterprise Linux and CentOS`: http://docs.openstack.org/liberty/install-guide-rdo/
-.. _`Installation Guide for Ubuntu`: http://docs.openstack.org/liberty/install-guide-ubuntu/
+.. _`Installation Guide for openSUSE and SUSE Linux Enterprise Server`: http://docs.openstack.org/mitaka/install-guide-obs/
+.. _`Installation Guide for Red Hat Enterprise Linux and CentOS`: http://docs.openstack.org/mitaka/install-guide-rdo/
+.. _`Installation Guide for Ubuntu`: http://docs.openstack.org/mitaka/install-guide-ubuntu/
 
-.. _`OpenStack Configuration Reference`: http://docs.openstack.org/liberty/config-reference/content/
+.. _`OpenStack Configuration Reference`: http://docs.openstack.org/mitaka/config-reference/
 
-.. _`OpenStack Networking Guide`: http://docs.openstack.org/liberty/networking-guide/
+.. _`OpenStack Networking Guide`: http://docs.openstack.org/mitaka/networking-guide/
 
 .. _`release information`: https://wiki.openstack.org/wiki/Releases
 
