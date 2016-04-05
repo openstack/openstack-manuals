@@ -21,4 +21,5 @@ sizes of server instances.
    dashboard_manage_shares.rst
    dashboard_stacks.rst
    dashboard_databases.rst
+   dashboard_manage_lbaasv2.rst
 
