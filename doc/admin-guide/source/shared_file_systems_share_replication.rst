@@ -125,7 +125,16 @@ type of replication. In the example, we assume a configuration of two
 Availability Zones (configuration option: ``storage_availability_zone``),
 called `availability_zone_1` and `availability_zone_2`.
 
-See `Configuring the ZFSonLinux driver <http://docs.openstack.org/developer/manila/devref/zfs_on_linux_driver.html>`_
+Multiple availability zones are not necessary to use the replication feature.
+However, the use of an availability zone as a ``failure domain`` is encouraged.
+
+Pay attention to the network configuration for the ZFS driver. Here, we assume
+a configuration of ``zfs_service_ip`` and ``zfs_share_export_ip`` from two
+separate networks. The service network is reachable from the host where the
+``manila-share`` service is running. The share export IP is from a network that
+allows user access.
+
+See `Configuring the ZFSonLinux driver <http://docs.openstack.org/mitaka/config-reference/shared-file-systems/drivers/zfs-on-linux-driver.html>`_
 for information on how to set up the ZFSonLinux driver.
 
 
@@ -219,13 +228,13 @@ Specify the share ID or name as a parameter.
    | share_network_id            | None                                                               |
    | export_locations            |                                                                    |
    |                             | path =                                                             |
-   |                             |127.0.0.1:/alpha/manila_share_38efc042_50c2_4825_a6d8_cba2a8277b28  |
+   |                             |10.32.62.26:/alpha/manila_share_38efc042_50c2_4825_a6d8_cba2a8277b28|
    |                             | preferred = False                                                  |
    |                             | is_admin_only = False                                              |
    |                             | id = e1d754b5-ec06-42d2-afff-3e98c0013faf                          |
    |                             | share_instance_id = 38efc042-50c2-4825-a6d8-cba2a8277b28           |
    |                             | path =                                                             |
-   |                             |127.0.0.1:/alpha/manila_share_38efc042_50c2_4825_a6d8_cba2a8277b28  |
+   |                             |172.21.0.23:/alpha/manila_share_38efc042_50c2_4825_a6d8_cba2a8277b28|
    |                             | preferred = False                                                  |
    |                             | is_admin_only = True                                               |
    |                             | id = 6f843ecd-a7ea-4939-86de-e1e01d9e8672                          |
@@ -367,8 +376,8 @@ Once the promotion is complete, the ``replica_state`` will be set to
    +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------+---------------------+----------------------------+
 
 
-Access rules and snapshots
---------------------------
+Access rules
+------------
 
 Create an IP access rule for the share
 
@@ -413,14 +422,14 @@ export locations of a share.
    +--------------------------------------+---------------------------------------------------------------------------+-----------+
    | ID                                   | Path                                                                      | Preferred |
    +--------------------------------------+---------------------------------------------------------------------------+-----------+
-   | 3ed3fbf5-2fa1-4dc0-8440-a0af72398cb6 | 127.0.0.1:/beta/subdir/manila_share_78a5ef96_6c36_42e0_b50b_44efe7c1807e  | False     |
-   | 6f843ecd-a7ea-4939-86de-e1e01d9e8672 | 127.0.0.1:/alpha/manila_share_38efc042_50c2_4825_a6d8_cba2a8277b28        | False     |
-   | e1d754b5-ec06-42d2-afff-3e98c0013faf | 127.0.0.1:/alpha/manila_share_38efc042_50c2_4825_a6d8_cba2a8277b28        | False     |
-   | f3c5585f-c2f7-4264-91a7-a4a1e754e686 | 127.0.0.1:/beta/subdir/manila_share_78a5ef96_6c36_42e0_b50b_44efe7c1807e  | False     |
+   | 3ed3fbf5-2fa1-4dc0-8440-a0af72398cb6 | 10.32.62.21:/beta/subdir/manila_share_78a5ef96_6c36_42e0_b50b_44efe7c1807e| False     |
+   | 6f843ecd-a7ea-4939-86de-e1e01d9e8672 | 172.21.0.23:/alpha/manila_share_38efc042_50c2_4825_a6d8_cba2a8277b28      | False     |
+   | e1d754b5-ec06-42d2-afff-3e98c0013faf | 10.32.62.26:/alpha/manila_share_38efc042_50c2_4825_a6d8_cba2a8277b28      | False     |
+   | f3c5585f-c2f7-4264-91a7-a4a1e754e686 | 172.21.0.29:/beta/subdir/manila_share_78a5ef96_6c36_42e0_b50b_44efe7c1807e| False     |
    +--------------------------------------+---------------------------------------------------------------------------+-----------+
 
-Identify the export location corresponding to the share replica and you may
-mount it on the target node.
+Identify the export location corresponding to the share replica on the user
+accessible network and you may mount it on the target node.
 
 .. note::
    As an administrator, you can list the export locations for a particular
@@ -428,6 +437,9 @@ mount it on the target node.
    :command:`manila share-instance-export-location-list` command and
    specifying the share replica's ID as a parameter.
 
+
+Snapshots
+---------
 
 Create a snapshot of the share
 
