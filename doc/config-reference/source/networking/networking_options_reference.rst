@@ -96,7 +96,7 @@ This section describes the available configuration options.
      and set all guest virtual machines' MTU to the same value by
      using a DHCP option. For information about how to use this
      option, see `Configure OVS plug-in
-     <http://docs.openstack.org/admin-guide-cloud/networking_config-agents.html>`__.
+     <http://docs.openstack.org/admin-guide/networking_config-agents.html>`__.
 
 .. note::
    OpenFlow Agent (ofagent) Mechanism driver is deprecated in favor

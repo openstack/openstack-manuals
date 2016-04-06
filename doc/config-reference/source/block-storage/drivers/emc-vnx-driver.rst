@@ -166,8 +166,8 @@ with ``EMCCLIISCSIDriver`` if you are using the iSCSI driver.
    volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
    initiator_auto_registration = True
 
-For more details on multi-backends, see `OpenStack Cloud Administration Guide
-<http://docs.openstack.org/admin-guide-cloud/index.html>`__
+For more details on multi-backends, see `OpenStack Administrator Guide
+<http://docs.openstack.org/admin-guide/index.html>`__
 
 Required configurations
 -----------------------

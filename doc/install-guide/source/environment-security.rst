@@ -74,8 +74,8 @@ during installation and operation. In some cases, services perform
 modifications to the host that can interfere with deployment automation
 tools such as Ansible, Chef, and Puppet. For example, some OpenStack
 services add a root wrapper to ``sudo`` that can interfere with security
-policies. See the `Cloud Administrator Guide <http://docs.openstack.org/
-admin-guide-cloud/compute-root-wrap-reference.html>`__
+policies. See the `Administrator Guide <http://docs.openstack.org/
+admin-guide/compute-root-wrap-reference.html>`__
 for more information.
 
 Also, the Networking service assumes default values for kernel network

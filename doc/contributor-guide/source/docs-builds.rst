@@ -72,9 +72,9 @@ Guides for deployers and administrators
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/config-reference
      - http://docs.openstack.org/mitaka/config-reference/
 
-   * - Cloud Administrator Guide
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide-cloud
-     - http://docs.openstack.org/admin-guide-cloud
+   * - Administrator Guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide
+     - http://docs.openstack.org/admin-guide
 
    * - High Availability Guide
      - http://git.openstack.org/cgit/openstack/ha-guide

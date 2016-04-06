@@ -132,7 +132,7 @@ parameters:
 
 For information and examples on more advanced use of neutron's
 ``subnet`` subcommand, see the `OpenStack Administrator
-Guide <http://docs.openstack.org/admin-guide-cloud/networking_use.html#advanced-networking-operations>`__.
+Guide <http://docs.openstack.org/admin-guide/networking_use.html#advanced-networking-operations>`__.
 
 Create routers
 ~~~~~~~~~~~~~~

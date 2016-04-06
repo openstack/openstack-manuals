@@ -26,7 +26,7 @@ Tenant network types
 --------------------
 
 Similar info in:
-http://docs.openstack.org/admin-guide-cloud/networking_adv-features.html#provider-networks
+http://docs.openstack.org/admin-guide/networking_adv-features.html#provider-networks
 
 * Local
 
