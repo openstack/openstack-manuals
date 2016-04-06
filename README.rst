@@ -8,7 +8,6 @@ Guide <http://docs.openstack.org/contributor-guide/>`_.
 
 It includes these manuals:
 
- * Admin User Guide
  * Administrator Guide
  * Architecture Design Guide
  * Command-Line Interface Reference
