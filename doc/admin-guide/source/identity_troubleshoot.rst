@@ -95,10 +95,9 @@ are not. One possible problem is that the certificates are the wrong
 files or garbage. You can remove these files and run another command
 against your server; they are fetched on demand.
 
-The Identity service log should show the access of the certificate
-files. You might have to turn up your logging levels. Set
-``debug = True`` and ``verbose = True`` in your Identity configuration
-file and restart the Identity server.
+The Identity service log should show the access of the certificate files. You
+might have to turn up your logging levels. Set ``debug = True`` in your
+Identity configuration file and restart the Identity server.
 
 .. code-block:: console
 

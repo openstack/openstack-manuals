@@ -379,7 +379,6 @@ Controller node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       core_plugin = ml2
       service_plugins = router
       allow_overlapping_ips = True
@@ -426,13 +425,6 @@ Network node
 
 Compute nodes
 -------------
-
-#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
-
-   .. code-block:: ini
-
-      [DEFAULT]
-      verbose = True
 
 #. Configure the Macvtap agent. Edit the
    ``/etc/neutron/plugins/ml2/macvtap_agent.ini`` file:

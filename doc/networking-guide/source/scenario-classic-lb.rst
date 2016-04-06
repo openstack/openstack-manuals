@@ -542,7 +542,6 @@ Controller node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       core_plugin = ml2
       service_plugins = router
       allow_overlapping_ips = True
@@ -591,13 +590,6 @@ Controller node
 Network node
 ------------
 
-#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
-
-   .. code-block:: ini
-
-      [DEFAULT]
-      verbose = True
-
 #. Configure the Linux bridge agent. Edit the
    ``/etc/neutron/plugins/ml2/linuxbridge_agent.ini`` file:
 
@@ -628,7 +620,6 @@ Network node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
       external_network_bridge =
 
@@ -643,7 +634,6 @@ Network node
    .. code-block:: ini
 
          [DEFAULT]
-         verbose = True
          interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
          dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
          enable_isolated_metadata = True
@@ -669,7 +659,6 @@ Network node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       nova_metadata_ip = controller
       metadata_proxy_shared_secret = METADATA_SECRET
 
@@ -684,13 +673,6 @@ Network node
 
 Compute nodes
 -------------
-
-#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
-
-   .. code-block:: ini
-
-      [DEFAULT]
-      verbose = True
 
 #. Configure the Linux bridge agent. Edit the
    ``/etc/neutron/plugins/ml2/linuxbridge_agent.ini`` file:

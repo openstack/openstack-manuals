@@ -65,13 +65,12 @@ In each configuration file, add these lines:
 
 .. code-block:: ini
 
-   verbose = False
    debug = False
    use_syslog = True
    syslog_log_facility = LOG_LOCAL0
 
-In addition to enabling syslog, these settings also turn off verbose and
-debugging output from the log.
+In addition to enabling syslog, these settings also turn off debugging output
+from the log.
 
 .. note::
 

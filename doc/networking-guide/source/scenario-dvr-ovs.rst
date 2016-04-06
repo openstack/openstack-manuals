@@ -487,7 +487,6 @@ Controller node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       router_distributed = True
       core_plugin = ml2
       service_plugins = router
@@ -548,13 +547,6 @@ Controller node
 Network node
 ------------
 
-#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
-
-   .. code-block:: ini
-
-      [DEFAULT]
-      verbose = True
-
 #. Configure the Open vSwitch agent. Edit the
    ``/etc/neutron/plugins/ml2/openvswitch_agent.ini`` file:
 
@@ -583,7 +575,6 @@ Network node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
       external_network_bridge =
       agent_mode = dvr_snat
@@ -599,7 +590,6 @@ Network node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
       dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
       enable_isolated_metadata = True
@@ -625,7 +615,6 @@ Network node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       nova_metadata_ip = controller
       metadata_proxy_shared_secret = METADATA_SECRET
 
@@ -641,13 +630,6 @@ Network node
 
 Compute nodes
 -------------
-
-#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
-
-   .. code-block:: ini
-
-      [DEFAULT]
-      verbose = True
 
 #. Configure the Open vSwitch agent. Edit the
    ``/etc/neutron/plugins/ml2/openvswitch_agent.ini`` file:
@@ -677,7 +659,6 @@ Compute nodes
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
       external_network_bridge =
       agent_mode = dvr
@@ -693,7 +674,6 @@ Compute nodes
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       nova_metadata_ip = controller
       metadata_proxy_shared_secret = METADATA_SECRET
 

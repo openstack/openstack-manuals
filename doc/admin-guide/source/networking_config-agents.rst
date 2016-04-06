@@ -453,7 +453,6 @@ correctly using these
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = true
       control_exchange = neutron
       policy_file = C:\etc\policy.json
       rpc_backend = neutron.openstack.common.rpc.impl_kombu

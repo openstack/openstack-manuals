@@ -93,15 +93,6 @@ Install and configure components
      Replace ``CEILOMETER_PASS`` with the password you chose for
      the ``ceilometer`` user in the Identity service.
 
-   * (Optional) To assist with troubleshooting, enable verbose
-     logging in the ``[DEFAULT]`` section:
-
-     .. code-block:: ini
-
-        [DEFAULT]
-        ...
-        verbose = True
-
 Configure Compute to use Telemetry
 ----------------------------------
 

@@ -259,15 +259,6 @@ Install and configure components
      Replace ``AODH_PASS`` with the password you chose for
      the ``aodh`` user in the Identity service.
 
-   * (Optional) To assist with troubleshooting, enable verbose
-     logging in the ``[DEFAULT]`` section:
-
-     .. code-block:: ini
-
-        [DEFAULT]
-        ...
-        verbose = True
-
 .. todo:
 
    Workaround for https://bugs.launchpad.net/ubuntu/+source/aodh/+bug/1513599.

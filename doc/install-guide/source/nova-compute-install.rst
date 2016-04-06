@@ -221,15 +221,6 @@ Install and configure components
       * Due to a packaging bug, remove the ``logdir`` option from the
         ``[DEFAULT]`` section.
 
-   * In the ``[DEFAULT]`` section, enable verbose mode to assist with
-     potential troubleshooting:
-
-     .. code-block:: ini
-
-        [DEFAULT]
-        ...
-        verbose = True
-
 .. only:: obs or debian
 
    3. Ensure the kernel module ``nbd`` is loaded.
