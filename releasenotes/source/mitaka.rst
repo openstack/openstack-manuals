@@ -62,8 +62,8 @@ User Guides
   a step toward improved troubleshooting sections.
 
 * The **Admin User Guide** content has been removed from
-  OpenStack.org/docs since all files have been reorganised into
-  the **Administrator guide**.
+  `OpenStack Docs <http://docs.openstack.org>` since all files have been
+  reorganised into the **Administrator Guide**.
 
 Virtual Machine Image Guide
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
