@@ -341,7 +341,6 @@ OpenStack on Hyper-V. Below is a sample ``nova.conf`` for Windows:
    injected_network_template = C:\Program Files (x86)\OpenStack\Nova\etc\interfaces.template
    policy_file = C:\Program Files (x86)\OpenStack\Nova\etc\policy.json
    mkisofs_cmd = C:\Program Files (x86)\OpenStack\Nova\bin\mkisofs.exe
-   verbose = false
    allow_resize_to_same_host = true
    running_deleted_instance_action = reap
    running_deleted_instance_poll_interval = 120

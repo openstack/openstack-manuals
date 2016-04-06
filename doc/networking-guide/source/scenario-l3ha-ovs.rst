@@ -215,7 +215,6 @@ Controller node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       core_plugin = ml2
       service_plugins = router
       allow_overlapping_ips = True
@@ -273,13 +272,6 @@ Controller node
 Network nodes
 -------------
 
-#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
-
-   .. code-block:: ini
-
-      [DEFAULT]
-      verbose = True
-
 #. Configure the Open vSwitch agent. Edit the
    ``/etc/neutron/plugins/ml2/openvswitch_agent.ini`` file:
 
@@ -306,7 +298,6 @@ Network nodes
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
       external_network_bridge =
       agent_mode = legacy
@@ -322,7 +313,6 @@ Network nodes
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
       dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
       enable_isolated_metadata = True
@@ -348,7 +338,6 @@ Network nodes
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       nova_metadata_ip = controller
       metadata_proxy_shared_secret = METADATA_SECRET
 
@@ -364,13 +353,6 @@ Network nodes
 
 Compute nodes
 -------------
-
-#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
-
-   .. code-block:: ini
-
-      [DEFAULT]
-      verbose = True
 
 #. Configure the Open vSwitch agent. Edit the
    ``/etc/neutron/plugins/ml2/openvswitch_agent.ini`` file:

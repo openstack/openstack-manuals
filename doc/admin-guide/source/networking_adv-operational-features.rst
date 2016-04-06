@@ -27,10 +27,6 @@ methods:
       # Show debugging output in logs (sets DEBUG log level output)
       # debug = False
 
-      # Show more verbose log output (sets INFO log level output) if debug
-        is False
-      # verbose = False
-
       # log_date_format = %Y-%m-%d %H:%M:%S
 
       # use_syslog = False

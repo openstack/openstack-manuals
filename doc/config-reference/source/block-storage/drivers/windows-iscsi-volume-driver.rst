@@ -99,7 +99,6 @@ configuration sample for using the Windows iSCSI Driver:
    rabbit_port = 5672
    sql_connection = mysql+pymysql://root:Passw0rd@IP_ADDRESS/cinder
    windows_iscsi_lun_path = C:\iSCSIVirtualDisks
-   verbose = True
    rabbit_password = Passw0rd
    logdir = C:\OpenStack\Log\
    image_conversion_dir = C:\ImageConversionDir

@@ -403,7 +403,6 @@ Controller node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       core_plugin = ml2
       service_plugins =
 
@@ -467,7 +466,6 @@ Controller node
    .. code-block:: ini
 
       [DEFAULT]
-      verbose = True
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
       dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
       enable_isolated_metadata = True
@@ -500,13 +498,6 @@ Controller node
 
 Compute nodes
 -------------
-
-#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
-
-   .. code-block:: ini
-
-      [DEFAULT]
-      verbose = True
 
 #. Configure the Open vSwitch agent. Edit the
    ``/etc/neutron/plugins/ml2/openvswitch_agent.ini`` file:

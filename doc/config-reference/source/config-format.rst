@@ -15,9 +15,6 @@ For example:
    # Print debugging output (set logging level to DEBUG instead
    # of default WARNING level). (boolean value)
    debug = true
-   # Print more verbose output (set logging level to INFO instead
-   # of default WARNING level). (boolean value)
-   verbose = true
 
    [database]
    # The SQLAlchemy connection string used to connect to the
