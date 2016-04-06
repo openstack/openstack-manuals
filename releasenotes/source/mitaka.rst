@@ -47,6 +47,10 @@ User Guides
 * Troubleshooting chapters now have consistent formatting, which is
   a step toward improved troubleshooting sections.
 
+* The **Admin User Guide** content has been removed from
+  OpenStack.org/docs since all files have been reorganised into
+  the **Administrator guide**.
+
 Virtual Machine Image Guide
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
