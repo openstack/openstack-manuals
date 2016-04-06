@@ -25,3 +25,6 @@ runs.
    * - ``share.log``
      - ``openstack-manila-share``
      - ``manila-share``
+   * - ``data.log``
+     - ``openstack-manila-data``
+     - ``manila-data``
