@@ -97,7 +97,7 @@ To get the ``.html`` output locally, switch to the directory containing a
 
 The RST source is built into HTML using Sphinx, so that it is displayed on
 the *docs.openstack.org/<guide-name>*, for example,
-http://docs.openstack.org/user-guide-admin.
+http://docs.openstack.org/user-guide.
 
 The DocBook source is built into HTML (webhelp) and PDF using XSLT transforms
 included to the DocBook project.
