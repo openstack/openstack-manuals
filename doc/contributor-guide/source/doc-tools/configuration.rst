@@ -7,7 +7,7 @@ the books to the directory ``publish-docs`` in the top-level directory
 of your repository.
 
 By default, it outputs a directory with the same name as the directory
-where the ``pom.xml`` file lives in, such as ``admin-guide-cloud``. You can
+where the ``pom.xml`` file lives in, such as ``glossary``. You can
 also check the output of the build job for the name.
 
 Some books need special treatment and there are three options you can

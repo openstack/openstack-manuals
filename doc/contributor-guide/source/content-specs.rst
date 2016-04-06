@@ -69,9 +69,6 @@ Guides for end users
 * `OpenStack End User Guide`_: Shows OpenStack end users how to create and
   manage resources in an OpenStack cloud with the OpenStack dashboard and
   OpenStack client commands.
-* `OpenStack Admin User Guide`_: Shows OpenStack administrators how to create
-  and manage resources in an OpenStack cloud with the OpenStack dashboard and
-  OpenStack client commands.
 * `OpenStack API Guide`_: A brief overview of how to send REST API
   requests to endpoints for OpenStack services.
 * `Command-Line Interface Reference`_: Automatically generates help text for
@@ -102,7 +99,7 @@ Licenses
 This section shows the license indicators as of March 20, 2015.
 
 * OpenStack Architecture Design Guide: Apache 2.0 and CC-by-sa 3.0
-* OpenStack Cloud Administrator Guide: Apache 2.0 and CC-by-sa 3.0
+* OpenStack Administrator Guide: Apache 2.0 and CC-by-sa 3.0
 
 * OpenStack Install Guides (all): Apache 2.0
 * OpenStack High Availability Guide: Apache 2.0
@@ -113,7 +110,6 @@ This section shows the license indicators as of March 20, 2015.
 * Virtual Machine Image Guide: CC-by 3.0
 * OpenStack Operations Guide: CC-by 3.0
 * OpenStack End User Guide: CC-by 3.0
-* OpenStack Admin User Guide: CC-by 3.0
 * Command-Line Interface Reference: CC-by 3.0
 
 * Contributor dev docs (docs.openstack.org/developer/<projectname>): none
@@ -126,14 +122,13 @@ This section shows the license indicators as of March 20, 2015.
 What to do to make more consistent output:
 
 * OpenStack Architecture Design Guide: Apache 2.0 and CC-by 3.0
-* OpenStack Cloud Administrator Guide: Apache 2.0 and CC-by 3.0
+* OpenStack Administrator Guide: Apache 2.0 and CC-by 3.0
 * OpenStack Install Guides (all): Apache 2.0 and CC-by 3.0
 * OpenStack High Availability Guide: Apache 2.0 and CC-by 3.0
 * OpenStack Security Guide: CC-by 3.0
 * Virtual Machine Image Guide: CC-by 3.0
 * OpenStack Operations Guide: CC-by 3.0
 * OpenStack End User Guide: CC-by 3.0
-* OpenStack Admin User Guide: CC-by 3.0
 
 These guides are created by "scraping" code:
 
@@ -170,7 +165,6 @@ This guide has a review in place to get a license indicator in output:
 .. _`Virtual Machine Image Guide`: http://docs.openstack.org/image-guide/
 
 .. _`OpenStack End User Guide`: http://docs.openstack.org/user-guide/index.html
-.. _`OpenStack Admin User Guide`: http://docs.openstack.org/user-guide-admin/index.html
 .. _`OpenStack API Guide`: http://developer.openstack.org/api-guide/quick-start/
 .. _`Command-Line Interface Reference`: http://docs.openstack.org/cli-reference/
 

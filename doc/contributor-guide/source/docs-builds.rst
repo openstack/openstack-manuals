@@ -118,10 +118,6 @@ Guides for end users
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/user-guide
      - http://docs.openstack.org/user-guide
 
-   * - Admin User Guide
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/user-guide-admin
-     - http://docs.openstack.org/user-guide-admin
-
    * - Command Line Interface Reference
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/cli-reference
      - http://docs.openstack.org/cli-reference

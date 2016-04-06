@@ -11,7 +11,7 @@ information on the conversion, see `Doc Migration from DocBook to RST`_.
 To work on the RST source files, find the :file:`/doc/guide/source/` directory
 in a given OpenStack project. These files are built to
 *docs.openstack.org/<guide-name>*, for example,
-http://docs.openstack.org/user-guide-admin.
+http://docs.openstack.org/user-guide.
 
 Many cross-project manuals are in the
 http://git.openstack.org/cgit/openstack/openstack-manuals/tree/ project.
