@@ -66,8 +66,6 @@ command-line clients:
 
 *  `End User Guide <http://docs.openstack.org/user-guide/>`__
 
-*  `Admin User Guide <http://docs.openstack.org/user-guide-admin/>`__
-
 *  `Command-Line Interface Reference
    <http://docs.openstack.org/cli-reference/>`__
 
