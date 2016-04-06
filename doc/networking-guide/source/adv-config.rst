@@ -5,6 +5,7 @@ Advanced configuration
 .. toctree::
    :maxdepth: 2
 
+   adv-config-mtu.rst
    adv-config-operational.rst
    adv-config-dvr-ha-snat.rst
    adv-config-rbac.rst

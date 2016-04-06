@@ -430,9 +430,7 @@ provided for IPv4. In the case of dual stack Guests though it is always
 possible to use the IPv4 metadata service instead.
 
 Unlike IPv4 the MTU of a given network can be conveyed in the RA messages sent
-by the router and not in the DHCP messages. In Kilo the MTU sent by RADVD is
-always 1500, but in Liberty changes are planned to allow the RA to send the
-proper MTU of the network.
+by the router and not in the DHCP messages.
 
 OpenStack control & management network considerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -612,7 +610,7 @@ First, create a network and IPv6 subnet:
    +-----------------+--------------------------------------+
    | admin_state_up  | True                                 |
    | id              | 31ef3e85-111f-4772-8172-8e4a404a7476 |
-   | mtu             | 0                                    |
+   | mtu             | 1450                                 |
    | name            | ipv6-pd                              |
    | router:external | False                                |
    | shared          | False                                |
