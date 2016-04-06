@@ -45,7 +45,7 @@ Update ``nova-compute`` servers:
 
 Follow the instructions in the OpenStack Admin User Guide under the
 heading `Create an encrypted volume
-type <http://docs.openstack.org/user-guide-admin/dashboard_manage_volumes.html>`__
+type <http://docs.openstack.org/admin-guide/dashboard_manage_volumes.html>`__
 or alternatively, see ``TODO`` in this manual to do this via the
 command line.
 
