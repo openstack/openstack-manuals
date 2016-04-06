@@ -302,7 +302,7 @@ service, such as, a user named ``nova`` for the Compute service, and a
 special service tenant called ``service``.
 
 For information about how to create services and endpoints, see the
-`OpenStack Admin User Guide <http://docs.openstack.org/user-guide-admin/
+`OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/
 cli_manage_services.html>`__.
 
 Groups
