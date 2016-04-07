@@ -10,13 +10,12 @@ the IP packets are being manipulated.
 NAT is often implemented by routers, and so we will refer to the host
 performing NAT as a *NAT router*. However, in OpenStack deployments it
 is typically Linux servers that implement the NAT functionality, not
-hardware routers. These servers use the iptables_ software package to
-implement the NAT functionality.
+hardware routers. These servers use the
+`iptables <http://www.netfilter.org/projects/iptables/index.html>`_
+software package to implement the NAT functionality.
 
 There are multiple variations of NAT, and here we describe three kinds
 commonly found in OpenStack deployments.
-
-.. _iptables: http://www.netfilter.org/projects/iptables/index.html
 
 SNAT
 ~~~~
@@ -26,13 +25,12 @@ address of the sender in IP packets. SNAT is commonly used to enable
 hosts with *private addresses* to communicate with servers on the
 public Internet.
 
-`RFC 1918`_ reserves the following three subnets as private addresses:
+`RFC 1918 <https://tools.ietf.org/html/rfc1918>`_
+reserves the following three subnets as private addresses:
 
 * ``10.0.0.0/8``
 * ``172.16.0.0/12``
 * ``192.168.0.0/16``
-
-.. _RFC 1918: https://tools.ietf.org/html/rfc1918
 
 These IP addresses are not publicly routable, meaning that a host on the public
 Internet can not send an IP packet to any of these addresses. Private IP

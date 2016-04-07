@@ -2,15 +2,14 @@
 Disabling libvirt networking
 ============================
 
-Most OpenStack deployments use the libvirt_ toolkit for interacting with the
+Most OpenStack deployments use the `libvirt <http://libvirt.org>`__
+toolkit for interacting with the
 hypervisor. Specifically, OpenStack Compute uses libvirt for tasks such as
 booting and terminating virtual machine instances. When OpenStack Compute boots
 a new instance, libvirt provides OpenStack with the VIF associated with the
 instance, and OpenStack Compute plugs the VIF into a virtual device provided by
 OpenStack Network. The libvirt toolkit itself does not provide any networking
 functionality in OpenStack deployments.
-
-.. _libvirt: http://libvirt.org
 
 However, libvirt is capable of providing networking services to the virtual
 machines that it manages. In particular, libvirt can be configured to provide
