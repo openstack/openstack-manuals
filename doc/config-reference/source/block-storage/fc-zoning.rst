@@ -40,6 +40,9 @@ described in this section.
 Brocade Fibre Channel Zone Driver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Brocade Fibre Channel Zone Driver performs zoning operations
+through HTTP, HTTPS, or SSH.
+
 Configure SAN fabric parameters in the form of fabric groups as
 described in the example below:
 
@@ -49,6 +52,14 @@ described in the example below:
 
     Define a fabric group for each fabric using the fabric names used in
     ``fc_fabric_names`` configuration option as group name.
+
+.. note::
+
+    To define a fabric group for a switch which has Virtual Fabrics
+    enabled, include the ``fc_virtual_fabric_id`` configuration option
+    and ``fc_southbound_protocol`` configuration option set to ``HTTP``
+    or ``HTTPS`` in the fabric group. Zoning on VF enabled fabric using
+    ``SSH`` southbound protocol is not supported.
 
 System requirements
 -------------------
