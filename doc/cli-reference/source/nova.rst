@@ -9,7 +9,7 @@ Compute command-line client
 The nova client is the command-line interface (CLI) for
 the OpenStack Compute API and its extensions.
 
-This chapter documents :command:`nova` version ``3.3.1``.
+This chapter documents :command:`nova` version ``3.4.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -84,7 +84,7 @@ nova usage
   Delete the aggregate.
 
 ``aggregate-details``
-  Show details of the specified aggregate.
+  **DEPRECATED**, use aggregate-show instead.
 
 ``aggregate-list``
   Print a list of all aggregates.
@@ -96,6 +96,9 @@ nova usage
 ``aggregate-set-metadata``
   Update the metadata associated with the
   aggregate.
+
+``aggregate-show``
+  Show details of the specified aggregate.
 
 ``aggregate-update``
   Update the aggregate's name and optionally
@@ -722,8 +725,8 @@ nova usage
   Show a tenant network.
 
 ``host-servers-migrate``
-  Migrate all instances of the specified host to
-  other available hosts.
+  Cold migrate all instances off the specified
+  host to other available hosts.
 
 ``host-evacuate``
   Evacuate all instances from failed host.
@@ -849,7 +852,7 @@ Add a Security Group to a server.
   Name or ID of server.
 
 ``<secgroup>``
-  Name of Security Group.
+  Name or ID of Security Group.
 
 .. _nova_agent-create:
 
@@ -994,22 +997,6 @@ Delete the aggregate.
 ``<aggregate>``
   Name or ID of aggregate to delete.
 
-.. _nova_aggregate-details:
-
-nova aggregate-details
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: nova aggregate-details <aggregate>
-
-Show details of the specified aggregate.
-
-**Positional arguments:**
-
-``<aggregate>``
-  Name or ID of aggregate.
-
 .. _nova_aggregate-list:
 
 nova aggregate-list
@@ -1059,6 +1046,22 @@ Update the metadata associated with the aggregate.
 ``<key=value>``
   Metadata to add/update to aggregate. Specify only the key to
   delete a metadata item.
+
+.. _nova_aggregate-show:
+
+nova aggregate-show
+~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+   usage: nova aggregate-show <aggregate>
+
+Show details of the specified aggregate.
+
+**Positional arguments:**
+
+``<aggregate>``
+  Name or ID of aggregate.
 
 .. _nova_aggregate-update:
 
@@ -2461,7 +2464,7 @@ nova host-servers-migrate
 
    usage: nova host-servers-migrate <host>
 
-Migrate all instances of the specified host to other available hosts.
+Cold migrate all instances off the specified host to other available hosts.
 
 **Positional arguments:**
 
@@ -2935,7 +2938,7 @@ nova list
                     [--all-tenants [<0|1>]] [--tenant [<tenant>]]
                     [--user [<user>]] [--deleted] [--fields <fields>] [--minimal]
                     [--sort <key>[:<direction>]] [--marker <marker>]
-                    [--limit <limit>]
+                    [--limit <limit>] [--changes-since <changes_since>]
 
 List active servers.
 
@@ -3011,6 +3014,12 @@ List active servers.
   is bigger than 'osapi_max_limit' option of
   Nova API, limit 'osapi_max_limit' will be used
   instead.
+
+``--changes-since <changes_since>``
+  List only servers changed after a certain
+  point of time.The provided time should be an
+  ISO 8061 formated time.ex 2016-03-04T06:27:59Z
+  .
 
 .. _nova_list-extensions:
 
