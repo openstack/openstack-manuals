@@ -11,8 +11,7 @@ headings:
 
 * Section titles
 * Topic titles
-* Figure titles
-* Table titles
+* Figure and table titles
 
 General guidelines
 ~~~~~~~~~~~~~~~~~~
@@ -28,6 +27,8 @@ Use the following guidelines for all types of headings:
 * Do not end a title with a period or colon.
 * Add some introductory text between two headings that go directly after each
   other.
+
+For details on RST formatting, see :ref:`cg_titles`.
 
 Section titles
 ~~~~~~~~~~~~~~
@@ -75,15 +76,18 @@ Start the task topic title with an imperative verb.
 * Add a node
 * Remove a node
 
-Figure titles
-~~~~~~~~~~~~~
+.. _figure_table_titles:
 
-When introducing a figure or a diagram, add a title. Do not number the
-diagrams. Do not add the word *Diagram* or *Figure* to the title. Do not add a
-period after the title. Screenshots do not require titles.
+Figure and table titles
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Table titles
-~~~~~~~~~~~~
+Follow these guidelines for figure and table titles:
 
-When introducing a table, always add a short descriptive title to the table.
-Do not add the word *Table* to the table title.
+* When introducing a table, figure, or diagram, add a short descriptive title.
+* Do not add the word *Table*, *Diagram*, or *Figure* to the title.
+* Do not number tables, figures, or diagrams.
+* Place the title *above* tables, figures, or diagrams.
+* Make the title font bold.
+* Screenshots do not require titles.
+
+For details on RST formatting, see :ref:`rst_tables` and :ref:`rst_figures`.

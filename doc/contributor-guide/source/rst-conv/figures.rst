@@ -1,3 +1,5 @@
+.. _rst_figures:
+
 =======
 Figures
 =======
@@ -24,3 +26,5 @@ The figure directive supports the following options:
 
 For descriptions of the options and their possible values, refer to the
 `Docutils documentation <http://docutils.sourceforge.net/docs/ref/rst/directives.html#figure>`_.
+
+For details on figure titles, see :ref:`figure_table_titles`.

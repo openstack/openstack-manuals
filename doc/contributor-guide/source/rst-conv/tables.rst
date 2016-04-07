@@ -1,6 +1,17 @@
+.. _rst_tables:
+
 ======
 Tables
 ======
+
+This section describes several types of tables that you can use in the
+OpenStack documentation. Each table must have a title. Name a table using
+the ``table`` directive. See corresponding subsections for the title
+formatting details.
+
+.. seealso::
+
+   :ref:`figure_table_titles`
 
 Graphic tables
 ~~~~~~~~~~~~~~
@@ -18,27 +29,31 @@ lines of text and a small number of rows and columns.
 
 .. code::
 
-   ============  =========  ===============  =============
-    Flavor         VCPUs      Disk (in GB)     RAM (in MB)
-   ============  =========  ===============  =============
-    m1.tiny        1          1                512
-    m1.small       1          20               2048
-    m1.medium      2          40               4096
-    m1.large       4          80               8192
-    m1.xlarge      8          160              16384
-   ============  =========  ===============  =============
+   .. table:: **Default flavors**
+
+    ============  =========  ===============  =============
+     Flavor         VCPUs      Disk (in GB)     RAM (in MB)
+    ============  =========  ===============  =============
+     m1.tiny        1          1                512
+     m1.small       1          20               2048
+     m1.medium      2          40               4096
+     m1.large       4          80               8192
+     m1.xlarge      8          160              16384
+    ============  =========  ===============  =============
 
 **Output**
 
-============  =========  ===============  =============
- Flavor         VCPUs      Disk (in GB)     RAM (in MB)
-============  =========  ===============  =============
- m1.tiny        1          1                1
- m1.small       1          20               2048
- m1.medium      2          40               4096
- m1.large       4          80               8192
- m1.xlarge      8          160              16384
-============  =========  ===============  =============
+.. table:: **Default flavors**
+
+ ============  =========  ===============  =============
+  Flavor         VCPUs      Disk (in GB)     RAM (in MB)
+ ============  =========  ===============  =============
+  m1.tiny        1          1                1
+  m1.small       1          20               2048
+  m1.medium      2          40               4096
+  m1.large       4          80               8192
+  m1.xlarge      8          160              16384
+ ============  =========  ===============  =============
 
 List tables
 ~~~~~~~~~~~
