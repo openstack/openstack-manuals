@@ -55,14 +55,14 @@ User Guides
   **Administrator Guide**.
 
 * Approximately one third of the **Administrator Guide** chapters
-  recieved a thorough edit for style and consistency, following the
+  received a thorough edit for style and consistency, following the
   contributor guide standard.
 
 * Troubleshooting chapters now have consistent formatting, which is
   a step toward improved troubleshooting sections.
 
 * The **Admin User Guide** content has been removed from
-  `OpenStack Docs <http://docs.openstack.org>` since all files have been
+  `OpenStack Docs <http://docs.openstack.org>`_ since all files have been
   reorganised into the **Administrator Guide**.
 
 Virtual Machine Image Guide
