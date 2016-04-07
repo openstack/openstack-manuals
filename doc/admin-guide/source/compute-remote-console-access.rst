@@ -6,6 +6,18 @@ To provide a remote console or remote desktop access to guest virtual
 machines, use VNC or SPICE HTML5 through either the OpenStack dashboard
 or the command line. Best practice is to select one or the other to run.
 
+About nova-consoleauth
+~~~~~~~~~~~~~~~~~~~~~~
+
+Both client proxies leverage a shared service to manage token
+authentication called ``nova-consoleauth``. This service must be running for
+either proxy to work. Many proxies of either type can be run against a
+single ``nova-consoleauth`` service in a cluster configuration.
+
+Do not confuse the ``nova-consoleauth`` shared service with
+``nova-console``, which is a XenAPI-specific service that most recent
+VNC proxy architectures do not use.
+
 SPICE console
 ~~~~~~~~~~~~~
 
@@ -32,6 +44,8 @@ OpenStack Compute:
    :header-rows: 1
    :widths: 25 25
 
+   * - **[spice]**
+     -
    * - Spice configuration option = Default value
      - Description
    * - ``agent_enabled = True``
@@ -100,38 +114,6 @@ The proxy also tunnels the VNC protocol over WebSockets so that the
 .. figure:: figures/SCH_5009_V00_NUAC-VNC_OpenStack.png
    :alt: noVNC process
    :width: 95%
-
-About nova-consoleauth
-----------------------
-
-Both client proxies leverage a shared service to manage token
-authentication called ``nova-consoleauth``. This service must be running for
-either proxy to work. Many proxies of either type can be run against a
-single ``nova-consoleauth`` service in a cluster configuration.
-
-Do not confuse the ``nova-consoleauth`` shared service with
-``nova-console``, which is a XenAPI-specific service that most recent
-VNC proxy architectures do not use.
-
-Typical deployment
-------------------
-
-A typical deployment has the following components:
-
-- A ``nova-consoleauth`` process. Typically runs on the controller host.
-
-- One or more ``nova-novncproxy`` services. Supports browser-based noVNC
-  clients. For simple deployments, this service typically runs on the
-  same machine as ``nova-api`` because it operates as a proxy between the
-  public network and the private compute host network.
-
-- One or more ``nova-xvpvncproxy`` services. Supports the special Java
-  client discussed here. For simple deployments, this service typically
-  runs on the same machine as ``nova-api`` because it acts as a proxy
-  between the public network and the private compute host network.
-
-- One or more compute hosts. These compute hosts must have correctly
-  configured options, as follows.
 
 VNC configuration options
 -------------------------
@@ -205,6 +187,26 @@ your ``nova.conf`` file:
 
    - For multi-host libvirt deployments, set to a host management IP
      on the same network as the proxies.
+
+Typical deployment
+------------------
+
+A typical deployment has the following components:
+
+- A ``nova-consoleauth`` process. Typically runs on the controller host.
+
+- One or more ``nova-novncproxy`` services. Supports browser-based noVNC
+  clients. For simple deployments, this service typically runs on the
+  same machine as ``nova-api`` because it operates as a proxy between the
+  public network and the private compute host network.
+
+- One or more ``nova-xvpvncproxy`` services. Supports the special Java
+  client discussed here. For simple deployments, this service typically
+  runs on the same machine as ``nova-api`` because it acts as a proxy
+  between the public network and the private compute host network.
+
+- One or more compute hosts. These compute hosts must have correctly
+  configured options, as follows.
 
 nova-novncproxy (noVNC)
 -----------------------
