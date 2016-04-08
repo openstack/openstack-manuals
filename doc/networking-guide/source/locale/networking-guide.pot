@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-07 06:47+0000\n"
+"POT-Creation-Date: 2016-04-08 06:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2091,121 +2091,128 @@ msgstr ""
 
 #: ../adv-config-lbaas.rst:16
 msgid ""
-"Another LBaaS v2 implementation, `Octavia`_, has a separate API and separate "
-"worker processes that build load balancers within virtual machines on "
-"hypervisors that are managed by the Compute service. You do not need an "
-"agent for Octavia."
+"Another LBaaS v2 implementation, `Octavia <http://docs.openstack.org/"
+"developer/octavia/>`_, has a separate API and separate worker processes that "
+"build load balancers within virtual machines on hypervisors that are managed "
+"by the Compute service. You do not need an agent for Octavia."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:21
+#: ../adv-config-lbaas.rst:22
 msgid ""
 "Currently, no migration path exists between v1 and v2 load balancers. If you "
 "choose to switch from v1 to v2, you must recreate all load balancers, pools, "
 "and health monitors."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:28
+#: ../adv-config-lbaas.rst:27
 msgid "LBaaS v1"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:30
+#: ../adv-config-lbaas.rst:29
 msgid ""
 "LBaaS v1 is deprecated in the Liberty release. These links provide more "
 "details about how LBaaS v1 works and how to configure it:"
 msgstr ""
 
+#: ../adv-config-lbaas.rst:32
+msgid ""
+"`Load-Balancer-as-a-Service (LBaaS) overview <http://docs.openstack.org/"
+"admin-guide/networking_introduction.html#load-balancer-as-a-service-lbaas-"
+"overview>`__"
+msgstr ""
+
 #: ../adv-config-lbaas.rst:33
-msgid "`Load-Balancer-as-a-Service (LBaaS) overview`_"
+msgid ""
+"`Basic Load-Balancer-as-a-Service operations <http://docs.openstack.org/"
+"admin-guide/networking_adv-features.html#basic-load-balancer-as-a-service-"
+"operations>`__"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:34
-msgid "`Basic Load-Balancer-as-a-Service operations`_"
-msgstr ""
-
-#: ../adv-config-lbaas.rst:40
+#: ../adv-config-lbaas.rst:36
 msgid "LBaaS v2"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:42
+#: ../adv-config-lbaas.rst:38
 msgid "LBaaS v2 has several new concepts to understand:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:48
+#: ../adv-config-lbaas.rst:44
 msgid ""
 "The load balancer occupies a neutron network port and has an IP address "
 "assigned from a subnet."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:49
+#: ../adv-config-lbaas.rst:45
 msgid "Load balancer"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:52
+#: ../adv-config-lbaas.rst:48
 msgid ""
 "Load balancers can listen for requests on multiple ports. Each one of those "
 "ports is specified by a listener."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:53
+#: ../adv-config-lbaas.rst:49
 msgid "Listener"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:56
+#: ../adv-config-lbaas.rst:52
 msgid ""
 "A pool holds a list of members that serve content through the load balancer."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:56
+#: ../adv-config-lbaas.rst:52
 msgid "Pool"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:59
+#: ../adv-config-lbaas.rst:55
 msgid ""
 "Members are servers that serve traffic behind a load balancer. Each member "
 "is specified by the IP address and port that it uses to serve traffic."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:60
+#: ../adv-config-lbaas.rst:56
 msgid "Member"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:63
+#: ../adv-config-lbaas.rst:59
 msgid ""
 "Members may go offline from time to time and health monitors divert traffic "
 "away from members that are not responding properly. Health monitors are "
 "associated with pools."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:65
+#: ../adv-config-lbaas.rst:61
 msgid "Health monitor"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:67
+#: ../adv-config-lbaas.rst:63
 msgid ""
 "LBaaS v2 has multiple implementations via different service plug-ins. The "
 "two most common implementations use either an agent or the Octavia services. "
-"Both implementations use the `LBaaS v2 API`_."
+"Both implementations use the `LBaaS v2 API <http://developer.openstack.org/"
+"api-ref-networking-v2-ext.html#lbaas-v2.0>`_."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:74
+#: ../adv-config-lbaas.rst:68
 msgid "Configuring LBaaS v2 with an agent"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:76 ../adv-config-lbaas.rst:130
+#: ../adv-config-lbaas.rst:70 ../adv-config-lbaas.rst:126
 msgid ""
 "Add the LBaaS v2 service plug-in to the ``service_plugins`` configuration "
 "directive in ``/etc/neutron/neutron.conf``. The plug-in list is comma-"
 "separated:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:84
+#: ../adv-config-lbaas.rst:78
 msgid ""
 "Add the LBaaS v2 service provider to the ``service_provider`` configuration "
 "directive within the ``[service_providers]`` section in ``/etc/neutron/"
 "neutron.conf``:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:92
+#: ../adv-config-lbaas.rst:86
 msgid ""
 "If you have existing service providers for other networking service plug-"
 "ins, such as VPNaaS or FWaaS, add the ``service_provider`` line shown above "
@@ -2213,93 +2220,96 @@ msgid ""
 "configuration directives are repeatable and are not comma-separated."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:97
+#: ../adv-config-lbaas.rst:91
 msgid "Run the ``neutron-lbaas`` database migration:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:103
+#: ../adv-config-lbaas.rst:97
 msgid ""
 "If you have deployed LBaaS v1, **stop the LBaaS v1 agent now**. The v1 and "
 "v2 agents **cannot** run simultaneously."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:106
+#: ../adv-config-lbaas.rst:100
 msgid "Start the LBaaS v2 agent:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:114
+#: ../adv-config-lbaas.rst:108
 msgid ""
 "Restart the Network service to activate the new configuration. You are now "
 "ready to create load balancers with the LBaaS v2 agent."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:118
+#: ../adv-config-lbaas.rst:112
 msgid "Configuring LBaaS v2 with Octavia"
+msgstr ""
+
+#: ../adv-config-lbaas.rst:114
+msgid ""
+"Octavia provides additional capabilities for load balancers, including using "
+"a compute driver to build instances that operate as load balancers. The "
+"`Hands on Lab - Install and Configure OpenStack Octavia <https://www."
+"openstack.org/summit/tokyo-2015/videos/presentation/rsvp-required-hands-on-"
+"lab-install-and-configure-openstack-octavia>`_ session at the OpenStack "
+"Summit in Tokyo provides an overview of Octavia."
 msgstr ""
 
 #: ../adv-config-lbaas.rst:120
 msgid ""
-"Octavia provides additional capabilities for load balancers, including using "
-"a compute driver to build instances that operate as load balancers. The "
-"`Hands on Lab - Install and Configure OpenStack Octavia`_ session at the "
-"OpenStack Summit in Tokyo provides an overview of Octavia."
+"The DevStack documentation offers a `simple method to deploy Octavia <http://"
+"docs.openstack.org/developer/devstack/guides/devstack-with-lbaas-v2.html>`_ "
+"and test the service with redundant load balancer instances. If you already "
+"have Octavia installed and configured within your environment, you can "
+"configure the Network service to use Octavia:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:125
-msgid ""
-"The DevStack documentation offers a `simple method to deploy Octavia`_ and "
-"test the service with redundant load balancer instances. If you already have "
-"Octavia installed and configured within your environment, you can configure "
-"the Network service to use Octavia:"
-msgstr ""
-
-#: ../adv-config-lbaas.rst:138
+#: ../adv-config-lbaas.rst:134
 msgid ""
 "Add the Octavia service provider to the ``service_provider`` configuration "
 "directive within the ``[service_providers]`` section in ``/etc/neutron/"
 "neutron.conf``:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:146
+#: ../adv-config-lbaas.rst:142
 msgid ""
 "Ensure that the LBaaS v1 and v2 service providers are removed from the "
 "``[service_providers]`` section. They are not used with Octavia. **Verify "
 "that all LBaaS agents are stopped.**"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:150
+#: ../adv-config-lbaas.rst:146
 msgid ""
 "Restart the Network service to activate the new configuration. You are now "
 "ready to create and manage load balancers with Octavia."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:157
+#: ../adv-config-lbaas.rst:150
 msgid "LBaaS v2 operations"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:159
+#: ../adv-config-lbaas.rst:152
 msgid ""
 "The same neutron commands are used for LBaaS v2 with an agent or with "
 "Octavia."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:162
+#: ../adv-config-lbaas.rst:155
 msgid "Building an LBaaS v2 load balancer"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:164
+#: ../adv-config-lbaas.rst:157
 msgid ""
 "Start by creating a load balancer on a network. In this example, the "
 "``private`` network is an isolated network with two web server instances:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:171
+#: ../adv-config-lbaas.rst:164
 msgid ""
 "You can view the load balancer status and IP address with the ``lbaas-"
 "loadbalancer-show`` command:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:195
+#: ../adv-config-lbaas.rst:188
 msgid ""
 "Update the security group to allow traffic to reach the new load balancer. "
 "Create a new security group along with ingress rules to allow traffic into "
@@ -2307,64 +2317,64 @@ msgid ""
 "``vip_port_id`` above."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:200
+#: ../adv-config-lbaas.rst:193
 msgid ""
 "Create a security group and rules to allow TCP port 80, TCP port 443, and "
 "all ICMP traffic:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:225
+#: ../adv-config-lbaas.rst:218
 msgid ""
 "Apply the security group to the load balancer's network port using "
 "``vip_port_id`` from the :command:`lbaas-loadbalancer-show` command:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:234
+#: ../adv-config-lbaas.rst:227
 msgid ""
 "This load balancer is active and ready to serve traffic on ``192.168.1.22``."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:236
+#: ../adv-config-lbaas.rst:229
 msgid ""
 "Verify that the load balancer is responding to pings before moving further:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:252
+#: ../adv-config-lbaas.rst:245
 msgid "Adding an HTTP listener"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:254
+#: ../adv-config-lbaas.rst:247
 msgid ""
 "With the load balancer online, you can add a listener for plaintext HTTP "
 "traffic on port 80:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:265
+#: ../adv-config-lbaas.rst:258
 msgid ""
 "You can begin building a pool and adding members to the pool to serve HTTP "
 "content on port 80. For this example, the web servers are ``192.168.1.16`` "
 "and ``192.168.1.17``:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:287
+#: ../adv-config-lbaas.rst:280
 msgid ""
 "You can use ``curl`` to verify connectivity through the load balancers to "
 "your web servers:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:301
+#: ../adv-config-lbaas.rst:294
 msgid ""
 "In this example, the load balancer uses the round robin algorithm and the "
 "traffic alternates between the web servers on the backend."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:304
+#: ../adv-config-lbaas.rst:297
 msgid ""
 "You can add a health monitor so that unresponsive servers are removed from "
 "the pool:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:316
+#: ../adv-config-lbaas.rst:309
 msgid ""
 "In this example, the health monitor removes the server from the pool if it "
 "fails a health check at two five-second intervals. When the server recovers "
@@ -2372,35 +2382,35 @@ msgid ""
 "again."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:322
+#: ../adv-config-lbaas.rst:315
 msgid "Adding an HTTPS listener"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:324
+#: ../adv-config-lbaas.rst:317
 msgid ""
 "You can add another listener on port 443 for HTTPS traffic. LBaaS v2 offers "
 "SSL/TLS termination at the load balancer, but this example takes a simpler "
 "approach and allows encrypted connections to terminate at each member server."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:328
+#: ../adv-config-lbaas.rst:321
 msgid ""
 "Start by creating a listener, attaching a pool, and then adding members:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:353
+#: ../adv-config-lbaas.rst:346
 msgid "You can also add a health monitor for the HTTPS pool:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:364
+#: ../adv-config-lbaas.rst:357
 msgid "The load balancer now handles traffic on ports 80 and 443."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:367
+#: ../adv-config-lbaas.rst:360
 msgid "Associating a floating IP address"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:369
+#: ../adv-config-lbaas.rst:362
 msgid ""
 "Load balancers that are deployed on a public or provider network that are "
 "accessible to external clients do not need a floating IP address assigned. "
@@ -2408,7 +2418,7 @@ msgid ""
 "load balancers."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:374
+#: ../adv-config-lbaas.rst:367
 msgid ""
 "However, load balancers deployed onto private or isolated networks need a "
 "floating IP address assigned if they must be accessible to external clients. "
@@ -2416,7 +2426,7 @@ msgid ""
 "networks and an available floating IP address."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:379
+#: ../adv-config-lbaas.rst:372
 msgid ""
 "You can use the ``lbaas-loadbalancer-show`` command from the beginning of "
 "this section to locate the ``vip_port_id``. The ``vip_port_id`` is the ID of "
@@ -2424,36 +2434,36 @@ msgid ""
 "free floating IP address to the load balancer using ``floatingip-associate``:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:389
+#: ../adv-config-lbaas.rst:382
 msgid "Setting quotas for LBaaS v2"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:391
+#: ../adv-config-lbaas.rst:384
 msgid ""
 "Quotas are available for limiting the number of load balancers and load "
 "balancer pools. By default, both quotas are set to 10."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:394
+#: ../adv-config-lbaas.rst:387
 msgid "You can adjust quotas using the :command:`quota-update` command:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:401
+#: ../adv-config-lbaas.rst:394
 msgid "A setting of ``-1`` disables the quota for a tenant."
 msgstr ""
 
-#: ../adv-config-lbaas.rst:404
+#: ../adv-config-lbaas.rst:397
 msgid "Retrieving load balancer statistics"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:406
+#: ../adv-config-lbaas.rst:399
 msgid ""
 "The LBaaS v2 agent collects four types of statistics for each load balancer "
 "every six seconds. Users can query these statistics with the :command:`lbaas-"
 "loadbalancer-stats` command:"
 msgstr ""
 
-#: ../adv-config-lbaas.rst:422
+#: ../adv-config-lbaas.rst:415
 msgid ""
 "The ``active_connections`` count is the total number of connections that "
 "were active at the time the agent polled the load balancer. The other three "
@@ -3738,7 +3748,7 @@ msgstr ""
 # #-#-#-#-#  config-ml2-plug-in.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  intro-basic-networking.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  intro-os-networking-service.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../config-ml2-plug-in.rst:88 ../intro-basic-networking.rst:235
+#: ../config-ml2-plug-in.rst:88 ../intro-basic-networking.rst:233
 #: ../intro-os-networking-service.rst:51
 msgid "DHCP"
 msgstr ""
@@ -3828,10 +3838,10 @@ msgstr ""
 
 #: ../intro-basic-networking.rst:11
 msgid ""
-"In the `OSI model`_ of networking protocols, Ethernet occupies the second "
-"layer, which is known as the data link layer. When discussing Ethernet, you "
-"will often hear terms such as *local network*, *layer 2*, *L2*, *link layer* "
-"and *data link layer*."
+"In the `OSI model <https://en.wikipedia.org/wiki/OSI_model>`_ of networking "
+"protocols, Ethernet occupies the second layer, which is known as the data "
+"link layer. When discussing Ethernet, you will often hear terms such as "
+"*local network*, *layer 2*, *L2*, *link layer* and *data link layer*."
 msgstr ""
 
 #: ../intro-basic-networking.rst:16
@@ -3901,11 +3911,11 @@ msgid ""
 "connection of switches and hosts behaves like a single network."
 msgstr ""
 
-#: ../intro-basic-networking.rst:80
+#: ../intro-basic-networking.rst:78
 msgid "VLANs"
 msgstr ""
 
-#: ../intro-basic-networking.rst:82
+#: ../intro-basic-networking.rst:80
 msgid ""
 "VLAN is a networking technology that enables a single switch to act as if it "
 "was multiple independent switches. Specifically, two hosts that are "
@@ -3916,7 +3926,7 @@ msgid ""
 "1 and 4095. We say \"VLAN 15\" to refer to the VLAN with numerical ID of 15."
 msgstr ""
 
-#: ../intro-basic-networking.rst:91
+#: ../intro-basic-networking.rst:89
 msgid ""
 "To understand how VLANs work, let's consider VLAN applications in a "
 "traditional IT environment, where physical hosts are attached to a physical "
@@ -3931,7 +3941,7 @@ msgid ""
 "VLANs."
 msgstr ""
 
-#: ../intro-basic-networking.rst:103
+#: ../intro-basic-networking.rst:101
 msgid ""
 "Now consider the scenario that all of the switchports in the first switch "
 "become occupied, and so the organization buys a second switch and connects "
@@ -3943,7 +3953,7 @@ msgid ""
 "switch 2, it must communicate that the frame is associated with VLAN ID 10."
 msgstr ""
 
-#: ../intro-basic-networking.rst:113
+#: ../intro-basic-networking.rst:111
 msgid ""
 "If two switches are to be connected together, and the switches are "
 "configured for VLANs, then the switchports used for cross-connecting the "
@@ -3953,7 +3963,7 @@ msgid ""
 "only hosts on the matching VLAN are eligible to receive the frame."
 msgstr ""
 
-#: ../intro-basic-networking.rst:120
+#: ../intro-basic-networking.rst:118
 msgid ""
 "When a switchport is configured to pass frames from all VLANs and tag them "
 "with the VLAN IDs it is called a *trunk port*. IEEE 802.1Q is the network "
@@ -3961,14 +3971,14 @@ msgid ""
 "trunking is being used."
 msgstr ""
 
-#: ../intro-basic-networking.rst:125
+#: ../intro-basic-networking.rst:123
 msgid ""
 "Note that if you are using VLANs on your physical switches to implement "
 "tenant isolation in your OpenStack cloud, you must ensure that all of your "
 "switchports are configured as trunk ports."
 msgstr ""
 
-#: ../intro-basic-networking.rst:129
+#: ../intro-basic-networking.rst:127
 msgid ""
 "It is important that you select a VLAN range that your current network "
 "infrastructure is not using. For example, if you estimate that your cloud "
@@ -3978,25 +3988,25 @@ msgid ""
 "range."
 msgstr ""
 
-#: ../intro-basic-networking.rst:135
+#: ../intro-basic-networking.rst:133
 msgid ""
 "Trunking is used to connect between different switches. Each trunk uses a "
 "tag to identify which VLAN is in use. This ensures that switches on the same "
 "VLAN can communicate."
 msgstr ""
 
-#: ../intro-basic-networking.rst:143
+#: ../intro-basic-networking.rst:141
 msgid "Subnets and ARP"
 msgstr ""
 
-#: ../intro-basic-networking.rst:145
+#: ../intro-basic-networking.rst:143
 msgid ""
 "While NICs use MAC addresses to address network hosts, TCP/IP applications "
 "use IP addresses. The Address Resolution Protocol (ARP) bridges the gap "
 "between Ethernet and IP by translating IP addresses into MAC addresses."
 msgstr ""
 
-#: ../intro-basic-networking.rst:149
+#: ../intro-basic-networking.rst:147
 msgid ""
 "IP addresses are broken up into two parts: a *network number* and a *host "
 "identifier*. Two hosts are on the same *subnet* if they have the same "
@@ -4008,26 +4018,26 @@ msgid ""
 "local network, otherwise ARP does not work properly."
 msgstr ""
 
-#: ../intro-basic-networking.rst:158
+#: ../intro-basic-networking.rst:156
 msgid ""
 "To calculate the network number of an IP address, you must know the "
 "*netmask* associated with the address. A netmask indicates how many of the "
 "bits in the 32-bit IP address make up the network number."
 msgstr ""
 
-#: ../intro-basic-networking.rst:162
+#: ../intro-basic-networking.rst:160
 msgid "There are two syntaxes for expressing a netmask:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:164
+#: ../intro-basic-networking.rst:162
 msgid "dotted quad"
 msgstr ""
 
-#: ../intro-basic-networking.rst:165
+#: ../intro-basic-networking.rst:163
 msgid "classless inter-domain routing (CIDR)"
 msgstr ""
 
-#: ../intro-basic-networking.rst:167
+#: ../intro-basic-networking.rst:165
 msgid ""
 "Consider an IP address of 192.168.1.5, where the first 24 bits of the "
 "address are the network number. In dotted quad notation, the netmask would "
@@ -4035,14 +4045,14 @@ msgid ""
 "and netmask, and this example would be written as ``192.168.1.5/24``."
 msgstr ""
 
-#: ../intro-basic-networking.rst:175
+#: ../intro-basic-networking.rst:173
 msgid ""
 "Creating CIDR subnets including a multicast address or a loopback address "
 "cannot be used in an OpenStack environment. For example, creating a subnet "
 "using ``224.0.0.0/16`` or ``127.0.1.0/24`` is not supported."
 msgstr ""
 
-#: ../intro-basic-networking.rst:179
+#: ../intro-basic-networking.rst:177
 msgid ""
 "Sometimes we want to refer to a subnet, but not any particular IP address on "
 "the subnet. A common convention is to set the host identifier to all zeros "
@@ -4050,7 +4060,7 @@ msgid ""
 "``10.10.53.24/16``, then we would say the subnet is ``10.10.0.0/16``."
 msgstr ""
 
-#: ../intro-basic-networking.rst:185
+#: ../intro-basic-networking.rst:183
 msgid ""
 "To understand how ARP translates IP addresses to MAC addresses, consider the "
 "following example. Assume host *A* has an IP address of ``192.168.1.5/24`` "
@@ -4060,40 +4070,40 @@ msgid ""
 "host *B*."
 msgstr ""
 
-#: ../intro-basic-networking.rst:192
+#: ../intro-basic-networking.rst:190
 msgid ""
 "The first time host *A* attempts to communicate with host *B*, the "
 "destination MAC address is not known. Host *A* makes an ARP request to the "
 "local network. The request is a broadcast with a message like this:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:197
+#: ../intro-basic-networking.rst:195
 msgid ""
 "*To: everybody (ff:ff:ff:ff:ff:ff). I am looking for the computer who has IP "
 "address 192.168.1.7. Signed: MAC address fc:99:47:49:d4:a0*."
 msgstr ""
 
-#: ../intro-basic-networking.rst:200
+#: ../intro-basic-networking.rst:198
 msgid "Host *B* responds with a response like this:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:202
+#: ../intro-basic-networking.rst:200
 msgid ""
 "*To: fc:99:47:49:d4:a0. I have IP address 192.168.1.7. Signed: MAC address "
 "54:78:1a:86:00:a5.*"
 msgstr ""
 
-#: ../intro-basic-networking.rst:205
+#: ../intro-basic-networking.rst:203
 msgid "Host *A* then sends Ethernet frames to host *B*."
 msgstr ""
 
-#: ../intro-basic-networking.rst:207
+#: ../intro-basic-networking.rst:205
 msgid ""
 "You can initiate an ARP request manually using the :command:`arping` "
 "command. For example, to send an ARP request to IP address ``10.30.0.132``:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:220
+#: ../intro-basic-networking.rst:218
 msgid ""
 "To reduce the number of ARP requests, operating systems maintain an ARP "
 "cache that contains the mappings of IP addresses to MAC address. On a Linux "
@@ -4101,14 +4111,14 @@ msgid ""
 "`arp` command:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:237
+#: ../intro-basic-networking.rst:235
 msgid ""
 "Hosts connected to a network use the Dynamic Host Configuration Protocol (:"
 "term:`DHCP`) to dynamically obtain IP addresses. A DHCP server hands out the "
 "IP addresses to network hosts, which are the DHCP clients."
 msgstr ""
 
-#: ../intro-basic-networking.rst:242
+#: ../intro-basic-networking.rst:240
 msgid ""
 "DHCP clients locate the DHCP server by sending a UDP_ packet from port 68 to "
 "address ``255.255.255.255`` on port 67. Address ``255.255.255.255`` is the "
@@ -4120,49 +4130,49 @@ msgid ""
 "client. The exchange looks like this:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:252
+#: ../intro-basic-networking.rst:250
 msgid ""
 "The client sends a discover (\"I’m a client at MAC address ``08:00:27:"
 "b9:88:74``, I need an IP address\")"
 msgstr ""
 
-#: ../intro-basic-networking.rst:254
+#: ../intro-basic-networking.rst:252
 msgid ""
 "The server sends an offer (\"OK ``08:00:27:b9:88:74``, I’m offering IP "
 "address ``10.10.0.112``\")"
 msgstr ""
 
-#: ../intro-basic-networking.rst:256
+#: ../intro-basic-networking.rst:254
 msgid ""
 "The client sends a request (\"Server ``10.10.0.131``, I would like to have "
 "IP ``10.10.0.112``\")"
 msgstr ""
 
-#: ../intro-basic-networking.rst:258
+#: ../intro-basic-networking.rst:256
 msgid ""
 "The server sends an acknowledgement (\"OK ``08:00:27:b9:88:74``, IP "
 "``10.10.0.112`` is yours\")"
 msgstr ""
 
-#: ../intro-basic-networking.rst:262
+#: ../intro-basic-networking.rst:260
 msgid ""
-"OpenStack uses a third-party program called dnsmasq_ to implement the DHCP "
-"server. Dnsmasq writes to the syslog, where you can observe the DHCP request "
-"and replies::"
+"OpenStack uses a third-party program called `dnsmasq <http://www.thekelleys."
+"org.uk/dnsmasq/doc.html>`_ to implement the DHCP server. Dnsmasq writes to "
+"the syslog, where you can observe the DHCP request and replies::"
 msgstr ""
 
-#: ../intro-basic-networking.rst:272
+#: ../intro-basic-networking.rst:271
 msgid ""
 "When troubleshooting an instance that is not reachable over the network, it "
 "can be helpful to examine this log to verify that all four steps of the DHCP "
 "protocol were carried out for the instance in question."
 msgstr ""
 
-#: ../intro-basic-networking.rst:281
+#: ../intro-basic-networking.rst:277
 msgid "IP"
 msgstr ""
 
-#: ../intro-basic-networking.rst:283
+#: ../intro-basic-networking.rst:279
 msgid ""
 "The Internet Protocol (IP) specifies how to route packets between hosts that "
 "are connected to different local networks. IP relies on special network "
@@ -4172,14 +4182,14 @@ msgid ""
 "networks it is connected to."
 msgstr ""
 
-#: ../intro-basic-networking.rst:290
+#: ../intro-basic-networking.rst:286
 msgid ""
 "In the OSI model of networking protocols, IP occupies the third layer, which "
 "is known as the network layer. When discussing IP, you will often hear terms "
 "such as *layer 3*, *L3*, and *network layer*."
 msgstr ""
 
-#: ../intro-basic-networking.rst:294
+#: ../intro-basic-networking.rst:290
 msgid ""
 "A host sending a packet to an IP address consults its *routing table* to "
 "determine which machine on the local network(s) the packet should be sent "
@@ -4188,16 +4198,16 @@ msgid ""
 "routers that are on these local networks."
 msgstr ""
 
-#: ../intro-basic-networking.rst:300
+#: ../intro-basic-networking.rst:296
 msgid ""
 "On a Linux machine, any of the following commands displays the routing table:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:308
+#: ../intro-basic-networking.rst:304
 msgid "Here is an example of output from :command:`ip route show`:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:318
+#: ../intro-basic-networking.rst:314
 msgid ""
 "Line 1 of the output specifies the location of the default route, which is "
 "the effective routing rule if none of the other rules match. The router "
@@ -4207,45 +4217,45 @@ msgid ""
 "with the client's IP address and a netmask."
 msgstr ""
 
-#: ../intro-basic-networking.rst:325
+#: ../intro-basic-networking.rst:321
 msgid ""
 "Line 2 of the output specifies that IPs in the 10.0.2.0/24 subnet are on the "
 "local network associated with the network interface eth0."
 msgstr ""
 
-#: ../intro-basic-networking.rst:328
+#: ../intro-basic-networking.rst:324
 msgid ""
 "Line 3 of the output specifies that IPs in the 192.168.27.0/24 subnet are on "
 "the local network associated with the network interface eth1."
 msgstr ""
 
-#: ../intro-basic-networking.rst:331
+#: ../intro-basic-networking.rst:327
 msgid ""
 "Line 4 of the output specifies that IPs in the 192.168.122.0/24 subnet are "
 "on the local network associated with the network interface virbr0."
 msgstr ""
 
-#: ../intro-basic-networking.rst:334
+#: ../intro-basic-networking.rst:330
 msgid ""
 "The output of the :command:`route -n` and :command:`netstat -rn` commands "
 "are formatted in a slightly different way. This example shows how the same "
 "routes would be formatted using these commands:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:348
+#: ../intro-basic-networking.rst:344
 msgid ""
 "The :command:`ip route get` command outputs the route for a destination IP "
 "address. From the below example, destination IP address 10.0.2.14 is on the "
 "local network of eth0 and would be sent directly:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:357
+#: ../intro-basic-networking.rst:353
 msgid ""
 "The destination IP address 93.184.216.34 is not on any of the connected "
 "local networks and would be forwarded to the default gateway at 10.0.2.2:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:365
+#: ../intro-basic-networking.rst:361
 msgid ""
 "It is common for a packet to hop across multiple routers to reach its final "
 "destination. On a Linux machine, the ``traceroute`` and more recent ``mtr`` "
@@ -4253,21 +4263,22 @@ msgid ""
 "traverses along its path to its destination."
 msgstr ""
 
-#: ../intro-basic-networking.rst:373
+#: ../intro-basic-networking.rst:369
 msgid "TCP/UDP/ICMP"
 msgstr ""
 
-#: ../intro-basic-networking.rst:375
+#: ../intro-basic-networking.rst:371
 msgid ""
 "For networked software applications to communicate over an IP network, they "
 "must use a protocol layered atop IP. These protocols occupy the fourth layer "
 "of the OSI model known as the *transport layer* or *layer 4*. See the "
-"`Protocol Numbers`_ web page maintained by the Internet Assigned Numbers "
+"`Protocol Numbers <http://www.iana.org/assignments/protocol-numbers/protocol-"
+"numbers.xhtml>`_ web page maintained by the Internet Assigned Numbers "
 "Authority (IANA) for a list of protocols that layer atop IP and their "
 "associated numbers."
 msgstr ""
 
-#: ../intro-basic-networking.rst:384
+#: ../intro-basic-networking.rst:379
 msgid ""
 "The *Transmission Control Protocol* (TCP) is the most commonly used layer 4 "
 "protocol in networked applications. TCP is a *connection-oriented* protocol: "
@@ -4276,19 +4287,19 @@ msgid ""
 "interaction in a TCP-based application proceeds as follows:"
 msgstr ""
 
-#: ../intro-basic-networking.rst:392
+#: ../intro-basic-networking.rst:387
 msgid "Client connects to server."
 msgstr ""
 
-#: ../intro-basic-networking.rst:393
+#: ../intro-basic-networking.rst:388
 msgid "Client and server exchange data."
 msgstr ""
 
-#: ../intro-basic-networking.rst:394
+#: ../intro-basic-networking.rst:389
 msgid "Client or server disconnects."
 msgstr ""
 
-#: ../intro-basic-networking.rst:396
+#: ../intro-basic-networking.rst:391
 msgid ""
 "Because a network host may have multiple TCP-based applications running, TCP "
 "uses an addressing scheme called *ports* to uniquely identify TCP-based "
@@ -4297,7 +4308,7 @@ msgid ""
 "time, a restriction that is enforced by the operating system."
 msgstr ""
 
-#: ../intro-basic-networking.rst:402
+#: ../intro-basic-networking.rst:397
 msgid ""
 "A TCP server is said to *listen* on a port. For example, an SSH server "
 "typically listens on port 22. For a client to connect to a server using TCP, "
@@ -4305,7 +4316,7 @@ msgid ""
 "TCP port."
 msgstr ""
 
-#: ../intro-basic-networking.rst:407
+#: ../intro-basic-networking.rst:402
 msgid ""
 "The operating system of the TCP client application automatically assigns a "
 "port number to the client. The client owns this port number until the TCP "
@@ -4313,18 +4324,21 @@ msgid ""
 "port number. These types of ports are referred to as *ephemeral ports*."
 msgstr ""
 
-#: ../intro-basic-networking.rst:413
+#: ../intro-basic-networking.rst:408
 msgid ""
-"IANA maintains a `registry of port numbers`_ for many TCP-based services, as "
-"well as services that use other layer 4 protocols that employ ports. "
-"Registering a TCP port number is not required, but registering a port number "
-"is helpful to avoid collisions with other services. See `Appendix B. "
-"Firewalls and default ports`_ of the `OpenStack Configuration Reference`_ "
-"for the default TCP ports used by various services involved in an OpenStack "
-"deployment."
+"IANA maintains a `registry of port numbers <http://www.iana.org/assignments/"
+"service-names-port-numbers/service-names-port-numbers.xhtml>`_ for many TCP-"
+"based services, as well as services that use other layer 4 protocols that "
+"employ ports. Registering a TCP port number is not required, but registering "
+"a port number is helpful to avoid collisions with other services. See "
+"`Appendix B. Firewalls and default ports <http://docs.openstack.org/mitaka/"
+"config-reference/firewalls-default-ports.html>`_ of the `OpenStack "
+"Configuration Reference <http://docs.openstack.org/mitaka/config-reference/"
+">`_ for the default TCP ports used by various services involved in an "
+"OpenStack deployment."
 msgstr ""
 
-#: ../intro-basic-networking.rst:426
+#: ../intro-basic-networking.rst:420
 msgid ""
 "The most common application programming interface (API) for writing TCP-"
 "based applications is called *Berkeley sockets*, also known as *BSD sockets* "
@@ -4342,7 +4356,7 @@ msgid ""
 "*reliable* protocol."
 msgstr ""
 
-#: ../intro-basic-networking.rst:441
+#: ../intro-basic-networking.rst:435
 msgid ""
 "The *User Datagram Protocol* (UDP) is another layer 4 protocol that is the "
 "basis of several well-known networking protocols. UDP is a *connectionless* "
@@ -4354,7 +4368,7 @@ msgid ""
 "they were sent in."
 msgstr ""
 
-#: ../intro-basic-networking.rst:450
+#: ../intro-basic-networking.rst:444
 msgid ""
 "UDP, like TCP, uses the notion of ports to distinguish between different "
 "applications running on the same system. Note, however, that operating "
@@ -4363,7 +4377,7 @@ msgid ""
 "separate application to be associated with UDP port 16543."
 msgstr ""
 
-#: ../intro-basic-networking.rst:456
+#: ../intro-basic-networking.rst:450
 msgid ""
 "Like TCP, the sockets API is the most common API for writing UDP-based "
 "applications. The sockets API provides a *message-oriented* interface for "
@@ -4373,14 +4387,14 @@ msgid ""
 "responsible for implementing this functionality in the application code."
 msgstr ""
 
-#: ../intro-basic-networking.rst:463
+#: ../intro-basic-networking.rst:457
 msgid ""
 "DHCP_, the Domain Name System (DNS), the Network Time Protocol (NTP), and :"
 "ref:`VXLAN` are examples of UDP-based protocols used in OpenStack "
 "deployments."
 msgstr ""
 
-#: ../intro-basic-networking.rst:466
+#: ../intro-basic-networking.rst:460
 msgid ""
 "UDP has support for one-to-many communication: sending a single packet to "
 "multiple hosts. An application can broadcast a UDP packet to all of the "
@@ -4394,7 +4408,7 @@ msgid ""
 "routing. VXLAN is an example of a UDP-based protocol that uses IP multicast."
 msgstr ""
 
-#: ../intro-basic-networking.rst:478
+#: ../intro-basic-networking.rst:472
 msgid ""
 "The *Internet Control Message Protocol* (ICMP) is a protocol used for "
 "sending control messages over an IP network. For example, a router that "
@@ -4405,7 +4419,7 @@ msgid ""
 "\"don't fragment\" flag is set)."
 msgstr ""
 
-#: ../intro-basic-networking.rst:486
+#: ../intro-basic-networking.rst:480
 msgid ""
 "The :command:`ping` and :command:`mtr` Linux command-line tools are two "
 "examples of network utilities that use ICMP."
@@ -4428,21 +4442,21 @@ msgid ""
 "NAT is often implemented by routers, and so we will refer to the host "
 "performing NAT as a *NAT router*. However, in OpenStack deployments it is "
 "typically Linux servers that implement the NAT functionality, not hardware "
-"routers. These servers use the iptables_ software package to implement the "
-"NAT functionality."
+"routers. These servers use the `iptables <http://www.netfilter.org/projects/"
+"iptables/index.html>`_ software package to implement the NAT functionality."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:16
+#: ../intro-network-address-translation.rst:17
 msgid ""
 "There are multiple variations of NAT, and here we describe three kinds "
 "commonly found in OpenStack deployments."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:22
+#: ../intro-network-address-translation.rst:21
 msgid "SNAT"
 msgstr ""
 
-#: ../intro-network-address-translation.rst:24
+#: ../intro-network-address-translation.rst:23
 msgid ""
 "In *Source Network Address Translation* (SNAT), the NAT router modifies the "
 "IP address of the sender in IP packets. SNAT is commonly used to enable "
@@ -4450,8 +4464,10 @@ msgid ""
 "Internet."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:29
-msgid "`RFC 1918`_ reserves the following three subnets as private addresses:"
+#: ../intro-network-address-translation.rst:28
+msgid ""
+"`RFC 1918 <https://tools.ietf.org/html/rfc1918>`_ reserves the following "
+"three subnets as private addresses:"
 msgstr ""
 
 #: ../intro-network-address-translation.rst:31
@@ -4466,14 +4482,14 @@ msgstr ""
 msgid "``192.168.0.0/16``"
 msgstr ""
 
-#: ../intro-network-address-translation.rst:37
+#: ../intro-network-address-translation.rst:35
 msgid ""
 "These IP addresses are not publicly routable, meaning that a host on the "
 "public Internet can not send an IP packet to any of these addresses. Private "
 "IP addresses are widely used in both residential and corporate environments."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:41
+#: ../intro-network-address-translation.rst:39
 msgid ""
 "Often, an application running on a host with a private IP address will need "
 "to connect to a server on the public Internet. An example is a user who "
@@ -4482,7 +4498,7 @@ msgid ""
 "as the source, then the web server cannot send packets back to the sender."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:47
+#: ../intro-network-address-translation.rst:45
 msgid ""
 "SNAT solves this problem by modifying the source IP address to an IP address "
 "that is routable on the public Internet. There are different variations of "
@@ -4493,37 +4509,37 @@ msgid ""
 "true IP address and port, as well as the modified IP address and port."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:56
+#: ../intro-network-address-translation.rst:54
 msgid ""
 "When the router receives a packet with the matching IP address and port, it "
 "translates these back to the private IP address and port, and forwards the "
 "packet along."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:60
+#: ../intro-network-address-translation.rst:58
 msgid ""
 "Because the NAT router modifies ports as well as IP addresses, this form of "
 "SNAT is sometimes referred to as *Port Address Translation* (PAT). It is "
 "also sometimes referred to as *NAT overload*."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:64
+#: ../intro-network-address-translation.rst:62
 msgid ""
 "OpenStack uses SNAT to enable applications running inside of instances to "
 "connect out to the public Internet."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:68
+#: ../intro-network-address-translation.rst:66
 msgid "DNAT"
 msgstr ""
 
-#: ../intro-network-address-translation.rst:70
+#: ../intro-network-address-translation.rst:68
 msgid ""
 "In *Destination Network Address Translation* (DNAT), the NAT router modifies "
 "the IP address of the destination in IP packet headers."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:73
+#: ../intro-network-address-translation.rst:71
 msgid ""
 "OpenStack uses DNAT to route packets from instances to the OpenStack "
 "metadata service. Applications running inside of instances access the "
@@ -4534,11 +4550,11 @@ msgid ""
 "service is listening on."
 msgstr ""
 
-#: ../intro-network-address-translation.rst:82
+#: ../intro-network-address-translation.rst:80
 msgid "One-to-one NAT"
 msgstr ""
 
-#: ../intro-network-address-translation.rst:84
+#: ../intro-network-address-translation.rst:82
 msgid ""
 "In *one-to-one NAT*, the NAT router maintains a one-to-one mapping between "
 "private IP addresses and public IP addresses. OpenStack uses one-to-one NAT "
@@ -5772,16 +5788,17 @@ msgstr ""
 
 #: ../misc-libvirt.rst:5
 msgid ""
-"Most OpenStack deployments use the libvirt_ toolkit for interacting with the "
-"hypervisor. Specifically, OpenStack Compute uses libvirt for tasks such as "
-"booting and terminating virtual machine instances. When OpenStack Compute "
-"boots a new instance, libvirt provides OpenStack with the VIF associated "
-"with the instance, and OpenStack Compute plugs the VIF into a virtual device "
-"provided by OpenStack Network. The libvirt toolkit itself does not provide "
-"any networking functionality in OpenStack deployments."
+"Most OpenStack deployments use the `libvirt <http://libvirt.org>`__ toolkit "
+"for interacting with the hypervisor. Specifically, OpenStack Compute uses "
+"libvirt for tasks such as booting and terminating virtual machine instances. "
+"When OpenStack Compute boots a new instance, libvirt provides OpenStack with "
+"the VIF associated with the instance, and OpenStack Compute plugs the VIF "
+"into a virtual device provided by OpenStack Network. The libvirt toolkit "
+"itself does not provide any networking functionality in OpenStack "
+"deployments."
 msgstr ""
 
-#: ../misc-libvirt.rst:15
+#: ../misc-libvirt.rst:14
 msgid ""
 "However, libvirt is capable of providing networking services to the virtual "
 "machines that it manages. In particular, libvirt can be configured to "
@@ -5790,11 +5807,11 @@ msgid ""
 "similar to OpenStack Networking's networks, confined to a single node."
 msgstr ""
 
-#: ../misc-libvirt.rst:22
+#: ../misc-libvirt.rst:21
 msgid "libvirt network implementation"
 msgstr ""
 
-#: ../misc-libvirt.rst:24
+#: ../misc-libvirt.rst:23
 msgid ""
 "By default, libvirt's networking functionality is enabled, and libvirt "
 "creates a network when the system boots. To implement this network, libvirt "
@@ -5802,65 +5819,65 @@ msgid ""
 "particular, libvirt uses:"
 msgstr ""
 
-#: ../misc-libvirt.rst:29
+#: ../misc-libvirt.rst:28
 msgid "Linux bridging for implementing a layer 2 network"
 msgstr ""
 
-#: ../misc-libvirt.rst:30
+#: ../misc-libvirt.rst:29
 msgid "dnsmasq for providing IP addresses to virtual machines using DHCP"
 msgstr ""
 
-#: ../misc-libvirt.rst:31
+#: ../misc-libvirt.rst:30
 msgid ""
 "iptables to implement SNAT so instances can connect out to the public "
 "internet, and to ensure that virtual machines are permitted to communicate "
 "with dnsmasq using DHCP"
 msgstr ""
 
-#: ../misc-libvirt.rst:35
+#: ../misc-libvirt.rst:34
 msgid ""
 "By default, libvirt creates a network named *default*. The details of this "
 "network may vary by distribution; on Ubuntu this network involves:"
 msgstr ""
 
-#: ../misc-libvirt.rst:38
+#: ../misc-libvirt.rst:37
 msgid ""
 "a Linux bridge named ``virbr0`` with an IP address of ``192.168.122.1/24``"
 msgstr ""
 
-#: ../misc-libvirt.rst:39
+#: ../misc-libvirt.rst:38
 msgid ""
 "a dnsmasq process that listens on the ``virbr0`` interface and hands out IP "
 "addresses in the range ``192.168.122.2-192.168.122.254``"
 msgstr ""
 
-#: ../misc-libvirt.rst:41
+#: ../misc-libvirt.rst:40
 msgid "a set of iptables rules"
 msgstr ""
 
-#: ../misc-libvirt.rst:43
+#: ../misc-libvirt.rst:42
 msgid ""
 "When libvirt boots a virtual machine, it places the machine's VIF in the "
 "bridge ``virbr0`` unless explicitly told not to."
 msgstr ""
 
-#: ../misc-libvirt.rst:46
+#: ../misc-libvirt.rst:45
 msgid ""
 "On Ubuntu, the iptables ruleset that libvirt creates includes the following "
 "rules::"
 msgstr ""
 
-#: ../misc-libvirt.rst:69
+#: ../misc-libvirt.rst:68
 msgid ""
 "The following shows the dnsmasq process that libvirt manages as it appears "
 "in the output of :command:`ps`::"
 msgstr ""
 
-#: ../misc-libvirt.rst:75
+#: ../misc-libvirt.rst:74
 msgid "How to disable libvirt networks"
 msgstr ""
 
-#: ../misc-libvirt.rst:77
+#: ../misc-libvirt.rst:76
 msgid ""
 "Although OpenStack does not make use of libvirt's networking, this "
 "networking will not interfere with OpenStack's behavior, and can be safely "
@@ -5871,25 +5888,25 @@ msgid ""
 "machines using libvirt directly, you can safely disable libvirt's network."
 msgstr ""
 
-#: ../misc-libvirt.rst:86
+#: ../misc-libvirt.rst:85
 msgid "To view the defined libvirt networks and their state:"
 msgstr ""
 
-#: ../misc-libvirt.rst:95
+#: ../misc-libvirt.rst:94
 msgid "To deactivate the libvirt network named ``default``:"
 msgstr ""
 
-#: ../misc-libvirt.rst:101
+#: ../misc-libvirt.rst:100
 msgid ""
 "Deactivating the network will remove the ``virbr0`` bridge, terminate the "
 "dnsmasq process, and remove the iptables rules."
 msgstr ""
 
-#: ../misc-libvirt.rst:104
+#: ../misc-libvirt.rst:103
 msgid "To prevent the network from automatically starting on boot:"
 msgstr ""
 
-#: ../misc-libvirt.rst:110
+#: ../misc-libvirt.rst:109
 msgid "To activate the network after it has been deactivated:"
 msgstr ""
 
