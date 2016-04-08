@@ -59,7 +59,7 @@ Create an encrypted volume type
 
 .. figure:: figures/create_volume_type_encryption.png
 
-**Encryption Options**
+   **Encryption Options**
 
 The table below provides a few alternatives available for creating encrypted
 volumes.

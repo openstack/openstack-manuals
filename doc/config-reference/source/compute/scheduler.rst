@@ -84,7 +84,7 @@ hosts to use for that request, described in the :ref:`weights` section.
 
 .. figure:: ../figures/filteringWorkflow1.png
 
-   Filtering
+   **Filtering**
 
 The ``scheduler_available_filters`` configuration option in ``nova.conf``
 provides the Compute service with the list of the filters that are used
@@ -818,7 +818,7 @@ the host with the largest weight is given the highest priority.
 
 .. figure:: ../figures/nova-weighting-hosts.png
 
-   Weighting hosts
+   **Weighting hosts**
 
 If cells are used, cells are weighted by the scheduler in the same
 manner as hosts.

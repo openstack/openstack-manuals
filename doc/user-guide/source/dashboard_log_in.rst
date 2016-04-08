@@ -68,7 +68,7 @@ model, you can also select the domain from this menu.
 .. figure:: figures/dashboard_project_tab.png
    :width: 100%
 
-**Figure: Project tab**
+   **Figure: Project tab**
 
 From the :guilabel:`Project` tab, you can access the following categories:
 
@@ -139,7 +139,7 @@ manage instances, volumes, flavors, images, networks and so on.
 .. figure:: figures/dashboard_admin_tab.png
    :width: 100%
 
-**Figure: Admin tab**
+   **Figure: Admin tab**
 
 From the :guilabel:`Admin` tab, you can access the following category
 to complete these tasks:
@@ -215,7 +215,7 @@ OpenStack dashboard — :guilabel:`Identity` tab
 .. figure:: figures/dashboard_identity_tab.png
    :width: 100%
 
-**Figure:Identity tab**
+   **Figure:Identity tab**
 
 * :guilabel:`Projects`: View, create, assign users to, remove users from,
   and delete projects.
@@ -230,7 +230,7 @@ OpenStack dashboard — :guilabel:`Settings` tab
 .. figure:: figures/dashboard_settings_tab.png
    :width: 100%
 
-**Figure:Settings tab**
+   **Figure:Settings tab**
 
 Click the :guilabel:`Settings` button from the user drop down menu at the
 top right of any page, you will see the :guilabel:`Settings` tab.

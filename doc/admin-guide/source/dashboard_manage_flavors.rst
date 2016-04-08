@@ -31,7 +31,7 @@ Create flavors
 
    .. figure:: figures/create_flavor.png
 
-   **Dashboard — Create Flavor**
+      **Dashboard — Create Flavor**
 
    =========================  =======================================
     **Name**                   Enter the flavor name.
