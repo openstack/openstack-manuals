@@ -22,15 +22,6 @@ Verify operation of the Object Storage service.
 
          # chcon -R system_u:object_r:swift_data_t:s0 /srv/node
 
-#. Due to a
-   `bug <https://bugs.launchpad.net/python-swiftclient/+bug/1554885>`_,
-   you must add a version to the ``OS_AUTH_URL`` variable in the environment
-   scripts. For example:
-
-   .. code-block:: bash
-
-      export OS_AUTH_URL=http://controller:5000/v3
-
 #. Source the ``demo`` credentials:
 
    .. code-block:: console
@@ -95,13 +86,11 @@ Verify operation of the Object Storage service.
 
    .. code-block:: console
 
-      $ swift download container1 FILE
-        FILE [auth 0.410s, headers 0.746s, total 1.001s, 22.494 MB/s]
+      $ openstack object save container1 FILE
 
    Replace ``FILE`` with the name of the file uploaded to the
    ``container1`` container.
 
    .. note::
 
-      Due to a bug with the OpenStack client, you must use the conventional
-      ``swift`` client or other compatible client to download files.
+      This command provides no output.
