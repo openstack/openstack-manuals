@@ -50,3 +50,6 @@ levels within one file using the following non-alphanumeric characters:
    Avoid using lower heading levels by information
    rewriting and reorganizing.
 
+.. seealso::
+
+   General :ref:`guidelines for headings and titles <headings>`
