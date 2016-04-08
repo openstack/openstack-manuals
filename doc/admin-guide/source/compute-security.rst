@@ -43,8 +43,7 @@ project.
 
 .. figure:: figures/OpenStackTrustedComputePool1.png
 
-
-**Configuring Compute to use trusted compute pools**
+   **Configuring Compute to use trusted compute pools**
 
 #. Enable scheduling support for trusted compute pools by adding these
    lines to the ``DEFAULT`` section of the ``/etc/nova/nova.conf`` file:

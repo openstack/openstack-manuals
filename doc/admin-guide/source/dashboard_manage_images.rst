@@ -33,7 +33,7 @@ Guide <http://docs.openstack.org/image-guide/>`_.
 
    .. figure:: figures/create_image.png
 
-   **Figure Dashboard — Create Image**
+      **Figure Dashboard — Create Image**
 
 #. In the :guilabel:`Create An Image` window, enter or select the
    following values:
