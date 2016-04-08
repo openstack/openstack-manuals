@@ -9,7 +9,7 @@ Database service command-line client
 The trove client is the command-line interface (CLI) for
 the Database service API and its extensions.
 
-This chapter documents :command:`trove` version ``2.1.1``.
+This chapter documents :command:`trove` version ``2.2.0``.
 
 For help on a specific :command:`trove` command, enter:
 
@@ -1337,34 +1337,6 @@ trove limit-list
    usage: trove limit-list
 
 Lists the limits for a tenant.
-
-.. _trove_list:
-
-trove list
-~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: trove list [--limit <limit>] [--marker <ID>] [--include_clustered]
-
-Lists all the instances.
-
-**Optional arguments:**
-
-``--limit <limit>``
-  Limit the number of results displayed.
-
-``--marker <ID>``
-  Begin displaying the results for IDs greater
-  than the specified marker. When used with
-  :option:`--limit,` set this to the last ID displayed
-  in the previous run.
-
-``--include_clustered, --include-clustered``
-  Include instances that are part of a cluster
-  (default False). :option:`--include-clustered` may be
-  deprecated in the future, retaining just
-  :option:`--include_clustered`.
 
 .. _trove_log-disable:
 
