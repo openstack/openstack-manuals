@@ -2,19 +2,24 @@
 Hitachi NAS (HNAS) driver
 =========================
 
-This Shared File Systems driver provides support for Hitachi NAS
-Platform Models 3080, 3090, 4040, 4060, 4080, and 4100.
+The HNAS driver provides NFS Shared File Systems to OpenStack.
 
-HNAS storage requirements
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Requirements
+~~~~~~~~~~~~
 
-Before using Hitachi HNAS Shared File Systems driver, use the HNAS
-configuration and management utilities, such as GUI (SMU) or SSC CLI to create
-a storage pool (span) and an EVS. Also, check that HNAS/SMU software version
-is 12.2 or higher.
+- Hitachi NAS Platform Models 3080, 3090, 4040, 4060, 4080, and 4100.
 
-Supported operations
-~~~~~~~~~~~~~~~~~~~~
+- HNAS/SMU software version is 12.2 or higher.
+
+- HNAS configuration and management utilities to create a storage pool (span)
+  and an EVS.
+
+  -  GUI (SMU).
+
+  -  SSC CLI.
+
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The driver supports NFS shares.
 
@@ -40,172 +45,252 @@ The following operations are supported:
 
 - Unmanage a share.
 
-Driver configuration
-~~~~~~~~~~~~~~~~~~~~
+- Shrink a share.
 
-To configure the driver, make sure that the controller and compute nodes have
-access to the HNAS management port, and compute and networking nodes have
-access to the data ports (EVS IPs or aggregations). If Shared File Systems
-service is not running on controller node, it must have access to the
-management port. The driver configuration can be summarized in the following
-steps:
+Driver options
+~~~~~~~~~~~~~~
 
-#. Create a file system to be used by Shared File Systems on HNAS. Make sure
-   that the filesystem is not created as a replication target. For more
-   information on creating a filesystem, see the
-   `Hitachi HNAS reference <http://www.hds.com/assets/pdf/hus-file-module-file-services-administration-guide.pdf>`_.
-#. Install and configure an OpenStack environment with default Shared File
-   System parameters and services. Refer to OpenStack Manila configuration
-   reference.
-#. Configure HNAS parameters in the ``manila.conf`` file.
-#. Prepare the network.
-#. Configure and create share type.
-#. Restart the services.
-#. Configure the network.
-
-The first two steps are not in the scope of this document. We cover all the
-remaining steps in the following sections.
-
-Step 3 - HNAS parameter configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Below is an example of a minimal configuration of HNAS driver:
-
-.. code-block:: ini
-
-   [DEFAULT]
-   enabled_share_backends = hnas1
-   enabled_share_protocols = NFS
-   [hnas1]
-   share_backend_name = HNAS1
-   share_driver = manila.share.drivers.hitachi.hds_hnas.HDSHNASDriver
-   driver_handles_share_servers = False
-   hds_hnas_ip = 172.24.44.15
-   hds_hnas_user = supervisor
-   hds_hnas_password = supervisor
-   hds_hnas_evs_id = 1
-   hds_hnas_evs_ip = 10.0.1.20
-   hds_hnas_file_system_name = FS-Manila
-
-The following table contains the configuration options specific to the
-share driver.
+This table contains the configuration options specific to the share driver.
 
 .. include:: ../../tables/manila-hds_hnas.rst
 
-Step 4 - prepare the network
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Pre-configuration on OpenStack deployment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the driver mode used by HNAS Driver (DHSS = ``False``), the driver does not
-handle network configuration, it is up to the administrator to configure it.
-It is mandatory that HNAS management interface is reachable from Shared File
-System node through Admin network, while the selected EVS data interface is
-reachable from OpenStack Cloud, such as through Neutron Flat networking. Here
-is a step-by-step of an example configuration:
+#. Install the OpenStack environment with manila. See the
+   `OpenStack installation guide <http://docs.openstack.org/>`_.
 
-| **Shared File Systems node:**
-| **eth0**: Admin network, can ping HNAS management interface.
-| **eth1**: Data network, can ping HNAS EVS IP (data interface). This
- interface is only required if you plan to use share migration.
+#. Configure the OpenStack networking so it can reach HNAS Management
+   interface and HNAS EVS Data interface.
 
-| **Networking node and Compute nodes:**
-| **eth0**: Admin network, can ping HNAS management interface.
-| **eth1**: Data network, can ping HNAS EVS IP (data interface).
+   .. note ::
 
-Run in **Networking node**:
+      In the driver mode used by HNAS Driver (DHSS = ``False``), the driver
+      does not handle network configuration, it is up to the administrator to
+      configure it.
 
-.. code-block:: console
+   * Configure the network of the manila-share node network to reach HNAS
+     management interface through the admin network.
 
-   # ifconfig eth1 0
-   # ovs-vsctl add-br br-eth1
-   # ovs-vsctl add-port br-eth1 eth1
-   # ifconfig eth1 up
+     .. note::
 
-Edit the ``/etc/neutron/plugins/ml2/ml2_conf.ini`` (default directory),
-change the following settings as follows in their respective tags:
+        The manila-share node only requires the HNAS EVS data interface if you
+        plan to use share migration.
 
-.. code-block:: ini
+   * Configure the network of the Compute and Networking nodes to reach HNAS
+     EVS data interface through the data network.
 
-   [ml2]
-   type_drivers = flat,vlan,vxlan,gre
-   mechanism_drivers = openvswitch
-   [ml2_type_flat]
-   flat_networks = physnet1,physnet2
-   [ml2_type_vlan]
-   network_vlan_ranges = physnet1:1000:1500,physnet2:2000:2500
-   [ovs]
-   bridge_mappings = physnet1:br-ex,physnet2:br-eth1
+   * Example of networking architecture:
 
-You may have to repeat the last line above in another file on the Compute node,
-if it exists it is located in:
-``/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini``.
+     .. figure:: ../../figures/hds_network.jpg
+        :width: 60%
+        :align: center
+        :alt: Example networking scenario
 
-Create a route in HNAS to the tenant network. Please make sure
-multi-tenancy is enabled and routes are configured per EVS. Use the command
-:command:`route-net-add` in HNAS console, where the network parameter should
-be the tenant's private network, while the gateway parameter should be the
-FLAT network gateway and the :command:`console-context --evs` parameter should
-be the ID of EVS in use, such as in the following example:
+   * Edit the ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file and update the
+     following settings in their respective tags. In case you use linuxbridge,
+     update bridge mappings at linuxbridge section:
 
-.. code-block:: console
+   .. important ::
 
-   $ console-context --evs 3 route-net-add --gateway 192.168.1.1 \
-     10.0.0.0/24
+      It is mandatory that HNAS management interface is reachable from the
+      Shared File System node through the admin network, while the selected
+      EVS data interface is reachable from OpenStack Cloud, such as through
+      Neutron flat networking.
 
-Step 5 - share type configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   .. code-block:: ini
 
-Shared File Systems requires that the share type includes the
-``driver_handles_share_servers`` extra-spec. This ensures that the share will
-be created on a backend that supports the requested
-``driver_handles_share_servers`` capability. For the Hitachi HNAS Shared File
-System driver, this must be set to ``False``.
+      [ml2]
+      type_drivers = flat,vlan,vxlan,gre
+      mechanism_drivers = openvswitch
+      [ml2_type_flat]
+      flat_networks = physnet1,physnet2
+      [ml2_type_vlan]
+      network_vlan_ranges = physnet1:1000:1500,physnet2:2000:2500
+      [ovs]
+      bridge_mappings = physnet1:br-ex,physnet2:br-eth1
 
-.. code-block:: console
+   You may have to repeat the last line above in another file on the Compute
+   node, if it exists it is located in:
+   ``/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini``.
 
-   $ manila type-create hitachi False
+   * In case openvswitch for neutron agent, run in network node:
 
-Step 6 - restart the services
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     .. code-block:: console
 
-Restart all Shared File Systems services
-(``manila-share``, ``manila-scheduler`` and ``manila-api``) and
-Networking services (``neutron-\*``).
+        # ifconfig eth1 0
+        # ovs-vsctl add-br br-eth1
+        # ovs-vsctl add-port br-eth1 eth1
+        # ifconfig eth1 up
 
-Step 7 - configure the network
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   * Restart all neutron processes.
 
-In Networking node it is necessary to create a network, a subnet and to add
-this subnet interface to a router:
+#. Create the data HNAS network in Openstack:
 
-Create a network to the given tenant (demo), providing the DEMO_ID (this can
-be fetched using :command:`openstack project list` command), a name for the
-network, the name of the physical network over which the virtual network is
-implemented and the type of the physical mechanism by which the virtual
-network is implemented:
+   * List the available tenants:
 
-.. code-block:: console
+     .. code-block:: console
 
-   $ neutron net-create --tenant-id <DEMO_ID> hnas_network \
-     --provider:physical_network=physnet2 --provider:network_type=flat
+        $ openstack project list
 
-Create a subnet to same tenant (demo), providing the DEMO_ID (this can be
-fetched using :command:`openstack project list` command), the gateway IP of
-this subnet, a name for the subnet, the network ID created in the previous
-step (this can be fetched using :command:`neutron net-list` command) and
-CIDR of subnet:
+   * Create a network to the given tenant (demo), providing the tenant ID,
+     a name for the network, the name of the physical network over which the
+     virtual network is implemented, and the type of the physical mechanism by
+     which the virtual network is implemented:
 
-.. code-block:: console
+     .. code-block:: console
 
-   $ neutron subnet-create --tenant-id <DEMO_ID> --gateway <GATEWAY> \
-     --name hnas_subnet <NETWORK_ID> <SUBNET_CIDR>
+        $ neutron net-create --tenant-id <DEMO_ID> hnas_network \
+        --provider:physical_network=physnet2 --provider:network_type=flat
 
-Finally, add the subnet interface to a router, providing the router ID and
-subnet ID created in the previous step (can be fetched using :command:`neutron
-subnet-list` command):
+   * Optional - List available networks:
 
-.. code-block:: console
+     .. code-block:: console
 
-   $ neutron router-interface-add <ROUTER_ID> <SUBNET_ID>
+        $ neutron net-list
+
+   * Create a subnet to the same tenant (demo), the gateway IP of this subnet,
+     a name for the subnet, the network ID created before, and the CIDR of
+     subnet:
+
+     .. code-block:: console
+
+        $ neutron subnet-create --tenant-id <DEMO_ID> --gateway <GATEWAY> \
+        --name hnas_subnet <NETWORK_ID> <SUBNET_CIDR>
+
+   * OPTIONAL - List available subnets:
+
+     .. code-block:: console
+
+        $ neutron subnet-list
+
+   * Add the subnet interface to a router, providing the router ID and subnet
+     ID created before:
+
+     .. code-block:: console
+
+        $ neutron router-interface-add <ROUTER_ID> <SUBNET_ID>
+
+Pre-configuration on HNAS
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Create a file system on HNAS. See the `Hitachi HNAS reference <http://www.hds.com/assets/pdf/hus-file-module-file-services-administration-guide.pdf>`_.
+
+   .. important::
+
+      Make sure that the filesystem is not created as a replication target.
+      Refer official HNAS administration guide.
+
+#. Prepare the HNAS EVS network.
+
+   * Create a route in HNAS to the tenant network:
+
+     .. code-block:: console
+
+        $ console-context --evs <EVS_ID_IN_USE> route-net-add --gateway <FLAT_NETWORK_GATEWAY> \
+        <TENANT_PRIVATE_NETWORK>
+
+     .. important::
+
+        Make sure multi-tenancy is enabled and routes are configured
+        per EVS.
+
+     .. code-block:: console
+
+        $ console-context --evs 3 route-net-add --gateway 192.168.1.1 \
+        10.0.0.0/24
+
+Back end configuration
+~~~~~~~~~~~~~~~~~~~~~~
+
+#. Configure HNAS driver.
+
+   * Configure HNAS driver according to your environment. This example shows
+     a minimal HNAS driver configuration:
+
+     .. code-block:: ini
+
+        [DEFAULT]
+        enabled_share_backends = hnas1
+        enabled_share_protocols = NFS
+        [hnas1]
+        share_backend_name = HNAS1
+        share_driver = manila.share.drivers.hitachi.hds_hnas.HDSHNASDriver
+        driver_handles_share_servers = False
+        hds_hnas_ip = 172.24.44.15
+        hds_hnas_user = supervisor
+        hds_hnas_password = supervisor
+        hds_hnas_evs_id = 1
+        hds_hnas_evs_ip = 10.0.1.20
+        hds_hnas_file_system_name = FS-Manila
+
+#. Optional - HNAS multi-backend configuration.
+
+   * Update the ``enabled_share_backends`` flag with the names of the back
+     ends separated by commas.
+
+   * Add a section for every back end according to the example bellow:
+
+     .. code-block:: ini
+
+        [DEFAULT]
+        enabled_share_backends = hnas1,hnas2
+        enabled_share_protocols = NFS
+        [hnas1]
+        share_backend_name = HNAS1
+        share_driver = manila.share.drivers.hitachi.hds_hnas.HDSHNASDriver
+        driver_handles_share_servers = False
+        hds_hnas_ip = 172.24.44.15
+        hds_hnas_user = supervisor
+        hds_hnas_password = supervisor
+        hds_hnas_evs_id = 1
+        hds_hnas_evs_ip = 10.0.1.20
+        hds_hnas_file_system_name = FS-Manila1
+        [hnas2]
+        share_backend_name = HNAS2
+        share_driver = manila.share.drivers.hitachi.hds_hnas.HDSHNASDriver
+        driver_handles_share_servers = False
+        hds_hnas_ip = 172.24.44.15
+        hds_hnas_user = supervisor
+        hds_hnas_password = supervisor
+        hds_hnas_evs_id = 1
+        hds_hnas_evs_ip = 10.0.1.20
+        hds_hnas_file_system_name = FS-Manila2
+
+
+#. Disable DHSS for HNAS share type configuration:
+
+   .. note::
+
+      Shared File Systems requires that the share type includes the
+      ``driver_handles_share_servers`` extra-spec. This ensures that the share
+      will be created on a backend that supports the requested
+      ``driver_handles_share_servers`` capability.
+
+   .. code-block:: console
+
+      $ manila type-create hitachi False
+
+#. (Optional multiple back end) Create an extra-spec for specifying which
+   HNAS back end will be created by the share:
+
+   * Create additional share types.
+
+     .. code-block:: console
+
+        $ manila type-create hitachi2 False
+
+   * Add an extra-spec for each share-type in order to match a specific back
+     end. Therefore, it is possible to specify which back end the Shared File
+     System service will use when creating a share.
+
+     .. code-block:: console
+
+      $ manila type-key hitachi set share_backend_name=hnas1
+      $ manila type-key hitachi2 set share_backend_name=hnas2
+
+#. Restart all Shared File Systems services (``manila-share``,
+   ``manila-scheduler`` and ``manila-api``).
 
 Manage and unmanage shares
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -218,8 +303,8 @@ NFS export is an ordinary FS export, it is not possible to use it in Shared
 File Systems. The unmanage operation only unlinks the share from Shared File
 Systems. All data is preserved.
 
-Additional notes:
-~~~~~~~~~~~~~~~~~
+Additional notes
+~~~~~~~~~~~~~~~~
 
 * HNAS has some restrictions about the number of EVSs, filesystems,
   virtual-volumes, and simultaneous SSC connections. Check the manual
