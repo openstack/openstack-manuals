@@ -38,6 +38,10 @@ Follow this procedure to upload an image to a project:
 
    The :guilabel:`Create An Image` dialog box appears.
 
+   .. figure:: figures/create_image.png
+
+      **Dashboard — Create Image**
+
 #. Enter the following values:
 
    +-------------------------------+---------------------------------+
