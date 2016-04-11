@@ -4,17 +4,12 @@ Install and configure a share node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This section describes how to install and configure a share node for the
-Shared File Systems service. For simplicity, this configuration references one
-storage node with the generic driver managing the share servers. The
-generic backend manages share servers using compute, networking and block
-services for provisioning shares.
-
-.. Note::
-   The manila-share process can run in two modes, with and without handling of
-   share servers. In general it depends of the driver support.
+Shared File Systems service.
 
 Install and configure components
 --------------------------------
+
+.. include:: shared/note_configuration_vary_by_distribution.rst
 
 #. Install the packages:
 
@@ -22,39 +17,19 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper install openstack-manila python-PyMySQL
+         # zypper install openstack-manila-share python-PyMySQL
 
    .. only:: rdo
 
       .. code-block:: console
 
-         # yum install openstack-manila targetcli python-oslo-policy
+         # yum install openstack-manila-share python2-PyMySQL
 
    .. only:: ubuntu
 
       .. code-block:: console
 
-         # apt-get install manila-common python-pymysql
-
-#. Install neutron agent packages needed for generic driver:
-
-   .. only:: obs
-
-      .. code-block:: console
-
-         # zypper install --no-recommends openstack-neutron-linuxbridge-agent ipset
-
-   .. only:: rdo
-
-      .. code-block:: console
-
-         # yum install openstack-neutron openstack-neutron-linuxbridge ebtables ipset
-
-   .. only:: ubuntu
-
-      .. code-block:: console
-
-         # apt-get install neutron-plugin-linuxbridge-agent conntrack
+         # apt-get install manila-share python-pymysql
 
 #. Edit the ``/etc/manila/manila.conf`` file and complete the following
    actions:
@@ -105,9 +80,7 @@ Install and configure components
         [DEFAULT]
         ...
         default_share_type = default_share_type
-        share_name_template = share-%s
         rootwrap_config = /etc/manila/rootwrap.conf
-        api_paste_config = /etc/manila/api-paste.ini
 
    * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
      configure Identity service access:
@@ -120,6 +93,7 @@ Install and configure components
 
         [keystone_authtoken]
         ...
+        memcached_servers = controller:11211
         auth_uri = http://controller:5000
         auth_url = http://controller:35357
         auth_plugin = password
@@ -145,71 +119,6 @@ Install and configure components
      typically 10.0.0.41 for the first node in the
      :ref:`example architecture <overview-example-architectures>`.
 
-   * Edit the ``/etc/manila/manila.conf`` file, configure nova, cinder and
-     neutron credentials:
-
-     .. code-block:: ini
-
-        [DEFAULT]
-        ...
-        nova_admin_auth_url=http://controller:5000/v2.0
-        nova_admin_tenant_name=service
-        nova_admin_username=nova
-        nova_admin_password=NOVA_PASS
-
-        cinder_admin_auth_url=http://controller:5000/v2.0
-        cinder_admin_tenant_name=service
-        cinder_admin_username=cinder
-        cinder_admin_password=CINDER_PASS
-
-        neutron_admin_auth_url=http://controller:5000/v2.0
-        neutron_url=http://controller:9696
-        neutron_admin_project_name=service
-        neutron_admin_username=neutron
-        neutron_admin_password=NEUTRON_PASS
-
-   * In the ``[generic]`` section, configure the generic share driver:
-
-     .. code-block:: ini
-
-        [generic]
-        share_backend_name = GENERIC
-        share_driver = manila.share.drivers.generic.GenericShareDriver
-
-   * In the ``[generic]`` section, enable driver handles share servers (DHSS),
-     setup flavor (m1.small has id=2) and image configurations:
-
-     .. code-block:: ini
-
-        driver_handles_share_servers = True
-
-        service_instance_flavor_id = 2
-
-        service_image_name = manila-service-image
-        service_instance_user = manila
-        service_instance_password = manila
-
-   * In the ``[generic]`` section, configure linux bridge for interface
-     driver:
-
-     .. code-block:: ini
-
-        interface_driver = manila.network.linux.interface.BridgeInterfaceDriver
-
-   * In the ``[DEFAULT]`` section, enable the generic back end:
-
-     .. note::
-
-        Back-end names are arbitrary. As an example, this guide
-        uses the name of the driver as the name of the back end.
-
-     .. code-block:: ini
-
-        [DEFAULT]
-        ...
-        enabled_share_backends = generic
-        enabled_share_protocols = NFS,CIFS
-
    * In the ``[oslo_concurrency]`` section, configure the lock path:
 
      .. code-block:: ini
@@ -218,42 +127,78 @@ Install and configure components
         ...
         lock_path = /var/lib/manila/tmp
 
+Configure share server management support options
+-------------------------------------------------
+
+The share node can support two modes, with and without the handling of
+share servers. The mode depends on driver support.
+
+Option 1 deploys the service without driver support for share management. In
+this mode, the service does not do anything related to networking. The operator
+must ensure network connectivity between instances and the NFS server. This
+option uses LVM driver that requires LVM and NFS packages as well as an
+additional disk for the ``manila-share`` LVM volume group.
+
+Option 2 deploys the service with driver support for share management. In this
+mode, the service requires Compute (nova), Networking (neutron) and Block
+storage (cinder) services for managing share servers. The information used for
+creating share servers is configured as share networks. This option uses the
+generic driver with the handling of share servers capacity and requires
+attaching the ``selfservice`` network to a router.
+
+.. warning::
+
+   A bug prevents using both driver options on the same share node.
+   For more information, see LVM Driver section at the
+   `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/content/section_share-drivers.html>`__.
+
+Choose one of the following options to configure the share driver.
+Afterwards, return here and proceed to
+:ref:`manila-share-finalize-install`.
+
+.. toctree::
+   :maxdepth: 1
+
+   manila-share-install-dhss-false-option1.rst
+   manila-share-install-dhss-true-option2.rst
+
+.. _manila-share-finalize-install:
+
 Finalize installation
 ---------------------
-#. Prepare manila-share as start/stop service:
 
-   .. only:: obs
+.. only:: obs
 
-     * Start the Share File System service including its dependencies
-       and configure them to start when the system boots:
+   * Start the Share File Systems service including its dependencies
+     and configure them to start when the system boots:
 
-       .. code-block:: console
+     .. code-block:: console
 
-          # systemctl enable openstack-manila-share.service tgtd.service
-          # systemctl start openstack-manila-share.service tgtd.service
+        # systemctl enable openstack-manila-share.service
+        # systemctl start openstack-manila-share.service
 
-   .. only:: rdo
+.. only:: rdo
 
-     * Start the Share File System service including its dependencies
-       and configure them to start when the system boots:
+   * Start the Share File Systems service including its dependencies
+     and configure them to start when the system boots:
 
-       .. code-block:: console
+     .. code-block:: console
 
-          # systemctl enable openstack-manila-share.service target.service
-          # systemctl start openstack-manila-share.service target.service
+        # systemctl enable openstack-manila-share.service
+        # systemctl start openstack-manila-share.service
 
-   .. only:: ubuntu
+.. only:: ubuntu
 
-      * Start the Share File System service including its dependencies:
+   * Start the Share File Systems service including its dependencies:
 
-        .. code-block:: console
+     .. code-block:: console
 
-           # service manila-share restart
+        # service manila-share restart
 
-      * By default, the Ubuntu packages create an SQLite database.
-        Because this configuration uses an SQL database server,
-        remove the SQLite database file:
+   * By default, the Ubuntu packages create an SQLite database.
+     Because this configuration uses an SQL database server,
+     remove the SQLite database file:
 
-        .. code-block:: console
+     .. code-block:: console
 
-           # rm -f /var/lib/manila/manila.sqlite
+        # rm -f /var/lib/manila/manila.sqlite

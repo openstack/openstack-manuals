@@ -18,12 +18,26 @@ Verify operation of the Shared File Systems service.
 
 #. List service components to verify successful launch of each process:
 
+   For deployments using option 1:
+
    .. code-block:: console
 
       $ manila service-list
-      +------------------+----------------+------+---------+-------+----------------------------+-----------------+
-      |      Binary      |    Host        | Zone |  Status | State |         Updated_at         | Disabled Reason |
-      +------------------+----------------+------+---------+-------+----------------------------+-----------------+
-      | manila-scheduler | controller     | nova | enabled |   up  | 2014-10-18T01:30:54.000000 |       None      |
-      | manila-share     | share1@generic | nova | enabled |   up  | 2014-10-18T01:30:57.000000 |       None      |
-      +------------------+----------------+------+---------+-------+----------------------------+-----------------+
+      +----+------------------+-------------+------+---------+-------+----------------------------+
+      | Id | Binary           | Host        | Zone | Status  | State | Updated_at                 |
+      +----+------------------+-------------+------+---------+-------+----------------------------+
+      | 1  | manila-scheduler | controller  | nova | enabled | up    | 2016-03-30T20:17:28.000000 |
+      | 2  | manila-share     | storage@lvm | nova | enabled | up    | 2016-03-30T20:17:29.000000 |
+      +----+------------------+-------------+------+---------+-------+----------------------------+
+
+   For deployments using option 2:
+
+   .. code-block:: console
+
+      $ manila service-list
+      +----+------------------+-----------------+------+---------+-------+----------------------------+
+      | Id | Binary           | Host            | Zone | Status  | State | Updated_at                 |
+      +----+------------------+-----------------+------+---------+-------+----------------------------+
+      | 1  | manila-scheduler | controller      | nova | enabled | up    | 2016-03-30T20:17:28.000000 |
+      | 2  | manila-share     | storage@generic | nova | enabled | up    | 2016-03-30T20:17:29.000000 |
+      +----+------------------+-----------------+------+---------+-------+----------------------------+

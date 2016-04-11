@@ -189,7 +189,7 @@ Shared File Systems
 -------------------
 
 If your environment includes the Shared File Systems service, you can create
-a share.
+a share and mount it in an instance:
 
 .. toctree::
    :maxdepth: 1
