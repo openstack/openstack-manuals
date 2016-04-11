@@ -8,6 +8,9 @@ We recommend that you add the tags in the head of the git commit
 message or email subject line to show the topic explicitly.
 Based on the topic your request refers to, use the following tags:
 
+[admin-guide]
+  Administrator Guide
+
 [api]
   API Guide, API Complete References
 
@@ -50,8 +53,8 @@ Based on the topic your request refers to, use the following tags:
 [training]
   Training labs, Training guides
 
-[user-guides]
-  End User Guide, Administrator Guide
+[user-guide]
+  End User Guide
 
 [WIP]
   Commit is a work in progress
