@@ -295,6 +295,33 @@ in the following tables.
 |                         | *  VirtualVmxnet         |
 +-------------------------+--------------------------+
 
+.. note::
+
+   By default, hardware properties are retrieved from the image
+   properties. However, if this information is not available, the
+   ``libosinfo`` database provides an alternative source for these
+   values.
+
+   If the guest operating system is not in the database, or if the use
+   of ``libosinfo`` is disabled, the default system values are used.
+
+   Users can set the operating system ID or a ``short-id`` by setting
+   ``os_distro`` in image properties. For example:
+
+   .. code-block:: console
+
+      $ glance image-update --property os_distro=fedora23 \
+        name-of-my-fedora-image
+
+   Alternatively, users can set ``os_distro`` to a URL:
+
+   .. code-block:: console
+
+      $ glance image-update \
+        --property os_distro=http://fedoraproject.org/fedora/23 \
+        name-of-my-fedora-image
+
+
 Troubleshoot image creation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
