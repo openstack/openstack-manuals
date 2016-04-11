@@ -272,7 +272,7 @@ Install and configure components
 
               [database]
               ...
-              connection = mysql+pymysql://manila:manila_DBPASS@controller/manila
+              connection = mysql+pymysql://manila:MANILA_DBPASS@controller/manila
 
         Replace ``MANILA_DBPASS`` with the password you chose for the
         Share File System database.
