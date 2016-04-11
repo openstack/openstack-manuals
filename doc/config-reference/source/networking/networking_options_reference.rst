@@ -77,28 +77,6 @@ automatically by the Compute service.
 This section describes the available configuration options.
 
 .. note::
-
-   Configure MTU for VXLAN tunnelling
-
-   Specific MTU configuration is necessary for VXLAN to function as
-   expected:
-
-   - One option is to increase the MTU value of the physical interface
-     and physical switch fabric by at least 50 bytes. For example,
-     increase the MTU value to 1550. This value enables an automatic
-     50-byte MTU difference between the physical interface (1500) and
-     the VXLAN interface (automatically 1500-50 = 1450). An MTU value
-     of 1450 causes issues when virtual machine taps are configured at
-     an MTU value of 1500.
-   - Another option is to decrease the virtual Ethernet
-     devices' MTU. Set the ``network_device_mtu``
-     option to 1450 in the ``neutron.conf`` file,
-     and set all guest virtual machines' MTU to the same value by
-     using a DHCP option. For information about how to use this
-     option, see `Configure OVS plug-in
-     <http://docs.openstack.org/admin-guide/networking_config-agents.html>`__.
-
-.. note::
    OpenFlow Agent (ofagent) Mechanism driver is deprecated in favor
    of OpenvSwitch mechanism driver with "native" of_interface in the
    Mitaka release and will be removed in the next release.

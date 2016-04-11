@@ -167,7 +167,7 @@ hosted:
     | availability_zone_hints   | zone-1                               |
     |                           | zone-2                               |
     | id                        | 0ef0597c-4aab-4235-8513-bf5d8304fe64 |
-    | mtu                       | 0                                    |
+    | mtu                       | 1450                                 |
     | name                      | net1                                 |
     | port_security_enabled     | True                                 |
     | provider:network_type     | vxlan                                |
@@ -241,7 +241,7 @@ which zone the resource is hosted:
     | availability_zones        | zone-1                               |
     |                           | zone-2                               |
     | id                        | 0ef0597c-4aab-4235-8513-bf5d8304fe64 |
-    | mtu                       | 0                                    |
+    | mtu                       | 1450                                 |
     | name                      | net1                                 |
     | port_security_enabled     | True                                 |
     | provider:network_type     | vxlan                                |

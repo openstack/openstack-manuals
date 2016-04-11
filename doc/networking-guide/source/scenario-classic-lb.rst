@@ -106,8 +106,8 @@ because it only handles layer-2 connectivity.
 .. note::
 
    For VLAN external and project networks, the physical network infrastructure
-   must support VLAN tagging. For best performance with VXLAN project networks,
-   the network infrastructure should support jumbo frames.
+   must support VLAN tagging. For best performance, 10+ Gbps networks should
+   support jumbo frames.
 
 .. warning::
 
@@ -637,21 +637,6 @@ Network node
          interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
          dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
          enable_isolated_metadata = True
-
-#. (Optional) Reduce MTU for VXLAN project networks.
-
-   #. Edit the ``/etc/neutron/dhcp_agent.ini`` file:
-
-      .. code-block:: ini
-
-         [DEFAULT]
-         dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.conf
-
-   #. Edit the ``/etc/neutron/dnsmasq-neutron.conf`` file:
-
-      .. code-block:: ini
-
-         dhcp-option-force=26,1450
 
 #. Configure the metadata agent. Edit the
    ``/etc/neutron/metadata_agent.ini`` file:
