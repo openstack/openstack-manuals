@@ -167,7 +167,7 @@ it using the :command:`rbac-delete` command:
    Deleted rbac_policy: e45e6917-3f3f-4835-ad54-d12c9151541d
 
 If that project has ports or networks with the QoS policy applied to them,
-the server will not delete the RBAC policy from being deleted until
+the server will not delete the RBAC policy until
 the QoS policy is no longer in use:
 
 .. code-block:: console
