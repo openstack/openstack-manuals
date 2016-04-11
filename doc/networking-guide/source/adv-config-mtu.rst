@@ -57,15 +57,24 @@ To enable Neutron for Jumbo frames, the following option should be set in the
    [DEFAULT]
    global_physnet_mtu = <maximum MTU supported by your infrastructure>
 
-If you have multiple underlying physical networks, you may want to use separate
-MTU values for each of those physical networks. In that case, you can set the
-following option (note it works for flat and vlan networks only):
+If you have multiple underlying networks, you may want to use separate MTU
+values for each of those networks. In that case, you can set one of the
+following options (currently works for ML2 plug-in only).
+
+In case of flat and vlan network types:
 
 .. code-block:: ini
 
    [DEFAULT]
    physical_network_mtus = physnet1:<max-mtu1>,physnet2:<max-mtu2>[,...]
 
+For network types that use tunneling for tenant traffic encapsulation:
+
+.. code-block:: ini
+
+   [ml2]
+   path_mtu = <max-mtu>
+
 .. note::
 
-   Options only affect new network resources.
+   New configuration only affects new network resources.
