@@ -10,19 +10,145 @@ can lead to rapid jumps in the utilization of resources, the average rate of
 adoption of cloud services through normal usage also needs to be carefully
 monitored.
 
-
 General storage considerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A wide variety of operator-specific requirements dictates the nature of the
 storage back end. Examples of such requirements are as follows:
 
-* Public or private cloud, and associated SLA requirements
+* Public, private or a hybrid cloud, and associated SLA requirements
 * The need for encryption-at-rest, for data on storage nodes
 * Whether live migration will be offered
 
 We recommend that data be encrypted both in transit and at-rest.
 If you plan to use live migration, a shared storage configuration is highly
 recommended.
+
+Capacity planning for a multi-site cloud
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+An OpenStack cloud can be designed in a variety of ways to handle individual
+application needs. A multi-site deployment has additional challenges compared
+to single site installations.
+
+When determining capacity options, take into account technical, economic and
+operational issues that might arise from specific decisions.
+
+Inter-site link capacity describes the connectivity capability between
+different OpenStack sites. This includes parameters such as
+bandwidth, latency, whether or not a link is dedicated, and any business
+policies applied to the connection. The capability and number of the
+links between sites determine what kind of options are available for
+deployment. For example, if two sites have a pair of high-bandwidth
+links available between them, it may be wise to configure a separate
+storage replication network between the two sites to support a single
+swift endpoint and a shared Object Storage capability between them. An
+example of this technique, as well as a configuration walk-through, is
+available at
+http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network.
+Another option in this scenario is to build a dedicated set of tenant
+private networks across the secondary link, using overlay networks with
+a third party mapping the site overlays to each other.
+
+The capacity requirements of the links between sites is driven by
+application behavior. If the link latency is too high, certain
+applications that use a large number of small packets, for example
+:term:`RPC <Remote Procedure Call (RPC)>` API calls, may encounter
+issues communicating with each other or operating
+properly. OpenStack may also encounter similar types of issues.
+To mitigate this, the Identity service provides service call timeout
+tuning to prevent issues authenticating against a central Identity services.
+
+Another network capacity consideration for a multi-site deployment is
+the amount and performance of overlay networks available for tenant
+networks. If using shared tenant networks across zones, it is imperative
+that an external overlay manager or controller be used to map these
+overlays together. It is necessary to ensure the amount of possible IDs
+between the zones are identical.
+
+.. note::
+
+   As of the Kilo release, OpenStack Networking was not capable of
+   managing tunnel IDs across installations. So if one site runs out of
+   IDs, but another does not, that tenant's network is unable to reach
+   the other site.
+
+The ability for a region to grow depends on scaling out the number of
+available compute nodes. However, it may be necessary to grow cells in an
+individual region, depending on the size of your cluster and the ratio of
+virtual machines per hypervisor.
+
+A third form of capacity comes in the multi-region-capable components of
+OpenStack. Centralized Object Storage is capable of serving objects
+through a single namespace across multiple regions. Since this works by
+accessing the object store through swift proxy, it is possible to
+overload the proxies. There are two options available to mitigate this
+issue:
+
+* Deploy a large number of swift proxies. The drawback is that the
+  proxies are not load-balanced and a large file request could
+  continually hit the same proxy.
+
+* Add a caching HTTP proxy and load balancer in front of the swift
+  proxies. Since swift objects are returned to the requester via HTTP,
+  this load balancer alleviates the load required on the swift
+  proxies.
+
+Capacity planning for a compute-focused cloud
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Adding extra capacity to an compute-focused cloud is a horizontally scaling
+process.
+
+We recommend using similar CPUs when adding extra nodes to the environment.
+This reduces the chance of breaking live-migration features if they are
+present. Scaling out hypervisor hosts also has a direct effect on network
+and other data center resources. We recommend you factor in this increase
+when reaching rack capacity or when requiring extra network switches.
+
+Changing the internal components of a Compute host to account for increases in
+demand is a process known as vertical scaling. Swapping a CPU for one with more
+cores, or increasing the memory in a server, can help add extra capacity for
+running applications.
+
+Another option is to assess the average workloads and increase the number of
+instances that can run within the compute environment by adjusting the
+overcommit ratio.
+
+.. note::
+   It is important to remember that changing the CPU overcommit ratio can
+   have a detrimental effect and cause a potential increase in a noisy
+   neighbor.
+
+The added risk of increasing the overcommit ratio is that more instances fail
+when a compute host fails. We do not recommend that you increase the CPU
+overcommit ratio in compute-focused OpenStack design architecture. It can
+increase the potential for noisy neighbor issues.
+
+Capacity planning for a hybrid cloud
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+One of the primary reasons many organizations use a hybrid cloud is to
+increase capacity without making large capital investments.
+
+Capacity and the placement of workloads are key design considerations for
+hybrid clouds. The long-term capacity plan for these designs must incorporate
+growth over time to prevent permanent consumption of more expensive external
+clouds. To avoid this scenario, account for future applications’ capacity
+requirements and plan growth appropriately.
+
+It is difficult to predict the amount of load a particular application might
+incur if the number of users fluctuate, or the application experiences an
+unexpected increase in use. It is possible to define application requirements
+in terms of vCPU, RAM, bandwidth, or other resources and plan appropriately.
+However, other clouds might not use the same meter or even the same
+oversubscription rates.
+
+Oversubscription is a method to emulate more capacity than may physically be
+present. For example, a physical hypervisor node with 32 GB RAM may host 24
+instances, each provisioned with 2 GB RAM. As long as all 24 instances do not
+concurrently use 2 full gigabytes, this arrangement works well. However, some
+hosts take oversubscription to extremes and, as a result, performance can be
+inconsistent. If at all possible, determine what the oversubscription rates
+of each host are and plan capacity accordingly.
 
 Block Storage
 ~~~~~~~~~~~~~
@@ -45,7 +171,7 @@ characteristics. When deploying multiple pools of storage, it is also
 important to consider the impact on the Block Storage scheduler which is
 responsible for provisioning storage across resource nodes. Ideally,
 ensure that applications can schedule volumes in multiple regions, each with
-their own network, power, and cooling infrastructure.  This will give tenants
+their own network, power, and cooling infrastructure. This will give tenants
 the option of building fault-tolerant applications that are distributed
 across multiple availability zones.
 
@@ -186,11 +312,6 @@ resources servicing requests between proxy servers and storage nodes.
 For this reason, the network architecture used for access to storage
 nodes and proxy servers should make use of a design which is scalable.
 
-
-Network
-~~~~~~~
-.. TODO(unassigned): consolidate and update existing network sub-chapters.
-
 Compute resource design
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -278,7 +399,4 @@ overall architecture can be done later.
 For more information on these topics, refer to the `OpenStack
 Operations Guide <http://docs.openstack.org/ops>`_.
 
-Control plane API services and Horizon
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. No existing control plane sub-chapters in the current guide.
+.. TODO Add information on control plane API services and horizon.
