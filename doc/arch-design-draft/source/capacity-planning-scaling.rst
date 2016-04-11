@@ -186,11 +186,6 @@ resources servicing requests between proxy servers and storage nodes.
 For this reason, the network architecture used for access to storage
 nodes and proxy servers should make use of a design which is scalable.
 
-
-Network
-~~~~~~~
-.. TODO(unassigned): consolidate and update existing network sub-chapters.
-
 Compute resource design
 ~~~~~~~~~~~~~~~~~~~~~~~
 
