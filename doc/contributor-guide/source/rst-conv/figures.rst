@@ -7,6 +7,11 @@ Figures
 Use the ``figure`` directive to include an image, figure, or screenshot into
 the documentation.
 
+The PNG image format is preferred over other image formats for all image
+files. If available the source files (SVG, OmniGraffle, ..) of generated
+image files should be provided. Formats editable by open sources tools are
+preferred.
+
 **Syntax**
 
 ::
