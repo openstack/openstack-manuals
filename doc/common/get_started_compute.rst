@@ -89,13 +89,6 @@ OpenStack Compute consists of the following areas and their components:
 ``nova-cert`` daemon
   x509 certificates.
 
-``euca2ools`` client
-  A set of command-line interpreter commands for managing cloud
-  resources. Although it is not an OpenStack module, you can configure
-  nova-api to support this EC2 interface. For more information, see
-  the `Eucalyptus 3.4
-  Documentation <https://www.eucalyptus.com/docs/eucalyptus/3.4/index.html>`__.
-
 ``nova`` client
   Enables users to submit commands as a tenant administrator or end
   user.
