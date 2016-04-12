@@ -17,6 +17,12 @@ Follow these guidelines:
   ``--option ARGUMENT`` and ``--option=ARGUMENT``. In technical publications,
   use ``--option ARGUMENT``.
 
+* **Use "." to source script files**
+
+  When you have to source a script file, for example, a credentials file to
+  gain access to user-only or admin-only CLI commands, use ``.`` instead of
+  ``source``.
+
 .. note::
 
    Nova exposes both its own API and an EC2-compatible API. Therefore, you can
