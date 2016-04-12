@@ -1,16 +1,14 @@
-========================
-NexentaEdge iSCSI driver
-========================
+=====================================
+NexentaStor 5.x NFS and iSCSI drivers
+=====================================
 
-NexentaEdge is designed from the ground-up to deliver high performance Block
-and Object storage services and limitless scalability to next generation
-OpenStack clouds, petabyte scale active archives and Big Data applications.
-NexentaEdge runs on shared nothing clusters of industry standard Linux servers,
-and builds on Nexenta IP and patent pending Cloud Copy On Write (CCOW)
-technology to break new grounds in terms of reliability, functionality
-and cost efficiencies.
+NexentaStor is an Open Source-driven Software-Defined Storage (OpenSDS)
+platform delivering unified file (NFS and SMB) and block (FC and iSCSI)
+storage services. NexentaStor runs on industry standard hardware, scales from
+tens of terabytes to petabyte configurations, and includes all data management
+functionality by default.
 
-For Nexenta user documentation, visit http://docs.nexenta.com.
+For NexentaStor user documentation, visit: http://docs.nexenta.com/.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
@@ -29,17 +27,23 @@ Supported operations
 
 * Extend a volume.
 
+* Migrate a volume.
+
+* Change volume type.
+
 iSCSI driver
 ~~~~~~~~~~~~
 
-The NexentaEdge cluster must be installed and configured according to the
-relevant Nexenta documentation. A cluster, tenant, bucket must be pre-created,
-as well as an iSCSI service on the NexentaEdge gateway node.
+The NexentaStor appliance must be installed and configured according to the
+relevant Nexenta documentation. A pool and an enclosing namespace must be
+created for all iSCSI volumes to be accessed through the volume driver. This
+should be done as specified in the release-specific NexentaStor documentation.
 
-The NexentaEdge iSCSI driver is selected using the normal procedures for one
-or multiple back-end volume drivers.
+The NexentaStor Appliance iSCSI driver is selected using the normal procedures
+for one or multiple back-end volume drivers.
 
-You must configure these items for each NexentaEdge cluster that the iSCSI
+
+You must configure these items for each NexentaStor appliance that the iSCSI
 volume driver controls:
 
 #. Make the following changes on the volume node ``/etc/cinder/cinder.conf``
@@ -48,36 +52,75 @@ volume driver controls:
    .. code-block:: ini
 
       # Enable Nexenta iSCSI driver
-      volume_driver = cinder.volume.drivers.nexenta.nexentaedge.iscsi.NexentaEdgeISCSIDriver
+      volume_driver=cinder.volume.drivers.nexenta.ns5.iscsi.NexentaISCSIDriver
 
-      # Specify the ip address for Rest API (string value)
-      nexenta_rest_address = MANAGEMENT-NODE-IP
+      # IP address of NexentaStor host (string value)
+      nexenta_host=HOST-IP
 
       # Port for Rest API (integer value)
       nexenta_rest_port=8080
 
-      # Protocol used for Rest calls (string value, default=htpp)
-      nexenta_rest_protocol = http
-
-      # Username for NexentaEdge Rest (string value)
+      # Username for NexentaStor Rest (string value)
       nexenta_user=USERNAME
 
-      # Password for NexentaEdge Rest (string value)
+      # Password for NexentaStor Rest (string value)
       nexenta_password=PASSWORD
 
-      # Path to bucket containing iSCSI LUNs (string value)
-      nexenta_lun_container = CLUSTER/TENANT/BUCKET
+      # Pool on NexentaStor appliance (string value)
+      nexenta_volume=volume_name
 
-      # Name of pre-created iSCSI service (string value)
-      nexenta_iscsi_service = SERVICE-NAME
+      # Name of a parent Volume group where cinder created zvols will reside (string value)
+      nexenta_volume_group = iscsi
 
-      # IP address of the gateway node attached to iSCSI service above (string value)
-      nexenta_client_address = GATEWAY-NODE-IP
+   .. note::
 
+      nexenta_volume represents a zpool, which is called pool on NS 5.x appliance.
+      It must be pre-created before enabling the driver.
+
+      Volume group does not need to be pre-created, the driver will create it if does not exist.
 
 #. Save the changes to the ``/etc/cinder/cinder.conf`` file and
    restart the ``cinder-volume`` service.
 
+NFS driver
+~~~~~~~~~~
+The Nexenta NFS driver allows you to use NexentaStor appliance to store
+Compute volumes via NFS. Every Compute volume is represented by a single
+NFS file within a shared directory.
+
+While the NFS protocols standardize file access for users, they do not
+standardize administrative actions such as taking snapshots or replicating
+file systems. The OpenStack Volume Drivers bring a common interface to these
+operations. The Nexenta NFS driver implements these standard actions using the
+ZFS management plane that already is deployed on NexentaStor appliances.
+
+The NexentaStor appliance must be installed and configured according to the
+relevant Nexenta documentation. A single-parent file system must be created
+for all virtual disk directories supported for OpenStack.
+Create and export the directory on each NexentaStor appliance.
+
+You must configure these items for each NexentaStor appliance that the NFS
+volume driver controls:
+
+#. Make the following changes on the volume node ``/etc/cinder/cinder.conf``
+   file.
+
+   .. code-block:: ini
+
+      # Enable Nexenta NFS driver
+      volume_driver=cinder.volume.drivers.nexenta.ns5.nfs.NexentaNfsDriver
+
+      # IP address of NexentaStor host (string value)
+      nas_ip=HOST-IP
+
+      # Port for Rest API (integer value)
+      nexenta_rest_port=8080
+
+      # Path to parent filesystem (string value)
+      nas_share_path=POOL/FILESYSTEM
+
+      # Specify NFS version
+      nas_mount_options=vers=4
 
 Driver options
 ~~~~~~~~~~~~~~
