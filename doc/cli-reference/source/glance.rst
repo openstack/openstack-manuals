@@ -374,9 +374,7 @@ List images you can access.
 ``--human-readable``
   Print image size in a human-friendly format.
 
-``--sort-key {name,status,``
-
-``container_format,disk_format,size,id,created_at,updated_at}``
+``--sort-key {name,status,container_format,disk_format,size,id,created_at,updated_at}``
   Sort image list by specified field.
 
 ``--sort-dir {asc,desc}``
@@ -810,9 +808,7 @@ List images you can access.
 ``--tag <TAG>``
   Filter images by a user-defined tag.
 
-``--sort-key {name,status,``
-
-``container_format,disk_format,size,id,created_at,updated_at}``
+``--sort-key {name,status,container_format,disk_format,size,id,created_at,updated_at}``
   Sort image list by specified fields. May be used
   multiple times.
 

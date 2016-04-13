@@ -3124,9 +3124,7 @@ Scales cluster
 ``-h, --help``
   show this help message and exit
 
-``--instances <node-group-template:instances_count>``
-
-``[<node-group-template:instances_count> ...]``
+``--instances <node-group-template:instances_count> [<node-group-template:instances_count> ...]``
   Node group templates and number of their instances to
   be scale to [REQUIRED if JSON is not provided]
 
@@ -10105,9 +10103,7 @@ Store a secret in Barbican.
   "text/plain" is assumed to be UTF-8; required when
   :option:`--payload` is supplied.
 
-``--payload-content-encoding PAYLOAD_CONTENT_ENCODING,``
-
-``-e PAYLOAD_CONTENT_ENCODING``
+``--payload-content-encoding PAYLOAD_CONTENT_ENCODING, -e PAYLOAD_CONTENT_ENCODING``
   required if :option:`--payload-content-type` is "application
   /octet-stream".
 
@@ -10515,9 +10511,7 @@ Create a new server
   <id>:<type>:<size(GB)>:<delete_on_terminate> (optional
   extension)
 
-``--nic <net-id=net-uuid,``
-
-``v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>``
+``--nic <net-id=net-uuid,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>``
   Create a NIC on the server. Specify option multiple
   times to create multiple NICs. Either net-id or port-
   id must be provided, but not both. net-id: attach NIC
