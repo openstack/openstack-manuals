@@ -131,6 +131,11 @@ See http://docs.openstack.org/developer/openstack-projects.html.
 
 API Complete Reference pages (HTML)
 -----------------------------------
+
+We are migrating away from WADL in 2016. Refer to :ref:`api-docs` for details.
+Once the migration is complete, the API reference pages will be stored in the
+project repositories and we will have redirects in place for these API pages.
+
 **POM file location**: api-site/api-ref/pom.xml
 
 **Source file location**:

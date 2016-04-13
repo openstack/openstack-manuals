@@ -21,6 +21,7 @@ Contents
    writing-style.rst
    topic-structure.rst
    topic-tags.rst
+   api-guides.rst
    rst-conv.rst
    docbook-conv.rst
    docs-structure.rst
