@@ -13,3 +13,4 @@ while contributing to OpenStack documentation.
 
    additional-git-workflow/cherry-pick.rst
    additional-git-workflow/backport.rst
+   additional-git-workflow/rebase.rst
