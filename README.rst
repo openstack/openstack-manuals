@@ -116,6 +116,14 @@ If you would like to contribute to the documents, please see the
 `OpenStack Documentation contributor guide
 <http://docs.openstack.org/contributor-guide/>`_.
 
+Generated files
+---------------
+
+Some documentation files are generated using tools. These files include
+a ``do not edit`` header and should not be modified by hand. Please see
+`Generated files
+<http://docs.openstack.org/contributor-guide/tools-and-content-overview.html#Generated-files/>`_.
+
 
 Bugs
 ====
