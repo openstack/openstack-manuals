@@ -9,7 +9,7 @@ Networking service command-line client
 The neutron client is the command-line interface (CLI) for
 the Networking service API and its extensions.
 
-This chapter documents :command:`neutron` version ``4.1.0``.
+This chapter documents :command:`neutron` version ``4.2.0``.
 
 For help on a specific :command:`neutron` command, enter:
 
@@ -722,6 +722,21 @@ neutron API v2.0 commands
 ``qos-bandwidth-limit-rule-update``
   Update the given qos bandwidth limit rule.
 
+``qos-dscp-marking-rule-create``
+  Create a QoS DSCP marking rule.
+
+``qos-dscp-marking-rule-delete``
+  Delete a given qos dscp marking rule.
+
+``qos-dscp-marking-rule-list``
+  List all QoS DSCP marking rules belonging to the specified policy.
+
+``qos-dscp-marking-rule-show``
+  Show information about the given qos dscp marking rule.
+
+``qos-dscp-marking-rule-update``
+  Update the given QoS DSCP marking rule.
+
 ``qos-policy-create``
   Create a qos policy.
 
@@ -941,7 +956,7 @@ neutron API v2.0 commands
 .. _neutron_address-scope-create:
 
 neutron address-scope-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -980,7 +995,7 @@ Create an address scope for a given tenant.
 .. _neutron_address-scope-delete:
 
 neutron address-scope-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -1005,7 +1020,7 @@ Delete an address scope.
 .. _neutron_address-scope-show:
 
 neutron address-scope-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1040,7 +1055,7 @@ Show information about an address scope.
 .. _neutron_address-scope-update:
 
 neutron address-scope-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -1069,7 +1084,7 @@ Update an address scope.
 .. _neutron_agent-delete:
 
 neutron agent-delete
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1093,7 +1108,7 @@ Delete a given agent.
 .. _neutron_agent-show:
 
 neutron agent-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1128,7 +1143,7 @@ Show information of a given agent.
 .. _neutron_agent-update:
 
 neutron agent-update
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1160,7 +1175,7 @@ Updates the admin status and description for a specified agent.
 .. _neutron_bgp-dragent-list-hosting-speaker:
 
 neutron bgp-dragent-list-hosting-speaker
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 .. code-block:: console
 
@@ -1199,7 +1214,7 @@ List Dynamic Routing agents hosting a BGP speaker.
 .. _neutron_bgp-dragent-speaker-add:
 
 neutron bgp-dragent-speaker-add
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -1227,7 +1242,7 @@ Add a BGP speaker to a Dynamic Routing agent.
 .. _neutron_bgp-dragent-speaker-remove:
 
 neutron bgp-dragent-speaker-remove
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -1255,7 +1270,7 @@ Removes a BGP speaker from a Dynamic Routing agent.
 .. _neutron_bgp-peer-create:
 
 neutron bgp-peer-create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1303,7 +1318,7 @@ Create a BGP Peer.
 .. _neutron_bgp-peer-delete:
 
 neutron bgp-peer-delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1327,7 +1342,7 @@ Delete a BGP peer.
 .. _neutron_bgp-peer-show:
 
 neutron bgp-peer-show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1362,7 +1377,7 @@ Show information of a given BGP peer.
 .. _neutron_bgp-peer-update:
 
 neutron bgp-peer-update
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1394,7 +1409,7 @@ Update BGP Peer's information.
 .. _neutron_bgp-speaker-advertiseroute-list:
 
 neutron bgp-speaker-advertiseroute-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 .. code-block:: console
 
@@ -1450,7 +1465,7 @@ List routes advertised by a given BGP speaker.
 .. _neutron_bgp-speaker-create:
 
 neutron bgp-speaker-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1503,7 +1518,7 @@ Create a BGP Speaker.
 .. _neutron_bgp-speaker-delete:
 
 neutron bgp-speaker-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1527,7 +1542,7 @@ Delete a BGP speaker.
 .. _neutron_bgp-speaker-list-on-dragent:
 
 neutron bgp-speaker-list-on-dragent
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
@@ -1565,7 +1580,7 @@ List BGP speakers hosted by a Dynamic Routing agent.
 .. _neutron_bgp-speaker-network-add:
 
 neutron bgp-speaker-network-add
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -1593,7 +1608,7 @@ Add a network to the BGP speaker.
 .. _neutron_bgp-speaker-network-remove:
 
 neutron bgp-speaker-network-remove
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -1621,7 +1636,7 @@ Remove a network from the BGP speaker.
 .. _neutron_bgp-speaker-peer-add:
 
 neutron bgp-speaker-peer-add
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -1649,7 +1664,7 @@ Add a peer to the BGP speaker.
 .. _neutron_bgp-speaker-peer-remove:
 
 neutron bgp-speaker-peer-remove
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -1677,7 +1692,7 @@ Remove a peer from the BGP speaker.
 .. _neutron_bgp-speaker-show:
 
 neutron bgp-speaker-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1712,7 +1727,7 @@ Show information of a given BGP speaker.
 .. _neutron_bgp-speaker-update:
 
 neutron bgp-speaker-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1754,7 +1769,7 @@ Update BGP Speaker's information.
 .. _neutron_dhcp-agent-list-hosting-net:
 
 neutron dhcp-agent-list-hosting-net
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
@@ -1792,7 +1807,7 @@ List DHCP agents hosting a network.
 .. _neutron_dhcp-agent-network-add:
 
 neutron dhcp-agent-network-add
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -1820,7 +1835,7 @@ Add a network to a DHCP agent.
 .. _neutron_dhcp-agent-network-remove:
 
 neutron dhcp-agent-network-remove
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -1848,7 +1863,7 @@ Remove a network from a DHCP agent.
 .. _neutron_ext-show:
 
 neutron ext-show
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1883,7 +1898,7 @@ Show information of a given resource.
 .. _neutron_firewall-create:
 
 neutron firewall-create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1936,7 +1951,7 @@ Create a firewall.
 .. _neutron_firewall-delete:
 
 neutron firewall-delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1960,7 +1975,7 @@ Delete a given firewall.
 .. _neutron_firewall-policy-create:
 
 neutron firewall-policy-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -2008,7 +2023,7 @@ Create a firewall policy.
 .. _neutron_firewall-policy-delete:
 
 neutron firewall-policy-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -2033,7 +2048,7 @@ Delete a given firewall policy.
 .. _neutron_firewall-policy-insert-rule:
 
 neutron firewall-policy-insert-rule
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
@@ -2069,7 +2084,7 @@ Insert a rule into a given firewall policy.
 .. _neutron_firewall-policy-remove-rule:
 
 neutron firewall-policy-remove-rule
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
@@ -2097,7 +2112,7 @@ Remove a rule from a given firewall policy.
 .. _neutron_firewall-policy-show:
 
 neutron firewall-policy-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -2133,7 +2148,7 @@ Show information of a given firewall policy.
 .. _neutron_firewall-policy-update:
 
 neutron firewall-policy-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -2180,7 +2195,7 @@ Update a given firewall policy.
 .. _neutron_firewall-rule-delete:
 
 neutron firewall-rule-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -2205,7 +2220,7 @@ Delete a given firewall rule.
 .. _neutron_firewall-rule-show:
 
 neutron firewall-rule-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -2240,7 +2255,7 @@ Show information of a given firewall rule.
 .. _neutron_firewall-rule-update:
 
 neutron firewall-rule-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -2309,7 +2324,7 @@ Update a given firewall rule.
 .. _neutron_firewall-show:
 
 neutron firewall-show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -2344,7 +2359,7 @@ Show information of a given firewall.
 .. _neutron_firewall-update:
 
 neutron firewall-update
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -2394,7 +2409,7 @@ Update a given firewall.
 .. _neutron_flavor-associate:
 
 neutron flavor-associate
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -2423,7 +2438,7 @@ Associate a Neutron service flavor with a flavor profile.
 .. _neutron_flavor-create:
 
 neutron flavor-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -2466,7 +2481,7 @@ Create a Neutron service flavor.
 .. _neutron_flavor-delete:
 
 neutron flavor-delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -2490,7 +2505,7 @@ Delete a given Neutron service flavor.
 .. _neutron_flavor-disassociate:
 
 neutron flavor-disassociate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2519,7 +2534,7 @@ Disassociate a Neutron service flavor from a flavor profile.
 .. _neutron_flavor-profile-delete:
 
 neutron flavor-profile-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -2544,7 +2559,7 @@ Delete a given Neutron service flavor profile.
 .. _neutron_flavor-profile-show:
 
 neutron flavor-profile-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2580,7 +2595,7 @@ Show information about a given Neutron service flavor profile.
 .. _neutron_flavor-profile-update:
 
 neutron flavor-profile-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -2620,7 +2635,7 @@ Update a given Neutron service flavor profile.
 .. _neutron_flavor-show:
 
 neutron flavor-show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -2655,7 +2670,7 @@ Show information about a given Neutron service flavor.
 .. _neutron_flavor-update:
 
 neutron flavor-update
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -2691,7 +2706,7 @@ Update a Neutron service flavor.
 .. _neutron_floatingip-associate:
 
 neutron floatingip-associate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -2725,7 +2740,7 @@ Create a mapping between a floating IP and a fixed IP.
 .. _neutron_floatingip-create:
 
 neutron floatingip-create
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -2733,7 +2748,9 @@ neutron floatingip-create
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     [--request-format {json}]
-                                    [--tenant-id TENANT_ID] [--port-id PORT_ID]
+                                    [--tenant-id TENANT_ID]
+                                    [--description DESCRIPTION]
+                                    [--port-id PORT_ID]
                                     [--fixed-ip-address FIXED_IP_ADDRESS]
                                     [--floating-ip-address FLOATING_IP_ADDRESS]
                                     [--subnet SUBNET_ID]
@@ -2759,6 +2776,9 @@ Create a floating IP for a given tenant.
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
+``--description DESCRIPTION``
+  Description of the floating IP.
+
 ``--port-id PORT_ID``
   ID of the port to be associated with the floating IP.
 
@@ -2783,7 +2803,7 @@ Create a floating IP for a given tenant.
 .. _neutron_floatingip-delete:
 
 neutron floatingip-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -2807,7 +2827,7 @@ Delete a given floating IP.
 .. _neutron_floatingip-disassociate:
 
 neutron floatingip-disassociate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -2832,7 +2852,7 @@ Remove a mapping from a floating IP to a fixed IP.
 .. _neutron_floatingip-show:
 
 neutron floatingip-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -2867,7 +2887,7 @@ Show information of a given floating IP.
 .. _neutron_gateway-device-create:
 
 neutron gateway-device-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -2923,7 +2943,7 @@ Create a network gateway device.
 .. _neutron_gateway-device-delete:
 
 neutron gateway-device-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -2948,7 +2968,7 @@ Delete a given network gateway device.
 .. _neutron_gateway-device-show:
 
 neutron gateway-device-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2984,7 +3004,7 @@ Show information for a given network gateway device.
 .. _neutron_gateway-device-update:
 
 neutron gateway-device-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -3036,7 +3056,7 @@ Update a network gateway device.
 .. _neutron_ipsec-site-connection-delete:
 
 neutron ipsec-site-connection-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
@@ -3061,7 +3081,7 @@ Delete a given IPsec site connection.
 .. _neutron_ipsec-site-connection-show:
 
 neutron ipsec-site-connection-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -3098,7 +3118,7 @@ Show information of a given IPsec site connection.
 .. _neutron_ipsec-site-connection-update:
 
 neutron ipsec-site-connection-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
@@ -3143,7 +3163,7 @@ Update a given IPsec site connection.
 .. _neutron_l3-agent-list-hosting-router:
 
 neutron l3-agent-list-hosting-router
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
@@ -3182,7 +3202,7 @@ List L3 agents hosting a router.
 .. _neutron_l3-agent-router-add:
 
 neutron l3-agent-router-add
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -3210,7 +3230,7 @@ Add a router to a L3 agent.
 .. _neutron_l3-agent-router-remove:
 
 neutron l3-agent-router-remove
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -3238,7 +3258,7 @@ Remove a router from a L3 agent.
 .. _neutron_lb-agent-hosting-pool:
 
 neutron lb-agent-hosting-pool
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -3277,7 +3297,7 @@ schedulers
 .. _neutron_lb-healthmonitor-associate:
 
 neutron lb-healthmonitor-associate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -3306,7 +3326,7 @@ Create a mapping between a health monitor and a pool.
 .. _neutron_lb-healthmonitor-delete:
 
 neutron lb-healthmonitor-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -3331,7 +3351,7 @@ Delete a given health monitor.
 .. _neutron_lb-healthmonitor-disassociate:
 
 neutron lb-healthmonitor-disassociate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 .. code-block:: console
 
@@ -3360,7 +3380,7 @@ Remove a mapping from a health monitor to a pool.
 .. _neutron_lb-healthmonitor-show:
 
 neutron lb-healthmonitor-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -3396,7 +3416,7 @@ Show information of a given health monitor.
 .. _neutron_lb-healthmonitor-update:
 
 neutron lb-healthmonitor-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -3421,7 +3441,7 @@ Update a given health monitor.
 .. _neutron_lb-member-create:
 
 neutron lb-member-create
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -3469,7 +3489,7 @@ Create a member.
 .. _neutron_lb-member-delete:
 
 neutron lb-member-delete
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -3493,7 +3513,7 @@ Delete a given member.
 .. _neutron_lb-member-show:
 
 neutron lb-member-show
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -3528,7 +3548,7 @@ Show information of a given member.
 .. _neutron_lb-member-update:
 
 neutron lb-member-update
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -3552,7 +3572,7 @@ Update a given member.
 .. _neutron_lb-pool-delete:
 
 neutron lb-pool-delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -3576,7 +3596,7 @@ Delete a given pool.
 .. _neutron_lb-pool-list-on-agent:
 
 neutron lb-pool-list-on-agent
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -3613,7 +3633,7 @@ List the pools on a loadbalancer agent.
 .. _neutron_lb-pool-show:
 
 neutron lb-pool-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -3648,7 +3668,7 @@ Show information of a given pool.
 .. _neutron_lb-pool-stats:
 
 neutron lb-pool-stats
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -3683,7 +3703,7 @@ Retrieve stats for a given pool.
 .. _neutron_lb-pool-update:
 
 neutron lb-pool-update
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -3707,7 +3727,7 @@ Update a given pool.
 .. _neutron_lb-vip-create:
 
 neutron lb-vip-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -3770,7 +3790,7 @@ Create a vip.
 .. _neutron_lb-vip-delete:
 
 neutron lb-vip-delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -3794,7 +3814,7 @@ Delete a given vip.
 .. _neutron_lb-vip-show:
 
 neutron lb-vip-show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -3829,7 +3849,7 @@ Show information of a given vip.
 .. _neutron_lb-vip-update:
 
 neutron lb-vip-update
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -3853,7 +3873,7 @@ Update a given vip.
 .. _neutron_lbaas-agent-hosting-loadbalancer:
 
 neutron lbaas-agent-hosting-loadbalancer
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 .. code-block:: console
 
@@ -3894,7 +3914,7 @@ schedulers
 .. _neutron_lbaas-healthmonitor-delete:
 
 neutron lbaas-healthmonitor-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -3919,7 +3939,7 @@ LBaaS v2 Delete a given healthmonitor.
 .. _neutron_lbaas-healthmonitor-show:
 
 neutron lbaas-healthmonitor-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
@@ -3956,7 +3976,7 @@ LBaaS v2 Show information of a given healthmonitor.
 .. _neutron_lbaas-healthmonitor-update:
 
 neutron lbaas-healthmonitor-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -3985,7 +4005,7 @@ LBaaS v2 Update a given healthmonitor.
 .. _neutron_lbaas-l7policy-delete:
 
 neutron lbaas-l7policy-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -4009,7 +4029,7 @@ LBaaS v2 Delete a given L7 policy.
 .. _neutron_lbaas-l7policy-show:
 
 neutron lbaas-l7policy-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -4045,7 +4065,7 @@ LBaaS v2 Show information of a given L7 policy.
 .. _neutron_lbaas-l7policy-update:
 
 neutron lbaas-l7policy-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -4103,7 +4123,7 @@ LBaaS v2 Update a given L7 policy.
 .. _neutron_lbaas-l7rule-create:
 
 neutron lbaas-l7rule-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -4160,7 +4180,7 @@ LBaaS v2 Create L7 rule.
 .. _neutron_lbaas-l7rule-delete:
 
 neutron lbaas-l7rule-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -4188,7 +4208,7 @@ LBaaS v2 Delete a given L7 rule.
 .. _neutron_lbaas-l7rule-list:
 
 neutron lbaas-l7rule-list
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -4241,7 +4261,7 @@ LBaaS v2 List L7 rules that belong to a given L7 policy.
 .. _neutron_lbaas-l7rule-show:
 
 neutron lbaas-l7rule-show
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -4279,7 +4299,7 @@ LBaaS v2 Show information of a given rule.
 .. _neutron_lbaas-l7rule-update:
 
 neutron lbaas-l7rule-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -4332,7 +4352,7 @@ LBaaS v2 Update a given L7 rule.
 .. _neutron_lbaas-listener-delete:
 
 neutron lbaas-listener-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -4356,7 +4376,7 @@ LBaaS v2 Delete a given listener.
 .. _neutron_lbaas-listener-show:
 
 neutron lbaas-listener-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -4392,7 +4412,7 @@ LBaaS v2 Show information of a given listener.
 .. _neutron_lbaas-listener-update:
 
 neutron lbaas-listener-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -4416,7 +4436,7 @@ LBaaS v2 Update a given listener.
 .. _neutron_lbaas-loadbalancer-create:
 
 neutron lbaas-loadbalancer-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -4472,7 +4492,7 @@ LBaaS v2 Create a loadbalancer.
 .. _neutron_lbaas-loadbalancer-delete:
 
 neutron lbaas-loadbalancer-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -4497,7 +4517,7 @@ LBaaS v2 Delete a given loadbalancer.
 .. _neutron_lbaas-loadbalancer-list-on-agent:
 
 neutron lbaas-loadbalancer-list-on-agent
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 .. code-block:: console
 
@@ -4536,7 +4556,7 @@ List the loadbalancers on a loadbalancer v2 agent.
 .. _neutron_lbaas-loadbalancer-show:
 
 neutron lbaas-loadbalancer-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -4573,7 +4593,7 @@ LBaaS v2 Show information of a given loadbalancer.
 .. _neutron_lbaas-loadbalancer-stats:
 
 neutron lbaas-loadbalancer-stats
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
@@ -4610,7 +4630,7 @@ Retrieve stats for a given loadbalancer.
 .. _neutron_lbaas-loadbalancer-status:
 
 neutron lbaas-loadbalancer-status
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -4636,7 +4656,7 @@ tree, and the table format does not support this type of data.
 .. _neutron_lbaas-loadbalancer-update:
 
 neutron lbaas-loadbalancer-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -4661,7 +4681,7 @@ LBaaS v2 Update a given loadbalancer.
 .. _neutron_lbaas-member-create:
 
 neutron lbaas-member-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -4716,7 +4736,7 @@ LBaaS v2 Create a member.
 .. _neutron_lbaas-member-delete:
 
 neutron lbaas-member-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -4743,7 +4763,7 @@ LBaaS v2 Delete a given member.
 .. _neutron_lbaas-member-list:
 
 neutron lbaas-member-list
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -4796,7 +4816,7 @@ LBaaS v2 List members that belong to a given pool.
 .. _neutron_lbaas-member-show:
 
 neutron lbaas-member-show
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -4834,7 +4854,7 @@ LBaaS v2 Show information of a given member.
 .. _neutron_lbaas-member-update:
 
 neutron lbaas-member-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -4873,7 +4893,7 @@ LBaaS v2 Update a given member.
 .. _neutron_lbaas-pool-delete:
 
 neutron lbaas-pool-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -4897,7 +4917,7 @@ LBaaS v2 Delete a given pool.
 .. _neutron_lbaas-pool-show:
 
 neutron lbaas-pool-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -4932,7 +4952,7 @@ LBaaS v2 Show information of a given pool.
 .. _neutron_lbaas-pool-update:
 
 neutron lbaas-pool-update
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -4956,7 +4976,7 @@ LBaaS v2 Update a given pool.
 .. _neutron_meter-label-create:
 
 neutron meter-label-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -4995,7 +5015,7 @@ Create a metering label for a given tenant.
 .. _neutron_meter-label-delete:
 
 neutron meter-label-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -5020,7 +5040,7 @@ Delete a given metering label.
 .. _neutron_meter-label-rule-create:
 
 neutron meter-label-rule-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -5065,7 +5085,7 @@ Create a metering label rule for a given label.
 .. _neutron_meter-label-rule-delete:
 
 neutron meter-label-rule-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -5090,7 +5110,7 @@ Delete a given metering label.
 .. _neutron_meter-label-rule-show:
 
 neutron meter-label-rule-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -5126,7 +5146,7 @@ Show information of a given metering label rule.
 .. _neutron_meter-label-show:
 
 neutron meter-label-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -5161,7 +5181,7 @@ Show information of a given metering label.
 .. _neutron_net-create:
 
 neutron net-create
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -5173,6 +5193,7 @@ neutron net-create
                              [--provider:physical_network <physical_network_name>]
                              [--provider:segmentation_id <segmentation_id>]
                              [--vlan-transparent {True,False}]
+                             [--description DESCRIPTION]
                              [--qos-policy QOS_POLICY]
                              [--availability-zone-hint AVAILABILITY_ZONE]
                              [--dns-domain DNS_DOMAIN]
@@ -5217,6 +5238,9 @@ Create a network for a given tenant.
 ``--vlan-transparent {True,False}``
   Create a vlan transparent network.
 
+``--description DESCRIPTION``
+  Description of network.
+
 ``--qos-policy QOS_POLICY``
   Attach QoS policy ID or name to the resource.
 
@@ -5232,7 +5256,7 @@ Create a network for a given tenant.
 .. _neutron_net-delete:
 
 neutron net-delete
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -5256,7 +5280,7 @@ Delete a given network.
 .. _neutron_net-gateway-connect:
 
 neutron net-gateway-connect
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -5294,7 +5318,7 @@ Add an internal network interface to a router.
 .. _neutron_net-gateway-create:
 
 neutron net-gateway-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -5332,7 +5356,7 @@ Create a network gateway.
 .. _neutron_net-gateway-delete:
 
 neutron net-gateway-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -5357,7 +5381,7 @@ Delete a given network gateway.
 .. _neutron_net-gateway-disconnect:
 
 neutron net-gateway-disconnect
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -5395,7 +5419,7 @@ Remove a network from a network gateway.
 .. _neutron_net-gateway-show:
 
 neutron net-gateway-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -5430,7 +5454,7 @@ Show information of a given network gateway.
 .. _neutron_net-gateway-update:
 
 neutron net-gateway-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -5455,7 +5479,7 @@ Update the name for a network gateway.
 .. _neutron_net-ip-availability-show:
 
 neutron net-ip-availability-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
@@ -5484,7 +5508,7 @@ Show IP usage of specific network
 .. _neutron_net-list-on-dhcp-agent:
 
 neutron net-list-on-dhcp-agent
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -5545,7 +5569,7 @@ List the networks on a DHCP agent.
 .. _neutron_net-show:
 
 neutron net-show
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -5580,7 +5604,7 @@ Show information of a given network.
 .. _neutron_net-update:
 
 neutron net-update
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -5621,7 +5645,7 @@ Update network's information.
 .. _neutron_port-create:
 
 neutron port-create
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -5629,6 +5653,7 @@ neutron port-create
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX] [--request-format {json}]
                               [--tenant-id TENANT_ID] [--name NAME]
+                              [--description DESCRIPTION]
                               [--fixed-ip subnet_id=SUBNET,ip_address=IP_ADDR]
                               [--device-id DEVICE_ID]
                               [--device-owner DEVICE_OWNER] [--admin-state-down]
@@ -5662,6 +5687,9 @@ Create a port for a given tenant.
 
 ``--name NAME``
   Name of this port.
+
+``--description DESCRIPTION``
+  Description of this port.
 
 ``--fixed-ip``
   subnet_id=SUBNET,ip_address=IP_ADDR
@@ -5717,7 +5745,7 @@ Create a port for a given tenant.
 .. _neutron_port-delete:
 
 neutron port-delete
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -5741,7 +5769,7 @@ Delete a given port.
 .. _neutron_port-show:
 
 neutron port-show
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -5776,11 +5804,12 @@ Show information of a given port.
 .. _neutron_port-update:
 
 neutron port-update
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
    usage: neutron port-update [-h] [--request-format {json}] [--name NAME]
+                              [--description DESCRIPTION]
                               [--fixed-ip subnet_id=SUBNET,ip_address=IP_ADDR]
                               [--device-id DEVICE_ID]
                               [--device-owner DEVICE_OWNER]
@@ -5810,6 +5839,9 @@ Update port's information.
 
 ``--name NAME``
   Name of this port.
+
+``--description DESCRIPTION``
+  Description of this port.
 
 ``--fixed-ip``
   subnet_id=SUBNET,ip_address=IP_ADDR
@@ -5863,7 +5895,7 @@ Update port's information.
 .. _neutron_purge:
 
 neutron purge
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
@@ -5886,7 +5918,7 @@ neutron purge
 .. _neutron_qos-bandwidth-limit-rule-create:
 
 neutron qos-bandwidth-limit-rule-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 .. code-block:: console
 
@@ -5928,7 +5960,7 @@ Create a qos bandwidth limit rule.
 .. _neutron_qos-bandwidth-limit-rule-delete:
 
 neutron qos-bandwidth-limit-rule-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 .. code-block:: console
 
@@ -5956,7 +5988,7 @@ Delete a given qos bandwidth limit rule.
 .. _neutron_qos-bandwidth-limit-rule-list:
 
 neutron qos-bandwidth-limit-rule-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 .. code-block:: console
 
@@ -6012,7 +6044,7 @@ List all qos bandwidth limit rules belonging to the specified policy.
 .. _neutron_qos-bandwidth-limit-rule-show:
 
 neutron qos-bandwidth-limit-rule-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 .. code-block:: console
 
@@ -6053,7 +6085,7 @@ Show information about the given qos bandwidth limit rule.
 .. _neutron_qos-bandwidth-limit-rule-update:
 
 neutron qos-bandwidth-limit-rule-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 .. code-block:: console
 
@@ -6086,10 +6118,205 @@ Update the given qos bandwidth limit rule.
 ``--max-burst-kbps MAX_BURST_KBPS``
   max burst bandwidth in kbps.
 
+.. _neutron_qos-dscp-marking-rule-create:
+
+neutron qos-dscp-marking-rule-create
+------------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-dscp-marking-rule-create [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width <integer>]
+                                               [--noindent] [--prefix PREFIX]
+                                               [--request-format {json}]
+                                               [--tenant-id TENANT_ID]
+                                               --dscp-mark DSCP_MARK
+                                               QOS_POLICY
+
+Create a QoS DSCP marking rule.
+
+**Positional arguments:**
+
+``QOS_POLICY``
+  ID or name of the QoS policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--dscp-mark DSCP_MARK``
+  DSCP mark: value can be 0, even numbers from 8-56,
+  excluding 42, 44, 50, 52, and 54.
+
+.. _neutron_qos-dscp-marking-rule-delete:
+
+neutron qos-dscp-marking-rule-delete
+------------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-dscp-marking-rule-delete [-h] [--request-format {json}]
+                                               DSCP_MARKING_RULE QOS_POLICY
+
+Delete a given qos dscp marking rule.
+
+**Positional arguments:**
+
+``DSCP_MARKING_RULE``
+  ID of dscp_marking_rule to delete.
+
+``QOS_POLICY``
+  ID or name of the QoS policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_qos-dscp-marking-rule-list:
+
+neutron qos-dscp-marking-rule-list
+----------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-dscp-marking-rule-list [-h]
+                                             [-f {csv,html,json,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent]
+                                             [--quote {all,minimal,none,nonnumeric}]
+                                             [--request-format {json}] [-D]
+                                             [-F FIELD] [-P SIZE]
+                                             [--sort-key FIELD]
+                                             [--sort-dir {asc,desc}]
+                                             QOS_POLICY
+
+List all QoS DSCP marking rules belonging to the specified policy.
+
+**Positional arguments:**
+
+``QOS_POLICY``
+  ID or name of the QoS policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
+.. _neutron_qos-dscp-marking-rule-show:
+
+neutron qos-dscp-marking-rule-show
+----------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-dscp-marking-rule-show [-h]
+                                             [-f {html,json,shell,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent] [--prefix PREFIX]
+                                             [--request-format {json}] [-D]
+                                             [-F FIELD]
+                                             DSCP_MARKING_RULE QOS_POLICY
+
+Show information about the given qos dscp marking rule.
+
+**Positional arguments:**
+
+``DSCP_MARKING_RULE``
+  ID of dscp_marking_rule to look up.
+
+``QOS_POLICY``
+  ID or name of the QoS policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _neutron_qos-dscp-marking-rule-update:
+
+neutron qos-dscp-marking-rule-update
+------------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-dscp-marking-rule-update [-h] [--request-format {json}]
+                                               --dscp-mark DSCP_MARK
+                                               DSCP_MARKING_RULE QOS_POLICY
+
+Update the given QoS DSCP marking rule.
+
+**Positional arguments:**
+
+``DSCP_MARKING_RULE``
+  ID of dscp_marking_rule to update.
+
+``QOS_POLICY``
+  ID or name of the QoS policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--dscp-mark DSCP_MARK``
+  DSCP mark: value can be 0, even numbers from 8-56,
+  excluding 42, 44, 50, 52, and 54.
+
 .. _neutron_qos-policy-create:
 
 neutron qos-policy-create
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -6129,7 +6356,7 @@ Create a qos policy.
 .. _neutron_qos-policy-delete:
 
 neutron qos-policy-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -6153,7 +6380,7 @@ Delete a given qos policy.
 .. _neutron_qos-policy-show:
 
 neutron qos-policy-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -6188,7 +6415,7 @@ Show information of a given qos policy.
 .. _neutron_qos-policy-update:
 
 neutron qos-policy-update
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -6224,7 +6451,7 @@ Update a given qos policy.
 .. _neutron_queue-create:
 
 neutron queue-create
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -6273,7 +6500,7 @@ Create a queue.
 .. _neutron_queue-delete:
 
 neutron queue-delete
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -6297,7 +6524,7 @@ Delete a given queue.
 .. _neutron_queue-show:
 
 neutron queue-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -6332,7 +6559,7 @@ Show information of a given queue.
 .. _neutron_rbac-create:
 
 neutron rbac-create
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -6375,7 +6602,7 @@ Create a RBAC policy for a given tenant.
 .. _neutron_rbac-delete:
 
 neutron rbac-delete
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -6399,7 +6626,7 @@ Delete a RBAC policy.
 .. _neutron_rbac-show:
 
 neutron rbac-show
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -6434,7 +6661,7 @@ Show information of a given RBAC policy.
 .. _neutron_rbac-update:
 
 neutron rbac-update
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -6464,7 +6691,7 @@ Update RBAC policy for given tenant.
 .. _neutron_router-create:
 
 neutron router-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -6472,6 +6699,7 @@ neutron router-create
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--request-format {json}]
                                 [--tenant-id TENANT_ID] [--admin-state-down]
+                                [--description DESCRIPTION]
                                 [--distributed {True,False}] [--ha {True,False}]
                                 [--availability-zone-hint AVAILABILITY_ZONE]
                                 NAME
@@ -6497,6 +6725,9 @@ Create a router for a given tenant.
 ``--admin-state-down``
   Set admin state up to false.
 
+``--description DESCRIPTION``
+  Description of router.
+
 ``--distributed {True,False}``
   Create a distributed router.
 
@@ -6511,7 +6742,7 @@ Create a router for a given tenant.
 .. _neutron_router-delete:
 
 neutron router-delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -6535,7 +6766,7 @@ Delete a given router.
 .. _neutron_router-gateway-clear:
 
 neutron router-gateway-clear
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -6559,7 +6790,7 @@ Remove an external network gateway from a router.
 .. _neutron_router-gateway-set:
 
 neutron router-gateway-set
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -6599,7 +6830,7 @@ Set the external network gateway for a router.
 .. _neutron_router-interface-add:
 
 neutron router-interface-add
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -6630,7 +6861,7 @@ Add an internal network interface to a router.
 .. _neutron_router-interface-delete:
 
 neutron router-interface-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -6661,7 +6892,7 @@ Remove an internal network interface from a router.
 .. _neutron_router-list-on-l3-agent:
 
 neutron router-list-on-l3-agent
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -6699,7 +6930,7 @@ List the routers on a L3 agent.
 .. _neutron_router-port-list:
 
 neutron router-port-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -6752,7 +6983,7 @@ List ports that belong to a given tenant, with specified router.
 .. _neutron_router-show:
 
 neutron router-show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -6787,11 +7018,12 @@ Show information of a given router.
 .. _neutron_router-update:
 
 neutron router-update
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
    usage: neutron router-update [-h] [--request-format {json}] [--name NAME]
+                                [--description DESCRIPTION]
                                 [--admin-state-up {True,False}]
                                 [--distributed {True,False}]
                                 [--route destination=CIDR,nexthop=IP_ADDR | --no-routes]
@@ -6815,6 +7047,9 @@ Update router's information.
 ``--name NAME``
   Name of this router.
 
+``--description DESCRIPTION``
+  Description of router.
+
 ``--admin-state-up {True,False}``
   Specify the administrative state of the router (True
   meaning "Up")
@@ -6834,7 +7069,7 @@ Update router's information.
 .. _neutron_security-group-create:
 
 neutron security-group-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -6871,7 +7106,7 @@ Create a security group.
 .. _neutron_security-group-delete:
 
 neutron security-group-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -6896,7 +7131,7 @@ Delete a given security group.
 .. _neutron_security-group-rule-create:
 
 neutron security-group-rule-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -6906,6 +7141,7 @@ neutron security-group-rule-create
                                              [--noindent] [--prefix PREFIX]
                                              [--request-format {json}]
                                              [--tenant-id TENANT_ID]
+                                             [--description DESCRIPTION]
                                              [--direction {ingress,egress}]
                                              [--ethertype ETHERTYPE]
                                              [--protocol PROTOCOL]
@@ -6933,6 +7169,9 @@ Create a security group rule.
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
+``--description DESCRIPTION``
+  Description of security group rule.
+
 ``--direction {ingress,egress}``
   Direction of traffic: ingress/egress.
 
@@ -6958,7 +7197,7 @@ Create a security group rule.
 .. _neutron_security-group-rule-delete:
 
 neutron security-group-rule-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -6983,7 +7222,7 @@ Delete a given security group rule.
 .. _neutron_security-group-rule-show:
 
 neutron security-group-rule-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
@@ -7020,7 +7259,7 @@ Show information of a given security group rule.
 .. _neutron_security-group-show:
 
 neutron security-group-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -7056,7 +7295,7 @@ Show information of a given security group.
 .. _neutron_security-group-update:
 
 neutron security-group-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -7088,7 +7327,7 @@ Update a given security group.
 .. _neutron_subnet-create:
 
 neutron subnet-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -7096,6 +7335,7 @@ neutron subnet-create
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--request-format {json}]
                                 [--tenant-id TENANT_ID] [--name NAME]
+                                [--description DESCRIPTION]
                                 [--gateway GATEWAY_IP | --no-gateway]
                                 [--allocation-pool start=IP_ADDR,end=IP_ADDR]
                                 [--host-route destination=CIDR,nexthop=IP_ADDR]
@@ -7133,11 +7373,14 @@ Create a subnet for a given tenant.
 ``--name NAME``
   Name of this subnet.
 
+``--description DESCRIPTION``
+  Description of this subnet.
+
 ``--gateway GATEWAY_IP``
   Gateway IP of this subnet.
 
 ``--no-gateway``
-  No distribution of gateway.
+  Do not configure a gateway for this subnet.
 
 ``--allocation-pool``
   start=IP_ADDR,end=IP_ADDR
@@ -7182,7 +7425,7 @@ Create a subnet for a given tenant.
 .. _neutron_subnet-delete:
 
 neutron subnet-delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -7206,7 +7449,7 @@ Delete a given subnet.
 .. _neutron_subnet-show:
 
 neutron subnet-show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -7241,11 +7484,12 @@ Show information of a given subnet.
 .. _neutron_subnet-update:
 
 neutron subnet-update
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
    usage: neutron subnet-update [-h] [--request-format {json}] [--name NAME]
+                                [--description DESCRIPTION]
                                 [--gateway GATEWAY_IP | --no-gateway]
                                 [--allocation-pool start=IP_ADDR,end=IP_ADDR]
                                 [--host-route destination=CIDR,nexthop=IP_ADDR]
@@ -7271,11 +7515,14 @@ Update subnet's information.
 ``--name NAME``
   Name of this subnet.
 
+``--description DESCRIPTION``
+  Description of this subnet.
+
 ``--gateway GATEWAY_IP``
   Gateway IP of this subnet.
 
 ``--no-gateway``
-  No distribution of gateway.
+  Do not configure a gateway for this subnet.
 
 ``--allocation-pool``
   start=IP_ADDR,end=IP_ADDR
@@ -7299,7 +7546,7 @@ Update subnet's information.
 .. _neutron_subnetpool-create:
 
 neutron subnetpool-create
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -7308,6 +7555,7 @@ neutron subnetpool-create
                                     [--noindent] [--prefix PREFIX]
                                     [--request-format {json}]
                                     [--tenant-id TENANT_ID]
+                                    [--description DESCRIPTION]
                                     [--min-prefixlen MIN_PREFIXLEN]
                                     [--max-prefixlen MAX_PREFIXLEN]
                                     [--default-prefixlen DEFAULT_PREFIXLEN]
@@ -7333,6 +7581,9 @@ Create a subnetpool for a given tenant.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
+
+``--description DESCRIPTION``
+  Description of subnetpool.
 
 ``--min-prefixlen MIN_PREFIXLEN``
   Subnetpool minimum prefix length.
@@ -7361,7 +7612,7 @@ Create a subnetpool for a given tenant.
 .. _neutron_subnetpool-delete:
 
 neutron subnetpool-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -7385,7 +7636,7 @@ Delete a given subnetpool.
 .. _neutron_subnetpool-show:
 
 neutron subnetpool-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -7420,11 +7671,12 @@ Show information of a given subnetpool.
 .. _neutron_subnetpool-update:
 
 neutron subnetpool-update
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
    usage: neutron subnetpool-update [-h] [--request-format {json}]
+                                    [--description DESCRIPTION]
                                     [--min-prefixlen MIN_PREFIXLEN]
                                     [--max-prefixlen MAX_PREFIXLEN]
                                     [--default-prefixlen DEFAULT_PREFIXLEN]
@@ -7447,6 +7699,9 @@ Update subnetpool's information.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+``--description DESCRIPTION``
+  Description of subnetpool.
 
 ``--min-prefixlen MIN_PREFIXLEN``
   Subnetpool minimum prefix length.
@@ -7478,7 +7733,7 @@ Update subnetpool's information.
 .. _neutron_vpn-endpoint-group-delete:
 
 neutron vpn-endpoint-group-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -7503,7 +7758,7 @@ Delete a given VPN endpoint group.
 .. _neutron_vpn-endpoint-group-show:
 
 neutron vpn-endpoint-group-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -7540,7 +7795,7 @@ Show a specific VPN endpoint group.
 .. _neutron_vpn-endpoint-group-update:
 
 neutron vpn-endpoint-group-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -7573,7 +7828,7 @@ Update a given VPN endpoint group.
 .. _neutron_vpn-ikepolicy-create:
 
 neutron vpn-ikepolicy-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -7637,7 +7892,7 @@ Create an IKE policy.
 .. _neutron_vpn-ikepolicy-delete:
 
 neutron vpn-ikepolicy-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -7661,7 +7916,7 @@ Delete a given IKE policy.
 .. _neutron_vpn-ikepolicy-show:
 
 neutron vpn-ikepolicy-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -7696,7 +7951,7 @@ Show information of a given IKE policy.
 .. _neutron_vpn-ikepolicy-update:
 
 neutron vpn-ikepolicy-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -7728,7 +7983,7 @@ Update a given IKE policy.
 .. _neutron_vpn-ipsecpolicy-create:
 
 neutron vpn-ipsecpolicy-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -7792,7 +8047,7 @@ Create an IPsec policy.
 .. _neutron_vpn-ipsecpolicy-delete:
 
 neutron vpn-ipsecpolicy-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -7817,7 +8072,7 @@ Delete a given IPsec policy.
 .. _neutron_vpn-ipsecpolicy-show:
 
 neutron vpn-ipsecpolicy-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -7853,7 +8108,7 @@ Show information of a given IPsec policy.
 .. _neutron_vpn-ipsecpolicy-update:
 
 neutron vpn-ipsecpolicy-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -7885,7 +8140,7 @@ Update a given IPsec policy.
 .. _neutron_vpn-service-create:
 
 neutron vpn-service-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -7931,7 +8186,7 @@ Create a VPN service.
 .. _neutron_vpn-service-delete:
 
 neutron vpn-service-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -7955,7 +8210,7 @@ Delete a given VPN service.
 .. _neutron_vpn-service-show:
 
 neutron vpn-service-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -7990,7 +8245,7 @@ Show information of a given VPN service.
 .. _neutron_vpn-service-update:
 
 neutron vpn-service-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
