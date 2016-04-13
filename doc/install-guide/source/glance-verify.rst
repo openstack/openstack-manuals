@@ -16,14 +16,6 @@ For information about how to manage images, see the
 
    Perform these commands on the controller node.
 
-#. In each client environment script, configure the Image service
-   client to use API version 2:
-
-   .. code-block:: console
-
-      $ echo "export OS_IMAGE_API_VERSION=2" \
-        | tee -a admin-openrc demo-openrc
-
 #. Source the ``admin`` credentials to gain access to
    admin-only CLI commands:
 
