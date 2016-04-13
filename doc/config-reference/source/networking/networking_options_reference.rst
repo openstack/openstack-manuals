@@ -44,6 +44,11 @@ Linux bridge Agent configuration options
 
 .. include:: ../tables/neutron-linuxbridge_agent.rst
 
+MacVTap Agent configuration options
+----------------------------------------
+
+.. include:: ../tables/neutron-macvtap_agent.rst
+
 NEC configuration options
 -------------------------
 

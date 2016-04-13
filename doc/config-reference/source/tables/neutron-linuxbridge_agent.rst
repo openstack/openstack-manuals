@@ -42,7 +42,3 @@
      - (Integer) TTL for vxlan interface protocol packets.
    * - ``vxlan_group`` = ``224.0.0.1``
      - (String) Multicast group(s) for vxlan interface. A range of group addresses may be specified by using CIDR notation. Specifying a range allows different VNIs to use different group addresses, reducing or eliminating spurious broadcast traffic to the tunnel endpoints. To reserve a unique group for each possible (24-bit) VNI, use a /8 such as 239.0.0.0/8. This setting must be the same on all the agents.
-   * - **[macvtap]**
-     -
-   * - ``physical_interface_mappings`` =
-     - (List) Comma-separated list of <physical_network>:<physical_interface> tuples mapping physical network names to the agent's node-specific physical network interfaces to be used for flat and VLAN networks. All physical networks listed in network_vlan_ranges on the server should have mappings to appropriate interfaces on each agent.
