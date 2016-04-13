@@ -1406,9 +1406,7 @@ Boot a new server.
   Send arbitrary key/value pairs to the
   scheduler for custom use.
 
-``--nic <net-id=net-uuid,``
-
-``net-name=network-name,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>``
+``--nic <net-id=net-uuid,net-name=network-name,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>``
   Create a NIC on the server. Specify option
   multiple times to create multiple NICs. net-
   id: attach NIC to network with this UUID net-
