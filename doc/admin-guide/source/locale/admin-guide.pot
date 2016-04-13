@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-07 06:47+0000\n"
+"POT-Creation-Date: 2016-04-13 06:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5343,8 +5343,8 @@ msgstr ""
 # #-#-#-#-#  telemetry-measurements.pot (Administrator Guide 0.9)  #-#-#-#-#
 #: ../cli_set_compute_quotas.rst:17 ../compute-flavors.rst:34
 #: ../compute-manage-volumes.rst:14 ../compute-networking-nova.rst:310
-#: ../compute-networking-nova.rst:507 ../compute-remote-console-access.rst:36
-#: ../compute-remote-console-access.rst:153 ../compute-security.rst:105
+#: ../compute-networking-nova.rst:507 ../compute-remote-console-access.rst:50
+#: ../compute-remote-console-access.rst:135 ../compute-security.rst:104
 #: ../database.rst:119 ../database.rst:159 ../networking_adv-features.rst:49
 #: ../networking_adv-features.rst:132 ../networking_adv-features.rst:714
 #: ../networking_arch.rst:29 ../networking_introduction.rst:36
@@ -8563,7 +8563,7 @@ msgstr ""
 # #-#-#-#-#  compute-security.pot (Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  objectstorage-troubleshoot.pot (Administrator Guide 0.9)  #-#-#-#-#
 #: ../compute-networking-nova.rst:309 ../compute-networking-nova.rst:506
-#: ../compute-remote-console-access.rst:152 ../compute-security.rst:104
+#: ../compute-remote-console-access.rst:134 ../compute-security.rst:103
 #: ../objectstorage-troubleshoot.rst:87
 msgid "Configuration option = Default value"
 msgstr ""
@@ -9733,10 +9733,29 @@ msgid ""
 msgstr ""
 
 #: ../compute-remote-console-access.rst:10
-msgid "SPICE console"
+msgid "About nova-consoleauth"
 msgstr ""
 
 #: ../compute-remote-console-access.rst:12
+msgid ""
+"Both client proxies leverage a shared service to manage token authentication "
+"called ``nova-consoleauth``. This service must be running for either proxy "
+"to work. Many proxies of either type can be run against a single ``nova-"
+"consoleauth`` service in a cluster configuration."
+msgstr ""
+
+#: ../compute-remote-console-access.rst:17
+msgid ""
+"Do not confuse the ``nova-consoleauth`` shared service with ``nova-"
+"console``, which is a XenAPI-specific service that most recent VNC proxy "
+"architectures do not use."
+msgstr ""
+
+#: ../compute-remote-console-access.rst:22
+msgid "SPICE console"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:24
 msgid ""
 "OpenStack Compute supports VNC consoles to guests. The VNC protocol is "
 "fairly limited, lacking support for multiple monitors, bi-directional audio, "
@@ -9745,7 +9764,7 @@ msgid ""
 "support."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:18
+#: ../compute-remote-console-access.rst:30
 msgid ""
 "SPICE support in OpenStack Compute shares a similar architecture to the VNC "
 "implementation. The OpenStack dashboard uses a SPICE-HTML5 widget in its "
@@ -9754,135 +9773,139 @@ msgid ""
 "communicates directly with the hypervisor process by using SPICE."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:24
+#: ../compute-remote-console-access.rst:36
 msgid ""
 "VNC must be explicitly disabled to get access to the SPICE console. Set the "
 "``vnc_enabled`` option to ``False`` in the ``[DEFAULT]`` section to disable "
 "the VNC console."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:28
+#: ../compute-remote-console-access.rst:40
 msgid ""
 "Use the following options to configure SPICE as the console for OpenStack "
 "Compute:"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:35
+#: ../compute-remote-console-access.rst:47
+msgid "**[spice]**"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:49
 msgid "Spice configuration option = Default value"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:37
+#: ../compute-remote-console-access.rst:51
 msgid "``agent_enabled = True``"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:38
+#: ../compute-remote-console-access.rst:52
 msgid "(BoolOpt) Enable spice guest agent support"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:39
+#: ../compute-remote-console-access.rst:53
 msgid "``enabled = False``"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:40
+#: ../compute-remote-console-access.rst:54
 msgid "(BoolOpt) Enable spice related features"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:41
+#: ../compute-remote-console-access.rst:55
 msgid "``html5proxy_base_url = http://127.0.0.1:6082/spice_auto.html``"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:42
+#: ../compute-remote-console-access.rst:56
 msgid ""
 "(StrOpt) Location of spice HTML5 console proxy, in the form "
 "\"http://127.0.0.1:6082/spice_auto.html\""
 msgstr ""
 
-#: ../compute-remote-console-access.rst:44
+#: ../compute-remote-console-access.rst:58
 msgid "``html5proxy_host = 0.0.0.0``"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:45
-#: ../compute-remote-console-access.rst:161
+#: ../compute-remote-console-access.rst:59
+#: ../compute-remote-console-access.rst:143
 msgid "(StrOpt) Host on which to listen for incoming requests"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:46
+#: ../compute-remote-console-access.rst:60
 msgid "``html5proxy_port = 6082``"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:47
-#: ../compute-remote-console-access.rst:163
+#: ../compute-remote-console-access.rst:61
+#: ../compute-remote-console-access.rst:145
 msgid "(IntOpt) Port on which to listen for incoming requests"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:48
+#: ../compute-remote-console-access.rst:62
 msgid "``keymap = en-us``"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:49
+#: ../compute-remote-console-access.rst:63
 msgid "(StrOpt) Keymap for spice"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:50
+#: ../compute-remote-console-access.rst:64
 msgid "``server_listen = 127.0.0.1``"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:51
+#: ../compute-remote-console-access.rst:65
 msgid "(StrOpt) IP address on which instance spice server should listen"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:52
+#: ../compute-remote-console-access.rst:66
 msgid "``server_proxyclient_address = 127.0.0.1``"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:53
+#: ../compute-remote-console-access.rst:67
 msgid ""
 "(StrOpt) The address to which proxy clients (like nova-spicehtml5proxy) "
 "should connect"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:57
+#: ../compute-remote-console-access.rst:71
 msgid "VNC console proxy"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:59
+#: ../compute-remote-console-access.rst:73
 msgid ""
 "The VNC proxy is an OpenStack component that enables compute service users "
 "to access their instances through VNC clients."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:64
+#: ../compute-remote-console-access.rst:78
 msgid ""
 "The web proxy console URLs do not support the websocket protocol scheme "
 "(ws://) on python versions less than 2.7.4."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:67
+#: ../compute-remote-console-access.rst:81
 msgid "The VNC console connection works as follows:"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:69
+#: ../compute-remote-console-access.rst:83
 msgid ""
 "A user connects to the API and gets an ``access_url`` such as, ``http://ip:"
 "port/?token=xyz``."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:72
+#: ../compute-remote-console-access.rst:86
 msgid "The user pastes the URL in a browser or uses it as a client parameter."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:75
+#: ../compute-remote-console-access.rst:89
 msgid "The browser or client connects to the proxy."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:77
+#: ../compute-remote-console-access.rst:91
 msgid ""
 "The proxy talks to ``nova-consoleauth`` to authorize the token for the user, "
 "and maps the token to the *private* host and port of the VNC server for an "
 "instance."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:81
+#: ../compute-remote-console-access.rst:95
 msgid ""
 "The compute host specifies the address that the proxy should use to connect "
 "through the ``nova.conf`` file option, ``vncserver_proxyclient_address``. In "
@@ -9890,66 +9913,217 @@ msgid ""
 "private host network."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:86
+#: ../compute-remote-console-access.rst:100
 msgid ""
 "The proxy initiates the connection to VNC server and continues to proxy "
 "until the session ends."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:89
+#: ../compute-remote-console-access.rst:103
 msgid ""
 "The proxy also tunnels the VNC protocol over WebSockets so that the "
 "``noVNC`` client can talk to VNC servers. In general, the VNC proxy:"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:92
+#: ../compute-remote-console-access.rst:106
 msgid ""
 "Bridges between the public network where the clients live and the private "
 "network where VNC servers live."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:95
+#: ../compute-remote-console-access.rst:109
 msgid "Mediates token authentication."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:97
+#: ../compute-remote-console-access.rst:111
 msgid ""
 "Transparently deals with hypervisor-specific connection details to provide a "
 "uniform client experience."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:105
-msgid "About nova-consoleauth"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:107
-msgid ""
-"Both client proxies leverage a shared service to manage token authentication "
-"called ``nova-consoleauth``. This service must be running for either proxy "
-"to work. Many proxies of either type can be run against a single ``nova-"
-"consoleauth`` service in a cluster configuration."
-msgstr ""
-
-#: ../compute-remote-console-access.rst:112
-msgid ""
-"Do not confuse the ``nova-consoleauth`` shared service with ``nova-"
-"console``, which is a XenAPI-specific service that most recent VNC proxy "
-"architectures do not use."
-msgstr ""
-
-#: ../compute-remote-console-access.rst:117
-msgid "Typical deployment"
-msgstr ""
-
 #: ../compute-remote-console-access.rst:119
-msgid "A typical deployment has the following components:"
+msgid "VNC configuration options"
 msgstr ""
 
 #: ../compute-remote-console-access.rst:121
+msgid ""
+"To customize the VNC console, use the following configuration options in "
+"your ``nova.conf`` file:"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:126
+msgid ""
+"To support :ref:`live migration <section_configuring-compute-migrations>`, "
+"you cannot specify a specific IP address for ``vncserver_listen``, because "
+"that IP address does not exist on the destination host."
+msgstr ""
+
+#: ../compute-remote-console-access.rst:136
+msgid "**[DEFAULT]**"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:138
+msgid "``daemon = False``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:139
+msgid "(BoolOpt) Become a daemon (background process)"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:140
+msgid "``key = None``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:141
+msgid "(StrOpt) SSL key file (if separate from cert)"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:142
+msgid "``novncproxy_host = 0.0.0.0``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:144
+msgid "``novncproxy_port = 6080``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:146
+msgid "``record = False``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:147
+msgid "(BoolOpt) Record sessions to FILE.[session_number]"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:148
+msgid "``source_is_ipv6 = False``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:149
+msgid "(BoolOpt) Source is ipv6"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:150
+msgid "``ssl_only = False``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:151
+msgid "(BoolOpt) Disallow non-encrypted connections"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:152
+msgid "``web = /usr/share/spice-html5``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:153
+msgid "(StrOpt) Run webserver on same port. Serve files from DIR."
+msgstr ""
+
+#: ../compute-remote-console-access.rst:154
+msgid "**[vmware]**"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:156
+msgid "``vnc_port = 5900``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:157
+msgid "(IntOpt) VNC starting port"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:158
+msgid "``vnc_port_total = 10000``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:159
+msgid "vnc_port_total = 10000"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:160
+msgid "**[vnc]**"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:162
+msgid "enabled = True"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:163
+msgid "(BoolOpt) Enable VNC related features"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:164
+msgid "novncproxy_base_url = http://127.0.0.1:6080/vnc_auto.html"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:165
+msgid ""
+"(StrOpt) Location of VNC console proxy, in the form \"http://127.0.0.1:6080/"
+"vnc_auto.html\""
+msgstr ""
+
+#: ../compute-remote-console-access.rst:167
+msgid "vncserver_listen = 127.0.0.1"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:168
+msgid "(StrOpt) IP address on which instance vncservers should listen"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:169
+msgid "vncserver_proxyclient_address = 127.0.0.1"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:170
+msgid ""
+"(StrOpt) The address to which proxy clients (like nova-xvpvncproxy) should "
+"connect"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:172
+msgid "xvpvncproxy_base_url = http://127.0.0.1:6081/console"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:173
+msgid ""
+"(StrOpt) Location of nova xvp VNC console proxy, in the form "
+"\"http://127.0.0.1:6081/console\""
+msgstr ""
+
+#: ../compute-remote-console-access.rst:178
+msgid ""
+"The ``vncserver_proxyclient_address`` defaults to ``127.0.0.1``, which is "
+"the address of the compute host that Compute instructs proxies to use when "
+"connecting to instance servers."
+msgstr ""
+
+#: ../compute-remote-console-access.rst:182
+msgid "For all-in-one XenServer domU deployments, set this to ``169.254.0.1.``"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:185
+msgid ""
+"For multi-host XenServer domU deployments, set to a ``dom0 management IP`` "
+"on the same network as the proxies."
+msgstr ""
+
+#: ../compute-remote-console-access.rst:188
+msgid ""
+"For multi-host libvirt deployments, set to a host management IP on the same "
+"network as the proxies."
+msgstr ""
+
+#: ../compute-remote-console-access.rst:192
+msgid "Typical deployment"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:194
+msgid "A typical deployment has the following components:"
+msgstr ""
+
+#: ../compute-remote-console-access.rst:196
 msgid "A ``nova-consoleauth`` process. Typically runs on the controller host."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:123
+#: ../compute-remote-console-access.rst:198
 msgid ""
 "One or more ``nova-novncproxy`` services. Supports browser-based noVNC "
 "clients. For simple deployments, this service typically runs on the same "
@@ -9957,7 +10131,7 @@ msgid ""
 "network and the private compute host network."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:128
+#: ../compute-remote-console-access.rst:203
 msgid ""
 "One or more ``nova-xvpvncproxy`` services. Supports the special Java client "
 "discussed here. For simple deployments, this service typically runs on the "
@@ -9965,301 +10139,131 @@ msgid ""
 "network and the private compute host network."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:133
+#: ../compute-remote-console-access.rst:208
 msgid ""
 "One or more compute hosts. These compute hosts must have correctly "
 "configured options, as follows."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:137
-msgid "VNC configuration options"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:139
-msgid ""
-"To customize the VNC console, use the following configuration options in "
-"your ``nova.conf`` file:"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:144
-msgid ""
-"To support :ref:`live migration <section_configuring-compute-migrations>`, "
-"you cannot specify a specific IP address for ``vncserver_listen``, because "
-"that IP address does not exist on the destination host."
-msgstr ""
-
-#: ../compute-remote-console-access.rst:154
-msgid "**[DEFAULT]**"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:156
-msgid "``daemon = False``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:157
-msgid "(BoolOpt) Become a daemon (background process)"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:158
-msgid "``key = None``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:159
-msgid "(StrOpt) SSL key file (if separate from cert)"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:160
-msgid "``novncproxy_host = 0.0.0.0``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:162
-msgid "``novncproxy_port = 6080``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:164
-msgid "``record = False``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:165
-msgid "(BoolOpt) Record sessions to FILE.[session_number]"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:166
-msgid "``source_is_ipv6 = False``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:167
-msgid "(BoolOpt) Source is ipv6"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:168
-msgid "``ssl_only = False``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:169
-msgid "(BoolOpt) Disallow non-encrypted connections"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:170
-msgid "``web = /usr/share/spice-html5``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:171
-msgid "(StrOpt) Run webserver on same port. Serve files from DIR."
-msgstr ""
-
-#: ../compute-remote-console-access.rst:172
-msgid "**[vmware]**"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:174
-msgid "``vnc_port = 5900``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:175
-msgid "(IntOpt) VNC starting port"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:176
-msgid "``vnc_port_total = 10000``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:177
-msgid "vnc_port_total = 10000"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:178
-msgid "**[vnc]**"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:180
-msgid "enabled = True"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:181
-msgid "(BoolOpt) Enable VNC related features"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:182
-msgid "novncproxy_base_url = http://127.0.0.1:6080/vnc_auto.html"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:183
-msgid ""
-"(StrOpt) Location of VNC console proxy, in the form \"http://127.0.0.1:6080/"
-"vnc_auto.html\""
-msgstr ""
-
-#: ../compute-remote-console-access.rst:185
-msgid "vncserver_listen = 127.0.0.1"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:186
-msgid "(StrOpt) IP address on which instance vncservers should listen"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:187
-msgid "vncserver_proxyclient_address = 127.0.0.1"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:188
-msgid ""
-"(StrOpt) The address to which proxy clients (like nova-xvpvncproxy) should "
-"connect"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:190
-msgid "xvpvncproxy_base_url = http://127.0.0.1:6081/console"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:191
-msgid ""
-"(StrOpt) Location of nova xvp VNC console proxy, in the form "
-"\"http://127.0.0.1:6081/console\""
-msgstr ""
-
-#: ../compute-remote-console-access.rst:196
-msgid ""
-"The ``vncserver_proxyclient_address`` defaults to ``127.0.0.1``, which is "
-"the address of the compute host that Compute instructs proxies to use when "
-"connecting to instance servers."
-msgstr ""
-
-#: ../compute-remote-console-access.rst:200
-msgid "For all-in-one XenServer domU deployments, set this to ``169.254.0.1.``"
-msgstr ""
-
-#: ../compute-remote-console-access.rst:203
-msgid ""
-"For multi-host XenServer domU deployments, set to a ``dom0 management IP`` "
-"on the same network as the proxies."
-msgstr ""
-
-#: ../compute-remote-console-access.rst:206
-msgid ""
-"For multi-host libvirt deployments, set to a host management IP on the same "
-"network as the proxies."
-msgstr ""
-
-#: ../compute-remote-console-access.rst:210
+#: ../compute-remote-console-access.rst:212
 msgid "nova-novncproxy (noVNC)"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:212
+#: ../compute-remote-console-access.rst:214
 msgid ""
 "You must install the noVNC package, which contains the ``nova-novncproxy`` "
 "service. As root, run the following command:"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:219
+#: ../compute-remote-console-access.rst:221
 msgid "The service starts automatically on installation."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:221
+#: ../compute-remote-console-access.rst:223
 msgid "To restart the service, run:"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:227
+#: ../compute-remote-console-access.rst:229
 msgid ""
 "The configuration option parameter should point to your ``nova.conf`` file, "
 "which includes the message queue server address and credentials."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:230
+#: ../compute-remote-console-access.rst:232
 msgid "By default, ``nova-novncproxy`` binds on ``0.0.0.0:6080``."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:232
+#: ../compute-remote-console-access.rst:234
 msgid ""
 "To connect the service to your Compute deployment, add the following "
 "configuration options to your ``nova.conf`` file:"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:235
+#: ../compute-remote-console-access.rst:237
 msgid "``vncserver_listen=0.0.0.0``"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:237
+#: ../compute-remote-console-access.rst:239
 msgid ""
 "Specifies the address on which the VNC service should bind. Make sure it is "
 "assigned one of the compute node interfaces. This address is the one used by "
 "your domain file."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:247
+#: ../compute-remote-console-access.rst:249
 msgid "To use live migration, use the 0.0.0.0 address."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:249
+#: ../compute-remote-console-access.rst:251
 msgid "``vncserver_proxyclient_address=127.0.0.1``"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:251
+#: ../compute-remote-console-access.rst:253
 msgid ""
 "The address of the compute host that Compute instructs proxies to use when "
 "connecting to instance ``vncservers``."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:255
+#: ../compute-remote-console-access.rst:257
 msgid "Frequently asked questions about VNC access to virtual machines"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:257
+#: ../compute-remote-console-access.rst:259
 msgid ""
 "**Q: What is the difference between ``nova-xvpvncproxy`` and ``nova-"
 "novncproxy``?**"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:260
+#: ../compute-remote-console-access.rst:262
 msgid ""
 "A: ``nova-xvpvncproxy``, which ships with OpenStack Compute, is a proxy that "
 "supports a simple Java client. nova-novncproxy uses noVNC to provide VNC "
 "support through a web browser."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:264
+#: ../compute-remote-console-access.rst:266
 msgid ""
 "**Q: I want VNC support in the OpenStack dashboard. What services do I need?"
 "**"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:267
+#: ../compute-remote-console-access.rst:269
 msgid ""
 "A: You need ``nova-novncproxy``, ``nova-consoleauth``, and correctly "
 "configured compute hosts."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:270
+#: ../compute-remote-console-access.rst:272
 msgid ""
 "**Q: When I use ``nova get-vnc-console`` or click on the VNC tab of the "
 "OpenStack dashboard, it hangs. Why?**"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:273
+#: ../compute-remote-console-access.rst:275
 msgid ""
 "A: Make sure you are running ``nova-consoleauth`` (in addition to ``nova-"
 "novncproxy``). The proxies rely on ``nova-consoleauth`` to validate tokens, "
 "and waits for a reply from them until a timeout is reached."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:277
+#: ../compute-remote-console-access.rst:279
 msgid ""
 "**Q: My VNC proxy worked fine during my all-in-one test, but now it doesn't "
 "work on multi host. Why?**"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:280
+#: ../compute-remote-console-access.rst:282
 msgid ""
 "A: The default options work for an all-in-one install, but changes must be "
 "made on your compute hosts once you start to build a cluster. As an example, "
 "suppose you have two servers:"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:289
+#: ../compute-remote-console-access.rst:291
 msgid "Your ``nova-compute`` configuration file must set the following values:"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:304
+#: ../compute-remote-console-access.rst:306
 msgid ""
 "``novncproxy_base_url`` and ``xvpvncproxy_base_url`` use a public IP; this "
 "is the URL that is ultimately returned to clients, which generally do not "
@@ -10268,24 +10272,24 @@ msgid ""
 "the VNC connection is proxied."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:310
+#: ../compute-remote-console-access.rst:312
 msgid ""
 "**Q: My noVNC does not work with recent versions of web browsers. Why?**"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:312
+#: ../compute-remote-console-access.rst:314
 msgid ""
 "A: Make sure you have installed ``python-numpy``, which is required to "
 "support a newer version of the WebSocket protocol (HyBi-07+)."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:315
+#: ../compute-remote-console-access.rst:317
 msgid ""
 "**Q: How do I adjust the dimensions of the VNC window image in the OpenStack "
 "dashboard?**"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:318
+#: ../compute-remote-console-access.rst:320
 msgid ""
 "A: These values are hard-coded in a Django HTML template. To alter them, "
 "edit the ``_detail_vnc.html`` template file. The location of this file "
@@ -10294,17 +10298,17 @@ msgid ""
 "_detail_vnc.html``."
 msgstr ""
 
-#: ../compute-remote-console-access.rst:324
+#: ../compute-remote-console-access.rst:326
 msgid "Modify the ``width`` and ``height`` options, as follows:"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:330
+#: ../compute-remote-console-access.rst:332
 msgid ""
 "**Q: My noVNC connections failed with ValidationError: Origin header "
 "protocol does not match. Why?**"
 msgstr ""
 
-#: ../compute-remote-console-access.rst:333
+#: ../compute-remote-console-access.rst:335
 msgid ""
 "A: Make sure the ``base_url`` match your TLS setting. If you are using https "
 "console connections, make sure that the value of ``novncproxy_base_url`` is "
@@ -10517,17 +10521,17 @@ msgid ""
 "OpenAttestation/OpenAttestation>`__ project."
 msgstr ""
 
-#: ../compute-security.rst:47
+#: ../compute-security.rst:46
 msgid "**Configuring Compute to use trusted compute pools**"
 msgstr ""
 
-#: ../compute-security.rst:49
+#: ../compute-security.rst:48
 msgid ""
 "Enable scheduling support for trusted compute pools by adding these lines to "
 "the ``DEFAULT`` section of the ``/etc/nova/nova.conf`` file:"
 msgstr ""
 
-#: ../compute-security.rst:59
+#: ../compute-security.rst:58
 msgid ""
 "Specify the connection information for your attestation service by adding "
 "these lines to the ``trusted_computing`` section of the ``/etc/nova/nova."
@@ -10536,172 +10540,172 @@ msgstr ""
 
 # #-#-#-#-#  compute-security.pot (Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  database.pot (Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-security.rst:77 ../database.rst:120 ../database.rst:160
+#: ../compute-security.rst:76 ../database.rst:120 ../database.rst:160
 msgid "In this example:"
 msgstr ""
 
-#: ../compute-security.rst:80
+#: ../compute-security.rst:79
 msgid "Host name or IP address of the host that runs the attestation service"
 msgstr ""
 
-#: ../compute-security.rst:81
+#: ../compute-security.rst:80
 msgid "server"
 msgstr ""
 
-#: ../compute-security.rst:84
+#: ../compute-security.rst:83
 msgid "HTTPS port for the attestation service"
 msgstr ""
 
 # #-#-#-#-#  compute-security.pot (Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-security.rst:84 ../telemetry-measurements.rst:955
+#: ../compute-security.rst:83 ../telemetry-measurements.rst:955
 #: ../telemetry-measurements.rst:958 ../telemetry-measurements.rst:961
 #: ../telemetry-measurements.rst:1002
 msgid "port"
 msgstr ""
 
-#: ../compute-security.rst:87
+#: ../compute-security.rst:86
 msgid "Certificate file used to verify the attestation server's identity"
 msgstr ""
 
-#: ../compute-security.rst:87
+#: ../compute-security.rst:86
 msgid "server_ca_file"
 msgstr ""
 
-#: ../compute-security.rst:90
+#: ../compute-security.rst:89
 msgid "The attestation service's URL path"
 msgstr ""
 
-#: ../compute-security.rst:90
+#: ../compute-security.rst:89
 msgid "api_url"
 msgstr ""
 
-#: ../compute-security.rst:93
+#: ../compute-security.rst:92
 msgid "An authentication blob, required by the attestation service."
 msgstr ""
 
-#: ../compute-security.rst:93
+#: ../compute-security.rst:92
 msgid "auth_blob"
 msgstr ""
 
-#: ../compute-security.rst:95
+#: ../compute-security.rst:94
 msgid ""
 "Save the file, and restart the ``nova-compute`` and ``nova-scheduler`` "
 "service to pick up the changes."
 msgstr ""
 
-#: ../compute-security.rst:98
+#: ../compute-security.rst:97
 msgid ""
 "To customize the trusted compute pools, use these configuration option "
 "settings:"
 msgstr ""
 
-#: ../compute-security.rst:106
+#: ../compute-security.rst:105
 msgid "[trusted_computing]"
 msgstr ""
 
-#: ../compute-security.rst:108
+#: ../compute-security.rst:107
 msgid "attestation_api_url = /OpenAttestationWebServices/V1.0"
 msgstr ""
 
-#: ../compute-security.rst:109
+#: ../compute-security.rst:108
 msgid "(StrOpt) Attestation web API URL"
 msgstr ""
 
-#: ../compute-security.rst:110
+#: ../compute-security.rst:109
 msgid "attestation_auth_blob = None"
 msgstr ""
 
-#: ../compute-security.rst:111
+#: ../compute-security.rst:110
 msgid "(StrOpt) Attestation authorization blob - must change"
 msgstr ""
 
-#: ../compute-security.rst:112
+#: ../compute-security.rst:111
 msgid "attestation_auth_timeout = 60"
 msgstr ""
 
-#: ../compute-security.rst:113
+#: ../compute-security.rst:112
 msgid "(IntOpt) Attestation status cache valid period length"
 msgstr ""
 
-#: ../compute-security.rst:114
+#: ../compute-security.rst:113
 msgid "attestation_insecure_ssl = False"
 msgstr ""
 
-#: ../compute-security.rst:115
+#: ../compute-security.rst:114
 msgid "(BoolOpt) Disable SSL cert verification for Attestation service"
 msgstr ""
 
-#: ../compute-security.rst:116
+#: ../compute-security.rst:115
 msgid "attestation_port = 8443"
 msgstr ""
 
-#: ../compute-security.rst:117
+#: ../compute-security.rst:116
 msgid "(StrOpt) Attestation server port"
 msgstr ""
 
-#: ../compute-security.rst:118
+#: ../compute-security.rst:117
 msgid "attestation_server = None"
 msgstr ""
 
-#: ../compute-security.rst:119
+#: ../compute-security.rst:118
 msgid "(StrOpt) Attestation server HTTP"
 msgstr ""
 
-#: ../compute-security.rst:120
+#: ../compute-security.rst:119
 msgid "attestation_server_ca_file = None"
 msgstr ""
 
-#: ../compute-security.rst:121
+#: ../compute-security.rst:120
 msgid "(StrOpt) Attestation server Cert file for Identity verification"
 msgstr ""
 
-#: ../compute-security.rst:123
+#: ../compute-security.rst:122
 msgid "**Specifying trusted flavors**"
 msgstr ""
 
-#: ../compute-security.rst:125
+#: ../compute-security.rst:124
 msgid ""
 "Flavors can be designated as trusted using the :command:`nova flavor-key "
 "set` command. In this example, the ``m1.tiny`` flavor is being set as "
 "trusted:"
 msgstr ""
 
-#: ../compute-security.rst:133
+#: ../compute-security.rst:132
 msgid ""
 "You can request that your instance is run on a trusted host by specifying a "
 "trusted flavor when booting the instance:"
 msgstr ""
 
-#: ../compute-security.rst:145
+#: ../compute-security.rst:144
 msgid "Encrypt Compute metadata traffic"
 msgstr ""
 
-#: ../compute-security.rst:147
+#: ../compute-security.rst:146
 msgid "**Enabling SSL encryption**"
 msgstr ""
 
-#: ../compute-security.rst:149
+#: ../compute-security.rst:148
 msgid ""
 "OpenStack supports encrypting Compute metadata traffic with HTTPS. Enable "
 "SSL encryption in the ``metadata_agent.ini`` file."
 msgstr ""
 
-#: ../compute-security.rst:152
+#: ../compute-security.rst:151
 msgid "Enable the HTTPS protocol."
 msgstr ""
 
-#: ../compute-security.rst:158
+#: ../compute-security.rst:157
 msgid ""
 "Determine whether insecure SSL connections are accepted for Compute metadata "
 "server requests. The default value is ``False``."
 msgstr ""
 
-#: ../compute-security.rst:165
+#: ../compute-security.rst:164
 msgid "Specify the path to the client certificate."
 msgstr ""
 
-#: ../compute-security.rst:171
+#: ../compute-security.rst:170
 msgid "Specify the path to the private key."
 msgstr ""
 
