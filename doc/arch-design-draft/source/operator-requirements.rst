@@ -6,15 +6,10 @@ Operator requirements
    :maxdepth: 2
 
    operator-requirements-sla.rst
-   operator-requirements-logging-monitoring.rst
-   operator-requirements-network-design.rst
-   operator-requirements-licensing.rst
    operator-requirements-support-maintenance.rst
    operator-requirements-ops-access.rst
    operator-requirements-quota-management.rst
    operator-requirements-policy-management.rst
-   operator-requirements-hardware-selection.rst
-   operator-requirements-software-selection.rst
    operator-requirements-external-idp.rst
    operator-requirements-upgrades.rst
    operator-requirements-bleeding-edge.rst

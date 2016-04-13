@@ -34,8 +34,9 @@ developing cloud architecture design documents. The sections covered are:
    different business requirements and architecture design based on different
    internal and external stakeholders.
 
-*  :doc:`Functional requirements <functional-requirements>`: Information for
-   SMEs on deployment methods and how they will affect deployment cost.
+*  :doc:`Technical requirements <technical-requirements>`:
+   Information for SMEs on deployment methods and how they will affect
+   deployment cost.
 
 *  :doc:`Customer requirements <customer-requirements>`: Information for SMEs
    on business and technical requirements.
