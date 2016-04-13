@@ -1,89 +1,129 @@
+.. _adv-config-mtu:
+
 ==================
 MTU considerations
 ==================
 
-Network MTU calculation
-~~~~~~~~~~~~~~~~~~~~~~~
+The Networking service uses the MTU of the underlying physical network to
+calculate the MTU for virtual network components including instance network
+interfaces. By default, it assumes a standard 1500-byte MTU for the
+underlying physical network.
 
-Neutron calculates network MTU value on resource creation. The default value is
-1500 (standard Ethernet frame size), but core plug-ins may influence it. For
-example, they may need to make additional room for encapsulation protocol that
-will be used to realize tenant networks. Alternatively, the default value may
-need an increase. For example, an operator may need to do it to utilize Jumbo
-frames that her underlying physical infrastructure supports.
+The Networking service only references the underlying physical network MTU.
+Changing the underlying physical network device MTU requires configuration
+of physical network devices such as switches and routers.
 
-Updating instances
-~~~~~~~~~~~~~~~~~~
+.. warning::
 
-Neutron provides multiple ways to update instances about the desired MTU values
-to be used for their ports.
-
-DHCP agent
-----------
-
-DHCP agent can update its IPv4 clients about the desired MTU value for instance
-ports using DHCP Interface MTU Option (RFC 2132, section 5.1). This feature is
-controlled by the following option in ``/etc/neutron/neutron.conf``:
-
-.. code-block:: ini
-
-   [DEFAULT]
-   advertise_mtu = True
-
-.. note::
-
-    The feature is enabled by default.
-
-L3 agent
---------
-
-L3 agent uses Router Advertisements to update IPv6 aware clients about the
-desired MTU value to be used by instances.
+   For existing deployments, MTU values only apply to new network resources.
 
 Jumbo frames
 ~~~~~~~~~~~~
 
-The purpose of this section is to describe how to set up Neutron services for
-physical infrastructure capable of :term:`Jumbo frames <jumbo frame>`.
+The Networking service supports underlying physical networks using jumbo
+frames and also enables instances to use jumbo frames minus any overlay
+protocol overhead. For example, an underlying physical network with a
+9000-byte MTU yields a 8950-byte MTU for instances using a VXLAN network
+with IPv4 endpoints. Using IPv6 endpoints for overlay networks adds 20
+bytes of overhead for any protocol.
 
-neutron-server
---------------
+The Networking service supports the following underlying physical network
+architectures. Case 1 refers to the most common architecture. In general,
+architectures should avoid cases 2 and 3.
 
-To enable Neutron for Jumbo frames, the following option should be set in the
-``/etc/neutron/neutron.conf`` file:
+Case 1
+------
 
-.. code-block:: ini
+For typical underlying physical network architectures that implement a single
+MTU value, you can leverage jumbo frames using two options, one in the
+``neutron.conf`` file and the other in the ``ml2_conf.ini`` file. Most
+environments should use this configuration.
 
-   [DEFAULT]
-   global_physnet_mtu = <maximum MTU supported by your infrastructure>
+For example, referencing an underlying physical network with a 9000-byte MTU:
 
-If you use the Modular Layer 2 (ml2) plugin with tunneling protocols (VXLAN,
-GRE), you should set the following option in ``/etc/neutron/ml2/ml2_conf.ini``
-file:
+#. In the ``neutron.conf`` file:
 
-.. code-block:: ini
+   .. code-block:: ini
 
-   [ml2]
-   path_mtu = <same as for global_physnet_mtu above>
+      [DEFAULT]
+      global_physnet_mtu = 9000
 
-If you have multiple underlying networks, you may want to use separate MTU
-values for each of those networks. In that case, you can set one of the
-following options (currently works for ML2 plug-in only).
+#. In the ``ml2_conf.ini`` file:
 
-In case of flat and vlan network types:
+   .. code-block:: ini
 
-.. code-block:: ini
+      [ml2]
+      path_mtu = 9000
 
-   [DEFAULT]
-   physical_network_mtus = physnet1:<max-mtu1>,physnet2:<max-mtu2>[,...]
+Case 2
+------
 
-For network types that use tunneling for tenant traffic encapsulation:
+Some underlying physical network architectures contain multiple layer-2
+networks with different MTU values. You can configure each flat or VLAN
+provider network in the bridge or interface mapping options of the layer-2
+agent to reference a unique MTU value.
 
-.. code-block:: ini
+For example, referencing a 4000-byte MTU for ``provider2``, a 1500-byte
+MTU for ``provider3``, and a 9000-byte MTU for other networks using the
+Open vSwitch agent:
 
-   [ml2]
-   path_mtu = <max-mtu>
+#. In the ``neutron.conf`` file:
 
-.. note::
+   .. code-block:: ini
 
-   New configuration only affects new network resources.
+      [DEFAULT]
+      global_physnet_mtu = 9000
+
+#. In the ``openvswitch_agent.ini`` file:
+
+   .. code-block:: ini
+
+      [ovs]
+      bridge_mappings = provider1:eth1,provider2:eth2,provider3:eth3
+
+#. In the ``ml2_conf.ini`` file:
+
+   .. code-block:: ini
+
+      [ml2]
+      physical_network_mtus = provider2:4000,provider3:1500
+      path_mtu = 9000
+
+Case 3
+------
+
+Some underlying physical network architectures contain a unique layer-2 network
+for overlay networks using protocols such as VXLAN and GRE.
+
+For example, referencing a 4000-byte MTU for overlay networks and a 9000-byte
+MTU for other networks:
+
+#. In the ``neutron.conf`` file:
+
+   .. code-block:: ini
+
+      [DEFAULT]
+      global_physnet_mtu = 9000
+
+#. In the ``ml2_conf.ini`` file:
+
+   .. code-block:: ini
+
+      [ml2]
+      path_mtu = 4000
+
+   .. note::
+
+      Other networks including provider networks and flat or VLAN
+      self-service networks assume the value of the ``global_physnet_mtu``
+      option.
+
+Instance network interfaces (VIFs)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the ``advertise_mtu`` option in the ``neutron.conf`` file
+enables the DHCP agent to provide an appropriate MTU value to instances
+using IPv4 and enables the L3 agent to provide an appropriate MTU value
+to instances using IPv6. IPv6 uses RA via the L3 agent because the DHCP
+agent only supports IPv4. Instances using IPv4 and IPv6 should obtain the
+same MTU value regardless of method.

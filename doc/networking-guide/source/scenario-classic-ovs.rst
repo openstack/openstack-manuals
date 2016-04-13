@@ -638,54 +638,69 @@ scenario in your environment.
 Controller node
 ---------------
 
-#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
+#. In the ``neutron.conf`` file:
 
-   .. code-block:: ini
+   * Configure common options:
 
-      [DEFAULT]
-      core_plugin = ml2
-      service_plugins = router
-      allow_overlapping_ips = True
+     .. code-block:: ini
 
-#. Configure the ML2 plug-in. Edit the
-   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
+        [DEFAULT]
+        core_plugin = ml2
+        service_plugins = router
+        allow_overlapping_ips = True
 
-   .. code-block:: ini
+   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
 
-      [ml2]
-      type_drivers = flat,vlan,gre,vxlan
-      tenant_network_types = vlan,gre,vxlan
-      mechanism_drivers = openvswitch,l2population
-      extension_drivers = port_security
+#. In the ``ml2_conf.ini`` file:
 
-      [ml2_type_flat]
-      flat_networks = external
+   * Configure drivers and network types:
 
-      [ml2_type_vlan]
-      network_vlan_ranges = external,vlan:MIN_VLAN_ID:MAX_VLAN_ID
+     .. code-block:: ini
 
-      [ml2_type_gre]
-      tunnel_id_ranges = MIN_GRE_ID:MAX_GRE_ID
+        [ml2]
+        type_drivers = flat,vlan,gre,vxlan
+        tenant_network_types = vlan,gre,vxlan
+        mechanism_drivers = openvswitch,l2population
+        extension_drivers = port_security
 
-      [ml2_type_vxlan]
-      vni_ranges = MIN_VXLAN_ID:MAX_VXLAN_ID
+   * Configure network mappings and ID ranges:
 
-      [securitygroup]
-      enable_ipset = True
+     .. code-block:: ini
 
-   Replace ``MIN_VLAN_ID``, ``MAX_VLAN_ID``, ``MIN_GRE_ID``, ``MAX_GRE_ID``,
-   ``MIN_VXLAN_ID``, and ``MAX_VXLAN_ID`` with VLAN, GRE, and VXLAN ID minimum
-   and maximum values suitable for your environment.
+        [ml2_type_flat]
+        flat_networks = external
 
-   .. note::
+        [ml2_type_vlan]
+        network_vlan_ranges = external,vlan:MIN_VLAN_ID:MAX_VLAN_ID
 
-      The first value in the ``tenant_network_types`` option becomes the
-      default project network type when a regular user creates a network.
+        [ml2_type_gre]
+        tunnel_id_ranges = MIN_GRE_ID:MAX_GRE_ID
 
-   .. note::
+        [ml2_type_vxlan]
+        vni_ranges = MIN_VXLAN_ID:MAX_VXLAN_ID
 
-      The ``external`` value in the ``network_vlan_ranges`` option lacks VLAN
-      ID ranges to support use of arbitrary VLAN IDs by administrative users.
+     Replace ``MIN_VLAN_ID``, ``MAX_VLAN_ID``, ``MIN_GRE_ID``, ``MAX_GRE_ID``,
+     ``MIN_VXLAN_ID``, and ``MAX_VXLAN_ID`` with VLAN, GRE, and VXLAN ID minimum
+     and maximum values suitable for your environment.
+
+     .. note::
+
+        The first value in the ``tenant_network_types`` option becomes the
+        default project network type when a regular user creates a network.
+
+     .. note::
+
+        The ``external`` value in the ``network_vlan_ranges`` option lacks VLAN
+        ID ranges to support use of arbitrary VLAN IDs by administrative users.
+
+   * Configure the security group driver:
+
+     .. code-block:: ini
+
+        [securitygroup]
+        firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+
+   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
 
 #. Start the following services:
 
@@ -694,8 +709,7 @@ Controller node
 Network node
 ------------
 
-#. Configure the Open vSwitch agent. Edit the
-   ``/etc/neutron/plugins/ml2/openvswitch_agent.ini`` file:
+#. In the ``openvswitch_agent.ini`` file, configure the Open vSwitch agent:
 
    .. code-block:: ini
 
@@ -706,16 +720,14 @@ Network node
       [agent]
       tunnel_types = gre,vxlan
       l2_population = True
-      prevent_arp_spoofing = True
 
       [securitygroup]
       firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
-      enable_security_group = True
 
    Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
    that handles GRE/VXLAN project networks.
 
-#. Configure the L3 agent. Edit the ``/etc/neutron/l3_agent.ini`` file:
+#. In the ``l3_agent.ini`` file, configure the L3 agent:
 
    .. code-block:: ini
 
@@ -728,18 +740,15 @@ Network node
       The ``external_network_bridge`` option intentionally contains
       no value.
 
-#. Configure the DHCP agent. Edit the ``/etc/neutron/dhcp_agent.ini``
-   file:
+#. In the ``dhcp_agent.ini`` file, configure the DHCP agent:
 
    .. code-block:: ini
 
       [DEFAULT]
       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
-      dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
       enable_isolated_metadata = True
 
-#. Configure the metadata agent. Edit the
-   ``/etc/neutron/metadata_agent.ini`` file:
+#. In the ``metadata_agent.ini`` file, configure the metadata agent:
 
    .. code-block:: ini
 
@@ -760,8 +769,7 @@ Network node
 Compute nodes
 -------------
 
-#. Configure the Open vSwitch agent. Edit the
-   ``/etc/neutron/plugins/ml2/openvswitch_agent.ini`` file:
+#. In the ``openvswitch_agent.ini`` file, configure the Open vSwitch agent:
 
    .. code-block:: ini
 
@@ -772,11 +780,9 @@ Compute nodes
       [agent]
       tunnel_types = gre,vxlan
       l2_population = True
-      prevent_arp_spoofing = True
 
       [securitygroup]
       firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
-      enable_security_group = True
 
    Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
    that handles GRE/VXLAN project networks.
@@ -795,7 +801,6 @@ Verify service operation
    .. code-block:: console
 
       $ neutron agent-list
-
       +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
       | id                                   | agent_type         | host     | alive | admin_state_up | binary                    |
       +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
@@ -819,7 +824,6 @@ This example creates a flat external network and a VXLAN project network.
 
       $ neutron net-create ext-net --router:external True \
         --provider:physical_network external --provider:network_type flat
-
         Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -844,7 +848,6 @@ This example creates a flat external network and a VXLAN project network.
       $ neutron subnet-create ext-net --name ext-subnet --allocation-pool \
         start=203.0.113.101,end=203.0.113.200 --disable-dhcp \
         --gateway 203.0.113.1 203.0.113.0/24
-
       Created a new subnet:
       +-------------------+----------------------------------------------------+
       | Field             | Value                                              |
@@ -876,7 +879,6 @@ This example creates a flat external network and a VXLAN project network.
    .. code-block:: console
 
       $ openstack project show demo
-
       +-------------+----------------------------------+
       | Field       | Value                            |
       +-------------+----------------------------------+
@@ -892,7 +894,6 @@ This example creates a flat external network and a VXLAN project network.
 
       $ neutron net-create demo-net --tenant-id 443cd1596b2e46d49965750771ebbfe1 \
         --provider:network_type vxlan
-
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -918,7 +919,6 @@ This example creates a flat external network and a VXLAN project network.
 
       $ neutron subnet-create demo-net --name demo-subnet --gateway 192.168.1.1 \
         192.168.1.0/24
-
       Created a new subnet:
       +-------------------+--------------------------------------------------+
       | Field             | Value                                            |
@@ -943,7 +943,6 @@ This example creates a flat external network and a VXLAN project network.
    .. code-block:: console
 
       $ neutron router-create demo-router
-
       Created a new router:
       +-----------------------+--------------------------------------+
       | Field                 | Value                                |
@@ -993,7 +992,6 @@ Verify network operation
    .. code-block:: console
 
       $ neutron router-port-list demo-router
-
       +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------+
       | id                                   | name | mac_address       | fixed_ips                                                                            |
       +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------+
@@ -1057,54 +1055,65 @@ Verify network operation
 
    .. code-block:: console
 
-      $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
-      +-------------+-----------+---------+-----------+--------------+
-      | IP Protocol | From Port | To Port | IP Range  | Source Group |
-      +-------------+-----------+---------+-----------+--------------+
-      | icmp        | -1        | -1      | 0.0.0.0/0 |              |
-      +-------------+-----------+---------+-----------+--------------+
+      $ openstack security group rule create default --proto icmp
+      +-----------------------+--------------------------------------+
+      | Field                 | Value                                |
+      +-----------------------+--------------------------------------+
+      | id                    | 5a61ab14-c1b7-4520-a7a7-e32f2e575983 |
+      | ip_protocol           | icmp                                 |
+      | ip_range              | 0.0.0.0/0                            |
+      | parent_group_id       | cd15a4d3-d1c1-4702-a855-5d35027dd04c |
+      | port_range            |                                      |
+      | remote_security_group |                                      |
+      +-----------------------+--------------------------------------+
 
-      $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
-      +-------------+-----------+---------+-----------+--------------+
-      | IP Protocol | From Port | To Port | IP Range  | Source Group |
-      +-------------+-----------+---------+-----------+--------------+
-      | tcp         | 22        | 22      | 0.0.0.0/0 |              |
-      +-------------+-----------+---------+-----------+--------------+
+      $ openstack security group rule create default --proto tcp --dst-port 22
+      +-----------------------+--------------------------------------+
+      | Field                 | Value                                |
+      +-----------------------+--------------------------------------+
+      | id                    | de7aad57-9df2-492f-bdaf-54da18b56dc8 |
+      | ip_protocol           | tcp                                  |
+      | ip_range              | 0.0.0.0/0                            |
+      | parent_group_id       | cd15a4d3-d1c1-4702-a855-5d35027dd04c |
+      | port_range            | 22:22                                |
+      | remote_security_group |                                      |
+      +-----------------------+--------------------------------------+
 
 #. Create a floating IP address on the external network:
 
    .. code-block:: console
 
-      $ neutron floatingip-create ext-net
-      +---------------------+--------------------------------------+
-      | Field               | Value                                |
-      +---------------------+--------------------------------------+
-      | fixed_ip_address    |                                      |
-      | floating_ip_address | 203.0.113.102                        |
-      | floating_network_id | e5f9be2f-3332-4f2d-9f4d-7f87a5a7692e |
-      | id                  | 77cf2a36-6c90-4941-8e62-d48a585de050 |
-      | port_id             |                                      |
-      | router_id           |                                      |
-      | status              | DOWN                                 |
-      | tenant_id           | 443cd1596b2e46d49965750771ebbfe1     |
-      +---------------------+--------------------------------------+
+      $ openstack ip floating create ext-net
+      +-------------+--------------------------------------+
+      | Field       | Value                                |
+      +-------------+--------------------------------------+
+      | fixed_ip    | None                                 |
+      | id          | dad7a1f1-128c-4ed4-8bfa-1ed84b741a56 |
+      | instance_id | None                                 |
+      | ip          | 203.0.113.102                        |
+      | pool        | ext-net                              |
+      +-------------+--------------------------------------+
 
 #. Associate the floating IP address with the instance:
 
    .. code-block:: console
 
-      $ nova floating-ip-associate demo-instance1 203.0.113.102
+      $ openstack ip floating add 203.0.113.102 demo-instance1
+
+   .. note::
+
+      This command provides no output.
 
 #. Verify addition of the floating IP address to the instance:
 
    .. code-block:: console
 
-      $ nova list
-      +--------------------------------------+----------------+--------+------------+-------------+-----------------------------------------+
-      | ID                                   | Name           | Status | Task State | Power State | Networks                                |
-      +--------------------------------------+----------------+--------+------------+-------------+-----------------------------------------+
-      | 05682b91-81a1-464c-8f40-8b3da7ee92c5 | demo-instance1 | ACTIVE | -          | Running     | demo-net=192.168.1.3, 203.0.113.102     |
-      +--------------------------------------+----------------+--------+------------+-------------+-----------------------------------------+
+      $ openstack server list
+      +--------------------------------------+----------------+--------+------------------------------------+
+      | ID                                   | Name           | Status | Networks                           |
+      +--------------------------------------+----------------+--------+------------------------------------+
+      | 05682b91-81a1-464c-8f40-8b3da7ee92c5 | demo-instance1 | ACTIVE | private=192.168.1.3, 203.0.113.102 |
+      +--------------------------------------+----------------+--------+------------------------------------+
 
 #. On the controller node or any host with access to the external network,
    ping the floating IP address associated with the instance:

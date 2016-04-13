@@ -172,12 +172,10 @@ The network node contains the following network components:
 
 #. See :ref:`scenario-classic-ovs` or :ref:`scenario-classic-lb`
 
-
 The compute nodes contain the following network components:
 
 #. Macvtap agent managing the virtual server attachments and interaction
    with underlying interfaces.
-
 
 .. image:: figures/scenario-classic-mt-compute1.png
    :alt: Compute node components - overview
@@ -374,44 +372,57 @@ scenario in your environment.
 Controller node
 ---------------
 
-#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
+#. In the ``neutron.conf`` file:
 
-   .. code-block:: ini
+   * Configure common options:
 
-      [DEFAULT]
-      core_plugin = ml2
-      service_plugins = router
-      allow_overlapping_ips = True
+     .. code-block:: ini
 
-#. Configure the ML2 plug-in. Edit the
-   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
+        [DEFAULT]
+        core_plugin = ml2
+        service_plugins = router
+        allow_overlapping_ips = True
 
-   .. code-block:: ini
+   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
 
-      [ml2]
-      type_drivers = flat,vlan
-      tenant_network_types = vlan
-      mechanism_drivers = linuxbridge,macvtap
-      extension_drivers = port_security
+#. In the ``ml2_conf.ini`` file:
 
-      [ml2_type_flat]
-      flat_networks = external
+   * Configure drivers and network types:
 
-      [ml2_type_vlan]
-      network_vlan_ranges = external,vlan:MIN_VLAN_ID:MAX_VLAN_ID
+     .. code-block:: ini
 
-   Replace ``MIN_VLAN_ID`` and ``MAX_VLAN_ID`` with VLAN ID minimum and maximum
-   values suitable for your environment.
+        [ml2]
+        type_drivers = flat,vlan
+        tenant_network_types = vlan
+        mechanism_drivers = linuxbridge,macvtap
+        extension_drivers = port_security
 
-   .. note::
+   * Configure network mappings and IDs:
 
-      The first value in the ``tenant_network_types`` option becomes the
-      default project network type when a regular user creates a network.
+     .. code-block:: ini
 
-   .. note::
+        [ml2_type_flat]
+        flat_networks = external
 
-      The ``external`` value in the ``network_vlan_ranges`` option lacks VLAN
-      ID ranges to support use of arbitrary VLAN IDs by administrative users.
+        [ml2_type_vlan]
+        network_vlan_ranges = external,vlan:MIN_VLAN_ID:MAX_VLAN_ID
+
+     Replace ``MIN_VLAN_ID`` and ``MAX_VLAN_ID`` with VLAN ID minimum and
+     maximum values suitable for your environment.
+
+     .. note::
+
+        The ``external`` value in the ``network_vlan_ranges`` option lacks VLAN
+        ID ranges to support use of arbitrary VLAN IDs by administrative users.
+
+   * Configure the security group driver:
+
+     .. code-block:: ini
+
+        [securitygroup]
+        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+
+   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
 
 #. Start the following services:
 
@@ -426,8 +437,7 @@ Network node
 Compute nodes
 -------------
 
-#. Configure the Macvtap agent. Edit the
-   ``/etc/neutron/plugins/ml2/macvtap_agent.ini`` file:
+#. Edit the ``macvtap_agent.ini`` file:
 
    .. code-block:: ini
 
@@ -436,7 +446,6 @@ Compute nodes
 
       [securitygroup]
       firewall_driver = neutron.agent.firewall.NoopFirewallDriver
-      enable_security_group = True
 
    Replace ``PROJECT_VLAN_INTERFACE`` with the name of the underlying
    interface that handles VLAN project networks and external networks,
