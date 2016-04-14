@@ -364,8 +364,9 @@ The displayed image attributes are:
     is the UUID of the instance the snapshot derives from. For uploaded
     images, this field is blank.
 
-Virtual hardware templates are called ``flavors``. The default
-installation provides five predefined flavors.
+Virtual hardware templates are called ``flavors``, and are defined by
+administrators. Prior to the Newton release, a default installation also
+includes five predefined flavors.
 
 For a list of flavors that are available on your system, run:
 

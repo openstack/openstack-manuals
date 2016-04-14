@@ -16,29 +16,15 @@ Create and access a database
 
    When you create a database instance, you must specify a nova flavor.
    The flavor indicates various characteristics of the instance, such as
-   RAM, root volume size, and so on. The default nova flavors are not
-   sufficient to create database instances. You might need to create or
-   obtain some new nova flavors that work for databases.
+   RAM and root volume size. You will need to create or
+   obtain new nova flavors that work for databases.
 
    The first step is to list flavors by using the
    :command:`openstack flavor list` command.
 
-   Here are the default flavors, although you may have additional custom
-   flavors in your environment:
-
    .. code-block:: console
 
       $ openstack flavor list
-
-      +-----+-----------+-------+------+-----------+-------+-----------+
-      | ID  | Name      |   RAM | Disk | Ephemeral | VCPUs | Is_Public |
-      +-----+-----------+-------+------+-----------+-------+-----------+
-      | 1   | m1.tiny   |   512 |    1 |         0 |     1 | True      |
-      | 2   | m1.small  |  2048 |   20 |         0 |     1 | True      |
-      | 3   | m1.medium |  4096 |   40 |         0 |     2 | True      |
-      | 4   | m1.large  |  8192 |   80 |         0 |     4 | True      |
-      | 5   | m1.xlarge | 16384 |  160 |         0 |     8 | True      |
-      +-----+-----------+-------+------+-----------+-------+-----------+
 
    Now take a look at the minimum requirements for various database
    instances:

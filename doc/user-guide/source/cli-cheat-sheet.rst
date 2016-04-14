@@ -94,6 +94,12 @@ List images
 
    $ openstack image list
 
+Create a flavor named m1.tiny
+
+.. code-block:: console
+
+   $ openstack flavor create --ram 512 --disk 1 --vcpus 1 m1.tiny
+
 List flavors
 
 .. code-block:: console
