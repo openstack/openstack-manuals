@@ -192,6 +192,7 @@ Install and configure components
 
          # mkdir -p /var/cache/swift
          # chown -R root:swift /var/cache/swift
+         # chmod -R 775 /var/cache/swift
 
 .. only:: obs
 
