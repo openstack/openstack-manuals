@@ -9,17 +9,18 @@ Source files for developer.openstack.org
 
 The `developer.openstack.org`_ web site is intended for application developers
 using the OpenStack APIs to build upon. It contains links to multiple SDKs for
-specific programming languages, an API reference, and API Guides.
+specific programming languages, API references, and API Guides.
 
 For existing APIs, the reference information comes from RST and YAML source
 files. To convert from WADL to RST, use a tool called `wadl2rst`_. Then store
 the RST and YAML files in your project repository in an ``api-ref`` directory.
 The nova project has an example you can follow, including tox jobs for running
-``tox -e api`` to generate the documents.
+``tox -e api`` within the ``wadl2rst`` directory to generate the documents.
 
 Alternatively, a project can describe their API with Swagger or OpenAPI. To
 learn more about the Swagger format and OpenAPI initiative, refer to
-https://swagger.io.
+https://swagger.io. However, the HTML output builds for Swagger are not yet
+created.
 
 The RST conceptual and how-to files are stored in each project's
 ``doc/source/api-guide`` directory. These are built to locations based on the
@@ -43,41 +44,89 @@ If your project already has WADL files, they are migrated to Swagger files with
 every commit to the api-site repository. However, some APIs cannot be described
 with Swagger.
 
-If your project needs to migrate to RST and YAML as nova has done, follow these
-steps.
+When your project needs to migrate to RST (.inc) and YAML as nova has done,
+follow these steps.
 
 #. Clone the api-site repository locally.::
 
     git clone git@github.com:openstack/api-site.git
 
-#. Clone the wadl2rst repository locally.::
+#. Create a Python virtual environment.::
 
-    git@github.com:annegentle/wadl2rst.git
+    virtualenv wadl2rst
 
-#. Change directories to the ``wadl2rst`` directory.::
+#. Install the requirements and ``wadl2rst`` in the virtual environment.::
 
-    cd wadl2rst
+    pip install -r requirements.txt
+    pip install -e git+git@github.com:annegentle/wadl2rst.git@master#egg=wadl2rst
 
-#. In the wadl2rst directory, create a configuration YAML file to indicate
-which WADL file to migrate as well as the title and destination directory. The
-first line provides a relative path to the WADL file. If you have multiple WADL
-files, list them all in a single YAML file.::
+#. Create a ``.yaml`` configuration file with the following format.::
 
-    ../api-site/api-ref/src/wadls/compute-api/src/v2.1/wadl/os-instance-actions-v2.1.wadl:
-    title: OpenStack Compute API v2.1
-    output_directory: dist/collected
-    ../api-site/api-ref/src/wadls/compute-api/src/v2.1/wadl/os-instance-usage-audit-log-v2.1.wadl:
-    title: OpenStack Compute API v2.1
-    output_directory: dist/collected
+    [wadl_path]:
+        title: [book_title]
+        output_file: [output_file]
+        preamble: [preamble]
 
-#. Save the file as a ``.yaml`` file, such as ``project.config.yaml``.
+This format enables grouping of API operations for more manageable editing
+later.
 
-#. In the wadl2rst directory, run the script::
+In the preamble, you can include a header and any introductor text for the
+collected operations.
+
+For example::
+
+    ../api-site/api-ref/src/wadls/identity-api/src/v2.0/wadl/identity.wadl:
+        title: OpenStack Identity API v2.0
+        output_file: dist/identity/identity.inc
+        preamble: |
+          ======
+          Tokens
+          ======
+
+      Gets an authentication token that permits access to the
+      OpenStack services REST API.
+
+#. In the wadl2rst directory, run this command with your project's yaml file
+   to run the migration.::
 
     wadl2rst project.config.yaml
 
 #. Look at the RST files generated and make sure they contain all the
-operations you expect.
+   operations you expect. Note that the file extension is ``.inc`` to avoid
+   build errors. When included files are ``.inc`` files, Sphinx does not issue
+   warnings about generating the documents twice, or documents not being in
+   a toc directive.
+
+#. Next, run the ``fairy-slipper`` tool to generate individual migrated
+   ``<operationid>.yaml`` files. First, clone the repository::
+
+    git clone git://git.openstack.org/openstack/fairy-slipper
+
+#. Next, get a copy of this patch set::
+
+    cd fairy-slipper
+    git review -d 301958
+
+#. Now, install requirements in the virtual environment.
+
+    pip install -r requirements.txt
+
+#. In the ``fairy-slipper`` directory, run the migration script with the
+   ``--create-yamls`` parameter::
+
+    ./migrate.sh --create-yamls
+
+   The YAML files are placed in an ``api_doc/<service>/<version>`` directory.
+
+   The YAML files can be referenced from the RST files, and the migration tool
+   inserts pointers to parameters, such as::
+
+   .. rest_parameters:: parameters.yaml
+
+    - name: name
+    - description: description
+    - alias: alias
+    - updated: updated
 
 Optional: You can run a screen scraper program if you want to get a count of
 your project's total number of operations. The Python script,
@@ -99,7 +148,9 @@ your project team’s repository. You can find a suggested outline in the
 * http://git.openstack.org/cgit/openstack/nova/tree/api-guide
 * http://git.openstack.org/cgit/openstack/nova/tree/api-ref
 
-You need the `extensions`_ for the API reference information.
+You need the `extensions`_ for the API reference information. Those will be
+centralized in milestone 2, but for now you need to copy the directory to use
+those.
 
 All projects should use this set of `API documentation guidelines`_ from the
 OpenStack API working group any time their service has a REST API. This
