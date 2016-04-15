@@ -217,6 +217,11 @@ FWaaS management options are also available in the Dashboard.
           ...
       }
 
+   .. note::
+
+      By default, ``enable_firewall`` option value is ``True`` in
+      ``local_settings.py`` file.
+
    Apply the settings by restarting the web server.
 
 #. Restart the ``neutron-l3-agent`` and ``neutron-server`` services
