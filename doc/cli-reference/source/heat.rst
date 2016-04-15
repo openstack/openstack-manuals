@@ -9,7 +9,7 @@ Orchestration service command-line client
 The heat client is the command-line interface (CLI) for
 the Orchestration service API and its extensions.
 
-This chapter documents :command:`heat` version ``1.1.0``.
+This chapter documents :command:`heat` version ``1.2.0``.
 
 For help on a specific :command:`heat` command, enter:
 
@@ -89,7 +89,7 @@ heat usage
   Show the details of a software deployment.
 
 ``event``
-  **DEPRECATED!** Use event-show instead.
+  **DEPRECATED!**
 
 ``event-list``
   List events for a stack.
@@ -125,7 +125,7 @@ heat usage
   Send a signal to a resource.
 
 ``resource-template``
-  **DEPRECATED!** Use resource-type-template instead.
+  **DEPRECATED!**
 
 ``resource-type-list``
   List the available resource types.
