@@ -24,7 +24,7 @@ several message broker and database solutions, such as RabbitMQ,
 MySQL, MariaDB, and SQLite.
 
 Users can access OpenStack via the web-based user interface implemented
-by the :ref:`get_started_dashboard`, via `command-line
+by :doc:`Dashboard <get_started_dashboard>`, via `command-line
 clients <http://docs.openstack.org/cli-reference/>`__ and by
 issuing API requests through tools like browser plug-ins or :command:`curl`.
 For applications, `several SDKs <http://developer.openstack.org/#sdk>`__

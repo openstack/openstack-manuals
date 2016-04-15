@@ -14,7 +14,7 @@ traffic flows, see the
 .. toctree::
    :maxdepth: 1
 
-   common/get_started_openstack_networking.rst
+   common/get_started_networking.rst
    neutron-concepts.rst
    neutron-controller-install.rst
    neutron-compute-install.rst

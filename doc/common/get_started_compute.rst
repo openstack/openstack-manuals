@@ -1,6 +1,6 @@
-=================
-OpenStack Compute
-=================
+========================
+Compute service overview
+========================
 
 Use OpenStack Compute to host and manage cloud computing systems.
 OpenStack Compute is a major part of an Infrastructure-as-a-Service

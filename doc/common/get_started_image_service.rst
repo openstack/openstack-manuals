@@ -1,6 +1,6 @@
-=======================
-OpenStack Image service
-=======================
+======================
+Image service overview
+======================
 
 The OpenStack Image service is central to Infrastructure-as-a-Service
 (IaaS) as shown in :ref:`get_started_conceptual_architecture`. It accepts API

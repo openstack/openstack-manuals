@@ -1,6 +1,6 @@
-=====================================
-OpenStack Shared File Systems service
-=====================================
+====================================
+Shared File Systems service overview
+====================================
 
 The OpenStack Shared File Systems service (manila) provides file storage to a
 virtual machine. The Shared File Systems service provides an infrastructure

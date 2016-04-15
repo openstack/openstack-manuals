@@ -1,8 +1,6 @@
-.. _get_started_dashboard:
-
-===================
-OpenStack dashboard
-===================
+==================
+Dashboard overview
+==================
 
 The OpenStack dashboard is a modular `Django web
 application <https://www.djangoproject.com/>`__ that provides a

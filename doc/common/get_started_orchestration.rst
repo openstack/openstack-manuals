@@ -1,6 +1,6 @@
-===============================
-OpenStack Orchestration service
-===============================
+==============================
+Orchestration service overview
+==============================
 
 The Orchestration service provides a template-based orchestration for
 describing a cloud application by running OpenStack API calls to

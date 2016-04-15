@@ -1,6 +1,6 @@
-==========================
-OpenStack Database service
-==========================
+=========================
+Database service overview
+=========================
 
 The Database service provides scalable and reliable cloud provisioning
 functionality for both relational and non-relational database engines.
