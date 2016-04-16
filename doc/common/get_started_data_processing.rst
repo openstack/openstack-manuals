@@ -1,6 +1,6 @@
-=================================
-OpenStack Data processing service
-=================================
+================================
+Data Processing service overview
+================================
 
 The Data processing service for OpenStack (sahara) aims to provide users
 with a simple means to provision data processing (Hadoop, Spark)

@@ -1,6 +1,6 @@
-===========================
-OpenStack Telemetry service
-===========================
+==========================
+Telemetry service overview
+==========================
 
 Telemetry Data Collection service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

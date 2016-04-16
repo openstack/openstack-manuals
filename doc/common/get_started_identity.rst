@@ -1,6 +1,6 @@
-==================
-OpenStack Identity
-==================
+=========================
+Identity service overview
+=========================
 
 The OpenStack :term:`Identity service` provides a single point of
 integration for managing authentication, authorization, and service catalog

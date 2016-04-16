@@ -1,6 +1,6 @@
-====================
-OpenStack Networking
-====================
+===========================
+Networking service overview
+===========================
 
 OpenStack Networking (neutron) allows you to create and attach interface
 devices managed by other OpenStack services to networks. Plug-ins can be

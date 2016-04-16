@@ -1,6 +1,6 @@
-=======================
-OpenStack Block Storage
-=======================
+==============================
+Block Storage service overview
+==============================
 
 The OpenStack Block Storage service (cinder) adds persistent storage
 to a virtual machine. Block Storage provides an infrastructure for managing
