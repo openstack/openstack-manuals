@@ -194,7 +194,7 @@ Install and configure components
 
         [database]
         ...
-        connection = mongodb://aodh:AODH_DBPASS@controller:27017/aodh
+        connection = mysql+pymysql://aodh:AODH_DBPASS@controller/aodh
 
      Replace ``AODH_DBPASS`` with the password you chose for the
      Telemetry Alarming module database. You must escape special characters
