@@ -35,3 +35,7 @@ and mouse. KVM can expose the graphical console using the
 `SPICE <http://spice-space.org>`_ protocol.
 We will use the VNC protocol here, since you are more likely
 to find a VNC client that works on your local desktop.
+
+To create an image for the Database service,
+see `Building Guest Images for OpenStack Trove
+<http://docs.openstack.org/developer/trove/dev/building_guest_images.html>`_.
