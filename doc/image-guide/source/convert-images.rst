@@ -58,12 +58,12 @@ Run the following command to convert a vmdk image file to a qcow2 image file.
    Otherwise, you will get a blue screen when launching the image
    due to lack of the virtio driver.
    Another option is to set the image properties as below when you
-   update the image in glance to avoid this issue, but it will
-   reduce performance significantly.
+   update the image in the Image service to avoid this issue,
+   but it will reduce performance significantly.
 
    .. code-block:: console
 
-      $ glance image-update --property hw_disk_bus='ide' image_id
+      $ openstack image set --property hw_disk_bus='ide' image_name_or_id
 
 VBoxManage: VDI (VirtualBox) to raw
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
