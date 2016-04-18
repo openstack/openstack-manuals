@@ -36,8 +36,8 @@ Supported QoS rule types
 
 Any plug-in or ml2 mechanism driver can claim support for some QoS rule types
 by providing a plug-in/driver class property called 'supported_qos_rule_types'
-that returns a list of strings that correspond to QoS rule types:
-`<https://github.com/openstack/neutron/blob/master/neutron/services/qos/qos_consts.py>`
+that returns a list of strings that correspond to `QoS rule types
+<https://github.com/openstack/neutron/blob/master/neutron/services/qos/qos_consts.py>`_.
 
 .. note::
    For the Liberty release only egress bandwidth limit rules are supported.
