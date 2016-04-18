@@ -376,14 +376,3 @@ Finalize installation
 
         # service manila-scheduler restart
         # service manila-api restart
-
-.. only:: ubuntu
-
-   * By default, the Ubuntu packages create an SQLite database.
-
-     Because this configuration uses an SQL database server,
-     you can remove the SQLite database file:
-
-     .. code-block:: console
-
-        # rm -f /var/lib/manila/manila.sqlite

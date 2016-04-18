@@ -389,14 +389,3 @@ Finalize installation
 
          # service cinder-scheduler restart
          # service cinder-api restart
-
-.. only:: ubuntu
-
-   3. By default, the Ubuntu packages create an SQLite database.
-
-      Because this configuration uses an SQL database server,
-      you can remove the SQLite database file:
-
-      .. code-block:: console
-
-         # rm -f /var/lib/cinder/cinder.sqlite

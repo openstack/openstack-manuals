@@ -322,11 +322,3 @@ Finalize installation
 
          # service tgt restart
          # service cinder-volume restart
-
-   #. By default, the Ubuntu packages create an SQLite database.
-      Because this configuration uses an SQL database server,
-      remove the SQLite database file:
-
-      .. code-block:: console
-
-         # rm -f /var/lib/cinder/cinder.sqlite

@@ -328,12 +328,3 @@ Install and configure components
 
             # service glance-registry restart
             # service glance-api restart
-
-      #. By default, the Ubuntu packages create an SQLite database.
-
-         Because this configuration uses an SQL database server, you can
-         remove the SQLite database file:
-
-         .. code-block:: console
-
-            # rm -f /var/lib/glance/glance.sqlite
