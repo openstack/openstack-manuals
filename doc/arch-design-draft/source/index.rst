@@ -25,7 +25,7 @@ Contents
    common/conventions.rst
    introduction.rst
    identifying-stakeholders.rst
-   functional-requirements.rst
+   technical-requirements.rst
    customer-requirements.rst
    operator-requirements.rst
    capacity-planning-scaling.rst
