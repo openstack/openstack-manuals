@@ -1017,6 +1017,53 @@ Delete an address scope.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_address-scope-list:
+
+neutron address-scope-list
+--------------------------
+
+.. code-block:: console
+
+   usage: neutron address-scope-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+                                     [--request-format {json}] [-D] [-F FIELD]
+                                     [-P SIZE] [--sort-key FIELD]
+                                     [--sort-dir {asc,desc}]
+
+List address scopes that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_address-scope-show:
 
 neutron address-scope-show
@@ -1105,6 +1152,47 @@ Delete a given agent.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_agent-list:
+
+neutron agent-list
+------------------
+
+.. code-block:: console
+
+   usage: neutron agent-list [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
+                             [--quote {all,minimal,none,nonnumeric}]
+                             [--request-format {json}] [-D] [-F FIELD]
+                             [--sort-key FIELD] [--sort-dir {asc,desc}]
+
+List agents.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_agent-show:
 
 neutron agent-show
@@ -1171,6 +1259,88 @@ Updates the admin status and description for a specified agent.
 
 ``--description DESCRIPTION``
   Description for the agent.
+
+.. _neutron_auto-allocated-topology-show:
+
+neutron auto-allocated-topology-show
+------------------------------------
+
+.. code-block:: console
+
+   usage: neutron auto-allocated-topology-show [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width <integer>]
+                                               [--noindent] [--prefix PREFIX]
+                                               [--request-format {json}]
+                                               [--dry-run]
+                                               [--tenant-id tenant-id]
+
+Show the auto-allocated topology of a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--dry-run``
+  Validate the requirements for auto-allocated-topology.
+  (Does not return a topology.)
+
+``--tenant-id``
+  tenant-id
+  The owner tenant ID.
+
+.. _neutron_availability-zone-list:
+
+neutron availability-zone-list
+------------------------------
+
+.. code-block:: console
+
+   usage: neutron availability-zone-list [-h]
+                                         [-f {csv,html,json,table,value,yaml}]
+                                         [-c COLUMN] [--max-width <integer>]
+                                         [--noindent]
+                                         [--quote {all,minimal,none,nonnumeric}]
+                                         [--request-format {json}] [-D]
+                                         [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                                         [--sort-dir {asc,desc}]
+
+List availability zones.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_bgp-dragent-list-hosting-speaker:
 
@@ -1338,6 +1508,52 @@ Delete a BGP peer.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_bgp-peer-list:
+
+neutron bgp-peer-list
+---------------------
+
+.. code-block:: console
+
+   usage: neutron bgp-peer-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}]
+                                [--request-format {json}] [-D] [-F FIELD]
+                                [-P SIZE] [--sort-key FIELD]
+                                [--sort-dir {asc,desc}]
+
+List BGP peers.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_bgp-peer-show:
 
@@ -1538,6 +1754,53 @@ Delete a BGP speaker.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_bgp-speaker-list:
+
+neutron bgp-speaker-list
+------------------------
+
+.. code-block:: console
+
+   usage: neutron bgp-speaker-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent]
+                                   [--quote {all,minimal,none,nonnumeric}]
+                                   [--request-format {json}] [-D] [-F FIELD]
+                                   [-P SIZE] [--sort-key FIELD]
+                                   [--sort-dir {asc,desc}]
+
+List BGP speakers.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_bgp-speaker-list-on-dragent:
 
@@ -1860,6 +2123,35 @@ Remove a network from a DHCP agent.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_ext-list:
+
+neutron ext-list
+----------------
+
+.. code-block:: console
+
+   usage: neutron ext-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
+                           [--max-width <integer>] [--noindent]
+                           [--quote {all,minimal,none,nonnumeric}]
+                           [--request-format {json}] [-D] [-F FIELD]
+
+List all extensions.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
 .. _neutron_ext-show:
 
 neutron ext-show
@@ -1972,6 +2264,52 @@ Delete a given firewall.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_firewall-list:
+
+neutron firewall-list
+---------------------
+
+.. code-block:: console
+
+   usage: neutron firewall-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}]
+                                [--request-format {json}] [-D] [-F FIELD]
+                                [-P SIZE] [--sort-key FIELD]
+                                [--sort-dir {asc,desc}]
+
+List firewalls that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_firewall-policy-create:
 
 neutron firewall-policy-create
@@ -2080,6 +2418,53 @@ Insert a rule into a given firewall policy.
 
 ``--insert-after FIREWALL_RULE``
   Insert after this rule.
+
+.. _neutron_firewall-policy-list:
+
+neutron firewall-policy-list
+----------------------------
+
+.. code-block:: console
+
+   usage: neutron firewall-policy-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent]
+                                       [--quote {all,minimal,none,nonnumeric}]
+                                       [--request-format {json}] [-D] [-F FIELD]
+                                       [-P SIZE] [--sort-key FIELD]
+                                       [--sort-dir {asc,desc}]
+
+List firewall policies that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_firewall-policy-remove-rule:
 
@@ -2192,6 +2577,75 @@ Update a given firewall policy.
   Update the audit status of the policy. (True means
   auditing is enabled)
 
+.. _neutron_firewall-rule-create:
+
+neutron firewall-rule-create
+----------------------------
+
+.. code-block:: console
+
+   usage: neutron firewall-rule-create [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent] [--prefix PREFIX]
+                                       [--request-format {json}]
+                                       [--tenant-id TENANT_ID] [--shared]
+                                       [--name NAME] [--description DESCRIPTION]
+                                       [--source-ip-address SOURCE_IP_ADDRESS]
+                                       [--destination-ip-address DESTINATION_IP_ADDRESS]
+                                       [--source-port SOURCE_PORT]
+                                       [--destination-port DESTINATION_PORT]
+                                       [--enabled {True,False}] --protocol
+                                       {tcp,udp,icmp,any} --action
+                                       {allow,deny,reject} [--ip-version {4,6}]
+
+Create a firewall rule.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--shared``
+  Set shared flag for the firewall rule.
+
+``--name NAME``
+  Name for the firewall rule.
+
+``--description DESCRIPTION``
+  Description for the firewall rule.
+
+``--source-ip-address SOURCE_IP_ADDRESS``
+  Source IP address or subnet.
+
+``--destination-ip-address DESTINATION_IP_ADDRESS``
+  Destination IP address or subnet.
+
+``--source-port SOURCE_PORT``
+  Source port (integer in [1, 65535] or range in a:b).
+
+``--destination-port DESTINATION_PORT``
+  Destination port (integer in [1, 65535] or range in
+  a:b).
+
+``--enabled {True,False}``
+  Whether to enable or disable this rule.
+
+``--protocol {tcp,udp,icmp,any}``
+  Protocol for the firewall rule.
+
+``--action {allow,deny,reject}``
+  Action for the firewall rule.
+
+``--ip-version {4,6} IP``
+  version for the firewall rule (default is 4).
+
 .. _neutron_firewall-rule-delete:
 
 neutron firewall-rule-delete
@@ -2216,6 +2670,53 @@ Delete a given firewall rule.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_firewall-rule-list:
+
+neutron firewall-rule-list
+--------------------------
+
+.. code-block:: console
+
+   usage: neutron firewall-rule-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+                                     [--request-format {json}] [-D] [-F FIELD]
+                                     [-P SIZE] [--sort-key FIELD]
+                                     [--sort-dir {asc,desc}]
+
+List firewall rules that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_firewall-rule-show:
 
@@ -2531,6 +3032,93 @@ Disassociate a Neutron service flavor from a flavor profile.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_flavor-list:
+
+neutron flavor-list
+-------------------
+
+.. code-block:: console
+
+   usage: neutron flavor-list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--quote {all,minimal,none,nonnumeric}]
+                              [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
+                              [--sort-key FIELD] [--sort-dir {asc,desc}]
+
+List Neutron service flavors.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
+.. _neutron_flavor-profile-create:
+
+neutron flavor-profile-create
+-----------------------------
+
+.. code-block:: console
+
+   usage: neutron flavor-profile-create [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        [--request-format {json}]
+                                        [--tenant-id TENANT_ID]
+                                        [--description DESCRIPTION]
+                                        [--driver DRIVER] [--metainfo METAINFO]
+                                        [--enabled {True,False}]
+
+Create a Neutron service flavor profile.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--description DESCRIPTION``
+  Description for the flavor profile.
+
+``--driver DRIVER``
+  Python module path to driver.
+
+``--metainfo METAINFO``
+  Metainfo for the flavor profile.
+
+``--enabled {True,False}``
+  Sets enabled flag.
+
 .. _neutron_flavor-profile-delete:
 
 neutron flavor-profile-delete
@@ -2555,6 +3143,53 @@ Delete a given Neutron service flavor profile.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_flavor-profile-list:
+
+neutron flavor-profile-list
+---------------------------
+
+.. code-block:: console
+
+   usage: neutron flavor-profile-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]
+                                      [--request-format {json}] [-D] [-F FIELD]
+                                      [-P SIZE] [--sort-key FIELD]
+                                      [--sort-dir {asc,desc}]
+
+List Neutron service flavor profiles.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_flavor-profile-show:
 
@@ -2849,6 +3484,53 @@ Remove a mapping from a floating IP to a fixed IP.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_floatingip-list:
+
+neutron floatingip-list
+-----------------------
+
+.. code-block:: console
+
+   usage: neutron floatingip-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent]
+                                  [--quote {all,minimal,none,nonnumeric}]
+                                  [--request-format {json}] [-D] [-F FIELD]
+                                  [-P SIZE] [--sort-key FIELD]
+                                  [--sort-dir {asc,desc}]
+
+List floating IPs that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_floatingip-show:
 
 neutron floatingip-show
@@ -2965,6 +3647,36 @@ Delete a given network gateway device.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_gateway-device-list:
+
+neutron gateway-device-list
+---------------------------
+
+.. code-block:: console
+
+   usage: neutron gateway-device-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]
+                                      [--request-format {json}] [-D] [-F FIELD]
+
+List network gateway devices for a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
 .. _neutron_gateway-device-show:
 
 neutron gateway-device-show
@@ -3053,6 +3765,105 @@ Update a network gateway device.
   gateway transport node to authenticate with the NSX
   controller.
 
+.. _neutron_ipsec-site-connection-create:
+
+neutron ipsec-site-connection-create
+------------------------------------
+
+.. code-block:: console
+
+   usage: neutron ipsec-site-connection-create [-h]
+                                               [-f {html,json,shell,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width <integer>]
+                                               [--noindent] [--prefix PREFIX]
+                                               [--request-format {json}]
+                                               [--tenant-id TENANT_ID]
+                                               [--admin-state-down] [--name NAME]
+                                               [--description DESCRIPTION]
+                                               [--mtu MTU]
+                                               [--initiator {bi-directional,response-only}]
+                                               --vpnservice-id VPNSERVICE
+                                               --ikepolicy-id IKEPOLICY
+                                               --ipsecpolicy-id IPSECPOLICY
+                                               --peer-address PEER_ADDRESS
+                                               --peer-id PEER_ID
+                                               [--peer-cidr PEER_CIDRS] --psk PSK
+                                               [--dpd action=ACTION,interval=INTERVAL,timeout=TIMEOUT]
+                                               [--local-ep-group LOCAL_EP_GROUP]
+                                               [--peer-ep-group PEER_EP_GROUP]
+
+Create an IPsec site connection.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--admin-state-down``
+  Set admin state up to false.
+
+``--name NAME``
+  Set friendly name for the connection.
+
+``--description DESCRIPTION``
+  Set a description for the connection.
+
+``--mtu MTU``
+  MTU size for the connection, default:1500
+
+``--initiator {bi-directional,response-only}``
+  Initiator state in lowercase, default:bi-directional
+
+``--vpnservice-id VPNSERVICE``
+  VPN service instance ID associated with this
+  connection.
+
+``--ikepolicy-id IKEPOLICY``
+  IKE policy ID associated with this connection.
+
+``--ipsecpolicy-id IPSECPOLICY``
+  IPsec policy ID associated with this connection.
+
+``--peer-address PEER_ADDRESS``
+  Peer gateway public IPv4/IPv6 address or FQDN.
+
+``--peer-id PEER_ID``
+  Peer router identity for authentication. Can be
+  IPv4/IPv6 address, e-mail address, key id, or FQDN.
+
+``--peer-cidr PEER_CIDRS``
+  [**DEPRECATED** in Mitaka] Remote subnet(s) in CIDR
+  format. Cannot be specified when using endpoint
+  groups. Only applicable, if subnet provided for VPN
+  service.
+
+``--psk PSK``
+  Pre-shared key string.
+
+``--dpd``
+  action=ACTION,interval=INTERVAL,timeout=TIMEOUT
+  Ipsec connection. Dead Peer Detection attributes.
+  'action'-hold,clear,disabled,restart,restart-by-peer.
+  'interval' and 'timeout' are non negative integers.
+  'interval' should be less than 'timeout' value.
+  'action', default:hold 'interval', default:30,
+  'timeout', default:120.
+
+``--local-ep-group LOCAL_EP_GROUP``
+  Local endpoint group ID/name with subnet(s) for IPSec
+  connection.
+
+``--peer-ep-group PEER_EP_GROUP``
+  Peer endpoint group ID/name with CIDR(s) for IPsec
+  connection.
+
 .. _neutron_ipsec-site-connection-delete:
 
 neutron ipsec-site-connection-delete
@@ -3077,6 +3888,55 @@ Delete a given IPsec site connection.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_ipsec-site-connection-list:
+
+neutron ipsec-site-connection-list
+----------------------------------
+
+.. code-block:: console
+
+   usage: neutron ipsec-site-connection-list [-h]
+                                             [-f {csv,html,json,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent]
+                                             [--quote {all,minimal,none,nonnumeric}]
+                                             [--request-format {json}] [-D]
+                                             [-F FIELD] [-P SIZE]
+                                             [--sort-key FIELD]
+                                             [--sort-dir {asc,desc}]
+
+List IPsec site connections that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_ipsec-site-connection-show:
 
@@ -3323,6 +4183,73 @@ Create a mapping between a health monitor and a pool.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_lb-healthmonitor-create:
+
+neutron lb-healthmonitor-create
+-------------------------------
+
+.. code-block:: console
+
+   usage: neutron lb-healthmonitor-create [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent] [--prefix PREFIX]
+                                          [--request-format {json}]
+                                          [--tenant-id TENANT_ID]
+                                          [--admin-state-down]
+                                          [--expected-codes EXPECTED_CODES]
+                                          [--http-method HTTP_METHOD]
+                                          [--url-path URL_PATH] --delay DELAY
+                                          --max-retries MAX_RETRIES --timeout
+                                          TIMEOUT --type {PING,TCP,HTTP,HTTPS}
+
+Create a health monitor.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--admin-state-down``
+  Set admin state up to false.
+
+``--expected-codes EXPECTED_CODES``
+  The list of HTTP status codes expected in response
+  from the member to declare it healthy. This attribute
+  can contain one value, or a list of values separated
+  by comma, or a range of values (e.g. "200-299"). If
+  this attribute is not specified, it defaults to "200".
+
+``--http-method HTTP_METHOD``
+  The HTTP method used for requests by the monitor of
+  type HTTP.
+
+``--url-path URL_PATH``
+  The HTTP path used in the HTTP request used by the
+  monitor to test a member health. This must be a string
+  beginning with a / (forward slash).
+
+``--delay DELAY``
+  The time in seconds between sending probes to members.
+
+``--max-retries MAX_RETRIES``
+  Number of permissible connection failures before
+  changing the member status to INACTIVE. [1..10]
+
+``--timeout TIMEOUT``
+  Maximum number of seconds for a monitor to wait for a
+  connection to be established before it times out. The
+  value must be less than the delay value.
+
+``--type {PING,TCP,HTTP,HTTPS}``
+  One of the predefined health monitor types.
+
 .. _neutron_lb-healthmonitor-delete:
 
 neutron lb-healthmonitor-delete
@@ -3376,6 +4303,54 @@ Remove a mapping from a health monitor to a pool.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_lb-healthmonitor-list:
+
+neutron lb-healthmonitor-list
+-----------------------------
+
+.. code-block:: console
+
+   usage: neutron lb-healthmonitor-list [-h]
+                                        [-f {csv,html,json,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent]
+                                        [--quote {all,minimal,none,nonnumeric}]
+                                        [--request-format {json}] [-D] [-F FIELD]
+                                        [-P SIZE] [--sort-key FIELD]
+                                        [--sort-dir {asc,desc}]
+
+List health monitors that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_lb-healthmonitor-show:
 
@@ -3510,6 +4485,52 @@ Delete a given member.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_lb-member-list:
+
+neutron lb-member-list
+----------------------
+
+.. code-block:: console
+
+   usage: neutron lb-member-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--quote {all,minimal,none,nonnumeric}]
+                                 [--request-format {json}] [-D] [-F FIELD]
+                                 [-P SIZE] [--sort-key FIELD]
+                                 [--sort-dir {asc,desc}]
+
+List members that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_lb-member-show:
 
 neutron lb-member-show
@@ -3569,6 +4590,58 @@ Update a given member.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_lb-pool-create:
+
+neutron lb-pool-create
+----------------------
+
+.. code-block:: console
+
+   usage: neutron lb-pool-create [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--prefix PREFIX] [--request-format {json}]
+                                 [--tenant-id TENANT_ID] [--admin-state-down]
+                                 [--description DESCRIPTION] --lb-method
+                                 {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP} --name
+                                 NAME --protocol {HTTP,HTTPS,TCP} --subnet-id
+                                 SUBNET [--provider PROVIDER]
+
+Create a pool.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--admin-state-down``
+  Set admin state up to false.
+
+``--description DESCRIPTION``
+  Description of the pool.
+
+``--lb-method {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}``
+  The algorithm used to distribute load between the
+  members of the pool.
+
+``--name NAME``
+  The name of the pool.
+
+``--protocol {HTTP,HTTPS,TCP}``
+  Protocol for balancing.
+
+``--subnet-id SUBNET``
+  The subnet on which the members of the pool will be
+  located.
+
+``--provider PROVIDER``
+  Provider name of loadbalancer service.
+
 .. _neutron_lb-pool-delete:
 
 neutron lb-pool-delete
@@ -3592,6 +4665,52 @@ Delete a given pool.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_lb-pool-list:
+
+neutron lb-pool-list
+--------------------
+
+.. code-block:: console
+
+   usage: neutron lb-pool-list [-h] [-f {csv,html,json,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--quote {all,minimal,none,nonnumeric}]
+                               [--request-format {json}] [-D] [-F FIELD]
+                               [-P SIZE] [--sort-key FIELD]
+                               [--sort-dir {asc,desc}]
+
+List pools that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_lb-pool-list-on-agent:
 
@@ -3811,6 +4930,51 @@ Delete a given vip.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_lb-vip-list:
+
+neutron lb-vip-list
+-------------------
+
+.. code-block:: console
+
+   usage: neutron lb-vip-list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--quote {all,minimal,none,nonnumeric}]
+                              [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
+                              [--sort-key FIELD] [--sort-dir {asc,desc}]
+
+List vips that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_lb-vip-show:
 
 neutron lb-vip-show
@@ -3911,6 +5075,81 @@ schedulers
   Specify the field(s) to be returned by server. You can
   repeat this option.
 
+.. _neutron_lbaas-healthmonitor-create:
+
+neutron lbaas-healthmonitor-create
+----------------------------------
+
+.. code-block:: console
+
+   usage: neutron lbaas-healthmonitor-create [-h]
+                                             [-f {html,json,shell,table,value,yaml}]
+                                             [-c COLUMN] [--max-width <integer>]
+                                             [--noindent] [--prefix PREFIX]
+                                             [--request-format {json}]
+                                             [--tenant-id TENANT_ID]
+                                             [--name NAME] [--admin-state-down]
+                                             [--expected-codes EXPECTED_CODES]
+                                             [--http-method HTTP_METHOD]
+                                             [--url-path URL_PATH] --delay DELAY
+                                             --max-retries MAX_RETRIES --timeout
+                                             TIMEOUT --type {PING,TCP,HTTP,HTTPS}
+                                             --pool POOL
+
+LBaaS v2 Create a healthmonitor.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--name NAME``
+  Name of the health monitor to be created.
+
+``--admin-state-down``
+  Set admin state up to false.
+
+``--expected-codes EXPECTED_CODES``
+  The list of HTTP status codes expected in response
+  from the member to declare it healthy. This attribute
+  can contain one value, or a list of values separated
+  by comma, or a range of values (e.g. "200-299"). If
+  this attribute is not specified, it defaults to "200".
+
+``--http-method HTTP_METHOD``
+  The HTTP method used for requests by the monitor of
+  type HTTP.
+
+``--url-path URL_PATH``
+  The HTTP path used in the HTTP request used by the
+  monitor to test a member health. This must be a string
+  beginning with a / (forward slash).
+
+``--delay DELAY``
+  The time in seconds between sending probes to members.
+
+``--max-retries MAX_RETRIES``
+  Number of permissible connection failures before
+  changing the member status to INACTIVE. [1..10].
+
+``--timeout TIMEOUT``
+  Maximum number of seconds for a monitor to wait for a
+  connection to be established before it times out. The
+  value must be less than the delay value.
+
+``--type {PING,TCP,HTTP,HTTPS}``
+  One of the predefined health monitor types.
+
+``--pool POOL``
+  ID or name of the pool that this healthmonitor will
+  monitor.
+
 .. _neutron_lbaas-healthmonitor-delete:
 
 neutron lbaas-healthmonitor-delete
@@ -3935,6 +5174,55 @@ LBaaS v2 Delete a given healthmonitor.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_lbaas-healthmonitor-list:
+
+neutron lbaas-healthmonitor-list
+--------------------------------
+
+.. code-block:: console
+
+   usage: neutron lbaas-healthmonitor-list [-h]
+                                           [-f {csv,html,json,table,value,yaml}]
+                                           [-c COLUMN] [--max-width <integer>]
+                                           [--noindent]
+                                           [--quote {all,minimal,none,nonnumeric}]
+                                           [--request-format {json}] [-D]
+                                           [-F FIELD] [-P SIZE]
+                                           [--sort-key FIELD]
+                                           [--sort-dir {asc,desc}]
+
+LBaaS v2 List healthmonitors that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_lbaas-healthmonitor-show:
 
@@ -4002,6 +5290,67 @@ LBaaS v2 Update a given healthmonitor.
 ``--name NAME``
   Updated name of the health monitor.
 
+.. _neutron_lbaas-l7policy-create:
+
+neutron lbaas-l7policy-create
+-----------------------------
+
+.. code-block:: console
+
+   usage: neutron lbaas-l7policy-create [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        [--request-format {json}]
+                                        [--tenant-id TENANT_ID] [--name NAME]
+                                        [--description DESCRIPTION] --action
+                                        ACTION [--redirect-pool REDIRECT_POOL]
+                                        [--redirect-url REDIRECT_URL]
+                                        [--position POSITION]
+                                        [--admin-state-down] --listener LISTENER
+
+LBaaS v2 Create L7 policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--name NAME``
+  Name of the policy.
+
+``--description DESCRIPTION``
+  Description of the policy.
+
+``--action ACTION``
+  Action type of the policy.
+
+``--redirect-pool REDIRECT_POOL``
+  ID or name of the pool for REDIRECT_TO_POOL action
+  type.
+
+``--redirect-url REDIRECT_URL``
+  URL for REDIRECT_TO_URL action type. This should be a
+  valid URL string.
+
+``--position POSITION``
+  L7 policy position in ordered policies list. This must
+  be an integer starting from 1. Not specifying the
+  position will place the policy at the tail of existing
+  policies list.
+
+``--admin-state-down``
+  Set admin state up to false.
+
+``--listener LISTENER``
+  ID or name of the listener this policy belongs to.
+
 .. _neutron_lbaas-l7policy-delete:
 
 neutron lbaas-l7policy-delete
@@ -4025,6 +5374,53 @@ LBaaS v2 Delete a given L7 policy.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_lbaas-l7policy-list:
+
+neutron lbaas-l7policy-list
+---------------------------
+
+.. code-block:: console
+
+   usage: neutron lbaas-l7policy-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]
+                                      [--request-format {json}] [-D] [-F FIELD]
+                                      [-P SIZE] [--sort-key FIELD]
+                                      [--sort-dir {asc,desc}]
+
+LBaaS v2 List L7 policies that belong to a given listener.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_lbaas-l7policy-show:
 
@@ -4349,6 +5745,76 @@ LBaaS v2 Update a given L7 rule.
   Specify the administrative state of the rule (True
   meaning "Up").
 
+.. _neutron_lbaas-listener-create:
+
+neutron lbaas-listener-create
+-----------------------------
+
+.. code-block:: console
+
+   usage: neutron lbaas-listener-create [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        [--request-format {json}]
+                                        [--tenant-id TENANT_ID]
+                                        [--admin-state-down]
+                                        [--connection-limit CONNECTION_LIMIT]
+                                        [--description DESCRIPTION] [--name NAME]
+                                        [--default-tls-container-ref DEFAULT_TLS_CONTAINER_REF]
+                                        [--sni-container-refs SNI_CONTAINER_REFS [SNI_CONTAINER_REFS ...]]
+                                        [--default-pool DEFAULT_POOL]
+                                        [--loadbalancer LOADBALANCER] --protocol
+                                        {TCP,HTTP,HTTPS,TERMINATED_HTTPS}
+                                        --protocol-port PORT
+
+LBaaS v2 Create a listener.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--admin-state-down``
+  Set admin state up to false.
+
+``--connection-limit CONNECTION_LIMIT``
+  The maximum number of connections per second allowed
+  for the vip. Positive integer or -1 for unlimited
+  (default).
+
+``--description DESCRIPTION``
+  Description of the listener.
+
+``--name NAME``
+  The name of the listener. At least one of :option:`--default-`
+  pool or :option:`--loadbalancer` must be specified.
+
+``--default-tls-container-ref DEFAULT_TLS_CONTAINER_REF``
+  Default TLS container reference to retrieve TLS
+  information.
+
+``--sni-container-refs SNI_CONTAINER_REFS [SNI_CONTAINER_REFS ...]``
+  List of TLS container references for SNI.
+
+``--default-pool DEFAULT_POOL``
+  Default pool for the listener.
+
+``--loadbalancer LOADBALANCER``
+  ID or name of the load balancer.
+
+``--protocol {TCP,HTTP,HTTPS,TERMINATED_HTTPS}``
+  Protocol for the listener.
+
+``--protocol-port PORT``
+  Protocol port for the listener.
+
 .. _neutron_lbaas-listener-delete:
 
 neutron lbaas-listener-delete
@@ -4372,6 +5838,53 @@ LBaaS v2 Delete a given listener.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_lbaas-listener-list:
+
+neutron lbaas-listener-list
+---------------------------
+
+.. code-block:: console
+
+   usage: neutron lbaas-listener-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]
+                                      [--request-format {json}] [-D] [-F FIELD]
+                                      [-P SIZE] [--sort-key FIELD]
+                                      [--sort-dir {asc,desc}]
+
+LBaaS v2 List listeners that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_lbaas-listener-show:
 
@@ -4513,6 +6026,54 @@ LBaaS v2 Delete a given loadbalancer.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_lbaas-loadbalancer-list:
+
+neutron lbaas-loadbalancer-list
+-------------------------------
+
+.. code-block:: console
+
+   usage: neutron lbaas-loadbalancer-list [-h]
+                                          [-f {csv,html,json,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent]
+                                          [--quote {all,minimal,none,nonnumeric}]
+                                          [--request-format {json}] [-D]
+                                          [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                                          [--sort-dir {asc,desc}]
+
+LBaaS v2 List loadbalancers that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_lbaas-loadbalancer-list-on-agent:
 
@@ -4890,6 +6451,69 @@ LBaaS v2 Update a given member.
 ``--name NAME``
   Updated name of the member.
 
+.. _neutron_lbaas-pool-create:
+
+neutron lbaas-pool-create
+-------------------------
+
+.. code-block:: console
+
+   usage: neutron lbaas-pool-create [-h] [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent] [--prefix PREFIX]
+                                    [--request-format {json}]
+                                    [--tenant-id TENANT_ID] [--admin-state-down]
+                                    [--description DESCRIPTION]
+                                    [--session-persistence type=TYPE[,cookie_name=COOKIE_NAME]]
+                                    [--name NAME] [--listener LISTENER]
+                                    [--loadbalancer LOADBALANCER] --lb-algorithm
+                                    {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}
+                                    --protocol {HTTP,HTTPS,TCP}
+
+LBaaS v2 Create a pool.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--admin-state-down``
+  Set admin state up to false.
+
+``--description DESCRIPTION``
+  Description of the pool.
+
+``--session-persistence``
+  type=TYPE[,cookie_name=COOKIE_NAME]
+  The type of session persistence to use and associated
+  cookie name
+
+``--name NAME``
+  The name of the pool.
+
+``--listener LISTENER``
+  Listener whose default-pool should be set to this
+  pool. At least one of :option:`--listener` or :option:`--loadbalancer`
+  must be specified.
+
+``--loadbalancer LOADBALANCER``
+  Loadbalancer with which this pool should be
+  associated. At least one of :option:`--listener` or
+  :option:`--loadbalancer` must be specified.
+
+``--lb-algorithm {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}``
+  The algorithm used to distribute load between the
+  members of the pool.
+
+``--protocol {HTTP,HTTPS,TCP}``
+  Protocol for balancing.
+
 .. _neutron_lbaas-pool-delete:
 
 neutron lbaas-pool-delete
@@ -4913,6 +6537,53 @@ LBaaS v2 Delete a given pool.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_lbaas-pool-list:
+
+neutron lbaas-pool-list
+-----------------------
+
+.. code-block:: console
+
+   usage: neutron lbaas-pool-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent]
+                                  [--quote {all,minimal,none,nonnumeric}]
+                                  [--request-format {json}] [-D] [-F FIELD]
+                                  [-P SIZE] [--sort-key FIELD]
+                                  [--sort-dir {asc,desc}]
+
+LBaaS v2 List pools that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_lbaas-pool-show:
 
@@ -5037,6 +6708,53 @@ Delete a given metering label.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_meter-label-list:
+
+neutron meter-label-list
+------------------------
+
+.. code-block:: console
+
+   usage: neutron meter-label-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent]
+                                   [--quote {all,minimal,none,nonnumeric}]
+                                   [--request-format {json}] [-D] [-F FIELD]
+                                   [-P SIZE] [--sort-key FIELD]
+                                   [--sort-dir {asc,desc}]
+
+List metering labels that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_meter-label-rule-create:
 
 neutron meter-label-rule-create
@@ -5106,6 +6824,54 @@ Delete a given metering label.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_meter-label-rule-list:
+
+neutron meter-label-rule-list
+-----------------------------
+
+.. code-block:: console
+
+   usage: neutron meter-label-rule-list [-h]
+                                        [-f {csv,html,json,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent]
+                                        [--quote {all,minimal,none,nonnumeric}]
+                                        [--request-format {json}] [-D] [-F FIELD]
+                                        [-P SIZE] [--sort-key FIELD]
+                                        [--sort-dir {asc,desc}]
+
+List metering labels that belong to a given label.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_meter-label-rule-show:
 
@@ -5277,6 +7043,59 @@ Delete a given network.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_net-external-list:
+
+neutron net-external-list
+-------------------------
+
+.. code-block:: console
+
+   usage: neutron net-external-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent]
+                                    [--quote {all,minimal,none,nonnumeric}]
+                                    [--request-format {json}] [-D] [-F FIELD]
+                                    [-P SIZE] [--sort-key FIELD]
+                                    [--sort-dir {asc,desc}]
+                                    [--tenant-id TENANT_ID] [--name NAME]
+                                    [--admin-state-up {True,False}]
+                                    [--status STATUS] [--shared {True,False}]
+                                    [--router:external {True,False}] [--tags TAG]
+                                    [--tags-any TAG] [--not-tags TAG]
+                                    [--not-tags-any TAG]
+
+List external networks that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_net-gateway-connect:
 
 neutron net-gateway-connect
@@ -5416,6 +7235,36 @@ Remove a network from a network gateway.
   Identifier for the L2 segment on the external side of
   the gateway.
 
+.. _neutron_net-gateway-list:
+
+neutron net-gateway-list
+------------------------
+
+.. code-block:: console
+
+   usage: neutron net-gateway-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent]
+                                   [--quote {all,minimal,none,nonnumeric}]
+                                   [--request-format {json}] [-D] [-F FIELD]
+
+List network gateways for a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
 .. _neutron_net-gateway-show:
 
 neutron net-gateway-show
@@ -5476,6 +7325,54 @@ Update the name for a network gateway.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_net-ip-availability-list:
+
+neutron net-ip-availability-list
+--------------------------------
+
+.. code-block:: console
+
+   usage: neutron net-ip-availability-list [-h]
+                                           [-f {csv,html,json,table,value,yaml}]
+                                           [-c COLUMN] [--max-width <integer>]
+                                           [--noindent]
+                                           [--quote {all,minimal,none,nonnumeric}]
+                                           [--request-format {json}] [-D]
+                                           [-F FIELD] [--sort-key FIELD]
+                                           [--sort-dir {asc,desc}]
+                                           [--ip-version {4,6}]
+                                           [--network-id NETWORK_ID]
+                                           [--network-name NETWORK_NAME]
+                                           [--tenant-id TENANT_ID]
+
+List IP usage of networks
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_net-ip-availability-show:
 
 neutron net-ip-availability-show
@@ -5504,6 +7401,56 @@ Show IP usage of specific network
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_net-list:
+
+neutron net-list
+----------------
+
+.. code-block:: console
+
+   usage: neutron net-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
+                           [--max-width <integer>] [--noindent]
+                           [--quote {all,minimal,none,nonnumeric}]
+                           [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
+                           [--sort-key FIELD] [--sort-dir {asc,desc}]
+                           [--tenant-id TENANT_ID] [--name NAME]
+                           [--admin-state-up {True,False}] [--status STATUS]
+                           [--shared {True,False}]
+                           [--router:external {True,False}] [--tags TAG]
+                           [--tags-any TAG] [--not-tags TAG] [--not-tags-any TAG]
+
+List networks that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_net-list-on-dhcp-agent:
 
@@ -5766,6 +7713,51 @@ Delete a given port.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_port-list:
+
+neutron port-list
+-----------------
+
+.. code-block:: console
+
+   usage: neutron port-list [-h] [-f {csv,html,json,table,value,yaml}]
+                            [-c COLUMN] [--max-width <integer>] [--noindent]
+                            [--quote {all,minimal,none,nonnumeric}]
+                            [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
+                            [--sort-key FIELD] [--sort-dir {asc,desc}]
+
+List ports that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_port-show:
 
 neutron port-show
@@ -5914,6 +7906,55 @@ neutron purge
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_qos-available-rule-types:
+
+neutron qos-available-rule-types
+--------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-available-rule-types [-h]
+                                           [-f {csv,html,json,table,value,yaml}]
+                                           [-c COLUMN] [--max-width <integer>]
+                                           [--noindent]
+                                           [--quote {all,minimal,none,nonnumeric}]
+                                           [--request-format {json}] [-D]
+                                           [-F FIELD] [-P SIZE]
+                                           [--sort-key FIELD]
+                                           [--sort-dir {asc,desc}]
+
+List available qos rule types.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_qos-bandwidth-limit-rule-create:
 
@@ -6377,6 +8418,53 @@ Delete a given qos policy.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_qos-policy-list:
+
+neutron qos-policy-list
+-----------------------
+
+.. code-block:: console
+
+   usage: neutron qos-policy-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent]
+                                  [--quote {all,minimal,none,nonnumeric}]
+                                  [--request-format {json}] [-D] [-F FIELD]
+                                  [-P SIZE] [--sort-key FIELD]
+                                  [--sort-dir {asc,desc}]
+
+List QoS policies that belong to a given tenant connection.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_qos-policy-show:
 
 neutron qos-policy-show
@@ -6521,6 +8609,35 @@ Delete a given queue.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_queue-list:
+
+neutron queue-list
+------------------
+
+.. code-block:: console
+
+   usage: neutron queue-list [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
+                             [--quote {all,minimal,none,nonnumeric}]
+                             [--request-format {json}] [-D] [-F FIELD]
+
+List queues that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
 .. _neutron_queue-show:
 
 neutron queue-show
@@ -6555,6 +8672,147 @@ Show information of a given queue.
 ``-F FIELD, --field FIELD``
   Specify the field(s) to be returned by server. You can
   repeat this option.
+
+.. _neutron_quota-delete:
+
+neutron quota-delete
+--------------------
+
+.. code-block:: console
+
+   usage: neutron quota-delete [-h] [--request-format {json}]
+                               [--tenant-id tenant-id]
+
+Delete defined quotas of a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id``
+  tenant-id
+  The owner tenant ID.
+
+.. _neutron_quota-list:
+
+neutron quota-list
+------------------
+
+.. code-block:: console
+
+   usage: neutron quota-list [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
+                             [--quote {all,minimal,none,nonnumeric}]
+                             [--request-format {json}]
+
+List quotas of all tenants who have non-default quota values.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_quota-show:
+
+neutron quota-show
+------------------
+
+.. code-block:: console
+
+   usage: neutron quota-show [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
+                             [--prefix PREFIX] [--request-format {json}]
+                             [--tenant-id tenant-id]
+
+Show quotas of a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id``
+  tenant-id
+  The owner tenant ID.
+
+.. _neutron_quota-update:
+
+neutron quota-update
+--------------------
+
+.. code-block:: console
+
+   usage: neutron quota-update [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--prefix PREFIX] [--request-format {json}]
+                               [--tenant-id tenant-id] [--network networks]
+                               [--subnet subnets] [--port ports]
+                               [--router routers] [--floatingip floatingips]
+                               [--security-group security_groups]
+                               [--security-group-rule security_group_rules]
+                               [--vip vips] [--pool pools] [--member members]
+                               [--health-monitor health_monitors]
+
+Define tenant's quotas not to use defaults.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id``
+  tenant-id
+  The owner tenant ID.
+
+``--network``
+  networks    The limit of networks.
+
+``--subnet``
+  subnets      The limit of subnets.
+
+``--port``
+  ports          The limit of ports.
+
+``--router``
+  routers      The limit of routers.
+
+``--floatingip``
+  floatingips
+  The limit of floating IPs.
+
+``--security-group``
+  security_groups
+  The limit of security groups.
+
+``--security-group-rule``
+  security_group_rules
+  The limit of security groups rules.
+
+``--vip``
+  vips            The limit of vips.
+
+``--pool``
+  pools          The limit of pools.
+
+``--member``
+  members      The limit of pool members.
+
+``--health-monitor``
+  health_monitors
+  The limit of health monitors.
 
 .. _neutron_rbac-create:
 
@@ -6622,6 +8880,51 @@ Delete a RBAC policy.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_rbac-list:
+
+neutron rbac-list
+-----------------
+
+.. code-block:: console
+
+   usage: neutron rbac-list [-h] [-f {csv,html,json,table,value,yaml}]
+                            [-c COLUMN] [--max-width <integer>] [--noindent]
+                            [--quote {all,minimal,none,nonnumeric}]
+                            [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
+                            [--sort-key FIELD] [--sort-dir {asc,desc}]
+
+List RBAC policies that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_rbac-show:
 
@@ -6889,6 +9192,51 @@ Remove an internal network interface from a router.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_router-list:
+
+neutron router-list
+-------------------
+
+.. code-block:: console
+
+   usage: neutron router-list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--quote {all,minimal,none,nonnumeric}]
+                              [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
+                              [--sort-key FIELD] [--sort-dir {asc,desc}]
+
+List routers that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_router-list-on-l3-agent:
 
 neutron router-list-on-l3-agent
@@ -7128,6 +9476,53 @@ Delete a given security group.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_security-group-list:
+
+neutron security-group-list
+---------------------------
+
+.. code-block:: console
+
+   usage: neutron security-group-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]
+                                      [--request-format {json}] [-D] [-F FIELD]
+                                      [-P SIZE] [--sort-key FIELD]
+                                      [--sort-dir {asc,desc}]
+
+List security groups that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_security-group-rule-create:
 
 neutron security-group-rule-create
@@ -7218,6 +9613,59 @@ Delete a given security group rule.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_security-group-rule-list:
+
+neutron security-group-rule-list
+--------------------------------
+
+.. code-block:: console
+
+   usage: neutron security-group-rule-list [-h]
+                                           [-f {csv,html,json,table,value,yaml}]
+                                           [-c COLUMN] [--max-width <integer>]
+                                           [--noindent]
+                                           [--quote {all,minimal,none,nonnumeric}]
+                                           [--request-format {json}] [-D]
+                                           [-F FIELD] [-P SIZE]
+                                           [--sort-key FIELD]
+                                           [--sort-dir {asc,desc}]
+                                           [--no-nameconv]
+
+List security group rules that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
+``--no-nameconv``
+  Do not convert security group ID to its name.
 
 .. _neutron_security-group-rule-show:
 
@@ -7323,6 +9771,54 @@ Update a given security group.
 
 ``--description DESCRIPTION``
   Description of security group.
+
+.. _neutron_service-provider-list:
+
+neutron service-provider-list
+-----------------------------
+
+.. code-block:: console
+
+   usage: neutron service-provider-list [-h]
+                                        [-f {csv,html,json,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent]
+                                        [--quote {all,minimal,none,nonnumeric}]
+                                        [--request-format {json}] [-D] [-F FIELD]
+                                        [-P SIZE] [--sort-key FIELD]
+                                        [--sort-dir {asc,desc}]
+
+List service providers.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_subnet-create:
 
@@ -7445,6 +9941,51 @@ Delete a given subnet.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_subnet-list:
+
+neutron subnet-list
+-------------------
+
+.. code-block:: console
+
+   usage: neutron subnet-list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--quote {all,minimal,none,nonnumeric}]
+                              [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
+                              [--sort-key FIELD] [--sort-dir {asc,desc}]
+
+List subnets that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_subnet-show:
 
@@ -7633,6 +10174,53 @@ Delete a given subnetpool.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_subnetpool-list:
+
+neutron subnetpool-list
+-----------------------
+
+.. code-block:: console
+
+   usage: neutron subnetpool-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent]
+                                  [--quote {all,minimal,none,nonnumeric}]
+                                  [--request-format {json}] [-D] [-F FIELD]
+                                  [-P SIZE] [--sort-key FIELD]
+                                  [--sort-dir {asc,desc}]
+
+List subnetpools that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_subnetpool-show:
 
 neutron subnetpool-show
@@ -7730,6 +10318,138 @@ Update subnetpool's information.
 ``--no-address-scope``
   Detach subnetpool from the address scope
 
+.. _neutron_tag-add:
+
+neutron tag-add
+---------------
+
+.. code-block:: console
+
+   usage: neutron tag-add [-h] [--request-format {json}] --resource-type
+                          {network} --resource RESOURCE --tag TAG
+
+Add a tag into the resource.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--resource-type {network}``
+  Resource Type.
+
+``--resource RESOURCE``
+  Resource name or ID.
+
+``--tag TAG``
+  Tag to be added.
+
+.. _neutron_tag-remove:
+
+neutron tag-remove
+------------------
+
+.. code-block:: console
+
+   usage: neutron tag-remove [-h] [--request-format {json}] --resource-type
+                             {network} --resource RESOURCE [--all | --tag TAG]
+
+Remove a tag on the resource.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--resource-type {network}``
+  Resource Type.
+
+``--resource RESOURCE``
+  Resource name or ID.
+
+``--all``
+  Remove all tags on the resource.
+
+``--tag TAG``
+  Tag to be removed.
+
+.. _neutron_tag-replace:
+
+neutron tag-replace
+-------------------
+
+.. code-block:: console
+
+   usage: neutron tag-replace [-h] [--request-format {json}] --resource-type
+                              {network} --resource RESOURCE --tag TAG
+
+Replace all tags on the resource.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--resource-type {network}``
+  Resource Type.
+
+``--resource RESOURCE``
+  Resource name or ID.
+
+``--tag TAG``
+  Tag (This option can be repeated).
+
+.. _neutron_vpn-endpoint-group-create:
+
+neutron vpn-endpoint-group-create
+---------------------------------
+
+.. code-block:: console
+
+   usage: neutron vpn-endpoint-group-create [-h]
+                                            [-f {html,json,shell,table,value,yaml}]
+                                            [-c COLUMN] [--max-width <integer>]
+                                            [--noindent] [--prefix PREFIX]
+                                            [--request-format {json}]
+                                            [--tenant-id TENANT_ID] [--name NAME]
+                                            [--description DESCRIPTION] --type
+                                            TYPE --value ENDPOINTS
+
+Create a VPN endpoint group.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--name NAME``
+  Set a name for the endpoint group.
+
+``--description DESCRIPTION``
+  Set a description for the endpoint group.
+
+``--type TYPE``
+  Type of endpoints in group (e.g. subnet, cidr, vlan).
+
+``--value ENDPOINTS``
+  Endpoint(s) for the group. Must all be of the same
+  type.
+
 .. _neutron_vpn-endpoint-group-delete:
 
 neutron vpn-endpoint-group-delete
@@ -7754,6 +10474,54 @@ Delete a given VPN endpoint group.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_vpn-endpoint-group-list:
+
+neutron vpn-endpoint-group-list
+-------------------------------
+
+.. code-block:: console
+
+   usage: neutron vpn-endpoint-group-list [-h]
+                                          [-f {csv,html,json,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent]
+                                          [--quote {all,minimal,none,nonnumeric}]
+                                          [--request-format {json}] [-D]
+                                          [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                                          [--sort-dir {asc,desc}]
+
+List VPN endpoint groups that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_vpn-endpoint-group-show:
 
@@ -7913,6 +10681,53 @@ Delete a given IKE policy.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_vpn-ikepolicy-list:
+
+neutron vpn-ikepolicy-list
+--------------------------
+
+.. code-block:: console
+
+   usage: neutron vpn-ikepolicy-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+                                     [--request-format {json}] [-D] [-F FIELD]
+                                     [-P SIZE] [--sort-key FIELD]
+                                     [--sort-dir {asc,desc}]
+
+List IKE policies that belong to a tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_vpn-ikepolicy-show:
 
 neutron vpn-ikepolicy-show
@@ -8069,6 +10884,53 @@ Delete a given IPsec policy.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+.. _neutron_vpn-ipsecpolicy-list:
+
+neutron vpn-ipsecpolicy-list
+----------------------------
+
+.. code-block:: console
+
+   usage: neutron vpn-ipsecpolicy-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent]
+                                       [--quote {all,minimal,none,nonnumeric}]
+                                       [--request-format {json}] [-D] [-F FIELD]
+                                       [-P SIZE] [--sort-key FIELD]
+                                       [--sort-dir {asc,desc}]
+
+List IPsec policies that belong to a given tenant connection.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
 .. _neutron_vpn-ipsecpolicy-show:
 
 neutron vpn-ipsecpolicy-show
@@ -8206,6 +11068,53 @@ Delete a given VPN service.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_vpn-service-list:
+
+neutron vpn-service-list
+------------------------
+
+.. code-block:: console
+
+   usage: neutron vpn-service-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent]
+                                   [--quote {all,minimal,none,nonnumeric}]
+                                   [--request-format {json}] [-D] [-F FIELD]
+                                   [-P SIZE] [--sort-key FIELD]
+                                   [--sort-dir {asc,desc}]
+
+List VPN service configurations that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
 
 .. _neutron_vpn-service-show:
 
