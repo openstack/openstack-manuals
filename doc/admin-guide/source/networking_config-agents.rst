@@ -403,8 +403,8 @@ For the back end, use either Octavia or Haproxy. This example uses Octavia.
       Horizon panels are enabled only for LBaaSV1. LBaaSV2 panels are still
       being developed.
 
-   Change the ``enable_lb`` option to ``True`` in the `local_settings.py`
-   file
+   By default, the ``enable_lb`` option is ``True`` in the `local_settings.py`
+   file.
 
    .. code-block:: python
 
