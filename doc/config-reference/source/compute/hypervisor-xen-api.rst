@@ -46,6 +46,9 @@ XenAPI
 
 XenAPI is the API provided by XAPI.
 This name is also used by the python library that is a client for XAPI.
+A set of packages to use XenAPI on existing distributions can be
+built using the `xenserver/buildroot
+<https://github.com/xenserver/buildroot>`_ project.
 
 XenServer
 ---------
@@ -62,23 +65,6 @@ XCP is not supported anymore. XCP project recommends all XCP users
 to upgrade to the latest version of XenServer by visiting
 `xenserver.org <http://xenserver.org/>`_.
 
-XenServer-core
---------------
-
-This is a method for building the core packages in a XenServer
-installation on an existing RPM-based system. Initial support
-for this configuration (notably running Compute services in domain 0)
-was added in Havana. XenServer-core for Debian/Ubuntu is built
-from the main branch and, therefore, is continuously up to date.
-
-Kronos
-------
-
-This is a project initiated to provide the ability to install
-XAPI toolstack onto an existing Debian-based deployment.
-For more information, visit the `Xen wiki Project Kronos
-<http://wiki.xenproject.org/wiki/Project_Kronos>`_.
-
 Privileged and unprivileged domains
 -----------------------------------
 
@@ -89,10 +75,11 @@ dom0. It is the first domain to boot after Xen, and owns the
 storage and networking hardware, the device drivers, and the
 primary control software. Any other VM is unprivileged, and is
 known as a domU or guest.  All customer VMs are unprivileged,
-but you should note that on Xen, the OpenStack Compute service
-(``nova-compute``) also runs in a domU. This gives a level of
-security isolation between the privileged system software and
-the OpenStack software (much of which is customer-facing).
+but you should note that on XenServer (and other XenAPI using
+hypervisors), the OpenStack Compute service (``nova-compute``)
+also runs in a domU. This gives a level of security isolation
+between the privileged system software and the OpenStack software
+(much of which is customer-facing).
 This architecture is described in more detail later.
 
 Paravirtualized versus hardware virtualized domains
