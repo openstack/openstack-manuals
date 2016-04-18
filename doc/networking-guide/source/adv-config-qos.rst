@@ -228,6 +228,19 @@ network, or initially create the network attached to the policy.
     $ neutron net-update private --qos-policy bw-limiter
     Updated network: private
 
+.. note::
+
+   Configuring the proper burst value is very important. If the burst value is
+   set too low, bandwidth usage will be throttled even with a proper bandwidth
+   limit setting. This issue is discussed in various documentation sources, for
+   example in `Juniper's documentation
+   <http://www.juniper.net/documentation/en_US/junos12.3/topics/concept/policer-mx-m120-m320-burstsize-determining.html>`_.
+   Burst value for TCP traffic can be set as 80% of desired bandwidth limit
+   value. For example, if the bandwidth limit is set to 1000kbps then enough
+   burst value will be 800kbit. If the configured burst value is too low,
+   achieved bandwidth limit will be lower than expected. If the configured burst
+   value is too high, too few packets could be limited and achieved bandwidth
+   limit would be higher than expected.
 
 Administrator enforcement
 -------------------------
