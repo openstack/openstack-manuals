@@ -161,9 +161,8 @@ Install and configure components
       .. code-block:: console
 
          # zypper install openstack-nova-api openstack-nova-scheduler \
-           openstack-nova-cert openstack-nova-conductor \
-           openstack-nova-consoleauth openstack-nova-novncproxy \
-           iptables
+           openstack-nova-conductor openstack-nova-consoleauth \
+           openstack-nova-novncproxy iptables
 
 .. only:: rdo
 
@@ -171,9 +170,9 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install openstack-nova-api openstack-nova-cert \
-           openstack-nova-conductor openstack-nova-console \
-           openstack-nova-novncproxy openstack-nova-scheduler
+         # yum install openstack-nova-api openstack-nova-conductor \
+           openstack-nova-console openstack-nova-novncproxy \
+           openstack-nova-scheduler
 
 .. only:: ubuntu
 
@@ -181,8 +180,8 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install nova-api nova-cert nova-conductor \
-           nova-consoleauth nova-novncproxy nova-scheduler
+         # apt-get install nova-api nova-conductor nova-consoleauth \
+           nova-novncproxy nova-scheduler
 
 .. only:: debian
 
@@ -190,9 +189,8 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install nova-api nova-cert nova-conductor \
-           nova-consoleauth nova-consoleproxy nova-scheduler \
-           python-novaclient
+         # apt-get install nova-api nova-conductor nova-consoleauth \
+           nova-consoleproxy nova-scheduler python-novaclient
 
       Respond to prompts for
       :doc:`database management <debconf/debconf-dbconfig-common>`,
@@ -408,13 +406,11 @@ Finalize installation
      .. code-block:: console
 
         # systemctl enable openstack-nova-api.service \
-          openstack-nova-cert.service openstack-nova-consoleauth.service \
-          openstack-nova-scheduler.service openstack-nova-conductor.service \
-          openstack-nova-novncproxy.service
+          openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+          openstack-nova-conductor.service openstack-nova-novncproxy.service
         # systemctl start openstack-nova-api.service \
-          openstack-nova-cert.service openstack-nova-consoleauth.service \
-          openstack-nova-scheduler.service openstack-nova-conductor.service \
-          openstack-nova-novncproxy.service
+          openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+          openstack-nova-conductor.service openstack-nova-novncproxy.service
 
 .. only:: rdo
 
@@ -424,13 +420,11 @@ Finalize installation
      .. code-block:: console
 
         # systemctl enable openstack-nova-api.service \
-          openstack-nova-cert.service openstack-nova-consoleauth.service \
-          openstack-nova-scheduler.service openstack-nova-conductor.service \
-          openstack-nova-novncproxy.service
+          openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+          openstack-nova-conductor.service openstack-nova-novncproxy.service
         # systemctl start openstack-nova-api.service \
-          openstack-nova-cert.service openstack-nova-consoleauth.service \
-          openstack-nova-scheduler.service openstack-nova-conductor.service \
-          openstack-nova-novncproxy.service
+          openstack-nova-consoleauth.service openstack-nova-scheduler.service \
+          openstack-nova-conductor.service openstack-nova-novncproxy.service
 
 .. only:: ubuntu or debian
 
@@ -439,7 +433,6 @@ Finalize installation
      .. code-block:: console
 
         # service nova-api restart
-        # service nova-cert restart
         # service nova-consoleauth restart
         # service nova-scheduler restart
         # service nova-conductor restart
