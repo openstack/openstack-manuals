@@ -444,14 +444,3 @@ Finalize installation
         # service nova-scheduler restart
         # service nova-conductor restart
         # service nova-novncproxy restart
-
-   .. only:: ubuntu
-
-      * By default, the Ubuntu packages create an SQLite database.
-
-        Because this configuration uses an SQL database server,
-        you can remove the SQLite database file:
-
-        .. code-block:: console
-
-           # rm -f /var/lib/nova/nova.sqlite
