@@ -9,5 +9,6 @@ Orchestration service
    heat-verify.rst
    heat-next-steps.rst
 
-The Orchestration service (heat) uses a heat orchestration
-template (HOT) to create and manage cloud resources.
+The Orchestration service (heat) uses a
+`Heat Orchestration Template (HOT) <http://docs.openstack.org/developer/heat/template_guide/hot_guide.html>`_
+to create and manage cloud resources.

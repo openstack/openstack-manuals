@@ -8,7 +8,7 @@ Image service
    glance-install.rst
    glance-verify.rst
 
-The OpenStack Image service (glance) enables users to discover,
+The Image service (glance) enables users to discover,
 register, and retrieve virtual machine images. It offers a
 :term:`REST <RESTful>` API that enables you to query virtual
 machine image metadata and retrieve an actual image.
