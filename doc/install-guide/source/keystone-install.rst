@@ -328,20 +328,12 @@ HTTP server to handle requests.
                 WSGIScriptAlias / /usr/bin/keystone-wsgi-public
                 WSGIApplicationGroup %{GLOBAL}
                 WSGIPassAuthorization On
-                <IfVersion >= 2.4>
-                  ErrorLogFormat "%{cu}t %M"
-                </IfVersion>
+                ErrorLogFormat "%{cu}t %M"
                 ErrorLog /var/log/httpd/keystone-error.log
                 CustomLog /var/log/httpd/keystone-access.log combined
 
                 <Directory /usr/bin>
-                    <IfVersion >= 2.4>
-                        Require all granted
-                    </IfVersion>
-                    <IfVersion < 2.4>
-                        Order allow,deny
-                        Allow from all
-                    </IfVersion>
+                    Require all granted
                 </Directory>
             </VirtualHost>
 
@@ -351,20 +343,12 @@ HTTP server to handle requests.
                 WSGIScriptAlias / /usr/bin/keystone-wsgi-admin
                 WSGIApplicationGroup %{GLOBAL}
                 WSGIPassAuthorization On
-                <IfVersion >= 2.4>
-                  ErrorLogFormat "%{cu}t %M"
-                </IfVersion>
+                ErrorLogFormat "%{cu}t %M"
                 ErrorLog /var/log/httpd/keystone-error.log
                 CustomLog /var/log/httpd/keystone-access.log combined
 
                 <Directory /usr/bin>
-                    <IfVersion >= 2.4>
-                        Require all granted
-                    </IfVersion>
-                    <IfVersion < 2.4>
-                        Order allow,deny
-                        Allow from all
-                    </IfVersion>
+                    Require all granted
                 </Directory>
             </VirtualHost>
 
@@ -391,20 +375,12 @@ HTTP server to handle requests.
                 WSGIScriptAlias / /usr/bin/keystone-wsgi-public
                 WSGIApplicationGroup %{GLOBAL}
                 WSGIPassAuthorization On
-                <IfVersion >= 2.4>
-                  ErrorLogFormat "%{cu}t %M"
-                </IfVersion>
+                ErrorLogFormat "%{cu}t %M"
                 ErrorLog /var/log/apache2/keystone.log
                 CustomLog /var/log/apache2/keystone_access.log combined
 
                 <Directory /usr/bin>
-                    <IfVersion >= 2.4>
-                        Require all granted
-                    </IfVersion>
-                    <IfVersion < 2.4>
-                        Order allow,deny
-                        Allow from all
-                    </IfVersion>
+                    Require all granted
                 </Directory>
             </VirtualHost>
 
@@ -414,20 +390,12 @@ HTTP server to handle requests.
                 WSGIScriptAlias / /usr/bin/keystone-wsgi-admin
                 WSGIApplicationGroup %{GLOBAL}
                 WSGIPassAuthorization On
-                <IfVersion >= 2.4>
-                  ErrorLogFormat "%{cu}t %M"
-                </IfVersion>
+                ErrorLogFormat "%{cu}t %M"
                 ErrorLog /var/log/apache2/keystone.log
                 CustomLog /var/log/apache2/keystone_access.log combined
 
                 <Directory /usr/bin>
-                    <IfVersion >= 2.4>
-                        Require all granted
-                    </IfVersion>
-                    <IfVersion < 2.4>
-                        Order allow,deny
-                        Allow from all
-                    </IfVersion>
+                    Require all granted
                 </Directory>
             </VirtualHost>
 
@@ -460,20 +428,12 @@ HTTP server to handle requests.
                 WSGIScriptAlias / /usr/bin/keystone-wsgi-public
                 WSGIApplicationGroup %{GLOBAL}
                 WSGIPassAuthorization On
-                <IfVersion >= 2.4>
-                  ErrorLogFormat "%{cu}t %M"
-                </IfVersion>
+                ErrorLogFormat "%{cu}t %M"
                 ErrorLog /var/log/apache2/keystone.log
                 CustomLog /var/log/apache2/keystone_access.log combined
 
                 <Directory /usr/bin>
-                    <IfVersion >= 2.4>
-                        Require all granted
-                    </IfVersion>
-                    <IfVersion < 2.4>
-                        Order allow,deny
-                        Allow from all
-                    </IfVersion>
+                    Require all granted
                 </Directory>
             </VirtualHost>
 
@@ -483,20 +443,12 @@ HTTP server to handle requests.
                 WSGIScriptAlias / /usr/bin/keystone-wsgi-admin
                 WSGIApplicationGroup %{GLOBAL}
                 WSGIPassAuthorization On
-                <IfVersion >= 2.4>
-                  ErrorLogFormat "%{cu}t %M"
-                </IfVersion>
+                ErrorLogFormat "%{cu}t %M"
                 ErrorLog /var/log/apache2/keystone.log
                 CustomLog /var/log/apache2/keystone_access.log combined
 
                 <Directory /usr/bin>
-                    <IfVersion >= 2.4>
-                        Require all granted
-                    </IfVersion>
-                    <IfVersion < 2.4>
-                        Order allow,deny
-                        Allow from all
-                    </IfVersion>
+                    Require all granted
                 </Directory>
             </VirtualHost>
 
@@ -538,12 +490,6 @@ HTTP server to handle requests.
            # systemctl start httpd.service
 
    .. only:: obs
-
-      #. Activate the Apache module ``mod_version``:
-
-         .. code-block:: console
-
-            # a2enmod version
 
       #. Start the Apache HTTP service and configure it to start when the system boots:
 
