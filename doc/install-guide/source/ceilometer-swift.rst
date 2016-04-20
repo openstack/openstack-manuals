@@ -27,12 +27,13 @@ node.
    .. code-block:: console
 
       $ openstack role create ResellerAdmin
-      +-------+----------------------------------+
-      | Field | Value                            |
-      +-------+----------------------------------+
-      | id    | 462fa46c13fd4798a95a3bfbe27b5e54 |
-      | name  | ResellerAdmin                    |
-      +-------+----------------------------------+
+      +-----------+----------------------------------+
+      | Field     | Value                            |
+      +-----------+----------------------------------+
+      | domain_id | None                             |
+      | id        | 462fa46c13fd4798a95a3bfbe27b5e54 |
+      | name      | ResellerAdmin                    |
+      +-----------+----------------------------------+
 
 #. Add the ``ResellerAdmin`` role to the ``ceilometer`` user:
 
