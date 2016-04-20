@@ -68,12 +68,13 @@ service. The authentication service uses a combination of :term:`domains
      .. code-block:: console
 
         $ openstack role create admin
-        +-------+----------------------------------+
-        | Field | Value                            |
-        +-------+----------------------------------+
-        | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-        | name  | admin                            |
-        +-------+----------------------------------+
+        +-----------+----------------------------------+
+        | Field     | Value                            |
+        +-----------+----------------------------------+
+        | domain_id | None                             |
+        | id        | cd2cb9a39e874ea69e5d4b896eb16128 |
+        | name      | admin                            |
+        +-----------+----------------------------------+
 
    * Add the ``admin`` role to the ``admin`` project and user:
 
@@ -162,12 +163,13 @@ service. The authentication service uses a combination of :term:`domains
      .. code-block:: console
 
         $ openstack role create user
-        +-------+----------------------------------+
-        | Field | Value                            |
-        +-------+----------------------------------+
-        | id    | 997ce8d05fc143ac97d83fdfb5998552 |
-        | name  | user                             |
-        +-------+----------------------------------+
+        +-----------+----------------------------------+
+        | Field     | Value                            |
+        +-----------+----------------------------------+
+        | domain_id | None                             |
+        | id        | 997ce8d05fc143ac97d83fdfb5998552 |
+        | name      | user                             |
+        +-----------+----------------------------------+
 
    * Add the ``user`` role to the ``demo`` project and user:
 

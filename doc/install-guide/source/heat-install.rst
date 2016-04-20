@@ -260,12 +260,13 @@ Orchestration service, code-named heat, on the controller node.
         .. code-block:: console
 
            $ openstack role create heat_stack_owner
-           +-------+----------------------------------+
-           | Field | Value                            |
-           +-------+----------------------------------+
-           | id    | 15e34f0c4fed4e68b3246275883c8630 |
-           | name  | heat_stack_owner                 |
-           +-------+----------------------------------+
+           +-----------+----------------------------------+
+           | Field     | Value                            |
+           +-----------+----------------------------------+
+           | domain_id | None                             |
+           | id        | 15e34f0c4fed4e68b3246275883c8630 |
+           | name      | heat_stack_owner                 |
+           +-----------+----------------------------------+
 
       * Add the ``heat_stack_owner`` role to the ``demo`` project and user to
         enable stack management by the ``demo`` user:
@@ -288,12 +289,13 @@ Orchestration service, code-named heat, on the controller node.
         .. code-block:: console
 
            $ openstack role create heat_stack_user
-           +-------+----------------------------------+
-           | Field | Value                            |
-           +-------+----------------------------------+
-           | id    | 88849d41a55d4d1d91e4f11bffd8fc5c |
-           | name  | heat_stack_user                  |
-           +-------+----------------------------------+
+           +-----------+----------------------------------+
+           | Field     | Value                            |
+           +-----------+----------------------------------+
+           | domain_id | None                             |
+           | id        | 88849d41a55d4d1d91e4f11bffd8fc5c |
+           | name      | heat_stack_user                  |
+           +-----------+----------------------------------+
 
         .. note::
 
