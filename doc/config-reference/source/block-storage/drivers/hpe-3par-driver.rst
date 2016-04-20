@@ -230,6 +230,8 @@ Adaptive Flash Cache license installed.
 * ``hpe3par:flash_cache`` - The flash-cache policy, which can be turned on and
   off by setting the value to ``true`` or ``false``.
 
+LDAP authentication is supported if the 3PAR is configured to do so.
+
 Enable the HPE 3PAR Fibre Channel and iSCSI drivers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
