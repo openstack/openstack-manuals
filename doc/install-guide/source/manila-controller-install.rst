@@ -225,7 +225,8 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper install openstack-manila-api openstack-manila-scheduler
+         # zypper install openstack-manila-api \
+           openstack-manila-scheduler python-manilaclient
 
 .. only:: rdo
 
@@ -233,7 +234,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install openstack-manila
+         # yum install openstack-manila python-manilaclient
 
 .. only:: ubuntu or debian
 
@@ -241,7 +242,8 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install manila-api manila-scheduler
+         # apt-get install manila-api manila-scheduler \
+           python-manilaclient
 
       .. only:: debian
 
