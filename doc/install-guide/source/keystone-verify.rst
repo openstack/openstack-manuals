@@ -23,7 +23,7 @@ services.
    #. For security reasons, disable the temporary authentication
       token mechanism:
 
-      Edit the ``/usr/share/keystone/keystone-dist-paste.ini``
+      Edit the ``/etc/keystone/keystone-paste.ini``
       file and remove ``admin_token_auth`` from the
       ``[pipeline:public_api]``, ``[pipeline:admin_api]``,
       and ``[pipeline:api_v3]`` sections.
