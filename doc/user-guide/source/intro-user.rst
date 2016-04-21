@@ -8,11 +8,11 @@ within the limits set by cloud administrators.
 The examples in this guide show you how to perform tasks by using the
 following methods:
 
-* OpenStack dashboard. Use this web-based graphical interface, code named
+* OpenStack dashboard: Use this web-based graphical interface, code named
   `horizon <https://git.openstack.org/cgit/openstack/horizon>`__, to view,
   create, and manage resources.
 
-* OpenStack command-line clients. Each core OpenStack project has a
+* OpenStack command-line clients: Each core OpenStack project has a
   command-line client that you can use to run simple commands to view,
   create, and manage resources in a cloud and automate tasks by using
   scripts.
