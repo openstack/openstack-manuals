@@ -9,7 +9,7 @@ Compute command-line client
 The nova client is the command-line interface (CLI) for
 the OpenStack Compute API and its extensions.
 
-This chapter documents :command:`nova` version ``3.4.0``.
+This chapter documents :command:`nova` version ``4.0.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -41,7 +41,7 @@ nova usage
                [--os-trust-id OS_TRUST_ID]
                [--os-default-domain-id OS_DEFAULT_DOMAIN_ID]
                [--os-default-domain-name OS_DEFAULT_DOMAIN_NAME]
-               [--os-user-id OS_USER_ID] [--os-user-name OS_USERNAME]
+               [--os-user-id OS_USER_ID] [--os-username OS_USERNAME]
                [--os-user-domain-id OS_USER_DOMAIN_ID]
                [--os-user-domain-name OS_USER_DOMAIN_NAME]
                [--os-password OS_PASSWORD]
@@ -292,16 +292,19 @@ nova usage
   running server.
 
 ``image-delete``
-  Delete specified image(s).
+  **DEPRECATED**: Delete specified image(s).
 
 ``image-list``
-  Print a list of available images to boot from.
+  **DEPRECATED**: Print a list of available images
+  to boot from.
 
 ``image-meta``
-  Set or delete metadata on an image.
+  **DEPRECATED**: Set or delete metadata on an
+  image.
 
 ``image-show``
-  Show details about the given image.
+  **DEPRECATED**: Show details about the given
+  image.
 
 ``interface-attach``
   Attach a network interface to a server.
@@ -625,42 +628,8 @@ nova usage
 ``volume-attachments``
   List all the volumes attached to a server.
 
-``volume-create``
-  **DEPRECATED**: Add a new volume.
-
-``volume-delete``
-  **DEPRECATED**: Remove volume(s).
-
 ``volume-detach``
   Detach a volume from a server.
-
-``volume-list``
-  **DEPRECATED**: List all the volumes.
-
-``volume-show``
-  **DEPRECATED**: Show details about a volume.
-
-``volume-snapshot-create``
-  **DEPRECATED**: Add a new snapshot.
-
-``volume-snapshot-delete``
-  **DEPRECATED**: Remove a snapshot.
-
-``volume-snapshot-list``
-  **DEPRECATED**: List all the snapshots.
-
-``volume-snapshot-show``
-  **DEPRECATED**: Show details about a snapshot.
-
-``volume-type-create``
-  **DEPRECATED**: Create a new volume type.
-
-``volume-type-delete``
-  **DEPRECATED**: Delete a specific volume type.
-
-``volume-type-list``
-  **DEPRECATED**: Print a list of available 'volume
-  types'.
 
 ``volume-update``
   Update volume attachment.
@@ -745,23 +714,9 @@ nova usage
 ``restore``
   Restore a soft-deleted server.
 
-``baremetal-interface-add``
-  Add a network interface to a baremetal node.
-
 ``baremetal-interface-list``
   List network interfaces associated with a
   baremetal node.
-
-``baremetal-interface-remove``
-  Remove a network interface from a baremetal
-  node.
-
-``baremetal-node-create``
-  Create a baremetal node.
-
-``baremetal-node-delete``
-  Remove a baremetal node and any associated
-  interfaces.
 
 ``baremetal-node-list``
   Print list of available baremetal nodes.
@@ -819,7 +774,7 @@ nova optional arguments
 .. _nova_add-fixed-ip:
 
 nova add-fixed-ip
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -838,7 +793,7 @@ Add new IP address on a network to server.
 .. _nova_add-secgroup:
 
 nova add-secgroup
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -857,7 +812,7 @@ Add a Security Group to a server.
 .. _nova_agent-create:
 
 nova agent-create
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -889,7 +844,7 @@ Create new agent build.
 .. _nova_agent-delete:
 
 nova agent-delete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -905,7 +860,7 @@ Delete existing agent build.
 .. _nova_agent-list:
 
 nova agent-list
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -921,7 +876,7 @@ List all builds.
 .. _nova_agent-modify:
 
 nova agent-modify
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -946,7 +901,7 @@ Modify existing agent build.
 .. _nova_aggregate-add-host:
 
 nova aggregate-add-host
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -965,7 +920,7 @@ Add the host to the specified aggregate.
 .. _nova_aggregate-create:
 
 nova aggregate-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -984,7 +939,7 @@ Create a new aggregate with the specified details.
 .. _nova_aggregate-delete:
 
 nova aggregate-delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1000,7 +955,7 @@ Delete the aggregate.
 .. _nova_aggregate-list:
 
 nova aggregate-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1011,7 +966,7 @@ Print a list of all aggregates.
 .. _nova_aggregate-remove-host:
 
 nova aggregate-remove-host
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1030,7 +985,7 @@ Remove the specified host from the specified aggregate.
 .. _nova_aggregate-set-metadata:
 
 nova aggregate-set-metadata
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -1050,7 +1005,7 @@ Update the metadata associated with the aggregate.
 .. _nova_aggregate-show:
 
 nova aggregate-show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1066,7 +1021,7 @@ Show details of the specified aggregate.
 .. _nova_aggregate-update:
 
 nova aggregate-update
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1088,7 +1043,7 @@ Update the aggregate's name and optionally availability zone.
 .. _nova_availability-zone-list:
 
 nova availability-zone-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -1099,7 +1054,7 @@ List all the availability zones.
 .. _nova_backup:
 
 nova backup
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -1121,39 +1076,10 @@ Backup a server by creating a 'backup' type snapshot.
 ``<rotation>``
   Int parameter representing how many backups to keep around.
 
-.. _nova_baremetal-interface-add:
-
-nova baremetal-interface-add
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: nova baremetal-interface-add [--datapath_id <datapath_id>]
-                                       [--port_no <port_no>]
-                                       <node> <address>
-
-Add a network interface to a baremetal node.
-
-**Positional arguments:**
-
-``<node>``
-  ID of node
-
-``<address>``
-  MAC address of interface
-
-**Optional arguments:**
-
-``--datapath_id <datapath_id>``
-  OpenFlow Datapath ID of interface
-
-``--port_no <port_no>``
-  OpenFlow port number of interface
-
 .. _nova_baremetal-interface-list:
 
 nova baremetal-interface-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -1166,93 +1092,10 @@ List network interfaces associated with a baremetal node.
 ``<node>``
   ID of node
 
-.. _nova_baremetal-interface-remove:
-
-nova baremetal-interface-remove
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: nova baremetal-interface-remove <node> <address>
-
-Remove a network interface from a baremetal node.
-
-**Positional arguments:**
-
-``<node>``
-  ID of node
-
-``<address>``
-  MAC address of interface
-
-.. _nova_baremetal-node-create:
-
-nova baremetal-node-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: nova baremetal-node-create [--pm_address <pm_address>]
-                                     [--pm_user <pm_user>]
-                                     [--pm_password <pm_password>]
-                                     [--terminal_port <terminal_port>]
-                                     <service_host> <cpus> <memory_mb> <local_gb>
-                                     <prov_mac_address>
-
-Create a baremetal node.
-
-**Positional arguments:**
-
-``<service_host>``
-  Name of nova compute host which will control
-  this baremetal node
-
-``<cpus>``
-  Number of CPUs in the node
-
-``<memory_mb>``
-  Megabytes of RAM in the node
-
-``<local_gb>``
-  Gigabytes of local storage in the node
-
-``<prov_mac_address>``
-  MAC address to provision the node
-
-**Optional arguments:**
-
-``--pm_address <pm_address>``
-  Power management IP for the node
-
-``--pm_user <pm_user>``
-  Username for the node's power management
-
-``--pm_password <pm_password>``
-  Password for the node's power management
-
-``--terminal_port <terminal_port>``
-  ShellInABox port?
-
-.. _nova_baremetal-node-delete:
-
-nova baremetal-node-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: nova baremetal-node-delete <node>
-
-Remove a baremetal node and any associated interfaces.
-
-**Positional arguments:**
-
-``<node>``
-  ID of the node to delete.
-
 .. _nova_baremetal-node-list:
 
 nova baremetal-node-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1263,7 +1106,7 @@ Print list of available baremetal nodes.
 .. _nova_baremetal-node-show:
 
 nova baremetal-node-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1279,7 +1122,7 @@ Show information about a baremetal node.
 .. _nova_boot:
 
 nova boot
-~~~~~~~~~
+---------
 
 .. code-block:: console
 
@@ -1315,10 +1158,10 @@ Boot a new server.
   Name or ID of flavor (see 'nova flavor-list').
 
 ``--image <image>``
-  Name or ID of image (see 'nova image-list').
+  Name or ID of image (see 'glance image-list').
 
 ``--image-with <key=value>``
-  Image metadata property (see 'nova image-
+  Image metadata property (see 'glance image-
   show').
 
 ``--boot-volume <volume_id>``
@@ -1441,7 +1284,7 @@ Boot a new server.
 .. _nova_cell-capacities:
 
 nova cell-capacities
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1457,7 +1300,7 @@ Get cell capacities for all cells or a given cell.
 .. _nova_cell-show:
 
 nova cell-show
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
@@ -1473,7 +1316,7 @@ Show details of a given cell.
 .. _nova_clear-password:
 
 nova clear-password
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1489,7 +1332,7 @@ Clear the admin password for a server.
 .. _nova_cloudpipe-configure:
 
 nova cloudpipe-configure
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1508,7 +1351,7 @@ Update the VPN IP/port of a cloudpipe instance.
 .. _nova_cloudpipe-create:
 
 nova cloudpipe-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1524,7 +1367,7 @@ Create a cloudpipe instance for the given project.
 .. _nova_cloudpipe-list:
 
 nova cloudpipe-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1535,7 +1378,7 @@ Print a list of all cloudpipe instances.
 .. _nova_console-log:
 
 nova console-log
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1556,7 +1399,7 @@ Get console log output of a server.
 .. _nova_credentials:
 
 nova credentials
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1572,7 +1415,7 @@ Show user credentials returned from auth.
 .. _nova_delete:
 
 nova delete
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -1593,7 +1436,7 @@ Immediately shut down and delete specified server(s).
 .. _nova_diagnostics:
 
 nova diagnostics
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1609,7 +1452,7 @@ Retrieve server diagnostics.
 .. _nova_dns-create:
 
 nova dns-create
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -1636,7 +1479,7 @@ Create a DNS entry for domain, name, and IP.
 .. _nova_dns-create-private-domain:
 
 nova dns-create-private-domain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -1660,7 +1503,7 @@ Create the specified DNS domain.
 .. _nova_dns-create-public-domain:
 
 nova dns-create-public-domain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -1682,7 +1525,7 @@ Create the specified DNS domain.
 .. _nova_dns-delete:
 
 nova dns-delete
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -1701,7 +1544,7 @@ Delete the specified DNS entry.
 .. _nova_dns-delete-domain:
 
 nova dns-delete-domain
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -1717,7 +1560,7 @@ Delete the specified DNS domain.
 .. _nova_dns-domains:
 
 nova dns-domains
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1728,7 +1571,7 @@ Print a list of available dns domains.
 .. _nova_dns-list:
 
 nova dns-list
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
@@ -1752,7 +1595,7 @@ List current DNS entries for domain and IP or domain and name.
 .. _nova_endpoints:
 
 nova endpoints
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
@@ -1763,7 +1606,7 @@ Discover endpoints that get returned from the authenticate services.
 .. _nova_evacuate:
 
 nova evacuate
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
@@ -1790,7 +1633,7 @@ Evacuate server from failed host.
 .. _nova_fixed-ip-get:
 
 nova fixed-ip-get
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -1806,7 +1649,7 @@ Retrieve info on a fixed IP.
 .. _nova_fixed-ip-reserve:
 
 nova fixed-ip-reserve
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1822,7 +1665,7 @@ Reserve a fixed IP.
 .. _nova_fixed-ip-unreserve:
 
 nova fixed-ip-unreserve
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1838,7 +1681,7 @@ Unreserve a fixed IP.
 .. _nova_flavor-access-add:
 
 nova flavor-access-add
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -1857,7 +1700,7 @@ Add flavor access for the given tenant.
 .. _nova_flavor-access-list:
 
 nova flavor-access-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1876,7 +1719,7 @@ Print access information about the given flavor.
 .. _nova_flavor-access-remove:
 
 nova flavor-access-remove
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -1895,7 +1738,7 @@ Remove flavor access for the given tenant.
 .. _nova_flavor-create:
 
 nova flavor-create
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1941,7 +1784,7 @@ Create a new flavor.
 .. _nova_flavor-delete:
 
 nova flavor-delete
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1957,7 +1800,7 @@ Delete a specific flavor
 .. _nova_flavor-key:
 
 nova flavor-key
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -1979,7 +1822,7 @@ Set or unset extra_spec for a flavor.
 .. _nova_flavor-list:
 
 nova flavor-list
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -2009,7 +1852,7 @@ Print a list of available 'flavors' (sizes of servers).
 .. _nova_flavor-show:
 
 nova flavor-show
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -2025,7 +1868,7 @@ Show details about the given flavor.
 .. _nova_floating-ip-associate:
 
 nova floating-ip-associate
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -2050,7 +1893,7 @@ Associate a floating IP address to a server.
 .. _nova_floating-ip-bulk-create:
 
 nova floating-ip-bulk-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -2075,7 +1918,7 @@ Bulk create floating IPs by range (nova-network only).
 .. _nova_floating-ip-bulk-delete:
 
 nova floating-ip-bulk-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -2091,7 +1934,7 @@ Bulk delete floating IPs by range (nova-network only).
 .. _nova_floating-ip-bulk-list:
 
 nova floating-ip-bulk-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -2107,7 +1950,7 @@ List all floating IPs (nova-network only).
 .. _nova_floating-ip-create:
 
 nova floating-ip-create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -2123,7 +1966,7 @@ Allocate a floating IP for the current tenant.
 .. _nova_floating-ip-delete:
 
 nova floating-ip-delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -2139,7 +1982,7 @@ De-allocate a floating IP.
 .. _nova_floating-ip-disassociate:
 
 nova floating-ip-disassociate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -2158,7 +2001,7 @@ Disassociate a floating IP address from a server.
 .. _nova_floating-ip-list:
 
 nova floating-ip-list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -2169,7 +2012,7 @@ List floating IPs.
 .. _nova_floating-ip-pool-list:
 
 nova floating-ip-pool-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -2180,7 +2023,7 @@ List all floating IP pools.
 .. _nova_force-delete:
 
 nova force-delete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -2196,7 +2039,7 @@ Force delete a server.
 .. _nova_get-mks-console:
 
 nova get-mks-console
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -2222,7 +2065,7 @@ for proper version]
 .. _nova_get-password:
 
 nova get-password
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -2244,7 +2087,7 @@ Get the admin password for a server.
 .. _nova_get-rdp-console:
 
 nova get-rdp-console
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -2263,7 +2106,7 @@ Get a rdp console to a server.
 .. _nova_get-serial-console:
 
 nova get-serial-console
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -2284,7 +2127,7 @@ Get a serial console to a server.
 .. _nova_get-spice-console:
 
 nova get-spice-console
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -2303,7 +2146,7 @@ Get a spice console to a server.
 .. _nova_get-vnc-console:
 
 nova get-vnc-console
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -2322,7 +2165,7 @@ Get a vnc console to a server.
 .. _nova_host-action:
 
 nova host-action
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -2343,7 +2186,7 @@ Perform a power action on a host.
 .. _nova_host-describe:
 
 nova host-describe
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -2359,7 +2202,7 @@ Describe a specific host.
 .. _nova_host-evacuate:
 
 nova host-evacuate
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -2386,7 +2229,7 @@ Evacuate all instances from failed host.
 .. _nova_host-evacuate-live:
 
 nova host-evacuate-live
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -2417,7 +2260,7 @@ Live migrate all instances of the specified host to other available hosts.
 .. _nova_host-list:
 
 nova host-list
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
@@ -2434,7 +2277,7 @@ List all hosts by service.
 .. _nova_host-meta:
 
 nova host-meta
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
@@ -2456,7 +2299,7 @@ Set or Delete metadata on all instances of a host.
 .. _nova_host-servers-migrate:
 
 nova host-servers-migrate
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -2472,7 +2315,7 @@ Cold migrate all instances off the specified host to other available hosts.
 .. _nova_host-update:
 
 nova host-update
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -2498,7 +2341,7 @@ Update host settings.
 .. _nova_hypervisor-list:
 
 nova hypervisor-list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -2514,7 +2357,7 @@ List hypervisors.
 .. _nova_hypervisor-servers:
 
 nova hypervisor-servers
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -2530,7 +2373,7 @@ List servers belonging to specific hypervisors.
 .. _nova_hypervisor-show:
 
 nova hypervisor-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -2552,7 +2395,7 @@ Display the details of the specified hypervisor.
 .. _nova_hypervisor-stats:
 
 nova hypervisor-stats
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -2563,7 +2406,7 @@ Get hypervisor statistics over all compute nodes.
 .. _nova_hypervisor-uptime:
 
 nova hypervisor-uptime
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -2579,7 +2422,7 @@ Display the uptime of the specified hypervisor.
 .. _nova_image-create:
 
 nova image-create
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -2610,81 +2453,10 @@ Create a new image by taking a snapshot of a running server.
   Report the snapshot progress and poll until image
   creation is complete.
 
-.. _nova_image-delete:
-
-nova image-delete
-~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: nova image-delete <image> [<image> ...]
-
-Delete specified image(s).
-
-**Positional arguments:**
-
-``<image>``
-  Name or ID of image(s).
-
-.. _nova_image-list:
-
-nova image-list
-~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: nova image-list [--limit <limit>]
-
-Print a list of available images to boot from.
-
-**Optional arguments:**
-
-``--limit <limit>``
-  Number of images to return per request.
-
-.. _nova_image-meta:
-
-nova image-meta
-~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: nova image-meta <image> <action> <key=value> [<key=value> ...]
-
-Set or delete metadata on an image.
-
-**Positional arguments:**
-
-``<image>``
-  Name or ID of image.
-
-``<action>``
-  Actions: 'set' or 'delete'.
-
-``<key=value>``
-  Metadata to add/update or delete (only key is necessary on
-  delete).
-
-.. _nova_image-show:
-
-nova image-show
-~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: nova image-show <image>
-
-Show details about the given image.
-
-**Positional arguments:**
-
-``<image>``
-  Name or ID of image.
-
 .. _nova_instance-action:
 
 nova instance-action
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -2705,7 +2477,7 @@ Show an action.
 .. _nova_instance-action-list:
 
 nova instance-action-list
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -2723,7 +2495,7 @@ List actions on a server.
 .. _nova_interface-attach:
 
 nova interface-attach
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -2752,7 +2524,7 @@ Attach a network interface to a server.
 .. _nova_interface-detach:
 
 nova interface-detach
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -2771,7 +2543,7 @@ Detach a network interface from a server.
 .. _nova_interface-list:
 
 nova interface-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -2787,7 +2559,7 @@ List interfaces attached to a server.
 .. _nova_keypair-add:
 
 nova keypair-add
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -2818,7 +2590,7 @@ Create a new key pair for use with servers.
 .. _nova_keypair-delete:
 
 nova keypair-delete
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -2849,7 +2621,7 @@ for proper version]
 .. _nova_keypair-list:
 
 nova keypair-list
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -2875,7 +2647,7 @@ for proper version]
 .. _nova_keypair-show:
 
 nova keypair-show
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -2906,7 +2678,7 @@ for proper version]
 .. _nova_limits:
 
 nova limits
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -2925,7 +2697,7 @@ Print rate and absolute limits.
 .. _nova_list:
 
 nova list
-~~~~~~~~~
+---------
 
 .. code-block:: console
 
@@ -3016,13 +2788,13 @@ List active servers.
 ``--changes-since <changes_since>``
   List only servers changed after a certain
   point of time.The provided time should be an
-  ISO 8061 formated time.ex 2016-03-04T06:27:59Z
-  .
+  ISO 8061 formatted time.ex
+  2016-03-04T06:27:59Z .
 
 .. _nova_list-extensions:
 
 nova list-extensions
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -3033,7 +2805,7 @@ List all the os-api extensions that are available.
 .. _nova_list-secgroup:
 
 nova list-secgroup
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -3049,7 +2821,7 @@ List Security Group(s) of a server.
 .. _nova_live-migration:
 
 nova live-migration
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -3075,7 +2847,7 @@ Migrate running server to a new machine.
 .. _nova_live-migration-abort:
 
 nova live-migration-abort
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -3104,7 +2876,7 @@ for proper version]
 .. _nova_live-migration-force-complete:
 
 nova live-migration-force-complete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -3133,7 +2905,7 @@ for proper version]
 .. _nova_lock:
 
 nova lock
-~~~~~~~~~
+---------
 
 .. code-block:: console
 
@@ -3150,7 +2922,7 @@ on a locked server.
 .. _nova_meta:
 
 nova meta
-~~~~~~~~~
+---------
 
 .. code-block:: console
 
@@ -3172,7 +2944,7 @@ Set or delete metadata on a server.
 .. _nova_migrate:
 
 nova migrate
-~~~~~~~~~~~~
+------------
 
 .. code-block:: console
 
@@ -3193,7 +2965,7 @@ Migrate a server. The new host will be selected by the scheduler.
 .. _nova_migration-list:
 
 nova migration-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -3216,7 +2988,7 @@ Print a list of migrations.
 .. _nova_network-associate-host:
 
 nova network-associate-host
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -3235,7 +3007,7 @@ Associate host with network.
 .. _nova_network-associate-project:
 
 nova network-associate-project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -3251,7 +3023,7 @@ Associate project with network.
 .. _nova_network-create:
 
 nova network-create
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -3354,7 +3126,7 @@ Create a network.
 .. _nova_network-delete:
 
 nova network-delete
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -3370,7 +3142,7 @@ Delete network by label or id.
 .. _nova_network-disassociate:
 
 nova network-disassociate
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -3394,7 +3166,7 @@ Disassociate host and/or project from the given network.
 .. _nova_network-list:
 
 nova network-list
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -3411,7 +3183,7 @@ Print a list of available networks.
 .. _nova_network-show:
 
 nova network-show
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -3427,7 +3199,7 @@ Show details about the given network.
 .. _nova_pause:
 
 nova pause
-~~~~~~~~~~
+----------
 
 .. code-block:: console
 
@@ -3443,7 +3215,7 @@ Pause a server.
 .. _nova_quota-class-show:
 
 nova quota-class-show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -3459,7 +3231,7 @@ List the quotas for a quota class.
 .. _nova_quota-class-update:
 
 nova quota-class-update
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -3535,7 +3307,7 @@ Update the quotas for a quota class.
 .. _nova_quota-defaults:
 
 nova quota-defaults
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -3551,7 +3323,7 @@ List the default quotas for a tenant.
 .. _nova_quota-delete:
 
 nova quota-delete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -3570,7 +3342,7 @@ Delete quota for a tenant/user so their quota will Revert back to default.
 .. _nova_quota-show:
 
 nova quota-show
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -3589,7 +3361,7 @@ List the quotas for a tenant/user.
 .. _nova_quota-update:
 
 nova quota-update
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -3675,7 +3447,7 @@ Update the quotas for a tenant/user.
 .. _nova_reboot:
 
 nova reboot
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -3699,7 +3471,7 @@ Reboot a server.
 .. _nova_rebuild:
 
 nova rebuild
-~~~~~~~~~~~~
+------------
 
 .. code-block:: console
 
@@ -3757,7 +3529,7 @@ Shutdown, re-image, and re-boot a server.
 .. _nova_refresh-network:
 
 nova refresh-network
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -3774,7 +3546,7 @@ Refresh server network information.
 .. _nova_remove-fixed-ip:
 
 nova remove-fixed-ip
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -3793,7 +3565,7 @@ Remove an IP address from a server.
 .. _nova_remove-secgroup:
 
 nova remove-secgroup
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -3812,7 +3584,7 @@ Remove a Security Group from a server.
 .. _nova_rescue:
 
 nova rescue
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -3839,7 +3611,7 @@ secondary.
 .. _nova_reset-network:
 
 nova reset-network
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -3855,7 +3627,7 @@ Reset network of a server.
 .. _nova_reset-state:
 
 nova reset-state
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -3880,7 +3652,7 @@ Reset the state of a server.
 .. _nova_resize:
 
 nova resize
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -3904,7 +3676,7 @@ Resize a server.
 .. _nova_resize-confirm:
 
 nova resize-confirm
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -3920,7 +3692,7 @@ Confirm a previous resize.
 .. _nova_resize-revert:
 
 nova resize-revert
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -3936,7 +3708,7 @@ Revert a previous resize (and return to the previous VM).
 .. _nova_restore:
 
 nova restore
-~~~~~~~~~~~~
+------------
 
 .. code-block:: console
 
@@ -3952,7 +3724,7 @@ Restore a soft-deleted server.
 .. _nova_resume:
 
 nova resume
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -3968,7 +3740,7 @@ Resume a server.
 .. _nova_scrub:
 
 nova scrub
-~~~~~~~~~~
+----------
 
 .. code-block:: console
 
@@ -3984,7 +3756,7 @@ Delete networks and security groups associated with a project.
 .. _nova_secgroup-add-default-rule:
 
 nova secgroup-add-default-rule
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -4010,7 +3782,7 @@ group for new tenants (nova-network only).
 .. _nova_secgroup-add-group-rule:
 
 nova secgroup-add-group-rule
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -4039,7 +3811,7 @@ Add a source group rule to a security group.
 .. _nova_secgroup-add-rule:
 
 nova secgroup-add-rule
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -4068,7 +3840,7 @@ Add a rule to a security group.
 .. _nova_secgroup-create:
 
 nova secgroup-create
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -4087,7 +3859,7 @@ Create a security group.
 .. _nova_secgroup-delete:
 
 nova secgroup-delete
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -4103,7 +3875,7 @@ Delete a security group.
 .. _nova_secgroup-delete-default-rule:
 
 nova secgroup-delete-default-rule
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -4130,7 +3902,7 @@ security group for new tenants (nova-network only).
 .. _nova_secgroup-delete-group-rule:
 
 nova secgroup-delete-group-rule
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -4159,7 +3931,7 @@ Delete a source group rule from a security group.
 .. _nova_secgroup-delete-rule:
 
 nova secgroup-delete-rule
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -4188,7 +3960,7 @@ Delete a rule from a security group.
 .. _nova_secgroup-list:
 
 nova secgroup-list
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -4204,7 +3976,7 @@ List security groups for the current tenant.
 .. _nova_secgroup-list-default-rules:
 
 nova secgroup-list-default-rules
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
@@ -4215,7 +3987,7 @@ List rules that will be added to the 'default' security group for new tenants.
 .. _nova_secgroup-list-rules:
 
 nova secgroup-list-rules
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -4231,7 +4003,7 @@ List rules for a security group.
 .. _nova_secgroup-update:
 
 nova secgroup-update
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -4253,7 +4025,7 @@ Update a security group.
 .. _nova_server-group-create:
 
 nova server-group-create
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -4272,7 +4044,7 @@ Create a new server group with the specified details.
 .. _nova_server-group-delete:
 
 nova server-group-delete
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -4288,7 +4060,7 @@ Delete specific server group(s).
 .. _nova_server-group-get:
 
 nova server-group-get
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -4304,7 +4076,7 @@ Get a specific server group.
 .. _nova_server-group-list:
 
 nova server-group-list
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -4320,7 +4092,7 @@ Print a list of all server groups.
 .. _nova_server-migration-list:
 
 nova server-migration-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -4347,7 +4119,7 @@ for proper version]
 .. _nova_server-migration-show:
 
 nova server-migration-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -4376,7 +4148,7 @@ for proper version]
 .. _nova_service-delete:
 
 nova service-delete
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -4392,7 +4164,7 @@ Delete the service.
 .. _nova_service-disable:
 
 nova service-disable
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -4416,7 +4188,7 @@ Disable the service.
 .. _nova_service-enable:
 
 nova service-enable
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -4435,7 +4207,7 @@ Enable the service.
 .. _nova_service-force-down:
 
 nova service-force-down
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -4469,7 +4241,7 @@ version]
 .. _nova_service-list:
 
 nova service-list
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -4488,7 +4260,7 @@ Show a list of all running services. Filter by host & binary.
 .. _nova_set-password:
 
 nova set-password
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -4504,7 +4276,7 @@ Change the admin password for a server.
 .. _nova_shelve:
 
 nova shelve
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -4520,7 +4292,7 @@ Shelve a server.
 .. _nova_shelve-offload:
 
 nova shelve-offload
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -4536,7 +4308,7 @@ Remove a shelved server from the compute node.
 .. _nova_show:
 
 nova show
-~~~~~~~~~
+---------
 
 .. code-block:: console
 
@@ -4557,7 +4329,7 @@ Show details about the given server.
 .. _nova_ssh:
 
 nova ssh
-~~~~~~~~
+--------
 
 .. code-block:: console
 
@@ -4605,7 +4377,7 @@ SSH into a server.
 .. _nova_start:
 
 nova start
-~~~~~~~~~~
+----------
 
 .. code-block:: console
 
@@ -4626,7 +4398,7 @@ Start the server(s).
 .. _nova_stop:
 
 nova stop
-~~~~~~~~~
+---------
 
 .. code-block:: console
 
@@ -4647,7 +4419,7 @@ Stop the server(s).
 .. _nova_suspend:
 
 nova suspend
-~~~~~~~~~~~~
+------------
 
 .. code-block:: console
 
@@ -4663,7 +4435,7 @@ Suspend a server.
 .. _nova_tenant-network-create:
 
 nova tenant-network-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -4683,7 +4455,7 @@ Create a tenant network.
 .. _nova_tenant-network-delete:
 
 nova tenant-network-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -4699,7 +4471,7 @@ Delete a tenant network.
 .. _nova_tenant-network-list:
 
 nova tenant-network-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -4710,7 +4482,7 @@ List tenant networks.
 .. _nova_tenant-network-show:
 
 nova tenant-network-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -4726,7 +4498,7 @@ Show a tenant network.
 .. _nova_trigger-crash-dump:
 
 nova trigger-crash-dump
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -4752,7 +4524,7 @@ for proper version]
 .. _nova_unlock:
 
 nova unlock
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -4768,7 +4540,7 @@ Unlock a server.
 .. _nova_unpause:
 
 nova unpause
-~~~~~~~~~~~~
+------------
 
 .. code-block:: console
 
@@ -4784,7 +4556,7 @@ Unpause a server.
 .. _nova_unrescue:
 
 nova unrescue
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
@@ -4800,7 +4572,7 @@ Restart the server from normal boot disk again.
 .. _nova_unshelve:
 
 nova unshelve
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
@@ -4816,7 +4588,7 @@ Unshelve a server.
 .. _nova_update:
 
 nova update
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -4843,7 +4615,7 @@ Update the name or the description for a server.
 .. _nova_usage:
 
 nova usage
-~~~~~~~~~~
+----------
 
 .. code-block:: console
 
@@ -4867,7 +4639,7 @@ Show usage data for a single tenant.
 .. _nova_usage-list:
 
 nova usage-list
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -4887,7 +4659,7 @@ List usage data for all tenants.
 .. _nova_version-list:
 
 nova version-list
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -4898,7 +4670,7 @@ List all API versions.
 .. _nova_virtual-interface-list:
 
 nova virtual-interface-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -4914,7 +4686,7 @@ Show virtual interface info about the given server.
 .. _nova_volume-attach:
 
 nova volume-attach
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -4937,7 +4709,7 @@ Attach a volume to a server.
 .. _nova_volume-attachments:
 
 nova volume-attachments
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -4953,7 +4725,7 @@ List all the volumes attached to a server.
 .. _nova_volume-detach:
 
 nova volume-detach
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -4972,7 +4744,7 @@ Detach a volume from a server.
 .. _nova_volume-update:
 
 nova volume-update
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -4994,7 +4766,7 @@ Update volume attachment.
 .. _nova_x509-create-cert:
 
 nova x509-create-cert
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -5014,7 +4786,7 @@ Create x509 cert for a user in tenant.
 .. _nova_x509-get-root-cert:
 
 nova x509-get-root-cert
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
