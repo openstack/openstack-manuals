@@ -305,21 +305,21 @@ in the following tables.
    If the guest operating system is not in the database, or if the use
    of ``libosinfo`` is disabled, the default system values are used.
 
-   Users can set the operating system ID or a ``short-id`` by setting
-   ``os_distro`` in image properties. For example:
+   Users can set the operating system ID or a ``short-id`` in image
+   properties. For example:
 
    .. code-block:: console
 
-      $ glance image-update --property os_distro=fedora23 \
+      $ glance image-update --property short-id=fedora23 \
         name-of-my-fedora-image
 
-   Alternatively, users can set ``os_distro`` to a URL:
+   Alternatively, users can set ``id`` to a URL:
 
    .. code-block:: console
 
       $ glance image-update \
-        --property os_distro=http://fedoraproject.org/fedora/23 \
-        name-of-my-fedora-image
+        --property id=http://fedoraproject.org/fedora/23 \
+        ID-of-my-fedora-image
 
 
 Troubleshoot image creation
