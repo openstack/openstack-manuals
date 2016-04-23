@@ -124,10 +124,19 @@ Compute
 
 If you use Networking, do not run the Compute ``nova-network`` service (like
 you do in traditional Compute deployments). Instead, Compute delegates
-most network-related decisions to Networking. Compute proxies
-tenant-facing API calls to manage security groups and floating IPs to
-Networking APIs. However, operator-facing tools such as ``nova-manage``, are
-not proxied and should not be used.
+most network-related decisions to Networking.
+
+.. note::
+
+   Uninstall ``nova-network`` and reboot any physical nodes that have been
+   running ``nova-network`` before using them to run Networking.
+   Inadvertently running the ``nova-network`` process while using
+   Networking can cause problems, as can stale iptables rules pushed
+   down by previously running ``nova-network``.
+
+Compute proxies tenant-facing API calls to manage security groups and
+floating IPs to Networking APIs. However, operator-facing tools such
+as ``nova-manage``, are not proxied and should not be used.
 
 .. warning::
 
@@ -138,14 +147,6 @@ not proxied and should not be used.
    supported for use with Networking. In particular, you cannot use CLI
    tools like ``nova-manage`` and ``nova`` to manage networks or IP
    addressing, including both fixed and floating IPs, with Networking.
-
-.. note::
-
-   Uninstall ``nova-network`` and reboot any physical nodes that have been
-   running ``nova-network`` before using them to run Networking.
-   Inadvertently running the ``nova-network`` process while using
-   Networking can cause problems, as can stale iptables rules pushed
-   down by previously running ``nova-network``.
 
 To ensure that Compute works properly with Networking (rather than the
 legacy ``nova-network`` mechanism), you must adjust settings in the
