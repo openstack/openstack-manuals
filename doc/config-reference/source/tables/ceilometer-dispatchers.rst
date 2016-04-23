@@ -10,7 +10,7 @@
 
 .. _ceilometer-dispatchers:
 
-.. list-table:: Description of dispatchers configuration options
+.. list-table:: Description of Dispatchers configuration options
    :header-rows: 1
    :class: config-ref-table
 

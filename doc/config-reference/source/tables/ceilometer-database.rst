@@ -30,8 +30,6 @@
      - (Integer) Verbosity of SQL debugging information: 0=None, 100=Everything.
    * - ``connection_trace`` = ``False``
      - (Boolean) Add Python stack traces to SQL as comment strings.
-   * - ``db2nosql_resource_id_maxlen`` = ``512``
-     - (Integer) The max length of resources id in DB2 nosql, the value should be larger than len(hostname) * 2 as compute node's resource id is <hostname>_<nodename>.
    * - ``db_inc_retry_interval`` = ``True``
      - (Boolean) If True, increases the interval between retries of a database operation up to db_max_retry_interval.
    * - ``db_max_retries`` = ``20``
