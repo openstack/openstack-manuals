@@ -272,52 +272,6 @@ Configure nova-scheduler (Controller)
 #. Now restart the nova-scheduler service with
    :command:`service nova-scheduler restart`.
 
-
-Enable neutron sriov-agent (Compute)
-------------------------------------
-
-.. note::
-
-   You only need to enable the sriov-agent if you decided to keep
-   ``agent_required=True`` in the step :ref:`configure_sriov_neutron_server`.
-   If you set ``agent_required=False``, you can safely skip this step.
-
-#. On each compute node edit the file
-   ``/etc/neutron/plugins/ml2/sriov_agent.ini``:
-
-   .. code-block:: ini
-
-      [securitygroup]
-      firewall_driver = neutron.agent.firewall.NoopFirewallDriver
-
-      [sriov_nic]
-      physical_device_mappings = physnet2:eth3
-      exclude_devices =
-
-   exclude_devices is empty so all the VFs associated with eth3 may be
-   configured by the agent. If you want to exclude specific VFs, add
-   them to the exclude_devices parameter as follows:
-
-   .. code-block:: ini
-
-      exclude_devices = eth1:0000:07:00.2; 0000:07:00.3, eth2:0000:05:00.1; 0000:05:00.2
-
-#. Test whether the sriov-agent runs successfully:
-
-   .. code-block:: console
-
-      # neutron-sriov-nic-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/sriov_agent.ini
-
-#. Enable the neutron-sriov-agent to start automatically at system start.
-   If your distribution does not come with a daemon file for your init
-   system, create a daemon configuration file.
-   For example on Ubuntu install the package:
-
-   .. code-block:: console
-
-      # apt-get install neutron-plugin-sriov-agent
-
-
 Creating instances with SR-IOV ports
 ------------------------------------
 After the configuration is done, you can now launch Instances

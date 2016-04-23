@@ -64,11 +64,6 @@ IPv6 Prefix Delegation configuration options
 
 .. include:: ../tables/neutron-pd_linux_agent.rst
 
-SR-IOV configuration options
-----------------------------
-
-.. include:: ../tables/neutron-sriov.rst
-
 Modular Layer 2 (ml2) configuration options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
