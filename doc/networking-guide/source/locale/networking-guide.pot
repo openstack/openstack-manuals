@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-18 06:23+0000\n"
+"POT-Creation-Date: 2016-04-23 06:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2827,38 +2827,53 @@ msgid ""
 msgstr ""
 
 #: ../adv-config-qos.rst:233
+msgid ""
+"Configuring the proper burst value is very important. If the burst value is "
+"set too low, bandwidth usage will be throttled even with a proper bandwidth "
+"limit setting. This issue is discussed in various documentation sources, for "
+"example in `Juniper's documentation <http://www.juniper.net/documentation/"
+"en_US/junos12.3/topics/concept/policer-mx-m120-m320-burstsize-determining."
+"html>`_. Burst value for TCP traffic can be set as 80% of desired bandwidth "
+"limit value. For example, if the bandwidth limit is set to 1000kbps then "
+"enough burst value will be 800kbit. If the configured burst value is too "
+"low, achieved bandwidth limit will be lower than expected. If the configured "
+"burst value is too high, too few packets could be limited and achieved "
+"bandwidth limit would be higher than expected."
+msgstr ""
+
+#: ../adv-config-qos.rst:246
 msgid "Administrator enforcement"
 msgstr ""
 
-#: ../adv-config-qos.rst:235
+#: ../adv-config-qos.rst:248
 msgid ""
 "Administrators are able to enforce policies on tenant ports or networks. As "
 "long as the policy is not shared, the tenant is not be able to detach any "
 "policy attached to a network or port."
 msgstr ""
 
-#: ../adv-config-qos.rst:239
+#: ../adv-config-qos.rst:252
 msgid ""
 "If the policy is shared, the tenant is able to attach or detach such policy "
 "from its own ports and networks."
 msgstr ""
 
-#: ../adv-config-qos.rst:244
+#: ../adv-config-qos.rst:257
 msgid "Rule modification"
 msgstr ""
 
-#: ../adv-config-qos.rst:245
+#: ../adv-config-qos.rst:258
 msgid ""
 "You can modify rules at runtime. Rule modifications will be propagated to "
 "any attached port."
 msgstr ""
 
-#: ../adv-config-qos.rst:266
+#: ../adv-config-qos.rst:279
 msgid ""
 "Just like with bandwidth limiting, create a policy for DSCP marking rule:"
 msgstr ""
 
-#: ../adv-config-qos.rst:284
+#: ../adv-config-qos.rst:297
 msgid ""
 "You can create, update, list, delete, and show DSCP markings with the "
 "neutron client:"
@@ -3167,7 +3182,7 @@ msgstr ""
 msgid "Configure nova-scheduler (Controller)"
 msgstr ""
 
-#: ../adv-config-sriov.rst:45 ../adv-config-sriov.rst:277
+#: ../adv-config-sriov.rst:45
 msgid "Enable neutron sriov-agent (Compute)"
 msgstr ""
 
@@ -3416,70 +3431,38 @@ msgid ""
 "restart`."
 msgstr ""
 
-#: ../adv-config-sriov.rst:281
-msgid ""
-"You only need to enable the sriov-agent if you decided to keep "
-"``agent_required=True`` in the step :ref:`configure_sriov_neutron_server`. "
-"If you set ``agent_required=False``, you can safely skip this step."
-msgstr ""
-
-#: ../adv-config-sriov.rst:285
-msgid ""
-"On each compute node edit the file ``/etc/neutron/plugins/ml2/sriov_agent."
-"ini``:"
-msgstr ""
-
-#: ../adv-config-sriov.rst:297
-msgid ""
-"exclude_devices is empty so all the VFs associated with eth3 may be "
-"configured by the agent. If you want to exclude specific VFs, add them to "
-"the exclude_devices parameter as follows:"
-msgstr ""
-
-#: ../adv-config-sriov.rst:305
-msgid "Test whether the sriov-agent runs successfully:"
-msgstr ""
-
-#: ../adv-config-sriov.rst:311
-msgid ""
-"Enable the neutron-sriov-agent to start automatically at system start. If "
-"your distribution does not come with a daemon file for your init system, "
-"create a daemon configuration file. For example on Ubuntu install the "
-"package:"
-msgstr ""
-
-#: ../adv-config-sriov.rst:322
+#: ../adv-config-sriov.rst:276
 msgid "Creating instances with SR-IOV ports"
 msgstr ""
 
-#: ../adv-config-sriov.rst:323
+#: ../adv-config-sriov.rst:277
 msgid ""
 "After the configuration is done, you can now launch Instances with neutron "
 "SR-IOV ports."
 msgstr ""
 
-#: ../adv-config-sriov.rst:326
+#: ../adv-config-sriov.rst:280
 msgid ""
 "Get the id of the neutron network where you want the SR-IOV port to be "
 "created:"
 msgstr ""
 
-#: ../adv-config-sriov.rst:333
+#: ../adv-config-sriov.rst:287
 msgid ""
 "Create the SR-IOV port. We specify vnic_type direct, but other options "
 "include macvtap:"
 msgstr ""
 
-#: ../adv-config-sriov.rst:340
+#: ../adv-config-sriov.rst:294
 msgid ""
 "Create the VM. For the nic we specify the SR-IOV port created in step 2:"
 msgstr ""
 
-#: ../adv-config-sriov.rst:347
+#: ../adv-config-sriov.rst:301
 msgid "SR-IOV with InfiniBand"
 msgstr ""
 
-#: ../adv-config-sriov.rst:349
+#: ../adv-config-sriov.rst:303
 msgid ""
 "The support for SR-IOV with InfiniBand allows a Virtual PCI device (VF) to "
 "be directly mapped to the guest, allowing higher performance and advanced "
@@ -3487,15 +3470,15 @@ msgid ""
 "you must:"
 msgstr ""
 
-#: ../adv-config-sriov.rst:354
+#: ../adv-config-sriov.rst:308
 msgid "Use InfiniBand enabled network adapters."
 msgstr ""
 
-#: ../adv-config-sriov.rst:356
+#: ../adv-config-sriov.rst:310
 msgid "Run InfiniBand subnet managers to enable InfiniBand fabric."
 msgstr ""
 
-#: ../adv-config-sriov.rst:358
+#: ../adv-config-sriov.rst:312
 msgid ""
 "All InfiniBand networks must have a subnet manager running for the network "
 "to function. This is true even when doing a simple network of two machines "
@@ -3506,16 +3489,16 @@ msgid ""
 "master subnet manager fails."
 msgstr ""
 
-#: ../adv-config-sriov.rst:366
+#: ../adv-config-sriov.rst:320
 msgid "Install the ``ebrctl`` utility on the compute nodes."
 msgstr ""
 
-#: ../adv-config-sriov.rst:368
+#: ../adv-config-sriov.rst:322
 msgid ""
 "Check that ``ebrctl`` is listed somewhere in ``/etc/nova/rootwrap.d/*``:"
 msgstr ""
 
-#: ../adv-config-sriov.rst:374
+#: ../adv-config-sriov.rst:328
 msgid ""
 "If ``ebrctl`` does not appear in any of the rootwrap files, add this to the "
 "``/etc/nova/rootwrap.d/compute.filters`` file in the ``[Filters]`` section."
