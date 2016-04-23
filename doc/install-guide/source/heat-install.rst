@@ -249,7 +249,7 @@ Orchestration service, code-named heat, on the controller node.
 
         .. code-block:: console
 
-           $ openstack role add --domain heat --user heat_domain_admin admin
+           $ openstack role add --domain heat --user-domain heat --user heat_domain_admin admin
 
         .. note::
 
