@@ -23,12 +23,13 @@ System requirements
 
 The Cinder driver supports both VMAX-2 and VMAX-3 series.
 
-For VMAX-2 series, EMC SMI-S Provider V4.6.2.8 and higher is required.
-For OpenStack release Juno and later Openstack releases, minimum SMI-S
-version is V4.6.2.54.
+For VMAX-2 series, minimum SMI-S version V4.6.2.29 is required.
 
-For VMAX-3 series, supported SMI-S version is 8.1.0.3 and above. However,
-these versions are compatible with VMAX-2 series also.
+For VMAX-3 series, Solutions Enabler 8.1.2 is required. However,
+this version is compatible with VMAX-2 series also.
+
+Note: For Mitaka, Solutions Enabler 8.2 and greater have not yet been
+qualified for VMAX-2 or VMAX-3 series.
 
 You can download SMI-S from the EMC's support web site (login is required).
 See the EMC SMI-S Provider release notes for installation instructions.
