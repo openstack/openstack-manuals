@@ -6,14 +6,14 @@ Block Storage
 
 The OpenStack Block Storage service works through the interaction of
 a series of daemon processes named ``cinder-*`` that reside
-persistently on the host machine or machines. The binaries can all be
-run from a single node, or spread across multiple nodes. They can
-also be run on the same node as other OpenStack services.
+persistently on the host machine or machines. You can run all the
+binaries from a single node, or spread across multiple nodes. You can
+also run them on the same node as other OpenStack services.
 
 To administer the OpenStack Block Storage service, it is helpful to
 understand a number of concepts. You must make certain choices when
 you configure the Block Storage service in OpenStack. The bulk of the
-options come down to two choices, single node or multi-node install.
+options come down to two choices - single node or multi-node install.
 You can read a longer discussion about `Storage Decisions`_ in the
 `OpenStack Operations Guide`_.
 
