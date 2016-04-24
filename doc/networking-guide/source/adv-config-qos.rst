@@ -155,6 +155,12 @@ First, create a QoS policy and its bandwidth limit rule:
    | max_kbps       | 3000                                 |
    +----------------+--------------------------------------+
 
+.. note::
+
+   The burst value is given in kilobits, not in kilobits per second as the name
+   of the parameter might suggest. This is an amount of data which can be sent
+   before the bandwidth limit applies.
+
 Second, associate the created policy with an existing neutron port.
 In order to do this, user extracts the port id to be associated to
 the already created policy. In the next example, we will assign the
