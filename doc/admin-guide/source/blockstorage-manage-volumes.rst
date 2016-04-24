@@ -8,14 +8,15 @@ iSCSI solution that uses :term:`Logical Volume Manager (LVM)` for Linux.
 .. note::
 
    The OpenStack Block Storage service is not a shared storage
-   solution like a Network Attached Storage (NAS) of NFS volumes,
+   solution like a Network Attached Storage (NAS) of NFS volumes
    where you can attach a volume to multiple servers. With the
    OpenStack Block Storage service, you can attach a volume to only
    one instance at a time.
 
    The OpenStack Block Storage service also provides drivers that
-   enable you to use several vendors' back-end storage devices, in
-   addition to or instead of the base LVM implementation.
+   enable you to use several vendors' back-end storage devices in
+   addition to the base LVM implementation.  These storage devices can
+   also be used instead of the base LVM installation.
 
 This high-level procedure shows you how to create and attach a volume
 to a server instance.
@@ -36,10 +37,10 @@ to a server instance.
    * Libvirt uses that local storage as storage for the instance. The
      instance gets a new disk (usually a ``/dev/vdX`` disk).
 
-For this particular walk through, one cloud controller runs
+For this particular walkthrough, one cloud controller runs
 ``nova-api``, ``nova-scheduler``, ``nova-objectstore``,
 ``nova-network`` and ``cinder-*`` services. Two additional compute
-nodes run ``nova-compute``. The walk through uses a custom
+nodes run ``nova-compute``. The walkthrough uses a custom
 partitioning scheme that carves out 60 GB of space and labels it as
 LVM. The network uses the ``FlatManager`` and ``NetworkManager``
 settings for OpenStack Compute.
