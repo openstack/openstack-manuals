@@ -41,11 +41,11 @@ filters definition files. This chain ensures that the Compute
 user itself is not in control of the configuration or modules
 used by the :command:`nova-rootwrap` executable.
 
-Rootwrap is configured using the ``rootwrap.conf`` file. Because
-it's in the trusted security path, it must be owned and writable
-by only the root user. The file's location is specified in both
-the sudoers entry and in the ``nova.conf`` configuration file
-with the ``rootwrap_config=entry`` parameter.
+Configure rootwrap in the ``rootwrap.conf`` file. Because
+it is in the trusted security path, it must be owned and writable
+by only the root user. The ``rootwrap_config=entry`` parameter
+specifies the file's location in the sudoers entry and in the
+``nova.conf`` configuration file.
 
 The ``rootwrap.conf`` file uses an INI file format with these
 sections and parameters:
