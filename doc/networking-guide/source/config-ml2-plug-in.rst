@@ -318,9 +318,8 @@ resources. It typically runs on each Network Node and on each Compute Node.
   ``macvtap_agent.ini`` configuration file. Make sure that on agent start
   you pass this configuration file as argument.
 
-  .. todo::
-     Add Link to Configuration Reference as soon as available. See bug
-     https://bugs.launchpad.net/openstack-manuals/+bug/1567804
+  For a detailed list of configuration options, see the related section in the
+  `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/networking/networking_options_reference.html#macvtap-agent-configuration-options>`__.
 
 L3 agent
 ^^^^^^^^
