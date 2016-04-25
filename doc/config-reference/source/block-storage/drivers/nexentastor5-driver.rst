@@ -110,8 +110,8 @@ volume driver controls:
       # Enable Nexenta NFS driver
       volume_driver=cinder.volume.drivers.nexenta.ns5.nfs.NexentaNfsDriver
 
-      # IP address of NexentaStor host (string value)
-      nas_ip=HOST-IP
+      # IP address or Hostname of NexentaStor host (string value)
+      nas_host=HOST-IP
 
       # Port for Rest API (integer value)
       nexenta_rest_port=8080
