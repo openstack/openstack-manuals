@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-19 06:23+0000\n"
+"POT-Creation-Date: 2016-04-25 06:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1237,7 +1237,7 @@ msgstr ""
 #: ../blockstorage-manage-volumes.rst:10
 msgid ""
 "The OpenStack Block Storage service is not a shared storage solution like a "
-"Network Attached Storage (NAS) of NFS volumes, where you can attach a volume "
+"Network Attached Storage (NAS) of NFS volumes where you can attach a volume "
 "to multiple servers. With the OpenStack Block Storage service, you can "
 "attach a volume to only one instance at a time."
 msgstr ""
@@ -1245,69 +1245,70 @@ msgstr ""
 #: ../blockstorage-manage-volumes.rst:16
 msgid ""
 "The OpenStack Block Storage service also provides drivers that enable you to "
-"use several vendors' back-end storage devices, in addition to or instead of "
-"the base LVM implementation."
+"use several vendors' back-end storage devices in addition to the base LVM "
+"implementation.  These storage devices can also be used instead of the base "
+"LVM installation."
 msgstr ""
 
-#: ../blockstorage-manage-volumes.rst:20
+#: ../blockstorage-manage-volumes.rst:21
 msgid ""
 "This high-level procedure shows you how to create and attach a volume to a "
 "server instance."
 msgstr ""
 
-#: ../blockstorage-manage-volumes.rst:23
+#: ../blockstorage-manage-volumes.rst:24
 msgid "**To create and attach a volume to an instance**"
 msgstr ""
 
-#: ../blockstorage-manage-volumes.rst:25
+#: ../blockstorage-manage-volumes.rst:26
 msgid ""
 "Configure the OpenStack Compute and the OpenStack Block Storage services "
 "through the ``cinder.conf`` file."
 msgstr ""
 
-#: ../blockstorage-manage-volumes.rst:27
+#: ../blockstorage-manage-volumes.rst:28
 msgid ""
 "Use the :command:`cinder create` command to create a volume. This command "
 "creates an LV into the volume group (VG) ``cinder-volumes``."
 msgstr ""
 
-#: ../blockstorage-manage-volumes.rst:29
+#: ../blockstorage-manage-volumes.rst:30
 msgid ""
 "Use the nova :command:`volume-attach` command to attach the volume to an "
 "instance. This command creates a unique  :term:`IQN` that is exposed to the "
 "compute node."
 msgstr ""
 
-#: ../blockstorage-manage-volumes.rst:33
+#: ../blockstorage-manage-volumes.rst:34
 msgid ""
 "The compute node, which runs the instance, now has an active iSCSI session "
 "and new local storage (usually a ``/dev/sdX`` disk)."
 msgstr ""
 
-#: ../blockstorage-manage-volumes.rst:36
+#: ../blockstorage-manage-volumes.rst:37
 msgid ""
 "Libvirt uses that local storage as storage for the instance. The instance "
 "gets a new disk (usually a ``/dev/vdX`` disk)."
 msgstr ""
 
-#: ../blockstorage-manage-volumes.rst:39
+#: ../blockstorage-manage-volumes.rst:40
 msgid ""
-"For this particular walk through, one cloud controller runs ``nova-api``, "
+"For this particular walkthrough, one cloud controller runs ``nova-api``, "
 "``nova-scheduler``, ``nova-objectstore``, ``nova-network`` and ``cinder-*`` "
-"services. Two additional compute nodes run ``nova-compute``. The walk "
-"through uses a custom partitioning scheme that carves out 60 GB of space and "
-"labels it as LVM. The network uses the ``FlatManager`` and "
-"``NetworkManager`` settings for OpenStack Compute."
+"services. Two additional compute nodes run ``nova-compute``. The walkthrough "
+"uses a custom partitioning scheme that carves out 60 GB of space and labels "
+"it as LVM. The network uses the ``FlatManager`` and ``NetworkManager`` "
+"settings for OpenStack Compute."
 msgstr ""
 
-#: ../blockstorage-manage-volumes.rst:47
+#: ../blockstorage-manage-volumes.rst:48
 msgid ""
 "The network mode does not interfere with OpenStack Block Storage operations, "
 "but you must set up networking for Block Storage to work. For details, see :"
 "ref:`networking`."
 msgstr ""
 
-#: ../blockstorage-manage-volumes.rst:51
+#: ../blockstorage-manage-volumes.rst:52
 msgid ""
 "To set up Compute to use volumes, ensure that Block Storage is installed "
 "along with ``lvm2``. This guide describes how to troubleshoot your "
@@ -1335,9 +1336,9 @@ msgstr ""
 msgid ""
 "The OpenStack Block Storage service works through the interaction of a "
 "series of daemon processes named ``cinder-*`` that reside persistently on "
-"the host machine or machines. The binaries can all be run from a single "
-"node, or spread across multiple nodes. They can also be run on the same node "
-"as other OpenStack services."
+"the host machine or machines. You can run all the binaries from a single "
+"node, or spread across multiple nodes. You can also run them on the same "
+"node as other OpenStack services."
 msgstr ""
 
 #: ../blockstorage.rst:13
@@ -1345,7 +1346,7 @@ msgid ""
 "To administer the OpenStack Block Storage service, it is helpful to "
 "understand a number of concepts. You must make certain choices when you "
 "configure the Block Storage service in OpenStack. The bulk of the options "
-"come down to two choices, single node or multi-node install. You can read a "
+"come down to two choices - single node or multi-node install. You can read a "
 "longer discussion about `Storage Decisions`_ in the `OpenStack Operations "
 "Guide`_."
 msgstr ""
@@ -10373,10 +10374,10 @@ msgstr ""
 
 #: ../compute-root-wrap-reference.rst:44
 msgid ""
-"Rootwrap is configured using the ``rootwrap.conf`` file. Because it's in the "
+"Configure rootwrap in the ``rootwrap.conf`` file. Because it is in the "
 "trusted security path, it must be owned and writable by only the root user. "
-"The file's location is specified in both the sudoers entry and in the ``nova."
-"conf`` configuration file with the ``rootwrap_config=entry`` parameter."
+"The ``rootwrap_config=entry`` parameter specifies the file's location in the "
+"sudoers entry and in the ``nova.conf`` configuration file."
 msgstr ""
 
 #: ../compute-root-wrap-reference.rst:50
@@ -17440,7 +17441,7 @@ msgstr ""
 # #-#-#-#-#  networking_adv-features.pot (Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  networking_config-identity.pot (Administrator Guide 0.9)  #-#-#-#-#
 #: ../networking_adv-features.rst:129 ../networking_adv-features.rst:711
-#: ../networking_config-identity.rst:166
+#: ../networking_config-identity.rst:167
 msgid "Attribute name"
 msgstr ""
 
@@ -18219,7 +18220,7 @@ msgstr ""
 
 # #-#-#-#-#  networking_adv-features.pot (Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  networking_config-identity.pot (Administrator Guide 0.9)  #-#-#-#-#
-#: ../networking_adv-features.rst:712 ../networking_config-identity.rst:167
+#: ../networking_adv-features.rst:712 ../networking_config-identity.rst:168
 msgid "Required"
 msgstr ""
 
@@ -19538,13 +19539,26 @@ msgstr ""
 msgid ""
 "If you use Networking, do not run the Compute ``nova-network`` service (like "
 "you do in traditional Compute deployments). Instead, Compute delegates most "
-"network-related decisions to Networking. Compute proxies tenant-facing API "
-"calls to manage security groups and floating IPs to Networking APIs. "
-"However, operator-facing tools such as ``nova-manage``, are not proxied and "
-"should not be used."
+"network-related decisions to Networking."
 msgstr ""
 
-#: ../networking_config-identity.rst:134
+#: ../networking_config-identity.rst:131
+msgid ""
+"Uninstall ``nova-network`` and reboot any physical nodes that have been "
+"running ``nova-network`` before using them to run Networking. Inadvertently "
+"running the ``nova-network`` process while using Networking can cause "
+"problems, as can stale iptables rules pushed down by previously running "
+"``nova-network``."
+msgstr ""
+
+#: ../networking_config-identity.rst:137
+msgid ""
+"Compute proxies tenant-facing API calls to manage security groups and "
+"floating IPs to Networking APIs. However, operator-facing tools such as "
+"``nova-manage``, are not proxied and should not be used."
+msgstr ""
+
+#: ../networking_config-identity.rst:143
 msgid ""
 "When you configure networking, you must use this guide. Do not rely on "
 "Compute networking documentation or past experience with Compute. If a :"
@@ -19555,27 +19569,18 @@ msgid ""
 "floating IPs, with Networking."
 msgstr ""
 
-#: ../networking_config-identity.rst:144
-msgid ""
-"Uninstall ``nova-network`` and reboot any physical nodes that have been "
-"running ``nova-network`` before using them to run Networking. Inadvertently "
-"running the ``nova-network`` process while using Networking can cause "
-"problems, as can stale iptables rules pushed down by previously running "
-"``nova-network``."
-msgstr ""
-
-#: ../networking_config-identity.rst:150
+#: ../networking_config-identity.rst:151
 msgid ""
 "To ensure that Compute works properly with Networking (rather than the "
 "legacy ``nova-network`` mechanism), you must adjust settings in the ``nova."
 "conf`` configuration file."
 msgstr ""
 
-#: ../networking_config-identity.rst:155
+#: ../networking_config-identity.rst:156
 msgid "Networking API and credential configuration"
 msgstr ""
 
-#: ../networking_config-identity.rst:157
+#: ../networking_config-identity.rst:158
 msgid ""
 "Each time you provision or de-provision a VM in Compute, ``nova-\\*`` "
 "services communicate with Networking using the standard API. For this to "
@@ -19583,80 +19588,80 @@ msgid ""
 "(used by each ``nova-compute`` and ``nova-api`` instance)."
 msgstr ""
 
-#: ../networking_config-identity.rst:168
+#: ../networking_config-identity.rst:169
 msgid "``[DEFAULT] use_neutron``"
 msgstr ""
 
-#: ../networking_config-identity.rst:169
+#: ../networking_config-identity.rst:170
 msgid ""
 "Modify from the default to ``True`` to indicate that Networking should be "
 "used rather than the traditional nova-network networking model."
 msgstr ""
 
-#: ../networking_config-identity.rst:172
+#: ../networking_config-identity.rst:173
 msgid "``[neutron] url``"
 msgstr ""
 
-#: ../networking_config-identity.rst:173
+#: ../networking_config-identity.rst:174
 msgid ""
 "Update to the host name/IP and port of the neutron-server instance for this "
 "deployment."
 msgstr ""
 
-#: ../networking_config-identity.rst:175
+#: ../networking_config-identity.rst:176
 msgid "``[neutron] auth_strategy``"
 msgstr ""
 
-#: ../networking_config-identity.rst:176
+#: ../networking_config-identity.rst:177
 msgid "Keep the default ``keystone`` value for all production deployments."
 msgstr ""
 
-#: ../networking_config-identity.rst:177
+#: ../networking_config-identity.rst:178
 msgid "``[neutron] admin_tenant_name``"
 msgstr ""
 
-#: ../networking_config-identity.rst:178
+#: ../networking_config-identity.rst:179
 msgid ""
 "Update to the name of the service tenant created in the above section on "
 "Identity configuration."
 msgstr ""
 
-#: ../networking_config-identity.rst:180
+#: ../networking_config-identity.rst:181
 msgid "``[neutron] admin_username``"
 msgstr ""
 
-#: ../networking_config-identity.rst:181
+#: ../networking_config-identity.rst:182
 msgid ""
 "Update to the name of the user created in the above section on Identity "
 "configuration."
 msgstr ""
 
-#: ../networking_config-identity.rst:183
+#: ../networking_config-identity.rst:184
 msgid "``[neutron] admin_password``"
 msgstr ""
 
-#: ../networking_config-identity.rst:184
+#: ../networking_config-identity.rst:185
 msgid ""
 "Update to the password of the user created in the above section on Identity "
 "configuration."
 msgstr ""
 
-#: ../networking_config-identity.rst:186
+#: ../networking_config-identity.rst:187
 msgid "``[neutron] admin_auth_url``"
 msgstr ""
 
-#: ../networking_config-identity.rst:187
+#: ../networking_config-identity.rst:188
 msgid ""
 "Update to the Identity server IP and port. This is the Identity (keystone) "
 "admin API server IP and port value, and not the Identity service API IP and "
 "port."
 msgstr ""
 
-#: ../networking_config-identity.rst:192
+#: ../networking_config-identity.rst:193
 msgid "Configure security groups"
 msgstr ""
 
-#: ../networking_config-identity.rst:194
+#: ../networking_config-identity.rst:195
 msgid ""
 "The Networking service provides security group functionality using a "
 "mechanism that is more flexible and powerful than the security group "
@@ -19666,44 +19671,44 @@ msgid ""
 "by being simultaneously applied by both services."
 msgstr ""
 
-#: ../networking_config-identity.rst:201
+#: ../networking_config-identity.rst:202
 msgid ""
 "To proxy security groups to Networking, use the following configuration "
 "values in the ``nova.conf`` file:"
 msgstr ""
 
-#: ../networking_config-identity.rst:204
+#: ../networking_config-identity.rst:205
 msgid "**nova.conf security group settings**"
 msgstr ""
 
 # #-#-#-#-#  networking_config-identity.pot (Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  networking_multi-dhcp-agents.pot (Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  shared_file_systems_share_replication.pot (Administrator Guide 0.9)  #-#-#-#-#
-#: ../networking_config-identity.rst:207 ../networking_config-identity.rst:229
+#: ../networking_config-identity.rst:208 ../networking_config-identity.rst:230
 #: ../networking_multi-dhcp-agents.rst:54
 #: ../shared_file_systems_share_replication.rst:62
 msgid "Configuration"
 msgstr ""
 
-#: ../networking_config-identity.rst:207 ../networking_config-identity.rst:229
+#: ../networking_config-identity.rst:208 ../networking_config-identity.rst:230
 msgid "Item"
 msgstr ""
 
-#: ../networking_config-identity.rst:209
+#: ../networking_config-identity.rst:210
 msgid ""
 "Update to ``nova.virt.firewall.NoopFirewallDriver``, so that nova-compute "
 "does not perform iptables-based filtering itself."
 msgstr ""
 
-#: ../networking_config-identity.rst:209
+#: ../networking_config-identity.rst:210
 msgid "``firewall_driver``"
 msgstr ""
 
-#: ../networking_config-identity.rst:215
+#: ../networking_config-identity.rst:216
 msgid "Configure metadata"
 msgstr ""
 
-#: ../networking_config-identity.rst:217
+#: ../networking_config-identity.rst:218
 msgid ""
 "The Compute service allows VMs to query metadata associated with a VM by "
 "making a web request to a special 169.254.169.254 address. Networking "
@@ -19712,45 +19717,45 @@ msgid ""
 "IP addresses."
 msgstr ""
 
-#: ../networking_config-identity.rst:223
+#: ../networking_config-identity.rst:224
 msgid ""
 "To enable proxying the requests, you must update the following fields in "
 "``[neutron]`` section in the ``nova.conf``."
 msgstr ""
 
-#: ../networking_config-identity.rst:226
+#: ../networking_config-identity.rst:227
 msgid "**nova.conf metadata settings**"
 msgstr ""
 
-#: ../networking_config-identity.rst:231
+#: ../networking_config-identity.rst:232
 msgid ""
 "Update to ``true``, otherwise nova-api will not properly respond to requests "
 "from the neutron-metadata-agent."
 msgstr ""
 
-#: ../networking_config-identity.rst:231
+#: ../networking_config-identity.rst:232
 msgid "``service_metadata_proxy``"
 msgstr ""
 
-#: ../networking_config-identity.rst:235
+#: ../networking_config-identity.rst:236
 msgid ""
 "Update to a string \"password\" value. You must also configure the same "
 "value in the ``metadata_agent.ini`` file, to authenticate requests made for "
 "metadata."
 msgstr ""
 
-#: ../networking_config-identity.rst:235
+#: ../networking_config-identity.rst:236
 msgid "``metadata_proxy_shared_secret``"
 msgstr ""
 
-#: ../networking_config-identity.rst:240
+#: ../networking_config-identity.rst:241
 msgid ""
 "The default value of an empty string in both files will allow metadata to "
 "function, but will not be secure if any non-trusted entities have access to "
 "the metadata APIs exposed by nova-api."
 msgstr ""
 
-#: ../networking_config-identity.rst:249
+#: ../networking_config-identity.rst:250
 msgid ""
 "As a precaution, even when using ``metadata_proxy_shared_secret``, we "
 "recommend that you do not expose metadata using the same nova-api instances "
@@ -19760,11 +19765,11 @@ msgid ""
 "determined by the value of ``enabled_apis`` in its ``nova.conf``."
 msgstr ""
 
-#: ../networking_config-identity.rst:258
+#: ../networking_config-identity.rst:259
 msgid "Example nova.conf (for nova-compute and nova-api)"
 msgstr ""
 
-#: ../networking_config-identity.rst:260
+#: ../networking_config-identity.rst:261
 msgid ""
 "Example values for the above settings, assuming a cloud controller node "
 "running Compute and Networking with an IP address of 192.168.1.2:"
