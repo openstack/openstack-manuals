@@ -285,7 +285,7 @@ with neutron SR-IOV ports.
       $ net_id=`neutron net-show net04 | grep "\ id\ " | awk '{ print $4 }'`
 
 #. Create the SR-IOV port. We specify vnic_type direct, but other options
-   include macvtap:
+   include direct-physical, and macvtap:
 
    .. code-block:: console
 
