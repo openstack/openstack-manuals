@@ -96,7 +96,7 @@ Install and configure components
         memcached_servers = controller:11211
         auth_uri = http://controller:5000
         auth_url = http://controller:35357
-        auth_plugin = password
+        auth_type = password
         project_domain_name = default
         user_domain_name = default
         project_name = service
