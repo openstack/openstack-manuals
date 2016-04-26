@@ -163,7 +163,7 @@ Block Storage
 -------------
 
 The optional Block Storage node contains the disks that the Block
-Storage service provisions for instances.
+Storage and Shared File System services provision for instances.
 
 For simplicity, service traffic between compute nodes and this node
 uses the management network. Production environments should implement
