@@ -20,7 +20,7 @@ Verify operation of the Orchestration service.
 
    .. code-block:: console
 
-      $ heat service-list
+      $ openstack orchestration service list
       +------------+-------------+--------------------------------------+------------+--------+----------------------------+--------+
       | hostname   | binary      | engine_id                            | host       | topic  | updated_at                 | status |
       +------------+-------------+--------------------------------------+------------+--------+----------------------------+--------+
