@@ -37,8 +37,8 @@ Standards for API reference in OpenStack
 The API working group has `API documentation guidelines`_ that all teams
 providing a REST API service in OpenStack strive to follow.
 
-How to document your OpenStack API service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How to migrate WADL files for your OpenStack API service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your project already has WADL files, they are migrated to Swagger files with
 every commit to the api-site repository. However, some APIs cannot be described
@@ -53,11 +53,18 @@ follow these steps.
 
       $ git clone https://git.openstack.org/openstack/api-site
 
-#. Create a Python virtual environment.
+#. Clone the wadl2rst repository locally.
+
+   .. code-block:: console
+
+      $ git clone https://github.com/annegentle/wadl2rst
+
+#. Create a Python virtual environment and use it.
 
    .. code-block:: console
 
       $ virtualenv wadl2rst
+      $ source wadl2rst/bin/activate
 
 #. Install the requirements and ``wadl2rst`` in the virtual
    environment.
@@ -65,7 +72,7 @@ follow these steps.
    .. code-block:: console
 
       $ pip install -r requirements.txt
-      $ pip install -e git+git@github.com:annegentle/wadl2rst.git@master#egg=wadl2rst
+      $ pip install -e git+https://github.com/annegentle/wadl2rst@master#egg=wadl2rst
 
 #. Create a ``.yaml`` configuration file with the following format.
 
@@ -86,7 +93,7 @@ For example:
 
 .. code-block:: yaml
 
-   /api-site/api-ref/src/wadls/identity-api/src/v2.0/wadl/identity.wadl:
+   ../api-site/api-ref/src/wadls/identity-api/src/v2.0/wadl/identity.wadl:
      title: OpenStack Identity API v2.0
      output_file: dist/identity/identity.inc
      preamble: |
@@ -110,34 +117,9 @@ For example:
    warnings about generating the documents twice, or documents not being in
    a toc directive.
 
-#. Next, run the ``fairy-slipper`` tool to generate individual migrated
-   ``<operationid>.yaml`` files. First, clone the repository:
-
-   .. code-block:: console
-
-      $ git clone git://git.openstack.org/openstack/fairy-slipper
-
-#. Next, get a copy of this patch set:
-
-   .. code-block:: console
-
-      $ cd fairy-slipper
-      $ git review -d 301958
-
-#. Now, install requirements in the virtual environment.
-
-   .. code-block:: console
-
-      $ pip install -r requirements.txt
-
-#. In the ``fairy-slipper`` directory, run the migration script with the
-   ``--create-yamls`` parameter:
-
-   .. code-block:: console
-
-      $ ./migrate.sh --create-yamls
-
-   The YAML files are placed in an ``api_doc/<service>/<version>`` directory.
+#. Next, get a copy of the ``parameters.yaml`` file for your service from the
+   fairy-slipper project. You can get those from
+   https://review.openstack.org/#/c/301958/.
 
    The YAML files can be referenced from the RST files, and the migration tool
    inserts pointers to parameters, such as:
@@ -200,4 +182,5 @@ need to be written.
 .. _`Compute API Guide`: http://developer.openstack.org/api-guide/compute
 .. _`example patch`: https://review.openstack.org/#/c/233446/
 .. _`API documentation guidelines`: http://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html
+.. _`nova example`: https://github.com/openstack/nova/blob/master/api-ref/source/conf.py
 .. _`extensions`: http://git.openstack.org/cgit/openstack/nova/tree/api-ref/ext
