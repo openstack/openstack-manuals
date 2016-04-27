@@ -51,7 +51,7 @@ follow these steps.
 
    .. code-block:: console
 
-      $ git clone git@github.com:openstack/api-site.git
+      $ git clone https://git.openstack.org/openstack/api-site
 
 #. Create a Python virtual environment.
 
