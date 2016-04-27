@@ -133,14 +133,62 @@ For example:
          - alias: alias
          - updated: updated
 
-Optional: You can run a screen scraper program if you want to get a count of
+Optional: Determine how many operations are currently documented
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can run a screen scraper program if you want to get a count of
 your project's total number of operations. The Python script,
 ``apirefscrape.py``, is in a ``/scripts/`` directory in the wadl2rst
-repository. Run it like so.
+repository.
+
+#. To run the counting tool, clone a copy of the wadl2rst repository:
+
+   .. code-block:: console
+
+      $ git clone https://github.com/annegentle/wadl2rst
+
+#. Change directories to ``wadl2rst`` and then create a python virtualenv:
+
+   .. code-block:: console
+
+     $ cd wadl2rst
+     $ virtualenv wadl2rst
+
+#. Install Python requests and lxml:
+
+   .. code-block:: console
+
+     $ pip install requests
+     $ pip install lxml
+
+#. Run the script.
 
 .. code-block:: console
 
-   $ python apirefscrape.py
+   $ python scripts/apirefscrape.py
+   URL:  api-ref-telemetry-v2.html
+   ----------
+   19
+   19
+   GET /v2/alarms
+   POST /v2/alarms
+   GET /v2/alarms/​{alarm_id}​
+   PUT /v2/alarms/​{alarm_id}​
+   DELETE /v2/alarms/​{alarm_id}​
+   PUT /v2/alarms/​{alarm_id}​/state
+   GET /v2/alarms/​{alarm_id}​/state
+   GET /v2/alarms/​{alarm_id}​/history
+   GET /v2/meters
+   POST /v2/meters/​{meter_name}​
+   GET /v2/meters/​{meter_name}​
+   GET /v2/meters/​{meter_name}​/statistics
+   GET /v2/samples
+   GET /v2/samples/​{sample_id}​
+   GET /v2/resources
+   GET /v2/resources/​{resource_id}​
+   GET /v2/capabilities
+   GET /v2/events
+   GET /v2/events/​{message_id}
 
 You see output of each service, a count of all operations, and a listing of
 each operation.
