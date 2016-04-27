@@ -47,49 +47,62 @@ with Swagger.
 When your project needs to migrate to RST (.inc) and YAML as nova has done,
 follow these steps.
 
-#. Clone the api-site repository locally.::
+#. Clone the api-site repository locally.
 
-    git clone git@github.com:openstack/api-site.git
+   .. code-block:: console
 
-#. Create a Python virtual environment.::
+      $ git clone git@github.com:openstack/api-site.git
 
-    virtualenv wadl2rst
+#. Create a Python virtual environment.
 
-#. Install the requirements and ``wadl2rst`` in the virtual environment.::
+   .. code-block:: console
 
-    pip install -r requirements.txt
-    pip install -e git+git@github.com:annegentle/wadl2rst.git@master#egg=wadl2rst
+      $ virtualenv wadl2rst
 
-#. Create a ``.yaml`` configuration file with the following format.::
+#. Install the requirements and ``wadl2rst`` in the virtual
+   environment.
 
-    [wadl_path]:
-        title: [book_title]
-        output_file: [output_file]
-        preamble: [preamble]
+   .. code-block:: console
+
+      $ pip install -r requirements.txt
+      $ pip install -e git+git@github.com:annegentle/wadl2rst.git@master#egg=wadl2rst
+
+#. Create a ``.yaml`` configuration file with the following format.
+
+   .. code-block:: yaml
+
+      [wadl_path]:
+          title: [book_title]
+          output_file: [output_file]
+          preamble: [preamble]
 
 This format enables grouping of API operations for more manageable editing
 later.
 
-In the preamble, you can include a header and any introductor text for the
+In the preamble, you can include a header and any introductory text for the
 collected operations.
 
-For example::
+For example:
 
-    ../api-site/api-ref/src/wadls/identity-api/src/v2.0/wadl/identity.wadl:
-        title: OpenStack Identity API v2.0
-        output_file: dist/identity/identity.inc
-        preamble: |
-          ======
-          Tokens
-          ======
+.. code-block:: yaml
 
-      Gets an authentication token that permits access to the
-      OpenStack services REST API.
+   /api-site/api-ref/src/wadls/identity-api/src/v2.0/wadl/identity.wadl:
+     title: OpenStack Identity API v2.0
+     output_file: dist/identity/identity.inc
+     preamble: |
+       ======
+       Tokens
+       ======
+
+   Gets an authentication token that permits access to the
+   OpenStack services REST API.
 
 #. In the wadl2rst directory, run this command with your project's yaml file
-   to run the migration.::
+   to run the migration.
 
-    wadl2rst project.config.yaml
+   .. code-block:: console
+
+      $ wadl2rst project.config.yaml
 
 #. Look at the RST files generated and make sure they contain all the
    operations you expect. Note that the file extension is ``.inc`` to avoid
@@ -98,42 +111,54 @@ For example::
    a toc directive.
 
 #. Next, run the ``fairy-slipper`` tool to generate individual migrated
-   ``<operationid>.yaml`` files. First, clone the repository::
+   ``<operationid>.yaml`` files. First, clone the repository:
 
-    git clone git://git.openstack.org/openstack/fairy-slipper
+   .. code-block:: console
 
-#. Next, get a copy of this patch set::
+      $ git clone git://git.openstack.org/openstack/fairy-slipper
 
-    cd fairy-slipper
-    git review -d 301958
+#. Next, get a copy of this patch set:
+
+   .. code-block:: console
+
+      $ cd fairy-slipper
+      $ git review -d 301958
 
 #. Now, install requirements in the virtual environment.
 
-    pip install -r requirements.txt
+   .. code-block:: console
+
+      $ pip install -r requirements.txt
 
 #. In the ``fairy-slipper`` directory, run the migration script with the
-   ``--create-yamls`` parameter::
+   ``--create-yamls`` parameter:
 
-    ./migrate.sh --create-yamls
+   .. code-block:: console
+
+      $ ./migrate.sh --create-yamls
 
    The YAML files are placed in an ``api_doc/<service>/<version>`` directory.
 
    The YAML files can be referenced from the RST files, and the migration tool
-   inserts pointers to parameters, such as::
+   inserts pointers to parameters, such as:
 
-   .. rest_parameters:: parameters.yaml
+   .. code-block:: none
 
-    - name: name
-    - description: description
-    - alias: alias
-    - updated: updated
+      .. rest_parameters:: parameters.yaml
+
+         - name: name
+         - description: description
+         - alias: alias
+         - updated: updated
 
 Optional: You can run a screen scraper program if you want to get a count of
 your project's total number of operations. The Python script,
 ``apirefscrape.py``, is in a ``/scripts/`` directory in the wadl2rst
-repository. Run it like so.::
+repository. Run it like so.
 
-    python apirefscrape.py
+.. code-block:: console
+
+   $ python apirefscrape.py
 
 You see output of each service, a count of all operations, and a listing of
 each operation.
