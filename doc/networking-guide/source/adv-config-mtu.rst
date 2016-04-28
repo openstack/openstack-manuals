@@ -57,6 +57,15 @@ To enable Neutron for Jumbo frames, the following option should be set in the
    [DEFAULT]
    global_physnet_mtu = <maximum MTU supported by your infrastructure>
 
+If you use the Modular Layer 2 (ml2) plugin with tunneling protocols (VXLAN,
+GRE), you should set the following option in ``/etc/neutron/ml2/ml2_conf.ini``
+file:
+
+.. code-block:: ini
+
+   [ml2]
+   path_mtu = <same as for global_physnet_mtu above>
+
 If you have multiple underlying networks, you may want to use separate MTU
 values for each of those networks. In that case, you can set one of the
 following options (currently works for ML2 plug-in only).
