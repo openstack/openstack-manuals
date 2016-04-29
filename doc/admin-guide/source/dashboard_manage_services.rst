@@ -7,8 +7,8 @@ As an administrative user, you can view information for OpenStack services.
 #. Log in to the Dashboard and select the
    :guilabel:`admin` project from the drop-down list.
 
-#. On the :guilabel:`Admin` tab, click the :guilabel:`System Information`
-   category.
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
+   and click the :guilabel:`System Information` category.
 
    View the following information on these tabs:
 
