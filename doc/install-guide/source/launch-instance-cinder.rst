@@ -121,7 +121,8 @@ Attach the volume to an instance
       to use the volume.
 
 For more information about how to manage volumes, see the
-`OpenStack User Guide
-<http://docs.openstack.org/user-guide/index.html>`__.
+`Manage volumes
+<http://docs.openstack.org/user-guide/common/cli_manage_volumes.html>`__
+in OpenStack End User Guide.
 
 Return to :ref:`launch-instance`.
