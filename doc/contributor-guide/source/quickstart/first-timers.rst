@@ -118,13 +118,27 @@ Set up SSH
 
 #. View and copy your SSH key:
 
+   **Linux/Mac**
+
    .. code-block:: console
 
       $ less ~/.ssh/id_rsa.pub
 
-#. Add your SSH key by logging into gerrit and viewing
-   the `Settings > SSH Public Keys`_ page.
+   **Windows**
 
+   In Windows Explorer, browse to ``c:\Users\<username>\.ssh\`` and open the
+   ``id_rsa.pub`` file in Notepad. Use Select All and then copy.
+
+   .. note::
+
+     If you use Windows, our testing shows you must open the ``.pub`` file in
+     Notepad in order for gerrit to accept the key.
+
+#. Sign into gerrit at review.openstack.org.
+
+#. In the upper right, click your username. Click the `Settings > SSH Public
+   Keys`_ page. Click ``Add Key``. Paste the key in the ``Add SSH Public Key``
+   web form and click ``Add``.
 
 Set up a repository
 -------------------
