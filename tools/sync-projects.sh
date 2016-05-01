@@ -45,31 +45,6 @@ function copy_rst {
 }
 
 
-function copy_glossary_xml {
-    GLOSSARY_SUB_DIR=$1
-    ENT_DIR=$2
-    CHECK_MARK_DIR=$3
-
-    GLOSSARY_DIR="$PROJECT_DIR/$GLOSSARY_SUB_DIR"
-
-    cp doc/glossary/glossary-terms.xml $GLOSSARY_DIR/
-    # Copy only Japanese and zh_CN translations since ha-guide,
-    # security-guide, and operations-guide are only translated to Japanese
-    # currently while the ha-guide is additionally translated to zh_CN.
-    # Training-guides is not translated at all.
-    cp doc/glossary/locale/{ja,zh_CN}.po $GLOSSARY_DIR/locale/
-    sed -i -e "s|\"./openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|" \
-        $GLOSSARY_DIR/glossary-terms.xml
-    (cd $PROJECT_DIR; git add $GLOSSARY_SUB_DIR)
-
-    # Sync entitites file
-    cp doc/glossary/openstack.ent $GLOSSARY_DIR/../$ENT_DIR/
-
-    # Add files
-    (cd $PROJECT_DIR; git add $GLOSSARY_SUB_DIR \
-        $GLOSSARY_SUB_DIR/../$ENT_DIR/openstack.ent)
-}
-
 case "$PROJECT_DIR" in
     api-site)
         copy_rst common
@@ -78,10 +53,6 @@ case "$PROJECT_DIR" in
     ha-guide)
         copy_rst doc/common
         copy_rst_trans doc/common
-        ;;
-    operations-guide)
-        copy_glossary_xml "doc/glossary" "openstack-ops" "figures"
-        copy_rst doc/common
         ;;
     security-doc)
         copy_rst common
