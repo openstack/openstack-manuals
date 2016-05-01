@@ -162,7 +162,7 @@ Mount the share from an instance
       # mount -t nfs 10.0.0.41:/var/lib/manila/mnt/share-b94a4dbf-49e2-452c-b9c7-510277adf5c6 ~/test_folder
 
 For more information about how to manage shares, see the
-`OpenStack User Guide
+`OpenStack End User Guide
 <http://docs.openstack.org/user-guide/index.html>`__.
 
 Return to :ref:`launch-instance`.

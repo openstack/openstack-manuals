@@ -9,7 +9,7 @@ For more information about how to download and build images, see
 `OpenStack Virtual Machine Image Guide
 <http://docs.openstack.org/image-guide/>`__.
 For information about how to manage images, see the
-`OpenStack User Guide
+`OpenStack End User Guide
 <http://docs.openstack.org/user-guide/common/cli_manage_images.html>`__.
 
 .. note::
