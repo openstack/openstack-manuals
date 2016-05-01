@@ -37,6 +37,59 @@ Standards for API reference in OpenStack
 The API working group has `API documentation guidelines`_ that all teams
 providing a REST API service in OpenStack strive to follow.
 
+.. _how-to-document-api:
+
+How to document your OpenStack API service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have a WADL file, we recommend using the migration process to create
+RST files for the content and YAML files for the parameters. See
+:ref:`how-to-migrate-wadl`. If you have no documentation currently, or what to
+update it to be consistent with other projects, read more here.
+
+The basic steps are:
+
+#. Create an ``api-ref/source`` directory in your project repository.
+
+#. Create a ``conf.py`` for the project, similar to the `nova example`_.
+
+#. Create an ``api-ref/ext`` directory and copy from the `nova example`_.
+   Those will be a shared resource during the Newton release cycle.
+
+#. Create RST files for each operation.
+
+#. In the RST file, use ``.. rest_method::`` for each operation.
+
+   Example: ``.. rest_method:: GET /v2.1/{tenant_id}/flavors``
+
+#. In the RST file, add requests and responses that point to a
+   ``parameters.yaml`` file::
+
+    .. rest_parameters:: parameters.yaml
+
+       - tenant_id: tenant_id
+
+   Here is an example entry in ``parameters.yaml``::
+
+       admin_tenant_id:
+         description: |
+           The UUID of the administrative tenant.
+         in: path
+         required: true
+         type: string
+
+#. Create sample JSON requests and responses and store in a directory, and
+   point to those in your RST files. As an example::
+
+    .. literalinclude:: samples/os-evacuate/server-evacuate-resp.json
+       :language: javascript
+
+#. Create a build job similar to the nova job for your project. Examples:
+   https://review.openstack.org/#/c/305464/ and
+   https://review.openstack.org/#/c/305485/.
+
+.. _how-to-migrate-wadl:
+
 How to migrate WADL files for your OpenStack API service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -47,82 +100,34 @@ with Swagger.
 When your project needs to migrate to RST (.inc) and YAML as nova has done,
 follow these steps.
 
-#. Clone the api-site repository locally.
+#. Clone the api-site repository and get the patch from
+   https://review.openstack.org/#/c/311596:
 
    .. code-block:: console
 
-      $ git clone https://git.openstack.org/openstack/api-site
+      $ git clone https://github.com/openstack/api-site
+      $ git review -s
+      $ git review -d 311596
 
-#. Clone the wadl2rst repository locally.
-
-   .. code-block:: console
-
-      $ git clone https://github.com/annegentle/wadl2rst
-
-#. Create a Python virtual environment and use it.
-
-   .. code-block:: console
-
-      $ virtualenv wadl2rst
-      $ source wadl2rst/bin/activate
-
-#. Install the requirements and ``wadl2rst`` in the virtual
-   environment.
-
-   .. code-block:: console
-
-      $ pip install -r requirements.txt
-      $ pip install -e git+https://github.com/annegentle/wadl2rst@master#egg=wadl2rst
-
-#. Create a ``.yaml`` configuration file with the following format.
-
-   .. code-block:: yaml
-
-      [wadl_path]:
-          title: [book_title]
-          output_file: [output_file]
-          preamble: [preamble]
-
-This format enables grouping of API operations for more manageable editing
-later.
-
-In the preamble, you can include a header and any introductory text for the
-collected operations.
-
-For example:
-
-.. code-block:: yaml
-
-   ../api-site/api-ref/src/wadls/identity-api/src/v2.0/wadl/identity.wadl:
-     title: OpenStack Identity API v2.0
-     output_file: dist/identity/identity.inc
-     preamble: |
-       ======
-       Tokens
-       ======
-
-   Gets an authentication token that permits access to the
-   OpenStack services REST API.
-
-#. In the wadl2rst directory, run this command with your project's yaml file
-   to run the migration.
-
-   .. code-block:: console
-
-      $ wadl2rst project.config.yaml
+   The files are available in api-ref/source/<service>/<version>/.
 
 #. Look at the RST files generated and make sure they contain all the
-   operations you expect. Note that the file extension is ``.inc`` to avoid
-   build errors. When included files are ``.inc`` files, Sphinx does not issue
-   warnings about generating the documents twice, or documents not being in
-   a toc directive.
+   operations you expect. The ``.inc`` files contain groupings of the
+   operations.
 
-#. Next, get a copy of the ``parameters.yaml`` file for your service from the
-   fairy-slipper project. You can get those from
-   https://review.openstack.org/#/c/301958/.
+   .. note::
 
-   The YAML files can be referenced from the RST files, and the migration tool
-   inserts pointers to parameters, such as:
+      Note that the file extension is ``.inc`` to avoid
+      build errors. When included files are ``.inc`` files, Sphinx does not
+      issue warnings about generating the documents twice, or documents not
+      being in a toc directive.
+
+#. In addition to separate files for each operation's parameters, there is a
+   ``parameters.yaml`` file for your service. Check the accuracy of these
+   files.
+
+   The YAML files can be referenced from the RST files, you can place pointers
+   to parameters, such as:
 
    .. code-block:: none
 
@@ -132,6 +137,11 @@ For example:
          - description: description
          - alias: alias
          - updated: updated
+
+#. Copy the files to your project's repository.
+
+#. Refer to :ref:`how-to-document-api` for details on how to build and publish
+   the files.
 
 Optional: Determine how many operations are currently documented
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -172,23 +182,23 @@ repository.
    19
    GET /v2/alarms
    POST /v2/alarms
-   GET /v2/alarms/​{alarm_id}​
-   PUT /v2/alarms/​{alarm_id}​
-   DELETE /v2/alarms/​{alarm_id}​
-   PUT /v2/alarms/​{alarm_id}​/state
-   GET /v2/alarms/​{alarm_id}​/state
-   GET /v2/alarms/​{alarm_id}​/history
+   GET /v2/alarms/{alarm_id}
+   PUT /v2/alarms/{alarm_id}
+   DELETE /v2/alarms/{alarm_id}
+   PUT /v2/alarms/{alarm_id}/state
+   GET /v2/alarms/{alarm_id}/state
+   GET /v2/alarms/{alarm_id}/history
    GET /v2/meters
-   POST /v2/meters/​{meter_name}​
-   GET /v2/meters/​{meter_name}​
-   GET /v2/meters/​{meter_name}​/statistics
+   POST /v2/meters/{meter_name}
+   GET /v2/meters/{meter_name}
+   GET /v2/meters/{meter_name}/statistics
    GET /v2/samples
-   GET /v2/samples/​{sample_id}​
+   GET /v2/samples/{sample_id}
    GET /v2/resources
-   GET /v2/resources/​{resource_id}​
+   GET /v2/resources/{resource_id}
    GET /v2/capabilities
    GET /v2/events
-   GET /v2/events/​{message_id}
+   GET /v2/events/{message_id}
 
 You see output of each service, a count of all operations, and a listing of
 each operation.
