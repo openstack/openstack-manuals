@@ -138,17 +138,16 @@ OpenStack Installation Guides
     Describes a manual installation process, as in, by hand, without
     automation, for multiple distributions based on a packaging system:
 
-    -  `Installation Guide for openSUSE 13.2 and SUSE Linux Enterprise
-       Server
-       12 <http://docs.openstack.org/liberty/install-guide-obs/>`_
+    -  `Installation Guide for openSUSE and SUSE Linux Enterprise
+       <http://docs.openstack.org/mitaka/install-guide-obs/>`_
 
-    -  `Installation Guide for Red Hat Enterprise Linux 7 and CentOS
-       7 <http://docs.openstack.org/liberty/install-guide-rdo/>`_
+    -  `Installation Guide for Red Hat Enterprise Linux and CentOS
+       <http://docs.openstack.org/mitaka/install-guide-rdo/>`_
 
-    -  `Installation Guide for Ubuntu 14.04 (LTS)
-       Server <http://docs.openstack.org/liberty/install-guide-ubuntu/>`_
+    -  `Installation Guide for Ubuntu
+       <http://docs.openstack.org/mitaka/install-guide-ubuntu/>`_
 
-`OpenStack Configuration Reference <http://docs.openstack.org/liberty/config-reference/content/>`_
+`OpenStack Configuration Reference <http://docs.openstack.org/mitaka/config-reference/>`_
     Contains a reference listing of all configuration options for core
     and integrated OpenStack services by release version
 
@@ -337,6 +336,9 @@ On the first day, we filled white boards with colorful sticky notes to
 start to shape this nebulous book about how to architect and operate
 clouds:
 
+.. figure:: figures/osog_00in01.png
+   :figwidth: 100%
+
 We wrote furiously from our own experiences and bounced ideas between
 each other. At regular intervals we reviewed the shape and organization
 of the book and further molded it, leading to what you see today.
@@ -450,51 +452,3 @@ under Extra options with the ``ops-guide`` tag to indicate that the bug
 is in this guide. You can assign the bug to yourself if you know how to
 fix it. Also, a member of the OpenStack doc-core team can triage the doc
 bug.
-
-Conventions Used in This Book
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The following typographical conventions are used in this book:
-
-*Italic*
-    Indicates new terms, URLs, email addresses, filenames, and file
-    extensions.
-
-``Constant width``
-    Used for program listings, as well as within paragraphs to refer to
-    program elements such as variable or function names, databases, data
-    types, environment variables, statements, and keywords.
-
-``Constant width bold``
-    Shows commands or other text that should be typed literally by the
-    user.
-
-Constant width italic
-    Shows text that should be replaced with user-supplied values or by
-    values determined by context.
-
-Command prompts
-    Commands prefixed with the ``#`` prompt should be executed by the
-    ``root`` user. These examples can also be executed using the
-    :command:`sudo` command, if available.
-
-    Commands prefixed with the ``$`` prompt can be executed by any user,
-    including ``root``.
-
-.. tip::
-
-   This element signifies a tip or suggestion.
-
-.. note::
-
-   This element signifies a general note.
-
-.. warning::
-
-   This element indicates a warning or caution.
-
-See also:
-
-.. toctree::
-
-   common/conventions.rst
