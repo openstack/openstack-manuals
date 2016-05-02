@@ -216,7 +216,8 @@ Mount the share from an instance
       # mount -t nfs 10.254.0.6:/shares/share-0bfd69a1-27f0-4ef5-af17-7cd50bce6550 ~/test_folder
 
 For more information about how to manage shares, see the
-`OpenStack End User Guide
-<http://docs.openstack.org/user-guide/index.html>`__.
+`Manage shares
+<http://docs.openstack.org/user-guide/cli_manage_shares.html>`__ in
+OpenStack End User Guide.
 
 Return to :ref:`launch-instance`.
