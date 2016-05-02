@@ -31,8 +31,9 @@ function copy_to_branch {
         cp -a publish-docs/draft/* publish-docs/$BRANCH/
         # We don't need this file
         rm -f publish-docs/$BRANCH/draft-index.html
-        # We don't need Contributor Guide
-        rm -rf publish-docs/$BRANCH/contributor-guide
+        # We don't need these draft guides on the branch
+        rm -rf publish-docs/$BRANCH/arch-design-draft
+        rm -rf publish-docs/$BRANCH/ops-guide
 
         for f in $(find publish-docs/$BRANCH -name "atom.xml"); do
             sed -i -e "s|/draft/|/$BRANCH/|g" $f
