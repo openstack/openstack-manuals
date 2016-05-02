@@ -57,7 +57,7 @@ if [ "$PUBLISH" = "build" ] ; then
     python tools/www-generator.py --source-directory www/ \
         --output-directory publish-docs/www/
     rsync -a www/static/ publish-docs/www/
-    # publish-docs/www-index.html is the trigger for openstack-doc-test
+    # publish-docs/www-index.html is the trigger for openstack-indexpage
     # to include the file.
     mv publish-docs/www/www-index.html publish-docs/www-index.html
 fi
@@ -71,9 +71,9 @@ fi
 
 # We only publish changed manuals.
 if [ "$PUBLISH" = "publish" ] ; then
-    openstack-doc-test --check-build --publish
     # For publishing to both /draft and /BRANCH
     copy_to_branch mitaka
 else
-    openstack-doc-test --check-build
+    # Create index page for viewing
+    openstack-indexpage publish-docs
 fi

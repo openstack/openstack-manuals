@@ -36,7 +36,6 @@ function copy_rst {
     target=$1
     # Copy over some RST files
     mkdir -p $PROJECT_DIR/$target
-    tools/glossary2rst.py $PROJECT_DIR/$target/glossary.rst
 
     for filename in app_support.rst conventions.rst; do
         cp doc/common/$filename $PROJECT_DIR/$target
