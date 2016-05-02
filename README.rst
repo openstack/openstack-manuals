@@ -16,6 +16,7 @@ It includes these manuals:
  * End User Guide
  * Installation Guides
  * Networking Guide
+ * Operations Guide
  * Virtual Machine Image Guide
 
 In addition to the guides, this repository contains:
