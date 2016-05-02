@@ -15,7 +15,8 @@ Contents
    :maxdepth: 2
 
    acknowledgements.rst
-   preface_ops.rst
+   preface.rst
+   common/conventions.rst
    architecture.rst
    operations.rst
    app_usecases.rst
