@@ -54,10 +54,6 @@ if [[ "$REPOSITORY" = "openstack-manuals" && "$DOCNAME" = "common" ]] ; then
 EOF
 fi
 
-if [ "$REPOSITORY" = "openstack-manuals" ] ; then
-    # Build Glossary
-    tools/glossary2rst.py doc/common/glossary.rst
-fi
 # First remove the old pot file, otherwise the new file will contain
 # old references
 

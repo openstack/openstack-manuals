@@ -17,7 +17,6 @@ DIRECTORY=$1
 if [ -z "$DIRECTORY" ] ; then
     echo "usage $0 DIRECTORY options"
     echo "Options are:"
-    echo "--glossary: Build glossary"
     echo "--tag TAG: Use given tag for building"
     echo "--target TARGET: Copy files to publish-docs/$TARGET"
     echo "--build BUILD: Name of build directory"
@@ -25,7 +24,6 @@ if [ -z "$DIRECTORY" ] ; then
     exit 1
 fi
 
-GLOSSARY=0
 TARGET=""
 TAG=""
 TAG_OPT=""
@@ -42,9 +40,6 @@ while [[ $# > 0 ]] ; do
         --linkcheck)
             LINKCHECK=1
             ;;
-        --glossary)
-            GLOSSARY=1
-            ;;
         --tag)
             TAG="$2"
             TAG_OPT="-t $2"
@@ -58,11 +53,6 @@ while [[ $# > 0 ]] ; do
     shift
 done
 
-
-if [ "$GLOSSARY" -eq "1" ] ; then
-    echo "Generating Glossary"
-    tools/glossary2rst.py doc/common/glossary.rst
-fi
 
 if [ -z "$BUILD" ] ; then
     if [ -z "$TAG" ] ; then

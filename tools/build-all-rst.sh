@@ -2,8 +2,6 @@
 
 mkdir -p publish-docs
 
-GLOSSARY="--glossary"
-
 LINKCHECK=""
 if [[ $# > 0 ]] ; then
     if [ "$1" = "--linkcheck" ] ; then
@@ -13,10 +11,8 @@ fi
 
 for guide in user-guide admin-guide \
     contributor-guide image-guide arch-design cli-reference; do
-    tools/build-rst.sh doc/$guide $GLOSSARY --build build \
+    tools/build-rst.sh doc/$guide --build build \
         --target $guide $LINKCHECK
-    # Build it only the first time
-    GLOSSARY=""
 done
 
 # Draft guides
