@@ -111,7 +111,7 @@ Option 3
     should be better because I/O is focused on dedicated tasks. However,
     the LVM partition is much smaller.
 
-.. note::
+.. tip::
 
    You may find that you can automate the partitioning itself. For
    example, MIT uses `Fully Automatic Installation
@@ -225,22 +225,22 @@ available. You could format and repurpose those servers for OpenStack
 Object Storage. All of these considerations and input from users help
 you build your use case and your deployment plan.
 
-.. note::
+.. tip::
 
     For further research about OpenStack deployment, investigate the
     supported and documented preconfigured, prepackaged installers for
     OpenStack from companies such as
-    `Canonical <http://www.ubuntu.com/cloud/ubuntu-openstack>`_,
+    `Canonical <http://www.ubuntu.com/cloud/openstack>`_,
     `Cisco <http://www.cisco.com/web/solutions/openstack/index.html>`_,
     `Cloudscaling <http://www.cloudscaling.com/>`_,
-    `IBM <http://www-03.ibm.com/software/products/en/smartcloud-orchestrator/>`_,
+    `IBM <http://www-03.ibm.com/software/products/en/ibm-cloud-orchestrator>`_,
     `Metacloud <http://www.metacloud.com/>`_,
-    `Mirantis <http://www.mirantis.com/>`_,
+    `Mirantis <https://www.mirantis.com/>`_,
     `Piston <http://www.pistoncloud.com/>`_,
-    `Rackspace <http://www.rackspace.com/cloud/private/>`_, `Red
-    Hat <http://www.redhat.com/openstack/>`_,
-    `SUSE <https://www.suse.com/products/suse-cloud/>`_, and
-    `SwiftStack <https://www.swiftstack.com/>`_.
+    `Rackspace <http://www.rackspace.com/cloud/private>`_,
+    `Red Hat <http://www.redhat.com/openstack/>`_,
+    `SUSE <https://www.suse.com/products/suse-openstack-cloud/>`_,
+    and `SwiftStack <https://www.swiftstack.com/>`_.
 
 Conclusion
 ~~~~~~~~~~
