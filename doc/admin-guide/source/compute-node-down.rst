@@ -326,3 +326,9 @@ session. This example closes an iSCSI session with the number ``15``:
    # iscsiadm -m session -u -r 15
 
 Do not forget the :option:`-r` option. Otherwise, all sessions close.
+
+.. warning::
+
+   There is potential for data loss while running instances during
+   this procedure. If you are using Liberty or earlier, ensure you have the
+   correct patch and set the options appropriately.
