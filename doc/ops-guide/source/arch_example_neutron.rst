@@ -110,11 +110,13 @@ Node types
 This section gives you a breakdown of the different nodes that make up
 the OpenStack environment. A node is a physical machine that is
 provisioned with an operating system, and running a defined software
-stack on top of it. The table below provides node descriptions and
+stack on top of it. :ref:`table_node_types` provides node descriptions and
 specifications.
 
-.. list-table:: Node types
-   :widths: 33 33 33
+.. _table_node_types:
+
+.. list-table:: Table. Node types
+   :widths: 20 50 30
    :header-rows: 1
 
    * - Type
@@ -297,40 +299,45 @@ Initial deployment
 
 Initially, the connection setup should revolve around keeping the
 connectivity simple and straightforward in order to minimize deployment
-complexity and time to deploy. The deployment shown below aims to have 1 × 10G
-connectivity available to all compute nodes, while still leveraging bonding on
-appropriate nodes for maximum performance.
+complexity and time to deploy.
+The deployment shown in :ref:`figure_basic_node_deployment` aims to
+have 1 × 10G connectivity available to all compute nodes, while still
+leveraging bonding on appropriate nodes for maximum performance.
+
+.. _figure_basic_node_deployment:
 
 .. figure:: figures/osog_0101.png
    :alt: Basic node deployment
    :width: 100%
 
-   Basic node deployment
+   Figure. Basic node deployment
 
 
 Connectivity for maximum performance
 ------------------------------------
 
 If the networking performance of the basic layout is not enough, you can
-move to the design below, which provides 2 × 10G network
-links to all instances in the environment as well as providing more
+move to :ref:`figure_performance_node_deployment`, which provides 2 × 10G
+network links to all instances in the environment as well as providing more
 network bandwidth to the storage layer.
+
+.. _figure_performance_node_deployment:
 
 .. figure:: figures/osog_0102.png
    :alt: Performance node deployment
    :width: 100%
 
-   Performance node deployment
+   Figure. Performance node deployment
 
 
 Node diagrams
 ~~~~~~~~~~~~~
 
-The following diagrams include logical
-information about the different types of nodes, indicating what services
-will be running on top of them and how they interact with each other.
-The diagrams also illustrate how the availability and scalability of
-services are achieved.
+The following diagrams, :ref:`controller_node` through :ref:`storage_node`,
+include logical information about the different types of nodes, indicating
+what services will be running on top of them and how they interact with
+each other. The diagrams also illustrate how the availability and
+scalability of services are achieved.
 
 .. _controller_node:
 
@@ -338,7 +345,7 @@ services are achieved.
    :alt: Controller node
    :width: 100%
 
-   Controller node
+   Figure. Controller node
 
 .. _compute_node:
 
@@ -346,7 +353,7 @@ services are achieved.
    :alt: Compute node
    :width: 100%
 
-   Compute node
+   Figure. Compute node
 
 .. _network_node:
 
@@ -354,7 +361,7 @@ services are achieved.
    :alt: Network node
    :width: 100%
 
-   Network node
+   Figure. Network node
 
 .. _storage_node:
 
@@ -362,17 +369,20 @@ services are achieved.
    :alt: Storage node
    :width: 100%
 
-   Storage node
+   Figure. Storage node
 
 
 Example Component Configuration
 -------------------------------
 
-The following tables include example configuration
+:ref:`third_party_component_configuration` and
+:ref:`openstack_component_configuration` include example configuration
 and considerations for both third-party and OpenStack components:
 
-.. list-table:: Table: Third-party component configuration
-   :widths: 25 25 25 25
+.. _third_party_component_configuration:
+
+.. list-table:: Table. Third-party component configuration
+   :widths: 10 30 30 30
    :header-rows: 1
 
    * - Component
@@ -454,8 +464,10 @@ and considerations for both third-party and OpenStack components:
 
 |
 
-.. list-table:: Table: OpenStack component configuration
-   :widths: 20 20 20 20 20
+.. _openstack_component_configuration:
+
+.. list-table:: Table. OpenStack component configuration
+   :widths: 10 10 20 30 30
    :header-rows: 1
 
    * - Component
@@ -523,7 +535,7 @@ and considerations for both third-party and OpenStack components:
        achieved linearly by adding in more compute nodes.
    * - Block Storage (cinder)
      - Controller
-     - Configured to use Qpid, ``qpid_heartbeat = ``\ ``10``,configured to
+     - Configured to use Qpid, ``qpid_heartbeat = ``10``,configured to
        use a Gluster volume from the storage layer as the back end for
        Block Storage, using the Gluster native client.
      - Block Storage API, scheduler, and volume services are run on all

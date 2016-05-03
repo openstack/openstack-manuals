@@ -75,27 +75,27 @@ those deviations next.
     -  :term:`Dashboard`: You probably want to offer a dashboard, but your
        users may be more interested in API access only.
 
-    -  Block storage: You don't have to offer users block storage if
-       their use case only needs ephemeral storage on compute nodes, for
-       example.
+    -  :term:`Block storage <Block Storage service>`:
+       You don't have to offer users block storage if their use case only
+       needs ephemeral storage on compute nodes, for example.
 
-    -  Floating IP address: Floating IP addresses are public IP
-       addresses that you allocate from a predefined pool to assign to
-       virtual machines at launch. Floating IP address ensure that the
-       public IP address is available whenever an instance is booted.
-       Not every organization can offer thousands of public floating IP
-       addresses for thousands of instances, so this feature is
-       considered optional.
+    -  :term:`Floating IP address <floating IP address>`:
+       Floating IP addresses are public IP addresses that you allocate
+       from a predefined pool to assign to virtual machines at launch.
+       Floating IP address ensure that the public IP address is available
+       whenever an instance is booted. Not every organization can offer
+       thousands of public floating IP addresses for thousands of
+       instances, so this feature is considered optional.
 
-    -  Live migration: If you need to move running virtual machine
-       instances from one host to another with little or no service
-       interruption, you would enable live migration, but it is
-       considered optional.
+    -  :term:`Live migration <live migration>`: If you need to move
+       running virtual machine instances from one host to another with
+       little or no service interruption, you would enable live migration,
+       but it is considered optional.
 
-    -  Object storage: You may choose to store machine images on a file
-       system rather than in object storage if you do not have the extra
-       hardware for the required replication and redundancy that
-       OpenStack Object Storage offers.
+    -  :term:`Object storage <Object Storage service>`: You may choose to
+       store machine images on a file system rather than in object storage
+       if you do not have the extra hardware for the required replication
+       and redundancy that OpenStack Object Storage offers.
 
 Rationale
 ~~~~~~~~~
@@ -157,7 +157,7 @@ We chose the *SQL back end for Identity* over others, such as LDAP. This
 back end is simple to install and is robust. The authors acknowledge
 that many installations want to bind with existing directory services
 and caution careful understanding of the `array of options available
-<http://docs.openstack.org/havana/config-reference/content/ch_configuring-openstack-identity.html#configuring-keystone-for-ldap-backend>`_.
+<http://docs.openstack.org/mitaka/config-reference/identity/options.html#keystone-ldap>`_.
 
 Block Storage (cinder) is installed natively on external storage nodes
 and uses the *LVM/iSCSI plug-in*. Most Block Storage plug-ins are tied
@@ -191,12 +191,12 @@ and the instances cannot access the Internet. The single node that runs
 the ``nova-network`` service can become a bottleneck if excessive
 network traffic comes in and goes out of the cloud.
 
-.. note::
+.. tip::
 
-    `Multi-host <http://docs.openstack.org/havana/install-guide/install/apt/content/nova-network.html>`_
-    is a high-availability option for the network configuration, where
-    the ``nova-network`` service is run on every compute node instead of
-    running on only a single node.
+   `Multi-host <http://docs.openstack.org/havana/install-guide/install/apt/content/nova-network.html>`_
+   is a high-availability option for the network configuration, where
+   the ``nova-network`` service is run on every compute node instead of
+   running on only a single node.
 
 Detailed Description
 --------------------
@@ -253,7 +253,8 @@ optional extensions follows:
 -  Add additional cloud controllers (see :doc:`ops_maintenance`).
 
 -  Add an OpenStack Storage service (see the Object Storage chapter in
-   the *OpenStack Installation Guide* for your distribution).
+   the `OpenStack Installation Guide
+   <http://docs.openstack.org/#install-guides>`_ for your distribution).
 
 -  Add additional OpenStack Block Storage hosts (see
    :doc:`ops_maintenance`).

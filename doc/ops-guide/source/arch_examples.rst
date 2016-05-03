@@ -17,7 +17,7 @@ documenting, as well as to provide the scope for this guide. Both of the
 offered architecture examples are currently running in production and
 serving users.
 
-.. note::
+.. tip::
 
    As always, refer to the :doc:`common/glossary` if you are unclear
    about any of the terminology mentioned in architecture examples.
