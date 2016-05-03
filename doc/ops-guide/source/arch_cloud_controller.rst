@@ -90,11 +90,13 @@ services that the cloud controller manages, such as the message queuing.
 In this guide, we assume that all services are running directly on the
 cloud controller.
 
-The table below contains common considerations to review when sizing hardware
-for the cloud controller design.
+:ref:`table_controller_hardware` contains common considerations to
+review when sizing hardware for the cloud controller design.
 
-.. list-table:: Cloud controller hardware sizing considerations
-   :widths: 50 50
+.. _table_controller_hardware:
+
+.. list-table:: Table. Cloud controller hardware sizing considerations
+   :widths: 25 75
    :header-rows: 1
 
    * - Consideration
@@ -119,7 +121,8 @@ for the cloud controller design.
        node but also demanding on the controller node because of all the API
        queries and scheduling needs.
    * - Does your authentication system also verify externally?
-     - External systems such as LDAP or Active Directory require network
+     - External systems such as :term:`LDAP <Lightweight Directory Access
+       Protocol (LDAP)>` or :term:`Active Directory` require network
        connectivity between the cloud controller and an external authentication
        system. Also ensure that the cloud controller has the CPU power to keep
        up with requests.
@@ -130,11 +133,13 @@ Separation of Services
 
 While our example contains all central services in a single location, it
 is possible and indeed often a good idea to separate services onto
-different physical servers. The table below is a list of deployment
-scenarios we've seen and their justifications.
+different physical servers. :ref:`table_deployment_scenarios` is a list
+of deployment scenarios we've seen and their justifications.
 
-.. list-table:: Deployment scenarios
-   :widths: 50 50
+.. _table_deployment_scenarios:
+
+.. list-table:: Table. Deployment scenarios
+   :widths: 25 75
    :header-rows: 1
 
    * - Scenario
@@ -242,7 +247,7 @@ Application Programming Interface (API)
 
 All public access, whether direct, through a command-line client, or
 through the web-based dashboard, uses the API service. Find the API
-reference at http://api.openstack.org/.
+reference at http://developer.openstack.org/.
 
 You must choose whether you want to support the Amazon EC2 compatibility
 APIs, or just the OpenStack APIs. One issue you might encounter when
