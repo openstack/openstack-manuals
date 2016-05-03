@@ -181,7 +181,7 @@ The following meters are collected for OpenStack Compute:
 | bytes.rate|       |      |          |          | vSphere |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
 | network.\ | Cumu\ | pac\ | interface| Pollster | Libvirt,| Number of        |
-| incoming| | lative| ket  | ID       |          | Hyper-V | incoming packets |
+| incoming\ | lative| ket  | ID       |          | Hyper-V | incoming packets |
 | .packets  |       |      |          |          |         |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
 | network.\ | Gauge | pack\| interface| Pollster | Libvirt,| Average rate of  |
