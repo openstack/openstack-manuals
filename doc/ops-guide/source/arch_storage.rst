@@ -73,12 +73,10 @@ a rack, a server, or a disk?
 Object Storage's network patterns might seem unfamiliar at first.
 Consider these main traffic flows:
 
--  Among :term:`object`, :term:`container`, and
-   :term:`account servers <account server>`
-
--  Between those servers and the proxies
-
--  Between the proxies and your users
+* Among :term:`object`, :term:`container`, and
+  :term:`account servers <account server>`
+* Between those servers and the proxies
+* Between the proxies and your users
 
 Object Storage is very "chatty" among servers hosting data—even a small
 cluster does megabytes/second of traffic, which is predominantly, “Do
@@ -146,37 +144,28 @@ shares. A share is a remote, mountable file system. You can mount a
 share to and access a share from several hosts by several users at a
 time. With shares, user can also:
 
--  Create a share specifying its size, shared file system protocol,
-   visibility level
-
--  Create a share on either a share server or standalone, depending on
-   the selected back-end mode, with or without using a share network.
-
--  Specify access rules and security services for existing shares.
-
--  Combine several shares in groups to keep data consistency inside the
-   groups for the following safe group operations.
-
--  Create a snapshot of a selected share or a share group for storing
-   the existing shares consistently or creating new shares from that
-   snapshot in a consistent way
-
--  Create a share from a snapshot.
-
--  Set rate limits and quotas for specific shares and snapshots
-
--  View usage of share resources
-
--  Remove shares.
+* Create a share specifying its size, shared file system protocol,
+  visibility level
+* Create a share on either a share server or standalone, depending on
+  the selected back-end mode, with or without using a share network.
+* Specify access rules and security services for existing shares.
+* Combine several shares in groups to keep data consistency inside the
+  groups for the following safe group operations.
+* Create a snapshot of a selected share or a share group for storing
+  the existing shares consistently or creating new shares from that
+  snapshot in a consistent way
+* Create a share from a snapshot.
+* Set rate limits and quotas for specific shares and snapshots
+* View usage of share resources
+* Remove shares.
 
 Like Block Storage, the Shared File Systems service is persistent. It
 can be:
 
--  Mounted to any number of client machines.
-
--  Detached from one instance and attached to another without data loss.
-   During this process the data are safe unless the Shared File Systems
-   service itself is changed or removed.
+* Mounted to any number of client machines.
+* Detached from one instance and attached to another without data loss.
+  During this process the data are safe unless the Shared File Systems
+  service itself is changed or removed.
 
 Shares are provided by the Shared File Systems service. In OpenStack,
 Shared File Systems service is implemented by Shared File System
@@ -189,9 +178,12 @@ CIFS, GlusterFS, or HDFS.
 OpenStack Storage Concepts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The table below explains the different storage concepts provided by OpenStack.
+:ref:`table_openstack_storage` explains the different storage concepts
+provided by OpenStack.
 
-.. list-table:: OpenStack storage
+.. _table_openstack_storage:
+
+.. list-table:: Table. OpenStack storage
    :widths: 20 20 20 20 20
    :header-rows: 1
 
@@ -255,19 +247,21 @@ The table below explains the different storage concepts provided by OpenStack.
        <http://docs.openstack.org/developer/manila/devref/capabilities_and_extra_specs.html?highlight=extra%20specs#common-capabilities>`_
        specification)
 
+.. note::
 
-With file-level storage, users access stored data using the operating
-system's file system interface. Most users, if they have used a network
-storage solution before, have encountered this form of networked
-storage. In the Unix world, the most common form of this is NFS. In the
-Windows world, the most common form is called CIFS (previously,
-SMB).
+   **File-level Storage (for Live Migration)**
 
-OpenStack clouds do not present file-level storage to end users.
-However, it is important to consider file-level storage for storing
-instances under ``/var/lib/nova/instances`` when designing your cloud,
-since you must have a shared file system if you want to support live
-migration.
+   With file-level storage, users access stored data using the operating
+   system's file system interface. Most users, if they have used a network
+   storage solution before, have encountered this form of networked
+   storage. In the Unix world, the most common form of this is NFS. In the
+   Windows world, the most common form is called CIFS (previously, SMB).
+
+   OpenStack clouds do not present file-level storage to end users.
+   However, it is important to consider file-level storage for storing
+   instances under ``/var/lib/nova/instances`` when designing your cloud,
+   since you must have a shared file system if you want to support live
+   migration.
 
 Choosing Storage Back Ends
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -282,35 +276,29 @@ shut down— is the preferred way. When you select
 :term:`storage back ends <storage back end>`,
 ask the following questions on behalf of your users:
 
--  Do my users need block storage?
+* Do my users need block storage?
+* Do my users need object storage?
+* Do I need to support live migration?
+* Should my persistent storage drives be contained in my compute nodes,
+  or should I use external storage?
+* What is the platter count I can achieve? Do more spindles result in
+  better I/O despite network access?
+* Which one results in the best cost-performance scenario I'm aiming for?
+* How do I manage the storage operationally?
+* How redundant and distributed is the storage? What happens if a
+  storage node fails? To what extent can it mitigate my data-loss
+  disaster scenarios?
 
--  Do my users need object storage?
+To deploy your storage by using only commodity hardware, you can use a number
+of open-source packages, as shown in :ref:`table_persistent_file_storage`.
 
--  Do I need to support live migration?
+.. _table_persistent_file_storage:
 
--  Should my persistent storage drives be contained in my compute nodes,
-   or should I use external storage?
-
--  What is the platter count I can achieve? Do more spindles result in
-   better I/O despite network access?
-
--  Which one results in the best cost-performance scenario I'm aiming
-   for?
-
--  How do I manage the storage operationally?
-
--  How redundant and distributed is the storage? What happens if a
-   storage node fails? To what extent can it mitigate my data-loss
-   disaster scenarios?
-
-To deploy your storage by using only commodity hardware, you can use a
-number of open-source packages, as shown in the following table.
-
-.. list-table:: Persistent file-based storage support
+.. list-table:: Table. Persistent file-based storage support
    :widths: 25 25 25 25
    :header-rows: 1
 
-   * -  
+   * -
      - Object
      - Block
      - File-level
@@ -318,12 +306,12 @@ number of open-source packages, as shown in the following table.
      - .. image:: figures/Check_mark_23x20_02.png
           :width: 30%
      -
-     -  
+     -
    * - LVM
      -
      - .. image:: figures/Check_mark_23x20_02.png
           :width: 30%
-     -  
+     -
    * - Ceph
      - .. image:: figures/Check_mark_23x20_02.png
           :width: 30%
@@ -347,7 +335,7 @@ number of open-source packages, as shown in the following table.
      -
      - .. image:: figures/Check_mark_23x20_02.png
           :width: 30%
-     -  
+     -
    * - Sheepdog
      - .. image:: figures/Check_mark_23x20_02.png
           :width: 30%
@@ -355,39 +343,34 @@ number of open-source packages, as shown in the following table.
           :width: 30%
      -
 
+This list of open source file-level shared storage solutions is not
+exhaustive; other open source solutions exist (MooseFS). Your
+organization may already have deployed a file-level shared storage
+solution that you can use.
 
 .. note::
 
-   This list of open source file-level shared storage solutions is not
-   exhaustive; other open source solutions exist (MooseFS). Your
-   organization may already have deployed a file-level shared storage
-   solution that you can use.
+   **Storage Driver Support**
 
-**Storage Driver Support**
+   In addition to the open source technologies, there are a number of
+   proprietary solutions that are officially supported by OpenStack Block
+   Storage. They are offered by the following vendors:
 
-In addition to the open source technologies, there are a number of
-proprietary solutions that are officially supported by OpenStack Block
-Storage. They are offered by the following vendors:
+   * IBM (Storwize family/SVC, XIV)
+   * NetApp
+   * Nexenta
+   * SolidFire
 
--  IBM (Storwize family/SVC, XIV)
-
--  NetApp
-
--  Nexenta
-
--  SolidFire
-
-You can find a matrix of the functionality provided by all of the
-supported Block Storage drivers on the `OpenStack
-wiki <https://wiki.openstack.org/wiki/CinderSupportMatrix>`_.
+   You can find a matrix of the functionality provided by all of the
+   supported Block Storage drivers on the `OpenStack
+   wiki <https://wiki.openstack.org/wiki/CinderSupportMatrix>`_.
 
 Also, you need to decide whether you want to support object storage in
 your cloud. The two common use cases for providing object storage in a
 compute cloud are:
 
--  To provide users with a persistent storage mechanism
-
--  As a scalable, reliable data store for virtual machine images
+* To provide users with a persistent storage mechanism
+* As a scalable, reliable data store for virtual machine images
 
 Commodity Storage Back-end Technologies
 ---------------------------------------
