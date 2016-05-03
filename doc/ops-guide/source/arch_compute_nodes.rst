@@ -14,7 +14,7 @@ The type of CPU in your compute node is a very important choice. First,
 ensure that the CPU supports virtualization by way of *VT-x* for Intel
 chips and *AMD-v* for AMD chips.
 
-.. note::
+.. tip::
 
    Consult the vendor documentation to check for virtualization
    support. For Intel, read `“Does my processor support Intel® Virtualization
@@ -31,18 +31,20 @@ Intel CPU supports hyperthreading, those 12 cores are doubled to 24
 cores. If you purchase a server that supports multiple CPUs, the number
 of cores is further multiplied.
 
-**Multithread Considerations**
+.. note::
 
-Hyper-Threading is Intel's proprietary simultaneous multithreading
-implementation used to improve parallelization on their CPUs. You might
-consider enabling Hyper-Threading to improve the performance of
-multithreaded applications.
+   **Multithread Considerations**
 
-Whether you should enable Hyper-Threading on your CPUs depends upon your
-use case. For example, disabling Hyper-Threading can be beneficial in
-intense computing environments. We recommend that you do performance
-testing with your local workload with both Hyper-Threading on and off to
-determine what is more appropriate in your case.
+   Hyper-Threading is Intel's proprietary simultaneous multithreading
+   implementation used to improve parallelization on their CPUs. You might
+   consider enabling Hyper-Threading to improve the performance of
+   multithreaded applications.
+
+   Whether you should enable Hyper-Threading on your CPUs depends upon your
+   use case. For example, disabling Hyper-Threading can be beneficial in
+   intense computing environments. We recommend that you do performance
+   testing with your local workload with both Hyper-Threading on and off to
+   determine what is more appropriate in your case.
 
 Choosing a Hypervisor
 ~~~~~~~~~~~~~~~~~~~~~
@@ -52,20 +54,13 @@ underlying hardware. The hypervisor creates, manages, and monitors
 virtual machines. OpenStack Compute supports many hypervisors to various
 degrees, including:
 
--  `KVM <http://www.linux-kvm.org/page/Main_Page>`_
-
--  `LXC <https://linuxcontainers.org/>`_
-
--  `QEMU <http://wiki.qemu.org/Main_Page>`_
-
--  `VMware
-   ESX/ESXi <https://www.vmware.com/support/vsphere-hypervisor>`_
-
--  `Xen <http://www.xenproject.org/>`_
-
--  `Hyper-V <http://technet.microsoft.com/en-us/library/hh831531.aspx>`_
-
--  `Docker <https://www.docker.com/>`_
+* `KVM <http://www.linux-kvm.org/page/Main_Page>`_
+* `LXC <https://linuxcontainers.org/>`_
+* `QEMU <http://wiki.qemu.org/Main_Page>`_
+* `VMware ESX/ESXi <https://www.vmware.com/support/vsphere-hypervisor>`_
+* `Xen <http://www.xenproject.org/>`_
+* `Hyper-V <http://technet.microsoft.com/en-us/library/hh831531.aspx>`_
+* `Docker <https://www.docker.com/>`_
 
 Probably the most important factor in your choice of hypervisor is your
 current usage or experience. Aside from that, there are practical
@@ -82,7 +77,7 @@ The best information available to support your choice is found on the
 `Hypervisor Support Matrix
 <http://docs.openstack.org/developer/nova/support-matrix.html>`_
 and in the `configuration reference
-<http://docs.openstack.org/liberty/config-reference/content/section_compute-hypervisors.html>`_.
+<http://docs.openstack.org/mitaka/config-reference/compute/hypervisors.html>`_.
 
 .. note::
 
@@ -100,23 +95,17 @@ is important to understand the implications of the choice.
 
 They are:
 
--  Off compute node storage—shared file system
-
--  On compute node storage—shared file system
-
--  On compute node storage—nonshared file system
+* Off compute node storage—shared file system
+* On compute node storage—shared file system
+* On compute node storage—nonshared file system
 
 In general, the questions you should ask when selecting storage are as
 follows:
 
--  What is the platter count you can achieve?
-
--  Do more spindles result in better I/O despite network access?
-
--  Which one results in the best cost-performance scenario you're aiming
-   for?
-
--  How do you manage the storage operationally?
+* What is the platter count you can achieve?
+* Do more spindles result in better I/O despite network access?
+* Which one results in the best cost-performance scenario you are aiming for?
+* How do you manage the storage operationally?
 
 Many operators use separate compute and storage hosts. Compute services
 and storage services have different requirements, and compute hosts
@@ -147,20 +136,16 @@ simplifies maintenance for the compute hosts.
 
 There are several advantages to this approach:
 
--  If a compute node fails, instances are usually easily recoverable.
-
--  Running a dedicated storage system can be operationally simpler.
-
--  You can scale to any number of spindles.
-
--  It may be possible to share the external storage for other purposes.
+*  If a compute node fails, instances are usually easily recoverable.
+*  Running a dedicated storage system can be operationally simpler.
+*  You can scale to any number of spindles.
+*  It may be possible to share the external storage for other purposes.
 
 The main downsides to this approach are:
 
--  Depending on design, heavy I/O usage from some instances can affect
-   unrelated instances.
-
--  Use of the network can decrease performance.
+* Depending on design, heavy I/O usage from some instances can affect
+  unrelated instances.
+* Use of the network can decrease performance.
 
 On Compute Node Storage—Shared File System
 ------------------------------------------
@@ -174,15 +159,12 @@ when you require additional storage.
 
 However, this option has several downsides:
 
--  Running a distributed file system can make you lose your data
-   locality compared with nonshared storage.
-
--  Recovery of instances is complicated by depending on multiple hosts.
-
--  The chassis size of the compute node can limit the number of spindles
-   able to be used in a compute node.
-
--  Use of the network can decrease performance.
+* Running a distributed file system can make you lose your data
+  locality compared with nonshared storage.
+* Recovery of instances is complicated by depending on multiple hosts.
+* The chassis size of the compute node can limit the number of spindles
+  able to be used in a compute node.
+* Use of the network can decrease performance.
 
 On Compute Node Storage—Nonshared File System
 ---------------------------------------------
@@ -192,22 +174,18 @@ store the instances it hosts.
 
 There are two main reasons why this is a good idea:
 
--  Heavy I/O usage on one compute node does not affect instances on
-   other compute nodes.
-
--  Direct I/O access can increase performance.
+* Heavy I/O usage on one compute node does not affect instances on
+  other compute nodes.
+* Direct I/O access can increase performance.
 
 This has several downsides:
 
--  If a compute node fails, the instances running on that node are lost.
-
--  The chassis size of the compute node can limit the number of spindles
-   able to be used in a compute node.
-
--  Migrations of instances from one node to another are more complicated
-   and rely on features that may not continue to be developed.
-
--  If additional storage is required, this option does not scale.
+* If a compute node fails, the instances running on that node are lost.
+* The chassis size of the compute node can limit the number of spindles
+  able to be used in a compute node.
+* Migrations of instances from one node to another are more complicated
+  and rely on features that may not continue to be developed.
+* If additional storage is required, this option does not scale.
 
 Running a shared file system on a storage system apart from the computes
 nodes is ideal for clouds where reliability and scalability are the most
@@ -243,13 +221,10 @@ configure a distributed file system.
 
 Possible options include:
 
--  NFS (default for Linux)
-
--  GlusterFS
-
--  MooseFS
-
--  Lustre
+* NFS (default for Linux)
+* GlusterFS
+* MooseFS
+* Lustre
 
 We've seen deployments with all, and recommend that you choose the one
 you are most familiar with operating. If you are not familiar with any
@@ -264,9 +239,8 @@ allows you to increase the number of instances you can have running on
 your cloud, at the cost of reducing the performance of the instances.
 OpenStack Compute uses the following ratios by default:
 
--  CPU allocation ratio: 16:1
-
--  RAM allocation ratio: 1.5:1
+* CPU allocation ratio: 16:1
+* RAM allocation ratio: 1.5:1
 
 The default CPU allocation ratio of 16:1 means that the scheduler
 allocates up to 16 virtual cores per physical core. For example, if a
@@ -275,15 +249,15 @@ cores. With typical flavor definitions of 4 virtual cores per instance,
 this ratio would provide 48 instances on a physical node.
 
 The formula for the number of virtual instances on a compute node is
-*(OR*PC)/VC*, where:
+``(OR*PC)/VC``, where:
 
-*OR*
+OR
     CPU overcommit ratio (virtual cores per physical core)
 
-*PC*
+PC
     Number of physical cores
 
-*VC*
+VC
     Number of virtual cores per instance
 
 Similarly, the default RAM allocation ratio of 1.5:1 means that the
