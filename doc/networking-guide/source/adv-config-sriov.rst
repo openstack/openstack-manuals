@@ -114,7 +114,7 @@ To create the VFs on Ubuntu for **Intel SR-IOV Ethernet cards**,
 do the following:
 
 #. Make sure SR-IOV is enabled in BIOS, check for VT-d and
-   make sure it is enabled.  After enabling VT-d, enable IOMMU on
+   make sure it is enabled. After enabling VT-d, enable IOMMU on
    Linux by adding ``intel_iommu=on`` to kernel parameters. Edit the file
    :file:`/etc/default/grub`:
 
@@ -135,9 +135,43 @@ do the following:
 
       # echo '7' > /sys/class/net/eth3/device/sriov_numvfs
 
-   Alternatively VFs can be created by passing the ``max_vfs`` to the kernel
-   module of your network interface. The ``max_vfs`` parameter has been
-   deprecated so the PCI SYS interface is the preferred method.
+   .. note::
+
+      On some PCI devices, observe that when changing the amount of VFs you
+      receive the error ``Device or resource busy``. In this case, you first
+      need to set ``sriov_numvfs`` to ``0``, then set it to your new value.
+
+   .. warning::
+
+      Alternatively, you can create VFs by passing the ``max_vfs`` to the
+      kernel module of your network interface. However, the ``max_vfs``
+      parameter has been deprecated, so the PCI SYS interface is the preferred
+      method.
+
+   You can determine the maximum number of VFs a PF can support:
+
+   .. code-block:: console
+
+      # cat /sys/class/net/eth3/device/sriov_totalvfs
+      63
+
+   If the interface is down, make sure it is set to ``up`` before launching a
+   guest, else the instance will fail to spawn:
+
+   .. code-block:: console
+
+      # ip link set eth3 up
+      # ip link show eth3
+      8: eth3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT qlen 1000
+         link/ether a0:36:9f:8f:3f:b8 brd ff:ff:ff:ff:ff:ff
+         vf 0 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
+         vf 1 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
+         vf 2 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
+         vf 3 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
+         vf 4 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
+         vf 5 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
+         vf 6 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
+         vf 7 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
 
 #. Now verify that the VFs have been created (Should see Virtual Function
    device):
