@@ -65,7 +65,7 @@ for tag in $TAGS; do
 
     # Build the guide
     tools/build-rst.sh doc/install-guide  \
-        $GLOSSARY --tag ${tag} --target "draft/install-guide-${tag}" \
+        $GLOSSARY --tag ${tag} --target "mitaka/install-guide-${tag}" \
         $LINKCHECK
 
     # Restore the index file
@@ -74,6 +74,6 @@ for tag in $TAGS; do
     ##
     # Remove Debian specific content from other guides
     if [[ "$tag" != "debian" ]]; then
-        rm -rf publish-docs/draft/install-guide-$tag/debconf
+        rm -rf publish-docs/mitaka/install-guide-$tag/debconf
     fi
 done

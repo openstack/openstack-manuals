@@ -53,27 +53,24 @@ tools/build-all-rst.sh
 
 # Build the www pages so that openstack-doc-test creates a link to
 # www/www-index.html.
-if [ "$PUBLISH" = "build" ] ; then
-    python tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs/www/
-    rsync -a www/static/ publish-docs/www/
-    # publish-docs/www-index.html is the trigger for openstack-indexpage
-    # to include the file.
-    mv publish-docs/www/www-index.html publish-docs/www-index.html
-fi
-if [ "$PUBLISH" = "publish" ] ; then
-    python tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs
-    rsync -a www/static/ publish-docs/
-    # Don't publish this file
-    rm publish-docs/www-index.html
-fi
+# Disabled for stable/mitaka:
+#if [ "$PUBLISH" = "build" ] ; then
+#    python tools/www-generator.py --source-directory www/ \
+#        --output-directory publish-docs/www/
+#    rsync -a www/static/ publish-docs/www/
+#    # publish-docs/www-index.html is the trigger for openstack-indexpage
+#    # to include the file.
+#    mv publish-docs/www/www-index.html publish-docs/www-index.html
+#fi
+#if [ "$PUBLISH" = "publish" ] ; then
+#    python tools/www-generator.py --source-directory www/ \
+#        --output-directory publish-docs
+#    rsync -a www/static/ publish-docs/
+#    # Don't publish this file
+#    rm publish-docs/www-index.html
+#fi
 
-# We only publish changed manuals.
-if [ "$PUBLISH" = "publish" ] ; then
-    # For publishing to both /draft and /BRANCH
-    copy_to_branch mitaka
-else
+if [ "$PUBLISH" = "build" ] ; then
     # Create index page for viewing
     openstack-indexpage publish-docs
 fi
