@@ -69,11 +69,12 @@ if [ "$PUBLISH" = "publish" ] ; then
     rm publish-docs/www-index.html
 fi
 
-# We only publish changed manuals.
-if [ "$PUBLISH" = "publish" ] ; then
-    # For publishing to both /draft and /BRANCH
-    copy_to_branch mitaka
-else
+# For publishing to both /draft and /BRANCH
+#if [ "$PUBLISH" = "publish" ] ; then
+#    # For publishing to both /draft and /BRANCH
+#    copy_to_branch mitaka
+
+if [ "$PUBLISH" = "build" ] ; then
     # Create index page for viewing
     openstack-indexpage publish-docs
 fi
