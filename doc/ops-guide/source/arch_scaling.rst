@@ -26,9 +26,11 @@ the flavors you'll provide. These templates define sizes for memory in
 RAM, root disk size, amount of ephemeral data disk space available, and
 number of cores for starters.
 
-The default OpenStack flavors are shown in the following table.
+The default OpenStack flavors are shown in :ref:`table_default_flavors`.
 
-.. list-table:: OpenStack default flavors
+.. _table_default_flavors:
+
+.. list-table:: Table. OpenStack default flavors
    :widths: 20 20 20 20 20
    :header-rows: 1
 
@@ -124,7 +126,7 @@ performance (spindles/core), memory availability (RAM/core), network
 bandwidthbandwidth hardware specifications and (Gbps/core), and overall
 CPU performance (CPU/core).
 
-.. note::
+.. tip::
 
    For a discussion of metric tracking, including how to extract
    metrics from your cloud, see :doc:`ops_logging_monitoring`.
@@ -155,7 +157,7 @@ You can configure some services, such as ``nova-api`` and
 configuration file—allowing them to share work between multiple cores on
 the one machine.
 
-.. note::
+.. tip::
 
    Several options are available for MySQL load balancing, and the
    supported AMQP brokers have built-in clustering support. Information
@@ -177,13 +179,15 @@ into two groups:
 -  Cells and regions, which segregate an entire cloud and result in
    running separate Compute deployments.
 
--  :term:`Availability zones <availability zone>` and host aggregates, which
-   merely divide a single Compute deployment.
+-  :term:`Availability zones <availability zone>` and host aggregates,
+   which merely divide a single Compute deployment.
 
-The table below provides a comparison view of each segregation method currently
-provided by OpenStack Compute.
+:ref:`table_segregation_methods` provides a comparison view of each
+segregation method currently provided by OpenStack Compute.
 
-.. list-table:: OpenStack segregation methods
+.. _table_segregation_methods:
+
+.. list-table:: Table. OpenStack segregation methods
    :widths: 20 20 20 20 20
    :header-rows: 1
 
@@ -263,7 +267,7 @@ way to host aggregates.
 However, you use them for different reasons.
 
 Availability zone
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 
 This enables you to arrange OpenStack compute hosts into logical groups
 and provides a form of physical isolation and redundancy from other
@@ -283,7 +287,7 @@ to ensure that their application resources are spread across disparate
 machines to achieve high availability in the event of hardware failure.
 
 Host aggregates zone
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 This enables you to partition OpenStack Compute deployments into logical
 groups for load balancing and instance distribution. You can use host
@@ -409,8 +413,8 @@ vendor, as existing nodes.
 For compute nodes, ``nova-scheduler`` will take care of differences in
 sizing having to do with core count and RAM amounts; however, you should
 consider that the user experience changes with differing CPU speeds.
-When adding object storage nodes, a weight should be specified that
-reflects the capability of the node.
+When adding object storage nodes, a :term:`weight` should be specified
+that reflects the :term:`capability` of the node.
 
 Monitoring the resource usage and user growth will enable you to know
 when to procure. :doc:`ops_logging_monitoring` details some useful metrics.
