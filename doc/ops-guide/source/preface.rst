@@ -173,7 +173,7 @@ OpenStack Installation Guides
     OpenStack cloud with the OpenStack dashboard and OpenStack client
     commands
 
-`Networking Guide <http://docs.openstack.org/networking-guide/>`_
+`Networking Guide <http://docs.openstack.org/mitaka/networking-guide/>`_
     This guide targets OpenStack administrators seeking to deploy and
     manage OpenStack Networking (neutron).
 
