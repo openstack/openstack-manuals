@@ -108,7 +108,7 @@ Compute, Image Service, Identity.
 
       .. code-block:: console
 
-         $ openstack endpoint create --region regionOne \
+         $ openstack endpoint create --region RegionOne \
            database public http://controller:8779/v1.0/%\(tenant_id\)s
          +--------------+----------------------------------------------+
          | Field        | Value                                        |
@@ -116,15 +116,15 @@ Compute, Image Service, Identity.
          | enabled      | True                                         |
          | id           | 3f4dab34624e4be7b000265f25049609             |
          | interface    | public                                       |
-         | region       | regionOne                                    |
-         | region_id    | regionOne                                    |
+         | region       | RegionOne                                    |
+         | region_id    | RegionOne                                    |
          | service_id   | 727841c6f5df4773baa4e8a5ae7d72eb             |
          | service_name | trove                                        |
          | service_type | database                                     |
          | url          | http://controller:8779/v1.0/%\(tenant_id\)s  |
          +--------------+----------------------------------------------+
 
-         $ openstack endpoint create --region regionOne \
+         $ openstack endpoint create --region RegionOne \
            database internal http://controller:8779/v1.0/%\(tenant_id\)s
          +--------------+----------------------------------------------+
          | Field        | Value                                        |
@@ -132,15 +132,15 @@ Compute, Image Service, Identity.
          | enabled      | True                                         |
          | id           | 9489f78e958e45cc85570fec7e836d98             |
          | interface    | internal                                     |
-         | region       | regionOne                                    |
-         | region_id    | regionOne                                    |
+         | region       | RegionOne                                    |
+         | region_id    | RegionOne                                    |
          | service_id   | 727841c6f5df4773baa4e8a5ae7d72eb             |
          | service_name | trove                                        |
          | service_type | database                                     |
          | url          | http://controller:8779/v1.0/%\(tenant_id\)s  |
          +--------------+----------------------------------------------+
 
-         $ openstack endpoint create --region regionOne \
+         $ openstack endpoint create --region RegionOne \
            database admin http://controller:8779/v1.0/%\(tenant_id\)s
          +--------------+----------------------------------------------+
          | Field        | Value                                        |
@@ -148,8 +148,8 @@ Compute, Image Service, Identity.
          | enabled      | True                                         |
          | id           | 76091559514b40c6b7b38dde790efe99             |
          | interface    | admin                                        |
-         | region       | regionOne                                    |
-         | region_id    | regionOne                                    |
+         | region       | RegionOne                                    |
+         | region_id    | RegionOne                                    |
          | service_id   | 727841c6f5df4773baa4e8a5ae7d72eb             |
          | service_name | trove                                        |
          | service_type | database                                     |
