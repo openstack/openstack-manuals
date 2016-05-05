@@ -14,6 +14,7 @@ It includes these manuals:
  * Configuration Reference
  * Documentation Contributor Guide
  * End User Guide
+ * High Availability Guide
  * Installation Guides
  * Networking Guide
  * Operations Guide
