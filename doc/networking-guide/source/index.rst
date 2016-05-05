@@ -30,7 +30,19 @@ Contents
    miscellaneous.rst
    adv-config.rst
 
+Appendix
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    common/app_support.rst
+
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
 
    common/glossary.rst
 

@@ -87,9 +87,6 @@ Contents
    trove.rst
    launch-instance.rst
 
-   common/app_support.rst
-   common/glossary.rst
-
 .. Pseudo only directive for each distribution used by the build tool.
    This pseudo only directive for toctree only works fine with Tox.
    When you directly build this guide with Sphinx,
@@ -99,6 +96,22 @@ Contents
 .. only:: obs or rdo or ubuntu
 .. only:: debian
 .. end of contents
+
+Appendix
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
+   common/app_support.rst
+
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
+   common/glossary.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~

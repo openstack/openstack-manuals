@@ -11,6 +11,9 @@ repository
 update the source file ``doc/common/glossary.rst`` through the
 OpenStack contribution process.
 
+0-9
+~~~
+
 .. glossary::
 
    6to4
@@ -18,6 +21,11 @@ OpenStack contribution process.
       A mechanism that allows IPv6 packets to be transmitted
       over an IPv4 network, providing a strategy for migrating to
       IPv6.
+
+A
+~
+
+.. glossary::
 
    absolute limit
 
@@ -363,6 +371,11 @@ OpenStack contribution process.
       collection of related resources. The Orchestration service
       supports a CloudFormation-compatible format (CFN).
 
+B
+~
+
+.. glossary::
+
    back end
 
       Interactions and processes that are obfuscated from the user,
@@ -534,6 +547,11 @@ OpenStack contribution process.
 
       Set of bits that make up a single character; there are usually 8
       bits to a byte.
+
+C
+~
+
+.. glossary::
 
    CA
 
@@ -961,6 +979,11 @@ OpenStack contribution process.
       A user-created Python module that is loaded by horizon to change
       the look and feel of the dashboard.
 
+D
+~
+
+.. glossary::
+
    daemon
 
       A process that runs in the background and waits for requests.
@@ -1255,6 +1278,11 @@ OpenStack contribution process.
       enable users to interact with a web page or show simple
       animation.
 
+E
+~
+
+.. glossary::
+
    east-west traffic
 
       Network traffic between servers in the same cloud or data center.
@@ -1423,6 +1451,11 @@ OpenStack contribution process.
       to start a new instance. Examples include a minimum amount of network
       bandwidth or a GPU.
 
+F
+~
+
+.. glossary::
+
    FakeLDAP
 
       An easy method to create a local LDAP directory for testing
@@ -1548,6 +1581,11 @@ OpenStack contribution process.
       The point where a user interacts with a service; can be an API
       endpoint, the horizon dashboard, or a command-line tool.
 
+G
+~
+
+.. glossary::
+
    gateway
 
       An IP address, typically assigned to a router, that
@@ -1633,6 +1671,11 @@ OpenStack contribution process.
 
       An operating system instance running under the control of a
       hypervisor.
+
+H
+~
+
+.. glossary::
 
    Hadoop
 
@@ -1757,6 +1800,11 @@ OpenStack contribution process.
 
       A collection of hypervisors grouped together through host
       aggregates.
+
+I
+~
+
+.. glossary::
 
    IaaS
 
@@ -2046,6 +2094,11 @@ OpenStack contribution process.
       A default role in the Compute RBAC system that can quarantine an
       instance in any project.
 
+J
+~
+
+.. glossary::
+
    Java
 
       A programming language that is used to create systems that
@@ -2074,6 +2127,11 @@ OpenStack contribution process.
       The code name for the tenth release of OpenStack. The
       design summit took place in Atlanta, Georgia, US and Juno is
       an unincorporated community in Georgia.
+
+K
+~
+
+.. glossary::
 
    Kerberos
 
@@ -2115,6 +2173,11 @@ OpenStack contribution process.
       unit symbol for kilo and the reference artifact is stored near Paris
       in the Pavillon de Breteuil in Sèvres, the community chose Kilo as
       the release name.
+
+L
+~
+
+.. glossary::
 
    large object
 
@@ -2206,6 +2269,11 @@ OpenStack contribution process.
       Provides a method of allocating space on mass-storage
       devices that is more flexible than conventional partitioning
       schemes.
+
+M
+~
+
+.. glossary::
 
    magnum
 
@@ -2384,6 +2452,11 @@ OpenStack contribution process.
       Facility in Compute that enables a virtual machine instance to
       have more than one VIF connected to it.
 
+N
+~
+
+.. glossary::
+
    Nebula
 
       Released as open source by NASA in 2010 and is the basis for
@@ -2553,6 +2626,11 @@ OpenStack contribution process.
       firewalls, and other network-related tasks. This is the legacy
       networking option and an alternative to Networking.
 
+O
+~
+
+.. glossary::
+
    object
 
       A BLOB of data held by Object Storage; can be in any
@@ -2703,6 +2781,11 @@ OpenStack contribution process.
 
       OpenStack project that produces a set of Python libraries
       containing code shared by OpenStack projects.
+
+P
+~
+
+.. glossary::
 
    parent cell
 
@@ -2901,6 +2984,11 @@ OpenStack contribution process.
 
       Programming language used extensively in OpenStack.
 
+Q
+~
+
+.. glossary::
+
    QEMU Copy On Write 2 (QCOW2)
 
       One of the VM image disk formats supported by Image
@@ -2928,6 +3016,11 @@ OpenStack contribution process.
 
       In Compute and Block Storage, the ability to set resource limits
       on a per-project basis.
+
+R
+~
+
+.. glossary::
 
    RabbitMQ
 
@@ -3161,6 +3254,11 @@ OpenStack contribution process.
 
       Soft limit on the amount of network traffic a Compute VM
       instance can send and receive.
+
+S
+~
+
+.. glossary::
 
    S3
 
@@ -3557,6 +3655,11 @@ OpenStack contribution process.
       collects meters and usage information. This information can be used
       for billing.
 
+T
+~
+
+.. glossary::
+
    Telemetry service
 
       An integrated project that provides metering and measuring
@@ -3656,6 +3759,11 @@ OpenStack contribution process.
       OpenStack project that provides database services to
       applications.
 
+U
+~
+
+.. glossary::
+
    Ubuntu
 
       A Debian-based Linux distribution.
@@ -3685,6 +3793,11 @@ OpenStack contribution process.
    User Mode Linux (UML)
 
       An OpenStack-supported hypervisor.
+
+V
+~
+
+.. glossary::
 
    VIF UUID
 
@@ -3872,6 +3985,11 @@ OpenStack contribution process.
 
       An OpenStack-supported hypervisor.
 
+W
+~
+
+.. glossary::
+
    weighting
 
       A Compute process that determines the suitability of the VM
@@ -3903,6 +4021,11 @@ OpenStack contribution process.
       workflow execution state and state of individual tasks. The
       code name of the project is mistral.
 
+X
+~
+
+.. glossary::
+
    Xen
 
       Xen is a hypervisor using a microkernel design, providing
@@ -3932,6 +4055,11 @@ OpenStack contribution process.
       High-performance 64-bit file system created by Silicon
       Graphics. Excels in parallel I/O operations and data
       consistency.
+
+Z
+~
+
+.. glossary::
 
    zaqar
 
