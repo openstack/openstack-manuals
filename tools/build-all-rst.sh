@@ -9,8 +9,8 @@ if [[ $# > 0 ]] ; then
     fi
 fi
 
-for guide in user-guide admin-guide \
-    contributor-guide image-guide arch-design cli-reference; do
+for guide in admin-guide arch-design cli-reference contributor-guide \
+    ha-guide image-guide user-guide; do
     tools/build-rst.sh doc/$guide --build build \
         --target $guide $LINKCHECK
 done
