@@ -18,7 +18,7 @@ tab with a :guilabel:`System Panel` and an :guilabel:`Identity` tab.
 These interfaces give you access to system information and usage as
 well as to settings for configuring what
 end users can do. Refer to the `OpenStack Administrator
-Guide <http://docs.openstack.org/admin-guide/dashboard.html>`_ for
+Guide <http://docs.openstack.org/admin-guide/dashboard.html>`__ for
 detailed how-to information about using the dashboard as an admin user.
 
 Command-Line Tools
@@ -163,7 +163,7 @@ The generated file looks something like this:
    require interactivity. It is possible to store a value directly in
    the script if you require a noninteractive operation, but you then
    need to be extremely cautious with the security and permissions of
-   this file.passwordssecurity issues passwords
+   this file.
 
 EC2 compatibility credentials can be downloaded by selecting
 :guilabel:`Project`, then :guilabel:`Compute`, then
@@ -205,9 +205,7 @@ Inspecting API Calls
 --------------------
 
 The command-line tools can be made to show the OpenStack API calls they
-make by passing the :option:`--debug` flag to them.API (application
-programming interface) API calls, inspectingcommand-line tools
-inspecting API calls For example:
+make by passing the :option:`--debug` flag to them. For example:
 
 .. code-block:: console
 
@@ -229,7 +227,7 @@ such as `jq <http://stedolan.github.io/jq/>`_, to parse the JSON from
 the responses.
 
 The first thing you must do is authenticate with the cloud using your
-credentials to get an authentication token.
+credentials to get an :term:`authentication token`.
 
 Your credentials are a combination of username, password, and tenant
 (project). You can extract these values from the ``openrc.sh`` discussed
@@ -239,7 +237,7 @@ are typically good for 24 hours, and when the token expires, you are
 alerted with a 401 (Unauthorized) response and you can request another
 token.
 
-#. Look at your OpenStack service catalog:
+#. Look at your OpenStack service :term:`catalog`:
 
    .. code-block:: console
 
@@ -484,9 +482,7 @@ project, while the other is unallocated.
 Users and Projects
 ~~~~~~~~~~~~~~~~~~
 
-To see a list of projects that have been added to the cloud,projects
-obtaining list of currentuser management listing usersworking
-environment users and projects run:
+To see a list of projects that have been added to the cloud, run:
 
 .. code-block:: console
 
@@ -526,8 +522,7 @@ To see a list of users, run:
 Running Instances
 ~~~~~~~~~~~~~~~~~
 
-To see a list of running instances,instances list of runningworking
-environment running instances run:
+To see a list of running instances, run:
 
 .. code-block:: console
 
@@ -597,6 +592,6 @@ Summary
 
 We hope you have enjoyed this quick tour of your working environment,
 including how to interact with your cloud and extract useful
-information. From here, you can use the `Administrator
+information. From here, you can use the `OpenStack Administrator
 Guide <http://docs.openstack.org/admin-guide/>`_ as your
 reference for all of the command-line functionality in your cloud.
