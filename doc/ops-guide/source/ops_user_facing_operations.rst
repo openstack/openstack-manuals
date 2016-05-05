@@ -829,15 +829,15 @@ and detach them from instances. These operations can all be done from
 the **Volumes** page of the dashboard or by using the ``cinder``
 command-line client.
 
-To add new volumes, you need only a name and a volume size in gigabytes.
+To add new volumes, you need only a volume size in gigabytes.
 Either put these into the **create volume** web form or use the command
 line:
 
 .. code-block:: console
 
-   $ cinder create --display-name test-volume 10
+   $ cinder create 10
 
-This creates a 10 GB volume named ``test-volume``. To list existing
+This creates a 10 GB volume. To list existing
 volumes and the instances they are connected to, if any:
 
 .. code-block:: console
@@ -846,7 +846,7 @@ volumes and the instances they are connected to, if any:
    +------------+---------+--------------------+------+-------------+-------------+
    |     ID     | Status  |    Display Name    | Size | Volume Type | Attached to |
    +------------+---------+--------------------+------+-------------+-------------+
-   | 0821...19f |  active |    test-volume     |  10  |     None    |             |
+   | 0821...19f |  active |                    |  10  |     None    |             |
    +------------+---------+--------------------+------+-------------+-------------+
 
 OpenStack Block Storage also allows creating snapshots of volumes.
