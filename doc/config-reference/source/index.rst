@@ -33,11 +33,24 @@ Contents
    shared-file-systems.rst
    telemetry.rst
 
+Appendix
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    policy-json-file.rst
    firewalls-default-ports.rst
    common/app_support.rst
 
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    common/glossary.rst
+
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~

@@ -32,7 +32,21 @@ Contents
    orchestration.rst
    cli.rst
    cross_project.rst
+
+Appendix
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    common/app_support.rst
+
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    common/glossary.rst
 
 Search in this guide

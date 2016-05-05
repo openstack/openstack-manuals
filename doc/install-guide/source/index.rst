@@ -101,9 +101,6 @@ Contents
       trove.rst
       launch-instance.rst
 
-      common/app_support.rst
-      common/glossary.rst
-
 .. only:: debian
 
    .. toctree::
@@ -126,10 +123,23 @@ Contents
       trove.rst
       launch-instance.rst
 
-      common/app_support.rst
-      common/glossary.rst
-
 .. end of contents
+
+Appendix
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
+   common/app_support.rst
+
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
+   common/glossary.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~

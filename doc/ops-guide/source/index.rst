@@ -7,7 +7,6 @@ Abstract
 
 This book provides information about designing and operating OpenStack clouds.
 
-
 Contents
 ~~~~~~~~
 
@@ -19,9 +18,28 @@ Contents
    common/conventions.rst
    architecture.rst
    operations.rst
+
+Appendix
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    app_usecases.rst
    app_crypt.rst
    app_roadmaps.rst
    app_resources.rst
    common/app_support.rst
+
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    common/glossary.rst
+
+Search in this guide
+~~~~~~~~~~~~~~~~~~~~
+
+* :ref:`search`

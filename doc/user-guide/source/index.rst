@@ -28,7 +28,19 @@ Contents
    hot.rst
    cli_cheat_sheet.rst
 
+Appendix
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    common/app_support.rst
+
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
 
    common/glossary.rst
 
