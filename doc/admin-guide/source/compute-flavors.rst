@@ -449,3 +449,19 @@ Large pages allocation
         if a guest OS does intend to use huge pages, it is very important that
         the guest RAM be backed by huge pages. Otherwise, the guest OS will not
         be getting the performance benefit it is expecting.
+
+PCI passthrough
+    You can assign PCI devices to a guest by specifying them in the flavor.
+
+    .. code:: console
+
+       $ openstack flavor set FLAVOR-NAME \
+           --property pci_passthrough:alias=ALIAS:COUNT
+
+    Where:
+
+    - ALIAS: (string) The alias which correspond to a particular PCI device
+      class as configured in the nova configuration file (see `nova.conf
+      configuration options <http://docs.openstack.org/mitaka/config-reference/compute/config-options.html>`_).
+    - COUNT: (integer) The amount of PCI devices of type ALIAS to be assigned
+      to a guest.
