@@ -830,7 +830,7 @@ the **Volumes** page of the dashboard or by using the ``cinder``
 command-line client.
 
 To add new volumes, you need only a volume size in gigabytes.
-Either put these into the **create volume** web form or use the command
+Either put these into the **Create Volume** web form or use the command
 line:
 
 .. code-block:: console
