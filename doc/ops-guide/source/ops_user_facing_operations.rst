@@ -858,7 +858,7 @@ snapshot may have an inconsistent file system. In fact, by default, the
 volume service does not take a snapshot of a volume that is attached to
 an image, though it can be forced to. To take a volume snapshot, either
 select :guilabel:`Create Snapshot` from the :guilabel:`actions` column
-next to the :guilabel:`volume` name on the **dashboard** volume page,
+next to the :guilabel:`volume` name on the dashboard :guilabel:`Volumes` page,
 or run this from the command line:
 
 .. code-block:: console
