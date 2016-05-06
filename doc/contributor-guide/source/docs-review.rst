@@ -14,7 +14,7 @@ Repositories and core team
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The OpenStack Docs team is core for api-site, openstack-manuals,
-operations-guide, openstackdocstheme, and openstack-doc-tools projects.
+openstackdocstheme, and openstack-doc-tools projects.
 
 For the following repositories that are part of the Documentation program,
 special rules apply:

@@ -77,7 +77,7 @@ Guides for deployers and administrators
      - http://docs.openstack.org/admin-guide
 
    * - High Availability Guide
-     - http://git.openstack.org/cgit/openstack/ha-guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/ha-guide
      - http://docs.openstack.org/ha-guide
 
    * - Networking Guide
@@ -85,7 +85,7 @@ Guides for deployers and administrators
      - http://docs.openstack.org/mitaka/networking-guide
 
    * - Operations Guide
-     - http://git.openstack.org/cgit/openstack/operations-guide/
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/ops-guide/
      - http://docs.openstack.org/openstack-ops/content
 
    * - Security Guide

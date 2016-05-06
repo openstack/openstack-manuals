@@ -152,9 +152,8 @@ of the Infrastructure manual.
    Substitute ``<projectname>`` in the examples included in this section
    with ``openstack-manuals`` as the documentation is mostly stored in
    the *openstack-manuals* repository. However, if you need specific
-   guide sources, refer to *openstack/api-site*, *openstack/operations-guide*,
-   *openstack/security-guide*, *openstack/training-guides*,
-   or *openstack/ha-guide* repository.
+   guide sources, refer to *openstack/api-site*,
+   *openstack/security-guide*, *openstack/training-guides* repository.
 
 See :ref:`troubleshoot_setup` if you have difficulty with a repository
 setup.

@@ -53,11 +53,9 @@ across OpenStack:
   should be used for docs sourced from these repositories:
 
   * clouddocs-maven-plugin
-  * ha-guide
   * openstackdocstheme
   * openstack-doc-tools
   * openstack-manuals
-  * operations-guide
   * security-doc
 
 * Launchpad bug area `openstack-api-site`_ is used for the api-site API

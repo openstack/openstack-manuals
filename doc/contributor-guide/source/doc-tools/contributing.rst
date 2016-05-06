@@ -48,4 +48,3 @@ The repositories gated by ``openstack-doc-tools`` are:
 
 * api-guide
 * openstack-manuals
-* operations-guide

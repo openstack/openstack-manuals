@@ -59,12 +59,8 @@ www-generator.py
 
 sync-projects.sh
   Synchronizes the **Glossary**, common files, entity files, and some
-  translations across multiple repos, including ``api-site``, ``ha-guide``,
-  ``security-doc``, and ``operations-guide``.
-
-glossary2rst.py
-  Convert existing docbook glossary to rst prior to the build of rst
-  guides. Will be removed when all books are in RST format.
+  translations across multiple repos, including ``api-site``,
+  ``security-doc``.
 
 publishdocs.sh
   Publishdocs job uses this script to publish documentation to
