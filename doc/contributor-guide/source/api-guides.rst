@@ -84,6 +84,32 @@ The basic steps are:
     .. literalinclude:: samples/os-evacuate/server-evacuate-resp.json
        :language: javascript
 
+#. Update the project's ``tox.ini`` file to include a configuration for
+   building the API reference locally with these lines:
+
+   .. code-block:: console
+
+      [testenv:api-ref]
+      # This environment is called from CI scripts to test and publish
+      # the API Ref to developer.openstack.org.
+      # NOTE(sdague): this target does not use constraints because
+      # upstream infra does not yet support it. Once that's fixed, we can
+      # drop the install_command.
+      #
+      # we do not used -W here because we are doing some slightly tricky
+      # things to build a single page document, and as such, we are ok
+      # ignoring the duplicate stanzas warning.
+      install_command = pip install -U --force-reinstall {opts} {packages}
+      commands =
+        rm -rf api-ref/build
+        sphinx-build -W -b html -d api-ref/build/doctrees api-ref/source api-ref/build/html
+
+#. Test the ``tox.ini`` changes by running this tox command:
+
+   .. code-block:: console
+
+      $ tox -e api-ref
+
 #. Create a build job similar to the nova job for your project. Examples:
    https://review.openstack.org/#/c/305464/ and
    https://review.openstack.org/#/c/305485/.
