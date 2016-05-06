@@ -355,11 +355,11 @@ CPU topology
     Where:
 
     -  FLAVOR-SOCKETS: (integer) The number of sockets for the guest VM. By
-       this is set to the number of vCPUs requested.
+       default, this is set to the number of vCPUs requested.
     -  FLAVOR-CORES: (integer) The number of cores per socket for the guest
-       VM. By this is set to 1.
+       VM. By default, this is set to ``1``.
     -  FLAVOR-THREADS: (integer) The number of threads per core for the guest
-       VM. By this is set to 1.
+       VM. By default, this is set to ``1``.
 
 CPU pinning policy
     For the libvirt driver, you can pin the virtual CPUs (vCPUs) of instances
