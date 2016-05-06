@@ -17,9 +17,13 @@ Install the components
 
 .. only:: rdo
 
+   .. todo:
+
+      https://bugzilla.redhat.com/show_bug.cgi?id=1334626
+
    .. code-block:: console
 
-      # yum install openstack-neutron-linuxbridge ebtables
+      # yum install openstack-neutron-linuxbridge ebtables ipset
 
 .. only:: obs
 
