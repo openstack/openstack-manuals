@@ -93,7 +93,7 @@ service. The authentication service uses a combination of :term:`domains
         OpenStack service. The default policy for most services grants
         administrative access to the ``admin`` role. For more information,
         see the `OpenStack Operations Guide - Managing Projects and
-        Users <http://docs.openstack.org/openstack-ops/content/projects_users.html>`__.
+        Users <http://docs.openstack.org/ops-guide/ops_projects_users.html>`__.
 
 #. This guide uses a service project that contains a unique user for each
    service that you add to your environment. Create the ``service``

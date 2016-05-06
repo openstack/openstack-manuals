@@ -28,5 +28,5 @@ Amazon EC2 Elastic Block Storage (EBS) offering.
    blockstorage-manage-volumes.rst
    blockstorage-troubleshoot.rst
 
-.. _`Storage Decisions`: http://docs.openstack.org/openstack-ops/content/storage_decision.html
-.. _`OpenStack Operations Guide`: http://docs.openstack.org/ops/
+.. _`Storage Decisions`: http://docs.openstack.org/ops-guide/arch_storage.html
+.. _`OpenStack Operations Guide`: http://docs.openstack.org/ops-guide/

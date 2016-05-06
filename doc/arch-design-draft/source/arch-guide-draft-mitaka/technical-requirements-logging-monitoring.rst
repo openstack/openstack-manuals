@@ -18,7 +18,7 @@ Specific meters that are critically important to capture include:
 
 Logging and monitoring does not significantly differ for a multi-site OpenStack
 cloud. The tools described in the `Logging and monitoring chapter
-<http://docs.openstack.org/openstack-ops/content/logging_monitoring.html>`__ of
+<http://docs.openstack.org/ops-guide/ops_logging_monitoring.html>`__ of
 the Operations Guide remain applicable. Logging and monitoring can be provided
 on a per-site basis, and in a common centralized location.
 
