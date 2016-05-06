@@ -49,10 +49,6 @@ case "$PROJECT_DIR" in
         copy_rst common
         copy_rst_trans common
         ;;
-    ha-guide)
-        copy_rst doc/common
-        copy_rst_trans doc/common
-        ;;
     security-doc)
         copy_rst common
         copy_rst_trans common
