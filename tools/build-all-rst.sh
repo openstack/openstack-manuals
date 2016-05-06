@@ -10,7 +10,7 @@ if [[ $# > 0 ]] ; then
 fi
 
 for guide in admin-guide arch-design cli-reference contributor-guide \
-    ha-guide image-guide user-guide; do
+    ha-guide image-guide ops-guide user-guide; do
     tools/build-rst.sh doc/$guide --build build \
         --target $guide $LINKCHECK
 done
@@ -18,8 +18,7 @@ done
 # Draft guides
 # This includes guides that we publish from stable branches
 # as versioned like the networking-guide.
-for guide in networking-guide arch-design-draft config-reference \
-    ops-guide; do
+for guide in networking-guide arch-design-draft config-reference; do
     tools/build-rst.sh doc/$guide --build build \
         --target "draft/$guide" $LINKCHECK
 done
