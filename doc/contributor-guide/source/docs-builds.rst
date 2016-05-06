@@ -85,8 +85,8 @@ Guides for deployers and administrators
      - http://docs.openstack.org/mitaka/networking-guide
 
    * - Operations Guide
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/ops-guide/
-     - http://docs.openstack.org/openstack-ops/content
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/ops-guide
+     - http://docs.openstack.org/ops-guide
 
    * - Security Guide
      - http://git.openstack.org/cgit/openstack/security-doc/tree/security-guide

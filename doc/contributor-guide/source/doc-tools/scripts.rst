@@ -13,7 +13,7 @@ build_environment directory (deprecated)
   A Vagrant environment for working with the guides.
 
 cleanup directory
-  Manually cleanup documentation files.
+  Manually clean up documentation files.
 
 sitemap
   Generate the sitemap.xml file.
@@ -58,9 +58,8 @@ www-generator.py
   Generate static, template-based html files for http://docs.openstack.org/.
 
 sync-projects.sh
-  Synchronizes the **Glossary**, common files, entity files, and some
-  translations across multiple repos, including ``api-site``,
-  ``security-doc``.
+  Synchronizes the **Glossary**, common files, and some translations
+  across multiple repos, including ``api-site`` and ``security-doc``.
 
 publishdocs.sh
   Publishdocs job uses this script to publish documentation to
@@ -76,7 +75,7 @@ Notes
 - There are many undocumented synchronizations (automated and manual) between
   the various documentation repositories. These should be documented.
 
-- There are a several jobs that must be run regularly, for example updating
+- There are a several jobs that must be run regularly, for example, updating
   the ``sitemap.xml`` file and the command line configuration reference. These
   should be documented.
 

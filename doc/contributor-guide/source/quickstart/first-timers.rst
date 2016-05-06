@@ -153,7 +153,8 @@ of the Infrastructure manual.
    with ``openstack-manuals`` as the documentation is mostly stored in
    the *openstack-manuals* repository. However, if you need specific
    guide sources, refer to *openstack/api-site*,
-   *openstack/security-guide*, *openstack/training-guides* repository.
+   *openstack/security-guide*, or *openstack/training-guides*
+   repository.
 
 See :ref:`troubleshoot_setup` if you have difficulty with a repository
 setup.

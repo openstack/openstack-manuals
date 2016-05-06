@@ -46,5 +46,5 @@ running: ``tox`` inside of each.
 
 The repositories gated by ``openstack-doc-tools`` are:
 
-* api-guide
+* api-site
 * openstack-manuals
