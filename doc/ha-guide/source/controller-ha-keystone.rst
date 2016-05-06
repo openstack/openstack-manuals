@@ -76,9 +76,9 @@ Configure OpenStack Identity service
 
    .. code-block:: ini
 
-      bind_host = 10.0.0.11
-      public_bind_host = 10.0.0.11
-      admin_bind_host = 10.0.0.11
+      bind_host = 10.0.0.12
+      public_bind_host = 10.0.0.12
+      admin_bind_host = 10.0.0.12
 
    The ``admin_bind_host`` parameter
    lets you use a private network for admin access.
