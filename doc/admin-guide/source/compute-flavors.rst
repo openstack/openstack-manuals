@@ -418,6 +418,10 @@ CPU pinning policy
        but not enough cores with free thread siblings are available, then
        scheduling fails.
 
+    .. note::
+
+        The ``hw:cpu_thread_policy`` option is only valid if ``hw:cpu_policy``
+        is set to ``dedicated``.
 
 Large pages allocation
     You can configure the size of large pages used to back the VMs.
