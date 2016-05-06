@@ -94,7 +94,7 @@ You need a copy of it on each controller node.
    listen galera_cluster
      bind <Virtual IP>:3306
      balance  source
-     option  httpchk
+     option  mysql-check
      server controller1 10.0.0.12:3306 check port 9200 inter 2000 rise 2 fall 5
      server controller2 10.0.0.13:3306 backup check port 9200 inter 2000 rise 2 fall 5
      server controller3 10.0.0.14:3306 backup check port 9200 inter 2000 rise 2 fall 5

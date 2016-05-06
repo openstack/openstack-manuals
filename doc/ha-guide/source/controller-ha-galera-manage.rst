@@ -219,7 +219,8 @@ use the ``clustercheck`` utility to improve health checks.
 
    .. code-block:: ini
 
-      service galera-monitor {
+      service galera-monitor
+      {
          port = 9200
          disable = no
          socket_type = stream

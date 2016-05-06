@@ -468,17 +468,36 @@ Note the following:
 Start Corosync
 --------------
 
-Corosync is started as a regular system service.
+``Corosync`` is started as a regular system service.
 Depending on your distribution, it may ship with an LSB init script,
 an upstart job, or a systemd unit file.
-Either way, the service is usually named corosync:
+Either way, the service is usually named ``corosync``:
 
-- :command:`# /etc/init.d/corosync start` (LSB)
-- :command:`# service corosync start` (LSB, alternate)
-- :command:`# start corosync` (upstart)
-- :command:`# systemctl start corosync` (systemd)
+- To start ``corosync`` with the LSB init script:
 
-You can now check the Corosync connectivity with two tools.
+  .. code-block:: console
+
+     # /etc/init.d/corosync start
+
+- Alternatively:
+
+  .. code-block:: console
+
+     # service corosync start
+
+- To start ``corosync`` with upstart:
+
+  .. code-block:: console
+
+     # start corosync
+
+- To start ``corosync`` with systemd unit file:
+
+  .. code-block:: console
+
+     # systemctl start corosync
+
+You can now check the ``corosync`` connectivity with one of these tools.
 
 Use the :command:`corosync-cfgtool` utility with the :option:`-s` option
 to get a summary of the health of the communication rings:
@@ -524,21 +543,38 @@ give the command for Corosync version 1?]
 Start Pacemaker
 ---------------
 
-After the Corosync services have been started
+After the ``corosync`` service have been started
 and you have verified that the cluster is communicating properly,
-you can start :command:`pacemakerd`, the Pacemaker master control process:
+you can start :command:`pacemakerd`, the Pacemaker master control process.
+Choose one from the following four ways to start it:
 
-- :command:`# /etc/init.d/pacemaker start` (LSB)
+- To start ``pacemaker`` with the LSB init script:
 
-- :command:`# service pacemaker start` (LSB, alternate)
+  .. code-block:: console
 
-- :command:`# start pacemaker` (upstart)
+     # /etc/init.d/pacemaker start
 
-- :command:`# systemctl start pacemaker` (systemd)
+- Alternatively:
 
-After the Pacemaker services have started,
+  .. code-block:: console
+
+     # service pacemaker start
+
+- To start ``pacemaker`` with upstart:
+
+  .. code-block:: console
+
+     # start pacemaker
+
+- To start ``pacemaker`` with the systemd unit file:
+
+  .. code-block:: console
+
+     # systemctl start pacemaker
+
+After the ``pacemaker`` service have started,
 Pacemaker creates a default empty cluster configuration with no resources.
-Use the :command:`crm_mon` utility to observe the status of Pacemaker:
+Use the :command:`crm_mon` utility to observe the status of ``pacemaker``:
 
 .. code-block:: console
 
