@@ -423,6 +423,60 @@ CPU pinning policy
         The ``hw:cpu_thread_policy`` option is only valid if ``hw:cpu_policy``
         is set to ``dedicated``.
 
+NUMA topology
+    For the libvirt driver, you can define the host NUMA placement for the
+    instance vCPU threads as well as the allocation of instance vCPUs and
+    memory from the host NUMA nodes. For flavors whose memory and vCPU
+    allocations are larger than the size of NUMA nodes in the compute hosts,
+    the definition of a NUMA topology allows hosts to better utilize NUMA
+    and improve performance of the instance OS.
+
+    .. code-block:: console
+
+       $ openstack flavor set FLAVOR-NAME \
+           --property hw:numa_nodes=FLAVOR-NODES \
+           --property hw:numa_cpus.N=FLAVOR-CORES \
+           --property hw:numa_mem.N=FLAVOR-MEMORY
+
+    Where:
+
+    -  FLAVOR-NODES: (integer) The number of host NUMA nodes to restrict
+       execution of instance vCPU threads to. If not specified, the vCPU
+       threads can run on any number of the host NUMA nodes available.
+    -  N: (integer) The instance NUMA node to apply a given CPU or memory
+       configuration to, where N is in the range ``0`` to ``FLAVOR-NODES``
+       - ``1``.
+    -  FLAVOR-CORES: (comma-separated list of integers) A list of instance
+       vCPUs to map to instance NUMA node N. If not specified, vCPUs are evenly
+       divided among available NUMA nodes.
+    -  FLAVOR-MEMORY: (integer) The number of MB of instance memory to map to
+       instance instance NUMA node N. If not specified, memory is evenly divided
+       among available NUMA nodes.
+
+    .. note::
+
+       ``hw:numa_cpus.N`` and ``hw:numa_mem.N`` are only valid if
+       ``hw:numa_nodes`` is set. Additionally, they are only required if the
+       instance's NUMA nodes have an asymetrical allocation of CPUs and RAM
+       (important for some NFV workloads).
+
+    .. note::
+
+       The ``N`` parameter is an index of *guest* NUMA nodes and may not
+       correspond to *host* NUMA nodes. For example, on a platform with two
+       NUMA nodes, the scheduler may opt to place guest NUMA node 0, as
+       referenced in ``hw:numa_mem.0`` on host NUMA node 1 and vice versa.
+       Similarly, the integers used for ``FLAVOR-CORES`` are indexes of
+       *guest* vCPUs and may not correspond to *host* CPUs. As such, this
+       feature cannot be used to constrain instances to specific host CPUs or
+       NUMA nodes.
+
+    .. warning::
+
+       If the combined values of ``hw:numa_cpus.N`` or ``hw:numa_mem.N``
+       are greater than the available number of CPUs or memory respectively,
+       an exception is raised.
+
 Large pages allocation
     You can configure the size of large pages used to back the VMs.
 
