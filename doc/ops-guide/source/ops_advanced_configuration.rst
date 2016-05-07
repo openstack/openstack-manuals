@@ -11,8 +11,8 @@ possible deployments with the default configuration values.
 
 At the time of writing, OpenStack has more than 3,000 configuration
 options. You can see them documented at the
-`OpenStack configuration reference
-guide <http://docs.openstack.org/liberty/config-reference/content/config_overview.html>`_.
+`OpenStack Configuration Reference
+<http://docs.openstack.org/mitaka/config-reference/config-overview.html>`_.
 This chapter cannot hope to document all of these, but we do try to
 introduce the important concepts so that you know where to go digging
 for more information.
@@ -30,11 +30,10 @@ different tuning requirements.
 .. note::
 
    The currently implemented hypervisors are listed on the `OpenStack
-   documentation
-   website <http://docs.openstack.org/liberty/config-reference/content/section_compute-hypervisors.html>`_.
+   Configuration Reference
+   <http://docs.openstack.org/mitaka/config-reference/compute/hypervisors.html>`__.
    You can see a matrix of the various features in OpenStack Compute
-   (nova) hypervisor drivers on the OpenStack wiki at the `Hypervisor
-   support matrix
+   (nova) hypervisor drivers at the `Hypervisor support matrix
    page <http://docs.openstack.org/developer/nova/support-matrix.html>`_.
 
 The point we are trying to make here is that just because an option
@@ -81,25 +80,16 @@ to disable every periodic task in OpenStack Compute (nova), you would
 need to set a number of configuration options to zero. The current list
 of configuration options you would need to set to zero are:
 
--  ``bandwidth_poll_interval``
-
--  ``sync_power_state_interval``
-
--  ``heal_instance_info_cache_interval``
-
--  ``host_state_interval``
-
--  ``image_cache_manager_interval``
-
--  ``reclaim_instance_interval``
-
--  ``volume_usage_poll_interval``
-
--  ``shelved_poll_interval``
-
--  ``shelved_offload_time``
-
--  ``instance_delete_interval``
+* ``bandwidth_poll_interval``
+* ``sync_power_state_interval``
+* ``heal_instance_info_cache_interval``
+* ``host_state_interval``
+* ``image_cache_manager_interval``
+* ``reclaim_instance_interval``
+* ``volume_usage_poll_interval``
+* ``shelved_poll_interval``
+* ``shelved_offload_time``
+* ``instance_delete_interval``
 
 To set a configuration option to zero, include a line such as
 ``image_cache_manager_interval=0`` in your ``nova.conf`` file.
@@ -136,8 +126,7 @@ Enabling IPv6 Support
 
 You can follow the progress being made on IPV6 support by watching the
 `neutron IPv6 Subteam at
-work <https://wiki.openstack.org/wiki/Meetings/Neutron-IPv6-Subteam>`_.Liberty
-IPv6 supportIPv6, enabling support forconfiguration options IPv6 support
+work <https://wiki.openstack.org/wiki/Meetings/Neutron-IPv6-Subteam>`_.
 
 By modifying your configuration setup, you can set up IPv6 when using
 ``nova-network`` for networking, and a tested setup is documented for
@@ -157,7 +146,6 @@ quickly based on the closest data center. You configure a default region
 with one zone for each cluster, but be sure your network (WAN) can
 handle the additional request and response load between zones as you add
 more zones and build a ring that handles more zones. Refer to
-`Geographically Distributed
-Clusters <http://docs.openstack.org/developer/swift/admin_guide.html#geographically-distributed-clusters>`_
+`Geographically Distributed Clusters
+<http://docs.openstack.org/developer/swift/admin_guide.html#geographically-distributed-clusters>`_
 in the documentation for additional information.
-
