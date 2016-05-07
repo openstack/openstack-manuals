@@ -25,20 +25,20 @@ the various lists. As an operator, the main lists you should be aware of
 are:
 
 `General list <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack>`_
-    *openstack@lists.openstack.org*. The scope of this list is the
-    current state of OpenStack. This is a very high-traffic mailing
-    list, with many, many emails per day.
+    *openstack@lists.openstack.org*.
+    The scope of this list is the current state of OpenStack.
+    This is a high-traffic mailing list, with multiple emails per day.
 
 `Operators list <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-operators>`_
-    *openstack-operators@lists.openstack.org.* This list is intended for
-    discussion among existing OpenStack cloud operators, such as
-    yourself. Currently, this list is relatively low traffic, on the
-    order of one email a day.
+    *openstack-operators@lists.openstack.org*.
+    This list is intended for discussion among existing OpenStack cloud
+    operators, such as yourself. Currently,
+    this list is relatively low traffic, on the order of one email a day.
 
 `Development list <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-dev>`_
-    *openstack-dev@lists.openstack.org*. The scope of this list is the
-    future state of OpenStack. This is a high-traffic mailing list, with
-    multiple emails per day.
+    *openstack-dev@lists.openstack.org*.
+    The scope of this list is the future state of OpenStack.
+    This is a very high-traffic mailing list, with many, many emails per day.
 
 We recommend that you subscribe to the general list and the operator
 list, although you must set up filters to manage the volume for the
@@ -301,24 +301,22 @@ Management Team, depending on how sensitive the issue is:
    Security <http://www.openstack.org/projects/openstack-security/>`_.
 
 You can find the full list of security-oriented teams you can join at
-`Security Teams <https://wiki.openstack.org/wiki/SecurityTeams>`_. The
+`Security Teams <https://wiki.openstack.org/wiki/Security_Teams>`_. The
 vulnerability management process is fully documented at `Vulnerability
-Management <https://wiki.openstack.org/wiki/VulnerabilityManagement>`_.
+Management <https://wiki.openstack.org/wiki/Vulnerability_Management>`_.
 
 Finding Additional Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to this book, there are many other sources of information
-about OpenStack. The
-`OpenStack website <http://www.openstack.org/>`_
+about OpenStack. The `OpenStack website <http://www.openstack.org/>`_
 is a good starting point, with
 `OpenStack Docs <http://docs.openstack.org/>`_ and `OpenStack API
 Docs <http://developer.openstack.org/>`_ providing technical
-documentation about OpenStack. The `OpenStack
-wiki <https://wiki.openstack.org/wiki/Main_Page>`_ contains a lot of
-general information that cuts across the OpenStack projects, including a
-list of `recommended
-tools <https://wiki.openstack.org/wiki/OperationsTools>`_. Finally,
-there are a number of blogs aggregated at \ `Planet
-OpenStack <http://planet.openstack.org/>`_.OpenStack community
-additional information
+documentation about OpenStack.
+The `OpenStack wiki <https://wiki.openstack.org/wiki/Main_Page>`_
+contains a lot of general information that cuts across the OpenStack
+projects, including a list of
+`recommended tools <https://wiki.openstack.org/wiki/Operations/Tools>`_.
+Finally, there are a number of blogs aggregated at
+`Planet OpenStack <http://planet.openstack.org/>`_.
