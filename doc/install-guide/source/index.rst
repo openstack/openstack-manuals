@@ -123,6 +123,7 @@ Contents
       swift.rst
       heat.rst
       ceilometer.rst
+      trove.rst
       launch-instance.rst
 
       common/app_support.rst

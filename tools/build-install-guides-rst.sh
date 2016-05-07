@@ -2,7 +2,7 @@
 
 mkdir -p publish-docs
 
-TAGS=${1:-obs rdo ubuntu}
+TAGS=${1:-obs rdo ubuntu debian}
 INDEX=doc/install-guide/source/index.rst
 
 LINKCHECK=""
