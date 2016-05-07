@@ -14,7 +14,7 @@ Upgrade planning
 ----------------
 
 -  Thoroughly review the `release
-   notes <http://wiki.openstack.org/wiki/ReleaseNotes/>`_ to learn
+   notes <http://releases.openstack.org/>`_ to learn
    about new, updated, and deprecated features. Find incompatibilities
    between versions.
 
@@ -36,7 +36,7 @@ Upgrade planning
 -  Consider adopting structure and options from the service
    configuration files and merging them with existing configuration
    files. The `OpenStack Configuration
-   Reference <http://docs.openstack.org/liberty/config-reference/content/>`_
+   Reference <http://docs.openstack.org/mitaka/config-reference/>`_
    contains new, updated, and deprecated options for most services.
 
 -  Like all major system upgrades, your upgrade could fail for one or
@@ -185,7 +185,8 @@ and the current release packages.
 Service specific upgrade instructions
 -------------------------------------
 
-* `Upgrading the Networking Service <http://docs.openstack.org/developer/neutron/devref/upgrade.html>`_
+* `Upgrading the Networking service
+  <http://docs.openstack.org/developer/neutron/devref/upgrade.html>`_
 
 Prerequisites
 -------------
@@ -281,40 +282,37 @@ upgrade process is described below:
 
 **Controller node**
 
-#.  OpenStack Identity - Clear any expired tokens before synchronizing
-    the database.
+#. Identity service - Clear any expired tokens before synchronizing
+   the database.
 
-#.  OpenStack Image service
+#. Image service
 
-#.  OpenStack Compute, including networking components.
+#. Compute service, including networking components.
 
-#.  OpenStack Networking
+#. Networking service
 
-#.  OpenStack Block Storage
+#. Block Storage service
 
-#.  OpenStack dashboard - In typical environments, updating the
-    dashboard only requires restarting the Apache HTTP service.
+#. Dashboard - In typical environments, updating Dashboard only
+   requires restarting the Apache HTTP service.
 
-#.  OpenStack Orchestration
+#. Orchestration service
 
-#.  OpenStack Telemetry - In typical environments, updating the
-    Telemetry service only requires restarting the service.
+#. Telemetry service - In typical environments, updating the
+   Telemetry service only requires restarting the service.
 
-#.  OpenStack Compute - Edit the configuration file and restart the
-    service.
+#. Compute service - Edit the configuration file and restart the service.
 
-#. OpenStack Networking - Edit the configuration file and restart the
-    service.
-
-**Compute nodes**
-
--  OpenStack Block Storage - Updating the Block Storage service only
-   requires restarting the service.
+#. Networking service - Edit the configuration file and restart the service.
 
 **Storage nodes**
 
--  OpenStack Networking - Edit the configuration file and restart the
-   service.
+* Block Storage service - Updating the Block Storage service only requires
+  restarting the service.
+
+**Compute nodes**
+
+* Networking service - Edit the configuration file and restart the service.
 
 Final steps
 -----------
