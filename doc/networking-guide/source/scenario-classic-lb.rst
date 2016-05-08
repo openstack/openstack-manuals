@@ -177,11 +177,9 @@ The network node contains the following network components:
 .. image:: figures/scenario-classic-lb-network2.png
    :alt: Network node components - connectivity
 
-The compute nodes contain the following network components:
-
-#. Linux bridge agent managing virtual switches, connectivity among
-   them, and interaction via virtual ports with other network components
-   such as namespaces, security groups, and underlying interfaces.
+The compute nodes contain the Linux bridge agent managing virtual switches,
+connectivity among them, and interaction via virtual ports with other network
+components such as namespaces, security groups, and underlying interfaces.
 
 .. image:: figures/scenario-classic-lb-compute1.png
    :alt: Compute node components - overview
