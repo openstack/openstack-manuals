@@ -73,13 +73,13 @@ You can find all of the documentation at the
 
       .. code-block:: console
 
-         # apt-get -y update
+         # apt-get update
 
    #. Install git:
 
       .. code-block:: console
 
-         # apt-get -y install git
+         # apt-get install git
 
    #. Clone the ``devstack`` repository:
 
