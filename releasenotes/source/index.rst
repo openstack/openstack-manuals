@@ -9,9 +9,7 @@ Thus this file covers the content of the following repositories:
 
 * api-site
 * fairy-slipper
-* ha-guide
 * openstack-manuals
-* operations-guide
 * security-guide
 * training-guide
 * training-labs
