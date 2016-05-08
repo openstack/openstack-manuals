@@ -37,12 +37,6 @@ openstack-auto-commands
   http://docs.openstack.org/cli-reference/. A helper script to use this
   tool is available at ``bin/doc-tools-update-cli-reference``.
 
-openstack-generate-docbook
-  Check translated docbook documentation builds.
-
-openstack-generate-pot
-  Generate pot files from docbook files.
-
 openstack-jsoncheck
   Check JSON files. Used for the API guides
 

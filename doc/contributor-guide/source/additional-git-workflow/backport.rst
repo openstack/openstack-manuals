@@ -12,13 +12,13 @@ For example:
 
   .. code-block:: console
 
-     backport: liberty
+     backport: mitaka
 
 * To backport to multiple branches:
 
   .. code-block:: console
 
-     backport: liberty kilo
+     backport: mitaka liberty
 
 * If no backporting is needed, do not add the ``backport`` line,
   or explicitly add:
