@@ -107,7 +107,7 @@ For example, take a deployment that has both OpenStack Compute and
 Object Storage, with private ranges 172.22.42.0/24 and 172.22.87.0/26
 available. One way to segregate the space might be as follows:
 
-::
+.. code-block:: none
 
     172.22.42.0/24:
     172.22.42.1   - 172.22.42.3   - subnet routers
@@ -151,12 +151,14 @@ configure with real hardware you can re-create with a software-defined
 equivalent. Each tenant can contain typical network elements such as
 routers, and services such as :term:`DHCP`.
 
-The following table describes the networking deployment options for both
-legacy ``nova-network`` options and an equivalent neutron
-configuration.
+:ref:`table_networking_deployment` describes the networking deployment
+options for both legacy ``nova-network`` options and an equivalent
+neutron configuration.
+
+.. _table_networking_deployment:
 
 .. list-table:: Networking deployment options
-   :widths: 25 25 25 25
+   :widths: 10 30 30 30
    :header-rows: 1
 
    * - Network deployment model
@@ -268,7 +270,7 @@ even matching log timestamps for debugging.
 All servers running OpenStack components should be able to access an
 appropriate NTP server. You may decide to set up one locally or use the
 public pools available from the `Network Time Protocol
-project <http://www.pool.ntp.org/en/>`_.
+project <http://www.pool.ntp.org/>`_.
 
 DNS
 ---
