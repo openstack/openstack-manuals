@@ -283,6 +283,10 @@ Install and configure components
 
          # su -s /bin/sh -c "glance-manage db_sync" glance
 
+      .. note::
+
+         Ignore any deprecation messages in this output.
+
 .. only:: debian
 
    #. Install the packages:
