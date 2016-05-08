@@ -109,15 +109,9 @@ signed images:
 
    .. code-block:: console
 
-      $ openssl dgst -sha256 -sign private_key.pem -sigopt rsa_padding_mode:\
-              pss -out image-file.signature cirros-0.3.4-x86_64-disk.img
-
-   .. code-block:: console
-
+      $ openssl dgst -sha256 -sign private_key.pem -sigopt rsa_padding_mode:pss \
+        -out image-file.signature cirros-0.3.4-x86_64-disk.img
       $ base64 image-file.signature > signature_64
-
-   .. code-block:: console
-
       $ cat signature_64
       'c4br5f3FYQV6Nu20cRUSnx75R/VcW3diQdsUN2nhPw+UcQRDoGx92hwMgRxzFYeUyydRTWCcUS2ZLudPR9X7rM
       THFInA54Zj1TwEIbJTkHwlqbWBMU4+k5IUIjXxHO6RuH3Z5f/SlSt7ajsNVXaIclWqIw5YvEkgXTIEuDPE+C4='
@@ -183,18 +177,12 @@ signed images:
 
       $ source openrc demo
       $ export OS_IMAGE_API_VERSION=2
-      $ glance image-create\
-      --property name=cirrosSignedImage_goodSignature\
-      --property is-public=true\
-      --container-format bare\
-      --disk-format qcow2\
-      --property img_signature='c4br5f3FYQV6Nu20cRUSnx75R/VcW3diQdsUN2nhPw+UcQRDoGx92hwM
-      gRxzFYeUyydRTWCcUS2ZLudPR9X7rMTHFInA54Zj1TwEIbJTkHwlqbWBMU4+k5IUIjXxHO6RuH3Z5f/
-      SlSt7ajsNVXaIclWqIw5YvEkgXTIEuDPE+C4='\
-      --property img_signature_certificate_uuid='62a33f41-f061-44ba-9a69-4fc247d3bfce'\
-      --property img_signature_hash_method='SHA-256'\
-      --property img_signature_key_type='RSA-PSS'\
-      < ~/cirros-0.3.4-x86_64-disk.img
+      $ glance image-create --property name=cirrosSignedImage_goodSignature \
+        --property is-public=true --container-format bare --disk-format qcow2 \
+        --property img_signature='c4br5f3FYQV6Nu20cRUSnx75R/VcW3diQdsUN2nhPw+UcQRDoGx92hwMgRxzFYeUyydRTWCcUS2ZLudPR9X7rMTHFInA54Zj1TwEIbJTkHwlqbWBMU4+k5IUIjXxHO6RuH3Z5fSlSt7ajsNVXaIclWqIw5YvEkgXTIEuDPE+C4=' \
+        --property img_signature_certificate_uuid='62a33f41-f061-44ba-9a69-4fc247d3bfce' \
+        --property img_signature_hash_method='SHA-256' \
+        --property img_signature_key_type='RSA-PSS' < ~/cirros-0.3.4-x86_64-disk.img
 
 #. Signature verification will occur when Compute boots the signed image
 
@@ -202,7 +190,7 @@ signed images:
 
       As of the Mitaka release, Compute supports instance signature
       validation. This is enabled by setting the
-      verify_glance_signatures flag in nova.conf to TRUE. When enabled,
+      ``verify_glance_signatures`` flag in nova.conf to TRUE. When enabled,
       Compute will automatically validate signed instances prior to its
       launch.
 
@@ -240,10 +228,10 @@ To share an image or snapshot with another project, do the following:
    .. code-block:: console
 
       $ glance member-create 733d1c44-a2ea-414b-aca7-69decf20d810 \
-          771ed149ef7e4b2b88665cc1c98f77ca
+        771ed149ef7e4b2b88665cc1c98f77ca
 
-   Project 771ed149ef7e4b2b88665cc1c98f77ca will now have access to image
-   733d1c44-a2ea-414b-aca7-69decf20d810.
+   Project `771ed149ef7e4b2b88665cc1c98f77ca`` will now have access to image
+   ``733d1c44-a2ea-414b-aca7-69decf20d810``.
 
 Deleting Images
 ---------------
@@ -278,9 +266,8 @@ The only thing that the Image service does not store in a database is
 the image itself. The Image service database has two main
 tables:
 
--  ``images``
-
--  ``image_properties``
+* ``images``
+* ``image_properties``
 
 Working directly with the database and SQL queries can provide you with
 custom lists and reports of images. Technically, you can update
@@ -295,7 +282,7 @@ of that image. This can be easily done if you simply display the unique
 ID of the owner. Image service database queriesThis example goes one
 step further and displays the readable name of the owner:
 
-.. code-block:: console
+.. code-block:: mysql
 
    mysql> select glance.images.id,
                  glance.images.name, keystone.tenant.name, is_public from
@@ -304,7 +291,7 @@ step further and displays the readable name of the owner:
 
 Another example is displaying all properties for a certain image:
 
-.. code-block:: console
+.. code-block:: mysql
 
    mysql> select name, value from
                  image_properties where id = <image_id>
@@ -345,13 +332,16 @@ command:
 
 Flavors define a number of parameters, resulting in the user having a
 choice of what type of virtual machine to run—just like they would have
-if they were purchasing a physical server. The below table lists the elements
-that can be set. Note in particular ``extra_specs``, which can be used to
+if they were purchasing a physical server.
+:ref:`table_flavor_params` lists the elements that can be set.
+Note in particular ``extra_specs``, which can be used to
 define free-form characteristics, giving a lot of flexibility beyond just the
 size of RAM, CPU, and Disk.
 
-.. list-table:: Flavor parameters
-   :widths: 50 50
+.. _table_flavor_params:
+
+.. list-table:: Table. Flavor parameters
+   :widths: 25 75
    :header-rows: 1
 
    * - **Column**
@@ -411,7 +401,7 @@ To view a flavor's access list, do the following:
 
    $ nova flavor-access-list <flavor-id>
 
-.. note::
+.. tip::
 
    Once access to a flavor has been restricted, no other projects
    besides the ones granted explicit access will be able to see the
@@ -424,7 +414,8 @@ To view a flavor's access list, do the following:
    with custom flavors. This helps you easily identify which flavors
    are custom, private, and public for the entire cloud.
 
-**How Do I Modify an Existing Flavor?**
+How Do I Modify an Existing Flavor?
+-----------------------------------
 
 The OpenStack dashboard simulates the ability to modify a flavor by
 deleting an existing flavor and creating a new one with the same name.
@@ -458,7 +449,7 @@ case, it is possible for projects to simulate ``allow_same_net_traffic``
 by configuring their default security group to allow all traffic from
 their subnet.
 
-.. note::
+.. tip::
 
    As noted in the previous chapter, the number of rules per security
    group is controlled by the ``quota_security_group_rules``, and the
@@ -473,8 +464,9 @@ dashboard under :guilabel:`Access & Security`. To see details of an
 existing group, select the :guilabel:`edit` action for that security group.
 Obviously, modifying existing groups can be done from this edit interface.
 There is a :guilabel:`Create Security Group` button on the main
-**Access & Security** page for creating new groups. We discuss the terms
-used in these fields when we explain the command-line equivalents.
+:guilabel:`Access & Security` page for creating new groups.
+We discuss the terms used in these fields when we explain the
+command-line equivalents.
 
 **Setting with nova command**
 
@@ -523,8 +515,7 @@ where. From the command line, do:
 
 .. code-block:: console
 
-   $ nova secgroup-create \
-            global_http "allow web traffic from the Internet"
+   $ nova secgroup-create global_http "allow web traffic from the Internet"
    +-------------+-------------------------------------+
    | Name        | Description                         |
    +-------------+-------------------------------------+
@@ -590,7 +581,7 @@ The code is structured like this:
 
 .. code-block:: console
 
-   nova secgroup-add-group-rule <secgroup> <source-group> <ip-proto> <from-port> <to-port>
+   $ nova secgroup-add-group-rule <secgroup> <source-group> <ip-proto> <from-port> <to-port>
 
 An example usage is shown here:
 
@@ -683,8 +674,7 @@ From the command line, do:
 
 .. code-block:: console
 
-   $ neutron security-group-create \
-            global_http --description "allow web traffic from the Internet"
+   $ neutron security-group-create global_http --description "allow web traffic from the Internet"
    Created a new security_group:
    +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | Field                | Value                                                                                                                                                                                                                                                                                                                         |
@@ -716,7 +706,9 @@ rule. To make it do what we want, we need to add some rules:
                                         [--remote-ip-prefix REMOTE_IP_PREFIX]
                                         [--remote-group-id REMOTE_GROUP]
                                         SECURITY_GROUP
-   $ neutron security-group-rule-create --direction ingress --ethertype IPv4 --protocol tcp --port-range-min 80 --port-range-max 80 --remote-ip-prefix 0.0.0.0/0 global_http
+   $ neutron security-group-rule-create --direction ingress --ethertype IPv4 \
+     --protocol tcp --port-range-min 80 --port-range-max 80 \
+     --remote-ip-prefix 0.0.0.0/0 global_http
    Created a new security_group_rule:
    +-------------------+--------------------------------------+
    | Field             | Value                                |
@@ -739,7 +731,9 @@ both http and https traffic, do this:
 
 .. code-block:: console
 
-   $ neutron security-group-rule-create --direction ingress --ethertype ipv4 --protocol tcp --port-range-min 443 --port-range-max 443 --remote-ip-prefix 0.0.0.0/0 global_http
+   $ neutron security-group-rule-create --direction ingress --ethertype ipv4 \
+     --protocol tcp --port-range-min 443 --port-range-max 443 \
+     --remote-ip-prefix 0.0.0.0/0 global_http
    Created a new security_group_rule:
    +-------------------+--------------------------------------+
    | Field             | Value                                |
@@ -796,7 +790,8 @@ For example:
 .. code-block:: console
 
    $ neutron security-group-rule-create --direction ingress \
-           --ethertype IPv4 --protocol tcp --port-range-min 22 --port-range-max 22 --remote-group-id global_http cluster
+     --ethertype IPv4 --protocol tcp --port-range-min 22 --port-range-max 22 \
+     --remote-group-id global_http cluster
 
 The "cluster" rule allows SSH access from any other instance that uses
 the ``global-http`` group.
@@ -895,7 +890,7 @@ to be created:
 
 .. code-block:: console
 
-   # grep  903b85d0-bacc-4855-a261-10843fc2d65b /var/log/cinder/*.log
+   # grep 903b85d0-bacc-4855-a261-10843fc2d65b /var/log/cinder/*.log
 
 Shared File Systems Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -908,8 +903,8 @@ This share can then be used for storing, sharing, and exchanging files.
 The default configuration of the Shared File Systems service depends on
 the back-end driver the admin chooses when starting the Shared File
 Systems service. For more information about existing back-end drivers,
-see section `"Share
-Backends" <http://docs.openstack.org/developer/manila/devref/index.html#share-backends>`__
+see `Share Backends
+<http://docs.openstack.org/developer/manila/devref/index.html#share-backends>`__
 of Shared File Systems service Developer Guide. For example, in case of
 OpenStack Block Storage based back-end is used, the Shared File Systems
 service cares about everything, including VMs, networking, keypairs, and
@@ -922,70 +917,59 @@ multiple hosts, and have it accessed from multiple hosts by multiple
 users at a time. With the Shared File Systems service, you can perform a
 large number of operations with shares:
 
--  Create, update, delete, and force-delete shares
+* Create, update, delete, and force-delete shares
+* Change access rules for shares, reset share state
+* Specify quotas for existing users or tenants
+* Create share networks
+* Define new share types
+* Perform operations with share snapshots:
+  create, change name, create a share from a snapshot, delete
+* Operate with consistency groups
+* Use security services
 
--  Change access rules for shares, reset share state
-
--  Specify quotas for existing users or tenants
-
--  Create share networks
-
--  Define new share types
-
--  Perform operations with share snapshots: create, change name, create
-   a share from a snapshot, delete
-
--  Operate with consistency groups
-
--  Use security services
-
-For more information on share management see section `“Share
-management” <http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
+For more information on share management see `Share management
+<http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide.
 As to Security services, you should remember that different drivers
 support different authentication methods, while generic driver does not
-support Security Services at all (see section `“Security
-services” <http://docs.openstack.org/admin-guide/shared_file_systems_security_services.html>`__
+support Security Services at all (see section `Security services
+<http://docs.openstack.org/admin-guide/shared_file_systems_security_services.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 You can create a share in a network, list shares, and show information
 for, update, and delete a specified share. You can also create snapshots
-of shares (see section `“Share
-snapshots” <http://docs.openstack.org/admin-guide/shared_file_systems_snapshots.html>`__
+of shares (see `Share snapshots
+<http://docs.openstack.org/admin-guide/shared_file_systems_snapshots.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 There are default and specific share types that allow you to filter or
 choose back-ends before you create a share. Functions and behaviour of
-share type is similar to Block Storage volume type (see section `“Share
-types” <http://docs.openstack.org/admin-guide/shared_file_systems_share_types.html>`__
+share type is similar to Block Storage volume type (see `Share types
+<http://docs.openstack.org/admin-guide/shared_file_systems_share_types.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 To help users keep and restore their data, Shared File Systems service
-provides a mechanism to create and operate snapshots (see section
-`“Share
-snapshots” <http://docs.openstack.org/admin-guide/shared_file_systems_snapshots.html>`__
+provides a mechanism to create and operate snapshots (see `Share snapshots
+<http://docs.openstack.org/admin-guide/shared_file_systems_snapshots.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 A security service stores configuration information for clients for
 authentication and authorization. Inside Manila a share network can be
 associated with up to three security types (for detailed information see
-section `“Security
-services” <http://docs.openstack.org/admin-guide/shared_file_systems_security_services.html>`__
+`Security services
+<http://docs.openstack.org/admin-guide/shared_file_systems_security_services.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide):
 
--  LDAP
-
--  Kerberos
-
--  Microsoft Active Directory
+* LDAP
+* Kerberos
+* Microsoft Active Directory
 
 Shared File Systems service differs from the principles implemented in
 Block Storage. Shared File Systems service can work in two modes:
 
--  Without interaction with share networks, in so called "no share
-   servers" mode.
-
--  Interacting with share networks.
+* Without interaction with share networks, in so called "no share
+  servers" mode.
+* Interacting with share networks.
 
 Networking service is used by the Shared File Systems service to
 directly operate with share servers. For switching interaction with
@@ -1010,9 +994,8 @@ Shared File System storage allows administrators to set limits and
 quotas for specific tenants and users. Limits are the resource
 limitations that are allowed for each tenant or user. Limits consist of:
 
--  Rate limits
-
--  Absolute limits
+* Rate limits
+* Absolute limits
 
 Rate limits control the frequency at which users can issue specific API
 requests. Rate limits are configured by administrators in a config file.
@@ -1021,40 +1004,29 @@ absolute limits per tenant. Whereas users can see only the amount of
 their consumed resources. Administrator can specify rate limits or
 quotas for the following resources:
 
--  Max amount of space awailable for all shares
-
--  Max number of shares
-
--  Max number of shared networks
-
--  Max number of share snapshots
-
--  Max total amount of all snapshots
-
--  Type and number of API calls that can be made in a specific time
-   interval
+*  Max amount of space awailable for all shares
+*  Max number of shares
+*  Max number of shared networks
+*  Max number of share snapshots
+*  Max total amount of all snapshots
+*  Type and number of API calls that can be made in a specific time interval
 
 User can see his rate limits and absolute limits by running commands
 :command:`manila rate-limits` and :command:`manila absolute-limits`
-respectively. For more details on limits and quotas see subsection `"Quotas
-and limits" <http://docs.openstack.org/admin-guide/shared_file_systems_quotas.html>`__
+respectively. For more details on limits and quotas see `Quotas and limits
+<http://docs.openstack.org/admin-guide/shared_file_systems_quotas.html>`__
 of "Share management" section of OpenStack Administrator Guide document.
 
 This section lists several of the most important Use Cases that
 demonstrate the main functions and abilities of Shared File Systems
 service:
 
--  Create share
-
--  Operating with a share
-
--  Manage access to shares
-
--  Create snapshots
-
--  Create a share network
-
--  Manage a share network
+* Create share
+* Operating with a share
+* Manage access to shares
+* Create snapshots
+* Create a share network
+* Manage a share network
 
 .. note::
 
@@ -1128,7 +1100,8 @@ share type, NFS shared file systems protocol, and 1 GB size:
 
 .. code-block:: console
 
-   $ manila create nfs 1 --name "Share1" --description "My first share" --share-type default --share-network my_share_net --metadata aim=testing --public
+   $ manila create nfs 1 --name "Share1" --description "My first share" \
+     --share-type default --share-network my_share_net --metadata aim=testing --public
    +-----------------------------+--------------------------------------+
    | Property                    | Value                                |
    +-----------------------------+--------------------------------------+
@@ -1223,8 +1196,8 @@ system and use it for your purposes.
 
 .. note::
 
-   See subsection `“Share
-   Management” <http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
+   See `Share Management
+   <http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
    of “Shared File Systems” section of Administrator Guide
    document for the details on share management operations.
 
@@ -1303,11 +1276,11 @@ specified access rules:
    driver that does not support ``user`` and ``cert`` authentication
    methods.
 
-.. note::
+.. tip::
 
    For the details of features supported by different drivers see
-   section `“Manila share features support
-   mapping” <http://docs.openstack.org/developer/manila/devref/share_back_ends_feature_support_mapping.html>`__
+   `Manila share features support mapping
+   <http://docs.openstack.org/developer/manila/devref/share_back_ends_feature_support_mapping.html>`__
    of Manila Developer Guide document.
 
 Manage Shares
@@ -1457,11 +1430,11 @@ permissions to run it:
 
    $ manila force-delete b6b0617c-ea51-4450-848e-e7cff69238c7
 
-.. note::
+.. tip::
 
    For more details and additional information about other cases,
-   features, API commands etc, see subsection `“Share
-   Management” <http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
+   features, API commands etc, see `Share Management
+   <http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
    of “Shared File Systems” section of Administrator Guide document.
 
 Create Snapshots
@@ -1516,11 +1489,11 @@ To make sure that the snapshot is available, run:
    | name              | Snapshot1                            |
    +-------------------+--------------------------------------+
 
-.. note::
+.. tip::
 
    For more details and additional information on snapshots, see
-   subsection `“Share
-   Snapshots” <http://docs.openstack.org/admin-guide/shared_file_systems_snapshots.html>`__
+   `Share Snapshots
+   <http://docs.openstack.org/admin-guide/shared_file_systems_snapshots.html>`__
    of “Shared File Systems” section of “Administrator Guide” document.
 
 
@@ -1589,10 +1562,10 @@ once again:
 Finally, to create a share that uses this share network, get to Create
 Share use case described earlier in this chapter.
 
-.. note::
+.. tip::
 
-   See subsection `“Share
-   Networks” <http://docs.openstack.org/admin-guide/shared_file_systems_share_networks.html>`__
+   See `Share Networks
+   <http://docs.openstack.org/admin-guide/shared_file_systems_share_networks.html>`__
    of “Shared File Systems” section of Administrator Guide
    document for more details.
 
@@ -1664,10 +1637,10 @@ You also can see detailed information about the share network including
 
 You also can add and remove the security services to the share network.
 
-.. note::
+.. tip::
 
-   For details, see subsection `"Security
-   Services" <http://docs.openstack.org/admin-guide/shared_file_systems_security_services.html>`__
+   For details, see subsection `Security Services
+   <http://docs.openstack.org/admin-guide/shared_file_systems_security_services.html>`__
    of “Shared File Systems” section of Administrator Guide document.
 
 Instances
@@ -1685,9 +1658,9 @@ To launch an instance, you need to select an image, a flavor, and a
 name. The name needn't be unique, but your life will be simpler if it is
 because many tools will use the name in place of the UUID so long as the
 name is unique. You can start an instance from the dashboard from the
-:guilabel:`Launch Instance` button on the **Instances page** or by selecting
-the :guilabel:`Launch Instance action` next to an :guilabel:`image`
-or :guilabel:`snapshot` on the **Images** page.
+:guilabel:`Launch Instance` button on the :guilabel:`Instances` page
+or by selecting the :guilabel:`Launch Instance action` next to an
+:guilabel:`image` or :guilabel:`snapshot` on the :guilabel:`Images` page.
 
 On the command line, do this:
 
@@ -1733,9 +1706,6 @@ run the instance. In these cases, the error is apparent when you run a
 .. code-block:: console
 
    $ nova show test-instance
-
-.. code-block:: console
-
    +------------------------+-----------------------------------------------------\
    | Property               | Value                                               /
    +------------------------+-----------------------------------------------------\
@@ -1972,8 +1942,8 @@ Attaching Block Storage
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 You can attach block storage to instances from the dashboard on the
-Volumes page. Click the Manage Attachments action next to the volume you
-want to attach.
+Volumes page. Click the :guilabel:`Manage Attachments` action next to
+the volume you want to attach.
 
 To perform this action from command line, run the following command:
 
@@ -2023,8 +1993,8 @@ the instance is terminated:
 .. code-block:: console
 
    $ nova boot --image 4042220e-4f5e-4398-9054-39fbd75a5dd7 \
-               --flavor 2 --key-name mykey --block-device-mapping vdc=13:::0 \
-               boot-with-vol-test
+     --flavor 2 --key-name mykey --block-device-mapping vdc=13:::0 \
+     boot-with-vol-test
 
 If you have previously prepared block storage with a bootable file
 system image, it is even possible to boot from persistent block storage.
@@ -2035,7 +2005,7 @@ is now attached as ``/dev/vda``:
 .. code-block:: console
 
    $ nova boot --flavor 2 --key-name mykey \
-               --block-device-mapping vda=13:::0 boot-from-vol-test
+     --block-device-mapping vda=13:::0 boot-from-vol-test
 
 Read more detailed instructions for launching an instance from a
 bootable volume in the `OpenStack End User
@@ -2068,7 +2038,6 @@ properties in the glance database. These properties are found in the
 ``image_properties`` table and include:
 
 .. list-table::
-   :widths: 50 50
    :header-rows: 1
 
    * - Name
