@@ -345,6 +345,10 @@ Install and configure components
 
          # su -s /bin/sh -c "cinder-manage db sync" cinder
 
+      .. note::
+
+         Ignore any deprecation messages in this output.
+
 Configure Compute to use Block Storage
 --------------------------------------
 

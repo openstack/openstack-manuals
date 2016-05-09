@@ -442,6 +442,10 @@ Install and configure components
 
          # su -s /bin/sh -c "heat-manage db_sync" heat
 
+      .. note::
+
+         Ignore any deprecation messages in this output.
+
 .. only:: debian
 
    #. Run the following commands to install the packages:
