@@ -2,10 +2,11 @@
 Example usage and Identity features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``keystone`` client is set up to expect commands in the general
-form of ``keystone command argument``, followed by flag-like keyword
+The ``openstack`` CLI is used to interact with the Identity service.
+It is set up to expect commands in the general
+form of ``openstack command argument``, followed by flag-like keyword
 arguments to provide additional (often optional) information. For
-example, the :command:`user-list` and :command:`tenant-create`
+example, the :command:`user list` and :command:`project create`
 commands can be invoked as follows:
 
 .. code-block:: bash
@@ -13,12 +14,12 @@ commands can be invoked as follows:
    # Using token auth env variables
    export OS_SERVICE_ENDPOINT=http://127.0.0.1:5000/v2.0/
    export OS_SERVICE_TOKEN=secrete_token
-   keystone user-list
-   keystone tenant-create --name demo
+   openstack user list
+   openstack project create demo
 
    # Using token auth flags
-   keystone --os-token secrete --os-endpoint http://127.0.0.1:5000/v2.0/ user-list
-   keystone --os-token secrete --os-endpoint http://127.0.0.1:5000/v2.0/ tenant-create --name=demo
+   openstack --os-token secrete --os-endpoint http://127.0.0.1:5000/v2.0/ user list
+   openstack --os-token secrete --os-endpoint http://127.0.0.1:5000/v2.0/ project create demo
 
    # Using user + password + project_name env variables
    export OS_USERNAME=admin

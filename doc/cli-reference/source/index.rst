@@ -29,7 +29,6 @@ Contents
    trove
    trove-misc
    designate
-   keystone
    glance
    barbican
    monasca
