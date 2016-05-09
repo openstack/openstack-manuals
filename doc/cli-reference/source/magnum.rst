@@ -9,7 +9,7 @@ Containers service command-line client
 The magnum client is the command-line interface (CLI) for
 the Containers service API and its extensions.
 
-This chapter documents :command:`magnum` version ``2.0.0``.
+This chapter documents :command:`magnum` version ``2.1.0``.
 
 For help on a specific :command:`magnum` command, enter:
 
@@ -307,9 +307,25 @@ magnum bay-list
 
 .. code-block:: console
 
-   usage: magnum bay-list
+   usage: magnum bay-list [--marker <marker>] [--limit <limit>]
+                          [--sort-key <sort-key>] [--sort-dir <sort-dir>]
 
 Print a list of available bays.
+
+**Optional arguments:**
+
+``--marker <marker>``
+  The last bay UUID of the previous page; displays list
+  of bays after "marker".
+
+``--limit <limit>``
+  Maximum number of bays to return.
+
+``--sort-key <sort-key>``
+  Column to sort results by.
+
+``--sort-dir <sort-dir>``
+  Direction to sort. "asc" or "desc".
 
 .. _magnum_bay-show:
 
@@ -370,7 +386,7 @@ magnum baymodel-create
                                  [--http-proxy <http-proxy>]
                                  [--https-proxy <https-proxy>]
                                  [--no-proxy <no-proxy>]
-                                 [--labels <KEY1=VALUE1,KEY2=VALUE2...>]
+                                 [--labels <KEY1=VALUE1,KEY2=VALUE2;KEY3=VALUE3...>]
                                  [--tls-disabled] [--public] [--registry-enabled]
 
 Create a baymodel.
@@ -430,7 +446,7 @@ Create a baymodel.
 ``--no-proxy <no-proxy>``
   The no_proxy address to use for nodes in bay.
 
-``--labels <KEY1=VALUE1,KEY2=VALUE2...>``
+``--labels <KEY1=VALUE1,KEY2=VALUE2;KEY3=VALUE3...>``
   Arbitrary labels in the form of key=value pairs to
   associate with a baymodel. May be used multiple times.
 
@@ -743,11 +759,26 @@ magnum container-list
 
 .. code-block:: console
 
-   usage: magnum container-list [--bay <bay>]
+   usage: magnum container-list [--marker <marker>] [--limit <limit>]
+                                [--sort-key <sort-key>] [--sort-dir <sort-dir>]
+                                [--bay <bay>]
 
 Print a list of available containers.
 
 **Optional arguments:**
+
+``--marker <marker>``
+  The last bay UUID of the previous page; displays list
+  of bays after "marker".
+
+``--limit <limit>``
+  Maximum number of containers to return
+
+``--sort-key <sort-key>``
+  Column to sort results by
+
+``--sort-dir <sort-dir>``
+  Direction to sort. "asc" or "desc".
 
 ``--bay <bay>``
   UUID or Name of Bay
