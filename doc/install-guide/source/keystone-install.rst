@@ -141,6 +141,10 @@ HTTP server to handle requests.
 
             # su -s /bin/sh -c "keystone-manage db_sync" keystone
 
+         .. note::
+
+           Ignore any deprecation messages in this output.
+
       5. Initialize Fernet keys:
 
          .. code-block:: console

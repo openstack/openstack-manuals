@@ -308,6 +308,10 @@ Install and configure components
         2016-04-06 22:00:17.771 10706 INFO trove.db.sqlalchemy.migration [-]
         Upgrading mysql://trove:dbaasdb@controller/trove to version latest
 
+   .. note::
+
+      Ignore any deprecation messages in this output.
+
 
 Finalize installation
 ---------------------

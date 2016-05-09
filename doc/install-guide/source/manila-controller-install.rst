@@ -357,6 +357,10 @@ Install and configure components
 
          # su -s /bin/sh -c "manila-manage db sync" manila
 
+      .. note::
+
+         Ignore any deprecation messages in this output.
+
 Finalize installation
 ---------------------
 
