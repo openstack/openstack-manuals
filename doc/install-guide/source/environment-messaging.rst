@@ -50,7 +50,8 @@ Install and configure components
       .. code-block:: console
 
          # rabbitmqctl add_user openstack RABBIT_PASS
-           Creating user "openstack" ...
+         Creating user "openstack" ...
+         ...done.
 
       Replace ``RABBIT_PASS`` with a suitable password.
 
@@ -60,7 +61,8 @@ Install and configure components
       .. code-block:: console
 
          # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
-           Setting permissions for user "openstack" in vhost "/" ...
+         Setting permissions for user "openstack" in vhost "/" ...
+         ...done.
 
 .. only:: ubuntu or debian
 
@@ -69,7 +71,8 @@ Install and configure components
       .. code-block:: console
 
          # rabbitmqctl add_user openstack RABBIT_PASS
-           Creating user "openstack" ...
+         Creating user "openstack" ...
+         ...done.
 
       Replace ``RABBIT_PASS`` with a suitable password.
 
@@ -79,4 +82,5 @@ Install and configure components
       .. code-block:: console
 
          # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
-           Setting permissions for user "openstack" in vhost "/" ...
+         Setting permissions for user "openstack" in vhost "/" ...
+         ...done.
