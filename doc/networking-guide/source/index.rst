@@ -15,9 +15,11 @@ manage OpenStack Networking (neutron).
 
 This guide documents the OpenStack Kilo release.
 
-.. warning:: This guide is a work-in-progress and changing rapidly
-   while we continue to test and enhance the guidance. Please note
-   where there are open "to do" items and help where you are able.
+.. warning:: This guide documents OpenStack Kilo release and is frozen
+   since OpenStack Kilo has reached its official end-of-life and will
+   not get any updates by the OpenStack project anymore. Check the
+   `OpenStack Documentation page <http://docs.openstack.org/>`__ for
+   newer documents.
 
 Contents
 ~~~~~~~~
