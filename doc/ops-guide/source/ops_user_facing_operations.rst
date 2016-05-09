@@ -181,7 +181,7 @@ signed images:
 
    .. code-block:: console
 
-      $ source openrc demo
+      $ . openrc demo
       $ export OS_IMAGE_API_VERSION=2
       $ glance image-create\
       --property name=cirrosSignedImage_goodSignature\

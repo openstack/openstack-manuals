@@ -429,7 +429,7 @@ directory in the ``shell`` screen and edit your middleware module.
 
       .. code-block:: console
 
-         $ source openrc
+         $ . openrc
 
    #. Create a container called ``middleware-test``:
 
@@ -786,7 +786,7 @@ When you join the screen session that ``stack.sh`` starts with
 
       .. code-block:: console
 
-         $ source openrc
+         $ . openrc
 
    #. Put the image ID for the only installed image into an environment
       variable:
