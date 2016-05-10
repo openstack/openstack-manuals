@@ -11,13 +11,13 @@ List all users
 
 .. code-block:: console
 
-   $ keystone user-list
+   $ openstack user list
 
 List Identity service catalog
 
 .. code-block:: console
 
-   $ keystone catalog
+   $ openstack catalog list
 
 Images (glance)
 ~~~~~~~~~~~~~~~
