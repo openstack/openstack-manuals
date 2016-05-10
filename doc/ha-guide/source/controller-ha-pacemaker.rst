@@ -578,7 +578,7 @@ Use the :command:`crm_mon` utility to observe the status of ``pacemaker``:
 
 .. code-block:: console
 
-   ============
+   # crm_mon -1
    Last updated: Sun Oct  7 21:07:52 2012
    Last change: Sun Oct  7 20:46:00 2012 via cibadmin on controller2
    Stack: openais
@@ -586,9 +586,10 @@ Use the :command:`crm_mon` utility to observe the status of ``pacemaker``:
    Version: 1.1.6-9971ebba4494012a93c03b40a2c58ec0eb60f50c
    3 Nodes configured, 3 expected votes
    0 Resources configured.
-   ============
+
 
    Online: [ controller3 controller2 controller1 ]
+   ...
 
 .. _pacemaker-cluster-properties:
 
