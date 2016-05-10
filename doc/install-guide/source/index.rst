@@ -63,7 +63,7 @@ or as connected entities.
 Explanations of configuration options and sample configuration files
 are included.
 
-This guide documents OpenStack Mitaka release.
+This guide documents OpenStack Newton release.
 
 .. warning::
 
