@@ -395,6 +395,10 @@ Install and configure components
          # su -s /bin/sh -c "nova-manage api_db sync" nova
          # su -s /bin/sh -c "nova-manage db sync" nova
 
+      .. note::
+
+         Ignore any deprecation messages in this output.
+
 Finalize installation
 ---------------------
 
