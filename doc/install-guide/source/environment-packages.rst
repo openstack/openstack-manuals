@@ -23,7 +23,7 @@ these procedures on all nodes.
    .. code-block:: console
 
       # apt-get install software-properties-common
-      # add-apt-repository cloud-archive:mitaka
+      # add-apt-repository cloud-archive:newton
 
    .. note::
 
@@ -31,7 +31,7 @@ these procedures on all nodes.
 
       .. code-block:: console
 
-         # add-apt-repository cloud-archive:mitaka-proposed
+         # add-apt-repository cloud-archive:newton-proposed
 
 .. only:: rdo
 
@@ -87,7 +87,7 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # yum install centos-release-openstack-mitaka
+        # yum install centos-release-openstack-newton
 
    * On RHEL, download and install the RDO repository RPM to enable the
      OpenStack repository.
@@ -122,7 +122,15 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # zypper addrepo -f obs://Cloud:OpenStack:Mitaka/openSUSE_Leap_42.1 Mitaka
+        # zypper addrepo -f obs://Cloud:OpenStack:Newton/openSUSE_Leap_42.1 Newton
+
+   .. note::
+
+      For pre-release testing, use the master repository:
+
+     .. code-block:: console
+
+        # zypper addrepo -f obs://Cloud:OpenStack:Master/openSUSE_Leap_42.1 Master
 
      The openSUSE distribution uses the concept of patterns to represent
      collections of packages. If you selected 'Minimal Server Selection (Text
@@ -138,7 +146,7 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # zypper addrepo -f obs://Cloud:OpenStack:Mitaka/SLE_12_SP1 Mitaka
+        # zypper addrepo -f obs://Cloud:OpenStack:Newton/SLE_12_SP1 Newton
 
      .. note::
 
@@ -152,12 +160,20 @@ these procedures on all nodes.
            Key Created:      2015-12-16T16:48:37 CET
            Key Expires:      2018-02-23T16:48:37 CET
 
+   .. note::
+
+      For pre-release testing, use the master repository:
+
+     .. code-block:: console
+
+        # zypper addrepo -f obs://Cloud:OpenStack:Master/SLE_12_SP1 Master
+
 .. only:: debian
 
    Enable the backports repository
    -------------------------------
 
-   The Mitaka release is available directly through the official
+   The Newton release is available directly through the official
    Debian backports repository. To use this repository, follow
    the instruction from the official
    `Debian website <http://backports.debian.org/Instructions/>`_,
