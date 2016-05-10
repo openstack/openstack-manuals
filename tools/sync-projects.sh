@@ -37,7 +37,7 @@ function copy_rst {
     # Copy over some RST files
     mkdir -p $PROJECT_DIR/$target
 
-    for filename in app_support.rst conventions.rst; do
+    for filename in app_support.rst conventions.rst glossary.rst; do
         cp doc/common/$filename $PROJECT_DIR/$target
     done
     (cd $PROJECT_DIR; git add $target)
