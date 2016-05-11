@@ -17,11 +17,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 01:03+0000\n"
+"POT-Creation-Date: 2016-05-10 22:21+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-04-17 03:41+0000\n"
+"PO-Revision-Date: 2016-05-11 04:23+0000\n"
 "Last-Translator: Akihiro Motoki <amotoki@gmail.com>\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -281,6 +281,32 @@ msgstr ""
 "sriov-agent 使用時の ARP spoofing フィルタリングは Liberty 以降でサポートされ"
 "ています。"
 
+msgid "Ability to leverage tags by deployment tools."
+msgstr "デプロイメントツールがタグを利用する。"
+
+msgid ""
+"Ability to map IDs from different management/orchestration systems to "
+"OpenStack networks in mixed environments. For example, in the Kuryr project, "
+"the Docker network ID is mapped to the Neutron network ID."
+msgstr ""
+"混在環境で、別の管理システムやオーケストレーションシステムが割り当てた ID を "
+"OpenStack ネットワークにマッピングする。例えば、 Kuryr プロジェクトでは、 "
+"Docker のネットワーク ID が Neutron ネットワーク ID にマッピングされます。"
+
+msgid ""
+"Ability to map different networks in different OpenStack locations to one "
+"logically same network (for multi-site OpenStack)."
+msgstr ""
+"別の場所にある OpenStack 上の別々のネットワークを論理的な 1 つのネットワーク"
+"にマッピングする (マルチサイト OpenStack 用)。"
+
+msgid ""
+"Ability to tag information about provider networks (for example, high-"
+"bandwith, low-latency, and so on)."
+msgstr ""
+"プロバイダーネットワークに関する情報をタグ付けする (例えば、広帯域、低遅延な"
+"ど)。"
+
 msgid "Abstract"
 msgstr "概要"
 
@@ -317,6 +343,9 @@ msgstr "ルーターに外部ネットワークへのゲートウェイを追加
 
 msgid "Add a gateway to the external network on the router:"
 msgstr "ルーターに外部ネットワークへのゲートウェイを追加します。"
+
+msgid "Add a tag to a resource:"
+msgstr "リソースにタグを付与します。"
 
 msgid ""
 "Add the LBaaS v2 service plug-in to the ``service_plugins`` configuration "
@@ -613,6 +642,9 @@ msgstr ""
 # #-#-#-#-#  scenario_provider_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 msgid "Architecture"
 msgstr "アーキテクチャー"
+
+msgid "Arp Spoofing Prevention"
+msgstr "ARP 詐称防止"
 
 msgid ""
 "As introduced in other guide entries, neutron provides a means of making an "
@@ -978,6 +1010,25 @@ msgstr ""
 "は OpenStack Networking が使っているのと同じ技術をいくつか活用しています。特"
 "に以下を使います。"
 
+msgid ""
+"By default, the ``advertise_mtu`` option in the ``neutron.conf`` file "
+"enables the DHCP agent to provide an appropriate MTU value to instances "
+"using IPv4 and enables the L3 agent to provide an appropriate MTU value to "
+"instances using IPv6. IPv6 uses RA via the L3 agent because the DHCP agent "
+"only supports IPv4. Instances using IPv4 and IPv6 should obtain the same MTU "
+"value regardless of method."
+msgstr ""
+"デフォルトでは、 ``neutron.conf`` ファイルの ``advertise_mtu`` オプションを設"
+"定すると、 IPv4 を使うインスタンスに対しては DHCP エージェントが適切な MTU を"
+"提供するようになり、 IPv6 を使うインスタンスに対しては L3 エージェントが適切"
+"な MTU 値を提供するようになります。 DHCP エージェントは IPv4 のみに対応してい"
+"るため、 IPv6 の場合には L3 エージェント経由で RA が使用されます。 IPv4 と "
+"IPv6 の両方を使うインスタンスでは、提供方法によらず同じ MTU が得られるはずで"
+"す。"
+
+msgid "Case 1"
+msgstr "ケース 1"
+
 msgid "Case 1: North-south"
 msgstr "ケース 1: north-south"
 
@@ -989,6 +1040,9 @@ msgid "Case 1: North/south for instances with a fixed IP address"
 msgstr ""
 "ケース 1: Fixed IP アドレスを持つインスタンスの north/south トラフィック"
 
+msgid "Case 2"
+msgstr "ケース 2"
+
 msgid "Case 2: East-west for instances on different networks"
 msgstr "ケース 2: 別のネットワークのインスタンスでの east-west トラフィック"
 
@@ -999,6 +1053,9 @@ msgstr ""
 msgid "Case 2: North/south for instances with a floating IP address"
 msgstr ""
 "ケース 2: Floating IP アドレスを持つインスタンスの north/south トラフィック"
+
+msgid "Case 3"
+msgstr "ケース 3"
 
 msgid "Case 3: East-west for instances on different networks"
 msgstr "ケース 3: 別のネットワークのインスタンスでの east/west トラフィック"
@@ -1021,6 +1078,9 @@ msgstr ""
 "``/etc/nova/rootwrap.d/*`` のいずれかのファイルに ``ebrctl`` が入っていること"
 "を確認します。"
 
+msgid "Clear tags from a resource:"
+msgstr "リソースのタグをクリアします。"
+
 msgid "Client and server exchange data."
 msgstr "クライアントとサーバーがデータを交換します。"
 
@@ -1029,6 +1089,10 @@ msgstr "クライアントがサーバーに接続します。"
 
 msgid "Client or server disconnects."
 msgstr "クライアントかサーバーが接続を終了します。"
+
+msgid "Complex queries may have contradictory parameters. Example::"
+msgstr ""
+"複雑な問い合わせでは、矛盾するパラメーターを指定することもできます。例::"
 
 msgid ""
 "Compute needs a per-hypervisor \"has_transitioned\" boolean change in the "
@@ -1435,6 +1499,17 @@ msgstr ""
 "デフォルトポリシーでは、非特権ユーザーの場合、コマンド出力に ``distributed`` "
 "フラグは表示されません。"
 
+msgid "Define how an OpenStack network is technically realized. Example: VXLAN"
+msgstr ""
+"OpenStack ネットワークがどの技術で実現されているかを定義します。例: VXLAN"
+
+msgid ""
+"Define the mechanism to access an OpenStack network of a certain type. "
+"Example: Open vSwitch mechanism driver."
+msgstr ""
+"あるタイプの OpenStack ネットワークを実現する仕組みを定義します。例: Open "
+"vSwitch メカニズムドライバー。"
+
 msgid "Definition"
 msgstr "定義"
 
@@ -1673,6 +1748,16 @@ msgid "FWaaS allows creation of IPv6 based rules."
 msgstr "FWaaS では、IPv6 を使ったルールを作成できます。"
 
 msgid ""
+"Filtering resources with a tag whose name contains a comma is not supported. "
+"Thus, do not put such a tag name to resources."
+msgstr ""
+"名前にコンマが入ったタグによるリソースのフィルタリングには対応していません。"
+"したがって、コンマが入ったタグ名をリソースに付与しないでください。"
+
+msgid "Filtering with tags"
+msgstr "タグによるフィルタリング"
+
+msgid ""
 "Find out the ``vendor_id`` and ``product_id`` of your **VFs** by logging in "
 "to your compute node with VFs previously created:"
 msgstr ""
@@ -1772,6 +1857,33 @@ msgstr ""
 "同じ名前空間内の他のプロセスだけが見え、通信できるのも名前空間内のプロセスだ"
 "けです。そのため、あるプロセス名前空間内のシェルで :command:`ps waux` を実行"
 "すると、同じ名前空間内の他のプロセスだけが表示されます。"
+
+msgid ""
+"For example, referencing a 4000-byte MTU for ``provider2``, a 1500-byte MTU "
+"for ``provider3``, and a 9000-byte MTU for other networks using the Open "
+"vSwitch agent:"
+msgstr ""
+"例えば、Open vSwitch エージェントを使う場合で、 ``provider2`` の MTU は 4000 "
+"バイト、 ``provider3`` の MTU は 1500 バイト、それ以外のネットワークの MTU "
+"は 9000 バイトの場合には、以下のように設定します。"
+
+msgid ""
+"For example, referencing a 4000-byte MTU for overlay networks and a 9000-"
+"byte MTU for other networks:"
+msgstr ""
+"例えば、オーバーレイネットワーク側の MTU が 4000 バイトで、他のネットワーク"
+"の MTU が 9000 バイトの場合には、以下のように設定します。"
+
+msgid ""
+"For example, referencing an underlying physical network with a 9000-byte MTU:"
+msgstr ""
+"例えば、アンダーレイ物理ネットワークの MTU が 9000 バイトの場合には、以下のよ"
+"うに設定します。"
+
+msgid ""
+"For existing deployments, MTU values only apply to new network resources."
+msgstr ""
+"既存の環境では、 MTU 値は新規のネットワークリソースにのみ適用されます。"
 
 msgid ""
 "For illustration purposes, the diagram contains two different provider "
@@ -1897,6 +2009,15 @@ msgstr ""
 "``qos`` を追加します。"
 
 msgid ""
+"For more details, see the `Configuration Reference <http://docs.openstack."
+"org/mitaka/config-reference/networking/networking_options_reference."
+"html#modular-layer-2-ml2-configuration-options>`__."
+msgstr ""
+"詳しい情報は `Configuration Reference <http://docs.openstack.org/mitaka/"
+"config-reference/networking/networking_options_reference.html#modular-"
+"layer-2-ml2-configuration-options>`__ を参照してください。"
+
+msgid ""
 "For networked software applications to communicate over an IP network, they "
 "must use a protocol layered atop IP. These protocols occupy the fourth layer "
 "of the OSI model known as the *transport layer* or *layer 4*. See the "
@@ -1928,6 +2049,17 @@ msgstr ""
 "True になっていなければなりません。"
 
 msgid ""
+"For typical underlying physical network architectures that implement a "
+"single MTU value, you can leverage jumbo frames using two options, one in "
+"the ``neutron.conf`` file and the other in the ``ml2_conf.ini`` file. Most "
+"environments should use this configuration."
+msgstr ""
+"使用する MTU 値が 1 つだけの一般的なアンダーレイ物理ネットワークアーキテク"
+"チャーの場合、 2 つのオプションを使うことでジャンボフレームを活用できます。 "
+"1 つは ``neutron.conf`` ファイルで設定し、もう 1 つは ``ml2_conf.ini`` ファイ"
+"ルで設定します。ほとんどの環境で、この設定が使用できることでしょう。"
+
+msgid ""
 "From the Liberty release onwards, OpenStack Networking supports IPv6 prefix "
 "delegation. This section describes the configuration and workflow steps "
 "necessary to use IPv6 prefix delegation to provide automatic allocation of "
@@ -1950,6 +2082,9 @@ msgstr ""
 "Mitaka リリース以降では、 OpenStack Networking コマンドラインインターフェー"
 "ス (CLI) では、指定したテナントの複数のリソースをコマンド 1 つで削除できま"
 "す。"
+
+msgid "Future support"
+msgstr "今後の予定"
 
 msgid "FwaaS"
 msgstr "FwaaS"
@@ -1989,6 +2124,37 @@ msgstr "ゲートウェイ: 198.51.100.1 (MAC アドレスは *TG2*)"
 
 msgid "Generic routing encapsulation (GRE)"
 msgstr "Generic routing encapsulation (GRE)"
+
+msgid "Get Network IP address availability for all IPv4 networks:"
+msgstr "全 IPv4 ネットワークの IP アドレス利用状況を取得します。"
+
+msgid "Get Network IP address availability for all IPv6 networks:"
+msgstr "全 IPv6 ネットワークの IP アドレス利用状況を取得します。"
+
+msgid "Get Network IP address availability statistics for a specific network:"
+msgstr "特定のネットワークの IP アドレス使用状況を取得します。"
+
+msgid "Get list of resources with ``not-tags-any`` filter:"
+msgstr "``not-tags-any`` フィルターを使ってリソース一覧を取得します。"
+
+msgid "Get list of resources with ``not-tags`` filter:"
+msgstr "``not-tags`` フィルターを使ってリソース一覧を取得します。"
+
+msgid "Get list of resources with ``tags-any`` filter:"
+msgstr "``tags-any`` フィルターを使ってリソース一覧を取得します。"
+
+msgid "Get list of resources with ``tags`` filter:"
+msgstr "``tags`` フィルターを使ってリソース一覧を取得します。"
+
+msgid ""
+"Get list of resources with tag filters from networks. The networks are: test-"
+"net1 with \"red\" tag, test-net2 with \"red\" and \"blue\" tags, test-net3 "
+"with \"red\", \"blue\", and \"green\" tags, and test-net4 with \"green\" tag."
+msgstr ""
+"タグフィルターを使ってネットワークの一覧を取得できます。以下の例では、 test-"
+"net1 にはタグ \"red\"、 test-net2 にはタグ \"red\" と \"blue\"、 test-net3 に"
+"はタグ \"red\", \"blue\", \"green\"、 test-net4 にはタグ \"green\" が付与され"
+"ています。"
 
 msgid ""
 "Get the id of the neutron network where you want the SR-IOV port to be "
@@ -2408,6 +2574,13 @@ msgstr ""
 "Linux 自身のネットワークサービスを"
 
 msgid ""
+"In future release, the Networking service will support setting tags to "
+"resources other than network."
+msgstr ""
+"今後のリリースでは、ネットワーク以外のリソースへのタグ付けがサポートされる予"
+"定です。"
+
+msgid ""
 "In general, the OpenStack Networking software components that handle layer-3 "
 "operations impact performance and reliability the most. To improve "
 "performance and reliability, provider networks move layer-3 operations to "
@@ -2517,6 +2690,15 @@ msgstr ""
 "の話をすると、 *ローカルネットワーク*、*レイヤー 2*、 *L2*、*リンクレイヤー"
 "*、 *データリンク層* といった用語をしばしば聞くことでしょう。"
 
+msgid "In the ``ml2_conf.ini`` file:"
+msgstr "``ml2_conf.ini`` ファイル:"
+
+msgid "In the ``neutron.conf`` file:"
+msgstr "``neutron.conf`` ファイル:"
+
+msgid "In the ``openvswitch_agent.ini`` file:"
+msgstr "``openvswitch_agent.ini`` ファイル:"
+
 msgid ""
 "In the absence of an upstream RA support, ``ipv6_gateway`` flag can be set "
 "with the external router gateway LLA in the neutron L3 agent configuration "
@@ -2579,6 +2761,15 @@ msgid ""
 msgstr ""
 "最も簡単な場合では、プロパティーはクラス内で単純な Python リストで定義されて"
 "います。"
+
+msgid ""
+"In this case, we should let the Networking service find these networks. "
+"Obviously, there are no such networks and the service will return an empty "
+"list."
+msgstr ""
+"この場合、 Networking サービスにこのようなネットワークを検索させることになり"
+"ます。明らかに、このようなネットワークは存在しないので、空のリストが返されま"
+"す。"
 
 msgid ""
 "In this example, the health monitor removes the server from the pool if it "
@@ -2707,6 +2898,9 @@ msgstr "インスタンス 2: 192.168.2.11 (MAC アドレスは *I2*)"
 msgid "Instance 2: 198.51.100.11 with MAC address *I2*"
 msgstr "インスタンス 2: 198.51.100.11 (MAC アドレスは *I2*)"
 
+msgid "Instance network interfaces (VIFs)"
+msgstr "インスタンスのネットワークインターフェース (VIF)"
+
 msgid "Intel"
 msgstr "Intel"
 
@@ -2762,8 +2956,14 @@ msgstr ""
 "びます。 OpenStack およびテナントネットワークを扱うすべての物理ネットワーク基"
 "盤でこの VLAN 範囲が利用できる必要があります。"
 
+msgid "Jumbo frames"
+msgstr "ジャンボフレーム"
+
 msgid "Known limitations"
 msgstr "既知の制限"
+
+msgid "L2 agent"
+msgstr "L2 エージェント"
 
 msgid "L2 population"
 msgstr "L2 population"
@@ -2775,6 +2975,9 @@ msgstr "L3"
 
 msgid "L3 HA to Legacy"
 msgstr "L3 HA からレガシー"
+
+msgid "L3 Metering agent"
+msgstr "L3 メータリングエージェント"
 
 # #-#-#-#-#  scenario_dvr_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario_l3ha_lb.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -2815,6 +3018,9 @@ msgstr ""
 
 msgid "L3 high availability"
 msgstr "L3 の高可用性"
+
+msgid "L3 metering agent"
+msgstr "L3 メータリングエージェント"
 
 # #-#-#-#-#  adv_config_ipv6.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  adv_config_LBaaS.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -2949,6 +3155,9 @@ msgstr "Linux ブリッジ"
 
 msgid "Linux bridge"
 msgstr "Linux ブリッジ"
+
+msgid "Linux bridge & Linux bridge agent"
+msgstr "Linux ブリッジ & Linux ブリッジエージェント"
 
 # #-#-#-#-#  deploy_scenario4b.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario_l3ha_lb.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -3094,12 +3303,27 @@ msgstr ""
 "どのゾーンにそのリソースが配置されたかを確認するには、各リソースの "
 "``availability_zones`` を見ます。"
 
+msgid "ML2 driver support matrix"
+msgstr "ML2 ドライバーの対応状況"
+
 msgid "ML2 plug-in"
 msgstr "ML2 プラグイン"
 
 msgid "ML2 plug-in, Linux bridge agent, and any dependencies."
 msgstr ""
 "ML2 プラグイン、Linux ブリッジエージェント、DHCP エージェントと依存サービス。"
+
+msgid "MTU considerations"
+msgstr "MTU に関する考慮事項"
+
+msgid "MacVTap"
+msgstr "MacVTap"
+
+msgid "MacVTap & MacVTap agent"
+msgstr "MacVTap & MacVTap エージェント"
+
+msgid "MacVTap agent"
+msgstr "MacVTap エージェント"
 
 msgid "Macvtap agent"
 msgstr "Macvtap エージェント"
@@ -3145,6 +3369,12 @@ msgstr "管理面での影響"
 
 msgid "Manages agents"
 msgstr "エージェントを管理する"
+
+msgid "Mechanism Driver"
+msgstr "メカニズムドライバー"
+
+msgid "Mechanism drivers"
+msgstr "メカニズムドライバー"
 
 msgid "Mellanox"
 msgstr "Mellanox"
@@ -3285,6 +3515,20 @@ msgstr "ネットワーク 192.168.2.0/24"
 # #-#-#-#-#  scenario_provider_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 msgid "Network 203.0.113.0/24"
 msgstr "ネットワーク 203.0.113.0/24"
+
+msgid ""
+"Network IP Availability is an information-only API extension that allows a "
+"user or process to determine the number of IP addresses that are consumed "
+"across networks and the allocation pools of their subnets. This extension "
+"was added to neutron in the Mitaka release."
+msgstr ""
+"ネットワーク IP アドレス利用状況機能 (network IP availability) は情報取得用"
+"の API 拡張で、これを使うとユーザーやプロセスがネットワークやサブネットのアド"
+"レス割り当てプールで使用されている IP アドレス数を取得できます。この API 拡張"
+"は Mitaka リリースで追加されました。"
+
+msgid "Network IP Availability plug-in extension"
+msgstr "ネットワーク IP アドレス利用状況のプラグイン拡張"
 
 msgid "Network address translation"
 msgstr "ネットワークアドレス変換 (NAT)"
@@ -3873,6 +4117,9 @@ msgstr "オープンソース"
 msgid "Open vSwitch"
 msgstr "Open vSwitch"
 
+msgid "Open vSwitch & Open vSwitch agent"
+msgstr "Open vSwitch & Open vSwitch エージェント"
+
 # #-#-#-#-#  scenario_dvr_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario_l3ha_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario_legacy_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -3907,6 +4154,9 @@ msgstr ""
 "ポート経由での名前空間、 Linux ブリッジ、物理インターフェースなどの他のネット"
 "ワークコンポーネントとのやり取りを管理します。"
 
+msgid "Open vSwitch agent, Linux bridge agent"
+msgstr "Open vSwitch エージェント、 Linux ブリッジエージェント"
+
 msgid ""
 "Open vSwitch service, Open vSwitch agent, L3 agent, DHCP agent, metadata "
 "agent, and any dependencies."
@@ -3932,6 +4182,12 @@ msgstr ""
 "Open vSwitch は、ブリッジを通過するネットワークを分離するために、内部では "
 "VLAN を使用します。この VLAN ID は普通は仮想ネットワークの segmentation ID と"
 "は異なります。"
+
+msgid "OpenContrail"
+msgstr "OpenContrail"
+
+msgid "OpenDaylight"
+msgstr "OpenDaylight"
 
 msgid ""
 "OpenStack :term:`Compute service` (nova) is used to plug each virtual NIC on "
@@ -4200,6 +4456,13 @@ msgid "Other Configuration Flag = 1"
 msgstr "Other Configuration Flag = 1"
 
 msgid ""
+"Other networks including provider networks and flat or VLAN self-service "
+"networks assume the value of the ``global_physnet_mtu`` option."
+msgstr ""
+"プロバイダーネットワークや flat/VLAN のセルフサービスネットワークなどの他の"
+"ネットワークでは ``global_physnet_mtu`` オプションの値が使用されます。"
+
+msgid ""
 "Other supporting services include DHCP and metadata. The DHCP service "
 "manages IP addresses for instances on project networks. The metadata service "
 "provides an API for instances on project networks to obtain metadata such as "
@@ -4459,6 +4722,9 @@ msgstr "プロバイダーネットワーク 1"
 msgid "Provider network 2"
 msgstr "プロバイダーネットワーク 2"
 
+msgid "Provider network types"
+msgstr "プロバイダーネットワーク種別"
+
 msgid "Provider networks"
 msgstr "プロバイダーネットワーク"
 
@@ -4554,6 +4820,9 @@ msgstr "サブネット作成時にサブネットプールを指定する"
 msgid "Regular port creation permissions on networks (since Liberty)."
 msgstr "ネットワークに通常のポートを作成する許可 (Liberty 以降)"
 
+msgid "Remove a tag from a resource:"
+msgstr "リソースからタグを削除します。"
+
 # #-#-#-#-#  scenario_dvr_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario_l3ha_lb.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario_l3ha_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -4628,6 +4897,9 @@ msgid ""
 msgstr ""
 "``TUNNEL_INTERFACE_IP_ADDRESS`` は、VXLAN プロジェクトネットワークを扱うイン"
 "ターフェースの IP アドレスに置き換えます。"
+
+msgid "Replace all tags on the resource:"
+msgstr "リソースのタグをすべて置き換えます。"
 
 msgid "Required"
 msgstr "必須"
@@ -4770,6 +5042,18 @@ msgstr "InfiniBand を用いた SR-IOV"
 
 msgid "SR-IOV with ethernet"
 msgstr "Ethernet を用いた SR-IOV"
+
+msgid "SRIOV"
+msgstr "SRIOV"
+
+msgid "SRIOV & SRIOV nic switch agent"
+msgstr "SRIOV & SRIOV NIC スイッチエージェント"
+
+msgid "SRIOV Nic Switch agent"
+msgstr "SRIOV NIC スイッチエージェント"
+
+msgid "SRIOV nic switch agent"
+msgstr "SRIOV NIC スイッチエージェント"
 
 msgid "Scenario: Classic with Linux Bridge"
 msgstr "シナリオ: Linux Bridge を使った基本構成"
@@ -5136,6 +5420,26 @@ msgstr ""
 "に、以下のよく知られたツールを使います。"
 
 msgid ""
+"Some underlying physical network architectures contain a unique layer-2 "
+"network for overlay networks using protocols such as VXLAN and GRE."
+msgstr ""
+"アンダーレイ物理ネットワークアーキテクチャーによっては、VXLAN や GRE などのプ"
+"ロトコルを使うオーバーレイネットワーク用に専用のレイヤー 2 ネットワークを持つ"
+"場合があります。"
+
+msgid ""
+"Some underlying physical network architectures contain multiple layer-2 "
+"networks with different MTU values. You can configure each flat or VLAN "
+"provider network in the bridge or interface mapping options of the layer-2 "
+"agent to reference a unique MTU value."
+msgstr ""
+"物理ネットワークアーキテクチャーによっては、アンダーレイ物理ネットワークが "
+"MTU が異なる複数のレイヤー 2 ネットワークで構成される場合があります。レイ"
+"ヤー 2 エージェントのブリッジマッピングやインターフェースマッピングのオプショ"
+"ンで flat/VLAN プロバイダーネットワーク毎に独自の MTU 値を使うように設定でき"
+"ます。"
+
+msgid ""
 "Sometimes we want to refer to a subnet, but not any particular IP address on "
 "the subnet. A common convention is to set the host identifier to all zeros "
 "to make reference to a subnet. For example, if a host's IP address is "
@@ -5290,6 +5594,9 @@ msgstr "TCP/UDP/ICMP"
 
 msgid "TODO"
 msgstr "TODO"
+
+msgid "Tagging resources"
+msgstr "リソースのタグ付け"
 
 msgid ""
 "Tell nova-compute which pci devices are allowed to be passed through. Edit "
@@ -5466,6 +5773,13 @@ msgid ""
 msgstr ""
 "Linux のコマンドラインツール :command:`ping` や :command:`mtr` は、 ICMP を使"
 "うネットワークユーティリティーの例です。"
+
+msgid ""
+"The API allows searching/filtering of the ``GET /v2.0/networks`` API. The "
+"following query parameters are supported:"
+msgstr ""
+"この API では、 ``GET /v2.0/networks`` API で検索やフィルタリングが可能です。"
+"以下の問い合わせパラメーターが使用できます。"
 
 msgid ""
 "The Compute REST API is available throughout the entire process, although "
@@ -5680,6 +5994,15 @@ msgstr ""
 "ドバランサー実装を提供しています。"
 
 msgid ""
+"The Networking service only references the underlying physical network MTU. "
+"Changing the underlying physical network device MTU requires configuration "
+"of physical network devices such as switches and routers."
+msgstr ""
+"Networking サービスはアンダーレイの物理ネットワークの MTU のみを参照します。"
+"アンダーレイの物理ネットワークデバイスの MTU を変更するには、スイッチやルー"
+"ターなどの物理ネットワークデバイスの設定が必要です。"
+
+msgid ""
 "The Networking service schedules a network to one of the agents within the "
 "selected zone as with ``WeightScheduler``. In this case, scheduler refers to "
 "``dhcp_load_type`` as well."
@@ -5693,6 +6016,42 @@ msgid ""
 msgstr ""
 "Networking サービスは、選択されたゾーン内のいずれかのエージェントに "
 "``LeastRouterScheduler `` によりルーターの割り当てを行います。"
+
+msgid ""
+"The Networking service supports the following underlying physical network "
+"architectures. Case 1 refers to the most common architecture. In general, "
+"architectures should avoid cases 2 and 3."
+msgstr ""
+"Networking サービスは以下のアンダーレイの物理ネットワークアーキテクチャーに対"
+"応しています。ケース 1 が最も一般的なアーキテクチャーです。一般には、ケース "
+"2 や 3 のアーキテクチャーは避けるべきでしょう。"
+
+msgid ""
+"The Networking service supports underlying physical networks using jumbo "
+"frames and also enables instances to use jumbo frames minus any overlay "
+"protocol overhead. For example, an underlying physical network with a 9000-"
+"byte MTU yields a 8950-byte MTU for instances using a VXLAN network with "
+"IPv4 endpoints. Using IPv6 endpoints for overlay networks adds 20 bytes of "
+"overhead for any protocol."
+msgstr ""
+"Networking サービスは、アンダーレイの物理ネットワークでのジャンボフレームの使"
+"用に対応しており、インスタンスでもオーバーレイプロトコルのオーバーヘッド分を"
+"引いたサイズのジャンボフレームを使用できます。例えば、アンダーレイの物理ネッ"
+"トワークが 9000 バイトの MTU の場合、 IPv4 エンドポイントの VXLAN ネットワー"
+"クではインスタンスは 8950 バイトの MTU を使用できます。 IPv6 エンドポイントの"
+"オーバーレイネットワークでは、どのプロトコルの場合でもさらに 20 バイトほど"
+"オーバーヘッドが増えます。"
+
+msgid ""
+"The Networking service uses the MTU of the underlying physical network to "
+"calculate the MTU for virtual network components including instance network "
+"interfaces. By default, it assumes a standard 1500-byte MTU for the "
+"underlying physical network."
+msgstr ""
+"Networking サービスは、アンダーレイの物理ネットワークの MTU に基いて、インス"
+"タンスのネットワーク・インターフェースなどの仮想ネットワークコンポーネントの "
+"MTU を計算します。デフォルトでは、アンダーレイの物理ネットワークの MTU を標準"
+"の 1500 バイトと仮定します。"
 
 msgid ""
 "The Networking service, code-named neutron, provides an API that lets you "
@@ -6414,6 +6773,13 @@ msgstr ""
 "用できるようになります。"
 
 msgid ""
+"The ``tags``, ``tags-any``, ``not-tags``, and ``not-tags-any`` arguments can "
+"be combined to build more complex queries. Example::"
+msgstr ""
+"``tags``, ``tags-any``, ``not-tags``, ``not-tags-any`` 引数は組み合わせて、"
+"もっと複雑な問い合わせを構成することもできます。例::"
+
+msgid ""
 "The ``target-tenant`` parameter specifies the project that requires access "
 "to the QoS policy. The ``action`` parameter specifies what the project is "
 "allowed to do. The ``type`` parameter says that the target object is a QoS "
@@ -6446,6 +6812,14 @@ msgstr ""
 "``tenant_network_types`` オプションには何も値を指定しません。このアーキテク"
 "チャーでは、プロジェクト (プライベート) ネットワークがサポートされないからで"
 "す。"
+
+msgid ""
+"The above example returns any networks that have the \"red\" and \"blue\" "
+"tags, plus at least one of \"green\" and \"orange\"."
+msgstr ""
+"上記の例では、 \"red\" と \"blue\" の両方のタグを持ち、かつ \"green\" と "
+"\"orange\" のタグの少なくとも 1 つが設定されているネットワークの一覧を取得し"
+"ています。"
 
 msgid ""
 "The above is all you need in this scenario, but more information on "
@@ -6892,6 +7266,13 @@ msgstr "以下の手順は、物理ネットワーク環境で行われます。
 
 msgid "The following terms are used over the document:"
 msgstr "このドキュメントでは以下の用語を使用します。"
+
+msgid ""
+"The following use cases refer to adding tags to networks, but the same can "
+"be applicable to any other Networking service resource:"
+msgstr ""
+"ネットワークへのタグ付けには以下のようなユースケースがありますが、他の "
+"Networking サービスのリソースについても同じことが言えます。"
 
 msgid ""
 "The general provider network architecture uses physical network "
@@ -7903,6 +8284,21 @@ msgstr ""
 "用するにはどうすればよいかの手順書として利用できます。"
 
 msgid ""
+"This page serves as a guide for how to use the ``Tag`` functionality "
+"available in the Networking service as of the Mitaka release. The service "
+"supports networks only in the Mitaka release. The Networking service allows "
+"users to set tags on their resources. Tagging resources can be used by "
+"external systems or any other clients of the Networking service REST API "
+"(and NOT back-end drivers)."
+msgstr ""
+"このページでは、 Networking サービスの Mitaka リリースで利用できる「タグ」機"
+"能の使用方法を説明します。 Mitaka リリースでは、ネットワークだけがタグ機能に"
+"対応しています。 Networking サービスでは、ユーザーがリソースにタグを設定でき"
+"ます。リソースのタグ付けは、外部のシステムなどの Networking サービスの REST "
+"API のクライアントが利用するものです (バックエンドドライバーが利用するもので"
+"はありません)。"
+
+msgid ""
 "This process can be repeated any number of times to share a network with an "
 "arbitrary number of projects."
 msgstr ""
@@ -8014,6 +8410,13 @@ msgstr ""
 "このセクションでは、L3 と DHCP に対するアベイラビリティーゾーンと組み合わせて"
 "高可用性を実現する方法を説明します。アベイラビリティーゾーンについては上記の"
 "オプションを設定しているものとします。"
+
+msgid ""
+"This section illustrates how you can get the Network IP address availability "
+"through the command-line interface."
+msgstr ""
+"このセクションでは、コマンドラインインターフェースを使ってネットワークの IP "
+"アドレス利用状況を取得する方法を説明します。"
 
 msgid ""
 "This section summarizes parts of :ref:`scenario-l3ha-ovs` and :ref:`scenario-"
@@ -8282,6 +8685,62 @@ msgstr ""
 "ンドを使って、作成したポリシーを削除します。"
 
 msgid ""
+"To request the list of networks that do not have at least one of a list of "
+"tags, the ``not-tags-any`` argument should be set to the list of tags, "
+"separated by commas. In this case, only the networks that do not have at "
+"least one of the given tags will be included in the query result. Example "
+"that returns the networks that do not have the \"red\" tag, or do not have "
+"the \"blue\" tag::"
+msgstr ""
+"指定されたタグのいずれも持たないネットワークの一覧を取得するには、 ``not-"
+"tags-any`` 引数にタグのリストをコンマ区切りで指定します。この場合、指定された"
+"タグのいずれも持たないネットワークだけが問い合わせの結果として返されます。 "
+"\"red\" と \"blue\" のタグのどちらも持たないネットワーク一覧を取得する例::"
+
+msgid ""
+"To request the list of networks that do not have one or more tags, the ``not-"
+"tags`` argument should be set to the list of tags, separated by commas. In "
+"this case, only the networks that do not have any of the given tags will be "
+"included in the query results. Example that returns the networks that do not "
+"have either \"red\" or \"blue\" tag::"
+msgstr ""
+"指定された 1 つ以上のタグを持たないネットワークの一覧を取得するには、 ``not-"
+"tags`` 引数にタグのリストをコンマ区切りで指定します。この場合、指定されたタグ"
+"のいずれかを持たないネットワークだけが問い合わせの結果として返されます。 "
+"\"red\" と \"blue\" のタグのどちらかを持たないネットワーク一覧を取得する例::"
+
+msgid ""
+"To request the list of networks that have a single tag, ``tags`` argument "
+"should be set to the desired tag name. Example::"
+msgstr ""
+"あるタグを持つネットワークの一覧を取得するには、 ``tags`` 引数に所望のタグ名"
+"を指定します。例::"
+
+msgid ""
+"To request the list of networks that have one or more of a list of given "
+"tags, the ``tags-any`` argument should be set to the list of tags, separated "
+"by commas. In this case, as long as one of the given tags is present, the "
+"network will be included in the query result. Example that returns the "
+"networks that have the \"red\" or the \"blue\" tag::"
+msgstr ""
+"指定されたタグのいずれかを持つネットワークの一覧を取得するには、 ``tags-"
+"any`` 引数にタグのリストをコンマ区切りで指定します。この場合、指定されたタグ"
+"が 1 つでもあれば、そのネットワークは問い合わせの結果として返されます。 \"red"
+"\" か \"blue\" のタグを持つネットワーク一覧を取得する例::"
+
+msgid ""
+"To request the list of networks that have two or more tags, the ``tags`` "
+"argument should be set to the list of tags, separated by commas. In this "
+"case, the tags given must all be present for a network to be included in the "
+"query result. Example that returns networks that have the \"red\" and \"blue"
+"\" tags::"
+msgstr ""
+"2 つ以上のタグを持つネットワークの一覧を取得するには、 ``tags`` 引数にタグの"
+"リストをコンマ区切りで指定します。この場合、指定されたすべてのタグを持つネッ"
+"トワークが問い合わせの結果として返されます。 \"red\" と \"blue\" のタグを持つ"
+"ネットワーク一覧を取得する例::"
+
+msgid ""
 "To return to classic mode, turn down the router again, turning off L3 HA and "
 "starting the router again."
 msgstr ""
@@ -8406,6 +8865,9 @@ msgstr ""
 "ポロジーを作成する、バックエンド実装にベンダー固有の技術を利用する、テナント"
 "専用のネットワークリソースを提供する、といったことはできません。これらの制限"
 "が、 OpenStack Networking (neutron) のモデルが作成された主な理由です。"
+
+msgid "Type drivers"
+msgstr "タイプドライバー"
 
 msgid ""
 "UDP has support for one-to-many communication: sending a single packet to "
@@ -9085,6 +9547,13 @@ msgid "dotted quad"
 msgstr "ドット区切りの 4 つの数字"
 
 msgid ""
+"http://docs.openstack.org/admin-guide/networking_adv-operational-features."
+"html#logging-settings"
+msgstr ""
+"http://docs.openstack.org/admin-guide/networking_adv-operational-features."
+"html#logging-settings"
+
+msgid ""
 "http://docs.openstack.org/admin-guide/networking_introduction.html#firewall-"
 "as-a-service-fwaas-overview"
 msgstr ""
@@ -9129,6 +9598,9 @@ msgstr "文字列リスト"
 msgid "network"
 msgstr "ネットワーク"
 
+msgid "no"
+msgstr "いいえ"
+
 msgid "radvd A,M,O"
 msgstr "radvd A,M,O"
 
@@ -9146,3 +9618,9 @@ msgstr "サブネット (IPv6)"
 
 msgid "tcpdump"
 msgstr "tcpdump"
+
+msgid "type driver / mech driver"
+msgstr "タイプドライバー / メカニズムドライバー"
+
+msgid "yes"
+msgstr "はい"
