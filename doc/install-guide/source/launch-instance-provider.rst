@@ -241,8 +241,10 @@ Access the instance remotely
       $
 
 If your instance does not launch or seem to work as you expect, see the
-`OpenStack Operations Guide <http://docs.openstack.org/ops>`__ for more
-information or use one of the :doc:`many other options <common/app_support>`
+`Instance Boot Failures
+<http://docs.openstack.org/openstack-ops/content/instances.html#instance_boot_failures>`__
+section in OpenStack Operations Guide for more information or use one of
+the :doc:`many other options <common/app_support>`
 to seek assistance. We want your first installation to work!
 
 Return to :ref:`Launch an instance <launch-instance-complete>`.
