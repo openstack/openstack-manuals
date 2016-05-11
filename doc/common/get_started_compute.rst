@@ -113,4 +113,4 @@ SQL database
 
   Theoretically, OpenStack Compute can support any database that
   SQL-Alchemy supports. Common databases are SQLite3 for test and
-  development work, MySQL, and PostgreSQL.
+  development work, MySQL, MariaDB, and PostgreSQL.
