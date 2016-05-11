@@ -18,11 +18,9 @@ to how quickly you need to recover from data loss.
 
 Other backup considerations include:
 
--  How many backups to keep?
-
--  Should backups be kept off-site?
-
--  How often should backups be tested?
+* How many backups to keep?
+* Should backups be kept off-site?
+* How often should backups be tested?
 
 Just as important as a backup policy is a recovery policy (or at least
 recovery testing).
@@ -119,8 +117,7 @@ replicate the images to another server:
 
 .. code-block:: console
 
-   # rsync -az --progress /var/lib/glance/images \
-   backup-server:/var/lib/glance/images/
+   # rsync -az --progress /var/lib/glance/images backup-server:/var/lib/glance/images/
 
 Identity
 --------
@@ -184,8 +181,8 @@ Once the files are restored, start everything back up:
 .. code-block:: console
 
    # start mysql
-   # for i in nova-api nova-cert nova-consoleauth nova-novncproxy
-   nova-objectstore nova-scheduler
+   # for i in nova-api nova-cert nova-consoleauth nova-novncproxy \
+     nova-objectstore nova-scheduler
    > do
    > start $i
    > done
