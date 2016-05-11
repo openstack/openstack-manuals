@@ -22,4 +22,4 @@ The Shared File Systems API and scheduler services typically run on the
 controller nodes. Depending upon the drivers used, the share service can run
 on controllers, compute nodes, or storage nodes.
 
-For more information, see the `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/content/section_share-drivers.html>`__.
+For more information, see the `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/shared-file-systems/drivers.html>`__.
