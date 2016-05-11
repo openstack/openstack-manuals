@@ -515,7 +515,7 @@ to each of the supported VMDK disk types:
      - VMFS flat, thin provisioned
    * - preallocated (default)
      - VMFS flat, thick/zeroedthick/eagerzeroedthick
-   * - Streamoptimized
+   * - streamOptimized
      - Compressed Sparse
 
 The ``vmware_disktype`` property is set when an image is loaded into the
