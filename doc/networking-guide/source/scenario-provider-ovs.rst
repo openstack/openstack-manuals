@@ -456,7 +456,7 @@ Controller node
      .. code-block:: ini
 
         [securitygroup]
-        firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+        firewall_driver = iptables_hybrid
 
 #. In the ``openvswitch_agent.ini`` file, configure the Open vSwitch agent:
 
@@ -466,7 +466,7 @@ Controller node
       bridge_mappings = provider:br-provider
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = iptables_hybrid
 
 #. In the ``dhcp_agent.ini`` file, configure the DHCP agent:
 
@@ -513,7 +513,7 @@ Compute nodes
       bridge_mappings = provider:br-provider
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = iptables_hybrid
 
 #. Start the following service:
 
