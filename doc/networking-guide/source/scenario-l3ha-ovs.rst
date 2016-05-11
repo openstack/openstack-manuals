@@ -278,7 +278,7 @@ Controller node
      .. code-block:: ini
 
         [securitygroup]
-        firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+        firewall_driver = iptables_hybrid
 
    * If necessary, :ref:`configure MTU <adv-config-mtu>`.
 
@@ -302,7 +302,7 @@ Network nodes
       l2_population = True
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = iptables_hybrid
 
    Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
    that handles GRE/VXLAN project networks.
@@ -362,7 +362,7 @@ Compute nodes
       l2_population = False
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = iptables_hybrid
 
    Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
    that handles GRE/VXLAN project networks.

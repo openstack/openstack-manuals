@@ -594,7 +594,7 @@ Controller node
      .. code-block:: ini
 
         [securitygroup]
-        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+        firewall_driver = iptables
 
    * If necessary, :ref:`configure MTU <adv-config-mtu>`.
 
@@ -617,7 +617,7 @@ Network node
       l2_population = True
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+      firewall_driver = iptables
 
    Replace ``PROJECT_VLAN_INTERFACE`` and ``EXTERNAL_INTERFACE`` with the name
    of the underlying interface that handles VLAN project networks and external
@@ -677,7 +677,7 @@ Compute nodes
       l2_population = True
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+      firewall_driver = iptables
 
    Replace ``PROJECT_VLAN_INTERFACE`` with the name of the underlying
    interface that handles VLAN project networks and external networks,

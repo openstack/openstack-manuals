@@ -422,7 +422,7 @@ Controller node
      .. code-block:: ini
 
         [securitygroup]
-        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+        firewall_driver = iptables
 
 #. In the ``linuxbridge_agent.ini`` file, configure the Linux bridge agent:
 
@@ -435,7 +435,7 @@ Controller node
       enable_vxlan = False
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+      firewall_driver = iptables
 
    Replace ``PROVIDER_INTERFACE`` with the name of the underlying interface
    that handles provider networks. For example, ``eth1``.
@@ -468,7 +468,7 @@ Compute nodes
       enable_vxlan = False
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+      firewall_driver = iptables
       enable_security_group = True
 
    Replace ``PROVIDER_INTERFACE`` with the name of the underlying interface
