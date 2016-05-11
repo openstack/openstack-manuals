@@ -195,9 +195,10 @@ The compute nodes contain the following network components:
 #. Open vSwitch agent managing virtual switches, connectivity among
    them, and interaction via virtual ports with other network components
    such as namespaces, Linux bridges, and underlying interfaces.
-#. Linux bridges handling security groups. Due to limitations with Open
-   vSwitch and *iptables*, the Networking service uses a Linux bridge
-   to manage security groups for instances.
+#. Conventional Linux bridges handling security groups. Optionally, a native
+   OVS implementation can handle security groups. However, due to kernel and
+   OVS version requirements for it, this scenario uses conventional Linux
+   bridges. See :ref:`adv-config-ovsfwdriver` for more information.
 
 .. image:: figures/scenario-classic-ovs-compute1.png
    :alt: Compute node components - overview

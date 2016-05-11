@@ -11,6 +11,7 @@ Advanced configuration
    adv-config-rbac.rst
    adv-config-subnet-pools.rst
    adv-config-address-scopes.rst
+   adv-config-ovsfwdriver.rst
    adv-config-lbaas.rst
    adv-config-fwaas.rst
    adv-config-vpnaas.rst
