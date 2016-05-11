@@ -15,36 +15,36 @@ Contents
 .. toctree::
    :maxdepth: 1
 
-   common/conventions
-   overview
-   openstack
+   common/conventions.rst
+   overview.rst
+   openstack.rst
 
-   murano
-   ironic
-   cinder
-   senlin
-   nova
-   magnum
-   sahara
-   trove
-   trove-misc
-   designate
-   glance
-   barbican
-   monasca
-   neutron
-   neutron-misc
-   swift
-   heat
-   cloudkitty
-   manila
-   ceilometer
-   gnocchi
-   mistral
+   murano.rst
+   ironic.rst
+   cinder.rst
+   senlin.rst
+   nova.rst
+   magnum.rst
+   sahara.rst
+   trove.rst
+   trove-misc.rst
+   designate.rst
+   glance.rst
+   barbican.rst
+   monasca.rst
+   neutron.rst
+   neutron-misc.rst
+   swift.rst
+   heat.rst
+   cloudkitty.rst
+   manila.rst
+   ceilometer.rst
+   gnocchi.rst
+   mistral.rst
 
-   common/app_support
+   common/app_support.rst
 
-   common/glossary
+   common/glossary.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
