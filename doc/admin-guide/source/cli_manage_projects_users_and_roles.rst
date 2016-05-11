@@ -298,12 +298,18 @@ IDs.
       | 80cab5e1f02045abad92a2864cfd76cb | test_project       |   True  |
       +----------------------------------+--------------------+---------+
 
-#. Assign a role to a user-project pair. In this example, assign the
-   ``new-role`` role to the ``demo`` and ``test-project`` pair:
+#. Assign a role to a user-project pair:
 
    .. code-block:: console
 
       $ openstack role add --user USER_NAME --project TENANT_ID ROLE_NAME
+
+   For example, assign the ``new-role`` role to the ``demo`` and
+   ``test-project`` pair:
+
+   .. code-block:: console
+
+      $ openstack role add --user demo --project test-project new-role
 
 #. Verify the role assignment:
 
