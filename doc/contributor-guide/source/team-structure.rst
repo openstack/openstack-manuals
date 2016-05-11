@@ -11,7 +11,7 @@ their respective leads:
 * `Configuration Reference`_: Gauvain Pocentek
 * `High Availability Guide`_: Bogdan Dobrelya
 * `Hypervisor Tuning Guide`_: Joe Topjian
-* `Installation guides`_: Christian Berendt
+* `Installation guides`_: Lana Brindley
 * `Networking Guide`_: Edgar Magana
 * `Operations and Architecture Design guides`_: Shilla Saebi
 * `Security Guide`_: Nathaniel Dillon
