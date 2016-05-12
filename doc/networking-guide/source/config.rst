@@ -11,3 +11,4 @@ the `Configuration Reference
 
    config-server.rst
    config-ml2-plug-in.rst
+   config-dns-resolution.rst
