@@ -295,7 +295,7 @@ The details of consistency group operations are shown in the following.
 The parameter ``CG`` is required. It can be a name or UUID of a consistency
 group. UUID1,UUID2,...... are UUIDs of one or more volumes to be added
 to the consistency group, separated by commas. Default is None.
-UUID3,UUId4,...... are UUIDs of one or more volumes to be removed from
+UUID3,UUID4,...... are UUIDs of one or more volumes to be removed from
 the consistency group, separated by commas. Default is None.
 
 .. code-block:: console

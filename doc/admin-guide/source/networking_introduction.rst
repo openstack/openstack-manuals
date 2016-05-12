@@ -164,11 +164,6 @@ policy and logical firewall instance per project.
 Whereas security groups operate at the instance-level, FWaaS operates at
 the perimeter to filter traffic at the neutron router.
 
-.. note::
-
-   FWaaS is currently in technical preview; untested operation is not
-   recommended.
-
 The example diagram illustrates the flow of ingress and egress traffic
 for the VM2 instance:
 
