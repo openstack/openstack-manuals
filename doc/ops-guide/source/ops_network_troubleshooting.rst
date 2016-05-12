@@ -44,11 +44,15 @@ Visualizing nova-network Traffic in the Cloud
 
 If you are logged in to an instance and ping an external host—for
 example, Google—the ping packet takes the route shown in
-the following figure.
+:ref:`figure_traffic_route`.
+
+.. _figure_traffic_route:
 
 .. figure:: figures/osog_1201.png
    :alt: Traffic route for ping packet
    :width: 100%
+
+   Figure. Traffic route for ping packet
 
 #. The instance generates a packet and places it on the virtual Network
    Interface Card (NIC) inside the instance, such as ``eth0``.
@@ -166,16 +170,13 @@ Linux Bridge driver. We'll describe each step in turn, with
    the traffic on the internal port.
 
    **To capture packets from the patch-tun internal interface on integration
-   bridge, ``br-int``:**
+   bridge, br-int:**
 
    #. Create and bring up a dummy interface, ``snooper0``:
 
       .. code-block:: console
 
          # ip link add name snooper0 type dummy
-
-      .. code-block:: console
-
          # ip link set dev snooper0 up
 
    #. Add device ``snooper0`` to bridge ``br-int``:
@@ -190,9 +191,9 @@ Linux Bridge driver. We'll describe each step in turn, with
       .. code-block:: console
 
          # ovs-vsctl -- set Bridge br-int mirrors=@m  -- --id=@snooper0 \
-         get Port snooper0  -- --id=@patch-tun get Port patch-tun \
-         -- --id=@m create Mirror name=mymirror select-dst-port=@patch-tun \
-         select-src-port=@patch-tun output-port=@snooper0 select_all=1
+           get Port snooper0  -- --id=@patch-tun get Port patch-tun \
+           -- --id=@m create Mirror name=mymirror select-dst-port=@patch-tun \
+           select-src-port=@patch-tun output-port=@snooper0 select_all=1
 
    #. Profit. You can now see traffic on ``patch-tun`` by running
       :command:`tcpdump -i snooper0`.
@@ -203,13 +204,7 @@ Linux Bridge driver. We'll describe each step in turn, with
       .. code-block:: console
 
          # ovs-vsctl clear Bridge br-int mirrors
-
-      .. code-block:: console
-
          # ovs-vsctl del-port br-int snooper0
-
-      .. code-block:: console
-
          # ip link delete dev snooper0
 
    On the integration bridge, networks are distinguished using internal
@@ -228,7 +223,7 @@ Linux Bridge driver. We'll describe each step in turn, with
    on the other bridges and will be discussed in those sections.
 
    **To discover which internal VLAN tag is in use for a given external VLAN
-   by using the :command:`ovs-ofctl` command**
+   by using the ovs-ofctl command**
 
    #. Find the external VLAN tag of the network you're interested in. This
       is the ``provider:segmentation_id`` as returned by the networking
@@ -249,7 +244,7 @@ Linux Bridge driver. We'll describe each step in turn, with
 
       .. code-block:: console
 
-         # ovs-ofctl dump-flows br-int|grep vlan=2113
+         # ovs-ofctl dump-flows br-int | grep vlan=2113
          cookie=0x0, duration=173615.481s, table=0, n_packets=7676140,
          n_bytes=444818637, idle_age=0, hard_age=65534, priority=3,
          in_port=1,dl_vlan=2113 actions=mod_vlan_vid:7,NORMAL
@@ -299,7 +294,7 @@ Linux Bridge driver. We'll describe each step in turn, with
 
       .. code-block:: console
 
-         # ovs-ofctl dump-flows br-eth1|grep 2113
+         # ovs-ofctl dump-flows br-eth1 | grep 2113
          cookie=0x0, duration=184168.225s, table=0, n_packets=0, n_bytes=0,
          idle_age=65534, hard_age=65534, priority=4,in_port=1,dl_vlan=7
          actions=mod_vlan_vid:2113,NORMAL
@@ -321,7 +316,7 @@ Linux Bridge driver. We'll describe each step in turn, with
 
       .. code-block:: console
 
-         # ovs-vsctl show |grep -A 3 -e Port\ \"gre-
+         # ovs-vsctl show | grep -A 3 -e Port\ \"gre-
                  Port "gre-1"
                      Interface "gre-1"
                          type: gre
@@ -346,7 +341,7 @@ Linux Bridge driver. We'll describe each step in turn, with
       on this bridge.
 
    **To discover which internal VLAN tag is in use for a GRE tunnel by using
-   the :command:`ovs-ofctl` command**
+   the ovs-ofctl command**
 
    #. Find the ``provider:segmentation_id`` of the network you're
       interested in. This is the same field used for the VLAN ID in
@@ -431,7 +426,7 @@ Linux Bridge driver. We'll describe each step in turn, with
 
    .. code-block:: console
 
-      # ip netns exec qrouter-e521f9d0-a1bd-4ff4-bc81-78a60dd88fe5 ip a|grep state
+      # ip netns exec qrouter-e521f9d0-a1bd-4ff4-bc81-78a60dd88fe5 ip a | grep state
       10: qr-e6256f7d-31: <BROADCAST,UP,LOWER_UP> mtu 1500 qdisc noqueue
           state UNKNOWN
       11: qg-35916e1f-36: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500
@@ -487,8 +482,7 @@ For example, run the following command:
 
 .. code-block:: console
 
-   tcpdump -i any -n -v \ 'icmp[icmptype] = icmp-echoreply or icmp[icmptype] =
-   icmp-echo'
+   # tcpdump -i any -n -v 'icmp[icmptype] = icmp-echoreply or icmp[icmptype] = icmp-echo'
 
 Run this on the command line of the following areas:
 
@@ -503,13 +497,13 @@ In this example, these locations have the following IP addresses:
 .. code-block:: console
 
    Instance
-                             10.0.2.24
-                             203.0.113.30
-                             Compute Node
-                             10.0.0.42
-                             203.0.113.34
-                             External Server
-                             1.2.3.4
+       10.0.2.24
+       203.0.113.30
+   Compute Node
+       10.0.0.42
+       203.0.113.34
+   External Server
+       1.2.3.4
 
 Next, open a new shell to the instance and then ping the external host
 where ``tcpdump`` is running. If the network path to the external server
@@ -575,31 +569,19 @@ will be inserted in the rules to help indicate the purpose of the rule.
 
 The following comments are added to the rule set as appropriate:
 
--  Perform source NAT on outgoing traffic.
-
--  Default drop rule for unmatched traffic.
-
--  Direct traffic from the VM interface to the security group chain.
-
--  Jump to the VM specific chain.
-
--  Direct incoming traffic from VM to the security group chain.
-
--  Allow traffic from defined IP/MAC pairs.
-
--  Drop traffic without an IP/MAC allow rule.
-
--  Allow DHCP client traffic.
-
--  Prevent DHCP Spoofing by VM.
-
--  Send unmatched traffic to the fallback chain.
-
--  Drop packets that are not associated with a state.
-
--  Direct packets associated with a known session to the RETURN chain.
-
--  Allow IPv6 ICMP traffic to allow RA packets.
+* Perform source NAT on outgoing traffic.
+* Default drop rule for unmatched traffic.
+* Direct traffic from the VM interface to the security group chain.
+* Jump to the VM specific chain.
+* Direct incoming traffic from VM to the security group chain.
+* Allow traffic from defined IP/MAC pairs.
+* Drop traffic without an IP/MAC allow rule.
+* Allow DHCP client traffic.
+* Prevent DHCP Spoofing by VM.
+* Send unmatched traffic to the fallback chain.
+* Drop packets that are not associated with a state.
+* Direct packets associated with a known session to the RETURN chain.
+* Allow IPv6 ICMP traffic to allow RA packets.
 
 Run the following command to view the current iptables configuration:
 
@@ -736,9 +718,6 @@ dnsmasq processes running:
 .. code-block:: console
 
    # ps aux | grep dnsmasq
-
-.. code-block:: console
-
    nobody 3735 0.0 0.0 27540 1044 ? S 15:40 0:00 /usr/sbin/dnsmasq --strict-order
        --bind-interfaces --conf-file=
        --domain=novalocal --pid-file=/var/lib/nova/networks/nova-br100.pid
@@ -771,7 +750,7 @@ request properly and handing out an IP, the output looks like this:
    Feb 27 22:01:36 mynode dnsmasq-dhcp[2438]: DHCPREQUEST(br100) 192.168.100.3
                                               fa:16:3e:56:0b:6f
    Feb 27 22:01:36 mynode dnsmasq-dhcp[2438]: DHCPACK(br100) 192.168.100.3
-   fa:16:3e:56:0b:6f test
+                                              fa:16:3e:56:0b:6f test
 
 If you do not see the ``DHCPDISCOVER``, a problem exists with the packet
 getting from the instance to the machine running dnsmasq. If you see all
@@ -804,15 +783,15 @@ The output looks something like the following:
 .. code-block:: console
 
    108 1695 0.0 0.0 25972 1000 ? S Feb26 0:00 /usr/sbin/dnsmasq
-   -u libvirt-dnsmasq
-   --strict-order --bind-interfaces
+    -u libvirt-dnsmasq
+    --strict-order --bind-interfaces
     --pid-file=/var/run/libvirt/network/default.pid --conf-file=
     --except-interface lo --listen-address 192.168.122.1
     --dhcp-range 192.168.122.2,192.168.122.254
     --dhcp-leasefile=/var/lib/libvirt/dnsmasq/default.leases
     --dhcp-lease-max=253 --dhcp-no-override
-   nobody 2438 0.0 0.0 27540 1096 ? S Feb26 0:00 /usr/sbin/dnsmasq --strict-order
-   --bind-interfaces --conf-file=
+   nobody 2438 0.0 0.0 27540 1096 ? S Feb26 0:00 /usr/sbin/dnsmasq
+    --strict-order --bind-interfaces --conf-file=
     --domain=novalocal --pid-file=/var/lib/nova/networks/nova-br100.pid
     --listen-address=192.168.100.1
     --except-interface=lo
@@ -820,8 +799,8 @@ The output looks something like the following:
     --dhcp-lease-max=256
     --dhcp-hostsfile=/var/lib/nova/networks/nova-br100.conf
     --dhcp-script=/usr/bin/nova-dhcpbridge --leasefile-ro
-     root 2439 0.0 0.0 27512 472 ? S Feb26 0:00 /usr/sbin/dnsmasq --strict-order
-   --bind-interfaces --conf-file=
+   root 2439 0.0 0.0 27512 472 ? S Feb26 0:00 /usr/sbin/dnsmasq --strict-order
+    --bind-interfaces --conf-file=
     --domain=novalocal --pid-file=/var/lib/nova/networks/nova-br100.pid
     --listen-address=192.168.100.1
     --except-interface=lo
@@ -923,8 +902,7 @@ listening with ``tcpdump`` on the compute node:
 .. code-block:: console
 
    # tcpdump -i br100 -n -v udp port 53
-   tcpdump: listening on br100, link-type EN10MB (Ethernet), capture size 65535
-   bytes
+   tcpdump: listening on br100, link-type EN10MB (Ethernet), capture size 65535 bytes
 
 Then, if you use SSH to log into your instance and try ``ping openstack.org``,
 you should see something like:
@@ -932,10 +910,10 @@ you should see something like:
 .. code-block:: console
 
    16:36:18.807518 IP (tos 0x0, ttl 64, id 56057, offset 0, flags [DF],
-   proto UDP (17), length 59)
+    proto UDP (17), length 59)
     192.168.100.4.54244 > 192.168.100.1.53: 2+ A? openstack.org. (31)
    16:36:18.808285 IP (tos 0x0, ttl 64, id 0, offset 0, flags [DF],
-   proto UDP (17), length 75)
+    proto UDP (17), length 75)
     192.168.100.1.53 > 192.168.100.4.54244: 2 1/0/0 openstack.org. A
     174.143.194.225 (47)
 
@@ -1061,21 +1039,21 @@ interfaces exist in the first qdhcp namespace returned above, do this:
        inet 10.0.1.100/24 brd 10.0.1.255 scope global tape6256f7d-31
        inet 169.254.169.254/16 brd 169.254.255.255 scope global tape6256f7d-31
        inet6 fe80::f816:3eff:feaa:f7a1/64 scope link
-          valid_lft forever preferred_lft forever
+       valid_lft forever preferred_lft forever
    28: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN
        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
        inet 127.0.0.1/8 scope host lo
        inet6 ::1/128 scope host
-          valid_lft forever preferred_lft forever
+       valid_lft forever preferred_lft forever
 
 From this you see that the DHCP server on that network is using the
-tape6256f7d-31 device and has an IP address of 10.0.1.100. Seeing the
-address 169.254.169.254, you can also see that the dhcp-agent is running
-a metadata-proxy service. Any of the commands mentioned previously in
-this chapter can be run in the same way. It is also possible to run a
-shell, such as ``bash``, and have an interactive session within the
-namespace. In the latter case, exiting the shell returns you to the
-top-level default namespace.
+``tape6256f7d-31`` device and has an IP address of ``10.0.1.100``.
+Seeing the address ``169.254.169.254``, you can also see that the
+dhcp-agent is running a metadata-proxy service. Any of the commands
+mentioned previously in this chapter can be run in the same way.
+It is also possible to run a shell, such as ``bash``, and have an
+interactive session within the namespace. In the latter case,
+exiting the shell returns you to the top-level default namespace.
 
 Summary
 ~~~~~~~
