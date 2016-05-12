@@ -47,6 +47,22 @@ Swap
   Amount of swap space (in megabytes) to use. If
   unspecified, the value is 0 by default.
 
+RXTX Factor
+  Optional property that allows servers with a different bandwidth be
+  created with the RXTX Factor. The default value is ``1.0``. That is,
+  the new bandwidth is the same as that of the attached network. The
+  RXTX Factor is available only for Xen or NSX based systems.
+
+Is Public
+  Boolean value defines whether the flavor is available to all users.
+  Defaults to ``True``.
+
+Extra Specs
+  Key and value pairs that define on which compute nodes a
+  flavor can run. These pairs must match corresponding pairs on
+  the compute nodes. It can be used to implement special resources, such
+  as flavors that run on only compute nodes with GPU hardware.
+
 The default flavors are:
 
 ============  =========  ===============  ===============
