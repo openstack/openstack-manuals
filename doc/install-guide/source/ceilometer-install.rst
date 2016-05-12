@@ -23,7 +23,7 @@ MongoDB before proceeding further.
 
          # mongo --host controller --eval '
            db = db.getSiblingDB("ceilometer");
-           db.addUser({user: "ceilometer",
+           db.createUser({user: "ceilometer",
            pwd: "CEILOMETER_DBPASS",
            roles: [ "readWrite", "dbAdmin" ]})'
 
