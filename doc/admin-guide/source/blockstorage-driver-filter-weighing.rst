@@ -86,10 +86,11 @@ highest).
 
 .. important::
 
-   Default values for the filter and goodness functions will be used
-   for each back end if you do not define them yourself. If complete
-   control is desired then a filter and goodness function should be
-   defined for each of the back ends in the ``cinder.conf`` file.
+   The drive filter and weigher will use default values for filter and
+   goodness functions for each back end if you do not define them
+   yourself. If complete control is desired then a filter and goodness
+   function should be defined for each of the back ends in
+   the ``cinder.conf`` file.
 
 
 Supported operations in filter and goodness functions
@@ -116,8 +117,8 @@ and goodness functions created by you:
 
 .. caution::
 
-   Syntax errors in filter or goodness strings defined by you will
-   cause errors to be thrown at volume request time.
+   Syntax errors you define in filter or goodness strings
+   are thrown at a volume request time.
 
 Available properties when creating custom functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
