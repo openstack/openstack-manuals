@@ -8,7 +8,7 @@ The OpenStack community has the following documentation specialty teams with
 their respective leads:
 
 * `API`_: Anne Gentle
-* `Configuration Reference`_: Gauvain Pocentek
+* `Configuration Reference`_: Tomoyuki Kato
 * `High Availability Guide`_: Bogdan Dobrelya
 * `Hypervisor Tuning Guide`_: Joe Topjian
 * `Installation guides`_: Lana Brindley
