@@ -21,6 +21,7 @@ System administration
    compute-service-groups.rst
    compute-security.rst
    compute-node-down.rst
+   compute-adv-config.rst
 
 To effectively administer Compute, you must understand how the different
 installed nodes interact with each other. Compute can be installed in
