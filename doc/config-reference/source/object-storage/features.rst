@@ -463,8 +463,8 @@ resellers. There is no account quota limitation on a reseller account even if
 Any object PUT operations that exceed the quota return a 413 response (request
 entity too large) with a descriptive body.
 
-The following command uses an admin account that own the Reseller role to set a
-quota on the test account:
+The following command uses an admin account that owns the Reseller role to
+set a quota on the test account:
 
 .. code-block:: console
 
