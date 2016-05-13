@@ -33,8 +33,20 @@ Contents
    compute-node-ha.rst
    noncore-ha.rst
 
+Appendix
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
 
    common/app_support.rst
+
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    common/glossary.rst
 
 Search in this guide

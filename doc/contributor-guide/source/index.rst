@@ -36,6 +36,13 @@ Contents
    json-conventions.rst
    ui-text-guidelines.rst
    doc-tools.rst
+
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    common/glossary.rst
 
 Search in this guide

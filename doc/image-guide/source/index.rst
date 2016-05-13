@@ -23,7 +23,19 @@ Contents
    create-images-automatically.rst
    convert-images.rst
 
+Appendix
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    common/app_support.rst
+
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
 
    common/glossary.rst
 

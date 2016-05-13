@@ -21,7 +21,6 @@ Contents
    :maxdepth: 2
 
    common/conventions.rst
-
    introduction.rst
    legal-security-requirements.rst
    generalpurpose.rst
@@ -34,7 +33,19 @@ Contents
    specialized.rst
    references.rst
 
+Appendix
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
    common/app_support.rst
+
+Glossary
+~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
 
    common/glossary.rst
 
