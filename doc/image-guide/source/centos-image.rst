@@ -3,7 +3,7 @@ Example: CentOS image
 =====================
 
 This example shows you how to install a CentOS image and focuses
-mainly on CentOS 6.4. Because the CentOS installation process
+mainly on CentOS 7. Because the CentOS installation process
 might differ across versions, the installation steps might
 differ if you use a different version of CentOS.
 
@@ -11,15 +11,15 @@ Download a CentOS install ISO
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Navigate to the `CentOS mirrors
-   <http://www.centos.org/download/mirrors/>`_ page.
+   <https://www.centos.org/download/mirrors/>`_ page.
 #. Click one of the ``HTTP`` links in the right-hand
    column next to one of the mirrors.
 #. Click the folder link of the CentOS version that
-   you want to use. For example, ``6.4/``.
+   you want to use. For example, ``7/``.
 #. Click the ``isos/`` folder link.
 #. Click the ``x86_64/`` folder link for 64-bit images.
 #. Click the netinstall ISO image that you want to download.
-   For example, ``CentOS-6.4-x86_64-netinstall.iso`` is a good
+   For example, ``CentOS-7-x86_64-NetInstall-1511.iso`` is a good
    choice because it is a smaller image that downloads missing
    packages from the Internet during installation.
 
@@ -33,7 +33,7 @@ VNC client to the virtual machine.
 
 Assume that:
 
-* The name of your virtual machine image is ``centos-6.4``;
+* The name of your virtual machine image is ``centos``;
   you need this name when you use :command:`virsh` commands
   to manipulate the state of the image.
 * You saved the netinstall ISO image to the ``/data/isos`` directory.
@@ -43,31 +43,31 @@ something like this:
 
 .. code-block:: console
 
-   # qemu-img create -f qcow2 /tmp/centos-6.4.qcow2 10G
-   # virt-install --virt-type kvm --name centos-6.4 --ram 1024 \
-     --disk /tmp/centos-6.4.qcow2,format=qcow2 \
+   # qemu-img create -f qcow2 /tmp/centos.qcow2 10G
+   # virt-install --virt-type kvm --name centos --ram 1024 \
+     --disk /tmp/centos.qcow2,format=qcow2 \
      --network network=default \
      --graphics vnc,listen=0.0.0.0 --noautoconsole \
-     --os-type=linux --os-variant=rhel6 \
-     --extra-args="console=tty0 console=ttyS0,115200n8 serial" \
-     --location=/data/isos/CentOS-6.4-x86_64-netinstall.iso
+     --os-type=linux --os-variant=rhel7 \
+     --location=/data/isos/CentOS-7-x86_64-NetInstall-1511.iso
 
 Step through the installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At the initial Installer boot menu, choose the
-:guilabel:`Install or upgrade an existing system` option.
+:guilabel:`Install CentOS 7` option.
 Step through the installation prompts. Accept the defaults.
 
 .. figure:: figures/centos-install.png
    :width: 100%
 
-Configure TCP/IP
-~~~~~~~~~~~~~~~~
+Change the Ethernet status
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The default TCP/IP settings are fine.
-In particular, ensure that ``Enable IPv4 support`` is enabled
-with DHCP, which is the default.
+The default Ethernet setting is ``OFF``. Change the setting of
+the Ethernet form ``OFF`` to ``ON``. In particular, ensure that
+``IPv4 Settings' Method`` is ``Automatic (DHCP)``, which is the
+default.
 
 .. figure:: figures/centos-tcpip.png
    :width: 100%
@@ -75,16 +75,11 @@ with DHCP, which is the default.
 Point the installer to a CentOS web server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Choose URL as the installation method.
-
-.. figure:: figures/centos-install-method.png
-   :width: 100%
-
 Depending on the version of CentOS, the net installer requires
 the user to specify either a URL or the web site and
 a CentOS directory that corresponds to one of the CentOS mirrors.
 If the installer asks for a single URL, a valid URL might be
-``http://mirror.umd.edu/centos/6/os/x86_64``.
+``http://mirror.umd.edu/centos/7/os/x86_64``.
 
 .. note::
 
@@ -97,9 +92,9 @@ If the installer asks for web site name and CentOS directory
 separately, you might enter:
 
 * Web site name: ``mirror.umd.edu``
-* CentOS directory: ``centos/6/os/x86_64``
+* CentOS directory: ``centos/7/os/x86_64``
 
-See `CentOS mirror page <http://www.centos.org/download/mirrors/>`_
+See `CentOS mirror page <https://www.centos.org/download/mirrors/>`_
 to get a full list of mirrors, click on the ``HTTP`` link
 of a mirror to retrieve the web site name of a mirror.
 
@@ -107,7 +102,7 @@ Storage devices
 ~~~~~~~~~~~~~~~
 
 If prompted about which type of devices your installation uses,
-choose :guilabel:`Basic Storage Devices`.
+choose :guilabel:`Virtio Block Device`.
 
 Hostname
 ~~~~~~~~
@@ -134,9 +129,22 @@ Step through the installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Step through the installation, using the default options.
-The simplest thing to do is to choose the ``Basic Server`` install
-(may be called ``Server`` install on older versions of CentOS),
-which installs an SSH server.
+The simplest thing to do is to choose the ``Minimal Install``
+install, which installs an SSH server.
+
+Install the ACPI service
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To enable the hypervisor to reboot or shutdown an instance,
+you must install and run the ``acpid`` service on the guest system.
+
+Run the following commands inside the CentOS guest to install the
+ACPI service and configure it to start when the system boots:
+
+.. code-block:: console
+
+   # yum install acpid
+   # systemctl enable acpid
 
 Detach the CD-ROM and reboot
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,9 +164,9 @@ You can confirm the appropriate target using the
 
 .. code-block:: console
 
-   # virsh dumpxml centos-6.4
-   <domain type='kvm'>
-     <name>centos-6.4</name>
+   # virsh dumpxml centos
+   <domain type='kvm' id='19'>
+     <name>centos</name>
    ...
        <disk type='block' device='cdrom'>
          <driver name='qemu' type='raw'/>
@@ -176,9 +184,8 @@ and reboot it by manually stopping and starting.
 
 .. code-block:: console
 
-   # virsh attach-disk --type cdrom --mode readonly centos-6.4 "" hdc
-   # virsh destroy centos-6.4
-   # virsh start centos-6.4
+   # virsh attach-disk --type cdrom --mode readonly centos "" hdc
+   # virsh reboot centos
 
 Log in to newly created image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -186,20 +193,6 @@ Log in to newly created image
 When you boot for the first time after installation,
 you might be prompted about authentication tools.
 Select :guilabel:`Exit`. Then, log in as root.
-
-Install the ACPI service
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-To enable the hypervisor to reboot or shutdown an instance,
-you must install and run the ``acpid`` service on the guest system.
-
-Run the following commands inside the CentOS guest to install the
-ACPI service and configure it to start when the system boots:
-
-.. code-block:: console
-
-   # yum install acpid
-   # chkconfig acpid on
 
 Configure to fetch metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -225,7 +218,7 @@ adding the EPEL repo:
 
 .. code-block:: console
 
-   # yum install http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+   # yum install http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm
    # yum install cloud-init
 
 The account varies by distribution. On Ubuntu-based virtual machines,
@@ -311,15 +304,32 @@ Configure console
 ~~~~~~~~~~~~~~~~~
 
 For the :command:`nova console-log` command to work properly
-on CentOS 6.``x``, you might need to add the following lines
-to the ``/boot/grub/menu.lst`` file:
+on CentOS 7.``x``, you might need to do the following steps:
 
-.. code-block:: console
+#. Edit the ``/etc/default/grub`` file and configure the
+   ``GRUB_CMDLINE_LINUX`` option. Delete the ``rhgb quiet``
+   and add the ``console=tty0 console=ttyS0,115200n8`` to the option:
 
-   serial --unit=0 --speed=115200
-   terminal --timeout=10 console serial
-   # Edit the kernel line to add the console entries
-   kernel ... console=tty0 console=ttyS0,115200n8
+   .. code-block:: ini
+
+     ...
+     GRUB_CMDLINE_LINUX="crashkernel=auto console=tty0 console=ttyS0,115200n8"
+
+#. Run the following command to save the changes:
+
+   .. code-block:: console
+
+     # grub2-mkconfig -o /boot/grub2/grub.cfg
+     Generating grub configuration file ...
+     Found linux image: /boot/vmlinuz-3.10.0-229.14.1.el7.x86_64
+     Found initrd image: /boot/initramfs-3.10.0-229.14.1.el7.x86_64.img
+     Found linux image: /boot/vmlinuz-3.10.0-229.4.2.el7.x86_64
+     Found initrd image: /boot/initramfs-3.10.0-229.4.2.el7.x86_64.img
+     Found linux image: /boot/vmlinuz-3.10.0-229.el7.x86_64
+     Found initrd image: /boot/initramfs-3.10.0-229.el7.x86_64.img
+     Found linux image: /boot/vmlinuz-0-rescue-605f01abef434fb98dd1309e774b72ba
+     Found initrd image: /boot/initramfs-0-rescue-605f01abef434fb98dd1309e774b72ba.img
+     done
 
 Shut down the instance
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -346,7 +356,7 @@ It will clean up a virtual machine image in place:
 
 .. code-block:: console
 
-   # virt-sysprep -d centos-6.4
+   # virt-sysprep -d centos
 
 Undefine the libvirt domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -357,12 +367,12 @@ Use the :command:`virsh undefine vm-image` command to inform libvirt:
 
 .. code-block:: console
 
-   # virsh undefine centos-6.4
+   # virsh undefine centos
 
 Image is complete
 ~~~~~~~~~~~~~~~~~
 
 The underlying image file that you created with the
 :command:`qemu-img create` command is ready to be uploaded.
-For example, you can upload the ``/tmp/centos-6.4.qcow2``
+For example, you can upload the ``/tmp/centos.qcow2``
 image to the Image service.
