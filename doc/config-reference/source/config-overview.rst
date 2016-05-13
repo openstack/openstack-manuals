@@ -7,6 +7,7 @@ OpenStack configuration overview
 
    common/conventions.rst
    config-format.rst
+   mutable.rst
 
 OpenStack is a collection of open source project components
 that enable setting up cloud services. Each component uses similar
