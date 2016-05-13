@@ -231,7 +231,7 @@ additions.
    socket=/var/lib/mysql/mysql.sock
    user=mysql
    binlog_format=ROW
-   bind-address=0.0.0.0
+   bind-address=10.0.0.12
 
    # InnoDB Configuration
    default_storage_engine=innodb
@@ -257,12 +257,15 @@ there are some that you must define an outset to avoid conflict or
 unexpected behavior.
 
 - Ensure that the database server is not bound only to to the localhost,
-  ``127.0.0.1``. Instead, bind it to ``0.0.0.0`` to ensure it listens on
-  all available interfaces.
+  ``127.0.0.1``. Also, do not bind it to ``0.0.0.0``. It makes ``mySQL``
+  bind to all IP addresses on the machine including the virtual IP address,
+  which will cause ``HAProxy`` not to start. Instead, bind it to the
+  management IP address of the controller node to enable access by other
+  nodes through the management network:
 
   .. code-block:: ini
 
-     bind-address=0.0.0.0
+     bind-address=10.0.0.12
 
 - Ensure that the binary log format is set to use row-level replication,
   as opposed to statement-level replication:
