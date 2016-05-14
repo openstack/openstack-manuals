@@ -898,15 +898,14 @@ C
       its associated metadata, such as machine state, OS disk size, and so
       on.
 
+   Container Infrastructure Management service
+
+      To provide a set of services for provisioning, scaling, and managing
+      container orchestration engines.
+
    container server
 
       An Object Storage server that manages containers.
-
-   Containers service
-
-      OpenStack project that provides a set of services for
-      management of application containers in a multi-tenant cloud
-      environment. The code name of the project name is magnum.
 
    container service
 

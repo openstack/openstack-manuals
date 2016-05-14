@@ -60,7 +60,7 @@ service with its package name and description.
      - nova
      - python-novaclient
      - Creates and manages images, instances, and flavors.
-   * - Containers service
+   * - Container Infrastructure Management service
      - magnum
      - python-magnumclient
      - Creates and manages containers.

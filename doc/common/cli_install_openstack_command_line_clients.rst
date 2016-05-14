@@ -172,7 +172,7 @@ list below.
 *  ``gnocchi`` - Telemetry API v3
 *  ``heat`` - Orchestration API
 *  ``keystone`` - Identity service API and extensions
-*  ``magnum`` - Containers service API
+*  ``magnum`` - Container Infrastructure Management service API
 *  ``manila`` - Shared file systems API
 *  ``mistral`` - Workflow service API
 *  ``monasca`` - Monitoring API

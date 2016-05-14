@@ -172,7 +172,7 @@ The following Launchpad Bugs areas are available:
 
 *  `Bugs: Clustering service (senlin) <https://bugs.launchpad.net/senlin>`__
 
-*  `Bugs: Containers service (magnum) <https://bugs.launchpad.net/magnum>`__
+*  `Bugs: Container Infrastructure Management service (magnum) <https://bugs.launchpad.net/magnum>`__
 
 *  `Bugs: Data processing service
    (sahara) <https://bugs.launchpad.net/sahara>`__
