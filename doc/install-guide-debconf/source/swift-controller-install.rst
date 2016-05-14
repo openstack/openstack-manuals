@@ -1,0 +1,1 @@
+../../install-guide/source/swift-controller-install.rst

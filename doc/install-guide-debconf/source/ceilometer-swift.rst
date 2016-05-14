@@ -1,0 +1,1 @@
+../../install-guide/source/ceilometer-swift.rst

@@ -1,0 +1,1 @@
+../../install-guide/source/manila-share-install.rst
