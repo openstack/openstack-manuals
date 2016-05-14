@@ -30,8 +30,8 @@ Configure Identity service for Networking
 
    .. code-block:: console
 
-      $ NEUTRON_SERVICE_ID=$(get_id keystone service-create --name
-      neutron --type network --description 'OpenStack Networking Service')
+      $ NEUTRON_SERVICE_ID=$(get_id openstack service create network
+      --name neutron --description 'OpenStack Networking Service')
 
 #. Create the Networking service endpoint entry
 
@@ -45,20 +45,18 @@ Configure Identity service for Networking
 
       .. code-block:: console
 
-         $ keystone endpoint-create --region $REGION --service-id \
-           $NEUTRON_SERVICE_ID \
-          --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' \
-          --internalurl 'http://$IP:9696/'
+         $ openstack endpoint create $NEUTRON_SERVICE_ID --region $REGION \
+         --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' \
+         --internalurl 'http://$IP:9696/'
 
       For example:
 
       .. code-block:: console
 
-         $ keystone endpoint-create --region myregion --service-id \
-           $NEUTRON_SERVICE_ID \
-          --publicurl "http://10.211.55.17:9696/" --adminurl \
-          "http://10.211.55.17:9696/" --internalurl \
-          "http://10.211.55.17:9696/"
+         $ openstack endpoint create $NEUTRON_SERVICE_ID --region myregion \
+         --publicurl "http://10.211.55.17:9696/" --adminurl \
+         "http://10.211.55.17:9696/" --internalurl \
+         "http://10.211.55.17:9696/"
 
    -  If you are using the ``template driver``, specify the following
       parameters in your Compute catalog template file
@@ -92,28 +90,29 @@ Configure Identity service for Networking
 
       .. code-block:: console
 
-         $ ADMIN_ROLE=$(get_id keystone role-create --name admin)
+         $ ADMIN_ROLE=$(get_id openstack role create admin)
 
    b. Create the ``neutron`` user:
 
       .. code-block:: console
 
-         $ NEUTRON_USER=$(get_id keystone user-create --name neutron\
-         --pass "$NEUTRON_PASSWORD" --email demo@example.com --tenant-id service)
+         $ NEUTRON_USER=$(get_id openstack user create neutron \
+         --password "$NEUTRON_PASSWORD" --email demo@example.com \
+         --project service)
 
    c. Create the ``service`` tenant:
 
       .. code-block:: console
 
-         $ SERVICE_TENANT=$(get_id keystone tenant-create --name
-         service --description "Services Tenant")
+         $ SERVICE_TENANT=$(get_id openstack project create service
+         --description "Services project")
 
    d. Establish the relationship among the tenant, user, and role:
 
       .. code-block:: console
 
-         $ keystone user-role-add --user_id $NEUTRON_USER \
-         --role_id $ADMIN_ROLE --tenant_id $SERVICE_TENANT
+         $ openstack role add $ADMIN_ROLE --user $NEUTRON_USER \
+         --project $SERVICE_TENANT
 
 For information about how to create service entries and users, see the
 OpenStack Installation Guide for your distribution
