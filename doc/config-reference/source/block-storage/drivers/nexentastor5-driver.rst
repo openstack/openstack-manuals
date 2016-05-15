@@ -122,6 +122,28 @@ volume driver controls:
       # Specify NFS version
       nas_mount_options=vers=4
 
+#. Create filesystem on appliance and share via NFS. For example:
+
+   .. code-block:: ini
+
+      "securityContexts": [
+         {"readWriteList": [{"allow": true, "etype": "fqnip", "entity": "1.1.1.1"}],
+          "root": [{"allow": true, "etype": "fqnip", "entity": "1.1.1.1"}],
+          "securityModes": ["sys"]}]
+
+#. Create ACL for the filesystem. For example:
+
+   .. code-block:: ini
+
+      {"type": "allow",
+      "principal": "everyone@",
+      "permissions": ["list_directory","read_data","add_file","write_data",
+      "add_subdirectory","append_data","read_xattr","write_xattr","execute",
+      "delete_child","read_attributes","write_attributes","delete","read_acl",
+      "write_acl","write_owner","synchronize"],
+      "flags": ["file_inherit","dir_inherit"]}
+
+
 Driver options
 ~~~~~~~~~~~~~~
 
