@@ -1,9 +1,9 @@
-=========================
-Role-Based Access Control
-=========================
+================================
+Role-Based Access Control (RBAC)
+================================
 
-A new policy framework was added in Liberty that allows both
-operators and users to grant access to resources for specific projects.
+The Role-Based Access Control (RBAC) policy framework enables both operators
+and users to grant access to resources for specific projects.
 
 
 Supported objects for sharing with specific projects
@@ -14,6 +14,7 @@ is supported by:
 
 * Regular port creation permissions on networks (since Liberty).
 * Binding QoS policies permissions to networks or ports (since Mitaka).
+* Attaching router gateways to networks (since Mitaka).
 
 
 Sharing an object with specific projects
@@ -261,6 +262,153 @@ If there is a wildcard entry, the ``shared`` flag is always set to ``True``.
 If there are only entries that share with specific projects, only
 the projects the object is shared to will see the flag as ``True``
 and the rest will see the flag as ``False``.
+
+
+Allowing a network to be used as an external network
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To make a network available as an external network for specific projects
+rather than all projects, use the ``access_as_external`` action.
+
+#. Create a network that you want to be available as an external network:
+
+   .. code-block:: console
+
+      $ neutron net-create secret_external_network
+
+      Created a new network:
+      +---------------------------+--------------------------------------+
+      | Field                     | Value                                |
+      +---------------------------+--------------------------------------+
+      | admin_state_up            | True                                 |
+      | availability_zone_hints   |                                      |
+      | availability_zones        |                                      |
+      | created_at                | 2016-04-30T06:51:46                  |
+      | description               |                                      |
+      | id                        | f9e39715-f7da-4bca-a74d-fc3675321661 |
+      | ipv4_address_scope        |                                      |
+      | ipv6_address_scope        |                                      |
+      | mtu                       | 1450                                 |
+      | name                      | secret_external_network              |
+      | port_security_enabled     | True                                 |
+      | provider:network_type     | vxlan                                |
+      | provider:physical_network |                                      |
+      | provider:segmentation_id  | 1073                                 |
+      | router:external           | False                                |
+      | shared                    | False                                |
+      | status                    | ACTIVE                               |
+      | subnets                   |                                      |
+      | tags                      |                                      |
+      | tenant_id                 | dfe49b63660e494fbdbf6ad2ca2a810f     |
+      | updated_at                | 2016-04-30T06:51:46                  |
+      +---------------------------+--------------------------------------+
+
+#. Create a policy entry using the :command:`rbac-create` command (in
+   this example, the ID of the project we want to share with is
+   ``e28769db97d9449da658bc6931fcb683``):
+
+   .. code-block:: console
+
+      $ neutron rbac-create --target-tenant e28769db97d9449da658bc6931fcb683 \
+        --action access_as_external --type network f9e39715-f7da-4bca-a74d-fc3675321661
+
+      Created a new rbac_policy:
+      +---------------+--------------------------------------+
+      | Field         | Value                                |
+      +---------------+--------------------------------------+
+      | action        | access_as_external                   |
+      | id            | c26b3b05-5781-48a1-a36a-fb63072b5e56 |
+      | object_id     | f9e39715-f7da-4bca-a74d-fc3675321661 |
+      | object_type   | network                              |
+      | target_tenant | e28769db97d9449da658bc6931fcb683     |
+      | tenant_id     | dfe49b63660e494fbdbf6ad2ca2a810f     |
+      +---------------+--------------------------------------+
+
+The ``target-tenant`` parameter specifies the project that requires
+access to the network. The ``action`` parameter specifies what
+the project is allowed to do. The ``type`` parameter indicates
+that the target object is a network. The final parameter is the ID of
+the network we are granting external access to.
+
+Now project ``e28769db97d9449da658bc6931fcb683`` is able to see
+the network when running :command:`net-list` and :command:`net-show`
+and can attach router gateway ports to that network. No other users
+(other than admins and the owner) are able to see the network.
+
+To remove access for that project, delete the policy that allows
+it using the :command:`rbac-delete` command:
+
+.. code-block:: console
+
+   $ neutron rbac-delete c26b3b05-5781-48a1-a36a-fb63072b5e56
+   Deleted rbac_policy: c26b3b05-5781-48a1-a36a-fb63072b5e56
+
+If that project has router gateway ports attached to that network,
+the server prevents the policy from being deleted until the
+ports have been deleted:
+
+.. code-block:: console
+
+   $ neutron rbac-delete c26b3b05-5781-48a1-a36a-fb63072b5e56
+   RBAC policy on object f9e39715-f7da-4bca-a74d-fc3675321661
+   cannot be removed because other objects depend on it.
+
+This process can be repeated any number of times to make a network
+available as external to an arbitrary number of projects.
+
+If a network is marked as external during creation, it now implicitly
+creates a wildcard RBAC policy granting everyone access to preserve
+previous behavior before this feature was added.
+
+.. code-block:: console
+
+   $ neutron net-create global_external_network --router:external
+
+   Created a new network:
+   +---------------------------+--------------------------------------+
+   | Field                     | Value                                |
+   +---------------------------+--------------------------------------+
+   | admin_state_up            | True                                 |
+   | availability_zone_hints   |                                      |
+   | availability_zones        |                                      |
+   | created_at                | 2016-04-30T07:00:57                  |
+   | description               |                                      |
+   | id                        | cb78991c-cdde-445b-a8ca-d819b9266756 |
+   | ipv4_address_scope        |                                      |
+   | ipv6_address_scope        |                                      |
+   | is_default                | False                                |
+   | mtu                       | 1450                                 |
+   | name                      | global_external_network              |
+   | port_security_enabled     | True                                 |
+   | provider:network_type     | vxlan                                |
+   | provider:physical_network |                                      |
+   | provider:segmentation_id  | 1007                                 |
+   | router:external           | True                                 |
+   | shared                    | False                                |
+   | status                    | ACTIVE                               |
+   | subnets                   |                                      |
+   | tags                      |                                      |
+   | tenant_id                 | dfe49b63660e494fbdbf6ad2ca2a810f     |
+   | updated_at                | 2016-04-30T07:00:57                  |
+   +---------------------------+--------------------------------------+
+
+In the output above the standard ``router:external`` attribute is
+``True`` as expected. Now a wildcard policy is visible in the
+RBAC policy listings:
+
+.. code-block:: console
+
+   $ neutron rbac-list --object_id=cb78991c-cdde-445b-a8ca-d819b9266756 \
+     -c id -c target_tenant
+
+   +--------------------------------------+---------------+
+   | id                                   | target_tenant |
+   +--------------------------------------+---------------+
+   | 2b72fe2e-20cf-4856-af12-3ac0733604d8 | *             |
+   +--------------------------------------+---------------+
+
+You can modify or delete this policy with the same constraints
+as any other RBAC ``access_as_external`` policy.
 
 
 Preventing regular users from sharing objects with each other
