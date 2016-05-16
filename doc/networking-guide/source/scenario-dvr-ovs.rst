@@ -169,13 +169,10 @@ The compute nodes contain the following network components:
 
 #. Metadata agent handling metadata operations for instances using project
    networks on distributed routers.
-#. Linux bridges handling security groups.
-
-   .. note::
-
-      Due to limitations with Open vSwitch and *iptables*, the Networking
-      service uses a Linux bridge to manage security groups for
-      instances.
+#. Conventional Linux bridges handling security groups. Optionally, a native
+   OVS implementation can handle security groups. However, due to kernel and
+   OVS version requirements for it, this scenario uses conventional Linux
+   bridges. See :ref:`adv-config-ovsfwdriver` for more information.
 
 .. image:: figures/scenario-dvr-compute1.png
    :alt: Network node components - overview
