@@ -198,17 +198,11 @@ Install and configure components
 
 .. only:: obs or rdo or ubuntu
 
-2. In ``/etc/trove``, edit the following configuration files,
-   taking the below actions for each file:
+2. In the ``/etc/trove`` directory, edit the ``trove.conf``,
+   ``trove-taskmanager.conf`` and ``trove-conductor.conf`` files and
+   complete the following steps:
 
-   ``trove.conf``
-
-   ``trove-taskmanager.conf``
-
-   ``trove-conductor.conf``
-
-   * Provide appropriate
-     values for the following settings:
+   * Provide appropriate values for the following settings:
 
      .. code-block:: ini
 
@@ -223,9 +217,8 @@ Install and configure components
         [database]
         connection = mysql://trove:TROVE_DBPASS@controller/trove
 
-   * Configure the Database module to use the ``RabbitMQ`` message broker
-     by setting the following options in the ``[DEFAULT]`` configuration
-     group of each file:
+   * Configure the Database service to use the ``RabbitMQ`` message broker
+     by setting the following options in each file:
 
      .. code-block:: ini
 
@@ -239,8 +232,7 @@ Install and configure components
         rabbit_userid = openstack
         rabbit_password = RABBIT_PASS
 
-3. Verify that the ``api-paste.ini``
-   file is present in ``/etc/trove``.
+3. Verify that the ``api-paste.ini`` file is present in ``/etc/trove``.
 
    If the file is not present, you can get it from this
    `location <http://git.openstack.org/cgit/openstack/trove/plain/etc/trove/api-paste.ini?h=stable/mitaka>`__.
@@ -287,7 +279,7 @@ Install and configure components
       nova_proxy_admin_tenant_name = service
       taskmanager_manager = trove.taskmanager.manager.Manager
 
-6. In ``etc/trove``, edit the ``trove-guestagent.conf`` file
+6. Edit the ``/etc/trove/trove-guestagent.conf`` file
    so that future trove guests can connect to your OpenStack environment:
 
    .. code-block:: ini
@@ -318,8 +310,8 @@ Finalize installation
 
 .. only:: ubuntu
 
-   1. Due to a bug in the Ubuntu packages, you need to edit the
-      service definition files to use the correct configuration settings.
+   1. Due to a bug in the Ubuntu packages, edit the service definition files
+      to use the correct configuration settings.
 
       To do this, navigate to ``/etc/init`` and edit the following files
       as described below:
