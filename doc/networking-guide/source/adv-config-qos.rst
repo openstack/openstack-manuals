@@ -161,6 +161,13 @@ First, create a QoS policy and its bandwidth limit rule:
    of the parameter might suggest. This is an amount of data which can be sent
    before the bandwidth limit applies.
 
+.. note::
+
+   The QoS implementation requires a burst value to ensure proper behavior of
+   bandwidth limit rules in the Open vSwitch and Linux bridge agents. If you
+   do not provide a value, it defaults to 80% of the bandwidth limit which
+   works for typical TCP traffic.
+
 Second, associate the created policy with an existing neutron port.
 In order to do this, user extracts the port id to be associated to
 the already created policy. In the next example, we will assign the
