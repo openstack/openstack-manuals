@@ -80,6 +80,8 @@ This section describes the available configuration options.
    OpenFlow Agent (ofagent) Mechanism driver has been removed
    as of Newton.
 
+.. include:: ../tables/neutron-ml2.rst
+
 Modular Layer 2 (ml2) Flat Type configuration options
 -----------------------------------------------------
 
