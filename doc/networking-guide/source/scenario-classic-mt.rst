@@ -445,7 +445,7 @@ Compute nodes
       physical_interface_mappings = vlan:PROJECT_VLAN_INTERFACE
 
       [securitygroup]
-      firewall_driver = noop
+      firewall_driver = neutron.agent.firewall.NoopFirewallDriver
 
    Replace ``PROJECT_VLAN_INTERFACE`` with the name of the underlying
    interface that handles VLAN project networks and external networks,
