@@ -18,23 +18,23 @@ Contents
 
    quickstart.rst
    additional-git-workflow.rst
-   writing-style.rst
-   topic-structure.rst
-   topic-tags.rst
-   api-guides.rst
-   rst-conv.rst
-   docbook-conv.rst
-   docs-structure.rst
-   team-structure.rst
-   content-specs.rst
-   tools-and-content-overview.rst
+   blueprints-and-specs.rst
    doc-bugs.rst
    docs-review.rst
+   team-structure.rst
+   docs-structure.rst
+   content-specs.rst
+   api-guides.rst
+   topic-structure.rst
+   topic-tags.rst
+   writing-style.rst
+   ui-text-guidelines.rst
+   rst-conv.rst
+   json-conventions.rst
+   docbook-conv.rst
+   tools-and-content-overview.rst
    docs-builds.rst
    build-locally.rst
-   blueprints-and-specs.rst
-   json-conventions.rst
-   ui-text-guidelines.rst
    doc-tools.rst
 
 Glossary
