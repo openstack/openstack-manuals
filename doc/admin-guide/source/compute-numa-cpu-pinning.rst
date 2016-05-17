@@ -174,6 +174,29 @@ siblings if available. This is the default, but it can be set explicitly:
        --property hw:cpu_policy=dedicated \
        --property hw:cpu_thread_policy=prefer
 
+For more information about the syntax for ``hw:cpu_policy`` and
+``hw:cpu_thread_policy``, refer to the `Flavors`_ guide.
+
+Applications are frequently packaged as images. For applications that require
+real-time or near real-time behavior, configure image metadata to ensure
+created instances are always pinned regardless of flavor. To configure an
+image to use pinned vCPUs and avoid thread siblings, run:
+
+.. code-block:: console
+
+   # openstack image set [IMAGE_ID] \
+       --property hw_cpu_policy=dedicated \
+       --property hw_cpu_thread_policy=isolate
+
+Image metadata takes precedence over flavor extra specs: configuring competing
+policies will result in an exception. By setting a ``shared`` policy through
+image metadata, administrators can prevent users configuring CPU policies in
+flavors and impacting resource utilization. To configure this policy, run:
+
+.. code-block:: console
+
+   # openstack image set [IMAGE_ID] --property hw_cpu_policy=shared
+
 .. note::
 
    There is no correlation required between the NUMA topology exposed in the
@@ -181,10 +204,11 @@ siblings if available. This is the default, but it can be set explicitly:
    design. See this `bug <https://bugs.launchpad.net/nova/+bug/1466780>`_ for
    more information.
 
-For more information about the syntax for ``hw:cpu_policy`` and
-``hw:cpu_thread_policy``, refer to the `Flavors`_ guide.
+For more information about image metadata, refer to the `Image metadata`_
+guide.
 
 .. Links
 .. _`Scheduling`: http://docs.openstack.org/mitaka/config-reference/compute/scheduler.html
 .. _`Flavors`: http://docs.openstack.org/admin-guide/compute-flavors.html
+.. _`Image metadata`: http://docs.openstack.org/image-guide/image-metadata.html
 .. _`discussion`: http://lists.openstack.org/pipermail/openstack-dev/2016-March/090367.html
