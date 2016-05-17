@@ -122,9 +122,9 @@ and define your endpoint like this:
 
 .. code-block:: console
 
-   $ keystone endpoint-create --region $KEYSTONE_REGION \
-      --service-id $service-id --publicurl 'http://PUBLIC_VIP:9292' \
-      --adminurl 'http://10.0.0.11:9292' \
-      --internalurl 'http://10.0.0.11:9292'
+   $ openstack endpoint create image --region $KEYSTONE_REGION \
+   --publicurl 'http://PUBLIC_VIP:9292' \
+   --adminurl 'http://10.0.0.11:9292' \
+   --internalurl 'http://10.0.0.11:9292'
 
 

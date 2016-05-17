@@ -230,9 +230,8 @@ you should create two virtual IPs and define your endpoint like this:
 
 .. code-block:: console
 
-   $ keystone endpoint-create --region $KEYSTONE_REGION \
-      --service-id $service-id \
-      --publicurl 'http://PUBLIC_VIP:8776/v1/%(tenant_id)s' \
-      --adminurl 'http://10.0.0.11:8776/v1/%(tenant_id)s' \
-      --internalurl 'http://10.0.0.11:8776/v1/%(tenant_id)s'
+   $ openstack endpoint create volume --region $KEYSTONE_REGION \
+   --publicurl 'http://PUBLIC_VIP:8776/v1/%(tenant_id)s' \
+   --adminurl 'http://10.0.0.11:8776/v1/%(tenant_id)s' \
+   --internalurl 'http://10.0.0.11:8776/v1/%(tenant_id)s'
 
