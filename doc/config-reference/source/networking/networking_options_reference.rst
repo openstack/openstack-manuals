@@ -77,9 +77,8 @@ automatically by the Compute service.
 This section describes the available configuration options.
 
 .. note::
-   OpenFlow Agent (ofagent) Mechanism driver is deprecated in favor
-   of OpenvSwitch mechanism driver with "native" of_interface in the
-   Mitaka release and will be removed in the next release.
+   OpenFlow Agent (ofagent) Mechanism driver has been removed
+   as of Newton.
 
 Modular Layer 2 (ml2) Flat Type configuration options
 -----------------------------------------------------
@@ -105,13 +104,6 @@ Modular Layer 2 (ml2) Geneve Mechanism configuration options
 -------------------------------------------------------------
 
 .. include:: ../tables/neutron-ml2_geneve.rst
-
-Modular Layer 2 (ml2) OpenFlow Agent (ofagent) Mechanism configuration options
-------------------------------------------------------------------------------
-
-ofagent is deprecated in the Mitaka release.
-
-.. include:: ../tables/neutron-ml2_ofa.rst
 
 Modular Layer 2 (ml2) L2 Population Mechanism configuration options
 -------------------------------------------------------------------
