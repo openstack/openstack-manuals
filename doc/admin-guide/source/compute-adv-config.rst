@@ -24,3 +24,4 @@ instance for these kind of workloads.
    :maxdepth: 2
 
    compute-pci-passthrough.rst
+   compute-numa-cpu-pinning.rst
