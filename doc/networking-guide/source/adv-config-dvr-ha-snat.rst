@@ -77,7 +77,7 @@ Controller node configuration
 
    .. note::
 
-      The *max_3_agents_per_router* and *min_l3_agents_per_router* determine
+      The *max_l3_agents_per_router* and *min_l3_agents_per_router* determine
       the number of backup DVR/SNAT routers which  will be instantiated.
 
 #. Add the following to ``/etc/neutron/plugins/ml2/ml2_conf.ini``:
