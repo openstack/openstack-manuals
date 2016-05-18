@@ -4,7 +4,7 @@ Launch and manage stacks using the CLI
 
 The Orchestration service provides a template-based
 orchestration engine. Administrators can use the orchestration engine
-to create and manage Openstack cloud infrastructure resources. For
+to create and manage OpenStack cloud infrastructure resources. For
 example, an administrator can define storage, networking, instances,
 and applications to use as a repeatable running environment.
 

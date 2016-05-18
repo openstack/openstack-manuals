@@ -4,7 +4,7 @@
 Attaching physical PCI devices to guests
 ========================================
 
-The PCI passthrough feature in Openstack allows full access and direct
+The PCI passthrough feature in OpenStack allows full access and direct
 control of a physical PCI device in guests. This mechanism is generic for any
 kind of PCI devices (for example: Network Interface Card (NIC), Graphics
 Processing Unit (GPU) or any other devices that can be attached to a PCI bus).

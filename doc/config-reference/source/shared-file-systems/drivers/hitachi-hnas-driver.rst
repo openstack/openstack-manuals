@@ -125,7 +125,7 @@ Pre-configuration on OpenStack deployment
 
    * Restart all neutron processes.
 
-#. Create the data HNAS network in Openstack:
+#. Create the data HNAS network in OpenStack:
 
    * List the available tenants:
 
