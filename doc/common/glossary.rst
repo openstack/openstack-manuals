@@ -2308,6 +2308,11 @@ M
       OpenStack project that provides shared file systems as
       service to applications.
 
+   manila-share
+
+      Responsible for managing Shared File System Service devices, specifically
+      the back-end devices.
+
    maximum transmission unit (MTU)
 
       Maximum frame or packet size for a particular network
