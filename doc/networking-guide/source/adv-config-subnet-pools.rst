@@ -45,7 +45,7 @@ A subnet pool manages a pool of addresses from which subnets can be allocated.
 It ensures that there is no overlap between any two subnets allocated from the
 same pool.
 
-As a regular tenant in an Openstack cloud, you can create a subnet pool of your
+As a regular tenant in an OpenStack cloud, you can create a subnet pool of your
 own and use it to manage your own pool of addresses. This does not require any
 admin privileges. Your pool will not be visible to any other tenant.
 
@@ -104,7 +104,7 @@ If there is a default, it can be requested by passing
 Demo
 ----
 
-If you have access to an Openstack Kilo or later based neutron, you can play
+If you have access to an OpenStack Kilo or later based neutron, you can play
 with this feature now. Give it a try. All of the following commands work
 equally as well with IPv6 addresses.
 
