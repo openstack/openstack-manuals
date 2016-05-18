@@ -30,7 +30,7 @@ Steps to update ``cinder-volume`` servers:
         Use a '#' prefix to comment out the line in this section that
         begins with 'fixed_key'.
 
-#. Restart ``cinder-volume``.
+#. Restart ``cinder-api``.
 
 Update ``nova-compute`` servers:
 
