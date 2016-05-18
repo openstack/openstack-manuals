@@ -49,7 +49,7 @@ This example shows the default options for the Ceph backup driver.
 .. code-block:: ini
 
     backup_ceph_conf=/etc/ceph/ceph.conf
-    backup_ceph_user = cinder
+    backup_ceph_user = cinder-backup
     backup_ceph_chunk_size = 134217728
     backup_ceph_pool = backups
     backup_ceph_stripe_unit = 0
