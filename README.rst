@@ -27,16 +27,19 @@ In addition to the guides, this repository contains:
 
 Building
 ========
+
 Various manuals are in subdirectories of the ``doc/`` directory.
 
 Guides
 ------
-Various guides are in the RST format. You can use tox to prepare
-virtual environment and build all RST based guides::
+
+All guides are in the RST format. You can use tox to prepare
+virtual environment and build all guides::
 
     tox -e docs
 
 You can also build a specific guide.
+
 For example, to build *OpenStack End User Guide*, use the following command::
 
     tox -e build -- user-guide
@@ -45,53 +48,18 @@ You can find the root of the generated HTML documentation at::
 
     doc/user-guide/build/html/index.html
 
-Glossary
---------
-
-`Apache Maven <http://maven.apache.org/>`_ must be installed to build the
-glossary.
-
-To install Maven 3 for Ubuntu 12.04 and later, and Debian wheezy and later::
-
-    apt-get install maven
-
-On Fedora 20 and later::
-
-    yum install maven
-
-On openSUSE Leap::
-
-    zypper ar http://download.opensuse.org/repositories/devel:/tools:/building/openSUSE_Leap_42.1/devel:tools:building.repo
-    zypper install maven
-
-To build the glossary, move to ``doc/glossary``,
-then run the ``mvn`` command in that directory::
-
-    cd doc/glossary
-    mvn clean generate-sources
-
-The generated PDF documentation file is::
-
-    doc/glossary/target/docbkx/webhelp/glossary/openstack-glossary.pdf
-
-The root of the generated HTML documentation is::
-
-    doc/glossary/target/docbkx/webhelp/glossary/content/index.html
-
 
 Testing of changes and building of the manual
 =============================================
 
-Install the python tox package and run ``tox`` from the top-level
+Install the Python tox package and run ``tox`` from the top-level
 directory to use the same tests that are done as part of our Jenkins
 gating jobs.
 
 If you like to run individual tests, run:
 
- * ``tox -e checklinks`` - to run the tests for working remote URLs
+ * ``tox -e linkcheck`` - to run the tests for working remote URLs
  * ``tox -e checkniceness`` - to run the niceness tests
- * ``tox -e checksyntax`` - to run syntax checks
- * ``tox -e checkdeletions`` - to check that no deleted files are referenced
  * ``tox -e checkbuild`` - to actually build the manual
  * ``tox -e checklang`` - to build translated manuals
 
@@ -115,7 +83,7 @@ We welcome all types of contributions, from blueprint designs to
 documentation to testing to deployment scripts.
 
 If you would like to contribute to the documents, please see the
-`OpenStack Documentation contributor guide
+`OpenStack Documentation Contributor Guide
 <http://docs.openstack.org/contributor-guide/>`_.
 
 Generated files
@@ -137,5 +105,6 @@ Bugs should be filed on Launchpad, not GitHub:
 
 Installing
 ==========
+
 Refer to http://docs.openstack.org to see where these documents are published
 and to learn more about the OpenStack project.
