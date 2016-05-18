@@ -1,10 +1,11 @@
 ================================
-IBM XIV and DS8000 volume driver
+IBM Storage volume driver
 ================================
 
 The IBM Storage Driver for OpenStack is a Block Storage driver that
-supports IBM XIV and IBM DS8000 storage systems over Fiber channel and
-iSCSI.
+supports IBM XIV, IBM Spectrum Accelerate, IBM FlashSystem A9000,
+IBM FlashSystem A9000R and IBM DS8000 storage systems over Fiber channel
+and iSCSI.
 
 Set the following in your ``cinder.conf`` file, and use the following options
 to configure it.
