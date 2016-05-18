@@ -23,11 +23,6 @@ cp -f ${INDEX} ${INDEX}.save
 trap "mv -f ${INDEX}.save ${INDEX}" EXIT
 
 for tag in $TAGS; do
-    GLOSSARY=""
-    if [[ ! -e doc/common/glossary.rst ]] ; then
-        GLOSSARY="--glossary"
-    fi
-
     ##
     # Because Sphinx uses the first heading as title regardless of
     # only directive, replace title directive with the proper title
@@ -64,9 +59,8 @@ for tag in $TAGS; do
     fi
 
     # Build the guide
-    tools/build-rst.sh doc/install-guide  \
-        $GLOSSARY --tag ${tag} --target "draft/install-guide-${tag}" \
-        $LINKCHECK
+    tools/build-rst.sh doc/install-guide \
+        --tag ${tag} --target "draft/install-guide-${tag}" $LINKCHECK
 
     # Restore the index file
     cp -f ${INDEX}.save ${INDEX}
