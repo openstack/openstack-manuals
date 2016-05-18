@@ -360,6 +360,15 @@ with neutron SR-IOV ports.
 
       $ nova boot --flavor m1.large --image ubuntu_14.04 --nic port-id=$port_id test-sriov
 
+
+   .. note::
+
+      There are two ways to attach VFs to an instance. You can create a
+      neutron SR-IOV port or use the ``pci_alias`` in nova.
+      For more information about using ``pci_alias``, refer to
+      `nova-api configuration`_.
+
+
 SR-IOV with InfiniBand
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -395,3 +404,6 @@ you must:
 
       [Filters]
       ebrctl: CommandFilter, ebrctl, root
+
+.. Links
+.. _`nova-api configuration`: http://docs.openstack.org/admin-guide/compute-pci-passthrough.html#configure-nova-api-controller
