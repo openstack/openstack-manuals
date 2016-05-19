@@ -30,7 +30,7 @@ do:
 .. code-block:: console
 
    $ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
-   $ glance image-create --name='cirros image' --is-public=true \
+   $ openstack image create --name='cirros image' --public \
      --container-format=bare --disk-format=qcow2 < cirros-0.3.4-x86_64-disk.img
 
 The :command:`glance image-create` command provides a large set of options for
@@ -40,7 +40,7 @@ Windows images). To view these options, do:
 
 .. code-block:: console
 
-   $ glance help image-create
+   $ openstack help image create
 
 The ``location`` option is important to note. It does not copy the
 entire image into the Image service, but references an original location
@@ -55,7 +55,7 @@ Run the following command to view the properties of existing images:
 
 .. code-block:: console
 
-   $ glance image-show <image-uuid>
+   $ openstack image show <image-uuid>
 
 Adding Signed Images
 --------------------
@@ -177,7 +177,7 @@ signed images:
 
       $ . openrc demo
       $ export OS_IMAGE_API_VERSION=2
-      $ glance image-create --property name=cirrosSignedImage_goodSignature \
+      $ openstack image create --property name=cirrosSignedImage_goodSignature \
         --property is-public=true --container-format bare --disk-format qcow2 \
         --property img_signature='c4br5f3FYQV6Nu20cRUSnx75R/VcW3diQdsUN2nhPw+UcQRDoGx92hwMgRxzFYeUyydRTWCcUS2ZLudPR9X7rMTHFInA54Zj1TwEIbJTkHwlqbWBMU4+k5IUIjXxHO6RuH3Z5fSlSt7ajsNVXaIclWqIw5YvEkgXTIEuDPE+C4=' \
         --property img_signature_certificate_uuid='62a33f41-f061-44ba-9a69-4fc247d3bfce' \
@@ -208,7 +208,7 @@ To share an image or snapshot with another project, do the following:
 
    .. code-block:: console
 
-      $ glance image-list
+      $ openstack image list
 
 #. Obtain the UUID of the project with which you want to share your image.
    Unfortunately, non-admin users are unable to use the :command:`keystone`
@@ -240,7 +240,7 @@ To delete an image,images deleting just execute:
 
 .. code-block:: console
 
-   $ glance image-delete <image uuid>
+   $ openstack image delete <image uuid>
 
 .. note::
 
