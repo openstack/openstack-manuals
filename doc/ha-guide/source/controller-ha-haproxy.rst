@@ -47,7 +47,13 @@ and ensure the VIPs can only run on machines where HAProxy is active:
 
 ``crmsh``
 
-TBA
+.. code-block:: console
+
+   $ crm cib new conf-haproxy
+   $ crm configure primitive haproxy lsb:haproxy op monitor interval="1s"
+   $ crm configure clone haproxy-clone haproxy
+   $ crm configure colocation vip-with-haproxy inf: vip haproxy-clone
+   $ crm configure order haproxy-after-vip mandatory: vip haproxy-clone
 
 Example Config File
 ~~~~~~~~~~~~~~~~~~~
