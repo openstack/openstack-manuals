@@ -82,17 +82,17 @@ if [[ "$REPOSITORY" = "openstack-manuals" && "$DOCNAME" = "install-guide" ]] ; t
     # save common.pot as common to translate
     mv -f ${DIRECTORY}/source/locale/common.pot \
         ${TOPDIR}common/source/locale/common.pot
-
-    # common is translated as part of openstack-manuals, do not
-    # include the file in the combined tree if it exists.
-    rm -f ${DIRECTORY}/source/locale/common.pot
-    # Take care of deleting all temporary files so that
-    # "git add ${DIRECTORY}/source/locale" will only add the
-    # single pot file.
-    # Remove UUIDs, those are not necessary and change too often
-    msgcat --sort-by-file ${DIRECTORY}/source/locale/*.pot | \
-        awk '$0 !~ /^\# [a-z0-9]+$/' > ${DIRECTORY}/source/$DOCNAME.pot
-    rm  ${DIRECTORY}/source/locale/*.pot
-    rm -rf ${DIRECTORY}/source/locale/.doctrees/
-    mv ${DIRECTORY}/source/$DOCNAME.pot ${DIRECTORY}/source/locale/$DOCNAME.pot
 fi
+
+# common is translated as part of openstack-manuals, do not
+# include the file in the combined tree if it exists.
+rm -f ${DIRECTORY}/source/locale/common.pot
+# Take care of deleting all temporary files so that
+# "git add ${DIRECTORY}/source/locale" will only add the
+# single pot file.
+# Remove UUIDs, those are not necessary and change too often
+msgcat --sort-by-file ${DIRECTORY}/source/locale/*.pot | \
+    awk '$0 !~ /^\# [a-z0-9]+$/' > ${DIRECTORY}/source/$DOCNAME.pot
+rm  ${DIRECTORY}/source/locale/*.pot
+rm -rf ${DIRECTORY}/source/locale/.doctrees/
+mv ${DIRECTORY}/source/$DOCNAME.pot ${DIRECTORY}/source/locale/$DOCNAME.pot
