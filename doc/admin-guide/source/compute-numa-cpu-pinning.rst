@@ -34,7 +34,7 @@ however, as with NUMA, threads compete for shared resources.
 Customizing instance NUMA topologies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note::
+.. important::
 
    The functionality described below is currently only supported by the
    libvirt/KVM driver.
@@ -55,7 +55,7 @@ CPUs, or explicitly, through the use of flavor extra specs or image metadata.
 In all cases, the ``NUMATopologyFilter`` filter must be enabled. Details on
 this filter are provided in `Scheduling`_ configuration guide.
 
-.. warning::
+.. caution::
 
    The NUMA node(s) used are normally chosen at random. However, if a PCI
    passthrough or SR-IOV device is attached to the instance, then the NUMA
@@ -64,7 +64,7 @@ this filter are provided in `Scheduling`_ configuration guide.
    similar instances can result in unbalanced NUMA node usage. Care should
    be taken to mitigate this issue. See this `discussion`_ for more details.
 
-.. warning::
+.. caution::
 
    Inadequate per-node resources will result in scheduling failures.  Resources
    that are specific to a node include not only CPUs and memory, but also PCI
@@ -115,7 +115,7 @@ and ``hw:num_mem.N``, refer to the `Flavors`_ guide.
 Customizing instance CPU policies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note::
+.. important::
 
    The functionality described below is currently only supported by the
    libvirt/KVM driver.
@@ -138,7 +138,7 @@ use a dedicated CPU policy. To force this, run:
 
    # openstack flavor set m1.large --property hw:cpu_policy=dedicated
 
-.. warning::
+.. caution::
 
    Host aggregates should be used to separate pinned instances from unpinned
    instances as the latter will not respect the resourcing requirements of
