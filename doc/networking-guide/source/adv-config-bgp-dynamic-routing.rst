@@ -489,7 +489,7 @@ conditions:
 * The BGP speaker associates with the external network that provides a
   gateway on the router.
 
-* The BGP speaker has the ``advertise_tenant_networks`` atttribute set to
+* The BGP speaker has the ``advertise_tenant_networks`` attribute set to
   ``True``.
 
 .. image:: figures/bgp-with-address-scope-diagram.png
