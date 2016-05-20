@@ -2,13 +2,12 @@
 Network Troubleshooting
 =======================
 
-Network troubleshooting can unfortunately be a very difficult and
-confusing procedure. A network issue can cause a problem at several
-points in the cloud. Using a logical troubleshooting procedure can help
-mitigate the confusion and more quickly isolate where exactly the
-network issue is. This chapter aims to give you the information you need
-to identify any issues for either ``nova-network`` or OpenStack
-Networking (neutron) with Linux Bridge or Open vSwitch.
+Network troubleshooting can be challenging. A network issue may cause
+problems at any point in the cloud. Using a logical troubleshooting
+procedure can help mitigate the issue and isolate where the network issue is.
+This chapter aims to give you the information you need to identify any
+issues for ``nova-network`` or OpenStack Networking (neutron) with Linux
+Bridge or Open vSwitch.
 
 Using "ip a" to Check Interface States
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -21,9 +20,8 @@ IPs, VLANs, and whether your interfaces are up:
 
    # ip a
 
-If you're encountering any sort of networking difficulty, one good
-initial sanity check is to make sure that your interfaces are up. For
-example:
+If you are encountering any sort of networking difficulty, one good initial
+troubleshooting step is to make sure that your interfaces are up. For example:
 
 .. code-block:: console
 
@@ -42,8 +40,8 @@ created by libvirt and not used by OpenStack.
 Visualizing nova-network Traffic in the Cloud
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you are logged in to an instance and ping an external host—for
-example, Google—the ping packet takes the route shown in
+If you are logged in to an instance and ping an external host, for
+example, Google, the ping packet takes the route shown in
 :ref:`figure_traffic_route`.
 
 .. _figure_traffic_route:
@@ -108,9 +106,8 @@ environment.
 
 For this example, we will use the Open vSwitch (OVS) back end. Other
 back-end plug-ins will have very different flow paths. OVS is the most
-popularly deployed network driver, according to the October 2015
-OpenStack User Survey, with 41 percent more sites using it than the
-Linux Bridge driver. We'll describe each step in turn, with
+popularly deployed network driver, according to the April 2016
+OpenStack User Survey. We'll describe each step in turn, with
 :ref:`network_paths` for reference.
 
 #. The instance generates a packet and places it on the virtual NIC
@@ -475,7 +472,7 @@ One great, although very in-depth, way of troubleshooting network issues
 is to use ``tcpdump``. We recommended using ``tcpdump`` at several
 points along the network path to correlate where a problem might be. If
 you prefer working with a GUI, either live or by using a ``tcpdump``
-capture, do also check out
+capture, check out
 `Wireshark <http://www.wireshark.org/>`_.
 
 For example, run the following command:
@@ -623,7 +620,7 @@ Manually Disassociating a Floating IP
 -------------------------------------
 
 Sometimes an instance is terminated but the floating IP was not
-correctly de-associated from that instance. Because the database is in
+correctly disassociated from that instance. Because the database is in
 an inconsistent state, the usual tools to disassociate the IP no longer
 work. To fix this, you must manually update the database.
 
@@ -986,7 +983,7 @@ each compute and network node in your cluster:
    .
    gre-<N>
 
-If any of these links is missing or incorrect, it suggests a
+If any of these links are missing or incorrect, it suggests a
 configuration error. Bridges can be added with ``ovs-vsctl add-br``,
 and ports can be added to bridges with
 ``ovs-vsctl add-port``. While running these by hand can be useful
@@ -1060,7 +1057,7 @@ Summary
 
 The authors have spent too much time looking at packet dumps in order to
 distill this information for you. We trust that, following the methods
-outlined in this chapter, you will have an easier time! Aside from
+outlined in this chapter, you will have an easier time. Aside from
 working with the tools and steps above, don't forget that sometimes an
 extra pair of eyes goes a long way to assist.
 
