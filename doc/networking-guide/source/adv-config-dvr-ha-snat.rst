@@ -132,12 +132,8 @@ Network nodes
    .. code-block:: ini
 
       [DEFAULT]
-      router_delete_namespaces = True
-      ha_confs_path = /opt/stack/data/neutron/ha_confs
-      ha_vrrp_auth_type = PASS
       ha_vrrp_auth_password = password
-      ha_vrrp_advert_int = 2
-      interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+      interface_driver = openvswitch
       external_network_bridge =
       agent_mode = dvr_snat
 
@@ -171,7 +167,7 @@ Compute nodes
    .. code-block:: ini
 
       [DEFAULT]
-      interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+      interface_driver = openvswitch
       external_network_bridge =
       agent_mode = dvr
 
