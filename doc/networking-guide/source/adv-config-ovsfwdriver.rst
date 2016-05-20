@@ -18,7 +18,7 @@ increasing scalability and performance.
 Prerequisites
 ~~~~~~~~~~~~~
 
-The native OVS firewall implementation requires kernel and userspace support
+The native OVS firewall implementation requires kernel and user space support
 for *conntrack*, thus requiring minimum versions of the Linux kernel and
 Open vSwitch. All cases require Open vSwitch version 2.5 or newer.
 
