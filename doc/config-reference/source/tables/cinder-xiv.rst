@@ -10,7 +10,7 @@
 
 .. _cinder-xiv:
 
-.. list-table:: Description of IBM XIV and DS8000 volume driver configuration options
+.. list-table:: Description of the IBM Storage driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
