@@ -119,8 +119,8 @@ User workflow
 ~~~~~~~~~~~~~
 
 QoS policies are only created by admins with the default ``policy.json``.
-Therefore, you should have the Cloud Operator to set up them on
-behalf of the Cloud tenants.
+Therefore, you should have the cloud operator set them up on
+behalf of the cloud tenants.
 
 If tenants are trusted to create their own policies, check the trusted tenants
 ``policy.json`` configuration section.
@@ -224,7 +224,7 @@ Ports can be created with a policy attached to them too.
 You can attach networks to a QoS policy. The meaning of this is that
 any compute port connected to the network will use the network policy by
 default unless the port has a specific policy attached to it. Network owned
-ports like dhcp and router ports are excluded from network policy application.
+ports like DHCP and router ports are excluded from network policy application.
 
 In order to attach a QoS policy to a network, update an existing
 network, or initially create the network attached to the policy.
