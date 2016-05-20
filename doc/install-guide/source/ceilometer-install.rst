@@ -296,48 +296,132 @@ Install and configure components
            ...
            dispatcher = database
 
+.. only:: obs or rdo or ubuntu
+
+   Configure the Apache HTTP server
+   --------------------------------
+
+   .. only:: rdo
+
+      * Create the ``/etc/httpd/conf.d/wsgi-ceilometer.conf`` file with
+        the following content:
+
+        .. code-block:: apache
+
+           Listen 8777
+
+           <VirtualHost *:8777>
+               WSGIDaemonProcess ceilometer-api processes=2 threads=10 user=ceilometer group=ceilometer display-name=%{GROUP}
+               WSGIProcessGroup ceilometer-api
+               WSGIScriptAlias / "/var/www/cgi-bin/ceilometer/app"
+               WSGIApplicationGroup %{GLOBAL}
+               ErrorLog /var/log/httpd/ceilometer_error.log
+               CustomLog /var/log/httpd/ceilometer_access.log combined
+           </VirtualHost>
+
+           WSGISocketPrefix /var/run/httpd
+
+   .. only:: ubuntu
+
+      #. Create the ``/etc/apache2/sites-available/wsgi-ceilometer.conf`` file
+         with the following content:
+
+         .. code-block:: apache
+
+            Listen 8777
+
+            <VirtualHost *:8777>
+                WSGIDaemonProcess ceilometer-api processes=2 threads=10 user=ceilometer group=ceilometer display-name=%{GROUP}
+                WSGIProcessGroup ceilometer-api
+                WSGIScriptAlias / "/var/www/cgi-bin/ceilometer/app"
+                WSGIApplicationGroup %{GLOBAL}
+                ErrorLog /var/log/apache2/ceilometer_error.log
+                CustomLog /var/log/apache2/ceilometer_access.log combined
+            </VirtualHost>
+
+            WSGISocketPrefix /var/run/apache2
+
+      #. Enable the Telemetry service virtual hosts:
+
+         .. code-block:: console
+
+            # a2ensite ceilometer
+
+   .. only:: obs
+
+      * Create the ``/etc/apache2/conf.d/wsgi-ceilometer.conf`` file
+        with the following content:
+
+        .. code-block:: apache
+
+           Listen 8777
+
+           <VirtualHost *:8777>
+               WSGIDaemonProcess ceilometer-api processes=2 threads=10 user=ceilometer group=ceilometer display-name=%{GROUP}
+               WSGIProcessGroup ceilometer-api
+               WSGIScriptAlias / "/var/www/cgi-bin/ceilometer/app"
+               WSGIApplicationGroup %{GLOBAL}
+               ErrorLog /var/log/apache2/ceilometer_error.log
+               CustomLog /var/log/apache2/ceilometer_access.log combined
+           </VirtualHost>
+
+           WSGISocketPrefix /var/run/apache2
+
 Finalize installation
 ---------------------
 
 .. only:: obs
 
-   * Start the Telemetry services and configure them to start when the
-     system boots:
+   #. Reload the Apache HTTP server:
 
-     .. code-block:: console
+      .. code-block:: console
 
-        # systemctl enable openstack-ceilometer-api.service \
-          openstack-ceilometer-agent-notification.service \
-          openstack-ceilometer-agent-central.service \
-          openstack-ceilometer-collector.service
-        # systemctl start openstack-ceilometer-api.service \
-          openstack-ceilometer-agent-notification.service \
-          openstack-ceilometer-agent-central.service \
-          openstack-ceilometer-collector.service
+         # systemctl reload apache2.service
+
+   #. Start the Telemetry services and configure them to start when the
+      system boots:
+
+      .. code-block:: console
+
+         # systemctl enable openstack-ceilometer-agent-notification.service \
+           openstack-ceilometer-agent-central.service \
+           openstack-ceilometer-collector.service
+         # systemctl start openstack-ceilometer-agent-notification.service \
+           openstack-ceilometer-agent-central.service \
+           openstack-ceilometer-collector.service
 
 .. only:: rdo
 
-   * Start the Telemetry services and configure them to start when the
-     system boots:
+   #. Reload the Apache HTTP server:
 
-     .. code-block:: console
+      .. code-block:: console
 
-        # systemctl enable openstack-ceilometer-api.service \
-          openstack-ceilometer-notification.service \
-          openstack-ceilometer-central.service \
-          openstack-ceilometer-collector.service
-        # systemctl start openstack-ceilometer-api.service \
-          openstack-ceilometer-notification.service \
-          openstack-ceilometer-central.service \
-          openstack-ceilometer-collector.service
+         # systemctl reload httpd.service
 
-.. only:: ubuntu or debian
+   #. Start the Telemetry services and configure them to start when the
+      system boots:
 
-   * Restart the Telemetry services:
+      .. code-block:: console
 
-     .. code-block:: console
+         # systemctl enable openstack-ceilometer-notification.service \
+           openstack-ceilometer-central.service \
+           openstack-ceilometer-collector.service
+         # systemctl start openstack-ceilometer-notification.service \
+           openstack-ceilometer-central.service \
+           openstack-ceilometer-collector.service
 
-        # service ceilometer-agent-central restart
-        # service ceilometer-agent-notification restart
-        # service ceilometer-api restart
-        # service ceilometer-collector restart
+.. only:: ubuntu
+
+   #. Reload the Apache HTTP server:
+
+      .. code-block:: console
+
+         # service apache2 reload
+
+   #. Restart the Telemetry services:
+
+      .. code-block:: console
+
+         # service ceilometer-agent-central restart
+         # service ceilometer-agent-notification restart
+         # service ceilometer-collector restart
