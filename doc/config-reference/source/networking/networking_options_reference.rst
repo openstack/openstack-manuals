@@ -81,6 +81,8 @@ This section describes the available configuration options.
    of OpenvSwitch mechanism driver with "native" of_interface in the
    Mitaka release and will be removed in the next release.
 
+.. include:: ../tables/neutron-ml2.rst
+
 Modular Layer 2 (ml2) Flat Type configuration options
 -----------------------------------------------------
 
