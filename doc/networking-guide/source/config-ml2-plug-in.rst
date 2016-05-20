@@ -268,7 +268,7 @@ Agents
 L2 agent
 ^^^^^^^^
 
-A L2 agent serves layer 2 (Ethernet) network connectivity to OpenStack
+An L2 agent serves layer 2 (Ethernet) network connectivity to OpenStack
 resources. It typically runs on each Network Node and on each Compute Node.
 
 * Open vSwitch agent
@@ -395,7 +395,7 @@ Reference implementations
 Overview
 --------
 
-In this section, the combination of an mechanism driver and an L2 agent is
+In this section, the combination of a mechanism driver and an L2 agent is
 called 'reference implementation'. The following table lists these
 implementations:
 
@@ -480,11 +480,11 @@ This guide characterizes the L2 reference implementations that currently exist.
 
   Is deployed besides an other mechanism driver and L2 agent such as OVS or
   Linux bridge. It offers instances direct access to the network adapter
-  through an PCI Virtual Function (VF). This gives an instance direct access to
+  through a PCI Virtual Function (VF). This gives an instance direct access to
   hardware capabilities and high performance networking.
 
   The cloud consumer can decide via the neutron APIs VNIC_TYPE attribute, if
-  an instance gets a normal ovs port or an SRIOV port.
+  an instance gets a normal OVS port or an SRIOV port.
 
   Due to direct connection, some features are not available when using SRIOV.
   For example, DVR, security groups, migration.
