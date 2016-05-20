@@ -53,7 +53,7 @@ There are 2 ways of configuring SR-IOV:
 
 The sriov-agent allows you to set the admin state of ports and
 starting from Liberty allows you to control
-port security (enable and disable spoofchecking) and QoS rate limit settings.
+port security (enable and disable spoof checking) and QoS rate limit settings.
 
 
 .. note::
@@ -159,7 +159,7 @@ do the following:
       63
 
    If the interface is down, make sure it is set to ``up`` before launching a
-   guest, else the instance will fail to spawn:
+   guest, otherwise the instance will fail to spawn:
 
    .. code-block:: console
 
@@ -176,7 +176,7 @@ do the following:
          vf 6 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
          vf 7 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
 
-#. Now verify that the VFs have been created (Should see Virtual Function
+#. Now verify that the VFs have been created (should see Virtual Function
    device):
 
    .. code-block:: console
@@ -214,8 +214,8 @@ through. Edit the file ``/etc/nova/nova.conf``:
 
 This tells nova that all VFs belonging to eth3 are allowed to be passed
 through to VMs and belong to the neutron provider network physnet2. Restart
-nova compute with :command:`service nova-compute restart` to let the changes
-have effect.
+nova compute with :command:`service nova-compute restart` for the changes
+to go into effect.
 
 Alternatively the ``pci_passthrough_whitelist`` parameter also supports
 whitelisting by:
@@ -283,7 +283,7 @@ Configure neutron-server (Controller)
       --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugin.ini
       --config-file /etc/neutron/plugins/ml2/ml2_conf_sriov.ini
 
-#. To make the changes have effect, restart the neutron-server service with
+#. For the changes to go into effect, restart the neutron-server service with
    the :command:`service neutron-server restart`.
 
 Configure nova-scheduler (Controller)
