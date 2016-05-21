@@ -1,9 +1,6 @@
-
-.. _neutron-lbaas:
-
-=======================
-Run neutron LBaaS agent
-=======================
+==========================
+Run Networking LBaaS agent
+==========================
 
 Currently, no native feature is provided
 to make the LBaaS agent highly available
@@ -14,4 +11,3 @@ Unfortunately, this is not yet implemented
 in the LBaaS HAProxy plug-in.
 
 [TODO: update this section.]
-

@@ -15,6 +15,6 @@ and must talk to all other services.
    controller-ha-galera.rst
    controller-ha-memcached.rst
    controller-ha-rabbitmq.rst
-   controller-ha-keystone.rst
+   controller-ha-identity.rst
    controller-ha-telemetry.rst
 

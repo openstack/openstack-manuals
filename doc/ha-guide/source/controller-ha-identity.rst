@@ -1,23 +1,20 @@
+=============================
+Highly available Identity API
+=============================
 
-============================
-Identity services (keystone)
-============================
-
-OpenStack Identity (keystone)
-is the Identity service in OpenStack that is used by many services.
 You should be familiar with
-`OpenStack identity concepts
-<http://docs.openstack.org/liberty/install-guide-ubuntu/common/get_started_identity.html>`_
-before proceeding.
+`OpenStack Identity service
+<http://docs.openstack.org/admin-guide/common/get_started_identity.html>`_
+before proceeding, which is used by many services.
 
 Making the OpenStack Identity service highly available
 in active / passive mode involves:
 
-- :ref:`keystone-pacemaker`
-- :ref:`keystone-config-identity`
-- :ref:`keystone-services-config`
+- :ref:`identity-pacemaker`
+- :ref:`identity-config-identity`
+- :ref:`identity-services-config`
 
-.. _keystone-pacemaker:
+.. _identity-pacemaker:
 
 Add OpenStack Identity resource to Pacemaker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -66,7 +63,7 @@ Add OpenStack Identity resource to Pacemaker
    Pacemaker then starts the OpenStack Identity service
    and its dependent resources on one of your nodes.
 
-.. _keystone-config-identity:
+.. _identity-config-identity:
 
 Configure OpenStack Identity service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -97,7 +94,7 @@ Configure OpenStack Identity service
       ...
 
 
-.. _keystone-services-config:
+.. _identity-services-config:
 
 Configure OpenStack services to use the highly available OpenStack Identity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
