@@ -36,8 +36,8 @@ or similar techniques implemented.
 [TODO Need description of VIP failover inside Linux namespaces
 and expected SLA.]
 
-See [TODO link] for more information about configuring networking
-for high availability.
+See :doc:`networking-ha` for more information about configuring
+Networking for high availability.
 
 Common deployement architectures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
