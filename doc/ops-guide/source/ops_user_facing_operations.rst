@@ -399,7 +399,7 @@ To view a flavor's access list, do the following:
 
 .. code-block:: console
 
-   $ nova flavor-access-list <flavor-id>
+   $ nova flavor-access-list [--flavor <flavor-id>]
 
 .. tip::
 
