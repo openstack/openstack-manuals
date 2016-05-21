@@ -27,16 +27,14 @@ Memory caching is managed by `oslo.cache
 <http://specs.openstack.org/openstack/oslo-specs/specs/kilo/oslo-cache-using-dogpile.html>`_
 so the way to use multiple memcached servers is the same for all projects.
 
-[TODO: Should this show three hosts?]
+Example configuration with three hosts:
 
-Example configuration with two hosts:
+.. code-block:: ini
 
-::
+  memcached_servers = controller1:11211,controller2:11211,controller3:11211
 
-  memcached_servers = controller1:11211,controller2:11211
-
-By default, `controller1` handles the caching service but,
-if the host goes down, `controller2` does the job.
+By default, ``controller1`` handles the caching service.
+If the host goes down, ``controller2`` or ``controller3`` does the job.
 For more information about memcached installation,
 see the `OpenStack Administrator Guide
 <http://docs.openstack.org/admin-guide/>`_.
