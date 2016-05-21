@@ -389,13 +389,13 @@ commands, which are provided by the
 
    .. code-block:: console
 
-      # cinder quota-show tenantName
+      # openstack quota show tenantID
 
    For example:
 
    .. code-block:: console
 
-      # cinder quota-show tenant01
+      # openstack quota show tenantID
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+
@@ -423,7 +423,7 @@ commands, which are provided by the
    .. code-block:: console
 
       # cinder quota-update --volumes 15 $tenant
-      # cinder quota-show tenant01
+      # cinder quota-show $tenant
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+
