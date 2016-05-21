@@ -1922,7 +1922,7 @@ of the dashboard. The command line can also be used:
 Once allocated, a floating IP can be assigned to running instances from
 the dashboard either by selecting :guilabel:`Associate Floating IP` from the
 actions drop-down next to the :guilabel:`IP on the Floating IPs` tab of the
-**Access & Security page** or by making this selection next to the instance
+**Access & Security** page or by making this selection next to the instance
 you want to associate it with on the Instances page. The inverse action,
 Dissociate Floating IP, is available from the :guilabel:`Floating IPs` tab
 of the **Access & Security** page and from the **Instances** page.
@@ -1932,7 +1932,7 @@ command line, use the following commands:
 
 .. code-block:: console
 
-   $ nova add-floating-ip <server> <address>
+   $ openstack ip floating add <ip-address> <server>
 
 .. code-block:: console
 
