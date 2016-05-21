@@ -1,25 +1,18 @@
-# Akihiro Motoki <amotoki@gmail.com>, 2015. #zanata
-# KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>, 2015. #zanata
-# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
-# Yuko Katabami <yukokatabami@gmail.com>, 2015. #zanata
 # KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>, 2016. #zanata
-# Kyohei Moriyama <flogofrein@gmail.com>, 2016. #zanata
-# Shinichi Take <chantake33@gmail.com>, 2016. #zanata
-# Yuta Hono <yuta.hono@ntt.com>, 2016. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: High Availability Guide 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-05 00:17+0000\n"
+"POT-Creation-Date: 2016-05-20 10:29+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-03-31 12:49+0000\n"
-"Last-Translator: Kyohei Moriyama <flogofrein@gmail.com>\n"
-"Language: ja\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Zanata 3.7.3\n"
+"PO-Revision-Date: 2016-05-21 12:35+0000\n"
+"Last-Translator: KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>\n"
 "Language-Team: Japanese\n"
+"Language: ja\n"
+"X-Generator: Zanata 3.7.3\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 
 msgid "**Cluster Address** List the IP addresses for each cluster node."
 msgstr "**クラスターアドレス** 各クラスターノードの IP アドレスを表示します。"
@@ -83,32 +76,8 @@ msgstr "8 GB"
 msgid "8+ GB"
 msgstr "8+ GB"
 
-msgid ":command:`# /etc/init.d/corosync start` (LSB)"
-msgstr ":command:`# /etc/init.d/corosync start` (LSB)"
-
-msgid ":command:`# /etc/init.d/pacemaker start` (LSB)"
-msgstr ":command:`# /etc/init.d/pacemaker start` (LSB)"
-
 msgid ":command:`# apt-get install rabbitmq-server`"
 msgstr ":command:`# apt-get install rabbitmq-server`"
-
-msgid ":command:`# service corosync start` (LSB, alternate)"
-msgstr ":command:`# service corosync start` (LSB, 別の方法)"
-
-msgid ":command:`# service pacemaker start` (LSB, alternate)"
-msgstr ":command:`# service pacemaker start` (LSB, 別の方法)"
-
-msgid ":command:`# start corosync` (upstart)"
-msgstr ":command:`# start corosync` (upstart)"
-
-msgid ":command:`# start pacemaker` (upstart)"
-msgstr ":command:`# start pacemaker` (upstart)"
-
-msgid ":command:`# systemctl start corosync` (systemd)"
-msgstr ":command:`# systemctl start corosync` (systemd)"
-
-msgid ":command:`# systemctl start pacemaker` (systemd)"
-msgstr ":command:`# systemctl start pacemaker` (systemd)"
 
 msgid ":command:`# yum install rabbitmq-server`"
 msgstr ":command:`# yum install rabbitmq-server`"
@@ -245,9 +214,9 @@ msgstr ""
 "部品です。SPOF を削減するために、以下の冗長性に対するメカニズムを確認します。"
 
 msgid ""
-"A sample votequorum service configuration in the :file:`corosync.com` file "
+"A sample votequorum service configuration in the :file:`corosync.conf` file "
 "is:"
-msgstr ":file:`corosync.com` ファイルの votequorum サービス設定例:"
+msgstr ":file:`corosync.conf` ファイルの votequorum サービス設定例:"
 
 msgid ""
 "A service that provides a response after your request and then requires no "
@@ -327,8 +296,8 @@ msgid ""
 "Ability to take periodic \"snap shots\" throughout the installation process "
 "and \"roll back\" to a working configuration in the event of a problem."
 msgstr ""
-"インストールプロセス以降、定期的な「スナップショット」を取得する機能、および"
-"問題発生時に動作する設定に「ロールバック」する機能があります。"
+"インストール中に定期的に「スナップショット」を取得したり、問題発生時に動作す"
+"る設定に「ロールバック」したりできます。"
 
 msgid "Abstract"
 msgstr "概要"
@@ -361,7 +330,7 @@ msgstr ""
 msgid "Accidental deletion or destruction of data."
 msgstr "意図しないデータの削除や破損。"
 
-msgid "Active/Passive vs Active/Active"
+msgid "Active/Passive vs. Active/Active"
 msgstr "アクティブ/パッシブとアクティブ/アクティブ"
 
 msgid "Add Block Storage API resource to Pacemaker"
@@ -417,21 +386,13 @@ msgstr ""
 "定ファイルを作成する必要があります。"
 
 msgid ""
-"After the Corosync services have been started and you have verified that the "
-"cluster is communicating properly, you can start :command:`pacemakerd`, the "
-"Pacemaker master control process:"
+"After the ``pacemaker`` service have started, Pacemaker creates a default "
+"empty cluster configuration with no resources. Use the :command:`crm_mon` "
+"utility to observe the status of ``pacemaker``:"
 msgstr ""
-"Corosync サービスが起動して、クラスターが正常に通信していることを確認した後、"
-"Pacemaker のマスター制御プロセス :command:`pacemakerd` を起動できます。"
-
-msgid ""
-"After the Pacemaker services have started, Pacemaker creates a default empty "
-"cluster configuration with no resources. Use the :command:`crm_mon` utility "
-"to observe the status of Pacemaker:"
-msgstr ""
-"Pacemaker サービスの起動後、Pacemaker がリソースを持たないデフォルトの空クラ"
-"スターを作成します。 :command:`crm_mon` ユーティリティーを使用して、"
-"Pacemaker の状態を確認します。"
+"``pacemaker`` サービスの起動後、Pacemaker がリソースを持たないデフォルトの空"
+"クラスターを作成します。 :command:`crm_mon` ユーティリティーを使用して、"
+"``pacemaker`` の状態を確認します。"
 
 msgid ""
 "After you add these resources, commit your configuration changes by "
@@ -477,6 +438,9 @@ msgstr ""
 "または、systemd エージェントを使用する代わりに、OCF リソースエージェントをダ"
 "ウンロードしてインストールします。"
 
+msgid "Alternatively:"
+msgstr "他の"
+
 msgid ""
 "An AMQP (Advanced Message Queuing Protocol) compliant message bus is "
 "required for most OpenStack components in order to coordinate the execution "
@@ -499,6 +463,9 @@ msgstr "AppArmor"
 
 msgid "AppArmor now permits Galera Cluster to operate."
 msgstr "AppArmor により Galera Cluster の動作を許可されます。"
+
+msgid "Appendix"
+msgstr "付録"
 
 msgid ""
 "Application Armor is a kernel module for improving security on Linux "
@@ -613,13 +580,13 @@ msgstr ""
 msgid ""
 "By default, `controller1` handles the caching service but, if the host goes "
 "down, `controller2` does the job. For more information about memcached "
-"installation, see the `OpenStack Cloud Administrator Guide <http://docs."
-"openstack.org/admin-guide-cloud/>`_."
+"installation, see the `OpenStack Administrator Guide <http://docs.openstack."
+"org/admin-guide/>`_."
 msgstr ""
 "デフォルトで、 `controller1` がキャッシュサービスを処理しますが、ホストが停止"
 "している場合、 `controller2` がジョブを実行します。memcached のインストールの"
-"詳細は `OpenStack Cloud Administrator Guide <http://docs.openstack.org/admin-"
-"guide-cloud/>`_ を参照してください。"
+"詳細は `OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/"
+">`_ を参照してください。"
 
 msgid ""
 "By default, cluster nodes do not start as part of a Primary Component. "
@@ -686,13 +653,6 @@ msgstr "クラスターとクォーラム"
 msgid "Collapsed"
 msgstr "Collapsed"
 
-# #-#-#-#-#  compute-manage-volumes.pot (Cloud Administrator Guide 0.9)
-# #-#-#-#-#
-# #-#-#-#-#  networking_adv-features.pot (Cloud Administrator Guide 0.9)
-# #-#-#-#-#
-# #-#-#-#-#  networking_config-agents.pot (Cloud Administrator Guide 0.9)
-# #-#-#-#-#
-# #-#-#-#-#  networking_use.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 msgid "Command"
 msgstr "コマンド"
 
@@ -818,16 +778,6 @@ msgstr ""
 "Corosync を動作させるための設定としては、マルチキャスト IP アドレスを使う、ユ"
 "ニキャスト IP アドレスを使う、 votequorum ライブラリーを使う、の選択肢があり"
 "ます。"
-
-msgid ""
-"Corosync is started as a regular system service. Depending on your "
-"distribution, it may ship with an LSB init script, an upstart job, or a "
-"systemd unit file. Either way, the service is usually named corosync:"
-msgstr ""
-"Corosync は通常のシステムサービスとして起動します。お使いのディストリビュー"
-"ションに応じて、LSB init スクリプト、upstart ジョブ、systemd ユニットファイル"
-"を同梱しているかもしれません。どちらにしても、サービスは通常 corosync という"
-"名前です。"
 
 msgid ""
 "Create a ``Galera.repo`` file in the local directory. For Galera Cluster for "
@@ -1012,15 +962,6 @@ msgid ""
 msgstr ""
 "バイナリーログ形式が、ステートメントレベルのレプリケーションではなく、行レベ"
 "ルのレプリケーションに設定されていることを確認してください。"
-
-msgid ""
-"Ensure that the database server is not bound only to to the localhost, "
-"``127.0.0.1``. Instead, bind it to ``0.0.0.0`` to ensure it listens on all "
-"available interfaces."
-msgstr ""
-"データベースサーバーが localhost や ``127.0.0.1`` のみにバインドされていない"
-"ことを確認してください。代わりに、すべてのインターフェースをきちんとリッスン"
-"するよう、 ``0.0.0.0`` にバインドしてください。"
 
 msgid "Ensure that the default storage engine is set to InnoDB:"
 msgstr "デフォルトのストレージエンジンをきちんと InnoDB に設定してください。"
@@ -1286,12 +1227,12 @@ msgstr ""
 
 msgid ""
 "For more information about configuring storage back ends for the different "
-"storage options, see the `Cloud Administrator Guide <http://docs.openstack."
-"org/admin-guide-cloud/>`_."
+"storage options, see the `Administrator Guide <http://docs.openstack.org/"
+"admin-guide/>`_."
 msgstr ""
 "さまざまなストレージの選択肢に対して、ストレージバックエンドを設定する方法の"
-"詳細は、 `Cloud Administrator Guide <http://docs.openstack.org/admin-guide-"
-"cloud/>`_ を参照してください。"
+"詳細は、 `Administrator Guide <http://docs.openstack.org/admin-guide/>`_ を参"
+"照してください。"
 
 msgid ""
 "For more information on configuring SELinux to work with Galera Cluster, see "
@@ -1425,6 +1366,9 @@ msgstr ""
 
 msgid "Get a list of nodes known to the quorum service"
 msgstr "クォーラムサービスが把握しているノード一覧の取得"
+
+msgid "Glossary"
+msgstr "用語集"
 
 msgid "HAProxy"
 msgstr "HAProxy"
@@ -1934,9 +1878,9 @@ msgstr ""
 
 msgid ""
 "Making the Block Storage (cinder) API service highly available in active/"
-"passive mode involves:"
+"active mode involves:"
 msgstr ""
-"Block Storage (cinder) API サービスのアクティブ/パッシブモードでの高可用性"
+"Block Storage (cinder) API サービスのアクティブ/アクティブモードでの高可用性"
 "は、以下が関係します。"
 
 msgid ""
@@ -3435,11 +3379,11 @@ msgstr ""
 "り、インストールガイドの内容を前提に書かれています。"
 
 msgid ""
-"This guide documents OpenStack Liberty, OpenStack Kilo, and OpenStack Juno "
+"This guide documents OpenStack Mitaka, OpenStack Liberty, and OpenStack Kilo "
 "releases."
 msgstr ""
-"このガイドででは、OpenStack Liberty, OpenStack Kilo, OpenStack Juno のリリー"
-"スを対象としています。"
+"このガイドは、OpenStack Mitaka, OpenStack Liberty, OpenStack Kilo のリリース"
+"を対象としています。"
 
 msgid ""
 "This guide is a work-in-progress and changing rapidly while we continue to "
@@ -3583,6 +3527,24 @@ msgstr ""
 ":option:`--permanent` オプションを付けて上のコマンドを繰り返して、この設定を"
 "永続化します。"
 
+msgid "To start ``corosync`` with systemd unit file:"
+msgstr "systemd ユニットファイルでcorosyncの起動"
+
+msgid "To start ``corosync`` with the LSB init script:"
+msgstr "LSBinitスクリプトでCorosync の起動"
+
+msgid "To start ``corosync`` with upstart:"
+msgstr "upstartでcorosyscの起動"
+
+msgid "To start ``pacemaker`` with the LSB init script:"
+msgstr "LSB init スクリプトを用いた ``pacemaker`` の起動"
+
+msgid "To start ``pacemaker`` with the systemd unit file:"
+msgstr "systemd ユニットファイルを用いた ``pacemaker`` の起動"
+
+msgid "To start ``pacemaker`` with upstart:"
+msgstr "upstart を用いた ``pacemaker`` の起動"
+
 msgid "To start the cluster, complete the following steps:"
 msgstr "以下の手順を実行して、クラスターを起動します。"
 
@@ -3703,15 +3665,15 @@ msgstr "クラスターマネージャーとは"
 
 msgid ""
 "When Ceph RBD is used for ephemeral volumes as well as block and image "
-"storage, it supports `live migration <http://docs.openstack.org/admin-guide-"
-"cloud/compute-live-migration-usage.html>`_ of VMs with ephemeral drives; LVM "
-"only supports live migration of volume-backed VMs."
+"storage, it supports `live migration <http://docs.openstack.org/admin-guide/"
+"compute-live-migration-usage.html>`_ of VMs with ephemeral drives; LVM only "
+"supports live migration of volume-backed VMs."
 msgstr ""
 "Ceph RBD をブロックストレージやイメージストレージと同じように一時ストレージ用"
 "に使用する場合、一時ボリュームを持つ仮想マシンの `ライブマイグレーション "
-"<http://docs.openstack.org/admin-guide-cloud/compute-live-migration-usage."
-"html>` がサポートされます。LVM のみがボリュームをバックエンドとした仮想マシン"
-"のライブマイグレーションをサポートします。"
+"<http://docs.openstack.org/admin-guide/compute-live-migration-usage.html>` が"
+"サポートされます。LVM のみがボリュームをバックエンドとした仮想マシンのライブ"
+"マイグレーションをサポートします。"
 
 msgid ""
 "When configuring an OpenStack environment for study or demonstration "
@@ -3912,8 +3874,9 @@ msgstr ""
 "`crm configure` を用いて Pacemaker クラスターに接続し、以下のクラスターリソー"
 "スを追加します。"
 
-msgid "You can now check the Corosync connectivity with two tools."
-msgstr "2 つのツールを用いて Corosync 接続性を確認できます。"
+msgid ""
+"You can now check the ``corosync`` connectivity with one of these tools."
+msgstr "corosyncの接続性をそれらのツールの一つで確認することができます。"
 
 msgid ""
 "You can read more about these concerns on the `Red Hat Bugzilla <https://"
@@ -4212,12 +4175,12 @@ msgid "`Highly Available Queues <http://www.rabbitmq.com/ha.html>`_"
 msgstr "`Highly Available Queues <http://www.rabbitmq.com/ha.html>`_"
 
 msgid ""
-"`LP1328922 <https://bugs.launchpad.net/openstack-manuals/+bug/1328922>` and "
-"`LP1349398 <https://bugs.launchpad.net/openstack-manuals/+bug/1349398>` are "
+"`LP1328922 <https://bugs.launchpad.net/openstack-manuals/+bug/1328922>`_ and "
+"`LP1349398 <https://bugs.launchpad.net/openstack-manuals/+bug/1349398>`_ are "
 "related.]"
 msgstr ""
-"`LP1328922 <https://bugs.launchpad.net/openstack-manuals/+bug/1328922>` and "
-"`LP1349398 <https://bugs.launchpad.net/openstack-manuals/+bug/1349398>` are "
+"`LP1328922 <https://bugs.launchpad.net/openstack-manuals/+bug/1328922>`_ and "
+"`LP1349398 <https://bugs.launchpad.net/openstack-manuals/+bug/1349398>`_ are "
 "related.]"
 
 msgid ""
@@ -4297,6 +4260,16 @@ msgstr "``1C4CBDCDCD2EFD2A``"
 
 msgid "``BC19DDBA``"
 msgstr "``BC19DDBA``"
+
+msgid ""
+"``Corosync`` is started as a regular system service. Depending on your "
+"distribution, it may ship with an LSB init script, an upstart job, or a "
+"systemd unit file. Either way, the service is usually named ``corosync``:"
+msgstr ""
+"Corosync は通常のシステムサービスとして起動します。お使いのディストリビュー"
+"ションに応じて、LSB init スクリプト、upstart ジョブ、systemd ユニットファイル"
+"を同梱している場合があります。どちらにしても、通常、サービスは corosync とい"
+"う名前です。"
 
 msgid "``crmsh``"
 msgstr "``crmsh``"
