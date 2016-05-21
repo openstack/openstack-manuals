@@ -36,7 +36,7 @@ Root Disk GB
 Ephemeral Disk GB
   Amount of disk space (in gigabytes) to use for
   the ephemeral partition. If unspecified, the value
-  is 0 by default.
+  is ``0`` by default.
   Ephemeral disks offer machine local disk storage
   linked to the lifecycle of a VM instance. When a
   VM is terminated, all data on the ephemeral disk
@@ -45,7 +45,7 @@ Ephemeral Disk GB
 
 Swap
   Amount of swap space (in megabytes) to use. If
-  unspecified, the value is 0 by default.
+  unspecified, the value is ``0`` by default.
 
 RXTX Factor
   Optional property that allows servers with a different bandwidth be
