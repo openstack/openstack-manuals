@@ -28,8 +28,8 @@ The large object is comprised of two types of objects:
    - **Static large objects**
    - **Dynamic large objects**
 
-To find out more information on large object support, see
-`Large objects <http://docs.openstack.org/user-guide/cli_swift_large_object_creation.html>`_
-in the End User Guide, or
-`Large Object Support <http://docs.openstack.org/developer/swift/overview_large_objects.html>`_
+To find out more information on large object support, see `Large objects
+<http://docs.openstack.org/user-guide/cli_swift_large_object_creation.html>`_
+in the OpenStack End User Guide, or `Large Object Support
+<http://docs.openstack.org/developer/swift/overview_large_objects.html>`_
 in the developer documentation.

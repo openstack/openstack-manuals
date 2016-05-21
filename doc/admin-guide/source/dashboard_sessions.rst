@@ -11,10 +11,10 @@ back end. You customize the session back end through the
 After architecting and implementing the core OpenStack
 services and other required services, combined with the Dashboard
 service steps below, users and administrators can use
-the OpenStack dashboard. Refer to the
-`OpenStack Dashboard <http://docs.openstack.org/
-user-guide/dashboard.html>`__ chapter of the User Guide for further
-instructions on logging in to the Dashboard.
+the OpenStack dashboard. Refer to the `OpenStack Dashboard
+<http://docs.openstack.org/user-guide/dashboard.html>`__
+chapter of the OpenStack End User Guide for
+further instructions on logging in to the Dashboard.
 
 The following sections describe the pros and cons of each option as it
 pertains to deploying the Dashboard.
