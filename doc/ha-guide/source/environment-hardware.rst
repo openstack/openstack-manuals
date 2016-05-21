@@ -1,12 +1,19 @@
+=============================================
+Hardware considerations for high availability
+=============================================
 
-==============
+[TODO: Provide a minimal architecture example for HA,
+expanded on that given in
+http://docs.openstack.org/mitaka/install-guide-ubuntu/environment.html
+for easy comparison]
+
 Hardware setup
-==============
+~~~~~~~~~~~~~~
 
 The standard hardware requirements:
 
-- `Provider networks <http://docs.openstack.org/liberty/install-guide-ubuntu/overview.html#networking-option-1-provider-networks>`_
-- `Self-service networks <http://docs.openstack.org/liberty/install-guide-ubuntu/overview.html#networking-option-2-self-service-networks>`_
+- `Provider networks <http://docs.openstack.org/mitaka/install-guide-ubuntu/overview.html#networking-option-1-provider-networks>`_
+- `Self-service networks <http://docs.openstack.org/mitaka/install-guide-ubuntu/overview.html#networking-option-2-self-service-networks>`_
 
 However, OpenStack does not require a significant amount of resources
 and the following minimum requirements should support
@@ -44,4 +51,3 @@ for hardware acceleration of nested VMs.
    When installing highly-available OpenStack on VMs,
    be sure that your hypervisor permits promiscuous mode
    and disables MAC address filtering on the external network.
-

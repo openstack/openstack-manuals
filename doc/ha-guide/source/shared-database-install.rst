@@ -1,5 +1,6 @@
+============
 Installation
-=============
+============
 
 Using Galera Cluster requires that you install two packages. The first is
 the database server, which must include the wsrep API patch. The second

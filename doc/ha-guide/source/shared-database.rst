@@ -1,5 +1,6 @@
-Database (Galera Cluster)
-==========================
+===============================================
+Database (Galera Cluster) for high availability
+===============================================
 
 The first step is to install the database that sits at the heart of the
 cluster. To implement high availability, run an instance of the database on
@@ -28,6 +29,6 @@ replication system.
 .. toctree::
   :maxdepth: 2
 
-  controller-ha-galera-install
-  controller-ha-galera-config
-  controller-ha-galera-manage
+  shared-database-install.rst
+  shared-database-configure.rst
+  shared-database-manage.rst

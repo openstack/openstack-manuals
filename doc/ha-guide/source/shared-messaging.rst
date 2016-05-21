@@ -1,6 +1,6 @@
-========
-RabbitMQ
-========
+=======================================
+Messaging service for high availability
+=======================================
 
 An AMQP (Advanced Message Queuing Protocol) compliant message bus is
 required for most OpenStack components in order to coordinate the

@@ -1,5 +1,6 @@
+==========
 Management
-===========
+==========
 
 When you finish the installation and configuration process on each
 cluster node in your OpenStack database, you can initialize Galera Cluster.
