@@ -11,22 +11,21 @@ scalability and HA.
    Use the :command:`neutron ext-list` client command to check if these
    extensions are enabled:
 
-    .. code-block:: console
+   .. code-block:: console
 
-       $ neutron ext-list -c name -c alias
-
-       +-----------------+--------------------------+
-       | alias           | name                     |
-       +-----------------+--------------------------+
-       | agent_scheduler | Agent Schedulers         |
-       | binding         | Port Binding             |
-       | quotas          | Quota management support |
-       | agent           | agent                    |
-       | provider        | Provider Network         |
-       | router          | Neutron L3 Router        |
-       | lbaas           | Load Balancing service   |
-       | extraroute      | Neutron Extra Route      |
-       +-----------------+--------------------------+
+      $ neutron ext-list -c name -c alias
+      +-----------------+--------------------------+
+      | alias           | name                     |
+      +-----------------+--------------------------+
+      | agent_scheduler | Agent Schedulers         |
+      | binding         | Port Binding             |
+      | quotas          | Quota management support |
+      | agent           | agent                    |
+      | provider        | Provider Network         |
+      | router          | Neutron L3 Router        |
+      | lbaas           | Load Balancing service   |
+      | extraroute      | Neutron Extra Route      |
+      +-----------------+--------------------------+
 
 .. figure:: figures/demo_multiple_dhcp_agents.png
 
