@@ -134,6 +134,6 @@ Help URL
 
    .. code-block:: python
 
-      'help_url': "http://openstack.mycompany.org"
+      HORIZON_CONFIG["help_url"] = "http://openstack.mycompany.org"
 
 #. Restart Apache for this change to take effect.
