@@ -31,7 +31,6 @@ Contents
    controller-ha.rst
    storage-ha.rst
    compute-node-ha.rst
-   noncore-ha.rst
 
 Appendix
 ~~~~~~~~
