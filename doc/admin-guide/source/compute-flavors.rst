@@ -46,17 +46,18 @@ Flavors define these elements:
 +-------------+---------------------------------------------------------------+
 | Ephemeral   | Specifies the size of a secondary ephemeral data disk. This   |
 |             | is an empty, unformatted disk and exists only for the life o\ |
-|             | f the instance.                                               |
+|             | f the instance. Default value is ``0``.                       |
 +-------------+---------------------------------------------------------------+
-| Swap        | Optional swap space allocation for the instance.              |
+| Swap        | Optional swap space allocation for the instance. Default      |
+|             | value is ``0``.                                               |
 +-------------+---------------------------------------------------------------+
 | VCPUs       | Number of virtual CPUs presented to the instance.             |
 +-------------+---------------------------------------------------------------+
 | RXTX Factor | Optional property allows created servers to have a different  |
 |             | bandwidth cap than that defined in the network they are att\  |
 |             | ached to. This factor is multiplied by the rxtx_base propert\ |
-|             | y of the network. Default value is 1.0. That is, the same as  |
-|             | attached network. This parameter is only available for Xen    |
+|             | y of the network. Default value is ``1.0``. That is, the same |
+|             | as attached network. This parameter is only available for Xen |
 |             | or NSX based systems.                                         |
 +-------------+---------------------------------------------------------------+
 | Is Public   | Boolean value, whether flavor is available to all users or p\ |
