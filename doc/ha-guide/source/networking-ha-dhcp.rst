@@ -1,9 +1,6 @@
-
-.. _dhcp-agent:
-
-======================
-Run neutron DHCP agent
-======================
+=========================
+Run Networking DHCP agent
+=========================
 
 The OpenStack Networking service has a scheduler
 that lets you run multiple agents across nodes;
@@ -14,4 +11,3 @@ in the :file:`/etc/neutron/neutron.conf` file.
 By default this is set to 1.
 To achieve high availability,
 assign more than one DHCP agent per network.
-

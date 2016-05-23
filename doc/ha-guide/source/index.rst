@@ -27,8 +27,8 @@ Contents
    intro-ha.rst
    hardware-ha.rst
    install-ha.rst
-   networking-ha.rst
    controller-ha.rst
+   networking-ha.rst
    storage-ha.rst
    compute-node-ha.rst
 

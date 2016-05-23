@@ -1,9 +1,6 @@
-
-.. _neutron-metadata:
-
-==========================
-Run neutron metadata agent
-==========================
+=============================
+Run Networking metadata agent
+=============================
 
 No native feature is available
 to make this service highly available.
@@ -15,4 +12,3 @@ in failover mode with Pacemaker.
 Can this service now be made HA in active/active mode
 or do we need to pull in the instructions
 to run this service in active/passive mode?]
-

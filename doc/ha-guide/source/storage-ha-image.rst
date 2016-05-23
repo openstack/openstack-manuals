@@ -1,6 +1,6 @@
-====================================
-Highly available OpenStack Image API
-====================================
+==========================
+Highly available Image API
+==========================
 
 The OpenStack Image service offers a service for discovering,
 registering, and retrieving virtual machine images.

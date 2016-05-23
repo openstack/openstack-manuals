@@ -1,6 +1,3 @@
-.. highlight: ini
-   :linenothreshold: 5
-
 ========================================
 Highly available Shared File Systems API
 ========================================
@@ -8,11 +5,11 @@ Highly available Shared File Systems API
 Making the Shared File Systems (manila) API service highly available
 in active/passive mode involves:
 
-- :ref:`ha-manila-pacemaker`
-- :ref:`ha-manila-configure`
-- :ref:`ha-manila-services`
+- :ref:`ha-sharedfilesystems-pacemaker`
+- :ref:`ha-sharedfilesystems-configure`
+- :ref:`ha-sharedfilesystems-services`
 
-.. _ha-manila-pacemaker:
+.. _ha-sharedfilesystems-pacemaker:
 
 Add Shared File Systems API resource to Pacemaker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -53,7 +50,7 @@ from the :command:`crm configure` menu. Pacemaker then starts the
 Shared File Systems API service and its dependent resources on one of your
 nodes.
 
-.. _ha-manila-configure:
+.. _ha-sharedfilesystems-configure:
 
 Configure Shared File Systems API service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,7 +71,7 @@ Edit the :file:`/etc/manila/manila.conf` file:
    rabbit_host = 10.0.0.11
 
 
-.. _ha-manila-services:
+.. _ha-sharedfilesystems-services:
 
 Configure OpenStack services to use HA Shared File Systems API
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,9 +1,6 @@
-
-.. _neutron-l3:
-
-====================
-Run neutron L3 agent
-====================
+=======================
+Run Networking L3 agent
+=======================
 
 The neutron L3 agent is scalable, due to the scheduler that supports
 Virtual Router Redundancy Protocol (VRRP)
@@ -33,5 +30,3 @@ to set the following values:
      - Minimum number of network nodes to use for the HA router.
        A new router can be created only if this number
        of network nodes are available.
-
-

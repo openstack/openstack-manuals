@@ -1,6 +1,3 @@
-.. highlight: ini
-   :linenothreshold: 5
-
 ==================================
 Highly available Block Storage API
 ==================================
@@ -16,9 +13,9 @@ also has volume snapshots capability for backing up the volumes.
 Making this Block Storage API service highly available in
 active/passive mode involves:
 
-- :ref:`ha-cinder-pacemaker`
-- :ref:`ha-cinder-configure`
-- :ref:`ha-cinder-services`
+- :ref:`ha-blockstorage-pacemaker`
+- :ref:`ha-blockstorage-configure`
+- :ref:`ha-blockstorage-services`
 
 In theory, you can run the Block Storage service as active/active.
 However, because of sufficient concerns, it is recommended running
@@ -67,7 +64,7 @@ and there is a
 for addressing them upstream.
 
 
-.. _ha-cinder-pacemaker:
+.. _ha-blockstorage-pacemaker:
 
 Add Block Storage API resource to Pacemaker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -133,7 +130,7 @@ by entering :command:`commit` from the :command:`crm configure` menu.
 Pacemaker then starts the Block Storage API service
 and its dependent resources on one of your nodes.
 
-.. _ha-cinder-configure:
+.. _ha-blockstorage-configure:
 
 Configure Block Storage API service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -212,7 +209,7 @@ be filled in for you, resulting in a shorter configuration file:
 Replace ``CINDER_DBPASS`` with the password you chose for the Block Storage
 database.
 
-.. _ha-cinder-services:
+.. _ha-blockstorage-services:
 
 Configure OpenStack services to use highly available Block Storage API
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

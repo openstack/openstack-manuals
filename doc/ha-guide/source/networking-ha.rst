@@ -1,11 +1,10 @@
-
-=======================
-OpenStack network nodes
-=======================
+=========================================
+Networking services for high availability
+=========================================
 
 Configure networking on each node.
 The
-`Networking <http://docs.openstack.org/liberty/install-guide-ubuntu/environment-networking.html>`_
+`Networking <http://docs.openstack.org/mitaka/install-guide-ubuntu/environment-networking.html>`_
 section of the *Install Guide* includes basic information
 about configuring networking.
 
@@ -33,16 +32,16 @@ are related.]
 
 OpenStack network nodes contain:
 
-- :ref:`Neutron DHCP agent<dhcp-agent>`
-- Neutron L2 agent.
+- :doc:`Networking DHCP agent<networking-ha-dhcp>`
+- Networking L2 agent.
   Note that the L2 agent cannot be distributed and highly available.
   Instead, it must be installed on each data forwarding node
   to control the virtual network drivers
   such as Open vSwitch or Linux Bridge.
   One L2 agent runs per node and controls its virtual interfaces.
-- :ref:`Neutron L3 agent<neutron-l3>`
-- :ref:`Neutron metadata agent<neutron-metadata>`
-- :ref:`Neutron LBaaS<neutron-lbaas>` (Load Balancing as a Service) agent
+- :doc:`Neutron L3 agent<networking-ha-l3>`
+- :doc:`Neutron metadata agent<networking-ha-metadata>`
+- :doc:`Neutron LBaaS agent<networking-ha-lbaas>`
 
 .. note::
 
@@ -57,4 +56,3 @@ OpenStack network nodes contain:
    networking-ha-l3.rst
    networking-ha-metadata.rst
    networking-ha-lbaas.rst
-
