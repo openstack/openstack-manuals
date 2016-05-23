@@ -14,5 +14,5 @@ Identity service
 This chapter details the OpenStack Identity service configuration options. For
 installation prerequisites and step-by-step walkthroughs, see the OpenStack
 Installation Guide for your distribution (`docs.openstack.org
-<http://docs.openstack.org>`__) and `Administrator Guide
+<http://docs.openstack.org>`__) and `OpenStack Administrator Guide
 <http://docs.openstack.org/admin-guide/>`__.

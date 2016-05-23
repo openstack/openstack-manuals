@@ -9,7 +9,7 @@ message or email subject line to show the topic explicitly.
 Based on the topic your request refers to, use the following tags:
 
 [admin-guide]
-  Administrator Guide
+  OpenStack Administrator Guide
 
 [api]
   API Guide, API Complete References
