@@ -262,9 +262,9 @@ Percona XtraDB Cluster:
 - For Red Hat Enterprise Linux and Red Hat-based distributions, such as
   Fedora or CentOS, instead run this command:
 
- .. code-block:: console
+  .. code-block:: console
 
-   # yum install Percona-XtraDB-Cluster
+     # yum install Percona-XtraDB-Cluster
 
 Galera Cluster is now installed on your system. You must repeat this
 process for each controller node in your cluster.
