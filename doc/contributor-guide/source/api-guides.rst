@@ -53,8 +53,10 @@ The basic steps are:
 
 #. Create a ``conf.py`` for the project, similar to the `nova example`_.
 
-#. Create an ``api-ref/ext`` directory and copy from the `nova example`_.
-   Those will be a shared resource during the Newton release cycle.
+#. Update the ``test-requirements.txt`` file for the project with a line for
+   the ``os-api-ref`` Sphinx extension::
+
+       os-api-ref>=0.1.0 # Apache-2.0
 
 #. Create RST files for each operation.
 
@@ -126,14 +128,11 @@ with Swagger.
 When your project needs to migrate to RST (.inc) and YAML as nova has done,
 follow these steps.
 
-#. Clone the api-site repository and get the patch from
-   https://review.openstack.org/#/c/311596:
+#. Clone the api-site repository:
 
    .. code-block:: console
 
       $ git clone https://github.com/openstack/api-site
-      $ git review -s
-      $ git review -d 311596
 
    The files are available in api-ref/source/<service>/<version>/.
 
