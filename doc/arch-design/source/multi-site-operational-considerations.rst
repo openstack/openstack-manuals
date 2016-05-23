@@ -49,8 +49,8 @@ Logging and monitoring
 Logging and monitoring does not significantly differ for a multi-site
 OpenStack cloud. The tools described in the `Logging and monitoring
 chapter <http://docs.openstack.org/openstack-ops/content/logging_monitoring.html>`__
-of the Operations Guide remain applicable. Logging and monitoring can be
-provided on a per-site basis, and in a common centralized location.
+of the OpenStack Operations Guide remain applicable. Logging and monitoring
+can be provided on a per-site basis, and in a common centralized location.
 
 When attempting to deploy logging and monitoring facilities to a
 centralized location, care must be taken with the load placed on the
@@ -65,7 +65,7 @@ shared centralized services such as OpenStack Identity. At a high level
 the recommended order of operations to upgrade an individual OpenStack
 environment is (see the `Upgrades
 chapter <http://docs.openstack.org/openstack-ops/content/ops_upgrades-general-steps.html>`__
-of the Operations Guide for details):
+of the OpenStack Operations Guide for details):
 
 #. Upgrade the OpenStack Identity service (keystone).
 
