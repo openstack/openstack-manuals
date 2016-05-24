@@ -46,38 +46,30 @@ In order to enable SR-IOV, the following steps are required:
 
 **Neutron sriov-agent**
 
-There are 2 ways of configuring SR-IOV:
+Neutron sriov-agent is required in the lastest version.
 
-#. With the sriov-agent running on each compute node
-#. Without the sriov-agent running on each compute node
-
-The sriov-agent allows you to set the admin state of ports and
+Neutron sriov-agent allows you to set the admin state of ports and
 starting from Liberty allows you to control
 port security (enable and disable spoof checking) and QoS rate limit settings.
 
-
 .. note::
 
-   With the sriov-agent mode is default in Liberty.
-   Without the sriov-agent mode is deprecated in Liberty and
-   removed in Mitaka.
+   Neutron sriov-agent was optional before Mitaka, and was not
+   enabled by default before Liberty.
 
 Known limitations
 -----------------
 
 * QoS is supported since Liberty, while it has limitations.
-  max_burst_kbps (burst over max_kbps) is not supported.
-  max_kbps is rounded to Mbps.
+  ``max_burst_kbps`` (burst over ``max_kbps``) is not supported.
+  ``max_kbps`` is rounded to Mbps.
 * Security Group is not supported. the agent is only working with
   ``firewall_driver = neutron.agent.firewall.NoopFirewallDriver``.
 * No OpenStack Dashboard integration. Users need to use CLI or API to
   create neutron SR-IOV ports.
 * Live migration is not supported for instances with SR-IOV ports.
-
-  .. note::
-
-     ARP spoofing filtering is supported since Liberty when using
-     sriov-agent.
+* ARP spoofing filtering was not supported before Mitaka when using
+  neutron sriov-agent.
 
 Environment example
 -------------------
@@ -204,8 +196,8 @@ For **QLogic SR-IOV Ethernet cards** see:
 Whitelist PCI devices nova-compute (Compute)
 --------------------------------------------
 
-Tell nova-compute which pci devices are allowed to be passed
-through. Edit the file ``/etc/nova/nova.conf``:
+Tell ``nova-compute`` which pci devices are allowed to be passed
+through. Edit the file ``nova.conf``:
 
 .. code-block:: ini
 
@@ -214,8 +206,7 @@ through. Edit the file ``/etc/nova/nova.conf``:
 
 This tells nova that all VFs belonging to eth3 are allowed to be passed
 through to VMs and belong to the neutron provider network physnet2. Restart
-nova compute with :command:`service nova-compute restart` for the changes
-to go into effect.
+the ``nova-compute`` service for the changes to go into effect.
 
 Alternatively the ``pci_passthrough_whitelist`` parameter also supports
 whitelisting by:
@@ -248,8 +239,7 @@ entries per host are supported.
 Configure neutron-server (Controller)
 -------------------------------------
 
-#. Add ``sriovnicswitch`` as mechanism driver. Edit the file
-   ``/etc/neutron/plugins/ml2/ml2_conf.ini``:
+#. Add ``sriovnicswitch`` as mechanism driver, edit the file ``ml2_conf.ini``:
 
    .. code-block:: ini
 
@@ -265,9 +255,10 @@ Configure neutron-server (Controller)
       87:10.1 Ethernet controller [0200]: Intel Corporation 82599 Ethernet Controller Virtual Function [8086:10ed] (rev 01)
       87:10.3 Ethernet controller [0200]: Intel Corporation 82599 Ethernet Controller Virtual Function [8086:10ed] (rev 01)
 
-#. Update the ``/etc/neutron/plugins/ml2/ml2_conf_sriov.ini`` on each
-   controller. In our case the vendor_id is 8086 and the product_id is 10ed.
-   Tell neutron the vendor_id and product_id of the VFs that are supported.
+#. Update the ``ml2_conf_sriov.ini`` on each controller.
+   In our case the ``vendor_id`` is ``8086`` and the ``product_id``
+   is ``10ed``. Tell neutron the ``vendor_id`` and ``product_id`` of the VFs
+   that are supported.
 
    .. code-block:: ini
 
@@ -275,25 +266,24 @@ Configure neutron-server (Controller)
 
 
 #. Add the newly configured ``ml2_conf_sriov.ini`` as parameter to
-   the neutron-server daemon.  Edit the file
-   ``/etc/init/neutron-server.conf``:
+   the ``neutron-server`` daemon. Edit the appropriate initialization script
+   to configure the ``neutron-server`` service to load
+   the SRIOV configuration file:
 
    .. code-block:: ini
 
       --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugin.ini
       --config-file /etc/neutron/plugins/ml2/ml2_conf_sriov.ini
 
-#. For the changes to go into effect, restart the neutron-server service with
-   the :command:`service neutron-server restart`.
+#. For the changes to go into effect, restart the ``neutron-server`` service.
 
 Configure nova-scheduler (Controller)
 -------------------------------------
 
-#. On every controller node running nova-scheduler add
-   PciPassthroughFilter to the scheduler_default_filters parameter
-   and add a new line for scheduler_available_filters parameter
-   under the ``[default]`` section in
-   ``/etc/nova/nova.conf``:
+#. On every controller node running the ``nova-scheduler`` service, add
+   ``PciPassthroughFilter`` to the ``scheduler_default_filters`` parameter
+   and add a new line for ``scheduler_available_filters`` parameter
+   under the ``[DEFAULT]`` section in ``nova.conf``:
 
    .. code-block:: ini
 
@@ -303,8 +293,39 @@ Configure nova-scheduler (Controller)
       scheduler_available_filters = nova.scheduler.filters.pci_passthrough_filter.PciPassthroughFilter
 
 
-#. Now restart the nova-scheduler service with
-   :command:`service nova-scheduler restart`.
+#. Restart the nova-scheduler service.
+
+
+Enable neutron sriov-agent (Compute)
+-------------------------------------
+
+#. On each compute node, edit the file ``sriov_agent.ini``:
+
+   .. code-block:: ini
+
+      [securitygroup]
+      firewall_driver = neutron.agent.firewall.NoopFirewallDriver
+
+      [sriov_nic]
+      physical_device_mappings = physnet2:eth3
+      exclude_devices =
+
+   The ``exclude_devices`` parameter is empty, therefore, all the VFs associated with eth3 may be
+   configured by the agent. To exclude specific VFs, add
+   them to the ``exclude_devices`` parameter as follows:
+
+   .. code-block:: ini
+
+      exclude_devices = eth1:0000:07:00.2; 0000:07:00.3, eth2:0000:05:00.1; 0000:05:00.2
+
+#. Test whether the neutron sriov-agent runs successfully:
+
+   .. code-block:: console
+
+      # neutron-sriov-nic-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/sriov_agent.ini
+
+#. Enable the neutron sriov-agent service.
+
 
 Creating instances with SR-IOV ports
 ------------------------------------
@@ -318,8 +339,8 @@ with neutron SR-IOV ports.
 
       $ net_id=`neutron net-show net04 | grep "\ id\ " | awk '{ print $4 }'`
 
-#. Create the SR-IOV port. We specify vnic_type direct, but other options
-   include direct-physical, and macvtap:
+#. Create the SR-IOV port. We specify ``vnic_type=direct``, but other options
+   include ``normal``, ``direct-physical``, and ``macvtap``:
 
    .. code-block:: console
 
