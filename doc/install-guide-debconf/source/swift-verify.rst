@@ -1,0 +1,1 @@
+../../install-guide/source/swift-verify.rst

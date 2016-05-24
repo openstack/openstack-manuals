@@ -1,0 +1,1 @@
+../../install-guide/source/environment-ntp-verify.rst

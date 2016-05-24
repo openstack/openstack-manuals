@@ -1,0 +1,1 @@
+../../install-guide/source/nova-verify.rst

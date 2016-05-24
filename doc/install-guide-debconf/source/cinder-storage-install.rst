@@ -1,0 +1,1 @@
+../../install-guide/source/cinder-storage-install.rst
