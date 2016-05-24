@@ -1198,7 +1198,7 @@ system and use it for your purposes.
 
    See `Share Management
    <http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
-   of “Shared File Systems” section of Administrator Guide
+   of “Shared File Systems” section of OpenStack Administrator Guide
    document for the details on share management operations.
 
 Manage Access To Shares
@@ -1435,7 +1435,7 @@ permissions to run it:
    For more details and additional information about other cases,
    features, API commands etc, see `Share Management
    <http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
-   of “Shared File Systems” section of Administrator Guide document.
+   of “Shared File Systems” section of OpenStack Administrator Guide document.
 
 Create Snapshots
 ----------------
@@ -1494,7 +1494,7 @@ To make sure that the snapshot is available, run:
    For more details and additional information on snapshots, see
    `Share Snapshots
    <http://docs.openstack.org/admin-guide/shared_file_systems_snapshots.html>`__
-   of “Shared File Systems” section of “Administrator Guide” document.
+   of “Shared File Systems” section of “OpenStack Administrator Guide” document.
 
 
 .. _create_a_share_network:
@@ -1566,7 +1566,7 @@ Share use case described earlier in this chapter.
 
    See `Share Networks
    <http://docs.openstack.org/admin-guide/shared_file_systems_share_networks.html>`__
-   of “Shared File Systems” section of Administrator Guide
+   of “Shared File Systems” section of OpenStack Administrator Guide
    document for more details.
 
 Manage a Share Network
@@ -1641,7 +1641,7 @@ You also can add and remove the security services to the share network.
 
    For details, see subsection `Security Services
    <http://docs.openstack.org/admin-guide/shared_file_systems_security_services.html>`__
-   of “Shared File Systems” section of Administrator Guide document.
+   of “Shared File Systems” section of OpenStack Administrator Guide document.
 
 Instances
 ~~~~~~~~~
@@ -2285,7 +2285,7 @@ Good Luck!
 
 This section was intended as a brief introduction to some of the most
 useful of many OpenStack commands. For an exhaustive list, please refer
-to the `Administrator Guide <http://docs.openstack.org/admin-guide/>`__.
+to the `OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/>`__.
 We hope your users remain happy and recognize your hard work!
 (For more hard work, turn the page to the next chapter, where we discuss
 the system-facing operations: maintenance, failures and debugging.)

@@ -72,7 +72,7 @@ Guides for deployers and administrators
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/config-reference
      - http://docs.openstack.org/mitaka/config-reference/
 
-   * - Administrator Guide
+   * - OpenStack Administrator Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide
      - http://docs.openstack.org/admin-guide
 
