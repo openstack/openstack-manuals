@@ -249,8 +249,8 @@ Install and configure components
 
       .. only:: debian
 
-         Respond to prompts for
-         :doc:`database management <debconf/debconf-dbconfig-common>`,
+         Respond to prompts for debconf.
+      .. :doc:`database management <debconf/debconf-dbconfig-common>`,
          :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
          :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
          and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.

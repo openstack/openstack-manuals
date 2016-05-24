@@ -68,59 +68,36 @@ This guide documents OpenStack Mitaka release.
 Contents
 ~~~~~~~~
 
+.. toctree::
+   :maxdepth: 2
+
+   common/conventions.rst
+   overview.rst
+   environment.rst
+   keystone.rst
+   glance.rst
+   nova.rst
+   neutron.rst
+   horizon.rst
+   cinder.rst
+   manila.rst
+   swift.rst
+   heat.rst
+   ceilometer.rst
+   trove.rst
+   launch-instance.rst
+
+   common/app_support.rst
+   common/glossary.rst
+
 .. Pseudo only directive for each distribution used by the build tool.
    This pseudo only directive for toctree only works fine with Tox.
    When you directly build this guide with Sphinx,
    some navigation menu may not work properly.
-
+.. Keep this pseudo only directive not to break translation tool chain
+   at the openstack-doc-tools repo until it is changed.
 .. only:: obs or rdo or ubuntu
-
-   .. toctree::
-      :maxdepth: 2
-
-      common/conventions.rst
-      overview.rst
-      environment.rst
-      keystone.rst
-      glance.rst
-      nova.rst
-      neutron.rst
-      horizon.rst
-      cinder.rst
-      manila.rst
-      swift.rst
-      heat.rst
-      ceilometer.rst
-      trove.rst
-      launch-instance.rst
-
-      common/app_support.rst
-      common/glossary.rst
-
 .. only:: debian
-
-   .. toctree::
-      :maxdepth: 2
-
-      common/conventions.rst
-      overview.rst
-      environment.rst
-      debconf/debconf.rst
-      keystone.rst
-      glance.rst
-      nova.rst
-      neutron.rst
-      horizon.rst
-      cinder.rst
-      manila.rst
-      swift.rst
-      heat.rst
-      ceilometer.rst
-      launch-instance.rst
-
-      common/app_support.rst
-      common/glossary.rst
-
 .. end of contents
 
 Search in this guide
