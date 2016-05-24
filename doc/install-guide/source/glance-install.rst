@@ -295,11 +295,12 @@ Install and configure components
 
          # apt-get install glance python-glanceclient
 
-   #. Respond to prompts for
-      :doc:`database management <debconf/debconf-dbconfig-common>`,
-      :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
-      :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
-      and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
+   #. Respond to prompts for debconf.
+
+      .. :doc:`database management <debconf/debconf-dbconfig-common>`,
+         :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
+         :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
+         and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
 
    #. Select the ``keystone`` pipeline to configure the Image service
       to use the Identity service:
