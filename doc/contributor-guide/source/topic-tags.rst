@@ -54,7 +54,7 @@ Based on the topic your request refers to, use the following tags:
   Training labs, Training guides
 
 [user-guide]
-  End User Guide
+  OpenStack End User Guide
 
 [WIP]
   Commit is a work in progress
