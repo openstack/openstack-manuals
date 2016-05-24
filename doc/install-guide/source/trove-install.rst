@@ -57,7 +57,7 @@ Compute, Image Service, Identity.
 
       .. code-block:: console
 
-         $ source admin-openrc.sh
+         $ . admin-openrc
 
    #. To create the service credentials, complete these steps:
 

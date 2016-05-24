@@ -13,7 +13,7 @@ Verify operation of the Database service.
 
    .. code-block:: console
 
-      $ source admin-openrc.sh
+      $ . admin-openrc
 
 #. Run the ``trove list`` command. You should see output similar to this:
 
