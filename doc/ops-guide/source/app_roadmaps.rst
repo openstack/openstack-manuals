@@ -28,8 +28,7 @@ Information Available to You
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are several good sources of information available that you can use
-to track your OpenStack development desires.OpenStack community working
-with roadmaps information available
+to track your OpenStack development desires.
 
 Release notes are maintained on the OpenStack wiki, and also shown here:
 
