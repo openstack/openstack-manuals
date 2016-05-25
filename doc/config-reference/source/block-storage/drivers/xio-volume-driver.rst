@@ -69,8 +69,9 @@ Multipath
 ---------
 
 The X-IO ISE supports a multipath configuration, but multipath must be enabled
-on the compute node (see *ISE Storage Blade Best Practices Guide*). For more
-information, see `*www.openstack.org* <http://www.openstack.org/>`__.
+on the compute node (see *ISE Storage Blade Best Practices Guide*).
+For more information, see `X-IO Document Library
+<http://xiostorage.com/document_library/>`__.
 
 Volume types
 ------------
