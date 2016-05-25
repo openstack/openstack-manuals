@@ -1,4 +1,3 @@
-
 ================================================
 Configuring the controller for high availability
 ================================================
@@ -12,9 +11,6 @@ and must talk to all other services.
    controller-ha-pacemaker.rst
    controller-ha-vip.rst
    controller-ha-haproxy.rst
-   controller-ha-galera.rst
    controller-ha-memcached.rst
-   controller-ha-rabbitmq.rst
    controller-ha-identity.rst
    controller-ha-telemetry.rst
-

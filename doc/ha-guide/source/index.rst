@@ -25,8 +25,8 @@ Contents
 
    common/conventions.rst
    intro-ha.rst
-   hardware-ha.rst
-   install-ha.rst
+   environment.rst
+   shared-services.rst
    controller-ha.rst
    networking-ha.rst
    storage-ha.rst
