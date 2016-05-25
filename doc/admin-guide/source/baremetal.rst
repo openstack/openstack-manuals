@@ -84,6 +84,15 @@ Use Bare Metal
 
 .. TODO Add the detail command line later on.
 
+Use multitenancy with Bare Metal service
+----------------------------------------
+
+.. toctree::
+
+    baremetal-multitenancy.rst
+
+.. TODO Add guides for other features.
+
 Troubleshooting
 ~~~~~~~~~~~~~~~
 
