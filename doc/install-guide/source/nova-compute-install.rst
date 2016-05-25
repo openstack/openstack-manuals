@@ -52,12 +52,13 @@ Install and configure components
 
       .. only:: debian
 
-         Respond to prompts for
-         :doc:`database management <debconf/debconf-dbconfig-common>`,
-         :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
-         and :doc:`message broker credentials <debconf/debconf-rabbitmq>`. Make
-         sure that you do not activate database management handling by debconf,
-         as a compute node should not access the central database.
+         Respond to prompts for debconf.
+
+         .. :doc:`database management <debconf/debconf-dbconfig-common>`,
+            :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
+            and :doc:`message broker credentials <debconf/debconf-rabbitmq>`. Make
+            sure that you do not activate database management handling by debconf,
+            as a compute node should not access the central database.
 
 2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:

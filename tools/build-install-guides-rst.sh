@@ -16,7 +16,7 @@ fi
 # because our tools generate translation resources from
 # only one index file.
 # Therefore, this tool uses one combined index file
-# while processing title and toctree for each distribution.
+# while processing title for each distribution.
 
 # Save and restore the index file
 cp -f ${INDEX} ${INDEX}.save
@@ -27,8 +27,7 @@ for tag in $TAGS; do
         # Build the guide with debconf
         # To use debian only contents, use "debian" tag.
         tools/build-rst.sh doc/install-guide-debconf  \
-            $GLOSSARY --tag debian --target "draft/install-guide-debconf" \
-            $LINKCHECK
+            --tag debian --target "draft/install-guide-${tag}" $LINKCHECK
     else
         ##
         # Because Sphinx uses the first heading as title regardless of
@@ -39,43 +38,8 @@ for tag in $TAGS; do
                   sed -n 4p | sed -e 's/^ *//g')
         sed -i -e "s/\.\. title::.*/.. title:: ${title}/" ${INDEX}
 
-        ##
-        # Sphinx builds the navigation before processing directives,
-        # so the conditional toctree does not work.
-        # We need to prepare toctree depending on distribution
-        # only with one toctree before exectuing sphinx-build.
-
-        # Get line number of each tag
-        lineno_start=$(grep -n "^Contents" ${INDEX} | sed -e 's/:.*//')
-        lineno_end=$(grep -n "^.. end of contents" ${INDEX} | sed -e 's/:.*//')
-        lineno_debian=$(grep -n "^.. only:: debian" ${INDEX} \
-            | tail -1 | sed -e 's/:.*//')
-        lineno_notdebian=$(grep -n "^.. only:: [^d]" ${INDEX} \
-            | tail -1 | sed -e 's/:.*//')
-
-        # Remove indent for pseudo only directive
-        sed -i "${lineno_start},${lineno_end} s/^  *\.\. toctree/.. toctree/" ${INDEX}
-        sed -i "${lineno_start},${lineno_end} s/^  */   /" ${INDEX}
-
-        # Remove unnecessary toctree for each distribution
-        if [[ "$tag" == "debian" ]]; then
-            sed -i "${lineno_notdebian},${lineno_debian}d" ${INDEX}
-        else
-            sed -i "${lineno_debian},$((${lineno_end}-1))d" ${INDEX}
-            sed -i "${lineno_notdebian}d" ${INDEX}
-        fi
-
         # Build the guide
         tools/build-rst.sh doc/install-guide \
             --tag ${tag} --target "draft/install-guide-${tag}" $LINKCHECK
-
-        # Restore the index file
-        cp -f ${INDEX}.save ${INDEX}
-
-        ##
-        # Remove Debian specific content from other guides
-        if [[ "$tag" != "debian" ]]; then
-            rm -rf publish-docs/draft/install-guide-$tag/debconf
-        fi
     fi
 done

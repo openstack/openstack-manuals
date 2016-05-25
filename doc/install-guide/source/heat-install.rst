@@ -454,11 +454,12 @@ Install and configure components
 
          # apt-get install heat-api heat-api-cfn heat-engine python-heat-client
 
-   #. Respond to prompts for
-      :doc:`database management <debconf/debconf-dbconfig-common>`,
-      :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
-      :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
-      and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
+   #. Respond to prompts for debconf.
+
+      .. :doc:`database management <debconf/debconf-dbconfig-common>`,
+         :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
+         :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
+         and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
 
    #. Edit the ``/etc/heat/heat.conf`` file and complete the following
       actions:
