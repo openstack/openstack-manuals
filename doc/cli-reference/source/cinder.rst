@@ -9,7 +9,7 @@ Block Storage service command-line client
 The cinder client is the command-line interface (CLI) for
 the Block Storage service API and its extensions.
 
-This chapter documents :command:`cinder` version ``1.6.0``.
+This chapter documents :command:`cinder` version ``1.7.1``.
 
 For help on a specific :command:`cinder` command, enter:
 
@@ -31,7 +31,7 @@ cinder usage
                  [--endpoint-type <endpoint-type>]
                  [--os-volume-api-version <volume-api-ver>]
                  [--bypass-url <bypass-url>] [--retries <retries>]
-                 [--os-auth-strategy <auth-strategy>]
+                 [--profile HMAC_KEY] [--os-auth-strategy <auth-strategy>]
                  [--os-username <auth-user-name>] [--os-password <auth-password>]
                  [--os-tenant-name <auth-tenant-name>]
                  [--os-tenant-id <auth-tenant-id>] [--os-auth-url <auth-url>]
@@ -148,11 +148,13 @@ cinder usage
   Lists current volume types and extra specs.
 
 ``failover-host``
+  Failover a replicating cinder-volume host.
 
 ``force-delete``
   Attempts force-delete of volume, regardless of state.
 
 ``freeze-host``
+  Freeze and disable the specified cinder-volume host.
 
 ``get-capabilities``
   Show backend volume stats and properties. Admin only.
@@ -305,6 +307,7 @@ cinder usage
   Stop managing a snapshot.
 
 ``thaw-host``
+  Thaw and enable the specified cinder-volume host.
 
 ``transfer-accept``
   Accepts a volume transfer.
@@ -337,7 +340,7 @@ cinder usage
   List the default volume type.
 
 ``type-delete``
-  Deletes a volume type.
+  Deletes volume type or types.
 
 ``type-key``
   Sets or unsets extra_spec for a volume type.
@@ -402,8 +405,9 @@ cinder optional arguments
   **DEPRECATED!** Use :option:`--os-endpoint-type`.
 
 ``--os-volume-api-version <volume-api-ver>``
-  Block Storage API version. Valid values are 1 or 2.
-  Default= ``env[OS_VOLUME_API_VERSION]``.
+  Block Storage API version. Accepts X, X.Y (where X is
+  major and Y is minor
+  part).Default= ``env[OS_VOLUME_API_VERSION]``.
 
 ``--bypass-url <bypass-url>``
   Use this API endpoint instead of the Service Catalog.
@@ -411,6 +415,13 @@ cinder optional arguments
 
 ``--retries <retries>``
   Number of retries.
+
+``--profile HMAC_KEY``
+  HMAC key to use for encrypting context data for
+  performance profiling of operation. This key needs to
+  match the one configured on the cinder api server.
+  Without key the profiling will not be triggered even
+  if osprofiler is enabled on server side.
 
 ``--os-auth-strategy <auth-strategy>``
   Authentication strategy (Env: OS_AUTH_STRATEGY,
@@ -1038,7 +1049,7 @@ cinder delete
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 delete <volume> [<volume> ...]
+   usage: cinder --os-volume-api-version 2 delete [--cascade [<cascade>]] <volume> [<volume> ...]
 
 Removes one or more volumes.
 
@@ -1046,6 +1057,11 @@ Removes one or more volumes.
 
 ``<volume>``
   Name or ID of volume or volumes to delete.
+
+**Optional arguments:**
+
+``--cascade [<cascade>]``
+  Remove any snapshots along with volume. Default=False.
 
 .. _cinder_encryption-type-create:
 
@@ -1219,6 +1235,7 @@ cinder failover-host
 
    usage: cinder --os-volume-api-version 2 failover-host [--backend_id <backend-id>] <hostname>
 
+Failover a replicating cinder-volume host.
 
 **Positional arguments:**
 
@@ -1255,6 +1272,7 @@ cinder freeze-host
 
    usage: cinder --os-volume-api-version 2 freeze-host <hostname>
 
+Freeze and disable the specified cinder-volume host.
 
 **Positional arguments:**
 
@@ -1998,7 +2016,7 @@ actual state. This can render a volume unusable in the case of change to the
   "maintenance". NOTE: This command simply changes the
   state of the Volume in the DataBase with no regard to
   actual status, exercise caution when using.
-  Default=available.
+  Default=None, that means the state is unchanged.
 
 ``--attach-status <attach-status>``
   The attach status to assign to the volume in the
@@ -2427,6 +2445,7 @@ cinder thaw-host
 
    usage: cinder --os-volume-api-version 2 thaw-host <hostname>
 
+Thaw and enable the specified cinder-volume host.
 
 **Positional arguments:**
 
@@ -2623,14 +2642,14 @@ cinder type-delete
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 type-delete <id>
+   usage: cinder --os-volume-api-version 2 type-delete <vol_type> [<vol_type> ...]
 
-Deletes a volume type.
+Deletes volume type or types.
 
 **Positional arguments:**
 
-``<id>``
-  ID of volume type to delete.
+``<vol_type>``
+  Name or ID of volume type or types to delete.
 
 .. _cinder_type-key:
 
@@ -3303,7 +3322,7 @@ cinder delete (v1)
 
 .. code-block:: console
 
-   usage: cinder delete <volume> [<volume> ...]
+   usage: cinder delete [--cascade [<cascade>]] <volume> [<volume> ...]
 
 Removes one or more volumes.
 
@@ -3311,6 +3330,11 @@ Removes one or more volumes.
 
 ``<volume>``
   Name or ID of volume or volumes to delete.
+
+**Optional arguments:**
+
+``--cascade [<cascade>]``
+  Remove any snapshots along with volume. Default=False.
 
 .. _cinder_encryption-type-create_v1:
 
@@ -3484,6 +3508,7 @@ cinder failover-host (v1)
 
    usage: cinder failover-host [--backend_id <backend-id>] <hostname>
 
+Failover a replicating cinder-volume host.
 
 **Positional arguments:**
 
@@ -3520,6 +3545,7 @@ cinder freeze-host (v1)
 
    usage: cinder freeze-host <hostname>
 
+Freeze and disable the specified cinder-volume host.
 
 **Positional arguments:**
 
@@ -4263,7 +4289,7 @@ actual state. This can render a volume unusable in the case of change to the
   "maintenance". NOTE: This command simply changes the
   state of the Volume in the DataBase with no regard to
   actual status, exercise caution when using.
-  Default=available.
+  Default=None, that means the state is unchanged.
 
 ``--attach-status <attach-status>``
   The attach status to assign to the volume in the
@@ -4692,6 +4718,7 @@ cinder thaw-host (v1)
 
    usage: cinder thaw-host <hostname>
 
+Thaw and enable the specified cinder-volume host.
 
 **Positional arguments:**
 
@@ -4888,14 +4915,14 @@ cinder type-delete (v1)
 
 .. code-block:: console
 
-   usage: cinder type-delete <id>
+   usage: cinder type-delete <vol_type> [<vol_type> ...]
 
-Deletes a volume type.
+Deletes volume type or types.
 
 **Positional arguments:**
 
-``<id>``
-  ID of volume type to delete.
+``<vol_type>``
+  Name or ID of volume type or types to delete.
 
 .. _cinder_type-key_v1:
 
