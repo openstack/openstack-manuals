@@ -108,6 +108,8 @@
      - (Integer) Interval between checks of child process liveness (seconds), use 0 to disable
    * - ``log_agent_heartbeats`` = ``False``
      - (Boolean) Log agent heartbeats
+   * - ``polling_interval`` = ``2``
+     - (Integer) The number of seconds the agent will wait between polling for local device changes.
    * - ``root_helper`` = ``sudo``
      - (String) Root helper application. Use 'sudo neutron-rootwrap /etc/neutron/rootwrap.conf' to use the real root filter facility. Change to 'sudo' to skip the filtering and just run the command directly.
    * - ``root_helper_daemon`` = ``None``
