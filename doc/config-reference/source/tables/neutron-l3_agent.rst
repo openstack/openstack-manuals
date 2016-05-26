@@ -20,10 +20,6 @@
      -
    * - ``agent_mode`` = ``legacy``
      - (String) The working mode for the agent. Allowed modes are: 'legacy' - this preserves the existing behavior where the L3 agent is deployed on a centralized networking node to provide L3 services like DNAT, and SNAT. Use this mode if you do not want to adopt DVR. 'dvr' - this mode enables DVR functionality and must be used for an L3 agent that runs on a compute host. 'dvr_snat' - this enables centralized SNAT support in conjunction with DVR. This mode must be used for an L3 agent running on a centralized node (or in single-host deployments, e.g. devstack)
-   * - ``allow_automatic_dhcp_failover`` = ``True``
-     - (Boolean) Automatically remove networks from offline DHCP agents.
-   * - ``allow_automatic_l3agent_failover`` = ``False``
-     - (Boolean) Automatically reschedule routers from offline L3 agents to online L3 agents.
    * - ``enable_metadata_proxy`` = ``True``
      - (Boolean) Allow running metadata proxy.
    * - ``enable_snat_by_default`` = ``True``
