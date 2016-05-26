@@ -11,5 +11,5 @@ Dashboard
    dashboard/sample-configuration-files.rst
    dashboard/logs.rst
 
-This chapter describes how to configure the OpenStack dashboard with
+This chapter describes how to configure the Dashboard with
 Apache web server.

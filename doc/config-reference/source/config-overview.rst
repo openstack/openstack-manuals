@@ -15,15 +15,17 @@ configuration techniques and a common framework for INI file options.
 This guide pulls together multiple references and configuration
 options for the following OpenStack components:
 
-* Bare metal service
-* OpenStack Block Storage
-* OpenStack Compute
-* OpenStack dashboard
-* Database service for OpenStack
-* Data processing service
-* OpenStack Identity
-* OpenStack Image service
-* OpenStack Networking
-* OpenStack Object Storage
-* Orchestration
-* Telemetry
+* Bare Metal service
+* Block Storage service
+* Compute service
+* Dashboard
+* Database service
+* Data Processing service
+* Identity service
+* Image service
+* Message service
+* Networking service
+* Object Storage service
+* Orchestration service
+* Shared File Systems service
+* Telemetry service

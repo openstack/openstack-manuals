@@ -1,6 +1,6 @@
-=======
-Compute
-=======
+===============
+Compute service
+===============
 
 .. toctree::
    :maxdepth: 1
@@ -23,10 +23,10 @@ Compute
    compute/config-samples.rst
    tables/conf-changes/nova.rst
 
-The OpenStack Compute service is a cloud computing fabric
-controller, which is the main part of an IaaS system.
+The Compute service is a cloud computing fabric controller,
+which is the main part of an IaaS system.
 You can use OpenStack Compute to host and manage cloud computing systems.
-This section describes the OpenStack Compute configuration options.
+This section describes the Compute service configuration options.
 
 To configure your Compute installation,
 you must define configuration options in these files:
