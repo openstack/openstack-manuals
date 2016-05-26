@@ -1,6 +1,6 @@
-=============
-Block Storage
-=============
+=====================
+Block Storage service
+=====================
 
 .. toctree::
    :maxdepth: 2
@@ -16,5 +16,5 @@ Block Storage
    block-storage/volume-misc.rst
    tables/conf-changes/cinder.rst
 
-The OpenStack Block Storage service works with many different storage
+The Block Storage service works with many different storage
 drivers that you can configure by using these instructions.
