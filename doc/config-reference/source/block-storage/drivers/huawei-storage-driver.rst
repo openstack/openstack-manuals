@@ -39,7 +39,11 @@ driver, Huawei storage system and OpenStack:
 
        OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
 
-       OceanStor 18500/18800V1R1C00/C20/C30 V3R3C00
+       OceanStor 2200V3 V300R005C00
+
+       OceanStor 2600V3 V300R005C00
+
+       OceanStor 18500/18800 V1R1C00/C20/C30 V3R3C00
      - 1.1.0
 
        1.1.1
@@ -53,13 +57,114 @@ driver, Huawei storage system and OpenStack:
 
        Smart Thin/Thick(version 1.1.1 or later)
 
-       SmartPartition(version 1.1.1 or later)
+       Replication V2.1(version 1.1.1 or later)
      - OceanStor T series V2R2 C00/C20/C30
 
        OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
 
+       OceanStor 2200V3 V300R005C00
+
+       OceanStor 2600V3 V300R005C00
+
        OceanStor 18500/18800V1R1C00/C20/C30
      - 1.1.1
+   * - SmartPartition(version 1.1.1 or later)
+     - OceanStor T series V2R2 C00/C20/C30
+
+       OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
+
+       OceanStor 2600V3 V300R005C00
+
+       OceanStor 18500/18800V1R1C00/C20/C30
+     - 1.1.1
+
+Block Storage driver installation and deployment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Ubuntu environment deployment
+-----------------------------
+
+The OpenStack standard deployment steps are as follows:
+
+#. Before installation, delete all the installation files of Huawei OpenStack
+   Driver. The default path may be:
+   ``/usr/lib/python2.7/disk-packages/cinder/volume/drivers/huawei``.
+
+   .. note::
+
+      In this example, the version of Python is 2.7. If other version is
+      used, make corresponding changes to the Driver path.
+
+#. Copy OpenStack Cinder Driver to the Cinder Driver installation directory.
+   Refer to step 1 to find the default directory.
+
+#. Refer to chapter :ref:`huawei-driver-configuration` to complete the
+   configuration.
+
+#. After configuration, restart the ``cinder-volume`` service:
+
+   .. code-block:: console
+
+      service cinder-volume restart
+
+#. Check the status of services using the :command:`cinder service-list`
+   command. If the "State" of ``cinder-volume`` is ``up``, that means
+   Cinder-Volume is OK.
+
+   .. code-block:: console
+
+    root@ubuntuL004:/# cinder service-list
+
+    +---------------+---------------+------+-------+-----+--------------------------+---------------+
+    |Binary         |Host           | Zone |Status |State|Updated_at                |Disabled Reason|
+    +---------------+---------------+------+-------+-----+--------------------------+---------------+
+    |cinderscheduler|ubuntuL004     | nova |enabled|up   |2016-02-01T16:26:00.000000|-              |
+    +---------------+---------------+------+-------+-----+--------------------------+---------------+
+    |cindervolume   |ubuntuL004@v3r3| nova |enabled|up   |2016-02-01T16:25:53.000000|-              |
+    +---------------+---------------+------+-------+-----+--------------------------+---------------+
+
+Red Hat OpenStack deployment
+----------------------------
+
+Red Hat OpenStack deployment steps are as follows:
+
+#. Before installation, delete all the installation files of Huawei OpenStack
+   Driver. The default path may be:
+   ``/usr/lib/python2.7/disk-packages/cinder/volume/drivers/huawei``.
+
+   .. note::
+
+      In this example, the version of Python is 2.7. If other version is used,
+      make corresponding changes to the Driver path.
+
+#. Copy OpenStack Cinder Driver to Cinder Driver installation directory. Refer
+   to step 1 to find the default directory.
+
+#. Refer to chapter :ref:`huawei-driver-configuration` for the configurations.
+
+#. After configuration, restart the ``cinder-volume`` service:
+
+   .. code-block:: console
+
+      systemctl start openstack-cinder-volume.service
+
+#. Check the status of services using the :command:`cinder service-list`
+   command. If the "State" of ``cinder-volume`` is ``up``, that means
+   Cinder-Volume is OK.
+
+   .. code-block:: console
+
+    root@ubuntuL004:/# cinder service-list
+
+    +------------------+---------------+------+-------+-----+--------------------------+----------------+
+    |Binary            |Host           | Zone |Status |State|Updated_at                | Disabled Reason|
+    +------------------+---------------+------+-------+-----+--------------------------+----------------+
+    |cinderscheduler   |ubuntuL004     | nova |enabled|up   |2016-02-01T16:26:00.000000|-               |
+    +------------------+---------------+------+-------+-----+--------------------------+----------------+
+    |cindervolume      |ubuntuL004@v3r3| nova |enabled|up   |2016-02-01T16:25:53.000000|-               |
+    +------------------+---------------+------+-------+-----+--------------------------+----------------+
+
+.. _huawei-driver-configuration:
 
 Volume driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,17 +172,23 @@ Volume driver configuration
 This section describes how to configure the Huawei volume driver for either
 iSCSI storage or Fibre Channel storage.
 
-Configuring the volume driver
------------------------------
+**Pre-requisites**
 
-This section describes how to configure the volume driver for different
-products for either iSCSI or Fibre Channel storage products.
+When creating a volume from image, install the ``multipath`` tool and add the
+following configuration keys in the ``[DEFAULT]`` configuration group of
+the ``/etc/cinder/cinder.conf`` file:
 
-**Configuring the volume driver**
+.. code-block:: xml
+
+   use_multipath_for_image_xfer = True
+   enforce_multipath_for_image_xfer = True
+
+To configure the volume driver, follow the steps below:
 
 #. In ``/etc/cinder``, create a Huawei-customized driver configuration file.
    The file format is XML.
-
+#. Change the name of the driver configuration file based on the site
+   requirements, for example, ``cinder_huawei_conf.xml``.
 #. Configure parameters in the driver configuration file.
 
    Each product has its own value for the ``Product`` parameter under the
@@ -151,7 +262,7 @@ products for either iSCSI or Fibre Channel storage products.
    .. note::
 
       For details about the parameters in the configuration file, see the
-      section `Parameters in the Configuration File`_.
+      `Configuration file parameters`_ section.
 
 #. Configure the ``cinder.conf`` file.
 
@@ -231,7 +342,10 @@ products for either iSCSI or Fibre Channel storage products.
 #. Run the service :command:`cinder-volume restart` command to restart the
    Block Storage service.
 
-**Configuring iSCSI Multipathing**
+Configuring iSCSI Multipathing
+------------------------------
+
+To configure iSCSI Multipathing, follow the steps below:
 
 #. Create a port group on the storage device using the ``DeviceManager`` and add
    service links that require multipathing into the port group.
@@ -265,7 +379,8 @@ products for either iSCSI or Fibre Channel storage products.
 #. Run the service :command:`nova-compute restart` command to restart the
    ``nova-compute`` service.
 
-**Configuring CHAP and ALUA**
+Configuring CHAP and ALUA
+-------------------------
 
 On a public network, any application server whose IP address resides on the
 same network segment as that of the storage systems iSCSI host port can access
@@ -274,7 +389,7 @@ risks to the data security of the storage system. To ensure the storage
 systems access security, you can configure ``CHAP`` authentication to control
 application servers access to the storage system.
 
-Configure the driver configuration file as follows:
+Adjust he driver configuration file as follows:
 
 .. code-block:: xml
 
@@ -285,7 +400,8 @@ Configure the driver configuration file as follows:
 password authenticated by ``CHAP``. The format is ``mmuser; mm-user@storage``.
 The user name and password are separated by semicolons (;).
 
-**Configuring multi-storage support**
+Configuring multi-storage support
+---------------------------------
 
 Example for configuring multiple storage systems:
 
@@ -301,8 +417,11 @@ Example for configuring multiple storage systems:
    cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_18000_fc.xml
    volume_backend_name = HuaweiFCDriver
 
-Parameters in the Configuration File
-------------------------------------
+Configuration file parameters
+-----------------------------
+
+This section describes mandatory and optional configuration file parameters
+of the Huawei volume driver.
 
 .. list-table:: **Mandatory parameters**
    :widths: 10 10 50 10
@@ -338,7 +457,8 @@ Parameters in the Configuration File
        ``https://x.x.x.x/devicemanager/rest/``. The value ``x.x.x.x`` indicates
        the management IP address. OceanStor 18000 uses the preceding setting,
        and V2 and V3 requires you to add port number ``8088``, for example,
-       ``https://x.x.x.x:8088/deviceManager/rest/``.
+       ``https://x.x.x.x:8088/deviceManager/rest/``. If you need to configure
+       multiple RestURL, separate them by semicolons (;).
      - T series V2
 
        V3 18000
@@ -354,19 +474,6 @@ Parameters in the Configuration File
      - -
      - Name of a storage pool to be used. If you need to configure multiple
        storage pools, separate them by semicolons (;).
-     - All
-   * - DefaultTargetIP
-     - -
-     - Default IP address of the iSCSI target port that is provided for
-       computing nodes.
-     - All
-   * - OSType
-     - Linux
-     - Operating system of the Nova computer node's host.
-     - All
-   * - HostIP
-     - -
-     - IP address of the Nova computer node's host.
      - All
 
 .. note::
@@ -434,11 +541,24 @@ Parameters in the Configuration File
      - All
    * - Initiator TargetPortGroup
      - -
-     - IP address of the iSCSI target port that is provided for computing
+     - IP address of the iSCSI target port that is provided for compute
        nodes.
      - T series V2 V3
 
        18000
+   * - DefaultTargetIP
+     - -
+     - Default IP address of the iSCSI target port that is provided for
+       compute nodes.
+     - All
+   * - OSType
+     - Linux
+     - Operating system of the Nova compute node's host.
+     - All
+   * - HostIP
+     - -
+     - IP address of the Nova compute node's host.
+     - All
 
 .. important::
 
