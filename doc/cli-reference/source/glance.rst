@@ -181,407 +181,6 @@ glance optional arguments
 ``--os-endpoint-type OS_ENDPOINT_TYPE``
   Defaults to ``env[OS_ENDPOINT_TYPE]``.
 
-Image service API v1 commands
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. _glance_image-create_v1:
-
-glance image-create (v1)
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: glance --os-image-api-version 1 image-create [--id <IMAGE_ID>] [--name <NAME>] [--store <STORE>]
-                              [--disk-format <DISK_FORMAT>]
-                              [--container-format <CONTAINER_FORMAT>]
-                              [--owner <TENANT_ID>] [--size <SIZE>]
-                              [--min-disk <DISK_GB>] [--min-ram <DISK_RAM>]
-                              [--location <IMAGE_URL>] [--file <FILE>]
-                              [--checksum <CHECKSUM>] [--copy-from <IMAGE_URL>]
-                              [--is-public {True,False}]
-                              [--is-protected {True,False}]
-                              [--property <key=value>] [--human-readable]
-                              [--progress]
-
-Create a new image.
-
-**Optional arguments:**
-
-``--id <IMAGE_ID>``
-  ID of image to reserve.
-
-``--name <NAME>``
-  Name of image.
-
-``--store <STORE>``
-  Store to upload image to.
-
-``--disk-format <DISK_FORMAT>``
-  Disk format of image. Acceptable formats: ami, ari,
-  aki, vhd, vmdk, raw, qcow2, vdi, and iso.
-
-``--container-format <CONTAINER_FORMAT>``
-  Container format of image. Acceptable formats: ami,
-  ari, aki, bare, and ovf.
-
-``--owner <TENANT_ID>``
-  Tenant who should own image.
-
-``--size <SIZE>``
-  Size of image data (in bytes). Only used with ':option:`--`
-  location' and ':option:`--copy_from`'.
-
-``--min-disk <DISK_GB>``
-  Minimum size of disk needed to boot image (in
-  gigabytes).
-
-``--min-ram <DISK_RAM>``
-  Minimum amount of ram needed to boot image (in
-  megabytes).
-
-``--location <IMAGE_URL>``
-  URL where the data for this image already resides. For
-  example, if the image data is stored in swift, you
-  could specify 'swift+http://tenant%3Aaccount:key@auth_
-  url/v2.0/container/obj'. (Note: '%3A' is ':' URL
-  encoded.)
-
-``--file <FILE>``
-  Local file that contains disk image to be uploaded
-  during creation. Alternatively, images can be passed
-  to the client via stdin.
-
-``--checksum <CHECKSUM>``
-  Hash of image data used Glance can use for
-  verification. Provide a md5 checksum here.
-
-``--copy-from <IMAGE_URL>``
-  Similar to ':option:`--location`' in usage, but this indicates
-  that the Glance server should immediately copy the
-  data and store it in its configured image store.
-
-``--is-public {True,False}``
-  Make image accessible to the public.
-
-``--is-protected {True,False}``
-  Prevent image from being deleted.
-
-``--property <key=value>``
-  Arbitrary property to associate with image. May be
-  used multiple times.
-
-``--human-readable``
-  Print image size in a human-friendly format.
-
-``--progress``
-  Show upload progress bar.
-
-.. _glance_image-delete_v1:
-
-glance image-delete (v1)
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: glance --os-image-api-version 1 image-delete <IMAGE> [<IMAGE> ...]
-
-Delete specified image(s).
-
-**Positional arguments:**
-
-``<IMAGE>``
-  Name or ID of image(s) to delete.
-
-.. _glance_image-download_v1:
-
-glance image-download (v1)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: glance --os-image-api-version 1 image-download [--file <FILE>] [--progress] <IMAGE>
-
-Download a specific image.
-
-**Positional arguments:**
-
-``<IMAGE>``
-  Name or ID of image to download.
-
-**Optional arguments:**
-
-``--file <FILE>``
-  Local file to save downloaded image data to. If this is not
-  specified and there is no redirection the image data will be
-  not be saved.
-
-``--progress``
-  Show download progress bar.
-
-.. _glance_image-list_v1:
-
-glance image-list (v1)
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: glance --os-image-api-version 1 image-list [--name <NAME>] [--status <STATUS>]
-                            [--changes-since <CHANGES_SINCE>]
-                            [--container-format <CONTAINER_FORMAT>]
-                            [--disk-format <DISK_FORMAT>] [--size-min <SIZE>]
-                            [--size-max <SIZE>] [--property-filter <KEY=VALUE>]
-                            [--page-size <SIZE>] [--human-readable]
-                            [--sort-key {name,status,container_format,disk_format,size,id,created_at,updated_at}]
-                            [--sort-dir {asc,desc}] [--is-public {True,False}]
-                            [--owner <TENANT_ID>] [--all-tenants]
-
-List images you can access.
-
-**Optional arguments:**
-
-``--name <NAME>``
-  Filter images to those that have this name.
-
-``--status <STATUS>``
-  Filter images to those that have this status.
-
-``--changes-since <CHANGES_SINCE>``
-  Filter images to those that changed since the given
-  time, which will include the deleted images.
-
-``--container-format <CONTAINER_FORMAT>``
-  Filter images to those that have this container
-  format. Acceptable formats: ami, ari, aki, bare, and
-  ovf.
-
-``--disk-format <DISK_FORMAT>``
-  Filter images to those that have this disk format.
-  Acceptable formats: ami, ari, aki, vhd, vmdk, raw,
-  qcow2, vdi, and iso.
-
-``--size-min <SIZE>``
-  Filter images to those with a size greater than this.
-
-``--size-max <SIZE>``
-  Filter images to those with a size less than this.
-
-``--property-filter <KEY=VALUE>``
-  Filter images by a user-defined image property.
-
-``--page-size <SIZE>``
-  Number of images to request in each paginated request.
-
-``--human-readable``
-  Print image size in a human-friendly format.
-
-``--sort-key {name,status,container_format,disk_format,size,id,created_at,updated_at}``
-  Sort image list by specified field.
-
-``--sort-dir {asc,desc}``
-  Sort image list in specified direction.
-
-``--is-public {True,False}``
-  Allows the user to select a listing of public or non
-  public images.
-
-``--owner <TENANT_ID>``
-  Display only images owned by this tenant id. Filtering
-  occurs on the client side so may be inefficient. This
-  option is mainly intended for admin use. Use an empty
-  string ('') to list images with no owner. Note: This
-  option overrides the :option:`--is-public` argument if present.
-  Note: the v2 API supports more efficient server-side
-  owner based filtering.
-
-``--all-tenants``
-  Allows the admin user to list all images irrespective
-  of the image's owner or is_public value.
-
-.. _glance_image-show_v1:
-
-glance image-show (v1)
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: glance --os-image-api-version 1 image-show [--human-readable] [--max-column-width <integer>]
-                            <IMAGE>
-
-Describe a specific image.
-
-**Positional arguments:**
-
-``<IMAGE>``
-  Name or ID of image to describe.
-
-**Optional arguments:**
-
-``--human-readable``
-  Print image size in a human-friendly format.
-
-``--max-column-width <integer>``
-  The max column width of the printed table.
-
-.. _glance_image-update_v1:
-
-glance image-update (v1)
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: glance --os-image-api-version 1 image-update [--name <NAME>] [--disk-format <DISK_FORMAT>]
-                              [--container-format <CONTAINER_FORMAT>]
-                              [--owner <TENANT_ID>] [--size <SIZE>]
-                              [--min-disk <DISK_GB>] [--min-ram <DISK_RAM>]
-                              [--location <IMAGE_URL>] [--file <FILE>]
-                              [--checksum <CHECKSUM>] [--copy-from <IMAGE_URL>]
-                              [--is-public {True,False}]
-                              [--is-protected {True,False}]
-                              [--property <key=value>] [--purge-props]
-                              [--human-readable] [--progress]
-                              <IMAGE>
-
-Update a specific image.
-
-**Positional arguments:**
-
-``<IMAGE>``
-  Name or ID of image to modify.
-
-**Optional arguments:**
-
-``--name <NAME>``
-  Name of image.
-
-``--disk-format <DISK_FORMAT>``
-  Disk format of image. Acceptable formats: ami, ari,
-  aki, vhd, vmdk, raw, qcow2, vdi, and iso.
-
-``--container-format <CONTAINER_FORMAT>``
-  Container format of image. Acceptable formats: ami,
-  ari, aki, bare, and ovf.
-
-``--owner <TENANT_ID>``
-  Tenant who should own image.
-
-``--size <SIZE>``
-  Size of image data (in bytes).
-
-``--min-disk <DISK_GB>``
-  Minimum size of disk needed to boot image (in
-  gigabytes).
-
-``--min-ram <DISK_RAM>``
-  Minimum amount of ram needed to boot image (in
-  megabytes).
-
-``--location <IMAGE_URL>``
-  URL where the data for this image already resides. For
-  example, if the image data is stored in swift, you
-  could specify 'swift+http://tenant%3Aaccount:key@auth_
-  url/v2.0/container/obj'. (Note: '%3A' is ':' URL
-  encoded.) This option only works for images in
-  'queued' status.
-
-``--file <FILE>``
-  Local file that contains disk image to be uploaded
-  during update. Alternatively, images can be passed to
-  the client via stdin.
-
-``--checksum <CHECKSUM>``
-  Hash of image data used Glance can use for
-  verification.
-
-``--copy-from <IMAGE_URL>``
-  Similar to ':option:`--location`' in usage, but this indicates
-  that the Glance server should immediately copy the
-  data and store it in its configured image store. This
-  option only works for images in 'queued' status.
-
-``--is-public {True,False}``
-  Make image accessible to the public.
-
-``--is-protected {True,False}``
-  Prevent image from being deleted.
-
-``--property <key=value>``
-  Arbitrary property to associate with image. May be
-  used multiple times.
-
-``--purge-props``
-  If this flag is present, delete all image properties
-  not explicitly set in the update request. Otherwise,
-  those properties not referenced are preserved.
-
-``--human-readable``
-  Print image size in a human-friendly format.
-
-``--progress``
-  Show upload progress bar.
-
-.. _glance_member-create_v1:
-
-glance member-create (v1)
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: glance --os-image-api-version 1 member-create [--can-share] <IMAGE> <TENANT_ID>
-
-Share a specific image with a tenant.
-
-**Positional arguments:**
-
-``<IMAGE>``
-  Image to add member to.
-
-``<TENANT_ID>``
-  Tenant to add as member.
-
-**Optional arguments:**
-
-``--can-share``
-  Allow the specified tenant to share this image.
-
-.. _glance_member-delete_v1:
-
-glance member-delete (v1)
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: glance --os-image-api-version 1 member-delete <IMAGE> <TENANT_ID>
-
-Remove a shared image from a tenant.
-
-**Positional arguments:**
-
-``<IMAGE>``
-  Image from which to remove member.
-
-``<TENANT_ID>``
-  Tenant to remove as member.
-
-.. _glance_member-list_v1:
-
-glance member-list (v1)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: glance --os-image-api-version 1 member-list [--image-id <IMAGE_ID>] [--tenant-id <TENANT_ID>]
-
-Describe sharing permissions by image or tenant.
-
-**Optional arguments:**
-
-``--image-id <IMAGE_ID>``
-  Filter results by an image ID.
-
-``--tenant-id <TENANT_ID>``
-  Filter results by a tenant ID.
-
-
 Image service API v2 commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -596,7 +195,7 @@ setting the corresponding environment variable:
 .. _glance_explain_v2:
 
 glance explain (v2)
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -612,7 +211,7 @@ Describe a specific model.
 .. _glance_image-create_v2:
 
 glance image-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -710,7 +309,7 @@ Create a new image.
 .. _glance_image-deactivate_v2:
 
 glance image-deactivate (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -726,7 +325,7 @@ Deactivate specified image.
 .. _glance_image-delete_v2:
 
 glance image-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -742,7 +341,7 @@ Delete specified image.
 .. _glance_image-download_v2:
 
 glance image-download (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -768,7 +367,7 @@ Download a specific image.
 .. _glance_image-list_v2:
 
 glance image-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -824,7 +423,7 @@ List images you can access.
 .. _glance_image-reactivate_v2:
 
 glance image-reactivate (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -840,7 +439,7 @@ Reactivate specified image.
 .. _glance_image-show_v2:
 
 glance image-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -865,7 +464,7 @@ Describe a specific image.
 .. _glance_image-tag-delete_v2:
 
 glance image-tag-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -884,7 +483,7 @@ Delete the tag associated with the given image.
 .. _glance_image-tag-update_v2:
 
 glance image-tag-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -903,7 +502,7 @@ Update an image with the given tag.
 .. _glance_image-update_v2:
 
 glance image-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -994,7 +593,7 @@ Update an existing image.
 .. _glance_image-upload_v2:
 
 glance image-upload (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1026,7 +625,7 @@ Upload data for a specific image.
 .. _glance_location-add_v2:
 
 glance location-add (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1051,7 +650,7 @@ Add a location (and related metadata) to an image.
 .. _glance_location-delete_v2:
 
 glance location-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -1072,7 +671,7 @@ Remove locations (and related metadata) from an image.
 .. _glance_location-update_v2:
 
 glance location-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -1097,7 +696,7 @@ Update metadata of an image's location.
 .. _glance_md-namespace-create_v2:
 
 glance md-namespace-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -1117,7 +716,7 @@ Create a new metadata definitions namespace.
 .. _glance_md-namespace-delete_v2:
 
 glance md-namespace-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -1133,7 +732,7 @@ Delete specified metadata definitions namespace with its contents.
 .. _glance_md-namespace-import_v2:
 
 glance md-namespace-import (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -1151,7 +750,7 @@ Import a metadata definitions namespace from file or standard input.
 .. _glance_md-namespace-list_v2:
 
 glance md-namespace-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -1176,7 +775,7 @@ List metadata definitions namespaces.
 .. _glance_md-namespace-objects-delete_v2:
 
 glance md-namespace-objects-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 .. code-block:: console
 
@@ -1192,7 +791,7 @@ Delete all metadata definitions objects inside a specific namespace.
 .. _glance_md-namespace-properties-delete_v2:
 
 glance md-namespace-properties-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 .. code-block:: console
 
@@ -1208,7 +807,7 @@ Delete all metadata definitions property inside a specific namespace.
 .. _glance_md-namespace-resource-type-list_v2:
 
 glance md-namespace-resource-type-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------
 
 .. code-block:: console
 
@@ -1224,7 +823,7 @@ List resource types associated to specific namespace.
 .. _glance_md-namespace-show_v2:
 
 glance md-namespace-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -1252,7 +851,7 @@ properties, objects and resource type associations.
 .. _glance_md-namespace-tags-delete_v2:
 
 glance md-namespace-tags-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
@@ -1268,7 +867,7 @@ Delete all metadata definitions tags inside a specific namespace.
 .. _glance_md-namespace-update_v2:
 
 glance md-namespace-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -1288,7 +887,7 @@ Update an existing metadata definitions namespace.
 .. _glance_md-object-create_v2:
 
 glance md-object-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -1312,7 +911,7 @@ Create a new metadata definitions object inside a namespace.
 .. _glance_md-object-delete_v2:
 
 glance md-object-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -1331,7 +930,7 @@ Delete a specific metadata definitions object inside a namespace.
 .. _glance_md-object-list_v2:
 
 glance md-object-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1347,7 +946,7 @@ List metadata definitions objects inside a specific namespace.
 .. _glance_md-object-property-show_v2:
 
 glance md-object-property-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
@@ -1375,7 +974,7 @@ Describe a specific metadata definitions property inside an object.
 .. _glance_md-object-show_v2:
 
 glance md-object-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1400,7 +999,7 @@ Describe a specific metadata definitions object inside a namespace.
 .. _glance_md-object-update_v2:
 
 glance md-object-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -1428,7 +1027,7 @@ Update metadata definitions object inside a namespace.
 .. _glance_md-property-create_v2:
 
 glance md-property-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -1457,7 +1056,7 @@ Create a new metadata definitions property inside a namespace.
 .. _glance_md-property-delete_v2:
 
 glance md-property-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -1476,7 +1075,7 @@ Delete a specific metadata definitions property inside a namespace.
 .. _glance_md-property-list_v2:
 
 glance md-property-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -1492,7 +1091,7 @@ List metadata definitions properties inside a specific namespace.
 .. _glance_md-property-show_v2:
 
 glance md-property-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -1517,7 +1116,7 @@ Describe a specific metadata definitions property inside a namespace.
 .. _glance_md-property-update_v2:
 
 glance md-property-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -1549,7 +1148,7 @@ Update metadata definitions property inside a namespace.
 .. _glance_md-resource-type-associate_v2:
 
 glance md-resource-type-associate (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 .. code-block:: console
 
@@ -1569,7 +1168,7 @@ Associate resource type with a metadata definitions namespace.
 .. _glance_md-resource-type-deassociate_v2:
 
 glance md-resource-type-deassociate (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 .. code-block:: console
 
@@ -1588,7 +1187,7 @@ Deassociate resource type with a metadata definitions namespace.
 .. _glance_md-resource-type-list_v2:
 
 glance md-resource-type-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -1599,7 +1198,7 @@ List available resource type names.
 .. _glance_md-tag-create_v2:
 
 glance md-tag-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -1620,7 +1219,7 @@ Add a new metadata definitions tag inside a namespace.
 .. _glance_md-tag-create-multiple_v2:
 
 glance md-tag-create-multiple (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -1646,7 +1245,7 @@ Create new metadata definitions tags inside a namespace.
 .. _glance_md-tag-delete_v2:
 
 glance md-tag-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -1665,7 +1264,7 @@ Delete a specific metadata definitions tag inside a namespace.
 .. _glance_md-tag-list_v2:
 
 glance md-tag-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1681,7 +1280,7 @@ List metadata definitions tags inside a specific namespace.
 .. _glance_md-tag-show_v2:
 
 glance md-tag-show (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1700,7 +1299,7 @@ Describe a specific metadata definitions tag inside a namespace.
 .. _glance_md-tag-update_v2:
 
 glance md-tag-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -1724,7 +1323,7 @@ Rename a metadata definitions tag inside a namespace.
 .. _glance_member-create_v2:
 
 glance member-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -1743,7 +1342,7 @@ Create member for a given image.
 .. _glance_member-delete_v2:
 
 glance member-delete (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -1762,7 +1361,7 @@ Delete image member.
 .. _glance_member-list_v2:
 
 glance member-list (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1778,7 +1377,7 @@ Describe sharing permissions by image.
 .. _glance_member-update_v2:
 
 glance member-update (v2)
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -1801,7 +1400,7 @@ Update the status of a member for a given image.
 .. _glance_task-create_v2:
 
 glance task-create (v2)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1821,7 +1420,7 @@ Create a new task.
 .. _glance_task-list_v2:
 
 glance task-list (v2)
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1851,7 +1450,7 @@ List tasks you can access.
 .. _glance_task-show_v2:
 
 glance task-show (v2)
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1863,5 +1462,405 @@ Describe a specific task.
 
 ``<TASK_ID>``
   ID of task to describe.
+
+Image service API v1 commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. _glance_image-create_v1:
+
+glance image-create (v1)
+------------------------
+
+.. code-block:: console
+
+   usage: glance --os-image-api-version 1 image-create [--id <IMAGE_ID>] [--name <NAME>] [--store <STORE>]
+                              [--disk-format <DISK_FORMAT>]
+                              [--container-format <CONTAINER_FORMAT>]
+                              [--owner <TENANT_ID>] [--size <SIZE>]
+                              [--min-disk <DISK_GB>] [--min-ram <DISK_RAM>]
+                              [--location <IMAGE_URL>] [--file <FILE>]
+                              [--checksum <CHECKSUM>] [--copy-from <IMAGE_URL>]
+                              [--is-public {True,False}]
+                              [--is-protected {True,False}]
+                              [--property <key=value>] [--human-readable]
+                              [--progress]
+
+Create a new image.
+
+**Optional arguments:**
+
+``--id <IMAGE_ID>``
+  ID of image to reserve.
+
+``--name <NAME>``
+  Name of image.
+
+``--store <STORE>``
+  Store to upload image to.
+
+``--disk-format <DISK_FORMAT>``
+  Disk format of image. Acceptable formats: ami, ari,
+  aki, vhd, vmdk, raw, qcow2, vdi, and iso.
+
+``--container-format <CONTAINER_FORMAT>``
+  Container format of image. Acceptable formats: ami,
+  ari, aki, bare, and ovf.
+
+``--owner <TENANT_ID>``
+  Tenant who should own image.
+
+``--size <SIZE>``
+  Size of image data (in bytes). Only used with ':option:`--`
+  location' and ':option:`--copy_from`'.
+
+``--min-disk <DISK_GB>``
+  Minimum size of disk needed to boot image (in
+  gigabytes).
+
+``--min-ram <DISK_RAM>``
+  Minimum amount of ram needed to boot image (in
+  megabytes).
+
+``--location <IMAGE_URL>``
+  URL where the data for this image already resides. For
+  example, if the image data is stored in swift, you
+  could specify 'swift+http://tenant%3Aaccount:key@auth_
+  url/v2.0/container/obj'. (Note: '%3A' is ':' URL
+  encoded.)
+
+``--file <FILE>``
+  Local file that contains disk image to be uploaded
+  during creation. Alternatively, images can be passed
+  to the client via stdin.
+
+``--checksum <CHECKSUM>``
+  Hash of image data used Glance can use for
+  verification. Provide a md5 checksum here.
+
+``--copy-from <IMAGE_URL>``
+  Similar to ':option:`--location`' in usage, but this indicates
+  that the Glance server should immediately copy the
+  data and store it in its configured image store.
+
+``--is-public {True,False}``
+  Make image accessible to the public.
+
+``--is-protected {True,False}``
+  Prevent image from being deleted.
+
+``--property <key=value>``
+  Arbitrary property to associate with image. May be
+  used multiple times.
+
+``--human-readable``
+  Print image size in a human-friendly format.
+
+``--progress``
+  Show upload progress bar.
+
+.. _glance_image-delete_v1:
+
+glance image-delete (v1)
+------------------------
+
+.. code-block:: console
+
+   usage: glance --os-image-api-version 1 image-delete <IMAGE> [<IMAGE> ...]
+
+Delete specified image(s).
+
+**Positional arguments:**
+
+``<IMAGE>``
+  Name or ID of image(s) to delete.
+
+.. _glance_image-download_v1:
+
+glance image-download (v1)
+--------------------------
+
+.. code-block:: console
+
+   usage: glance --os-image-api-version 1 image-download [--file <FILE>] [--progress] <IMAGE>
+
+Download a specific image.
+
+**Positional arguments:**
+
+``<IMAGE>``
+  Name or ID of image to download.
+
+**Optional arguments:**
+
+``--file <FILE>``
+  Local file to save downloaded image data to. If this is not
+  specified and there is no redirection the image data will be
+  not be saved.
+
+``--progress``
+  Show download progress bar.
+
+.. _glance_image-list_v1:
+
+glance image-list (v1)
+----------------------
+
+.. code-block:: console
+
+   usage: glance --os-image-api-version 1 image-list [--name <NAME>] [--status <STATUS>]
+                            [--changes-since <CHANGES_SINCE>]
+                            [--container-format <CONTAINER_FORMAT>]
+                            [--disk-format <DISK_FORMAT>] [--size-min <SIZE>]
+                            [--size-max <SIZE>] [--property-filter <KEY=VALUE>]
+                            [--page-size <SIZE>] [--human-readable]
+                            [--sort-key {name,status,container_format,disk_format,size,id,created_at,updated_at}]
+                            [--sort-dir {asc,desc}] [--is-public {True,False}]
+                            [--owner <TENANT_ID>] [--all-tenants]
+
+List images you can access.
+
+**Optional arguments:**
+
+``--name <NAME>``
+  Filter images to those that have this name.
+
+``--status <STATUS>``
+  Filter images to those that have this status.
+
+``--changes-since <CHANGES_SINCE>``
+  Filter images to those that changed since the given
+  time, which will include the deleted images.
+
+``--container-format <CONTAINER_FORMAT>``
+  Filter images to those that have this container
+  format. Acceptable formats: ami, ari, aki, bare, and
+  ovf.
+
+``--disk-format <DISK_FORMAT>``
+  Filter images to those that have this disk format.
+  Acceptable formats: ami, ari, aki, vhd, vmdk, raw,
+  qcow2, vdi, and iso.
+
+``--size-min <SIZE>``
+  Filter images to those with a size greater than this.
+
+``--size-max <SIZE>``
+  Filter images to those with a size less than this.
+
+``--property-filter <KEY=VALUE>``
+  Filter images by a user-defined image property.
+
+``--page-size <SIZE>``
+  Number of images to request in each paginated request.
+
+``--human-readable``
+  Print image size in a human-friendly format.
+
+``--sort-key {name,status,container_format,disk_format,size,id,created_at,updated_at}``
+  Sort image list by specified field.
+
+``--sort-dir {asc,desc}``
+  Sort image list in specified direction.
+
+``--is-public {True,False}``
+  Allows the user to select a listing of public or non
+  public images.
+
+``--owner <TENANT_ID>``
+  Display only images owned by this tenant id. Filtering
+  occurs on the client side so may be inefficient. This
+  option is mainly intended for admin use. Use an empty
+  string ('') to list images with no owner. Note: This
+  option overrides the :option:`--is-public` argument if present.
+  Note: the v2 API supports more efficient server-side
+  owner based filtering.
+
+``--all-tenants``
+  Allows the admin user to list all images irrespective
+  of the image's owner or is_public value.
+
+.. _glance_image-show_v1:
+
+glance image-show (v1)
+----------------------
+
+.. code-block:: console
+
+   usage: glance --os-image-api-version 1 image-show [--human-readable] [--max-column-width <integer>]
+                            <IMAGE>
+
+Describe a specific image.
+
+**Positional arguments:**
+
+``<IMAGE>``
+  Name or ID of image to describe.
+
+**Optional arguments:**
+
+``--human-readable``
+  Print image size in a human-friendly format.
+
+``--max-column-width <integer>``
+  The max column width of the printed table.
+
+.. _glance_image-update_v1:
+
+glance image-update (v1)
+------------------------
+
+.. code-block:: console
+
+   usage: glance --os-image-api-version 1 image-update [--name <NAME>] [--disk-format <DISK_FORMAT>]
+                              [--container-format <CONTAINER_FORMAT>]
+                              [--owner <TENANT_ID>] [--size <SIZE>]
+                              [--min-disk <DISK_GB>] [--min-ram <DISK_RAM>]
+                              [--location <IMAGE_URL>] [--file <FILE>]
+                              [--checksum <CHECKSUM>] [--copy-from <IMAGE_URL>]
+                              [--is-public {True,False}]
+                              [--is-protected {True,False}]
+                              [--property <key=value>] [--purge-props]
+                              [--human-readable] [--progress]
+                              <IMAGE>
+
+Update a specific image.
+
+**Positional arguments:**
+
+``<IMAGE>``
+  Name or ID of image to modify.
+
+**Optional arguments:**
+
+``--name <NAME>``
+  Name of image.
+
+``--disk-format <DISK_FORMAT>``
+  Disk format of image. Acceptable formats: ami, ari,
+  aki, vhd, vmdk, raw, qcow2, vdi, and iso.
+
+``--container-format <CONTAINER_FORMAT>``
+  Container format of image. Acceptable formats: ami,
+  ari, aki, bare, and ovf.
+
+``--owner <TENANT_ID>``
+  Tenant who should own image.
+
+``--size <SIZE>``
+  Size of image data (in bytes).
+
+``--min-disk <DISK_GB>``
+  Minimum size of disk needed to boot image (in
+  gigabytes).
+
+``--min-ram <DISK_RAM>``
+  Minimum amount of ram needed to boot image (in
+  megabytes).
+
+``--location <IMAGE_URL>``
+  URL where the data for this image already resides. For
+  example, if the image data is stored in swift, you
+  could specify 'swift+http://tenant%3Aaccount:key@auth_
+  url/v2.0/container/obj'. (Note: '%3A' is ':' URL
+  encoded.) This option only works for images in
+  'queued' status.
+
+``--file <FILE>``
+  Local file that contains disk image to be uploaded
+  during update. Alternatively, images can be passed to
+  the client via stdin.
+
+``--checksum <CHECKSUM>``
+  Hash of image data used Glance can use for
+  verification.
+
+``--copy-from <IMAGE_URL>``
+  Similar to ':option:`--location`' in usage, but this indicates
+  that the Glance server should immediately copy the
+  data and store it in its configured image store. This
+  option only works for images in 'queued' status.
+
+``--is-public {True,False}``
+  Make image accessible to the public.
+
+``--is-protected {True,False}``
+  Prevent image from being deleted.
+
+``--property <key=value>``
+  Arbitrary property to associate with image. May be
+  used multiple times.
+
+``--purge-props``
+  If this flag is present, delete all image properties
+  not explicitly set in the update request. Otherwise,
+  those properties not referenced are preserved.
+
+``--human-readable``
+  Print image size in a human-friendly format.
+
+``--progress``
+  Show upload progress bar.
+
+.. _glance_member-create_v1:
+
+glance member-create (v1)
+-------------------------
+
+.. code-block:: console
+
+   usage: glance --os-image-api-version 1 member-create [--can-share] <IMAGE> <TENANT_ID>
+
+Share a specific image with a tenant.
+
+**Positional arguments:**
+
+``<IMAGE>``
+  Image to add member to.
+
+``<TENANT_ID>``
+  Tenant to add as member.
+
+**Optional arguments:**
+
+``--can-share``
+  Allow the specified tenant to share this image.
+
+.. _glance_member-delete_v1:
+
+glance member-delete (v1)
+-------------------------
+
+.. code-block:: console
+
+   usage: glance --os-image-api-version 1 member-delete <IMAGE> <TENANT_ID>
+
+Remove a shared image from a tenant.
+
+**Positional arguments:**
+
+``<IMAGE>``
+  Image from which to remove member.
+
+``<TENANT_ID>``
+  Tenant to remove as member.
+
+.. _glance_member-list_v1:
+
+glance member-list (v1)
+-----------------------
+
+.. code-block:: console
+
+   usage: glance --os-image-api-version 1 member-list [--image-id <IMAGE_ID>] [--tenant-id <TENANT_ID>]
+
+Describe sharing permissions by image or tenant.
+
+**Optional arguments:**
+
+``--image-id <IMAGE_ID>``
+  Filter results by an image ID.
+
+``--tenant-id <TENANT_ID>``
+  Filter results by a tenant ID.
 
 .. include:: glance_property_keys.rst
