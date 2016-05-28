@@ -65,7 +65,7 @@ hardware with a large number of ports, that forwards Ethernet frames
 from one connected host to another. When hosts first send frames over
 the switch, the switch doesn’t know which MAC address is associated
 with which port. If an Ethernet frame is destined for an unknown MAC
-address, the switch broadcasts the frame to all ports. The port learns
+address, the switch broadcasts the frame to all ports. The switch learns
 which MAC addresses are at which ports by observing the traffic. Once
 it knows which MAC address is associated with a port, it can send
 Ethernet frames to the correct port instead of broadcasting. The
