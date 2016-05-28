@@ -50,6 +50,10 @@ The dashboard is generally installed on the controller node.
      (:ref:`dashboard-admin-tab`) and :guilabel:`Identity` tab
      (:ref:`dashboard-identity-tab`) are displayed.
 
+.. note::
+
+   Some tabs, such as :guilabel:`Orchestration` and :guilabel:`Firewalls`,
+   only appear on the dashboard if they are properly configured.
 
 .. _dashboard-project-tab:
 
@@ -112,6 +116,22 @@ From the :guilabel:`Project` tab, you can access the following categories:
 * :guilabel:`Networks`: Create and manage public and private networks.
 
 * :guilabel:`Routers`: Create and manage routers.
+
+* :guilabel:`Load Balancers`: Create and manage load balancers.
+
+  * :guilabel:`Pools`: Add and manage pools.
+
+  * :guilabel:`Members`: Add and manage members.
+
+  * :guilabel:`Monitors`: Add and manage monitors.
+
+* :guilabel:`Firewalls`: Create and manage firewalls.
+
+  * :guilabel:`Firewalls`: Create and manage firewalls.
+
+  * :guilabel:`Firewall Policies`: Add and manage firewall policies.
+
+  * :guilabel:`Firewall Rules`: Add and manage firewall rules.
 
 :guilabel:`Orchestration` tab
 -----------------------------
