@@ -1,8 +1,6 @@
-.. title:: OpenStack Installation Guide
-
-=======================================
-OpenStack Installation Guide for Debian
-=======================================
+====================================================
+OpenStack Installation Guide for Debian with debconf
+====================================================
 
 Abstract
 ~~~~~~~~
