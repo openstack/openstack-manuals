@@ -189,7 +189,7 @@ This example shows you how to back up and restore a MySQL database.
 
    .. code-block:: console
 
-      $ trove database-li0st INSTANCE_ID
+      $ trove database-list INSTANCE_ID
 
       +--------------------+
       |        name        |
