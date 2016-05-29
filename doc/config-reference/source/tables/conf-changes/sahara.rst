@@ -13,29 +13,29 @@ New, updated, and deprecated options in Mitaka for Data Processing service
    * - Option = default value
      - (Type) Help string
    * - ``[DEFAULT] coordinator_heartbeat_interval = 1``
-     - ``(IntOpt) Interval size between heartbeat execution in seconds. Heartbeats are executed to make sure that connection to the coordination server is active.``
+     - (IntOpt) Interval size between heartbeat execution in seconds. Heartbeats are executed to make sure that connection to the coordination server is active.
    * - ``[DEFAULT] hash_ring_replicas_count = 40``
-     - ``(IntOpt) Number of points that belongs to each member on a hash ring. The larger number leads to a better distribution.``
+     - (IntOpt) Number of points that belongs to each member on a hash ring. The larger number leads to a better distribution.
    * - ``[DEFAULT] periodic_coordinator_backend_url = None``
-     - ``(StrOpt) The backend URL to use for distributed periodic tasks coordination.``
+     - (StrOpt) The backend URL to use for distributed periodic tasks coordination.
    * - ``[DEFAULT] periodic_workers_number = 1``
-     - ``(IntOpt) Number of threads to run periodic tasks.``
+     - (IntOpt) Number of threads to run periodic tasks.
    * - ``[DEFAULT] use_barbican_key_manager = False``
-     - ``(BoolOpt) Enable the usage of the OpenStack Key Management service provided by barbican.``
+     - (BoolOpt) Enable the usage of the OpenStack Key Management service provided by barbican.
    * - ``[castellan] barbican_api_endpoint = None``
-     - ``(StrOpt) The endpoint to use for connecting to the barbican api controller. By default, castellan will use the URL from the service catalog.``
+     - (StrOpt) The endpoint to use for connecting to the barbican api controller. By default, castellan will use the URL from the service catalog.
    * - ``[castellan] barbican_api_version = v1``
-     - ``(StrOpt) Version of the barbican API, for example: "v1"``
+     - (StrOpt) Version of the barbican API, for example: "v1"
    * - ``[cluster_verifications] verification_enable = True``
-     - ``(BoolOpt) Option to enable verifications for all clusters``
+     - (BoolOpt) Option to enable verifications for all clusters
    * - ``[cluster_verifications] verification_periodic_interval = 600``
-     - ``(IntOpt) Interval between two consecutive periodic tasks forverifications, in seconds.``
+     - (IntOpt) Interval between two consecutive periodic tasks forverifications, in seconds.
    * - ``[oslo_messaging_notifications] enable = False``
-     - ``(BoolOpt) Enables sending notifications to Ceilometer``
+     - (BoolOpt) Enables sending notifications to Ceilometer
    * - ``[oslo_messaging_notifications] level = INFO``
-     - ``(StrOpt) Notification level for outgoing notifications``
+     - (StrOpt) Notification level for outgoing notifications
    * - ``[oslo_messaging_notifications] publisher_id = None``
-     - ``(StrOpt) Notification publisher_id for outgoing notifications``
+     - (StrOpt) Notification publisher_id for outgoing notifications
 
 .. list-table:: New default values
    :header-rows: 1

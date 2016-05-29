@@ -13,279 +13,279 @@ New, updated, and deprecated options in Mitaka for Block Storage
    * - Option = default value
      - (Type) Help string
    * - ``[DEFAULT] backup_gcs_block_size = 32768``
-     - ``(IntOpt) The size in bytes that changes are tracked for incremental backups. backup_gcs_object_size has to be multiple of backup_gcs_block_size.``
+     - (IntOpt) The size in bytes that changes are tracked for incremental backups. backup_gcs_object_size has to be multiple of backup_gcs_block_size.
    * - ``[DEFAULT] backup_gcs_bucket = None``
-     - ``(StrOpt) The GCS bucket to use.``
+     - (StrOpt) The GCS bucket to use.
    * - ``[DEFAULT] backup_gcs_bucket_location = US``
-     - ``(StrOpt) Location of GCS bucket.``
+     - (StrOpt) Location of GCS bucket.
    * - ``[DEFAULT] backup_gcs_credential_file = None``
-     - ``(StrOpt) Absolute path of GCS service account credential file.``
+     - (StrOpt) Absolute path of GCS service account credential file.
    * - ``[DEFAULT] backup_gcs_enable_progress_timer = True``
-     - ``(BoolOpt) Enable or Disable the timer to send the periodic progress notifications to Ceilometer when backing up the volume to the GCS backend storage. The default value is True to enable the timer.``
+     - (BoolOpt) Enable or Disable the timer to send the periodic progress notifications to Ceilometer when backing up the volume to the GCS backend storage. The default value is True to enable the timer.
    * - ``[DEFAULT] backup_gcs_num_retries = 3``
-     - ``(IntOpt) Number of times to retry.``
+     - (IntOpt) Number of times to retry.
    * - ``[DEFAULT] backup_gcs_object_size = 52428800``
-     - ``(IntOpt) The size in bytes of GCS backup objects.``
+     - (IntOpt) The size in bytes of GCS backup objects.
    * - ``[DEFAULT] backup_gcs_project_id = None``
-     - ``(StrOpt) Owner project id for GCS bucket.``
+     - (StrOpt) Owner project id for GCS bucket.
    * - ``[DEFAULT] backup_gcs_reader_chunk_size = 2097152``
-     - ``(IntOpt) GCS object will be downloaded in chunks of bytes.``
+     - (IntOpt) GCS object will be downloaded in chunks of bytes.
    * - ``[DEFAULT] backup_gcs_retry_error_codes = 429``
-     - ``(ListOpt) List of GCS error codes.``
+     - (ListOpt) List of GCS error codes.
    * - ``[DEFAULT] backup_gcs_storage_class = NEARLINE``
-     - ``(StrOpt) Storage class of GCS bucket.``
+     - (StrOpt) Storage class of GCS bucket.
    * - ``[DEFAULT] backup_gcs_user_agent = gcscinder``
-     - ``(StrOpt) Http user-agent string for gcs api.``
+     - (StrOpt) Http user-agent string for gcs api.
    * - ``[DEFAULT] backup_gcs_writer_chunk_size = 2097152``
-     - ``(IntOpt) GCS object will be uploaded in chunks of bytes. Pass in a value of -1 if the file is to be uploaded as a single chunk.``
+     - (IntOpt) GCS object will be uploaded in chunks of bytes. Pass in a value of -1 if the file is to be uploaded as a single chunk.
    * - ``[DEFAULT] backup_swift_auth_insecure = False``
-     - ``(BoolOpt) Bypass verification of server certificate when making SSL connection to Swift.``
+     - (BoolOpt) Bypass verification of server certificate when making SSL connection to Swift.
    * - ``[DEFAULT] backup_swift_auth_url = None``
-     - ``(StrOpt) The URL of the Keystone endpoint``
+     - (StrOpt) The URL of the Keystone endpoint
    * - ``[DEFAULT] backup_use_same_host = False``
-     - ``(BoolOpt) Backup services use same backend.``
+     - (BoolOpt) Backup services use same backend.
    * - ``[DEFAULT] cb_update_file_system = compression, sync, noofcopies, readonly``
-     - ``(ListOpt) These values will be used for CloudByte storage's updateFileSystem API call.``
+     - (ListOpt) These values will be used for CloudByte storage's updateFileSystem API call.
    * - ``[DEFAULT] cb_update_qos_group = iops, latency, graceallowed``
-     - ``(ListOpt) These values will be used for CloudByte storage's updateQosGroup API call.``
+     - (ListOpt) These values will be used for CloudByte storage's updateQosGroup API call.
    * - ``[DEFAULT] cinder_eternus_config_file = /etc/cinder/cinder_fujitsu_eternus_dx.xml``
-     - ``(StrOpt) config file for cinder eternus_dx volume driver``
+     - (StrOpt) config file for cinder eternus_dx volume driver
    * - ``[DEFAULT] clone_check_timeout = 3600``
-     - ``(IntOpt) How long we check whether a clone is finished before we give up``
+     - (IntOpt) How long we check whether a clone is finished before we give up
    * - ``[DEFAULT] coho_rpc_port = 2049``
-     - ``(IntOpt) RPC port to connect to Coha Data MicroArray``
+     - (IntOpt) RPC port to connect to Coha Data MicroArray
    * - ``[DEFAULT] disco_client = 127.0.0.1``
-     - ``(IPOpt) The IP of DMS client socket server``
+     - (IPOpt) The IP of DMS client socket server
    * - ``[DEFAULT] disco_client_port = 9898``
-     - ``(PortOpt) The port to connect DMS client socket server``
+     - (PortOpt) The port to connect DMS client socket server
    * - ``[DEFAULT] disco_wsdl_path = /etc/cinder/DISCOService.wsdl``
-     - ``(StrOpt) Path to the wsdl file to communicate with DISCO request manager``
+     - (StrOpt) Path to the wsdl file to communicate with DISCO request manager
    * - ``[DEFAULT] drbdmanage_devs_on_controller = True``
-     - ``(BoolOpt) If set, the c-vol node will receive a useable /dev/drbdX device, even if the actual data is stored on other nodes only. This is useful for debugging, maintenance, and to be able to do the iSCSI export from the c-vol node.``
+     - (BoolOpt) If set, the c-vol node will receive a useable /dev/drbdX device, even if the actual data is stored on other nodes only. This is useful for debugging, maintenance, and to be able to do the iSCSI export from the c-vol node.
    * - ``[DEFAULT] drbdmanage_resize_plugin = drbdmanage.plugins.plugins.wait_for.WaitForVolumeSize``
-     - ``(StrOpt) Volume resize completion wait plugin.``
+     - (StrOpt) Volume resize completion wait plugin.
    * - ``[DEFAULT] drbdmanage_resize_policy = {"timeout": "60"}``
-     - ``(StrOpt) Volume resize completion wait policy.``
+     - (StrOpt) Volume resize completion wait policy.
    * - ``[DEFAULT] drbdmanage_resource_plugin = drbdmanage.plugins.plugins.wait_for.WaitForResource``
-     - ``(StrOpt) Resource deployment completion wait plugin.``
+     - (StrOpt) Resource deployment completion wait plugin.
    * - ``[DEFAULT] drbdmanage_resource_policy = {"ratio": "0.51", "timeout": "60"}``
-     - ``(StrOpt) Resource deployment completion wait policy.``
+     - (StrOpt) Resource deployment completion wait policy.
    * - ``[DEFAULT] drbdmanage_snapshot_plugin = drbdmanage.plugins.plugins.wait_for.WaitForSnapshot``
-     - ``(StrOpt) Snapshot completion wait plugin.``
+     - (StrOpt) Snapshot completion wait plugin.
    * - ``[DEFAULT] drbdmanage_snapshot_policy = {"count": "1", "timeout": "60"}``
-     - ``(StrOpt) Snapshot completion wait policy.``
+     - (StrOpt) Snapshot completion wait policy.
    * - ``[DEFAULT] driver_ssl_cert_path = None``
-     - ``(StrOpt) Can be used to specify a non default path to a CA_BUNDLE file or directory with certificates of trusted CAs, which will be used to validate the backend``
+     - (StrOpt) Can be used to specify a non default path to a CA_BUNDLE file or directory with certificates of trusted CAs, which will be used to validate the backend
    * - ``[DEFAULT] enable_v3_api = True``
-     - ``(BoolOpt) Deploy v3 of the Cinder API.``
+     - (BoolOpt) Deploy v3 of the Cinder API.
    * - ``[DEFAULT] glance_catalog_info = image:glance:publicURL``
-     - ``(StrOpt) Info to match when looking for glance in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> - Only used if glance_api_servers are not provided.``
+     - (StrOpt) Info to match when looking for glance in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> - Only used if glance_api_servers are not provided.
    * - ``[DEFAULT] hpe3par_api_url =``
-     - ``(StrOpt) 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1``
+     - (StrOpt) 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1
    * - ``[DEFAULT] hpe3par_cpg = OpenStack``
-     - ``(ListOpt) List of the CPG(s) to use for volume creation``
+     - (ListOpt) List of the CPG(s) to use for volume creation
    * - ``[DEFAULT] hpe3par_cpg_snap =``
-     - ``(StrOpt) The CPG to use for Snapshots for volumes. If empty the userCPG will be used.``
+     - (StrOpt) The CPG to use for Snapshots for volumes. If empty the userCPG will be used.
    * - ``[DEFAULT] hpe3par_debug = False``
-     - ``(BoolOpt) Enable HTTP debugging to 3PAR``
+     - (BoolOpt) Enable HTTP debugging to 3PAR
    * - ``[DEFAULT] hpe3par_iscsi_chap_enabled = False``
-     - ``(BoolOpt) Enable CHAP authentication for iSCSI connections.``
+     - (BoolOpt) Enable CHAP authentication for iSCSI connections.
    * - ``[DEFAULT] hpe3par_iscsi_ips =``
-     - ``(ListOpt) List of target iSCSI addresses to use.``
+     - (ListOpt) List of target iSCSI addresses to use.
    * - ``[DEFAULT] hpe3par_password =``
-     - ``(StrOpt) 3PAR password for the user specified in hpe3par_username``
+     - (StrOpt) 3PAR password for the user specified in hpe3par_username
    * - ``[DEFAULT] hpe3par_snapshot_expiration =``
-     - ``(StrOpt) The time in hours when a snapshot expires and is deleted. This must be larger than expiration``
+     - (StrOpt) The time in hours when a snapshot expires and is deleted. This must be larger than expiration
    * - ``[DEFAULT] hpe3par_snapshot_retention =``
-     - ``(StrOpt) The time in hours to retain a snapshot. You can't delete it before this expires.``
+     - (StrOpt) The time in hours to retain a snapshot. You can't delete it before this expires.
    * - ``[DEFAULT] hpe3par_username =``
-     - ``(StrOpt) 3PAR username with the 'edit' role``
+     - (StrOpt) 3PAR username with the 'edit' role
    * - ``[DEFAULT] hpelefthand_api_url = None``
-     - ``(StrOpt) HPE LeftHand WSAPI Server Url like https://<LeftHand ip>:8081/lhos``
+     - (StrOpt) HPE LeftHand WSAPI Server Url like https://<LeftHand ip>:8081/lhos
    * - ``[DEFAULT] hpelefthand_clustername = None``
-     - ``(StrOpt) HPE LeftHand cluster name``
+     - (StrOpt) HPE LeftHand cluster name
    * - ``[DEFAULT] hpelefthand_debug = False``
-     - ``(BoolOpt) Enable HTTP debugging to LeftHand``
+     - (BoolOpt) Enable HTTP debugging to LeftHand
    * - ``[DEFAULT] hpelefthand_iscsi_chap_enabled = False``
-     - ``(BoolOpt) Configure CHAP authentication for iSCSI connections (Default: Disabled)``
+     - (BoolOpt) Configure CHAP authentication for iSCSI connections (Default: Disabled)
    * - ``[DEFAULT] hpelefthand_password = None``
-     - ``(StrOpt) HPE LeftHand Super user password``
+     - (StrOpt) HPE LeftHand Super user password
    * - ``[DEFAULT] hpelefthand_ssh_port = 16022``
-     - ``(PortOpt) Port number of SSH service.``
+     - (PortOpt) Port number of SSH service.
    * - ``[DEFAULT] hpelefthand_username = None``
-     - ``(StrOpt) HPE LeftHand Super user username``
+     - (StrOpt) HPE LeftHand Super user username
    * - ``[DEFAULT] hpexp_async_copy_check_interval = 10``
-     - ``(IntOpt) Interval to check copy asynchronously``
+     - (IntOpt) Interval to check copy asynchronously
    * - ``[DEFAULT] hpexp_compute_target_ports = None``
-     - ``(ListOpt) Target port names of compute node for host group or iSCSI target``
+     - (ListOpt) Target port names of compute node for host group or iSCSI target
    * - ``[DEFAULT] hpexp_copy_check_interval = 3``
-     - ``(IntOpt) Interval to check copy``
+     - (IntOpt) Interval to check copy
    * - ``[DEFAULT] hpexp_copy_speed = 3``
-     - ``(IntOpt) Copy speed of storage system``
+     - (IntOpt) Copy speed of storage system
    * - ``[DEFAULT] hpexp_default_copy_method = FULL``
-     - ``(StrOpt) Default copy method of storage system. There are two valid values: "FULL" specifies that a full copy; "THIN" specifies that a thin copy. Default value is "FULL"``
+     - (StrOpt) Default copy method of storage system. There are two valid values: "FULL" specifies that a full copy; "THIN" specifies that a thin copy. Default value is "FULL"
    * - ``[DEFAULT] hpexp_group_request = False``
-     - ``(BoolOpt) Request for creating host group or iSCSI target``
+     - (BoolOpt) Request for creating host group or iSCSI target
    * - ``[DEFAULT] hpexp_horcm_add_conf = True``
-     - ``(BoolOpt) Add to HORCM configuration``
+     - (BoolOpt) Add to HORCM configuration
    * - ``[DEFAULT] hpexp_horcm_name_only_discovery = False``
-     - ``(BoolOpt) Only discover a specific name of host group or iSCSI target``
+     - (BoolOpt) Only discover a specific name of host group or iSCSI target
    * - ``[DEFAULT] hpexp_horcm_numbers = 200, 201``
-     - ``(ListOpt) Instance numbers for HORCM``
+     - (ListOpt) Instance numbers for HORCM
    * - ``[DEFAULT] hpexp_horcm_resource_name = meta_resource``
-     - ``(StrOpt) Resource group name of storage system for HORCM``
+     - (StrOpt) Resource group name of storage system for HORCM
    * - ``[DEFAULT] hpexp_horcm_user = None``
-     - ``(StrOpt) Username of storage system for HORCM``
+     - (StrOpt) Username of storage system for HORCM
    * - ``[DEFAULT] hpexp_ldev_range = None``
-     - ``(StrOpt) Logical device range of storage system``
+     - (StrOpt) Logical device range of storage system
    * - ``[DEFAULT] hpexp_pool = None``
-     - ``(StrOpt) Pool of storage system``
+     - (StrOpt) Pool of storage system
    * - ``[DEFAULT] hpexp_storage_cli = None``
-     - ``(StrOpt) Type of storage command line interface``
+     - (StrOpt) Type of storage command line interface
    * - ``[DEFAULT] hpexp_storage_id = None``
-     - ``(StrOpt) ID of storage system``
+     - (StrOpt) ID of storage system
    * - ``[DEFAULT] hpexp_target_ports = None``
-     - ``(ListOpt) Target port names for host group or iSCSI target``
+     - (ListOpt) Target port names for host group or iSCSI target
    * - ``[DEFAULT] hpexp_thin_pool = None``
-     - ``(StrOpt) Thin pool of storage system``
+     - (StrOpt) Thin pool of storage system
    * - ``[DEFAULT] hpexp_zoning_request = False``
-     - ``(BoolOpt) Request for FC Zone creating host group``
+     - (BoolOpt) Request for FC Zone creating host group
    * - ``[DEFAULT] hypermetro_devices = None``
-     - ``(StrOpt) The remote device hypermetro will use.``
+     - (StrOpt) The remote device hypermetro will use.
    * - ``[DEFAULT] keystone_catalog_info = identity:Identity Service:publicURL``
-     - ``(StrOpt) Info to match when looking for keystone in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> - Only used if backup_swift_auth_url is unset``
+     - (StrOpt) Info to match when looking for keystone in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> - Only used if backup_swift_auth_url is unset
    * - ``[DEFAULT] lvm_max_over_subscription_ratio = 1.0``
-     - ``(FloatOpt) max_over_subscription_ratio setting for the LVM driver. If set, this takes precedence over the general max_over_subscription_ratio option. If None, the general option is used.``
+     - (FloatOpt) max_over_subscription_ratio setting for the LVM driver. If set, this takes precedence over the general max_over_subscription_ratio option. If None, the general option is used.
    * - ``[DEFAULT] nexenta_blocksize = 4096``
-     - ``(IntOpt) Block size for datasets``
+     - (IntOpt) Block size for datasets
    * - ``[DEFAULT] nexenta_chunksize = 16384``
-     - ``(IntOpt) NexentaEdge iSCSI LUN object chunk size``
+     - (IntOpt) NexentaEdge iSCSI LUN object chunk size
    * - ``[DEFAULT] nexenta_client_address =``
-     - ``(StrOpt) NexentaEdge iSCSI Gateway client address for non-VIP service``
+     - (StrOpt) NexentaEdge iSCSI Gateway client address for non-VIP service
    * - ``[DEFAULT] nexenta_dataset_compression = on``
-     - ``(StrOpt) Compression value for new ZFS folders.``
+     - (StrOpt) Compression value for new ZFS folders.
    * - ``[DEFAULT] nexenta_dataset_dedup = off``
-     - ``(StrOpt) Deduplication value for new ZFS folders.``
+     - (StrOpt) Deduplication value for new ZFS folders.
    * - ``[DEFAULT] nexenta_dataset_description =``
-     - ``(StrOpt) Human-readable description for the folder.``
+     - (StrOpt) Human-readable description for the folder.
    * - ``[DEFAULT] nexenta_host =``
-     - ``(StrOpt) IP address of Nexenta SA``
+     - (StrOpt) IP address of Nexenta SA
    * - ``[DEFAULT] nexenta_iscsi_service =``
-     - ``(StrOpt) NexentaEdge iSCSI service name``
+     - (StrOpt) NexentaEdge iSCSI service name
    * - ``[DEFAULT] nexenta_iscsi_target_portal_port = 3260``
-     - ``(IntOpt) Nexenta target portal port``
+     - (IntOpt) Nexenta target portal port
    * - ``[DEFAULT] nexenta_lun_container =``
-     - ``(StrOpt) NexentaEdge logical path of bucket for LUNs``
+     - (StrOpt) NexentaEdge logical path of bucket for LUNs
    * - ``[DEFAULT] nexenta_mount_point_base = $state_path/mnt``
-     - ``(StrOpt) Base directory that contains NFS share mount points``
+     - (StrOpt) Base directory that contains NFS share mount points
    * - ``[DEFAULT] nexenta_nms_cache_volroot = True``
-     - ``(BoolOpt) If set True cache NexentaStor appliance volroot option value.``
+     - (BoolOpt) If set True cache NexentaStor appliance volroot option value.
    * - ``[DEFAULT] nexenta_ns5_blocksize = 32``
-     - ``(IntOpt) Block size for datasets``
+     - (IntOpt) Block size for datasets
    * - ``[DEFAULT] nexenta_password = nexenta``
-     - ``(StrOpt) Password to connect to Nexenta SA``
+     - (StrOpt) Password to connect to Nexenta SA
    * - ``[DEFAULT] nexenta_rest_address =``
-     - ``(StrOpt) IP address of NexentaEdge management REST API endpoint``
+     - (StrOpt) IP address of NexentaEdge management REST API endpoint
    * - ``[DEFAULT] nexenta_rest_password = nexenta``
-     - ``(StrOpt) Password to connect to NexentaEdge``
+     - (StrOpt) Password to connect to NexentaEdge
    * - ``[DEFAULT] nexenta_rest_port = 8080``
-     - ``(IntOpt) HTTP port to connect to Nexenta REST API server``
+     - (IntOpt) HTTP port to connect to Nexenta REST API server
    * - ``[DEFAULT] nexenta_rest_protocol = auto``
-     - ``(StrOpt) Use http or https for REST connection (default auto)``
+     - (StrOpt) Use http or https for REST connection (default auto)
    * - ``[DEFAULT] nexenta_rest_user = admin``
-     - ``(StrOpt) User name to connect to NexentaEdge``
+     - (StrOpt) User name to connect to NexentaEdge
    * - ``[DEFAULT] nexenta_rrmgr_compression = 0``
-     - ``(IntOpt) Enable stream compression, level 1..9. 1 - gives best speed; 9 - gives best compression.``
+     - (IntOpt) Enable stream compression, level 1..9. 1 - gives best speed; 9 - gives best compression.
    * - ``[DEFAULT] nexenta_rrmgr_connections = 2``
-     - ``(IntOpt) Number of TCP connections.``
+     - (IntOpt) Number of TCP connections.
    * - ``[DEFAULT] nexenta_rrmgr_tcp_buf_size = 4096``
-     - ``(IntOpt) TCP Buffer size in KiloBytes.``
+     - (IntOpt) TCP Buffer size in KiloBytes.
    * - ``[DEFAULT] nexenta_shares_config = /etc/cinder/nfs_shares``
-     - ``(StrOpt) File with the list of available nfs shares``
+     - (StrOpt) File with the list of available nfs shares
    * - ``[DEFAULT] nexenta_sparse = False``
-     - ``(BoolOpt) Enables or disables the creation of sparse datasets``
+     - (BoolOpt) Enables or disables the creation of sparse datasets
    * - ``[DEFAULT] nexenta_sparsed_volumes = True``
-     - ``(BoolOpt) Enables or disables the creation of volumes as sparsed files that take no space. If disabled (False), volume is created as a regular file, which takes a long time.``
+     - (BoolOpt) Enables or disables the creation of volumes as sparsed files that take no space. If disabled (False), volume is created as a regular file, which takes a long time.
    * - ``[DEFAULT] nexenta_target_group_prefix = cinder/``
-     - ``(StrOpt) Prefix for iSCSI target groups on SA``
+     - (StrOpt) Prefix for iSCSI target groups on SA
    * - ``[DEFAULT] nexenta_target_prefix = iqn.1986-03.com.sun:02:cinder-``
-     - ``(StrOpt) IQN prefix for iSCSI targets``
+     - (StrOpt) IQN prefix for iSCSI targets
    * - ``[DEFAULT] nexenta_user = admin``
-     - ``(StrOpt) User name to connect to Nexenta SA``
+     - (StrOpt) User name to connect to Nexenta SA
    * - ``[DEFAULT] nexenta_volume = cinder``
-     - ``(StrOpt) SA Pool that holds all volumes``
+     - (StrOpt) SA Pool that holds all volumes
    * - ``[DEFAULT] nexenta_volume_group = iscsi``
-     - ``(StrOpt) Volume group for ns5``
+     - (StrOpt) Volume group for ns5
    * - ``[DEFAULT] pure_automatic_max_oversubscription_ratio = True``
-     - ``(BoolOpt) Automatically determine an oversubscription ratio based on the current total data reduction values. If used this calculated value will override the max_over_subscription_ratio config option.``
+     - (BoolOpt) Automatically determine an oversubscription ratio based on the current total data reduction values. If used this calculated value will override the max_over_subscription_ratio config option.
    * - ``[DEFAULT] pure_eradicate_on_delete = False``
-     - ``(BoolOpt) When enabled, all Pure volumes, snapshots, and protection groups will be eradicated at the time of deletion in Cinder. Data will NOT be recoverable after a delete with this set to True! When disabled, volumes and snapshots will go into pending eradication state and can be recovered.``
+     - (BoolOpt) When enabled, all Pure volumes, snapshots, and protection groups will be eradicated at the time of deletion in Cinder. Data will NOT be recoverable after a delete with this set to True! When disabled, volumes and snapshots will go into pending eradication state and can be recovered.
    * - ``[DEFAULT] pure_replica_interval_default = 900``
-     - ``(IntOpt) Snapshot replication interval in seconds.``
+     - (IntOpt) Snapshot replication interval in seconds.
    * - ``[DEFAULT] pure_replica_retention_long_term_default = 7``
-     - ``(IntOpt) Retain snapshots per day on target for this time (in days.)``
+     - (IntOpt) Retain snapshots per day on target for this time (in days.)
    * - ``[DEFAULT] pure_replica_retention_long_term_per_day_default = 3``
-     - ``(IntOpt) Retain how many snapshots for each day.``
+     - (IntOpt) Retain how many snapshots for each day.
    * - ``[DEFAULT] pure_replica_retention_short_term_default = 14400``
-     - ``(IntOpt) Retain all snapshots on target for this time (in seconds.)``
+     - (IntOpt) Retain all snapshots on target for this time (in seconds.)
    * - ``[DEFAULT] replication_device = None``
-     - ``(MultiOpt) Multi opt of dictionaries to represent a replication target device. This option may be specified multiple times in a single config section to specify multiple replication target devices. Each entry takes the standard dict config form: replication_device = target_device_id:<required>,key1:value1,key2:value2...``
+     - (MultiOpt) Multi opt of dictionaries to represent a replication target device. This option may be specified multiple times in a single config section to specify multiple replication target devices. Each entry takes the standard dict config form: replication_device = target_device_id:<required>,key1:value1,key2:value2...
    * - ``[DEFAULT] report_discard_supported = False``
-     - ``(BoolOpt) Report to clients of Cinder that the backend supports discard (aka. trim/unmap). This will not actually change the behavior of the backend or the client directly, it will only notify that it can be used.``
+     - (BoolOpt) Report to clients of Cinder that the backend supports discard (aka. trim/unmap). This will not actually change the behavior of the backend or the client directly, it will only notify that it can be used.
    * - ``[DEFAULT] restore_check_timeout = 3600``
-     - ``(IntOpt) How long we check whether a restore is finished before we give up``
+     - (IntOpt) How long we check whether a restore is finished before we give up
    * - ``[DEFAULT] retry_interval = 1``
-     - ``(IntOpt) How long we wait before retrying to get an item detail``
+     - (IntOpt) How long we wait before retrying to get an item detail
    * - ``[DEFAULT] sf_enable_vag = False``
-     - ``(BoolOpt) Utilize volume access groups on a per-tenant basis.``
+     - (BoolOpt) Utilize volume access groups on a per-tenant basis.
    * - ``[DEFAULT] sf_volume_prefix = UUID-``
-     - ``(StrOpt) Create SolidFire volumes with this prefix. Volume names are of the form <sf_volume_prefix><cinder-volume-id>. The default is to use a prefix of 'UUID-'.``
+     - (StrOpt) Create SolidFire volumes with this prefix. Volume names are of the form <sf_volume_prefix><cinder-volume-id>. The default is to use a prefix of 'UUID-'.
    * - ``[DEFAULT] smbfs_allocation_info_file_path = $state_path/allocation_data``
-     - ``(StrOpt) The path of the automatically generated file containing information about volume disk space allocation.``
+     - (StrOpt) The path of the automatically generated file containing information about volume disk space allocation.
    * - ``[DEFAULT] snapshot_check_timeout = 3600``
-     - ``(IntOpt) How long we check whether a snapshot is finished before we give up``
+     - (IntOpt) How long we check whether a snapshot is finished before we give up
    * - ``[DEFAULT] storwize_san_secondary_ip = None``
-     - ``(StrOpt) Specifies secondary management IP or hostname to be used if san_ip is invalid or becomes inaccessible.``
+     - (StrOpt) Specifies secondary management IP or hostname to be used if san_ip is invalid or becomes inaccessible.
    * - ``[DEFAULT] storwize_svc_flashcopy_rate = 50``
-     - ``(IntOpt) Specifies the Storwize FlashCopy copy rate to be used when creating a full volume copy. The default is rate is 50, and the valid rates are 1-100.``
+     - (IntOpt) Specifies the Storwize FlashCopy copy rate to be used when creating a full volume copy. The default is rate is 50, and the valid rates are 1-100.
    * - ``[DEFAULT] storwize_svc_vol_nofmtdisk = False``
-     - ``(BoolOpt) Specifies that the volume not be formatted during creation.``
+     - (BoolOpt) Specifies that the volume not be formatted during creation.
    * - ``[DEFAULT] suppress_requests_ssl_warnings = False``
-     - ``(BoolOpt) Suppress requests library SSL certificate warnings.``
+     - (BoolOpt) Suppress requests library SSL certificate warnings.
    * - ``[DEFAULT] tegile_default_pool = None``
-     - ``(StrOpt) Create volumes in this pool``
+     - (StrOpt) Create volumes in this pool
    * - ``[DEFAULT] tegile_default_project = None``
-     - ``(StrOpt) Create volumes in this project``
+     - (StrOpt) Create volumes in this project
    * - ``[DEFAULT] tintri_image_cache_expiry_days = 30``
-     - ``(IntOpt) Delete unused image snapshots older than mentioned days``
+     - (IntOpt) Delete unused image snapshots older than mentioned days
    * - ``[DEFAULT] tintri_image_shares_config = None``
-     - ``(StrOpt) Path to image nfs shares file``
+     - (StrOpt) Path to image nfs shares file
    * - ``[DEFAULT] volume_name_prefix = openstack-``
-     - ``(StrOpt) Prefix before volume name to differenciate DISCO volume created through openstack and the other ones``
+     - (StrOpt) Prefix before volume name to differenciate DISCO volume created through openstack and the other ones
    * - ``[DEFAULT] xtremio_volumes_per_glance_cache = 100``
-     - ``(IntOpt) Number of volumes created from each cached glance image``
+     - (IntOpt) Number of volumes created from each cached glance image
    * - ``[DEFAULT] zfssa_manage_policy = loose``
-     - ``(StrOpt) Driver policy for volume manage.``
+     - (StrOpt) Driver policy for volume manage.
    * - ``[BRCD_FABRIC_EXAMPLE] fc_fabric_ssh_cert_path =``
-     - ``(StrOpt) Local SSH certificate Path.``
+     - (StrOpt) Local SSH certificate Path.
    * - ``[BRCD_FABRIC_EXAMPLE] fc_southbound_protocol = HTTP``
-     - ``(StrOpt) South bound connector for the fabric.``
+     - (StrOpt) South bound connector for the fabric.
    * - ``[BRCD_FABRIC_EXAMPLE] fc_virtual_fabric_id = None``
-     - ``(StrOpt) Virtual Fabric ID.``
+     - (StrOpt) Virtual Fabric ID.
    * - ``[coordination] backend_url = file://$state_path``
-     - ``(StrOpt) The backend URL to use for distributed coordination.``
+     - (StrOpt) The backend URL to use for distributed coordination.
    * - ``[coordination] heartbeat = 1.0``
-     - ``(FloatOpt) Number of seconds between heartbeats for distributed coordination.``
+     - (FloatOpt) Number of seconds between heartbeats for distributed coordination.
    * - ``[coordination] initial_reconnect_backoff = 0.1``
-     - ``(FloatOpt) Initial number of seconds to wait after failed reconnection.``
+     - (FloatOpt) Initial number of seconds to wait after failed reconnection.
    * - ``[coordination] max_reconnect_backoff = 60.0``
-     - ``(FloatOpt) Maximum number of seconds between sequential reconnection retries.``
+     - (FloatOpt) Maximum number of seconds between sequential reconnection retries.
    * - ``[hyperv] force_volumeutils_v1 = False``
-     - ``(BoolOpt) DEPRECATED: Force V1 volume utility class``
+     - (BoolOpt) DEPRECATED: Force V1 volume utility class
    * - ``[profiler] enabled = False``
-     - ``(BoolOpt) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature). Possible values: * True: Enables the feature * False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.``
+     - (BoolOpt) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature). Possible values: * True: Enables the feature * False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.
    * - ``[profiler] hmac_keys = SECRET_KEY``
-     - ``(StrOpt) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project. Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.``
+     - (StrOpt) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project. Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
 
 .. list-table:: New default values
    :header-rows: 1
