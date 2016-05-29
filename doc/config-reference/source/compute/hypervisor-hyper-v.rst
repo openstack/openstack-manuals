@@ -13,10 +13,6 @@ The use of the Windows Server 2012 platform is recommend for the best
 experience and is the platform for active development.
 The following Windows platforms have been tested as compute nodes:
 
-Windows Server 2008 R2
-  Both Server and Server Core with the Hyper-V role enabled
-  (Shared Nothing Live migration is not supported using 2008 R2)
-
 Windows Server 2012 and Windows Server 2012 R2
   Server and Core (with the Hyper-V role enabled), and Hyper-V Server
 
@@ -31,8 +27,8 @@ one connected to the management network and one to the guest data network.
 
 The following sections discuss how to prepare the Windows Hyper-V
 node for operation as an OpenStack compute node. Unless stated otherwise,
-any configuration information should work for the Windows 2008 R2,
-2012 and 2012 R2 platforms.
+any configuration information should work for the Windows 2012 and
+2012 R2 platforms.
 
 Local storage considerations
 ----------------------------
