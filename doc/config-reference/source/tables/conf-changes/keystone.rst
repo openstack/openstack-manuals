@@ -13,27 +13,27 @@ New, updated, and deprecated options in Mitaka for Identity service
    * - Option = default value
      - (Type) Help string
    * - ``[DEFAULT] insecure_debug = False``
-     - ``(BoolOpt) If set to true the server will return information in the response that may allow an unauthenticated or authenticated user to get more information than normal, such as why authentication failed. This may be useful for debugging but is insecure.``
+     - (BoolOpt) If set to true the server will return information in the response that may allow an unauthenticated or authenticated user to get more information than normal, such as why authentication failed. This may be useful for debugging but is insecure.
    * - ``[DEFAULT] notification_opt_out = []``
-     - ``(MultiStrOpt) Define the notification options to opt-out from. The value expected is: identity.<resource_type>.<operation>. This field can be set multiple times in order to add more notifications to opt-out from. For example: notification_opt_out=identity.user.created notification_opt_out=identity.authenticate.success``
+     - (MultiStrOpt) Define the notification options to opt-out from. The value expected is: identity.<resource_type>.<operation>. This field can be set multiple times in order to add more notifications to opt-out from. For example: notification_opt_out=identity.user.created notification_opt_out=identity.authenticate.success
    * - ``[assignment] prohibited_implied_role = admin``
-     - ``(ListOpt) A list of role names which are prohibited from being an implied role.``
+     - (ListOpt) A list of role names which are prohibited from being an implied role.
    * - ``[ldap] group_members_are_ids = False``
-     - ``(BoolOpt) If the members of the group objectclass are user IDs rather than DNs, set this to true. This is the case when using posixGroup as the group objectclass and OpenDirectory.``
+     - (BoolOpt) If the members of the group objectclass are user IDs rather than DNs, set this to true. This is the case when using posixGroup as the group objectclass and OpenDirectory.
    * - ``[ldap] user_description_attribute = description``
-     - ``(StrOpt) LDAP attribute mapped to user description.``
+     - (StrOpt) LDAP attribute mapped to user description.
    * - ``[resource] admin_project_domain_name = None``
-     - ``(StrOpt) Name of the domain that owns the `admin_project_name`. Defaults to None.``
+     - (StrOpt) Name of the domain that owns the `admin_project_name`. Defaults to None.
    * - ``[resource] admin_project_name = None``
-     - ``(StrOpt) Special project for performing administrative operations on remote services. Tokens scoped to this project will contain the key/value `is_admin_project=true`. Defaults to None.``
+     - (StrOpt) Special project for performing administrative operations on remote services. Tokens scoped to this project will contain the key/value `is_admin_project=true`. Defaults to None.
    * - ``[resource] domain_name_url_safe = off``
-     - ``(StrOpt) Whether the names of domains are restricted from containing url reserved characters. If set to new, attempts to create or update a domain with a url unsafe name will return an error. In addition, if set to strict, attempts to scope a token using a domain name which is unsafe will return an error.``
+     - (StrOpt) Whether the names of domains are restricted from containing url reserved characters. If set to new, attempts to create or update a domain with a url unsafe name will return an error. In addition, if set to strict, attempts to scope a token using a domain name which is unsafe will return an error.
    * - ``[resource] project_name_url_safe = off``
-     - ``(StrOpt) Whether the names of projects are restricted from containing url reserved characters. If set to new, attempts to create or update a project with a url unsafe name will return an error. In addition, if set to strict, attempts to scope a token using an unsafe project name will return an error.``
+     - (StrOpt) Whether the names of projects are restricted from containing url reserved characters. If set to new, attempts to create or update a project with a url unsafe name will return an error. In addition, if set to strict, attempts to scope a token using an unsafe project name will return an error.
    * - ``[shadow_users] driver = sql``
-     - ``(StrOpt) Entrypoint for the shadow users backend driver in the keystone.identity.shadow_users namespace.``
+     - (StrOpt) Entrypoint for the shadow users backend driver in the keystone.identity.shadow_users namespace.
    * - ``[token] infer_roles = True``
-     - ``(BoolOpt) Add roles to token that are not explicitly added, but that are linked implicitly to other roles.``
+     - (BoolOpt) Add roles to token that are not explicitly added, but that are linked implicitly to other roles.
 
 .. list-table:: New default values
    :header-rows: 1

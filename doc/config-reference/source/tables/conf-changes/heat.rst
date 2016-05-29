@@ -13,23 +13,23 @@ New, updated, and deprecated options in Mitaka for Orchestration
    * - Option = default value
      - (Type) Help string
    * - ``[DEFAULT] client_retry_limit = 2``
-     - ``(IntOpt) Number of times to retry when a client encounters an expected intermittent error. Set to 0 to disable retries.``
+     - (IntOpt) Number of times to retry when a client encounters an expected intermittent error. Set to 0 to disable retries.
    * - ``[DEFAULT] max_interface_check_attempts = 10``
-     - ``(IntOpt) Number of times to check whether an interface has been attached or detached.``
+     - (IntOpt) Number of times to check whether an interface has been attached or detached.
    * - ``[DEFAULT] observe_on_update = False``
-     - ``(BoolOpt) On update, enables heat to collect existing resource properties from reality and converge to updated template.``
+     - (BoolOpt) On update, enables heat to collect existing resource properties from reality and converge to updated template.
    * - ``[profiler] enabled = False``
-     - ``(BoolOpt) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature). Possible values: * True: Enables the feature * False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.``
+     - (BoolOpt) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature). Possible values: * True: Enables the feature * False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.
    * - ``[profiler] hmac_keys = SECRET_KEY``
-     - ``(StrOpt) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project. Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.``
+     - (StrOpt) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project. Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
    * - ``[resource_finder_cache] caching = True``
-     - ``(BoolOpt) Toggle to enable/disable caching when Orchestration Engine looks for other OpenStack service resources using name or id. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.``
+     - (BoolOpt) Toggle to enable/disable caching when Orchestration Engine looks for other OpenStack service resources using name or id. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
    * - ``[resource_finder_cache] expiration_time = 3600``
-     - ``(IntOpt) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of OpenStack service finder functions.``
+     - (IntOpt) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of OpenStack service finder functions.
    * - ``[service_extension_cache] caching = True``
-     - ``(BoolOpt) Toggle to enable/disable caching when Orchestration Engine retrieves extensions from other OpenStack services. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.``
+     - (BoolOpt) Toggle to enable/disable caching when Orchestration Engine retrieves extensions from other OpenStack services. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
    * - ``[service_extension_cache] expiration_time = 3600``
-     - ``(IntOpt) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of service extensions.``
+     - (IntOpt) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of service extensions.
 
 .. list-table:: New default values
    :header-rows: 1

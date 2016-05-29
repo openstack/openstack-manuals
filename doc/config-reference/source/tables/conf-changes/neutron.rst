@@ -13,71 +13,71 @@ New, updated, and deprecated options in Mitaka for Networking
    * - Option = default value
      - (Type) Help string
    * - ``[DEFAULT] bgp_drscheduler_driver = neutron.services.bgp.scheduler.bgp_dragent_scheduler.ChanceScheduler``
-     - ``(StrOpt) Driver used for scheduling BGP speakers to BGP DrAgent``
+     - (StrOpt) Driver used for scheduling BGP speakers to BGP DrAgent
    * - ``[DEFAULT] default_availability_zones =``
-     - ``(ListOpt) Default value of availability zone hints. The availability zone aware schedulers use this when the resources availability_zone_hints is empty. Multiple availability zones can be specified by a comma separated string. This value can be empty. In this case, even if availability_zone_hints for a resource is empty, availability zone is considered for high availability while scheduling the resource.``
+     - (ListOpt) Default value of availability zone hints. The availability zone aware schedulers use this when the resources availability_zone_hints is empty. Multiple availability zones can be specified by a comma separated string. This value can be empty. In this case, even if availability_zone_hints for a resource is empty, availability zone is considered for high availability while scheduling the resource.
    * - ``[DEFAULT] dnsmasq_local_resolv = False``
-     - ``(BoolOpt) Enables the dnsmasq service to provide name resolution for instances via DNS resolvers on the host running the DHCP agent. Effectively removes the '--no-resolv' option from the dnsmasq process arguments. Adding custom DNS resolvers to the 'dnsmasq_dns_servers' option disables this feature.``
+     - (BoolOpt) Enables the dnsmasq service to provide name resolution for instances via DNS resolvers on the host running the DHCP agent. Effectively removes the '--no-resolv' option from the dnsmasq process arguments. Adding custom DNS resolvers to the 'dnsmasq_dns_servers' option disables this feature.
    * - ``[DEFAULT] external_dns_driver = None``
-     - ``(StrOpt) Driver for external DNS integration.``
+     - (StrOpt) Driver for external DNS integration.
    * - ``[DEFAULT] global_physnet_mtu = 1500``
-     - ``(IntOpt) MTU of the underlying physical network. Neutron uses this value to calculate MTU for all virtual network components. For flat and VLAN networks, neutron uses this value without modification. For overlay networks such as VXLAN, neutron automatically subtracts the overlay protocol overhead from this value. Defaults to 1500, the standard value for Ethernet.``
+     - (IntOpt) MTU of the underlying physical network. Neutron uses this value to calculate MTU for all virtual network components. For flat and VLAN networks, neutron uses this value without modification. For overlay networks such as VXLAN, neutron automatically subtracts the overlay protocol overhead from this value. Defaults to 1500, the standard value for Ethernet.
    * - ``[DEFAULT] ipv6_pd_enabled = False``
-     - ``(BoolOpt) Enables IPv6 Prefix Delegation for automatic subnet CIDR allocation. Set to True to enable IPv6 Prefix Delegation for subnet allocation in a PD-capable environment. Users making subnet creation requests for IPv6 subnets without providing a CIDR or subnetpool ID will be given a CIDR via the Prefix Delegation mechanism. Note that enabling PD will override the behavior of the default IPv6 subnetpool.``
+     - (BoolOpt) Enables IPv6 Prefix Delegation for automatic subnet CIDR allocation. Set to True to enable IPv6 Prefix Delegation for subnet allocation in a PD-capable environment. Users making subnet creation requests for IPv6 subnets without providing a CIDR or subnetpool ID will be given a CIDR via the Prefix Delegation mechanism. Note that enabling PD will override the behavior of the default IPv6 subnetpool.
    * - ``[DEFAULT] max_rtr_adv_interval = 100``
-     - ``(IntOpt) MaxRtrAdvInterval setting for radvd.conf``
+     - (IntOpt) MaxRtrAdvInterval setting for radvd.conf
    * - ``[DEFAULT] min_rtr_adv_interval = 30``
-     - ``(IntOpt) MinRtrAdvInterval setting for radvd.conf``
+     - (IntOpt) MinRtrAdvInterval setting for radvd.conf
    * - ``[DEFAULT] rpc_state_report_workers = 1``
-     - ``(IntOpt) Number of RPC worker processes dedicated to state reports queue``
+     - (IntOpt) Number of RPC worker processes dedicated to state reports queue
    * - ``[DEFAULT] web_framework = legacy``
-     - ``(StrOpt) This will choose the web framework in which to run the Neutron API server. 'pecan' is a new experiemental rewrite of the API server.``
+     - (StrOpt) This will choose the web framework in which to run the Neutron API server. 'pecan' is a new experiemental rewrite of the API server.
    * - ``[DEFAULT] wsgi_default_pool_size = 100``
-     - ``(IntOpt) Size of the pool of greenthreads used by wsgi``
+     - (IntOpt) Size of the pool of greenthreads used by wsgi
    * - ``[DEFAULT] wsgi_log_format = %(client_ip)s "%(request_line)s" status: %(status_code)s  len: %(body_length)s time: %(wall_seconds).7f``
-     - ``(StrOpt) A python format string that is used as the template to generate log lines. The following values can beformatted into it: client_ip, date_time, request_line, status_code, body_length, wall_seconds.``
+     - (StrOpt) A python format string that is used as the template to generate log lines. The following values can beformatted into it: client_ip, date_time, request_line, status_code, body_length, wall_seconds.
    * - ``[AGENT] availability_zone = nova``
-     - ``(StrOpt) Availability zone of this node``
+     - (StrOpt) Availability zone of this node
    * - ``[BGP] bgp_router_id = None``
-     - ``(StrOpt) 32-bit BGP identifier, typically an IPv4 address owned by the system running the BGP DrAgent.``
+     - (StrOpt) 32-bit BGP identifier, typically an IPv4 address owned by the system running the BGP DrAgent.
    * - ``[BGP] bgp_speaker_driver = None``
-     - ``(StrOpt) BGP speaker driver class to be instantiated.``
+     - (StrOpt) BGP speaker driver class to be instantiated.
    * - ``[OVS] ovsdb_connection = tcp:127.0.0.1:6640``
-     - ``(StrOpt) The connection string for the native OVSDB backend. Requires the native ovsdb_interface to be enabled.``
+     - (StrOpt) The connection string for the native OVSDB backend. Requires the native ovsdb_interface to be enabled.
    * - ``[OVS] vhostuser_socket_dir = /var/run/openvswitch``
-     - ``(StrOpt) OVS vhost-user socket directory.``
+     - (StrOpt) OVS vhost-user socket directory.
    * - ``[QOS] kernel_hz = 250``
-     - ``(IntOpt) Value of host kernel tick rate (hz) for calculating minimum burst value in bandwidth limit rules for a port with QoS. See kernel configuration file for HZ value and tc-tbf manual for more information.``
+     - (IntOpt) Value of host kernel tick rate (hz) for calculating minimum burst value in bandwidth limit rules for a port with QoS. See kernel configuration file for HZ value and tc-tbf manual for more information.
    * - ``[QOS] tbf_latency = 50``
-     - ``(IntOpt) Value of latency (ms) for calculating size of queue for a port with QoS. See tc-tbf manual for more information.``
+     - (IntOpt) Value of latency (ms) for calculating size of queue for a port with QoS. See tc-tbf manual for more information.
    * - ``[VXLAN] arp_responder = False``
-     - ``(BoolOpt) Enable local ARP responder which provides local responses instead of performing ARP broadcast into the overlay. Enabling local ARP responder is not fullycompatible with the allowed-address-pairs extension.``
+     - (BoolOpt) Enable local ARP responder which provides local responses instead of performing ARP broadcast into the overlay. Enabling local ARP responder is not fullycompatible with the allowed-address-pairs extension.
    * - ``[designate] admin_auth_url = None``
-     - ``(StrOpt) Authorization URL for connecting to designate in admin context``
+     - (StrOpt) Authorization URL for connecting to designate in admin context
    * - ``[designate] admin_password = None``
-     - ``(StrOpt) Password for connecting to designate in admin context``
+     - (StrOpt) Password for connecting to designate in admin context
    * - ``[designate] admin_tenant_id = None``
-     - ``(StrOpt) Tenant id for connecting to designate in admin context``
+     - (StrOpt) Tenant id for connecting to designate in admin context
    * - ``[designate] admin_tenant_name = None``
-     - ``(StrOpt) Tenant name for connecting to designate in admin context``
+     - (StrOpt) Tenant name for connecting to designate in admin context
    * - ``[designate] admin_username = None``
-     - ``(StrOpt) Username for connecting to designate in admin context``
+     - (StrOpt) Username for connecting to designate in admin context
    * - ``[designate] allow_reverse_dns_lookup = True``
-     - ``(BoolOpt) Allow the creation of PTR records``
+     - (BoolOpt) Allow the creation of PTR records
    * - ``[designate] ipv4_ptr_zone_prefix_size = 24``
-     - ``(IntOpt) Number of bits in an ipv4 PTR zone that will be considered network prefix. It has to align to byte boundary. Minimum value is 8. Maximum value is 24. As a consequence, range of values is 8, 16 and 24``
+     - (IntOpt) Number of bits in an ipv4 PTR zone that will be considered network prefix. It has to align to byte boundary. Minimum value is 8. Maximum value is 24. As a consequence, range of values is 8, 16 and 24
    * - ``[designate] ipv6_ptr_zone_prefix_size = 120``
-     - ``(IntOpt) Number of bits in an ipv6 PTR zone that will be considered network prefix. It has to align to nyble boundary. Minimum value is 4. Maximum value is 124. As a consequence, range of values is 4, 8, 12, 16,..., 124``
+     - (IntOpt) Number of bits in an ipv6 PTR zone that will be considered network prefix. It has to align to nyble boundary. Minimum value is 4. Maximum value is 124. As a consequence, range of values is 4, 8, 12, 16,..., 124
    * - ``[designate] ptr_zone_email =``
-     - ``(StrOpt) The email address to be used when creating PTR zones. If not specified, the email address will be admin@<dns_domain>``
+     - (StrOpt) The email address to be used when creating PTR zones. If not specified, the email address will be admin@<dns_domain>
    * - ``[designate] url = None``
-     - ``(StrOpt) URL for connecting to designate``
+     - (StrOpt) URL for connecting to designate
    * - ``[macvtap] physical_interface_mappings =``
-     - ``(ListOpt) Comma-separated list of <physical_network>:<physical_interface> tuples mapping physical network names to the agent's node-specific physical network interfaces to be used for flat and VLAN networks. All physical networks listed in network_vlan_ranges on the server should have mappings to appropriate interfaces on each agent.``
+     - (ListOpt) Comma-separated list of <physical_network>:<physical_interface> tuples mapping physical network names to the agent's node-specific physical network interfaces to be used for flat and VLAN networks. All physical networks listed in network_vlan_ranges on the server should have mappings to appropriate interfaces on each agent.
    * - ``[nova] auth_type = None``
-     - ``(Opt) Authentication type to load``
+     - (Opt) Authentication type to load
    * - ``[nova] endpoint_type = public``
-     - ``(StrOpt) Type of the nova endpoint to use. This endpoint will be looked up in the keystone catalog and should be one of public, internal or admin.``
+     - (StrOpt) Type of the nova endpoint to use. This endpoint will be looked up in the keystone catalog and should be one of public, internal or admin.
 
 .. list-table:: New default values
    :header-rows: 1
