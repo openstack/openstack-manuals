@@ -37,10 +37,12 @@ architecture:
 As the figure shows, the OpenStack Compute Scheduler sees
 three hypervisors that each correspond to a cluster in vCenter.
 ``nova-compute`` contains the VMware driver. You can run with multiple
-``nova-compute`` services. While Compute schedules at the granularity
-of a cluster, the VMware driver inside ``nova-compute`` interacts with
-the vCenter APIs to select an appropriate ESX host within the cluster.
-Internally, vCenter uses DRS for placement.
+``nova-compute`` services. It is recommended to run with one ``nova-compute``
+service per ESX cluster thus ensuring that while Compute schedules at the
+granularity of the ``nova-compute`` service it is also in effect able to
+schedule at the cluster level. In turn the VMware driver inside
+``nova-compute`` interacts with the vCenter APIs to select an appropriate ESX
+host within the cluster. Internally, vCenter uses DRS for placement.
 
 The VMware vCenter driver also interacts with the Image service to copy
 VMDK images from the Image service back-end store.
