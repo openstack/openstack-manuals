@@ -1,12 +1,12 @@
-==========
-Bare metal
-==========
+==================
+Bare Metal service
+==================
 
-The Bare metal service is capable of managing and provisioning physical
+The Bare Metal service is capable of managing and provisioning physical
 machines. The configuration file of this module is
 ``/etc/ironic/ironic.conf``.
 
-The following tables provide a comprehensive list of the Bare metal
+The following tables provide a comprehensive list of the Bare Metal
 service configuration options.
 
 .. include:: tables/ironic-agent.rst

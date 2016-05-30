@@ -1,6 +1,6 @@
-==============
-Object Storage
-==============
+======================
+Object Storage service
+======================
 
 .. toctree::
    :maxdepth: 2
@@ -14,4 +14,3 @@ Object Storage
    object-storage/listendpoints.rst
    object-storage/logs.rst
    tables/conf-changes/swift.rst
-
