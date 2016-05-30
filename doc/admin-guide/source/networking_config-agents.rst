@@ -391,7 +391,7 @@ For the back end, use either Octavia or Haproxy. This example uses Octavia.
 
    .. code-block:: console
 
-      # neutron-db-manage --service lbaas upgrade head
+      # neutron-db-manage --subproject neutron-lbaas upgrade head
 
 #. Restart the ``neutron-server`` service.
 
