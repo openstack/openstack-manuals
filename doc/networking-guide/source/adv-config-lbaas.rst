@@ -104,7 +104,7 @@ Configuring LBaaS v2 with an agent
 
     .. code-block:: console
 
-       neutron-db-manage --service lbaas upgrade head
+       neutron-db-manage --subproject neutron-lbaas upgrade head
 
 #.  If you have deployed LBaaS v1, **stop the LBaaS v1 agent now**. The v1 and
     v2 agents **cannot** run simultaneously.
