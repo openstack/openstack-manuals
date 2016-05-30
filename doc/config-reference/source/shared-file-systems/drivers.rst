@@ -4,6 +4,7 @@ Share drivers
 
 .. toctree::
 
+   drivers/cephfs-native-driver.rst
    drivers/emc-isilon-driver.rst
    drivers/emc-vnx-driver.rst
    drivers/generic-driver.rst

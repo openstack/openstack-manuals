@@ -657,8 +657,10 @@ You must also specify one of these supported authentication methods:
   long in the common name (CN) of the certificate. The meaning of a string
   depends on its interpretation.
 
-- **cephx**. Ceph authentication system. Each share has a distinct
-  authentication key that must be passed to clients for them to use it.
+- **cephx**. Ceph authentication system. Specify the Ceph auth ID that needs
+  to be authenticated and authorized for share access by the Ceph back end. A
+  valid value must be non-empty, consist of ASCII printable characters, and not
+  contain periods.
 
 Try to mount NFS share with export path
 ``10.0.0.4:/shares/manila_share_a5fb1ab7_0bbd_465b_ac14_05706294b6e9`` on the

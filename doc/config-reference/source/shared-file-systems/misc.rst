@@ -8,7 +8,6 @@ These options can also be set in the ``manila.conf`` file.
 .. include:: ../tables/manila-auth_token.rst
 .. include:: ../tables/manila-auth.rst
 .. include:: ../tables/manila-ca.rst
-.. include:: ../tables/manila-cephfs.rst
 .. include:: ../tables/manila-common.rst
 .. include:: ../tables/manila-compute.rst
 .. include:: ../tables/manila-cors.rst
