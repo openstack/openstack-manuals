@@ -35,8 +35,8 @@ Consider the following costs categories when designing a cloud:
 
 *  Operational costs
 
-It is also important to be consider how costs will increase as your cloud
-scales. Choices that have a negligible impact in small systems may considerably
+It is also important to consider how costs will increase as your cloud scales.
+Choices that have a negligible impact in small systems may considerably
 increase costs in large systems. In these cases, it is important to minimize
 capital expenditure (CapEx) at all layers of the stack. Operators of massively
 scalable OpenStack clouds require the use of dependable commodity hardware and
@@ -125,7 +125,7 @@ See :ref:`security-requirements`.
 Service level agreements
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Service level agreements (SLA) must be developed in conjuction with business,
+Service level agreements (SLA) must be developed in conjunction with business,
 technical, and legal input. Small, private clouds may operate under an informal
 SLA, but hybrid or public clouds generally require more formal agreements with
 their users.
