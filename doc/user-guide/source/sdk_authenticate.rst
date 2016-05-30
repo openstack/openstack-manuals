@@ -5,23 +5,24 @@ Authenticate
 ============
 
 When using the SDK, you must authenticate against an OpenStack endpoint
-before you can use OpenStack services. Each project uses a slightly
-different syntax for authentication.
+before you can use OpenStack services. Because all projects use Keystone
+for authentication, the process is the same no matter which service
+or library you have decided to use. Each library also has more advanced
+and complicated ways to do things, should those be needed.
 
-You must typically authenticate against a specific version of a service.
-For example, a client might need to authenticate against Identity v2.0.
+There are two basic ways to deal with your cloud config and credentials:
 
-Python scripts that use the OpenStack SDK must have access to the
-credentials contained in the OpenStack RC file. Because credentials are
-sensitive information, do not include them in your scripts. This guide
-assumes that users source the PROJECT-openrc.sh file and access the
-credentials by using the environment variables in the Python scripts.
+- Environment variables via an openrc.sh file
+- clouds.yaml config file
+
+The environment variables have been around the longest and are the form
+you are most likely to receive from your cloud provider. If you have one
+and only one cloud account, they are the most convenient way.
+
+``clouds.yaml`` is a bit newer and was designed to help folks who have
+more than one OpenStack cloud that they are using.
 
 .. toctree::
    :maxdepth: 2
 
-   sdk_authenticate_against_identity_endpoint.rst
-   sdk_authenticate_against_image_service_endpoint.rst
-   sdk_authenticate_against_compute_endpoint.rst
-   sdk_authenticate_against_networking_endpoint.rst
-
+   sdk_create_legacy_novaclient.rst

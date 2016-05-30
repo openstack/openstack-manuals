@@ -1,9 +1,16 @@
-=======================================
-Authenticate against a Compute endpoint
-=======================================
+=============================
+Create a Legacy Client Object
+=============================
 
-To authenticate against a Compute endpoint, instantiate a
-`novaclient.v2.client.Client <http://docs.openstack.org/developer/python-novaclient/ref/v2/client.html>`__ object using `os-client-config`:
+All of the legacy client objects can be constructed the same way - the only
+difference is the first argument to ``make_client``. The examples will use
+``compute`` to get a nova client, but neutron can be accessed instead by
+replacing ``compute`` with ``network``.
+
+To use the legacy ``python-novaclient`` with a Compute endpoint, instantiate a
+`novaclient.v2.client.Client
+<http://docs.openstack.org/developer/python-novaclient/ref/v2/client.html>`__
+object using ``os-client-config``:
 
 .. code-block:: python
 
@@ -36,12 +43,13 @@ as the ``version`` parameter:
 
 If you authenticate against an endpoint that uses a custom
 authentication back end, you must provide the name of the plugin in the
-`auth_type` parameter.
+``auth_type`` parameter.
 
 For instance, the Rackspace public cloud is an OpenStack deployment that has
 an optional custom authentication back end. While normal keystone password
 authentication works perfectly well, you may want to use the
-custom Rackspace keystoneauth API Key plugin found in `rackspace-keystoneauth-plugin <https://pypi.python.org/pypi/rackspaceauth>`_.
+custom Rackspace keystoneauth API Key plugin found in
+`rackspace-keystoneauth-plugin <https://pypi.python.org/pypi/rackspaceauth>`_.
 
 .. code-block:: python
 
