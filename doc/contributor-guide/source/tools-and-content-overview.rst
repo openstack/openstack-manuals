@@ -120,14 +120,6 @@ architecture concepts that can help developers.
 RST stands for ReStructured Text, a simple markup syntax that can be built
 with Sphinx. Read more at `Sphinx documentation`_.
 
-Operations Guide (DocBook 5)
-----------------------------
-
-doc/$BOOK contains the DocBook XML source files and images. When editing
-DocBook documentation, please adhere to the DocBook 5 syntax. If you have used
-DocBook version 4 or earlier before, and you are not familiar with the changes
-of DocBook in V5.0, see the `Transition Guide`_.
-
 Maven plugin
 ------------
 
