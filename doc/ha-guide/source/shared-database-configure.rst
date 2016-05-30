@@ -45,16 +45,16 @@ the ``iptables`` utility. To do so, complete the following steps:
    .. code-block:: console
 
       # iptables --append INPUT --in-interface eth0 \
-         --protocol --match tcp --dport 3306 \
+         --protocol tcp --match tcp --dport 3306 \
          --source NODE-IP-ADDRESS --jump ACCEPT
       # iptables --append INPUT --in-interface eth0 \
-         --protocol --match tcp --dport 4567 \
+         --protocol tcp --match tcp --dport 4567 \
          --source NODE-IP-ADDRESS --jump ACCEPT
       # iptables --append INPUT --in-interface eth0 \
-         --protocol --match tcp --dport 4568 \
+         --protocol tcp --match tcp --dport 4568 \
          --source NODE-IP-ADDRESS --jump ACCEPT
       # iptables --append INPUT --in-interface eth0 \
-         --protocol --match tcp --dport 4444 \
+         --protocol tcp --match tcp --dport 4444 \
          --source NODE-IP-ADDRESS --jump ACCEPT
 
    In the event that you also want to configure multicast replication,
