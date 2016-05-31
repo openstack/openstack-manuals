@@ -62,7 +62,7 @@ Configure the driver name by setting the following parameter in the
 
    .. code-block:: ini
 
-      volume_driver = cinder.volume.drivers.emc.xtremio.XtremIOIscsiDriver
+      volume_driver = cinder.volume.drivers.emc.xtremio.XtremIOISCSIDriver
 
 -  For Fibre Channel:
 
