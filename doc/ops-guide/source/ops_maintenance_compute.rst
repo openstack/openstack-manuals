@@ -9,10 +9,16 @@ Planned Maintenance
 ~~~~~~~~~~~~~~~~~~~
 
 If you need to reboot a compute node due to planned maintenance (such as
-a software or hardware upgrade), first ensure that all hosted instances
-have been moved off the node. If your cloud is utilizing shared storage,
-use the :command:`nova live-migration` command. First, get a list of instances
-that need to be moved:
+a software or hardware upgrade), first disable scheduling of new VMs to
+the node, optionally providing a reason comment:
+
+.. code-block:: console
+
+   # nova service-disable --reason maintenance c01.example.com nova-compute
+
+Next, ensure that all hosted instances have been moved off the node. If your
+cloud is utilizing shared storage, use the :command:`nova live-migration`
+command. First, get a list of instances that need to be moved:
 
 .. code-block:: console
 
@@ -62,6 +68,12 @@ Then start the ``nova-compute`` service:
 .. code-block:: console
 
    # start nova-compute
+
+Finally, enable scheduling of VMs to the node:
+
+.. code-block:: console
+
+   # nova service-enable c01.example.com nova-compute
 
 You can now optionally migrate the instances back to their original
 compute node.
