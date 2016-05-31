@@ -39,11 +39,7 @@ Add OpenStack Identity resource to Pacemaker
    ::
 
       primitive p_keystone ocf:openstack:keystone \
-      params config="/etc/keystone/keystone.conf"
-          os_password="secretsecret" \
-          os_username="admin"
-          os_tenant_name="admin"
-          os_auth_url="http://10.0.0.11:5000/v2.0/" \
+      params config="/etc/keystone/keystone.conf" os_password="secretsecret" os_username="admin" os_tenant_name="admin" os_auth_url="http://10.0.0.11:5000/v2.0/" \
           op monitor interval="30s" timeout="30s"
 
    This configuration creates ``p_keystone``,
