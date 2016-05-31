@@ -52,6 +52,10 @@
      - (Floating point) Number of seconds between checks to see if group membership has changed
    * - ``heartbeat`` = ``1.0``
      - (Floating point) Number of seconds between heartbeats for distributed coordination.
+   * - ``max_retry_interval`` = ``30``
+     - (Integer) Maximum number of seconds between retry to join partitioning group
+   * - ``retry_backoff`` = ``1``
+     - (Integer) Retry backoff factor when retrying to connect withcoordination backend
    * - **[keystone_authtoken]**
      -
    * - ``memcached_servers`` = ``None``
