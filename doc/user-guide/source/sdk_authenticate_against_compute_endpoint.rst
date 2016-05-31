@@ -3,77 +3,53 @@ Authenticate against a Compute endpoint
 =======================================
 
 To authenticate against a Compute endpoint, instantiate a
-`novaclient.v2.client.Client <http://docs.openstack.org/developer/python-novaclient/ref/v2/client.html>`__ object:
+`novaclient.v2.client.Client <http://docs.openstack.org/developer/python-novaclient/ref/v2/client.html>`__ object using `os-client-config`:
 
 .. code-block:: python
 
-   from os import environ as env
-   import novaclient.v2.client as nvclient
-   nova = nvclient.Client(auth_url=env['OS_AUTH_URL'],
-                          username=env['OS_USERNAME'],
-                          api_key=env['OS_PASSWORD'],
-                          project_id=env['OS_TENANT_NAME'],
-                          region_name=env['OS_REGION_NAME'])
+   import os_client_config
 
-Alternatively, you can instantiate a ``novaclient.client.Client`` object
-and pass the version number:
+   nova = os_client_config.make_client(
+       'compute',
+       auth_url='https://example.com',
+       username='example-openstack-user',
+       password='example-password',
+       project_name='example-project-name',
+       region_name='example-region-name')
+
+If you desire a specific micro-version of the Nova API, you can pass that
+as the ``version`` parameter:
+
 
 .. code-block:: python
 
-   from os import environ as env
-   import novaclient.client
-   nova = novaclient.client.Client("2.1", auth_url=env['OS_AUTH_URL'],
-                                   username=env['OS_USERNAME'],
-                                   api_key=env['OS_PASSWORD'],
-                                   project_id=env['OS_TENANT_NAME'],
-                                   region_name=env['OS_REGION_NAME'])
+   import os_client_config
+
+   nova = os_client_config.make_client(
+       'compute',
+       version='2.10',
+       auth_url='https://example.com',
+       username='example-openstack-user',
+       password='example-password',
+       project_name='example-project-name',
+       region_name='example-region-name')
 
 If you authenticate against an endpoint that uses a custom
-authentication back end, you must load the authentication plug-in and
-pass it to the constructor.
+authentication back end, you must provide the name of the plugin in the
+`auth_type` parameter.
 
-The Rackspace public cloud is an OpenStack deployment that uses a custom
-authentication back end. To authenticate against this cloud, you must
-install the
-`rackspace-novaclient <https://pypi.python.org/pypi/rackspace-novaclient/>`__
-library that contains the Rackspace authentication plug-in, called
-``rackspace``. The following Python code shows the additional
-modifications required to instantiate a ``Client`` object that can
-authenticate against the Rackspace custom authentication back end.
+For instance, the Rackspace public cloud is an OpenStack deployment that has
+an optional custom authentication back end. While normal keystone password
+authentication works perfectly well, you may want to use the
+custom Rackspace keystoneauth API Key plugin found in `rackspace-keystoneauth-plugin <https://pypi.python.org/pypi/rackspaceauth>`_.
 
 .. code-block:: python
 
-   import novaclient.auth_plugin
-   import novaclient.v2.client as nvclient
-   from os import environ as env
-   auth_system = 'rackspace'
-   auth_plugin = novaclient.auth_plugin.load_plugin('rackspace')
-   nova = nvclient.Client(auth_url=env['OS_AUTH_URL'],
-                          username=env['OS_USERNAME'],
-                          api_key=env['OS_PASSWORD'],
-                          project_id=env['OS_TENANT_NAME'],
-                          region_name=env['OS_REGION_NAME'],
-                          auth_system='rackspace',
-                          auth_plugin=auth_plugin)
-
-If you set the ``OS_AUTH_SYSTEM`` environment variable, check for this
-variable in your Python script to determine whether you need to load a
-custom authentication back end:
-
-.. code-block:: python
-
-   import novaclient.auth_plugin
-   import novaclient.v2.client as nvclient
-   from os import environ as env
-   auth_system = env.get('OS_AUTH_SYSTEM', 'keystone')
-   if auth_system != "keystone":
-     auth_plugin = novaclient.auth_plugin.load_plugin(auth_system)
-   else:
-     auth_plugin = None
-   nova = nvclient.Client(auth_url=env['OS_AUTH_URL'],
-                          username=env['OS_USERNAME'],
-                          api_key=env['OS_PASSWORD'],
-                          project_id=env['OS_TENANT_NAME'],
-                          region_name=env['OS_REGION_NAME'],
-                          auth_system=auth_system,
-                          auth_plugin=auth_plugin)
+   nova = os_client_config.make_client(
+       'compute',
+       auth_type='rackspace_apikey',
+       auth_url='https://example.com',
+       username='example-openstack-user',
+       api_key='example-apikey',
+       project_name='example-project-name',
+       region_name='example-region-name')
