@@ -20,6 +20,10 @@
      -
    * - ``agent_down_time`` = ``75``
      - (Integer) Seconds to regard the agent is down; should be at least twice report_interval, to be sure the agent is down for good.
+   * - ``allow_automatic_dhcp_failover`` = ``True``
+     - (Boolean) Automatically remove networks from offline DHCP agents.
+   * - ``allow_automatic_l3agent_failover`` = ``False``
+     - (Boolean) Automatically reschedule routers from offline L3 agents to online L3 agents.
    * - ``api_workers`` = ``None``
      - (Integer) Number of separate API worker processes for service. If not specified, the default is equal to the number of CPUs available for best performance.
    * - ``auth_ca_cert`` = ``None``
