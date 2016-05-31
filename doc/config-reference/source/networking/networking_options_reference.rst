@@ -29,11 +29,6 @@ CISCO configuration options
 
 .. include:: ../tables/neutron-cisco.rst
 
-CloudBase Hyper-V Agent configuration options
----------------------------------------------
-
-.. include:: ../tables/neutron-hyperv_agent.rst
-
 Layer 2 Gateway configuration options
 -------------------------------------
 
