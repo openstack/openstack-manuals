@@ -48,12 +48,15 @@ Server 5.5 or later. For details, see :ref:`glance-backend-vmware-DS`.
    If you intend to use multiple data stores for the back end, use the
    SPBM feature.
 
-In the ``glance_store`` section, set the ``default_store`` option to
-``vsphere``, as shown in this code sample:
+In the ``glance_store`` section, set the ``stores`` and ``default_store``
+options to ``vsphere``, as shown in this code sample:
 
 .. code:: ini
 
    [glance_store]
+   # List of stores enabled. Valid stores are: cinder, file, http, rbd,
+   # sheepdog, swift, s3, vsphere (list value)
+   stores = file,http,vsphere
    # Which back end scheme should Glance use by default is not specified
    # in a request to add a new image to Glance? Known schemes are determined
    # by the known_stores option below.
