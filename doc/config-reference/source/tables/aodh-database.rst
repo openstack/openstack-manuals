@@ -18,8 +18,6 @@
      - Description
    * - **[database]**
      -
-   * - ``alarm_connection`` = ``None``
-     - (String) DEPRECATED: The connection string used to connect to the alarm database - rather use ${database.connection}
    * - ``alarm_history_time_to_live`` = ``-1``
      - (Integer) Number of seconds that alarm histories are kept in the database for (<= 0 means forever).
    * - ``backend`` = ``sqlalchemy``
