@@ -199,7 +199,7 @@ FWaaS management options are also available in the Dashboard.
 
    .. code-block:: console
 
-      # neutron-db-manage --service fwaas upgrade head
+      # neutron-db-manage --subproject neutron-fwaas upgrade head
 
 #. Enable the option in the ``local_settings.py`` file,
    which is typically located on the controller node:
