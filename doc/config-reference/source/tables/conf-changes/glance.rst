@@ -13,7 +13,7 @@ New, updated, and deprecated options in Mitaka for Image service
    * - Option = default value
      - (Type) Help string
    * - ``[profiler] hmac_keys = SECRET_KEY``
-     - ``(StrOpt) Secret key to use to sign Glance API and Glance Registry services tracing messages.``
+     - (StrOpt) Secret key to use to sign Glance API and Glance Registry services tracing messages.
 
 .. list-table:: New default values
    :header-rows: 1
