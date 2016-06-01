@@ -344,7 +344,7 @@ The following steps involve compute node 1:
    VLAN interface ``device.sid`` where *device* references the underlying
    physical VLAN interface and *sid* contains the project network
    segmentation ID. The packet contains destination MAC address *I2*
-   because the destination resides the same network.
+   because the destination resides on the same network.
 #. The logical VLAN interface ``device.sid`` forwards the packet to the
    compute node 2 via the physical VLAN interface.
 
@@ -397,7 +397,7 @@ Controller node
         mechanism_drivers = linuxbridge,macvtap
         extension_drivers = port_security
 
-   * Configure network mappings and IDs:
+   * Configure network mappings and ID ranges:
 
      .. code-block:: ini
 
