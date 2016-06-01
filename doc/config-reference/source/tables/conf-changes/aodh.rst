@@ -13,13 +13,13 @@ New, updated, and deprecated options in Mitaka for Alarming
    * - Option = default value
      - (Type) Help string
    * - ``[DEFAULT] ipc_protocol = queue``
-     - ``(StrOpt) The protocol used to communicate between evaluator and notifier services.``
+     - (StrOpt) The protocol used to communicate between evaluator and notifier services.
    * - ``[DEFAULT] notifier_topic = alarming``
-     - ``(StrOpt) The topic that aodh uses for alarm notifier messages.``
+     - (StrOpt) The topic that aodh uses for alarm notifier messages.
    * - ``[service_credentials] interface = public``
-     - ``(StrOpt) Type of endpoint in Identity service catalog to use for communication with OpenStack services.``
+     - (StrOpt) Type of endpoint in Identity service catalog to use for communication with OpenStack services.
    * - ``[service_credentials] region_name = None``
-     - ``(StrOpt) Region name to use for OpenStack service endpoints.``
+     - (StrOpt) Region name to use for OpenStack service endpoints.
 
 .. list-table:: New default values
    :header-rows: 1

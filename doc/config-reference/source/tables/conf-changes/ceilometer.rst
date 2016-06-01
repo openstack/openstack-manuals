@@ -13,43 +13,43 @@ New, updated, and deprecated options in Mitaka for Telemetry
    * - Option = default value
      - (Type) Help string
    * - ``[DEFAULT] event_dispatchers = ['database']``
-     - ``(MultiStrOpt) Dispatchers to process event data.``
+     - (MultiStrOpt) Dispatchers to process event data.
    * - ``[DEFAULT] meter_dispatchers = ['database']``
-     - ``(MultiStrOpt) Dispatchers to process metering data.``
+     - (MultiStrOpt) Dispatchers to process metering data.
    * - ``[collector] batch_size = 1``
-     - ``(IntOpt) Number of notification messages to wait before dispatching them``
+     - (IntOpt) Number of notification messages to wait before dispatching them
    * - ``[collector] batch_timeout = None``
-     - ``(IntOpt) Number of seconds to wait before dispatching sampleswhen batch_size is not reached (None means indefinitely)``
+     - (IntOpt) Number of seconds to wait before dispatching sampleswhen batch_size is not reached (None means indefinitely)
    * - ``[compute] resource_update_interval = 0``
-     - ``(IntOpt) New instances will be discovered periodically based on this option (in seconds). By default, the agent discovers instances according to pipeline polling interval. If option is greater than 0, the instance list to poll will be updated based on this option's interval. Measurements relating to the instances will match intervals defined in pipeline.``
+     - (IntOpt) New instances will be discovered periodically based on this option (in seconds). By default, the agent discovers instances according to pipeline polling interval. If option is greater than 0, the instance list to poll will be updated based on this option's interval. Measurements relating to the instances will match intervals defined in pipeline.
    * - ``[hyperv] force_volumeutils_v1 = False``
-     - ``(BoolOpt) DEPRECATED: Force V1 volume utility class``
+     - (BoolOpt) DEPRECATED: Force V1 volume utility class
    * - ``[notification] batch_size = 1``
-     - ``(IntOpt) Number of notification messages to wait before publishing them``
+     - (IntOpt) Number of notification messages to wait before publishing them
    * - ``[notification] batch_timeout = None``
-     - ``(IntOpt) Number of seconds to wait before publishing sampleswhen batch_size is not reached (None means indefinitely)``
+     - (IntOpt) Number of seconds to wait before publishing sampleswhen batch_size is not reached (None means indefinitely)
    * - ``[service_credentials] auth_section = None``
-     - ``(Opt) Config Section from which to load plugin specific options``
+     - (Opt) Config Section from which to load plugin specific options
    * - ``[service_credentials] auth_type = None``
-     - ``(Opt) Authentication type to load``
+     - (Opt) Authentication type to load
    * - ``[service_credentials] cafile = None``
-     - ``(StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.``
+     - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``[service_credentials] certfile = None``
-     - ``(StrOpt) PEM encoded client certificate cert file``
+     - (StrOpt) PEM encoded client certificate cert file
    * - ``[service_credentials] interface = public``
-     - ``(StrOpt) Type of endpoint in Identity service catalog to use for communication with OpenStack services.``
+     - (StrOpt) Type of endpoint in Identity service catalog to use for communication with OpenStack services.
    * - ``[service_credentials] keyfile = None``
-     - ``(StrOpt) PEM encoded client certificate key file``
+     - (StrOpt) PEM encoded client certificate key file
    * - ``[service_credentials] region_name = None``
-     - ``(StrOpt) Region name to use for OpenStack service endpoints.``
+     - (StrOpt) Region name to use for OpenStack service endpoints.
    * - ``[service_credentials] timeout = None``
-     - ``(IntOpt) Timeout value for http requests``
+     - (IntOpt) Timeout value for http requests
    * - ``[service_types] neutron_lbaas_version = v2``
-     - ``(StrOpt) Neutron load balancer version.``
+     - (StrOpt) Neutron load balancer version.
    * - ``[storage] max_retries = 10``
-     - ``(IntOpt) Maximum number of connection retries during startup. Set to -1 to specify an infinite retry count.``
+     - (IntOpt) Maximum number of connection retries during startup. Set to -1 to specify an infinite retry count.
    * - ``[storage] retry_interval = 10``
-     - ``(IntOpt) Interval (in seconds) between retries of connection.``
+     - (IntOpt) Interval (in seconds) between retries of connection.
 
 .. list-table:: New default values
    :header-rows: 1
