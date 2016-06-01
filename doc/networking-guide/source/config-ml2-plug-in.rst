@@ -120,9 +120,8 @@ Provider network types
 Provider networks provide connectivity like project networks.
 But only administrative (privileged) users can manage those
 networks because they interface with the physical network infrastructure.
-More information about provider networks see the related section in the
-`Networking Guide <http://docs.openstack.org/mitaka/networking-guide/intro-os-networking-overview.html>`__.
-or the `OpenStack Administrator Guide
+More information about provider networks see
+:doc:`intro-os-networking-overview` or the `OpenStack Administrator Guide
 <http://docs.openstack.org/admin-guide/networking_adv-features.html#provider-networks>`__.
 
 * Flat
@@ -163,9 +162,8 @@ Project network types
 Project (tenant) networks provide connectivity to instances for a particular
 project. Regular (non-privileged) users can manage project networks
 within the allocation that an administrator or operator defines for
-them. More information about project and provider networks see the related
-section in the
-`Networking Guide <http://docs.openstack.org/mitaka/networking-guide/intro-os-networking-overview.html>`__.
+them. More information about project and provider networks see
+:doc:`intro-os-networking-overview`
 or the `OpenStack Administrator Guide
 <http://docs.openstack.org/admin-guide/networking_adv-features.html#provider-networks>`__.
 
@@ -489,8 +487,7 @@ This guide characterizes the L2 reference implementations that currently exist.
   Due to direct connection, some features are not available when using SRIOV.
   For example, DVR, security groups, migration.
 
-  For more information see the
-  `Networking Guide <http://docs.openstack.org/mitaka/networking-guide/adv-config-sriov.html>`__.
+  For more information see the :doc:`adv-config-sriov`.
 
 * MacVTap mechanism driver and MacVTap agent
 
