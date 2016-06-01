@@ -39,5 +39,5 @@ and/or could not be deleted:
     Deleted 1 security_group, 2 ports, 1 router, 1 floatingip, 2 networks.
     The following resouces could not be deleted: 1 network.
 
-A resource in use by another tenant for example, a shared network
-with ports in more than one tenant will prevent it from being deleted.
+A resource in use by another tenant, for example, a shared network
+with ports in more than one tenant, will prevent it from being deleted.
