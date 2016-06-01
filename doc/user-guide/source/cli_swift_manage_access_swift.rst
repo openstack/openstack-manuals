@@ -18,7 +18,7 @@ Manage access
 
    .. code-block:: console
 
-      $ swift post CONTAINER -r "*r:*"
+      $ swift post CONTAINER -r ".r:*"
 
    A request with any HTTP referer header can read and list container
    contents:
