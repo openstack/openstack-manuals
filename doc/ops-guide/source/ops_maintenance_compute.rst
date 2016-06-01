@@ -8,75 +8,77 @@ reboot for maintenance reasons.
 Planned Maintenance
 ~~~~~~~~~~~~~~~~~~~
 
-If you need to reboot a compute node due to planned maintenance (such as
-a software or hardware upgrade), first disable scheduling of new VMs to
-the node, optionally providing a reason comment:
+If you need to reboot a compute node due to planned maintenance, such as
+a software or hardware upgrade, perform the following steps:
 
-.. code-block:: console
+#. Disable scheduling of new VMs to the node, optionally providing a reason
+   comment:
 
-   # nova service-disable --reason maintenance c01.example.com nova-compute
+   .. code-block:: console
 
-Next, ensure that all hosted instances have been moved off the node. If your
-cloud is utilizing shared storage, use the :command:`nova live-migration`
-command. First, get a list of instances that need to be moved:
+      # nova service-disable --reason maintenance c01.example.com nova-compute
 
-.. code-block:: console
+#. Verify that all hosted instances have been moved off the node:
 
-   # nova list --host c01.example.com --all-tenants
+   * If your cloud is using a shared storage:
 
-Next, migrate them one by one:
+     #. Get a list of instances that need to be moved:
 
-.. code-block:: console
+        .. code-block:: console
 
-   # nova live-migration <uuid> c02.example.com
+           # nova list --host c01.example.com --all-tenants
 
-If you are not using shared storage, you can use the
-:option:`--block-migrate` option:
+     #. Migrate all instances one by one:
 
-.. code-block:: console
+        .. code-block:: console
 
-   # nova live-migration --block-migrate <uuid> c02.example.com
+           # nova live-migration <uuid> c02.example.com
 
-After you have migrated all instances, ensure that the ``nova-compute``
-service has stopped:
+   * If your cloud is not using a shared storage, run:
 
-.. code-block:: console
+     .. code-block:: console
 
-   # stop nova-compute
+        # nova live-migration --block-migrate <uuid> c02.example.com
 
-If you use a configuration-management system, such as Puppet, that
-ensures the ``nova-compute`` service is always running, you can
-temporarily move the ``init`` files:
+#. Stop the ``nova-compute`` service:
 
-.. code-block:: console
+   .. code-block:: console
 
-   # mkdir /root/tmp
-   # mv /etc/init/nova-compute.conf /root/tmp
-   # mv /etc/init.d/nova-compute /root/tmp
+      # stop nova-compute
 
-Next, shut down your compute node, perform your maintenance, and turn
-the node back on. You can reenable the ``nova-compute`` service by
-undoing the previous commands:
+   If you use a configuration-management system, such as Puppet, that
+   ensures the ``nova-compute`` service is always running, you can
+   temporarily move the ``init`` files:
 
-.. code-block:: console
+   .. code-block:: console
 
-   # mv /root/tmp/nova-compute.conf /etc/init
-   # mv /root/tmp/nova-compute /etc/init.d/
+      # mkdir /root/tmp
+      # mv /etc/init/nova-compute.conf /root/tmp
+      # mv /etc/init.d/nova-compute /root/tmp
 
-Then start the ``nova-compute`` service:
+#. Shut down your compute node, perform the maintenance, and turn
+   the node back on.
 
-.. code-block:: console
+#. Start the ``nova-compute`` service:
 
-   # start nova-compute
+   .. code-block:: console
 
-Finally, enable scheduling of VMs to the node:
+      # start nova-compute
 
-.. code-block:: console
+   You can re-enable the ``nova-compute`` service by undoing the commands:
 
-   # nova service-enable c01.example.com nova-compute
+   .. code-block:: console
 
-You can now optionally migrate the instances back to their original
-compute node.
+      # mv /root/tmp/nova-compute.conf /etc/init
+      # mv /root/tmp/nova-compute /etc/init.d/
+
+#. Enable scheduling of VMs to the node:
+
+   .. code-block:: console
+
+      # nova service-enable c01.example.com nova-compute
+
+#. Optionally, migrate the instances back to their original compute node.
 
 After a Compute Node Reboots
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
