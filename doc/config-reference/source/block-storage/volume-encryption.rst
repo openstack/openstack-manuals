@@ -34,6 +34,8 @@ Steps to update ``cinder-volume`` servers:
 
 Update ``nova-compute`` servers:
 
+#. Install the ``cryptsetup`` utility.
+
 #. Set up the Key Manager service by editing ``/etc/nova/nova.conf``.
 
    .. code-block:: ini
