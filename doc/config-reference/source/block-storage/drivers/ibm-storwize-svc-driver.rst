@@ -88,7 +88,8 @@ management interface. The driver communicates with the management using
 SSH. The driver should be provided with the Storwize family or SVC
 management IP using the ``san_ip`` flag, and the management port should
 be provided by the ``san_ssh_port`` flag. By default, the port value is
-configured to be port 22 (SSH).
+configured to be port 22 (SSH). Also, you can set the secondary
+management IP using the ``storwize_san_secondary_ip`` flag.
 
 .. note::
 
