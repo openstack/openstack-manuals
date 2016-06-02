@@ -37,9 +37,8 @@ host-based migration mechanism and bypasses any driver optimizations.
 
 .. note::
 
-   If the volume is in use or has snapshots, the specified host
-   destination cannot accept the volume. If the user is not an
-   administrator, the migration fails.
+   If the volume has snapshots, the specified host destination cannot accept
+   the volume. If the user is not an administrator, the migration fails.
 
 Create a volume
 ~~~~~~~~~~~~~~~
