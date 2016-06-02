@@ -9,7 +9,7 @@ Block Storage service command-line client
 The cinder client is the command-line interface (CLI) for
 the Block Storage service API and its extensions.
 
-This chapter documents :command:`cinder` version ``1.7.1``.
+This chapter documents :command:`cinder` version ``1.8.0``.
 
 For help on a specific :command:`cinder` command, enter:
 
@@ -583,7 +583,7 @@ cinder backup-delete
 
 .. code-block:: console
 
-   usage: cinder --os-volume-api-version 2 backup-delete <backup> [<backup> ...]
+   usage: cinder --os-volume-api-version 2 backup-delete [--force] <backup> [<backup> ...]
 
 Removes one or more backups.
 
@@ -591,6 +591,12 @@ Removes one or more backups.
 
 ``<backup>``
   Name or ID of backup(s) to delete.
+
+**Optional arguments:**
+
+``--force``
+  Allows deleting backup of a volume when its status is other than
+  "available" or "error". Default=False.
 
 .. _cinder_backup-export:
 
@@ -2856,7 +2862,7 @@ cinder backup-delete (v1)
 
 .. code-block:: console
 
-   usage: cinder backup-delete <backup> [<backup> ...]
+   usage: cinder backup-delete [--force] <backup> [<backup> ...]
 
 Removes one or more backups.
 
@@ -2864,6 +2870,12 @@ Removes one or more backups.
 
 ``<backup>``
   Name or ID of backup(s) to delete.
+
+**Optional arguments:**
+
+``--force``
+  Allows deleting backup of a volume when its status is other than
+  "available" or "error". Default=False.
 
 .. _cinder_backup-export_v1:
 
