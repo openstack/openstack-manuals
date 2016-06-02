@@ -249,10 +249,13 @@ Install and configure components
 
         [service_credentials]
         ...
-        os_auth_url = http://controller:5000/v2.0
-        os_username = aodh
-        os_tenant_name = service
-        os_password = AODH_PASS
+        auth_type = password
+        auth_url = http://controller:5000/v3
+        project_domain_name = default
+        user_domain_name = default
+        project_name = service
+        username = aodh
+        password = AODH_PASS
         interface = internalURL
         region_name = RegionOne
 
