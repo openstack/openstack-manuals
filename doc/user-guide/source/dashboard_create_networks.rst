@@ -39,7 +39,7 @@ Create a network
    :guilabel:`Create Subnet`: Select this check box to create a subnet
 
    You do not have to specify a subnet when you create a network, but if
-   you do not specify a subnet, any attached instance receives an Error status.
+   you do not specify a subnet, the network can not be attached to an instance.
 
    :guilabel:`Subnet` tab
 
