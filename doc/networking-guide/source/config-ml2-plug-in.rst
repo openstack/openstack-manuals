@@ -232,6 +232,7 @@ For more details, see the
   `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-sr-iov-mechanism-configuration-options>`__.
 
 * MacVTap
+
   No additional configurations required for the mechanism driver. Additional
   agent configuration is required. Please see the related section.
 
