@@ -48,23 +48,8 @@ Set up a text editor
 Use any text editor of your choice to work with the documentation. For
 example:
 
-* To edit **RST** content:
-
-  * https://wiki.gnome.org/Apps/Gedit
-  * https://wiki.typo3.org/Editors_%28reST%29#Open_source_.28.3D_free_of_cost.29
-
-* To edit **XML** content:
-
-  * If you prefer Vi, there are ways to make DocBook editing easier:
-
-    https://fedoraproject.org/wiki/Editing_DocBook_with_Vi
-
-  * If you prefer a text-based editor but with validation, you can use Emacs.
-    Here are some resources on DocBook and Emacs' NXML mode:
-
-    * http://paul.frields.org/2011/02/09/xml-editing-with-emacs/
-    * https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing
-    * http://infohost.nmt.edu/tcc/help/pubs/nxml/
+* https://wiki.gnome.org/Apps/Gedit
+* https://wiki.typo3.org/Editors_%28reST%29#Open_source_.28.3D_free_of_cost.29
 
 To keep the documents clean and easy to compare, all of the OpenStack
 projects require that text is wrapped at `79 characters maximum`_,
