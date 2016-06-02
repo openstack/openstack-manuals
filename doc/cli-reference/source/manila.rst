@@ -9,7 +9,7 @@ Shared file systems command-line client
 The manila client is the command-line interface (CLI) for
 the Shared file systems API and its extensions.
 
-This chapter documents :command:`manila` version ``1.8.1``.
+This chapter documents :command:`manila` version ``1.9.0``.
 
 For help on a specific :command:`manila` command, enter:
 
@@ -36,6 +36,7 @@ manila usage
                  [--os-project-domain-id <auth-project-domain-id>]
                  [--os-project-domain-name <auth-project-domain-name>]
                  [--os-auth-url <auth-url>] [--os-region-name <region-name>]
+                 [--os-token <token>] [--bypass-url <bypass-url>]
                  [--service-type <service-type>] [--service-name <service-name>]
                  [--share-service-name <share-service-name>]
                  [--endpoint-type <endpoint-type>]
@@ -458,6 +459,13 @@ manila optional arguments
 ``--os-region-name <region-name>``
   Defaults to ``env[OS_REGION_NAME]``.
 
+``--os-token <token>``
+  Defaults to ``env[OS_TOKEN]``.
+
+``--bypass-url <bypass-url>``
+  Use this API endpoint instead of the Service Catalog.
+  Defaults to ``env[MANILACLIENT_BYPASS_URL]``.
+
 ``--service-type <service-type>``
   Defaults to compute for most actions.
 
@@ -488,7 +496,7 @@ manila optional arguments
 .. _manila_absolute-limits:
 
 manila absolute-limits
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -499,7 +507,7 @@ Print a list of absolute limits for a user.
 .. _manila_access-allow:
 
 manila access-allow
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -529,7 +537,7 @@ Allow access to the share.
 .. _manila_access-deny:
 
 manila access-deny
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -548,7 +556,7 @@ Deny access to a share.
 .. _manila_access-list:
 
 manila access-list
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -570,7 +578,7 @@ Show access list for share.
 .. _manila_api-version:
 
 manila api-version
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -581,7 +589,7 @@ Display the API version information.
 .. _manila_cg-create:
 
 manila cg-create
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -606,16 +614,14 @@ Creates a new consistency group (Experimental).
 ``--share-network <share_network>, --share_network <share_network>``
   Specify share-network name or id.
 
-``--source-cgsnapshot-id <source_cgsnapshot_id>,``
-
-``--source_cgsnapshot_id <source_cgsnapshot_id>``
+``--source-cgsnapshot-id <source_cgsnapshot_id>, --source_cgsnapshot_id <source_cgsnapshot_id>``
   Optional snapshot ID to create the share from.
   (Default=None)
 
 .. _manila_cg-delete:
 
 manila cg-delete
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -638,7 +644,7 @@ Remove one or more consistency groups (Experimental).
 .. _manila_cg-list:
 
 manila cg-list
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
@@ -666,7 +672,7 @@ List consistency groups with filters (Experimental).
 .. _manila_cg-reset-state:
 
 manila cg-reset-state
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -690,7 +696,7 @@ Explicitly update the state of a consistency group (Admin only, Experimental).
 .. _manila_cg-show:
 
 manila cg-show
-~~~~~~~~~~~~~~
+--------------
 
 .. code-block:: console
 
@@ -706,7 +712,7 @@ Show details about a consistency group (Experimental).
 .. _manila_cg-snapshot-create:
 
 manila cg-snapshot-create
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -733,7 +739,7 @@ Creates a new consistency group snapshot (Experimental).
 .. _manila_cg-snapshot-delete:
 
 manila cg-snapshot-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -755,7 +761,7 @@ Remove one or more consistency group snapshots (Experimental).
 .. _manila_cg-snapshot-list:
 
 manila cg-snapshot-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -787,7 +793,7 @@ List consistency group snapshots with filters (Experimental).
 .. _manila_cg-snapshot-members:
 
 manila cg-snapshot-members
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -812,7 +818,7 @@ Get member details for a consistency group snapshot (Experimental).
 .. _manila_cg-snapshot-reset-state:
 
 manila cg-snapshot-reset-state
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -836,7 +842,7 @@ Explicitly update the state of a consistency group (Admin only, Experimental).
 .. _manila_cg-snapshot-show:
 
 manila cg-snapshot-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -852,7 +858,7 @@ Show details about a consistency group snapshot (Experimental).
 .. _manila_cg-snapshot-update:
 
 manila cg-snapshot-update
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -877,7 +883,7 @@ Update a consistency group snapshot (Experimental).
 .. _manila_cg-update:
 
 manila cg-update
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -903,7 +909,7 @@ Update a consistency group (Experimental).
 .. _manila_create:
 
 manila create
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
@@ -927,7 +933,7 @@ Creates a new share (NFS, CIFS, CephFS, GlusterFS or HDFS).
 
 **Optional arguments:**
 
-``--snapshot-id <snapshot-id>``
+``--snapshot-id <snapshot-id>, --snapshot_id <snapshot-id>``
   Optional snapshot ID to create the share from.
   (Default=None)
 
@@ -937,19 +943,13 @@ Creates a new share (NFS, CIFS, CephFS, GlusterFS or HDFS).
 ``--metadata [<key=value> [<key=value> ...]]``
   Metadata key=value pairs (Optional, Default=None).
 
-``--share-network <network-info>``
+``--share-network <network-info>, --share_network <network-info>``
   Optional network info ID or name.
 
 ``--description <description>``
   Optional share description. (Default=None)
 
-``--share-type <share-type>,``
-
-``--share_type <share-type>,``
-
-``--volume-type <share-type>,``
-
-``--volume_type <share-type>``
+``--share-type <share-type>, --share_type <share-type>, --volume-type <share-type>, --volume_type <share-type>``
   Optional share type. Use of optional volume type is
   deprecated(Default=None)
 
@@ -957,25 +957,17 @@ Creates a new share (NFS, CIFS, CephFS, GlusterFS or HDFS).
   Level of visibility for share. Defines whether other
   tenants are able to see it or not.
 
-``--availability-zone <availability-zone>,``
-
-``--availability_zone <availability-zone>,``
-
-``--az <availability-zone>``
+``--availability-zone <availability-zone>, --availability_zone <availability-zone>, --az <availability-zone>``
   Availability zone in which share should be created.
 
-``--consistency-group <consistency-group>,``
-
-``--consistency_group <consistency-group>,``
-
-``--cg <consistency-group>``
+``--consistency-group <consistency-group>, --consistency_group <consistency-group>, --cg <consistency-group>``
   Optional consistency group name or ID in which to
   create the share (Experimental, Default=None).
 
 .. _manila_credentials:
 
 manila credentials
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -986,7 +978,7 @@ Show user credentials returned from auth.
 .. _manila_delete:
 
 manila delete
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
@@ -1002,18 +994,14 @@ Remove one or more shares.
 
 **Optional arguments:**
 
-``--consistency-group <consistency-group>,``
-
-``--consistency_group <consistency-group>,``
-
-``--cg <consistency-group>``
+``--consistency-group <consistency-group>, --consistency_group <consistency-group>, --cg <consistency-group>``
   Optional consistency group name or ID which contains
   the share (Experimental, Default=None).
 
 .. _manila_endpoints:
 
 manila endpoints
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1024,7 +1012,7 @@ Discover endpoints that get returned from the authenticate services.
 .. _manila_extend:
 
 manila extend
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
@@ -1043,7 +1031,7 @@ Increases the size of an existing share.
 .. _manila_extra-specs-list:
 
 manila extra-specs-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1060,7 +1048,7 @@ Print a list of current 'share types and extra specs' (Admin Only).
 .. _manila_force-delete:
 
 manila force-delete
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1076,7 +1064,7 @@ Attempt force-delete of share, regardless of state (Admin only).
 .. _manila_list:
 
 manila list
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -1105,43 +1093,19 @@ List NAS shares with filters.
 ``--status <status>``
   Filter results by status.
 
-``--share-server-id <share_server_id>,``
-
-``--share-server_id <share_server_id>,``
-
-``--share_server-id <share_server_id>,``
-
-``--share_server_id <share_server_id>``
+``--share-server-id <share_server_id>, --share-server_id <share_server_id>, --share_server-id <share_server_id>, --share_server_id <share_server_id>``
   Filter results by share server ID (Admin only).
 
 ``--metadata [<key=value> [<key=value> ...]]``
   Filters results by a metadata key and value. OPTIONAL:
   Default=None
 
-``--extra-specs [<key=value> [<key=value> ...]],``
-
-``--extra_specs [<key=value> [<key=value> ...]]``
+``--extra-specs [<key=value> [<key=value> ...]], --extra_specs [<key=value> [<key=value> ...]]``
   Filters results by a extra specs key and value of
   share type that was used for share creation. OPTIONAL:
   Default=None
 
-``--share-type <share_type>,``
-
-``--volume-type--share_type <share_type>,``
-
-``--share-type-id <share_type>,``
-
-``--volume-type-id <share_type>,``
-
-``--share-type_id <share_type>,``
-
-``--share_type-id <share_type>,``
-
-``--share_type_id <share_type>,``
-
-``--volume_type <share_type>,``
-
-``--volume_type_id <share_type>``
+``--share-type <share_type>, --volume-type <share_type>, --share_type <share_type>, --share-type-id <share_type>, --volume-type-id <share_type>, --share-type_id <share_type>, --share_type-id <share_type>, --share_type_id <share_type>, --volume_type <share_type>, --volume_type_id <share_type>``
   Filter results by a share type id or name that was
   used for share creation.
 
@@ -1183,11 +1147,7 @@ List NAS shares with filters.
 ``--public``
   Add public shares from all tenants to result.
 
-``--consistency-group <consistency_group>,``
-
-``--consistency_group <consistency_group>,``
-
-``--cg <consistency_group>``
+``--consistency-group <consistency_group>, --consistency_group <consistency_group>, --cg <consistency_group>``
   Filter results by consistency group name or ID
   (Experimental, Default=None).
 
@@ -1198,7 +1158,7 @@ List NAS shares with filters.
 .. _manila_list-extensions:
 
 manila list-extensions
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -1209,7 +1169,7 @@ List all the os-api extensions that are available.
 .. _manila_manage:
 
 manila manage
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
@@ -1245,9 +1205,7 @@ Manage share not handled by Manila (Admin only).
 ``--share_type <share-type>, --share-type <share-type>``
   Optional share type assigned to share. (Default=None)
 
-``--driver_options [<key=value> [<key=value> ...]],``
-
-``--driver-options [<key=value> [<key=value> ...]]``
+``--driver_options [<key=value> [<key=value> ...]], --driver-options [<key=value> [<key=value> ...]]``
   Driver option key=value pairs (Optional,
   Default=None).
 
@@ -1259,7 +1217,7 @@ Manage share not handled by Manila (Admin only).
 .. _manila_metadata:
 
 manila metadata
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -1281,7 +1239,7 @@ Set or delete metadata on a share.
 .. _manila_metadata-show:
 
 manila metadata-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1297,7 +1255,7 @@ Show metadata of given share.
 .. _manila_metadata-update-all:
 
 manila metadata-update-all
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1316,7 +1274,7 @@ Update all metadata of a share.
 .. _manila_migration-cancel:
 
 manila migration-cancel
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1332,7 +1290,7 @@ Cancels migration of a given share when copying (Admin only, Experimental).
 .. _manila_migration-complete:
 
 manila migration-complete
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -1348,7 +1306,7 @@ Completes migration for a given share (Admin only, Experimental).
 .. _manila_migration-get-progress:
 
 manila migration-get-progress
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -1366,7 +1324,7 @@ Experimental).
 .. _manila_migration-start:
 
 manila migration-start
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -1398,7 +1356,7 @@ Migrates share to a new host (Admin only, Experimental).
 .. _manila_pool-list:
 
 manila pool-list
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1428,7 +1386,7 @@ List all backend storage pools known to the scheduler (Admin only).
 .. _manila_quota-class-show:
 
 manila quota-class-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1444,7 +1402,7 @@ List the quotas for a quota class.
 .. _manila_quota-class-update:
 
 manila quota-class-update
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -1472,9 +1430,7 @@ Update the quotas for a quota class (Admin only).
 ``--gigabytes <gigabytes>``
   New value for the "gigabytes" quota.
 
-``--snapshot-gigabytes <snapshot_gigabytes>,``
-
-``--snapshot_gigabytes <snapshot_gigabytes>``
+``--snapshot-gigabytes <snapshot_gigabytes>, --snapshot_gigabytes <snapshot_gigabytes>``
   New value for the "snapshot_gigabytes" quota.
 
 ``--share-networks <share-networks>, --share_networks <share-networks>``
@@ -1483,7 +1439,7 @@ Update the quotas for a quota class (Admin only).
 .. _manila_quota-defaults:
 
 manila quota-defaults
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1499,7 +1455,7 @@ List the default quotas for a tenant.
 .. _manila_quota-delete:
 
 manila quota-delete
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1519,7 +1475,7 @@ only).
 .. _manila_quota-show:
 
 manila quota-show
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -1538,7 +1494,7 @@ List the quotas for a tenant/user.
 .. _manila_quota-update:
 
 manila quota-update
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1569,12 +1525,10 @@ Update the quotas for a tenant/user (Admin only).
 ``--gigabytes <gigabytes>``
   New value for the "gigabytes" quota.
 
-``--snapshot-gigabytes <snapshot_gigabytes>,``
-
-``--snapshot_gigabytes <snapshot_gigabytes>``
+``--snapshot-gigabytes <snapshot_gigabytes>, --snapshot_gigabytes <snapshot_gigabytes>``
   New value for the "snapshot_gigabytes" quota.
 
-``--share-networks <share-networks>``
+``--share-networks <share-networks>, --share_networks <share-networks>``
   New value for the "share_networks" quota.
 
 ``--force``
@@ -1584,7 +1538,7 @@ Update the quotas for a tenant/user (Admin only).
 .. _manila_rate-limits:
 
 manila rate-limits
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1601,7 +1555,7 @@ Print a list of rate limits for a user.
 .. _manila_reset-state:
 
 manila reset-state
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1624,7 +1578,7 @@ Explicitly update the state of a share (Admin only).
 .. _manila_reset-task-state:
 
 manila reset-task-state
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1654,7 +1608,7 @@ Explicitly update the task state of a share (Admin only, Experimental).
 .. _manila_security-service-create:
 
 manila security-service-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -1698,7 +1652,7 @@ Create security service used by tenant.
 .. _manila_security-service-delete:
 
 manila security-service-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -1714,7 +1668,7 @@ Delete security service.
 .. _manila_security-service-list:
 
 manila security-service-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -1777,7 +1731,7 @@ Get a list of security services.
 .. _manila_security-service-show:
 
 manila security-service-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -1793,7 +1747,7 @@ Show security service.
 .. _manila_security-service-update:
 
 manila security-service-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -1836,7 +1790,7 @@ Update security service.
 .. _manila_service-disable:
 
 manila service-disable
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -1855,7 +1809,7 @@ Disables 'manila-share' or 'manila-scheduler' services (Admin only).
 .. _manila_service-enable:
 
 manila service-enable
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1874,7 +1828,7 @@ Enables 'manila-share' or 'manila-scheduler' services (Admin only).
 .. _manila_service-list:
 
 manila service-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1908,7 +1862,7 @@ List all services (Admin only).
 .. _manila_share-export-location-list:
 
 manila share-export-location-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -1930,7 +1884,7 @@ List export locations of a given share.
 .. _manila_share-export-location-show:
 
 manila share-export-location-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -1949,7 +1903,7 @@ Show export location of the share.
 .. _manila_share-instance-export-location-list:
 
 manila share-instance-export-location-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 .. code-block:: console
 
@@ -1972,7 +1926,7 @@ List export locations of a given share instance.
 .. _manila_share-instance-export-location-show:
 
 manila share-instance-export-location-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 .. code-block:: console
 
@@ -1991,7 +1945,7 @@ Show export location for the share instance.
 .. _manila_share-instance-force-delete:
 
 manila share-instance-force-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -2007,7 +1961,7 @@ Force-delete the share instance, regardless of state (Admin only).
 .. _manila_share-instance-list:
 
 manila share-instance-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -2028,7 +1982,7 @@ List share instances (Admin only).
 .. _manila_share-instance-reset-state:
 
 manila share-instance-reset-state
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -2052,7 +2006,7 @@ Explicitly update the state of a share instance (Admin only).
 .. _manila_share-instance-show:
 
 manila share-instance-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -2068,7 +2022,7 @@ Show details about a share instance (Admin only).
 .. _manila_share-network-create:
 
 manila share-network-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2082,32 +2036,14 @@ Create description for network used by the tenant.
 
 **Optional arguments:**
 
-``--nova-net-id <nova-net-id>,``
-
-``--nova-net_id <nova-net-id>,``
-
-``--nova_net_id <nova-net-id>,``
-
-``--nova_net-id <nova-net-id>``
+``--nova-net-id <nova-net-id>, --nova-net_id <nova-net-id>, --nova_net_id <nova-net-id>, --nova_net-id <nova-net-id>``
   Nova net ID. Used to set up network for share servers.
 
-``--neutron-net-id <neutron-net-id>,``
-
-``--neutron-net_id <neutron-net-id>,``
-
-``--neutron_net_id <neutron-net-id>,``
-
-``--neutron_net-id <neutron-net-id>``
+``--neutron-net-id <neutron-net-id>, --neutron-net_id <neutron-net-id>, --neutron_net_id <neutron-net-id>, --neutron_net-id <neutron-net-id>``
   Neutron network ID. Used to set up network for share
   servers.
 
-``--neutron-subnet-id <neutron-subnet-id>,``
-
-``--neutron-subnet_id <neutron-subnet-id>,``
-
-``--neutron_subnet_id <neutron-subnet-id>,``
-
-``--neutron_subnet-id <neutron-subnet-id>``
+``--neutron-subnet-id <neutron-subnet-id>, --neutron-subnet_id <neutron-subnet-id>, --neutron_subnet_id <neutron-subnet-id>, --neutron_subnet-id <neutron-subnet-id>``
   Neutron subnet ID. Used to set up network for share
   servers. This subnet should belong to specified
   neutron network.
@@ -2121,7 +2057,7 @@ Create description for network used by the tenant.
 .. _manila_share-network-delete:
 
 manila share-network-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2137,7 +2073,7 @@ Delete share network.
 .. _manila_share-network-list:
 
 manila share-network-list
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -2176,36 +2112,16 @@ Get a list of network info.
   Return only share networks created until given date.
   The date is in the format 'yyyy-mm-dd'.
 
-``--security-service <security_service>,``
-
-``--security_service <security_service>``
+``--security-service <security_service>, --security_service <security_service>``
   Filter results by attached security service.
 
-``--nova-net-id <nova_net_id>,``
-
-``--nova_net_id <nova_net_id>,``
-
-``--nova_net-id <nova_net_id>,``
-
-``--nova-net_id <nova_net_id>``
+``--nova-net-id <nova_net_id>, --nova_net_id <nova_net_id>, --nova_net-id <nova_net_id>, --nova-net_id <nova_net_id>``
   Filter results by Nova net ID.
 
-``--neutron-net-id <neutron_net_id>,``
-
-``--neutron_net_id <neutron_net_id>,``
-
-``--neutron_net-id <neutron_net_id>,``
-
-``--neutron-net_id <neutron_net_id>``
+``--neutron-net-id <neutron_net_id>, --neutron_net_id <neutron_net_id>, --neutron_net-id <neutron_net_id>, --neutron-net_id <neutron_net_id>``
   Filter results by neutron net ID.
 
-``--neutron-subnet-id <neutron_subnet_id>,``
-
-``--neutron_subnet_id <neutron_subnet_id>,``
-
-``--neutron-subnet_id <neutron_subnet_id>,``
-
-``--neutron_subnet-id <neutron_subnet_id>``
+``--neutron-subnet-id <neutron_subnet_id>, --neutron_subnet_id <neutron_subnet_id>, --neutron-subnet_id <neutron_subnet_id>, --neutron_subnet-id <neutron_subnet_id>``
   Filter results by neutron subnet ID.
 
 ``--network-type <network_type>, --network_type <network_type>``
@@ -2233,7 +2149,7 @@ Get a list of network info.
 .. _manila_share-network-security-service-add:
 
 manila share-network-security-service-add
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 .. code-block:: console
 
@@ -2253,7 +2169,7 @@ Associate security service with share network.
 .. _manila_share-network-security-service-list:
 
 manila share-network-security-service-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 .. code-block:: console
 
@@ -2276,7 +2192,7 @@ Get list of security services associated with a given share network.
 .. _manila_share-network-security-service-remove:
 
 manila share-network-security-service-remove
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
 .. code-block:: console
 
@@ -2296,7 +2212,7 @@ Dissociate security service from share network.
 .. _manila_share-network-show:
 
 manila share-network-show
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -2312,7 +2228,7 @@ Get a description for network used by the tenant.
 .. _manila_share-network-update:
 
 manila share-network-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2332,32 +2248,14 @@ Update share network data.
 
 **Optional arguments:**
 
-``--nova-net-id <nova-net-id>,``
-
-``--nova-net_id <nova-net-id>,``
-
-``--nova_net_id <nova-net-id>,``
-
-``--nova_net-id <nova-net-id>``
+``--nova-net-id <nova-net-id>, --nova-net_id <nova-net-id>, --nova_net_id <nova-net-id>, --nova_net-id <nova-net-id>``
   Nova net ID. Used to set up network for share servers.
 
-``--neutron-net-id <neutron-net-id>,``
-
-``--neutron-net_id <neutron-net-id>,``
-
-``--neutron_net_id <neutron-net-id>,``
-
-``--neutron_net-id <neutron-net-id>``
+``--neutron-net-id <neutron-net-id>, --neutron-net_id <neutron-net-id>, --neutron_net_id <neutron-net-id>, --neutron_net-id <neutron-net-id>``
   Neutron network ID. Used to set up network for share
   servers.
 
-``--neutron-subnet-id <neutron-subnet-id>,``
-
-``--neutron-subnet_id <neutron-subnet-id>,``
-
-``--neutron_subnet_id <neutron-subnet-id>,``
-
-``--neutron_subnet-id <neutron-subnet-id>``
+``--neutron-subnet-id <neutron-subnet-id>, --neutron-subnet_id <neutron-subnet-id>, --neutron_subnet_id <neutron-subnet-id>, --neutron_subnet-id <neutron-subnet-id>``
   Neutron subnet ID. Used to set up network for share
   servers. This subnet should belong to specified
   neutron network.
@@ -2371,7 +2269,7 @@ Update share network data.
 .. _manila_share-replica-create:
 
 manila share-replica-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2388,11 +2286,7 @@ Create a share replica (Experimental).
 
 **Optional arguments:**
 
-``--availability-zone <availability-zone>,``
-
-``--availability_zone <availability-zone>,``
-
-``--az <availability-zone>``
+``--availability-zone <availability-zone>, --availability_zone <availability-zone>, --az <availability-zone>``
   Optional Availability zone in which replica should be
   created.
 
@@ -2402,7 +2296,7 @@ Create a share replica (Experimental).
 .. _manila_share-replica-delete:
 
 manila share-replica-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2425,7 +2319,7 @@ Remove one or more share replicas (Experimental).
 .. _manila_share-replica-list:
 
 manila share-replica-list
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -2441,7 +2335,7 @@ List share replicas (Experimental).
 .. _manila_share-replica-promote:
 
 manila share-replica-promote
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -2457,7 +2351,7 @@ Promote specified replica to 'active' replica_state (Experimental).
 .. _manila_share-replica-reset-replica-state:
 
 manila share-replica-reset-replica-state
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------
 
 .. code-block:: console
 
@@ -2474,11 +2368,7 @@ Explicitly update the 'replica_state' of a share replica (Experimental).
 
 **Optional arguments:**
 
-``--replica-state <replica_state>,``
-
-``--replica_state <replica_state>,``
-
-``--state <replica_state>``
+``--replica-state <replica_state>, --replica_state <replica_state>, --state <replica_state>``
   Indicate which replica_state to assign the replica.
   Options include in_sync, out_of_sync, active, error.
   If no state is provided, out_of_sync will be used.
@@ -2486,7 +2376,7 @@ Explicitly update the 'replica_state' of a share replica (Experimental).
 .. _manila_share-replica-reset-state:
 
 manila share-replica-reset-state
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
@@ -2509,7 +2399,7 @@ Explicitly update the 'status' of a share replica (Experimental).
 .. _manila_share-replica-resync:
 
 manila share-replica-resync
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2525,7 +2415,7 @@ Attempt to update the share replica with its 'active' mirror (Experimental).
 .. _manila_share-replica-show:
 
 manila share-replica-show
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -2541,7 +2431,7 @@ Show details about a replica (Experimental).
 .. _manila_share-server-delete:
 
 manila share-server-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -2557,7 +2447,7 @@ Delete share server (Admin only).
 .. _manila_share-server-details:
 
 manila share-server-details
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2573,7 +2463,7 @@ Show share server details (Admin only).
 .. _manila_share-server-list:
 
 manila share-server-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -2605,7 +2495,7 @@ List all share servers (Admin only).
 .. _manila_share-server-show:
 
 manila share-server-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -2621,7 +2511,7 @@ Show share server info (Admin only).
 .. _manila_show:
 
 manila show
-~~~~~~~~~~~
+-----------
 
 .. code-block:: console
 
@@ -2637,7 +2527,7 @@ Show details about a NAS share.
 .. _manila_shrink:
 
 manila shrink
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
@@ -2656,7 +2546,7 @@ Decreases the size of an existing share.
 .. _manila_snapshot-create:
 
 manila snapshot-create
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -2686,7 +2576,7 @@ Add a new snapshot.
 .. _manila_snapshot-delete:
 
 manila snapshot-delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -2702,7 +2592,7 @@ Remove a snapshot.
 .. _manila_snapshot-force-delete:
 
 manila snapshot-force-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -2718,7 +2608,7 @@ Attempt force-delete of snapshot, regardless of state (Admin only).
 .. _manila_snapshot-list:
 
 manila snapshot-list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -2772,7 +2662,7 @@ List all the snapshots.
 .. _manila_snapshot-manage:
 
 manila snapshot-manage
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -2798,16 +2688,14 @@ Manage share snapshot not handled by Manila (Admin only).
 ``--description <description>``
   Optional snapshot description (Default=None).
 
-``--driver_options [<key=value> [<key=value> ...]],``
-
-``--driver-options [<key=value> [<key=value> ...]]``
+``--driver_options [<key=value> [<key=value> ...]], --driver-options [<key=value> [<key=value> ...]]``
   Optional driver options as key=value pairs
   (Default=None).
 
 .. _manila_snapshot-rename:
 
 manila snapshot-rename
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -2832,7 +2720,7 @@ Rename a snapshot.
 .. _manila_snapshot-reset-state:
 
 manila snapshot-reset-state
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
@@ -2856,7 +2744,7 @@ Explicitly update the state of a snapshot (Admin only).
 .. _manila_snapshot-show:
 
 manila snapshot-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -2872,7 +2760,7 @@ Show details about a snapshot.
 .. _manila_snapshot-unmanage:
 
 manila snapshot-unmanage
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -2888,7 +2776,7 @@ Unmanage one or more share snapshots (Admin only).
 .. _manila_type-access-add:
 
 manila type-access-add
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -2907,7 +2795,7 @@ Adds share type access for the given project (Admin only).
 .. _manila_type-access-list:
 
 manila type-access-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -2923,7 +2811,7 @@ Print access information about the given share type (Admin only).
 .. _manila_type-access-remove:
 
 manila type-access-remove
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -2942,7 +2830,7 @@ Removes share type access for the given project (Admin only).
 .. _manila_type-create:
 
 manila type-create
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -2963,9 +2851,7 @@ Create a new share type (Admin only).
 
 **Optional arguments:**
 
-``--snapshot_support <snapshot_support>,``
-
-``--snapshot-support <snapshot_support>``
+``--snapshot_support <snapshot_support>, --snapshot-support <snapshot_support>``
   Boolean extra spec that used for filtering of back
   ends by their capability to create share snapshots.
   (Default is True).
@@ -2976,7 +2862,7 @@ Create a new share type (Admin only).
 .. _manila_type-delete:
 
 manila type-delete
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -2992,7 +2878,7 @@ Delete a specific share type (Admin only).
 .. _manila_type-key:
 
 manila type-key
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -3014,7 +2900,7 @@ Set or unset extra_spec for a share type (Admin only).
 .. _manila_type-list:
 
 manila type-list
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -3034,7 +2920,7 @@ Print a list of available 'share types'.
 .. _manila_unmanage:
 
 manila unmanage
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -3050,7 +2936,7 @@ Unmanage share (Admin only).
 .. _manila_update:
 
 manila update
-~~~~~~~~~~~~~
+-------------
 
 .. code-block:: console
 
