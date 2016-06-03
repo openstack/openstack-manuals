@@ -1,30 +1,30 @@
-.. title:: OpenStack Installation Guide
+.. title:: OpenStack Installation Tutorial
 
 .. Don't remove or change title tag manually, which is used by the build tool.
 
 .. only:: rdo
 
-   ====================================================================
-   OpenStack Installation Guide for Red Hat Enterprise Linux and CentOS
-   ====================================================================
+   =======================================================================
+   OpenStack Installation Tutorial for Red Hat Enterprise Linux and CentOS
+   =======================================================================
 
 .. only:: obs
 
-   ===================================================================
-   OpenStack Installation Guide for openSUSE and SUSE Linux Enterprise
-   ===================================================================
+   ======================================================================
+   OpenStack Installation Tutorial for openSUSE and SUSE Linux Enterprise
+   ======================================================================
 
 .. only:: ubuntu
 
-   =======================================
-   OpenStack Installation Guide for Ubuntu
-   =======================================
+   ==========================================
+   OpenStack Installation Tutorial for Ubuntu
+   ==========================================
 
 .. only:: debian
 
-   =======================================
-   OpenStack Installation Guide for Debian
-   =======================================
+   ==========================================
+   OpenStack Installation Tutorial for Debian
+   ==========================================
 
 
 Abstract
