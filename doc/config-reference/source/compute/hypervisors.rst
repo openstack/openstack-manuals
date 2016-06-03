@@ -41,8 +41,8 @@ The following hypervisors are supported:
 
 * `VMware vSphere
   <https://www.vmware.com/support/vsphere-hypervisor>`_
-  4.1 update 1 and newer, runs VMware-based Linux and Windows images
-  through a connection with a vCenter server or directly with an ESXi host.
+  5.1.0 and newer, runs VMware-based Linux and Windows images through a
+  connection with a vCenter server.
 
 * `Xen (using libvirt) <http://www.xenproject.org>`_ - Xen Project
   Hypervisor using libvirt as management interface into ``nova-compute``

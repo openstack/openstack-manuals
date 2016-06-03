@@ -413,21 +413,16 @@ options to the ``nova.conf`` file:
 .. code-block:: ini
 
    [DEFAULT]
-   compute_driver=vmwareapi.VMwareVCDriver
+   compute_driver = vmwareapi.VMwareVCDriver
 
    [vmware]
-   host_ip=<vCenter host IP>
-   host_username=<vCenter username>
-   host_password=<vCenter password>
-   cluster_name=<vCenter cluster name>
-   datastore_regex=<optional datastore regex>
+   host_ip = <vCenter host IP>
+   host_username = <vCenter username>
+   host_password = <vCenter password>
+   cluster_name = <vCenter cluster name>
+   datastore_regex = <optional datastore regex>
 
 .. note::
-
-   * vSphere vCenter versions 5.0 and earlier: You must specify the
-     location of the WSDL files by adding the
-     ``wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl``
-     setting to the above configuration.
 
    * Clusters: The vCenter driver can support only a single cluster.
      Clusters and data stores used by the vCenter driver should not contain
@@ -449,8 +444,8 @@ options to the ``nova.conf`` file:
      Instance name template is ignored.
 
    * The minimum supported vCenter version is 5.1.0.
-     In OpenStack Liberty release this will be logged as a warning.
-     In OpenStack Mitaka release this will be enforced.
+     Starting in the OpenStack Liberty release this will be logged as a
+     warning. In the OpenStack Newton release this will be enforced.
 
 A ``nova-compute`` service can control one or more clusters containing
 multiple ESXi hosts, making ``nova-compute`` a critical service from a
@@ -462,11 +457,6 @@ can fail while the vCenter and ESX still run, you must protect the
 
    Many ``nova.conf`` options are relevant to libvirt but do not apply
    to this driver.
-
-You must complete additional configuration for environments that use
-vSphere 5.0 and earlier. See
-`vSphere 5.0 and earlier additional set up <http://docs.openstack.org/liberty/config-reference/content/vmware.html#VMware_additional_config>`_
-available in previous released documents.
 
 .. _vmware-images:
 
@@ -526,10 +516,12 @@ Sparse image by setting ``vmware_disktype`` to ``sparse``:
 
 .. code-block:: console
 
-   $ glance image-create --name "ubuntu-sparse" --disk-format vmdk \
+   $ openstack image create \
+     --disk-format vmdk \
      --container-format bare \
      --property vmware_disktype="sparse" \
-     --property vmware_ostype="ubuntu64Guest" < ubuntuLTS-sparse.vmdk
+     --property vmware_ostype="ubuntu64Guest" \
+     ubuntu-sparse < ubuntuLTS-sparse.vmdk
 
 .. note::
 
@@ -749,11 +741,11 @@ upload the VMDK disk should be something like:
 
 .. code-block:: console
 
-   $ glance image-create --name trusty-cloud \
+   $ openstack image create \
      --container-format bare --disk-format vmdk \
      --property vmware_disktype="sparse" \
-     --property vmware_adaptertype="ide" < \
-     trusty-server-cloudimg-amd64-disk1.vmdk
+     --property vmware_adaptertype="ide" \
+     trusty-cloud < trusty-server-cloudimg-amd64-disk1.vmdk
 
 Note that the ``vmware_disktype`` is set to ``sparse`` and the
 ``vmware_adaptertype`` is set to ``ide`` in the previous command.
@@ -772,11 +764,13 @@ the following command uploads the VMDK disk:
 
 .. code-block:: console
 
-   $ glance image-create --name "ubuntu-thick-scsi" --disk-format vmdk \
+   $ openstack image create \
+     --disk-format vmdk \
      --container-format bare \
      --property vmware_adaptertype="lsiLogic" \
      --property vmware_disktype="preallocated" \
-     --property vmware_ostype="ubuntu64Guest" < ubuntuLTS-flat.vmdk
+     --property vmware_ostype="ubuntu64Guest" \
+     ubuntu-thick-scsi < ubuntuLTS-flat.vmdk
 
 Currently, OS boot VMDK disks with an IDE adapter type cannot be attached
 to a virtual SCSI controller and likewise disks with one of the SCSI
@@ -799,12 +793,14 @@ Note that ``qemu`` is used for both QEMU and KVM hypervisor types.
 
 .. code-block:: console
 
-   $ glance image-create --name "ubuntu-thick-scsi" --disk-format vmdk \
+   $ openstack image create \
+     --disk-format vmdk \
      --container-format bare \
      --property vmware_adaptertype="lsiLogic" \
      --property vmware_disktype="preallocated" \
      --property hypervisor_type="vmware" \
-     --property vmware_ostype="ubuntu64Guest" < ubuntuLTS-flat.vmdk
+     --property vmware_ostype="ubuntu64Guest" \
+     ubuntu-thick-scsi < ubuntuLTS-flat.vmdk
 
 Optimize images
 ---------------
@@ -883,12 +879,13 @@ enable this mode, see :ref:`vmware-config`.
 
 .. note::
 
-   You can also use the ``vmware_linked_clone`` property in the Image
-   service to override the linked_clone mode on a per-image basis.
+   You can also use the ``img_linked_clone`` property (or legacy property
+   ``vmware_linked_clone``) in the Image service to override the linked_clone
+   mode on a per-image basis.
 
    If spawning a virtual machine image from ISO with a VMDK disk,
    the image is created and attached to the virtual machine as a blank disk.
-   In that case ``vmware_linked_clone`` property for the image is just ignored.
+   In that case ``img_linked_clone`` property for the image is just ignored.
 
 If multiple compute nodes are running on the same host, or have a shared
 file system, you can enable them to use the same cache folder on the back-end
