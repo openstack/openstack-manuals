@@ -573,7 +573,7 @@ Delete a volume transfer
 Manage and unmanage a snapshot
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A snapshot is an image created from a running instance. As an administrator,
+A snapshot is a point in time version of a volume. As an administrator,
 you can manage and unmanage snapshots.
 
 Manage a snapshot
@@ -588,7 +588,8 @@ Manage a snapshot with the :command:`cinder snapshot-manage` command:
 The arguments to be passed are:
 
 ``VOLUME_ID``
- The ID of an already existent volume.
+ The ID of a volume that is the parent of the snapshot, and managed by the
+ Block Storage service.
 
 ``IDENTIFIER``
  Name, ID, or other identifier for an existing snapshot.
@@ -606,8 +607,8 @@ The arguments to be passed are:
 :option:`--metadata`
  Metadata key-value pairs. Defaults to ``None``.
 
-The following example manages the ``my-snapshot-id`` image in the
-``my-volume-id`` volume:
+The following example manages the ``my-snapshot-id`` snapshot with the
+``my-volume-id`` parent volume:
 
 .. code-block:: console
 
