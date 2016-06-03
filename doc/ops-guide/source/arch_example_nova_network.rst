@@ -203,9 +203,9 @@ Detailed Description
 
 The reference architecture consists of multiple compute nodes, a cloud
 controller, an external NFS storage server for instance storage, and an
-OpenStack Block Storage server for volume storage.legacy networking
-(nova) detailed description A network time service (:term:`Network Time
-Protocol <NTP>`, or NTP) synchronizes time on all the nodes. FlatDHCPManager in
+OpenStack Block Storage server for volume storage.
+A network time service (:term:`Network Time Protocol <NTP>`, or NTP)
+synchronizes time on all the nodes. FlatDHCPManager in
 multi-host mode is used for the networking. A logical diagram for this
 example architecture shows which services are running on each node:
 
