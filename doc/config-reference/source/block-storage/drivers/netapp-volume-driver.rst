@@ -93,6 +93,11 @@ setting the ``volume_driver``, ``netapp_storage_family`` and
    of the NetApp unified driver will not work and you may see warnings
    in the Block Storage logs.
 
+.. note::
+
+   The driver supports iSCSI CHAP uni-directional authentication.
+   To enable it, set the ``use_chap_auth`` option to ``True``.
+
 .. tip::
 
    For more information on these options and other deployment and
@@ -300,6 +305,11 @@ setting the ``volume_driver``, ``netapp_storage_family`` and
    ``netapp_storage_protocol`` with ``iscsi``.
 
 .. include:: ../../tables/cinder-netapp_7mode_iscsi.rst
+
+.. note::
+
+   The driver supports iSCSI CHAP uni-directional authentication.
+   To enable it, set the ``use_chap_auth`` option to ``True``.
 
 .. tip::
 
