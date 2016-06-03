@@ -32,6 +32,10 @@ Create a volume
    * No source, empty volume: Creates an empty volume. An empty volume does
      not contain a file system or a partition table.
 
+   * Snapshot: If you choose this option, a new field for
+     :guilabel:`Use snapshot as a source` displays. You can select the
+     snapshot from the list.
+
    * Image: If you choose this option, a new field for :guilabel:`Use image
      as a source` displays. You can select the image from the list.
 
