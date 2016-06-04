@@ -303,14 +303,14 @@ an IP address between two instances to enable fast data plane failover.
 
   .. code-block:: console
 
-     $ neutron port-create net1 --allowed-address-pairs type=dict
+     $ neutron port-create net1 --allowed-address-pairs type=dict \
        list=true mac_address=MAC_ADDRESS,ip_address=IP_CIDR
 
 - Update a port by adding allowed address pairs:
 
   .. code-block:: console
 
-     $ neutron port-update PORT_UUID --allowed-address-pairs type=dict
+     $ neutron port-update PORT_UUID --allowed-address-pairs type=dict \
      list=true mac_address=MAC_ADDRESS,ip_address=IP_CIDR
 
 
