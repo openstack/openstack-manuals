@@ -114,6 +114,11 @@ from the :guilabel:`Network Topology` tab.
 Create a port
 ~~~~~~~~~~~~~
 
+.. warning::
+
+  Creating and managing ports requires administrator privileges.
+  Contact an administrator before adding or changing ports.
+
 #. Log in to the dashboard.
 
 #. Select the appropriate project from the drop-down menu at the top left.

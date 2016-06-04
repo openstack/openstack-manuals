@@ -32,4 +32,6 @@ for your operating system.
   `Launch and manage instances
   <http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
   in the OpenStack End User Guide.
-
+- To create and manage ports, see the `Create and manage networks
+  <http://docs.openstack.org/user-guide/dashboard_create_networks.html#create-a-port>`__
+  section of the OpenStack End User Guide.
