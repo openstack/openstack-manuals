@@ -44,11 +44,3 @@
      - (String) Comma-separated list of storage pool names to be used.
    * - ``storage_vnx_security_file_dir`` = ``None``
      - (String) Directory path that contains the VNX security file. Make sure the security file is generated first.
-   * - ``xtremio_array_busy_retry_count`` = ``5``
-     - (Integer) Number of retries in case array is busy
-   * - ``xtremio_array_busy_retry_interval`` = ``5``
-     - (Integer) Interval between retries in case array is busy
-   * - ``xtremio_cluster_name`` =
-     - (String) XMS cluster id in multi-cluster environment
-   * - ``xtremio_volumes_per_glance_cache`` = ``100``
-     - (Integer) Number of volumes created from each cached glance image
