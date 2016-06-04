@@ -74,11 +74,11 @@ iSCSI connections.
 Configure storage pools
 -----------------------
 
-Each instance of the IBM Storwize/SVC driver allocates all volumes in a
-single pool. The pool should be created in advance and be provided to
-the driver using the ``storwize_svc_volpool_name`` configuration flag.
-For more details, see the configuration flags and how to provide the flags to
-the driver here: :ref:`config_flags`.
+The IBM Storwize/SVC driver can allocate volumes in multiple pools.
+The pools should be created in advance and be provided to the driver
+using the ``storwize_svc_volpool_name`` configuration flag in the form
+of a comma-separated list.
+For the complete list of configuration flags, see :ref:`config_flags`.
 
 Configure user authentication for the driver
 --------------------------------------------
