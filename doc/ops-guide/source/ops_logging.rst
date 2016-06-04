@@ -205,8 +205,7 @@ RabbitMQ Web Management Interface or rabbitmqctl
 
 Aside from connection failures, RabbitMQ log files are generally not
 useful for debugging OpenStack related issues. Instead, we recommend you
-use the RabbitMQ web management interface.RabbitMQlogging/monitoring
-RabbitMQ web management interface Enable it on your cloud
+use the RabbitMQ web management interface. Enable it on your cloud
 controller:
 
 .. code-block:: console

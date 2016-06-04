@@ -24,8 +24,7 @@ Adding Images
 
 Several pre-made images exist and can easily be imported into the Image
 service. A common image to add is the CirrOS image, which is very small
-and used for testing purposes.images adding To add this image, simply
-do:
+and used for testing purposes. To add this image, simply do:
 
 .. code-block:: console
 
@@ -198,9 +197,8 @@ Sharing Images Between Projects
 -------------------------------
 
 In a multi-tenant cloud environment, users sometimes want to share their
-personal images or snapshots with other projects.projects sharing images
-betweenimages sharing between projects This can be done on the command
-line with the ``glance`` tool by the owner of the image.
+personal images or snapshots with other projects. This can be done on
+the command line with the ``glance`` tool by the owner of the image.
 
 To share an image or snapshot with another project, do the following:
 
@@ -236,7 +234,7 @@ To share an image or snapshot with another project, do the following:
 Deleting Images
 ---------------
 
-To delete an image,images deleting just execute:
+To delete an image, just execute:
 
 .. code-block:: console
 
@@ -250,7 +248,7 @@ To delete an image,images deleting just execute:
 Other CLI Options
 -----------------
 
-A full set of options can be found using:images CLI options for
+A full set of options can be found using:
 
 .. code-block:: console
 
@@ -279,7 +277,7 @@ Example Image service Database Queries
 
 One interesting example is modifying the table of images and the owner
 of that image. This can be easily done if you simply display the unique
-ID of the owner. Image service database queriesThis example goes one
+ID of the owner. This example goes one
 step further and displays the readable name of the owner:
 
 .. code-block:: mysql
@@ -362,7 +360,7 @@ size of RAM, CPU, and Disk.
      - Number of virtual CPUs presented to the instance.
    * - RXTX_Factor
      - Optional property that allows created servers to have a different
-       bandwidthbandwidth capping cap from that defined in the network
+       bandwidth cap from that defined in the network
        they are attached to. This factor is multiplied by the rxtx\_base
        property of the network.
        Default value is 1.0 (that is, the same as the attached network).

@@ -92,12 +92,11 @@ Another fact that's often forgotten is that when a new file is being
 uploaded, the proxy server must write out as many streams as there are
 replicas—giving a multiple of network traffic. For a three-replica
 cluster, 10 Gbps in means 30 Gbps out. Combining this with the previous
-high bandwidth bandwidth private vs. public network recommendations
-demands of replication is what results in the recommendation that your
-private network be of significantly higher bandwidth than your public
-need be. Oh, and OpenStack Object Storage communicates internally with
-unencrypted, unauthenticated rsync for performance—you do want the
-private network to be private.
+high bandwidth demands of replication is what results in the
+recommendation that your private network be of significantly higher
+bandwidth than your public need be. Oh, and OpenStack Object Storage
+communicates internally with unencrypted, unauthenticated rsync for
+performance—you do want the private network to be private.
 
 The remaining point on bandwidth is the public-facing portion. The
 ``swift-proxy`` service is stateless, which means that you can easily

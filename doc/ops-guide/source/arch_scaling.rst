@@ -123,8 +123,7 @@ caveats.
 You must also consider key hardware specifications for the performance
 of user VMs, as well as budget and performance needs, including storage
 performance (spindles/core), memory availability (RAM/core), network
-bandwidthbandwidth hardware specifications and (Gbps/core), and overall
-CPU performance (CPU/core).
+bandwidth (Gbps/core), and overall CPU performance (CPU/core).
 
 .. tip::
 
