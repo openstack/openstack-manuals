@@ -111,13 +111,9 @@ Set up SSH
 
    **Windows**
 
-   In Windows Explorer, browse to ``c:\Users\<username>\.ssh\`` and open the
-   ``id_rsa.pub`` file in Notepad. Use Select All and then copy.
+   .. code-block:: console
 
-   .. note::
-
-     If you use Windows, our testing shows you must open the ``.pub`` file in
-     Notepad in order for gerrit to accept the key.
+      $ notepad ~/.ssh/id_rsa.pub
 
 #. Sign into gerrit at review.openstack.org.
 
