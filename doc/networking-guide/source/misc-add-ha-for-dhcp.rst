@@ -2,7 +2,6 @@
 Adding high availability for DHCP
 =================================
 
-
 This section describes how to use the agent management (alias agent) and
 scheduler (alias agent_scheduler) extensions for DHCP agents
 scalability and HA.
@@ -10,7 +9,8 @@ scalability and HA.
 .. note::
 
    Use the :command:`neutron ext-list` client command to check if these
-   extensions are enabled:
+   extensions are enabled. Check ``agent`` and ``agent_scheduler``
+   are included in the output.
 
    .. code-block:: console
 
@@ -28,6 +28,9 @@ scalability and HA.
       | extraroute      | Neutron Extra Route      |
       +-----------------+--------------------------+
 
+Demo setup
+~~~~~~~~~~
+
 .. figure:: figures/demo_multiple_dhcp_agents.png
 
 There will be three hosts in the setup.
@@ -38,7 +41,7 @@ There will be three hosts in the setup.
 
   * - Host
     - Description
-  * - OpenStack controller host - controlnod
+  * - OpenStack controller host - controlnode
     - Runs the Networking, Identity, and Compute services that are required
       to deploy VMs. The node must have at least one network interface that
       is connected to the Management Network. Note that ``nova-network`` should
@@ -47,8 +50,6 @@ There will be three hosts in the setup.
     - Runs ``nova-compute``, the Neutron L2 agent and DHCP agent
   * - HostB
     - Same as HostA
-
-**Hosts for demo**
 
 Configuration
 ~~~~~~~~~~~~~
@@ -65,6 +66,15 @@ Configuration
       allow_overlapping_ips = True
       host = controlnode
       agent_down_time = 5
+      dhcp_agents_per_network = 1
+
+   .. note::
+
+      In the above configuration, we use ``dhcp_agents_per_network = 1``
+      for this demonstration. In usual deployments, we suggest setting
+      ``dhcp_agents_per_network`` to more than one to match the number of
+      DHCP agents in your deployment.
+      See :ref:`conf-dhcp-agents-per-network`.
 
 #. Update the plug-in configuration file
    ``/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini``:
@@ -131,59 +141,40 @@ Configuration
      [DEFAULT]
      interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
 
-Commands in agent management and scheduler extensions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Prerequisites for demonstration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following commands require the tenant running the command to have an
-admin role.
-
-.. note::
-
-   Ensure that the following environment variables are set. These are
-   used by the various clients to access the Identity service.
-
-   .. code-block:: bash
-
-      export OS_USERNAME=admin
-      export OS_PASSWORD=adminpassword
-      export OS_TENANT_NAME=admin
-      export OS_AUTH_URL=http://controlnode:5000/v2.0/
-
-**Settings**
+Admin role is required to use the agent management and scheduler extensions.
+Ensure you run the following commands under a project with an admin role.
 
 To experiment, you need VMs and a neutron network:
 
 .. code-block:: console
 
    $ nova list
-
-    +-------------------------------------+----------+--------+--------------+
-    | ID                                  | Name     | Status | Networks     |
-    +-------------------------------------+----------+--------+--------------+
-    | c394fcd0-0baa-43ae-a793-201815c3e8ce| myserver1| ACTIVE | net1=10.0.1.3|
-    | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d| myserver2| ACTIVE | net1=10.0.1.4|
-    | c7c0481c-3db8-4d7a-a948-60ce8211d585| myserver3| ACTIVE | net1=10.0.1.5|
-    +-------------------------------------+----------+--------+--------------+
+   +--------------------------------------+-----------+--------+---------------+
+   | ID                                   | Name      | Status | Networks      |
+   +--------------------------------------+-----------+--------+---------------+
+   | c394fcd0-0baa-43ae-a793-201815c3e8ce | myserver1 | ACTIVE | net1=10.0.1.3 |
+   | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=10.0.1.4 |
+   | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 |
+   +--------------------------------------+-----------+--------+---------------+
 
    $ neutron net-list
-    +-------------------------+------+--------------------------------------+
-    | id                      | name | subnets                              |
-    +-------------------------+------+--------------------------------------+
-    | 89dca1c6-c7d4-4f7a-     |      |                                      |
-    | b730-549af0fb6e34       | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 |
-    +-------------------------+------+--------------------------------------+
+   +--------------------------------------+------+--------------------------------------+
+   | id                                   | name | subnets                              |
+   +--------------------------------------+------+--------------------------------------+
+   | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 |
+   +--------------------------------------+------+--------------------------------------+
 
-**Manage agents in neutron deployment**
-
-Every agent that supports these extensions will register itself with the
-neutron server when it starts up.
+Managing agents in neutron deployment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. List all agents:
 
    .. code-block:: console
 
       $ neutron agent-list
-
       +--------------------------------------+--------------------+-------+-------+----------------+
       | id                                   | agent_type         | host  | alive | admin_state_up |
       +--------------------------------------+--------------------+-------+-------+----------------+
@@ -193,24 +184,19 @@ neutron server when it starts up.
       | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
       +--------------------------------------+--------------------+-------+-------+----------------+
 
+   Every agent that supports these extensions will register itself with the
+   neutron server when it starts up.
+
    The output shows information for four agents. The ``alive`` field shows
    ``:-)`` if the agent reported its state within the period defined by the
    ``agent_down_time`` option in the ``neutron.conf`` file. Otherwise the
    ``alive`` is ``xxx``.
-
-#. List the DHCP agents that host a specified network:
-
-   In some deployments, one DHCP agent is not enough to hold all network
-   data. In addition, you must have a backup for it even when the
-   deployment is small. The same network can be assigned to more than one
-   DHCP agent and one DHCP agent can host more than one network.
 
 #. List DHCP agents that host a specified network:
 
    .. code-block:: console
 
       $ neutron dhcp-agent-list-hosting-net net1
-
       +--------------------------------------+-------+----------------+-------+
       | id                                   | host  | admin_state_up | alive |
       +--------------------------------------+-------+----------------+-------+
@@ -224,14 +210,11 @@ neutron server when it starts up.
    .. code-block:: console
 
       $ neutron net-list-on-dhcp-agent a0c1c21c-d4f4-4577-9ec7-908f2d48622d
-
-      +------------------------+------+---------------------------------+
-      | id                     | name | subnets                         |
-      +------------------------+------+---------------------------------+
-      | 89dca1c6-c7d4-4f7a     |      |                                 |
-      | -b730-549af0fb6e34     | net1 | f6c832e3-9968-46fd              |
-      |                        |      | -8e45-d5cf646db9d1  10.0.1.0/24 |
-      +------------------------+------+---------------------------------+
+      +--------------------------------------+------+--------------------------------------------------+
+      | id                                   | name | subnets                                          |
+      +--------------------------------------+------+--------------------------------------------------+
+      | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 10.0.1.0/24 |
+      +--------------------------------------+------+--------------------------------------------------+
 
 #. Show agent details.
 
@@ -240,29 +223,28 @@ neutron server when it starts up.
    .. code-block:: console
 
       $ neutron agent-show a0c1c21c-d4f4-4577-9ec7-908f2d48622d
-
-      +--------------------+---------------------------------------------------+
-      | Field              | Value                                             |
-      +--------------------+---------------------------------------------------+
-      | admin_state_up     | True                                              |
-      | agent_type         | DHCP agent                                        |
-      | alive              | False                                             |
-      | binary             | neutron-dhcp-agent                                |
-      | configurations     |{                                                  |
-      |                    | "subnets": 1,                                     |
-      |                    | "dhcp_driver": "neutron.agent.linux.dhcp.Dnsmasq",|
-      |                    | "networks": 1,                                    |
-      |                    | "dhcp_lease_time": 120,                           |
-      |                    | "ports": 3                                        |
-      |                    |}                                                  |
-      | created_at         | 2013-03-16T01:16:18.000000                        |
-      | description        |                                                   |
-      | heartbeat_timestamp| 2013-03-17T01:37:22.000000                        |
-      | host               | HostA                                             |
-      | id                 | 58f4ce07-6789-4bb3-aa42-ed3779db2b03              |
-      | started_at         | 2013-03-16T06:48:39.000000                        |
-      | topic              | dhcp_agent                                        |
-      +--------------------+---------------------------------------------------+
+      +---------------------+--------------------------------------------------------+
+      | Field               | Value                                                  |
+      +---------------------+--------------------------------------------------------+
+      | admin_state_up      | True                                                   |
+      | agent_type          | DHCP agent                                             |
+      | alive               | False                                                  |
+      | binary              | neutron-dhcp-agent                                     |
+      | configurations      | {                                                      |
+      |                     |     "subnets": 1,                                      |
+      |                     |     "dhcp_driver": "neutron.agent.linux.dhcp.Dnsmasq", |
+      |                     |     "networks": 1,                                     |
+      |                     |     "dhcp_lease_time": 120,                            |
+      |                     |     "ports": 3                                         |
+      |                     | }                                                      |
+      | created_at          | 2013-03-16T01:16:18.000000                             |
+      | description         |                                                        |
+      | heartbeat_timestamp | 2013-03-17T01:37:22.000000                             |
+      | host                | HostA                                                  |
+      | id                  | 58f4ce07-6789-4bb3-aa42-ed3779db2b03                   |
+      | started_at          | 2013-03-16T06:48:39.000000                             |
+      | topic               | dhcp_agent                                             |
+      +---------------------+--------------------------------------------------------+
 
    In this output, ``heartbeat_timestamp`` is the time on the neutron
    server. You do not need to synchronize all agents to this time for this
@@ -276,7 +258,6 @@ neutron server when it starts up.
    .. code-block:: console
 
       $ neutron agent-show ed96b856-ae0f-4d75-bb28-40a47ffd7695
-
       +---------------------+--------------------------------------+
       | Field               | Value                                |
       +---------------------+--------------------------------------+
@@ -301,16 +282,17 @@ neutron server when it starts up.
    The output shows ``bridge-mapping`` and the number of virtual network
    devices on this L2 agent.
 
-**Manage assignment of networks to DHCP agent**
+Managing assignment of networks to DHCP agent
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that you have run the :command:`net-list-on-dhcp-agent` and
-:command:`dhcp-agent-list-hosting-net` commands, you can add a network to a
-DHCP agent and remove one from it.
+A single network can be assigned to more than one DHCP agents and
+one DHCP agent can host more than one network.
+You can add a network to a DHCP agent and remove one from it.
 
 #. Default scheduling.
 
-   When you create a network with one port, you can schedule it to an
-   active DHCP agent. If many active DHCP agents are running, select one
+   When you create a network with one port, the network will be scheduled to
+   an active DHCP agent. If many active DHCP agents are running, select one
    randomly. You can design more sophisticated scheduling algorithms in the
    same way as nova-schedule later on.
 
@@ -320,7 +302,6 @@ DHCP agent and remove one from it.
       $ neutron subnet-create net2 9.0.1.0/24 --name subnet2
       $ neutron port-create net2
       $ neutron dhcp-agent-list-hosting-net net2
-
       +--------------------------------------+-------+----------------+-------+
       | id                                   | host  | admin_state_up | alive |
       +--------------------------------------+-------+----------------+-------+
@@ -341,7 +322,6 @@ DHCP agent and remove one from it.
       $ neutron dhcp-agent-network-add f28aa126-6edb-4ea5-a81e-8850876bc0a8 net2
       Added network net2 to dhcp agent
       $ neutron dhcp-agent-list-hosting-net net2
-
       +--------------------------------------+-------+----------------+-------+
       | id                                   | host  | admin_state_up | alive |
       +--------------------------------------+-------+----------------+-------+
@@ -362,7 +342,6 @@ DHCP agent and remove one from it.
         net2
       Removed network net2 to dhcp agent
       $ neutron dhcp-agent-list-hosting-net net2
-
       +--------------------------------------+-------+----------------+-------+
       | id                                   | host  | admin_state_up | alive |
       +--------------------------------------+-------+----------------+-------+
@@ -372,45 +351,35 @@ DHCP agent and remove one from it.
    You can see that only the DHCP agent for HostB is hosting the ``net2``
    network.
 
-**HA of DHCP agents**
+HA of DHCP agents
+~~~~~~~~~~~~~~~~~
 
-Boot a VM on net2. Let both DHCP agents host ``net2``. Fail the agents
+Boot a VM on ``net2``. Let both DHCP agents host ``net2``. Fail the agents
 in turn to see if the VM can still get the desired IP.
 
-#. Boot a VM on net2:
+#. Boot a VM on ``net2``:
 
    .. code-block:: console
 
       $ neutron net-list
-
-      +-------------------------+------+-----------------------------+
-      | id                      | name | subnets                     |
-      +-------------------------+------+-----------------------------+
-      | 89dca1c6-c7d4-4f7a-     |      |                             |
-      | b730-549af0fb6e34       | net1 | f6c832e3-9968-46fd-8e45     |
-      |                         |      | -d5cf646db9d1  10.0.1.0/24  |
-      | 9b96b14f-71b8-4918-90aa-|      |                             |
-      | c5d705606b1a            | net2 | 6979b71a-0ae8-448c-aa87-    |
-      |                         |      | 65f68eedcaaa  9.0.1.0/24    |
-      +-------------------------+------+-----------------------------+
-
-   .. code-block:: console
-
+      +--------------------------------------+------+--------------------------------------------------+
+      | id                                   | name | subnets                                          |
+      +--------------------------------------+------+--------------------------------------------------+
+      | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 10.0.1.0/24 |
+      | 9b96b14f-71b8-4918-90aa-c5d705606b1a | net2 | 6979b71a-0ae8-448c-aa87-65f68eedcaaa 9.0.1.0/24  |
+      +--------------------------------------+------+--------------------------------------------------+
       $ nova boot --image tty --flavor 1 myserver4 \
         --nic net-id=9b96b14f-71b8-4918-90aa-c5d705606b1a
-
-   .. code-block:: console
-
+      ...
       $ nova list
-
-      +-------------------------------------+----------+-------+---------------+
-      | ID                                  | Name     | Status| Networks      |
-      +-------------------------------------+----------+-------+---------------+
-      |c394fcd0-0baa-43ae-a793-201815c3e8ce |myserver1 |ACTIVE | net1=10.0.1.3 |
-      |2d604e05-9a6c-4ddb-9082-8a1fbdcc797d |myserver2 |ACTIVE | net1=10.0.1.4 |
-      |c7c0481c-3db8-4d7a-a948-60ce8211d585 |myserver3 |ACTIVE | net1=10.0.1.5 |
-      |f62f4731-5591-46b1-9d74-f0c901de567f |myserver4 |ACTIVE | net2=9.0.1.2  |
-      +-------------------------------------+----------+-------+---------------+
+      +--------------------------------------+-----------+--------+---------------+
+      | ID                                   | Name      | Status | Networks      |
+      +--------------------------------------+-----------+--------+---------------+
+      | c394fcd0-0baa-43ae-a793-201815c3e8ce | myserver1 | ACTIVE | net1=10.0.1.3 |
+      | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=10.0.1.4 |
+      | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 |
+      | f62f4731-5591-46b1-9d74-f0c901de567f | myserver4 | ACTIVE | net2=9.0.1.2  |
+      +--------------------------------------+-----------+--------+---------------+
 
 #. Make sure both DHCP agents hosting ``net2``:
 
@@ -419,7 +388,6 @@ in turn to see if the VM can still get the desired IP.
    .. code-block:: console
 
       $ neutron dhcp-agent-list-hosting-net net2
-
       +--------------------------------------+-------+----------------+-------+
       | id                                   | host  | admin_state_up | alive |
       +--------------------------------------+-------+----------------+-------+
@@ -427,7 +395,7 @@ in turn to see if the VM can still get the desired IP.
       | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
       +--------------------------------------+-------+----------------+-------+
 
-**Test the HA**
+To test the HA of DHCP agent:
 
 #. Log in to the ``myserver4`` VM, and run ``udhcpc``, ``dhclient`` or
    other DHCP client.
@@ -443,23 +411,25 @@ in turn to see if the VM can still get the desired IP.
 
 #. Start DHCP agent on HostB. The VM gets the wanted IP again.
 
-**Disable and remove an agent**
+Disabling and removing an agent
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An administrator might want to disable an agent if a system hardware or
 software upgrade is planned. Some agents that support scheduling also
 support disabling and enabling agents, such as L3 and DHCP agents. After
 the agent is disabled, the scheduler does not schedule new resources to
-the agent. After the agent is disabled, you can safely remove the agent.
-Remove the resources on the agent before you delete the agent.
+the agent.
 
-To run the following commands, you must stop the DHCP agent on HostA.
+After the agent is disabled, you can safely remove the agent.
+Even after disabling the agent, resources on the agent are kept assigned.
+Ensure you remove the resources on the agent before you delete the agent.
+
+Disable the DHCP agent on HostA before you stop it:
 
 .. code-block:: console
 
-   $ neutron agent-update --admin-state-up False \
-     a0c1c21c-d4f4-4577-9ec7-908f2d48622d
+   $ neutron agent-update a0c1c21c-d4f4-4577-9ec7-908f2d48622d --admin-state-up False
    $ neutron agent-list
-
    +--------------------------------------+--------------------+-------+-------+----------------+
    | id                                   | agent_type         | host  | alive | admin_state_up |
    +--------------------------------------+--------------------+-------+-------+----------------+
@@ -469,12 +439,14 @@ To run the following commands, you must stop the DHCP agent on HostA.
    | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
    +--------------------------------------+--------------------+-------+-------+----------------+
 
+After you stop the DHCP agent on HostA, you can delete it by the following
+command:
+
 .. code-block:: console
 
    $ neutron agent-delete a0c1c21c-d4f4-4577-9ec7-908f2d48622d
    Deleted agent: a0c1c21c-d4f4-4577-9ec7-908f2d48622d
    $ neutron agent-list
-
    +--------------------------------------+--------------------+-------+-------+----------------+
    | id                                   | agent_type         | host  | alive | admin_state_up |
    +--------------------------------------+--------------------+-------+-------+----------------+
@@ -485,3 +457,16 @@ To run the following commands, you must stop the DHCP agent on HostA.
 
 After deletion, if you restart the DHCP agent, it appears on the agent
 list again.
+
+.. _conf-dhcp-agents-per-network:
+
+Enabling DHCP high availability by default
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can control the default number of DHCP agents assigned to a network
+by setting the following configuration option
+in the file ``/etc/neutron/neutron.conf``.
+
+.. code-block:: ini
+
+   dhcp_agents_per_network = 3
