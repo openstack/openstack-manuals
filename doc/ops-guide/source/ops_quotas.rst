@@ -72,7 +72,7 @@ Set Compute Service Quotas
 
 As an administrative user, you can update the Compute service quotas for
 an existing tenant, as well as update the quota defaults for a new
-tenant.Compute Compute service See :ref:`table_compute_quota`.
+tenant. See :ref:`table_compute_quota`.
 
 .. _table_compute_quota:
 

@@ -247,8 +247,7 @@ diagram:
 Optional Extensions
 -------------------
 
-You can extend this reference architecture aslegacy networking (nova)
-optional extensions follows:
+You can extend this reference architecture as follows:
 
 -  Add additional cloud controllers (see :doc:`ops_maintenance`).
 

@@ -1015,7 +1015,7 @@ To see whether you are using namespaces, run :command:`ip netns`:
    qrouter-8a4ce760-ab55-4f2f-8ec5-a2e858ce0d39
 
 L3-agent router namespaces are named ``qrouter-<router_uuid>``, and
-dhcp-agent name spaces are named ``qdhcp-``\ ``<net_uuid>``. This output
+dhcp-agent name spaces are named ``qdhcp-<net_uuid>``. This output
 shows a network node with four networks running dhcp-agents, one of
 which is also running an l3-agent router. It's important to know which
 network you need to be working in. A list of existing networks and their

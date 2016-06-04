@@ -85,8 +85,7 @@ Administrative Command-Line Tools
 
 There are also several :command:`*-manage` command-line tools. These are
 installed with the project's services on the cloud controller and do not
-need to be installed\*-manage command-line toolscommand-line tools
-administrative separately:
+need to be installed separately:
 
 * :command:`glance-manage`
 * :command:`keystone-manage`
