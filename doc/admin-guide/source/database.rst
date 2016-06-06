@@ -411,6 +411,57 @@ different data stores.
    * - Experimental
      - All others
 
+Redis data store replication
+----------------------------
+
+Replication strategies are available for Redis with
+several commands located in the Redis data store
+manager:
+
+- :command:`create`
+- :command:`detach-replica`
+- :command:`eject-replica-source`
+- :command:`promote-to-replica-source`
+
+Additional arguments for the :command:`create` command
+include :command:`--replica_of` and
+:command:`--replica_count`.
+
+Redis integration and unit tests
+--------------------------------
+
+Unit tests and integration tests are also available for
+Redis.
+
+#. Install redstack:
+
+   .. code-block:: console
+
+      $ ./redstack install
+
+      .. note::
+
+         Redstack is a development script used for integration
+         testing and Database service development installations.
+         Do not use Redstack in a production environment. For
+         more information, see `the Database service
+         developer docs <http://docs.openstack.org/developer/trove/dev/install.html#running-redstack-to-install-trove>`_
+
+#. Start Redis:
+
+   .. code-block:: console
+
+      $ ./redstack kick-start redis
+
+#. Run integration tests:
+
+   .. code-block:: console
+
+      $ ./redstack int-tests --group=replication
+
+   You can run :command:`--group=redis_supported`
+   instead of :command:`--group=replication` if needed.
+
 Configure a cluster
 ~~~~~~~~~~~~~~~~~~~
 
