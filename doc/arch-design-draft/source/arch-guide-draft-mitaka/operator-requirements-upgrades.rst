@@ -15,7 +15,7 @@ independent OpenStack installations which are linked together using
 shared centralized services such as OpenStack Identity. At a high level
 the recommended order of operations to upgrade an individual OpenStack
 environment is (see the `Upgrades
-chapter <http://docs.openstack.org/openstack-ops/content/ops_upgrades-general-steps.html>`_
+chapter <http://docs.openstack.org/ops-guide/ops_upgrades.html>`_
 of the OpenStack Operations Guide for details):
 
 #. Upgrade the OpenStack Identity service (keystone).

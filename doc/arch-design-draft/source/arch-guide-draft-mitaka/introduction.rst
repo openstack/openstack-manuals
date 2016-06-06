@@ -15,7 +15,7 @@ Intended audience
 This book has been written for architects and designers of OpenStack
 clouds. For a guide on deploying and operating OpenStack, please refer
 to the
-`OpenStack Operations Guide <http://docs.openstack.org/openstack-ops/>`_.
+`OpenStack Operations Guide <http://docs.openstack.org/ops-guide/>`_.
 
 Before reading this book, we recommend:
 

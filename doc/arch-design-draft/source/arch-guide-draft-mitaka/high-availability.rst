@@ -79,7 +79,7 @@ extensible OpenStack Networking (neutron). OpenStack Networking and legacy
 networking both have their advantages and disadvantages. They are both valid
 and supported options that fit different network deployment models described in
 the `OpenStack Operations Guide
-<http://docs.openstack.org/openstack-ops/content/network_design.html#network_deployment_options>`_.
+<http://docs.openstack.org/ops-guide/arch_network_design.html#network-topology>`_.
 
 When using the Networking service, the OpenStack controller servers or separate
 Networking hosts handle routing unless the dynamic virtual routers pattern for
