@@ -102,13 +102,13 @@ Rules can compare API attributes to object attributes. For example:
 
 .. code-block:: json
 
-    "compute:start" : "user_id:%(user_id)s"
+    "os_compute_api:servers:start" : "project_id:%(project_id)s"
 
 states that only the owner of an instance can start it up. The
-``user_id`` string before the colon is an API attribute, namely the user
-ID of the API user. It is compared with the user ID of the object (in
+``project_id`` string before the colon is an API attribute, namely the project
+ID of the API user. It is compared with the project ID of the object (in
 this case, an instance); more precisely, it is compared with the
-``user_id`` field of that object in the database. If the two values are
+``project_id`` field of that object in the database. If the two values are
 equal, permission is granted.
 
 An admin user always has permission to call APIs. This is how
