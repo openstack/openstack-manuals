@@ -19,10 +19,16 @@ high availability.
 For information about:
 
 -  basic creation and deletion of Orchestration stacks, refer
-   to the `OpenStack End User Guide <http://docs.openstack.org/user-guide/dashboard_stacks.html>`_
+   to the `OpenStack End User Guide
+   <http://docs.openstack.org/user-guide/dashboard_stacks.html>`_
 
--  **heat** CLI commands, see the `OpenStack Command Line Interface Reference
-   <http://docs.openstack.org/cli-reference/heat.html>`_
+-  **openstack** CLI, see the `OpenStack Command-Line Interface
+   Reference <http://docs.openstack.org/cli-reference/openstack.html>`_
+
+.. note::
+
+   The ``heat`` CLI is deprecated in favor of ``python-openstackclient``.
+   For a Python library, continue using ``python-heatclient``.
 
 As an administrator, you can also carry out stack functions
 on behalf of your users. For example, to resume, suspend,
@@ -30,6 +36,6 @@ or delete a stack, run:
 
 .. code-block:: console
 
-   $ heat action-resume stackID
-   $ heat action-suspend stackID
-   $ heat stack-delete stackID
+   $ openstack stack resume STACK
+   $ openstack stack suspend STACK
+   $ openstack stack delete STACK
