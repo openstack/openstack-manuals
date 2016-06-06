@@ -81,21 +81,18 @@ driver, Huawei storage system and OpenStack:
 Block Storage driver installation and deployment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Ubuntu environment deployment
------------------------------
-
-The OpenStack standard deployment steps are as follows:
-
 #. Before installation, delete all the installation files of Huawei OpenStack
    Driver. The default path may be:
    ``/usr/lib/python2.7/disk-packages/cinder/volume/drivers/huawei``.
 
    .. note::
 
-      In this example, the version of Python is 2.7. If other version is
-      used, make corresponding changes to the Driver path.
+      In this example, the version of Python is 2.7. If another version is
+      used, make corresponding changes to the driver path.
 
-#. Copy OpenStack Cinder Driver to the Cinder Driver installation directory.
+#. Copy `the Block Storage driver
+   <http://git.openstack.org/cgit/openstack/cinder/tree/cinder/volume/drivers/huawei?h=stable/mitaka>`_
+   to the Block Storage driver installation directory.
    Refer to step 1 to find the default directory.
 
 #. Refer to chapter :ref:`huawei-driver-configuration` to complete the
@@ -103,66 +100,20 @@ The OpenStack standard deployment steps are as follows:
 
 #. After configuration, restart the ``cinder-volume`` service:
 
-   .. code-block:: console
-
-      service cinder-volume restart
-
 #. Check the status of services using the :command:`cinder service-list`
-   command. If the "State" of ``cinder-volume`` is ``up``, that means
-   Cinder-Volume is OK.
+   command. If the ``State`` of ``cinder-volume`` is ``up``, that means
+   ``cinder-volume`` is okay.
 
    .. code-block:: console
 
-    root@ubuntuL004:/# cinder service-list
-
-    +---------------+---------------+------+-------+-----+--------------------------+---------------+
-    |Binary         |Host           | Zone |Status |State|Updated_at                |Disabled Reason|
-    +---------------+---------------+------+-------+-----+--------------------------+---------------+
-    |cinderscheduler|ubuntuL004     | nova |enabled|up   |2016-02-01T16:26:00.000000|-              |
-    +---------------+---------------+------+-------+-----+--------------------------+---------------+
-    |cindervolume   |ubuntuL004@v3r3| nova |enabled|up   |2016-02-01T16:25:53.000000|-              |
-    +---------------+---------------+------+-------+-----+--------------------------+---------------+
-
-Red Hat OpenStack deployment
-----------------------------
-
-Red Hat OpenStack deployment steps are as follows:
-
-#. Before installation, delete all the installation files of Huawei OpenStack
-   Driver. The default path may be:
-   ``/usr/lib/python2.7/disk-packages/cinder/volume/drivers/huawei``.
-
-   .. note::
-
-      In this example, the version of Python is 2.7. If other version is used,
-      make corresponding changes to the Driver path.
-
-#. Copy OpenStack Cinder Driver to Cinder Driver installation directory. Refer
-   to step 1 to find the default directory.
-
-#. Refer to chapter :ref:`huawei-driver-configuration` for the configurations.
-
-#. After configuration, restart the ``cinder-volume`` service:
-
-   .. code-block:: console
-
-      systemctl start openstack-cinder-volume.service
-
-#. Check the status of services using the :command:`cinder service-list`
-   command. If the "State" of ``cinder-volume`` is ``up``, that means
-   Cinder-Volume is OK.
-
-   .. code-block:: console
-
-    root@ubuntuL004:/# cinder service-list
-
-    +------------------+---------------+------+-------+-----+--------------------------+----------------+
-    |Binary            |Host           | Zone |Status |State|Updated_at                | Disabled Reason|
-    +------------------+---------------+------+-------+-----+--------------------------+----------------+
-    |cinderscheduler   |ubuntuL004     | nova |enabled|up   |2016-02-01T16:26:00.000000|-               |
-    +------------------+---------------+------+-------+-----+--------------------------+----------------+
-    |cindervolume      |ubuntuL004@v3r3| nova |enabled|up   |2016-02-01T16:25:53.000000|-               |
-    +------------------+---------------+------+-------+-----+--------------------------+----------------+
+      # cinder service-list
+      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
+      | Binary          | Host            | Zone | Status  | State | Updated_at                 | Disabled Reason |
+      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
+      | cinderscheduler | controller      | nova | enabled | up    | 2016-02-01T16:26:00.000000 | -               |
+      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
+      | cindervolume    | controller@v3r3 | nova | enabled | up    | 2016-02-01T16:25:53.000000 | -               |
+      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
 
 .. _huawei-driver-configuration:
 
@@ -178,7 +129,7 @@ When creating a volume from image, install the ``multipath`` tool and add the
 following configuration keys in the ``[DEFAULT]`` configuration group of
 the ``/etc/cinder/cinder.conf`` file:
 
-.. code-block:: xml
+.. code-block:: ini
 
    use_multipath_for_image_xfer = True
    enforce_multipath_for_image_xfer = True
@@ -339,7 +290,7 @@ To configure the volume driver, follow the steps below:
         In Mitaka, ``Huawei18000ISCSIDriver`` and ``Huawei18000FCDriver`` have
         been renamed to ``HuaweiISCSIDriver`` and ``HuaweiFCDriver``.
 
-#. Run the service :command:`cinder-volume restart` command to restart the
+#. Run the :command:`service cinder-volume restart` command to restart the
    Block Storage service.
 
 Configuring iSCSI Multipathing
@@ -367,7 +318,7 @@ To configure iSCSI Multipathing, follow the steps below:
          <Initiator Name="xxxxxx" TargetPortGroup="xxxx" />
       </iSCSI>
 
-#. Enable the multipathing switch of the OpenStack Nova module.
+#. Enable the multipathing switch of the Compute service module.
 
    If the version of OpenStack is Havana or IceHouse, add
    ``libvirt_iscsi_use_multipath = True`` in ``[default]`` of
@@ -376,7 +327,7 @@ To configure iSCSI Multipathing, follow the steps below:
    If the version of OpenStack is Juno, Kilo, Liberty or Mitaka, add
    ``iscsi_use_multipath = True`` in ``[libvirt]`` of ``/etc/nova/nova.conf``.
 
-#. Run the service :command:`nova-compute restart` command to restart the
+#. Run the :command:`service nova-compute restart` command to restart the
    ``nova-compute`` service.
 
 Configuring CHAP and ALUA
@@ -389,7 +340,7 @@ risks to the data security of the storage system. To ensure the storage
 systems access security, you can configure ``CHAP`` authentication to control
 application servers access to the storage system.
 
-Adjust he driver configuration file as follows:
+Adjust the driver configuration file as follows:
 
 .. code-block:: xml
 
@@ -398,12 +349,12 @@ Adjust he driver configuration file as follows:
 ``ALUA`` indicates a multipathing mode. 0 indicates that ``ALUA`` is disabled.
 1 indicates that ``ALUA`` is enabled. ``CHAPinfo`` indicates the user name and
 password authenticated by ``CHAP``. The format is ``mmuser; mm-user@storage``.
-The user name and password are separated by semicolons (;).
+The user name and password are separated by semicolons (``;``).
 
-Configuring multi-storage support
----------------------------------
+Configuring multiple storage
+----------------------------
 
-Example for configuring multiple storage systems:
+Multiple storage systems configuration example:
 
 .. code-block:: ini
 
@@ -473,7 +424,7 @@ of the Huawei volume driver.
    * - StoragePool
      - -
      - Name of a storage pool to be used. If you need to configure multiple
-       storage pools, separate them by semicolons (;).
+       storage pools, separate them by semicolons (``;``).
      - All
 
 .. note::
