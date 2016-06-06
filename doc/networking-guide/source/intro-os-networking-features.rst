@@ -24,10 +24,9 @@ enabled:
 * ``external-net``
 * ``router``
 
-Suggestion: Before the end-user can use the auto-allocation feature, the
-operator must create the resources that will be used for the auto-allocated
-network topology creation. To perform this task, proceed with the following
-steps:
+Before the end-user can use the auto-allocation feature, the operator must
+create the resources that will be used for the auto-allocated network
+topology creation. To perform this task, proceed with the following steps:
 
 #. Set up a default external network
 

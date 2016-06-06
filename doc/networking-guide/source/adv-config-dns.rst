@@ -235,7 +235,7 @@ that is accessible externally. The steps to publish the port in the external
 DNS service are the following:
 
 #. Assign a valid domain name to the network's ``dns_domain`` attribute. This
-   name must end with a ``.``.
+   name must end with a period (``.``).
 #. Boot an instance specifying the externally accessible network.
    Alternatively, create a port on the externally accessible network specifying
    a valid value to its ``dns_name`` attribute. If the port is going to be used
@@ -415,7 +415,7 @@ DNS service in conjunction with the ``dns_name`` of its associated port and the
 the following:
 
 #. Assign a valid domain name to the network's ``dns_domain`` attribute. This
-   name must end with a ``.``.
+   name must end with a period (``.``).
 #. Boot an instance or alternatively, create a port specifying a valid value to
    its ``dns_name`` attribute. If the port is going to be used for an instance
    boot, the value assigned to ``dns_name`` must be equal to the ``hostname``
