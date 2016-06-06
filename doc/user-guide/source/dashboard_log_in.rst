@@ -21,7 +21,7 @@ The dashboard is generally installed on the controller node.
       support <https://github.com/kanaka/noVNC/wiki/Browser-support>`__.
 
 #. In the address bar, enter the host name or IP address for the
-   dashboard, for example ``https://ipAddressOrHostName/``.
+   dashboard, for example, ``https://ipAddressOrHostName/``.
 
    .. note::
 
@@ -30,9 +30,9 @@ The dashboard is generally installed on the controller node.
       considered trustworthy by default. Verify the certificate or add an
       exception in the browser to bypass the warning.
 
-#. On the Log In page, enter your user name and password, and click
-   :guilabel:`Sign In`. If the cloud supports multi-domain model, you also
-   need to enter your domain name.
+#. On the :guilabel:`Log In` page, enter your user name and password, and
+   click :guilabel:`Sign In`. If the cloud supports multi-domain model, you
+   also need to enter your domain name.
 
    The top of the window displays your user name. You can also access the
    :guilabel:`Settings` tab (:ref:`dashboard-settings-tab`) or sign out
@@ -60,19 +60,19 @@ The dashboard is generally installed on the controller node.
 OpenStack dashboard — :guilabel:`Project` tab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Projects are organizational units in the cloud, and are also known as
+Projects are organizational units in the cloud and are also known as
 tenants or accounts. Each user is a member of one or more projects.
 Within a project, a user creates and manages instances.
 
 From the :guilabel:`Project` tab, you can view and manage the resources in a
 selected project, including instances and images. You can select the project
-from the drop down menu at the top left. If the cloud supports multi-domain
+from the drop-down menu at the top left. If the cloud supports multi-domain
 model, you can also select the domain from this menu.
 
 .. figure:: figures/dashboard_project_tab.png
    :width: 100%
 
-   **Figure: Project tab**
+   **Figure: Project tab**
 
 From the :guilabel:`Project` tab, you can access the following categories:
 
@@ -153,13 +153,13 @@ OpenStack dashboard — :guilabel:`Admin` tab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Administrative users can use the :guilabel:`Admin` tab to view usage and to
-manage instances, volumes, flavors, images, networks and so on.
+manage instances, volumes, flavors, images, networks, and so on.
 
 
 .. figure:: figures/dashboard_admin_tab.png
    :width: 100%
 
-   **Figure: Admin tab**
+   **Figure: Admin tab**
 
 From the :guilabel:`Admin` tab, you can access the following category
 to complete these tasks:
@@ -195,7 +195,7 @@ to complete these tasks:
   * :guilabel:`Volume Snapshots`: View, manage, and delete volume snapshots.
 
 * :guilabel:`Flavors`: View, create, edit, view extra specifications for,
-  and delete flavors. A flavor is size of an instance.
+  and delete flavors. A flavor is the size of an instance.
 
 * :guilabel:`Images`: View, create, edit properties for, and delete custom
   images.
