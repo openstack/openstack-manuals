@@ -88,6 +88,18 @@ Configuring LBaaS v2 with an agent
     above in the ``[service_providers]`` section as a separate line. These
     configuration directives are repeatable and are not comma-separated.
 
+#.  Select the driver that manages virtual interfaces in
+    ``/etc/neutron/lbaas_agent.ini``:
+
+    .. code-block:: console
+
+       [DEFAULT]
+       interface_driver = INTERFACE_DRIVER
+
+    Replace ``INTERFACE_DRIVER`` with the interface driver that the layer-2
+    agent in your environment uses. For example, ``openvswitch`` for Open
+    vSwitch or ``linuxbridge`` for Linux bridge.
+
 #.  Run the ``neutron-lbaas`` database migration:
 
     .. code-block:: console
@@ -210,7 +222,7 @@ Building an LBaaS v2 load balancer
          --port-range-max 443 \
          --remote-ip-prefix 0.0.0.0/0 \
          lbaas
-       $ security-group-rule-create \
+       $ neutron security-group-rule-create \
          --direction ingress \
          --protocol icmp \
          lbaas
