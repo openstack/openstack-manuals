@@ -30,8 +30,8 @@ Configure Identity service for Networking
 
    .. code-block:: console
 
-      $ NEUTRON_SERVICE_ID=$(get_id openstack service create network
-      --name neutron --description 'OpenStack Networking Service')
+      $ NEUTRON_SERVICE_ID=$(get_id openstack service create network \
+        --name neutron --description 'OpenStack Networking Service')
 
 #. Create the Networking service endpoint entry
 
@@ -46,17 +46,17 @@ Configure Identity service for Networking
       .. code-block:: console
 
          $ openstack endpoint create $NEUTRON_SERVICE_ID --region $REGION \
-         --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' \
-         --internalurl 'http://$IP:9696/'
+           --publicurl 'http://$IP:9696/' --adminurl 'http://$IP:9696/' \
+           --internalurl 'http://$IP:9696/'
 
       For example:
 
       .. code-block:: console
 
          $ openstack endpoint create $NEUTRON_SERVICE_ID --region myregion \
-         --publicurl "http://10.211.55.17:9696/" --adminurl \
-         "http://10.211.55.17:9696/" --internalurl \
-         "http://10.211.55.17:9696/"
+           --publicurl "http://10.211.55.17:9696/" \
+           --adminurl "http://10.211.55.17:9696/" \
+           --internalurl "http://10.211.55.17:9696/"
 
    -  If you are using the ``template driver``, specify the following
       parameters in your Compute catalog template file
@@ -97,22 +97,22 @@ Configure Identity service for Networking
       .. code-block:: console
 
          $ NEUTRON_USER=$(get_id openstack user create neutron \
-         --password "$NEUTRON_PASSWORD" --email demo@example.com \
-         --project service)
+           --password "$NEUTRON_PASSWORD" --email demo@example.com \
+           --project service)
 
    c. Create the ``service`` tenant:
 
       .. code-block:: console
 
-         $ SERVICE_TENANT=$(get_id openstack project create service
-         --description "Services project")
+         $ SERVICE_TENANT=$(get_id openstack project create service \
+           --description "Services project")
 
    d. Establish the relationship among the tenant, user, and role:
 
       .. code-block:: console
 
          $ openstack role add $ADMIN_ROLE --user $NEUTRON_USER \
-         --project $SERVICE_TENANT
+           --project $SERVICE_TENANT
 
 For information about how to create service entries and users, see the
 OpenStack Installation Guide for your distribution
