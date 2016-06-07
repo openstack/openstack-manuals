@@ -17,7 +17,7 @@ Notes from planning outline:
 - Neutron agents shuld be described for active/active;
   deprecate single agent's instances case.
 - For Kilo and beyond, focus on L3HA and DVR.
-- Link to `Networking Guide <http://docs.openstack.org/networking-guide/>`_
+- Link to `OpenStack Networking Guide <http://docs.openstack.org/networking-guide/>`_
   for configuration details.
 
 [TODO: Verify that the active/passive

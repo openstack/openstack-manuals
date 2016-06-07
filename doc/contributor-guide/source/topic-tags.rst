@@ -42,7 +42,7 @@ Based on the topic your request refers to, use the following tags:
   Installation guides
 
 [networking]
-  Networking Guide
+  OpenStack Networking Guide
 
 [ops-guide]
   OpenStack Operations Guide

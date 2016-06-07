@@ -80,7 +80,7 @@ Guides for deployers and administrators
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/ha-guide
      - http://docs.openstack.org/ha-guide
 
-   * - Networking Guide
+   * - OpenStack Networking Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide
      - http://docs.openstack.org/mitaka/networking-guide
 
