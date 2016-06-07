@@ -2,15 +2,14 @@
 Auditing with CADF
 ==================
 
-The Identity service uses the `PyCADF`_ library to emit CADF (Cloud Auditing
-Data Federation) notifications. These events adhere to the DMTF (Distributed
-Management Task Force)`CADF`_ specification. The DMTF standard provides
-auditing capabilities for compliance with security, operational, and business
-processes and supports normalized and categorized event data for federation
-and aggregation.
-
-.. _PyCADF: http://docs.openstack.org/developer/pycadf
-.. _CADF: http://www.dmtf.org/standards/cadf
+The Identity service uses the
+`PyCADF <http://docs.openstack.org/developer/pycadf>`_ library to emit
+CADF (Cloud Auditing Data Federation) notifications.
+These events adhere to the DMTF (Distributed Management Task Force)
+`CADF <http://www.dmtf.org/standards/cadf>`_ specification.
+The DMTF standard provides auditing capabilities for compliance with
+security, operational, and business processes and supports normalized
+and categorized event data for federation and aggregation.
 
 CADF notifications include additional context data around the ``resource``,
 the ``action``, and the ``initiator``.
