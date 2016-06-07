@@ -27,7 +27,7 @@ Contents
    topic-structure.rst
    topic-tags.rst
    writing-style.rst
-   ui-text-guidelines.rst
+   user-guidelines.rst
    rst-conv.rst
    json-conv.rst
    tools-and-content-overview.rst
