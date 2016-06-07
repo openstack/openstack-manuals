@@ -34,11 +34,6 @@ Linux bridge Agent configuration options
 
 .. include:: ../tables/neutron-linuxbridge_agent.rst
 
-MacVTap Agent configuration options
-----------------------------------------
-
-.. include:: ../tables/neutron-macvtap_agent.rst
-
 Open vSwitch Agent configuration options
 ----------------------------------------
 
@@ -96,6 +91,11 @@ Modular Layer 2 (ml2) L2 Population Mechanism configuration options
 -------------------------------------------------------------------
 
 .. include:: ../tables/neutron-ml2_l2pop.rst
+
+Modular Layer 2 (ml2) MacVTap Mechanism configuration options
+-------------------------------------------------------------
+
+.. include:: ../tables/neutron-ml2_macvtap.rst
 
 Modular Layer 2 (ml2) SR-IOV Mechanism configuration options
 ------------------------------------------------------------
