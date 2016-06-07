@@ -824,8 +824,8 @@ complete basic L3 metering operations:
    * - Creates a metering rule.
      - .. code-block:: console
 
-          $ neutron meter-label-rule-create LABEL_UUID CIDR --direction DIRECTION
-            excluded
+          $ neutron meter-label-rule-create LABEL_UUID CIDR --direction DIRECTION \
+            --excluded
 
        For example:
 
