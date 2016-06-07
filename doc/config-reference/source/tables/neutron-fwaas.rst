@@ -18,5 +18,7 @@
      - Description
    * - **[fwaas]**
      -
+   * - ``driver`` =
+     - (String) Name of the FWaaS Driver
    * - ``enabled`` = ``False``
      - (Boolean) Enable FWaaS

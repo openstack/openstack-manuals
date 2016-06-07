@@ -39,11 +39,6 @@ MacVTap Agent configuration options
 
 .. include:: ../tables/neutron-macvtap_agent.rst
 
-NEC configuration options
--------------------------
-
-.. include:: ../tables/neutron-nec.rst
-
 Open vSwitch Agent configuration options
 ----------------------------------------
 
