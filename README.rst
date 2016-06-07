@@ -15,7 +15,7 @@ It includes these manuals:
  * Documentation Contributor Guide
  * End User Guide
  * High Availability Guide
- * Installation Guides
+ * Installation Guide
  * Networking Guide
  * Operations Guide
  * Virtual Machine Image Guide
