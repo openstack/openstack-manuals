@@ -19,17 +19,11 @@ Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
 * Create, delete, attach, detach, retype, clone, and extend volumes.
-
 * Create, list, and delete volume snapshots.
-
 * Create a volume from a snapshot.
-
 * Copy a volume to an image.
-
 * Copy an image to a volume.
-
 * Create a thin provisioned volume.
-
 * Get volume statistics.
 
 System requirements
@@ -74,3 +68,4 @@ Coho Data Block Storage driver configuration
 
 #. Restart the ``cinder-volume`` service to enable Coho Data driver.
 
+.. include:: ../../tables/cinder-coho.rst
