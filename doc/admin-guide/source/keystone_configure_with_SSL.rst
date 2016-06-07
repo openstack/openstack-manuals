@@ -34,6 +34,15 @@ ssl\_key.pem
 Client authentication with keystone-all
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. note::
+
+   When running the Identity service as a WSGI service in a web server
+   such as Apache HTTP Server, this configuration is done in the web server
+   instead. In this case, the options in the ``[eventlet_server_ssl]``
+   section are ignored.
+
+   The eventlet support will be removed in Newton.
+
 When running ``keystone-all``, the server can be configured to enable SSL
 with client authentication using the following instructions. Modify the
 ``[eventlet_server_ssl]`` section in the ``/etc/keystone/keystone.conf``
@@ -67,8 +76,3 @@ certificates:
 
 -  ``cert_required``
     Requires client certificate. Default is ``False``.
-
-When running the Identity service as a WSGI service in a web server such
-as Apache httpd, this configuration is done in the web server instead.
-In this case the options in the ``[eventlet_server_ssl]`` section are
-ignored.
