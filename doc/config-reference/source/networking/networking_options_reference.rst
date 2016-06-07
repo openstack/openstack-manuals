@@ -24,11 +24,6 @@ L2-in-L3 tunneling or OpenFlow. These sections
 detail the configuration options for the various
 plug-ins.
 
-CISCO configuration options
----------------------------
-
-.. include:: ../tables/neutron-cisco.rst
-
 Layer 2 Gateway configuration options
 -------------------------------------
 

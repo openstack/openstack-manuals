@@ -16,6 +16,10 @@
 
    * - Configuration option = Default value
      - Description
+   * - **[cisco_csr_ipsec]**
+     -
+   * - ``status_check_interval`` = ``60``
+     - (Integer) Status check interval for Cisco CSR IPSec connections
    * - **[ipsec]**
      -
    * - ``config_base_dir`` = ``$state_path/ipsec``
