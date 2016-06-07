@@ -295,7 +295,8 @@ services. It consists of:
 * keystone-all
     Starts both the service and administrative APIs in a single process.
     Using federation with keystone-all is not supported. keystone-all is
-    deprecated in favor of the WSGI service.
+    deprecated in favor of the WSGI service. Also, this will be removed
+    in Newton.
 
 The Identity service also maintains a user that corresponds to each
 service, such as, a user named ``nova`` for the Compute service, and a
