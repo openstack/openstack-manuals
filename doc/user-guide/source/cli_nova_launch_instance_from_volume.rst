@@ -240,13 +240,20 @@ the volume to boot an instance.
 
    - ``NAME``. The name for the server.
 
-#. Create a bootable volume from an image, before the instance boots. The
-   volume is not deleted when the instance is terminated.
+#. Create a bootable volume from an image. Cinder makes a volume bootable
+   when ``--image-id`` parameter is passed.
+
+   .. code-block:: console
+
+      $ cinder create --image-id $IMAGE_ID --display_name=bootable_volume $SIZE_IN_GB
+
+#. Create a VM from previously created bootable volume. The volume is not
+   deleted when the instance is terminated.
 
    .. code-block:: console
 
       $ nova boot --flavor 2 \
-        --block-device source=image,id=484e05af-a14d-4567-812b-28122d1c2260,dest=volume,size=10,shutdown=preserve,bootindex=0 \
+        --block-device source=volume,id=$VOLUME_ID,dest=volume,size=10,shutdown=preserve,bootindex=0 \
         myInstanceFromVolume
       +--------------------------------------+--------------------------------+
       | Property                             | Value                          |
@@ -279,7 +286,7 @@ the volume to boot an instance.
       | adminPass                            | TzjqyGsRcJo9                   |
       | tenant_id                            | f7ac731cc11f40efbc03a9f9e1d... |
       | created                              | 2014-02-02T13:29:53Z           |
-      | os-extended-volumes:volumes_attached | []                             |
+      | os-extended-volumes:volumes_attached | [{"id": "2fff50ab..."}]        |
       | metadata                             | {}                             |
       +--------------------------------------+--------------------------------+
 
@@ -289,11 +296,11 @@ the volume to boot an instance.
    .. code-block:: console
 
       $ cinder list
-      +-------------+--------+--------------+------+-------------+----------+-------------+
-      |      ID     | Status | Display Name | Size | Volume Type | Bootable | Attached to |
-      +-------------+--------+--------------+------+-------------+----------+-------------+
-      | 2fff50ab... | in-use |              |  10  |     None    |   true   | 2e65c854... |
-      +-------------+--------+--------------+------+-------------+----------+-------------+
+      +-------------+--------+-----------------+------+-------------+----------+-------------+
+      |      ID     | Status | Display Name    | Size | Volume Type | Bootable | Attached to |
+      +-------------+--------+-----------------+------+-------------+----------+-------------+
+      | 2fff50ab... | in-use | bootable_volume |  10  |     None    |   true   | 2e65c854... |
+      +-------------+--------+-----------------+------+-------------+----------+-------------+
 
 .. _Attach_swap_or_ephemeral_disk_to_an_instance:
 
