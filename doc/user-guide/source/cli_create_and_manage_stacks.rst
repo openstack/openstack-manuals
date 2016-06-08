@@ -29,45 +29,34 @@ Create a stack from an example template file
 
    .. code-block:: console
 
-      $ heat stack-create mystack --template-file /PATH_TO_HEAT_TEMPLATES/WordPress_Single_Instance.template \
-        --parameters "InstanceType=m1.large;DBUsername=USERNAME;DBPassword=PASSWORD;KeyName=HEAT_KEY;LinuxDistribution=F17"
+      $ openstack stack create --template server_console.yaml \
+        --parameter "image=cirros" MYSTACK
 
-   The :option:`--parameters` values that you specify depend on the parameters
+   The :option:`--parameter` values that you specify depend on the parameters
    that are defined in the template. If a website hosts the template
-   file, you can specify the URL with the :option:`--template-url` parameter
-   instead of the :option:`--template-file` parameter.
+   file, you can also specify the URL with the :option:`--template` parameter.
 
    The command returns the following output:
 
    .. code-block:: console
 
-      +------------------+---------------+--------------------+----------------------+
-      | id               | stack_name    | stack_status       | creation_time        |
-      +------------------+---------------+--------------------+----------------------+
-      | 4c712026-dcd5... | mystack       | CREATE_IN_PROGRESS | 2013-04-03T23:22:08Z |
-      +------------------+---------------+--------------------+----------------------+
+      +---------------------+----------------------------------------------------------------+
+      | Field               | Value                                                          |
+      +---------------------+----------------------------------------------------------------+
+      | id                  | 70b9feca-8f99-418e-b2f1-cc38d61b3ffb                           |
+      | stack_name          | MYSTACK                                                        |
+      | description         | The heat template is used to demo the 'console_urls' attribute |
+      |                     | of OS::Nova::Server.                                           |
+      |                     |                                                                |
+      | creation_time       | 2016-06-08T09:54:15                                            |
+      | updated_time        | None                                                           |
+      | stack_status        | CREATE_IN_PROGRESS                                             |
+      | stack_status_reason |                                                                |
+      +---------------------+----------------------------------------------------------------+
 
-   .. note::
-
-      When you run the :command:`heat stack-create` command with the
-      :option:`--poll` option, it prints the :command:`heat stack-show`
-      output first, and then continuously prints the events in log format
-      until the stack completes its action with success or failure.
-
--  You can also use the :command:`template-validate` command to validate a
+-  You can also use the :option:`--dry-run` option with the
+   :command:`openstack stack create` command to validate a
    template file without creating a stack from it.
-
-   .. note::
-
-      Previous versions of the heat client used :command:`validate` instead of
-      :command:`template-validate`, but it has been deprecated in favor of
-      :command:`template-validate`.
-
-   To do so, run the following command:
-
-   .. code-block:: console
-
-      $ heat template-validate --template-file /PATH_TO_HEAT_TEMPLATES/WordPress_Single_Instance.template
 
    If validation fails, the response returns an error message.
 
@@ -82,38 +71,37 @@ number of commands.
 
    .. code-block:: console
 
-      $ heat stack-list
-      +------------------+---------------+-----------------+----------------------+
-      | id               | stack_name    | stack_status    | creation_time        |
-      +------------------+---------------+-----------------+----------------------+
-      | 4c712026-dcd5... | mystack       | CREATE_COMPLETE | 2013-04-03T23:22:08Z |
-      | 7edc7480-bda5... | my-otherstack | CREATE_FAILED   | 2013-04-03T23:28:20Z |
-      +------------------+---------------+-----------------+----------------------+
+      $ openstack stack list
+      +--------------------------------------+------------+-----------------+---------------------+--------------+
+      | ID                                   | Stack Name | Stack Status    | Creation Time       | Updated Time |
+      +--------------------------------------+------------+-----------------+---------------------+--------------+
+      | 70b9feca-8f99-418e-b2f1-cc38d61b3ffb | MYSTACK    | CREATE_COMPLETE | 2016-06-08T09:54:15 | None         |
+      +--------------------------------------+------------+-----------------+---------------------+--------------+
 
 -  To show the details of a stack, run the following command:
 
    .. code-block:: console
 
-      $ heat stack-show mystack
+      $ openstack stack show MYSTACK
 
 -  A stack consists of a collection of resources. To list the resources
    and their status, run the following command:
 
    .. code-block:: console
 
-      $ heat resource-list mystack
-      +---------------------+--------------------+-----------------+----------------------+
-      | logical_resource_id | resource_type      | resource_status | updated_time         |
-      +---------------------+--------------------+-----------------+----------------------+
-      | WikiDatabase        | AWS::EC2::Instance | CREATE_COMPLETE | 2013-04-03T23:25:56Z |
-      +---------------------+--------------------+-----------------+----------------------+
+      $ openstack stack resource list MYSTACK
+      +---------------+--------------------------------------+------------------+-----------------+---------------------+
+      | resource_name | physical_resource_id                 | resource_type    | resource_status | updated_time        |
+      +---------------+--------------------------------------+------------------+-----------------+---------------------+
+      | server        | 1b3a7c13-42be-4999-a2a1-8fbefd00062b | OS::Nova::Server | CREATE_COMPLETE | 2016-06-08T09:54:15 |
+      +---------------+--------------------------------------+------------------+-----------------+---------------------+
 
 -  To show the details for a specific resource in a stack, run the
    following command:
 
    .. code-block:: console
 
-      $ heat resource-show mystack WikiDatabase
+      $ openstack stack resource show MYSTACK server
 
 -  Some resources have associated metadata which can change throughout
    the lifecycle of a resource. Show the metadata by running the
@@ -121,27 +109,25 @@ number of commands.
 
    .. code-block:: console
 
-      $ heat resource-metadata mystack WikiDatabase
+      $ openstack stack resource metadata MYSTACK server
 
 -  A series of events is generated during the lifecycle of a stack. To
    display lifecycle events, run the following command:
 
    .. code-block:: console
 
-      $ heat event-list mystack
-      +---------------------+----+------------------------+-----------------+----------------------+
-      | logical_resource_id | id | resource_status_reason | resource_status | event_time           |
-      +---------------------+----+------------------------+-----------------+----------------------+
-      | WikiDatabase        | 1  | state changed          | IN_PROGRESS     | 2013-04-03T23:22:09Z |
-      | WikiDatabase        | 2  | state changed          | CREATE_COMPLETE | 2013-04-03T23:25:56Z |
-      +---------------------+----+------------------------+-----------------+----------------------+
+      $ openstack stack event list MYSTACK
+      2016-06-08 09:54:15 [MYSTACK]: CREATE_IN_PROGRESS  Stack CREATE started
+      2016-06-08 09:54:15 [server]: CREATE_IN_PROGRESS  state changed
+      2016-06-08 09:54:41 [server]: CREATE_COMPLETE  state changed
+      2016-06-08 09:54:41 [MYSTACK]: CREATE_COMPLETE  Stack CREATE completed successfully
 
 -  To show the details for a particular event, run the following
    command:
 
    .. code-block:: console
 
-      $ heat event-show WikiDatabase 1
+      $ openstack stack event show MYSTACK server EVENT
 
 Update a stack
 ~~~~~~~~~~~~~~
@@ -151,15 +137,21 @@ like the following command:
 
 .. code-block:: console
 
-   $ heat stack-update mystack --template-file \
-     /path/to/heat/templates/WordPress_Single_Instance_v2.template \
-     --parameters "InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"
-   +--------------------------------------+---------------+-----------------+----------------------+
-   | id                                   | stack_name    | stack_status    | creation_time        |
-   +--------------------------------------+---------------+-----------------+----------------------+
-   | 4c712026-dcd5-4664-90b8-0915494c1332 | mystack       | UPDATE_COMPLETE | 2013-04-03T23:22:08Z |
-   | 7edc7480-bda5-4e1c-9d5d-f567d3b6a050 | my-otherstack | CREATE_FAILED   | 2013-04-03T23:28:20Z |
-   +--------------------------------------+---------------+-----------------+----------------------+
+   $ openstack stack update --template server_console.yaml \
+     --parameter "image=ubuntu" MYSTACK
+   +---------------------+----------------------------------------------------------------+
+   | Field               | Value                                                          |
+   +---------------------+----------------------------------------------------------------+
+   | id                  | 267a459a-a8cd-4d3e-b5a1-8c08e945764f                           |
+   | stack_name          | mystack                                                        |
+   | description         | The heat template is used to demo the 'console_urls' attribute |
+   |                     | of OS::Nova::Server.                                           |
+   |                     |                                                                |
+   | creation_time       | 2016-06-08T09:54:15                                            |
+   | updated_time        | 2016-06-08T10:41:18                                            |
+   | stack_status        | UPDATE_IN_PROGRESS                                             |
+   | stack_status_reason | Stack UPDATE started                                           |
+   +---------------------+----------------------------------------------------------------+
 
 Some resources are updated in-place, while others are replaced with new
 resources.
