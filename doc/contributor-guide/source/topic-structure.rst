@@ -19,7 +19,7 @@ any topic. Therefore, each topic represents an independent piece of
 information. Each topic states prerequisites and dependencies, if any, as
 well as providing information about the next steps.
 
-In topic-based authoring a chunk of information is called `topic`.
+In topic-based authoring, a chunk of information is called a `topic`.
 
 Structure the information around the following topics:
 
@@ -41,10 +41,10 @@ Structure the information around the following topics:
 
 **Task**
   A task topic provides a sequence of steps detailing how to achieve a
-  certain task. A section (or chapter) is the high level task topic.
+  certain task. A section (or chapter) is the high-level task topic.
 
   Typically, a section includes multiple sub-sections: task, concept, and
-  reference topics. Start the title of a high level task topic with a verb
+  reference topics. Start the title of a high-level task topic with a verb
   in gerund and the title of a subtask topic with a verb in imperative.
 
   Task topics are the most important topics in any technical documentation.
