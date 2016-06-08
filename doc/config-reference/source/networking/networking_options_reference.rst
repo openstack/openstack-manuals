@@ -73,6 +73,11 @@ Modular Layer 2 (ml2) Flat Type configuration options
 
 .. include:: ../tables/neutron-ml2_flat.rst
 
+Modular Layer 2 (ml2) Geneve Type configuration options
+-------------------------------------------------------------
+
+.. include:: ../tables/neutron-ml2_geneve.rst
+
 Modular Layer 2 (ml2) GRE Type configuration options
 ----------------------------------------------------
 
@@ -87,11 +92,6 @@ Modular Layer 2 (ml2) VXLAN Type configuration options
 ------------------------------------------------------
 
 .. include:: ../tables/neutron-ml2_vxlan.rst
-
-Modular Layer 2 (ml2) Geneve Mechanism configuration options
--------------------------------------------------------------
-
-.. include:: ../tables/neutron-ml2_geneve.rst
 
 Modular Layer 2 (ml2) OpenFlow Agent (ofagent) Mechanism configuration options
 ------------------------------------------------------------------------------
