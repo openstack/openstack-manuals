@@ -59,7 +59,7 @@ Alarm
   The comparison operator compares a selected meter statistic against
   an evaluation window of configurable length into the recent past.
 
-This example uses the :command:`heat` client to create an auto-scaling
+This example uses the :command:`openstack` client to create an auto-scaling
 stack and the :command:`ceilometer` client to measure resources.
 
 #. Create an auto-scaling stack by running the following command.
@@ -69,27 +69,20 @@ stack and the :command:`ceilometer` client to measure resources.
 
    .. code-block:: console
 
-      $ heat stack-create mystack  -f cfn/F17/AutoScalingCeilometer.yaml -P "KeyName=heat_key"
+      $ openstack stack create --template cfn/F17/AutoScalingCeilometer.yaml \
+        --parameter "KeyName=heat_key" mystack
 
 #. List the heat resources that were created:
 
    .. code-block:: console
 
-      $ heat resource-list mystack
-
-      +--------------------------+-----------------------------------------+----------------+----------------------+
-      | resource_name            | resource_type                           |resource_status | updated_time         |
-      +--------------------------+-----------------------------------------+----------------+----------------------+
-      | CfnUser                  | AWS::IAM::User                          |CREATE_COMPLETE | 2013-10-02T05:53:41Z |
-      | WebServerKeys            | AWS::IAM::AccessKey                     |CREATE_COMPLETE | 2013-10-02T05:53:42Z |
-      | LaunchConfig             | AWS::AutoScaling::LaunchConfiguration   |CREATE_COMPLETE | 2013-10-02T05:53:43Z |
-      | ElasticLoadBalancer      | AWS::ElasticLoadBalancing::LoadBalancer |UPDATE_COMPLETE | 2013-10-02T05:55:58Z |
-      | WebServerGroup           | AWS::AutoScaling::AutoScalingGroup      |CREATE_COMPLETE | 2013-10-02T05:55:58Z |
-      | WebServerScaleDownPolicy | AWS::AutoScaling::ScalingPolicy         |CREATE_COMPLETE | 2013-10-02T05:56:00Z |
-      | WebServerScaleUpPolicy   | AWS::AutoScaling::ScalingPolicy         |CREATE_COMPLETE | 2013-10-02T05:56:00Z |
-      | CPUAlarmHigh             | OS::Ceilometer::Alarm                   |CREATE_COMPLETE | 2013-10-02T05:56:02Z |
-      | CPUAlarmLow              | OS::Ceilometer::Alarm                   |CREATE_COMPLETE | 2013-10-02T05:56:02Z |
-      +--------------------------+-----------------------------------------+-----------------+---------------------+
+      $ openstack stack resource list mystack
+      +---------------+--------------------------------------+------------------+-----------------+---------------------+
+      | resource_name | physical_resource_id                 | resource_type    | resource_status | updated_time        |
+      +---------------+--------------------------------------+------------------+-----------------+---------------------+
+      | server        | 1b3a7c13-42be-4999-a2a1-8fbefd00062b | OS::Nova::Server | CREATE_COMPLETE | 2013-10-02T05:53:41Z |
+      | ...           | ...                                  | ...              | ...             | ...                  |
+      +---------------+--------------------------------------+------------------+-----------------+---------------------+
 
 #. List the alarms that are set:
 
