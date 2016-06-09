@@ -10,7 +10,6 @@ These options can also be set in the ``cinder.conf`` file.
 .. include:: ../tables/cinder-auth_token.rst
 .. include:: ../tables/cinder-backups.rst
 .. include:: ../tables/cinder-block-device.rst
-.. include:: ../tables/cinder-cloudbyte.rst
 .. include:: ../tables/cinder-coho.rst
 .. include:: ../tables/cinder-common.rst
 .. include:: ../tables/cinder-compute.rst
