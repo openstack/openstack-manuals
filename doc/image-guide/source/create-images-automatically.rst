@@ -168,6 +168,14 @@ Packer
 `Packer <https://packer.io>`_ is a tool for creating machine
 images for multiple platforms from a single source configuration.
 
+image-bootstrap
+~~~~~~~~~~~~~~~
+
+`image-bootstrap <https://github.com/hartwork/image-bootstrap>`_
+is a command line tool that generates bootable virtual machine images
+with support of Arch, Debian, Gentoo, Ubuntu, and is prepared for use
+with OpenStack.
+
 imagefactory
 ~~~~~~~~~~~~
 
