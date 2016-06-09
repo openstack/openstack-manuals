@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _cinder-storage_glusterfs:
+.. _cinder-backups_glusterfs:
 
-.. list-table:: Description of GlusterFS storage configuration options
+.. list-table:: Description of backups_glusterfs configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,9 +18,7 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``glusterfs_mount_point_base`` = ``$state_path/mnt``
-     - (String) Base dir containing mount points for gluster shares.
-   * - ``glusterfs_shares_config`` = ``/etc/cinder/glusterfs_shares``
-     - (String) File with the list of available gluster shares
-   * - ``nas_volume_prov_type`` = ``thin``
-     - (String) Provisioning type that will be used when creating volumes.
+   * - ``glusterfs_backup_mount_point`` = ``$state_path/backup_mount``
+     - (String) Base dir containing mount point for gluster share.
+   * - ``glusterfs_backup_share`` = ``None``
+     - (String) GlusterFS share in <hostname|ipv4addr|ipv6addr>:<gluster_vol_name> format. Eg: 1.2.3.4:backup_vol

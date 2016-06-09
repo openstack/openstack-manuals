@@ -6,7 +6,9 @@ Backup drivers
 
    backup/ceph-backup-driver.rst
    backup/gcs-backup-driver.rst
+   backup/glusterfs-backup-driver.rst
    backup/nfs-backup-driver.rst
+   backup/posix-backup-driver.rst
    backup/swift-backup-driver.rst
    backup/tsm-backup-driver.rst
 
