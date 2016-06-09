@@ -25,6 +25,7 @@ Contents
    docs-structure.rst
    content-specs.rst
    api-guides.rst
+   project-install-guide
    topic-structure.rst
    topic-tags.rst
    writing-style.rst
