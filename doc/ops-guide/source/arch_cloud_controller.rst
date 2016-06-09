@@ -190,8 +190,7 @@ Message Queue
 ~~~~~~~~~~~~~
 
 Most OpenStack services communicate with each other using the *message
-queue*.messages design considerationsdesign considerations message
-queues For example, Compute communicates to block storage services and
+queue*. For example, Compute communicates to block storage services and
 networking services through the message queue. Also, you can optionally
 enable notifications for any service. RabbitMQ, Qpid, and Zeromq are all
 popular choices for a message-queue service. In general, if the message
