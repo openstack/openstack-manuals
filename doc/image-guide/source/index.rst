@@ -22,6 +22,7 @@ Contents
    create-images-manually.rst
    create-images-automatically.rst
    convert-images.rst
+   share-images.rst
 
 Appendix
 ~~~~~~~~
