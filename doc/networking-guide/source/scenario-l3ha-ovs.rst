@@ -20,8 +20,8 @@ of routers on different network nodes to reduce the chances of bandwidth
 constraints and to improve scaling. Also, this implementation does not address
 situations where one or more layer-3 agents fail and the underlying virtual
 networks continue to operate normally. Consider deploying
-ref:`scenario-dvr-ovs` to increase performance in addition to redundancy. As
-of the Liberty release, you cannot combine the DVR and L3HA mechanisms.
+:ref:`scenario-dvr-ovs` to increase performance in addition to redundancy.
+As of the Liberty release, you cannot combine the DVR and L3HA mechanisms.
 
 .. note::
 
