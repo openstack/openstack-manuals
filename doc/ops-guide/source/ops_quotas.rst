@@ -365,13 +365,13 @@ commands, which are provided by the
 
    .. code-block:: console
 
-      $ cinder quota-defaults
+      $ cinder quota-defaults tenantID
 
    For example:
 
    .. code-block:: console
 
-      $ cinder quota-defaults
+      $ cinder quota-defaults tenantID
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+
