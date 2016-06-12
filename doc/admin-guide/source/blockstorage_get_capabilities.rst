@@ -214,7 +214,8 @@ Add volume type access for the given demo project, using its project-id:
 
 .. code-block:: console
 
-   $ cinder type-access-add --volume-type vol_Type2 --project-id c4860af62ffe465e99ed1bc08ef6082e
+   $ cinder type-access-add --volume-type vol_Type2 --project-id \
+     c4860af62ffe465e99ed1bc08ef6082e
 
 List the access information about the given volume type:
 
