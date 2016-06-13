@@ -855,6 +855,16 @@ the ``/etc/nova/nova.conf`` file:
      - ``io_ops_weight_multiplier``
      - Multiplier used for weighing host I/O operations. A negative
        value means a preference to choose light workload compute hosts.
+   * - [DEFAULT]
+     - ``soft_affinity_weight_multiplier``
+     - Multiplier used for weighing hosts for group soft-affinity.
+       Only a positive value is meaningful. Negative means that the
+       behavior will change to the opposite, which is soft-anti-affinity.
+   * - [DEFAULT]
+     - ``soft_anti_affinity_weight_multiplier``
+     - Multiplier used for weighing hosts for group soft-anti-affinity.
+       Only a positive value is meaningful. Negative means that the
+       behavior will change to the opposite, which is soft-affinity.
    * - [metrics]
      - ``weight_multiplier``
      - Multiplier for weighting meters. Use a floating-point value.
@@ -887,6 +897,8 @@ For example:
    scheduler_weight_classes = nova.scheduler.weights.all_weighers
    ram_weight_multiplier = 1.0
    io_ops_weight_multiplier = 2.0
+   soft_affinity_weight_multiplier = 1.0
+   soft_anti_affinity_weight_multiplier = 1.0
    [metrics]
    weight_multiplier = 1.0
    weight_setting = name1=1.0, name2=-1.0
