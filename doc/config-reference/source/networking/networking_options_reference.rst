@@ -13,39 +13,16 @@ for the various networking plug-ins.
 Networking plug-ins
 ~~~~~~~~~~~~~~~~~~~
 
-OpenStack Networking introduces the concept of a
-plug-in, which is a back-end implementation of the
-OpenStack Networking API. A plug-in can use a
-variety of technologies to implement the logical API
-requests. Some OpenStack Networking plug-ins might
-use basic Linux VLANs and IP tables, while others
-might use more advanced technologies, such as
-L2-in-L3 tunneling or OpenFlow. These sections
-detail the configuration options for the various
-plug-ins.
+OpenStack Networking introduces the concept of a plug-in,
+which is a back-end implementation of the OpenStack Networking API.
+A plug-in can use a variety of technologies to implement the logical
+API requests. Some OpenStack Networking plug-ins might use basic
+Linux VLANs and IP tables, while others might use more advanced
+technologies, such as L2-in-L3 tunneling or OpenFlow. These sections
+detail the configuration options for the various plug-ins.
 
-Layer 2 Gateway configuration options
--------------------------------------
-
-.. include:: ../tables/neutron-l2_agent.rst
-
-Linux bridge Agent configuration options
-----------------------------------------
-
-.. include:: ../tables/neutron-linuxbridge_agent.rst
-
-Open vSwitch Agent configuration options
-----------------------------------------
-
-.. include:: ../tables/neutron-openvswitch_agent.rst
-
-IPv6 Prefix Delegation configuration options
---------------------------------------------
-
-.. include:: ../tables/neutron-pd_linux_agent.rst
-
-Modular Layer 2 (ml2) configuration options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Modular Layer 2 (ml2) plug-in configuration options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Modular Layer 2 (ml2) plug-in has two components:
 network types and mechanisms. You can configure these
@@ -160,6 +137,26 @@ Agent
 Use the following options to alter agent-related settings.
 
 .. include:: ../tables/neutron-agent.rst
+
+Layer 2 agent configuration options
+-----------------------------------
+
+.. include:: ../tables/neutron-l2_agent.rst
+
+Linux Bridge agent configuration options
+----------------------------------------
+
+.. include:: ../tables/neutron-linuxbridge_agent.rst
+
+Open vSwitch agent configuration options
+----------------------------------------
+
+.. include:: ../tables/neutron-openvswitch_agent.rst
+
+IPv6 Prefix Delegation configuration options
+--------------------------------------------
+
+.. include:: ../tables/neutron-pd_linux_agent.rst
 
 API
 ~~~
