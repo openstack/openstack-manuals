@@ -856,6 +856,7 @@ or run this from the command line:
 
 .. code-block:: console
 
+   $ cinder help snapshot-create
    usage: cinder snapshot-create [--force <True|False>]
    [--display-name <display-name>]
    [--display-description <display-description>]
