@@ -9,7 +9,7 @@ Clustering service command-line client
 The senlin client is the command-line interface (CLI) for
 the Clustering service API and its extensions.
 
-This chapter documents :command:`senlin` version ``0.4.1``.
+This chapter documents :command:`senlin` version ``0.5.0``.
 
 For help on a specific :command:`senlin` command, enter:
 
@@ -41,7 +41,7 @@ senlin usage
                  [--os-api-name <service>=<name>]
                  [--os-api-region <service>=<region>]
                  [--os-api-version <service>=<version>]
-                 [--os-api-interface <service>=<interface>]
+                 [--os-api-interface <service>=<interface>] [--profile HMAC_KEY]
                  <subcommand> ...
 
 **Subcommands:**
@@ -306,10 +306,19 @@ senlin optional arguments
 ``--os-api-interface <service>=<interface>``
   Desired API interface, defaults to ``env[OS_INTERFACE]``
 
+``--profile HMAC_KEY``
+  HMAC key to use for encrypting context data for
+  performance profiling of operation. This key should be
+  the value of HMAC key configured in osprofiler
+  middleware in senlin, it is specified in the paste
+  deploy configuration (/etc/senlin/api-paste.ini).
+  Without the key, profiling will not be triggered even
+  if osprofiler is enabled on server side.
+
 .. _senlin_action-list:
 
 senlin action-list
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -328,7 +337,7 @@ List actions.
 ``-o <KEY:DIR>, --sort <KEY:DIR>``
   Sorting option which is a string containing a list of
   keys separated by commas. Each key can be optionally
-  appened by a sort direction (:asc or :desc)
+  appended by a sort direction (:asc or :desc)
 
 ``-l <LIMIT>, --limit <LIMIT>``
   Limit the number of actions returned.
@@ -343,7 +352,7 @@ List actions.
 .. _senlin_action-show:
 
 senlin action-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -359,7 +368,7 @@ Show detailed info about the specified action.
 .. _senlin_build-info:
 
 senlin build-info
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -371,7 +380,7 @@ Additional command line arguments, if any.
 .. _senlin_cluster-check:
 
 senlin cluster-check
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -387,7 +396,7 @@ Check the cluster(s).
 .. _senlin_cluster-create:
 
 senlin cluster-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -430,7 +439,7 @@ Create the cluster.
 .. _senlin_cluster-delete:
 
 senlin cluster-delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -446,7 +455,7 @@ Delete the cluster(s).
 .. _senlin_cluster-list:
 
 senlin cluster-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -465,7 +474,7 @@ List the user's clusters.
 ``-o <KEY:DIR>, --sort <KEY:DIR>``
   Sorting option which is a string containing a list of
   keys separated by commas. Each key can be optionally
-  appened by a sort direction (:asc or :desc)
+  appended by a sort direction (:asc or :desc)
 
 ``-l <LIMIT>, --limit <LIMIT>``
   Limit the number of clusters returned.
@@ -485,7 +494,7 @@ List the user's clusters.
 .. _senlin_cluster-node-add:
 
 senlin cluster-node-add
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -507,7 +516,7 @@ Add specified nodes to cluster.
 .. _senlin_cluster-node-del:
 
 senlin cluster-node-del
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -529,7 +538,7 @@ Delete specified nodes from cluster.
 .. _senlin_cluster-node-list:
 
 senlin cluster-node-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -563,7 +572,7 @@ List nodes from cluster.
 .. _senlin_cluster-policy-attach:
 
 senlin cluster-policy-attach
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -588,7 +597,7 @@ Attach policy to cluster.
 .. _senlin_cluster-policy-detach:
 
 senlin cluster-policy-detach
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -609,7 +618,7 @@ Detach policy from cluster.
 .. _senlin_cluster-policy-list:
 
 senlin cluster-policy-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -634,7 +643,7 @@ List policies from cluster.
 ``-o <SORT_STRING>, --sort <SORT_STRING>``
   Sorting option which is a string containing a list of
   keys separated by commas. Each key can be optionally
-  appened by a sort direction (:asc or :desc)
+  appended by a sort direction (:asc or :desc)
 
 ``-F, --full-id``
   Print full IDs in list.
@@ -642,7 +651,7 @@ List policies from cluster.
 .. _senlin_cluster-policy-show:
 
 senlin cluster-policy-show
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -663,7 +672,7 @@ Show a specific policy that is bound to the specified cluster.
 .. _senlin_cluster-policy-update:
 
 senlin cluster-policy-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -687,7 +696,7 @@ Update a policy's properties on a cluster.
 .. _senlin_cluster-recover:
 
 senlin cluster-recover
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -703,7 +712,7 @@ Recover the cluster(s).
 .. _senlin_cluster-resize:
 
 senlin cluster-resize
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -752,7 +761,7 @@ Resize a cluster.
 .. _senlin_cluster-scale-in:
 
 senlin cluster-scale-in
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -774,7 +783,7 @@ Scale in a cluster by the specified number of nodes.
 .. _senlin_cluster-scale-out:
 
 senlin cluster-scale-out
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -795,7 +804,7 @@ Scale out a cluster by the specified number of nodes.
 .. _senlin_cluster-show:
 
 senlin cluster-show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -811,7 +820,7 @@ Show details of the cluster.
 .. _senlin_cluster-update:
 
 senlin cluster-update
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -845,7 +854,7 @@ Update the cluster.
 .. _senlin_event-list:
 
 senlin event-list
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -871,7 +880,7 @@ List events.
 ``-o <KEY:DIR>, --sort <KEY:DIR>``
   Sorting option which is a string containing a list of
   keys separated by commas. Each key can be optionally
-  appened by a sort direction (:asc or :desc)
+  appended by a sort direction (:asc or :desc)
 
 ``-g, --global-project``
   Whether events from all projects should be listed.
@@ -884,7 +893,7 @@ List events.
 .. _senlin_event-show:
 
 senlin event-show
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -900,7 +909,7 @@ Describe the event.
 .. _senlin_node-check:
 
 senlin node-check
-~~~~~~~~~~~~~~~~~
+-----------------
 
 .. code-block:: console
 
@@ -916,7 +925,7 @@ Check the node(s).
 .. _senlin_node-create:
 
 senlin node-create
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -950,7 +959,7 @@ Create the node.
 .. _senlin_node-delete:
 
 senlin node-delete
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -966,7 +975,7 @@ Delete the node(s).
 .. _senlin_node-list:
 
 senlin node-list
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -989,7 +998,7 @@ Show list of nodes.
 ``-o <KEY:DIR>, --sort <KEY:DIR>``
   Sorting option which is a string containing a list of
   keys separated by commas. Each key can be optionally
-  appened by a sort direction (:asc or :desc)
+  appended by a sort direction (:asc or :desc)
 
 ``-l <LIMIT>, --limit <LIMIT>``
   Limit the number of nodes returned.
@@ -1008,7 +1017,7 @@ Show list of nodes.
 .. _senlin_node-recover:
 
 senlin node-recover
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1024,7 +1033,7 @@ Recover the node(s).
 .. _senlin_node-show:
 
 senlin node-show
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -1045,7 +1054,7 @@ Show detailed info about the specified node.
 .. _senlin_node-update:
 
 senlin node-update
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1079,7 +1088,7 @@ Update the node.
 .. _senlin_policy-create:
 
 senlin policy-create
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1100,7 +1109,7 @@ Create a policy.
 .. _senlin_policy-delete:
 
 senlin policy-delete
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1116,7 +1125,7 @@ Delete policy(s).
 .. _senlin_policy-list:
 
 senlin policy-list
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1141,7 +1150,7 @@ List policies that meet the criteria.
 ``-o <KEY:DIR>, --sort <KEY:DIR>``
   Sorting option which is a string containing a list of
   keys separated by commas. Each key can be optionally
-  appened by a sort direction (:asc or :desc)
+  appended by a sort direction (:asc or :desc)
 
 ``-g, --global-project``
   Indicate that the list should include policies from
@@ -1154,7 +1163,7 @@ List policies that meet the criteria.
 .. _senlin_policy-show:
 
 senlin policy-show
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
@@ -1170,7 +1179,7 @@ Show the policy details.
 .. _senlin_policy-type-list:
 
 senlin policy-type-list
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1181,7 +1190,7 @@ List the available policy types.
 .. _senlin_policy-type-show:
 
 senlin policy-type-show
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1202,7 +1211,7 @@ Get the details about a policy type.
 .. _senlin_policy-update:
 
 senlin policy-update
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1223,7 +1232,7 @@ Update a policy.
 .. _senlin_profile-create:
 
 senlin profile-create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1250,7 +1259,7 @@ Create a profile.
 .. _senlin_profile-delete:
 
 senlin profile-delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1266,7 +1275,7 @@ Delete profile(s).
 .. _senlin_profile-list:
 
 senlin profile-list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1291,7 +1300,7 @@ List profiles that meet the criteria.
 ``-o <KEY:DIR>, --sort <KEY:DIR>``
   Sorting option which is a string containing a list of
   keys separated by commas. Each key can be optionally
-  appened by a sort direction (:asc or :desc)
+  appended by a sort direction (:asc or :desc)
 
 ``-g, --global-project``
   Indicate that the list should include profiles from
@@ -1304,7 +1313,7 @@ List profiles that meet the criteria.
 .. _senlin_profile-show:
 
 senlin profile-show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -1320,7 +1329,7 @@ Show the profile details.
 .. _senlin_profile-type-list:
 
 senlin profile-type-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1332,7 +1341,7 @@ args: Additional command line arguments, if any.
 .. _senlin_profile-type-show:
 
 senlin profile-type-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1353,7 +1362,7 @@ Get the details about a profile type.
 .. _senlin_profile-update:
 
 senlin profile-update
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1380,7 +1389,7 @@ Update a profile.
 .. _senlin_receiver-create:
 
 senlin receiver-create
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -1413,7 +1422,7 @@ Create a receiver.
 .. _senlin_receiver-delete:
 
 senlin receiver-delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -1429,7 +1438,7 @@ Delete receiver(s).
 .. _senlin_receiver-list:
 
 senlin receiver-list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -1454,7 +1463,7 @@ List receivers that meet the criteria.
 ``-o <KEY:DIR>, --sort <KEY:DIR>``
   Sorting option which is a string containing a list of
   keys separated by commas. Each key can be optionally
-  appened by a sort direction (:asc or :desc)
+  appended by a sort direction (:asc or :desc)
 
 ``-g, --global-project``
   Indicate that the list should include receivers from
@@ -1467,7 +1476,7 @@ List receivers that meet the criteria.
 .. _senlin_receiver-show:
 
 senlin receiver-show
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
