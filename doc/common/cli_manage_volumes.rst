@@ -51,7 +51,6 @@ This example creates a ``my-new-volume`` volume based on an image.
    .. code-block:: console
 
       $ nova image-list
-
       +-----------------------+---------------------------------+--------+--------------------------+
       | ID                    | Name                            | Status | Server                   |
       +-----------------------+---------------------------------+--------+--------------------------+
@@ -68,7 +67,6 @@ This example creates a ``my-new-volume`` volume based on an image.
    .. code-block:: console
 
       $ cinder availability-zone-list
-
       +------+-----------+
       | Name |   Status  |
       +------+-----------+
@@ -80,9 +78,9 @@ This example creates a ``my-new-volume`` volume based on an image.
 
    .. code-block:: console
 
-      $ cinder create 8 --display-name my-new-volume --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 --availability-zone nova
-
-
+      $ cinder create 8 --display-name my-new-volume \
+        --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 \
+        --availability-zone nova
       +---------------------+--------------------------------------+
       |       Property      |                Value                 |
       +---------------------+--------------------------------------+
@@ -108,7 +106,6 @@ This example creates a ``my-new-volume`` volume based on an image.
    .. code-block:: console
 
       $ cinder list
-
       +-----------------+-----------+-----------------+------+-------------+----------+-------------+
       |    ID           |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
       +-----------------+-----------+-----------------+------+-------------+----------+-------------+
@@ -246,8 +243,8 @@ Attach a volume to an instance
 
    .. code-block:: console
 
-      $ nova volume-attach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 573e024d-5235-49ce-8332-be1576d323f8 /dev/vdb
-
+      $ nova volume-attach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 \
+        573e024d-5235-49ce-8332-be1576d323f8 /dev/vdb
       +----------+--------------------------------------+
       | Property | Value                                |
       +----------+--------------------------------------+
@@ -583,7 +580,8 @@ Manage a snapshot with the :command:`cinder snapshot-manage` command:
 
 .. code-block:: console
 
-   $ cinder snapshot-manage VOLUME_ID IDENTIFIER --id-type ID-TYPE --name NAME --description DESCRIPTION --metadata METADATA
+   $ cinder snapshot-manage VOLUME_ID IDENTIFIER --id-type ID-TYPE \
+     --name NAME --description DESCRIPTION --metadata METADATA
 
 The arguments to be passed are:
 
