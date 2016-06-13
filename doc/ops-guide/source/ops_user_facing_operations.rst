@@ -1416,7 +1416,8 @@ If you do not need a share any more, you can delete it using
 
 .. code-block:: console
 
-   $ manila delete ba52454e-2ea3-47fa-a683-3176a01295e6 --consistency-group ffee08d9-c86c-45e5-861e-175c731daca2
+   $ manila delete ba52454e-2ea3-47fa-a683-3176a01295e6 --consistency-group \
+     ffee08d9-c86c-45e5-861e-175c731daca2
 
 Sometimes it appears that a share hangs in one of transitional states
 (i.e.
@@ -1523,7 +1524,9 @@ subnetwork.
 
 .. code-block:: console
 
-   $ manila share-network-create --neutron-net-id 5ed5a854-21dc-4ed3-870a-117b7064eb21 --neutron-subnet-id 74dcfb5a-b4d7-4855-86f5-a669729428dc --name my_share_net --description "My first share network"
+   $ manila share-network-create --neutron-net-id 5ed5a854-21dc-4ed3-870a-117b7064eb21 \
+     --neutron-subnet-id 74dcfb5a-b4d7-4855-86f5-a669729428dc --name my_share_net \
+     --description "My first share network"
    +-------------------+--------------------------------------+
    | Property          | Value                                |
    +-------------------+--------------------------------------+
