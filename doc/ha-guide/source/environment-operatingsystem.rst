@@ -13,6 +13,12 @@ Follow the instructions in the OpenStack Installation Guides:
 The OpenStack Installation Guides also include a list of the services
 that use passwords with important notes about using them.
 
+.. note::
+
+   Before following this guide to configure the highly available
+   OpenStack cluster, ensure the IP ``10.0.0.11`` and hostname
+   ``controller`` are not in use.
+
 This guide uses the following example IP addresses:
 
 .. code-block:: none
