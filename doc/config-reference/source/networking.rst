@@ -5,6 +5,9 @@ Networking
 .. toctree::
 
    networking/networking_options_reference.rst
+   networking/fwaas.rst
+   networking/lbaas.rst
+   networking/vpnaas.rst
    networking/logs.rst
    networking/sample-configuration-files.rst
    networking/sample-configuration-files-advanced.rst
