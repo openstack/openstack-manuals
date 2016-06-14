@@ -17,6 +17,7 @@ Contents
    :maxdepth: 2
 
    config-overview.rst
+   common-configurations.rst
 
    bare-metal.rst
    block-storage.rst
