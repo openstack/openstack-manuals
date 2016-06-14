@@ -690,7 +690,8 @@ rule. To make it do what we want, we need to add some rules:
 
 .. code-block:: console
 
-   $ neutron security-group-rule-create [-h]
+   $ neutron help security-group-rule-create
+   neutron security-group-rule-create [-h]
                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent] [--prefix PREFIX]
