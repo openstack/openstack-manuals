@@ -1,28 +1,26 @@
 .. _config-sriov:
 
-==========================
-Using SR-IOV functionality
-==========================
+======
+SR-IOV
+======
 
-The purpose of this page is to describe how to enable SR-IOV
-functionality available in OpenStack (using OpenStack Networking) as of
-the Juno release. This page serves as a how-to guide on configuring
-OpenStack Networking and OpenStack Compute to create neutron SR-IOV ports.
+The purpose of this page is to describe how to enable SR-IOV functionality
+available in OpenStack (using OpenStack Networking) as of the Juno release. It
+is intended to server as a guide for how to configure OpenStack Networking and
+OpenStack Compute to create SR-IOV ports.
 
 The basics
 ~~~~~~~~~~
 
-PCI-SIG Single Root I/O Virtualization and Sharing (SR-IOV)
-specification defines a standardized mechanism to virtualize PCIe devices.
-The mechanism can virtualize a single PCIe Ethernet controller to appear as
-multiple PCIe devices. You can directly assign each virtual PCIe device to
-a VM, bypassing the hypervisor and virtual switch layer. As a result, users
-are able to achieve low latency and near-line wire speed.
+PCI-SIG Single Root I/O Virtualization and Sharing (SR-IOV) functionality is
+available in OpenStack since the Juno release. The SR-IOV specification
+defines a standardized mechanism to virtualize PCIe devices. This mechanism
+can virtualize a single PCIe Ethernet controller to appear as multiple PCIe
+devices. Each device can be directly assigned to an instance, bypassing the
+hypervisor and virtual switch layer. As a result, users are able to achieve
+low latency and near-line wire speed.
 
-SR-IOV with ethernet
-~~~~~~~~~~~~~~~~~~~~
-
-The following terms are used over the document:
+The following terms are used throughout this document:
 
 .. list-table::
    :header-rows: 1
@@ -31,12 +29,48 @@ The following terms are used over the document:
    * - Term
      - Definition
    * - PF
-     - Physical Function. This is the physical Ethernet controller
-       that supports SR-IOV.
+     - Physical Function. The physical Ethernet controller that supports
+       SR-IOV.
    * - VF
-     - Virtual Function. This is a virtual PCIe device created
-       from a physical Ethernet controller.
+     - Virtual Function. The virtual PCIe device created from a physical
+       Ethernet controller.
 
+SR-IOV agent
+------------
+
+The SR-IOV agent allows you to set the admin state of ports, configure port
+security (enable and disable spoof checking), and configure QoS rate limiting.
+You must include the SR-IOV agent on each compute node using SR-IOV ports.
+
+.. note::
+
+   The SR-IOV agent was optional before Mitaka, and was not enabled by default
+   before Liberty.
+
+.. note::
+
+   The ability to control port security and QoS rate limit settings was added
+   in Liberty.
+
+Supported Ethernet controllers
+------------------------------
+
+The following manufacturers are known to work:
+
+- Intel
+- Mellanox
+- QLogic
+
+For information on **Mellanox SR-IOV Ethernet cards** see:
+`Mellanox: How To Configure SR-IOV VFs
+<https://community.mellanox.com/docs/DOC-1484>`_
+
+For information on **QLogic SR-IOV Ethernet cards** see:
+`User's Guide OpenStack Deployment with SR-IOV Configuration
+<http://www.qlogic.com/solutions/Documents/UsersGuide_OpenStack_SR-IOV.pdf>`_
+
+Using SR-IOV interfaces
+~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to enable SR-IOV, the following steps are required:
 
@@ -46,97 +80,44 @@ In order to enable SR-IOV, the following steps are required:
 #. Configure nova-scheduler (Controller)
 #. Enable neutron sriov-agent (Compute)
 
-**Neutron sriov-agent**
-
-Neutron sriov-agent is required since Mitaka release.
-
-Neutron sriov-agent allows you to set the admin state of ports and
-starting from Liberty allows you to control
-port security (enable and disable spoof checking) and QoS rate limit settings.
+We recommend using VLAN provider networks for segregation. This way you can
+combine instances without SR-IOV ports and instances with SR-IOV ports on a
+single network.
 
 .. note::
 
-   Neutron sriov-agent was optional before Mitaka, and was not
-   enabled by default before Liberty.
-
-Known limitations
------------------
-
-* QoS is supported since Liberty, while it has limitations.
-  ``max_burst_kbps`` (burst over ``max_kbps``) is not supported.
-  ``max_kbps`` is rounded to Mbps.
-* Security Group is not supported. the agent is only working with
-  ``firewall_driver = neutron.agent.firewall.NoopFirewallDriver``.
-* No OpenStack Dashboard integration. Users need to use CLI or API to
-  create neutron SR-IOV ports.
-* Live migration is not supported for instances with SR-IOV ports.
-* ARP spoofing filtering was not supported before Mitaka when using
-  neutron sriov-agent.
-
-Environment example
--------------------
-We recommend using Open vSwitch with VLAN as segregation. This
-way you can combine normal VMs without SR-IOV ports
-and instances with SR-IOV ports on a single neutron
-network.
-
-.. note::
-
-   Throughout this guide, eth3 is used as the PF and
-   physnet2 is used as the provider network configured as a VLAN range.
-   You are expected to change this according to your actual
-   environment.
-
+   Throughout this guide, ``eth3`` is used as the PF and ``physnet2`` is used
+   as the provider network configured as a VLAN range. These ports may vary in
+   different environments.
 
 Create Virtual Functions (Compute)
 ----------------------------------
-In this step, create the VFs for the network
-interface that will be used for SR-IOV.
-Use eth3 as PF, which is also used
-as the interface for Open vSwitch VLAN and has access
-to the private networks of all machines.
 
-The step to create VFs differ between SR-IOV card Ethernet controller
-manufacturers. Currently the following manufacturers are known to work:
+Create the VFs for the network interface that will be used for SR-IOV. We use
+``eth3`` as PF, which is also used as the interface for the VLAN provider
+network and has access to the private networks of all machines.
 
-- Intel
-- Mellanox
-- QLogic
+.. note::
 
-For **Mellanox SR-IOV Ethernet cards** see:
-`Mellanox: HowTo Configure SR-IOV VFs
-<https://community.mellanox.com/docs/DOC-1484>`_
+   The steps detail how to create VFs using **Intel SR-IOV Ethernet cards** on
+   an Intel system. Steps may differ for different hardware configurations.
 
-To create the VFs on Ubuntu for **Intel SR-IOV Ethernet cards**,
-do the following:
+#. Ensure SR-IOV and VT-d are enabled in BIOS.
 
-#. Make sure SR-IOV is enabled in BIOS, check for VT-d and
-   make sure it is enabled. After enabling VT-d, enable IOMMU on
-   Linux by adding ``intel_iommu=on`` to kernel parameters. Edit the file
-   ``/etc/default/grub``:
-
-   .. code-block:: ini
-
-      GRUB_CMDLINE_LINUX_DEFAULT="nomdmonddf nomdmonisw intel_iommu=on
-
-#. Run the following if you have added new parameters:
-
-   .. code-block:: console
-
-      # update-grub
-      # reboot
+#. Enable IOMMU in Linux by adding ``intel_iommu=on`` to the kernel parameters,
+   for example, using GRUB.
 
 #. On each compute node, create the VFs via the PCI SYS interface:
 
    .. code-block:: console
 
-      # echo '7' > /sys/class/net/eth3/device/sriov_numvfs
+      # echo '8' > /sys/class/net/eth3/device/sriov_numvfs
 
    .. note::
 
       On some PCI devices, observe that when changing the amount of VFs you
-      receive the error ``Device or resource busy``. In this case, you first
-      need to set ``sriov_numvfs`` to ``0``, then set it to your new value.
+      receive the error ``Device or resource busy``. In this case, you must
+      first set ``sriov_numvfs`` to ``0``, then set it to your new value.
 
    .. warning::
 
@@ -152,12 +133,24 @@ do the following:
       # cat /sys/class/net/eth3/device/sriov_totalvfs
       63
 
-   If the interface is down, make sure it is set to ``up`` before launching a
-   guest, otherwise the instance will fail to spawn:
+#. Verify that the VFs have been created and are in ``up`` state:
 
    .. code-block:: console
 
-      # ip link set eth3 up
+      # lspci | grep Ethernet
+      82:00.0 Ethernet controller: Intel Corporation 82599ES 10-Gigabit SFI/SFP+ Network Connection (rev 01)
+      82:00.1 Ethernet controller: Intel Corporation 82599ES 10-Gigabit SFI/SFP+ Network Connection (rev 01)
+      82:10.0 Ethernet controller: Intel Corporation 82599 Ethernet Controller Virtual Function (rev 01)
+      82:10.2 Ethernet controller: Intel Corporation 82599 Ethernet Controller Virtual Function (rev 01)
+      82:10.4 Ethernet controller: Intel Corporation 82599 Ethernet Controller Virtual Function (rev 01)
+      82:10.6 Ethernet controller: Intel Corporation 82599 Ethernet Controller Virtual Function (rev 01)
+      82:11.0 Ethernet controller: Intel Corporation 82599 Ethernet Controller Virtual Function (rev 01)
+      82:11.2 Ethernet controller: Intel Corporation 82599 Ethernet Controller Virtual Function (rev 01)
+      82:11.4 Ethernet controller: Intel Corporation 82599 Ethernet Controller Virtual Function (rev 01)
+      82:11.6 Ethernet controller: Intel Corporation 82599 Ethernet Controller Virtual Function (rev 01)
+
+   .. code-block:: console
+
       # ip link show eth3
       8: eth3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT qlen 1000
          link/ether a0:36:9f:8f:3f:b8 brd ff:ff:ff:ff:ff:ff
@@ -170,12 +163,12 @@ do the following:
          vf 6 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
          vf 7 MAC 00:00:00:00:00:00, spoof checking on, link-state auto
 
-#. Now verify that the VFs have been created (should see Virtual Function
-   device):
+   If the interfaces are down, set them to ``up`` before launching a guest,
+   otherwise the instance will fail to spawn:
 
    .. code-block:: console
 
-      # lspci | grep Ethernet
+      # ip link set eth3 up
 
 #. Persist created VFs on reboot:
 
@@ -183,72 +176,70 @@ do the following:
 
       # echo "echo '7' > /sys/class/net/eth3/device/sriov_numvfs" >> /etc/rc.local
 
-
    .. note::
 
-      The suggested way of making PCI SYS settings persistent
-      is through :file:`sysfs.conf` but for unknown reason
-      changing :file:`sysfs.conf` does not have any effect on Ubuntu 14.04.
-
-For **QLogic SR-IOV Ethernet cards** see:
-`User's Guide OpenStack Deployment with SR-IOV Configuration
-<http://www.qlogic.com/solutions/Documents/UsersGuide_OpenStack_SR-IOV.pdf>`_
-
+      The suggested way of making PCI SYS settings persistent is through
+      the ``sysfsutils`` tool. However, this is not available by default on
+      many major distributions.
 
 Whitelist PCI devices nova-compute (Compute)
 --------------------------------------------
 
-Tell ``nova-compute`` which pci devices are allowed to be passed
-through. Edit the file ``nova.conf``:
+#. Configure which PCI devices the ``nova-compute`` service may use. Edit
+   the ``nova.conf`` file:
 
-.. code-block:: ini
+   .. code-block:: ini
 
-   [default]
-   pci_passthrough_whitelist = { "devname": "eth3", "physical_network": "physnet2"}
+      [default]
+      pci_passthrough_whitelist = { "devname": "eth3", "physical_network": "physnet2"}
 
-This tells nova that all VFs belonging to eth3 are allowed to be passed
-through to VMs and belong to the neutron provider network physnet2. Restart
-the ``nova-compute`` service for the changes to go into effect.
+   This tells the Compute service that all VFs belonging to ``eth3`` are
+   allowed to be passed through to instances and belong to the provider network
+   ``physnet2``.
 
-Alternatively the ``pci_passthrough_whitelist`` parameter also supports
-whitelisting by:
+   Alternatively the ``pci_passthrough_whitelist`` parameter also supports
+   whitelisting by:
 
-- PCI address: The address uses the same syntax as in ``lspci`` and an
-  asterisk (*) can be used to match anything.
+   - PCI address: The address uses the same syntax as in ``lspci`` and an
+     asterisk (*) can be used to match anything.
 
-  .. code-block:: ini
+     .. code-block:: ini
 
-     pci_passthrough_whitelist = { "address": "[[[[<domain>]:]<bus>]:][<slot>][.[<function>]]", "physical_network": "physnet2" }
+        pci_passthrough_whitelist = { "address": "[[[[<domain>]:]<bus>]:][<slot>][.[<function>]]", "physical_network": "physnet2" }
 
-     # Example match any domain, bus 0a, slot 00, all function
-     pci_passthrough_whitelist = { "address": "*:0a:00.*", "physical_network": "physnet2" }
+     For example, to match any domain, bus 0a, slot 00, and all functions:
 
-- PCI ``vendor_id`` and ``product_id`` as displayed by the Linux utility
-  ``lspci``.
+     .. code-block: ini
 
-  .. code-block:: ini
+        pci_passthrough_whitelist = { "address": "*:0a:00.*", "physical_network": "physnet2" }
 
-     pci_passthrough_whitelist = { "vendor_id": "<id>", "product_id": "<id>",
-                                   "physical_network": "physnet2"}
+   - PCI ``vendor_id`` and ``product_id`` as displayed by the Linux utility
+     ``lspci``.
 
+     .. code-block:: ini
 
-If the device defined by the PCI address or devname corresponds to a SR-IOV PF,
-all VFs under the PF will match the entry. Multiple pci_passthrough_whitelist
-entries per host are supported.
+        pci_passthrough_whitelist = { "vendor_id": "<id>", "product_id": "<id>", "physical_network": "physnet2" }
+
+   If the device defined by the PCI address or ``devname`` corresponds to an
+   SR-IOV PF, all VFs under the PF will match the entry. Multiple
+   ``pci_passthrough_whitelist`` entries per host are supported.
+
+#. Restart the ``nova-compute`` service for the changes to go into effect.
 
 .. _configure_sriov_neutron_server:
 
 Configure neutron-server (Controller)
 -------------------------------------
 
-#. Add ``sriovnicswitch`` as mechanism driver, edit the file ``ml2_conf.ini``:
+#. Add ``sriovnicswitch`` as mechanism driver. Edit the ``ml2_conf.ini`` file
+   on each controller:
 
    .. code-block:: ini
 
       mechanism_drivers = openvswitch,sriovnicswitch
 
-#. Find out the ``vendor_id`` and ``product_id`` of your **VFs** by logging
-   in to your compute node with VFs previously created:
+#. Identify the ``vendor_id`` and ``product_id`` of the VFs on each compute
+   node:
 
    .. code-block:: console
 
@@ -257,51 +248,49 @@ Configure neutron-server (Controller)
       87:10.1 Ethernet controller [0200]: Intel Corporation 82599 Ethernet Controller Virtual Function [8086:10ed] (rev 01)
       87:10.3 Ethernet controller [0200]: Intel Corporation 82599 Ethernet Controller Virtual Function [8086:10ed] (rev 01)
 
-#. Update the ``ml2_conf_sriov.ini`` on each controller.
-   In our case the ``vendor_id`` is ``8086`` and the ``product_id``
-   is ``10ed``. Tell neutron the ``vendor_id`` and ``product_id`` of the VFs
-   that are supported.
+#. Add the VF as a supported device. Edit the ``ml2_conf_sriov.ini`` file on
+   each controller.
 
    .. code-block:: ini
 
       supported_pci_vendor_devs = 8086:10ed
 
-
-#. Add the newly configured ``ml2_conf_sriov.ini`` as parameter to
-   the ``neutron-server`` daemon. Edit the appropriate initialization script
-   to configure the ``neutron-server`` service to load
-   the SRIOV configuration file:
+#. Add the newly configured ``ml2_conf_sriov.ini`` file as parameter to the
+   ``neutron-server`` service. Edit the appropriate initialization script to
+   configure the ``neutron-server`` service to load the SRI-OV configuration
+   file:
 
    .. code-block:: ini
 
-      --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugin.ini
+      --config-file /etc/neutron/neutron.conf
+      --config-file /etc/neutron/plugin.ini
       --config-file /etc/neutron/plugins/ml2/ml2_conf_sriov.ini
 
-#. For the changes to go into effect, restart the ``neutron-server`` service.
+#. Restart the ``neutron-server`` service.
 
 Configure nova-scheduler (Controller)
 -------------------------------------
 
-#. On every controller node running the ``nova-scheduler`` service, add
-   ``PciPassthroughFilter`` to the ``scheduler_default_filters`` parameter
-   and add a new line for ``scheduler_available_filters`` parameter
-   under the ``[DEFAULT]`` section in ``nova.conf``:
+#. On every controller node running the ``nova-scheduler`` service, enable the
+   ``PciPassthroughFilter`` by setting the ``scheduler_default_filters``
+   parameter to ``all_filters``. Add a new line for
+   ``scheduler_available_filters`` parameter under the ``[DEFAULT]`` section in
+   ``nova.conf``:
 
    .. code-block:: ini
 
       [DEFAULT]
       scheduler_default_filters = RetryFilter, AvailabilityZoneFilter, RamFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter, PciPassthroughFilter
       scheduler_available_filters = nova.scheduler.filters.all_filters
-      scheduler_available_filters = nova.scheduler.filters.pci_passthrough_filter.PciPassthroughFilter
-
 
 #. Restart the ``nova-scheduler`` service.
-
 
 Enable neutron sriov-agent (Compute)
 -------------------------------------
 
-#. On each compute node, edit the file ``sriov_agent.ini``:
+#. Install the SR-IOV agent.
+
+#. Edit the ``sriov_agent.ini`` file on each compute node. For example:
 
    .. code-block:: ini
 
@@ -315,52 +304,51 @@ Enable neutron sriov-agent (Compute)
    .. note::
 
       The ``physical_device_mappings`` parameter is not limited to be a 1-1
-      mapping between physnets and NICs. This enables you to map the same
-      physnet to more than one NIC. For example, if ``physnet2`` is
-      connected to ``eth3`` and ``eth4``, then ``physnet2:eth3,physnet2:eth4``
-      is a valid option.
+      mapping between physical networks and NICs. This enables you to map the
+      same physical network to more than one NIC. For example, if ``physnet2``
+      is connected to ``eth3`` and ``eth4``, then
+      ``physnet2:eth3,physnet2:eth4`` is a valid option.
 
-   The ``exclude_devices`` parameter is empty, therefore, all the VFs associated with eth3 may be
-   configured by the agent. To exclude specific VFs, add
-   them to the ``exclude_devices`` parameter as follows:
+   The ``exclude_devices`` parameter is empty, therefore, all the VFs
+   associated with eth3 may be configured by the agent. To exclude specific
+   VFs, add them to the ``exclude_devices`` parameter as follows:
 
    .. code-block:: ini
 
-      exclude_devices = eth1:0000:07:00.2; 0000:07:00.3, eth2:0000:05:00.1; 0000:05:00.2
+      exclude_devices = eth1:0000:07:00.2;0000:07:00.3,eth2:0000:05:00.1;0000:05:00.2
 
-#. Test whether the neutron sriov-agent runs successfully:
+#. Ensure the neutron sriov-agent runs successfully:
 
    .. code-block:: console
 
-      # neutron-sriov-nic-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/sriov_agent.ini
+      # neutron-sriov-nic-agent \
+        --config-file /etc/neutron/neutron.conf \
+        --config-file /etc/neutron/plugins/ml2/sriov_agent.ini
 
 #. Enable the neutron sriov-agent service.
 
+   If installing from source, you must configure a daemon file for the init
+   system manually.
 
-FDB L2 agent extension
-----------------------
-The FDB population is an L2 agent extension to OVS agent or Linux bridge. Its
-objective is to update the FDB table for existing instance using normal port.
-This enables communication between SR-IOV instances and normal instances.
-The use cases of the FDB population extension are:
+(Optional) FDB L2 agent extension
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Direct port and normal port instances reside on the same compute node.
+Forwarding DataBase (FDB) population is an L2 agent extension to OVS agent or
+Linux bridge. Its objective is to update the FDB table for existing instance
+using normal port. This enables communication between SR-IOV instances and
+normal instances. The use cases of the FDB population extension are:
 
-#. Direct port instance that uses floating IP address and network node
+* Direct port and normal port instances reside on the same compute node.
+
+* Direct port instance that uses floating IP address and network node
    are located on the same host.
 
-Additional information describing the problem, see:
+For additional information describing the problem, refer to:
 `Virtual switching technologies and Linux bridge.
 <http://events.linuxfoundation.org/sites/events/files/slides/LinuxConJapan2014_makita_0.pdf>`_
 
-.. note::
-
-   This feature is supported from Newton release.
-
-To enable this extension, edit the relevant L2 agent
-``ovs_agent.ini/linuxbridge_agent.ini`` config file:
-
-#. In the ``[agent]`` section, add FDB to the extensions:
+#. Edit the ``ovs_agent.ini`` or ``linuxbridge_agent.ini`` file on each compute
+   node. For example:
 
    .. code-block:: console
 
@@ -368,48 +356,45 @@ To enable this extension, edit the relevant L2 agent
       extensions = fdb
 
 #. Add the FDB section and the ``shared_physical_device_mappings`` parameter.
-   This parameter maps each physical port to its physical network name.
-   Each physical network can be mapped to several ports:
+   This parameter maps each physical port to its physical network name. Each
+   physical network can be mapped to several ports:
 
    .. code-block:: console
 
       [FDB]
       shared_physical_device_mappings = physnet1:p1p1, physnet1:p1p2
 
+Launching instances with SR-IOV ports
+-------------------------------------
 
-Creating instances with SR-IOV ports
-------------------------------------
-After the configuration is done, you can now launch Instances
-with neutron SR-IOV ports.
+Once configuration is complete, you can launch instances with SR-IOV ports.
 
-#. Get the id of the neutron network where you want the SR-IOV port to be
-   created:
+#. Get the ``id`` of the network where you want the SR-IOV port to be created:
 
    .. code-block:: console
 
       $ net_id=`neutron net-show net04 | grep "\ id\ " | awk '{ print $4 }'`
 
-#. Create the SR-IOV port. We specify ``vnic_type=direct``, but other options
+#. Create the SR-IOV port. ``vnic_type=direct`` is used here, but other options
    include ``normal``, ``direct-physical``, and ``macvtap``:
 
    .. code-block:: console
 
       $ port_id=`neutron port-create $net_id --name sriov_port --binding:vnic_type direct | grep "\ id\ " | awk '{ print $4 }'`
 
-#. Create the VM. For the nic we specify the SR-IOV port created in step 2:
+#. Create the instance. Specify the SR-IOV port created in step two for the
+   NIC:
 
    .. code-block:: console
 
       $ nova boot --flavor m1.large --image ubuntu_14.04 --nic port-id=$port_id test-sriov
 
-
    .. note::
 
-      There are two ways to attach VFs to an instance. You can create a
-      neutron SR-IOV port or use the ``pci_alias`` in nova.
-      For more information about using ``pci_alias``, refer to
-      `nova-api configuration`_.
-
+      There are two ways to attach VFs to an instance. You can create an SR-IOV
+      port or use the ``pci_alias`` in the Compute service. For more
+      information about using ``pci_alias``, refer to `nova-api
+      configuration`_.
 
 SR-IOV with InfiniBand
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -446,6 +431,24 @@ you must:
 
       [Filters]
       ebrctl: CommandFilter, ebrctl, root
+
+Known limitations
+~~~~~~~~~~~~~~~~~
+
+* When using Quality of Service (QoS), ``max_burst_kbps`` (burst over
+  ``max_kbps``) is not supported. In addition, ``max_kbps`` is rounded to
+  Mbps.
+* Security groups are not supported when using SR-IOV, thus, the firewall
+  driver must be disabled. This can be done in the ``neutron.conf`` file.
+
+  .. code-block:: ini
+
+     [securitygroup]
+     firewall_driver = neutron.agent.firewall.NoopFirewallDriver
+
+* SR-IOV is not integrated into the OpenStack Dashboard (horizon). Users must
+  use the CLI or API to configure SR-IOV interfaces.
+* Live migration is not supported for instances with SR-IOV ports.
 
 .. Links
 .. _`nova-api configuration`: http://docs.openstack.org/admin-guide/compute-pci-passthrough.html#configure-nova-api-controller
