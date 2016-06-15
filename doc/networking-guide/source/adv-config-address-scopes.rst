@@ -100,7 +100,7 @@ allow simple routing for project networks with the same subnet pools.
 
 #. Create subnet pools specifying the name (or UUID) of the address
    scope that the subnet pool belongs to. If you have existing
-   subnet pools, use the ``subnet-pool-update`` command to put them in
+   subnet pools, use the ``subnetpool-update`` command to put them in
    a new address scope:
 
    .. code-block:: console
@@ -139,7 +139,8 @@ allow simple routing for project networks with the same subnet pools.
       | shared            | True                                 |
       +-------------------+--------------------------------------+
 
-#. Make sure that the subnets use an external network:
+#. Make sure that subnets on external networks are created
+   from the subnet pools created above:
 
    .. code-block:: console
 
