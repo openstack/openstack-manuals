@@ -208,11 +208,12 @@ To share an image or snapshot with another project, do the following:
 
       $ openstack image list
 
-#. Obtain the UUID of the project with which you want to share your image.
-   Unfortunately, non-admin users are unable to use the :command:`keystone`
+#. Obtain the UUID of the project with which you want to share your image,
+   let's call it target project.
+   Unfortunately, non-admin users are unable to use the :command:`openstack`
    command to do this. The easiest solution is to obtain the UUID either
    from an administrator of the cloud or from a user located in the
-   project.
+   target project.
 
 #. Once you have both pieces of information, run
    the :command:`glance` command:
@@ -228,8 +229,37 @@ To share an image or snapshot with another project, do the following:
       $ glance member-create 733d1c44-a2ea-414b-aca7-69decf20d810 \
         771ed149ef7e4b2b88665cc1c98f77ca
 
-   Project `771ed149ef7e4b2b88665cc1c98f77ca`` will now have access to image
+#. You now need to act in the target project scope.
+
+   .. note::
+
+      You will not see the shared image yet.
+      Therefore the sharing needs to be accepted.
+
+   To accept the sharing, you need to update the member status:
+
+   .. code-block:: console
+
+      $ glance member-update <image-uuid> <project-uuid> accepted
+
+   For example:
+
+   .. code-block:: console
+
+      $ glance member-update 733d1c44-a2ea-414b-aca7-69decf20d810 \
+        771ed149ef7e4b2b88665cc1c98f77ca accepted
+
+   Project ``771ed149ef7e4b2b88665cc1c98f77ca`` will now have access to image
    ``733d1c44-a2ea-414b-aca7-69decf20d810``.
+
+   .. tip::
+
+      You can explicitly ask for pending member status to view shared images not yet accepted:
+
+      .. code-block:: console
+
+         $ glance image-list --member-status pending
+
 
 Deleting Images
 ---------------
@@ -260,7 +290,7 @@ Reference <http://docs.openstack.org/cli-reference/glance.html>`__.
 The Image service and the Database
 ----------------------------------
 
-The only thing that the Image service does not store in a database is
+The only thing the Image service does not store in a database is
 the image itself. The Image service database has two main
 tables:
 
