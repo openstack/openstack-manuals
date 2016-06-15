@@ -10,7 +10,7 @@ Cross-origin resource sharing
 
 OpenStack supports :term:`Cross-Origin Resource Sharing (CORS)`, a W3C
 specification defining a contract by which the single-origin policy of a user
-agent (usually a browser) may be relaxed. It permits it's javascript engine
+agent (usually a browser) may be relaxed. It permits the javascript engine
 to access an API that does not reside on the same domain, protocol, or port.
 
 This feature is most useful to organizations which maintain one or more
