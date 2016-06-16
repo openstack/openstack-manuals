@@ -490,10 +490,10 @@ End-User Configuration of Security Groups
 
 Security groups for the current project can be found on the OpenStack
 dashboard under :guilabel:`Access & Security`. To see details of an
-existing group, select the :guilabel:`edit` action for that security group.
-Obviously, modifying existing groups can be done from this edit interface.
-There is a :guilabel:`Create Security Group` button on the main
-:guilabel:`Access & Security` page for creating new groups.
+existing group, select the :guilabel:`Edit Security Group` action for that
+security group. Obviously, modifying existing groups can be done from this
+edit interface. There is a :guilabel:`Create Security Group` button on the
+main :guilabel:`Access & Security` page for creating new groups.
 We discuss the terms used in these fields when we explain the
 command-line equivalents.
 
@@ -882,8 +882,8 @@ instance it is attached to. If the volume is under heavy use, the
 snapshot may have an inconsistent file system. In fact, by default, the
 volume service does not take a snapshot of a volume that is attached to
 an image, though it can be forced to. To take a volume snapshot, either
-select :guilabel:`Create Snapshot` from the :guilabel:`actions` column
-next to the :guilabel:`volume` name on the dashboard :guilabel:`Volumes` page,
+select :guilabel:`Create Snapshot` from the actions column
+next to the volume name on the dashboard :guilabel:`Volumes` page,
 or run this from the command line:
 
 .. code-block:: console
@@ -1693,8 +1693,8 @@ name. The name needn't be unique, but your life will be simpler if it is
 because many tools will use the name in place of the UUID so long as the
 name is unique. You can start an instance from the dashboard from the
 :guilabel:`Launch Instance` button on the :guilabel:`Instances` page
-or by selecting the :guilabel:`Launch Instance action` next to an
-:guilabel:`image` or :guilabel:`snapshot` on the :guilabel:`Images` page.
+or by selecting the :guilabel:`Launch Instance` action next to an
+image or a snapshot on the :guilabel:`Images` page.
 
 On the command line, do this:
 
@@ -1707,7 +1707,7 @@ read the rest of this section before trying to start an instance, but
 this is the base command that later details are layered upon.
 
 To delete instances from the dashboard, select the
-:guilabel:`Delete instance action` next to the
+:guilabel:`Delete instance` action next to the
 :guilabel:`instance` on the **Instances** page.
 
 .. note::
@@ -1922,7 +1922,7 @@ project has been modified to be more permissive.
 
 Adding security groups is typically done on instance boot. When
 launching from the dashboard, you do this on the
-:guilabel:`Access & Security` tab of the Launch Instance dialog.
+:guilabel:`Access & Security` tab of the :guilabel:`Launch Instance` dialog.
 When launching from the command line, append ``--security-groups``
 with a comma-separated list of security groups.
 
@@ -1955,7 +1955,7 @@ of the dashboard. The command line can also be used:
 
 Once allocated, a floating IP can be assigned to running instances from
 the dashboard either by selecting :guilabel:`Associate Floating IP` from the
-actions drop-down next to the :guilabel:`IP on the Floating IPs` tab of the
+actions drop-down next to the IP on the :guilabel:`Floating IPs` tab of the
 **Access & Security** page or by making this selection next to the instance
 you want to associate it with on the Instances page. The inverse action,
 Dissociate Floating IP, is available from the :guilabel:`Floating IPs` tab
