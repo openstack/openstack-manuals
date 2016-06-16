@@ -128,7 +128,7 @@ If you get this message, check the following:
 
    .. code-block:: console
 
-      $ nova flavor-show <FLAVOR NAME>
+      $ openstack flavor show FLAVOR
 
 #. Make sure that enough nodes are in ``available`` state according to
    :command:`ironic node-list`. Nodes in ``manageable`` state usually mean they
