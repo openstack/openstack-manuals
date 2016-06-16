@@ -54,7 +54,7 @@ The following procedure is a workflow for image sharing after image creation.
 
 Communications between the image producer and the consumer, such as
 those described in this example, must be arranged independently of
-the OpenStack Images API. The consumer and producer can send notifications
+the OpenStack Image API. The consumer and producer can send notifications
 by using email, phone, Twitter, or other channels.
 
 #. The producer posts the availability of specific images for consumers to
