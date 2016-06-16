@@ -162,8 +162,11 @@ HTTP server to handle requests.
 
          # apt-get install keystone
 
-   #. Respond to prompts for :doc:`debconf/debconf-dbconfig-common`,
+   #. Respond to prompts for debconf,
       which will fill the below database access directive.
+
+      .. :doc:`debconf/debconf-dbconfig-common`,
+         which will fill the below database access directive.
 
       .. code-block:: ini
 
