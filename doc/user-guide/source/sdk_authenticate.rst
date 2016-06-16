@@ -21,8 +21,3 @@ and only one cloud account, they are the most convenient way.
 
 ``clouds.yaml`` is a bit newer and was designed to help folks who have
 more than one OpenStack cloud that they are using.
-
-.. toctree::
-   :maxdepth: 2
-
-   sdk_create_legacy_novaclient.rst
