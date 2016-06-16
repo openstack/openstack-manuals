@@ -65,6 +65,15 @@ Install and configure components
 
    .. only:: obs or rdo or ubuntu
 
+      * In the ``[DEFAULT]`` section, enable only the compute and
+        metadata APIs:
+
+        .. code-block:: ini
+
+           [DEFAULT]
+           ...
+           enabled_apis = osapi_compute,metadata
+
       * In the ``[DEFAULT]`` and [oslo_messaging_rabbit]
         sections, configure ``RabbitMQ`` message queue access:
 
