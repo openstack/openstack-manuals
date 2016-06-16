@@ -561,10 +561,10 @@ List security groups: complete code listing example
     sg = neutron.list_security_groups()
     print(sg)
 
-   .. note::
+.. note::
 
-     OpenStack Networking security groups are case-sensitive while the
-     nova-network security groups are case-insensitive.
+   OpenStack Networking security groups are case-sensitive while the
+   nova-network security groups are case-insensitive.
 
 List subnets
 ~~~~~~~~~~~~
