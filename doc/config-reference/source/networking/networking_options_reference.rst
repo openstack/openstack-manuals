@@ -208,69 +208,6 @@ Use the following options to alter DVR-related settings.
 
 .. include:: ../tables/neutron-dvr.rst
 
-
-Firewall-as-a-Service driver
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Use the following options in the ``fwaas_driver.ini``
-file for the FWaaS driver.
-
-.. include:: ../tables/neutron-fwaas.rst
-.. include:: ../tables/neutron-fwaas_ngfw.rst
-.. include:: ../tables/neutron-fwaas_varmour.rst
-
-Load-Balancer-as-a-Service configuration options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Use the following options in the ``neutron_lbaas.conf`` file for the
-LBaaS agent.
-
-.. include:: ../tables/neutron-lbaas.rst
-
-Use the following options in the ``lbaas_agent.ini`` file for the
-LBaaS agent.
-
-.. include:: ../tables/neutron-lbaas_agent.rst
-
-Use the following options in the ``services_lbaas.conf`` file for the
-LBaaS agent.
-
-.. include:: ../tables/neutron-lbaas_services.rst
-
-
-VPN-as-a-Service configuration options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Use the following options in the ``vpnaas_agent.ini`` file for the
-VPNaaS agent.
-
-.. include:: ../tables/neutron-vpnaas.rst
-.. include:: ../tables/neutron-vpnaas_ipsec.rst
-.. include:: ../tables/neutron-vpnaas_openswan.rst
-.. include:: ../tables/neutron-vpnaas_strongswan.rst
-
-.. note::
-
-   ``strongSwan`` and ``Openswan`` cannot both be installed and enabled at the
-   same time. The ``vpn_device_driver`` configuration option in the
-   ``vpnaas_agent.ini`` file is an option that lists the VPN device
-   drivers that the Networking service will use. You must choose either
-   ``strongSwan`` or ``Openswan`` as part of the list.
-
-.. important::
-
-   Ensure that your ``strongSwan`` version is 5 or newer.
-
-To declare either one in the ``vpn_device_driver``:
-
-.. code-block:: ini
-
-   #Openswan
-   vpn_device_driver = ['neutron_vpnaas.services.vpn.device_drivers.ipsec.OpenSwanDriver']
-
-   #strongSwan
-   vpn_device_driver = ['neutron.services.vpn.device_drivers.strongswan_ipsec.StrongSwanDriver']
-
 IPv6 router advertisement
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -285,23 +222,6 @@ Use the following options in the ``l3_agent.ini`` file for the L3
 agent.
 
 .. include:: ../tables/neutron-l3_agent.rst
-
-Load Balancing service (octavia)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Use the following options to configure the octavia service:
-
-.. include:: ../tables/octavia-api.rst
-.. include:: ../tables/octavia-auth_token.rst
-.. include:: ../tables/octavia-cache.rst
-.. include:: ../tables/octavia-common.rst
-.. include:: ../tables/octavia-cors.rst
-.. include:: ../tables/octavia-database.rst
-.. include:: ../tables/octavia-logging.rst
-.. include:: ../tables/octavia-rabbitmq.rst
-.. include:: ../tables/octavia-redis.rst
-.. include:: ../tables/octavia-rpc.rst
-.. include:: ../tables/octavia-zeromq.rst
 
 Logging
 ~~~~~~~
