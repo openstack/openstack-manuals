@@ -29,24 +29,25 @@ and used for testing purposes. To add this image, simply do:
 .. code-block:: console
 
    $ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
-   $ openstack image create --name='cirros image' --public \
-     --container-format=bare --disk-format=qcow2 < cirros-0.3.4-x86_64-disk.img
+   $ openstack image create --file cirros-0.3.4-x86_64-disk.img \
+     --public --container-format bare \
+     --disk-format qcow2 "cirros image"
 
-The :command:`glance image-create` command provides a large set of options for
-working with your image. For example, the `` min-disk`` option is useful
-for images that require root disks of a certain size (for example, large
-Windows images). To view these options, do:
+The :command:`openstack image create` command provides a large set of options
+for working with your image. For example, the :option:`--min-disk` option is
+useful for images that require root disks of a certain size (for example,
+large Windows images). To view these options, run:
 
 .. code-block:: console
 
    $ openstack help image create
 
-The ``location`` option is important to note. It does not copy the
+The :option:`location` option is important to note. It does not copy the
 entire image into the Image service, but references an original location
 where the image can be found. Upon launching an instance of that image,
 the Image service accesses the image from the location specified.
 
-The ``copy-from`` option copies the image from the location specified
+The :option:`copy-from` option copies the image from the location specified
 into the ``/var/lib/glance/images`` directory. The same thing is done
 when using the STDIN redirection with <, as shown in the example.
 
@@ -81,7 +82,7 @@ signed images:
 
    .. code-block:: console
 
-      $ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img > cirros-0.3.4-x86_64-disk.img
+      $ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
 
 #. Use private key to create a signature of the image
 
