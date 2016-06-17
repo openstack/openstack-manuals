@@ -5,7 +5,7 @@ Manage images using cURL
 This section is intended to provide a series of commands a typical
 client of the API might use to create and modify an image.
 
-These commands assume the implementation of the v2 Images API using
+These commands assume the implementation of the v2 Image API using
 the Identity Service for authentication and authorization. The
 X-Auth-Token header is used to provide the authentication token issued by
 the Identity Service.
