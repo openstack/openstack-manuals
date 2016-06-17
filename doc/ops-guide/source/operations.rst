@@ -36,6 +36,5 @@ problem.
    ops_logging_monitoring.rst
    ops_backup_recovery.rst
    ops_customize.rst
-   ops_upstream.rst
    ops_advanced_configuration.rst
    ops_upgrades.rst
