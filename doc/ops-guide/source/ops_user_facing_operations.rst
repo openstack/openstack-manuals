@@ -851,11 +851,11 @@ to access block devices from within the instance operating system,
 potentially formatting them for first use and being cautious when
 removing them. What is specific is how to create new volumes and attach
 and detach them from instances. These operations can all be done from
-the **Volumes** page of the dashboard or by using the ``cinder``
+the :guilabel:`Volumes` page of the dashboard or by using the ``cinder``
 command-line client.
 
 To add new volumes, you need only a volume size in gigabytes.
-Either put these into the **Create Volume** web form or use the command
+Either put these into the :guilabel:`Create Volume` web form or use the command
 line:
 
 .. code-block:: console
@@ -1708,7 +1708,7 @@ this is the base command that later details are layered upon.
 
 To delete instances from the dashboard, select the
 :guilabel:`Delete instance` action next to the
-:guilabel:`instance` on the **Instances** page.
+:guilabel:`instance` on the :guilabel:`Instances` page.
 
 .. note::
 
@@ -1956,10 +1956,11 @@ of the dashboard. The command line can also be used:
 Once allocated, a floating IP can be assigned to running instances from
 the dashboard either by selecting :guilabel:`Associate Floating IP` from the
 actions drop-down next to the IP on the :guilabel:`Floating IPs` tab of the
-**Access & Security** page or by making this selection next to the instance
-you want to associate it with on the Instances page. The inverse action,
-Dissociate Floating IP, is available from the :guilabel:`Floating IPs` tab
-of the **Access & Security** page and from the **Instances** page.
+:guilabel:`Access & Security` page or by making this selection next to the
+instance you want to associate it with on the Instances page. The inverse
+action, Dissociate Floating IP, is available from the :guilabel:`Floating IPs`
+tab of the :guilabel:`Access & Security` page and from the
+:guilabel:`Instances` page.
 
 To associate or disassociate a floating IP with a server from the
 command line, use the following commands:
@@ -1976,8 +1977,8 @@ Attaching Block Storage
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 You can attach block storage to instances from the dashboard on the
-Volumes page. Click the :guilabel:`Manage Attachments` action next to
-the volume you want to attach.
+:guilabel:`Volumes` page. Click the :guilabel:`Manage Attachments` action
+next to the volume you want to attach.
 
 To perform this action from command line, run the following command:
 
@@ -2064,7 +2065,7 @@ snapshot a running instance to an image using the CLI, do this:
    $ nova image-create <instance name or uuid> <name of new image>
 
 The dashboard interface for snapshots can be confusing because the
-snapshots and images are displayed in the **Images** page. However, an
+snapshots and images are displayed in the :guilabel:`Images` page. However, an
 instance snapshot *is* an image. The only difference between an image
 that you upload directly to the Image Service and an image that you
 create by snapshot is that an image created by snapshot has additional
