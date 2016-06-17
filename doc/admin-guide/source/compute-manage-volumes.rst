@@ -4,52 +4,51 @@ Manage volumes
 
 Depending on the setup of your cloud provider, they may give you an
 endpoint to use to manage volumes, or there may be an extension under
-the covers. In either case, you can use the ``nova`` CLI to manage
+the covers. In either case, you can use the ``openstack`` CLI to manage
 volumes.
 
-.. list-table:: **nova volume commands**
+.. list-table:: **openstack volume commands**
    :header-rows: 1
 
    * - Command
      - Description
-   * - volume-attach
+   * - server add volume
      - Attach a volume to a server.
-   * - volume-create
+   * - volume create
      - Add a new volume.
-   * - volume-delete
-     - Remove a volume.
-   * - volume-detach
-     - Detach a volume from a server.
-   * - volume-list
+   * - volume delete
+     - Remove or delete a volume.
+   * - server remove volume
+     - Detach or remove a volume from a server.
+   * - volume list
      - List all the volumes.
-   * - volume-show
+   * - volume show
      - Show details about a volume.
-   * - volume-snapshot-create
+   * - snapshot create
      - Add a new snapshot.
-   * - volume-snapshot-delete
+   * - snapshot delete
      - Remove a snapshot.
-   * - volume-snapshot-list
+   * - snapshot list
      - List all the snapshots.
-   * - volume-snapshot-show
+   * - snapshot show
      - Show details about a snapshot.
-   * - volume-type-create
+   * - volume type create
      - Create a new volume type.
-   * - volume-type-delete
+   * - volume type delete
      - Delete a specific flavor
-   * - volume-type-list
+   * - volume type list
      - Print a list of available 'volume types'.
-   * - volume-update
-     - Update an attached volume.
 
 |
 
-For example, to list IDs and names of Compute volumes, run:
+For example, to list IDs and names of volumes, run:
 
 .. code-block:: console
 
-   $ nova volume-list
-   +-----------+-----------+--------------+------+-------------+-------------+
-   | ID        | Status    | Display Name | Size | Volume Type | Attached to |
-   +-----------+-----------+--------------+------+-------------+-------------+
-   | 1af4cb9...| available | PerfBlock    | 1    | Performance |             |
-   +-----------+-----------+--------------+------+-------------+-------------+
+   $ openstack volume list
+   +--------+--------------+-----------+------+-------------+
+   | ID     | Display Name | Status    | Size | Attached to |
+   +--------+--------------+-----------+------+-------------+
+   | 86e6cb | testnfs      | available |    1 |             |
+   | e389f7 | demo         | available |    1 |             |
+   +--------+--------------+-----------+------+-------------+
