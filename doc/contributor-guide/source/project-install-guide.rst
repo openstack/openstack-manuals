@@ -4,27 +4,37 @@ Project specific install guides
 
 For the Newton release, a new method of publishing Installation Guides is
 being implemented. This will allow each big tent project to create their
-own Installation Guide, based on a standard 'cookie cutter' template, in
-their own repository. These guides are then centrally published to the
-docs.openstack.org page.
+own Installation Guide, based on a standard template, in their own
+repository. These guides are then centrally published to `docs.openstack.org
+<http://docs.openstack.org>`_.
 
-For updates on the progress of this project, see the ``Install Guide wiki
-page <https://wiki.openstack.org/wiki/Documentation/InstallGuideWorkItems>``.
-If you would like to help out, ``attend a meeting
-<http://eavesdrop.openstack.org/#Documentation_Install_Team_Meeting>``.
+For updates on the progress of this project, see the `Install Guide wiki
+page <https://wiki.openstack.org/wiki/Documentation/InstallGuideWorkItems>`_.
+If you would like to help out, `attend a meeting
+<http://eavesdrop.openstack.org/#Documentation_Install_Team_Meeting>`_.
 
-Project specific installation guides can be set up as follows:
+Set up project specific installation guides:
 
-#. Use the ``installguide-cookiecutter
-   <https://git.openstack.org/cgit/openstack/installguide-cookiecutter>``
-   to create a skeleton for your project.
+#. Install ``cookiecutter``:
 
-   This adds content to the ``install-guide`` directory in the
+   .. code-block:: console
+
+      # pip install cookiecutter
+
+#. Run the Install Guide cookiecutter to create a skeleton for your project:
+
+   .. code-block:: console
+
+      $ cookiecutter https://git.openstack.org/openstack/installguide-cookiecutter.git
+
+   You will be prompted to answer questions to complete the installation.
+   Content will be added to the ``install-guide`` directory in the
    top-level of the project repository.
 
-#. Include a ``tox.ini`` environment for 'install-guide':
+#. Create a ``tox.ini`` environment for ``install-guide`` in your project
+   repository, using this content:
 
-   .. code::
+   .. code-block:: ini
 
       [testenv:install-guide]
       # NOTE(jaegerandi): this target does not use constraints because
@@ -33,24 +43,67 @@ Project specific installation guides can be set up as follows:
       install_command = pip install -U --force-reinstall {opts} {packages}
       commands = sphinx-build -a -E -W -d install-guide/build/doctrees -b html install-guide/source install-guide/build/html
 
-#. Add the python package ``openstackdocs-theme``  to the
-   ``test-requirements.txt`` file.
 
-#. Once the changes above are merged, add jobs for it in the
-   ``openstack-infra/project-config`` repository. Define the jobs using
-   the JJB ``install-guide-jobs`` job-template in file
-   ``jenkins/jobs/projects.yaml`` like:
+#. Add your installation content, and test the build locally with ``tox``:
+
+   .. code-block:: console
+
+      $ tox -e install-guide
+
+   The local build is in ``install-guide/build/html``.
+
+#. Add the python package ``openstackdocstheme``  to the
+   ``test-requirements.txt`` file. Copy the extact requirement line from the
+   `global file
+   <http://git.openstack.org/cgit/openstack/requirements/tree/global-requirements.txt>`_:
+
+   .. code-block:: none
+
+      openstackdocstheme>=1.0.3  # Apache-2.0
+
+#. Commit the changes to your project repository for review.
+
+
+After these changes have merged, you can set up the jobs for building.
+
+#. Clone the ``project-config`` repo:
+
+   .. code-block:: console
+
+      $ git clone https://git.openstack.org/openstack-infra/project-config
+
+#. In ``jenkins/jobs/projects.yaml``, add ``install-guide-jobs`` within the
+   entry for your project:
 
    .. code-block:: yaml
 
-      ...
-      - install-guide-jobs:
-         service: orchestration
+      - project:
+          name: heat
+          tarball-site: tarballs.openstack.org
+          doc-publisher-site: docs.openstack.org
 
-   Here ``service`` is the service name of the project, like
-   orchestration for heat.
+          jobs:
+          ...
+           - install-guide-jobs:
+             service: orchestration
 
-#. Add the ``install-guide-jobs`` template to ``zuul/layout.yaml`` to
-   schedule the jobs.
+   Here ``service`` is the service name of the project, like orchestration
+   for heat.
+
+   This defines the jobs using the JJB ``install-guide-jobs`` job-template.
+
+#. In ``zuul/layout.yaml``, locate the entry for your project and add the
+   ``install-guide-jobs`` template:
+
+   .. code-block:: yaml
+
+      - name: openstack/heat
+        template:
+          - name: install-guide-jobs
+
+   This schedules the Install Guide jobs.
+
+#. Commit the changes to the infra repository for review.
+
 
 TBD: How to create master index file for this.
