@@ -266,11 +266,6 @@ OpenStack clouds.
     this chapter describes how to use DevStack to write custom
     middleware or a custom scheduler to rebalance your resources.
 
-:doc:`ops_upstream`
-    Because OpenStack is so, well, open, this chapter is dedicated to
-    helping you navigate the community and find out where you can help
-    and where you can get help.
-
 :doc:`ops_advanced_configuration`
     Much of OpenStack is driver-oriented, so you can plug in different
     solutions to the base set of services. This chapter describes some
