@@ -40,15 +40,16 @@ It is possible to define other roles, but doing so is uncommon.
 
 Once you've gathered this information, creating the user in the
 dashboard is just another web form similar to what we've seen before and
-can be found by clicking the Users link in the Identity navigation bar
-and then clicking the Create User button at the top right.
+can be found by clicking the :guilabel:`Users` link in the
+:guilabel:`Identity` navigation bar and then clicking the
+:guilabel:`Create User` button at the top right.
 
-Modifying users is also done from this Users page. If you have a large
-number of users, this page can get quite crowded. The Filter search box
-at the top of the page can be used to limit the users listing. A form
-very similar to the user creation dialog can be pulled up by selecting
-Edit from the actions dropdown menu at the end of the line for the user
-you are modifying.
+Modifying users is also done from this :guilabel:`Users` page. If you have a
+large number of users, this page can get quite crowded. The :guilabel:`Filter`
+search box at the top of the page can be used to limit the users listing. A
+form very similar to the user creation dialog can be pulled up by selecting
+:guilabel:`Edit` from the actions drop-down menu at the end of the line for
+the user you are modifying.
 
 Associating Users with Projects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,15 +65,15 @@ associate users with multiple projects if that makes sense for your
 organization.
 
 Associating existing users with an additional project or removing them
-from an older project is done from the Projects page of the dashboard by
-selecting Modify Users from the Actions column, as shown in
-:ref:`figure_edit_project_members`.
+from an older project is done from the :guilabel:`Projects` page of the
+dashboard by selecting :guilabel:`Manage Members` from the
+:guilabel:`Actions` column, as shown in :ref:`figure_edit_project_members`.
 
 From this view, you can do a number of useful things, as well as a few
 dangerous ones.
 
-The first column of this form, named All Users, includes a list of all
-the users in your cloud who are not already associated with this
+The first column of this form, named :guilabel:`All Users`, includes a list of
+all the users in your cloud who are not already associated with this
 project. The second column shows all the users who are. These lists can
 be quite long, but they can be limited by typing a substring of the
 username you are looking for in the filter field at the top of the
@@ -91,12 +92,12 @@ Click the :guilabel:`-` to remove them.
 The dangerous possibility comes with the ability to change member roles.
 This is the dropdown list below the username in the
 :guilabel:`Project Members` list. In virtually all cases,
-this value should be set to Member. This example purposefully shows
-an administrative user where this value is admin.
+this value should be set to :guilabel:`Member`. This example purposefully
+shows an administrative user where this value is ``admin``.
 
 .. warning::
 
-   The admin is global, not per project, so granting a user the admin
+   The admin is global, not per project, so granting a user the ``admin``
    role in any project gives the user administrative rights across the
    whole cloud.
 
@@ -209,7 +210,7 @@ Here are snippets of the default nova ``policy.json`` file:
    operation does not match any of the policies in ``policy.json``.
 
 3. Shows a policy restricting the ability to manipulate flavors to
-   administrators using the Admin API only.admin API
+   administrators using the Admin API only.
 
 In some cases, some operations should be restricted to administrators
 only. Therefore, as a further example, let us consider how this sample
