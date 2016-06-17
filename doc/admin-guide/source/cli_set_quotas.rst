@@ -47,6 +47,11 @@ node.
       | 4f8113c1d838467cad0c2f337b3dfded | demo01 |
       +----------------------------------+--------+
 
+Use :samp:`openstack quota show {PROJECT_NAME}` to list all quotas for a
+project.
+
+Use :samp:`openstack quota set {PROJECT_NAME} {--parameters}` to set quota
+values.
 
 .. toctree::
    :maxdepth: 2
