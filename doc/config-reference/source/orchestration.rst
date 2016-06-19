@@ -1,6 +1,6 @@
-=============
-Orchestration
-=============
+=====================
+Orchestration service
+=====================
 
 .. toctree::
 
