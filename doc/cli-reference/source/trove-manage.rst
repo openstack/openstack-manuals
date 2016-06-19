@@ -7,7 +7,7 @@ trove-manage command-line client
 The :command:`trove-manage` client is the command-line interface (CLI)
 for the Database Management Utility API and its extensions.
 
-This chapter documents :command:`trove-manage` version ``4.0.0``.
+This chapter documents :command:`trove-manage` version ``5.0.1``.
 
 For help on a specific :command:`trove-manage` command, enter:
 
@@ -24,12 +24,16 @@ trove-manage usage
 
    usage: trove-manage [-h] [--config-dir DIR] [--config-file PATH] [--debug]
                        [--log-config-append PATH] [--log-date-format DATE_FORMAT]
-                       [--log-dir LOG_DIR] [--log-file PATH]
-                       [--log-format FORMAT] [--nodebug] [--nouse-syslog]
-                       [--nouse-syslog-rfc-format] [--noverbose]
+                       [--log-dir LOG_DIR] [--log-file PATH] [--nodebug]
+                       [--nouse-syslog] [--noverbose] [--nowatch-log-file]
                        [--syslog-log-facility SYSLOG_LOG_FACILITY] [--use-syslog]
-                       [--use-syslog-rfc-format] [--verbose] [--version]
-                       {db_sync,db_upgrade,db_downgrade,datastore_update,datastore_version_update,db_recreate,db_load_datastore_config_parameters,datastore_version_flavor_add,datastore_version_flavor_delete}
+                       [--verbose] [--version] [--watch-log-file]
+
+                       {db_sync,db_upgrade,db_downgrade,datastore_update,
+                       datastore_version_update,db_recreate,
+                       db_load_datastore_config_parameters,
+                       datastore_version_flavor_add,
+                       datastore_version_flavor_delete}
                        ...
 
 .. _trove-manage_command_options:
@@ -57,26 +61,26 @@ trove-manage optional arguments
   instead of default ``INFO`` level).
 
 ``--log-config-append PATH, --log_config PATH``
-  The name of a logging configuration file. This file is
-  appended to any existing logging configuration files.
-  For details about logging configuration files,
-  see the Python logging module documentation.
+  The name of a logging configuration file.
+  This file is appended to any existing logging configuration files.
+  For details about logging configuration files, see the Python logging
+  module documentation. Note that when logging configuration files are
+  used then all logging configuration is set in the configuration file
+  and other logging configuration options are ignored (for example,
+  ``logging_context_format_string``).
 
 ``--log-date-format DATE_FORMAT``
   Format string for ``%(asctime)s`` in log records. Default: ``None``.
+  This option is ignored if ``log_config_append`` is set.
 
 ``--log-dir LOG_DIR, --logdir LOG_DIR``
   (Optional) The base directory used for relative ``--log-file`` paths.
+  This option is ignored if ``log_config_append`` is set.
 
 ``--log-file PATH, --logfile PATH``
-  (Optional) Name of log file to output to.
-  If no default is set, logging will go to stdout.
-
-``--log-format FORMAT``
-  **DEPRECATED**. A logging.Formatter log message format string which
-  may use any of the available ``logging.LogRecord`` attributes.
-  This option is deprecated. Please use ``logging_context_format_string``
-  and ``logging_default_format_string`` instead.
+  (Optional) Name of log file to send logging output to. If no default
+  is set, logging will go to stderr as defined by ``use_stderr``.
+  This option is ignored if ``log_config_append`` is set.
 
 ``--nodebug``
   The inverse of :option:`--debug`
@@ -92,23 +96,26 @@ trove-manage optional arguments
 
 ``--syslog-log-facility SYSLOG_LOG_FACILITY``
   Syslog facility to receive log lines.
+  This option is ignored if ``log_config_append`` is set.
 
 ``--use-syslog``
   Use syslog for logging. Existing syslog format is
   **DEPRECATED** and will be changed later to honor RFC5424.
-
-``--use-syslog-rfc-format``
-  (Optional) Enables or disables syslog rfc5424 format for logging.
-  If enabled, prefixes the MSG part of the syslog message with
-  APP-NAME (RFC5424). The format without the APP-NAME is **deprecated**
-  in Kilo, and will be removed in Mitaka, along with this option.
+  This option is ignored if ``log_config_append`` is set.
 
 ``--verbose, -v``
-  If set to false, will disable ``INFO`` logging level,
-  making ``WARNING`` the default.
+  If set to false, the logging level will be set to ``WARNING``
+  instead of the default ``INFO`` level.
 
 ``--version``
   show program's version number and exit
+
+``--watch-log-file``
+  Uses logging handler designed to watch file system.
+  When log file is moved or removed this handler will open a new log
+  file with specified path instantaneously. It makes sense only if
+  ``log_file`` option is specified and Linux platform is used.
+  This option is ignored if ``log_config_append`` is set.
 
 trove-manage datastore_update
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,8 +127,7 @@ trove-manage datastore_update
 Add or update a datastore.
 If the datastore already exists, the default version will be updated.
 
-Positional arguments
---------------------
+**positional arguments:**
 
 ``datastore_name``
   Name of the datastore.
@@ -130,8 +136,7 @@ Positional arguments
   Name or ID of an existing datastore version to set as the default.
   When adding a new datastore, use an empty string.
 
-Optional arguments
-------------------
+**optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -146,8 +151,7 @@ trove-manage datastore_version_flavor_add
                                                     datastore_version_name
                                                     flavor_ids
 
-Positional arguments
---------------------
+**positional arguments:**
 
 ``datastore_name``
   Name of the datastore.
@@ -156,10 +160,9 @@ Positional arguments
   Name of the datastore version.
 
 ``flavor_ids``
-        Comma separated list of flavor ids.
+  Comma separated list of flavor ids.
 
-Optional arguments
-------------------
+**optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -174,8 +177,7 @@ trove-manage datastore_version_flavor_delete
                                                        datastore_version_name
                                                        flavor_id
 
-Positional arguments
---------------------
+**positional arguments:**
 
 ``datastore_name``
   Name of the datastore.
@@ -186,8 +188,7 @@ Positional arguments
 ``flavor_id``
   The flavor to be deleted for a given datastore and datastore version.
 
-Optional arguments
-------------------
+**optional arguments:**
 
 ``-h, --help``
         show this help message and exit
@@ -204,8 +205,7 @@ trove-manage datastore_version_update
 Add or update a datastore version. If the datastore version already exists,
 all values except the datastore name and version will be updated.
 
-Positional arguments
---------------------
+**positional arguments:**
 
 ``datastore``
   Name of the datastore.
@@ -227,8 +227,7 @@ Positional arguments
   Whether the datastore version is active or not.
   Accepted values are ``0`` and ``1``.
 
-Optional arguments
-------------------
+**optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -242,14 +241,12 @@ trove-manage db_downgrade
 
 Downgrade the database to the specified version.
 
-Positional arguments
---------------------
+**positional arguments:**
 
 ``version``
   Target version.
 
-Optional arguments
-------------------
+**optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -270,8 +267,7 @@ trove-manage db_load_datastore_config_parameters
 Loads configuration group parameter validation rules for a datastore version
 into the database.
 
-Positional arguments
---------------------
+**positional arguments:**
 
 ``datastore``
   Name of the datastore.
@@ -283,8 +279,7 @@ Positional arguments
   Fully qualified file path to the configuration group
   parameter validation rules.
 
-Optional arguments
-------------------
+**optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -298,8 +293,7 @@ trove-manage db_recreate
 
 Drop the database and recreate it.
 
-Optional arguments
-------------------
+**optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -316,8 +310,7 @@ trove-manage db_sync
 
 Populate the database structure
 
-Optional arguments
-------------------
+**optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -335,8 +328,7 @@ trove-manage db_upgrade
 
 Upgrade the database to the specified version.
 
-Optional arguments
-------------------
+**optional arguments:**
 
 ``-h, --help``
   show this help message and exit
