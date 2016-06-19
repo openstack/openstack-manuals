@@ -1,6 +1,9 @@
-==================================
-OpenStack Linux image requirements
-==================================
+==================
+Image requirements
+==================
+
+Linux
+~~~~~
 
 For a Linux-based image to have full functionality in an
 OpenStack Compute cloud, there are a few requirements.
