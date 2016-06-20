@@ -99,7 +99,8 @@ address family can be marked default.
     Updated subnetpool: 74348864-f8bf-4fc0-ab03-81229d189467
 
 If there is a default, it can be requested by passing
-`--use-default-subnetpool` instead of `--subnetpool SUBNETPOOL`.
+:option:`--use-default-subnetpool` instead of
+:option:`--subnetpool SUBNETPOOL`.
 
 Demo
 ----
@@ -128,8 +129,8 @@ First, as admin, create a shared subnet pool:
     | tenant_id         | c597484841ff4a8785804c62ba81449b     |
     +-------------------+--------------------------------------+
 
-The default_prefixlen defines the subnet size you will get if you do not
-specify --prefixlen when creating a subnet.
+The ``default_prefixlen`` defines the subnet size you will get if you do not
+specify :option:`--prefixlen` when creating a subnet.
 
 Do essentially the same thing for ipv6 and there are now two subnet
 pools. Regular tenants can see them. (the output is trimmed a bit
@@ -166,7 +167,7 @@ Now, use them. It is easy to create a subnet from a pool:
 You can request a specific subnet from the pool. You need to specify a subnet
 that falls within the pool's prefixes. If the subnet is not already allocated,
 the request succeeds. You can leave off the IP version because it is deduced
-from the subnet.
+from the subnet pool.
 
 .. code-block:: console
 
