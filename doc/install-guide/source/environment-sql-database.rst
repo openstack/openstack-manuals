@@ -63,6 +63,7 @@ Install and configure components
            ...
            default-storage-engine = innodb
            innodb_file_per_table
+           max_connections = 4096
            collation-server = utf8_general_ci
            character-set-server = utf8
 
@@ -91,6 +92,7 @@ Install and configure components
            ...
            default-storage-engine = innodb
            innodb_file_per_table
+           max_connections = 4096
            collation-server = utf8_general_ci
            character-set-server = utf8
 
