@@ -267,24 +267,6 @@ capabilities:
 
       # ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping FIXED_IP
 
-   .. note::
-
-      For iproute version 3.12.0 and above, networking namespaces
-      are configured to be deleted by default. This behavior can be
-      changed for both DHCP and L3 agents. The configuration files are
-      ``/etc/neutron/dhcp_agent.ini`` and
-      ``/etc/neutron/l3_agent.ini`` respectively.
-
-      For DHCP namespace the configuration key:
-      ``dhcp_delete_namespaces = True``. You can set it to ``False``
-      in case namespaces cannot be deleted cleanly on the host running the
-      DHCP agent.
-
-      For L3 namespace, the configuration key:
-      ``router_delete_namespaces = True``. You can set it to False
-      in case namespaces cannot be deleted cleanly on the host running the
-      L3 agent.
-
    .. important::
 
       If you reboot a node that runs the L3 agent, you must run the
