@@ -7,7 +7,7 @@ neutron-sanity-check command-line client
 The :command:`neutron-sanity-check` client is a tool that checks various
 sanity about the Networking service.
 
-This chapter documents :command:`neutron-sanity-check` version ``7.0.2``.
+This chapter documents :command:`neutron-sanity-check` version ``8.1.0``.
 
 neutron-sanity-check usage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -18,25 +18,29 @@ neutron-sanity-check usage
                                [--config-dir DIR] [--config-file PATH] [--debug]
                                [--dibbler_version] [--dnsmasq_version]
                                [--ebtables_installed] [--icmpv6_header_match]
-                               [--iproute2_vxlan] [--keepalived_ipv6_support]
+                               [--ip6tables_installed] [--iproute2_vxlan]
+                               [--ipset_installed] [--keepalived_ipv6_support]
                                [--log-config-append PATH]
                                [--log-date-format DATE_FORMAT]
                                [--log-dir LOG_DIR] [--log-file PATH]
-                               [--log-format FORMAT] [--noarp_header_match]
-                               [--noarp_responder] [--nodebug]
-                               [--nodibbler_version] [--nodnsmasq_version]
-                               [--noebtables_installed] [--noicmpv6_header_match]
-                               [--noiproute2_vxlan] [--nokeepalived_ipv6_support]
-                               [--nonova_notify] [--noovs_geneve] [--noovs_patch]
-                               [--noovs_vxlan] [--noovsdb_native]
-                               [--noread_netns] [--nouse-syslog]
-                               [--nouse-syslog-rfc-format] [--nova_notify]
-                               [--noverbose] [--novf_management] [--ovs_geneve]
-                               [--ovs_patch] [--ovs_vxlan] [--ovsdb_native]
-                               [--read_netns] [--state_path STATE_PATH]
+                               [--noarp_header_match] [--noarp_responder]
+                               [--nodebug] [--nodibbler_version]
+                               [--nodnsmasq_version] [--noebtables_installed]
+                               [--noicmpv6_header_match]
+                               [--noip6tables_installed] [--noiproute2_vxlan]
+                               [--noipset_installed]
+                               [--nokeepalived_ipv6_support] [--nonova_notify]
+                               [--noovs_conntrack] [--noovs_geneve]
+                               [--noovs_patch] [--noovs_vxlan] [--noovsdb_native]
+                               [--noread_netns] [--nouse-syslog] [--nova_notify]
+                               [--noverbose] [--novf_management]
+                               [--nowatch-log-file] [--ovs_conntrack]
+                               [--ovs_geneve] [--ovs_patch] [--ovs_vxlan]
+                               [--ovsdb_native] [--read_netns]
+                               [--state_path STATE_PATH]
                                [--syslog-log-facility SYSLOG_LOG_FACILITY]
-                               [--use-syslog] [--use-syslog-rfc-format]
-                               [--verbose] [--version] [--vf_management]
+                               [--use-syslog] [--verbose] [--version]
+                               [--vf_management] [--watch-log-file]
 
 neutron-sanity-check optional arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,8 +63,7 @@ neutron-sanity-check optional arguments
 
 ``--config-file PATH``
   Path to a config file to use. Multiple config files can be specified,
-  with values in later files taking precedence.
-  The default files used are: ``None``.
+  with values in later files taking precedence. Dafaults to ``None``.
 
 ``--debug, -d``
   Print debugging output (set logging level to ``DEBUG`` instead of default
@@ -78,8 +81,14 @@ neutron-sanity-check optional arguments
 ``--icmpv6_header_match``
   Check for ICMPv6 header match support
 
+``--ip6tables_installed``
+  Check ip6tables installation
+
 ``--iproute2_vxlan``
   Check for iproute2 vxlan support
+
+``--ipset_installed``
+  Check ipset installation
 
 ``--keepalived_ipv6_support``
   Check keepalived IPv6 support
@@ -88,22 +97,23 @@ neutron-sanity-check optional arguments
   The name of a logging configuration file. This file is appended to any
   existing logging configuration files. For details about logging
   configuration files, see the Python logging module documentation.
+  Note that when logging configuration files are used then all logging
+  configuration is set in the configuration file and other logging
+  configuration options are ignored (for example,
+  ``logging_context_format_string``).
 
 ``--log-date-format DATE_FORMAT``
   Format string for %(asctime)s in log records. Default: None.
+  This option is ignored if ``log_config_append`` is set.
 
 ``--log-dir LOG_DIR, --logdir LOG_DIR``
-  (Optional) The base directory used for relative :option:`--log-file` paths.
+  (Optional) The base directory used for relative ``log-file`` paths.
+  This option is ignored if ``log_config_append`` is set.
 
 ``--log-file PATH, --logfile PATH``
-  (Optional) Name of log file to output to.
-  If no default is set, logging will go to stdout.
-
-``--log-format FORMAT``
-  **DEPRECATED**. A logging.Formatter log message format string which may
-  use any of the available logging.LogRecord attributes. This option is
-  deprecated. Please use ``logging_context_format_string`` and
-  ``logging_default_format_string`` instead.
+  (Optional) Name of log file to output to. If no default is set,
+  logging will go to stderr as defined by ``use_stderr``.
+  This option is ignored if ``log_config_append`` is set.
 
 ``--noarp_header_match``
   The inverse of :option:`--arp_header_match`
@@ -126,14 +136,23 @@ neutron-sanity-check optional arguments
 ``--noicmpv6_header_match``
   The inverse of :option:`--icmpv6_header_match`
 
+``--noip6tables_installed``
+  The inverse of :option:`--ip6tables_installed`
+
 ``--noiproute2_vxlan``
   The inverse of :option:`--iproute2_vxlan`
+
+``--noipset_installed``
+  The inverse of :option:`--ipset_installed`
 
 ``--nokeepalived_ipv6_support``
   The inverse of :option:`--keepalived_ipv6_support`
 
 ``--nonova_notify``
   The inverse of :option:`--nova_notify`
+
+``--noovs_conntrack``
+  The inverse of :option:`--ovs_conntrack`
 
 ``--noovs_geneve``
   The inverse of :option:`--ovs_geneve`
@@ -153,9 +172,6 @@ neutron-sanity-check optional arguments
 ``--nouse-syslog``
   The inverse of :option:`--use-syslog`
 
-``--nouse-syslog-rfc-format``
-  The inverse of :option:`--use-syslog-rfc-format`
-
 ``--nova_notify``
   Check for nova notification support
 
@@ -164,6 +180,9 @@ neutron-sanity-check optional arguments
 
 ``--novf_management``
   The inverse of :option:`--vf_management`
+
+``--nowatch-log-file``
+  The inverse of :option:`--watch-log-file`
 
 ``--ovs_geneve``
   Check for OVS Geneve support
@@ -186,23 +205,26 @@ neutron-sanity-check optional arguments
 
 ``--syslog-log-facility SYSLOG_LOG_FACILITY``
   Syslog facility to receive log lines.
+  This option is ignored if ``log_config_append`` is set.
 
 ``--use-syslog``
   Use syslog for logging. Existing syslog format is
-  DEPRECATED and will be changed later to honor RFC5424.
-
-``--use-syslog-rfc-format``
-  (Optional) Enables or disables syslog rfc5424 format for logging.
-  If enabled, prefixes the MSG part of the syslog message with APP-NAME
-  (RFC5424). The format without the APP-NAME is deprecated in Kilo,
-  and will be removed in Mitaka, along with this option.
+  **DEPRECATED** and will be changed later to honor RFC5424.
+  This option is ignored if ``log_config_append`` is set.
 
 ``--verbose, -v``
-  If set to false, will disable ``INFO`` logging level,
-  making ``WARNING`` the default.
+  If set to ``false``, the logging level will be set to
+  ``WARNING`` instead of the default ``INFO`` level.
 
 ``--version``
   show program's version number and exit
 
 ``--vf_management``
   Check for VF management support
+
+``--watch-log-file``
+  Uses logging handler designed to watch file system.
+  When log file is moved or removed this handler will open a new log
+  file with specified path instantaneously. It makes sense only if
+  ``log_file`` option is specified and Linux platform is used.
+  This option is ignored if ``log_config_append`` is set.
