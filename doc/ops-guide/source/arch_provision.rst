@@ -236,7 +236,6 @@ you build your use case and your deployment plan.
     `IBM <http://www-03.ibm.com/software/products/en/ibm-cloud-orchestrator>`_,
     `Metacloud <http://www.metacloud.com/>`_,
     `Mirantis <https://www.mirantis.com/>`_,
-    `Piston <http://www.pistoncloud.com/>`_,
     `Rackspace <http://www.rackspace.com/cloud/private>`_,
     `Red Hat <http://www.redhat.com/openstack/>`_,
     `SUSE <https://www.suse.com/products/suse-openstack-cloud/>`_,
