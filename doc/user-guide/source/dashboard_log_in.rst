@@ -108,6 +108,16 @@ From the :guilabel:`Project` tab, you can access the following categories:
 
   * :guilabel:`API Access`: View API endpoints.
 
+* :guilabel:`Shares`: Use the following tabs to complete these tasks:
+
+  * :guilabel:`Shares`: View, create, manage, and delete shares.
+
+  * :guilabel:`Snapshots`: View, manage, and delete volume snapshots.
+
+  * :guilabel:`Share Networks`: View, manage, and delete share networks.
+
+  * :guilabel:`Security Services`: View, manage, and delete security services.
+
 :guilabel:`Network` tab
 -----------------------
 
@@ -226,6 +236,20 @@ to complete these tasks:
 
   * :guilabel:`Orchestration Services`: View a list of all Orchestration
     services.
+
+* :guilabel:`Shares`: Use the following tabs to complete these tasks:
+
+  * :guilabel:`Shares`: View, create, manage, and delete shares.
+
+  * :guilabel:`Snapshots`: View, manage, and delete volume snapshots.
+
+  * :guilabel:`Share Networks`: View, manage, and delete share networks.
+
+  * :guilabel:`Security Services`: View, manage, and delete security services.
+
+  * :guilabel:`Share Types`: View, create, manage, and delete share types.
+
+  * :guilabel:`Share Servers`: View, manage, and delete share servers.
 
 .. _dashboard-identity-tab:
 
