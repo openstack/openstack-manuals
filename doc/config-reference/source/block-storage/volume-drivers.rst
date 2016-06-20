@@ -28,6 +28,7 @@ Volume drivers
    drivers/ibm-storwize-svc-driver.rst
    drivers/ibm-xiv-volume-driver.rst
    drivers/ibm-flashsystem-volume-driver.rst
+   drivers/itri-disco-driver.rst
    drivers/lenovo-driver.rst
    drivers/lvm-volume-driver.rst
    drivers/netapp-volume-driver.rst
