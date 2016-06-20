@@ -28,57 +28,28 @@ We recommend using a combination of the OpenStack command-line interface
 (CLI) tools and the OpenStack dashboard for administration. Some users
 with a background in other cloud technologies may be using the EC2
 Compatibility API, which uses naming conventions somewhat different from
-the native API. We highlight those differences.
-
-We strongly suggest that you install the command-line clients from the
-`Python Package Index <https://pypi.python.org/pypi>`_ (PyPI) instead
-of from the distribution packages. The clients are under heavy
-development, and it is very likely at any given time that the version of
-the packages distributed by your operating-system vendor are out of
-date.
+the native API.
 
 The pip utility is used to manage package installation from the PyPI
 archive and is available in the python-pip package in most Linux
-distributions. Each OpenStack project has its own client, so depending
-on which services your site runs, install some or all of the
-following packages:
+distributions. While each OpenStack project has its own client, they are
+being deprecated in favour of a common OpenStack client. It is generally
+recommended to install the OpenStack client.
 
-* python-novaclient (:term:`nova` CLI)
-* python-glanceclient (:term:`glance` CLI)
-* python-keystoneclient (:term:`keystone` CLI)
-* python-cinderclient (:term:`cinder` CLI)
-* python-swiftclient (:term:`swift` CLI)
-* python-neutronclient (:term:`neutron` CLI)
+Install OpenStack command-line clients
+--------------------------------------
 
-Installing the Tools
---------------------
+For instructions on installing, upgrading, or removing command-line clients,
+see the `OpenStack Command-Line Interface Reference <http://docs.openstack.org
+/cli-reference/common/cli_install_openstack_command_line_clients.html>_`.
 
-To install (or upgrade) a package from the PyPI archive with pip,
-command-line tools installingas root:
+.. note::
 
-.. code-block:: console
-
-   # pip install [--upgrade] <package-name>
-
-To remove the package:
-
-.. code-block:: console
-
-   # pip uninstall <package-name>
-
-If you need even newer versions of the clients, pip can install directly
-from the upstream git repository using the :option:`-e` flag. You must specify
-a name for the Python egg that is installed. For example:
-
-.. code-block:: console
-
-   # pip install -e git+https://git.openstack.org/openstack/python-novaclient#egg=python-novaclient
-
-If you support the EC2 API on your cloud, you should also install the
-euca2ools package or some other EC2 API tool so that you can get the
-same view your users have. Using EC2 API-based tools is mostly out of
-the scope of this guide, though we discuss getting credentials for use
-with it.
+   If you support the EC2 API on your cloud, you should also install the
+   euca2ools package or some other EC2 API tool so that you can get the
+   same view your users have. Using EC2 API-based tools is mostly out of
+   the scope of this guide, though we discuss getting credentials for use
+   with it.
 
 Administrative Command-Line Tools
 ---------------------------------
