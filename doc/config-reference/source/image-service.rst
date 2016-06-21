@@ -7,7 +7,6 @@ Image service
    image-service/api.rst
    image-service/rpc.rst
    image-service/backends.rst
-   image-service/image_service_ISO_support.rst
    image-service/logs.rst
    image-service/sample-configuration-files.rst
    tables/conf-changes/glance.rst
