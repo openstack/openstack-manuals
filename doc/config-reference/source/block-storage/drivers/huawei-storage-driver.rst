@@ -14,12 +14,11 @@ driver, Huawei storage system and OpenStack:
 
 .. list-table:: **Version mappings among the Block Storage driver and Huawei
    storage system**
-   :widths: 30 35 10
+   :widths: 30 35
    :header-rows: 1
 
-   * - Description (Volume Driver Version)
+   * - Description
      - Storage System Version
-     - Volume Driver Version
    * - Create, delete, expand, attach, detach, manage, and unmanage volumes.
 
        Create, delete, manage and unmanage a snapshot.
@@ -33,9 +32,7 @@ driver, Huawei storage system and OpenStack:
        Clone a volume
 
        QoS
-     - OceanStor T series V1R5 C02/C30
-
-       OceanStor T series V2R2 C00/C20/C30
+     - OceanStor T series V2R2 C00/C20/C30
 
        OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
 
@@ -44,20 +41,17 @@ driver, Huawei storage system and OpenStack:
        OceanStor 2600V3 V300R005C00
 
        OceanStor 18500/18800 V1R1C00/C20/C30 V3R3C00
-     - 1.1.0
+   * - Volume Migration
 
-       1.1.1
-   * - Volume Migration(version 1.1.1 or later)
+       Auto zoning
 
-       Auto zoning(version 1.1.1 or later)
+       SmartTier
 
-       SmartTier(version 1.1.1 or later)
+       SmartCache
 
-       SmartCache(version 1.1.1 or later)
+       Smart Thin/Thick
 
-       Smart Thin/Thick(version 1.1.1 or later)
-
-       Replication V2.1(version 1.1.1 or later)
+       Replication V2.1
      - OceanStor T series V2R2 C00/C20/C30
 
        OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
@@ -67,8 +61,7 @@ driver, Huawei storage system and OpenStack:
        OceanStor 2600V3 V300R005C00
 
        OceanStor 18500/18800V1R1C00/C20/C30
-     - 1.1.1
-   * - SmartPartition(version 1.1.1 or later)
+   * - SmartPartition
      - OceanStor T series V2R2 C00/C20/C30
 
        OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
@@ -76,7 +69,6 @@ driver, Huawei storage system and OpenStack:
        OceanStor 2600V3 V300R005C00
 
        OceanStor 18500/18800V1R1C00/C20/C30
-     - 1.1.1
 
 Block Storage driver installation and deployment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -175,11 +167,6 @@ To configure the volume driver, follow the steps below:
 
     The corresponding ``Product`` values for each product are as below:
 
-   * **For T series V1**
-
-     .. code-block:: xml
-
-        <Product>T</Product>
 
    * **For T series V2**
 
@@ -243,39 +230,7 @@ To configure the volume driver, follow the steps below:
       By default, the value for ``hypermetro_devices`` is ``None``.
 
 
-   The ``volume-driver`` values for each iSCSI product is as below:
-
-   * **For T series V1**
-
-     .. code-block:: ini
-
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiTISCSIDriver
-
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiTFCDriver
-
-   * **For T series V2**
-
-     .. code-block:: ini
-
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiTV2ISCSIDriver
-
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiTV2FCDriver
-
-   * **For V3**
-
-     .. code-block:: ini
-
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiV3ISCSIDriver
-
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiV3FCDriver
-
-   * **For OceanStor 18000 series**
+   In Mitaka, the ``volume-driver`` value for every product is as below:
 
      .. code-block:: ini
 
@@ -284,11 +239,6 @@ To configure the volume driver, follow the steps below:
 
         # For FC
         volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
-
-     .. note::
-
-        In Mitaka, ``Huawei18000ISCSIDriver`` and ``Huawei18000FCDriver`` have
-        been renamed to ``HuaweiISCSIDriver`` and ``HuaweiFCDriver``.
 
 #. Run the :command:`service cinder-volume restart` command to restart the
    Block Storage service.
@@ -358,10 +308,10 @@ Multiple storage systems configuration example:
 
 .. code-block:: ini
 
-   enabled_backends = t_fc, 18000_fc
-   [t_fc]
-   volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiTFCDriver
-   cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_t_fc.xml
+   enabled_backends = v3_fc, 18000_fc
+   [v3_fc]
+   volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiFCDriver
+   cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_v3_fc.xml
    volume_backend_name = HuaweiTFCDriver
    [18000_fc]
    volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
@@ -383,27 +333,17 @@ of the Huawei volume driver.
      - Description
      - Applicable to
    * - Product
-     - -
-     - Type of a storage product. Possible values are ``T``, ``18000`` and
+     - ``-``
+     - Type of a storage product. Possible values are ``TV2``, ``18000`` and
        ``V3``.
      - All
    * - Protocol
-     - -
+     - ``-``
      - Type of a connection protocol. The possible value is either ``'iSCSI'``
        or ``'FC'``.
      - All
-   * - ControllerIP0
-     - -
-     - IP address of the primary controller on an OceanStor T series V100R005
-       storage device.
-     - T series V1
-   * - ControllerIP1
-     - -
-     - IP address of the secondary controller on an OceanStor T series V100R005
-       storage device.
-     - T series V1
    * - RestURL
-     - -
+     - ``-``
      - Access address of the REST interface,
        ``https://x.x.x.x/devicemanager/rest/``. The value ``x.x.x.x`` indicates
        the management IP address. OceanStor 18000 uses the preceding setting,
@@ -414,15 +354,15 @@ of the Huawei volume driver.
 
        V3 18000
    * - UserName
-     - -
+     - ``-``
      - User name of a storage administrator.
      - All
    * - UserPassword
-     - -
+     - ``-``
      - Password of a storage administrator.
      - All
    * - StoragePool
-     - -
+     - ``-``
      - Name of a storage pool to be used. If you need to configure multiple
        storage pools, separate them by semicolons (``;``).
      - All
@@ -443,11 +383,6 @@ of the Huawei volume driver.
      - Thin
      - Type of the LUNs to be created. The value can be ``Thick`` or ``Thin``.
      - All
-   * - StripUnitSize
-     - 64
-     - Stripe depth of a LUN to be created. The unit is KB. This parameter is
-       invalid when a thin LUN is created.
-     - T series V1
    * - WriteType
      - 1
      - Cache write type, possible values are: ``1`` (write back), ``2``
@@ -458,16 +393,6 @@ of the Huawei volume driver.
      - Cache mirroring or not, possible values are: ``0`` (without mirroring)
        or ``1`` (with mirroring).
      - All
-   * - Prefetch Type
-     - 3
-     - Cache prefetch policy, possible values are: ``0`` (no prefetch), ``1``
-       (fixed prefetch), ``2`` (variable prefetch) or ``3``
-       (intelligent prefetch).
-     - T series V1
-   * - Prefetch Value
-     - 0
-     - Cache prefetch value.
-     - T series V1
    * - LUNcopyWaitInterval
      - 5
      - After LUN copy is enabled, the plug-in frequently queries the copy
@@ -483,22 +408,22 @@ of the Huawei volume driver.
 
        18000
    * - Initiator Name
-     - -
+     - ``-``
      - Name of a compute node initiator.
      - All
    * - Initiator TargetIP
-     - -
+     - ``-``
      - IP address of the iSCSI port provided for compute nodes.
      - All
    * - Initiator TargetPortGroup
-     - -
+     - ``-``
      - IP address of the iSCSI target port that is provided for compute
        nodes.
      - T series V2 V3
 
        18000
    * - DefaultTargetIP
-     - -
+     - ``-``
      - Default IP address of the iSCSI target port that is provided for
        compute nodes.
      - All
@@ -507,7 +432,7 @@ of the Huawei volume driver.
      - Operating system of the Nova compute node's host.
      - All
    * - HostIP
-     - -
+     - ``-``
      - IP address of the Nova compute node's host.
      - All
 
