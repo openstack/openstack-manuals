@@ -9,7 +9,7 @@ Image service command-line client
 The glance client is the command-line interface (CLI) for
 the Image service API and its extensions.
 
-This chapter documents :command:`glance` version ``2.0.0``.
+This chapter documents :command:`glance` version ``2.1.0``.
 
 For help on a specific :command:`glance` command, enter:
 
@@ -358,8 +358,8 @@ Download a specific image.
 
 ``--file <FILE>``
   Local file to save downloaded image data to. If this is not
-  specified and there is no redirection the image data will be
-  not be saved.
+  specified and there is no redirection the image data will not
+  be saved.
 
 ``--progress``
   Show download progress bar.
@@ -700,7 +700,16 @@ glance md-namespace-create (v2)
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-create <NAMESPACE> <unavailable>
+   usage: glance --os-image-api-version 2 md-namespace-create [--schema <SCHEMA>]
+                                     [--created-at <CREATED_AT>]
+                                     [--resource-type-associations <RESOURCE_TYPE_ASSOCIATIONS> [<RESOURCE_TYPE_ASSOCIATIONS> ...]]
+                                     [--protected [True|False]] [--self <SELF>]
+                                     [--display-name <DISPLAY_NAME>]
+                                     [--owner <OWNER>]
+                                     [--visibility <VISIBILITY>]
+                                     [--updated-at <UPDATED_AT>]
+                                     [--description <DESCRIPTION>]
+                                     <NAMESPACE>
 
 Create a new metadata definitions namespace.
 
@@ -709,9 +718,36 @@ Create a new metadata definitions namespace.
 ``<NAMESPACE>``
   Name of the namespace.
 
-``<unavailable>``
-  Please run with connection parameters set to retrieve the
-  schema for generating help for this command
+**Optional arguments:**
+
+``--schema <SCHEMA>``
+
+``--created-at <CREATED_AT>``
+  Date and time of namespace creation.
+
+``--resource-type-associations <RESOURCE_TYPE_ASSOCIATIONS> [...]``
+
+``--protected [True|False]``
+  If true, namespace will not be deletable.
+
+``--self <SELF>``
+
+``--display-name <DISPLAY_NAME>``
+  The user friendly name for the namespace. Used by UI
+  if available.
+
+``--owner <OWNER>``
+  Owner of the namespace.
+
+``--visibility <VISIBILITY>``
+  Scope of namespace accessibility. Valid values:
+  public, private
+
+``--updated-at <UPDATED_AT>``
+  Date and time of the last namespace modification.
+
+``--description <DESCRIPTION>``
+  Provides a user friendly description of the namespace.
 
 .. _glance_md-namespace-delete_v2:
 
@@ -871,7 +907,15 @@ glance md-namespace-update (v2)
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-update <NAMESPACE> <unavailable>
+   usage: glance --os-image-api-version 2 md-namespace-update [--created-at <CREATED_AT>]
+                                     [--protected [True|False]]
+                                     [--namespace <NAMESPACE>] [--self <SELF>]
+                                     [--display-name <DISPLAY_NAME>]
+                                     [--owner <OWNER>]
+                                     [--visibility <VISIBILITY>]
+                                     [--updated-at <UPDATED_AT>]
+                                     [--description <DESCRIPTION>]
+                                     <NAMESPACE>
 
 Update an existing metadata definitions namespace.
 
@@ -880,9 +924,35 @@ Update an existing metadata definitions namespace.
 ``<NAMESPACE>``
   Name of namespace to update.
 
-``<unavailable>``
-  Please run with connection parameters set to retrieve the
-  schema for generating help for this command
+**Optional arguments:**
+
+``--created-at <CREATED_AT>``
+  Date and time of namespace creation.
+
+``--protected [True|False]``
+  If true, namespace will not be deletable.
+
+``--namespace <NAMESPACE>``
+  The unique namespace text.
+
+``--self <SELF>``
+
+``--display-name <DISPLAY_NAME>``
+  The user friendly name for the namespace. Used by UI
+  if available.
+
+``--owner <OWNER>``
+  Owner of the namespace.
+
+``--visibility <VISIBILITY>``
+  Scope of namespace accessibility. Valid values:
+  public, private
+
+``--updated-at <UPDATED_AT>``
+  Date and time of the last namespace modification.
+
+``--description <DESCRIPTION>``
+  Provides a user friendly description of the namespace.
 
 .. _glance_md-object-create_v2:
 
@@ -1152,7 +1222,12 @@ glance md-resource-type-associate (v2)
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-resource-type-associate <NAMESPACE> <unavailable>
+   usage: glance --os-image-api-version 2 md-resource-type-associate [--updated-at <UPDATED_AT>]
+                                            [--name <NAME>]
+                                            [--properties-target <PROPERTIES_TARGET>]
+                                            [--prefix <PREFIX>]
+                                            [--created-at <CREATED_AT>]
+                                            <NAMESPACE>
 
 Associate resource type with a metadata definitions namespace.
 
@@ -1161,9 +1236,34 @@ Associate resource type with a metadata definitions namespace.
 ``<NAMESPACE>``
   Name of namespace.
 
-``<unavailable>``
-  Please run with connection parameters set to retrieve the
-  schema for generating help for this command
+**Optional arguments:**
+
+``--updated-at <UPDATED_AT>``
+  Date and time of the last resource type association
+  modification.
+
+``--name <NAME>``
+  Resource type names should be aligned with Heat
+  resource types whenever possible: http://docs.openstac
+  k.org/developer/heat/template_guide/openstack.html
+
+``--properties-target <PROPERTIES_TARGET>``
+  Some resource types allow more than one key / value
+  pair per instance. For example, Cinder allows user and
+  image metadata on volumes. Only the image properties
+  metadata is evaluated by Nova (scheduling or drivers).
+  This property allows a namespace target to remove the
+  ambiguity.
+
+``--prefix <PREFIX>``
+  Specifies the prefix to use for the given resource
+  type. Any properties in the namespace should be
+  prefixed with this prefix when being applied to the
+  specified resource type. Must include prefix separator
+  (e.g. a colon :).
+
+``--created-at <CREATED_AT>``
+  Date and time of resource type association.
 
 .. _glance_md-resource-type-deassociate_v2:
 
@@ -1463,6 +1563,7 @@ Describe a specific task.
 ``<TASK_ID>``
   ID of task to describe.
 
+
 Image service API v1 commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1594,8 +1695,8 @@ Download a specific image.
 
 ``--file <FILE>``
   Local file to save downloaded image data to. If this is not
-  specified and there is no redirection the image data will be
-  not be saved.
+  specified and there is no redirection the image data will not
+  be saved.
 
 ``--progress``
   Show download progress bar.
