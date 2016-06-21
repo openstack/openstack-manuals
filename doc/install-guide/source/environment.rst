@@ -46,7 +46,7 @@ A single disk partition on each node works for most basic installations.
 However, you should consider :term:`Logical Volume Manager (LVM)` for
 installations with optional services such as Block Storage.
 
-For first-time installation and testing purposes, many users elect to build
+For first-time installation and testing purposes, many users select to build
 each host as a :term:`virtual machine (VM)`. The primary benefits of VMs
 include the following:
 
