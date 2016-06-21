@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _cinder-zoning_fabric:
+.. _cinder-zoning_fabric_brcd:
 
-.. list-table:: Description of zoning fabrics configuration options
+.. list-table:: Description of brocade zoning fabrics configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -40,21 +40,3 @@
      - (String) Overridden zone name prefix.
    * - ``zoning_policy`` = ``initiator-target``
      - (String) Overridden zoning policy.
-   * - **[CISCO_FABRIC_EXAMPLE]**
-     -
-   * - ``cisco_fc_fabric_address`` =
-     - (String) Management IP of fabric
-   * - ``cisco_fc_fabric_password`` =
-     - (String) Password for user
-   * - ``cisco_fc_fabric_port`` = ``22``
-     - (Unknown) Connecting port
-   * - ``cisco_fc_fabric_user`` =
-     - (String) Fabric user ID
-   * - ``cisco_zone_activate`` = ``True``
-     - (Boolean) overridden zoning activation state
-   * - ``cisco_zone_name_prefix`` = ``None``
-     - (String) overridden zone name prefix
-   * - ``cisco_zoning_policy`` = ``initiator-target``
-     - (String) overridden zoning policy
-   * - ``cisco_zoning_vsan`` = ``None``
-     - (String) VSAN of the Fabric
