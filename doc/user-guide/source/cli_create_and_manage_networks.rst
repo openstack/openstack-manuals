@@ -19,7 +19,6 @@ Create networks
    .. code-block:: console
 
       $ neutron ext-list -c alias -c name
-
       +-----------------+--------------------------+
       | alias           | name                     |
       +-----------------+--------------------------+
@@ -38,7 +37,6 @@ Create networks
    .. code-block:: console
 
       $ neutron net-create net1
-
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -65,7 +63,6 @@ Create networks
    .. code-block:: console
 
       $ neutron net-create net2 --provider:network-type local
-
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -94,7 +91,6 @@ Create a subnet:
 .. code-block:: console
 
    $ neutron subnet-create net1 192.168.2.0/24 --name subnet1
-
    Created a new subnet:
    +------------------+--------------------------------------------------+
    | Field            | Value                                            |
@@ -142,7 +138,6 @@ Create routers
    .. code-block:: console
 
       $ neutron router-create router1
-
       Created a new router:
       +-----------------------+--------------------------------------+
       | Field                 | Value                                |
@@ -184,7 +179,6 @@ Create ports
    .. code-block:: console
 
       $ neutron port-create net1 --fixed-ip ip_address=192.168.2.40
-
       Created a new port:
       +----------------------+----------------------------------------------------------------------+
       | Field                | Value                                                                |
@@ -218,7 +212,6 @@ Create ports
    .. code-block:: console
 
       $ neutron port-create net1
-
       Created a new port:
       +----------------------+----------------------------------------------------------------------+
       | Field                | Value                                                                |
@@ -242,13 +235,18 @@ Create ports
       Note that the system allocates one IP address if you do not specify
       an IP address in the :command:`neutron port-create` command.
 
+   .. note::
+
+      You can specify a MAC address with :option:`--mac-address MAC_ADDRESS`.
+      If you specify an invalid MAC address, including ``00:00:00:00:00:00``
+      or ``ff:ff:ff:ff:ff:ff``, you will get an error.
+
 #. Query ports with specified fixed IP addresses:
 
    .. code-block:: console
 
       $ neutron port-list --fixed-ips ip_address=192.168.2.2 \
         ip_address=192.168.2.40
-
       +----------------+------+-------------------+-------------------------------------------------+
       | id             | name | mac_address       | fixed_ips                                       |
       +----------------+------+-------------------+-------------------------------------------------+
