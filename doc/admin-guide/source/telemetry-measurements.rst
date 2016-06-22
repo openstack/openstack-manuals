@@ -359,6 +359,11 @@ The following meters are collected for OpenStack Compute:
 |           |       |      | ID       |          | Hyper-V | ince previous d\ |
 |           |       |      |          |          |         | atapoint         |
 +-----------+-------+------+----------+----------+---------+------------------+
+| **Meters added in the Newton release**                                      |
++-----------+-------+------+----------+----------+---------+------------------+
+| cpu_l3_c\ | Gauge | B    | instance | Pollster | Libvirt | L3 cache used b\ |
+| ache      |       |      | ID       |          |         | y the instance   |
++-----------+-------+------+----------+----------+---------+------------------+
 
 |
 
