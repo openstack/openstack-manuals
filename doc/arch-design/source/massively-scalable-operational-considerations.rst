@@ -5,7 +5,7 @@ In order to run efficiently at massive scale, automate as many of the
 operational processes as possible. Automation includes the configuration of
 provisioning, monitoring and alerting systems. Part of the automation process
 includes the capability to determine when human intervention is required and
-who should act. The objective is to increase the ratio of operational staff to
+who should act. The objective is to decrease the ratio of operational staff to
 running systems as much as possible in order to reduce maintenance costs. In a
 massively scaled environment, it is very difficult for staff to give each
 system individual care.
