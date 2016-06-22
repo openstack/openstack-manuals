@@ -47,6 +47,13 @@ The following operations are supported:
 
 - Shrink a share.
 
+- Create a consistency group.
+
+- Delete a consistency group.
+
+- Create a consistency group snapshot.
+
+- Delete a consistency group snapshot.
 
 Required licenses
 ~~~~~~~~~~~~~~~~~
