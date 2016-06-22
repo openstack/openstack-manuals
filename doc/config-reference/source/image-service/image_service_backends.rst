@@ -5,12 +5,12 @@ Configure back ends
 The Image service supports several back ends for storing virtual machine
 images:
 
-* OpenStack Block Storage (cinder)
+* Block Storage service (cinder)
 * A directory on a local file system
+* HTTP
 * Ceph RBD
-* Amazon S3
 * Sheepdog
-* OpenStack Object Storage (swift)
+* Object Storage service (swift)
 * VMware ESX
 
 The following tables detail the options available for each.
@@ -19,7 +19,6 @@ The following tables detail the options available for each.
 .. include:: ../tables/glance-filesystem.rst
 .. include:: ../tables/glance-http.rst
 .. include:: ../tables/glance-rbd.rst
-.. include:: ../tables/glance-s3.rst
 .. include:: ../tables/glance-sheepdog.rst
 .. include:: ../tables/glance-swift.rst
 
