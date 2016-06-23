@@ -12,7 +12,10 @@ Integrate Identity with LDAP
    keystone_secure_identity_to_ldap_backend.rst
 
 The OpenStack Identity service supports integration with existing LDAP
-directories for authentication and authorization services.
+directories for authentication and authorization services. LDAP back
+ends require initialization before configuring the OpenStack Identity
+service to work with it. For more information, see `Setting up LDAP
+for use with Keystone <https://wiki.openstack.org/wiki/OpenLDAP>`__.
 
 When the OpenStack Identity service is configured to use LDAP back ends,
 you can split authentication (using the *identity* feature) and
