@@ -90,11 +90,15 @@ list, as follows:
 
 .. note::
 
-   To store location metadata for images, which enables direct file access for a client, update the ``/etc/glance/glance-api.conf`` file with the following statements:
+   To store location metadata for images, which enables direct file access for a client,
+   update the ``/etc/glance/glance-api.conf`` file with the following statements:
 
-   *  ``show_multiple_locations = True``
+   * ``show_multiple_locations = True``
 
-   *  ``filesystem_store_metadata_file = filePath``, where filePath points to a JSON file that defines the mount point for OpenStack images on your system and a unique ID. For example:
+   * ``filesystem_store_metadata_file = filePath``
+
+     where filePath points to a JSON file that defines the mount point for OpenStack
+     images on your system and a unique ID. For example:
 
    .. code-block:: json
 
@@ -103,7 +107,8 @@ list, as follows:
           "mountpoint": "/var/lib/glance/images/"
       }]
 
-   After you restart the Image service, you can use the following syntax to view the image's location information:
+   After you restart the Image service, you can use the following syntax to view
+   the image's location information:
 
    .. code-block:: console
 
@@ -321,6 +326,24 @@ in the following tables.
         --property id=http://fedoraproject.org/fedora/23 \
         ID-of-my-fedora-image
 
+Create an image from ISO image
+------------------------------
+
+You can upload ISO images to the Image service (glance).
+You can subsequently boot an ISO image using Compute.
+
+In the Image service, run the following command:
+
+.. code-block:: console
+
+   $ openstack image create ISO_IMAGE --file IMAGE.iso \
+     --disk-format iso --container-format bare
+
+Optionally, to confirm the upload in Image service, run:
+
+.. code-block:: console
+
+   $ openstack image list
 
 Troubleshoot image creation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
