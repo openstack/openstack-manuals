@@ -193,16 +193,7 @@ To use this feature, you must configure the Image service, as follows:
 
 - Set the ``filesystem_store_metadata_file`` configuration option to a metadata
   file. The metadata file should contain a JSON object that contains the
-  correct information about the NFS export used by the Image service, similar
-  to:
-
-  .. code-block:: json
-
-     {
-         "share_location": "nfs://192.168.0.1/myGlanceExport",
-         "mount_point": "/var/lib/glance/images",
-         "type": "nfs"
-     }
+  correct information about the NFS export used by the Image service.
 
 To use this feature, you must configure the Block Storage service, as follows:
 
