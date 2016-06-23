@@ -17,12 +17,8 @@ maintain a catalog of available images. By default, Compute is configured to
 use the Image service (glance), which is currently the only supported image
 service.
 
-If your installation requires :command:`euca2ools` to register new images, you
-must run the ``nova-objectstore`` service. This service provides an Amazon S3
-front end for the Image service, which is required by :command:`euca2ools`.
-
 To customize the Compute service, use the configuration option settings
-documented in :ref:`nova-glance` and :ref:`nova-s3`.
+documented in :ref:`nova-glance`.
 
 You can modify many options in the Image service. The following tables provide
 a comprehensive list.
