@@ -43,7 +43,7 @@ and ensure the VIPs can only run on machines where HAProxy is active:
 
    $ pcs resource create lb-haproxy systemd:haproxy --clone
    $ pcs constraint order start vip then lb-haproxy-clone kind=Optional
-   $ pcs constraint colocation add vip with lb-haproxy-clone
+   $ pcs constraint colocation add lb-haproxy-clone with vip
 
 ``crmsh``
 
