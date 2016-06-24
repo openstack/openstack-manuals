@@ -1,1 +1,0 @@
-../../install-guide/source/heat-next-steps.rst

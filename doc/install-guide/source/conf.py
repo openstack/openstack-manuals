@@ -98,7 +98,9 @@ exclude_patterns = ['common/cli*', 'common/nova*',
                     'common/get_started_logical_architecture.rst',
                     'common/get_started_dashboard.rst',
                     'common/get_started_storage_concepts.rst',
+                    'common/get_started_database_service.rst',
                     'common/get_started_data_processing.rst',
+                    'common/get_started_orchestration.rst',
                     'common/dashboard_customizing.rst',
                     'shared/note_configuration_vary_by_distribution.rst']
 
