@@ -379,7 +379,8 @@ basic security group operations:
    * - Creates a security group for our web servers.
      - .. code-block:: console
 
-          $ neutron security-group-create webservers --description "security group for webservers"
+          $ neutron security-group-create webservers \
+           --description "security group for webservers"
    * - Lists security groups.
      - .. code-block:: console
 
@@ -388,7 +389,8 @@ basic security group operations:
      - .. code-block:: console
 
           $ neutron security-group-rule-create --direction ingress \
-            --protocol tcp --port_range_min 80 --port_range_max 80 SECURITY_GROUP_UUID
+            --protocol tcp --port_range_min 80 --port_range_max 80 \
+             SECURITY_GROUP_UUID
    * - Lists security group rules.
      - .. code-block:: console
 
@@ -404,7 +406,8 @@ basic security group operations:
    * - Creates a port and associates two security groups.
      - .. code-block:: console
 
-          $ neutron port-create --security-group SECURITY_GROUP_ID1 --security-group SECURITY_GROUP_ID2 NETWORK_ID
+          $ neutron port-create --security-group SECURITY_GROUP_ID1 \
+            --security-group SECURITY_GROUP_ID2 NETWORK_ID
    * - Removes security groups from a port.
      - .. code-block:: console
 
@@ -447,7 +450,8 @@ basic LBaaS operations:
 
    .. code-block:: console
 
-      $ neutron lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3
+      $ neutron lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 \
+        --timeout 3
 
 -  Associates a health monitor with pool.
 
@@ -756,7 +760,7 @@ traffic from external networks to the 10.10.10.0/24 subnet:
 
 .. code-block:: console
 
-   $ neutron router-update ROUTER_UUID --router_rules type=dict list=true\
+   $ neutron router-update ROUTER_UUID --router_rules type=dict list=true \
      source=any,destination=any,action=permit \
      source=external,destination=10.10.10.0/24,action=deny
 
@@ -764,7 +768,7 @@ Specify alternate next-hop addresses for a specific subnet:
 
 .. code-block:: console
 
-   $ neutron router-update ROUTER_UUID --router_rules type=dict list=true\
+   $ neutron router-update ROUTER_UUID --router_rules type=dict list=true  \
      source=any,destination=any,action=permit \
      source=10.10.10.0/24,destination=any,action=permit,nexthops=10.10.10.254+10.10.10.253
 
@@ -772,7 +776,7 @@ Block traffic between two subnets while allowing everything else:
 
 .. code-block:: console
 
-   $ neutron router-update ROUTER_UUID --router_rules type=dict list=true\
+   $ neutron router-update ROUTER_UUID --router_rules type=dict list=true \
      source=any,destination=any,action=permit \
      source=10.10.10.0/24,destination=10.20.20.20/24,action=deny
 
