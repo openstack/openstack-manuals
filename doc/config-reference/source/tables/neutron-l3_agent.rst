@@ -60,8 +60,6 @@
      - (Integer) Maximum number of L3 agents which a HA router will be scheduled on. If it is set to 0 then the router will be scheduled on every agent.
    * - ``min_l3_agents_per_router`` = ``2``
      - (Integer) Minimum number of L3 agents which a HA router will be scheduled on. If it is set to 0 then the router will be scheduled on every agent.
-   * - ``router_id`` =
-     - (String) DEPRECATED: If non-empty, the l3 agent can only configure a router that has the matching router ID.
    * - ``send_arp_for_ha`` = ``3``
      - (Integer) Send this many gratuitous ARPs for HA setup, if less than or equal to 0, the feature is disabled
    * - **[AGENT]**
