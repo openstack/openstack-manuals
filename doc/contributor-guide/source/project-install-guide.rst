@@ -85,7 +85,7 @@ After these changes have merged, you can set up the jobs for building.
           jobs:
           ...
            - install-guide-jobs:
-             service: orchestration
+               service: orchestration
 
    Here ``service`` is the service name of the project, like orchestration
    for heat.
