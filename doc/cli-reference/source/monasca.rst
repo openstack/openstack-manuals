@@ -9,7 +9,7 @@ Monitoring command-line client
 The monasca client is the command-line interface (CLI) for
 the Monitoring API and its extensions.
 
-This chapter documents :command:`monasca` version ``1.0.30``.
+This chapter documents :command:`monasca` version ``1.1.0``.
 
 For help on a specific :command:`monasca` command, enter:
 
@@ -32,7 +32,8 @@ monasca usage
                   [--os-user-domain-name OS_USER_DOMAIN_NAME]
                   [--os-project-id OS_PROJECT_ID]
                   [--os-project-name OS_PROJECT_NAME]
-                  [--os-domain-id OS_DOMAIN_ID] [--os-domain-name OS_DOMAIN_NAME]
+                  [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
+                  [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
                   [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
                   [--os-auth-token OS_AUTH_TOKEN] [--os-no-client-auth]
                   [--monasca-api-url MONASCA_API_URL]
@@ -59,6 +60,7 @@ monasca usage
        metric-create            Create metric.
        metric-create-raw        Create metric from raw json body.
        metric-list              List metrics for this tenant.
+       metric-name-list
        metric-statistics        List measurement statistics for the specified
                                 metric.
        notification-create      Create notification.
@@ -133,11 +135,11 @@ monasca optional arguments
 ``--os-project-name OS_PROJECT_NAME``
   Defaults to ``env[OS_PROJECT_NAME]``.
 
-``--os-domain-id OS_DOMAIN_ID``
-  Defaults to ``env[OS_DOMAIN_ID]``.
+``--os-project-domain-id OS_PROJECT_DOMAIN_ID``
+  Defaults to ``env[OS_PROJECT_DOMAIN_ID]``.
 
-``--os-domain-name OS_DOMAIN_NAME``
-  Defaults to ``env[OS_DOMAIN_NAME]``.
+``--os-project-domain-name OS_PROJECT_DOMAIN_NAME``
+  Defaults to ``env[OS_PROJECT_DOMAIN_NAME]``.
 
 ``--os-auth-url OS_AUTH_URL``
   Defaults to ``env[OS_AUTH_URL]``.
@@ -233,7 +235,7 @@ monasca alarm-definition-create
 
    usage: monasca alarm-definition-create [--description <DESCRIPTION>]
                                           [--severity <SEVERITY>]
-                                          [--match-by <DIMENSION_KEY1,DIMENSION_KEY2,...>]
+                                          [--match-by <MATCH_BY_DIMENSION_KEY1,MATCH_BY_DIMENSION_KEY2,...>]
                                           [--alarm-actions <NOTIFICATION-ID>]
                                           [--ok-actions <NOTIFICATION-ID>]
                                           [--undetermined-actions <NOTIFICATION-ID>]
@@ -257,12 +259,11 @@ Create an alarm definition.
 ``--severity <SEVERITY>``
   Severity is one of [LOW, MEDIUM, HIGH, CRITICAL].
 
-``--match-by <DIMENSION_KEY1,DIMENSION_KEY2,...>``
-  The metric dimensions to match to the alarm
-  dimensions. One or more dimension key names separated
-  by a comma. Key names need quoting when they contain
-  special chars [&,(,),{,},>,<] that confuse the CLI
-  parser.
+``--match-by <MATCH_BY_DIMENSION_KEY1,MATCH_BY_DIMENSION_KEY2,...>``
+  The metric dimensions to use to create unique alarms.
+  One or more dimension key names separated by a comma.
+  Key names need quoting when they contain special chars
+  [&,(,),{,},>,<] that confuse the CLI parser.
 
 ``--alarm-actions <NOTIFICATION-ID>``
   The notification method to use when an alarm state is
@@ -327,10 +328,9 @@ List alarm definitions for this tenant.
 
 ``--sort-by <SORT BY FIELDS>``
   Fields to sort by as a comma separated list. Valid
-  values are id, name, severity, updated_timestamp,
-  created_timestamp. Fields may be followed by "asc" or
-  "desc", ex "severity desc", to set the direction of
-  sorting.
+  values are id, name, severity, created_at, updated_at.
+  Fields may be followed by "asc" or "desc", ex
+  "severity desc", to set the direction of sorting.
 
 ``--offset <OFFSET LOCATION>``
   The offset used to paginate the return data.
@@ -423,7 +423,7 @@ monasca alarm-definition-update
                                           <OK-NOTIFICATION-ID1,OK-NOTIFICATION-ID2,...>
                                           <UNDETERMINED-NOTIFICATION-ID1,UNDETERMINED-NOTIFICATION-ID2,...>
                                           <ACTIONS-ENABLED>
-                                          <DIMENSION_KEY1,DIMENSION_KEY2,...>
+                                          <MATCH_BY_DIMENSION_KEY1,MATCH_BY_DIMENSION_KEY2,...>
                                           <SEVERITY>
 
 Update the alarm definition.
@@ -457,12 +457,11 @@ Update the alarm definition.
 ``<ACTIONS-ENABLED>``
   The actions-enabled boolean is one of [true,false]
 
-``<DIMENSION_KEY1,DIMENSION_KEY2,...>``
-  The metric dimensions to match to the alarm
-  dimensions. One or more dimension key names separated
-  by a comma. Key names need quoting when they contain
-  special chars [&,(,),{,},>,<] that confuse the CLI
-  parser.
+``<MATCH_BY_DIMENSION_KEY1,MATCH_BY_DIMENSION_KEY2,...>``
+  The metric dimensions to use to create unique alarms.
+  One or more dimension key names separated by a comma.
+  Key names need quoting when they contain special chars
+  [&,(,),{,},>,<] that confuse the CLI parser.
 
 ``<SEVERITY>``
   Severity is one of [LOW, MEDIUM, HIGH, CRITICAL].
@@ -701,6 +700,8 @@ monasca measurement-list
                                    [--endtime <UTC_END_TIME>]
                                    [--offset <OFFSET LOCATION>]
                                    [--limit <RETURN LIMIT>] [--merge_metrics]
+                                   [--group_by <KEY1,KEY2,...>]
+                                   [--tenant-id <TENANT_ID>]
                                    <METRIC_NAME> <UTC_START_TIME>
 
 List measurements for the specified metric.
@@ -737,6 +738,15 @@ List measurements for the specified metric.
 
 ``--merge_metrics``
   Merge multiple metrics into a single result.
+
+``--group_by <KEY1,KEY2,...>``
+  Select which keys to use for grouping. A '\*' groups by
+  all keys.
+
+``--tenant-id <TENANT_ID>``
+  Retrieve data for the specified tenant/project id
+  instead of the tenant/project from the user's Keystone
+  credentials.
 
 .. _monasca_metric-create:
 
@@ -813,7 +823,7 @@ monasca metric-list
                               [--starttime <UTC_START_TIME>]
                               [--endtime <UTC_END_TIME>]
                               [--offset <OFFSET LOCATION>]
-                              [--limit <RETURN LIMIT>]
+                              [--limit <RETURN LIMIT>] [--tenant-id <TENANT_ID>]
 
 List metrics for this tenant.
 
@@ -845,6 +855,45 @@ List metrics for this tenant.
   The amount of data to be returned up to the API
   maximum limit.
 
+``--tenant-id <TENANT_ID>``
+  Retrieve data for the specified tenant/project id
+  instead of the tenant/project from the user's Keystone
+  credentials.
+
+.. _monasca_metric-name-list:
+
+monasca metric-name-list
+------------------------
+
+.. code-block:: console
+
+   usage: monasca metric-name-list [--dimensions <KEY1=VALUE1,KEY2=VALUE2...>]
+                                   [--offset <OFFSET LOCATION>]
+                                   [--limit <RETURN LIMIT>]
+                                   [--tenant-id <TENANT_ID>]
+
+
+**Optional arguments:**
+
+``--dimensions <KEY1=VALUE1,KEY2=VALUE2...>``
+  key value pair used to specify a metric dimension.
+  This can be specified multiple times, or once with
+  parameters separated by a comma. Dimensions need
+  quoting when they contain special chars
+  [&,(,),{,},>,<] that confuse the CLI parser.
+
+``--offset <OFFSET LOCATION>``
+  The offset used to paginate the return data.
+
+``--limit <RETURN LIMIT>``
+  The amount of data to be returned up to the API
+  maximum limit.
+
+``--tenant-id <TENANT_ID>``
+  Retrieve data for the specified tenant/project id
+  instead of the tenant/project from the user's Keystone
+  credentials.
+
 .. _monasca_metric-statistics:
 
 monasca metric-statistics
@@ -857,6 +906,8 @@ monasca metric-statistics
                                     [--period <PERIOD>]
                                     [--offset <OFFSET LOCATION>]
                                     [--limit <RETURN LIMIT>] [--merge_metrics]
+                                    [--group_by <KEY1,KEY2,...>]
+                                    [--tenant-id <TENANT_ID>]
                                     <METRIC_NAME> <STATISTICS> <UTC_START_TIME>
 
 List measurement statistics for the specified metric.
@@ -901,6 +952,15 @@ List measurement statistics for the specified metric.
 ``--merge_metrics``
   Merge multiple metrics into a single result.
 
+``--group_by <KEY1,KEY2,...>``
+  Select which keys to use for grouping. A '\*' groups by
+  all keys.
+
+``--tenant-id <TENANT_ID>``
+  Retrieve data for the specified tenant/project id
+  instead of the tenant/project from the user's Keystone
+  credentials.
+
 .. _monasca_notification-create:
 
 monasca notification-create
@@ -908,7 +968,8 @@ monasca notification-create
 
 .. code-block:: console
 
-   usage: monasca notification-create <NOTIFICATION_NAME> <TYPE> <ADDRESS>
+   usage: monasca notification-create [--period <PERIOD>]
+                                      <NOTIFICATION_NAME> <TYPE> <ADDRESS>
 
 Create notification.
 
@@ -923,6 +984,12 @@ Create notification.
 
 ``<ADDRESS>``
   A valid EMAIL Address, URL, or SERVICE KEY.
+
+**Optional arguments:**
+
+``--period <PERIOD>``
+  A period for the notification method. Can only be non
+  zero with webhooks
 
 .. _monasca_notification-delete:
 
@@ -947,12 +1014,19 @@ monasca notification-list
 
 .. code-block:: console
 
-   usage: monasca notification-list [--offset <OFFSET LOCATION>]
+   usage: monasca notification-list [--sort-by <SORT BY FIELDS>]
+                                    [--offset <OFFSET LOCATION>]
                                     [--limit <RETURN LIMIT>]
 
 List notifications for this tenant.
 
 **Optional arguments:**
+
+``--sort-by <SORT BY FIELDS>``
+  Fields to sort by as a comma separated list. Valid
+  values are id, name, type, address, created_at,
+  updated_at. Fields may be followed by "asc" or "desc",
+  ex "address desc", to set the direction of sorting.
 
 ``--offset <OFFSET LOCATION>``
   The offset used to paginate the return data.
@@ -985,7 +1059,7 @@ monasca notification-update
 .. code-block:: console
 
    usage: monasca notification-update <NOTIFICATION_ID> <NOTIFICATION_NAME>
-                                      <TYPE> <ADDRESS>
+                                      <TYPE> <ADDRESS> <PERIOD>
 
 Update notification.
 
@@ -1003,4 +1077,8 @@ Update notification.
 
 ``<ADDRESS>``
   A valid EMAIL Address, URL, or SERVICE KEY.
+
+``<PERIOD>``
+  A period for the notification method. Can only be non
+  zero with webhooks
 
