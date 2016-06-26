@@ -89,9 +89,7 @@ Contents
    cinder.rst
    manila.rst
    swift.rst
-   heat.rst
    ceilometer.rst
-   trove.rst
    launch-instance.rst
 
 .. Pseudo only directive for each distribution used by the build tool.
