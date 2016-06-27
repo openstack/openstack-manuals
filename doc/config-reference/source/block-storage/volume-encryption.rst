@@ -17,13 +17,13 @@ Steps to update ``cinder-api`` servers:
 #. Edit the ``/etc/cinder/cinder.conf`` file to use Key management service
    as follows:
 
-   * Look for the ``[keymgr]`` section.
+   * Look for the ``[key_manager]`` section.
 
-   * Enter a new line directly below ``[keymgr]`` with the following:
+   * Enter a new line directly below ``[key_manager]`` with the following:
 
      .. code-block:: ini
 
-        api_class = cinder.keymgr.barbican.BarbicanKeyManager
+        api_class = cinder.key_manager.barbican.BarbicanKeyManager
 
      .. note::
 
@@ -41,8 +41,8 @@ Update ``nova-compute`` servers:
 
    .. code-block:: ini
 
-      [keymgr]
-      api_class = nova.keymgr.barbican.BarbicanKeyManager
+      [key_manager]
+      api_class = nova.key_manager.barbican.BarbicanKeyManager
 
 #. Restart ``nova-compute``.
 
