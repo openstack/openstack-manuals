@@ -38,6 +38,7 @@ Contents
    heat.rst
    cloudkitty.rst
    manila.rst
+   solum.rst
    ceilometer.rst
    gnocchi.rst
    mistral.rst
