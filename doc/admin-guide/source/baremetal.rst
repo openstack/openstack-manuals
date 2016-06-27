@@ -114,7 +114,7 @@ If you get this message, check the following:
 
 #. Introspection should have succeeded for you before, or you should have
    entered the required bare-metal node properties manually.
-   For each node in :command:`ironic node-list` use:
+   For each node in the :command:`ironic node-list` command, use:
 
    .. code-block:: console
 
@@ -130,14 +130,14 @@ If you get this message, check the following:
 
       $ openstack flavor show FLAVOR
 
-#. Make sure that enough nodes are in ``available`` state according to
-   :command:`ironic node-list`. Nodes in ``manageable`` state usually mean they
-   have failed introspection.
+#. Make sure that enough nodes are in ``available`` state according to the
+   :command:`ironic node-list` command. Nodes in ``manageable`` state usually
+   mean they have failed introspection.
 
 #. Make sure nodes you are going to deploy to are not in maintenance mode.
-   Use :command:`ironic node-list` to check. A node automatically going to
-   maintenance mode usually means the incorrect credentials for this node.
-   Check them and then remove maintenance mode:
+   Use the :command:`ironic node-list` command to check. A node automatically
+   going to maintenance mode usually means the incorrect credentials for
+   this node. Check them and then remove maintenance mode:
 
    .. code-block:: console
 
@@ -147,5 +147,5 @@ If you get this message, check the following:
    service to the Compute service after introspection. Our tooling usually
    accounts for it, but if you did some steps manually there may be a period
    of time when nodes are not available to the Compute service yet. Check that
-   :command:`nova hypervisor-stats` correctly shows total amount of resources
-   in your system.
+   the :command:`nova hypervisor-stats` command correctly shows total amount
+   of resources in your system.
