@@ -9,7 +9,7 @@ Compute command-line client
 The nova client is the command-line interface (CLI) for
 the OpenStack Compute API and its extensions.
 
-This chapter documents :command:`nova` version ``4.0.0``.
+This chapter documents :command:`nova` version ``4.1.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -115,7 +115,9 @@ nova usage
   Boot a new server.
 
 ``clear-password``
-  Clear the admin password for a server.
+  Clear the admin password for a server from the
+  metadata server. This action does not actually
+  change the instance server password.
 
 ``cloudpipe-configure``
   Update the VPN IP/port of a cloudpipe
@@ -242,7 +244,10 @@ nova usage
   message for proper version]
 
 ``get-password``
-  Get the admin password for a server.
+  Get the admin password for a server. This
+  operation calls the metadata service to query
+  metadata information and does not read
+  password information from the server itself.
 
 ``get-rdp-console``
   Get a rdp console to a server.
@@ -543,6 +548,36 @@ nova usage
   version' flag to show help message for proper
   version]
 
+``server-tag-add``
+  Add single tag to a server. (Supported by API
+  versions '2.26' - '2.latest') [hint: use
+  ':option:`--os-compute-api-version`' flag to show help
+  message for proper version]
+
+``server-tag-delete``
+  Delete single tag from a server. (Supported by
+  API versions '2.26' - '2.latest') [hint: use
+  ':option:`--os-compute-api-version`' flag to show help
+  message for proper version]
+
+``server-tag-delete-all``
+  Delete all tags from a server. (Supported by
+  API versions '2.26' - '2.latest') [hint: use
+  ':option:`--os-compute-api-version`' flag to show help
+  message for proper version]
+
+``server-tag-list``
+  Get list of tags from a server. (Supported by
+  API versions '2.26' - '2.latest') [hint: use
+  ':option:`--os-compute-api-version`' flag to show help
+  message for proper version]
+
+``server-tag-set``
+  Set list of tags to a server. (Supported by
+  API versions '2.26' - '2.latest') [hint: use
+  ':option:`--os-compute-api-version`' flag to show help
+  message for proper version]
+
 ``service-delete``
   Delete the service.
 
@@ -649,9 +684,45 @@ nova usage
   Display help about this program or one of its
   subcommands.
 
+``host-evacuate``
+  Evacuate all instances from failed host.
+
+``force-delete``
+  Force delete a server.
+
+``restore``
+  Restore a soft-deleted server.
+
+``list-extensions``
+  List all the os-api extensions that are
+  available.
+
+``baremetal-interface-list``
+  List network interfaces associated with a
+  baremetal node.
+
+``baremetal-node-list``
+  Print list of available baremetal nodes.
+
+``baremetal-node-show``
+  Show information about a baremetal node.
+
 ``host-evacuate-live``
   Live migrate all instances of the specified
   host to other available hosts.
+
+``instance-action``
+  Show an action.
+
+``instance-action-list``
+  List actions on a server.
+
+``migration-list``
+  Print a list of migrations.
+
+``host-meta``
+  Set or Delete metadata on all instances of a
+  host.
 
 ``cell-capacities``
   Get cell capacities for all cells or a given
@@ -659,15 +730,6 @@ nova usage
 
 ``cell-show``
   Show details of a given cell.
-
-``migration-list``
-  Print a list of migrations.
-
-``instance-action``
-  Show an action.
-
-``instance-action-list``
-  List actions on a server.
 
 ``net``
   **DEPRECATED**, use tenant-network-show instead.
@@ -696,33 +758,6 @@ nova usage
 ``host-servers-migrate``
   Cold migrate all instances off the specified
   host to other available hosts.
-
-``host-evacuate``
-  Evacuate all instances from failed host.
-
-``host-meta``
-  Set or Delete metadata on all instances of a
-  host.
-
-``list-extensions``
-  List all the os-api extensions that are
-  available.
-
-``force-delete``
-  Force delete a server.
-
-``restore``
-  Restore a soft-deleted server.
-
-``baremetal-interface-list``
-  List network interfaces associated with a
-  baremetal node.
-
-``baremetal-node-list``
-  Print list of available baremetal nodes.
-
-``baremetal-node-show``
-  Show information about a baremetal node.
 
 .. _nova_command_options:
 
@@ -1025,7 +1060,9 @@ nova aggregate-update
 
 .. code-block:: console
 
-   usage: nova aggregate-update <aggregate> <name> [<availability-zone>]
+   usage: nova aggregate-update [--name NAME]
+                                [--availability-zone <availability-zone>]
+                                <aggregate>
 
 Update the aggregate's name and optionally availability zone.
 
@@ -1034,10 +1071,12 @@ Update the aggregate's name and optionally availability zone.
 ``<aggregate>``
   Name or ID of aggregate to update.
 
-``<name>``
+**Optional arguments:**
+
+``--name NAME``
   Name of aggregate.
 
-``<availability-zone>``
+``--availability-zone <availability-zone>``
   The availability zone of the aggregate.
 
 .. _nova_availability-zone-list:
@@ -1322,7 +1361,8 @@ nova clear-password
 
    usage: nova clear-password <server>
 
-Clear the admin password for a server.
+Clear the admin password for a server from the metadata server. This action
+does not actually change the instance server password.
 
 **Positional arguments:**
 
@@ -1714,7 +1754,9 @@ Print access information about the given flavor.
   Filter results by flavor name or ID.
 
 ``--tenant <tenant_id>``
-  Filter results by tenant ID.
+  Filter results by tenant ID. (Deprecated; this option
+  is not supported, and will be removed in version
+  5.0.0.)
 
 .. _nova_flavor-access-remove:
 
@@ -2071,7 +2113,9 @@ nova get-password
 
    usage: nova get-password <server> [<private-key>]
 
-Get the admin password for a server.
+Get the admin password for a server. This operation calls the metadata service
+to query metadata information and does not read password information from the
+server itself.
 
 **Positional arguments:**
 
@@ -2206,8 +2250,7 @@ nova host-evacuate
 
 .. code-block:: console
 
-   usage: nova host-evacuate [--target_host <target_host>] [--on-shared-storage]
-                             <host>
+   usage: nova host-evacuate [--target_host <target_host>] <host>
 
 Evacuate all instances from failed host.
 
@@ -2221,10 +2264,6 @@ Evacuate all instances from failed host.
 ``--target_host <target_host>``
   Name of target host. If no host is specified
   the scheduler will select a target.
-
-``--on-shared-storage``
-  Specifies whether all instances files are on
-  shared storage
 
 .. _nova_host-evacuate-live:
 
@@ -2616,7 +2655,8 @@ for proper version]
 **Optional arguments:**
 
 ``--user <user-id>``
-  ID of key-pair owner (Admin only).
+  ID of key-pair owner (Admin only). (Supported by API
+  versions '2.10' - '2.latest')
 
 .. _nova_keypair-list:
 
@@ -2643,6 +2683,7 @@ for proper version]
 
 ``--user <user-id>``
   List key-pairs of specified user ID (Admin only).
+  (Supported by API versions '2.10' - '2.latest')
 
 .. _nova_keypair-show:
 
@@ -2673,7 +2714,8 @@ for proper version]
 **Optional arguments:**
 
 ``--user <user-id>``
-  ID of key-pair owner (Admin only).
+  ID of key-pair owner (Admin only). (Supported by API
+  versions '2.10' - '2.latest')
 
 .. _nova_limits:
 
@@ -2709,6 +2751,8 @@ nova list
                     [--user [<user>]] [--deleted] [--fields <fields>] [--minimal]
                     [--sort <key>[:<direction>]] [--marker <marker>]
                     [--limit <limit>] [--changes-since <changes_since>]
+                    [--tags <tags>] [--tags-any <tags-any>]
+                    [--not-tags <not-tags>] [--not-tags-any <not-tags-any>]
 
 List active servers.
 
@@ -2790,6 +2834,38 @@ List active servers.
   point of time.The provided time should be an
   ISO 8061 formatted time.ex
   2016-03-04T06:27:59Z .
+
+``--tags <tags>``
+  The given tags must all be present for a
+  server to be included in the list result.
+  Boolean expression in this case is 't1 AND
+  t2'. Tags must be separated by commas: :option:`--tags`
+  <tag1,tag2> (Supported by API versions '2.26'
+  - '2.latest')
+
+``--tags-any <tags-any>``
+  If one of the given tags is present the server
+  will be included in the list result. Boolean
+  expression in this case is 't1 OR t2'. Tags
+  must be separated by commas: :option:`--tags-any`
+  <tag1,tag2> (Supported by API versions '2.26'
+  - '2.latest')
+
+``--not-tags <not-tags>``
+  Only the servers that do not have any of the
+  given tags willbe included in the list
+  results. Boolean expression in this case is
+  'NOT(t1 AND t2)'. Tags must be separated by
+  commas: :option:`--not-tags` <tag1,tag2> (Supported by
+  API versions '2.26' - '2.latest')
+
+``--not-tags-any <not-tags-any>``
+  Only the servers that do not have at least one
+  of the given tagswill be included in the list
+  result. Boolean expression in this case is
+  'NOT(t1 OR t2)'. Tags must be separated by
+  commas: :option:`--not-tags-any` <tag1,tag2> (Supported
+  by API versions '2.26' - '2.latest')
 
 .. _nova_list-extensions:
 
@@ -3463,7 +3539,10 @@ Reboot a server.
 **Optional arguments:**
 
 ``--hard``
-  Perform a hard reboot (instead of a soft one).
+  Perform a hard reboot (instead of a soft one). Note: Ironic does
+  not currently support soft reboot; consequently, bare metal nodes
+  will always do a hard reboot, regardless of the use of this
+  option.
 
 ``--poll``
   Poll until reboot is complete.
@@ -4144,6 +4223,148 @@ for proper version]
 
 ``<migration>``
   ID of migration.
+
+.. _nova_server-tag-add:
+
+nova server-tag-add
+-------------------
+
+.. code-block:: console
+
+   usage: nova server-tag-add <server> <tag>
+
+Add single tag to a server. (Supported by API versions '2.26' - '2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for
+proper
+version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
+
+``<tag>``
+  Tag to add.
+
+.. _nova_server-tag-delete:
+
+nova server-tag-delete
+----------------------
+
+.. code-block:: console
+
+   usage: nova server-tag-delete <server> <tag>
+
+Delete single tag from a server. (Supported by API versions '2.26' -
+'2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for proper version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
+
+``<tag>``
+  Tag to delete.
+
+.. _nova_server-tag-delete-all:
+
+nova server-tag-delete-all
+--------------------------
+
+.. code-block:: console
+
+   usage: nova server-tag-delete-all <server>
+
+Delete all tags from a server. (Supported by API versions '2.26' - '2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for
+proper
+version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
+
+.. _nova_server-tag-list:
+
+nova server-tag-list
+--------------------
+
+.. code-block:: console
+
+   usage: nova server-tag-list <server>
+
+Get list of tags from a server. (Supported by API versions '2.26' -
+'2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for proper version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
+
+.. _nova_server-tag-set:
+
+nova server-tag-set
+-------------------
+
+.. code-block:: console
+
+   usage: nova server-tag-set <server> <tags> [<tags> ...]
+
+Set list of tags to a server. (Supported by API versions '2.26' - '2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for
+proper
+version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
+
+``<tags>``
+  Tag(s) to set.
 
 .. _nova_service-delete:
 
