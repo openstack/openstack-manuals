@@ -23,7 +23,7 @@ Contents
    ironic.rst
    cinder.rst
    senlin.rst
-   nova.rst
+   compute.rst
    magnum.rst
    sahara.rst
    trove.rst
