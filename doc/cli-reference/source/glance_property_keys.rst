@@ -157,6 +157,14 @@ For example:
      - The operating system version as specified by the distributor.
      - Valid version number (for example, ``11.10``).
    * - All
+     - ``os_secure_boot``
+     - Secure Boot is a security standard. When the instance starts,
+       Secure Boot first examines software such as firmware and OS by their
+       signature and only allows them to run if the signatures are valid.
+     - * ``required`` - Enable the Secure Boot feature.
+       * ``disabled`` or ``optional`` - (default) Disable the Secure Boot
+         feature.
+   * - All
      - ``ramdisk_id``
      - The ID of image stored in the Image service that should be used as the
        ramdisk when booting an AMI-style image.
