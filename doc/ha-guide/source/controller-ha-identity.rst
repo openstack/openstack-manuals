@@ -19,6 +19,12 @@ in active / passive mode involves:
 Add OpenStack Identity resource to Pacemaker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+SUSE
+-----
+
+SUSE Enterprise Linux and SUSE-based distributions, such as openSUSE,
+use a set of OCF agents for controlling OpenStack services.
+
 #. You must first download the OpenStack Identity resource to Pacemaker
    by running the following commands:
 
@@ -58,6 +64,16 @@ Add OpenStack Identity resource to Pacemaker
    from the :command:`crm configure` menu.
    Pacemaker then starts the OpenStack Identity service
    and its dependent resources on one of your nodes.
+
+Red Hat
+--------
+
+For Red Hat Enterprise Linux and Red Hat-based Linux distributions,
+the process is simpler as they use the standard Systemd unit files.
+
+   .. code-block:: console
+
+      # pcs resource create openstack-keystone systemd:openstack-keystone --clone interleave=true
 
 .. _identity-config-identity:
 
