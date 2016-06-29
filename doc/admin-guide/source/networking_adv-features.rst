@@ -266,7 +266,7 @@ basic L3 operations:
 
           $ neutron port-list -c id -c fixed_ips --device_id INSTANCE_ID
 
-       This port must be on an Networking subnet that is attached to
+       This port must be on a Networking subnet that is attached to
        a router uplinked to the external network used to create the floating
        IP. Conceptually, this is because the router must be able to perform the
        Destination NAT (DNAT) rewriting of packets from the floating IP address
