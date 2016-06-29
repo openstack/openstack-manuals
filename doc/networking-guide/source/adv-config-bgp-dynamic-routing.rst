@@ -57,7 +57,7 @@ Agent nodes
 
     .. code-block:: ini
 
-       [DEFAULT]
+       [BGP]
        bgp_speaker_driver = neutron.services.bgp.driver.ryu.driver.RyuBgpDriver
 
     .. note::
@@ -68,7 +68,7 @@ Agent nodes
 
     .. code-block:: ini
 
-       [DEFAULT]
+       [BGP]
        bgp_router_id = ROUTER_ID
 
     Replace ``ROUTER_ID`` with a suitable unique 32-bit number, typically an
@@ -308,7 +308,7 @@ Create and configure a router
 
    .. code-block:: console
 
-      $ neutron router-port-list router1
+      $ neutron router-port-list router
       +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------+
       | id                                   | name | mac_address       | fixed_ips                                                                                 |
       +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------+
