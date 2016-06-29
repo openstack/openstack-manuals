@@ -310,6 +310,14 @@ Enable neutron sriov-agent (Compute)
       physical_device_mappings = physnet2:eth3
       exclude_devices =
 
+  .. note::
+
+      The ``physical_device_mappings`` parameter is not limited to be a 1-1
+      mapping between physnets and NICs. This enables you to map the same
+      physnet to more than one NIC. For example, if ``physnet2`` is
+      connected to ``eth3`` and ``eth4``, then ``physnet2:eth3,physnet2:eth4``
+      is a valid option.
+
    The ``exclude_devices`` parameter is empty, therefore, all the VFs associated with eth3 may be
    configured by the agent. To exclude specific VFs, add
    them to the ``exclude_devices`` parameter as follows:
