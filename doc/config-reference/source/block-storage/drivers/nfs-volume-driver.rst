@@ -80,7 +80,7 @@ Configure with multiple NFS servers
    You can use the multiple NFS servers with `cinder multi back ends
    <https://wiki.openstack.org/wiki/Cinder-multi-backend>`_ feature.
    Configure the :ref:`enabled_backends <cinder-storage>` option with
-   mutliple values, and use the ``nas_host`` and ``nas_share`` options
+   multiple values, and use the ``nas_host`` and ``nas_share`` options
    for each back end as described above.
 
 The below example is another method to use multiple NFS servers,
