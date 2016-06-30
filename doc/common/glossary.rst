@@ -421,7 +421,7 @@ B
    Bare Metal service
 
       OpenStack project that provisions bare metal, as opposed to
-      virtual, machines. The code name for the project is ironic.
+      virtual machines. The code name for the project is ironic.
 
    base image
 
@@ -2009,7 +2009,7 @@ I
    ironic
 
       OpenStack project that provisions bare metal, as opposed to
-      virtual, machines.
+      virtual machines.
 
    IOPS
 
