@@ -46,7 +46,7 @@ In order to enable SR-IOV, the following steps are required:
 
 **Neutron sriov-agent**
 
-Neutron sriov-agent is required in the lastest version.
+Neutron sriov-agent is required since Mitaka release.
 
 Neutron sriov-agent allows you to set the admin state of ports and
 starting from Liberty allows you to control
