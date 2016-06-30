@@ -107,7 +107,7 @@ When you join the screen session that ``stack.sh`` starts with
 
       import random
 
-      from oslo.config import cfg
+      from oslo_config import cfg
 
       from nova.compute import rpcapi as compute_rpcapi
       from nova import exception
