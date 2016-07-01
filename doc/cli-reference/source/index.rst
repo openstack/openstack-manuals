@@ -15,33 +15,31 @@ Contents
 .. toctree::
    :maxdepth: 1
 
-   common/conventions.rst
-   overview.rst
-   openstack.rst
+   common/conventions
+   overview
+   openstack
 
-   murano.rst
-   ironic.rst
-   cinder.rst
-   senlin.rst
-   compute.rst
-   magnum.rst
-   sahara.rst
-   trove.rst
-   trove-misc.rst
-   designate.rst
-   glance.rst
-   barbican.rst
-   monasca.rst
-   neutron.rst
-   neutron-misc.rst
-   swift.rst
-   heat.rst
-   cloudkitty.rst
-   manila.rst
-   solum.rst
-   ceilometer.rst
-   gnocchi.rst
-   mistral.rst
+   murano
+   ironic
+   cinder
+   senlin
+   compute
+   magnum
+   sahara
+   database
+   designate
+   glance
+   barbican
+   monasca
+   networking
+   swift
+   heat
+   cloudkitty
+   manila
+   solum
+   ceilometer
+   gnocchi
+   mistral
 
 Appendix
 ~~~~~~~~
@@ -49,7 +47,7 @@ Appendix
 .. toctree::
    :maxdepth: 1
 
-   common/app_support.rst
+   common/app_support
 
 Glossary
 ~~~~~~~~
@@ -57,7 +55,7 @@ Glossary
 .. toctree::
    :maxdepth: 1
 
-   common/glossary.rst
+   common/glossary
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
