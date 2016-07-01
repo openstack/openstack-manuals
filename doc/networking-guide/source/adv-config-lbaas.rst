@@ -164,7 +164,9 @@ Add LBaaS panels in Horizon
 Horizon panels for managing LBaaSv2 are available starting with the Mitaka
 release.
 
-#.  Clone the `neutron-lbaas-dashboard repository`_ and check out the release
+#.  Clone the `neutron-lbaas-dashboard repository
+    <http://git.openstack.org/cgit/openstack/neutron-lbaas-dashboard/>`__
+    and check out the release
     branch that matches the installed version of Horizon:
 
     .. code-block:: console
@@ -205,8 +207,6 @@ release.
 
 To find the panel, click on :guilabel:`Project` in Horizon, then click the
 :guilabel:`Network` drop down, and click :guilabel:`Load Balancers`.
-
-.. _neutron-lbaas-dashboard repository: http://git.openstack.org/cgit/openstack/neutron-lbaas-dashboard/
 
 LBaaS v2 operations
 ~~~~~~~~~~~~~~~~~~~
