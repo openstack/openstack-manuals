@@ -64,7 +64,7 @@ To enable Xen via libvirt, ensure the following options are set in
    compute_driver = libvirt.LibvirtDriver
 
    [libvirt]
-   virt_type = xen</programlisting></para>
+   virt_type = xen
 
 Additional configuration options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
