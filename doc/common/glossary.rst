@@ -3300,6 +3300,11 @@ S
       String of text known only by the user; used along with an access
       key to make requests to the Compute API.
 
+   secure boot
+
+      Process whereby the system firmware validates the authenticity of
+      the code involved in the boot process.
+
    secure shell (SSH)
 
       Open source tool used to access remote hosts through an
@@ -3762,6 +3767,11 @@ T
 
       OpenStack project that provides database services to
       applications.
+
+   trusted platform module (TPM)
+
+      Specialized microprocessor for incorporating cryptographic keys
+      into devices for authenticating and securing a hardware platform.
 
 U
 ~
