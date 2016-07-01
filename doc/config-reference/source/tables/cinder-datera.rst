@@ -22,9 +22,13 @@
      - (String) Datera API port.
    * - ``datera_api_version`` = ``2``
      - (String) Datera API version.
-   * - ``datera_num_replicas`` = ``1``
-     - (String) Number of replicas to create of an inode.
-   * - ``driver_client_cert`` = ``None``
-     - (String) The path to the client certificate for verification, if the driver supports it.
-   * - ``driver_client_cert_key`` = ``None``
-     - (String) The path to the client certificate key for verification, if the driver supports it.
+   * - ``datera_num_replicas`` = ``3``
+     - (Int) Number of replicas to create of an inode.
+   * - ``datera_503_timeout`` = ``120``
+     - (Int) Timeout for HTTP 503 retry messages
+   * - ``datera_503_interval`` = ``5``
+     - (Int) Interval between HTTP 503 retries
+   * - ``datera_acl_allow_all`` = ``False``
+     - (Bool) True to set acl 'allow_all' on volumes created
+   * - ``datera_debug`` = ``False``
+     - (Bool) True to set function arg and return logging
