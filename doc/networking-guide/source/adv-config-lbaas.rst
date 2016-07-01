@@ -158,6 +158,56 @@ configure the Network service to use Octavia:
 #.  Restart the Network service to activate the new configuration. You are now
     ready to create and manage load balancers with Octavia.
 
+Add LBaaS panels in Horizon
+---------------------------
+
+Horizon panels for managing LBaaSv2 are available starting with the Mitaka
+release.
+
+#.  Clone the `neutron-lbaas-dashboard repository`_ and check out the release
+    branch that matches the installed version of Horizon:
+
+    .. code-block:: console
+
+       $ git clone http://git.openstack.org/cgit/openstack/neutron-lbaas-dashboard/
+       $ cd neutron-lbaas-dashboard
+       $ git checkout OPENSTACK_RELEASE
+
+#.  Install the Horizon panel plugin:
+
+    .. code-block:: console
+
+       $ python setup.py install
+
+#.  Copy the ``_1481_project_ng_loadbalancersv2_panel.py`` file from the
+    ``neutron-lbaas-dashboard/enabled`` directory into Horizon's
+    ``openstack_dashboard/local/enabled`` directory. This step ensures that
+    Horizon can find the plugin when it enumerates all of its available panels.
+
+#.  Enable the plugin in Horizon by editing the ``local_settings.py`` file and
+    setting ``enable_lb`` to ``True`` in the ``OPENSTACK_NEUTRON_NETWORK``
+    dictionary.
+
+#.  If Horizon is configured to compress static files for better performance
+    (usually set via ``COMPRESS_OFFLINE`` in the ``local_settings.py``),
+    the static files must be optimized again:
+
+    .. code-block:: console
+
+       $ ./manage.py collectstatic
+       $ ./manage.py compress
+
+#.  Restart Apache to activate the new panel:
+
+    .. code-block:: console
+
+       $ sudo service apache2 restart
+
+To find the panel, click on :guilabel:`Project` in Horizon, then click the
+:guilabel:`Network` drop down, and click :guilabel:`Load Balancers`.
+
+.. _neutron-lbaas-dashboard repository: http://git.openstack.org/cgit/openstack/neutron-lbaas-dashboard/
+
 LBaaS v2 operations
 ~~~~~~~~~~~~~~~~~~~
 
