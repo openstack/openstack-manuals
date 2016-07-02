@@ -17,7 +17,6 @@ service configuration options:
 .. include:: tables/sahara-auth_token.rst
 .. include:: tables/sahara-clients.rst
 .. include:: tables/sahara-common.rst
-.. include:: tables/sahara-cors.rst
 .. include:: tables/sahara-database.rst
 .. include:: tables/sahara-domain.rst
 .. include:: tables/sahara-logging.rst

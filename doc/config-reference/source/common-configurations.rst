@@ -14,3 +14,4 @@ for shared service and libraries.
 
    common-configurations/logging.rst
    common-configurations/rpc.rst
+   common-configurations/cors.rst

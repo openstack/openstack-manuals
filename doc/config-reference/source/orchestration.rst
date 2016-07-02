@@ -23,7 +23,6 @@ configuration options:
 
 .. include:: tables/heat-auth_token.rst
 .. include:: tables/heat-common.rst
-.. include:: tables/heat-cors.rst
 .. include:: tables/heat-crypt.rst
 .. include:: tables/heat-database.rst
 .. include:: tables/heat-loadbalancer.rst
