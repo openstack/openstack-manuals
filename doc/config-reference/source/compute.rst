@@ -18,9 +18,10 @@ Compute service
    compute/scheduler.rst
    compute/cells.rst
    compute/conductor.rst
-   compute/nova-conf-samples.rst
+   compute/config-options.rst
    compute/logs.rst
-   compute/config-samples.rst
+   compute/nova-conf-samples.rst
+   compute/samples/index.rst
    tables/conf-changes/nova.rst
 
 The Compute service is a cloud computing fabric controller,

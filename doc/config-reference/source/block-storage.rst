@@ -8,12 +8,12 @@ Block Storage service
    block-storage/block-storage-overview.rst
    block-storage/volume-drivers.rst
    block-storage/backup-drivers.rst
-   block-storage/block-storage-sample-configuration-files.rst
    block-storage/logs.rst
    block-storage/fc-zoning.rst
    block-storage/nested-quota.rst
    block-storage/volume-encryption.rst
    block-storage/volume-misc.rst
+   block-storage/samples/index.rst
    tables/conf-changes/cinder.rst
 
 .. note::

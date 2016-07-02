@@ -8,7 +8,7 @@ Dashboard
    dashboard/configure.rst
    common/dashboard_customizing.rst
    dashboard/config-options.rst
-   dashboard/sample-configuration-files.rst
+   dashboard/samples/index.rst
    dashboard/logs.rst
 
 This chapter describes how to configure the Dashboard with
