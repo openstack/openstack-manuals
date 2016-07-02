@@ -139,7 +139,7 @@ allow simple routing for project networks with the same subnet pools.
       | shared            | True                                 |
       +-------------------+--------------------------------------+
 
-#. Make sure that subnets on an external networks are created
+#. Make sure that subnets on an external network are created
    from the subnet pools created above:
 
    .. code-block:: console
