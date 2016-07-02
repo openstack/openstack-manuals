@@ -18,35 +18,16 @@ services on their root directory.
 Load-Balancer-as-a-Service (LBaaS)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-neutron_lbaas.conf
-------------------
+.. toctree::
 
-.. literalinclude:: ../samples/neutron-lbaas/neutron_lbaas.conf.sample
-   :language: ini
-
-lbaas_agent.ini
----------------
-
-.. literalinclude:: ../samples/neutron-lbaas/lbaas_agent.ini.sample
-   :language: ini
-
-services_lbaas.conf
--------------------
-
-.. literalinclude:: ../samples/neutron-lbaas/services_lbaas.conf.sample
-   :language: ini
+   neutron_lbaas.conf.rst
+   lbaas_agent.ini.rst
+   services_lbaas.conf.rst
 
 VPN-as-a-Service (VPNaaS)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-neutron_vpnaas.conf
--------------------
+.. toctree::
 
-.. literalinclude:: ../samples/neutron-vpnaas/neutron_vpnaas.conf.sample
-   :language: ini
-
-vpn_agent.ini
--------------
-
-.. literalinclude:: ../samples/neutron-vpnaas/vpn_agent.ini.sample
-   :language: ini
+   neutron_vpnaas.conf.rst
+   vpn_agent.ini.rst
