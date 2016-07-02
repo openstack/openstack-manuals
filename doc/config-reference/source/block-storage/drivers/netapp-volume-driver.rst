@@ -241,21 +241,23 @@ To use this feature, you must configure the Block Storage service, as follows:
 NetApp-supported extra specs for clustered Data ONTAP
 -----------------------------------------------------
 
-Extra specs enable vendors to specify extra filter criteria that the Block
-Storage scheduler uses when it determines which volume node should fulfill a
-volume provisioning request. When you use the NetApp unified driver with a
-clustered Data ONTAP storage system, you can leverage extra specs with
-Block Storage volume types to ensure that Block Storage
-volumes are created on storage back ends that have certain properties. For
-example, when you configure QoS, mirroring, or compression for a storage back
-end.
+Extra specs enable vendors to specify extra filter criteria.
+The Block Storage scheduler uses the specs when the scheduler determines
+which volume node should fulfill a volume provisioning request.
+When you use the NetApp unified driver with a clustered Data ONTAP
+storage system, you can leverage extra specs with Block Storage
+volume types to ensure that Block Storage volumes are created
+on storage back ends that have certain properties.
+An example of this is when you configure QoS, mirroring,
+or compression for a storage back end.
 
-Extra specs are associated with Block Storage volume types, so that
-when users request volumes of a particular volume type, the volumes are created
-on storage back ends that meet the list of requirements. For example, the back
-ends have the available space or extra specs. You can use the specs in the
-following table when you define Block Storage volume types by using
-the :command:`cinder type-key` command.
+Extra specs are associated with Block Storage volume types.
+When users request volumes of a particular volume type, the volumes
+are created on storage back ends that meet the list of requirements.
+An example of this is the back ends that have the available space or
+extra specs. Use the specs in the following table to configure volumes.
+Define Block Storage volume types by using the :command:`cinder type-key`
+command.
 
 .. include:: ../../tables/manual/cinder-netapp_cdot_extraspecs.rst
 
@@ -436,6 +438,37 @@ NetApp unified driver, E-Series, and iSCSI respectively by setting the
    operational scenarios, visit the `NetApp OpenStack Deployment and
    Operations
    Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
+
+NetApp-supported extra specs for E-Series
+-----------------------------------------
+
+Extra specs enable vendors to specify extra filter criteria.
+The Block Storage scheduler uses the specs when the scheduler determines
+which volume node should fulfill a volume provisioning request.
+When you use the NetApp unified driver with an E-Series storage system,
+you can leverage extra specs with Block Storage volume types to ensure
+that Block Storage volumes are created on storage back ends that have
+certain properties. An example of this is when you configure thin
+provisioning for a storage back end.
+
+Extra specs are associated with Block Storage volume types.
+When users request volumes of a particular volume type, the volumes are
+created on storage back ends that meet the list of requirements.
+An example of this is the back ends that have the available space or
+extra specs. Use the specs in the following table to configure volumes.
+Define Block Storage volume types by using the :command:`cinder type-key`
+command.
+
+.. list-table:: Description of extra specs options for NetApp Unified Driver with E-Series
+   :header-rows: 1
+
+   * - Extra spec
+     - Type
+     - Description
+   * - ``netapp_thin_provisioned``
+     - Boolean
+     - Limit the candidate volume list to only the ones that support thin
+       provisioning on the storage controller.
 
 Upgrading prior NetApp drivers to the NetApp unified driver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
