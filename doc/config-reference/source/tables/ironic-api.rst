@@ -30,34 +30,6 @@
      - (Unknown) The TCP port on which ironic-api listens.
    * - ``public_endpoint`` = ``None``
      - (String) Public URL to use when building the links to the API resources (for example, "https://ironic.rocks:6384"). If None the links will be built using the request's host URL. If the API is operating behind a proxy, you will want to change this to represent the proxy's URL. Defaults to None.
-   * - **[cors]**
-     -
-   * - ``allow_credentials`` = ``True``
-     - (Boolean) Indicate that the actual request can include user credentials
-   * - ``allow_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (List) Indicate which header field names may be used during the actual request.
-   * - ``allow_methods`` = ``GET, POST, PUT, DELETE, OPTIONS``
-     - (List) Indicate which methods can be used during the actual request.
-   * - ``allowed_origin`` = ``None``
-     - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
-   * - ``expose_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
-   * - ``max_age`` = ``3600``
-     - (Integer) Maximum cache age of CORS preflight requests.
-   * - **[cors.subdomain]**
-     -
-   * - ``allow_credentials`` = ``True``
-     - (Boolean) Indicate that the actual request can include user credentials
-   * - ``allow_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (List) Indicate which header field names may be used during the actual request.
-   * - ``allow_methods`` = ``GET, POST, PUT, DELETE, OPTIONS``
-     - (List) Indicate which methods can be used during the actual request.
-   * - ``allowed_origin`` = ``None``
-     - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
-   * - ``expose_headers`` = ``Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
-   * - ``max_age`` = ``3600``
-     - (Integer) Maximum cache age of CORS preflight requests.
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``

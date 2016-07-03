@@ -10,7 +10,6 @@ Alarming service configuration options.
 .. include:: ../tables/aodh-auth_token.rst
 .. include:: ../tables/aodh-common.rst
 .. include:: ../tables/aodh-coordination.rst
-.. include:: ../tables/aodh-cors.rst
 .. include:: ../tables/aodh-database.rst
 .. include:: ../tables/aodh-logging.rst
 .. include:: ../tables/aodh-policy.rst

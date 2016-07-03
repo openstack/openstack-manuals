@@ -10,7 +10,6 @@ Object Storage service
    object-storage/configure.rst
    object-storage/features.rst
    object-storage/configure-s3.rst
-   object-storage/cors.rst
    object-storage/listendpoints.rst
    object-storage/logs.rst
    tables/conf-changes/swift.rst

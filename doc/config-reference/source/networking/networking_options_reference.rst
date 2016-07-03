@@ -180,13 +180,6 @@ Use the following options to alter Compute-related settings.
 
 .. include:: ../tables/neutron-compute.rst
 
-CORS
-~~~~
-
-Use the following options to alter CORS-related settings.
-
-.. include:: ../tables/neutron-cors.rst
-
 Database
 ~~~~~~~~
 
