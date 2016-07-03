@@ -88,3 +88,9 @@ options in these files:
   v2. Resides in the ``/etc/zaqar`` directory. If there is a file
   ``policy.json`` in ``~/.zaqar`` directory, it is used instead of the one in
   ``/etc/zaqar`` directory. See :doc:`../policy-json-file`.
+
+.. note::
+
+   The common configurations for shared service and libraries,
+   such as database connections and RPC messaging,
+   are described at :doc:`common-configurations`.

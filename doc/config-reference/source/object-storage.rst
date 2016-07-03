@@ -13,3 +13,9 @@ Object Storage service
    object-storage/listendpoints.rst
    object-storage/logs.rst
    tables/conf-changes/swift.rst
+
+.. note::
+
+   The common configurations for shared service and libraries,
+   such as database connections and RPC messaging,
+   are described at :doc:`common-configurations`.

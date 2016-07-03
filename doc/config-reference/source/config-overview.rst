@@ -30,3 +30,7 @@ options for the following OpenStack components:
 * Orchestration service
 * Shared File Systems service
 * Telemetry service
+
+Also, OpenStack uses many shared service and libraries,
+such as database connections and RPC messaging,
+whose configuration options are described at :doc:`common-configurations`.
