@@ -13,6 +13,7 @@ for shared service and libraries.
    :maxdepth: 1
 
    common-configurations/auth.rst
+   common-configurations/database.rst
    common-configurations/logging.rst
    common-configurations/rpc.rst
    common-configurations/cors.rst
