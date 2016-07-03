@@ -12,6 +12,7 @@ for shared service and libraries.
 .. toctree::
    :maxdepth: 1
 
+   common-configurations/auth.rst
    common-configurations/logging.rst
    common-configurations/rpc.rst
    common-configurations/cors.rst
