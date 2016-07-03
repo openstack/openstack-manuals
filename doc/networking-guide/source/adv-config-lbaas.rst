@@ -171,7 +171,7 @@ release.
 
     .. code-block:: console
 
-       $ git clone http://git.openstack.org/cgit/openstack/neutron-lbaas-dashboard/
+       $ git clone https://git.openstack.org/openstack/neutron-lbaas-dashboard
        $ cd neutron-lbaas-dashboard
        $ git checkout OPENSTACK_RELEASE
 
