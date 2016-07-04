@@ -27,7 +27,7 @@ to a server instance.
    services through the ``cinder.conf`` file.
 #. Use the :command:`cinder create` command to create a volume. This
    command creates an LV into the volume group (VG) ``cinder-volumes``.
-#. Use the nova :command:`volume-attach` command to attach the volume
+#. Use the :command:`nova volume-attach` command to attach the volume
    to an instance. This command creates a unique  :term:`IQN` that is
    exposed to the compute node.
 
