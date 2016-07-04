@@ -293,7 +293,7 @@ Configure nova-scheduler (Controller)
       scheduler_available_filters = nova.scheduler.filters.pci_passthrough_filter.PciPassthroughFilter
 
 
-#. Restart the nova-scheduler service.
+#. Restart the ``nova-scheduler`` service.
 
 
 Enable neutron sriov-agent (Compute)
