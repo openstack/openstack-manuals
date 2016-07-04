@@ -158,16 +158,16 @@ configure the Network service to use Octavia:
 #.  Restart the Network service to activate the new configuration. You are now
     ready to create and manage load balancers with Octavia.
 
-Add LBaaS panels in Horizon
----------------------------
+Add LBaaS panels to Dashboard
+-----------------------------
 
-Horizon panels for managing LBaaSv2 are available starting with the Mitaka
-release.
+The Dashboard panels for managing LBaaS v2 are available starting with the
+Mitaka release.
 
 #.  Clone the `neutron-lbaas-dashboard repository
     <http://git.openstack.org/cgit/openstack/neutron-lbaas-dashboard/>`__
     and check out the release
-    branch that matches the installed version of Horizon:
+    branch that matches the installed version of Dashboard:
 
     .. code-block:: console
 
@@ -175,24 +175,26 @@ release.
        $ cd neutron-lbaas-dashboard
        $ git checkout OPENSTACK_RELEASE
 
-#.  Install the Horizon panel plugin:
+#.  Install the Dashboard panel plug-in:
 
     .. code-block:: console
 
        $ python setup.py install
 
 #.  Copy the ``_1481_project_ng_loadbalancersv2_panel.py`` file from the
-    ``neutron-lbaas-dashboard/enabled`` directory into Horizon's
-    ``openstack_dashboard/local/enabled`` directory. This step ensures that
-    Horizon can find the plugin when it enumerates all of its available panels.
+    ``neutron-lbaas-dashboard/enabled`` directory into the Dashboard
+    ``openstack_dashboard/local/enabled`` directory.
 
-#.  Enable the plugin in Horizon by editing the ``local_settings.py`` file and
-    setting ``enable_lb`` to ``True`` in the ``OPENSTACK_NEUTRON_NETWORK``
+    This step ensures that Dashboard can find the plug-in when it enumerates
+    all of its available panels.
+
+#.  Enable the plug-in in Dashboard by editing the ``local_settings.py`` file
+    and setting ``enable_lb`` to ``True`` in the ``OPENSTACK_NEUTRON_NETWORK``
     dictionary.
 
-#.  If Horizon is configured to compress static files for better performance
-    (usually set via ``COMPRESS_OFFLINE`` in the ``local_settings.py``),
-    the static files must be optimized again:
+#.  If Dashboard is configured to compress static files for better performance
+    (usually set through ``COMPRESS_OFFLINE`` in ``local_settings.py``),
+    optimize the static files again:
 
     .. code-block:: console
 
@@ -205,8 +207,8 @@ release.
 
        $ sudo service apache2 restart
 
-To find the panel, click on :guilabel:`Project` in Horizon, then click the
-:guilabel:`Network` drop down, and click :guilabel:`Load Balancers`.
+To find the panel, click on :guilabel:`Project` in Dashboard, then click the
+:guilabel:`Network` drop-down menu and select :guilabel:`Load Balancers`.
 
 LBaaS v2 operations
 ~~~~~~~~~~~~~~~~~~~
