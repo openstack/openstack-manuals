@@ -164,7 +164,8 @@ To update quota values for an existing tenant (project)
 
    .. note::
 
-      To view a list of options for the :command:`quota-update` command, run:
+      To view a list of options for the :command:`nova quota-update` command,
+      run:
 
       .. code-block:: console
 
@@ -262,7 +263,8 @@ To update quota values for a tenant user
 
    .. note::
 
-      To view a list of options for the :command:`quota-update` command, run:
+      To view a list of options for the :command:`nova quota-update` command,
+      run:
 
       .. code-block:: console
 
