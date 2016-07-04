@@ -42,8 +42,9 @@ Launch an instance
 
       .. note::
 
-         The name you assign here becomes the initial host name
-         of the server.
+         The name you assign here becomes the initial host name of the server.
+         If the name is longer than 63 characters, the Compute service
+         truncates it automatically to ensure dnsmasq works correctly.
 
          After the server is built, if you change the server name in the API
          or change the host name directly, the names are not updated in the
