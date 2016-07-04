@@ -94,13 +94,6 @@ category are flat (untagged) and VLAN (802.1Q tagged).
 .. image:: figures/NetworkTypes.png
    :alt: Tenant and provider networks
 
-To configure rich network topologies, you can create and configure networks
-and subnets and other OpenStack services like Compute will request to be
-connected to these networks by requesting virtual ports.
-In particular, Networking supports each tenant having multiple private
-networks and enables tenants to choose their own IP addressing scheme,
-even if those IP addresses overlap with those that other tenants use.
-
 Subnets
 -------
 
