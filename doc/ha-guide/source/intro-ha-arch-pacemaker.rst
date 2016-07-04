@@ -45,7 +45,7 @@ cluster manager:
 
    A single application does not have sufficient context to know the
    difference between failure of a machine and failure of the
-   applcation on a machine. The usual practice is to assume the
+   application on a machine. The usual practice is to assume the
    machine is dead and carry on, however this is highly risky - a
    rogue process or machine could still be responding to requests and
    generally causing havoc. The safer approach is to make use of
