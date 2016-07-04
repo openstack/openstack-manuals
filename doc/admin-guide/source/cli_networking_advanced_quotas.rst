@@ -282,8 +282,8 @@ the default set of quotas are enforced for all tenants, so no
 
    .. code-block:: console
 
-      $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723
-      --network 3 --subnet 3 --port 3 --floatingip 3 --router 3
+      $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 \
+        --network 3 --subnet 3 --port 3 --floatingip 3 --router 3
       +------------+-------+
       | Field      | Value |
       +------------+-------+
