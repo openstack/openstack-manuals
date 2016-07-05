@@ -122,9 +122,8 @@ The following meters are collected for OpenStack Compute:
 | cpu       | Cumu\ | ns   | instance | Pollster | Libvirt,| CPU time used    |
 |           | lative|      | ID       |          | Hyper-V |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
-| cpu_util  | Gauge | %    | instance | Pollster | Libvirt,| Average CPU      |
-|           |       |      | ID       |          | Hyper-V,| utilization      |
-|           |       |      |          |          | vSphere |                  |
+| cpu_util  | Gauge | %    | instance | Pollster | vSphere | Average CPU      |
+|           |       |      | ID       |          |         | utilization      |
 +-----------+-------+------+----------+----------+---------+------------------+
 | vcpus     | Gauge | vcpu | instance | Notific\ | Libvirt,| Number of virtual|
 |           |       |      | ID       | ation    | Hyper-V | CPUs allocated to|
@@ -216,10 +215,8 @@ The following meters are collected for OpenStack Compute:
 |           |       |      |          |          |         | amount of its    |
 |           |       |      |          |          |         | allocated memory |
 +-----------+-------+------+----------+----------+---------+------------------+
-| cpu_util  | Gauge | %    | instance | Pollster | Libvirt,| Average CPU      |
-|           |       |      | ID       |          | Hyper-V,| utilization      |
-|           |       |      |          |          | vSphere,|                  |
-|           |       |      |          |          | XenAPI  |                  |
+| cpu_util  | Gauge | %    | instance | Pollster | vSphere,| Average CPU      |
+|           |       |      | ID       |          | XenAPI  | utilization      |
 +-----------+-------+------+----------+----------+---------+------------------+
 | disk.read\| Gauge | B/s  | instance | Pollster | Libvirt,| Average rate of  |
 | .bytes.\  |       |      | ID       |          | Hyper-V,| reads            |
