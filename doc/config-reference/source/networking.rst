@@ -9,8 +9,8 @@ Networking service
    networking/lbaas.rst
    networking/vpnaas.rst
    networking/logs.rst
-   networking/sample-configuration-files.rst
-   networking/sample-configuration-files-advanced.rst
+   networking/samples/index.rst
+   networking/samples/advanced.rst
    tables/conf-changes/neutron.rst
 
 This chapter explains the Networking service configuration options.
