@@ -604,7 +604,8 @@ Verify network operation
 
    .. code-block:: console
 
-      $ nova boot --flavor m1.tiny --image cirros-0.3.3-x86_64-disk test_server
+      $ nova boot --flavor m1.tiny --image cirros-0.3.3-x86_64-disk \
+        --nic net-id=572a3fc9-ad1f-4e54-a63a-4bf5047c1a4a test_server
 
       +--------------------------------------+-----------------------------------------------------------------+
       | Property                             | Value                                                           |
