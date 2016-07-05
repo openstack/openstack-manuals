@@ -170,8 +170,8 @@ the default set of quotas are enforced for all tenants, so no
 
 #. List tenants who have per-tenant quota support.
 
-   The :command:`quota-list` command lists tenants for which the per-tenant
-   quota is enabled. The command does not list tenants with default
+   The :command:`neutron quota-list` command lists tenants for which the
+   per-tenant quota is enabled. The command does not list tenants with default
    quota support. You must be an administrative user to run this command:
 
    .. code-block:: console
@@ -186,7 +186,7 @@ the default set of quotas are enforced for all tenants, so no
 
 #. Show per-tenant quota values.
 
-   The :command:`quota-show` command reports the current
+   The :command:`neutron quota-show` command reports the current
    set of quota limits for the specified tenant.
    Non-administrative users can run this command without the
    :option:`--tenant_id` parameter. If per-tenant quota limits are
@@ -224,7 +224,7 @@ the default set of quotas are enforced for all tenants, so no
 
 #. Update quota values for a specified tenant.
 
-   Use the :command:`quota-update` command to
+   Use the :command:`neutron quota-update` command to
    update a quota for a specified tenant.
 
    .. code-block:: console
@@ -297,7 +297,7 @@ the default set of quotas are enforced for all tenants, so no
 #. Delete per-tenant quota values.
 
    To clear per-tenant quota limits, use the
-   :command:`quota-delete` command.
+   :command:`neutron quota-delete` command.
 
    .. code-block:: console
 
