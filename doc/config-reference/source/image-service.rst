@@ -16,6 +16,12 @@ maintain a catalog of available images. By default, Compute is configured to
 use the Image service (glance), which is currently the only supported image
 service.
 
+.. note::
+
+   The common configurations for shared service and libraries,
+   such as database connections and RPC messaging,
+   are described at :doc:`common-configurations`.
+
 To customize the Compute service, use the configuration option settings
 documented in :ref:`nova-glance`.
 

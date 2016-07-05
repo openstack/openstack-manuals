@@ -9,6 +9,12 @@ Data Processing service
 The Data Processing service (sahara) provides a scalable data-processing stack
 and associated management interfaces.
 
+.. note::
+
+   The common configurations for shared service and libraries,
+   such as database connections and RPC messaging,
+   are described at :doc:`common-configurations`.
+
 The following tables provide a comprehensive list of the Data Processing
 service configuration options:
 

@@ -18,6 +18,12 @@ configured in the ``/etc/heat/heat.conf`` file.
 To install Orchestration, see the OpenStack Installation Guide for your
 distribution (`docs.openstack.org <http://docs.openstack.org>`__).
 
+.. note::
+
+   The common configurations for shared service and libraries,
+   such as database connections and RPC messaging,
+   are described at :doc:`common-configurations`.
+
 The following tables provide a comprehensive list of the Orchestration
 configuration options:
 

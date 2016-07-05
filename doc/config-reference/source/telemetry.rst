@@ -18,3 +18,8 @@ various agents and services are configured in the
 To install Telemetry, see the OpenStack Installation Guide for your
 distribution (`docs.openstack.org <http://docs.openstack.org>`__).
 
+.. note::
+
+   The common configurations for shared service and libraries,
+   such as database connections and RPC messaging,
+   are described at :doc:`common-configurations`.

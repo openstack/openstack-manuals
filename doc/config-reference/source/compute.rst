@@ -28,6 +28,12 @@ which is the main part of an IaaS system.
 You can use OpenStack Compute to host and manage cloud computing systems.
 This section describes the Compute service configuration options.
 
+.. note::
+
+   The common configurations for shared service and libraries,
+   such as database connections and RPC messaging,
+   are described at :doc:`common-configurations`.
+
 To configure your Compute installation,
 you must define configuration options in these files:
 
