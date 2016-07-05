@@ -1,1 +1,0 @@
-../../install-guide/source/ceilometer-verify.rst

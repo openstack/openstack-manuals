@@ -46,7 +46,6 @@ Contents
    cinder.rst
    manila.rst
    swift.rst
-   ceilometer.rst
    launch-instance.rst
 
 Appendix
