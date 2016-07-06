@@ -14,8 +14,45 @@ nodes to a ScaleIO storage cluster.
 Support matrix
 ~~~~~~~~~~~~~~
 
-* ScaleIO: Version 1.32
-* ScaleIO: Version 2.0
+.. list-table::
+   :widths: 10 25
+   :header-rows: 1
+
+   * - ScaleIO version
+     - Supported Linux operating systems
+   * - 1.32
+     - CentOS 6.x, CentOS 7.x, SLES 11 SP3, SLES 12
+   * - 2.0
+     - CentOS 6.x, CentOS 7.x, SLES 11 SP3, SLES 12, Ubuntu 14.04
+
+Deployment prerequisites
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* ScaleIO Gateway must be installed and accessible in the network.
+  For installation steps, refer to the Preparing the installation Manager
+  and the Gateway section in ScaleIO Deployment Guide. See
+  :ref:`scale_io_docs`.
+
+* ScaleIO Data Client (SDC) must be installed on all OpenStack nodes.
+
+.. note:: Ubuntu users must follow the specific instructions in the ScaleIO
+          deployment guide for Ubuntu environments. See the Deploying on
+          Ubuntu servers section in ScaleIO Deployment Guide. See
+          :ref:`scale_io_docs`.
+
+.. _scale_io_docs:
+
+Official documentation
+----------------------
+
+To find the ScaleIO documentation:
+
+#. Go to the `ScaleIO product documentation page <https://support.emc.com/products/33925_ScaleIO/Documentation/?source=promotion>`_.
+
+#. From the left-side panel, select the relevant version (1.32 or 2.0).
+
+#. Search for "ScaleIO Installation Guide 1.32" or "ScaleIO 2.0 Deployment
+   Guide" accordingly.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
