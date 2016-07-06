@@ -5,8 +5,8 @@ Object Storage general service configuration
 Most Object Storage services fall into two categories, Object Storage's WSGI
 servers and background daemons.
 
-Object Storage uses paste.deploy to manage server configurations. Read more at
-http://pythonpaste.org/deploy/.
+Object Storage uses ``paste.deploy`` to manage server configurations.
+Read more at `<http://pythonpaste.org/deploy/>`_.
 
 Default configuration options are set in the ``[DEFAULT]`` section, and any
 options specified there can be overridden in any of the other sections when the
@@ -37,6 +37,12 @@ the ``object-server``, ``object-updater``, ``object-replicator``, and
     [object-updater]
 
     [object-auditor]
+
+.. note::
+
+   Default constraints can be overridden in ``swift.conf``. For example,
+   you can change the maximum object size and other variables.
+
 
 Object Storage services expect a configuration path as the first argument:
 
