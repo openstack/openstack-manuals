@@ -10,7 +10,7 @@ administrators can provision and manage multiple database instances as
 needed.
 
 The Database service provides resource isolation at high performance
-levels, and automates complex administrative tasks such as deployment,
+levels and automates complex administrative tasks such as deployment,
 configuration, patching, backups, restores, and monitoring.
 
 **Process flow example**
