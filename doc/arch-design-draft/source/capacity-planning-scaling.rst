@@ -1,3 +1,5 @@
+.. _capacity-planning-scaling:
+
 =============================
 Capacity planning and scaling
 =============================
