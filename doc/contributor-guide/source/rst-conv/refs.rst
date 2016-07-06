@@ -48,9 +48,9 @@ To link to some external locations, format the RST source as follows:
   format a web link as ``Link text <http://web-link.com>``
   wrapping it in backticks.
 
-* Do not separate a link name from a link itself by defining the link in other
-  place in your document. It prevents translated documents from using different
-  links, for example, corresponding links to translated versions.
+* Do not separate the link name from the link itself by defining the link in
+  another place in your document. It prevents translated documents from using
+  different links, for example, corresponding links to translated versions.
 
 **Input**
 

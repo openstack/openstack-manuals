@@ -30,7 +30,7 @@ the admonition directives described above.
       A note may contain bulleted or enumerated lists,
       as well as code blocks:
 
-      * first option,
+      * First option,
       * ...
 
 **Output**
@@ -40,9 +40,9 @@ the admonition directives described above.
    This is the text of a note admonition.
    This line is the continuation of the first line.
 
-   Note may contain bulleted or enumerated lists,
+   A note may contain bulleted or enumerated lists,
    as well as code blocks:
 
-   * first option,
+   * First option,
    * ...
 

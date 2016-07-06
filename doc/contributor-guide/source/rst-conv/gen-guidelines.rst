@@ -11,7 +11,7 @@ side-by-side diffs on reviews.
 
 .. note::
 
-   Exception to this rule is the content of code-block elements and links
+   An exception to this rule is the content of code-block elements and links
    within the references.
 
 When formatting a table that presupposes long lines of text, give
