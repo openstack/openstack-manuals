@@ -413,7 +413,7 @@ correctly using these
    .. code-block:: console
 
       > cd C:\OpenStack\
-      > git clone https://git.openstack.org/cgit/openstack/neutron
+      > git clone https://git.openstack.org/openstack/neutron
 
 #. Install the OpenStack Networking Hyper-V Agent:
 
