@@ -153,6 +153,11 @@ Open vSwitch agent configuration options
 
 .. include:: ../tables/neutron-openvswitch_agent.rst
 
+SR-IOV agent configuration options
+----------------------------------
+
+.. include:: ../tables/neutron-sriov_agent.rst
+
 IPv6 Prefix Delegation configuration options
 --------------------------------------------
 
