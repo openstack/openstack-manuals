@@ -7,7 +7,7 @@ Telemetry service
    telemetry/telemetry_service_config_opts.rst
    telemetry/alarming_service_config_opts.rst
    telemetry/logs.rst
-   telemetry/sample-configuration-files.rst
+   telemetry/samples/index.rst
    tables/conf-changes/aodh.rst
    tables/conf-changes/ceilometer.rst
 
