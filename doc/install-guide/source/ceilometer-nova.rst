@@ -83,10 +83,10 @@ Install and configure components
 
         [service_credentials]
         ...
-        os_auth_url = http://controller:5000/v2.0
-        os_username = ceilometer
-        os_tenant_name = service
-        os_password = CEILOMETER_PASS
+        auth_url = http://controller:5000/v2.0
+        username = ceilometer
+        project_name = service
+        password = CEILOMETER_PASS
         interface = internalURL
         region_name = RegionOne
 
