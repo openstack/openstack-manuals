@@ -37,6 +37,7 @@ driver.
 .. code-block:: ini
 
     backup_swift_url = http://localhost:8080/v1/AUTH_
+    backup_swift_auth_url = http://localhost:5000/v3
     backup_swift_auth = per_user
     backup_swift_auth_version = 1
     backup_swift_user = <None>
