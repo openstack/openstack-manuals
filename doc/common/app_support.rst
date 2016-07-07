@@ -12,7 +12,7 @@ Community support
 The following resources are available to help you run and use OpenStack.
 The OpenStack community constantly improves and adds to the main
 features of OpenStack, but if you have any questions, do not hesitate to
-ask. Use the following resources to get OpenStack support, and
+ask. Use the following resources to get OpenStack support and
 troubleshoot your installations.
 
 Documentation
