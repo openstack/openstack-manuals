@@ -938,7 +938,7 @@ A standard meter definition looks like:
        type: 'type of meter eg: gauge, cumulative or delta'
        unit: 'name of unit eg: MB'
        volume: 'path to a measurable value eg: $.payload.size'
-       resource_id: 'path to resouce id eg: $.payload.id'
+       resource_id: 'path to resource id eg: $.payload.id'
        project_id: 'path to project id eg: $.payload.owner'
 
 The definition above shows a simple meter definition with some fields,
