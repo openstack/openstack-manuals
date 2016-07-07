@@ -15,17 +15,6 @@ Datera supports all of the Block Storage services.
 System requirements, prerequisites, and recommendations
 -------------------------------------------------------
 
-Minimum requirements
-~~~~~~~~~~~~~~~~~~~~
-
-* Three Datera nodes
-
-* One controller node
-
-* Two compute nodes
-
-* One non-blocking high-speed switch
-
 Prerequisites
 ~~~~~~~~~~~~~
 
