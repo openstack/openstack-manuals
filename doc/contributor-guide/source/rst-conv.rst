@@ -15,7 +15,7 @@ code blocks, vertical lists, and many others. All the source content formatted
 using RST is stored in files with the ``.rst`` extension.
 
 To keep the documentation format consistent, follow the guidelines
-included in this chapter for all the RST source content. When in doubt
+included in this chapter for all the RST source content. When in doubt,
 use simpler formatting.
 
 .. note::

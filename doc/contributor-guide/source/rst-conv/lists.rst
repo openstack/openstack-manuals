@@ -63,7 +63,7 @@ Consider using a variable list instead of:
 * An itemized list when your list has a regular pattern of key/value or
   term/definition pairs.
 
-* A two column table where the first column lists items of a consistent type
+* A two-column table where the first column lists items of a consistent type
   and the second column describes the items.
 
 **Input**
