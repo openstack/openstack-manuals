@@ -77,17 +77,31 @@ is attached to an instance, and thus to a compute node/SDC.
 ScaleIO thin provisioning support
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Block Storage driver supports creation of thin-provisioned volumes,
-in addition to thick provisioning.
-The provisioning type settings should be added as an extra specification
+The Block Storage driver supports creation of thin-provisioned and
+thick-provisioned volumes.
+The provisioning type settings can be added as an extra specification
 of the volume type, as follows:
 
 .. code-block:: ini
 
    sio:provisioning_type = thin\thick
 
-If the provisioning type value is not specified, the default value of
-"thick" will be used.
+If provisioning type settings are not specified in the volume type,
+the default value is set according to the ``san_thin_provision``
+option in the configuration file. The default provisioning type
+will be ``thin`` if the option is not specified in the configuration
+file. To set the default provisioning type ``thick``, set
+the ``san_thin_provision`` option to ``false``
+in the configuration file, as follows:
+
+.. code-block:: ini
+
+   san_thin_provision = false
+
+The configuration file is usually located in
+``/etc/cinder/cinder.conf``.
+For a configuration example, see:
+:ref:`cinder.conf <cg_configuration_example_emc>`.
 
 ScaleIO Block Storage driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,6 +237,7 @@ parameters as follows:
    sio_storage_pools = Domain1:Pool1,Domain2:Pool2
    san_login = SIO_USER
    san_password = SIO_PASSWD
+   san_thin_provision = false
 
 Configuration options
 ~~~~~~~~~~~~~~~~~~~~~
