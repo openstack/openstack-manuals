@@ -25,7 +25,7 @@ can be applicable to any other Networking service resource:
 #. Ability to leverage tags by deployment tools.
 
 #. Ability to tag information about provider networks
-   (for example, high-bandwith, low-latency, and so on).
+   (for example, high-bandwidth, low-latency, and so on).
 
 Filtering with tags
 ~~~~~~~~~~~~~~~~~~~
