@@ -10,8 +10,10 @@ node using the example architecture.
 Although most environments include Identity, Image service, Compute, at least
 one networking service, and the dashboard, the Object Storage service can
 operate independently. If your use case only involves Object Storage, you can
-skip to :ref:`swift` after configuring the appropriate nodes for it. However,
-the dashboard requires at least the Image service, Compute, and Networking.
+skip to `Object Storage Installation Guide
+<http://docs.openstack.org/project-install-guide/object-storage/draft/>`_
+after configuring the appropriate nodes for it. However, the dashboard
+requires at least the Image service, Compute, and Networking.
 
 You must use an account with administrative privileges to configure each node.
 Either run the commands as the ``root`` user or configure the ``sudo``

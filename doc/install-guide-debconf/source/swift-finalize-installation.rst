@@ -1,1 +1,0 @@
-../../install-guide/source/swift-finalize-installation.rst

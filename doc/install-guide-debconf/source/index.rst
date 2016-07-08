@@ -45,7 +45,6 @@ Contents
    horizon.rst
    cinder.rst
    manila.rst
-   swift.rst
    launch-instance.rst
 
 Appendix

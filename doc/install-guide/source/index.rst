@@ -88,7 +88,6 @@ Contents
    horizon.rst
    cinder.rst
    manila.rst
-   swift.rst
    additional-services.rst
    launch-instance.rst
 
