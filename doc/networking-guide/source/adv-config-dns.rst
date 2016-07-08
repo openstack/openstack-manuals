@@ -102,7 +102,7 @@ in its ``dns_name`` attribute.
    +-----------------------+-------------------------------------------------------------------------------------+
 
 When this functionality is enabled, it is leveraged by the Compute service when
-creating instances. When allocating ports for an instace during boot, the
+creating instances. When allocating ports for an instance during boot, the
 Compute service populates the ``dns_name`` attributes of these ports with
 the ``hostname`` attribute of the instance, which is a DNS sanitized version of
 its display name. As a consequence, at the end of the boot process, the
