@@ -23,8 +23,8 @@ The basics
 ~~~~~~~~~~
 
 QoS is an advanced service plug-in. QoS is decoupled from the rest of the
-Neutron code on multiple levels and it is available through the ml2 extension
-driver.
+OpenStack Networking code on multiple levels and it is available through the
+ml2 extension driver.
 
 Details about the DB models, API extension, and use cases are out of the scope
 of this guide but can be found in the
