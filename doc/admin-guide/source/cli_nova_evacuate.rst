@@ -4,8 +4,8 @@ Evacuate instances
 
 If a hardware malfunction or other error causes a cloud compute node to fail,
 you can evacuate instances to make them available again. You can optionally
-include the target host on the :command:`evacuate` command. If you omit the
-host, the scheduler chooses the target host.
+include the target host on the :command:`nova evacuate` command. If you omit
+the host, the scheduler chooses the target host.
 
 To preserve user data on the server disk, configure shared storage on the
 target host. When you evacuate the instance, Compute detects whether shared
