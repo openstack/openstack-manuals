@@ -158,7 +158,7 @@ No sign of attach call in the ``cinder-api`` log
 Problem
 -------
 
-The attach call is unavailble, or not appearing in the ``cinder-api`` log.
+The attach call is unavailable, or not appearing in the ``cinder-api`` log.
 
 Solution
 --------
