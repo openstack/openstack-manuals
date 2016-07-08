@@ -75,8 +75,8 @@ The default flavors are:
  m1.xlarge      8          160              16384
 ============  =========  ===============  ===============
 
-You can create and manage flavors with the nova
-**flavor-*** commands provided by the ``python-novaclient``
+You can create and manage flavors with the
+:command:`nova flavor-*` commands provided by the ``python-novaclient``
 package.
 
 Create a flavor
