@@ -35,7 +35,7 @@ guaranteed not to overlap. If the addresses come from an externally routable
 pool then you know that all of the tenants have addresses which are *routable*
 and unique. This can be useful in the following scenarios.
 
-#. IPv6 since OpenStack Networking has no IPv6 floating ips.
+#. IPv6 since OpenStack Networking has no IPv6 floating IPs.
 #. Routing directly to a tenant network from an external network.
 
 How they work
@@ -73,7 +73,7 @@ example, with a quota of 128, I might get 203.0.113.128/26,
 the future.
 
 With IPv6 it is a little different. It is not practical to count
-individual addresses. To avoid rediculously large numbers, the quota is
+individual addresses. To avoid ridiculously large numbers, the quota is
 expressed in the number of /64 subnets which can be allocated. For
 example, with a default_quota of 3, I might get 2001:db8:c18e:c05a::/64,
 2001:db8:221c:8ef3::/64, and still have room to allocate one more prefix
@@ -132,7 +132,7 @@ First, as admin, create a shared subnet pool:
 The ``default_prefixlen`` defines the subnet size you will get if you do not
 specify :option:`--prefixlen` when creating a subnet.
 
-Do essentially the same thing for ipv6 and there are now two subnet
+Do essentially the same thing for IPv6 and there are now two subnet
 pools. Regular tenants can see them. (the output is trimmed a bit
 for display)
 
