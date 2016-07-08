@@ -9,7 +9,7 @@ DNS service command-line client
 The designate client is the command-line interface (CLI) for
 the DNS service API and its extensions.
 
-This chapter documents :command:`designate` version ``2.0.0``.
+This chapter documents :command:`designate` version ``2.1.0``.
 
 For help on a specific :command:`designate` command, enter:
 
@@ -59,7 +59,7 @@ designate optional arguments
   Specify a file to log output. Disabled by default.
 
 ``-h, --help``
-  Show this help message and exit.
+  Show help message and exit.
 
 ``--debug``
   Show tracebacks on errors.
@@ -151,11 +151,11 @@ designate optional arguments
 .. _designate_diagnostics-ping:
 
 designate diagnostics-ping
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: designate diagnostics-ping [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate diagnostics-ping [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX] --service
                                      SERVICE --host HOST
@@ -176,11 +176,11 @@ Ping a service on a given host
 .. _designate_domain-create:
 
 designate domain-create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: designate domain-create [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate domain-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] --name NAME
                                   --email EMAIL [--ttl TTL]
@@ -208,11 +208,11 @@ Create Domain
 .. _designate_domain-delete:
 
 designate domain-delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: designate domain-delete [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate domain-delete [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   id
@@ -232,11 +232,11 @@ Delete Domain
 .. _designate_domain-get:
 
 designate domain-get
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: designate domain-get [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate domain-get [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                id
@@ -256,12 +256,12 @@ Get Domain
 .. _designate_domain-list:
 
 designate domain-list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: designate domain-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                                [--max-width <integer>] [--noindent]
+   usage: designate domain-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
 List Domains
@@ -274,11 +274,12 @@ List Domains
 .. _designate_domain-servers-list:
 
 designate domain-servers-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
-   usage: designate domain-servers-list [-h] [-f {csv,json,table,value,yaml}]
+   usage: designate domain-servers-list [-h]
+                                        [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
@@ -299,11 +300,11 @@ List Domain Servers
 .. _designate_domain-update:
 
 designate domain-update
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: designate domain-update [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate domain-update [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] [--name NAME]
                                   [--email EMAIL] [--ttl TTL]
@@ -339,12 +340,12 @@ Update Domain
 .. _designate_quota-get:
 
 designate quota-get
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: designate quota-get [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                              [--max-width <integer>] [--noindent]
+   usage: designate quota-get [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX]
                               tenant_id
 
@@ -363,11 +364,11 @@ Get Quota
 .. _designate_quota-reset:
 
 designate quota-reset
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: designate quota-reset [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate quota-reset [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 tenant_id
@@ -387,11 +388,11 @@ Reset Quota
 .. _designate_quota-update:
 
 designate quota-update
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: designate quota-update [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate quota-update [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX] [--domains DOMAINS]
                                  [--domain-recordsets DOMAIN_RECORDSETS]
@@ -430,11 +431,11 @@ Update Quota
 .. _designate_record-create:
 
 designate record-create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: designate record-create [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate record-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] --name NAME
                                   --type TYPE --data DATA [--ttl TTL]
@@ -475,11 +476,11 @@ Create Record
 .. _designate_record-delete:
 
 designate record-delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: designate record-delete [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate record-delete [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   domain_id id
@@ -502,11 +503,11 @@ Delete Record
 .. _designate_record-get:
 
 designate record-get
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: designate record-get [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate record-get [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                domain_id id
@@ -529,12 +530,12 @@ Get Record
 .. _designate_record-list:
 
 designate record-list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: designate record-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                                [--max-width <integer>] [--noindent]
+   usage: designate record-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 domain_id
 
@@ -553,11 +554,11 @@ List Records
 .. _designate_record-update:
 
 designate record-update
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: designate record-update [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate record-update [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] [--name NAME]
                                   [--type TYPE] [--data DATA]
@@ -608,11 +609,11 @@ Update Record
 .. _designate_report-count-all:
 
 designate report-count-all
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
-   usage: designate report-count-all [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate report-count-all [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
 
@@ -626,11 +627,12 @@ Get count totals for all tenants, domains and records
 .. _designate_report-count-domains:
 
 designate report-count-domains
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: designate report-count-domains [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate report-count-domains [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
 
@@ -644,11 +646,12 @@ Get counts for total domains
 .. _designate_report-count-records:
 
 designate report-count-records
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: designate report-count-records [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate report-count-records [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
 
@@ -662,11 +665,12 @@ Get counts for total records
 .. _designate_report-count-tenants:
 
 designate report-count-tenants
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: designate report-count-tenants [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate report-count-tenants [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
 
@@ -680,11 +684,12 @@ Get counts for total tenants
 .. _designate_report-tenant-domains:
 
 designate report-tenant-domains
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
-   usage: designate report-tenant-domains [-h] [-f {csv,json,table,value,yaml}]
+   usage: designate report-tenant-domains [-h]
+                                          [-f {csv,html,json,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
@@ -703,11 +708,11 @@ Get a list of domains for given tenant
 .. _designate_report-tenants-all:
 
 designate report-tenants-all
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
-   usage: designate report-tenants-all [-h] [-f {csv,json,table,value,yaml}]
+   usage: designate report-tenants-all [-h] [-f {csv,html,json,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]
@@ -722,11 +727,11 @@ Get list of tenants and domain count for each
 .. _designate_server-create:
 
 designate server-create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: designate server-create [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate server-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] --name NAME
 
@@ -743,11 +748,11 @@ Create Server
 .. _designate_server-delete:
 
 designate server-delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: designate server-delete [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate server-delete [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   id
@@ -767,11 +772,11 @@ Delete Server
 .. _designate_server-get:
 
 designate server-get
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
-   usage: designate server-get [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate server-get [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
                                id
@@ -791,12 +796,12 @@ Get Server
 .. _designate_server-list:
 
 designate server-list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: designate server-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                                [--max-width <integer>] [--noindent]
+   usage: designate server-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
 List Servers
@@ -809,11 +814,11 @@ List Servers
 .. _designate_server-update:
 
 designate server-update
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: designate server-update [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate server-update [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX] [--name NAME]
                                   id
@@ -836,12 +841,12 @@ Update Server
 .. _designate_sync-all:
 
 designate sync-all
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. code-block:: console
 
-   usage: designate sync-all [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                             [--max-width <integer>] [--noindent]
+   usage: designate sync-all [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--prefix PREFIX]
 
 Sync Everything
@@ -854,11 +859,11 @@ Sync Everything
 .. _designate_sync-domain:
 
 designate sync-domain
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: designate sync-domain [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate sync-domain [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 domain_id
@@ -878,11 +883,11 @@ Sync a single Domain
 .. _designate_sync-record:
 
 designate sync-record
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: designate sync-record [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate sync-record [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 domain_id record_id
@@ -905,11 +910,11 @@ Sync a single Record
 .. _designate_touch-domain:
 
 designate touch-domain
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
-   usage: designate touch-domain [-h] [-f {json,shell,table,value,yaml}]
+   usage: designate touch-domain [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
                                  [--prefix PREFIX]
                                  domain_id
