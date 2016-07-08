@@ -308,7 +308,7 @@ Resize a volume
 
       $ nova volume-detach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5   573e024d-5235-49ce-8332-be1576d323f8
 
-   The :command:`volume-detach` command does not return any output.
+   The :command:`nova volume-detach` command does not return any output.
 
 #. List volumes:
 
@@ -331,7 +331,7 @@ Resize a volume
 
       $ cinder extend 573e024d-5235-49ce-8332-be1576d323f8 10
 
-   The :command:`extend` command does not return any output.
+   The :command:`cinder extend` command does not return any output.
 
 Delete a volume
 ~~~~~~~~~~~~~~~
@@ -346,7 +346,7 @@ Delete a volume
 
       $ cinder delete my-new-volume
 
-   The :command:`delete` command does not return any output.
+   The :command:`cinder delete` command does not return any output.
 
 #. List the volumes again, and note that the status of your volume is
    ``deleting``:
