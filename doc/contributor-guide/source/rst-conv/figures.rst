@@ -14,7 +14,7 @@ preferred.
 
 **Syntax**
 
-::
+.. code-block:: none
 
   .. figure:: file_name.file_extension
      :option: option_value
@@ -32,4 +32,6 @@ The figure directive supports the following options:
 For descriptions of the options and their possible values, refer to the
 `Docutils documentation <http://docutils.sourceforge.net/docs/ref/rst/directives.html#figure>`_.
 
-For details on figure titles, see :ref:`figure_table_titles`.
+.. seealso::
+
+   For the style guidelines on figure titles, see :ref:`figure_table_titles`.

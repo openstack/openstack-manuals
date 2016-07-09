@@ -32,7 +32,7 @@ as described in the :ref:`non-standard-block` section.
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    Add logging statements::
 
@@ -45,7 +45,6 @@ Add logging statements::
 
   from nova.openstack.common import log as logging
   LOG = logging.getLogger(__name__)
-
 
 .. _non-standard-block:
 
@@ -70,7 +69,7 @@ files, ``console`` for console inputs and outputs, and so on.
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    .. code-block:: ini
 
@@ -121,7 +120,7 @@ content from a remote URL (``http`` or ``https``).
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    .. remote-code-block:: ini
 

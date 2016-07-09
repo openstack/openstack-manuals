@@ -46,4 +46,3 @@ Use indentation to format the nested content within:
 
 For more information on how to format elements from the list above,
 see the related section of this chapter.
-

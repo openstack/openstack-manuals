@@ -11,7 +11,7 @@ formatting details.
 
 .. seealso::
 
-   :ref:`figure_table_titles`
+   For the style guidelines on table titles, see :ref:`figure_table_titles`.
 
 Graphic tables
 ~~~~~~~~~~~~~~
@@ -27,7 +27,7 @@ lines of text and a small number of rows and columns.
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    .. table:: **Default flavors**
 
@@ -63,7 +63,7 @@ number of rows and columns with the long lines within the cells.
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    .. list-table:: **Quota descriptions**
       :widths: 10 25 10
@@ -111,15 +111,15 @@ directives.
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    .. csv-table:: **ipv6_ra_mode and ipv6_address_mode combinations**
-     :header: ipv6 ra mode, ipv6 address mode, "radvd A,M,O", "External Router A,M,O", Description
-     :widths: 2, 2, 2, 2, 4
+      :header: ipv6 ra mode, ipv6 address mode, "radvd A,M,O", "External Router A,M,O", Description
+      :widths: 2, 2, 2, 2, 4
 
-     *N/S*, *N/S*, Off, Not Defined, Backwards compatibility with pre-Juno IPv6 behavior.
-     *N/S*, slaac, Off, "1,0,0", Guest instance obtains IPv6 address from non-OpenStack
-     *N/S*, dhcpv6-stateful, Off, "0,1,1", Not currently implemented in the reference implementation.
+      *N/S*, *N/S*, Off, Not Defined, Backwards compatibility with pre-Juno IPv6 behavior.
+      *N/S*, slaac, Off, "1,0,0", Guest instance obtains IPv6 address from non-OpenStack
+      *N/S*, dhcpv6-stateful, Off, "0,1,1", Not currently implemented in the reference implementation.
 
 **Output**
 
@@ -131,12 +131,12 @@ directives.
    *N/S*, slaac, Off, "1,0,0", Guest instance obtains IPv6 address from non-OpenStack
    *N/S*, dhcpv6-stateful, Off, "0,1,1", Not currently implemented in the reference implementation.
 
-
 Useful links on table formatting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* `Graphic tables formatting details <http://docutils.sourceforge.net/docs/user/rst/quickref.html#tables>`_
-
-* `List tables formatting details <http://docutils.sourceforge.net/docs/ref/rst/directives.html#list-table>`_
-
-* `CSV tables formatting details <http://docutils.sourceforge.net/docs/ref/rst/directives.html#id48>`_
+* `Graphic tables formatting details
+  <http://docutils.sourceforge.net/docs/user/rst/quickref.html#tables>`_
+* `List tables formatting details
+  <http://docutils.sourceforge.net/docs/ref/rst/directives.html#list-table>`_
+* `CSV tables formatting details
+  <http://docutils.sourceforge.net/docs/ref/rst/directives.html#id48>`_
