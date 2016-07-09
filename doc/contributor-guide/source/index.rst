@@ -32,7 +32,6 @@ Contents
    ui-text-guidelines.rst
    rst-conv.rst
    json-conventions.rst
-   docbook-conv.rst
    tools-and-content-overview.rst
    docs-builds.rst
    build-locally.rst
