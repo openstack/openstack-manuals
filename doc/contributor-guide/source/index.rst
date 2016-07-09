@@ -18,12 +18,11 @@ Contents
 
    quickstart.rst
    additional-git-workflow.rst
-   blueprints-and-specs.rst
    doc-bugs.rst
    docs-review.rst
    team-structure.rst
    docs-structure.rst
-   content-specs.rst
+   blueprints-and-specs.rst
    api-guides.rst
    project-install-guide
    topic-structure.rst
