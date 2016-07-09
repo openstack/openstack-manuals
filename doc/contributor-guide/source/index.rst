@@ -30,7 +30,6 @@ Contents
    ui-text-guidelines.rst
    rst-conv.rst
    json-conv.rst
-   tools-and-content-overview.rst
    docs-builds.rst
    build-locally.rst
    doc-tools.rst

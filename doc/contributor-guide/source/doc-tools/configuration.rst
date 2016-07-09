@@ -1,47 +1,47 @@
-=============
-Configuration
-=============
+=======================================
+Configure OpenStack documentation tools
+=======================================
 
-If you run the ``openstack-doc-test --check-build``, it will copy all
-the books to the directory ``publish-docs`` in the top-level directory
-of your repository.
+OpenStack documentation tools use the ``doc-test.conf`` file as a source for
+the default settings.
 
-By default, it outputs a directory with the same name as the directory
-where the ``pom.xml`` file lives in, such as ``glossary``. You can
-also check the output of the build job for the name.
+By default, the :command:`openstack-doc-test --check-build` copies the books
+to the ``publish-docs`` directory in the top-level directory of a project's
+repository. You can modify the default settings for the books that require
+special treatment by configuring the following options:
 
-Some books need special treatment and there are three options you can
-set in the file ``doc-test.conf``:
+book
+  The name of a book that needs special treatment
 
-* ``book`` - the name of a book that needs special treatment
-* ``target_dir`` - the path of subdirectory starting at ``target``
-  that is the root for publishing
-* ``publish_dir`` - a new name to publish a book under
+target_dir
+  The path of subdirectory starting at ``target`` that is the root for
+  publishing
 
-As an example, to publish the compute-api version 2 in the directory
-``publish-docs/api/openstack-compute/2``, use::
-
-  book = openstack-compute-api-2
-  target_dir = target/docbkx/webhelp/api/openstack-compute/2
-  publish_dir = api/openstack-compute/2
-
-These options can be specified multiple times and should
-always be used this way. You do not need to set ``publish_dir`` but if
-you set it, you need to use it every time.
+publish_dir
+  A new name to publish a book under
 
 .. note::
 
-   These are optional settings. The logic in the tool is
-   sufficient for many of the books.
+   You can specify these options multiple times and should always use them
+   this way.
 
-* Source: http://git.openstack.org/cgit/openstack/openstack-doc-tools
-* Bugs: http://bugs.launchpad.net/openstack-manuals
+   You do not need to set ``publish_dir`` but if you set it, you need to use
+   it every time.
+
+As an example, to publish the compute-api version 2 to
+``publish-docs/api/openstack-compute/2``, edit ``doc-test.conf`` as follows:
+
+.. code-block:: none
+
+   book = openstack-compute-api-2
+   target_dir = target/docbkx/webhelp/api/openstack-compute/2
+   publish_dir = api/openstack-compute/2
 
 
 Sample doc-test.conf file
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code::
+.. code-block:: none
 
    [DEFAULT]
 

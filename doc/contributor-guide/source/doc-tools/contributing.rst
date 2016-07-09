@@ -1,50 +1,57 @@
-============
-Contributing
-============
+===========================================
+Contribute to OpenStack documentation tools
+===========================================
 
-If you would like to contribute to the development of the
-``openstack-doc-tools``, follow the steps in the `Developers Guide
-<http://docs.openstack.org/infra/manual/developers.html>`_.
+If you would like to contribute to OpenStack documentation tools, you are
+welcome to submit a patch or file a bug against the toolkit.
 
-Once those steps have been completed, changes to OpenStack
-should be submitted for review via the Gerrit tool, following
-the `gerrit workflow
-<http://docs.openstack.org/infra/manual/developers.html#development-workflow>`_
+Contribute to the tool development
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Pull requests submitted through GitHub will be ignored.
+To contribute to the development of ``openstack-doc-tools``, proceed with
+the following steps:
 
-Bugs should be filed on `Launchpad
-<https://bugs.launchpad.net/openstack-manuals>`_, not GitHub.
+#. Complete the procedures described
+   in the `Developers Guide <http://docs.openstack.org/infra/manual/developers.html>`_.
+
+#. Follow  `OpenStack Style Commandments <http://docs.openstack.org/developer/hacking/>`_
+   while developing improvements for the tool.
+
+#. Run tests before you submit your change request.
+
+   For now, the documentation toolkit is tested with basic ``flake8``
+   and ``bashate`` tests. A test suite would be welcome.
+
+   Since the ``openstack-doc-test`` tool is used for gating of
+   the OpenStack documentation repositories, test building of
+   these repositories with any changes done within the tool repository:
+
+   #. Install ``openstack-doc-tools`` locally.
+   #. Check out the gated repositories.
+      The repositories gated by ``openstack-doc-tools`` are:
+
+      * api-site
+      * openstack-manuals
+
+   #. Run :command:`tox` inside of each gated repository.
+
+#. Submit your change for review through the Gerrit tool as described
+   in the `gerrit workflow <http://docs.openstack.org/infra/manual/developers.html#development-workflow>`_.
+
+   .. warning::
+
+      Pull requests submitted through GitHub will be ignored.
 
 .. note::
 
    To be able to run ``"tox -e py27"`` successfully locally, add
    ``jinja2`` and ``markupsafe`` to your local ``test-requirements.txt``
-   file so the two get installed in your local virtual environment.
+   file to have them installed in your local virtual environment.
 
 
-Style commandments
-~~~~~~~~~~~~~~~~~~
+File a bug against the tools
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Read the `OpenStack Style Commandments
-<http://docs.openstack.org/developer/hacking/>`_.
-
-
-Running tests
-~~~~~~~~~~~~~
-
-So far these tools are tested with only basic flake8 and bashate tests. A test
-suite would be welcome!
-
-Since the ``openstack-doc-test`` tool is used for gating of the OpenStack
-documentation repositories, test building of these repositories with
-any changes done here.
-
-Testing can be done with simply a local install of
-``openstack-doc-tools``, then checking out the gated repositories and
-running: ``tox`` inside of each.
-
-The repositories gated by ``openstack-doc-tools`` are:
-
-* api-site
-* openstack-manuals
+If you experience an issue while using the ``openstack-doc-test`` tool,
+file a bug on Launchpad in the `openstack-manuals project
+<https://bugs.launchpad.net/openstack-manuals>`_, not on GitHub.

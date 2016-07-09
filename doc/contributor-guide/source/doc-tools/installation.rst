@@ -1,22 +1,29 @@
-======================
-Installation and usage
-======================
+.. _doc-toolsd-installation:
 
-At the command line:
+=====================================
+Install OpenStack documentation tools
+=====================================
 
-.. code::
+To install the documentation toolkit:
 
-   $ pip install openstack-doc-tools
+#. Verify that you have installed
+   the `prerequisites <https://github.com/openstack/openstack-doc-tools/blob/master/README.rst>`_.
 
-Or, if you have ``virtualenvwrapper`` installed:
+#. Install the ``openstack-doc-tools`` package:
 
-.. code::
+   .. code-block:: console
 
-   $ mkvirtualenv openstack-doc-tools
-   $ pip install openstack-doc-tools
+      $ pip install openstack-doc-tools
 
-To use openstack-doc-tools in a project:
+   If you have ``virtualenvwrapper`` installed, run:
 
-.. code::
+   .. code::
 
-   import os_doc_tools
+      $ mkvirtualenv openstack-doc-tools
+      $ pip install openstack-doc-tools
+
+#. To use ``openstack-doc-tools``, import the tools to a project:
+
+   .. code-block:: console
+
+      import os_doc_tools
