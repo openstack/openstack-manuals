@@ -4,29 +4,52 @@
 Documentation team structure
 ============================
 
-The OpenStack community has the following documentation specialty teams with
-their respective leads:
+The Documentation project provides documentation for various OpenStack
+projects to promote OpenStack, develop and maintain tools and processes
+to ensure quality and accuracy of documentation.
 
-* `API`_: Anne Gentle
-* `Configuration Reference`_: Tomoyuki Kato
-* `High Availability Guide`_: Bogdan Dobrelya
-* `Hypervisor Tuning Guide`_: Joe Topjian
-* `Installation guides`_: Lana Brindley
-* `Networking Guide`_: Edgar Magana
-* `Operations and Architecture Design guides`_: Shilla Saebi
-* `Security Guide`_: Nathaniel Dillon
-* `Training Guides`_: Matjaz Pancur
-* `Training labs`_: Pranav Salunke, Roger Luethi
-* `User guides`_: Joseph Robinson
+The OpenStack community has the following documentation specialty teams
+with their respective leads:
 
-.. _`API`: https://wiki.openstack.org/wiki/Documentation/API
-.. _`Configuration Reference`: https://wiki.openstack.org/wiki/Documentation/ConfigRef
-.. _`High Availability Guide`: https://wiki.openstack.org/wiki/Documentation/HA_Guide_Update
-.. _`Hypervisor Tuning Guide`: https://wiki.openstack.org/wiki/Documentation/HypervisorTuningGuide
-.. _`Installation guides`: https://wiki.openstack.org/wiki/Documentation/InstallGuide
-.. _`Networking Guide`: https://wiki.openstack.org/wiki/Documentation/NetworkingGuide
-.. _`Operations and Architecture Design guides`: https://wiki.openstack.org/wiki/Documentation/OpsGuide
-.. _`Security Guide`: https://wiki.openstack.org/wiki/Documentation/SecurityGuide
-.. _`Training Guides`: https://wiki.openstack.org/wiki/Training-guides
-.. _`Training labs`: https://wiki.openstack.org/wiki/Documentation/training-labs
-.. _`User guides`: https://wiki.openstack.org/wiki/User_Guides
+* :doc:`API <api-guides>`: Anne Gentle
+* `Configuration Reference and CLI Reference
+  <https://wiki.openstack.org/wiki/Documentation/ConfigRef>`_:
+  Tomoyuki Kato
+* `High Availability Guide
+  <https://wiki.openstack.org/wiki/Documentation/HA_Guide_Update>`_:
+  Bogdan Dobrelya
+* `Hypervisor Tuning Guide
+  <https://wiki.openstack.org/wiki/Documentation/HypervisorTuningGuide>`_:
+  Joe Topjian
+* `Installation guides
+  <https://wiki.openstack.org/wiki/Documentation/InstallGuide>`_:
+  Lana Brindley
+* `Networking Guide
+  <https://wiki.openstack.org/wiki/Documentation/NetworkingGuide>`_:
+  Edgar Magana
+* `Operations and Architecture Design guides
+  <https://wiki.openstack.org/wiki/Documentation/OpsGuide>`_:
+  Shilla Saebi
+* `Security Guide
+  <https://wiki.openstack.org/wiki/Documentation/SecurityGuide>`_:
+  Nathaniel Dillon
+* `Training Guides <https://wiki.openstack.org/wiki/Training-guides>`_:
+  Matjaz Pancur
+* `Training labs
+  <https://wiki.openstack.org/wiki/Documentation/training-labs>`_:
+  Pranav Salunke, Roger Luethi
+* `User guides <https://wiki.openstack.org/wiki/User_Guides>`_:
+  Joseph Robinson
+
+The current list of docs cores for openstack-manuals, openstackdocstheme,
+and openstack-doc-tools repositories can be found at
+https://review.openstack.org/#/admin/groups/30,members.
+The docs-specs, security-doc, training-guides, and training-labs
+repositories have a separate core team respectively.
+
+The cross-project liaisons (CPLs) assist with subject matter questions,
+reviews, doc bug triaging, and patching docs.
+Refer to `documentation cross-project liaisons
+<https://wiki.openstack.org/wiki/CrossProjectLiaisons#Documentation>`_
+for the list of people, and if you are interested in becoming a CPL
+for docs, contact the Documentation PTL.
