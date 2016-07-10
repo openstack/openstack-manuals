@@ -11,8 +11,7 @@ documentation bugs at Launchpad.
 
 Other good first-time documentation tasks are bug triaging and bug fixing:
 
-#. Go to the bug lists at https://bugs.launchpad.net/openstack-manuals/+bugs
-   and https://bugs.launchpad.net/openstack-api-site/+bugs.
+#. Go to the bug lists at https://bugs.launchpad.net/openstack-manuals/+bugs.
 
 #. When you can confirm a bug, give it a status based on
    the :ref:`documentation bug triaging guidelines <doc_bugs_triaging>`.
@@ -34,13 +33,11 @@ Setting up for contribution
 
 To get started, complete the following steps:
 
-#. Set up your account and agree to the Individual Contributor License
-   Agreement (ICLA). See `Account Setup`_ for details.
+#. Set up your account and agree to the ``Individual Contributor License
+   Agreement (ICLA)``. See `Account Setup`_ for details.
 
-#. Join the Launchpad `OpenStack Documentation Bug Team`_.
-
-To set up your environment for contributions, proceed with the subsections
-below.
+To set up your environment for contributions, proceed with the
+subsections below.
 
 Set up a text editor
 --------------------
@@ -73,13 +70,13 @@ For example, in the :file:`.vimrc`:
 Set up git and git-review
 -------------------------
 
-#. Install git. See `GitHub help`_ for details.
+#. Install ``git``. See `GitHub help`_ for details.
 
    If you use Windows to contribute to OpenStack, install
    `Git for Windows <https://git-for-windows.github.io/>`_.
    In the subsequent procedures, run commands from the Git Bash console.
 
-#. Install git-review so that you are able to submit patches.
+#. Install ``git-review`` so that you are able to submit patches.
    See `Installing git-review`_ for details.
 
    .. note::
@@ -115,7 +112,7 @@ Set up SSH
 
       $ notepad ~/.ssh/id_rsa.pub
 
-#. Sign into gerrit at review.openstack.org.
+#. Sign into gerrit at https://review.openstack.org/.
 
 #. In the upper right, click your username. Click the `Settings > SSH Public
    Keys`_ page. Click ``Add Key``. Paste the key in the ``Add SSH Public Key``
@@ -157,7 +154,7 @@ Committing a change
 #. Create a patch for review.openstack.org following the `Submitting a Change
    for Review`_ instructions.
 
-#. Follow the URL returned from git-review to check your commit::
+#. Follow the URL returned from ``git-review`` to check your commit::
 
      http://review.openstack.org/<COMMIT-NUMBER>
 

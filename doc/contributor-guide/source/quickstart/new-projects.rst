@@ -11,12 +11,12 @@ project.
 Developer documentation for your project should live in your project's git
 repository, and be published to `docs.openstack.org/developer/yourproject`.
 If you need to create that index page, send a patch to the openstack-manuals
-team. You will also need to add the `openstack-server-publish` job to the
+team. You will also need to add the ``openstack-server-publish`` job to the
 appropriate repositories so that the index page is re-published with every
 commit.
 
 Any configuration options or command line tools should be documented using
-the automated `openstack-doc-tools`. For more information about these
+the automated ``openstack-doc-tools``. For more information about these
 automated tools, see the :ref:`doc-tools` chapter.
 
 To create your Installation documentation in accordance with the OpenStack
