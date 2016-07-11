@@ -281,7 +281,7 @@ before the line ``touch /var/lock/subsys/local``:
 
    The previous script only gets the ssh public key from the
    metadata server. It does not get user data, which is optional
-   data that can be passed by the user whenrequesting a new instance.
+   data that can be passed by the user when requesting a new instance.
    User data is often used to run a custom script when an instance boots.
 
    As the OpenStack metadata service is compatible with version
