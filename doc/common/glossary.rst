@@ -1787,7 +1787,7 @@ H
       rather, it is the result of simply layering the Hypertext Transfer
       Protocol (HTTP) on top of the TLS or SSL protocol, thus adding the
       security capabilities of TLS or SSL to standard HTTP communications.
-      most OpenStack API endpoints and many inter-component communications
+      Most OpenStack API endpoints and many inter-component communications
       support HTTPS communication.
 
    hypervisor
