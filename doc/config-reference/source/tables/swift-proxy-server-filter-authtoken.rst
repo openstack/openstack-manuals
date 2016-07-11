@@ -9,19 +9,27 @@
 
    * - Configuration option = Default value
      - Description
-   * - ``admin_password`` = ``password``
+   * - ``auth_plugin`` = ``password``
      - No help text available for this option.
-   * - ``admin_tenant_name`` = ``service``
+   * - ``auth_uri`` = ``http://keystonehost:5000``
      - No help text available for this option.
-   * - ``admin_user`` = ``swift``
-     - No help text available for this option.
-   * - ``auth_uri`` = ``http://keystonehost:5000/``
+   * - ``auth_url`` = ``http://keystonehost:35357``
      - No help text available for this option.
    * - ``cache`` = ``swift.cache``
      - No help text available for this option.
    * - ``delay_auth_decision`` = ``False``
-     - No help text available for this option.
-   * - ``identity_uri`` = ``http://keystonehost:35357/``
-     - No help text available for this option.
+     - delay_auth_decision defaults to False, but leaving it as false will prevent other auth systems, staticweb, tempurl, formpost, and ACLs from working. This value must be explicitly set to True.
    * - ``include_service_catalog`` = ``False``
+     - No help text available for this option.
+   * - ``password`` = ``password``
+     - No help text available for this option.
+   * - ``paste.filter_factory`` = ``keystonemiddleware.auth_token:filter_factory``
+     - No help text available for this option.
+   * - ``project_domain_id`` = ``default``
+     - No help text available for this option.
+   * - ``project_name`` = ``service``
+     - No help text available for this option.
+   * - ``user_domain_id`` = ``default``
+     - No help text available for this option.
+   * - ``username`` = ``swift``
      - No help text available for this option.
