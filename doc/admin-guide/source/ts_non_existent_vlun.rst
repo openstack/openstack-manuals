@@ -7,7 +7,7 @@ Problem
 
 This error occurs if the 3PAR host exists with the correct host name
 that the OpenStack Block Storage drivers expect but the volume was
-created in a different Domain.
+created in a different domain.
 
 .. code-block:: console
 
