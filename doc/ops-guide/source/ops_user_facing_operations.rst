@@ -271,10 +271,12 @@ To delete an image, just execute:
 
    $ openstack image delete <image uuid>
 
-.. note::
+.. caution::
 
-   Deleting an image does not affect instances or snapshots that were
-   based on the image.
+   Generally, deleting an image does not affect instances or snapshots that were
+   based on the image. However, some drivers may require the original image to be
+   present to perform a migration. For example, XenAPI live-migrate will work
+   fine if the image is deleted, but libvirt will fail.
 
 Other CLI Options
 -----------------
