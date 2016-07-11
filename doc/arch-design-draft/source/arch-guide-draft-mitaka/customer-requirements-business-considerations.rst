@@ -138,9 +138,9 @@ their own. The exception to this expectation is the rare case of a massively
 scalable cloud infrastructure built for a private or government organization
 that has specific requirements.
 
-High performance systems have SLA requirements for a minimum quality of service
-with regard to guaranteed uptime, latency, and bandwidth. The level of the
-SLA can have a significant impact on the network architecture and
+High performance systems have SLA requirements for a minimum :term:`quality of
+service (QoS)` with regard to guaranteed uptime, latency, and bandwidth. The
+level of the SLA can have a significant impact on the network architecture and
 requirements for redundancy in the systems.
 
 Hybrid cloud designs must accommodate differences in SLAs between providers,

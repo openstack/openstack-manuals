@@ -3009,6 +3009,16 @@ Q
       Message queue software supported by OpenStack; an alternative to
       RabbitMQ.
 
+   Quality of Service (QoS)
+
+      The ability to guarantee certain network or storage requirements to
+      satisfy a Service Level Agreement (SLA) between an application provider
+      and end users.
+      Typically includes performance requirements like networking bandwidth,
+      latency, jitter correction, and reliability as well as storage
+      performance in Input/Output Operations Per Second (IOPS), throttling
+      agreements, and performance expectations at peak load.
+
    quarantine
 
       If Object Storage finds objects, containers, or accounts that

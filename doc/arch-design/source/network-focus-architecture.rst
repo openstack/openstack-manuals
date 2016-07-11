@@ -169,7 +169,7 @@ across the complete path the packets traverse. If one network component
 is not capable of handling jumbo frames then the entire path reverts to
 the default MTU.
 
-Quality of Service (QoS) also has a great impact on network intensive
+:term:`Quality of Service (QoS)` also has a great impact on network intensive
 workloads as it provides instant service to packets which have a higher
 priority due to the impact of poor network performance. In applications
 such as Voice over IP (VoIP), differentiated services code points are a

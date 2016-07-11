@@ -79,8 +79,8 @@ infrastructure.
 Performance tuning
 ------------------
 
-Network level tuning for this workload is minimal. Quality-of-Service
-(QoS) applies to these workloads for a middle ground Class Selector
+Network level tuning for this workload is minimal. :term:`Quality of Service
+(QoS)` applies to these workloads for a middle ground Class Selector
 depending on existing policies. It is higher than a best effort queue
 but lower than an Expedited Forwarding or Assured Forwarding queue.
 Since this type of application generates larger packets with

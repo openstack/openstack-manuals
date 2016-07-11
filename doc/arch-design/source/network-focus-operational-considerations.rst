@@ -46,8 +46,8 @@ have differences in implementation.
 To segregate traffic, allow applications to create a private tenant
 network for database and storage network traffic. Use a public network
 for services that require direct client access from the internet. Upon
-segregating the traffic, consider quality of service (QoS) and security
-to ensure each network has the required level of service.
+segregating the traffic, consider :term:`quality of service (QoS)` and
+security to ensure each network has the required level of service.
 
 Finally, consider the routing of network traffic. For some applications,
 develop a complex policy framework for routing. To create a routing

@@ -247,7 +247,7 @@ Bandwidth I/O
     Incoming and outgoing traffic can be shaped independently. The
     bandwidth element can have at most, one inbound and at most, one
     outbound child element. If you leave any of these child elements
-    out, no quality of service (QoS) is applied on that traffic
+    out, no :term:`quality of service (QoS)` is applied on that traffic
     direction. So, if you want to shape only the network's incoming
     traffic, use inbound only (and vice versa). Each element has one
     mandatory attribute average, which specifies the average bit rate on
