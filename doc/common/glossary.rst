@@ -776,7 +776,7 @@ C
 
    Clustering service
 
-      The OpenStack project that OpenStack project that implements
+      The OpenStack project that implements
       clustering services and libraries for the management of
       groups of homogeneous objects exposed by other OpenStack
       services. The project name of Clustering service is
