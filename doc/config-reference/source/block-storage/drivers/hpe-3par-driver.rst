@@ -363,13 +363,11 @@ OpenStack software.
    .. note::
 
       You can configure one or more iSCSI addresses by using the
-      ``hpe3par_iscsi_ips`` option. When you configure multiple addresses, the
-      driver selects the iSCSI port with the fewest active volumes at attach
-      time. The IP address might include an IP port by using a colon (``:``)
-      to separate the address from port. If you do not define an IP port, the
-      default port 3260 is used. Separate IP addresses with a comma (``,``).
-      The ``iscsi_ip_address``/``iscsi_port`` options might be used as an
-      alternative to ``hpe3par_iscsi_ips`` for single port iSCSI configuration.
+      ``hpe3par_iscsi_ips`` option. Separate multiple IP addresses with a
+      comma (``,``). When you configure multiple addresses, the driver selects
+      the iSCSI port with the fewest active volumes at attach time. The 3PAR
+      array does not allow the default port 3260 to be changed, so IP ports
+      need not be specified.
 
 #. Save the changes to the ``cinder.conf`` file and restart the cinder-volume
    service.
