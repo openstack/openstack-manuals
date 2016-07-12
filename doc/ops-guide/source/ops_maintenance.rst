@@ -12,6 +12,7 @@ Maintenance, Failures, and Debugging
    ops_maintenance_configuration.rst
    ops_maintenance_hardware.rst
    ops_maintenance_database.rst
+   ops_maintenance_rabbitmq.rst
    ops_maintenance_hdmwy.rst
    ops_maintenance_determine.rst
    ops_maintenance_slow.rst
