@@ -18,9 +18,7 @@ General guidelines
 
 Use the following guidelines for all types of headings:
 
-* Use sentence-style capitalization except for the Operations Guide, which
-  follows the `O'Reilly heading capitalization style <http://chimera.labs.oreilly.com/books/1230000000969/ch02.html#headings>`_,
-  and book titles.
+* Use sentence-style capitalization.
 * Make headings brief but descriptive.
 * Use articles in titles, but do not start the title with an article.
 * Avoid using uncommon abbreviations.
