@@ -1027,6 +1027,12 @@ D
       relational and non-relational database engines. The project
       name of Database service is trove.
 
+   Data loss prevention (DLP) software
+
+      Software programs used to protect sensitive information
+      and prevent it from leaking outside a network boundary
+      through the detection and denying of the data transportation.
+
    Data Processing service
 
       OpenStack project that provides a scalable
