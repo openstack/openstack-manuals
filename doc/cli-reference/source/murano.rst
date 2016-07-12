@@ -9,7 +9,7 @@ Application Catalog service command-line client
 The murano client is the command-line interface (CLI) for
 the Application Catalog service API and its extensions.
 
-This chapter documents :command:`murano` version ``0.8.4``.
+This chapter documents :command:`murano` version ``0.9.0``.
 
 For help on a specific :command:`murano` command, enter:
 
@@ -533,7 +533,7 @@ murano env-template-create-env
 
 .. code-block:: console
 
-   usage: murano env-template-create-env <ID> <ENV_TEMPLATE_NAME>
+   usage: murano env-template-create-env <ID> <ENV_NAME>
 
 Create a new environment from template.
 
@@ -542,7 +542,7 @@ Create a new environment from template.
 ``<ID>``
   Environment template ID.
 
-``<ENV_TEMPLATE_NAME>``
+``<ENV_NAME>``
   New environment name.
 
 .. _murano_env-template-del-app:
@@ -968,6 +968,7 @@ murano package-import
    usage: murano package-import [-c [<CATEGORY> [<CATEGORY> ...]]] [--is-public]
                                 [--package-version PACKAGE_VERSION]
                                 [--exists-action {a,s,u}]
+                                [--dep-exists-action {a,s,u}]
                                 <FILE> [<FILE> ...]
 
 Import a package. \`FILE\` can be either a path to a zip file, url or a FQPN.
@@ -994,9 +995,7 @@ be separated with a space and have to be already present in murano.
 
 **Optional arguments:**
 
-``-c [<CATEGORY> [<CATEGORY> ...]],``
-
-``--categories [<CATEGORY> [<CATEGORY> ...]]``
+``-c [<CATEGORY> [<CATEGORY> ...]], --categories [<CATEGORY> [<CATEGORY> ...]]``
   Category list to attach.
 
 ``--is-public``
@@ -1008,7 +1007,12 @@ be separated with a space and have to be already present in murano.
   when importing with multiple packages).
 
 ``--exists-action {a,s,u}``
-  Default action when a package already exists.
+  Default action when a package already exists: (s)kip,
+  (u)pdate, (a)bort.
+
+``--dep-exists-action {a,s,u}``
+  Default action when a dependency package already
+  exists: (s)kip, (u)pdate, (a)bort.
 
 .. _murano_package-list:
 
