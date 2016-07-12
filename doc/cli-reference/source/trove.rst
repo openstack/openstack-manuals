@@ -9,7 +9,7 @@ Database service command-line client
 The trove client is the command-line interface (CLI) for
 the Database service API and its extensions.
 
-This chapter documents :command:`trove` version ``2.2.0``.
+This chapter documents :command:`trove` version ``2.3.0``.
 
 For help on a specific :command:`trove` command, enter:
 
@@ -24,27 +24,26 @@ trove usage
 
 .. code-block:: console
 
-   usage: trove [--version] [--debug] [--os-auth-system <auth-system>]
-                [--service-type <service-type>] [--service-name <service-name>]
-                [--bypass-url <bypass-url>]
+   usage: trove [--version] [--debug] [--service-type <service-type>]
+                [--service-name <service-name>] [--bypass-url <bypass-url>]
                 [--database-service-name <database-service-name>]
                 [--endpoint-type <endpoint-type>]
                 [--os-database-api-version <database-api-ver>]
                 [--retries <retries>] [--json] [--profile HMAC_KEY] [--insecure]
                 [--os-cacert <ca-certificate>] [--os-cert <certificate>]
-                [--os-key <key>] [--timeout <seconds>]
+                [--os-key <key>] [--timeout <seconds>] [--os-auth-type <name>]
                 [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
                 [--os-domain-name OS_DOMAIN_NAME] [--os-project-id OS_PROJECT_ID]
                 [--os-project-name OS_PROJECT_NAME]
                 [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
                 [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
-                [--os-trust-id OS_TRUST_ID] [--os-user-id OS_USER_ID]
-                [--os-username OS_USERNAME]
+                [--os-trust-id OS_TRUST_ID]
+                [--os-default-domain-id OS_DEFAULT_DOMAIN_ID]
+                [--os-default-domain-name OS_DEFAULT_DOMAIN_NAME]
+                [--os-user-id OS_USER_ID] [--os-username OS_USERNAME]
                 [--os-user-domain-id OS_USER_DOMAIN_ID]
                 [--os-user-domain-name OS_USER_DOMAIN_NAME]
-                [--os-password OS_PASSWORD] [--os-tenant-name <auth-tenant-name>]
-                [--os-tenant-id <tenant-id>] [--os-auth-token OS_AUTH_TOKEN]
-                [--os-region-name <region-name>]
+                [--os-password OS_PASSWORD] [--os-region-name <region-name>]
                 <subcommand> ...
 
 **Subcommands:**
@@ -354,9 +353,6 @@ trove optional arguments
 ``--debug``
   Print debugging output.
 
-``--os-auth-system <auth-system>``
-  Defaults to ``env[OS_AUTH_SYSTEM]``.
-
 ``--service-type <service-type>``
   Defaults to database for most actions.
 
@@ -396,76 +392,8 @@ trove optional arguments
   server side. Defaults to
   ``env[OS_PROFILE_HMACKEY]``.
 
-``--insecure``
-  Explicitly allow client to perform
-  "insecure" TLS (https) requests. The
-  server's certificate will not be verified
-  against any certificate authorities. This
-  option should be used with caution.
-
-``--os-cacert <ca-certificate>``
-  Specify a CA bundle file to use in verifying
-  a TLS (https) server certificate. Defaults
-  to ``env[OS_CACERT]``.
-
-``--os-cert <certificate>``
-  Defaults to ``env[OS_CERT]``.
-
-``--os-key <key>``
-  Defaults to ``env[OS_KEY]``.
-
-``--timeout <seconds>``
-  Set request timeout (in seconds).
-
-``--os-auth-url OS_AUTH_URL``
-  Authentication URL
-
-``--os-domain-id OS_DOMAIN_ID``
-  Domain ID to scope to
-
-``--os-domain-name OS_DOMAIN_NAME``
-  Domain name to scope to
-
-``--os-project-id OS_PROJECT_ID``
-  Project ID to scope to
-
-``--os-project-name OS_PROJECT_NAME``
-  Project name to scope to
-
-``--os-project-domain-id OS_PROJECT_DOMAIN_ID``
-  Domain ID containing project
-
-``--os-project-domain-name OS_PROJECT_DOMAIN_NAME``
-  Domain name containing project
-
-``--os-trust-id OS_TRUST_ID``
-  Trust ID
-
-``--os-user-id OS_USER_ID``
-  User ID
-
-``--os-username OS_USERNAME, --os-user_name OS_USERNAME``
-  Username
-
-``--os-user-domain-id OS_USER_DOMAIN_ID``
-  User's domain id
-
-``--os-user-domain-name OS_USER_DOMAIN_NAME``
-  User's domain name
-
-``--os-password OS_PASSWORD``
-  User's password
-
-``--os-tenant-name <auth-tenant-name>``
-  Tenant to request authorization on. Defaults
-  to ``env[OS_TENANT_NAME]``.
-
-``--os-tenant-id <tenant-id>``
-  Tenant to request authorization on. Defaults
-  to ``env[OS_TENANT_ID]``.
-
-``--os-auth-token OS_AUTH_TOKEN``
-  Defaults to ``env[OS_AUTH_TOKEN]``
+``--os-auth-type <name>, --os-auth-plugin <name>``
+  Authentication type to use
 
 ``--os-region-name <region-name>``
   Specify the region to use. Defaults to
@@ -567,7 +495,7 @@ Lists available backups.
   this to the last ID displayed in the previous run.
 
 ``--datastore <datastore>``
-  Name or ID of the datastore to list backups for.
+  ID or name of the datastore (to filter backups by).
 
 .. _trove_backup-list-instance:
 
@@ -609,7 +537,7 @@ Shows details of a backup.
 **Positional arguments:**
 
 ``<backup>``
-  ID of the backup.
+  ID or name of the backup.
 
 .. _trove_cluster-create:
 
@@ -620,6 +548,7 @@ trove cluster-create
 
    usage: trove cluster-create <name> <datastore> <datastore_version>
                                [--instance "opt=<value>[,opt=<value> ...] "]
+                               [--locality <policy>]
 
 Creates a new cluster.
 
@@ -637,17 +566,20 @@ Creates a new cluster.
 **Optional arguments:**
 
 ``--instance "opt=<value>[,opt=<value> ...] "``
-  Create an instance for the cluster. Specify
+  Add an instance to the cluster. Specify
   multiple times to create multiple instances.
   Valid options are:
   flavor=<flavor_name_or_id>,
   volume=<disk_size_in_GB>,
   volume_type=<type>, nic='<net-id=<net-uuid>,
   v4-fixed-ip=<ip-addr>, port-id=<port-uuid>>'
-  (where net-id=network_id, v4-fixed-
-  ip=IPv4r_fixed_address, port-id=port_id),
+  (where net-id=network_id, v4-fixed-ip=IPv4r_fixed_address, port-id=port_id),
   availability_zone=<AZ_hint_for_Nova>,
   module=<module_name_or_id>.
+
+``--locality <policy>``
+  Locality policy to use when creating
+  cluster. Choose one of affinity, anti-affinity.
 
 .. _trove_cluster-delete:
 
@@ -687,8 +619,13 @@ Adds more instances to a cluster.
 ``--instance "opt=<value>[,opt=<value> ...] "``
   Add an instance to the cluster. Specify
   multiple times to create multiple instances.
-  Valid options are: name=<name>,
-  flavor=<flavor_name_or_id>, volume=<volume>,
+  Valid options are:
+  flavor=<flavor_name_or_id>,
+  volume=<disk_size_in_GB>,
+  volume_type=<type>, nic='<net-id=<net-uuid>,
+  v4-fixed-ip=<ip-addr>, port-id=<port-uuid>>'
+  (where net-id=network_id, v4-fixed-ip=IPv4r_fixed_address, port-id=port_id),
+  availability_zone=<AZ_hint_for_Nova>,
   module=<module_name_or_id>.
 
 .. _trove_cluster-instances:
@@ -797,7 +734,8 @@ Attaches a configuration group to an instance.
   ID or name of the instance.
 
 ``<configuration>``
-  ID of the configuration group to attach to the instance.
+  ID or name of the configuration group to attach to the
+  instance.
 
 .. _trove_configuration-create:
 
@@ -866,7 +804,7 @@ Deletes a configuration group.
 **Positional arguments:**
 
 ``<configuration_group>``
-  ID of the configuration group.
+  ID or name of the configuration group.
 
 .. _trove_configuration-detach:
 
@@ -898,7 +836,7 @@ Lists all instances associated with a configuration group.
 **Positional arguments:**
 
 ``<configuration_group>``
-  ID of the configuration group.
+  ID or name of the configuration group.
 
 .. _trove_configuration-list:
 
@@ -978,7 +916,7 @@ Patches a configuration group.
 **Positional arguments:**
 
 ``<configuration_group>``
-  ID of the configuration group.
+  ID or name of the configuration group.
 
 ``<values>``
   Dictionary of the values to set.
@@ -997,7 +935,7 @@ Shows details of a configuration group.
 **Positional arguments:**
 
 ``<configuration_group>``
-  ID of the configuration group.
+  ID or name of the configuration group.
 
 .. _trove_configuration-update:
 
@@ -1015,7 +953,7 @@ Updates a configuration group.
 **Positional arguments:**
 
 ``<configuration_group>``
-  ID of the configuration group.
+  ID or name of the configuration group.
 
 ``<values>``
   Dictionary of the values to set.
@@ -1047,7 +985,7 @@ trove create
                        [--nic <net-id=<net-uuid>,v4-fixed-ip=<ip-addr>,port-id=<port-uuid>>]
                        [--configuration <configuration>]
                        [--replica_of <source_instance>] [--replica_count <count>]
-                       [--module <module>]
+                       [--module <module>] [--locality <policy>]
 
 Creates a new instance.
 
@@ -1057,7 +995,7 @@ Creates a new instance.
   Name of the instance.
 
 ``<flavor>``
-  Flavor ID or name of the instance.
+  A flavor name or ID.
 
 **Optional arguments:**
 
@@ -1076,7 +1014,7 @@ Creates a new instance.
   Optional list of users.
 
 ``--backup <backup>``
-  A backup ID.
+  A backup name or ID.
 
 ``--availability_zone <availability_zone>``
   The Zone hint to give to Nova.
@@ -1089,8 +1027,20 @@ Creates a new instance.
 
 ``--nic <net-id=<net-uuid>,v4-fixed-ip=<ip-addr>,port-id=<port-uuid>>``
   Create a NIC on the instance. Specify option
-  multiple times to create multiple NICs. net-
-  id: attach NIC to network with this ID
+  multiple
+  times
+  to
+  create
+  multiple
+  NICs.
+  net-id:
+  attach
+  NIC
+  to
+  network
+  with
+  this
+  ID
   (either port-id or net-id must be
   specified), v4-fixed-ip: IPv4 fixed address
   for NIC (optional), port-id: attach NIC to
@@ -1106,12 +1056,16 @@ Creates a new instance.
   replicate from.
 
 ``--replica_count <count>``
-  Number of replicas to create (defaults to
-  1).
+  Number of replicas to create (defaults to 1
+  if replica_of specified).
 
 ``--module <module>``
   ID or name of the module to apply. Specify
   multiple times to apply multiple modules.
+
+``--locality <policy>``
+  Locality policy to use when creating
+  replicas. Choose one of affinity, anti-affinity.
 
 .. _trove_database-create:
 
