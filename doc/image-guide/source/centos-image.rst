@@ -62,7 +62,7 @@ Step through the installation prompts. Accept the defaults.
    :width: 100%
 
 Change the Ethernet status
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 The default Ethernet setting is ``OFF``. Change the setting of
 the Ethernet form ``OFF`` to ``ON``. In particular, ensure that
@@ -73,7 +73,7 @@ default.
    :width: 100%
 
 Point the installer to a CentOS web server
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------
 
 Depending on the version of CentOS, the net installer requires
 the user to specify either a URL or the web site and
@@ -99,13 +99,13 @@ to get a full list of mirrors, click on the ``HTTP`` link
 of a mirror to retrieve the web site name of a mirror.
 
 Storage devices
-~~~~~~~~~~~~~~~
+---------------
 
 If prompted about which type of devices your installation uses,
 choose :guilabel:`Virtio Block Device`.
 
 Hostname
-~~~~~~~~
+--------
 
 The installer may ask you to choose a host name.
 The default (``localhost.localdomain``) is fine.
@@ -114,7 +114,7 @@ which sets the host name on boot when a new instance
 is provisioned using this image.
 
 Partition the disks
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 There are different options for partitioning the disks.
 The default installation uses LVM partitions, and creates
@@ -125,29 +125,15 @@ partition that is mounted to ``/``, which also works fine.
 If unsure, use the default partition scheme for the installer
 because no scheme is better than another.
 
-Step through the installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Select installation option
+--------------------------
 
 Step through the installation, using the default options.
 The simplest thing to do is to choose the ``Minimal Install``
 install, which installs an SSH server.
 
-Install the ACPI service
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-To enable the hypervisor to reboot or shutdown an instance,
-you must install and run the ``acpid`` service on the guest system.
-
-Run the following commands inside the CentOS guest to install the
-ACPI service and configure it to start when the system boots:
-
-.. code-block:: console
-
-   # yum install acpid
-   # systemctl enable acpid
-
 Detach the CD-ROM and reboot
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 When the installation has completed, the
 :guilabel:`Congratulations, your CentOS installation is complete`
@@ -188,11 +174,25 @@ and reboot it by manually stopping and starting.
    # virsh reboot centos
 
 Log in to newly created image
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 When you boot for the first time after installation,
 you might be prompted about authentication tools.
 Select :guilabel:`Exit`. Then, log in as root.
+
+Install the ACPI service
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+To enable the hypervisor to reboot or shutdown an instance,
+you must install and run the ``acpid`` service on the guest system.
+
+Run the following commands inside the CentOS guest to install the
+ACPI service and configure it to start when the system boots:
+
+.. code-block:: console
+
+   # yum install acpid
+   # systemctl enable acpid
 
 Configure to fetch metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
