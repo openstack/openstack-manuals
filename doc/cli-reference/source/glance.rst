@@ -236,8 +236,7 @@ Create a new image.
 
 ``--architecture <ARCHITECTURE>``
   Operating system architecture as specified in
-  http://docs.openstack.org/trunk/openstack-
-  compute/admin/content/adding-images.html
+  http://docs.openstack.org/trunk/openstack-compute/admin/content/adding-images.html
 
 ``--protected [True|False]``
   If true, image will not be deletable.
@@ -530,8 +529,7 @@ Update an existing image.
 
 ``--architecture <ARCHITECTURE>``
   Operating system architecture as specified in
-  http://docs.openstack.org/trunk/openstack-
-  compute/admin/content/adding-images.html
+  http://docs.openstack.org/trunk/openstack-compute/admin/content/adding-images.html
 
 ``--protected [True|False]``
   If true, image will not be deletable.
