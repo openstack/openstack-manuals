@@ -7,7 +7,7 @@ Compute service command-line client
 ===================================
 
 The nova client is the command-line interface (CLI) for
-the OpenStack Compute API and its extensions.
+the Compute service API and its extensions.
 
 This chapter documents :command:`nova` version ``4.1.0``.
 
@@ -211,12 +211,10 @@ nova usage
   Associate a floating IP address to a server.
 
 ``floating-ip-bulk-create``
-  Bulk create floating IPs by range (nova-
-  network only).
+  Bulk create floating IPs by range (nova-network only).
 
 ``floating-ip-bulk-delete``
-  Bulk delete floating IPs by range (nova-
-  network only).
+  Bulk delete floating IPs by range (nova-network only).
 
 ``floating-ip-bulk-list``
   List all floating IPs (nova-network only).
@@ -361,8 +359,15 @@ nova usage
 
 ``live-migration-force-complete``
   Force on-going live migration to complete.
-  (Supported by API versions '2.22' -
-  '2.latest') [hint: use ':option:`--os-compute-api-`
+  (Supported
+  by
+  API
+  versions
+  '2.22'
+  -'2.latest')
+  [hint:
+  use
+  ':option:`--os-compute-api-`
   version' flag to show help message for proper
   version]
 
@@ -536,15 +541,29 @@ nova usage
 
 ``server-migration-list``
   Get the migrations list of specified server.
-  (Supported by API versions '2.23' -
-  '2.latest') [hint: use ':option:`--os-compute-api-`
+  (Supported
+  by
+  API
+  versions
+  '2.23'
+  -'2.latest')
+  [hint:
+  use
+  ':option:`--os-compute-api-`
   version' flag to show help message for proper
   version]
 
 ``server-migration-show``
   Get the migration of specified server.
-  (Supported by API versions '2.23' -
-  '2.latest') [hint: use ':option:`--os-compute-api-`
+  (Supported
+  by
+  API
+  versions
+  '2.23'
+  -'2.latest')
+  [hint:
+  use
+  ':option:`--os-compute-api-`
   version' flag to show help message for proper
   version]
 
@@ -684,31 +703,14 @@ nova usage
   Display help about this program or one of its
   subcommands.
 
-``host-evacuate``
-  Evacuate all instances from failed host.
-
 ``force-delete``
   Force delete a server.
 
 ``restore``
   Restore a soft-deleted server.
 
-``list-extensions``
-  List all the os-api extensions that are
-  available.
-
-``baremetal-interface-list``
-  List network interfaces associated with a
-  baremetal node.
-
-``baremetal-node-list``
-  Print list of available baremetal nodes.
-
-``baremetal-node-show``
-  Show information about a baremetal node.
-
-``host-evacuate-live``
-  Live migrate all instances of the specified
+``host-servers-migrate``
+  Cold migrate all instances off the specified
   host to other available hosts.
 
 ``instance-action``
@@ -716,9 +718,6 @@ nova usage
 
 ``instance-action-list``
   List actions on a server.
-
-``migration-list``
-  Print a list of migrations.
 
 ``host-meta``
   Set or Delete metadata on all instances of a
@@ -730,6 +729,9 @@ nova usage
 
 ``cell-show``
   Show details of a given cell.
+
+``host-evacuate``
+  Evacuate all instances from failed host.
 
 ``net``
   **DEPRECATED**, use tenant-network-show instead.
@@ -755,9 +757,26 @@ nova usage
 ``tenant-network-show``
   Show a tenant network.
 
-``host-servers-migrate``
-  Cold migrate all instances off the specified
+``baremetal-interface-list``
+  List network interfaces associated with a
+  baremetal node.
+
+``baremetal-node-list``
+  Print list of available baremetal nodes.
+
+``baremetal-node-show``
+  Show information about a baremetal node.
+
+``host-evacuate-live``
+  Live migrate all instances of the specified
   host to other available hosts.
+
+``migration-list``
+  Print a list of migrations.
+
+``list-extensions``
+  List all the os-api extensions that are
+  available.
 
 .. _nova_command_options:
 
@@ -1200,8 +1219,7 @@ Boot a new server.
   Name or ID of image (see 'glance image-list').
 
 ``--image-with <key=value>``
-  Image metadata property (see 'glance image-
-  show').
+  Image metadata property (see 'glance image-show').
 
 ``--boot-volume <volume_id>``
   Volume ID to boot from.
@@ -1243,9 +1261,13 @@ Boot a new server.
   Comma separated list of security group names.
 
 ``--block-device-mapping <dev-name=mapping>``
-  Block device mapping in the format <dev-
-  name>=<id>:<type>:<size(GB)>:<delete-on-
-  terminate>.
+  Block
+  device
+  mapping
+  in
+  the
+  format
+  <dev-name>=<id>:<type>:<size(GB)>:<delete-on-terminate>.
 
 ``--block-device``
   key1=value1[,key2=value2...]
@@ -1290,9 +1312,28 @@ Boot a new server.
 
 ``--nic <net-id=net-uuid,net-name=network-name,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>``
   Create a NIC on the server. Specify option
-  multiple times to create multiple NICs. net-
-  id: attach NIC to network with this UUID net-
-  name: attach NIC to network with this name
+  multiple
+  times
+  to
+  create
+  multiple
+  NICs.
+  net-id:
+  attach
+  NIC
+  to
+  network
+  with
+  this
+  UUID
+  net-name:
+  attach
+  NIC
+  to
+  network
+  with
+  this
+  name
   (either port-id or net-id or net-name must be
   provided), v4-fixed-ip: IPv4 fixed address for
   NIC (optional), v6-fixed-ip: IPv6 fixed
@@ -3356,8 +3397,7 @@ Update the quotas for a quota class.
   New value for the "injected-files" quota.
 
 ``--injected-file-content-bytes <injected-file-content-bytes>``
-  New value for the "injected-file-content-
-  bytes" quota.
+  New value for the "injected-file-content-bytes" quota.
 
 ``--injected-file-path-bytes <injected-file-path-bytes>``
   New value for the "injected-file-path-bytes"
@@ -3491,8 +3531,7 @@ Update the quotas for a tenant/user.
   New value for the "injected-files" quota.
 
 ``--injected-file-content-bytes <injected-file-content-bytes>``
-  New value for the "injected-file-content-
-  bytes" quota.
+  New value for the "injected-file-content-bytes" quota.
 
 ``--injected-file-path-bytes <injected-file-path-bytes>``
   New value for the "injected-file-path-bytes"
