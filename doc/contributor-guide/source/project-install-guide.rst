@@ -1,12 +1,12 @@
-===============================
-Project specific install guides
-===============================
+=================================
+Installation tutorials and guides
+=================================
 
-For the Newton release, a new method of publishing Installation Guides is
-being implemented. This will allow each big tent project to create their
-own Installation Guide, based on a standard template, in their own
-repository. These guides are then centrally published to `docs.openstack.org
-<http://docs.openstack.org>`_.
+For the Newton release, a new method of publishing installation tutorials
+and guides is being implemented. This will allow each big tent project to
+create their own installation guide, based on a standard template,
+in their own repository. These guides are then centrally published to
+`docs.openstack.org <http://docs.openstack.org>`_.
 
 For updates on the progress of this project, see the `Install Guide wiki
 page <https://wiki.openstack.org/wiki/Documentation/InstallGuideWorkItems>`_.
@@ -105,5 +105,7 @@ After these changes have merged, you can set up the jobs for building.
 
 #. Commit the changes to the infra repository for review.
 
-
-TBD: How to create master index file for this.
+To create or update the master index file, create or update the
+``www/project-install-guide/RELEASE/index.html`` file at the
+``openstack-manuals`` repository.
+For draft (unreleased) version, replace ``RELEASE`` with ``draft``.
