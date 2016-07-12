@@ -9,7 +9,7 @@ Bare Metal service command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.3.1``.
+This chapter documents :command:`ironic` version ``1.4.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -889,7 +889,8 @@ Initiate a provisioning state change for a node.
 
 ``<provision-state>``
   Supported states: 'active', 'deleted', 'rebuild',
-  'inspect', 'provide', 'manage', 'clean' or 'abort'.
+  'inspect', 'provide', 'manage', 'clean', 'abort', or
+  'adopt'.
 
 **Optional arguments:**
 
