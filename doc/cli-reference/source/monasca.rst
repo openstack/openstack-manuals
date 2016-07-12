@@ -9,7 +9,7 @@ Monitoring command-line client
 The monasca client is the command-line interface (CLI) for
 the Monitoring API and its extensions.
 
-This chapter documents :command:`monasca` version ``1.1.0``.
+This chapter documents :command:`monasca` version ``1.2.0``.
 
 For help on a specific :command:`monasca` command, enter:
 
@@ -32,8 +32,7 @@ monasca usage
                   [--os-user-domain-name OS_USER_DOMAIN_NAME]
                   [--os-project-id OS_PROJECT_ID]
                   [--os-project-name OS_PROJECT_NAME]
-                  [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
-                  [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
+                  [--os-domain-id OS_DOMAIN_ID] [--os-domain-name OS_DOMAIN_NAME]
                   [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
                   [--os-auth-token OS_AUTH_TOKEN] [--os-no-client-auth]
                   [--monasca-api-url MONASCA_API_URL]
@@ -60,7 +59,7 @@ monasca usage
        metric-create            Create metric.
        metric-create-raw        Create metric from raw json body.
        metric-list              List metrics for this tenant.
-       metric-name-list
+       metric-name-list         List names of metrics.
        metric-statistics        List measurement statistics for the specified
                                 metric.
        notification-create      Create notification.
@@ -135,11 +134,11 @@ monasca optional arguments
 ``--os-project-name OS_PROJECT_NAME``
   Defaults to ``env[OS_PROJECT_NAME]``.
 
-``--os-project-domain-id OS_PROJECT_DOMAIN_ID``
-  Defaults to ``env[OS_PROJECT_DOMAIN_ID]``.
+``--os-domain-id OS_DOMAIN_ID``
+  Defaults to ``env[OS_DOMAIN_ID]``.
 
-``--os-project-domain-name OS_PROJECT_DOMAIN_NAME``
-  Defaults to ``env[OS_PROJECT_DOMAIN_NAME]``.
+``--os-domain-name OS_DOMAIN_NAME``
+  Defaults to ``env[OS_DOMAIN_NAME]``.
 
 ``--os-auth-url OS_AUTH_URL``
   Defaults to ``env[OS_AUTH_URL]``.
@@ -872,6 +871,7 @@ monasca metric-name-list
                                    [--limit <RETURN LIMIT>]
                                    [--tenant-id <TENANT_ID>]
 
+List names of metrics.
 
 **Optional arguments:**
 
