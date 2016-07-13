@@ -159,7 +159,7 @@ barbican optional arguments
 .. _barbican_acl_delete:
 
 barbican acl delete
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -180,7 +180,7 @@ Delete ACLs for a secret or container as identified by its href.
 .. _barbican_acl_get:
 
 barbican acl get
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -204,7 +204,7 @@ Retrieve ACLs for a secret or container by providing its href.
 .. _barbican_acl_submit:
 
 barbican acl submit
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -243,7 +243,7 @@ Submit ACL on a secret or container as identified by its href.
 .. _barbican_acl_user_add:
 
 barbican acl user add
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -282,7 +282,7 @@ Add ACL users to a secret or container as identified by its href.
 .. _barbican_acl_user_remove:
 
 barbican acl user remove
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -322,7 +322,7 @@ Remove ACL users from a secret or container as identified by its href.
 .. _barbican_ca_get:
 
 barbican ca get
-~~~~~~~~~~~~~~~
+---------------
 
 .. code-block:: console
 
@@ -346,7 +346,7 @@ Retrieve a CA by providing its URI.
 .. _barbican_ca_list:
 
 barbican ca list
-~~~~~~~~~~~~~~~~
+----------------
 
 .. code-block:: console
 
@@ -375,7 +375,7 @@ List cas.
 .. _barbican_secret_container_create:
 
 barbican secret container create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
@@ -407,7 +407,7 @@ Store a container in Barbican.
 .. _barbican_secret_container_delete:
 
 barbican secret container delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
@@ -428,7 +428,7 @@ Delete a container by providing its href.
 .. _barbican_secret_container_get:
 
 barbican secret container get
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -453,7 +453,7 @@ Retrieve a container by providing its URI.
 .. _barbican_secret_container_list:
 
 barbican secret container list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -488,7 +488,7 @@ List containers.
 .. _barbican_secret_delete:
 
 barbican secret delete
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -509,7 +509,7 @@ Delete a secret by providing its URI.
 .. _barbican_secret_get:
 
 barbican secret get
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
@@ -550,7 +550,7 @@ Retrieve a secret by providing its URI.
 .. _barbican_secret_list:
 
 barbican secret list
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -591,7 +591,7 @@ List secrets.
 .. _barbican_secret_order_create:
 
 barbican secret order create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -667,7 +667,7 @@ Create a new order.
 .. _barbican_secret_order_delete:
 
 barbican secret order delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 .. code-block:: console
 
@@ -688,7 +688,7 @@ Delete an order by providing its href.
 .. _barbican_secret_order_get:
 
 barbican secret order get
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -712,7 +712,7 @@ Retrieve an order by providing its URI.
 .. _barbican_secret_order_list:
 
 barbican secret order list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -739,7 +739,7 @@ List orders.
 .. _barbican_secret_store:
 
 barbican secret store
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -775,9 +775,7 @@ Store a secret in Barbican.
   "text/plain" is assumed to be UTF-8; required when
   :option:`--payload` is supplied.
 
-``--payload-content-encoding PAYLOAD_CONTENT_ENCODING,``
-
-``-e PAYLOAD_CONTENT_ENCODING``
+``--payload-content-encoding PAYLOAD_CONTENT_ENCODING, -e PAYLOAD_CONTENT_ENCODING``
   required if :option:`--payload-content-type` is "application
   /octet-stream".
 
@@ -797,7 +795,7 @@ Store a secret in Barbican.
 .. _barbican_secret_update:
 
 barbican secret update
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
