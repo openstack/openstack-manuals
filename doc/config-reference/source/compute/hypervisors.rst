@@ -13,6 +13,7 @@ Hypervisors
    hypervisor-lxc.rst
    hypervisor-vmware.rst
    hypervisor-hyper-v.rst
+   hypervisor-virtuozzo.rst
 
 OpenStack Compute supports many hypervisors, which might make it difficult
 for you to choose one. Most installations use only one hypervisor.
@@ -57,3 +58,7 @@ The following hypervisors are supported:
   virtualization.aspx>`_ - Server virtualization with Microsoft Hyper-V,
   use to run Windows, Linux, and FreeBSD virtual machines.
   Runs ``nova-compute`` natively on the Windows virtualization platform.
+
+* `Virtuozzo <https://virtuozzo.com/products/#product-virtuozzo/>`_ -
+  OS Containers and Kernel-based Virtual Machines supported via libvirt
+  virt_type=parallels. The supported formats include ploop and qcow2 images.
