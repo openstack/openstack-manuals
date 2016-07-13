@@ -144,7 +144,7 @@ advanced network operations:
 |disabled.                      |                                            |
 |                               |                                            |
 |                               |   ``$ neutron subnet-create``              |
-|                               |   ``net1 10.0.0.0/24 --enable-dhcp False`` |
+|                               |   ``net1 10.0.0.0/24 --enable-dhcp=False`` |
 +-------------------------------+--------------------------------------------+
 |Specifies a set of host routes |                                            |
 |                               |                                            |
