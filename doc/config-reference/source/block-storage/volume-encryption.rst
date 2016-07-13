@@ -10,9 +10,9 @@ Initial configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
 Configuration changes need to be made to any nodes running the
-``cinder-volume`` or ``nova-compute`` server.
+``cinder-api`` or ``nova-compute`` server.
 
-Steps to update ``cinder-volume`` servers:
+Steps to update ``cinder-api`` servers:
 
 #. Edit the ``/etc/cinder/cinder.conf`` file to use Key management service
    as follows:
@@ -34,9 +34,10 @@ Steps to update ``cinder-volume`` servers:
 
 Update ``nova-compute`` servers:
 
-#. Install the ``cryptsetup`` utility.
+#. Install the ``cryptsetup`` utility and the ``python-barbicanclient``
+   Python package.
 
-#. Set up the Key Manager service by editing ``/etc/nova/nova.conf``.
+#. Set up the Key Manager service by editing ``/etc/nova/nova.conf``:
 
    .. code-block:: ini
 
@@ -45,24 +46,6 @@ Update ``nova-compute`` servers:
 
 #. Restart ``nova-compute``.
 
-Follow the instructions in the OpenStack Administrator Guide under the
-heading `Create an encrypted volume
-type <http://docs.openstack.org/admin-guide/dashboard_manage_volumes.html>`__
-or alternatively, see ``TODO`` in this manual to do this via the
-command line.
-
-TODO: Add link to section_create-encrypted-volume-type.
-
-Create an encrypted volume by typing the command:
-
-.. code-block:: console
-
-    $ cinder create --name encryptedVolume --volume-type LUKS 1
-
-For alternate instructions and details, including the console output,
-see the TODO in this document.
-
-TODO: Add link to section_create_volume.
 
 Create an encrypted volume type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,7 +91,9 @@ the volume.
       +--------------------------------------+-------------------------------------------+-----------------+----------+------------------+
 
 The OpenStack dashboard (horizon) supports creating the encrypted
-volume type as of the Kilo release.
+volume type as of the Kilo release. For instructions, see
+`Create an encrypted volume type
+<http://docs.openstack.org/admin-guide/dashboard_manage_volumes.html>`_.
 
 Create an encrypted volume
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
