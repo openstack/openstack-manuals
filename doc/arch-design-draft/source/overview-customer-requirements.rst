@@ -1,8 +1,113 @@
-==========================
-Performance considerations
-==========================
+=====================
+Customer requirements
+=====================
 
-Performance is a critical considertion when designing any cloud, and becomes
+The following sections describe business, usage, and performance
+considerations for customers which will impact cloud design.
+
+Cost
+~~~~
+
+Financial factors are a primary concern for any organization. Cost
+considerations may influence the type of cloud that you build.
+For example, a general purpose cloud is unlikely to be the most
+cost-effective environment for specialized applications.
+Unless business needs dictate that cost is a critical factor,
+cost should not be the sole consideration when choosing or designing a cloud.
+
+As a general guideline, increasing the complexity of a cloud architecture
+increases the cost of building and maintaining it. For example, a hybrid or
+multi-site cloud architecture involving multiple vendors and technical
+architectures may require higher setup and operational costs because of the
+need for more sophisticated orchestration and brokerage tools than in other
+architectures. However, overall operational costs might be lower by virtue of
+using a cloud brokerage tool to deploy the workloads to the most cost effective
+platform.
+
+Consider the following costs categories when designing a cloud:
+
+*  Compute resources
+
+*  Networking resources
+
+*  Replication
+
+*  Storage
+
+*  Management
+
+*  Operational costs
+
+It is also important to consider how costs will increase as your cloud scales.
+Choices that have a negligible impact in small systems may considerably
+increase costs in large systems. In these cases, it is important to minimize
+capital expenditure (CapEx) at all layers of the stack. Operators of massively
+scalable OpenStack clouds require the use of dependable commodity hardware and
+freely available open source software components to reduce deployment costs and
+operational expenses. Initiatives like OpenCompute (more information available
+at http://www.opencompute.org) provide additional information and pointers.
+Factors to consider include power, cooling, and the physical design of the
+chassis. Through customization, it is possible to optimize your hardware and
+systems for specific types of workloads when working at scale.
+
+Time-to-market
+~~~~~~~~~~~~~~
+
+The ability to deliver services or products within a flexible time
+frame is a common business factor when building a cloud. Allowing users to
+self-provision and gain access to compute, network, and
+storage resources on-demand may decrease time-to-market for new products
+and applications.
+
+You must balance the time required to build a new cloud platform against the
+time saved by migrating users away from legacy platforms. In some cases,
+existing infrastructure may influence your architecture choices. For example,
+using multiple cloud platforms may be a good option when there is an existing
+investment in several applications, as it could be faster to tie the
+investments together rather than migrating the components and refactoring them
+to a single platform.
+
+Revenue opportunity
+~~~~~~~~~~~~~~~~~~~
+
+Revenue opportunities vary based on the intent and use case of the cloud.
+The requirements of a commercial, customer-facing product are often very
+different from an internal, private cloud. You must consider what features
+make your design most attractive to your users.
+
+Capacity planning and scalability
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Capacity and the placement of workloads are key design considerations
+for clouds. One of the primary reasons many organizations use a hybrid cloud
+is to increase capacity without making large capital investments.
+The long-term capacity plan for these designs must
+incorporate growth over time to prevent permanent consumption of more
+expensive external clouds. To avoid this scenario, account for future
+applications' capacity requirements and plan growth appropriately.
+
+It is difficult to predict the amount of load a particular
+application might incur if the number of users fluctuates, or the
+application experiences an unexpected increase in use.
+It is possible to define application requirements in terms of
+vCPU, RAM, bandwidth, or other resources and plan appropriately.
+However, other clouds might not use the same meter or even the same
+oversubscription rates.
+
+Oversubscription is a method to emulate more capacity than
+may physically be present. For example, a physical hypervisor node with 32 GB
+RAM may host 24 instances, each provisioned with 2 GB RAM.
+As long as all 24 instances do not concurrently use 2 full
+gigabytes, this arrangement works well.
+However, some hosts take oversubscription to extremes and,
+as a result, performance can be inconsistent.
+If at all possible, determine what the oversubscription rates
+of each host are and plan capacity accordingly.
+
+Performance
+~~~~~~~~~~~
+
+Performance is a critical consideration when designing any cloud, and becomes
 increasingly important as size and complexity grow. While single-site, private
 clouds can be closely controlled, multi-site and hybrid deployments require
 more careful planning to reduce problems such as network latency between sites.
@@ -83,9 +188,8 @@ Scale
  capacity, while also allowing flexibility to implement new
  technologies and methods as they become available.
 
-
-Network considerations
-~~~~~~~~~~~~~~~~~~~~~~
+Network
+~~~~~~~
 
 It is important to consider the functionality, security, scalability,
 availability, and testability of the network when choosing a CMP and cloud
@@ -157,22 +261,117 @@ Dynamic resource expansion or bursting
  a public cloud for these peak load periods. These bursts could be
  for long or short cycles ranging from hourly to yearly.
 
+Compliance and geo-location
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Consistency of images and templates across different sites
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+An organization may have certain legal obligations and regulatory
+compliance measures which could require certain workloads or data to not
+be located in certain regions.
 
-It is essential that the deployment of instances is consistent across
-different sites and built into the infrastructure. If OpenStack
-Object Storage is used as a back end for the Image service, it is
-possible to create repositories of consistent images across multiple
-sites. Having central endpoints with multiple storage nodes allows
-consistent centralized storage for every site.
+Compliance considerations are particularly important for multi-site clouds.
+Considerations include:
 
-Not using a centralized object store increases the operational overhead
-of maintaining a consistent image library. This could include
-development of a replication mechanism to handle the transport of images
-and the changes to the images across multiple sites.
+- federal legal requirements
+- local jurisdictional legal and compliance requirements
+- image consistency and availability
+- storage replication and availability (both block and file/object storage)
+- authentication, authorization, and auditing (AAA)
 
+Geographical considerations may also impact the cost of building or leasing
+data centers. Considerations include:
+
+- floor space
+- floor weight
+- rack height and type
+- environmental considerations
+- power usage and power usage efficiency (PUE)
+- physical security
+
+
+Auditing
+~~~~~~~~
+
+A well-considered auditing plan is essential for quickly finding issues.
+Keeping track of changes made to security groups and tenant changes can be
+useful in rolling back the changes if they affect production. For example,
+if all security group rules for a tenant disappeared, the ability to quickly
+track down the issue would be important for operational and legal reasons.
+For more details on auditing, see the `Compliance chapter
+<http://docs.openstack.org/security-guide/compliance.html>`_ in the OpenStack
+Security Guide.
+
+Security
+~~~~~~~~
+
+The importance of security varies based on the type of organization using
+a cloud. For example, government and financial institutions often have
+very high security requirements. Security should be implemented according to
+asset, threat, and vulnerability risk assessment matrices.
+See `security-requirements`.
+
+Service level agreements
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Service level agreements (SLA) must be developed in conjunction with business,
+technical, and legal input. Small, private clouds may operate under an informal
+SLA, but hybrid or public clouds generally require more formal agreements with
+their users.
+
+For a user of a massively scalable OpenStack public cloud, there are no
+expectations for control over security, performance, or availability. Users
+expect only SLAs related to uptime of API services, and very basic SLAs for
+services offered. It is the user's responsibility to address these issues on
+their own. The exception to this expectation is the rare case of a massively
+scalable cloud infrastructure built for a private or government organization
+that has specific requirements.
+
+High performance systems have SLA requirements for a minimum quality of service
+with regard to guaranteed uptime, latency, and bandwidth. The level of the
+SLA can have a significant impact on the network architecture and
+requirements for redundancy in the systems.
+
+Hybrid cloud designs must accommodate differences in SLAs between providers,
+and consider their enforceability.
+
+Application readiness
+~~~~~~~~~~~~~~~~~~~~~
+
+Some applications are tolerant of a lack of synchronized object
+storage, while others may need those objects to be replicated and
+available across regions. Understanding how the cloud implementation
+impacts new and existing applications is important for risk mitigation,
+and the overall success of a cloud project. Applications may have to be
+written or rewritten for an infrastructure with little to no redundancy,
+or with the cloud in mind.
+
+Application momentum
+ Businesses with existing applications may find that it is
+ more cost effective to integrate applications on multiple
+ cloud platforms than migrating them to a single platform.
+
+No predefined usage model
+ The lack of a pre-defined usage model enables the user to run a wide
+ variety of applications without having to know the application
+ requirements in advance. This provides a degree of independence and
+ flexibility that no other cloud scenarios are able to provide.
+
+On-demand and self-service application
+ By definition, a cloud provides end users with the ability to
+ self-provision computing power, storage, networks, and software in a
+ simple and flexible way. The user must be able to scale their
+ resources up to a substantial level without disrupting the
+ underlying host operations. One of the benefits of using a general
+ purpose cloud architecture is the ability to start with limited
+ resources and increase them over time as the user demand grows.
+
+Authentication
+~~~~~~~~~~~~~~
+
+It is recommended to have a single authentication domain rather than a
+separate implementation for each and every site. This requires an
+authentication mechanism that is highly available and distributed to
+ensure continuous operation. Authentication server locality might be
+required and should be planned for.
 
 Migration, availability, site loss and recovery
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

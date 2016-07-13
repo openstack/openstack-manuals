@@ -47,4 +47,4 @@ where privileged administrator commands are necessary.
    design-identity.rst
    design-images.rst
    design-control-plane.rst
-   design-dashboard-api.rst
+   design-cmp-tools.rst
