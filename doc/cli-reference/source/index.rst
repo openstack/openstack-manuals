@@ -29,6 +29,7 @@ Contents
    database
    designate
    glance
+   watcher
    barbican
    monasca
    networking
