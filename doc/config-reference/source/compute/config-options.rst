@@ -57,4 +57,5 @@ OpenStack Compute service, run
 .. include:: ../tables/nova-vnc.rst
 .. include:: ../tables/nova-volumes.rst
 .. include:: ../tables/nova-vpn.rst
+.. include:: ../tables/nova-wsgi.rst
 .. include:: ../tables/nova-xen.rst
