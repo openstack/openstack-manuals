@@ -10,7 +10,7 @@ use the ``ref`` role:
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    .. _cg_titles:
 
@@ -54,7 +54,7 @@ To link to some external locations, format the RST source as follows:
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    Here is a link to the User guide: http://docs.openstack.org/user-guide/.
 

@@ -13,14 +13,14 @@ Depending on specific semantic meaning of the message, you can use:
 * **caution** - delivers information that prevents a user from mistakes
   and undesirable consequences when following the procedures.
 
-* **tip** - wraps extra but helpful information.
+* **tip** or **seealso** - wraps extra but helpful information.
 
 Here is the example of the note directive usage; these can be applied to all
 the admonition directives described above.
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    .. note::
 
@@ -45,4 +45,3 @@ the admonition directives described above.
 
    * First option,
    * ...
-

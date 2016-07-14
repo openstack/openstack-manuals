@@ -1,8 +1,8 @@
 .. _rst_conv:
 
-==========================
-RST formatting conventions
-==========================
+===============
+RST conventions
+===============
 
 OpenStack documentation uses reStructuredText (RST) markup syntax
 with Sphinx extensions.
@@ -26,27 +26,23 @@ use simpler formatting.
 .. toctree::
    :maxdepth: 2
 
-   rst-conv/gen-guidelines.rst
+   rst-conv/general-guidelines.rst
    rst-conv/titles.rst
    rst-conv/inline-markups.rst
    rst-conv/lists.rst
-   rst-conv/spec-info.rst
+   rst-conv/specific-info.rst
    rst-conv/source-code.rst
-   rst-conv/refs.rst
+   rst-conv/references.rst
    rst-conv/tables.rst
    rst-conv/figures.rst
    rst-conv/profiling.rst
    rst-conv/comment.rst
-   rst-conv/decor.rst
-
+   rst-conv/decorations.rst
 
 Useful links
 ~~~~~~~~~~~~
 
 * `Sphinx documentation <http://sphinx.readthedocs.org/en/latest/rest.html>`_
-
 * `reStructuredText: Markup Syntax and Parser Component of Docutils
   <http://docutils.sourceforge.net/rst.html>`_
-
 * `Quick reStructuredText <http://docutils.sourceforge.net/docs/user/rst/quickref.html>`_
-

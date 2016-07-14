@@ -23,7 +23,6 @@ To insert a semantic markup into your document, use the syntax below.
 
   :markup:`inline text`
 
-
 Application
 ~~~~~~~~~~~
 
@@ -205,5 +204,3 @@ A literal text with a *variable* part in it wrapped in curly braces.
 | **Example of output**  | Use the :samp:`--flavor {FLAVOR}` parameter to    |
 |                        | specify the ID or name of the flavor.             |
 +------------------------+---------------------------------------------------+
-
-

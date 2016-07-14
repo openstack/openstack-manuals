@@ -1,11 +1,10 @@
-.. _json:
+.. _json_conv:
 
 ================
 JSON conventions
 ================
 
-JSON formatting conventions
----------------------------
+OpenStack uses JSON format. Use the following JSON formatting conventions:
 
 * Format JSON files to be human readable.
 * Use four spaces for indentation (matching OpenStack conventions used in

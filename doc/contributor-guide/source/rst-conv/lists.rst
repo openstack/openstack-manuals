@@ -12,7 +12,7 @@ matters.
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    During the migration process the target host:
 
@@ -34,7 +34,7 @@ or whose order does not matter.
 
 **Input**
 
-.. code::
+.. code-block:: none
 
   Valid formats include:
 
@@ -68,7 +68,7 @@ Consider using a variable list instead of:
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    Spellchecking
     Process of correcting spelling
@@ -91,7 +91,7 @@ Use the mixed types of lists to nest lists of different types.
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    #. The system exposes these components to users:
 
@@ -126,5 +126,3 @@ Use the mixed types of lists to nest lists of different types.
     * Mac OS X
 
 #. API libraries are also available.
-
-

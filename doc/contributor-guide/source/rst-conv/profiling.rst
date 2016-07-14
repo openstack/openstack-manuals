@@ -17,7 +17,7 @@ The valid tags for the ``only`` directive are:
 
 **Input**
 
-.. code::
+.. code-block:: none
 
    Install the NTP service
    -----------------------
@@ -52,4 +52,3 @@ The valid tags for the ``only`` directive are:
 
 For more details refer to `Including content based on tags
 <http://sphinx.readthedocs.org/en/latest/markup/misc.html?highlight=only%20directive#including-content-based-on-tags>`_.
-
