@@ -17,7 +17,7 @@ Orchestration service command-line client
 The heat client is the command-line interface (CLI) for
 the Orchestration service API and its extensions.
 
-This chapter documents :command:`heat` version ``1.2.0``.
+This chapter documents :command:`heat` version ``1.3.0``.
 
 For help on a specific :command:`heat` command, enter:
 
@@ -693,7 +693,7 @@ heat hook-clear
 
 .. code-block:: console
 
-   usage: heat hook-clear [--pre-create] [--pre-update]
+   usage: heat hook-clear [--pre-create] [--pre-update] [--pre-delete]
                           <NAME or ID> <RESOURCE> [<RESOURCE> ...]
 
 Clear hooks on a given stack.
@@ -717,6 +717,9 @@ Clear hooks on a given stack.
 
 ``--pre-update``
   Clear the pre-update hooks (optional)
+
+``--pre-delete``
+  Clear the pre-delete hooks (optional)
 
 .. _heat_hook-poll:
 
@@ -817,7 +820,7 @@ Show list of resources belonging to a stack.
 ``-f <KEY=VALUE>, --filter <KEY=VALUE>``
   Filter parameters to apply on returned resources based
   on their name, status, type, action, id and
-  physcial_resource_id. This can be specified multiple
+  physical_resource_id. This can be specified multiple
   times.
 
 .. _heat_resource-mark-unhealthy:
