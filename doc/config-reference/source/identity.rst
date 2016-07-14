@@ -5,7 +5,6 @@ Identity service
 .. toctree::
 
    identity/options.rst
-   identity/logs.rst
    identity/samples/index.rst
    identity/caching.rst
    tables/conf-changes/keystone.rst
