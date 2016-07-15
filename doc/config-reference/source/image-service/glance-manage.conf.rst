@@ -2,8 +2,9 @@
 glance-manage.conf
 ==================
 
-The Image service's custom logging options are found in the
-``glance-manage.conf`` file.
+Configuration options for the `glance database management tool
+<http://docs.openstack.org/developer/glance/man/glancemanage.html>`_
+are found in the ``glance-manage.conf`` file.
 
 .. note::
 
