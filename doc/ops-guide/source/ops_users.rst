@@ -2,13 +2,15 @@
 User Management
 ===============
 
-The command-line tools for managing users are inconvenient to use
-directly. They require issuing multiple commands to complete a single
-task, and they use UUIDs rather than symbolic names for many items. In
-practice, humans typically do not use these tools directly. Fortunately,
-the OpenStack dashboard provides a reasonable interface to this. In
-addition, many sites write custom tools for local needs to enforce local
-policies and provide levels of self-service to users that aren't
+The OpenStack Dashboard provides a graphical interface to manage users.
+This section describes user management with the Dashboard.
+
+You can also `manage projects, users, and roles
+<http://docs.openstack.org/admin-guide/cli_manage_projects_users_and_roles.html>`_
+from the command-line clients.
+
+In addition, many sites write custom tools for local needs to enforce
+local policies and provide levels of self-service to users that are not
 currently available with packaged tools.
 
 Creating New Users
