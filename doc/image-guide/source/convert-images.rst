@@ -59,7 +59,7 @@ Run the following command to convert a vmdk image file to a qcow2 image file.
    due to lack of the virtio driver.
    Another option is to set the image properties as below when you
    update the image in the Image service to avoid this issue,
-   but it will reduce performance significantly.
+   but it will reduce virtual machine performance significantly.
 
    .. code-block:: console
 
