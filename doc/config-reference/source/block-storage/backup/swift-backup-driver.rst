@@ -17,8 +17,8 @@ backup driver.
 
 .. include:: ../../tables/cinder-backups_swift.rst
 
-To enable the swift backup driver for 1.0 or 2.0 authentication version,
-specify ``1`` or ``2`` correspondingly. For example:
+To enable the swift backup driver for 1.0, 2.0, or 3.0  authentication version,
+specify ``1``, ``2``, or ``3`` correspondingly. For example:
 
 .. code-block:: ini
 
@@ -41,9 +41,12 @@ driver.
     backup_swift_auth = per_user
     backup_swift_auth_version = 1
     backup_swift_user = <None>
+    backup_swift_user_domain = <None>
     backup_swift_key = <None>
     backup_swift_container = volumebackups
     backup_swift_object_size = 52428800
+    backup_swift_project = <None>
+    backup_swift_project_domain = <None>
     backup_swift_retry_attempts = 3
     backup_swift_retry_backoff = 2
     backup_compression_algorithm = zlib
