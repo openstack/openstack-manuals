@@ -88,3 +88,7 @@ existing volume, the same approach is taken. The same approach is also
 used when a new volume is created from an Image service image, if the
 source image is in raw format, and ``gpfs_images_share_mode`` is set to
 ``copy_on_write``.
+
+The GPFS driver supports encrypted volume back end feature.
+To encrypt a volume at rest, specify the extra specification
+``gpfs_encryption_rest = True``.
