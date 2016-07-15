@@ -23,8 +23,8 @@ Contents
    block-storage.rst
    compute.rst
    dashboard.rst
-   database-service.rst
    data-processing-service.rst
+   database-service.rst
    identity.rst
    image-service.rst
    messaging.rst
