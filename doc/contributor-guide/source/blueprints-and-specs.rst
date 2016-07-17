@@ -57,12 +57,24 @@ Installation Guides
 The OpenStack Installation Guide describes a manual install process for
 multiple distributions based on the following packaging systems:
 
-* `Installation Guide for openSUSE and SUSE Linux Enterprise Server
-  <http://docs.openstack.org/mitaka/install-guide-obs/>`_
-* `Installation Guide for Red Hat Enterprise Linux and CentOS
-  <http://docs.openstack.org/mitaka/install-guide-rdo/>`_
-* `Installation Guide for Ubuntu
-  <http://docs.openstack.org/mitaka/install-guide-ubuntu/>`_
+.. list-table::
+   :header-rows: 1
+
+   * - Document
+     - Source location
+     - Target location
+
+   * - Installation Guide for openSUSE and SUSE Linux Enterprise Server
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
+     - http://docs.openstack.org/mitaka/install-guide-obs/
+
+   * - Installation Guide for Red Hat Enterprise Linux and CentOS
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
+     - http://docs.openstack.org/mitaka/install-guide-rdo/
+
+   * - Installation Guide for Ubuntu 14.04 (LTS)
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
+     - http://docs.openstack.org/mitaka/install-guide-ubuntu/
 
 Guides for deployers and administrators
 ---------------------------------------
@@ -75,6 +87,21 @@ Guides for deployers and administrators
   <http://docs.openstack.org/mitaka/networking-guide/>`_:
   This guide targets OpenStack administrators seeking to deploy and manage
   OpenStack Networking (neutron).
+
+.. list-table::
+   :header-rows: 1
+
+   * - Document
+     - Source location
+     - Target location
+
+   * - Configuration Reference
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/config-reference
+     - http://docs.openstack.org/mitaka/config-reference/
+
+   * - OpenStack Networking Guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide
+     - http://docs.openstack.org/mitaka/networking-guide/
 
 Continuously released documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -101,12 +128,40 @@ Guides for deployers and administrators
 * `OpenStack High Availability Guide <http://docs.openstack.org/ha-guide/>`_:
   Describes potential strategies for making your OpenStack services and
   related controllers and data stores highly available.
-* `OpenStack Security Guide <http://docs.openstack.org/sec>`_:
+* `OpenStack Security Guide <http://docs.openstack.org/sec/>`_:
   Provide best practices and conceptual
   information about securing an OpenStack cloud.
-* `Virtual Machine Image Guide <http://docs.openstack.org/image-guide>`_:
+* `OpenStack Virtual Machine Image Guide
+  <http://docs.openstack.org/image-guide/>`_:
   Shows you how to obtain, create, and modify virtual machine images that
   are compatible with OpenStack.
+
+.. list-table::
+   :header-rows: 1
+
+   * - Document
+     - Source location
+     - Target location
+
+   * - OpenStack Architecture Design Guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/arch-design
+     - http://docs.openstack.org/arch-design/
+
+   * - OpenStack Administrator Guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide
+     - http://docs.openstack.org/admin-guide/
+
+   * - OpenStack High Availability Guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/ha-guide
+     - http://docs.openstack.org/ha-guide/
+
+   * - OpenStack Security Guide
+     - http://git.openstack.org/cgit/openstack/security-doc/tree/security-guide
+     - http://docs.openstack.org/security-guide/
+
+   * - OpenStack Virtual Machine Image Guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/image-guide
+     - http://docs.openstack.org/image-guide/
 
 Guides for end users
 --------------------
@@ -122,6 +177,25 @@ Guides for end users
   <http://docs.openstack.org/cli-reference/>`_:
   Automatically generates help text for CLI commands and subcommands.
 
+.. list-table::
+   :header-rows: 1
+
+   * - Document
+     - Source location
+     - Target location
+
+   * - OpenStack End User Guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/user-guide
+     - http://docs.openstack.org/user-guide/
+
+   * - OpenStack API Guide
+     - http://git.openstack.org/cgit/openstack/api-site/tree/api-quick-start
+     - http://developer.openstack.org/api-guide/quick-start/
+
+   * - OpenStack Command-Line Interface Reference
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/cli-reference
+     - http://docs.openstack.org/cli-reference/
+
 API documentation
 -----------------
 
@@ -134,8 +208,28 @@ API documentation
 * `Object Storage API v1
   <http://docs.openstack.org/developer/swift/#object-storage-v1-rest-api-documentation>`_
 
-Guides for contributors
+We are migrating away from WADL in 2016. Refer to :ref:`api-docs` for details.
+Once the migration is complete, the API reference pages will be stored in the
+project repositories and we will have redirects in place for these API pages.
+
+Project-specific guides
 -----------------------
+
+Each project maintains its own developer guide.
+They are published from each project repository.
+See http://docs.openstack.org/developer/openstack-projects.html
+and http://docs.openstack.org/developer/language-bindings.html.
+
+Contributor guides
+------------------
+
+Generally, the http://docs.openstack.org/developer/ documentation is meant
+for contributors to OpenStack projects. Each project's repo has a
+``doc/source`` directory where RST source files are stored. They are built
+automatically with Sphinx when the patch is merged. For example, see
+http://git.openstack.org/cgit/openstack/horizon/tree/doc/source for the
+horizon contributor documentation source and http://docs.openstack.org/developer/horizon/
+for the built documentation.
 
 * `Infrastructure User Manual <http://docs.openstack.org/infra/manual>`_:
   Reference documentation for tools and processes used for all
@@ -144,6 +238,39 @@ Guides for contributors
   use gerrit review workflow. The manual also covers more
   advanced topics, like how to create new git repositories. The manual is
   maintained by the OpenStack Infrastructure team.
+
+.. list-table::
+   :header-rows: 1
+
+   * - Document
+     - Source location
+     - Target location
+
+   * - Documentation Contributor Guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/contributor-guide
+     - http://docs.openstack.org/contributor-guide/
+
+   * - Python Developer Documentation
+     - http://git.openstack.org/cgit/openstack/<project>/tree/master/doc/source/,
+       such as http://git.openstack.org/cgit/openstack/nova/tree/doc/source
+     - http://docs.openstack.org/developer/openstack-projects.html
+
+   * - Language Bindings and Python Clients
+     - http://git.openstack.org/cgit/openstack/python-<project>client/tree/master/doc/source/,
+       such as http://git.openstack.org/cgit/openstack/python-novaclient/tree/doc/source
+     - http://docs.openstack.org/developer/language-bindings.html
+
+   * - OpenStack Project Infrastructure
+     - http://git.openstack.org/cgit/openstack-infra/system-config/tree/doc/source
+     - http://docs.openstack.org/infra/system-config/
+
+   * - Tempest Testing Project
+     - http://git.openstack.org/cgit/openstack/tempest/tree/doc/source
+     - http://docs.openstack.org/developer/tempest/
+
+Guides for contributors
+-----------------------
+
 
 Licenses
 ~~~~~~~~
