@@ -27,6 +27,7 @@ use simpler formatting.
    :maxdepth: 2
 
    rst-conv/general-guidelines.rst
+   rst-conv/file-naming.rst
    rst-conv/titles.rst
    rst-conv/inline-markups.rst
    rst-conv/lists.rst
