@@ -66,8 +66,6 @@ and their associated references in the guide:
      - Password of Compute service user ``nova``
    * - ``RABBIT_PASS``
      - Password of user guest of RabbitMQ
-   * - ``SWIFT_PASS``
-     - Password of Object Storage service user ``swift``
 
 OpenStack and supporting services require administrative privileges
 during installation and operation. In some cases, services perform
