@@ -25,8 +25,8 @@ manage flavors. To see information for this command, run:
       ``compute_extension:flavormanage`` in ``/etc/nova/policy.json``
       on the ``nova-api`` server.
 
-   -  You can modify an existing flavor from the :guilabel:`Edit Flavor`
-      button in the Dashboard.
+   -  The Dashboard simulates the ability to modify a flavor
+      by deleting an existing flavor and creating a new one with the same name.
 
 Flavors define these elements:
 
