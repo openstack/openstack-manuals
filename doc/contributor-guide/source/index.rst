@@ -21,7 +21,6 @@ Contents
    doc-bugs.rst
    docs-review.rst
    team-structure.rst
-   docs-structure.rst
    blueprints-and-specs.rst
    api-guides.rst
    project-install-guide

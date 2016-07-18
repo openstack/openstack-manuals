@@ -1,10 +1,8 @@
-.. _docs-structure:
-
-=======================
-Documentation structure
-=======================
-
 .. _filename-conv:
+
+=========================
+File naming and structure
+=========================
 
 File naming conventions
 ~~~~~~~~~~~~~~~~~~~~~~~
