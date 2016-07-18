@@ -33,7 +33,6 @@ Contents
    json-conv.rst
    tools-and-content-overview.rst
    docs-builds.rst
-   build-locally.rst
    doc-tools.rst
 
 Glossary
