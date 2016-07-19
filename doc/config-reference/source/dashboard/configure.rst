@@ -7,6 +7,11 @@ or you can configure the dashboard for a secured HTTPS deployment.
 While the standard installation uses a non-encrypted HTTP channel,
 you can enable SSL support for the dashboard.
 
+.. note::
+
+   This section uses concrete examples to make it easier to
+   understand, but the file path varies by distribution.
+
 Also, you can configure the size of the VNC window in the dashboard.
 
 Configure the dashboard for HTTP
