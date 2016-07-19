@@ -22,17 +22,12 @@ the same quota values, such as the number of resources that a
 tenant can create.
 
 The quota value is defined in the OpenStack Networking
-``neutron.conf`` configuration file. To disable quotas for
-a specific resource, such as network, subnet,
-or port, remove a corresponding item from ``quota_items``.
-This example shows the default quota values:
+``neutron.conf`` configuration file. This example shows the
+default quota values:
 
 .. code-block:: ini
 
    [quotas]
-   # resource name(s) that are supported in quota features
-   quota_items = network,subnet,port
-
    # number of networks allowed per tenant, and minus means unlimited
    quota_network = 10
 
@@ -58,10 +53,6 @@ router and floating IP. Add these lines to the
    # number of floating IPs allowed per tenant, and minus means unlimited
    quota_floatingip = 50
 
-.. note::
-
-   The ``quota_items`` option does not affect these quotas.
-
 OpenStack Networking also supports quotas for security group
 resources: number of security groups and the number of rules for
 each security group. Add these lines to the
@@ -75,10 +66,6 @@ each security group. Add these lines to the
 
    # number of security rules allowed per tenant, and minus means unlimited
    quota_security_group_rule = 100
-
-.. note::
-
-   The ``quota_items`` option does not affect these quotas.
 
 .. _cfg_quotas_per_tenant:
 
