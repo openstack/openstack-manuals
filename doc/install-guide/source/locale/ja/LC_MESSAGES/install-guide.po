@@ -12,16 +12,17 @@
 # Akihiro Motoki <amotoki@gmail.com>, 2016. #zanata
 # KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>, 2016. #zanata
 # Yuko Katabami <yukokatabami@gmail.com>, 2016. #zanata
+# Yusuke Higashino <yusuke_higashino@adoc.co.jp>, 2016. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: Installation Guide 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-17 14:24+0000\n"
+"POT-Creation-Date: 2016-07-19 01:26+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-07-17 09:25+0000\n"
-"Last-Translator: Akihiro Motoki <amotoki@gmail.com>\n"
+"PO-Revision-Date: 2016-07-19 01:45+0000\n"
+"Last-Translator: KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Zanata 3.7.3\n"
@@ -169,9 +170,6 @@ msgstr ""
 msgid "Actual output may differ slightly from this example."
 msgstr "実際の出力はこの例と少し違う場合があります。"
 
-msgid "Add each storage node to the ring:"
-msgstr "各ストレージノードをリングに追加します。"
-
 # #-#-#-#-#  launch-instance-neutron.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  launch-instance-nova.pot (Installation Guide 0.1)  #-#-#-#-#
 msgid "Add rules to the ``default`` security group:"
@@ -200,9 +198,6 @@ msgstr "``admin`` ロールを ``neutron`` ユーザーに追加します。"
 
 msgid "Add the ``admin`` role to the ``nova`` user:"
 msgstr "``admin`` ロールを ``nova`` ユーザーに追加します。"
-
-msgid "Add the ``admin`` role to the ``swift`` user:"
-msgstr "``admin`` ロールを ``swift`` ユーザーに追加します。"
 
 msgid "Add the ``openstack`` user:"
 msgstr "``openstack`` ユーザーを追加します。"
@@ -406,34 +401,6 @@ msgstr ""
 "できます。"
 
 msgid ""
-"Although Object Storage supports any file system with :term:`extended "
-"attributes (xattr)`, testing and benchmarking indicate the best performance "
-"and reliability on :term:`XFS`. For more information on horizontally scaling "
-"your environment, see the `Deployment Guide <http://docs.openstack.org/"
-"developer/swift/deployment_guide.html>`_."
-msgstr ""
-"Object Storage は、:term:`拡張属性 (xattr) <extended attributes (xattr)>` を"
-"持つ任意のファイルシステムをサポートしますが、テストとベンチマークによると :"
-"term:`XFS` が最高のパフォーマンスと信頼性を示しています。お使いの環境を水平的"
-"にスケールさせる方法の詳細は `Deployment Guide <http://docs.openstack.org/"
-"developer/swift/deployment_guide.html>`_ を参照してください。"
-
-msgid ""
-"Although most environments include Identity, Image service, Compute, at "
-"least one networking service, and the dashboard, the Object Storage service "
-"can operate independently. If your use case only involves Object Storage, "
-"you can skip to :ref:`swift` after configuring the appropriate nodes for it. "
-"However, the dashboard requires at least the Image service, Compute, and "
-"Networking."
-msgstr ""
-"ほとんどの環境には、Identity service、Image service、Compute、少なくとも 1 つ"
-"のネットワークサービス、ダッシュボードがありますが、Object Storage は他のほと"
-"んどのサービスと独立して動作できます。Object Storage のみを使用するユースケー"
-"スの場合、適切なノードを設定した後に :ref:`swift` に進んでください。また、"
-"ダッシュボードは、少なくとも Image service、Compute、Networking を必要としま"
-"す。"
-
-msgid ""
 "Any given Networking set up has at least one external network. Unlike the "
 "other networks, the external network is not merely a virtually defined "
 "network. Instead, it represents a view into a slice of the physical, "
@@ -554,27 +521,6 @@ msgstr ""
 "は、インスタンスに IP アドレスを提供する DHCP サーバーがあります。"
 
 msgid ""
-"Before starting the Object Storage services, you must create the initial "
-"account, container, and object rings. The ring builder creates configuration "
-"files that each node uses to determine and deploy the storage architecture. "
-"For simplicity, this guide uses one region and two zones with 2^10 (1024) "
-"maximum partitions, 3 replicas of each object, and 1 hour minimum time "
-"between moving a partition more than once. For Object Storage, a partition "
-"indicates a directory on a storage device rather than a conventional "
-"partition table. For more information, see the `Deployment Guide <http://"
-"docs.openstack.org/developer/swift/deployment_guide.html>`__."
-msgstr ""
-"Object Storage サービスを起動する前に、アカウント、コンテナー、オブジェクトの"
-"初期リングを作成する必要があります。リングビルダーが、各ノードがストレージ"
-"アーキテクチャーを判断して配備するために使用する、設定ファイルを作成します。"
-"このガイドは、簡単のため、1 リージョン、 2 ゾーンで、ゾーンの最大パーティショ"
-"ン数 2^10 (1024)、各オブジェクトの複製数 3、パーティション移動後の再移動の最"
-"小間隔として 1 時間を使用します。 Object Storage では、パーティションは伝統的"
-"なパーティションテーブルではなく、ストレージデバイスにおけるディレクトリーを"
-"意味します。詳細は `Deployment Guide <http://docs.openstack.org/developer/"
-"swift/deployment_guide.html>`__ を参照してください。"
-
-msgid ""
 "Before you configure the OpenStack Identity service, you must create a "
 "database and an administration token."
 msgstr ""
@@ -615,13 +561,6 @@ msgid ""
 msgstr ""
 "Image service をインストールして設定する前に、データベース、サービスクレデン"
 "シャル、API エンドポイントを作成する必要があります。"
-
-msgid ""
-"Before you install and configure the Object Storage service on the storage "
-"nodes, you must prepare the storage devices."
-msgstr ""
-"ストレージノードに Object Storage サービスをインストールして設定する前に、ス"
-"トレージデバイスを準備する必要があります。"
 
 msgid ""
 "Before you install and configure the Share File System service, you must "
@@ -727,9 +666,6 @@ msgstr "CentOS では以下の手順は不要です。"
 msgid "Change the existing line with ``-l 127.0.0.1``."
 msgstr "既存の行 ``-l 127.0.0.1`` を置き換えます。"
 
-msgid "Change to the ``/etc/swift`` directory."
-msgstr "``/etc/swift`` ディレクトリーに移動します。"
-
 msgid "Check the status of your floating IP address:"
 msgstr "Floating IP アドレスの状態を確認します。"
 
@@ -778,13 +714,6 @@ msgstr ""
 msgid "Comment out any other session storage configuration."
 msgstr "それ以外のすべてのセッションストレージ設定をコメントアウトします。"
 
-msgid ""
-"Comment out or remove any other options in the ``[filter:authtoken]`` "
-"section."
-msgstr ""
-"``[filter:authtoken]`` セクションにある他のオプションは、コメントアウトまたは"
-"削除します。"
-
 # #-#-#-#-#  cinder-controller-node.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  cinder-storage-node.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  glance-install.pot (Installation Guide 0.1)  #-#-#-#-#
@@ -799,11 +728,6 @@ msgid ""
 msgstr ""
 "``[keystone_authtoken]`` セクションにある他のオプションは、コメントアウトまた"
 "は削除します。"
-
-msgid "Complete OpenStack environments already include some of these packages."
-msgstr ""
-"完全な OpenStack 環境では、これらのいくつかのパッケージはすでにインストールさ"
-"れています。"
 
 msgid "Compute"
 msgstr "Compute"
@@ -964,27 +888,8 @@ msgstr "コントローラーノード: 1 CPU、4 GB メモリ、5 GB ストレ�
 msgid "Controller node"
 msgstr "コントローラーノード"
 
-msgid ""
-"Copy the ``account.ring.gz``, ``container.ring.gz``, and ``object.ring.gz`` "
-"files to the ``/etc/swift`` directory on each storage node and any "
-"additional nodes running the proxy service."
-msgstr ""
-"各ストレージノード、プロキシーサービスを実行している追加ノードのに ``/etc/"
-"swift`` ディレクトリーに、 ``account.ring.gz`` ファイル、``container.ring."
-"gz`` ファイル、``object.ring.gz`` ファイルをコピーします。"
-
-msgid ""
-"Copy the ``swift.conf`` file to the ``/etc/swift`` directory on each storage "
-"node and any additional nodes running the proxy service."
-msgstr ""
-"各ストレージノードおよびプロキシーサービスを実行している追加ノードにおいて、"
-"``swift.conf`` ファイルを ``/etc/swift`` ディレクトリーにコピーします。"
-
 msgid "Create OpenStack client environment scripts"
 msgstr "OpenStack クライアント環境スクリプトの作成"
-
-msgid "Create ``container1`` container:"
-msgstr "コンテナー ``container1`` を作成します。"
 
 msgid "Create a 1 GB volume:"
 msgstr "1 GB ボリュームを作成します。"
@@ -1060,18 +965,12 @@ msgstr "テンプレートの作成"
 msgid "Create a volume"
 msgstr "ボリュームの作成"
 
-msgid "Create account ring"
-msgstr "アカウントリングの作成"
-
 msgid ""
 "Create an administrative project, user, and role for administrative "
 "operations in your environment:"
 msgstr ""
 "お使いの環境の管理作業用に、管理用のプロジェクト、ユーザー、ロールを作成しま"
 "す。"
-
-msgid "Create and distribute initial rings"
-msgstr "初期リングの作成と配布"
 
 msgid ""
 "Create and edit the ``/etc/my.cnf.d/openstack.cnf`` file and complete the "
@@ -1096,18 +995,8 @@ msgstr ""
 "を作成します。これ以降は、このガイドでは、これらのスクリプトを参照して、クラ"
 "イアント操作に適切なクレデンシャルを読み込みます。"
 
-msgid "Create container ring"
-msgstr "コンテナーリングの作成"
-
 msgid "Create m1.nano flavor"
 msgstr "フレーバー m1.nano の作成"
-
-msgid "Create object ring"
-msgstr "オブジェクトリングの作成"
-
-msgid "Create or edit the ``/etc/rsyncd.conf`` file to contain the following:"
-msgstr ""
-"``/etc/rsyncd.conf`` ファイルを作成または編集して、以下の内容を含めます。"
 
 msgid "Create the Block Storage service API endpoints:"
 msgstr "Block Storage サービスの API エンドポイントを作成します。"
@@ -1136,9 +1025,6 @@ msgstr "LVM ボリュームグループ ``manila-volumes`` を作成します。
 msgid "Create the Networking service API endpoints:"
 msgstr "Networking サービス API エンドポイントを作成します。"
 
-msgid "Create the Object Storage service API endpoints:"
-msgstr "Object Storage service API エンドポイントを作成します。"
-
 msgid "Create the Shared File Systems service API endpoints:"
 msgstr "Shared File Systems サービス API エンドポイントを作成します。"
 
@@ -1158,9 +1044,6 @@ msgid ""
 "Create the ``/etc/httpd/conf.d/wsgi-keystone.conf`` file with the following "
 "content:"
 msgstr "``/etc/httpd/conf.d/wsgi-keystone.conf`` を以下の内容で作成します。"
-
-msgid "Create the ``/etc/swift`` directory."
-msgstr "``/etc/swift`` ディレクトリーを作成します。"
 
 msgid "Create the ``admin`` project and user:"
 msgstr "``admin`` プロジェクトと ``admin`` ユーザーを作成します。"
@@ -1228,29 +1111,8 @@ msgstr "``nova`` サービスエンティティーを作成します。"
 msgid "Create the ``nova`` user:"
 msgstr "``nova`` ユーザーを作成します。"
 
-msgid "Create the ``recon`` directory and ensure proper ownership of it:"
-msgstr "``recon`` ディレクトリーを作成し、適切な所有権を設定します。"
-
-msgid "Create the ``swift`` service entity:"
-msgstr "``swift`` サービスエンティティーを作成します。"
-
-msgid "Create the ``swift`` user:"
-msgstr "``swift`` ユーザーを作成します。"
-
 msgid "Create the ``user`` role:"
 msgstr "``user`` ロールを作成します。"
-
-msgid "Create the base ``account.builder`` file:"
-msgstr "ベースの ``account.builder`` ファイルを作成します。"
-
-msgid "Create the base ``container.builder`` file:"
-msgstr "ベースの ``container.builder`` ファイルを作成します。"
-
-msgid "Create the base ``object.builder`` file:"
-msgstr "ベースの ``object.builder`` ファイルを作成します。"
-
-msgid "Create the mount point directory structure:"
-msgstr "マウントポイントとなるディレクトリーを作成します。"
 
 # #-#-#-#-#  networking-nova.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  neutron-initial-networks.pot (Installation Guide 0.1)  #-#-#-#-#
@@ -1412,9 +1274,6 @@ msgid ""
 msgstr ""
 "keystone サービスがインストール後に自動実行されないように無効化します。"
 
-msgid "Distribute ring configuration files"
-msgstr "リング設定ファイルの配布"
-
 msgid ""
 "Distributions release OpenStack packages as part of the distribution or "
 "using other methods because of differing release schedules. Perform these "
@@ -1429,17 +1288,11 @@ msgstr ""
 msgid "Do not change the ``HWADDR`` and ``UUID`` keys."
 msgstr "``HWADDR`` と ``UUID`` の項目は変更してはいけません。"
 
-msgid "Do not change the order of the modules."
-msgstr "モジュールの順序を変更しないこと。"
-
 msgid ""
 "Do not repeat this step when creating additional users for this project."
 msgstr ""
 "このプロジェクトに追加のユーザーを作成する際には、上記の手順を行わないでくだ"
 "さい。"
-
-msgid "Download a test file from the ``container1`` container:"
-msgstr "コンテナー ``container1`` からテストファイルをダウンロードします。"
 
 msgid "Download the source image of the share server:"
 msgstr "share サーバーの元イメージをダウンロードします。"
@@ -1524,8 +1377,8 @@ msgid ""
 "Edit the ``/etc/chrony/chrony.conf`` file and add, change, or remove the "
 "following keys as necessary for your environment:"
 msgstr ""
-"ファイル ``/etc/ntp.conf`` を編集して、お使いの環境の必要に応じて、以下の項目"
-"の追加、変更、削除を行います。"
+"ファイル ``/etc/chrony/chrony.conf`` を編集して、お使いの環境の必要に応じて、"
+"以下の項目の追加、変更、削除を行います。"
 
 msgid ""
 "Edit the ``/etc/chrony/chrony.conf`` file and comment out or remove all but "
@@ -1539,13 +1392,6 @@ msgid ""
 "Edit the ``/etc/cinder/cinder.conf`` file and complete the following actions:"
 msgstr ""
 "``/etc/cinder/cinder.conf`` ファイルを編集し、以下の作業をすべて行います。"
-
-msgid "Edit the ``/etc/default/rsync`` file and enable the ``rsync`` service:"
-msgstr ""
-"``/etc/default/rsync`` ファイルを編集し、``rsync`` サービスを有効にします。"
-
-msgid "Edit the ``/etc/fstab`` file and add the following to it:"
-msgstr "``/etc/fstab`` ファイルを編集し、以下の内容を追加します。"
 
 msgid ""
 "Edit the ``/etc/glance/glance-api.conf`` file and complete the following "
@@ -1672,39 +1518,6 @@ msgstr ""
 "べて行います。"
 
 msgid ""
-"Edit the ``/etc/swift/account-server.conf`` file and complete the following "
-"actions:"
-msgstr ""
-"``/etc/swift/account-server.conf`` ファイルを編集し、以下の作業をすべて行いま"
-"す。"
-
-msgid ""
-"Edit the ``/etc/swift/container-server.conf`` file and complete the "
-"following actions:"
-msgstr ""
-"``/etc/swift/container-server.conf`` ファイルを編集し、以下の作業をすべて行い"
-"ます。"
-
-msgid ""
-"Edit the ``/etc/swift/object-server.conf`` file and complete the following "
-"actions:"
-msgstr ""
-"``/etc/swift/object-server.conf`` ファイルを編集し、以下の作業をすべて行いま"
-"す。"
-
-msgid ""
-"Edit the ``/etc/swift/proxy-server.conf`` file and complete the following "
-"actions:"
-msgstr ""
-"``/etc/swift/proxy-server.conf`` ファイルを編集し、以下の作業をすべて行いま"
-"す。"
-
-msgid ""
-"Edit the ``/etc/swift/swift.conf`` file and complete the following actions:"
-msgstr ""
-"``/etc/swift/swift.conf`` ファイルを編集し、以下の作業をすべて行います。"
-
-msgid ""
 "Edit the ``/etc/sysconfig/apache2`` file and configure the "
 "``APACHE_SERVERNAME`` option to reference the controller node:"
 msgstr ""
@@ -1795,9 +1608,6 @@ msgstr ""
 "ンダーやネットワーク技術に対応した、プラグイン可能なアーキテクチャーが採用さ"
 "れています。"
 
-msgid "Ensure proper ownership of the mount point directory structure:"
-msgstr "マウントポイントのディレクトリー構造に適切な所有権を設定します。"
-
 msgid "Ensure the kernel module ``nbd`` is loaded."
 msgstr "カーネルモジュール ``nbd`` が読み込まれていることを確認します。"
 
@@ -1838,9 +1648,6 @@ msgid "Find entitlement pools containing the channels for your RHEL system:"
 msgstr ""
 "お使いの RHEL システム用のチャンネルが含まれたエンタイトルメントプールを特定"
 "します。"
-
-msgid "First node"
-msgstr "1 番目のノード"
 
 msgid "Flavor is image specific and may differ from image to image."
 msgstr ""
@@ -1963,17 +1770,6 @@ msgstr ""
 "サービスに関する詳細は、 `OpenStack ネットワークガイド <http://docs."
 "openstack.org/mitaka/networking-guide/>`__ を参照してください。"
 
-# #-#-#-#-#  swift-controller-node.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  swift-storage-node.pot (Installation Guide 0.1)  #-#-#-#-#
-msgid ""
-"For more information on other modules that enable additional features, see "
-"the `Deployment Guide <http://docs.openstack.org/developer/swift/"
-"deployment_guide.html>`__."
-msgstr ""
-"追加機能を有効にする他のモジュールに関する詳細は、`Deployment Guide <http://"
-"docs.openstack.org/developer/swift/deployment_guide.html>`__ を参照してくださ"
-"い。"
-
 msgid ""
 "For more information on production architectures, see the `Architecture "
 "Design Guide <http://docs.openstack.org/arch-design/>`__, `OpenStack "
@@ -2092,11 +1888,6 @@ msgstr ""
 "にサブネットがアクセスできます。また、マシンはルーターに対するゲートウェイ経"
 "由で外部ネットワークにアクセスできます。"
 
-msgid "Format the ``/dev/sdb`` and ``/dev/sdc`` devices as XFS:"
-msgstr ""
-"パーティション ``/dev/sdb1`` と ``/dev/sdc1`` を XFS としてフォーマットしま"
-"す。"
-
 msgid "From the *compute* node, test access to the Internet:"
 msgstr "*コンピュート* ノードから、インターネットへのアクセスをテストします。"
 
@@ -2179,32 +1970,12 @@ msgstr "IP アドレス: 10.0.0.31"
 msgid "IP address: ``10.0.0.41``"
 msgstr "IP アドレス: ``10.0.0.41``"
 
-msgid "IP address: ``10.0.0.51``"
-msgstr "IP アドレス: ``10.0.0.51``"
-
-msgid "IP address: ``10.0.0.52``"
-msgstr "IP アドレス: ``10.0.0.52``"
-
 msgid "Identity service"
 msgstr "Identity サービス"
 
 msgid ""
 "If necessary, replace ``10.0.0.0/24`` with a description of your subnet."
 msgstr "必要に応じて、``10.0.0.0/24`` をお使いのサブネットに置き換えます。"
-
-msgid ""
-"If one or more of these steps do not work, check the ``/var/log/audit/audit."
-"log`` file for SELinux messages indicating denial of actions for the "
-"``swift`` processes. If present, change the security context of the ``/srv/"
-"node`` directory to the lowest security level (s0) for the ``swift_data_t`` "
-"type, ``object_r`` role and the ``system_u`` user:"
-msgstr ""
-"以下の手順で動作しないものがある場合は、 ``/var/log/audit/audit.log`` ファイ"
-"ルを見て、 ``swift`` プロセスに対するアクション拒否を示す SELinux メッセージ"
-"がないか確認してください。見つかった場合は、 ``/srv/node`` ディレクトリーのセ"
-"キュリティーコンテキストの、 ``swift_data_t`` タイプ、 ``object_r`` ロール、 "
-"``system_u`` ユーザーのレベルを最も低いセキュリティーレベル (s0) に変更してく"
-"ださい。"
 
 msgid ""
 "If the upgrade process includes a new kernel, reboot your host to activate "
@@ -2309,12 +2080,6 @@ msgid ""
 "storage node."
 msgstr ""
 "Block Storage サービスをデプロイしたい場合、追加のノードを 1 つ設定します。"
-
-msgid ""
-"If you want to deploy the Object Storage service, configure two additional "
-"storage nodes."
-msgstr ""
-"Object Storage サービスをデプロイしたい場合、追加のノードを 2 つ設定します。"
 
 msgid ""
 "If your environment includes the Block Storage service, you can create a "
@@ -2500,21 +2265,6 @@ msgid "In the ``[DEFAULT]`` section, configure the ``my_ip`` option:"
 msgstr "``[DEFAULT]`` セクションに ``my_ip`` オプションを設定します。"
 
 msgid ""
-"In the ``[DEFAULT]`` section, configure the bind IP address, bind port, "
-"user, configuration directory, and mount point directory:"
-msgstr ""
-"``[DEFAULT]`` セクションで、バインドする IP アドレス、バインドするポート、"
-"ユーザー、設定ディレクトリー、マウントポイントとなるディレクトリーを設定しま"
-"す。"
-
-msgid ""
-"In the ``[DEFAULT]`` section, configure the bind port, user, and "
-"configuration directory:"
-msgstr ""
-"``[DEFAULT]`` セクションで、バインドするポート、ユーザー、設定ディレクトリー"
-"を設定します。"
-
-msgid ""
 "In the ``[DEFAULT]`` section, configure the location of the Image service "
 "API:"
 msgstr "``[DEFAULT]`` セクションで、Image サービス API の場所を設定します。"
@@ -2588,11 +2338,6 @@ msgstr ""
 "法を設定します。"
 
 msgid ""
-"In the ``[app:proxy-server]`` section, enable automatic account creation:"
-msgstr ""
-"``[app:proxy-server]`` セクションで、自動アカウント作成を有効にします。"
-
-msgid ""
 "In the ``[database]`` section, comment out any ``connection`` options "
 "because compute nodes do not directly access the database."
 msgstr ""
@@ -2608,33 +2353,6 @@ msgstr ""
 # #-#-#-#-#  keystone-install.pot (Installation Guide 0.1)  #-#-#-#-#
 msgid "In the ``[database]`` section, configure database access:"
 msgstr "``[database]`` セクションで、データベースのアクセス方法を設定します。"
-
-msgid ""
-"In the ``[filter:authtoken]`` section, configure Identity service access:"
-msgstr ""
-"``[filter:authtoken]`` セクションに、Identity サービスへのアクセス方法を設定"
-"します。"
-
-msgid ""
-"In the ``[filter:cache]`` section, configure the ``memcached`` location:"
-msgstr "``[filter:cache]`` セクションに、``memcached`` の位置を設定します。"
-
-msgid "In the ``[filter:keystoneauth]`` section, configure the operator roles:"
-msgstr "``[filter:keystoneauth]`` セクションで、operator ロールを設定します。"
-
-msgid ""
-"In the ``[filter:recon]`` section, configure the recon (meters) cache and "
-"lock directories:"
-msgstr ""
-"``[filter:recon]`` セクションに、recon (計測項目) キャッシュおよびロックディ"
-"レクトリーを設定します。"
-
-msgid ""
-"In the ``[filter:recon]`` section, configure the recon (meters) cache "
-"directory:"
-msgstr ""
-"``[filter:recon]`` セクションに、recon (計測項目) キャッシュディレクトリーを"
-"設定します。"
 
 msgid "In the ``[generic]`` section, configure the generic driver:"
 msgstr "``[generic]`` セクションで、汎用ドライバーを設定します。"
@@ -2762,18 +2480,6 @@ msgstr ""
 msgid "In the ``[oslo_concurrency]`` section, configure the lock path:"
 msgstr "``[oslo_concurrency]`` セクションにロックパスを設定します。"
 
-# #-#-#-#-#  swift-controller-node.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  swift-storage-node.pot (Installation Guide 0.1)  #-#-#-#-#
-msgid "In the ``[pipeline:main]`` section, enable the appropriate modules:"
-msgstr "``[pipeline:main]`` セクションで、適切なモジュールを有効にします。"
-
-msgid ""
-"In the ``[pipeline:main]`` section, remove the ``tempurl`` and ``tempauth`` "
-"modules and add the ``authtoken`` and ``keystoneauth`` modules:"
-msgstr ""
-"``[pipeline:main]`` セクションで、モジュール ``tempurl`` と ``tempauth`` を削"
-"除し、モジュール ``authtoken`` と ``keystoneauth`` を追加します。"
-
 msgid ""
 "In the ``[securitygroup]`` section, enable :term:`ipset` to increase "
 "efficiency of security group rules:"
@@ -2787,19 +2493,6 @@ msgid ""
 msgstr ""
 "``[securitygroup]`` セクションで、セキュリティグループを有効にし、 Linux ブ"
 "リッジ :term:`iptables` ファイアウォールドライバーを設定します。"
-
-msgid ""
-"In the ``[storage-policy:0]`` section, configure the default storage policy:"
-msgstr ""
-"``[storage-policy:0]`` セクションで、デフォルトのストレージポリシーを設定しま"
-"す。"
-
-msgid ""
-"In the ``[swift-hash]`` section, configure the hash path prefix and suffix "
-"for your environment."
-msgstr ""
-"``[swift-hash]`` セクションに、ハッシュパスのプレフィックスとサフィックスをお"
-"使いの環境に合わせて設定します。"
 
 msgid "In the ``[token]`` section, configure the Fernet token provider:"
 msgstr "``[token]`` セクションで Fernet トークンプロバイダーを設定します。"
@@ -2939,12 +2632,6 @@ msgstr ""
 msgid "Install and configure the components"
 msgstr "コンポーネントのインストールと設定"
 
-msgid "Install and configure the controller node"
-msgstr "コントローラーノードのインストールと設定"
-
-msgid "Install and configure the storage nodes"
-msgstr "ストレージノードのインストールと設定"
-
 msgid "Install the LVM packages:"
 msgstr "LVM パッケージをインストールします。"
 
@@ -3052,9 +2739,6 @@ msgstr ""
 "他の OpenStack サービスのインストールと設定は、個別のプロジェクトごとのインス"
 "トールガイドに書かれています。"
 
-msgid "Keep these values secret and do not change or lose them."
-msgstr "これらの値を秘密にしておきます。変更したり紛失したりしてはいけません。"
-
 msgid ""
 "Later on, the package will configure the below directive with the value you "
 "entered:"
@@ -3124,9 +2808,6 @@ msgstr "利用可能なネットワークを一覧表示します。"
 # #-#-#-#-#  launch-instance-nova.pot (Installation Guide 0.1)  #-#-#-#-#
 msgid "List available security groups:"
 msgstr "利用可能なセキュリティーグループを一覧表示します。"
-
-msgid "List files in the ``container1`` container:"
-msgstr "コンテナー ``container1`` 内のファイルを一覧表示します。"
 
 msgid ""
 "List loaded extensions to verify successful launch of the ``neutron-server`` "
@@ -3234,9 +2915,6 @@ msgid ""
 "Mount the NFS share in the instance using the export location of the share:"
 msgstr "共有の公開場所を指定して、インスタンス内で NFS 共有をマウントします。"
 
-msgid "Mount the devices:"
-msgstr "デバイスをマウントします。"
-
 msgid "Mount the share from an instance"
 msgstr "インスタンスからの共有のマウント"
 
@@ -3331,14 +3009,8 @@ msgstr ""
 msgid "Object Storage"
 msgstr "Object Storage"
 
-msgid "Object Storage service"
-msgstr "Object Storage サービス"
-
 msgid "Object Storage services (swift)"
 msgstr "Object Storage サービス (swift)"
-
-msgid "Object storage nodes (Optional)"
-msgstr "オブジェクトストレージノード (オプション)"
 
 # #-#-#-#-#  launch-instance-neutron.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  launch-instance-nova.pot (Installation Guide 0.1)  #-#-#-#-#
@@ -3348,27 +3020,6 @@ msgid ""
 msgstr ""
 "このインスタンス用の :term:`Virtual Network Computing (VNC)` セッション URL "
 "を取得し、Web ブラウザーからアクセスします。"
-
-msgid ""
-"Obtain the ``/etc/swift/swift.conf`` file from the Object Storage source "
-"repository:"
-msgstr ""
-"Object Storage のソースリポジトリーから ``/etc/swift/swift.conf`` ファイルを"
-"取得します。"
-
-msgid ""
-"Obtain the accounting, container, and object service configuration files "
-"from the Object Storage source repository:"
-msgstr ""
-"Object Storage のソースリポジトリーからアカウント、コンテナー、オブジェクトの"
-"サービス設定ファイルを取得します。"
-
-msgid ""
-"Obtain the proxy service configuration file from the Object Storage source "
-"repository:"
-msgstr ""
-"プロキシーサービスの設定ファイルを Object Storage のソースディレクトリーから"
-"取得します。"
 
 msgid ""
 "On CentOS, the ``extras`` repository provides the RPM that enables the "
@@ -3404,27 +3055,8 @@ msgstr ""
 "すべてのノードで、Debian 8 (Jessie) バックポートリポジトリをソースリストに追"
 "加します。"
 
-msgid "On all nodes, ensure proper ownership of the configuration directory:"
-msgstr "すべてのノードにおいて、設定ディレクトリーに適切な所有権を設定します。"
-
 msgid "On openSUSE:"
 msgstr "openSUSE の場合:"
-
-msgid ""
-"On the controller node and any other nodes running the proxy service, "
-"restart the Object Storage proxy service including its dependencies:"
-msgstr ""
-"コントローラーノード、プロキシーサービスを実行する全ノードにおいて、Object "
-"Storage のプロキシサービスと関連サービスを再起動します。"
-
-msgid ""
-"On the controller node and any other nodes running the proxy service, start "
-"the Object Storage proxy service including its dependencies and configure "
-"them to start when the system boots:"
-msgstr ""
-"コントローラーノード、プロキシサービスを実行する全ノードにおいて、Object "
-"Storage プロキシーサービスと関連サービスを起動し、システム起動時に自動的に起"
-"動するよう設定します。"
 
 msgid ""
 "On the controller node, source the ``admin`` credentials to gain access to "
@@ -3439,16 +3071,6 @@ msgid ""
 msgstr ""
 "コントローラーノードにおいて、``demo`` クレデンシャルを読み込み、利用者用の "
 "CLI コマンドへのアクセス権を取得します。"
-
-msgid ""
-"On the storage nodes, start the Object Storage services and configure them "
-"to start when the system boots:"
-msgstr ""
-"ストレージノードにおいて、Object Storage サービスを起動し、システム起動時に自"
-"動的に起動するよう設定します。"
-
-msgid "On the storage nodes, start the Object Storage services:"
-msgstr "ストレージノードにおいて、Object Storage サービスを起動します。"
 
 msgid ""
 "One physical server can support multiple nodes, each with almost any number "
@@ -3762,9 +3384,6 @@ msgstr "Image service のユーザー ``glance`` のパスワード"
 msgid "Password of Networking service user ``neutron``"
 msgstr "Networking サービスのユーザー ``neutron`` のパスワード"
 
-msgid "Password of Object Storage service user ``swift``"
-msgstr "Object Storage サービスのユーザー ``swift`` のパスワード"
-
 msgid "Password of Orchestration domain"
 msgstr "Orchestration ドメインのパスワード"
 
@@ -3788,9 +3407,6 @@ msgstr "RabbitMQ の guest ユーザーのパスワード"
 # #-#-#-#-#  nova-verify.pot (Installation Guide 0.1)  #-#-#-#-#
 msgid "Perform these commands on the controller node."
 msgstr "これらのコマンドをコントローラーノードで実行します。"
-
-msgid "Perform these steps on each storage node."
-msgstr "各ストレージノードにおいて以下の手順を実行します。"
 
 # #-#-#-#-#  ceilometer-verify.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  swift-verify.pot (Installation Guide 0.1)  #-#-#-#-#
@@ -3905,9 +3521,6 @@ msgstr ""
 "selinux`` パッケージをインストールして、OpenStack サービスのセキュリティーポ"
 "リシーを自動的に管理します。"
 
-msgid "Rebalance the ring:"
-msgstr "リングをリバランスします。"
-
 # #-#-#-#-#  basics-networking-neutron.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  basics-networking-nova.pot (Installation Guide 0.1)  #-#-#-#-#
 msgid "Reboot the system to activate the changes."
@@ -3934,16 +3547,6 @@ msgstr ""
 
 msgid "Reload the web server configuration:"
 msgstr "ウェブサーバーの設定を再読み込みします。"
-
-msgid ""
-"Repeat this command for each storage device on each storage node. In the "
-"example architecture, use the command in four variations:"
-msgstr ""
-"各ストレージノードの各ストレージデバイスごとに、このコマンドを繰り返します。"
-"このサンプルアーキテクチャーは、このコマンドを 4 つ使用します。"
-
-msgid "Replace HASH_PATH_PREFIX and HASH_PATH_SUFFIX with unique values."
-msgstr "HASH_PATH_PREFIX と HASH_PATH_SUFFIX を一意な値で置き換えます。"
 
 msgid ""
 "Replace ``ADMIN_PASS`` with the password you chose for the ``admin`` user in "
@@ -3999,20 +3602,6 @@ msgstr ""
 "``DNS_RESOLVER`` は DNS リソルバーの IP アドレスで置き換えます。ほとんどの場"
 "合、ホストの ``/etc/resolv.conf`` に書かれているアドレスのいずれかが使用でき"
 "るでしょう。"
-
-msgid ""
-"Replace ``FILE`` with the name of a local file to upload to the "
-"``container1`` container."
-msgstr ""
-"``FILE`` はローカルファイルの名前で置き換えます。 ``container1`` コンテナーに"
-"アップロードします。"
-
-msgid ""
-"Replace ``FILE`` with the name of the file uploaded to the ``container1`` "
-"container."
-msgstr ""
-"``FILE`` は ``container1`` コンテナーにアップロードしたファイルの名前に置き換"
-"えます。"
 
 msgid "Replace ``GLANCE_DBPASS`` with a suitable password."
 msgstr "``GLANCE_DBPASS`` を適切なパスワードに置き換えます。"
@@ -4086,13 +3675,6 @@ msgstr ""
 "``MANAGEMENT_INTERFACE_IP_ADDRESS`` をストレージノードの管理ネットワークイン"
 "ターフェースの IP アドレスに置き換えます。通常は、:ref:`アーキテクチャー例 "
 "<overview-example-architectures>` にある 1 番目のノードは 10.0.0.41  です。"
-
-msgid ""
-"Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address of the "
-"management network on the storage node."
-msgstr ""
-"``MANAGEMENT_INTERFACE_IP_ADDRESS`` はストレージノードの管理ネットワークの "
-"IP アドレスで置き換えます。"
 
 msgid "Replace ``MANILA_DBPASS`` with a suitable password."
 msgstr "``MANILA_DBPASS`` は適切なパスワードに置き換えます。"
@@ -4286,26 +3868,6 @@ msgstr ""
 "IP アドレスを含んではいけません。"
 
 msgid ""
-"Replace ``STORAGE_NODE_MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address "
-"of the management network on the storage node. Replace ``DEVICE_NAME`` with "
-"a storage device name on the same storage node. For example, using the first "
-"storage node in :ref:`swift-storage` with the ``/dev/sdb`` storage device "
-"and weight of 100:"
-msgstr ""
-"``STORAGE_NODE_MANAGEMENT_INTERFACE_IP_ADDRESS`` をストレージノードの管理ネッ"
-"トワークの IP アドレスに置き換えます。``DEVICE_NAME`` を同じストレージノード"
-"のストレージデバイス名に置き換えます。例えば、:ref:`swift-storage` にある 1 "
-"番目のストレージノード、ストレージデバイス ``/dev/sdb`` を使用し、ウェイト "
-"を 100 にします。"
-
-msgid ""
-"Replace ``SWIFT_PASS`` with the password you chose for the ``swift`` user in "
-"the Identity service."
-msgstr ""
-"``SWIFT_PASS`` は Identity サービスで ``swift`` ユーザー用に選択したパスワー"
-"ドで置き換えます。"
-
-msgid ""
 "Replace ``TIME_ZONE`` with an appropriate time zone identifier. For more "
 "information, see the `list of time zones <http://en.wikipedia.org/wiki/"
 "List_of_tz_database_time_zones>`__."
@@ -4456,9 +4018,6 @@ msgstr "SQL データベース"
 msgid "Search in this guide"
 msgstr "ガイド内検索"
 
-msgid "Second node"
-msgstr "2 番目のノード"
-
 msgid ""
 "Secure the database service by running the ``mysql_secure_installation`` "
 "script."
@@ -4568,12 +4127,6 @@ msgstr "このノードのホスト名を ``compute1`` に設定します。"
 msgid "Set the hostname of the node to ``controller``."
 msgstr "このノードのホスト名を ``controller`` に設定します。"
 
-msgid "Set the hostname of the node to ``object1``."
-msgstr "このノードのホスト名を ``object1`` に設定します。"
-
-msgid "Set the hostname of the node to ``object2``."
-msgstr "このノードのホスト名を ``object2`` に設定します。"
-
 msgid ""
 "Set up session storage. See `Set up session storage for the dashboard "
 "<http://docs.openstack.org/admin-guide/dashboard_sessions.html>`__."
@@ -4609,9 +4162,6 @@ msgid ""
 msgstr ""
 "インスタンスの名前と IP アドレスを表示して、 OpenStack クライアントの出力と比"
 "較します。"
-
-msgid "Show the service status:"
-msgstr "サービスの状態を表示します。"
 
 msgid ""
 "Similarly, if your compute nodes use LVM on the operating system disk, you "
@@ -4672,12 +4222,6 @@ msgid ""
 msgstr ""
 "``demo`` クレデンシャルを読み込み、非管理プロジェクトとして以下の手順を実行し"
 "ます。"
-
-# #-#-#-#-#  launch-instance-neutron.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  launch-instance-nova.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  swift-verify.pot (Installation Guide 0.1)  #-#-#-#-#
-msgid "Source the ``demo`` credentials:"
-msgstr "``demo`` のクレデンシャルを読み込みます。"
 
 # #-#-#-#-#  launch-instance-neutron.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  launch-instance-nova.pot (Installation Guide 0.1)  #-#-#-#-#
@@ -4770,13 +4314,6 @@ msgstr ""
 
 msgid "Start the Share File Systems service including its dependencies:"
 msgstr "Share File Systems サービスを依存サービスも含めて開始します。"
-
-msgid "Start the ``rsync`` service:"
-msgstr "``rsync`` サービスを起動します。"
-
-msgid ""
-"Start the ``rsyncd`` service and configure it to start when the system boots:"
-msgstr "``rsyncd`` サービスを起動し、システム起動時に起動するよう設定します。"
 
 msgid ""
 "Start the database service and configure it to start when the system boots:"
@@ -5050,21 +4587,6 @@ msgstr ""
 "ることが推奨されています。"
 
 msgid ""
-"The Object Storage service does not use an SQL database on the controller "
-"node. Instead, it uses distributed SQLite databases on each storage node."
-msgstr ""
-"Object Storage サービスは、コントローラーノードの SQL データベースを使用しま"
-"せん。代わりに、各ストレージノードに分散した SQLite データベースを使用しま"
-"す。"
-
-msgid ""
-"The Object Storage services (swift) work together to provide object storage "
-"and retrieval through a :term:`REST API <RESTful>`."
-msgstr ""
-"OpenStack Object Storage (swift) は、協調動作してオブジェクトストレージを提供"
-"します。 :term:`REST API <RESTful>` 経由でオブジェクト取得をサポートします。"
-
-msgid ""
 "The Object Storage services (swift) work together to provide object storage "
 "and retrieval through a REST API."
 msgstr ""
@@ -5216,24 +4738,11 @@ msgstr ""
 "トワークを有効にすることができません。これは意図的なものです。"
 
 msgid ""
-"The ``rsync`` service requires no authentication, so consider running it on "
-"a private network in production environments."
-msgstr ""
-"``rsync`` サービスは認証を必要としないため、本番環境ではプライベートネット"
-"ワークで実行することを検討してください。"
-
-msgid ""
 "The ``systemctl restart`` command starts each service if not currently "
 "running."
 msgstr ""
 "``systemctl restart`` コマンドは、動作していない場合、各サービスを開始しま"
 "す。"
-
-msgid ""
-"The account server uses the account ring to maintain lists of containers."
-msgstr ""
-"アカウントサーバーは、コンテナーの一覧を管理するために、アカウントリングを使"
-"用します。"
 
 msgid ""
 "The automatic configuration process generates a self-signed SSL certificate. "
@@ -5263,13 +4772,6 @@ msgstr ""
 "は、インスタンスを仮想ネットワークに接続し、:term:`セキュリティーグループ "
 "<security group>` としてインスタンスに対するファイアウォールサービスを提供し"
 "ます。"
-
-msgid ""
-"The container server uses the container ring to maintain lists of objects. "
-"However, it does not track object locations."
-msgstr ""
-"コンテナーサーバーは、オブジェクトの一覧を管理するために、コンテナーリングを"
-"使用します。ただし、オブジェクトの位置の把握は行いません。"
 
 msgid "The controller node requires a minimum of two network interfaces."
 msgstr ""
@@ -5348,13 +4850,6 @@ msgstr ""
 msgid "The instance must use the ``selfservice`` network."
 msgstr ""
 "インスタンスは ``selfservice`` ネットワークを使用しなければいけません。"
-
-msgid ""
-"The object server uses the object ring to maintain lists of object locations "
-"on local devices."
-msgstr ""
-"オブジェクトサーバーは、ローカルデバイスのおけるオブジェクトの位置の一覧を維"
-"持するために、オブジェクトリングを使用します。"
 
 msgid ""
 "The openSUSE distribution uses the concept of patterns to represent "
@@ -5491,21 +4986,6 @@ msgstr ""
 "れます。"
 
 msgid ""
-"The proxy service relies on an authentication and authorization mechanism "
-"such as the Identity service. However, unlike other services, it also offers "
-"an internal mechanism that allows it to operate without any other OpenStack "
-"services. However, for simplicity, this guide references the Identity "
-"service in :doc:`keystone`. Before you configure the Object Storage service, "
-"you must create service credentials and an API endpoint."
-msgstr ""
-"プロキシーサービスは、Identity サービスなどの認証認可機構を必要とします。しか"
-"しながら、他のサービスと異なり、他の OpenStack のサービスなしで動作できる組み"
-"込みの認証認可機能も提供されています。しかしながら、このガイドでは、簡単のた"
-"め、:doc:`keystone` で説明する Identity サービスを参照します。Object Storage "
-"サービスを設定する前に、サービスクレデンシャルと API エンドポイントを作成する"
-"必要があります。"
-
-msgid ""
 "The self-service network uses 172.16.1.0/24 with a gateway on 172.16.1.1. A "
 "DHCP server assigns each instance an IP address from 172.16.1.2 to "
 "172.16.1.254. All instances use 8.8.4.4 as a DNS resolver."
@@ -5575,15 +5055,6 @@ msgid ""
 "successfully completes."
 msgstr ""
 "ビルド処理が正常に終了すると、状態が ``BUILD`` から ``ACTIVE`` に変わります。"
-
-msgid ""
-"The storage node runs many Object Storage services and the :command:`swift-"
-"init` command makes them easier to manage. You can ignore errors from "
-"services not running on the storage node."
-msgstr ""
-"ストレージノードは、多くの Object Storage サービスを実行します。:command:"
-"`swift-init` コマンドにより楽に管理できます。ストレージノードにおいて実行して"
-"いないサービスのエラーは無視できます。"
 
 msgid ""
 "There are two modes of installation. One using ``/horizon`` as the URL, "
@@ -5871,20 +5342,6 @@ msgstr ""
 "き換えることができます。"
 
 msgid ""
-"This section describes how to install and configure storage nodes that "
-"operate the account, container, and object services. For simplicity, this "
-"configuration references two storage nodes, each containing two empty local "
-"block storage devices. The instructions use ``/dev/sdb`` and ``/dev/sdc``, "
-"but you can substitute different values for your particular nodes."
-msgstr ""
-"このセクションでは、アカウントサービス、コンテナーサービス、オブジェクトサー"
-"ビスを実行するストレージノードをインストールして設定する方法を説明します。こ"
-"の設定は簡単のため、それぞれ 2 つの空のローカルブロックストレージデバイスを持"
-"つ、2 つのストレージノードを利用します。この説明では ``/dev/sdb`` と ``/dev/"
-"sdc`` を使用しますが、お使いのノードに合わせて、別の値に置き換えることができ"
-"ます。"
-
-msgid ""
 "This section describes how to install and configure the Block Storage "
 "service, code-named cinder, on the controller node. This service requires at "
 "least one additional storage node that provides volumes to instances."
@@ -5959,27 +5416,6 @@ msgstr ""
 "設定する方法を説明します。"
 
 msgid ""
-"This section describes how to install and configure the proxy service that "
-"handles requests for the account, container, and object services operating "
-"on the storage nodes. For simplicity, this guide installs and configures the "
-"proxy service on the controller node. However, you can run the proxy service "
-"on any node with network connectivity to the storage nodes. Additionally, "
-"you can install and configure the proxy service on multiple nodes to "
-"increase performance and redundancy. For more information, see the "
-"`Deployment Guide <http://docs.openstack.org/developer/swift/"
-"deployment_guide.html>`__."
-msgstr ""
-"このセクションは、プロキシーサービスをインストールして設定する方法を説明しま"
-"す。プロキシーサービスは、ストレージノードで動作するアカウントサービス、コン"
-"テナーサービス、オブジェクトサービスに対するリクエストを処理します。簡単のた"
-"め、このガイドでは、コントローラーノードにプロキシーサービスをインストールし"
-"て設定を行います。ただし、ストレージノードとネットワーク接続性のあるノードで"
-"あれば、任意のノードでプロキシーサービスを実行できます。また、パフォーマンス"
-"と冗長性を向上させるために、複数のノードにプロキシーサービスをインストールし"
-"て設定できます。詳細は `Deployment Guide <http://docs.openstack.org/"
-"developer/swift/deployment_guide.html>`__ を参照してください。"
-
-msgid ""
 "This section explains how to configure the controller and one compute node "
 "using the example architecture."
 msgstr ""
@@ -6000,10 +5436,6 @@ msgstr ""
 "このサービスは 2 つのノードを必要とします。各ノードは、少なくとも 1 つのネッ"
 "トワークインターフェースを必要とします。複数のオブジェクトストレージノードを"
 "配備できます。"
-
-msgid "To create the Identity service credentials, complete these steps:"
-msgstr ""
-"これらの手順をすべて行い、Identity サービスのクレデンシャルを作成します。"
 
 msgid "To create the database, complete the following actions:"
 msgstr "以下の作業を実行して、データベースを作成します。"
@@ -6108,9 +5540,6 @@ msgstr "一時的な環境変数 ``OS_TOKEN`` と ``OS_URL`` を設定解除し�
 
 msgid "Upgrade the packages on your host:"
 msgstr "パッケージをホスト上でアップグレードします:"
-
-msgid "Upload a test file to the ``container1`` container:"
-msgstr "テストファイルをコンテナー ``container1`` にアップロードします。"
 
 msgid ""
 "Upload the image to the Image service using the :term:`QCOW2 <QEMU Copy On "
@@ -6224,17 +5653,11 @@ msgstr ""
 "証します。 Cirros は、OpenStack 環境のテストに役立つ軽量な Linux イメージで"
 "す。"
 
-msgid "Verify operation of the Object Storage service."
-msgstr "Object Storage サービスの動作を検証します。"
-
 msgid "Verify operation of the Shared File Systems service."
 msgstr "Shared File Systems サービスの動作を検証します。"
 
 msgid "Verify operation of the dashboard."
 msgstr "ダッシュボードの動作を検証します。"
-
-msgid "Verify the ring contents:"
-msgstr "リングの内容を検証します。"
 
 msgid ""
 "We recommend disabling EPEL when using RDO packages due to updates in EPEL "
@@ -6375,13 +5798,6 @@ msgstr ""
 "追加することもできます。"
 
 msgid ""
-"Your OpenStack environment now includes Object Storage. You can :ref:`launch-"
-"instance` or add more services to your environment."
-msgstr ""
-"OpenStack 環境に Object Storage が追加されました。:ref:`launch-instance` を行"
-"えます。以降の章に記載されているサービスを環境に追加できます。"
-
-msgid ""
 "Your OpenStack environment now includes the Shared File Systems service. You "
 "can :doc:`launch an instance <launch-instance>` or add more services to your "
 "environment in the following chapters."
@@ -6428,13 +5844,6 @@ msgstr ""
 "順が失敗します。お使いの環境のセキュリティーを向上させる方法についての詳細は "
 "`OpenStack Security Guide <http://docs.openstack.org/sec/>`__ を参照してくだ"
 "さい。"
-
-msgid ""
-"Your environment must at least include the Identity service (keystone) prior "
-"to deploying Object Storage."
-msgstr ""
-"Object Storage を導入する前に、お使いの環境に少なくとも Identity サービス "
-"(keystone) を準備しておく必要があります。"
 
 msgid ""
 "Your hosts must contain the latest versions of base installation packages "
@@ -6586,9 +5995,6 @@ msgstr "``NOVA_PASS``"
 
 msgid "``RABBIT_PASS``"
 msgstr "``RABBIT_PASS``"
-
-msgid "``SWIFT_PASS``"
-msgstr "``SWIFT_PASS``"
 
 msgid "``linuxbridge_agent.ini``:"
 msgstr "``linuxbridge_agent.ini``:"
