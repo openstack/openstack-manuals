@@ -115,7 +115,7 @@ Tags for doc bugs
 
 Depending on the area a bug affects, it has one or more tags. For example:
 
-* **low-hanging-fruit** for documentaion bugs that are straightforward to fix.
+* **low-hanging-fruit** for documentation bugs that are straightforward to fix.
   If you are a newcomer, this is a way to start.
 
 * **sec guide**, **install guide**, **ops-guide**, and other for specific
