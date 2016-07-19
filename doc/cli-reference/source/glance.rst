@@ -9,7 +9,7 @@ Image service command-line client
 The glance client is the command-line interface (CLI) for
 the Image service API and its extensions.
 
-This chapter documents :command:`glance` version ``2.1.0``.
+This chapter documents :command:`glance` version ``2.2.0``.
 
 For help on a specific :command:`glance` command, enter:
 
@@ -236,7 +236,7 @@ Create a new image.
 
 ``--architecture <ARCHITECTURE>``
   Operating system architecture as specified in
-  http://docs.openstack.org/trunk/openstack-compute/admin/content/adding-images.html
+  http://docs.openstack.org/user-guide/common/cli_manage_images.html
 
 ``--protected [True|False]``
   If true, image will not be deletable.
@@ -268,13 +268,14 @@ Create a new image.
   distributor
 
 ``--disk-format <DISK_FORMAT>``
-  Format of the disk Valid values: ami, ari, aki, vhd,
-  vmdk, raw, qcow2, vdi, iso
+  Format of the disk Valid values: None, ami, ari, aki,
+  vhd, vmdk, raw, qcow2, vdi, iso
 
 ``--os-distro <OS_DISTRO>``
   Common name of operating system distribution as
-  specified in http://docs.openstack.org/trunk
-  /openstack-compute/admin/content/adding-images.html
+  specified
+  in
+  http://docs.openstack.org/user-guide/common/cli_manage_images.html
 
 ``--id <ID>``
   An identifier for the image
@@ -290,8 +291,8 @@ Create a new image.
   Amount of ram (in MB) required to boot image.
 
 ``--container-format <CONTAINER_FORMAT>``
-  Format of the container Valid values: ami, ari, aki,
-  bare, ovf, ova, docker
+  Format of the container Valid values: None, ami, ari,
+  aki, bare, ovf, ova, docker
 
 ``--property <key=value>``
   Arbitrary property to associate with image. May be
@@ -529,7 +530,7 @@ Update an existing image.
 
 ``--architecture <ARCHITECTURE>``
   Operating system architecture as specified in
-  http://docs.openstack.org/trunk/openstack-compute/admin/content/adding-images.html
+  http://docs.openstack.org/user-guide/common/cli_manage_images.html
 
 ``--protected [True|False]``
   If true, image will not be deletable.
@@ -558,13 +559,14 @@ Update an existing image.
   distributor
 
 ``--disk-format <DISK_FORMAT>``
-  Format of the disk Valid values: ami, ari, aki, vhd,
-  vmdk, raw, qcow2, vdi, iso
+  Format of the disk Valid values: None, ami, ari, aki,
+  vhd, vmdk, raw, qcow2, vdi, iso
 
 ``--os-distro <OS_DISTRO>``
   Common name of operating system distribution as
-  specified in http://docs.openstack.org/trunk
-  /openstack-compute/admin/content/adding-images.html
+  specified
+  in
+  http://docs.openstack.org/user-guide/common/cli_manage_images.html
 
 ``--owner <OWNER>``
   Owner of the image
@@ -577,8 +579,8 @@ Update an existing image.
   Amount of ram (in MB) required to boot image.
 
 ``--container-format <CONTAINER_FORMAT>``
-  Format of the container Valid values: ami, ari, aki,
-  bare, ovf, ova, docker
+  Format of the container Valid values: None, ami, ari,
+  aki, bare, ovf, ova, docker
 
 ``--property <key=value>``
   Arbitrary property to associate with image. May be
