@@ -9,7 +9,7 @@ Compute service command-line client
 The nova client is the command-line interface (CLI) for
 the Compute service API and its extensions.
 
-This chapter documents :command:`nova` version ``4.1.0``.
+This chapter documents :command:`nova` version ``5.0.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -27,7 +27,6 @@ nova usage
    usage: nova [--version] [--debug] [--os-cache] [--timings]
                [--os-region-name <region-name>] [--service-type <service-type>]
                [--service-name <service-name>]
-               [--volume-service-name <volume-service-name>]
                [--os-endpoint-type <endpoint-type>]
                [--os-compute-api-version <compute-api-ver>]
                [--bypass-url <bypass-url>] [--insecure]
@@ -236,8 +235,8 @@ nova usage
   List all floating IP pools.
 
 ``get-mks-console``
-  Get a serial console to a server. (Supported
-  by API versions '2.8' - '2.latest') [hint: use
+  Get an MKS console to a server. (Supported by
+  API versions '2.8' - '2.latest') [hint: use
   ':option:`--os-compute-api-version`' flag to show help
   message for proper version]
 
@@ -758,14 +757,16 @@ nova usage
   Show a tenant network.
 
 ``baremetal-interface-list``
-  List network interfaces associated with a
-  baremetal node.
+  **DEPRECATED**: List network interfaces associated
+  with a baremetal node.
 
 ``baremetal-node-list``
-  Print list of available baremetal nodes.
+  **DEPRECATED**: Print list of available baremetal
+  nodes.
 
 ``baremetal-node-show``
-  Show information about a baremetal node.
+  **DEPRECATED**: Show information about a baremetal
+  node.
 
 ``host-evacuate-live``
   Live migrate all instances of the specified
@@ -804,9 +805,6 @@ nova optional arguments
 
 ``--service-name <service-name>``
   Defaults to ``env[NOVA_SERVICE_NAME]``.
-
-``--volume-service-name <volume-service-name>``
-  Defaults to ``env[NOVA_VOLUME_SERVICE_NAME]``.
 
 ``--os-endpoint-type <endpoint-type>``
   Defaults to ``env[NOVA_ENDPOINT_TYPE]``,
@@ -1134,49 +1132,6 @@ Backup a server by creating a 'backup' type snapshot.
 ``<rotation>``
   Int parameter representing how many backups to keep around.
 
-.. _nova_baremetal-interface-list:
-
-nova baremetal-interface-list
------------------------------
-
-.. code-block:: console
-
-   usage: nova baremetal-interface-list <node>
-
-List network interfaces associated with a baremetal node.
-
-**Positional arguments:**
-
-``<node>``
-  ID of node
-
-.. _nova_baremetal-node-list:
-
-nova baremetal-node-list
-------------------------
-
-.. code-block:: console
-
-   usage: nova baremetal-node-list
-
-Print list of available baremetal nodes.
-
-.. _nova_baremetal-node-show:
-
-nova baremetal-node-show
-------------------------
-
-.. code-block:: console
-
-   usage: nova baremetal-node-show <node>
-
-Show information about a baremetal node.
-
-**Positional arguments:**
-
-``<node>``
-  ID of node
-
 .. _nova_boot:
 
 nova boot
@@ -1282,12 +1237,13 @@ Boot a new server.
   honoured only if device type is supplied)
   type=device type (e.g. disk, cdrom, ...;
   defaults to 'disk') device=name of the device
-  (e.g. vda, xda, ...; if omitted, hypervisor
-  driver chooses suitable device depending on
-  selected bus; note the libvirt driver always
-  uses default device names), size=size of the
-  block device in MB(for swap) and in GB(for
-  other formats) (if omitted, hypervisor driver
+  (e.g. vda, xda, ...; tag=device metadata tag
+  (optional) if omitted, hypervisor driver
+  chooses suitable device depending on selected
+  bus; note the libvirt driver always uses
+  default device names), size=size of the block
+  device in MB(for swap) and in GB(for other
+  formats) (if omitted, hypervisor driver
   calculates size), format=device will be
   formatted (e.g. swap, ntfs, ...; optional),
   bootindex=integer used for ordering the boot
@@ -1295,7 +1251,7 @@ Boot a new server.
   to 0, for others need to be specified) and
   shutdown=shutdown behaviour (either preserve
   or remove, for local destination set to
-  remove).
+  remove). (Supported by API versions '2.32' -'2.latest')
 
 ``--swap <swap_size>``
   Create and attach a local swap block device of
@@ -1317,7 +1273,7 @@ Boot a new server.
   to
   create
   multiple
-  NICs.
+  nics.
   net-id:
   attach
   NIC
@@ -1338,8 +1294,10 @@ Boot a new server.
   provided), v4-fixed-ip: IPv4 fixed address for
   NIC (optional), v6-fixed-ip: IPv6 fixed
   address for NIC (optional), port-id: attach
-  NIC to port with this UUID (either port-id or
-  net-id must be provided).
+  NIC to port with this UUID tag: interface
+  metadata tag (optional) (either port-id or
+  net-id must be provided). (Supported by API
+  versions '2.32' - '2.latest')
 
 ``--config-drive <value>``
   Enable config drive.
@@ -1691,7 +1649,7 @@ nova evacuate
 
 .. code-block:: console
 
-   usage: nova evacuate [--password <password>] <server> [<host>]
+   usage: nova evacuate [--password <password>] [--force] <server> [<host>]
 
 Evacuate server from failed host.
 
@@ -1710,6 +1668,10 @@ Evacuate server from failed host.
   Set the provided admin password on the evacuated
   server. Not applicable if the server is on shared
   storage.
+
+``--force``
+  Force to not verify the scheduler if a host is
+  provided. (Supported by API versions '2.29' -'2.latest')
 
 .. _nova_fixed-ip-get:
 
@@ -2128,8 +2090,7 @@ nova get-mks-console
 
    usage: nova get-mks-console <server>
 
-Get a serial console to a server. (Supported by API versions '2.8' -
-'2.latest')
+Get an MKS console to a server. (Supported by API versions '2.8' - '2.latest')
 [hint:
 use
 ':option:`--os-compute-api-version`'
@@ -2138,7 +2099,9 @@ to
 show
 help
 message
-for proper version]
+for
+proper
+version]
 
 **Positional arguments:**
 
@@ -2291,7 +2254,7 @@ nova host-evacuate
 
 .. code-block:: console
 
-   usage: nova host-evacuate [--target_host <target_host>] <host>
+   usage: nova host-evacuate [--target_host <target_host>] [--force] <host>
 
 Evacuate all instances from failed host.
 
@@ -2306,6 +2269,10 @@ Evacuate all instances from failed host.
   Name of target host. If no host is specified
   the scheduler will select a target.
 
+``--force``
+  Force to not verify the scheduler if a host is
+  provided. (Supported by API versions '2.29' -'2.latest')
+
 .. _nova_host-evacuate-live:
 
 nova host-evacuate-live
@@ -2314,7 +2281,7 @@ nova host-evacuate-live
 .. code-block:: console
 
    usage: nova host-evacuate-live [--target-host <target_host>] [--block-migrate]
-                                  [--max-servers <max_servers>]
+                                  [--max-servers <max_servers>] [--force]
                                   <host>
 
 Live migrate all instances of the specified host to other available hosts.
@@ -2336,6 +2303,10 @@ Live migrate all instances of the specified host to other available hosts.
 ``--max-servers <max_servers>``
   Maximum number of servers to live migrate
   simultaneously
+
+``--force``
+  Force to not verify the scheduler if a host is
+  provided. (Supported by API versions '2.30' -'2.latest')
 
 .. _nova_host-list:
 
@@ -2942,7 +2913,7 @@ nova live-migration
 
 .. code-block:: console
 
-   usage: nova live-migration [--block-migrate] <server> [<host>]
+   usage: nova live-migration [--block-migrate] [--force] <server> [<host>]
 
 Migrate running server to a new machine.
 
@@ -2960,6 +2931,10 @@ Migrate running server to a new machine.
   True in case of block_migration.
   (Default=auto:live_migration) (Supported by API versions
   '2.25' - '2.latest')
+
+``--force``
+  Force to not verify the scheduler if a host is provided.
+  (Supported by API versions '2.30' - '2.latest')
 
 .. _nova_live-migration-abort:
 
@@ -3462,7 +3437,7 @@ nova quota-show
 
 .. code-block:: console
 
-   usage: nova quota-show [--tenant <tenant-id>] [--user <user-id>]
+   usage: nova quota-show [--tenant <tenant-id>] [--user <user-id>] [--detail]
 
 List the quotas for a tenant/user.
 
@@ -3473,6 +3448,9 @@ List the quotas for a tenant/user.
 
 ``--user <user-id>``
   ID of user to list the quotas for.
+
+``--detail``
+  Show detailed info (limit, reserved, in-use).
 
 .. _nova_quota-update:
 
