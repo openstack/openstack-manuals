@@ -9,7 +9,7 @@ Bare Metal service command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.4.0``.
+This chapter documents :command:`ironic` version ``1.5.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -157,8 +157,7 @@ ironic usage
   Call a vendor-passthru extension for a driver.
 
 ``bash-completion``
-  Prints all of the commands and options for bash-
-  completion.
+  Prints all of the commands and options for bash-completion.
 
 ``help``
   Display help about this program or one of its
@@ -570,6 +569,7 @@ ironic node-create
    usage: ironic node-create [-c <chassis>] -d <driver> [-i <key=value>]
                              [-p <key=value>] [-e <key=value>] [-u <uuid>]
                              [-n <name>]
+                             [--network-interface <network_interface>]
 
 Register a new node with the Ironic service.
 
@@ -600,6 +600,10 @@ Register a new node with the Ironic service.
 
 ``-n <name>, --name <name>``
   Unique name for the node.
+
+``--network-interface <network_interface>``
+  Network interface used for switching node to
+  cleaning/provisioning networks.
 
 .. _ironic_node-delete:
 
@@ -1057,7 +1061,9 @@ ironic port-create
 
 .. code-block:: console
 
-   usage: ironic port-create -a <address> -n <node> [-e <key=value>] [-u <uuid>]
+   usage: ironic port-create -a <address> -n <node> [-l <key=value>]
+                             [--pxe-enabled <boolean>] [-e <key=value>]
+                             [-u <uuid>]
 
 Create a new port.
 
@@ -1068,6 +1074,15 @@ Create a new port.
 
 ``-n <node>, --node <node>, --node_uuid <node>``
   UUID of the node that this port belongs to.
+
+``-l <key=value>, --local-link-connection <key=value>``
+  Key/value metadata describing Local link connection
+  information. Valid keys are switch_info, switch_id,
+  port_id.Can be specified multiple times.
+
+``--pxe-enabled <boolean>``
+  Indicates whether this Port should be used when PXE
+  booting this Node.
 
 ``-e <key=value>, --extra <key=value>``
   Record arbitrary key/value metadata. Can be specified
