@@ -11,7 +11,7 @@ To indicate the hierarchical type of files for filenames:
 
 * Follow a page-based, topical approach to file naming and do not apply
   any special prefixes.
-* Use hyphens as space delimiters.
+* Use hyphens as space delimiters for `search optimization <https://support.google.com/webmasters/answer/76329>`_.
 
 For example, ``technical-considerations-multi-site.rst``.
 
