@@ -232,13 +232,13 @@ To configure the volume driver, follow the steps below:
 
    In Mitaka, the ``volume-driver`` value for every product is as below:
 
-     .. code-block:: ini
+   .. code-block:: ini
 
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiISCSIDriver
+      # For iSCSI
+      volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiISCSIDriver
 
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
+      # For FC
+      volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
 
 #. Run the :command:`service cinder-volume restart` command to restart the
    Block Storage service.
