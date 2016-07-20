@@ -72,7 +72,7 @@ service:
       cleaning_network_uuid=$UUID
       provisioning_network_uuid=$UUID
 
-   .. warning:: The ``cleaning_network_uuid`` and ``privisioning_network_uuid``
+   .. warning:: The ``cleaning_network_uuid`` and ``provisioning_network_uuid``
     parameters are required for the ``neutron`` network interface. If they are
     not set, ``ironic-conductor`` fails to start.
 
