@@ -107,9 +107,9 @@ configuration file directs image traffic to the compute node.
    backed by network storage rather than a local disk.
 
 When you delete an instance, the state is reclaimed with the exception
-of the persistent volume. The ephemeral storage is purged. Memory and
-vCPU resources are released. The image remains unchanged throughout this
-process.
+of the persistent volume. The ephemeral storage, whether encrypted or not,
+is purged. Memory and vCPU resources are released. The image remains
+unchanged throughout this process.
 
 |
 
