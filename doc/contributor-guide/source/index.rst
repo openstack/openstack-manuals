@@ -17,15 +17,13 @@ Contents
    :maxdepth: 2
 
    quickstart.rst
-   additional-git-workflow.rst
    doc-bugs.rst
    docs-review.rst
    team-structure.rst
    blueprints-and-specs.rst
    api-guides.rst
    project-install-guide
-   topic-structure.rst
-   topic-tags.rst
+   writing-docs.rst
    writing-style.rst
    ui-text-guidelines.rst
    rst-conv.rst
