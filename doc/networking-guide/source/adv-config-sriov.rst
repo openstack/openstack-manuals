@@ -310,7 +310,7 @@ Enable neutron sriov-agent (Compute)
       physical_device_mappings = physnet2:eth3
       exclude_devices =
 
-  .. note::
+   .. note::
 
       The ``physical_device_mappings`` parameter is not limited to be a 1-1
       mapping between physnets and NICs. This enables you to map the same
