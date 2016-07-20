@@ -15,130 +15,115 @@ If you need to install the source package for the command-line package,
 the following table lists the software needed to run the
 command-line clients, and provides installation instructions as needed.
 
-+-----------------------+-----------------------------------------------------+
-| Prerequisite          | Description                                         |
-+=======================+=====================================================+
-| Python 2.7 or later   | Currently, the clients do not support Python 3.     |
-+-----------------------+-----------------------------------------------------+
-| setuptools package    | Installed by default on Mac OS X.                   |
-|                       |                                                     |
-|                       | Many Linux distributions provide packages to make   |
-|                       | setuptools easy to install. Search your package     |
-|                       | manager for setuptools to find an installation      |
-|                       | package. If you cannot find one, download the       |
-|                       | setuptools package directly from                    |
-|                       | https://pypi.python.org/pypi/setuptools.            |
-|                       |                                                     |
-|                       | The recommended way to install setuptools on        |
-|                       | Microsoft Windows is to follow the documentation    |
-|                       | provided on the setuptools website                  |
-|                       | (https://pypi.python.org/pypi/setuptools).          |
-|                       | Another option is to use the unofficial binary      |
-|                       | installer maintained by Christoph Gohlke            |
-|                       | (`http://www.lfd.uci.edu/~gohlke/pythonlibs/        |
-|                       | #setuptools <http://www.lfd.uci.edu/~gohlke/        |
-|                       | pythonlibs/#setuptools>`__).                        |
-+-----------------------+-----------------------------------------------------+
-| pip package           | To install the clients on a Linux, Mac OS X, or     |
-|                       | Microsoft Windows system, use pip. It is easy to    |
-|                       | use, ensures that you get the latest version of the |
-|                       | clients from the                                    |
-|                       | `Python Package Index <https://pypi.python.org/>`__,|
-|                       | and lets you update or remove the packages later on.|
-|                       |                                                     |
-|                       | Since the installation process compiles source      |
-|                       | files, this requires the related Python development |
-|                       | package for your operating system and distribution. |
-|                       |                                                     |
-|                       | Install pip through the package manager for your    |
-|                       | system:                                             |
-|                       |                                                     |
-|                       | **MacOS**                                           |
-|                       |                                                     |
-|                       | .. code-block:: console                             |
-|                       |                                                     |
-|                       |    # easy_install pip                               |
-|                       |                                                     |
-|                       | **Microsoft Windows**                               |
-|                       |                                                     |
-|                       | Ensure that the ``C:\Python27\Scripts`` directory is|
-|                       | defined in the ``PATH`` environment variable, and   |
-|                       | use the ``easy_install`` command from the setuptools|
-|                       | package:                                            |
-|                       |                                                     |
-|                       | .. code-block:: console                             |
-|                       |                                                     |
-|                       |    C:\>easy_install pip                             |
-|                       |                                                     |
-|                       | Another option is to use the unofficial binary      |
-|                       | installer provided by Christoph Gohlke              |
-|                       | (http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip).   |
-|                       |                                                     |
-|                       | **Ubuntu or Debian**                                |
-|                       |                                                     |
-|                       | .. code-block:: console                             |
-|                       |                                                     |
-|                       |    # apt-get install python-dev python-pip          |
-|                       |                                                     |
-|                       | Note that extra dependencies may be required, per   |
-|                       | operating system, depending on the package being    |
-|                       | installed, such as is the case with Tempest.        |
-|                       |                                                     |
-|                       | **Red Hat Enterprise Linux, CentOS, or Fedora.**    |
-|                       |                                                     |
-|                       | A packaged version enables you to use yum to install|
-|                       | the package:                                        |
-|                       |                                                     |
-|                       | .. code-block:: console                             |
-|                       |                                                     |
-|                       |    # yum install python-devel python-pip            |
-|                       |                                                     |
-|                       | There are also packaged versions of the clients     |
-|                       | available in `RDO <https://www.rdoproject.org/>`__  |
-|                       | that enable yum to install the clients as described |
-|                       | in Installing_from_packages_.                       |
-|                       |                                                     |
-|                       | **SUSE Linux Enterprise Server**                    |
-|                       |                                                     |
-|                       | A packaged version available in the Open Build      |
-|                       | Service (`https://build.opensuse.org/package/show?  |
-|                       | package=python-pip&project=Cloud:OpenStack:Master   |
-|                       | <https://build.opensuse.org/package/show?package=pyt|
-|                       | hon-pip&project=Cloud:OpenStack:Master>`__)         |
-|                       | enables you to use YaST or zypper to install the    |
-|                       | package.                                            |
-|                       |                                                     |
-|                       | First, add the Open Build Service repository:       |
-|                       |                                                     |
-|                       | .. code-block:: console                             |
-|                       |                                                     |
-|                       |    # zypper addrepo -f obs://Cloud:OpenStack: \     |
-|                       |    Liberty/SLE_12 Liberty                           |
-|                       |                                                     |
-|                       | Then install pip and use it to manage client        |
-|                       | installation:                                       |
-|                       |                                                     |
-|                       | .. code-block:: console                             |
-|                       |                                                     |
-|                       |    # zypper install python-devel python-pip         |
-|                       |                                                     |
-|                       | There are also packaged versions of the clients     |
-|                       | available that enable zypper to install the clients |
-|                       | as described in Installing_from_packages_.          |
-|                       |                                                     |
-|                       | **openSUSE**                                        |
-|                       |                                                     |
-|                       | You can install pip and use it to manage client     |
-|                       | installation:                                       |
-|                       |                                                     |
-|                       | .. code-block:: console                             |
-|                       |                                                     |
-|                       |    # zypper install python-devel python-pip         |
-|                       |                                                     |
-|                       | There are also packaged versions of the clients     |
-|                       | available that enable zypper to install the clients |
-|                       | as described in Installing_from_packages_.          |
-+-----------------------+-----------------------------------------------------+
+.. list-table:: OpenStack command-line clients prerequisites
+   :header-rows: 1
+   :widths: 20 80
+
+   * - Prerequisite
+     - Description
+   * - Python 2.7 or later
+     - Currently, the clients do not support Python 3.
+   * - setuptools package
+     - Installed by default on Mac OS X.
+
+       Many Linux distributions provide packages to make setuptools
+       easy to install. Search your package manager for setuptools to
+       find an installation package.
+       If you cannot find one, download the setuptools package
+       directly from https://pypi.python.org/pypi/setuptools.
+
+       The recommended way to install setuptools on Microsoft Windows
+       is to follow the documentation provided on the setuptools website
+       (https://pypi.python.org/pypi/setuptools).
+
+       Another option is to use the unofficial binary installer
+       maintained by Christoph Gohlke
+       (http://www.lfd.uci.edu/~gohlke/pythonlibs/#setuptools).
+   * - pip package
+     - To install the clients on a Linux, Mac OS X, or Microsoft Windows
+       system, use pip. It is easy to use, ensures that you get the latest
+       version of the clients from the `Python Package Index
+       <https://pypi.python.org/>`__, and lets you update or remove
+       the packages later on.
+
+       Since the installation process compiles source files, this requires
+       the related Python development package for your operating system
+       and distribution.
+
+       Install pip through the package manager for your system:
+
+       **MacOS**
+
+       .. code-block:: console
+
+          # easy_install pip
+
+       **Microsoft Windows**
+
+       Ensure that the ``C:\Python27\Scripts`` directory is defined in the
+       ``PATH`` environment variable, and use the ``easy_install`` command
+       from the setuptools package:
+
+       .. code-block:: console
+
+          C:\>easy_install pip
+
+       Another option is to use the unofficial binary installer provided by
+       Christoph Gohlke (http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip).
+
+       **Ubuntu or Debian**
+
+       .. code-block:: console
+
+          # apt install python-dev python-pip
+
+       Note that extra dependencies may be required, per operating system,
+       depending on the package being installed, such as is the case with
+       Tempest.
+
+       **Red Hat Enterprise Linux, CentOS, or Fedora**
+
+       A packaged version enables you to use yum to install the package:
+
+       .. code-block:: console
+
+          # yum install python-devel python-pip
+
+       There are also packaged versions of the clients available in
+       `RDO <https://www.rdoproject.org/>`__ that enable yum to install
+       the clients as described in Installing_from_packages_.
+
+       **SUSE Linux Enterprise Server**
+
+       A packaged version available in `the Open Build Service
+       <https://build.opensuse.org/package/show?package=python-pip&project=Cloud:OpenStack:Master>`__
+       enables you to use YaST or zypper to install the package.
+
+       First, add the Open Build Service repository:
+
+       .. code-block:: console
+
+          # zypper addrepo -f obs://Cloud:OpenStack:Liberty/SLE_12 Liberty
+
+       Then install pip and use it to manage client installation:
+
+       .. code-block:: console
+
+          # zypper install python-devel python-pip
+
+       There are also packaged versions of the clients available that enable
+       zypper to install the clients as described in Installing_from_packages_.
+
+       **openSUSE**
+
+       You can install pip and use it to manage client installation:
+
+       .. code-block:: console
+
+          # zypper install python-devel python-pip
+
+       There are also packaged versions of the clients available that enable
+       zypper to install the clients as described in Installing_from_packages_.
 
 Install the OpenStack client
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
