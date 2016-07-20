@@ -103,7 +103,7 @@ command-line clients, and provides installation instructions as needed.
 
        .. code-block:: console
 
-          # zypper addrepo -f obs://Cloud:OpenStack:Liberty/SLE_12 Liberty
+          # zypper addrepo -f obs://Cloud:OpenStack:Mitaka/SLE_12_SP1 Mitaka
 
        Then install pip and use it to manage client installation:
 
@@ -232,7 +232,7 @@ that can be installed without ``pip``.
 
    .. code-block:: console
 
-      # zypper addrepo -f obs://Cloud:OpenStack:Liberty/SLE_12 Liberty
+      # zypper addrepo -f obs://Cloud:OpenStack:Mitaka/SLE_12_SP1 Mitaka
 
    Then you can install the packages:
 
