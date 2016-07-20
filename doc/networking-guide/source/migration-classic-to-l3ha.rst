@@ -1,6 +1,8 @@
-===============
-Legacy to L3 HA
-===============
+.. _migration-classic-to-l3ha:
+
+======================
+Classic to VRRP (L3HA)
+======================
 
 This section describes the process of migrating from a classic router to an L3
 HA router, which is available starting from the Mitaka release.

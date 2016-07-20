@@ -147,7 +147,7 @@ The compute nodes contain the following network components:
 #. Conventional Linux bridges handling security groups. Optionally, a native
    OVS implementation can handle security groups. However, due to kernel and
    OVS version requirements for it, this scenario uses conventional Linux
-   bridges. See :ref:`adv-config-ovsfwdriver` for more information.
+   bridges. See :ref:`config-ovsfwdriver` for more information.
 
 .. figure:: figures/scenario-provider-ovs-compute1.png
    :alt: Compute node components - overview
@@ -415,7 +415,7 @@ Controller node
         `Installation Guide <http://docs.openstack.org/mitaka/install-guide-ubuntu/horizon-install.html>`__
         for more information.
 
-   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
+   * If necessary, :ref:`configure MTU <config-mtu>`.
 
 #. In the ``ml2_conf.ini`` file:
 
