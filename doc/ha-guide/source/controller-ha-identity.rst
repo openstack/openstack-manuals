@@ -119,7 +119,7 @@ of an OpenStack Identity server as you would do
 in a non-HA environment.
 
 #. For OpenStack Compute, for example,
-   if your OpenStack Identiy service IP address is 10.0.0.11,
+   if your OpenStack Identity service IP address is 10.0.0.11,
    use the following configuration in your :file:`api-paste.ini` file:
 
    .. code-block:: ini
