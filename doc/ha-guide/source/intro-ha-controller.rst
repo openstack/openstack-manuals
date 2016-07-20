@@ -39,7 +39,7 @@ and expected SLA.]
 See :doc:`networking-ha` for more information about configuring
 Networking for high availability.
 
-Common deployement architectures
+Common deployment architectures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are primarily two HA architectures in use today.

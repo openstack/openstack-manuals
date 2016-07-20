@@ -115,7 +115,7 @@ steps on each cluster node:
       # firewall-cmd --add-port=4568/tcp
       # firewall-cmd --add-port=4444/tcp
 
-   In the event that you also want to configure mutlicast replication,
+   In the event that you also want to configure multicast replication,
    run this command as well:
 
    .. code-block:: console

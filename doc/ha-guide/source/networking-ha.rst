@@ -14,7 +14,7 @@ Notes from planning outline:
   we should simply mention physical network HA methods
   such as bonding and additional node/network requirements
   for L3HA and DVR for planning purposes.
-- Neutron agents shuld be described for active/active;
+- Neutron agents should be described for active/active;
   deprecate single agent's instances case.
 - For Kilo and beyond, focus on L3HA and DVR.
 - Link to `OpenStack Networking Guide <http://docs.openstack.org/networking-guide/>`_
