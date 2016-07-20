@@ -64,21 +64,53 @@ Configuration
 
 To enable the service, follow the steps below:
 
-On server side:
+On network nodes:
 
-* Enable ``qos`` service in ``service_plugins``.
-* Set the needed ``notification_drivers`` in ``[qos]`` section
-  (``message_queue`` is the default).
-* For ml2, add ``qos`` to ``extension_drivers`` in ``[ml2]`` section.
+#. Add the QoS service to the ``service_plugins`` setting in
+   ``/etc/neutron/neutron.conf``. For example:
 
-On agent side:
+   .. code-block:: ini
 
-* Add ``qos`` to extensions in ``[agent]`` section.
+      service_plugins = \
+      neutron.services.l3_router.l3_router_plugin.L3RouterPlugin,
+      neutron.services.metering.metering_plugin.MeteringPlugin,
+      neutron.services.qos.qos_plugin.QoSPlugin
+
+#. Optionally, set the needed ``notification_drivers`` in the ``[qos]``
+   section in ``/etc/neutron/neutron.conf`` (``message_queue`` is the
+   default).
+
+#. In ``/etc/neutron/plugins/ml2/ml2_conf.ini``, add ``qos`` to
+   ``extension_drivers`` in the ``[ml2]`` section. For example:
+
+   .. code-block:: ini
+
+      [ml2]
+      extension_drivers = port_security, qos
+
+#. If the Open vSwitch agent is being used, set ``extensions`` to
+   ``qos`` in the ``[agent]`` section of
+   ``/etc/neutron/plugins/ml2/openvswitch_agent.ini``. For example:
+
+   .. code-block:: ini
+
+      [agent]
+      extensions = qos
+
+On compute nodes:
+
+#. In ``/etc/neutron/plugins/ml2/ml2_conf.ini``, add ``qos`` to the
+   ``extensions`` setting in the ``[agent]`` section. For example:
+
+   .. code-block:: ini
+
+      [agent]
+      extensions = qos
 
 .. note::
 
-   QoS currently works with ml2 only (SR-IOV, Open vSwitch, and linuxbridge are
-   drivers that are enabled for QoS in Mitaka release).
+   QoS currently works with ml2 only (SR-IOV, Open vSwitch, and linuxbridge
+   are drivers that are enabled for QoS in Mitaka release).
 
 Trusted tenants policy.json configuration
 -----------------------------------------
