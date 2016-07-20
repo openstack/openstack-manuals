@@ -1,6 +1,8 @@
-=============================================================
-Migrate legacy nova-network to OpenStack Networking (neutron)
-=============================================================
+.. _migration-nova-to-neutron:
+
+=====================================================
+Legacy nova-network to OpenStack Networking (neutron)
+=====================================================
 
 Two networking models exist in OpenStack. The first is called legacy
 networking (:term:`nova-network`) and it is a sub-process embedded in

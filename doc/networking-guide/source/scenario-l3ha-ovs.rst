@@ -163,7 +163,7 @@ The compute nodes contain the following components:
 #. Conventional Linux bridges handling security groups. Optionally, a native
    OVS implementation can handle security groups. However, due to kernel and
    OVS version requirements for it, this scenario uses conventional Linux
-   bridges. See :ref:`adv-config-ovsfwdriver` for more information.
+   bridges. See :ref:`config-ovsfwdriver` for more information.
 
 .. figure:: figures/scenario-l3ha-ovs-compute1.png
    :alt: Compute node components - overview
@@ -226,7 +226,7 @@ Controller node
         You can increase the ``dhcp_agents_per_network`` value up to the
         number of nodes running the DHCP agent.
 
-   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
+   * If necessary, :ref:`configure MTU <config-mtu>`.
 
 #. In the ``ml2_conf.ini`` file:
 
@@ -277,7 +277,7 @@ Controller node
         [securitygroup]
         firewall_driver = iptables_hybrid
 
-   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
+   * If necessary, :ref:`configure MTU <config-mtu>`.
 
 #. Start the following services:
 

@@ -1,6 +1,8 @@
-============================
-Disabling libvirt networking
-============================
+.. _misc-disable-libvirt-networking:
+
+==========================
+Disable libvirt networking
+==========================
 
 Most OpenStack deployments use the `libvirt <http://libvirt.org>`__
 toolkit for interacting with the

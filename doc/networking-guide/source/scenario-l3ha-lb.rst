@@ -218,7 +218,7 @@ Controller node
         You can increase the ``dhcp_agents_per_network`` value up to the
         number of nodes running the DHCP agent.
 
-   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
+   * If necessary, :ref:`configure MTU <config-mtu>`.
 
 #. In the ``ml2_conf.ini`` file:
 
@@ -266,7 +266,7 @@ Controller node
         [securitygroup]
         firewall_driver = iptables
 
-   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
+   * If necessary, :ref:`configure MTU <config-mtu>`.
 
 #. Start the following services:
 
