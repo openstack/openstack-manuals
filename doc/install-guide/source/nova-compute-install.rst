@@ -63,63 +63,61 @@ Install and configure components
 2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
 
-   .. only:: obs or rdo or ubuntu
+   * In the ``[DEFAULT]`` section, enable only the compute and
+     metadata APIs:
 
-      * In the ``[DEFAULT]`` section, enable only the compute and
-        metadata APIs:
+     .. code-block:: ini
 
-        .. code-block:: ini
+        [DEFAULT]
+        ...
+        enabled_apis = osapi_compute,metadata
 
-           [DEFAULT]
-           ...
-           enabled_apis = osapi_compute,metadata
+   * In the ``[DEFAULT]`` and [oslo_messaging_rabbit]
+     sections, configure ``RabbitMQ`` message queue access:
 
-      * In the ``[DEFAULT]`` and [oslo_messaging_rabbit]
-        sections, configure ``RabbitMQ`` message queue access:
+     .. code-block:: ini
 
-        .. code-block:: ini
+        [DEFAULT]
+        ...
+        rpc_backend = rabbit
 
-           [DEFAULT]
-           ...
-           rpc_backend = rabbit
+        [oslo_messaging_rabbit]
+        ...
+        rabbit_host = controller
+        rabbit_userid = openstack
+        rabbit_password = RABBIT_PASS
 
-           [oslo_messaging_rabbit]
-           ...
-           rabbit_host = controller
-           rabbit_userid = openstack
-           rabbit_password = RABBIT_PASS
+     Replace ``RABBIT_PASS`` with the password you chose for
+     the ``openstack`` account in ``RabbitMQ``.
 
-        Replace ``RABBIT_PASS`` with the password you chose for
-        the ``openstack`` account in ``RabbitMQ``.
+   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
+     configure Identity service access:
 
-      * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
-        configure Identity service access:
+     .. code-block:: ini
 
-        .. code-block:: ini
+        [DEFAULT]
+        ...
+        auth_strategy = keystone
 
-           [DEFAULT]
-           ...
-           auth_strategy = keystone
+        [keystone_authtoken]
+        ...
+        auth_uri = http://controller:5000
+        auth_url = http://controller:35357
+        memcached_servers = controller:11211
+        auth_type = password
+        project_domain_name = default
+        user_domain_name = default
+        project_name = service
+        username = nova
+        password = NOVA_PASS
 
-           [keystone_authtoken]
-           ...
-           auth_uri = http://controller:5000
-           auth_url = http://controller:35357
-           memcached_servers = controller:11211
-           auth_type = password
-           project_domain_name = default
-           user_domain_name = default
-           project_name = service
-           username = nova
-           password = NOVA_PASS
+     Replace ``NOVA_PASS`` with the password you chose for the
+     ``nova`` user in the Identity service.
 
-        Replace ``NOVA_PASS`` with the password you chose for the
-        ``nova`` user in the Identity service.
+     .. note::
 
-        .. note::
-
-           Comment out or remove any other options in the
-           ``[keystone_authtoken]`` section.
+        Comment out or remove any other options in the
+        ``[keystone_authtoken]`` section.
 
    .. only:: debian
 
@@ -153,21 +151,21 @@ Install and configure components
         typically 10.0.0.31 for the first node in the
         :ref:`example architecture <overview-example-architectures>`.
 
-   * In the ``[DEFAULT]`` section, enable support for the Networking service:
+      * In the ``[DEFAULT]`` section, enable support for the Networking service:
 
-     .. code-block:: ini
+        .. code-block:: ini
 
-        [DEFAULT]
-        ...
-        use_neutron = True
-        firewall_driver = nova.virt.firewall.NoopFirewallDriver
+           [DEFAULT]
+           ...
+           use_neutron = True
+           firewall_driver = nova.virt.firewall.NoopFirewallDriver
 
-     .. note::
+        .. note::
 
-        By default, Compute uses an internal firewall service. Since
-        Networking includes a firewall service, you must disable the Compute
-        firewall service by using the
-        ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
+           By default, Compute uses an internal firewall service. Since
+           Networking includes a firewall service, you must disable the Compute
+           firewall service by using the
+           ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
 
    * In the ``[vnc]`` section, enable and configure remote console access:
 
