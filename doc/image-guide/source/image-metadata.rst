@@ -79,7 +79,7 @@ Metadata definition service
 With this service you can define:
 
 Namespace
- * Contains metadata definitons.
+ * Contains metadata definitions.
 
  * Specifies the access controls for everything defined in the namespace.
    These access controls determine who can define and use the definitions
