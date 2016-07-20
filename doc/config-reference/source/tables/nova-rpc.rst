@@ -30,10 +30,6 @@
      - (Integer) The default number of seconds that poll should wait. Poll raises timeout exception when timeout expired.
    * - ``rpc_response_timeout`` = ``60``
      - (Integer) Seconds to wait for a response from a call.
-   * - **[cells]**
-     -
-   * - ``rpc_driver_queue_base`` = ``cells.intercell``
-     - (String) RPC driver queue base When sending a message to another cell by JSON-ifying the message and making an RPC cast to 'process_message', a base queue is used. This option defines the base queue name to be used when communicating between cells. Various topics by message type will be appended to this. Possible values: * The base queue name to be used when communicating between cells. Services which consume this: * nova-cells Related options: * None
    * - **[oslo_concurrency]**
      -
    * - ``disable_process_locking`` = ``False``
