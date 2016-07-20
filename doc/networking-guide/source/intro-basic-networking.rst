@@ -207,7 +207,7 @@ For example, to send an ARP request to IP address ``10.30.0.132``:
 
 .. code-block:: console
 
-   $ arping 10.30.0.132
+   $ arping -I eth0 10.30.0.132
    ARPING 10.30.0.132 from 10.30.0.131 eth0
    Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.670ms
    Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.722ms
