@@ -8,7 +8,7 @@ hardware that it runs on, rather than exposing specifics about the underlying
 host platforms. This abstraction manifests itself in many ways. For example,
 rather than exposing the types and topologies of CPUs running on hosts, the
 service exposes a number of generic CPUs (virtual CPUs, or vCPUs) and allows
-for overcommiting of these. In a similar manner, rather than exposing the
+for overcommitting of these. In a similar manner, rather than exposing the
 individual types of network devices available on hosts, generic
 software-powered network ports are provided. These features are designed to
 allow high resource utilization and allows the service to provide a generic
