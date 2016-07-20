@@ -71,9 +71,9 @@ Red Hat
 For Red Hat Enterprise Linux and Red Hat-based Linux distributions,
 the process is simpler as they use the standard Systemd unit files.
 
-   .. code-block:: console
+.. code-block:: console
 
-      # pcs resource create openstack-keystone systemd:openstack-keystone --clone interleave=true
+   # pcs resource create openstack-keystone systemd:openstack-keystone --clone interleave=true
 
 .. _identity-config-identity:
 
