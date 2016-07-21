@@ -17,17 +17,17 @@ Contents
    :maxdepth: 2
 
    quickstart.rst
-   doc-bugs.rst
-   docs-review.rst
    team-structure.rst
    blueprints-and-specs.rst
-   api-guides.rst
    project-install-guide
+   api-guides.rst
+   doc-bugs.rst
    writing-docs.rst
    writing-style.rst
    ui-text-guidelines.rst
    rst-conv.rst
    json-conv.rst
+   docs-review.rst
    docs-builds.rst
    doc-tools.rst
 
