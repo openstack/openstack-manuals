@@ -25,48 +25,16 @@ be shared.
 
 To enable PCI passthrough, follow the steps below:
 
-#. Enable PCI passthrough (Compute)
-#. Configure PCI devices in nova-compute (Compute)
 #. Configure nova-scheduler (Controller)
 #. Configure nova-api (Controller)**
 #. Configure a flavor (Controller)
+#. Enable PCI passthrough (Compute)
+#. Configure PCI devices in nova-compute (Compute)
 
 .. note::
 
    The PCI device with address ``0000:41:00.0`` is as an example. Expect
    to change this according to your actual environment.
-
-Enable PCI passthrough (Compute)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Enable VT-d and IOMMU. For more information, refer to steps one and two
-in `Create Virtual Functions`_.
-
-Configure PCI devices nova-compute (Compute)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#. Configure ``nova-compute`` to allow the PCI device to be passed through to
-   VMs. Edit ``/etc/nova/nova.conf``:
-
-   .. code-block:: ini
-
-      [default]
-      pci_passthrough_whitelist = { "address": "0000:41:00.0" }
-
-   Alternatively specify multiple PCI devices using whitelisting:
-
-   .. code-block:: ini
-
-      [default]
-      pci_passthrough_whitelist = { "vendor_id": "8086", "product_id": "10fb" }
-
-   All PCI devices matching the ``vendor_id`` and ``product_id`` are added to
-   the pool of PCI devices available for passthrough to VMs.
-
-   For more information about the syntax of ``pci_passthrough_whitelist``,
-   refer to `nova.conf configuration options`_.
-
-#. Restart ``nova-compute`` with :command:`service nova-compute restart`.
 
 Configure nova-scheduler (Controller)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,6 +76,57 @@ Configure a flavor to request two PCI devices, each with ``vendor_id`` as
 
 For more information about the syntax for ``pci_passthrough:alias``, refer to
 `flavor`_.
+
+Enable PCI passthrough (Compute)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enable VT-d and IOMMU. For more information, refer to steps one and two
+in `Create Virtual Functions`_.
+
+Configure PCI devices ``nova-compute`` (Compute)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Configure ``nova-compute`` to allow the PCI device to be passed through to
+   VMs. Edit ``/etc/nova/nova.conf``:
+
+   .. code-block:: ini
+
+      [default]
+      pci_passthrough_whitelist = { "address": "0000:41:00.0" }
+
+   Alternatively specify multiple PCI devices using whitelisting:
+
+   .. code-block:: ini
+
+      [default]
+      pci_passthrough_whitelist = { "vendor_id": "8086", "product_id": "10fb" }
+
+   All PCI devices matching the ``vendor_id`` and ``product_id`` are added to
+   the pool of PCI devices available for passthrough to VMs.
+
+   For more information about the syntax of ``pci_passthrough_whitelist``,
+   refer to `nova.conf configuration options`_.
+
+#. Specify the PCI alias for the device.
+
+   From the Newton release, to resize guest with PCI device, configure
+   the PCI alias on the compute node as well.
+
+   Configure a PCI alias ``a1`` to request a PCI device with a ``vendor_id`` of
+   ``0x8086`` and a ``product_id`` of ``0x154d``. The ``vendor_id`` and
+   ``product_id`` correspond the PCI device with address ``0000:41:00.0``.
+
+   Edit ``/etc/nova/nova.conf``:
+
+   .. code-block:: ini
+
+      [default]
+      pci_alias = { "vendor_id":"8086", "product_id":"154d", "device_type":"type-PF", "name":"a1" }
+
+   For more information about the syntax of ``pci_alias``, refer to
+   `nova.conf configuration options`_.
+
+#. Restart ``nova-compute`` with :command:`service nova-compute restart`.
 
 Create instances with PCI passthrough devices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
