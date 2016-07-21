@@ -17,7 +17,7 @@ Include diagrams in OpenStack documentation in the following
 situations:
 
 * If there is evidence of a process, whether the process is
-  is automated or manual
+  automated or manual
 
   Example: Basic setup workflow
 
