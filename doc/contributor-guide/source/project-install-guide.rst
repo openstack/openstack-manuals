@@ -37,10 +37,6 @@ Set up project specific installation guides:
    .. code-block:: ini
 
       [testenv:install-guide]
-      # NOTE(jaegerandi): this target does not use constraints because
-      # upstream infra does not yet support it. Once that's fixed, we can
-      # drop the install_command.
-      install_command = pip install -U --force-reinstall {opts} {packages}
       commands = sphinx-build -a -E -W -d install-guide/build/doctrees -b html install-guide/source install-guide/build/html
 
 
