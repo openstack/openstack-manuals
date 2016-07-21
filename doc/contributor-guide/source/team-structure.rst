@@ -17,7 +17,7 @@ with their respective leads:
   Tomoyuki Kato
 * `High Availability Guide
   <https://wiki.openstack.org/wiki/Documentation/HA_Guide_Update>`_:
-  Bogdan Dobrelya
+  Andrew Beekhof
 * `Hypervisor Tuning Guide
   <https://wiki.openstack.org/wiki/Documentation/HypervisorTuningGuide>`_:
   Joe Topjian
