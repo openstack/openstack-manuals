@@ -431,7 +431,7 @@ B
 
       A security model that focuses on data confidentiality
       and controlled access to classified information.
-      This model divide the entities into subjects and objects.
+      This model divides the entities into subjects and objects.
       The clearance of a subject is compared to the classification of the
       object to determine if the subject is authorized for the specific access mode.
       The clearance or classification scheme is expressed in terms of a lattice.
