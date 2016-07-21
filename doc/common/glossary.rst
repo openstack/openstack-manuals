@@ -1204,7 +1204,7 @@ D
 
       Domain Name System. A hierarchical and distributed naming system
       for computers, services, and resources connected to the Internet or a
-      private network. Associates a human-friendly names to IP
+      private network. Associates human-friendly, domain names to IP
       addresses.
 
    DNS record
