@@ -62,7 +62,7 @@ For example, to restrict a project's image storage to 5 GB, do this:
 
 .. note::
 
-   There is a configuration option in ``glance-api.conf`` that limits
+   There is a configuration option in ``/etc/glance/glance-api.conf`` that limits
    the number of members allowed per image, called
    ``image_member_quota``, set to 128 by default. That setting is a
    different quota from the storage quota.
