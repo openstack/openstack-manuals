@@ -180,10 +180,8 @@ Orchestration
 If your environment includes the Orchestration service, you can create
 a stack that launches an instance.
 
-.. toctree::
-   :maxdepth: 1
-
-   launch-instance-heat.rst
+For more information, see the
+`Orchestration installation guide <http://docs.openstack.org/project-install-guide/orchestration/draft/launch-instance.html>`_.
 
 Shared File Systems
 -------------------
