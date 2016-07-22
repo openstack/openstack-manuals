@@ -367,11 +367,17 @@ commands, which are provided by the
 
       $ cinder quota-defaults tenantID
 
+#. Obtain the tenant ID, as follows:
+
+   .. code-block:: console
+
+      $ tenant=$(openstack project list | awk '/tenantName/ {print $2}')
+
    For example:
 
    .. code-block:: console
 
-      $ cinder quota-defaults tenantID
+      $ cinder quota-defaults $tenant
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+
