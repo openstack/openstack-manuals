@@ -101,8 +101,9 @@ service quotas.
 #. To update a default value for a new project,
    update the property in the :guilabel:`cinder.quota`
    section of the ``/etc/cinder/cinder.conf`` file.
-   For more information, see the `Block Storage
-   Configuration Reference <http://docs.openstack.org/mitaka/config-reference/block-storage.html>`_.
+   For more information, see the `Block Storage service
+   <http://docs.openstack.org/mitaka/config-reference/block-storage.html>`_
+   in OpenStack Configuration Reference.
 
 #. To update Block Storage service quotas for an existing project (tenant)
 
