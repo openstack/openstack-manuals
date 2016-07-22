@@ -22,7 +22,7 @@ Architecture reference
 **Blockbridge architecture**
 
 .. figure:: ../../figures/bb-cinder-fig1.png
-
+   :width: 100%
 
 
 Control paths
