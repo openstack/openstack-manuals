@@ -1732,7 +1732,7 @@ H
       A high availability system design approach and associated
       service implementation ensures that a prearranged level of
       operational performance will be met during a contractual
-      measurement period. High availability systems seeks to
+      measurement period. High availability systems seek to
       minimize system downtime and data loss.
 
    horizon
