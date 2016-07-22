@@ -14,7 +14,7 @@ Advanced configuration
    adv-config-lbaas.rst
    adv-config-fwaas.rst
    adv-config-vpnaas.rst
-   adv-config-service-chaining.rst
+   adv-config-sfc.rst
    adv-config-qos.rst
    adv-config-group-policy.rst
    adv-config-debugging.rst
