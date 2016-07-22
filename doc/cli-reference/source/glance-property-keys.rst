@@ -1,7 +1,6 @@
-:orphan:
-
+===========================
 Image service property keys
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===========================
 
 The following keys, together with the components to which they are specific,
 can be used with the property option for both the
