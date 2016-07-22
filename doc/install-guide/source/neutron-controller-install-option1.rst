@@ -21,22 +21,6 @@ Install the components
       # apt-get install neutron-server neutron-linuxbridge-agent \
         neutron-dhcp-agent neutron-metadata-agent python-neutronclient
 
-   Respond to prompts for `database
-   management <#debconf-dbconfig-common>`__, `Identity service
-   credentials <#debconf-keystone_authtoken>`__, `service endpoint
-   registration <#debconf-api-endpoints>`__, and `message queue
-   credentials <#debconf-rabbitmq>`__.
-
-   Select the ML2 plug-in:
-
-   .. image:: figures/debconf-screenshots/neutron_1_plugin_selection.png
-
-   .. note::
-
-      Selecting the ML2 plug-in also populates the ``core_plugin`` option
-      in the ``/etc/neutron/neutron.conf`` file with the appropriate values
-      (in this case, it is set to the value ``ml2``).
-
 .. only:: rdo
 
    .. code-block:: console
@@ -52,161 +36,119 @@ Install the components
         openstack-neutron-server openstack-neutron-linuxbridge-agent \
         openstack-neutron-dhcp-agent openstack-neutron-metadata-agent
 
-.. only:: debian
+Configure the server component
+------------------------------
 
-   Configure the server component
-   ------------------------------
+The Networking server component configuration includes the database,
+authentication mechanism, message queue, topology change notifications,
+and plug-in.
 
-   #. Edit the ``/etc/neutron/neutron.conf`` file and complete the following
-      actions:
+.. include:: shared/note_configuration_vary_by_distribution.rst
 
-      * In the ``[DEFAULT]`` section, disable additional plug-ins:
+* Edit the ``/etc/neutron/neutron.conf`` file and complete the following
+  actions:
 
-        .. code-block:: ini
+  * In the ``[database]`` section, configure database access:
 
-           [DEFAULT]
-           ...
-           service_plugins =
+    .. code-block:: ini
 
-      * In the ``[DEFAULT]`` and ``[nova]`` sections, configure Networking to
-        notify Compute of network topology changes:
+       [database]
+       ...
+       connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
 
-        .. code-block:: ini
+    Replace ``NEUTRON_DBPASS`` with the password you chose for the
+    database.
 
-           [DEFAULT]
-           ...
-           notify_nova_on_port_status_changes = True
-           notify_nova_on_port_data_changes = True
+  * In the ``[DEFAULT]`` section, enable the Modular Layer 2 (ML2)
+    plug-in and disable additional plug-ins:
 
-           [nova]
-           ...
-           auth_url = http://controller:35357
-           auth_type = password
-           project_domain_name = default
-           user_domain_name = default
-           region_name = RegionOne
-           project_name = service
-           username = nova
-           password = NOVA_PASS
+    .. code-block:: ini
 
-        Replace ``NOVA_PASS`` with the password you chose for the ``nova``
-        user in the Identity service.
+       [DEFAULT]
+       ...
+       core_plugin = ml2
+       service_plugins =
 
-.. only:: ubuntu or rdo or obs
+  * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
+    configure RabbitMQ message queue access:
 
-   Configure the server component
-   ------------------------------
+    .. code-block:: ini
 
-   The Networking server component configuration includes the database,
-   authentication mechanism, message queue, topology change notifications,
-   and plug-in.
+       [DEFAULT]
+       ...
+       rpc_backend = rabbit
 
-   .. include:: shared/note_configuration_vary_by_distribution.rst
+       [oslo_messaging_rabbit]
+       ...
+       rabbit_host = controller
+       rabbit_userid = openstack
+       rabbit_password = RABBIT_PASS
 
-   * Edit the ``/etc/neutron/neutron.conf`` file and complete the following
-     actions:
+    Replace ``RABBIT_PASS`` with the password you chose for the
+    ``openstack`` account in RabbitMQ.
 
-     * In the ``[database]`` section, configure database access:
+  * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections, configure
+    Identity service access:
 
-       .. code-block:: ini
+    .. code-block:: ini
 
-          [database]
-          ...
-          connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
+       [DEFAULT]
+       ...
+       auth_strategy = keystone
 
-       Replace ``NEUTRON_DBPASS`` with the password you chose for the
-       database.
+       [keystone_authtoken]
+       ...
+       auth_uri = http://controller:5000
+       auth_url = http://controller:35357
+       memcached_servers = controller:11211
+       auth_type = password
+       project_domain_name = default
+       user_domain_name = default
+       project_name = service
+       username = neutron
+       password = NEUTRON_PASS
 
-     * In the ``[DEFAULT]`` section, enable the Modular Layer 2 (ML2)
-       plug-in and disable additional plug-ins:
+    Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
+    user in the Identity service.
 
-       .. code-block:: ini
+    .. note::
 
-          [DEFAULT]
-          ...
-          core_plugin = ml2
-          service_plugins =
+       Comment out or remove any other options in the
+       ``[keystone_authtoken]`` section.
 
-     * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-       configure RabbitMQ message queue access:
+  * In the ``[DEFAULT]`` and ``[nova]`` sections, configure Networking to
+    notify Compute of network topology changes:
 
-       .. code-block:: ini
+    .. code-block:: ini
 
-          [DEFAULT]
-          ...
-          rpc_backend = rabbit
+       [DEFAULT]
+       ...
+       notify_nova_on_port_status_changes = True
+       notify_nova_on_port_data_changes = True
 
-          [oslo_messaging_rabbit]
-          ...
-          rabbit_host = controller
-          rabbit_userid = openstack
-          rabbit_password = RABBIT_PASS
+       [nova]
+       ...
+       auth_url = http://controller:35357
+       auth_type = password
+       project_domain_name = default
+       user_domain_name = default
+       region_name = RegionOne
+       project_name = service
+       username = nova
+       password = NOVA_PASS
 
-       Replace ``RABBIT_PASS`` with the password you chose for the
-       ``openstack`` account in RabbitMQ.
+    Replace ``NOVA_PASS`` with the password you chose for the ``nova``
+    user in the Identity service.
 
-     * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections, configure
-       Identity service access:
+  .. only:: rdo
 
-       .. code-block:: ini
-
-          [DEFAULT]
-          ...
-          auth_strategy = keystone
-
-          [keystone_authtoken]
-          ...
-          auth_uri = http://controller:5000
-          auth_url = http://controller:35357
-          memcached_servers = controller:11211
-          auth_type = password
-          project_domain_name = default
-          user_domain_name = default
-          project_name = service
-          username = neutron
-          password = NEUTRON_PASS
-
-       Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
-       user in the Identity service.
-
-       .. note::
-
-          Comment out or remove any other options in the
-          ``[keystone_authtoken]`` section.
-
-     * In the ``[DEFAULT]`` and ``[nova]`` sections, configure Networking to
-       notify Compute of network topology changes:
+     * In the ``[oslo_concurrency]`` section, configure the lock path:
 
        .. code-block:: ini
 
-          [DEFAULT]
+          [oslo_concurrency]
           ...
-          notify_nova_on_port_status_changes = True
-          notify_nova_on_port_data_changes = True
-
-          [nova]
-          ...
-          auth_url = http://controller:35357
-          auth_type = password
-          project_domain_name = default
-          user_domain_name = default
-          region_name = RegionOne
-          project_name = service
-          username = nova
-          password = NOVA_PASS
-
-       Replace ``NOVA_PASS`` with the password you chose for the ``nova``
-       user in the Identity service.
-
-     .. only:: rdo
-
-        * In the ``[oslo_concurrency]`` section, configure the lock path:
-
-          .. code-block:: ini
-
-             [oslo_concurrency]
-             ...
-             lock_path = /var/lib/neutron/tmp
+          lock_path = /var/lib/neutron/tmp
 
 Configure the Modular Layer 2 (ML2) plug-in
 -------------------------------------------
