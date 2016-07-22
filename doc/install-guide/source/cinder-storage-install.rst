@@ -149,7 +149,7 @@ Install and configure components
 
          # yum install openstack-cinder targetcli
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    #. Install the packages:
 
@@ -314,7 +314,7 @@ Finalize installation
         # systemctl enable openstack-cinder-volume.service target.service
         # systemctl start openstack-cinder-volume.service target.service
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    #. Restart the Block Storage volume service including its dependencies:
 
