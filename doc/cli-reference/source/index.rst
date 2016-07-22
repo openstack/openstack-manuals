@@ -28,7 +28,7 @@ Contents
    sahara
    database
    designate
-   glance
+   image
    watcher
    barbican
    monasca

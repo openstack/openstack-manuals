@@ -1963,5 +1963,3 @@ Describe sharing permissions by image or tenant.
 
 ``--tenant-id <TENANT_ID>``
   Filter results by a tenant ID.
-
-.. include:: glance_property_keys.rst
