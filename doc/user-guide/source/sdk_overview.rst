@@ -3,7 +3,7 @@ Overview
 ========
 
 OpenStack provides four different options for interacting with its
-APIs from Python, each targetting a slightly different user:
+APIs from Python, each targeting a slightly different user:
 
 - OpenStack SDK
 - shade
