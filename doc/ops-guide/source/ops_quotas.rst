@@ -246,7 +246,7 @@ commands, which are provided by the
 
    .. note::
 
-      To view a list of options for the ``quota-update`` command, run:
+      To view a list of options for the ``nova quota-update`` command, run:
 
       .. code-block:: console
 
