@@ -2,11 +2,19 @@
 Volume drivers
 ==============
 
+.. sort by the drivers by open source software
+.. and the drivers for proprietary components
+
 .. toctree::
    :maxdepth: 1
 
-   drivers/blockbridge-eps-driver.rst
    drivers/ceph-rbd-volume-driver.rst
+   drivers/glusterfs-driver.rst
+   drivers/lvm-volume-driver.rst
+   drivers/nfs-volume-driver.rst
+   drivers/sheepdog-driver.rst
+   drivers/smbfs-volume-driver.rst
+   drivers/blockbridge-eps-driver.rst
    drivers/cloudbyte-driver.rst
    drivers/coho-data-driver.rst
    drivers/datera-volume-driver.rst
@@ -18,7 +26,6 @@ Volume drivers
    drivers/emc-vnx-driver.rst
    drivers/emc-xtremio-driver.rst
    drivers/fujitsu-eternus-dx-driver.rst
-   drivers/glusterfs-driver.rst
    drivers/hds-hnas-driver.rst
    drivers/hitachi-storage-volume-driver.rst
    drivers/hpe-3par-driver.rst
@@ -31,19 +38,15 @@ Volume drivers
    drivers/ibm-flashsystem-volume-driver.rst
    drivers/itri-disco-driver.rst
    drivers/lenovo-driver.rst
-   drivers/lvm-volume-driver.rst
    drivers/netapp-volume-driver.rst
    drivers/nimble-volume-driver.rst
    drivers/nexentastor4-driver.rst
    drivers/nexentastor5-driver.rst
    drivers/nexentaedge-driver.rst
-   drivers/nfs-volume-driver.rst
    drivers/prophetstor-dpl-driver.rst
    drivers/pure-storage-driver.rst
    drivers/quobyte-driver.rst
    drivers/scality-sofs-driver.rst
-   drivers/sheepdog-driver.rst
-   drivers/smbfs-volume-driver.rst
    drivers/solidfire-volume-driver.rst
    drivers/tintri-volume-driver.rst
    drivers/violin-v7000-driver.rst
