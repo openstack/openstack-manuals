@@ -159,7 +159,7 @@ services communicate with Networking using the standard API. For this to
 happen, you must configure the following items in the ``nova.conf`` file
 (used by each ``nova-compute`` and ``nova-api`` instance).
 
-.. list-table:: **nova.conf API and credential settings**
+.. list-table:: **nova.conf API and credential settings prior to Mitaka**
    :widths: 20 50
    :header-rows: 1
 
@@ -175,7 +175,7 @@ happen, you must configure the following items in the ``nova.conf`` file
    * - ``[neutron] auth_strategy``
      - Keep the default ``keystone`` value for all production deployments.
    * - ``[neutron] admin_project_name``
-     - Update to the name of the service project created in the above section on
+     - Update to the name of the service tenant created in the above section on
        Identity configuration.
    * - ``[neutron] admin_username``
      - Update to the name of the user created in the above section on Identity
@@ -184,6 +184,35 @@ happen, you must configure the following items in the ``nova.conf`` file
      - Update to the password of the user created in the above section on
        Identity configuration.
    * - ``[neutron] admin_auth_url``
+     - Update to the Identity server IP and port. This is the Identity
+       (keystone) admin API server IP and port value, and not the Identity
+       service API IP and port.
+
+.. list-table:: **nova.conf API and credential settings in Newton**
+   :widths: 20 50
+   :header-rows: 1
+
+   * - Attribute name
+     - Required
+   * - ``[DEFAULT] use_neutron``
+     - Modify from the default to ``True`` to
+       indicate that Networking should be used rather than the traditional
+       nova-network networking model.
+   * - ``[neutron] url``
+     - Update to the host name/IP and port of the neutron-server instance
+       for this deployment.
+   * - ``[neutron] auth_strategy``
+     - Keep the default ``keystone`` value for all production deployments.
+   * - ``[neutron] project_name``
+     - Update to the name of the service tenant created in the above section on
+       Identity configuration.
+   * - ``[neutron] username``
+     - Update to the name of the user created in the above section on Identity
+       configuration.
+   * - ``[neutron] password``
+     - Update to the password of the user created in the above section on
+       Identity configuration.
+   * - ``[neutron] auth_url``
      - Update to the Identity server IP and port. This is the Identity
        (keystone) admin API server IP and port value, and not the Identity
        service API IP and port.
