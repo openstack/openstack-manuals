@@ -266,7 +266,7 @@ Disable live snapshotting
 Problem
 -------
 
-Administrators using libverity version ``1.2.2`` may experience problems
+Administrators using libvirt version ``1.2.2`` may experience problems
 with live snapshot creation. Occasionally, libvirt version ``1.2.2`` fails
 to create live snapshots under the load of creating concurrent snapshot.
 
