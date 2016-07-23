@@ -97,8 +97,8 @@ Set up clustering
 
    .. note::
 
-      **Your application connects to this IP address.** The trove
-      :command:`cluster-show` command displays the IP address of the query router.
+      **Your application connects to this IP address.** The :command:`trove cluster-show`
+      command displays the IP address of the query router.
       This is the IP address your application uses to retrieve data from
       the database.
 
