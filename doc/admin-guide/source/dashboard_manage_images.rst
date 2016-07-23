@@ -98,13 +98,13 @@ Update images
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Images` category.
 #. Select the images that you want to edit. Click :guilabel:`Edit Image`.
-#. In the :guilabel:`Update Image` window, you can change the image name.
+#. In the :guilabel:`Edit Image` window, you can change the image name.
 
    Select the :guilabel:`Public` check box to make the image public.
    Clear this check box to make the image private. You cannot change
    the :guilabel:`Kernel ID`, :guilabel:`Ramdisk ID`, or
    :guilabel:`Architecture` attributes for an image.
-#. Click :guilabel:`Update Image`.
+#. Click :guilabel:`Edit Image`.
 
 Delete images
 ~~~~~~~~~~~~~
