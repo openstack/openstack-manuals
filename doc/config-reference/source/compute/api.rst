@@ -1,5 +1,5 @@
 =========================
-Configure the Compute API
+Compute API configuration
 =========================
 
 The Compute API, run by the ``nova-api`` daemon, is the component of
@@ -132,8 +132,11 @@ The following example shows the default rate-limiting values:
    paste.filter_factory = nova.api.openstack.compute.limits:RateLimitingMiddleware.factory
    limits =(POST, "*", .*, 120, MINUTE);(POST, "*/servers", ^/servers, 120, MINUTE);(PUT, "*", .*, 120, MINUTE);(GET, "*changes-since*", .*changes-since.*, 120, MINUTE);(DELETE, "*", .*, 120, MINUTE);(GET, "*/os-fping", ^/os-fping, 12, MINUTE)
 
-Configuration reference
-~~~~~~~~~~~~~~~~~~~~~~~
+Configuration options
+~~~~~~~~~~~~~~~~~~~~~
 
-The Compute API configuration options are documented in
-the table :ref:`nova-api`.
+The Compute API configuration options are documented in the tables below.
+
+.. include:: ../tables/nova-api.rst
+.. include:: ../tables/nova-apiv21.rst
+.. include:: ../tables/nova-ca.rst

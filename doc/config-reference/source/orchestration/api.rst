@@ -1,6 +1,9 @@
-==============
-Configure APIs
-==============
+===============================
+Orchestration API configuration
+===============================
+
+Configuration options
+~~~~~~~~~~~~~~~~~~~~~
 
 The following options allow configuration of the APIs that Orchestration
 supports. Currently this includes compatibility APIs for CloudFormation

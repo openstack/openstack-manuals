@@ -1,6 +1,6 @@
-===========
-API options
-===========
+=========================
+Message API configuration
+=========================
 
 The Message service has two APIs: the HTTP REST API for WSGI transport driver,
 and the Websocket API for Websocket transport driver. The Message service can
@@ -25,6 +25,9 @@ Permission control options in each API version:
   * ``secret_key`` option which defines a secret key to use for signing
     special URLs. These are called pre-signed URLs and give temporary
     permissions to outsiders of the system.
+
+Configuration options
+~~~~~~~~~~~~~~~~~~~~~
 
 The Message service can be configured by changing the following options:
 
