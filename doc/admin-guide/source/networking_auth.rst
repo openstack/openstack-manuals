@@ -41,8 +41,8 @@ such policies is to edit the policy file. In this section, the terms
 in the policy file. There are no syntax differences between a rule and a
 policy. A policy is something that is matched directly from the
 Networking policy engine. A rule is an element in a policy, which is
-evaluated. For instance in ``create_subnet:
-[["admin_or_network_owner"]]``, *create_subnet* is a
+evaluated. For instance in ``"create_subnet":
+"rule:admin_or_network_owner"``, *create_subnet* is a
 policy, and *admin_or_network_owner* is a rule.
 
 Policies are triggered by the Networking policy engine whenever one of
