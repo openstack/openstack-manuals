@@ -340,7 +340,7 @@ The DHCP agent is responsible for :term:`DHCP` (Dynamic Host Configuration
 Protocol) and RADVD (Router Advertisement Daemon) services. It requires a
 running L2 agent on the same node.
 
-Configuration for the  DHCP agent is typically done in the
+Configuration for the DHCP agent is typically done in the
 ``dhcp_agent.ini`` configuration file. Make sure that on agent start
 you pass this configuration file as argument.
 
@@ -353,7 +353,7 @@ Metadata agent
 The Metadata agent allows instances to access cloud-init meta data and user
 data via the network. It requires a running L2 agent on the same node.
 
-Configuration for the  Metadata agent is typically done in the
+Configuration for the Metadata agent is typically done in the
 ``metadata_agent.ini`` configuration file. Make sure that on agent start
 you pass this configuration file as argument.
 
@@ -366,7 +366,7 @@ L3 metering agent
 The L3 metering agent enables layer3 traffic metering. It requires a running L3
 agent on the same node.
 
-Configuration for the  Metadata agent is typically done in the
+Configuration for the L3 metering agent is typically done in the
 ``metering_agent.ini`` configuration file. Make sure that on agent start
 you pass this configuration file as argument.
 
