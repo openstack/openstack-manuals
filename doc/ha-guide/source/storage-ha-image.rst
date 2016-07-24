@@ -98,7 +98,7 @@ Configure OpenStack services to use highly available OpenStack Image API
 Your OpenStack services must now point
 their OpenStack Image API configuration to the highly available,
 virtual cluster IP address
-instead of pointint to the physical IP address
+instead of pointing to the physical IP address
 of an OpenStack Image API server
 as you would in a non-HA cluster.
 
