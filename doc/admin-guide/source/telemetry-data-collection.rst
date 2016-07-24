@@ -843,7 +843,7 @@ arrived and then flushes them all down the pipeline at once:
          parameters:
              size: 15
 
-**Muli meter arithmetic transformer**
+**Multi meter arithmetic transformer**
 
 This transformer enables us to perform arithmetic calculations over one
 or more meters and/or their metadata, for example:
