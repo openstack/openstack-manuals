@@ -60,8 +60,9 @@ Once done, follow the steps below to submit a patch review.
    gate link (for the openstack-manuals, it is called
    ``gate-openstack-manuals-tox-doc-publish-checkbuild``) and review the
    built manuals to see how the change will look on the web page. For a new
-   patch, it takes some time before Jenkins checks appear on the Gerrit
-   page. You can also `build the patch locally`_ if necessary.
+   patch, it takes some time before Jenkins checks appear on the Gerrit page.
+   You can also :ref:`build the patch locally <docs_builds_locally>`
+   if necessary.
 #. Click :guilabel:`Reply` to vote and enter any comments about your review,
    then click :guilabel:`Post`.
 
@@ -76,65 +77,6 @@ Once done, follow the steps below to submit a patch review.
 
    `Peer Review
    <http://docs.openstack.org/infra/manual/developers.html#peer-review>`_
-
-.. _`build the patch locally`:
-
-Building an existing patch locally
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Before proceeding, make sure you have all the necessary
-:ref:`tools <setting_up_for_contribution>` installed and
-set up for contribution.
-
-To build a patch locally:
-
-#. Change to the directory containing the appropriate repository.
-
-   .. code-block:: console
-
-      $ cd openstack-manuals
-
-#. Create a local branch that contains the particular patch.
-
-   .. code-block:: console
-
-      $ git review -d PATCH_ID
-
-   Where the value of PATCH_ID is a Gerrit commit number.
-   You can find this number on the patch link,
-   ``https://review.openstack.org/#/c/PATCH_ID``.
-
-#. Build all the books that are affected by changes in the patch set:
-
-   .. code-block:: console
-
-      $ tox -e checkbuild
-
-#. Find the build result in ``publish-docs/index.html``.
-
-#. Review the source and the output. You can edit and update the patch:
-
-   #. Ensure that your edits adhere to the
-      :ref:`Writing Style <stg_writing_style>` for OpenStack documentation
-      and use standard U.S. English.
-   #. Once the build and new output are good to commit, run:
-
-      .. code-block:: console
-
-         $ git commit -a --amend
-
-   #. When the editor opens, update the commit message if necessary. But do
-      not add information on what your specific patch set changes. A reviewer
-      can use the Gerrit interface to see the difference between patches.
-   #. Save the changes if any, and exit the editor.
-   #. Send your patch to the existing review:
-
-      .. code-block:: console
-
-         $ git review
-
-   #. Leave a comment in Gerrit explaining the reason for the additional
-      changes.
 
 Achieving a core reviewer status
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

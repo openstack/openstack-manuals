@@ -131,6 +131,8 @@ The following individual checks are also availableː
    * If Tox stops working, try :command:`tox --recreate` to rebuild the
      environment.
 
+.. _docs_builds_locally:
+
 Build an existing patch locally
 -------------------------------
 
