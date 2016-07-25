@@ -12,34 +12,34 @@ Based on the topic your request refers to, use the following tags:
   OpenStack Administrator Guide
 
 [api]
-  API Guide, API Complete References
+  OpenStack API Guide, API Complete References
 
 [arch-design]
-  Architecture Design Guide
+  OpenStack Architecture Design Guide
 
 [cli-ref]
-  Command-Line Interface Reference
+  OpenStack Command-Line Interface Reference
 
 [common]
   Common contents for several guides in the common directory
 
 [config-ref]
-  Configuration Reference
+  OpenStack Configuration Reference
 
 [contributor]
-  Documentation Contributor Guide
+  OpenStack Documentation Contributor Guide
 
 [firstapp]
   Writing your first OpenStack application
 
 [ha-guide]
-  High Availability Guide
+  OpenStack High Availability Guide
 
 [image-guide]
-  Virtual Machine Image Guide
+  OpenStack Virtual Machine Image Guide
 
 [install]
-  Installation guides
+  OpenStack Installation tutorials and guides
 
 [networking]
   OpenStack Networking Guide
@@ -51,13 +51,13 @@ Based on the topic your request refers to, use the following tags:
   Security Guide
 
 [training]
-  Training labs, Training guides
+  Training labs, Training guides, and Upstream Training materials
 
 [user-guide]
   OpenStack End User Guide
 
 [WIP]
-  Commit is a work in progress
+  A marker that means the commit is a work in progress
 
 [www]
   Web page contents
