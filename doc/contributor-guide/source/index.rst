@@ -5,8 +5,8 @@ OpenStack Documentation Contributor Guide
 Abstract
 ~~~~~~~~
 
-This guide provides detailed instructions on the documentation contribution
-workflow and conventions to be considered by all contributors. Please
+This guide provides detailed instructions on the contribution workflow and
+conventions to be considered by all documentation contributors. Please
 follow these guidelines to keep the documentation structure, style, and
 syntax consistent.
 

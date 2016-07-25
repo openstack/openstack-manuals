@@ -51,6 +51,18 @@ To patch for the release-specific documentation, you should generally patch to
 master branch with "backport: xxxx" (for example, backport: kilo) in the commit
 message.
 
+For these guides, the docs.openstack.org site defaults to the current release,
+with the previous two releases being available under the ``More Releases
+& Languages`` drop-down. At release time, the documentation release team
+will update the default page to the new release, and remove the link to
+the oldest release. These docs are still available online for people who
+have direct URLs to the content, but they are no longer linked from the
+main site. For books written in DocBook XML, these old versions are clearly
+marked with the release name in red down the left-hand margin. We are
+currently developing a similar method of marking older books written in RST.
+The core team tracks usage of older versions, and as usage falls, can
+remove them entirely.
+
 Installation Guides
 -------------------
 
