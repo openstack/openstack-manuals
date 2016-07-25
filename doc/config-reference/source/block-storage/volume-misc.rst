@@ -40,6 +40,5 @@ These options can also be set in the ``cinder.conf`` file.
 .. include:: ../tables/cinder-scst.rst
 .. include:: ../tables/cinder-storage.rst
 .. include:: ../tables/cinder-tegile.rst
-.. include:: ../tables/cinder-vzstorage.rst
 .. include:: ../tables/cinder-zeromq.rst
 .. include:: ../tables/cinder-zones.rst
