@@ -27,6 +27,7 @@ Contents
    ui-text-guidelines.rst
    rst-conv.rst
    json-conv.rst
+   diagram-guidelines.rst
    docs-review.rst
    docs-builds.rst
    doc-tools.rst
