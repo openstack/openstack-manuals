@@ -10,7 +10,7 @@
 
 .. _neutron-lbaas_services:
 
-.. list-table:: Description of LBaaS Embrane, Radware, NetScaler, HAproxy, Octavia plugin configuration options
+.. list-table:: Description of LBaaS Embrane, Radware, NetScaler, HAproxy, octavia plug-in configuration options
    :header-rows: 1
    :class: config-ref-table
 

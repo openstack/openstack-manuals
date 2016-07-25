@@ -20,7 +20,9 @@ LBaaS agent.
 Octavia configuration options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the following options to configure the octavia service.
+Octavia is an operator-grade open source load balancing solution.
+Use the following options in the ``/etc/octavia/octavia.conf`` file
+to configure the octavia service.
 
 .. include:: ../tables/octavia-api.rst
 .. include:: ../tables/octavia-auth_token.rst
