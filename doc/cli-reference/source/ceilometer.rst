@@ -9,7 +9,7 @@ Telemetry service command-line client
 The ceilometer client is the command-line interface (CLI) for
 the Telemetry service API and its extensions.
 
-This chapter documents :command:`ceilometer` version ``2.4.0``.
+This chapter documents :command:`ceilometer` version ``2.5.0``.
 
 For help on a specific :command:`ceilometer` command, enter:
 
@@ -58,8 +58,7 @@ ceilometer usage
   other alarms.
 
 ``alarm-create``
-  Create a new alarm (Deprecated). Use alarm-
-  threshold-create instead.
+  Create a new alarm (Deprecated). Use alarm-threshold-create instead.
 
 ``alarm-delete``
   Delete an alarm.
@@ -283,7 +282,7 @@ ceilometer optional arguments
 .. _ceilometer_alarm-combination-create:
 
 ceilometer alarm-combination-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
@@ -358,8 +357,7 @@ Create a new alarm based on state of other alarms.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--alarm_ids <ALARM IDS>``
   List of alarm IDs. Required.
@@ -371,7 +369,7 @@ Create a new alarm based on state of other alarms.
 .. _ceilometer_alarm-combination-update:
 
 ceilometer alarm-combination-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
@@ -452,8 +450,7 @@ Update an existing alarm based on state of other alarms.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--remove-time-constraint <Constraint names>``
   Name or list of names of the time constraints
@@ -469,7 +466,7 @@ Update an existing alarm based on state of other alarms.
 .. _ceilometer_alarm-delete:
 
 ceilometer alarm-delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -485,7 +482,7 @@ Delete an alarm.
 .. _ceilometer_alarm-event-create:
 
 ceilometer alarm-event-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -558,8 +555,7 @@ Create a new alarm based on events.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--event-type <EVENT_TYPE>``
   Event type for event alarm.
@@ -572,7 +568,7 @@ Create a new alarm based on events.
 .. _ceilometer_alarm-event-update:
 
 ceilometer alarm-event-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -650,8 +646,7 @@ Update an existing alarm based on events.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--event-type <EVENT_TYPE>``
   Event type for event alarm.
@@ -664,7 +659,7 @@ Update an existing alarm based on events.
 .. _ceilometer_alarm-gnocchi-aggregation-by-metrics-threshold-create:
 
 ceilometer alarm-gnocchi-aggregation-by-metrics-threshold-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------------------------
 
 .. code-block:: console
 
@@ -735,8 +730,7 @@ Create a new alarm based on computed statistics.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--granularity <GRANULARITY>``
   Length of each period (seconds) to evaluate
@@ -783,7 +777,7 @@ Create a new alarm based on computed statistics.
 .. _ceilometer_alarm-gnocchi-aggregation-by-metrics-threshold-update:
 
 ceilometer alarm-gnocchi-aggregation-by-metrics-threshold-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------------------------
 
 .. code-block:: console
 
@@ -860,8 +854,7 @@ Update an existing alarm based on computed statistics.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--granularity <GRANULARITY>``
   Length of each period (seconds) to evaluate
@@ -912,7 +905,7 @@ Update an existing alarm based on computed statistics.
 .. _ceilometer_alarm-gnocchi-aggregation-by-resources-threshold-create:
 
 ceilometer alarm-gnocchi-aggregation-by-resources-threshold-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------
 
 .. code-block:: console
 
@@ -984,8 +977,7 @@ Create a new alarm based on computed statistics.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--granularity <GRANULARITY>``
   Length of each period (seconds) to evaluate
@@ -1039,7 +1031,7 @@ Create a new alarm based on computed statistics.
 .. _ceilometer_alarm-gnocchi-aggregation-by-resources-threshold-update:
 
 ceilometer alarm-gnocchi-aggregation-by-resources-threshold-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------------------
 
 .. code-block:: console
 
@@ -1117,8 +1109,7 @@ Update an existing alarm based on computed statistics.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--granularity <GRANULARITY>``
   Length of each period (seconds) to evaluate
@@ -1175,7 +1166,7 @@ Update an existing alarm based on computed statistics.
 .. _ceilometer_alarm-gnocchi-resources-threshold-create:
 
 ceilometer alarm-gnocchi-resources-threshold-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------------
 
 .. code-block:: console
 
@@ -1260,8 +1251,7 @@ Create a new alarm based on computed statistics.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--granularity <GRANULARITY>``
   Length of each period (seconds) to evaluate
@@ -1314,7 +1304,7 @@ Create a new alarm based on computed statistics.
 .. _ceilometer_alarm-gnocchi-resources-threshold-update:
 
 ceilometer alarm-gnocchi-resources-threshold-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------------
 
 .. code-block:: console
 
@@ -1401,8 +1391,7 @@ Update an existing alarm based on computed statistics.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--granularity <GRANULARITY>``
   Length of each period (seconds) to evaluate
@@ -1459,7 +1448,7 @@ Update an existing alarm based on computed statistics.
 .. _ceilometer_alarm-history:
 
 ceilometer alarm-history
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1482,7 +1471,7 @@ Display the change history of an alarm.
 .. _ceilometer_alarm-list:
 
 ceilometer alarm-list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1500,7 +1489,7 @@ List the user's alarms.
 .. _ceilometer_alarm-show:
 
 ceilometer alarm-show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1516,7 +1505,7 @@ Show an alarm.
 .. _ceilometer_alarm-state-get:
 
 ceilometer alarm-state-get
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1532,7 +1521,7 @@ Get the state of an alarm.
 .. _ceilometer_alarm-state-set:
 
 ceilometer alarm-state-set
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1554,7 +1543,7 @@ Set the state of an alarm.
 .. _ceilometer_alarm-threshold-create:
 
 ceilometer alarm-threshold-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -1632,8 +1621,7 @@ Create a new alarm based on computed statistics.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``-m <METRIC>, --meter-name <METRIC>``
   Metric to evaluate against. Required.
@@ -1664,7 +1652,7 @@ Create a new alarm based on computed statistics.
 .. _ceilometer_alarm-threshold-update:
 
 ceilometer alarm-threshold-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -1749,8 +1737,7 @@ Update an existing alarm based on computed statistics.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
-  while alarm remains in target state. Defaults
-  to False.
+  while alarm remains in target state.
 
 ``--remove-time-constraint <Constraint names>``
   Name or list of names of the time constraints
@@ -1785,7 +1772,7 @@ Update an existing alarm based on computed statistics.
 .. _ceilometer_capabilities:
 
 ceilometer capabilities
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1796,7 +1783,7 @@ Print Ceilometer capabilities.
 .. _ceilometer_event-list:
 
 ceilometer event-list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1823,7 +1810,7 @@ List events.
 .. _ceilometer_event-show:
 
 ceilometer event-show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1839,7 +1826,7 @@ Show a particular event.
 .. _ceilometer_event-type-list:
 
 ceilometer event-type-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 .. code-block:: console
 
@@ -1850,7 +1837,7 @@ List event types.
 .. _ceilometer_meter-list:
 
 ceilometer meter-list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -1878,7 +1865,7 @@ List the user's meters.
 .. _ceilometer_query-alarm-history:
 
 ceilometer query-alarm-history
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
@@ -1910,7 +1897,7 @@ Query Alarm History.
 .. _ceilometer_query-alarms:
 
 ceilometer query-alarms
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -1940,7 +1927,7 @@ Query Alarms.
 .. _ceilometer_query-samples:
 
 ceilometer query-samples
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1971,7 +1958,7 @@ Query samples.
 .. _ceilometer_resource-list:
 
 ceilometer resource-list
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -1996,7 +1983,7 @@ List the resources.
 .. _ceilometer_resource-show:
 
 ceilometer resource-show
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -2012,7 +1999,7 @@ Show the resource.
 .. _ceilometer_sample-create:
 
 ceilometer sample-create
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -2065,7 +2052,7 @@ Create a sample.
 .. _ceilometer_sample-create-list:
 
 ceilometer sample-create-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -2086,7 +2073,7 @@ Create a sample list.
 .. _ceilometer_sample-list:
 
 ceilometer sample-list
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -2114,7 +2101,7 @@ List the samples (return OldSample objects if -m/:option:`--meter` is set).
 .. _ceilometer_sample-show:
 
 ceilometer sample-show
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -2130,7 +2117,7 @@ Show a sample.
 .. _ceilometer_statistics:
 
 ceilometer statistics
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -2164,7 +2151,7 @@ List the statistics for a meter.
 .. _ceilometer_trait-description-list:
 
 ceilometer trait-description-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -2181,7 +2168,7 @@ List trait info for an event type.
 .. _ceilometer_trait-list:
 
 ceilometer trait-list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
