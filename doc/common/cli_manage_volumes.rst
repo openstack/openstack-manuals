@@ -421,7 +421,7 @@ Create a volume transfer request
    The volume must be in an ``available`` state or the request will be
    denied. If the transfer request is valid in the database (that is, it
    has not expired or been deleted), the volume is placed in an
-   ``awaiting transfer`` state. For example:
+   ``awaiting-transfer`` state. For example:
 
    .. code-block:: console
 
