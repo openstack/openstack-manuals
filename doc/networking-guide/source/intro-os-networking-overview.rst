@@ -72,7 +72,7 @@ VLAN
     using VLAN IDs (802.1Q tagged) that correspond to VLANs present in the
     physical network. This allows instances to communicate with each other
     across the environment. They can also communicate with dedicated servers,
-    firewalls, load balancers, and other networking infrastructure on the
+    firewalls, load balancers, and other networking infrastructures on the
     same layer 2 VLAN.
 
 GRE and VXLAN
