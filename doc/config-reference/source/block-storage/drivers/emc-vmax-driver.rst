@@ -38,6 +38,74 @@ Ensure that there is only one SMI-S (ECOM) server active on the same VMAX
 array.
 
 
+Required VMAX Software Suites for OpenStack
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are five Software Suites available for the VMAX3:
+
+- Base Suite
+- Advanced Suite
+- Local Replication Suite
+- Remote Replication Suite
+- Total Productivity Pack
+
+Openstack requires the Advanced Suite and the Local Replication Suite
+or the Total Productivity Pack (it includes the Advanced Suite and the
+Local Replication Suite) for the VMAX3.
+
+There are four bundled Software Suites for the VMAX2:
+
+- Advanced Software Suite
+- Base Software Suite
+- Enginuity Suite
+- Symmetrix Management Suite
+
+OpenStack requires the Advanced Software Bundle for the VMAX2.
+
+or
+
+The VMAX2 Optional Software are:
+
+- EMC Storage Analytics (ESA)
+- FAST VP
+- Ionix ControlCenter and ProSphere Package
+- Open Replicator for Symmetrix
+- PowerPath
+- RecoverPoint EX
+- SRDF for VMAX 10K
+- Storage Configuration Advisor
+- TimeFinder for VMAX10K
+
+OpenStack requires TimeFinder for VMAX10K for the VMAX2.
+
+Each are licensed separately. For further details on how to get the
+relevant license(s), reference eLicensing Support below.
+
+
+eLicensing Support
+~~~~~~~~~~~~~~~~~~
+
+To activate your entitlements and obtain your VMAX license files, visit the
+Service Center on `<https://support.emc.com>`_, as directed on your License
+Authorization Code (LAC) letter emailed to you.
+
+-  For help with missing or incorrect entitlements after activation
+   (that is, expected functionality remains unavailable because it is not
+   licensed), contact your EMC account representative or authorized reseller.
+
+-  For help with any errors applying license files through Solutions Enabler,
+   contact the EMC Customer Support Center.
+
+-  If you are missing a LAC letter or require further instructions on
+   activating your licenses through the Online Support site, contact EMC's
+   worldwide Licensing team at ``licensing@emc.com`` or call:
+
+   North America, Latin America, APJK, Australia, New Zealand: SVC4EMC
+   (800-782-4362) and follow the voice prompts.
+
+   EMEA: +353 (0) 21 4879862 and follow the voice prompts.
+
+
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
