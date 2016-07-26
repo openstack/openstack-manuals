@@ -13,8 +13,10 @@ Use lowercase when you refer to:
 * project team names
 * command-line interface (CLI)
 
-The official source for services and project names is in the OpenStack
-governance repository in the
-`projects.yaml <http://git.openstack.org/cgit/openstack/governance/tree/reference/projects.yaml>`_
-file.
+For more information, see `Service and Project Naming
+<http://governance.openstack.org/reference/service-project-naming.html>`_
+in OpenStack Technical Committee governance documents.
 
+The official source for services and project names is in the
+`projects.yaml <http://git.openstack.org/cgit/openstack/governance/tree/reference/projects.yaml>`_
+file in the ``openstack/governance`` repository.
