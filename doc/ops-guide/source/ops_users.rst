@@ -19,6 +19,7 @@ Creating New Users
 To create a user, you need the following information:
 
 * Username
+* Description
 * Email address
 * Password
 * Primary project
