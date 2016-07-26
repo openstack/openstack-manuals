@@ -146,6 +146,18 @@ on your cluster inaccessible. A best practice is to copy the builder files
 to all storage nodes along with the ring files. Multiple backup copies are
 spread throughout your storage cluster.
 
+Telemetry
+---------
+
+Back up the ``/etc/ceilometer`` directory containing Telemetry configuration
+files.
+
+Orchestration
+-------------
+
+Back up HOT template ``yaml`` files, and the ``/etc/heat/`` directory
+containing Orchestration configuration files.
+
 Recovering Backups
 ~~~~~~~~~~~~~~~~~~
 
