@@ -2,6 +2,12 @@
 Compute Nodes
 =============
 
+.. toctree::
+  :maxdepth: 3
+
+  design-compute-tech
+
+
 This chapter describes some of the choices you need to consider
 when designing and building your compute nodes. Compute nodes form the
 resource core of the OpenStack Compute cloud, providing the processing, memory,
