@@ -36,7 +36,7 @@ Conductor services
 Authentication and authorization for identity management
     Indicates which users can do what actions on certain cloud
     resources; quota management is spread out among services,
-    howeverauthentication
+    however
 
 Image-management services
     Stores and serves images with metadata on each, for launching in the
