@@ -27,7 +27,7 @@ command:
 
 .. code-block:: console
 
-   $ nova get-vnc-console INSTANCE_NAME VNC_TYPE
+   $ openstack console url show INSTANCE_NAME --xvpvnc
 
 The command returns a URL from which you can access your instance:
 
@@ -39,13 +39,13 @@ The command returns a URL from which you can access your instance:
    | xvpvnc | http://192.168.5.96:6081/console?token=c83ae3a3-15c4-4890-8d45-aefb494a8d6c  |
    +--------+------------------------------------------------------------------------------+
 
-VNC\_TYPE can be replaced by any of the above values as connection
+:option:`--xvpvnc` can be replaced by any of the above values as connection
 types.
 
 When using SPICE to view the console of an instance, a browser plugin
-can be used directly on the instance page, or the :command:`get-vnc-console`
-command can be used with it, as well, by returning a token-authenticated
-address, as in the example above.
+can be used directly on the instance page, or the
+:command:`openstack console url show` command can be used with it, as well, by
+returning a token-authenticated address, as in the example above.
 
 For further information and comparisons (including security
 considerations), see the `Security
