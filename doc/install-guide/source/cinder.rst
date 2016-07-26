@@ -21,7 +21,7 @@ drivers that are available: NAS/SAN, NFS, iSCSI, Ceph, and more.
 
 The Block Storage API and scheduler services typically run on the controller
 nodes. Depending upon the drivers used, the volume service can run
-on controllers, compute nodes, or standalone storage nodes.
+on controller nodes, compute nodes, or standalone storage nodes.
 
 For more information, see the
 `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/block-storage/volume-drivers.html>`__.
