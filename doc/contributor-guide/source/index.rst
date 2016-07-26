@@ -24,7 +24,7 @@ Contents
    doc-bugs.rst
    writing-docs.rst
    writing-style.rst
-   ui-text-guidelines.rst
+   user-guidelines.rst
    rst-conv.rst
    json-conv.rst
    diagram-guidelines.rst
