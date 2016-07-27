@@ -13,6 +13,10 @@ images:
 * Object Storage service (swift)
 * VMware ESX
 
+.. note::
+
+   You must use only ``raw`` image formats with the Ceph RBD back end.
+
 The following tables detail the options available for each.
 
 .. include:: ../tables/glance-cinder.rst
