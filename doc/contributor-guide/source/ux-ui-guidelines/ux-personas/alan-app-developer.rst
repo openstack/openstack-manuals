@@ -4,10 +4,20 @@
 Alan - application developer
 ============================
 
-Alan develops and deploys applications for cloud instances running OpenStack.
-He does not know much about the underlying infrastructure of the cloud. The
-cloud instances he consumes can use various OpenStack projects. Alan does not
-know the names of the projects and has never been to an OpenStack summit.
+Alan develops and deploys cloud applications but does not necessarily know
+much about the underlying infrastructure of the cloud.
+
+Cloud applications are defined as:
+
+* Applications built using OpenStack SDKs or APIs
+* Applications deployed on top of OpenStack using Application Catalog
+  service, Orchestration service, or any 3rd-party deployment or
+  management tools
+* PaaS and container solutions running on top of OpenStack
+
+The cloud instances Alan consumes can use various OpenStack projects.
+Alan does not know the project names and goals, and has never
+been to an OpenStack Summit.
 
 Alan wishes to deploy his applications to the cloud without issues and to
 receive warnings about any issues with the applications before tickets start
@@ -19,7 +29,7 @@ that makes his development future-proof and backwards-compatible.
 Key tasks
 ~~~~~~~~~
 
-Alan performs the following tasks very frequently:
+Alan performs the following tasks frequently:
 
 * Development: Develops cloud-based applications with various requirements.
 
