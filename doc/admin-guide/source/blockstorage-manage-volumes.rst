@@ -24,11 +24,11 @@ to a server instance.
 **To create and attach a volume to an instance**
 
 #. Configure the OpenStack Compute and the OpenStack Block Storage
-   services through the ``cinder.conf`` file.
-#. Use the :command:`cinder create` command to create a volume. This
-   command creates an LV into the volume group (VG) ``cinder-volumes``.
-#. Use the :command:`nova volume-attach` command to attach the volume
-   to an instance. This command creates a unique  :term:`IQN` that is
+   services through the ``/etc/cinder/cinder.conf`` file.
+#. Use the :command:`openstack volume create ` command to create a volume.
+   This command creates an LV into the volume group (VG) ``cinder-volumes``.
+#. Use the :command:`openstack server add volume` command to attach the
+   volume to an instance. This command creates a unique  :term:`IQN` that is
    exposed to the compute node.
 
    * The compute node, which runs the instance, now has an active
