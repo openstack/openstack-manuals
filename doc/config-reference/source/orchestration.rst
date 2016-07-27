@@ -30,7 +30,6 @@ configuration options:
 .. include:: tables/heat-common.rst
 .. include:: tables/heat-crypt.rst
 .. include:: tables/heat-loadbalancer.rst
-.. include:: tables/heat-logging.rst
 .. include:: tables/heat-quota.rst
 .. include:: tables/heat-redis.rst
 .. include:: tables/heat-testing.rst

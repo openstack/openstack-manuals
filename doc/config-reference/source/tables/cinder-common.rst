@@ -54,6 +54,8 @@
      - (Boolean) If this is set to True, attachment of volumes for image transfer will be aborted when multipathd is not running. Otherwise, it will fallback to single path.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
+   * - ``fatal_exception_format_errors`` = ``False``
+     - (Boolean) Make exception message format errors fatal.
    * - ``host`` = ``localhost``
      - (String) Name of this node. This can be an opaque identifier. It is not necessarily a host name, FQDN, or IP address.
    * - ``iet_conf`` = ``/etc/iet/ietd.conf``
@@ -126,5 +128,3 @@
      - (Boolean) Option to enable/disable CHAP authentication for targets.
    * - ``use_forwarded_for`` = ``False``
      - (Boolean) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.
-   * - ``watch_log_file`` = ``False``
-     - (Boolean) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log_file option is specified and Linux platform is used. This option is ignored if log_config_append is set.

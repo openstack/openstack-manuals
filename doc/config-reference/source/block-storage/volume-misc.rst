@@ -25,7 +25,6 @@ These options can also be set in the ``cinder.conf`` file.
 .. include:: ../tables/cinder-images.rst
 .. include:: ../tables/cinder-infortrend.rst
 .. include:: ../tables/cinder-keymgr.rst
-.. include:: ../tables/cinder-logging.rst
 .. include:: ../tables/cinder-nas.rst
 .. include:: ../tables/cinder-profiler.rst
 .. include:: ../tables/cinder-pure.rst

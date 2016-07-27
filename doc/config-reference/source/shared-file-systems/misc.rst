@@ -10,7 +10,6 @@ These options can also be set in the ``manila.conf`` file.
 .. include:: ../tables/manila-compute.rst
 .. include:: ../tables/manila-ganesha.rst
 .. include:: ../tables/manila-hnas.rst
-.. include:: ../tables/manila-logging.rst
 .. include:: ../tables/manila-quota.rst
 .. include:: ../tables/manila-redis.rst
 .. include:: ../tables/manila-san.rst

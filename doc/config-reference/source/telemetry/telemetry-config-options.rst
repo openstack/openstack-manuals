@@ -19,7 +19,6 @@ configuration options.
 .. include:: ../tables/ceilometer-hyperv.rst
 .. include:: ../tables/ceilometer-inspector.rst
 .. include:: ../tables/ceilometer-ipmi.rst
-.. include:: ../tables/ceilometer-logging.rst
 .. include:: ../tables/ceilometer-magnetodb.rst
 .. include:: ../tables/ceilometer-notification.rst
 .. include:: ../tables/ceilometer-rabbitmq.rst

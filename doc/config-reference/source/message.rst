@@ -7,7 +7,6 @@ Message service
 
    message/zaqar-conf.rst
    message/api.rst
-   message/zaqar-logging.rst
    message/zaqar-drivers.rst
    message/zaqar-storage-drivers.rst
    message/zaqar-transport-drivers.rst

@@ -9,7 +9,6 @@ Alarming service configuration options.
 .. include:: ../tables/aodh-api.rst
 .. include:: ../tables/aodh-common.rst
 .. include:: ../tables/aodh-coordination.rst
-.. include:: ../tables/aodh-logging.rst
 .. include:: ../tables/aodh-rabbitmq.rst
 .. include:: ../tables/aodh-redis.rst
 .. include:: ../tables/aodh-rpc.rst

@@ -21,7 +21,6 @@ service options.
 .. include:: ../tables/keystone-identity.rst
 .. include:: ../tables/keystone-kvs.rst
 .. include:: ../tables/keystone-ldap.rst
-.. include:: ../tables/keystone-logging.rst
 .. include:: ../tables/keystone-mapping.rst
 .. include:: ../tables/keystone-memcache.rst
 .. include:: ../tables/keystone-oauth.rst

@@ -26,7 +26,6 @@ configuration options.
 .. include:: tables/trove-dns.rst
 .. include:: tables/trove-guestagent.rst
 .. include:: tables/trove-heat.rst
-.. include:: tables/trove-logging.rst
 .. include:: tables/trove-network.rst
 .. include:: tables/trove-nova.rst
 .. include:: tables/trove-quota.rst

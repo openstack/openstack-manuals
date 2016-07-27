@@ -24,7 +24,6 @@ service configuration options.
 .. include:: ../tables/ironic-ipmi.rst
 .. include:: ../tables/ironic-irmc.rst
 .. include:: ../tables/ironic-keystone.rst
-.. include:: ../tables/ironic-logging.rst
 .. include:: ../tables/ironic-neutron.rst
 .. include:: ../tables/ironic-pxe.rst
 .. include:: ../tables/ironic-redis.rst

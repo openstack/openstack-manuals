@@ -201,13 +201,6 @@ agent.
 
 .. include:: ../tables/neutron-l3_agent.rst
 
-Logging
-~~~~~~~
-
-Use the following options to alter logging settings.
-
-.. include:: ../tables/neutron-logging.rst
-
 Metadata Agent
 ~~~~~~~~~~~~~~
 

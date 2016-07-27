@@ -50,8 +50,6 @@
      - (List) List of directories to search for plug-ins.
    * - ``reauthentication_auth_method`` =
      - (String) Allow reauthentication on token expiry, such that long-running tasks may complete. Note this defeats the expiry of any provided user tokens.
-   * - ``watch_log_file`` = ``False``
-     - (Boolean) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log_file option is specified and Linux platform is used. This option is ignored if log_config_append is set.
    * - **[constraint_validation_cache]**
      -
    * - ``caching`` = ``True``

@@ -20,6 +20,8 @@
      -
    * - ``bindir`` = ``/usr/local/bin``
      - (String) Directory where ironic binaries are installed.
+   * - ``debug_tracebacks_in_api`` = ``False``
+     - (Boolean) Return server tracebacks in the API response for any error responses. WARNING: this is insecure and should not be used in a production environment.
    * - ``enabled_drivers`` = ``pxe_ipmitool``
      - (List) Specify the list of drivers to load during service initialization. Missing drivers, or drivers which fail to initialize, will prevent the conductor service from starting. The option default is a recommended set of production-oriented drivers. A complete list of drivers present on your system may be found by enumerating the "ironic.drivers" entrypoint. An example may be found in the developer documentation online.
    * - ``executor_thread_pool_size`` = ``64``
