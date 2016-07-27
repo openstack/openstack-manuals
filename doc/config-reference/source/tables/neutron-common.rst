@@ -67,7 +67,7 @@
    * - ``external_dns_driver`` = ``None``
      - (String) Driver for external DNS integration.
    * - ``global_physnet_mtu`` = ``1500``
-     - (Integer) MTU of the underlying physical network. Neutron uses this value to calculate MTU for all virtual network components. For flat and VLAN networks, neutron uses this value without modification. For overlay networks such as VXLAN, neutron automatically subtracts the overlay protocol overhead from this value. Defaults to 1500, the standard value for Ethernet.
+     - (Integer) MTU of the underlying physical network. Neutron uses this value to calculate MTU for all virtual network components. For flat and VLAN networks, neutron uses this value without modification. For overlay networks such as VXLAN, neutron automatically subtracts the overlay protocol overhead from this value. Defaults to 1500, the standard value for Ethernet. If using the ML2 plug-in with overlay/tunnel networks, also configure the ml2 path_mtu option with the same value as the global_physnet_mtu option.
    * - ``ip_lib_force_root`` = ``False``
      - (Boolean) Force ip_lib calls to use the root helper
    * - ``ipam_driver`` = ``None``
