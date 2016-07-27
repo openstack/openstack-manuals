@@ -60,6 +60,19 @@ or as connected entities.
    This guide walks through an installation by using packages
    available through Debian 8 (code name: Jessie).
 
+   .. note::
+
+      This guide uses installation with debconf set to non-interactive
+      mode. That is, there will be no debconf prompt. To configure a computer
+      to use this mode, run the following command:
+
+      .. code-block:: console
+
+         # dpkg-reconfigure debconf
+
+      If you prefer to use debconf, refer to the debconf
+      install-guide for Debian.
+
 Explanations of configuration options and sample configuration files
 are included.
 
