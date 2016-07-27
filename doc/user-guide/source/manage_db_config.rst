@@ -82,7 +82,7 @@ Bulk-configure a database or databases
       |          wait_timeout          | integer |    1    |       31536000       |      False       |
       +--------------------------------+---------+---------+----------------------+------------------+
 
-   In this example, the :command:`configuration-parameter-list` command
+   In this example, the :command:`trove configuration-parameter-list` command
    returns a list of options that work with MySQL 5.5.
 
 #. **Create a configuration group**
