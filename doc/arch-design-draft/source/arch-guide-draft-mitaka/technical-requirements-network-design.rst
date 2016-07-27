@@ -191,8 +191,8 @@ architecture include:
 * There are a variety of well tested tools, such as ICMP, to monitor and
   manage traffic.
 
-* Layer-3 architectures enable the use of Quality of Service (QoS) to manage
-  network performance.
+* Layer-3 architectures enable the use of :term:`quality of service (QoS)` to
+  manage network performance.
 
 Layer-3 architecture limitations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -297,8 +297,8 @@ have differences in implementation.
 To segregate traffic, allow applications to create a private tenant
 network for database and storage network traffic. Use a public network
 for services that require direct client access from the Internet. Upon
-segregating the traffic, consider quality of service (QoS) and security
-to ensure each network has the required level of service.
+segregating the traffic, consider :term:`quality of service (QoS)` and
+security to ensure each network has the required level of service.
 
 Finally, consider the routing of network traffic. For some applications,
 develop a complex policy framework for routing. To create a routing
@@ -430,15 +430,16 @@ allows for better use of available bandwidth. Configure jumbo frames across the
 complete path the packets traverse. If one network component is not capable of
 handling jumbo frames then the entire path reverts to the default MTU.
 
-Quality of Service (QoS) also has a great impact on network intensive workloads
-as it provides instant service to packets which have a higher priority due to
-the impact of poor network performance. In applications such as Voice over IP
-(VoIP), differentiated services code points are a near requirement for proper
-operation. You can also use QoS in the opposite direction for mixed workloads
-to prevent low priority but high bandwidth applications, for example backup
-services, video conferencing, or file sharing, from blocking bandwidth that is
-needed for the proper operation of other workloads. It is possible to tag file
-storage traffic as a lower class, such as best effort or scavenger, to allow
-the higher priority traffic through. In cases where regions within a cloud
-might be geographically distributed it may also be necessary to plan
-accordingly to implement WAN optimization to combat latency or packet loss.
+:term:`Quality of Service (QoS)` also has a great impact on network intensive
+workloads as it provides instant service to packets which have a higher
+priority due to the impact of poor network performance. In applications such as
+Voice over IP (VoIP), differentiated services code points are a near
+requirement for proper operation. You can also use QoS in the opposite
+direction for mixed workloads to prevent low priority but high bandwidth
+applications, for example backup services, video conferencing, or file sharing,
+from blocking bandwidth that is needed for the proper operation of other
+workloads. It is possible to tag file storage traffic as a lower class, such as
+best effort or scavenger, to allow the higher priority traffic through. In
+cases where regions within a cloud might be geographically distributed it may
+also be necessary to plan accordingly to implement WAN optimization to combat
+latency or packet loss.

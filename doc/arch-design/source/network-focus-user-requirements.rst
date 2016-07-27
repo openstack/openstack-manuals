@@ -20,8 +20,8 @@ Depending on the application and use case, network-intensive OpenStack
 installations can have high availability requirements. Financial
 transaction systems have a much higher requirement for high availability
 than a development application. Use network availability technologies,
-for example quality of service (QoS), to improve the network performance
-of sensitive applications such as VoIP and video streaming.
+for example :term:`quality of service (QoS)`, to improve the network
+performance of sensitive applications such as VoIP and video streaming.
 
 High performance systems have SLA requirements for a minimum QoS with
 regard to guaranteed uptime, latency, and bandwidth. The level of the

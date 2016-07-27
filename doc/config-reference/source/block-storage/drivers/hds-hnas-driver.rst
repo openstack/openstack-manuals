@@ -104,8 +104,8 @@ Driver configuration
 ~~~~~~~~~~~~~~~~~~~~
 
 The HDS driver supports the concept of differentiated services (also
-referred as quality of service) by mapping volume types to services
-provided through HNAS.
+referred as :term:`quality of service (QoS)`) by mapping volume types to
+services provided through HNAS.
 
 HNAS supports a variety of storage options and file system capabilities,
 which are selected through the definition of volume types and the use of

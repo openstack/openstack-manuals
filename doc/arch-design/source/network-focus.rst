@@ -81,17 +81,17 @@ Virtual desktop infrastructure (VDI)
 Voice over IP (VoIP)
  This is sensitive to network congestion, latency, jitter, and other network
  characteristics. VoIP has a symmetrical traffic pattern and it requires
- network quality of service (QoS) for best performance. In addition, you can
- implement active queue management to deliver voice and multimedia content.
- Users are sensitive to latency and jitter fluctuations and can detect them
- at very low levels.
+ network :term:`quality of service (QoS)` for best performance. In addition,
+ you can implement active queue management to deliver voice and multimedia
+ content. Users are sensitive to latency and jitter fluctuations and can detect
+ them at very low levels.
 
 Video Conference or web conference
  This is sensitive to network congestion, latency, jitter, and other network
  characteristics. Video Conferencing has a symmetrical traffic pattern, but
  unless the network is on an MPLS private network, it cannot use network
- quality of service (QoS) to improve performance. Similar to VoIP, users are
- sensitive to network performance issues even at low levels.
+ :term:`quality of service (QoS)` to improve performance. Similar to VoIP,
+ users are sensitive to network performance issues even at low levels.
 
 High performance computing (HPC)
  This is a complex use case that requires careful consideration of the traffic
