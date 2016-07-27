@@ -320,23 +320,21 @@ Virtual-Private-Network-as-a-Service (VPNaaS)
 The VPNaaS extension enables OpenStack tenants to extend private networks
 across the internet.
 
-This extension introduces these resources:
+VPNaas is a :term:`service`. It is a parent object that associates a VPN
+with a specific subnet and router. Only one VPN service object can be
+created for each router and each subnet. However, each VPN service object
+can have any number of IP security connections.
 
-- :term:`service`. A parent object that associates VPN with a specific subnet
-  and router.
+The Internet Key Exchange (IKE) policy specifies the authentication and
+encryption algorithms to use during phase one and two negotiation of a VPN
+connection. The IP security policy specifies the authentication and encryption
+algorithm and encapsulation mode to use for the established VPN connection.
+Note that you cannot update the IKE and IPSec parameters for live tunnels.
 
-- The Internet Key Exchange (IKE) policy that identifies the authentication
-  and encryption algorithm to use during phase one and two negotiation of a
-  VPN connection.
+You can set parameters for site-to-site IPsec connections, including peer
+CIDRs, MTU, authentication mode, peer address, DPD settings, and status.
 
-- The IP security policy that specifies the authentication and encryption
-  algorithm and encapsulation mode to use for
-  the established VPN connection.
-
-- Details for the site-to-site IPsec connection, including the peer CIDRs,
-  MTU, authentication mode, peer address, DPD settings, and status.
-
-This initial implementation of the VPNaaS extension provides:
+The current implementation of the VPNaaS extension provides:
 
 - Site-to-site VPN that connects two private networks.
 
@@ -350,3 +348,6 @@ This initial implementation of the VPNaaS extension provides:
 
 - Dead Peer Detection (DPD) with hold, clear, restart, disabled, or
   restart-by-peer actions.
+
+The VPNaaS driver plugin can be configured in the neutron configuration file.
+You can then enable the service.
