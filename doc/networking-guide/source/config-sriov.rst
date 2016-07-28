@@ -337,6 +337,46 @@ Enable neutron sriov-agent (Compute)
 #. Enable the neutron sriov-agent service.
 
 
+FDB L2 agent extension
+----------------------
+The FDB population is an L2 agent extension to OVS agent or Linux bridge. Its
+objective is to update the FDB table for existing instance using normal port.
+This enables communication between SR-IOV instances and normal instances.
+The use cases of the FDB population extension are:
+
+#. Direct port and normal port instances reside on the same compute node.
+
+#. Direct port instance that uses floating IP address and network node
+   are located on the same host.
+
+Additional information describing the problem, see:
+`Virtual switching technologies and Linux bridge.
+<http://events.linuxfoundation.org/sites/events/files/slides/LinuxConJapan2014_makita_0.pdf>`_
+
+   .. note::
+
+      This feature is supported from Newton release.
+
+To enable this extension, edit the relevant L2 agent
+``ovs_agent.ini/linuxbridge_agent.ini`` config file:
+
+#. In the ``[agent]`` section, add FDB to the extensions:
+
+   .. code-block:: console
+
+      [agent]
+      extensions = fdb
+
+#. Add the FDB section and the ``shared_physical_device_mappings`` parameter.
+   This parameter maps each physical port to its physical network name.
+   Each physical network can be mapped to several ports:
+
+   .. code-block:: console
+
+      [FDB]
+      shared_physical_device_mappings = physnet1:p1p1, physnet1:p1p2
+
+
 Creating instances with SR-IOV ports
 ------------------------------------
 After the configuration is done, you can now launch Instances
