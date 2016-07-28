@@ -21,12 +21,12 @@ List or get details for images (glance)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To get a list of images and to get further details about a single
-image, use :command:`glance image-list` and :command:`glance image-show`
+image, use :command:`openstack image list` and :command:`openstack image show`
 commands.
 
 .. code-block:: console
 
-   $ glance image-list
+   $ openstack image list
    +----------+---------------------------------+-------------+------------------+----------+--------+
    | ID       | Name                            | Disk Format | Container Format | Size     | Status |
    +----------+---------------------------------+-------------+------------------+----------+--------+
@@ -38,7 +38,7 @@ commands.
 
 .. code-block:: console
 
-   $ glance image-show myCirrosImage
+   $ openstack image show myCirrosImage
    +---------------------------------------+--------------------------------------+
    | Property                              | Value                                |
    +---------------------------------------+--------------------------------------+
@@ -83,7 +83,7 @@ list, as follows:
 
 .. code-block:: console
 
-   $ glance image-list | grep 'cirros'
+   $ openstack image list | grep 'cirros'
    | 397e713c-b95b-4186-ad46-612... | cirros-0.3.2-x86_64-uec         | ami | ami | 25165824 | active |
    | df430cc2-3406-4061-b635-a51... | cirros-0.3.2-x86_64-uec-kernel  | aki | aki | 4955792  | active |
    | 3cf852bd-2332-48f4-9ae4-7d9... | cirros-0.3.2-x86_64-uec-ramdisk | ari | ari | 3714968  | active |
@@ -112,24 +112,24 @@ list, as follows:
 
    .. code-block:: console
 
-      $ glance --os-image-api-version 2 image-show imageID
+      $ openstack --os-image-api-version 2 image show imageID
 
    For example, using the image ID shown above, you would issue the command as follows:
 
    .. code-block:: console
 
-      $ glance --os-image-api-version 2 image-show 2d9bb53f-70ea-4066-a68b-67960eaae673
+      $ openstack --os-image-api-version 2 image show 2d9bb53f-70ea-4066-a68b-67960eaae673
 
 Create or update an image (glance)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To create an image, use :command:`glance image-create`:
+To create an image, use :command:`openstack image create`:
 
 .. code-block:: console
 
-   $ glance image-create imageName
+   $ openstack image create imageName
 
-To update an image by name or ID, use :command:`glance image-update`:
+To update an image by name or ID, use :command:`openstack image set`:
 
 .. code-block:: console
 
@@ -206,7 +206,7 @@ CentOS 6.3 image in qcow2 format and configure it for public access:
 
 .. code-block:: console
 
-   $ glance image-create --name centos63-image --disk-format qcow2 \
+   $ openstack image create --name centos63-image --disk-format qcow2 \
      --container-format bare --is-public True --file ./centos63.qcow2
 
 The following example shows how to update an existing image with a
@@ -225,7 +225,7 @@ model:
 
 .. code-block:: console
 
-   $ glance image-update \
+   $ openstack image set \
        --property hw_disk_bus=scsi \
        --property hw_cdrom_bus=ide \
        --property hw_vif_model=e1000 \
@@ -315,14 +315,14 @@ in the following tables.
 
    .. code-block:: console
 
-      $ glance image-update --property short-id=fedora23 \
+      $ openstack image set --property short-id=fedora23 \
         name-of-my-fedora-image
 
    Alternatively, users can set ``id`` to a URL:
 
    .. code-block:: console
 
-      $ glance image-update \
+      $ glance image set \
         --property id=http://fedoraproject.org/fedora/23 \
         ID-of-my-fedora-image
 
