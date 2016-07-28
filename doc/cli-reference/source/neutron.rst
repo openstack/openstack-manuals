@@ -9,7 +9,7 @@ Networking service command-line client
 The neutron client is the command-line interface (CLI) for
 the Networking service API and its extensions.
 
-This chapter documents :command:`neutron` version ``4.2.0``.
+This chapter documents :command:`neutron` version ``5.0.0``.
 
 For help on a specific :command:`neutron` command, enter:
 
@@ -381,21 +381,6 @@ neutron API v2.0 commands
 ``floatingip-show``
   Show information of a given floating IP.
 
-``gateway-device-create``
-  Create a network gateway device.
-
-``gateway-device-delete``
-  Delete a given network gateway device.
-
-``gateway-device-list``
-  List network gateway devices for a given tenant.
-
-``gateway-device-show``
-  Show information for a given network gateway device.
-
-``gateway-device-update``
-  Update a network gateway device.
-
 ``help``
   print detailed help for another command
 
@@ -648,27 +633,6 @@ neutron API v2.0 commands
 ``net-external-list``
   List external networks that belong to a given tenant.
 
-``net-gateway-connect``
-  Add an internal network interface to a router.
-
-``net-gateway-create``
-  Create a network gateway.
-
-``net-gateway-delete``
-  Delete a given network gateway.
-
-``net-gateway-disconnect``
-  Remove a network from a network gateway.
-
-``net-gateway-list``
-  List network gateways for a given tenant.
-
-``net-gateway-show``
-  Show information of a given network gateway.
-
-``net-gateway-update``
-  Update the name for a network gateway.
-
 ``net-ip-availability-list``
   List IP usage of networks
 
@@ -703,6 +667,7 @@ neutron API v2.0 commands
   Update port's information.
 
 ``purge``
+  Delete all resources that belong to a given tenant.
 
 ``qos-available-rule-types``
   List available qos rule types.
@@ -751,18 +716,6 @@ neutron API v2.0 commands
 
 ``qos-policy-update``
   Update a given qos policy.
-
-``queue-create``
-  Create a queue.
-
-``queue-delete``
-  Delete a given queue.
-
-``queue-list``
-  List queues that belong to a given tenant.
-
-``queue-show``
-  Show information of a given queue.
 
 ``quota-delete``
   Delete defined quotas of a given tenant.
@@ -3566,205 +3519,6 @@ Show information of a given floating IP.
   Specify the field(s) to be returned by server. You can
   repeat this option.
 
-.. _neutron_gateway-device-create:
-
-neutron gateway-device-create
------------------------------
-
-.. code-block:: console
-
-   usage: neutron gateway-device-create [-h]
-                                        [-f {html,json,shell,table,value,yaml}]
-                                        [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
-                                        [--request-format {json}]
-                                        [--tenant-id TENANT_ID]
-                                        [--connector-type {stt,gre,ipsecgre,ipsecstt,bridge,ipsec_gre,ipsec_stt}]
-                                        --connector-ip CONNECTOR_IP
-                                        (--client-certificate CERT_DATA | --client-certificate-file CERT_FILE)
-                                        NAME
-
-Create a network gateway device.
-
-**Positional arguments:**
-
-``NAME``
-  Name of network gateway device to create.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``--tenant-id TENANT_ID``
-  The owner tenant ID.
-
-``--connector-type {stt,gre,ipsecgre,ipsecstt,bridge,ipsec_gre,ipsec_stt}``
-  Type of the transport zone connector to use for this
-  device. Valid values are gre, stt, ipsec_gre,
-  ipsec_stt, and bridge. Defaults to stt. ipsecgre and
-  ipsecstt are also accepted as alternative names
-
-``--connector-ip CONNECTOR_IP``
-  IP address for this device's transport connector. It
-  must correspond to the IP address of the interface
-  used for tenant traffic on the NSX gateway node.
-
-``--client-certificate CERT_DATA``
-  PEM certificate used by the NSX gateway transport node
-  to authenticate with the NSX controller.
-
-``--client-certificate-file CERT_FILE``
-  File containing the PEM certificate used by the NSX
-  gateway transport node to authenticate with the NSX
-  controller.
-
-.. _neutron_gateway-device-delete:
-
-neutron gateway-device-delete
------------------------------
-
-.. code-block:: console
-
-   usage: neutron gateway-device-delete [-h] [--request-format {json}]
-                                        GATEWAY_DEVICE
-
-Delete a given network gateway device.
-
-**Positional arguments:**
-
-``GATEWAY_DEVICE``
-  ID or name of gateway_device to delete.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-.. _neutron_gateway-device-list:
-
-neutron gateway-device-list
----------------------------
-
-.. code-block:: console
-
-   usage: neutron gateway-device-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                      [-c COLUMN] [--max-width <integer>]
-                                      [--noindent]
-                                      [--quote {all,minimal,none,nonnumeric}]
-                                      [--request-format {json}] [-D] [-F FIELD]
-
-List network gateway devices for a given tenant.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``-D, --show-details``
-  Show detailed information.
-
-``-F FIELD, --field FIELD``
-  Specify the field(s) to be returned by server. You can
-  repeat this option.
-
-.. _neutron_gateway-device-show:
-
-neutron gateway-device-show
----------------------------
-
-.. code-block:: console
-
-   usage: neutron gateway-device-show [-h]
-                                      [-f {html,json,shell,table,value,yaml}]
-                                      [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      [--request-format {json}] [-D] [-F FIELD]
-                                      GATEWAY_DEVICE
-
-Show information for a given network gateway device.
-
-**Positional arguments:**
-
-``GATEWAY_DEVICE``
-  ID or name of gateway_device to look up.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``-D, --show-details``
-  Show detailed information.
-
-``-F FIELD, --field FIELD``
-  Specify the field(s) to be returned by server. You can
-  repeat this option.
-
-.. _neutron_gateway-device-update:
-
-neutron gateway-device-update
------------------------------
-
-.. code-block:: console
-
-   usage: neutron gateway-device-update [-h] [--request-format {json}]
-                                        [--name NAME]
-                                        [--connector-type {stt,gre,ipsecgre,ipsecstt,bridge,ipsec_gre,ipsec_stt}]
-                                        [--connector-ip CONNECTOR_IP]
-                                        [--client-certificate CERT_DATA | --client-certificate-file CERT_FILE]
-                                        GATEWAY_DEVICE
-
-Update a network gateway device.
-
-**Positional arguments:**
-
-``GATEWAY_DEVICE``
-  ID or name of gateway_device to update.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``--name NAME``
-  New name for network gateway device.
-
-``--connector-type {stt,gre,ipsecgre,ipsecstt,bridge,ipsec_gre,ipsec_stt}``
-  Type of the transport zone connector to use for this
-  device. Valid values are gre, stt, ipsec_gre,
-  ipsec_stt, and bridge. Defaults to stt. ipsecgre and
-  ipsecstt are also accepted as alternative names
-
-``--connector-ip CONNECTOR_IP``
-  IP address for this device's transport connector. It
-  must correspond to the IP address of the interface
-  used for tenant traffic on the NSX gateway node.
-
-``--client-certificate CERT_DATA``
-  PEM certificate used by the NSX gateway transport node
-  to authenticate with the NSX controller.
-
-``--client-certificate-file CERT_FILE``
-  File containing the PEM certificate used by the NSX
-  gateway transport node to authenticate with the NSX
-  controller.
-
 .. _neutron_ipsec-site-connection-create:
 
 neutron ipsec-site-connection-create
@@ -4236,16 +3990,17 @@ Create a health monitor.
   beginning with a / (forward slash).
 
 ``--delay DELAY``
-  The time in seconds between sending probes to members.
+  The time in milliseconds between sending probes to
+  members.
 
 ``--max-retries MAX_RETRIES``
   Number of permissible connection failures before
   changing the member status to INACTIVE. [1..10]
 
 ``--timeout TIMEOUT``
-  Maximum number of seconds for a monitor to wait for a
-  connection to be established before it times out. The
-  value must be less than the delay value.
+  Maximum number of milliseconds for a monitor to wait
+  for a connection to be established before it times
+  out. The value must be less than the delay value.
 
 ``--type {PING,TCP,HTTP,HTTPS}``
   One of the predefined health monitor types.
@@ -5087,14 +4842,14 @@ neutron lbaas-healthmonitor-create
                                              [-c COLUMN] [--max-width <integer>]
                                              [--noindent] [--prefix PREFIX]
                                              [--request-format {json}]
-                                             [--tenant-id TENANT_ID]
-                                             [--name NAME] [--admin-state-down]
+                                             [--tenant-id TENANT_ID] --delay
+                                             DELAY [--name NAME] --timeout
+                                             TIMEOUT [--http-method HTTP_METHOD]
+                                             [--url-path URL_PATH] --max-retries
+                                             MAX_RETRIES
                                              [--expected-codes EXPECTED_CODES]
-                                             [--http-method HTTP_METHOD]
-                                             [--url-path URL_PATH] --delay DELAY
-                                             --max-retries MAX_RETRIES --timeout
-                                             TIMEOUT --type {PING,TCP,HTTP,HTTPS}
-                                             --pool POOL
+                                             [--admin-state-down] --type
+                                             {PING,TCP,HTTP,HTTPS} --pool POOL
 
 LBaaS v2 Create a healthmonitor.
 
@@ -5109,18 +4864,16 @@ LBaaS v2 Create a healthmonitor.
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
+``--delay DELAY``
+  The time in seconds between sending probes to members.
+
 ``--name NAME``
-  Name of the health monitor to be created.
+  Name of the health monitor.
 
-``--admin-state-down``
-  Set admin state up to false.
-
-``--expected-codes EXPECTED_CODES``
-  The list of HTTP status codes expected in response
-  from the member to declare it healthy. This attribute
-  can contain one value, or a list of values separated
-  by comma, or a range of values (e.g. "200-299"). If
-  this attribute is not specified, it defaults to "200".
+``--timeout TIMEOUT``
+  Maximum number of seconds for a monitor to wait for a
+  connection to be established before it times out. The
+  value must be less than the delay value.
 
 ``--http-method HTTP_METHOD``
   The HTTP method used for requests by the monitor of
@@ -5131,17 +4884,19 @@ LBaaS v2 Create a healthmonitor.
   monitor to test a member health. This must be a string
   beginning with a / (forward slash).
 
-``--delay DELAY``
-  The time in seconds between sending probes to members.
-
 ``--max-retries MAX_RETRIES``
   Number of permissible connection failures before
   changing the member status to INACTIVE. [1..10].
 
-``--timeout TIMEOUT``
-  Maximum number of seconds for a monitor to wait for a
-  connection to be established before it times out. The
-  value must be less than the delay value.
+``--expected-codes EXPECTED_CODES``
+  The list of HTTP status codes expected in response
+  from the member to declare it healthy. This attribute
+  can contain one value, or a list of values separated
+  by comma, or a range of values (e.g. "200-299"). If
+  this attribute is not specified, it defaults to "200".
+
+``--admin-state-down``
+  Set admin state up to false.
 
 ``--type {PING,TCP,HTTP,HTTPS}``
   One of the predefined health monitor types.
@@ -5269,7 +5024,13 @@ neutron lbaas-healthmonitor-update
 .. code-block:: console
 
    usage: neutron lbaas-healthmonitor-update [-h] [--request-format {json}]
-                                             [--name NAME]
+                                             [--delay DELAY] [--name NAME]
+                                             [--timeout TIMEOUT]
+                                             [--http-method HTTP_METHOD]
+                                             [--url-path URL_PATH]
+                                             [--max-retries MAX_RETRIES]
+                                             [--expected-codes EXPECTED_CODES]
+                                             [--admin-state-up {True,False}]
                                              HEALTHMONITOR
 
 LBaaS v2 Update a given healthmonitor.
@@ -5287,8 +5048,40 @@ LBaaS v2 Update a given healthmonitor.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+``--delay DELAY``
+  The time in seconds between sending probes to members.
+
 ``--name NAME``
-  Updated name of the health monitor.
+  Name of the health monitor.
+
+``--timeout TIMEOUT``
+  Maximum number of seconds for a monitor to wait for a
+  connection to be established before it times out. The
+  value must be less than the delay value.
+
+``--http-method HTTP_METHOD``
+  The HTTP method used for requests by the monitor of
+  type HTTP.
+
+``--url-path URL_PATH``
+  The HTTP path used in the HTTP request used by the
+  monitor to test a member health. This must be a string
+  beginning with a / (forward slash).
+
+``--max-retries MAX_RETRIES``
+  Number of permissible connection failures before
+  changing the member status to INACTIVE. [1..10].
+
+``--expected-codes EXPECTED_CODES``
+  The list of HTTP status codes expected in response
+  from the member to declare it healthy. This attribute
+  can contain one value, or a list of values separated
+  by comma, or a range of values (e.g. "200-299"). If
+  this attribute is not specified, it defaults to "200".
+
+``--admin-state-up {True,False}``
+  Update the administrative state of the health monitor
+  (True meaning "Up").
 
 .. _neutron_lbaas-l7policy-create:
 
@@ -5758,12 +5551,12 @@ neutron lbaas-listener-create
                                         [--noindent] [--prefix PREFIX]
                                         [--request-format {json}]
                                         [--tenant-id TENANT_ID]
-                                        [--admin-state-down]
+                                        [--description DESCRIPTION]
                                         [--connection-limit CONNECTION_LIMIT]
-                                        [--description DESCRIPTION] [--name NAME]
+                                        [--default-pool DEFAULT_POOL]
+                                        [--admin-state-down] [--name NAME]
                                         [--default-tls-container-ref DEFAULT_TLS_CONTAINER_REF]
                                         [--sni-container-refs SNI_CONTAINER_REFS [SNI_CONTAINER_REFS ...]]
-                                        [--default-pool DEFAULT_POOL]
                                         [--loadbalancer LOADBALANCER] --protocol
                                         {TCP,HTTP,HTTPS,TERMINATED_HTTPS}
                                         --protocol-port PORT
@@ -5781,16 +5574,19 @@ LBaaS v2 Create a listener.
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
-``--admin-state-down``
-  Set admin state up to false.
+``--description DESCRIPTION``
+  Description of the listener.
 
 ``--connection-limit CONNECTION_LIMIT``
   The maximum number of connections per second allowed
   for the vip. Positive integer or -1 for unlimited
   (default).
 
-``--description DESCRIPTION``
-  Description of the listener.
+``--default-pool DEFAULT_POOL``
+  Default pool for the listener.
+
+``--admin-state-down``
+  Set admin state up to false.
 
 ``--name NAME``
   The name of the listener. At least one of :option:`--default-`
@@ -5802,9 +5598,6 @@ LBaaS v2 Create a listener.
 
 ``--sni-container-refs SNI_CONTAINER_REFS [SNI_CONTAINER_REFS ...]``
   List of TLS container references for SNI.
-
-``--default-pool DEFAULT_POOL``
-  Default pool for the listener.
 
 ``--loadbalancer LOADBALANCER``
   ID or name of the load balancer.
@@ -5929,14 +5722,20 @@ neutron lbaas-listener-update
 
 .. code-block:: console
 
-   usage: neutron lbaas-listener-update [-h] [--request-format {json}] LISTENER
+   usage: neutron lbaas-listener-update [-h] [--request-format {json}]
+                                        [--description DESCRIPTION]
+                                        [--connection-limit CONNECTION_LIMIT]
+                                        [--default-pool DEFAULT_POOL]
+                                        [--name NAME]
+                                        [--admin-state-up {True,False}]
+                                        LISTENER
 
 LBaaS v2 Update a given listener.
 
 **Positional arguments:**
 
 ``LISTENER``
-  ID of listener to update.
+  ID or name of listener to update.
 
 **Optional arguments:**
 
@@ -5945,6 +5744,24 @@ LBaaS v2 Update a given listener.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+``--description DESCRIPTION``
+  Description of the listener.
+
+``--connection-limit CONNECTION_LIMIT``
+  The maximum number of connections per second allowed
+  for the vip. Positive integer or -1 for unlimited
+  (default).
+
+``--default-pool DEFAULT_POOL``
+  Default pool for the listener.
+
+``--name NAME``
+  Name of the listener.
+
+``--admin-state-up {True,False}``
+  Specify the administrative state of the listener.
+  (True meaning "Up")
 
 .. _neutron_lbaas-loadbalancer-create:
 
@@ -5960,7 +5777,7 @@ neutron lbaas-loadbalancer-create
                                             [--request-format {json}]
                                             [--tenant-id TENANT_ID]
                                             [--description DESCRIPTION]
-                                            [--admin-state-down] [--name NAME]
+                                            [--name NAME] [--admin-state-down]
                                             [--provider PROVIDER]
                                             [--flavor FLAVOR]
                                             [--vip-address VIP_ADDRESS]
@@ -5987,11 +5804,11 @@ LBaaS v2 Create a loadbalancer.
 ``--description DESCRIPTION``
   Description of the load balancer.
 
-``--admin-state-down``
-  Set admin state up to false.
-
 ``--name NAME``
   Name of the load balancer.
+
+``--admin-state-down``
+  Set admin state up to false.
 
 ``--provider PROVIDER``
   Provider name of load balancer service.
@@ -6222,6 +6039,9 @@ neutron lbaas-loadbalancer-update
 .. code-block:: console
 
    usage: neutron lbaas-loadbalancer-update [-h] [--request-format {json}]
+                                            [--admin-state-up {True,False}]
+                                            [--description DESCRIPTION]
+                                            [--name NAME]
                                             LOADBALANCER
 
 LBaaS v2 Update a given loadbalancer.
@@ -6239,6 +6059,16 @@ LBaaS v2 Update a given loadbalancer.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+``--admin-state-up {True,False}``
+  Update the administrative state of the load balancer
+  (True meaning "Up").
+
+``--description DESCRIPTION``
+  Description of the load balancer.
+
+``--name NAME``
+  Name of the load balancer.
+
 .. _neutron_lbaas-member-create:
 
 neutron lbaas-member-create
@@ -6251,10 +6081,10 @@ neutron lbaas-member-create
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent] [--prefix PREFIX]
                                       [--request-format {json}]
-                                      [--tenant-id TENANT_ID]
-                                      [--admin-state-down] [--weight WEIGHT]
-                                      [--name NAME] --subnet SUBNET --address
-                                      ADDRESS --protocol-port PROTOCOL_PORT
+                                      [--tenant-id TENANT_ID] [--name NAME]
+                                      [--weight WEIGHT] [--admin-state-down]
+                                      --subnet SUBNET --address ADDRESS
+                                      --protocol-port PROTOCOL_PORT
                                       POOL
 
 LBaaS v2 Create a member.
@@ -6275,14 +6105,14 @@ LBaaS v2 Create a member.
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
-``--admin-state-down``
-  Set admin state up to false
+``--name NAME``
+  Name of the member.
 
 ``--weight WEIGHT``
   Weight of member in the pool (default:1, [0..256]).
 
-``--name NAME``
-  Name of the member to be created.
+``--admin-state-down``
+  Set admin state up to false.
 
 ``--subnet SUBNET``
   Subnet ID or name for the member.
@@ -6420,8 +6250,9 @@ neutron lbaas-member-update
 .. code-block:: console
 
    usage: neutron lbaas-member-update [-h] [--request-format {json}]
-                                      [--admin-state-down] [--weight WEIGHT]
-                                      [--name NAME]
+                                      [--admin-state-down]
+                                      [--admin-state-up {True,False}]
+                                      [--name NAME] [--weight WEIGHT]
                                       MEMBER POOL
 
 LBaaS v2 Update a given member.
@@ -6432,7 +6263,7 @@ LBaaS v2 Update a given member.
   ID or name of member to update.
 
 ``POOL``
-  ID or name of the pool that this member belongs to
+  ID or name of the pool that this member belongs to.
 
 **Optional arguments:**
 
@@ -6442,14 +6273,18 @@ LBaaS v2 Update a given member.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
-``--admin-state-down``
-  Set admin state up to false
+``--admin-state-down [DEPRECATED in Mitaka]``
+  Set admin state up to false.
 
-``--weight WEIGHT``
-  Weight of member in the pool (default:1, [0..256])
+``--admin-state-up {True,False}``
+  Update the administrative state of the member (True
+  meaning "Up").
 
 ``--name NAME``
-  Updated name of the member.
+  Name of the member.
+
+``--weight WEIGHT``
+  Weight of member in the pool (default:1, [0..256]).
 
 .. _neutron_lbaas-pool-create:
 
@@ -6462,13 +6297,14 @@ neutron lbaas-pool-create
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     [--request-format {json}]
-                                    [--tenant-id TENANT_ID] [--admin-state-down]
-                                    [--description DESCRIPTION]
-                                    [--session-persistence type=TYPE[,cookie_name=COOKIE_NAME]]
-                                    [--name NAME] [--listener LISTENER]
-                                    [--loadbalancer LOADBALANCER] --lb-algorithm
+                                    [--tenant-id TENANT_ID]
+                                    [--description DESCRIPTION] [--name NAME]
+                                    --lb-algorithm
                                     {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}
-                                    --protocol {HTTP,HTTPS,TCP}
+                                    [--admin-state-down] [--listener LISTENER]
+                                    [--loadbalancer LOADBALANCER] --protocol
+                                    {HTTP,HTTPS,TCP}
+                                    [--session-persistence type=TYPE[,cookie_name=COOKIE_NAME]]
 
 LBaaS v2 Create a pool.
 
@@ -6483,19 +6319,18 @@ LBaaS v2 Create a pool.
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
-``--admin-state-down``
-  Set admin state up to false.
-
 ``--description DESCRIPTION``
   Description of the pool.
 
-``--session-persistence``
-  type=TYPE[,cookie_name=COOKIE_NAME]
-  The type of session persistence to use and associated
-  cookie name
-
 ``--name NAME``
   The name of the pool.
+
+``--lb-algorithm {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}``
+  The algorithm used to distribute load between the
+  members of the pool.
+
+``--admin-state-down``
+  Set admin state up to false.
 
 ``--listener LISTENER``
   Listener whose default-pool should be set to this
@@ -6507,12 +6342,13 @@ LBaaS v2 Create a pool.
   associated. At least one of :option:`--listener` or
   :option:`--loadbalancer` must be specified.
 
-``--lb-algorithm {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}``
-  The algorithm used to distribute load between the
-  members of the pool.
-
 ``--protocol {HTTP,HTTPS,TCP}``
   Protocol for balancing.
+
+``--session-persistence``
+  type=TYPE[,cookie_name=COOKIE_NAME]
+  The type of session persistence to use and associated
+  cookie name.
 
 .. _neutron_lbaas-pool-delete:
 
@@ -6627,7 +6463,13 @@ neutron lbaas-pool-update
 
 .. code-block:: console
 
-   usage: neutron lbaas-pool-update [-h] [--request-format {json}] POOL
+   usage: neutron lbaas-pool-update [-h] [--request-format {json}]
+                                    [--admin-state-up {True,False}]
+                                    [--session-persistence type=TYPE[,cookie_name=COOKIE_NAME]]
+                                    [--description DESCRIPTION] [--name NAME]
+                                    --lb-algorithm
+                                    {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}
+                                    POOL
 
 LBaaS v2 Update a given pool.
 
@@ -6643,6 +6485,25 @@ LBaaS v2 Update a given pool.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+``--admin-state-up {True,False}``
+  Update the administrative state of the pool (True
+  meaning "Up").
+
+``--session-persistence``
+  type=TYPE[,cookie_name=COOKIE_NAME]
+  The type of session persistence to use and associated
+  cookie name.
+
+``--description DESCRIPTION``
+  Description of the pool.
+
+``--name NAME``
+  The name of the pool.
+
+``--lb-algorithm {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}``
+  The algorithm used to distribute load between the
+  members of the pool.
 
 .. _neutron_meter-label-create:
 
@@ -7096,235 +6957,6 @@ List external networks that belong to a given tenant.
   Sorts the list in the specified direction. You can
   repeat this option.
 
-.. _neutron_net-gateway-connect:
-
-neutron net-gateway-connect
----------------------------
-
-.. code-block:: console
-
-   usage: neutron net-gateway-connect [-h] [--request-format {json}]
-                                      [--segmentation-type SEGMENTATION_TYPE]
-                                      [--segmentation-id SEGMENTATION_ID]
-                                      NET-GATEWAY-ID NETWORK-ID
-
-Add an internal network interface to a router.
-
-**Positional arguments:**
-
-``NET-GATEWAY-ID``
-  ID of the network gateway.
-
-``NETWORK-ID``
-  ID of the internal network to connect on the gateway.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``--segmentation-type SEGMENTATION_TYPE``
-  L2 segmentation strategy on the external side of the
-  gateway (e.g.: VLAN, FLAT).
-
-``--segmentation-id SEGMENTATION_ID``
-  Identifier for the L2 segment on the external side of
-  the gateway.
-
-.. _neutron_net-gateway-create:
-
-neutron net-gateway-create
---------------------------
-
-.. code-block:: console
-
-   usage: neutron net-gateway-create [-h] [-f {html,json,shell,table,value,yaml}]
-                                     [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
-                                     [--request-format {json}]
-                                     [--tenant-id TENANT_ID]
-                                     [--device id=ID,interface_name=NAME_OR_ID]
-                                     NAME
-
-Create a network gateway.
-
-**Positional arguments:**
-
-``NAME``
-  Name of network gateway to create.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``--tenant-id TENANT_ID``
-  The owner tenant ID.
-
-``--device``
-  id=ID,interface_name=NAME_OR_ID
-  Device info for this gateway. You can repeat this
-  option for multiple devices for HA gateways.
-
-.. _neutron_net-gateway-delete:
-
-neutron net-gateway-delete
---------------------------
-
-.. code-block:: console
-
-   usage: neutron net-gateway-delete [-h] [--request-format {json}]
-                                     NETWORK_GATEWAY
-
-Delete a given network gateway.
-
-**Positional arguments:**
-
-``NETWORK_GATEWAY``
-  ID or name of network_gateway to delete.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-.. _neutron_net-gateway-disconnect:
-
-neutron net-gateway-disconnect
-------------------------------
-
-.. code-block:: console
-
-   usage: neutron net-gateway-disconnect [-h] [--request-format {json}]
-                                         [--segmentation-type SEGMENTATION_TYPE]
-                                         [--segmentation-id SEGMENTATION_ID]
-                                         NET-GATEWAY-ID NETWORK-ID
-
-Remove a network from a network gateway.
-
-**Positional arguments:**
-
-``NET-GATEWAY-ID``
-  ID of the network gateway.
-
-``NETWORK-ID``
-  ID of the internal network to connect on the gateway.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``--segmentation-type SEGMENTATION_TYPE``
-  L2 segmentation strategy on the external side of the
-  gateway (e.g.: VLAN, FLAT).
-
-``--segmentation-id SEGMENTATION_ID``
-  Identifier for the L2 segment on the external side of
-  the gateway.
-
-.. _neutron_net-gateway-list:
-
-neutron net-gateway-list
-------------------------
-
-.. code-block:: console
-
-   usage: neutron net-gateway-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                   [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
-                                   [--quote {all,minimal,none,nonnumeric}]
-                                   [--request-format {json}] [-D] [-F FIELD]
-
-List network gateways for a given tenant.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``-D, --show-details``
-  Show detailed information.
-
-``-F FIELD, --field FIELD``
-  Specify the field(s) to be returned by server. You can
-  repeat this option.
-
-.. _neutron_net-gateway-show:
-
-neutron net-gateway-show
-------------------------
-
-.. code-block:: console
-
-   usage: neutron net-gateway-show [-h] [-f {html,json,shell,table,value,yaml}]
-                                   [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX]
-                                   [--request-format {json}] [-D] [-F FIELD]
-                                   NETWORK_GATEWAY
-
-Show information of a given network gateway.
-
-**Positional arguments:**
-
-``NETWORK_GATEWAY``
-  ID or name of network_gateway to look up.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``-D, --show-details``
-  Show detailed information.
-
-``-F FIELD, --field FIELD``
-  Specify the field(s) to be returned by server. You can
-  repeat this option.
-
-.. _neutron_net-gateway-update:
-
-neutron net-gateway-update
---------------------------
-
-.. code-block:: console
-
-   usage: neutron net-gateway-update [-h] [--request-format {json}]
-                                     NETWORK_GATEWAY
-
-Update the name for a network gateway.
-
-**Positional arguments:**
-
-``NETWORK_GATEWAY``
-  ID or name of network_gateway to update.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_net-ip-availability-list:
 
 neutron net-ip-availability-list
@@ -7679,7 +7311,7 @@ Create a port for a given tenant.
 
 ``--allowed-address-pair``
   ip_address=IP_ADDR[,mac_address=MAC_ADDR]
-  Allowed address pair associated with the port.You can
+  Allowed address pair associated with the port. You can
   repeat this option.
 
 ``--no-allowed-address-pairs``
@@ -7870,7 +7502,7 @@ Update port's information.
 
 ``--allowed-address-pair``
   ip_address=IP_ADDR[,mac_address=MAC_ADDR]
-  Allowed address pair associated with the port.You can
+  Allowed address pair associated with the port. You can
   repeat this option.
 
 ``--no-allowed-address-pairs``
@@ -7893,6 +7525,7 @@ neutron purge
 
    usage: neutron purge [-h] [--request-format {json}] TENANT
 
+Delete all resources that belong to a given tenant.
 
 **Positional arguments:**
 
@@ -8508,7 +8141,8 @@ neutron qos-policy-update
 .. code-block:: console
 
    usage: neutron qos-policy-update [-h] [--request-format {json}] [--name NAME]
-                                    [--description DESCRIPTION] [--shared]
+                                    [--description DESCRIPTION]
+                                    [--shared | --no-shared]
                                     POLICY
 
 Update a given qos policy.
@@ -8536,142 +8170,8 @@ Update a given qos policy.
   Accessible by other tenants. Set shared to True
   (default is False).
 
-.. _neutron_queue-create:
-
-neutron queue-create
---------------------
-
-.. code-block:: console
-
-   usage: neutron queue-create [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] [--request-format {json}]
-                               [--tenant-id TENANT_ID] [--min MIN] [--max MAX]
-                               [--qos-marking QOS_MARKING] [--default DEFAULT]
-                               [--dscp DSCP]
-                               NAME
-
-Create a queue.
-
-**Positional arguments:**
-
-``NAME``
-  Name of queue.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``--tenant-id TENANT_ID``
-  The owner tenant ID.
-
-``--min MIN``
-  Minimum rate.
-
-``--max MAX``
-  Maximum rate.
-
-``--qos-marking QOS_MARKING``
-  QOS marking as untrusted or trusted.
-
-``--default DEFAULT``
-  If true all created ports will be the size of this
-  queue, if queue is not specified
-
-``--dscp DSCP``
-  Differentiated Services Code Point.
-
-.. _neutron_queue-delete:
-
-neutron queue-delete
---------------------
-
-.. code-block:: console
-
-   usage: neutron queue-delete [-h] [--request-format {json}] QOS_QUEUE
-
-Delete a given queue.
-
-**Positional arguments:**
-
-``QOS_QUEUE``
-  ID or name of qos_queue to delete.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-.. _neutron_queue-list:
-
-neutron queue-list
-------------------
-
-.. code-block:: console
-
-   usage: neutron queue-list [-h] [-f {csv,html,json,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--quote {all,minimal,none,nonnumeric}]
-                             [--request-format {json}] [-D] [-F FIELD]
-
-List queues that belong to a given tenant.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``-D, --show-details``
-  Show detailed information.
-
-``-F FIELD, --field FIELD``
-  Specify the field(s) to be returned by server. You can
-  repeat this option.
-
-.. _neutron_queue-show:
-
-neutron queue-show
-------------------
-
-.. code-block:: console
-
-   usage: neutron queue-show [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [--request-format {json}] [-D]
-                             [-F FIELD]
-                             QOS_QUEUE
-
-Show information of a given queue.
-
-**Positional arguments:**
-
-``QOS_QUEUE``
-  ID or name of qos_queue to look up.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``-D, --show-details``
-  Show detailed information.
-
-``-F FIELD, --field FIELD``
-  Specify the field(s) to be returned by server. You can
-  repeat this option.
+``--no-shared``
+  Not accessible by other tenants. Set shared to False.
 
 .. _neutron_quota-delete:
 
@@ -10100,7 +9600,7 @@ neutron subnetpool-create
                                     [--min-prefixlen MIN_PREFIXLEN]
                                     [--max-prefixlen MAX_PREFIXLEN]
                                     [--default-prefixlen DEFAULT_PREFIXLEN]
-                                    [--pool-prefix PREFIXES]
+                                    --pool-prefix PREFIXES
                                     [--is-default {True,False}] [--shared]
                                     [--address-scope ADDRSCOPE]
                                     NAME
@@ -10607,7 +10107,7 @@ neutron vpn-ikepolicy-create
                                        [--request-format {json}]
                                        [--tenant-id TENANT_ID]
                                        [--description DESCRIPTION]
-                                       [--auth-algorithm {sha1}]
+                                       [--auth-algorithm {sha1,sha256}]
                                        [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                        [--phase1-negotiation-mode {main}]
                                        [--ike-version {v1,v2}]
@@ -10636,7 +10136,7 @@ Create an IKE policy.
 ``--description DESCRIPTION``
   Description of the IKE policy
 
-``--auth-algorithm {sha1}``
+``--auth-algorithm {sha1,sha256}``
   Authentication algorithm in lowercase. Default:sha1
 
 ``--encryption-algorithm ENCRYPTION_ALGORITHM``
@@ -10810,7 +10310,7 @@ neutron vpn-ipsecpolicy-create
                                          [--tenant-id TENANT_ID]
                                          [--description DESCRIPTION]
                                          [--transform-protocol {esp,ah,ah-esp}]
-                                         [--auth-algorithm {sha1}]
+                                         [--auth-algorithm {sha1,sha256}]
                                          [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                          [--encapsulation-mode {tunnel,transport}]
                                          [--pfs {group2,group5,group14}]
@@ -10841,7 +10341,7 @@ Create an IPsec policy.
 ``--transform-protocol {esp,ah,ah-esp}``
   Transform protocol in lowercase, default:esp
 
-``--auth-algorithm {sha1}``
+``--auth-algorithm {sha1,sha256}``
   Authentication algorithm in lowercase, default:sha1
 
 ``--encryption-algorithm ENCRYPTION_ALGORITHM``
