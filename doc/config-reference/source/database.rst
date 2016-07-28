@@ -17,7 +17,6 @@ The following tables provide a comprehensive list of the Database service
 configuration options.
 
 .. include:: tables/trove-api.rst
-.. include:: tables/trove-auth_token.rst
 .. include:: tables/trove-backup.rst
 .. include:: tables/trove-clients.rst
 .. include:: tables/trove-cluster.rst

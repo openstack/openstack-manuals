@@ -7,7 +7,6 @@ These options can also be set in the ``cinder.conf`` file.
 .. include:: ../tables/cinder-api.rst
 .. include:: ../tables/cinder-amqp.rst
 .. include:: ../tables/cinder-auth.rst
-.. include:: ../tables/cinder-auth_token.rst
 .. include:: ../tables/cinder-backups.rst
 .. include:: ../tables/cinder-block-device.rst
 .. include:: ../tables/cinder-common.rst

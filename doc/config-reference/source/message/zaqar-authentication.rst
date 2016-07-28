@@ -39,4 +39,3 @@ Options
 Configure the authentication and authorization strategy through these options:
 
 .. include:: ../tables/zaqar-authentication.rst
-.. include:: ../tables/zaqar-auth_token.rst

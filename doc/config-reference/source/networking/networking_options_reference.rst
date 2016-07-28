@@ -165,14 +165,6 @@ Use the following options to alter API-related settings.
 
 .. include:: ../tables/neutron-api.rst
 
-Token authentication
-~~~~~~~~~~~~~~~~~~~~
-
-Use the following options to alter token authentication settings.
-
-.. include:: ../tables/neutron-auth_token.rst
-
-
 Compute
 ~~~~~~~
 

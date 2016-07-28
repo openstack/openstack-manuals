@@ -118,10 +118,6 @@
      - (String) Root helper application. Use 'sudo neutron-rootwrap /etc/neutron/rootwrap.conf' to use the real root filter facility. Change to 'sudo' to skip the filtering and just run the command directly.
    * - ``root_helper_daemon`` = ``None``
      - (String) Root helper daemon application to use when possible.
-   * - **[keystone_authtoken]**
-     -
-   * - ``memcached_servers`` = ``None``
-     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
    * - **[qos]**
      -
    * - ``notification_drivers`` = ``message_queue``
