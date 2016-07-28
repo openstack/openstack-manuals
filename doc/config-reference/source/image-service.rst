@@ -30,7 +30,6 @@ a comprehensive list.
 
 .. include:: tables/glance-auth_token.rst
 .. include:: tables/glance-common.rst
-.. include:: tables/glance-database.rst
 .. include:: tables/glance-imagecache.rst
 .. include:: tables/glance-logging.rst
 .. include:: tables/glance-policy.rst

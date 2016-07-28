@@ -50,6 +50,10 @@
      - (Boolean) Whether to verify the SSL Server certificate when calling alarm action.
    * - ``user_alarm_quota`` = ``None``
      - (Integer) Maximum number of alarms defined for a user.
+   * - **[database]**
+     -
+   * - ``alarm_history_time_to_live`` = ``-1``
+     - (Integer) Number of seconds that alarm histories are kept in the database for (<= 0 means forever).
    * - **[service_credentials]**
      -
    * - ``interface`` = ``public``

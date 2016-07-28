@@ -180,13 +180,6 @@ Use the following options to alter Compute-related settings.
 
 .. include:: ../tables/neutron-compute.rst
 
-Database
-~~~~~~~~
-
-Use the following options to alter Database-related settings.
-
-.. include:: ../tables/neutron-database.rst
-
 DHCP agent
 ~~~~~~~~~~
 

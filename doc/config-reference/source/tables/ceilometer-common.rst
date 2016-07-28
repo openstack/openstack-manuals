@@ -20,6 +20,12 @@
      -
    * - ``batch_polled_samples`` = ``True``
      - (Boolean) To reduce polling agent load, samples are sent to the notification agent in a batch. To gain higher throughput at the cost of load set this to False.
+   * - ``database_connection`` = ``None``
+     - (String) DEPRECATED - Database connection string.
+   * - ``event_connection`` = ``None``
+     - (String) The connection string used to connect to the event database. (if unset, connection is used)
+   * - ``event_time_to_live`` = ``-1``
+     - (Integer) Number of seconds that events are kept in the database for (<= 0 means forever).
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
    * - ``host`` = ``localhost``
@@ -28,6 +34,10 @@
      - (Integer) Timeout seconds for HTTP requests. Set it to None to disable timeout.
    * - ``memcached_servers`` = ``None``
      - (List) Memcached servers or None for in process cache.
+   * - ``metering_connection`` = ``None``
+     - (String) The connection string used to connect to the metering database. (if unset, connection is used)
+   * - ``metering_time_to_live`` = ``-1``
+     - (Integer) Number of seconds that samples are kept in the database for (<= 0 means forever).
    * - ``polling_namespaces`` = ``['compute', 'central']``
      - (Unknown) Polling namespace(s) to be used while resource polling
    * - ``pollster_list`` = ``[]``

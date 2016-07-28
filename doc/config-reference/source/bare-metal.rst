@@ -25,7 +25,6 @@ service configuration options.
 .. include:: tables/ironic-common.rst
 .. include:: tables/ironic-conductor.rst
 .. include:: tables/ironic-console.rst
-.. include:: tables/ironic-database.rst
 .. include:: tables/ironic-debug.rst
 .. include:: tables/ironic-deploy.rst
 .. include:: tables/ironic-dhcp.rst
