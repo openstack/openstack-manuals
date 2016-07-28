@@ -90,7 +90,7 @@ Create a flavor
 
    .. code-block:: console
 
-      $ nova flavor-list
+      $ openstack flavor list
 
 #. To create a flavor, specify a name, ID, RAM
    size, disk size, and the number of VCPUs for the
@@ -98,7 +98,7 @@ Create a flavor
 
    .. code-block:: console
 
-      $ nova flavor-create FLAVOR_NAME FLAVOR_ID RAM_IN_MB ROOT_DISK_IN_GB NUMBER_OF_VCPUS
+      $ openstack flavor create FLAVOR_NAME FLAVOR_ID RAM_IN_MB ROOT_DISK_IN_GB NUMBER_OF_VCPUS
 
    .. note::
 
@@ -116,7 +116,7 @@ Create a flavor
 
    .. code-block:: console
 
-      $ nova flavor-create --is-public true m1.extra_tiny auto 256 0 1 --rxtx-factor .1
+      $ openstack flavor create --is-public true m1.extra_tiny auto 256 0 1 --rxtx-factor .1
 
 #. If an individual user or group of users needs a custom
    flavor that you do not want other tenants to have access to,
@@ -128,7 +128,7 @@ Create a flavor
 
    .. code-block:: console
 
-      $ nova help flavor-create
+      $ openstack help flavor create
 
 #. After you create a flavor, assign it to a
    project by specifying the flavor name or ID and
@@ -163,4 +163,4 @@ Delete a specified flavor, as follows:
 
 .. code-block:: console
 
-   $ nova flavor-delete FLAVOR_ID
+   $ openstack flavor delete FLAVOR_ID
