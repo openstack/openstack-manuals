@@ -369,7 +369,7 @@ with the neutron client:
         115e4f70-8034-4176-8fe9-2c47f8878a7d dscp-marking
       Deleted dscp_rule: 115e4f70-8034-4176-8fe9-2c47f8878a7d
 
-    $ neutron qos-dscp-marking-rule-list
+    $ neutron qos-dscp-marking-rule-list dscp-marking
 
     +--------------------------------------+----------------------------------+
     | id                                   | dscp_mark                        |
