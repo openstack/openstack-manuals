@@ -48,6 +48,8 @@
      - (String) Set path to pydevd library, used if pydevd is not found in python sys.path.
    * - ``quota_notification_interval`` = ``3600``
      - (Integer) Seconds to wait between pushing events.
+   * - ``sql_query_logging`` = ``False``
+     - (Boolean) Allow insecure logging while executing queries through SQLAlchemy.
    * - ``taskmanager_queue`` = ``taskmanager``
      - (String) Message queue name the Taskmanager will listen to.
    * - ``template_path`` = ``/etc/trove/templates/``

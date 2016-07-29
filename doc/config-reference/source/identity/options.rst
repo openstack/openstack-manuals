@@ -15,7 +15,6 @@ service options.
 .. include:: ../tables/keystone-catalog.rst
 .. include:: ../tables/keystone-common.rst
 .. include:: ../tables/keystone-credential.rst
-.. include:: ../tables/keystone-database.rst
 .. include:: ../tables/keystone-debug.rst
 .. include:: ../tables/keystone-domain.rst
 .. include:: ../tables/keystone-federation.rst

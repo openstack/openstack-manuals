@@ -11,7 +11,6 @@ configuration options.
 .. include:: ../tables/ceilometer-auth_token.rst
 .. include:: ../tables/ceilometer-collector.rst
 .. include:: ../tables/ceilometer-common.rst
-.. include:: ../tables/ceilometer-database.rst
 .. include:: ../tables/ceilometer-debug.rst
 .. include:: ../tables/ceilometer-dispatcher_gnocchi.rst
 .. include:: ../tables/ceilometer-dispatcher_http.rst

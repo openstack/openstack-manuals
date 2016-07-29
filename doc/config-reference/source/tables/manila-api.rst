@@ -28,6 +28,8 @@
      - (String) File name for the paste.deploy config for manila-api.
    * - ``api_rate_limit`` = ``True``
      - (Boolean) Whether to rate limit the API.
+   * - ``db_backend`` = ``sqlalchemy``
+     - (String) The backend to use for database.
    * - ``enable_v1_api`` = ``False``
      - (Boolean) Deploy v1 of the Manila API. This option is deprecated, is not used, and will be removed in a future release.
    * - ``enable_v2_api`` = ``False``

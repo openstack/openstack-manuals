@@ -13,7 +13,6 @@ These options can also be set in the ``cinder.conf`` file.
 .. include:: ../tables/cinder-common.rst
 .. include:: ../tables/cinder-compute.rst
 .. include:: ../tables/cinder-coordination.rst
-.. include:: ../tables/cinder-database.rst
 .. include:: ../tables/cinder-debug.rst
 .. include:: ../tables/cinder-drbd.rst
 .. include:: ../tables/cinder-emc.rst

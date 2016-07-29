@@ -18,34 +18,8 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``db_driver`` = ``nova.db``
+   * - ``db_driver`` = ``SERVICE.db``
      - (String) DEPRECATED: The driver to use for database access
-   * - **[api_database]**
-     -
-   * - ``connection`` = ``None``
-     - (String) The SQLAlchemy connection string to use to connect to the Nova API database.
-   * - ``connection_debug`` = ``0``
-     - (Integer) Verbosity of SQL debugging information: 0=None, 100=Everything.
-   * - ``connection_trace`` = ``False``
-     - (Boolean) Add Python stack traces to SQL as comment strings.
-   * - ``idle_timeout`` = ``3600``
-     - (Integer) Timeout before idle SQL connections are reaped.
-   * - ``max_overflow`` = ``None``
-     - (Integer) If set, use this value for max_overflow with SQLAlchemy.
-   * - ``max_pool_size`` = ``None``
-     - (Integer) Maximum number of SQL connections to keep open in a pool.
-   * - ``max_retries`` = ``10``
-     - (Integer) Maximum number of database connection retries during startup. Set to -1 to specify an infinite retry count.
-   * - ``mysql_sql_mode`` = ``TRADITIONAL``
-     - (String) The SQL mode to be used for MySQL sessions. This option, including the default, overrides any server-set SQL mode. To use whatever SQL mode is set by the server configuration, set this to no value. Example: mysql_sql_mode=
-   * - ``pool_timeout`` = ``None``
-     - (Integer) If set, use this value for pool_timeout with SQLAlchemy.
-   * - ``retry_interval`` = ``10``
-     - (Integer) Interval between retries of opening a SQL connection.
-   * - ``slave_connection`` = ``None``
-     - (String) The SQLAlchemy connection string to use to connect to the slave database.
-   * - ``sqlite_synchronous`` = ``True``
-     - (Boolean) If True, SQLite uses synchronous mode.
    * - **[database]**
      -
    * - ``backend`` = ``sqlalchemy``

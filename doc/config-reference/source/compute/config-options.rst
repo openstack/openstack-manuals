@@ -8,6 +8,7 @@ OpenStack Compute service, run
 
 .. include:: ../tables/nova-api.rst
 .. include:: ../tables/nova-apiv21.rst
+.. include:: ../tables/nova-api_database.rst
 .. include:: ../tables/nova-authentication.rst
 .. include:: ../tables/nova-auth_token.rst
 .. include:: ../tables/nova-availabilityzones.rst
@@ -20,7 +21,6 @@ OpenStack Compute service, run
 .. include:: ../tables/nova-conductor.rst
 .. include:: ../tables/nova-configdrive.rst
 .. include:: ../tables/nova-console.rst
-.. include:: ../tables/nova-database.rst
 .. include:: ../tables/nova-debug.rst
 .. include:: ../tables/nova-ephemeral_storage_encryption.rst
 .. include:: ../tables/nova-fping.rst
