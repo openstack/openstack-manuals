@@ -38,7 +38,7 @@ architecture for an OpenStack cloud.
 .. figure:: figures/osog_0001.png
    :width: 100%
 
-   Figure. OpenStack Logical Architecture
+   OpenStack Logical Architecture
 
 .. toctree::
    :maxdepth: 2
