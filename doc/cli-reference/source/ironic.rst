@@ -9,7 +9,7 @@ Bare Metal service command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.5.0``.
+This chapter documents :command:`ironic` version ``1.6.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -570,6 +570,7 @@ ironic node-create
                              [-p <key=value>] [-e <key=value>] [-u <uuid>]
                              [-n <name>]
                              [--network-interface <network_interface>]
+                             [--resource-class <resource_class>]
 
 Register a new node with the Ironic service.
 
@@ -604,6 +605,11 @@ Register a new node with the Ironic service.
 ``--network-interface <network_interface>``
   Network interface used for switching node to
   cleaning/provisioning networks.
+
+``--resource-class <resource_class>``
+  Resource class for classifying or grouping nodes.
+  Used, for example, to classify nodes in Nova's
+  placement engine.
 
 .. _ironic_node-delete:
 
@@ -699,6 +705,7 @@ ironic node-list
                            [--provision-state <provision-state>]
                            [--driver <driver>] [--detail]
                            [--fields <field> [<field> ...]]
+                           [--resource-class <resource class>]
 
 List the nodes which are registered with the Ironic service.
 
@@ -739,6 +746,9 @@ List the nodes which are registered with the Ironic service.
   One or more node fields. Only these fields will be
   fetched from the server. Can not be used when ':option:`--`
   detail' is specified.
+
+``--resource-class <resource class>``
+  List nodes using specified resource class.
 
 .. _ironic_node-port-list:
 
