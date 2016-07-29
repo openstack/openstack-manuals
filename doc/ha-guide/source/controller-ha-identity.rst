@@ -105,6 +105,11 @@ Configure OpenStack Identity service
       driver = keystone.identity.backends.sql.Identity
       ...
 
+#. If the Identity service will be sending ceilometer notifications
+   and your message bus is configured for high availability, you will
+   need to ensure that the Identity service is correctly configured to
+   use it. For details on how to configure the Identity service for
+   this kind of deployment, see :doc:`shared-messaging`.
 
 .. _identity-services-config:
 
