@@ -21,7 +21,6 @@ and techniques in the following sections:
       :maxdepth: 2
 
       ux-ui-guidelines/ux-personas.rst
+      ux-ui-guidelines/gui-guidelines.rst
       ux-ui-guidelines/ui-text-guidelines.rst
-
-.. TODO ux-ui-guidelines/gui-guidelines.rst
 
