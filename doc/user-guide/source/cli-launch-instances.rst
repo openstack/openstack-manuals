@@ -121,13 +121,9 @@ Before you begin, source the OpenStack RC file.
 
    .. note::
 
-      If you are an admin user, specify the :option:`--all-tenants` parameter to
-      list groups for all projects.
+      If you are an admin user, this command will list groups for all tenants.
 
-
-
-   Note the ID of the security group that you want to use for your
-   instance::
+   Note the ID of the security group that you want to use for your instance::
 
     +--------------------------------------+---------+------------------------+----------------------------------+
     | ID                                   | Name    | Description            | Project                          |
@@ -143,14 +139,14 @@ Before you begin, source the OpenStack RC file.
 
    .. code-block:: console
 
-      $ nova secgroup-list-rules default
+      $ openstack security group rule list default
 
 #. List the available key pairs, and note the key pair name that you use for
    SSH access.
 
    .. code-block:: console
 
-      $ nova keypair-list
+      $ openstack keypair list
 
 Launch an instance
 ~~~~~~~~~~~~~~~~~~
