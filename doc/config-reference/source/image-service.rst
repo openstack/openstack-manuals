@@ -32,7 +32,6 @@ a comprehensive list.
 .. include:: tables/glance-common.rst
 .. include:: tables/glance-imagecache.rst
 .. include:: tables/glance-logging.rst
-.. include:: tables/glance-policy.rst
 .. include:: tables/glance-profiler.rst
 .. include:: tables/glance-redis.rst
 .. include:: tables/glance-registry.rst
