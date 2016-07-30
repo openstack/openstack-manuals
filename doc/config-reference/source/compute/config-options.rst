@@ -14,7 +14,6 @@ OpenStack Compute service, run
 .. include:: ../tables/nova-availabilityzones.rst
 .. include:: ../tables/nova-barbican.rst
 .. include:: ../tables/nova-ca.rst
-.. include:: ../tables/nova-cache.rst
 .. include:: ../tables/nova-cells.rst
 .. include:: ../tables/nova-common.rst
 .. include:: ../tables/nova-compute.rst
