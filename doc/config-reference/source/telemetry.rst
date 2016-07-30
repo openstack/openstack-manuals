@@ -4,8 +4,8 @@ Telemetry service
 
 .. toctree::
 
-   telemetry/telemetry_service_config_opts.rst
-   telemetry/alarming_service_config_opts.rst
+   telemetry/telemetry-config-options.rst
+   telemetry/alarming-config-options.rst
    telemetry/logs.rst
    telemetry/samples/index.rst
    tables/conf-changes/aodh.rst
