@@ -9,7 +9,7 @@ Data Processing service command-line client
 The sahara client is the command-line interface (CLI) for
 the Data Processing service API and its extensions.
 
-This chapter documents :command:`sahara` version ``0.15.0``.
+This chapter documents :command:`sahara` version ``0.16.0``.
 
 For help on a specific :command:`sahara` command, enter:
 
