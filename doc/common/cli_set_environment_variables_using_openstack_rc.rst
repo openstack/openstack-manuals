@@ -18,7 +18,11 @@ with the OpenStack services that run in the cloud.
    Defining environment variables using an environment file is not a
    common practice on Microsoft Windows. Environment variables are
    usually defined in the :menuselection:`Advanced > System Properties`
-   dialog box.
+   dialog box. One method for using these scripts as-is on Windows is
+   to install `Git for Windows`_ and using Git Bash to source the environment
+   variables and to run all CLI commands.
+
+.. _Git for Windows: https://git-for-windows.github.io/
 
 Download and source the OpenStack RC file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
