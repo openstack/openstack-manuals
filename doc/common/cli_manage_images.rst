@@ -133,10 +133,10 @@ To update an image by name or ID, use :command:`openstack image set`:
 
 .. code-block:: console
 
-   $ glance image-update imageName
+   $ openstack image set imageName
 
 The following list explains the optional arguments that you can use with
-the ``create`` and ``update`` commands to modify image properties. For
+the ``create`` and ``set`` commands to modify image properties. For
 more information, refer to Image service chapter in the `OpenStack
 Command-Line Interface
 Reference <http://docs.openstack.org/cli-reference/index.html>`__.
@@ -164,9 +164,12 @@ Reference <http://docs.openstack.org/cli-reference/index.html>`__.
   The minimum amount of RAM needed to boot the image, in megabytes.
 
 ``--location IMAGE_URL``
-  The URL where the data for this image resides. For example, if the
-  image data is stored in swift, you could specify
-  ``swift://account:key@example.com/container/obj``.
+  The URL where the data for this image resides. This option is only
+  available in V1 API. When using it, you also need to set
+  ``--os-image-api-version``. For example, if the image data is
+  stored in swift, you could specify
+  ``--os-image-api-version 1
+  --location swift://account:key@example.com/container/obj``.
 
 ``--file FILE``
   Local file that contains the disk image to be uploaded during the
