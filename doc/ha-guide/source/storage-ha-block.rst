@@ -105,13 +105,13 @@ You can now add the Pacemaker configuration for Block Storage API resource.
 Connect to the Pacemaker cluster with the :command:`crm configure` command
 and add the following cluster resources:
 
-::
+.. code-block:: ini
 
    primitive p_cinder-api ocf:openstack:cinder-api \
-      params config="/etc/cinder/cinder.conf"
-      os_password="secretsecret"
+      params config="/etc/cinder/cinder.conf" \
+      os_password="secretsecret" \
       os_username="admin" \
-      os_tenant_name="admin"
+      os_tenant_name="admin" \
       keystone_get_token_url="http://10.0.0.11:5000/v2.0/tokens" \
       op monitor interval="30s" timeout="30s"
 
