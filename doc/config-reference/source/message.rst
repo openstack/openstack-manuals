@@ -6,7 +6,7 @@ Message service
    :maxdepth: 1
 
    message/zaqar-conf.rst
-   message/zaqar-api.rst
+   message/api.rst
    message/zaqar-logging.rst
    message/zaqar-drivers.rst
    message/zaqar-storage-drivers.rst

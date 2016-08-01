@@ -6,14 +6,11 @@ For a complete list of all available configuration options for each
 OpenStack Compute service, run
 :command:`bin/nova-<servicename>` ``--help``.
 
-.. include:: ../tables/nova-api.rst
-.. include:: ../tables/nova-apiv21.rst
 .. include:: ../tables/nova-api_database.rst
 .. include:: ../tables/nova-authentication.rst
 .. include:: ../tables/nova-auth_token.rst
 .. include:: ../tables/nova-availabilityzones.rst
 .. include:: ../tables/nova-barbican.rst
-.. include:: ../tables/nova-ca.rst
 .. include:: ../tables/nova-cells.rst
 .. include:: ../tables/nova-common.rst
 .. include:: ../tables/nova-compute.rst
