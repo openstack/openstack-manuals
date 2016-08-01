@@ -4,9 +4,9 @@ Image service
 
 .. toctree::
 
-   image-service/image_service_api.rst
-   image-service/image_service_rpc.rst
-   image-service/image_service_backends.rst
+   image-service/api.rst
+   image-service/rpc.rst
+   image-service/backends.rst
    image-service/logs.rst
    image-service/sample-configuration-files.rst
    tables/conf-changes/glance.rst

@@ -4,8 +4,8 @@ Database service
 
 .. toctree::
 
-   database-service/databaseservice_db.rst
-   database-service/databaseservice_rpc.rst
+   database-service/database.rst
+   database-service/rpc.rst
    database-service/logs.rst
    tables/conf-changes/trove.rst
 

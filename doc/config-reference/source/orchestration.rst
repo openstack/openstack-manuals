@@ -4,9 +4,9 @@ Orchestration service
 
 .. toctree::
 
-   orchestration/orchestration_api.rst
-   orchestration/orchestration_clients.rst
-   orchestration/orchestration_rpc.rst
+   orchestration/api.rst
+   orchestration/clients.rst
+   orchestration/rpc.rst
    orchestration/logs.rst
    tables/conf-changes/heat.rst
 
