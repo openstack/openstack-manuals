@@ -5,6 +5,7 @@ Shared File Systems service
 .. toctree::
 
    shared-file-systems/overview.rst
+   shared-file-systems/api.rst
    shared-file-systems/drivers.rst
    shared-file-systems/log-files.rst
    shared-file-systems/rpc.rst
