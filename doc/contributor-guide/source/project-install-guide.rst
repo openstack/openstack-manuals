@@ -49,7 +49,7 @@ Set up project specific installation guides:
    The local build is in ``install-guide/build/html``.
 
 #. Add the python package ``openstackdocstheme``  to the
-   ``test-requirements.txt`` file. Copy the extact requirement line from the
+   ``test-requirements.txt`` file. Copy the exact requirement line from the
    `global file
    <http://git.openstack.org/cgit/openstack/requirements/tree/global-requirements.txt>`_:
 
