@@ -21,6 +21,7 @@ Contents
 
    bare-metal.rst
    block-storage.rst
+   clustering.rst
    compute.rst
    dashboard.rst
    data-processing-service.rst
