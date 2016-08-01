@@ -19,6 +19,7 @@ Contents
    config-overview.rst
    common-configurations.rst
 
+   application-catalog.rst
    bare-metal.rst
    block-storage.rst
    clustering.rst
