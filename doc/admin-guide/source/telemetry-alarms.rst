@@ -258,7 +258,7 @@ could indicate that:
 
    * admin users see *all* alarms, regardless of the owner
 
-   * on-admin users see only the alarms associated with their project
+   * non-admin users see only the alarms associated with their project
      (as per the normal tenant segregation in OpenStack)
 
 Alarm update
