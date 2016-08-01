@@ -41,17 +41,18 @@ Volume, set the following options in the ``DEFAULT`` section of the
    glance_api_version = 2
    allowed_direct_url_schemes = cinder
 
-To enable the :command:`cinder upload-to-image` command to create an image
-that refers an ``Image-Volume``, set the following options in each back-end
-section of the ``cinder.conf`` file:
+To enable the :command:`openstack image create --volume <volume>` command to
+create an image that refers an ``Image-Volume``, set the following options in
+each back-end section of the ``cinder.conf`` file:
 
 .. code-block:: ini
 
    image_upload_use_cinder_backend = True
 
-By default, the :command:`upload-to-image` command creates the Image-Volume in
-the current tenant. To store the Image-Volume into the internal tenant, set the
-following options in each back-end section of the ``cinder.conf`` file:
+By default, the :command:`openstack image create --volume <volume>` command
+creates the Image-Volume in the current tenant. To store the Image-Volume into
+the internal tenant, set the following options in each back-end section of the
+``cinder.conf`` file:
 
 .. code-block:: ini
 
