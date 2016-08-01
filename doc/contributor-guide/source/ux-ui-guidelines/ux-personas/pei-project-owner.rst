@@ -5,7 +5,7 @@ Pei - project owner
 ===================
 
 Pei manages projects by adding or removing project members' access to the
-cloud instance. Pei does not know the underlaying infrastructure nor the
+cloud instance. Pei does not know the underlying infrastructure nor the
 OpenStack projects involved. Pei's main concern is to have enough resources
 available to support her projects. Therefore, if a project runs out of quota,
 she does not want to have to wait for the operators to raise it.
