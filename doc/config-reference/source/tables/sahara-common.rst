@@ -120,7 +120,3 @@
      -
    * - ``use_local`` = ``True``
      - (Boolean) Perform sahara-conductor operations locally.
-   * - **[keystone_authtoken]**
-     -
-   * - ``memcached_servers`` = ``None``
-     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.

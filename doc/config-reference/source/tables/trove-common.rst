@@ -64,10 +64,6 @@
      - (String) Name of the Barbican authentication method to use
    * - ``cert_manager_type`` = ``barbican``
      - (String) Certificate Manager plugin. Defaults to barbican.
-   * - **[keystone_authtoken]**
-     -
-   * - ``memcached_servers`` = ``None``
-     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
    * - **[service_auth]**
      -
    * - ``admin_password`` = ``password``

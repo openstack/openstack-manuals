@@ -10,7 +10,6 @@ service options.
 .. include:: ../tables/keystone-api.rst
 .. include:: ../tables/keystone-assignment.rst
 .. include:: ../tables/keystone-auth.rst
-.. include:: ../tables/keystone-auth_token.rst
 .. include:: ../tables/keystone-ca.rst
 .. include:: ../tables/keystone-catalog.rst
 .. include:: ../tables/keystone-common.rst

@@ -28,7 +28,6 @@ documented in :ref:`nova-glance`.
 You can modify many options in the Image service. The following tables provide
 a comprehensive list.
 
-.. include:: tables/glance-auth_token.rst
 .. include:: tables/glance-common.rst
 .. include:: tables/glance-imagecache.rst
 .. include:: tables/glance-logging.rst

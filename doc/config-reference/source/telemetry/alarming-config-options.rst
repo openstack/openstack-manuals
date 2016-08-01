@@ -7,7 +7,6 @@ Alarming service configuration options.
 
 .. include:: ../tables/aodh-amqp.rst
 .. include:: ../tables/aodh-api.rst
-.. include:: ../tables/aodh-auth_token.rst
 .. include:: ../tables/aodh-common.rst
 .. include:: ../tables/aodh-coordination.rst
 .. include:: ../tables/aodh-logging.rst

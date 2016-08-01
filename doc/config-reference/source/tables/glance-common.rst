@@ -70,10 +70,6 @@
      - (List) Supported values for the 'container_format' image attribute
    * - ``disk_formats`` = ``ami, ari, aki, vhd, vmdk, raw, qcow2, vdi, iso``
      - (List) Supported values for the 'disk_format' image attribute
-   * - **[keystone_authtoken]**
-     -
-   * - ``memcached_servers`` = ``None``
-     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
    * - **[task]**
      -
    * - ``task_executor`` = ``taskflow``

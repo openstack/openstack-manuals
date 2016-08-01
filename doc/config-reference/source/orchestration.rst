@@ -27,7 +27,6 @@ distribution (`docs.openstack.org <http://docs.openstack.org>`__).
 The following tables provide a comprehensive list of the Orchestration
 configuration options:
 
-.. include:: tables/heat-auth_token.rst
 .. include:: tables/heat-common.rst
 .. include:: tables/heat-crypt.rst
 .. include:: tables/heat-loadbalancer.rst

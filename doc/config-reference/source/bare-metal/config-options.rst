@@ -8,7 +8,6 @@ service configuration options.
 .. include:: ../tables/ironic-agent.rst
 .. include:: ../tables/ironic-amqp.rst
 .. include:: ../tables/ironic-amt.rst
-.. include:: ../tables/ironic-auth_token.rst
 .. include:: ../tables/ironic-auth.rst
 .. include:: ../tables/ironic-cisco_ucs.rst
 .. include:: ../tables/ironic-common.rst

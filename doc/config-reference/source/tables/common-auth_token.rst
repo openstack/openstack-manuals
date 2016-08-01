@@ -84,6 +84,8 @@
      - (String) (Optional) If defined, indicate whether token data should be authenticated or authenticated and encrypted. If MAC, token data is authenticated (with HMAC) in the cache. If ENCRYPT, token data is encrypted and authenticated in the cache. If the value is not one of these options or empty, auth_token will raise an exception on initialization.
    * - ``memcache_use_advanced_pool`` = ``False``
      - (Boolean) (Optional) Use the advanced (eventlet safe) memcached client pool. The advanced pool will only work under python 2.x.
+   * - ``memcached_servers`` = ``None``
+     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
    * - ``region_name`` = ``None``
      - (String) The region in which the identity server can be found.
    * - ``revocation_cache_time`` = ``10``

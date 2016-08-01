@@ -8,7 +8,6 @@ OpenStack Compute service, run
 
 .. include:: ../tables/nova-api_database.rst
 .. include:: ../tables/nova-authentication.rst
-.. include:: ../tables/nova-auth_token.rst
 .. include:: ../tables/nova-availabilityzones.rst
 .. include:: ../tables/nova-barbican.rst
 .. include:: ../tables/nova-cells.rst

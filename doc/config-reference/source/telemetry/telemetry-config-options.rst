@@ -8,7 +8,6 @@ configuration options.
 .. include:: ../tables/ceilometer-amqp.rst
 .. include:: ../tables/ceilometer-api.rst
 .. include:: ../tables/ceilometer-auth.rst
-.. include:: ../tables/ceilometer-auth_token.rst
 .. include:: ../tables/ceilometer-collector.rst
 .. include:: ../tables/ceilometer-common.rst
 .. include:: ../tables/ceilometer-debug.rst

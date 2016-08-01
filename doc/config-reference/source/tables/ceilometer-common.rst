@@ -66,10 +66,6 @@
      - (Integer) Maximum number of seconds between retry to join partitioning group
    * - ``retry_backoff`` = ``1``
      - (Integer) Retry backoff factor when retrying to connect withcoordination backend
-   * - **[keystone_authtoken]**
-     -
-   * - ``memcached_servers`` = ``None``
-     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
    * - **[meter]**
      -
    * - ``meter_definitions_cfg_file`` = ``meters.yaml``

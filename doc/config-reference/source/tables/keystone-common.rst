@@ -22,10 +22,6 @@
      - (Integer) Size of executor thread pool.
    * - ``memcached_servers`` = ``None``
      - (List) Memcached servers or None for in process cache.
-   * - **[keystone_authtoken]**
-     -
-   * - ``memcached_servers`` = ``None``
-     - (List) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.
    * - **[oslo_concurrency]**
      -
    * - ``disable_process_locking`` = ``False``

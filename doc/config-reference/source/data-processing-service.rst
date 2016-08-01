@@ -20,7 +20,6 @@ service configuration options:
 
 .. include:: tables/sahara-amqp.rst
 .. include:: tables/sahara-api.rst
-.. include:: tables/sahara-auth_token.rst
 .. include:: tables/sahara-clients.rst
 .. include:: tables/sahara-common.rst
 .. include:: tables/sahara-domain.rst
