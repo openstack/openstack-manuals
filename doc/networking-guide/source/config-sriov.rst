@@ -353,9 +353,9 @@ Additional information describing the problem, see:
 `Virtual switching technologies and Linux bridge.
 <http://events.linuxfoundation.org/sites/events/files/slides/LinuxConJapan2014_makita_0.pdf>`_
 
-   .. note::
+.. note::
 
-      This feature is supported from Newton release.
+   This feature is supported from Newton release.
 
 To enable this extension, edit the relevant L2 agent
 ``ovs_agent.ini/linuxbridge_agent.ini`` config file:
