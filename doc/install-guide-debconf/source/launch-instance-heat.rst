@@ -1,1 +1,0 @@
-../../install-guide/source/launch-instance-heat.rst
