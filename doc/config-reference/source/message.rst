@@ -5,17 +5,17 @@ Message service
 .. toctree::
    :maxdepth: 1
 
-   messaging/zaqar-conf.rst
-   messaging/zaqar-api.rst
-   messaging/zaqar-logging.rst
-   messaging/zaqar-drivers.rst
-   messaging/zaqar-storage-drivers.rst
-   messaging/zaqar-transport-drivers.rst
-   messaging/zaqar-notifications.rst
-   messaging/zaqar-authentication.rst
-   messaging/zaqar-pooling.rst
-   messaging/logs.rst
-   messaging/zaqar-cache.rst
+   message/zaqar-conf.rst
+   message/zaqar-api.rst
+   message/zaqar-logging.rst
+   message/zaqar-drivers.rst
+   message/zaqar-storage-drivers.rst
+   message/zaqar-transport-drivers.rst
+   message/zaqar-notifications.rst
+   message/zaqar-authentication.rst
+   message/zaqar-pooling.rst
+   message/logs.rst
+   message/zaqar-cache.rst
 
 The Message service is multi-tenant, fast, reliable, and scalable. It allows
 developers to share data between distributed application components performing

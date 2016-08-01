@@ -4,9 +4,9 @@ Database service
 
 .. toctree::
 
-   database-service/database.rst
-   database-service/rpc.rst
-   database-service/logs.rst
+   database/database.rst
+   database/rpc.rst
+   database/logs.rst
    tables/conf-changes/trove.rst
 
 The Database service provides a scalable and reliable Cloud

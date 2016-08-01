@@ -4,11 +4,11 @@ Image service
 
 .. toctree::
 
-   image-service/api.rst
-   image-service/rpc.rst
-   image-service/backends.rst
-   image-service/logs.rst
-   image-service/sample-configuration-files.rst
+   image/api.rst
+   image/rpc.rst
+   image/backends.rst
+   image/logs.rst
+   image/sample-configuration-files.rst
    tables/conf-changes/glance.rst
 
 Compute relies on an external image service to store virtual machine images and

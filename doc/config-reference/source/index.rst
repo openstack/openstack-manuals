@@ -26,10 +26,10 @@ Contents
    compute.rst
    dashboard.rst
    data-processing-service.rst
-   database-service.rst
+   database.rst
    identity.rst
-   image-service.rst
-   messaging.rst
+   image.rst
+   message.rst
    networking.rst
    object-storage.rst
    orchestration.rst
