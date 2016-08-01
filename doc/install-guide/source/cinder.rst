@@ -6,7 +6,7 @@ Block Storage service
 
 .. toctree::
 
-   common/get_started_block_storage.rst
+   common/get-started-block-storage.rst
    cinder-controller-install.rst
    cinder-storage-install.rst
    cinder-backup-install.rst

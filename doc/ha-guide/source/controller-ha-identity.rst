@@ -4,7 +4,7 @@ Highly available Identity API
 
 You should be familiar with
 `OpenStack Identity service
-<http://docs.openstack.org/admin-guide/common/get_started_identity.html>`_
+<http://docs.openstack.org/admin-guide/common/get-started-identity.html>`_
 before proceeding, which is used by many services.
 
 Making the OpenStack Identity service highly available

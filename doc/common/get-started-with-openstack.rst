@@ -5,10 +5,10 @@ Get started with OpenStack
 .. toctree::
    :maxdepth: 2
 
-   get_started_conceptual_architecture.rst
-   get_started_logical_architecture.rst
-   get_started_openstack_services.rst
-   get_started_feedback.rst
+   get-started-conceptual-architecture.rst
+   get-started-logical-architecture.rst
+   get-started-openstack-services.rst
+   get-started-feedback.rst
 
 The OpenStack project is an open source cloud computing platform for all
 types of clouds, which aims to be simple to implement, massively

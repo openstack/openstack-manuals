@@ -910,7 +910,7 @@ or run this from the command line:
 
    For more information about updating Block Storage volumes (for
    example, resizing or transferring), see the `OpenStack End User
-   Guide <http://docs.openstack.org/user-guide/common/cli_manage_volumes.html>`__.
+   Guide <http://docs.openstack.org/user-guide/common/cli-manage-volumes.html>`__.
 
 Block Storage Creation Failures
 -------------------------------

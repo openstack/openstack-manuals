@@ -14,4 +14,4 @@ This section includes tasks specific to the OpenStack environment.
    cli_nova_migrate_cfg_ssh.rst
    cli_admin_manage_ip_addresses.rst
    cli_admin_manage_stacks.rst
-   common/nova_show_usage_statistics_for_hosts_instances.rst
+   common/nova-show-usage-statistics-for-hosts-instances.rst

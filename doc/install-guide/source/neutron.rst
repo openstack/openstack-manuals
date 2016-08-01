@@ -7,7 +7,7 @@ Networking service
 .. toctree::
    :maxdepth: 1
 
-   common/get_started_networking.rst
+   common/get-started-networking.rst
    neutron-concepts.rst
    neutron-controller-install.rst
    neutron-compute-install.rst

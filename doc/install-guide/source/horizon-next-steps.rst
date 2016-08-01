@@ -15,7 +15,7 @@ complete the following tasks:
 
 * Customize your dashboard. See section
   `Customize the dashboard
-  <http://docs.openstack.org/admin-guide/common/dashboard_customizing.html>`__.
+  <http://docs.openstack.org/admin-guide/common/dashboard-customizing.html>`__.
 
 * Set up session storage. See
   `Set up session storage for the dashboard

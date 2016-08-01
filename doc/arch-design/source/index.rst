@@ -39,7 +39,7 @@ Appendix
 .. toctree::
    :maxdepth: 1
 
-   common/app_support.rst
+   common/app-support.rst
 
 Glossary
 ~~~~~~~~
