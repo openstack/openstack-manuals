@@ -157,7 +157,7 @@ Compute service, you must create a role in the Identity service and
 then modify the ``/etc/nova/policy.json`` file so that this role
 is required for Compute operations.
 
-For example, the following line in the ``/etc/nova/policy.json``
+For example, the following line in the ``/etc/cinder/policy.json``
 file does not restrict which users can create volumes:
 
 .. code-block:: json
