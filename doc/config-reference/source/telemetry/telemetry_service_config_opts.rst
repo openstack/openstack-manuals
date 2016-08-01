@@ -23,7 +23,6 @@ configuration options.
 .. include:: ../tables/ceilometer-logging.rst
 .. include:: ../tables/ceilometer-magnetodb.rst
 .. include:: ../tables/ceilometer-notification.rst
-.. include:: ../tables/ceilometer-policy.rst
 .. include:: ../tables/ceilometer-rabbitmq.rst
 .. include:: ../tables/ceilometer-redis.rst
 .. include:: ../tables/ceilometer-rgw.rst

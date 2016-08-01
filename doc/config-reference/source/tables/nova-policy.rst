@@ -38,11 +38,3 @@
      - (Boolean) Attempt to resize the filesystem by accessing the image over a block device. This is done by the host and may not be necessary if the image contains a recent version of cloud-init. Possible mechanisms require the nbd driver (for qcow and raw), or loop (for raw).
    * - ``until_refresh`` = ``0``
      - (Integer) Count of reservations until usage is refreshed. This defaults to 0(off) to avoid additional load but it is useful to turn on to help keep quota usage up to date and reduce the impact of out of sync usage issues.
-   * - **[oslo_policy]**
-     -
-   * - ``policy_default_rule`` = ``default``
-     - (String) Default rule. Enforced when a requested rule is not found.
-   * - ``policy_dirs`` = ``['policy.d']``
-     - (Multi-valued) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
-   * - ``policy_file`` = ``policy.json``
-     - (String) The JSON file that defines policies.

@@ -38,7 +38,6 @@ service configuration options.
 .. include:: tables/ironic-keystone.rst
 .. include:: tables/ironic-logging.rst
 .. include:: tables/ironic-neutron.rst
-.. include:: tables/ironic-policy.rst
 .. include:: tables/ironic-pxe.rst
 .. include:: tables/ironic-redis.rst
 .. include:: tables/ironic-rpc.rst

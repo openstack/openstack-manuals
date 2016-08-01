@@ -11,7 +11,6 @@ Alarming service configuration options.
 .. include:: ../tables/aodh-common.rst
 .. include:: ../tables/aodh-coordination.rst
 .. include:: ../tables/aodh-logging.rst
-.. include:: ../tables/aodh-policy.rst
 .. include:: ../tables/aodh-rabbitmq.rst
 .. include:: ../tables/aodh-redis.rst
 .. include:: ../tables/aodh-rpc.rst
