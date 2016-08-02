@@ -88,4 +88,4 @@ Verify operation of the Database service.
       Datastore version 'mysql-5.6' updated.
 
 #. Create a database `instance
-   <http://docs.openstack.org/user-guide/create_db.html>`_.
+   <http://docs.openstack.org/user-guide/create-db.html>`_.
