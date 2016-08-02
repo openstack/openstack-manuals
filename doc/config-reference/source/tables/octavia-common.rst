@@ -38,14 +38,8 @@
      - (Unknown) The port to bind to
    * - ``control_exchange`` = ``octavia``
      - (String) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
-   * - ``debug`` = ``False``
-     - (Boolean) If set to true, the logging level will be set to DEBUG instead of the default INFO level.
-   * - ``default_log_levels`` = ``amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, requests.packages.urllib3.util.retry=WARN, urllib3.util.retry=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN, taskflow=WARN, keystoneauth=WARN, oslo.cache=INFO, dogpile.core.dogpile=INFO``
-     - (List) List of package logging levels in logger=LEVEL pairs. This option is ignored if log_config_append is set.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
-   * - ``fatal_deprecations`` = ``False``
-     - (Boolean) Enables or disables fatal status of deprecations.
    * - ``host`` = ``localhost``
      - (String) The hostname Octavia is running on
    * - ``octavia_plugins`` = ``hot_plug_plugin``

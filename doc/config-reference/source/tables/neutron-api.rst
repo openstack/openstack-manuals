@@ -42,13 +42,21 @@
      - (List) The service plugins Neutron will use
    * - ``tcp_keepidle`` = ``600``
      - (Integer) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Not supported on OS X.
+   * - ``use_ssl`` = ``False``
+     - (Boolean) Enable SSL on the API server
    * - ``wsgi_default_pool_size`` = ``100``
      - (Integer) Size of the pool of greenthreads used by wsgi
    * - ``wsgi_keep_alive`` = ``True``
      - (Boolean) If False, closes the client socket connection explicitly.
+   * - ``wsgi_log_format`` = ``%(client_ip)s "%(request_line)s" status: %(status_code)s  len: %(body_length)s time: %(wall_seconds).7f``
+     - (String) A python format string that is used as the template to generate log lines. The following values can beformatted into it: client_ip, date_time, request_line, status_code, body_length, wall_seconds.
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
      - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+   * - **[oslo_versionedobjects]**
+     -
+   * - ``fatal_exception_format_errors`` = ``False``
+     - (Boolean) Make exception message format errors fatal

@@ -28,6 +28,8 @@
      - (String) The topic console auth proxy nodes listen on
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
+   * - ``fatal_exception_format_errors`` = ``False``
+     - (Boolean) Make exception message format errors fatal
    * - ``host`` = ``localhost``
      - (String) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address
    * - ``memcached_servers`` = ``None``

@@ -34,6 +34,8 @@
      - (String) The topic data nodes listen on.
    * - ``enable_new_services`` = ``True``
      - (Boolean) Services to be added to the available pool on create.
+   * - ``fatal_exception_format_errors`` = ``False``
+     - (Boolean) Whether to make exception message format errors fatal.
    * - ``host`` = ``localhost``
      - (String) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address.
    * - ``max_over_subscription_ratio`` = ``20.0``

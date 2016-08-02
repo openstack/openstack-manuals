@@ -28,7 +28,6 @@ to configure the octavia service.
 .. include:: ../tables/octavia-auth_token.rst
 .. include:: ../tables/octavia-cache.rst
 .. include:: ../tables/octavia-common.rst
-.. include:: ../tables/octavia-logging.rst
 .. include:: ../tables/octavia-rabbitmq.rst
 .. include:: ../tables/octavia-redis.rst
 .. include:: ../tables/octavia-rpc.rst
