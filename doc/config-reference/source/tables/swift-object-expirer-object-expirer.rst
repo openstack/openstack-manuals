@@ -14,16 +14,16 @@
    * - ``concurrency`` = ``1``
      - Number of replication workers to spawn
    * - ``expiring_objects_account_name`` = ``expiring_objects``
-     - No help text available for this option.
+     - Account name for expiring objects.
    * - ``interval`` = ``300``
      - Minimum time for a pass to take
    * - ``process`` = ``0``
      - (it will actually accept(2) N + 1). Setting this to one (1) will only handle one request at a time, without accepting another request concurrently.
    * - ``processes`` = ``0``
-     - for each port (disk) in the ring. If you have 24 disks per server, and this setting is 4, then each storage node will have 1 + (24 * 4) = 97 total object-server processes running. This gives complete I/O isolation, drastically reducing the impact of slow disks on storage node performance. The object-replicator and object-reconstructor need to see this setting too, so it must be in the [DEFAULT] section. See
+     - for each port (disk) in the ring. If you have 24 disks per server, and this setting is 4, then each storage node will have 1 + (24 * 4) = 97 total object-server processes running. This gives complete I/O isolation, drastically reducing the impact of slow disks on storage node performance. The object-replicator and object-reconstructor need to see this setting too, so it must be in the [DEFAULT] section.
    * - ``reclaim_age`` = ``604800``
      - Time elapsed in seconds before an object can be reclaimed
    * - ``recon_cache_path`` = ``/var/cache/swift``
      - Directory where stats for a few items will be stored
    * - ``report_interval`` = ``300``
-     - No help text available for this option.
+     - Interval in seconds between reports.
