@@ -22,7 +22,7 @@ the same quota values, such as the number of resources that a
 tenant can create.
 
 The quota value is defined in the OpenStack Networking
-``neutron.conf`` configuration file. This example shows the
+``/etc/neutron/neutron.conf`` configuration file. This example shows the
 default quota values:
 
 .. code-block:: ini
@@ -42,7 +42,7 @@ default quota values:
 
 OpenStack Networking also supports quotas for L3 resources:
 router and floating IP. Add these lines to the
-``quotas`` section in the ``neutron.conf`` file:
+``quotas`` section in the ``/etc/neutron/neutron.conf`` file:
 
 .. code-block:: ini
 
@@ -56,7 +56,7 @@ router and floating IP. Add these lines to the
 OpenStack Networking also supports quotas for security group
 resources: number of security groups and the number of rules for
 each security group. Add these lines to the
-``quotas`` section in the ``neutron.conf`` file:
+``quotas`` section in the ``/etc/neutron/neutron.conf`` file:
 
 .. code-block:: ini
 
@@ -94,7 +94,7 @@ the default set of quotas are enforced for all tenants, so no
 
 #. Configure Networking to show per-tenant quotas
 
-   Set the ``quota_driver`` option in the ``neutron.conf`` file.
+   Set the ``quota_driver`` option in the ``/etc/neutron/neutron.conf`` file.
 
    .. code-block:: ini
 
