@@ -873,9 +873,8 @@ the ``/etc/nova/nova.conf`` file:
        Use an integer value.
    * - [DEFAULT]
      - ``scheduler_weight_classes``
-     - Defaults to ``nova.scheduler.weights.all_weighers``, which selects
-       the RamWeigher and MetricsWeigher. Hosts are then weighted and
-       sorted with the largest weight winning.
+     - Defaults to ``nova.scheduler.weights.all_weighers``.
+       Hosts are then weighted and sorted with the largest weight winning.
    * - [DEFAULT]
      - ``io_ops_weight_multiplier``
      - Multiplier used for weighing host I/O operations. A negative
