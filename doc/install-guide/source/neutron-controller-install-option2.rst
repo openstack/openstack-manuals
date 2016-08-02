@@ -32,142 +32,119 @@ Install the components
 
 .. only:: debian
 
-   Install and configure the Networking components
-   -----------------------------------------------
-
    #. .. code-block:: console
 
-         # apt-get install neutron-server neutron-plugin-linuxbridge-agent \
-           neutron-dhcp-agent neutron-metadata-agent
+         # apt-get install neutron-server neutron-linuxbridge-agent \
+           neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
 
-      For networking option 2, also install the ``neutron-l3-agent`` package.
+Configure the server component
+------------------------------
 
-   #. Respond to prompts for `database
-      management <#debconf-dbconfig-common>`__, `Identity service
-      credentials <#debconf-keystone_authtoken>`__, `service endpoint
-      registration <#debconf-api-endpoints>`__, and `message queue
-      credentials <#debconf-rabbitmq>`__.
+* Edit the ``/etc/neutron/neutron.conf`` file and complete the following
+  actions:
 
-   #. Select the ML2 plug-in:
+  * In the ``[database]`` section, configure database access:
 
-      .. image:: figures/debconf-screenshots/neutron_1_plugin_selection.png
+    .. code-block:: ini
 
-      .. note::
+       [database]
+       ...
+       connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
 
-         Selecting the ML2 plug-in also populates the ``service_plugins`` and
-         ``allow_overlapping_ips`` options in the
-         ``/etc/neutron/neutron.conf`` file with the appropriate values.
+    Replace ``NEUTRON_DBPASS`` with the password you chose for the
+    database.
 
-.. only:: ubuntu or rdo or obs
+  * In the ``[DEFAULT]`` section, enable the Modular Layer 2 (ML2)
+    plug-in, router service, and overlapping IP addresses:
 
-   Configure the server component
-   ------------------------------
+    .. code-block:: ini
 
-   * Edit the ``/etc/neutron/neutron.conf`` file and complete the following
-     actions:
+       [DEFAULT]
+       ...
+       core_plugin = ml2
+       service_plugins = router
+       allow_overlapping_ips = True
 
-     * In the ``[database]`` section, configure database access:
+  * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
+    configure RabbitMQ message queue access:
+
+    .. code-block:: ini
+
+       [DEFAULT]
+       ...
+       rpc_backend = rabbit
+
+       [oslo_messaging_rabbit]
+       ...
+       rabbit_host = controller
+       rabbit_userid = openstack
+       rabbit_password = RABBIT_PASS
+
+    Replace ``RABBIT_PASS`` with the password you chose for the
+    ``openstack`` account in RabbitMQ.
+
+  * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections, configure
+    Identity service access:
+
+    .. code-block:: ini
+
+       [DEFAULT]
+       ...
+       auth_strategy = keystone
+
+       [keystone_authtoken]
+       ...
+       auth_uri = http://controller:5000
+       auth_url = http://controller:35357
+       memcached_servers = controller:11211
+       auth_type = password
+       project_domain_name = default
+       user_domain_name = default
+       project_name = service
+       username = neutron
+       password = NEUTRON_PASS
+
+    Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
+    user in the Identity service.
+
+    .. note::
+
+       Comment out or remove any other options in the
+       ``[keystone_authtoken]`` section.
+
+  * In the ``[DEFAULT]`` and ``[nova]`` sections, configure Networking to
+    notify Compute of network topology changes:
+
+    .. code-block:: ini
+
+       [DEFAULT]
+       ...
+       notify_nova_on_port_status_changes = True
+       notify_nova_on_port_data_changes = True
+
+       [nova]
+       ...
+       auth_url = http://controller:35357
+       auth_type = password
+       project_domain_name = default
+       user_domain_name = default
+       region_name = RegionOne
+       project_name = service
+       username = nova
+       password = NOVA_PASS
+
+    Replace ``NOVA_PASS`` with the password you chose for the ``nova``
+    user in the Identity service.
+
+  .. only:: rdo
+
+     * In the ``[oslo_concurrency]`` section, configure the lock path:
 
        .. code-block:: ini
 
-          [database]
+          [oslo_concurrency]
           ...
-          connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
-
-       Replace ``NEUTRON_DBPASS`` with the password you chose for the
-       database.
-
-     * In the ``[DEFAULT]`` section, enable the Modular Layer 2 (ML2)
-       plug-in, router service, and overlapping IP addresses:
-
-       .. code-block:: ini
-
-          [DEFAULT]
-          ...
-          core_plugin = ml2
-          service_plugins = router
-          allow_overlapping_ips = True
-
-     * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-       configure RabbitMQ message queue access:
-
-       .. code-block:: ini
-
-          [DEFAULT]
-          ...
-          rpc_backend = rabbit
-
-          [oslo_messaging_rabbit]
-          ...
-          rabbit_host = controller
-          rabbit_userid = openstack
-          rabbit_password = RABBIT_PASS
-
-       Replace ``RABBIT_PASS`` with the password you chose for the
-       ``openstack`` account in RabbitMQ.
-
-     * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections, configure
-       Identity service access:
-
-       .. code-block:: ini
-
-          [DEFAULT]
-          ...
-          auth_strategy = keystone
-
-          [keystone_authtoken]
-          ...
-          auth_uri = http://controller:5000
-          auth_url = http://controller:35357
-          memcached_servers = controller:11211
-          auth_type = password
-          project_domain_name = default
-          user_domain_name = default
-          project_name = service
-          username = neutron
-          password = NEUTRON_PASS
-
-       Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
-       user in the Identity service.
-
-       .. note::
-
-          Comment out or remove any other options in the
-          ``[keystone_authtoken]`` section.
-
-     * In the ``[DEFAULT]`` and ``[nova]`` sections, configure Networking to
-       notify Compute of network topology changes:
-
-       .. code-block:: ini
-
-          [DEFAULT]
-          ...
-          notify_nova_on_port_status_changes = True
-          notify_nova_on_port_data_changes = True
-
-          [nova]
-          ...
-          auth_url = http://controller:35357
-          auth_type = password
-          project_domain_name = default
-          user_domain_name = default
-          region_name = RegionOne
-          project_name = service
-          username = nova
-          password = NOVA_PASS
-
-       Replace ``NOVA_PASS`` with the password you chose for the ``nova``
-       user in the Identity service.
-
-     .. only:: rdo
-
-        * In the ``[oslo_concurrency]`` section, configure the lock path:
-
-          .. code-block:: ini
-
-             [oslo_concurrency]
-             ...
-             lock_path = /var/lib/neutron/tmp
+          lock_path = /var/lib/neutron/tmp
 
 Configure the Modular Layer 2 (ML2) plug-in
 -------------------------------------------
