@@ -588,7 +588,7 @@ SNMP based meters
 ~~~~~~~~~~~~~~~~~
 
 Telemetry supports gathering SNMP based generic host meters. In order to
-be able to collect this data you need to run smpd on each target host.
+be able to collect this data you need to run snmpd on each target host.
 
 The following meters are available about the host machines by using
 SNMP:
