@@ -29,6 +29,6 @@
    * - ``hpelefthand_password`` = ``None``
      - (String) HPE LeftHand Super user password
    * - ``hpelefthand_ssh_port`` = ``16022``
-     - (Unknown) Port number of SSH service.
+     - (Port number) Port number of SSH service.
    * - ``hpelefthand_username`` = ``None``
      - (String) HPE LeftHand Super user username

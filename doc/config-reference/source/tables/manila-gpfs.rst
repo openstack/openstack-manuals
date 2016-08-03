@@ -33,7 +33,7 @@
    * - ``gpfs_ssh_password`` = ``None``
      - (String) GPFS server SSH login password. The password is not needed, if 'gpfs_ssh_private_key' is configured.
    * - ``gpfs_ssh_port`` = ``22``
-     - (Unknown) GPFS server SSH port.
+     - (Port number) GPFS server SSH port.
    * - ``gpfs_ssh_private_key`` = ``None``
      - (String) Path to GPFS server SSH private key for login.
    * - ``knfs_export_options`` = ``rw,sync,no_root_squash,insecure,no_wdelay,no_subtree_check``

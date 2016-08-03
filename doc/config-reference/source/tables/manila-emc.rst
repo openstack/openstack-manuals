@@ -31,7 +31,7 @@
    * - ``emc_nas_server_container`` = ``server_2``
      - (String) Container of share servers.
    * - ``emc_nas_server_port`` = ``8080``
-     - (Unknown) Port number for the EMC server.
+     - (Port number) Port number for the EMC server.
    * - ``emc_nas_server_secure`` = ``True``
      - (Boolean) Use secure connection to server.
    * - ``emc_share_backend`` = ``None``

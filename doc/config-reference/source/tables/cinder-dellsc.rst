@@ -19,7 +19,7 @@
    * - **[DEFAULT]**
      -
    * - ``dell_sc_api_port`` = ``3033``
-     - (Unknown) Dell API port
+     - (Port number) Dell API port
    * - ``dell_sc_server_folder`` = ``openstack``
      - (String) Name of the server folder to use on the Storage Center
    * - ``dell_sc_ssn`` = ``64702``

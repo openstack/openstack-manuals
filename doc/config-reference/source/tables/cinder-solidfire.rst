@@ -25,7 +25,7 @@
    * - ``sf_allow_tenant_qos`` = ``False``
      - (Boolean) Allow tenants to specify QOS on create
    * - ``sf_api_port`` = ``443``
-     - (Unknown) SolidFire API port. Useful if the device api is behind a proxy on a different port.
+     - (Port number) SolidFire API port. Useful if the device api is behind a proxy on a different port.
    * - ``sf_emulate_512`` = ``True``
      - (Boolean) Set 512 byte emulation on volume creation;
    * - ``sf_enable_vag`` = ``False``

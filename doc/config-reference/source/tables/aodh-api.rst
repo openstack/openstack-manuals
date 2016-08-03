@@ -25,7 +25,7 @@
    * - ``pecan_debug`` = ``False``
      - (Boolean) Toggle Pecan Debug Middleware.
    * - ``port`` = ``8042``
-     - (Unknown) The port for the aodh API server.
+     - (Port number) The port for the aodh API server.
    * - ``workers`` = ``1``
      - (Integer) Number of workers for aodh API server.
    * - **[oslo_middleware]**

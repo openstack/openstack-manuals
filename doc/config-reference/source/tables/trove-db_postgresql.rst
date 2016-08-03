@@ -37,7 +37,7 @@
    * - ``mount_point`` = ``/var/lib/postgresql``
      - (String) Filesystem path for mounting volumes if volume support is enabled.
    * - ``postgresql_port`` = ``5432``
-     - (Unknown) The TCP port the server listens on.
+     - (Port number) The TCP port the server listens on.
    * - ``restore_namespace`` = ``trove.guestagent.strategies.restore.experimental.postgresql_impl``
      - (String) Namespace to load restore strategies from.
    * - ``root_controller`` = ``trove.extensions.common.service.DefaultRootController``

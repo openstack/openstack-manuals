@@ -33,7 +33,7 @@
    * - ``glance_num_retries`` = ``0``
      - (Integer) Number of retries when downloading an image from glance.
    * - ``glance_port`` = ``9292``
-     - (Unknown) Default glance port.
+     - (Port number) Default glance port.
    * - ``glance_protocol`` = ``http``
      - (String) Default protocol to use when connecting to glance. Set to https for SSL.
    * - ``swift_account`` = ``None``

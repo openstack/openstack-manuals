@@ -31,7 +31,7 @@
    * - ``clean_priority_reset_secure_boot_keys_to_default`` = ``20``
      - (Integer) Priority for reset_secure_boot_keys clean step. This step will reset the secure boot keys to manufacturing defaults.
    * - ``client_port`` = ``443``
-     - (Unknown) Port to be used for iLO operations
+     - (Port number) Port to be used for iLO operations
    * - ``client_timeout`` = ``60``
      - (Integer) Timeout (in seconds) for iLO operations
    * - ``power_retry`` = ``6``

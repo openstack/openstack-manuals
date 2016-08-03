@@ -35,7 +35,7 @@
    * - ``netapp_server_hostname`` = ``None``
      - (String) The hostname (or IP address) for the storage system.
    * - ``netapp_server_port`` = ``None``
-     - (Unknown) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS.
+     - (Port number) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS.
    * - ``netapp_snapmirror_quiesce_timeout`` = ``3600``
      - (Integer) The maximum time in seconds to wait for existing snapmirror transfers to complete before aborting when promoting a replica.
    * - ``netapp_storage_family`` = ``ontap_cluster``

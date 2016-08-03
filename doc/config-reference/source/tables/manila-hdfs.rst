@@ -21,11 +21,11 @@
    * - ``hdfs_namenode_ip`` = ``None``
      - (String) The IP of the HDFS namenode.
    * - ``hdfs_namenode_port`` = ``9000``
-     - (Unknown) The port of HDFS namenode service.
+     - (Port number) The port of HDFS namenode service.
    * - ``hdfs_ssh_name`` = ``None``
      - (String) HDFS namenode ssh login name.
    * - ``hdfs_ssh_port`` = ``22``
-     - (Unknown) HDFS namenode SSH port.
+     - (Port number) HDFS namenode SSH port.
    * - ``hdfs_ssh_private_key`` = ``None``
      - (String) Path to HDFS namenode SSH private key for login.
    * - ``hdfs_ssh_pw`` = ``None``

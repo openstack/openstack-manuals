@@ -51,7 +51,7 @@
    * - ``pecan_debug`` = ``False``
      - (Boolean) Toggle Pecan Debug Middleware.
    * - ``port`` = ``8777``
-     - (Unknown) The port for the ceilometer API server.
+     - (Port number) The port for the ceilometer API server.
    * - ``workers`` = ``1``
      - (Integer) Number of workers for api, default value is 1.
    * - **[oslo_middleware]**

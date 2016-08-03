@@ -35,7 +35,7 @@
    * - ``rpc_zmq_max_port`` = ``65536``
      - (Integer) Maximal port number for random ports range.
    * - ``rpc_zmq_min_port`` = ``49152``
-     - (Unknown) Minimal port number for random ports range.
+     - (Port number) Minimal port number for random ports range.
    * - ``rpc_zmq_topic_backlog`` = ``None``
      - (Integer) Maximum number of ingress messages to locally buffer per topic. Default is unlimited.
    * - ``use_pub_sub`` = ``True``

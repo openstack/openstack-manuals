@@ -51,7 +51,7 @@
    * - ``veth_mtu`` = ``9000``
      - (Integer) MTU size of veth interfaces
    * - ``vxlan_udp_port`` = ``4789``
-     - (Unknown) The UDP port to use for VXLAN tunnels.
+     - (Port number) The UDP port to use for VXLAN tunnels.
    * - **[OVS]**
      -
    * - ``bridge_mappings`` =
@@ -71,7 +71,7 @@
    * - ``of_listen_address`` = ``127.0.0.1``
      - (Unknown) Address to listen on for OpenFlow connections. Used only for 'native' driver.
    * - ``of_listen_port`` = ``6633``
-     - (Unknown) Port to listen on for OpenFlow connections. Used only for 'native' driver.
+     - (Port number) Port to listen on for OpenFlow connections. Used only for 'native' driver.
    * - ``of_request_timeout`` = ``10``
      - (Integer) Timeout in seconds to wait for a single OpenFlow request. Used only for 'native' driver.
    * - ``ovsdb_connection`` = ``tcp:127.0.0.1:6640``

@@ -25,7 +25,7 @@
    * - ``password`` =
      - (String) Password for Redis server (optional).
    * - ``port`` = ``6379``
-     - (Unknown) Use this port to connect to redis host.
+     - (Port number) Use this port to connect to redis host.
    * - ``sentinel_group_name`` = ``oslo-messaging-zeromq``
      - (String) Redis replica set name.
    * - ``sentinel_hosts`` =

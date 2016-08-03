@@ -33,7 +33,7 @@
    * - ``san_secondary_ip`` = ``None``
      - (String) VNX secondary SP IP Address.
    * - ``san_ssh_port`` = ``22``
-     - (Unknown) SSH port to use with SAN
+     - (Port number) SSH port to use with SAN
    * - ``san_thin_provision`` = ``True``
      - (Boolean) Use thin provisioning for SAN volumes?
    * - ``ssh_conn_timeout`` = ``30``

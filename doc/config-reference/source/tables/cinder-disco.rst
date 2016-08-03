@@ -23,7 +23,7 @@
    * - ``disco_client`` = ``127.0.0.1``
      - (Unknown) The IP of DMS client socket server
    * - ``disco_client_port`` = ``9898``
-     - (Unknown) The port to connect DMS client socket server
+     - (Port number) The port to connect DMS client socket server
    * - ``disco_wsdl_path`` = ``/etc/cinder/DISCOService.wsdl``
      - (String) Path to the wsdl file to communicate with DISCO request manager
    * - ``restore_check_timeout`` = ``3600``
