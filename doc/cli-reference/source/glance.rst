@@ -9,7 +9,7 @@ Image service command-line client
 The glance client is the command-line interface (CLI) for
 the Image service API and its extensions.
 
-This chapter documents :command:`glance` version ``2.2.0``.
+This chapter documents :command:`glance` version ``2.3.0``.
 
 For help on a specific :command:`glance` command, enter:
 
@@ -192,14 +192,14 @@ setting the corresponding environment variable:
 
    export OS_IMAGE_API_VERSION=2
 
-.. _glance_explain_v2:
+.. _glance_explain:
 
-glance explain (v2)
--------------------
+glance explain
+--------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 explain <MODEL>
+   usage: glance explain <MODEL>
 
 Describe a specific model.
 
@@ -208,14 +208,14 @@ Describe a specific model.
 ``<MODEL>``
   Name of model to describe.
 
-.. _glance_image-create_v2:
+.. _glance_image-create:
 
-glance image-create (v2)
-------------------------
+glance image-create
+-------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-create [--architecture <ARCHITECTURE>]
+   usage: glance image-create [--architecture <ARCHITECTURE>]
                               [--protected [True|False]] [--name <NAME>]
                               [--instance-uuid <INSTANCE_UUID>]
                               [--min-disk <MIN_DISK>] [--visibility <VISIBILITY>]
@@ -306,14 +306,14 @@ Create a new image.
 ``--progress``
   Show upload progress bar.
 
-.. _glance_image-deactivate_v2:
+.. _glance_image-deactivate:
 
-glance image-deactivate (v2)
-----------------------------
+glance image-deactivate
+-----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-deactivate <IMAGE_ID>
+   usage: glance image-deactivate <IMAGE_ID>
 
 Deactivate specified image.
 
@@ -322,14 +322,14 @@ Deactivate specified image.
 ``<IMAGE_ID>``
   ID of image to deactivate.
 
-.. _glance_image-delete_v2:
+.. _glance_image-delete:
 
-glance image-delete (v2)
-------------------------
+glance image-delete
+-------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-delete <IMAGE_ID> [<IMAGE_ID> ...]
+   usage: glance image-delete <IMAGE_ID> [<IMAGE_ID> ...]
 
 Delete specified image.
 
@@ -338,14 +338,14 @@ Delete specified image.
 ``<IMAGE_ID>``
   ID of image(s) to delete.
 
-.. _glance_image-download_v2:
+.. _glance_image-download:
 
-glance image-download (v2)
---------------------------
+glance image-download
+---------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-download [--file <FILE>] [--progress] <IMAGE_ID>
+   usage: glance image-download [--file <FILE>] [--progress] <IMAGE_ID>
 
 Download a specific image.
 
@@ -364,14 +364,14 @@ Download a specific image.
 ``--progress``
   Show download progress bar.
 
-.. _glance_image-list_v2:
+.. _glance_image-list:
 
-glance image-list (v2)
-----------------------
+glance image-list
+-----------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-list [--limit <LIMIT>] [--page-size <SIZE>]
+   usage: glance image-list [--limit <LIMIT>] [--page-size <SIZE>]
                             [--visibility <VISIBILITY>]
                             [--member-status <MEMBER_STATUS>] [--owner <OWNER>]
                             [--property-filter <KEY=VALUE>]
@@ -420,14 +420,14 @@ List images you can access.
   status, container_format, disk_format, size, id,
   created_at, updated_at. OPTIONAL.
 
-.. _glance_image-reactivate_v2:
+.. _glance_image-reactivate:
 
-glance image-reactivate (v2)
-----------------------------
+glance image-reactivate
+-----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-reactivate <IMAGE_ID>
+   usage: glance image-reactivate <IMAGE_ID>
 
 Reactivate specified image.
 
@@ -436,14 +436,14 @@ Reactivate specified image.
 ``<IMAGE_ID>``
   ID of image to reactivate.
 
-.. _glance_image-show_v2:
+.. _glance_image-show:
 
-glance image-show (v2)
-----------------------
+glance image-show
+-----------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-show [--human-readable] [--max-column-width <integer>]
+   usage: glance image-show [--human-readable] [--max-column-width <integer>]
                             <IMAGE_ID>
 
 Describe a specific image.
@@ -461,14 +461,14 @@ Describe a specific image.
 ``--max-column-width <integer>``
   The max column width of the printed table.
 
-.. _glance_image-tag-delete_v2:
+.. _glance_image-tag-delete:
 
-glance image-tag-delete (v2)
-----------------------------
+glance image-tag-delete
+-----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-tag-delete <IMAGE_ID> <TAG_VALUE>
+   usage: glance image-tag-delete <IMAGE_ID> <TAG_VALUE>
 
 Delete the tag associated with the given image.
 
@@ -480,14 +480,14 @@ Delete the tag associated with the given image.
 ``<TAG_VALUE>``
   Value of the tag.
 
-.. _glance_image-tag-update_v2:
+.. _glance_image-tag-update:
 
-glance image-tag-update (v2)
-----------------------------
+glance image-tag-update
+-----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-tag-update <IMAGE_ID> <TAG_VALUE>
+   usage: glance image-tag-update <IMAGE_ID> <TAG_VALUE>
 
 Update an image with the given tag.
 
@@ -499,14 +499,14 @@ Update an image with the given tag.
 ``<TAG_VALUE>``
   Value of the tag.
 
-.. _glance_image-update_v2:
+.. _glance_image-update:
 
-glance image-update (v2)
-------------------------
+glance image-update
+-------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-update [--architecture <ARCHITECTURE>]
+   usage: glance image-update [--architecture <ARCHITECTURE>]
                               [--protected [True|False]] [--name <NAME>]
                               [--instance-uuid <INSTANCE_UUID>]
                               [--min-disk <MIN_DISK>] [--visibility <VISIBILITY>]
@@ -590,14 +590,14 @@ Update an existing image.
   key
   Name of arbitrary property to remove from the image.
 
-.. _glance_image-upload_v2:
+.. _glance_image-upload:
 
-glance image-upload (v2)
-------------------------
+glance image-upload
+-------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 image-upload [--file <FILE>] [--size <IMAGE_SIZE>] [--progress]
+   usage: glance image-upload [--file <FILE>] [--size <IMAGE_SIZE>] [--progress]
                               <IMAGE_ID>
 
 Upload data for a specific image.
@@ -622,14 +622,14 @@ Upload data for a specific image.
 ``--progress``
   Show upload progress bar.
 
-.. _glance_location-add_v2:
+.. _glance_location-add:
 
-glance location-add (v2)
-------------------------
+glance location-add
+-------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 location-add --url <URL> [--metadata <STRING>] <IMAGE_ID>
+   usage: glance location-add --url <URL> [--metadata <STRING>] <IMAGE_ID>
 
 Add a location (and related metadata) to an image.
 
@@ -647,14 +647,14 @@ Add a location (and related metadata) to an image.
   Metadata associated with the location. Must be a valid
   JSON object (default: {})
 
-.. _glance_location-delete_v2:
+.. _glance_location-delete:
 
-glance location-delete (v2)
----------------------------
+glance location-delete
+----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 location-delete --url <URL> <IMAGE_ID>
+   usage: glance location-delete --url <URL> <IMAGE_ID>
 
 Remove locations (and related metadata) from an image.
 
@@ -668,14 +668,14 @@ Remove locations (and related metadata) from an image.
 ``--url <URL>``
   URL of location to remove. May be used multiple times.
 
-.. _glance_location-update_v2:
+.. _glance_location-update:
 
-glance location-update (v2)
----------------------------
+glance location-update
+----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 location-update --url <URL> [--metadata <STRING>] <IMAGE_ID>
+   usage: glance location-update --url <URL> [--metadata <STRING>] <IMAGE_ID>
 
 Update metadata of an image's location.
 
@@ -693,14 +693,14 @@ Update metadata of an image's location.
   Metadata associated with the location. Must be a valid
   JSON object (default: {})
 
-.. _glance_md-namespace-create_v2:
+.. _glance_md-namespace-create:
 
-glance md-namespace-create (v2)
--------------------------------
+glance md-namespace-create
+--------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-create [--schema <SCHEMA>]
+   usage: glance md-namespace-create [--schema <SCHEMA>]
                                      [--created-at <CREATED_AT>]
                                      [--resource-type-associations <RESOURCE_TYPE_ASSOCIATIONS> [<RESOURCE_TYPE_ASSOCIATIONS> ...]]
                                      [--protected [True|False]] [--self <SELF>]
@@ -749,14 +749,14 @@ Create a new metadata definitions namespace.
 ``--description <DESCRIPTION>``
   Provides a user friendly description of the namespace.
 
-.. _glance_md-namespace-delete_v2:
+.. _glance_md-namespace-delete:
 
-glance md-namespace-delete (v2)
--------------------------------
+glance md-namespace-delete
+--------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-delete <NAMESPACE>
+   usage: glance md-namespace-delete <NAMESPACE>
 
 Delete specified metadata definitions namespace with its contents.
 
@@ -765,14 +765,14 @@ Delete specified metadata definitions namespace with its contents.
 ``<NAMESPACE>``
   Name of namespace to delete.
 
-.. _glance_md-namespace-import_v2:
+.. _glance_md-namespace-import:
 
-glance md-namespace-import (v2)
--------------------------------
+glance md-namespace-import
+--------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-import [--file <FILEPATH>]
+   usage: glance md-namespace-import [--file <FILEPATH>]
 
 Import a metadata definitions namespace from file or standard input.
 
@@ -783,14 +783,14 @@ Import a metadata definitions namespace from file or standard input.
   Alternatively, namespaces schema can be passed to the
   client via stdin.
 
-.. _glance_md-namespace-list_v2:
+.. _glance_md-namespace-list:
 
-glance md-namespace-list (v2)
------------------------------
+glance md-namespace-list
+------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-list [--resource-types <RESOURCE_TYPES>]
+   usage: glance md-namespace-list [--resource-types <RESOURCE_TYPES>]
                                    [--visibility <VISIBILITY>]
                                    [--page-size <SIZE>]
 
@@ -808,14 +808,14 @@ List metadata definitions namespaces.
   Number of namespaces to request in each paginated
   request.
 
-.. _glance_md-namespace-objects-delete_v2:
+.. _glance_md-namespace-objects-delete:
 
-glance md-namespace-objects-delete (v2)
----------------------------------------
+glance md-namespace-objects-delete
+----------------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-objects-delete <NAMESPACE>
+   usage: glance md-namespace-objects-delete <NAMESPACE>
 
 Delete all metadata definitions objects inside a specific namespace.
 
@@ -824,14 +824,14 @@ Delete all metadata definitions objects inside a specific namespace.
 ``<NAMESPACE>``
   Name of namespace.
 
-.. _glance_md-namespace-properties-delete_v2:
+.. _glance_md-namespace-properties-delete:
 
-glance md-namespace-properties-delete (v2)
-------------------------------------------
+glance md-namespace-properties-delete
+-------------------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-properties-delete <NAMESPACE>
+   usage: glance md-namespace-properties-delete <NAMESPACE>
 
 Delete all metadata definitions property inside a specific namespace.
 
@@ -840,14 +840,14 @@ Delete all metadata definitions property inside a specific namespace.
 ``<NAMESPACE>``
   Name of namespace.
 
-.. _glance_md-namespace-resource-type-list_v2:
+.. _glance_md-namespace-resource-type-list:
 
-glance md-namespace-resource-type-list (v2)
--------------------------------------------
+glance md-namespace-resource-type-list
+--------------------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-resource-type-list <NAMESPACE>
+   usage: glance md-namespace-resource-type-list <NAMESPACE>
 
 List resource types associated to specific namespace.
 
@@ -856,14 +856,14 @@ List resource types associated to specific namespace.
 ``<NAMESPACE>``
   Name of namespace.
 
-.. _glance_md-namespace-show_v2:
+.. _glance_md-namespace-show:
 
-glance md-namespace-show (v2)
------------------------------
+glance md-namespace-show
+------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-show [--resource-type <RESOURCE_TYPE>]
+   usage: glance md-namespace-show [--resource-type <RESOURCE_TYPE>]
                                    [--max-column-width <integer>]
                                    <NAMESPACE>
 
@@ -884,14 +884,14 @@ properties, objects and resource type associations.
 ``--max-column-width <integer>``
   The max column width of the printed table.
 
-.. _glance_md-namespace-tags-delete_v2:
+.. _glance_md-namespace-tags-delete:
 
-glance md-namespace-tags-delete (v2)
-------------------------------------
+glance md-namespace-tags-delete
+-------------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-tags-delete <NAMESPACE>
+   usage: glance md-namespace-tags-delete <NAMESPACE>
 
 Delete all metadata definitions tags inside a specific namespace.
 
@@ -900,14 +900,14 @@ Delete all metadata definitions tags inside a specific namespace.
 ``<NAMESPACE>``
   Name of namespace.
 
-.. _glance_md-namespace-update_v2:
+.. _glance_md-namespace-update:
 
-glance md-namespace-update (v2)
--------------------------------
+glance md-namespace-update
+--------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-namespace-update [--created-at <CREATED_AT>]
+   usage: glance md-namespace-update [--created-at <CREATED_AT>]
                                      [--protected [True|False]]
                                      [--namespace <NAMESPACE>] [--self <SELF>]
                                      [--display-name <DISPLAY_NAME>]
@@ -954,14 +954,14 @@ Update an existing metadata definitions namespace.
 ``--description <DESCRIPTION>``
   Provides a user friendly description of the namespace.
 
-.. _glance_md-object-create_v2:
+.. _glance_md-object-create:
 
-glance md-object-create (v2)
-----------------------------
+glance md-object-create
+-----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-object-create --name <NAME> --schema <SCHEMA> <NAMESPACE>
+   usage: glance md-object-create --name <NAME> --schema <SCHEMA> <NAMESPACE>
 
 Create a new metadata definitions object inside a namespace.
 
@@ -978,14 +978,14 @@ Create a new metadata definitions object inside a namespace.
 ``--schema <SCHEMA>``
   Valid JSON schema of an object.
 
-.. _glance_md-object-delete_v2:
+.. _glance_md-object-delete:
 
-glance md-object-delete (v2)
-----------------------------
+glance md-object-delete
+-----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-object-delete <NAMESPACE> <OBJECT>
+   usage: glance md-object-delete <NAMESPACE> <OBJECT>
 
 Delete a specific metadata definitions object inside a namespace.
 
@@ -997,14 +997,14 @@ Delete a specific metadata definitions object inside a namespace.
 ``<OBJECT>``
   Name of an object.
 
-.. _glance_md-object-list_v2:
+.. _glance_md-object-list:
 
-glance md-object-list (v2)
---------------------------
+glance md-object-list
+---------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-object-list <NAMESPACE>
+   usage: glance md-object-list <NAMESPACE>
 
 List metadata definitions objects inside a specific namespace.
 
@@ -1013,14 +1013,14 @@ List metadata definitions objects inside a specific namespace.
 ``<NAMESPACE>``
   Name of namespace.
 
-.. _glance_md-object-property-show_v2:
+.. _glance_md-object-property-show:
 
-glance md-object-property-show (v2)
------------------------------------
+glance md-object-property-show
+------------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-object-property-show [--max-column-width <integer>]
+   usage: glance md-object-property-show [--max-column-width <integer>]
                                          <NAMESPACE> <OBJECT> <PROPERTY>
 
 Describe a specific metadata definitions property inside an object.
@@ -1041,14 +1041,14 @@ Describe a specific metadata definitions property inside an object.
 ``--max-column-width <integer>``
   The max column width of the printed table.
 
-.. _glance_md-object-show_v2:
+.. _glance_md-object-show:
 
-glance md-object-show (v2)
---------------------------
+glance md-object-show
+---------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-object-show [--max-column-width <integer>]
+   usage: glance md-object-show [--max-column-width <integer>]
                                 <NAMESPACE> <OBJECT>
 
 Describe a specific metadata definitions object inside a namespace.
@@ -1066,14 +1066,14 @@ Describe a specific metadata definitions object inside a namespace.
 ``--max-column-width <integer>``
   The max column width of the printed table.
 
-.. _glance_md-object-update_v2:
+.. _glance_md-object-update:
 
-glance md-object-update (v2)
-----------------------------
+glance md-object-update
+-----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-object-update [--name <NAME>] [--schema <SCHEMA>]
+   usage: glance md-object-update [--name <NAME>] [--schema <SCHEMA>]
                                   <NAMESPACE> <OBJECT>
 
 Update metadata definitions object inside a namespace.
@@ -1094,14 +1094,14 @@ Update metadata definitions object inside a namespace.
 ``--schema <SCHEMA>``
   Valid JSON schema of an object.
 
-.. _glance_md-property-create_v2:
+.. _glance_md-property-create:
 
-glance md-property-create (v2)
-------------------------------
+glance md-property-create
+-------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-property-create --name <NAME> --title <TITLE> --schema
+   usage: glance md-property-create --name <NAME> --title <TITLE> --schema
                                     <SCHEMA>
                                     <NAMESPACE>
 
@@ -1123,14 +1123,14 @@ Create a new metadata definitions property inside a namespace.
 ``--schema <SCHEMA>``
   Valid JSON schema of a property.
 
-.. _glance_md-property-delete_v2:
+.. _glance_md-property-delete:
 
-glance md-property-delete (v2)
-------------------------------
+glance md-property-delete
+-------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-property-delete <NAMESPACE> <PROPERTY>
+   usage: glance md-property-delete <NAMESPACE> <PROPERTY>
 
 Delete a specific metadata definitions property inside a namespace.
 
@@ -1142,14 +1142,14 @@ Delete a specific metadata definitions property inside a namespace.
 ``<PROPERTY>``
   Name of a property.
 
-.. _glance_md-property-list_v2:
+.. _glance_md-property-list:
 
-glance md-property-list (v2)
-----------------------------
+glance md-property-list
+-----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-property-list <NAMESPACE>
+   usage: glance md-property-list <NAMESPACE>
 
 List metadata definitions properties inside a specific namespace.
 
@@ -1158,14 +1158,14 @@ List metadata definitions properties inside a specific namespace.
 ``<NAMESPACE>``
   Name of namespace.
 
-.. _glance_md-property-show_v2:
+.. _glance_md-property-show:
 
-glance md-property-show (v2)
-----------------------------
+glance md-property-show
+-----------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-property-show [--max-column-width <integer>]
+   usage: glance md-property-show [--max-column-width <integer>]
                                   <NAMESPACE> <PROPERTY>
 
 Describe a specific metadata definitions property inside a namespace.
@@ -1183,14 +1183,14 @@ Describe a specific metadata definitions property inside a namespace.
 ``--max-column-width <integer>``
   The max column width of the printed table.
 
-.. _glance_md-property-update_v2:
+.. _glance_md-property-update:
 
-glance md-property-update (v2)
-------------------------------
+glance md-property-update
+-------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-property-update [--name <NAME>] [--title <TITLE>]
+   usage: glance md-property-update [--name <NAME>] [--title <TITLE>]
                                     [--schema <SCHEMA>]
                                     <NAMESPACE> <PROPERTY>
 
@@ -1215,14 +1215,14 @@ Update metadata definitions property inside a namespace.
 ``--schema <SCHEMA>``
   Valid JSON schema of a property.
 
-.. _glance_md-resource-type-associate_v2:
+.. _glance_md-resource-type-associate:
 
-glance md-resource-type-associate (v2)
---------------------------------------
+glance md-resource-type-associate
+---------------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-resource-type-associate [--updated-at <UPDATED_AT>]
+   usage: glance md-resource-type-associate [--updated-at <UPDATED_AT>]
                                             [--name <NAME>]
                                             [--properties-target <PROPERTIES_TARGET>]
                                             [--prefix <PREFIX>]
@@ -1265,14 +1265,14 @@ Associate resource type with a metadata definitions namespace.
 ``--created-at <CREATED_AT>``
   Date and time of resource type association.
 
-.. _glance_md-resource-type-deassociate_v2:
+.. _glance_md-resource-type-deassociate:
 
-glance md-resource-type-deassociate (v2)
-----------------------------------------
+glance md-resource-type-deassociate
+-----------------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-resource-type-deassociate <NAMESPACE> <RESOURCE_TYPE>
+   usage: glance md-resource-type-deassociate <NAMESPACE> <RESOURCE_TYPE>
 
 Deassociate resource type with a metadata definitions namespace.
 
@@ -1284,25 +1284,25 @@ Deassociate resource type with a metadata definitions namespace.
 ``<RESOURCE_TYPE>``
   Name of resource type.
 
-.. _glance_md-resource-type-list_v2:
+.. _glance_md-resource-type-list:
 
-glance md-resource-type-list (v2)
----------------------------------
+glance md-resource-type-list
+----------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-resource-type-list
+   usage: glance md-resource-type-list
 
 List available resource type names.
 
-.. _glance_md-tag-create_v2:
+.. _glance_md-tag-create:
 
-glance md-tag-create (v2)
--------------------------
+glance md-tag-create
+--------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-tag-create --name <NAME> <NAMESPACE>
+   usage: glance md-tag-create --name <NAME> <NAMESPACE>
 
 Add a new metadata definitions tag inside a namespace.
 
@@ -1316,14 +1316,14 @@ Add a new metadata definitions tag inside a namespace.
 ``--name <NAME>``
   The name of the new tag to add.
 
-.. _glance_md-tag-create-multiple_v2:
+.. _glance_md-tag-create-multiple:
 
-glance md-tag-create-multiple (v2)
-----------------------------------
+glance md-tag-create-multiple
+-----------------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-tag-create-multiple --names <NAMES> [--delim <DELIM>]
+   usage: glance md-tag-create-multiple --names <NAMES> [--delim <DELIM>]
                                         <NAMESPACE>
 
 Create new metadata definitions tags inside a namespace.
@@ -1342,14 +1342,14 @@ Create new metadata definitions tags inside a namespace.
   The delimiter used to separate the names (if none is
   provided then the default is a comma).
 
-.. _glance_md-tag-delete_v2:
+.. _glance_md-tag-delete:
 
-glance md-tag-delete (v2)
--------------------------
+glance md-tag-delete
+--------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-tag-delete <NAMESPACE> <TAG>
+   usage: glance md-tag-delete <NAMESPACE> <TAG>
 
 Delete a specific metadata definitions tag inside a namespace.
 
@@ -1361,14 +1361,14 @@ Delete a specific metadata definitions tag inside a namespace.
 ``<TAG>``
   Name of the tag.
 
-.. _glance_md-tag-list_v2:
+.. _glance_md-tag-list:
 
-glance md-tag-list (v2)
------------------------
+glance md-tag-list
+------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-tag-list <NAMESPACE>
+   usage: glance md-tag-list <NAMESPACE>
 
 List metadata definitions tags inside a specific namespace.
 
@@ -1377,14 +1377,14 @@ List metadata definitions tags inside a specific namespace.
 ``<NAMESPACE>``
   Name of namespace.
 
-.. _glance_md-tag-show_v2:
+.. _glance_md-tag-show:
 
-glance md-tag-show (v2)
------------------------
+glance md-tag-show
+------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-tag-show <NAMESPACE> <TAG>
+   usage: glance md-tag-show <NAMESPACE> <TAG>
 
 Describe a specific metadata definitions tag inside a namespace.
 
@@ -1396,14 +1396,14 @@ Describe a specific metadata definitions tag inside a namespace.
 ``<TAG>``
   Name of the tag.
 
-.. _glance_md-tag-update_v2:
+.. _glance_md-tag-update:
 
-glance md-tag-update (v2)
--------------------------
+glance md-tag-update
+--------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 md-tag-update --name <NAME> <NAMESPACE> <TAG>
+   usage: glance md-tag-update --name <NAME> <NAMESPACE> <TAG>
 
 Rename a metadata definitions tag inside a namespace.
 
@@ -1420,14 +1420,14 @@ Rename a metadata definitions tag inside a namespace.
 ``--name <NAME>``
   New name of the new tag.
 
-.. _glance_member-create_v2:
+.. _glance_member-create:
 
-glance member-create (v2)
--------------------------
+glance member-create
+--------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 member-create <IMAGE_ID> <MEMBER_ID>
+   usage: glance member-create <IMAGE_ID> <MEMBER_ID>
 
 Create member for a given image.
 
@@ -1439,14 +1439,14 @@ Create member for a given image.
 ``<MEMBER_ID>``
   Tenant to add as member.
 
-.. _glance_member-delete_v2:
+.. _glance_member-delete:
 
-glance member-delete (v2)
--------------------------
+glance member-delete
+--------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 member-delete <IMAGE_ID> <MEMBER_ID>
+   usage: glance member-delete <IMAGE_ID> <MEMBER_ID>
 
 Delete image member.
 
@@ -1458,14 +1458,14 @@ Delete image member.
 ``<MEMBER_ID>``
   Tenant to remove as member.
 
-.. _glance_member-list_v2:
+.. _glance_member-list:
 
-glance member-list (v2)
------------------------
+glance member-list
+------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 member-list --image-id <IMAGE_ID>
+   usage: glance member-list --image-id <IMAGE_ID>
 
 Describe sharing permissions by image.
 
@@ -1474,14 +1474,14 @@ Describe sharing permissions by image.
 ``--image-id <IMAGE_ID>``
   Image to display members of.
 
-.. _glance_member-update_v2:
+.. _glance_member-update:
 
-glance member-update (v2)
--------------------------
+glance member-update
+--------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 member-update <IMAGE_ID> <MEMBER_ID> <MEMBER_STATUS>
+   usage: glance member-update <IMAGE_ID> <MEMBER_ID> <MEMBER_STATUS>
 
 Update the status of a member for a given image.
 
@@ -1497,14 +1497,14 @@ Update the status of a member for a given image.
   Updated status of member. Valid Values: accepted, rejected,
   pending
 
-.. _glance_task-create_v2:
+.. _glance_task-create:
 
-glance task-create (v2)
------------------------
+glance task-create
+------------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 task-create [--type <TYPE>] [--input <STRING>]
+   usage: glance task-create [--type <TYPE>] [--input <STRING>]
 
 Create a new task.
 
@@ -1517,14 +1517,14 @@ Create a new task.
 ``--input <STRING>``
   Parameters of the task to be launched
 
-.. _glance_task-list_v2:
+.. _glance_task-list:
 
-glance task-list (v2)
----------------------
+glance task-list
+----------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 task-list [--sort-key {id,type,status}] [--sort-dir {asc,desc}]
+   usage: glance task-list [--sort-key {id,type,status}] [--sort-dir {asc,desc}]
                            [--page-size <SIZE>] [--type <TYPE>]
                            [--status <STATUS>]
 
@@ -1547,14 +1547,14 @@ List tasks you can access.
 ``--status <STATUS>``
   Filter tasks to those that have this status.
 
-.. _glance_task-show_v2:
+.. _glance_task-show:
 
-glance task-show (v2)
----------------------
+glance task-show
+----------------
 
 .. code-block:: console
 
-   usage: glance --os-image-api-version 2 task-show <TASK_ID>
+   usage: glance task-show <TASK_ID>
 
 Describe a specific task.
 
@@ -1963,3 +1963,4 @@ Describe sharing permissions by image or tenant.
 
 ``--tenant-id <TENANT_ID>``
   Filter results by a tenant ID.
+
