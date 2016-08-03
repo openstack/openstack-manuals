@@ -24,6 +24,8 @@
      - (Boolean) Allow the usage of the pagination
    * - ``allow_sorting`` = ``False``
      - (Boolean) Allow the usage of the sorting
+   * - ``pagination_max_limit`` = ``-1``
+     - (String) The maximum number of items returned in a single response, value was 'infinite' or negative integer means no limit
    * - ``api_extensions_path`` =
      - (String) The path for API extensions
    * - ``api_handler`` = ``queue_producer``
