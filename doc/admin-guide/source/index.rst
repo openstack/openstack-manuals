@@ -17,7 +17,7 @@ Contents
    :maxdepth: 2
 
    common/conventions.rst
-   common/get_started_with_openstack.rst
+   common/get-started-with-openstack.rst
    identity_management.rst
    dashboard.rst
    compute.rst
@@ -38,7 +38,7 @@ Appendix
 .. toctree::
    :maxdepth: 1
 
-   common/app_support.rst
+   common/app-support.rst
 
 Glossary
 ~~~~~~~~

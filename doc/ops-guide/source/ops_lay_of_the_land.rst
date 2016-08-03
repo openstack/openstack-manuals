@@ -41,7 +41,7 @@ Install OpenStack command-line clients
 
 For instructions on installing, upgrading, or removing command-line clients,
 see the `OpenStack Command-Line Interface Reference
-<http://docs.openstack.org/cli-reference/common/cli_install_openstack_command_line_clients.html>`_.
+<http://docs.openstack.org/cli-reference/common/cli-install-openstack-command-line-clients.html>`_.
 
 .. note::
 

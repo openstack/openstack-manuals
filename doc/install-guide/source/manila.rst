@@ -6,7 +6,7 @@ Shared File Systems service
 
 .. toctree::
 
-    common/get_started_shared_file_systems.rst
+    common/get-started-shared-file-systems.rst
     manila-controller-install.rst
     manila-share-install.rst
     manila-verify.rst

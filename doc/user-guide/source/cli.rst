@@ -5,13 +5,13 @@ OpenStack command-line clients
 .. toctree::
    :maxdepth: 2
 
-   common/cli_overview.rst
-   common/cli_install_openstack_command_line_clients.rst
-   common/cli_discover_version_number_for_a_client.rst
-   common/cli_set_environment_variables_using_openstack_rc.rst
-   common/cli_manage_images.rst
+   common/cli-overview.rst
+   common/cli-install-openstack-command-line-clients.rst
+   common/cli-discover-version-number-for-a-client.rst
+   common/cli-set-environment-variables-using-openstack-rc.rst
+   common/cli-manage-images.rst
    cli_manage_images_curl.rst
-   common/cli_manage_volumes.rst
+   common/cli-manage-volumes.rst
    cli_manage_shares.rst
    cli_nova_configure_access_security_for_instances.rst
    cli_launch_instances.rst

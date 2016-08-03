@@ -7,7 +7,7 @@ Manage the cloud
 .. toctree::
 
    compute-euca2ools.rst
-   common/nova_show_usage_statistics_for_hosts_instances.rst
+   common/nova-show-usage-statistics-for-hosts-instances.rst
 
 System administrators can use the :command:`openstack` and
 :command:`euca2ools` commands to manage their clouds.
@@ -25,7 +25,7 @@ specific commands might be restricted by the Identity service.
 
    To install python-openstackclient, follow the instructions in the
    `OpenStack User Guide
-   <http://docs.openstack.org/user-guide/common/cli_install_openstack_command_line_clients.html>`_.
+   <http://docs.openstack.org/user-guide/common/cli-install-openstack-command-line-clients.html>`_.
 
 #. Confirm the installation was successful:
 

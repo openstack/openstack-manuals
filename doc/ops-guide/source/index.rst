@@ -29,7 +29,7 @@ Appendix
    app_crypt.rst
    app_roadmaps.rst
    app_resources.rst
-   common/app_support.rst
+   common/app-support.rst
 
 Glossary
 ~~~~~~~~

@@ -140,7 +140,7 @@ Create and manage security group rules
 
 Modify security group rules with the :command:`nova secgroup-*-rule`
 commands. Before you begin, source the OpenStack RC file. For details,
-see :doc:`../common/cli_set_environment_variables_using_openstack_rc`.
+see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
 #. To list the rules for a security group, run the following command:
 

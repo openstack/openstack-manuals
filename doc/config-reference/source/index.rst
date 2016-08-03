@@ -44,7 +44,7 @@ Appendix
 
    policy-json-file.rst
    firewalls-default-ports.rst
-   common/app_support.rst
+   common/app-support.rst
 
 Glossary
 ~~~~~~~~

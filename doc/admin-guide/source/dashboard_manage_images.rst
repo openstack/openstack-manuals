@@ -12,7 +12,7 @@ user, see the `upload and manage images with Dashboard in
 OpenStack End User Guide
 <http://docs.openstack.org/user-guide/dashboard_manage_images.html>`_
 and `manage images with CLI in OpenStack End User Guide
-<http://docs.openstack.org/user-guide/common/cli_manage_images.html>`_ .
+<http://docs.openstack.org/user-guide/common/cli-manage-images.html>`_ .
 
 To create and manage images as an administrator for other
 users, use the following procedures.

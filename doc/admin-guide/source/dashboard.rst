@@ -13,7 +13,7 @@ for your operating system.
 .. toctree::
    :maxdepth: 2
 
-   common/dashboard_customizing.rst
+   common/dashboard-customizing.rst
    dashboard_sessions.rst
    dashboard_manage_images.rst
    dashboard_admin_manage_roles.rst

@@ -35,7 +35,7 @@ Appendix
 .. toctree::
    :maxdepth: 1
 
-   common/app_support
+   common/app-support
 
 Glossary
 ~~~~~~~~
