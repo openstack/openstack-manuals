@@ -31,6 +31,8 @@ Supported operations
 
 -  Manage and unmanage a volume.
 
+-  Manage and unmanage a snapshot.
+
 -  Get volume statistics.
 
 -  Create, modify, delete, and list consistency groups.
@@ -44,7 +46,7 @@ XtremIO Block Storage driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Edit the ``cinder.conf`` file by adding the configuration below under
-the ``[DEFAULT]`` section of the file in case of a single back end or
+the [DEFAULT] section of the file in case of a single back end or
 under a separate section in case of multiple back ends (for example
 [XTREMIO]). The configuration file is usually located under the
 following path ``/etc/cinder/cinder.conf``.
