@@ -34,6 +34,11 @@ The personas
    ux-personas/pei-project-owner.rst
    ux-personas/alan-app-developer.rst
 
+.. The original SVG copy of this figure is available in
+   in the same directory
+.. figure:: figures/persona-ecosystem.png
+    :align: center
+    :width: 100%
 
 The model companies
 ~~~~~~~~~~~~~~~~~~~
