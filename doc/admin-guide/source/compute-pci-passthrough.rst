@@ -41,7 +41,7 @@ Configure nova-scheduler (Controller)
 
 #. Configure ``nova-scheduler`` as specified in `Configure nova-scheduler`_.
 
-#. Restart ``nova-scheduler`` with :command:`service nova-scheduler restart`.
+#. Restart the ``nova-scheduler`` service.
 
 Configure nova-api (Controller)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,7 +62,7 @@ Configure nova-api (Controller)
    For more information about the syntax of ``pci_alias``, refer to
    `nova.conf configuration options`_.
 
-#. Restart ``nova-api`` with :command:`service nova-api restart`.
+#. Restart the ``nova-api`` service.
 
 Configure a flavor (Controller)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -126,7 +126,7 @@ Configure PCI devices ``nova-compute`` (Compute)
    For more information about the syntax of ``pci_alias``, refer to
    `nova.conf configuration options`_.
 
-#. Restart ``nova-compute`` with :command:`service nova-compute restart`.
+#. Restart the ``nova-compute`` service.
 
 Create instances with PCI passthrough devices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
