@@ -443,8 +443,12 @@ To find out whether any floating IPs are available in your cloud, run:
 .. code-block:: console
 
    # nova floating-ip-list
-   2725bb...59f43f 1.2.3.4 None            nova vlan20
-   None            1.2.3.5 48a415...b010ff nova vlan20
+   +--------------------------------------+-----------+--------------------------------------+----------+--------+
+   | Id                                   | IP        | Server Id                            | Fixed IP | Pool   |
+   +--------------------------------------+-----------+--------------------------------------+----------+--------+
+   | 0593224f-4d92-41d0-bb41-2c74aea645ba | 3.3.3.101 | 39954bca-4071-428a-9496-de86309473c9 | 3.3.2.4  | public |
+   | 62378f70-17b9-4649-8ae4-474579b3576e | 3.3.3.103 | -                                    | -        | public |
+   +--------------------------------------+-----------+--------------------------------------+----------+--------+
 
 Here, two floating IPs are available. The first has been allocated to a
 project, while the other is unallocated.
