@@ -17,27 +17,26 @@ third-party IP Address Management systems.
 The basics
 ~~~~~~~~~~
 
-The IPAM implementation within OpenStack Networking provides two basic
-flavors (pluggable IPAM, non-pluggable IPAM). By default, the non-pluggable
-IPAM is enabled. This provides backward compatibility with older releases. In
-contrast, the pluggable implementation will require a database migration to
-support upgraded systems. This migration is planned for the Mitaka release.
+In Liberty and Mitaka, the IPAM implementation within OpenStack Networking
+provided a pluggable and non-pluggable flavor. As of Newton, the non-pluggable
+flavor is no longer available. Instead, it is completely replaced with a
+reference driver implementation of the pluggable framework. All data will
+be automatically migrated during the upgrade process, unless you have
+previously configured a pluggable IPAM driver. In that case, no migration
+is necessary.
 
-The reference driver for the pluggable implementation is considered
-experimental at this time. It does not provide additional functionality
-beyond the non-pluggable implementation, but does provide a basis for custom
-or third-party developed drivers. This can enable, for example, development
-of drivers that use different algorithms to allocate an IP address.
-
-To enable the pluggable implementation, you must specify the driver to
-use in the ``neutron.conf`` file. The ``internal`` driver refers to the
-reference implementation.
+To configure a driver other than the reference driver, specify it
+in the ``neutron.conf`` file. Do this after the migration is
+complete. There is no need to specify any value if you wish to use the
+reference driver.
 
 .. code-block:: ini
 
-   ipam_driver = internal
+   ipam_driver = ipam-driver-name
 
-The documentation for any alternate drivers will include the value to
+There is no need to specify any value if you wish to use the reference
+driver, though specifying ``internal`` will explicitly choose the reference
+driver. The documentation for any alternate drivers will include the value to
 use when specifying that driver.
 
 Known limitations
@@ -46,8 +45,5 @@ Known limitations
 * The driver interface is designed to allow separate drivers for each
   subnet pool. However, the current implementation allows only a single
   IPAM driver system-wide.
-* Database migrations are not available to convert existing OpenStack
-  installations to the new reference implementation of the pluggable
-  IPAM. This migration is planned for the Mitaka release.
 * Third-party drivers must provide their own migration mechanisms to convert
   existing OpenStack installations to their IPAM.
