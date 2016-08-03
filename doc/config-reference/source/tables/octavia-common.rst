@@ -35,7 +35,7 @@
    * - ``bind_host`` = ``0.0.0.0``
      - (Unknown) The host IP to bind to
    * - ``bind_port`` = ``9876``
-     - (Unknown) The port to bind to
+     - (Port number) The port to bind to
    * - ``control_exchange`` = ``octavia``
      - (String) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
    * - ``debug`` = ``False``
@@ -149,7 +149,7 @@
    * - ``bind_host`` = ``0.0.0.0``
      - (Unknown) The host IP to bind to
    * - ``bind_port`` = ``9443``
-     - (Unknown) The port to bind to
+     - (Port number) The port to bind to
    * - ``client_cert`` = ``/etc/octavia/certs/client.pem``
      - (String) The client certificate to talk to the agent
    * - ``connection_max_retries`` = ``300``
@@ -179,7 +179,7 @@
    * - ``bind_ip`` = ``0.0.0.0``
      - (Unknown) IP address the controller will listen on for heart beats
    * - ``bind_port`` = ``5555``
-     - (Unknown) Port number the controller will listen onfor heart beats
+     - (Port number) Port number the controller will listen onfor heart beats
    * - ``controller_ip_port_list`` =
      - (List) List of controller ip and port pairs for the heartbeat receivers. Example 127.0.0.1:5555, 192.168.0.1:5555
    * - ``event_streamer_driver`` = ``noop_event_streamer``

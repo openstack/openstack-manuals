@@ -25,7 +25,7 @@
    * - ``bind_host`` = ``0.0.0.0``
      - (Unknown) IP address the API server will listen on.
    * - ``bind_port`` = ``8779``
-     - (Unknown) Port the API server will listen on.
+     - (Port number) Port the API server will listen on.
    * - ``black_list_regex`` = ``None``
      - (String) Exclude IP addresses that match this regular expression.
    * - ``db_api_implementation`` = ``trove.db.sqlalchemy.api``

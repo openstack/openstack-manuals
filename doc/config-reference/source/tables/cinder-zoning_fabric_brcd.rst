@@ -23,7 +23,7 @@
    * - ``fc_fabric_password`` =
      - (String) Password for user.
    * - ``fc_fabric_port`` = ``22``
-     - (Unknown) Connecting port
+     - (Port number) Connecting port
    * - ``fc_fabric_ssh_cert_path`` =
      - (String) Local SSH certificate Path.
    * - ``fc_fabric_user`` =

@@ -39,4 +39,4 @@
    * - ``nas_private_key`` =
      - (String) Filename of private key to use for SSH authentication.
    * - ``nas_ssh_port`` = ``22``
-     - (Unknown) SSH port to use to connect to NAS system.
+     - (Port number) SSH port to use to connect to NAS system.

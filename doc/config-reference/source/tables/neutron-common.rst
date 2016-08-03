@@ -33,7 +33,7 @@
    * - ``bind_host`` = ``0.0.0.0``
      - (String) The host IP to bind to
    * - ``bind_port`` = ``9696``
-     - (Unknown) The port to bind to
+     - (Port number) The port to bind to
    * - ``core_plugin`` = ``None``
      - (String) The core plugin Neutron will use
    * - ``default_availability_zones`` =

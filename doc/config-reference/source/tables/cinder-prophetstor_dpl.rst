@@ -21,9 +21,9 @@
    * - ``dpl_pool`` =
      - (String) DPL pool uuid in which DPL volumes are stored.
    * - ``dpl_port`` = ``8357``
-     - (Unknown) DPL port number.
+     - (Port number) DPL port number.
    * - ``iscsi_port`` = ``3260``
-     - (Unknown) The port that the iSCSI daemon is listening on
+     - (Port number) The port that the iSCSI daemon is listening on
    * - ``san_ip`` =
      - (String) IP address of SAN controller
    * - ``san_login`` = ``admin``

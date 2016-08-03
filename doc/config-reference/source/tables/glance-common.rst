@@ -27,7 +27,7 @@
    * - ``bind_host`` = ``0.0.0.0``
      - (String) Address to bind the server. Useful when selecting a particular network interface.
    * - ``bind_port`` = ``None``
-     - (Unknown) The port on which the server will listen.
+     - (Port number) The port on which the server will listen.
    * - ``data_api`` = ``glance.db.sqlalchemy.api``
      - (String) Python module path of data access API
    * - ``digest_algorithm`` = ``sha256``

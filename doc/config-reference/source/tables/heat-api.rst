@@ -93,7 +93,7 @@
    * - ``bind_host`` = ``0.0.0.0``
      - (Unknown) Address to bind the server. Useful when selecting a particular network interface.
    * - ``bind_port`` = ``8004``
-     - (Unknown) The port on which the server will listen.
+     - (Port number) The port on which the server will listen.
    * - ``cert_file`` = ``None``
      - (String) Location of the SSL certificate file to use for SSL mode.
    * - ``key_file`` = ``None``

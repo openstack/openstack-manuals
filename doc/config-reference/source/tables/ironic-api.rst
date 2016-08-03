@@ -27,7 +27,7 @@
    * - ``max_limit`` = ``1000``
      - (Integer) The maximum number of items returned in a single response from a collection resource.
    * - ``port`` = ``6385``
-     - (Unknown) The TCP port on which ironic-api listens.
+     - (Port number) The TCP port on which ironic-api listens.
    * - ``public_endpoint`` = ``None``
      - (String) Public URL to use when building the links to the API resources (for example, "https://ironic.rocks:6384"). If None the links will be built using the request's host URL. If the API is operating behind a proxy, you will want to change this to represent the proxy's URL. Defaults to None.
    * - **[cors]**

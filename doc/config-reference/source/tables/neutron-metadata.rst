@@ -23,7 +23,7 @@
    * - ``metadata_backlog`` = ``4096``
      - (Integer) Number of backlog requests to configure the metadata server socket with
    * - ``metadata_port`` = ``9697``
-     - (Unknown) TCP Port used by Neutron metadata namespace proxy.
+     - (Port number) TCP Port used by Neutron metadata namespace proxy.
    * - ``metadata_proxy_group`` =
      - (String) Group (gid or name) running metadata proxy after its initialization (if empty: agent effective group).
    * - ``metadata_proxy_shared_secret`` =
@@ -43,6 +43,6 @@
    * - ``nova_metadata_ip`` = ``127.0.0.1``
      - (String) IP address used by Nova metadata server.
    * - ``nova_metadata_port`` = ``8775``
-     - (Unknown) TCP Port used by Nova metadata server.
+     - (Port number) TCP Port used by Nova metadata server.
    * - ``nova_metadata_protocol`` = ``http``
      - (String) Protocol to access nova metadata, http or https

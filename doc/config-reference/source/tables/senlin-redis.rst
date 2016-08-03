@@ -25,7 +25,7 @@
    * - ``password`` =
      - (String) DEPRECATED: Password for Redis server (optional). Replaced by [DEFAULT]/transport_url
    * - ``port`` = ``6379``
-     - (Unknown) DEPRECATED: Use this port to connect to redis host. Replaced by [DEFAULT]/transport_url
+     - (Port number) DEPRECATED: Use this port to connect to redis host. Replaced by [DEFAULT]/transport_url
    * - ``sentinel_group_name`` = ``oslo-messaging-zeromq``
      - (String) Redis replica set name.
    * - ``sentinel_hosts`` =

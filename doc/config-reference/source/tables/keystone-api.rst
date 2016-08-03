@@ -59,7 +59,7 @@
    * - ``admin_bind_host`` = ``0.0.0.0``
      - (String) DEPRECATED: The IP address of the network interface for the admin service to listen on.
    * - ``admin_port`` = ``35357``
-     - (Unknown) DEPRECATED: The port number which the admin service listens on.
+     - (Port number) DEPRECATED: The port number which the admin service listens on.
    * - ``admin_workers`` = ``None``
      - (Integer) DEPRECATED: The number of worker processes to serve the admin eventlet application. Defaults to number of CPUs (minimum of 2).
    * - ``client_socket_timeout`` = ``900``
@@ -67,7 +67,7 @@
    * - ``public_bind_host`` = ``0.0.0.0``
      - (String) DEPRECATED: The IP address of the network interface for the public service to listen on.
    * - ``public_port`` = ``5000``
-     - (Unknown) DEPRECATED: The port number which the public service listens on.
+     - (Port number) DEPRECATED: The port number which the public service listens on.
    * - ``public_workers`` = ``None``
      - (Integer) DEPRECATED: The number of worker processes to serve the public eventlet application. Defaults to number of CPUs (minimum of 2).
    * - ``tcp_keepalive`` = ``False``

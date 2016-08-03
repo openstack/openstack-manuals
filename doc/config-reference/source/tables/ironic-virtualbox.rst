@@ -19,4 +19,4 @@
    * - **[virtualbox]**
      -
    * - ``port`` = ``18083``
-     - (Unknown) Port on which VirtualBox web service is listening.
+     - (Port number) Port on which VirtualBox web service is listening.

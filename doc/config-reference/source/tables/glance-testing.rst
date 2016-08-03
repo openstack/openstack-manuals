@@ -21,4 +21,4 @@
    * - ``pydev_worker_debug_host`` = ``None``
      - (String) The hostname/IP of the pydev process listening for debug connections
    * - ``pydev_worker_debug_port`` = ``5678``
-     - (Unknown) The port on which a pydev process is listening for connections.
+     - (Port number) The port on which a pydev process is listening for connections.

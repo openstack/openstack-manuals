@@ -45,7 +45,7 @@
    * - ``osapi_share_listen`` = ``::``
      - (String) IP address for OpenStack Share API to listen on.
    * - ``osapi_share_listen_port`` = ``8786``
-     - (Unknown) Port for OpenStack Share API to listen on.
+     - (Port number) Port for OpenStack Share API to listen on.
    * - ``osapi_share_workers`` = ``1``
      - (Integer) Number of workers for OpenStack Share API service.
    * - ``share_api_class`` = ``manila.share.api.API``

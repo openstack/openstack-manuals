@@ -35,4 +35,4 @@
    * - ``nas_share_path`` =
      - (String) Path to the share to use for storing Cinder volumes. For example: "/srv/export1" for an NFS server export available at 10.0.5.10:/srv/export1 .
    * - ``nas_ssh_port`` = ``22``
-     - (Unknown) SSH port to use to connect to NAS system.
+     - (Port number) SSH port to use to connect to NAS system.

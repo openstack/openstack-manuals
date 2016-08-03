@@ -33,7 +33,7 @@
    * - **[vmware]**
      -
    * - ``vnc_port`` = ``5900``
-     - (Unknown) VNC starting port
+     - (Port number) VNC starting port
    * - ``vnc_port_total`` = ``10000``
      - (Integer) Total number of VNC ports
    * - **[vnc]**

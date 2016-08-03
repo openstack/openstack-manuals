@@ -51,7 +51,7 @@
    * - ``osapi_volume_listen`` = ``0.0.0.0``
      - (String) IP address on which OpenStack Volume API listens
    * - ``osapi_volume_listen_port`` = ``8776``
-     - (Unknown) Port on which OpenStack Volume API listens
+     - (Port number) Port on which OpenStack Volume API listens
    * - ``osapi_volume_workers`` = ``None``
      - (Integer) Number of workers for OpenStack Volume API service. The default is equal to the number of CPUs available.
    * - ``per_volume_size_limit`` = ``-1``
