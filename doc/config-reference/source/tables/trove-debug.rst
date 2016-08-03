@@ -25,7 +25,7 @@
    * - ``pydev_debug_host`` = ``None``
      - (String) Pydev debug server host (localhost by default).
    * - ``pydev_debug_port`` = ``5678``
-     - (Unknown) Pydev debug server port (5678 by default).
+     - (Port number) Pydev debug server port (5678 by default).
    * - **[profiler]**
      -
    * - ``enabled`` = ``False``

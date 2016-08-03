@@ -69,4 +69,4 @@
    * - ``host`` = ``localhost``
      - (String) Address for invoking webhooks. It is useful for cases where proxies are used for triggering webhooks. Default to the hostname of the API node.
    * - ``port`` = ``8778``
-     - (Unknown) The port on which a webhook will be invoked. Useful when service is running behind a proxy.
+     - (Port number) The port on which a webhook will be invoked. Useful when service is running behind a proxy.

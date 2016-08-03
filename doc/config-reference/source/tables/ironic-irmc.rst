@@ -23,7 +23,7 @@
    * - ``client_timeout`` = ``60``
      - (Integer) Timeout (in seconds) for iRMC operations
    * - ``port`` = ``443``
-     - (Unknown) Port to be used for iRMC operations
+     - (Port number) Port to be used for iRMC operations
    * - ``remote_image_server`` = ``None``
      - (String) IP of remote image server
    * - ``remote_image_share_name`` = ``share``
@@ -43,7 +43,7 @@
    * - ``snmp_community`` = ``public``
      - (String) SNMP community. Required for versions "v1" and "v2c"
    * - ``snmp_port`` = ``161``
-     - (Unknown) SNMP port
+     - (Port number) SNMP port
    * - ``snmp_security`` = ``None``
      - (String) SNMP security name. Required for version "v3"
    * - ``snmp_version`` = ``v2c``

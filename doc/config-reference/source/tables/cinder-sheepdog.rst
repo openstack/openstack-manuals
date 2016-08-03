@@ -21,4 +21,4 @@
    * - ``sheepdog_store_address`` = ``127.0.0.1``
      - (String) IP address of sheep daemon.
    * - ``sheepdog_store_port`` = ``7000``
-     - (Unknown) Port of sheep daemon.
+     - (Port number) Port of sheep daemon.

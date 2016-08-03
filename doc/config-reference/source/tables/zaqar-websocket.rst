@@ -21,6 +21,6 @@
    * - ``bind`` = ``127.0.0.1``
      - (Unknown) Address on which the self-hosting server will listen.
    * - ``external_port`` = ``None``
-     - (Unknown) Port on which the service is provided to the user.
+     - (Port number) Port on which the service is provided to the user.
    * - ``port`` = ``9000``
-     - (Unknown) Port on which the self-hosting server will listen.
+     - (Port number) Port on which the self-hosting server will listen.

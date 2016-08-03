@@ -21,4 +21,4 @@
    * - ``bind`` = ``127.0.0.1``
      - (Unknown) Address on which the self-hosting server will listen.
    * - ``port`` = ``8888``
-     - (Unknown) Port on which the self-hosting server will listen.
+     - (Port number) Port on which the self-hosting server will listen.

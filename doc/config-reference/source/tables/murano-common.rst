@@ -23,7 +23,7 @@
    * - ``bind_host`` = ``0.0.0.0``
      - (String) Address to bind the Murano API server to.
    * - ``bind_port`` = ``8082``
-     - (Unknown) Port the bind the Murano API server to.
+     - (Port number) Port the bind the Murano API server to.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
    * - ``file_server`` =

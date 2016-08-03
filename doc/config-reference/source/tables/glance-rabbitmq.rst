@@ -91,7 +91,7 @@
    * - ``rabbit_password`` = ``guest``
      - (String) The RabbitMQ password.
    * - ``rabbit_port`` = ``5672``
-     - (Unknown) The RabbitMQ broker port where a single node is used.
+     - (Port number) The RabbitMQ broker port where a single node is used.
    * - ``rabbit_qos_prefetch_count`` = ``0``
      - (Integer) Specifies the number of messages to prefetch. Setting to zero allows unlimited messages.
    * - ``rabbit_retry_backoff`` = ``2``

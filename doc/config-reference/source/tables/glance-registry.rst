@@ -45,4 +45,4 @@
    * - ``registry_host`` = ``0.0.0.0``
      - (String) Address to find the registry server.
    * - ``registry_port`` = ``9191``
-     - (Unknown) Port the registry server is listening on.
+     - (Port number) Port the registry server is listening on.

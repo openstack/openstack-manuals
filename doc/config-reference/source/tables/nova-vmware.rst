@@ -35,7 +35,7 @@
    * - ``host_password`` = ``None``
      - (String) Password for connection to VMware vCenter host.
    * - ``host_port`` = ``443``
-     - (Unknown) Port for connection to VMware vCenter host.
+     - (Port number) Port for connection to VMware vCenter host.
    * - ``host_username`` = ``None``
      - (String) Username for connection to VMware vCenter host.
    * - ``insecure`` = ``False``

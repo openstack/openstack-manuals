@@ -93,7 +93,7 @@
    * - ``rabbit_password`` = ``guest``
      - (String) DEPRECATED: The RabbitMQ password. Replaced by [DEFAULT]/transport_url
    * - ``rabbit_port`` = ``5672``
-     - (Unknown) DEPRECATED: The RabbitMQ broker port where a single node is used. Replaced by [DEFAULT]/transport_url
+     - (Port number) DEPRECATED: The RabbitMQ broker port where a single node is used. Replaced by [DEFAULT]/transport_url
    * - ``rabbit_qos_prefetch_count`` = ``0``
      - (Integer) Specifies the number of messages to prefetch. Setting to zero allows unlimited messages.
    * - ``rabbit_retry_backoff`` = ``2``
@@ -143,7 +143,7 @@
    * - ``password`` = ``guest``
      - (String) The RabbitMQ password.
    * - ``port`` = ``5672``
-     - (Unknown) The RabbitMQ broker port.
+     - (Port number) The RabbitMQ broker port.
    * - ``ssl`` = ``False``
      - (Boolean) Boolean flag to enable SSL communication through the RabbitMQ broker between murano-engine and guest agents.
    * - ``virtual_host`` = ``/``

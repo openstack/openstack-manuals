@@ -27,7 +27,7 @@
    * - ``host_password`` =
      - (String) Password of VMware vSphere.
    * - ``host_port`` = ``443``
-     - (Unknown) Port of the VMware vSphere host.
+     - (Port number) Port of the VMware vSphere host.
    * - ``host_username`` =
      - (String) Username of VMware vSphere.
    * - ``insecure`` = ``False``

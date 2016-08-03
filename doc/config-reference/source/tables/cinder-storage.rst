@@ -31,7 +31,7 @@
    * - ``iscsi_ip_address`` = ``$my_ip``
      - (String) The IP address that the iSCSI daemon is listening on
    * - ``iscsi_port`` = ``3260``
-     - (Unknown) The port that the iSCSI daemon is listening on
+     - (Port number) The port that the iSCSI daemon is listening on
    * - ``iscsi_protocol`` = ``iscsi``
      - (String) Determines the iSCSI protocol for new iSCSI volumes, created with tgtadm or lioadm target helpers. In order to enable RDMA, this parameter should be set with the value "iser". The supported iSCSI protocol values are "iscsi" and "iser".
    * - ``iscsi_target_flags`` =
@@ -45,7 +45,7 @@
    * - ``iser_ip_address`` = ``$my_ip``
      - (String) The IP address that the iSER daemon is listening on
    * - ``iser_port`` = ``3260``
-     - (Unknown) The port that the iSER daemon is listening on
+     - (Port number) The port that the iSER daemon is listening on
    * - ``iser_target_prefix`` = ``iqn.2010-10.org.openstack:``
      - (String) Prefix for iSER volumes
    * - ``migration_create_volume_timeout_secs`` = ``300``

@@ -43,7 +43,7 @@
    * - ``hpe3par_san_password`` =
      - (String) Password for SAN controller
    * - ``hpe3par_san_ssh_port`` = ``22``
-     - (Unknown) SSH port to use with SAN
+     - (Port number) SSH port to use with SAN
    * - ``hpe3par_share_ip_address`` =
      - (String) The IP address for shares not using a share server
    * - ``hpe3par_share_mount_path`` = ``/mnt/``

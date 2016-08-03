@@ -25,7 +25,7 @@
    * - ``udp_address`` = ``0.0.0.0``
      - (String) Address to which the UDP socket is bound. Set to an empty string to disable.
    * - ``udp_port`` = ``4952``
-     - (Unknown) Port to which the UDP socket is bound.
+     - (Port number) Port to which the UDP socket is bound.
    * - ``workers`` = ``1``
      - (Integer) Number of workers for collector service. default value is 1.
    * - **[dispatcher_file]**
