@@ -30,113 +30,29 @@ Galera Cluster requires that you open four ports to network traffic:
 .. seealso:: For more information on firewalls, see `Firewalls and default ports
    <http://docs.openstack.org/liberty/config-reference/content/firewalls-default-ports.html>`_, in the Configuration Reference.
 
-
-
-``iptables``
-^^^^^^^^^^^^^
-
-For many Linux distributions, you can configure the firewall using
-the ``iptables`` utility. To do so, complete the following steps:
-
-#. For each cluster node, run the following commands, replacing
-   ``NODE-IP-ADDRESS`` with the IP address of the cluster node
-   you want to open the firewall to:
+This can be achieved through the use of either the ``iptables``
+command such as:
 
    .. code-block:: console
 
       # iptables --append INPUT --in-interface eth0 \
-         --protocol tcp --match tcp --dport 3306 \
-         --source NODE-IP-ADDRESS --jump ACCEPT
-      # iptables --append INPUT --in-interface eth0 \
-         --protocol tcp --match tcp --dport 4567 \
-         --source NODE-IP-ADDRESS --jump ACCEPT
-      # iptables --append INPUT --in-interface eth0 \
-         --protocol tcp --match tcp --dport 4568 \
-         --source NODE-IP-ADDRESS --jump ACCEPT
-      # iptables --append INPUT --in-interface eth0 \
-         --protocol tcp --match tcp --dport 4444 \
-         --source NODE-IP-ADDRESS --jump ACCEPT
+         --protocol tcp --match tcp --dport ${PORT} \
+         --source ${NODE-IP-ADDRESS} --jump ACCEPT
 
-   In the event that you also want to configure multicast replication,
-   run this command as well:
+Make sure to save the changes once you are done, this will vary
+depending on your distribution:
 
-   .. code-block:: console
+- `Ubuntu <http://askubuntu.com/questions/66890/how-can-i-make-a-specific-set-of-iptables-rules-permanent#66905>`_
+- `Fedora <https://fedoraproject.org/wiki/How_to_edit_iptables_rules>`_
 
-      # iptables --append INPUT --in-interface eth0 \
-          --protocol udp --match udp --dport 4567 \
-        --source NODE-IP-ADDRESS --jump ACCEPT
-
-
-#. Make the changes persistent. For servers that use ``init``, use
-   the :command:`save` command:
-
-   .. code-block:: console
-
-      # service save iptables
-
-   For servers that use ``systemd``, you need to save the current packet
-   filtering to the path of the file that ``iptables`` reads when it starts.
-   This path can vary by distribution, but common locations are in the
-   ``/etc`` directory, such as:
-
-   - ``/etc/sysconfig/iptables``
-   - ``/etc/iptables/iptables.rules``
-
-   When you find the correct path, run the :command:`iptables-save` command:
-
-   .. code-block:: console
-
-      # iptables-save > /etc/sysconfig/iptables
-
-With the firewall configuration saved, whenever your OpenStack
-database starts.
-
-``firewall-cmd``
-^^^^^^^^^^^^^^^^^
-
-For many Linux distributions, you can configure the firewall using the
-``firewall-cmd`` utility for FirewallD. To do so, complete the following
-steps on each cluster node:
-
-#. Add the Galera Cluster service:
-
-   .. code-block:: console
-
-      # firewall-cmd --add-service=mysql
-
-#. For each instance of OpenStack database in your cluster, run the
-   following commands, replacing ``NODE-IP-ADDRESS`` with the IP address
-   of the cluster node you want to open the firewall to:
-
-   .. code-block:: console
-
-      # firewall-cmd --add-port=3306/tcp
-      # firewall-cmd --add-port=4567/tcp
-      # firewall-cmd --add-port=4568/tcp
-      # firewall-cmd --add-port=4444/tcp
-
-   In the event that you also want to configure multicast replication,
-   run this command as well:
-
-   .. code-block:: console
-
-      # firewall-cmd --add-port=4567/udp
-
-#. To make this configuration persistent, repeat the above commands
-   with the :option:`--permanent` option.
+Alternatively you may be able to make modifications using the
+``firewall-cmd`` utility for FirewallD that is available on many Linux
+distributions:
 
    .. code-block:: console
 
       # firewall-cmd --add-service=mysql --permanent
       # firewall-cmd --add-port=3306/tcp --permanent
-      # firewall-cmd --add-port=4567/tcp --permanent
-      # firewall-cmd --add-port=4568/tcp --permanent
-      # firewall-cmd --add-port=4444/tcp --permanent
-      # firewall-cmd --add-port=4567/udp --permanent
-
-
-With the firewall configuration saved, whenever your OpenStack
-database starts.
 
 SELinux
 --------
@@ -147,32 +63,21 @@ Red Hat-based distributions. In the context of Galera Cluster, systems with
 SELinux may block the database service, keep it from starting or prevent it
 from establishing network connections with the cluster.
 
-To configure SELinux to permit Galera Cluster to operate, complete
-the following steps on each cluster node:
-
-#. Using the ``semanage`` utility, open the relevant ports:
+To configure SELinux to permit Galera Cluster to operate, you may need
+to use the ``semanage`` utility to open the ports it uses, for
+example:
 
    .. code-block:: console
 
       # semanage port -a -t mysqld_port_t -p tcp 3306
-      # semanage port -a -t mysqld_port_t -p tcp 4567
-      # semanage port -a -t mysqld_port_t -p tcp 4568
-      # semanage port -a -t mysqld_port_t -p tcp 4444
 
-   In the event that you use multicast replication, you also need to
-   open ``4567`` to UDP traffic:
-
-   .. code-block:: console
-
-      # semanage port -a -t mysqld_port_t -p udp 4567
-
-#. Set SELinux to allow the database server to run:
+Older versions of some distributions, which do not have an up-to-date
+policy for securing Galera, may also require SELinux to be more
+relaxed about database access and actions:
 
    .. code-block:: console
 
       # semanage permissive -a mysqld_t
-
-With these options set, SELinux now permits Galera Cluster to operate.
 
 .. note:: Bear in mind, leaving SELinux in permissive mode is not a good
         security practice. Over the longer term, you need to develop a
@@ -182,7 +87,6 @@ With these options set, SELinux now permits Galera Cluster to operate.
         For more information on configuring SELinux to work with
         Galera Cluster, see the `Documentation
         <http://galeracluster.com/documentation-webpages/selinux.html>`_
-
 
 AppArmor
 ---------
