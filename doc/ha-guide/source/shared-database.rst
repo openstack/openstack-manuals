@@ -29,6 +29,5 @@ replication system.
 .. toctree::
   :maxdepth: 2
 
-  shared-database-install.rst
   shared-database-configure.rst
   shared-database-manage.rst
