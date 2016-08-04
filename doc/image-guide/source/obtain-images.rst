@@ -99,10 +99,17 @@ The most recent version of the 64-bit QCOW2 image for Ubuntu 16.04 is
 openSUSE and SUSE Linux Enterprise Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SUSE provides images for `openSUSE
+The openSUSE community provides images for `openSUSE
 <http://download.opensuse.org/repositories/Cloud:/Images:/>`_.
 
-For openSUSE and SUSE Linux Enterprise Server (SLES), custom images can
+SUSE maintains official SUSE Linux Enterprise Server cloud images.
+A valid SUSE Linux Enterprise Server subscription is required to
+download these images.
+
+* `SUSE Linux Enterprise Server 12 SP1 JeOS
+  <https://www.suse.com/products/server/jeos>`_
+
+For openSUSE and SUSE Linux Enterprise Server (SLES), custom images can also
 be built with a web-based tool called `SUSE Studio <https://susestudio.com>`_.
 
 Red Hat Enterprise Linux
