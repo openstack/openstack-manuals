@@ -5,6 +5,7 @@ Customization
 .. toctree::
    :maxdepth: 1
 
+   ops-customize-provision-instance.rst
    ops-customize-development.rst
    ops-customize-objectstorage.rst
    ops-customize-compute.rst
