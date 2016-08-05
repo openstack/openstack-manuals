@@ -259,7 +259,7 @@ HTTP (TCP) traffic flows from 192.168.1.11:1000 to 192.168.2.11:80.
         --egress p6 PP3
 
 #. Create port pair group ``PPG1`` with port pair ``PP1`` and ``PP2`` and
-   ``PPG3`` with port pair ``PP3``.
+   ``PPG2`` with port pair ``PP3``.
 
    .. code-block:: console
 
