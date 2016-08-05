@@ -9,7 +9,7 @@
 
    * - Configuration option = Default value
      - Description
-   * - ``disable_path`` = `` ``
-     - No help text available for this option.
+   * - ``disable_path`` =
+     - An optional filesystem path, which if present, will cause the healthcheck URL to return "503 Service Unavailable" with a body of "DISABLED BY FILE"
    * - ``use`` = ``egg:swift#healthcheck``
      - Entry point of paste.deploy in the server

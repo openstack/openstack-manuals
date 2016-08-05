@@ -8,32 +8,6 @@ configurations. Default configuration options appear in the ``[DEFAULT]``
 section. You can override the default values by setting values in the other
 sections.
 
-Container server configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Find an example container server configuration at
-``etc/container-server.conf-sample`` in the source code repository.
-
-The available configuration options are:
-
-.. include:: ../tables/swift-container-server-DEFAULT.rst
-.. include:: ../tables/swift-container-server-app-container-server.rst
-.. include:: ../tables/swift-container-server-pipeline-main.rst
-.. include:: ../tables/swift-container-server-container-replicator.rst
-.. include:: ../tables/swift-container-server-container-updater.rst
-.. include:: ../tables/swift-container-server-container-auditor.rst
-.. include:: ../tables/swift-container-server-container-sync.rst
-.. include:: ../tables/swift-container-server-filter-healthcheck.rst
-.. include:: ../tables/swift-container-server-filter-recon.rst
-.. include:: ../tables/swift-container-server-filter-xprofile.rst
-
-Sample container server configuration file
-------------------------------------------
-
-.. remote-code-block:: ini
-
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-server.conf-sample?h=stable/mitaka
-
 Container sync realms configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
