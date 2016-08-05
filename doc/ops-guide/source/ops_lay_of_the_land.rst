@@ -212,9 +212,7 @@ token.
    .. code-block:: console
 
       $ curl -s -X POST http://203.0.113.10:35357/v2.0/tokens \
-        -d '{"auth": {"passwordCredentials": {"username":"test-user", \
-                                              "password":"test-password"},  \
-                                              "tenantName":"test-project"}}' \
+        -d '{"auth": {"passwordCredentials": {"username":"test-user", "password":"test-password"}, "tenantName":"test-project"}}' \
         -H "Content-type: application/json" | jq .
 
 #. Read through the JSON response to get a feel for how the catalog is
@@ -226,9 +224,7 @@ token.
    .. code-block:: console
 
       $ TOKEN=`curl -s -X POST http://203.0.113.10:35357/v2.0/tokens \
-        -d '{"auth": {"passwordCredentials": {"username":"test-user",  \
-                                              "password":"test-password"},  \
-                                              "tenantName":"test-project"}}' \
+        -d '{"auth": {"passwordCredentials": {"username":"test-user", "password":"test-password"}, "tenantName":"test-project"}}' \
         -H "Content-type: application/json" |  jq -r .access.token.id`
 
    Now you can refer to your token on the command line as ``$TOKEN``.
