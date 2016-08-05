@@ -12,11 +12,11 @@ different jobs.
 
 We have identified five personas:
 
-* Arnie - Infrastructure Architect
-* Carlos - Cloud Operator
-* Doug - Domain Operator
-* Pei - Project Owner
-* Alan - App Developer
+* Adrian - Infrastructure Architect
+* Rey - Cloud Operator
+* Taylor - Domain Operator
+* Wei - Project Owner
+* Quinn - App Developer
 
 These personas are based on model companies and user ecosystems. Each
 persona takes part in different cloud adoption stages and can assume multiple
