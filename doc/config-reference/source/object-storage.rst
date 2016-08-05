@@ -8,6 +8,7 @@ Object Storage service
    object-storage/about.rst
    object-storage/general-service-conf.rst
    object-storage/object-server.rst
+   object-storage/object-expirer.rst
    object-storage/configure.rst
    object-storage/features.rst
    object-storage/configure-s3.rst
