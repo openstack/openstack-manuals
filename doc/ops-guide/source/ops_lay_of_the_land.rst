@@ -236,7 +236,7 @@ token.
 
       $ curl -s \
         -H "X-Auth-Token: $TOKEN" \
-        http://203.0.113.10:8774/v2/98333aba48e756fa8f629c83a818ad57/servers | jq .
+        http://203.0.113.10:8774/v2.0/98333aba48e756fa8f629c83a818ad57/servers | jq .
 
 To discover how API requests should be structured, read the `OpenStack
 API Reference <http://developer.openstack.org/api-ref.html>`_. To chew
