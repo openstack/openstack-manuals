@@ -42,7 +42,7 @@ The Networking service internal DNS resolution
 The Networking service enables users to control the name assigned to ports by
 the internal DNS. To enable this functionality, do the following:
 
-1. Edit the ``/etc/neutron.conf`` file and assign a value different to
+1. Edit the ``/etc/neutron/neutron.conf`` file and assign a value different to
    ``openstacklocal`` (its default value) to the ``dns_domain`` parameter in
    the ``[default]`` section. As an example:
 
