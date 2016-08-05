@@ -25,6 +25,9 @@ roles within each company.
 The personas
 ~~~~~~~~~~~~
 
+The personas fall into different phases of the cloud adoption workflow based
+on their specific contribution.
+
 .. toctree::
    :maxdepth: 1
 
