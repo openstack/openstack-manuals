@@ -26,13 +26,13 @@ You can now add the Pacemaker configuration for the Shared File Systems
 API resource. Connect to the Pacemaker cluster with the
 :command:`crm configure` command and add the following cluster resources:
 
-::
+.. code-block:: ini
 
    primitive p_manila-api ocf:openstack:manila-api \
-      params config="/etc/manila/manila.conf"
-      os_password="secretsecret"
+      params config="/etc/manila/manila.conf" \
+      os_password="secretsecret" \
       os_username="admin" \
-      os_tenant_name="admin"
+      os_tenant_name="admin" \
       keystone_get_token_url="http://10.0.0.11:5000/v2.0/tokens" \
       op monitor interval="30s" timeout="30s"
 
