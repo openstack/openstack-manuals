@@ -427,13 +427,10 @@ OpenStack control & management network considerations
 
 As of the Kilo release, considerable effort has gone in to ensuring
 the tenant network can handle dual stack IPv6 and IPv4 transport
-across the variety of configurations describe above. This same level
-of scrutiny has not been apply to running the OpenStack control
-network in a dual stack configuration. Similarly, little scrutiny has
-gone into ensuring that the OpenStack API endpoints can be accessed
-via an IPv6 network. At this time, Open vSwitch (OVS) tunnel types -
-STT, VXLAN, GRE, only support IPv4 endpoints, not IPv6, so a full
-IPv6-only deployment is not possible with that technology.
+across the variety of configurations describe above. OpenStack control
+network can be run in a dual stack configuration and OpenStack API
+endpoints can be accessed via an IPv6 network. At this time, Open vSwitch
+(OVS) tunnel types - STT, VXLAN, GRE, support both IPv4 and IPv6 endpoints.
 
 
 Prefix delegation
