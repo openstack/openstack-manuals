@@ -14,7 +14,7 @@
    * - ``container_time`` = ``60``
      - Maximum amount of time to spend syncing each container
    * - ``internal_client_conf_path`` = ``/etc/swift/internal-client.conf``
-     - No help text available for this option.
+     - Internal client config file path
    * - ``interval`` = ``300``
      - Minimum time for a pass to take
    * - ``log_address`` = ``/dev/log``
@@ -26,6 +26,6 @@
    * - ``log_name`` = ``container-sync``
      - Label used when logging
    * - ``request_tries`` = ``3``
-     - No help text available for this option.
+     - Server errors from requests will be retried by default
    * - ``sync_proxy`` = ``http://10.1.1.1:8888,http://10.1.1.2:8888``
      - If you need to use an HTTP proxy, set it here. Defaults to no proxy.

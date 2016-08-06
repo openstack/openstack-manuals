@@ -10,7 +10,7 @@
    * - Configuration option = Default value
      - Description
    * - ``allowed_sync_hosts`` = ``127.0.0.1``
-     - No help text available for this option.
+     - The list of hosts that are allowed to send syncs to.
    * - ``backlog`` = ``4096``
      - Maximum number of allowed pending TCP connections
    * - ``bind_ip`` = ``0.0.0.0``
@@ -31,7 +31,7 @@
      - You can set fallocate_reserve to the number of bytes you'd like fallocate to reserve, whether there is space for the given file size or not. This is useful for systems that behave badly when they completely run out of space; you can make the services pretend they're out of space early. server. For most cases, this should be
    * - ``log_address`` = ``/dev/log``
      - Location where syslog sends the logs to
-   * - ``log_custom_handlers`` = `` ``
+   * - ``log_custom_handlers`` =
      - Comma-separated list of functions to call to setup custom log handlers.
    * - ``log_facility`` = ``LOG_LOCAL0``
      - Syslog log facility
@@ -45,13 +45,13 @@
      - Defines the probability of sending a sample for any given event or timing measurement.
    * - ``log_statsd_host`` = ``localhost``
      - If not set, the StatsD feature is disabled.
-   * - ``log_statsd_metric_prefix`` = `` ``
+   * - ``log_statsd_metric_prefix`` =
      - Value will be prepended to every metric sent to the StatsD server.
    * - ``log_statsd_port`` = ``8125``
      - Port value for the StatsD server.
    * - ``log_statsd_sample_rate_factor`` = ``1.0``
      - Not recommended to set this to a value less than 1.0, if frequency of logging is too high, tune the log_statsd_default_sample_rate instead.
-   * - ``log_udp_host`` = `` ``
+   * - ``log_udp_host`` =
      - If not set, the UDP receiver for syslog is disabled.
    * - ``log_udp_port`` = ``514``
      - Port value for UDP receiver, if enabled.

@@ -34,7 +34,7 @@
    * - ``recon_cache_path`` = ``/var/cache/swift``
      - Directory where stats for a few items will be stored
    * - ``rsync_compress`` = ``no``
-     - No help text available for this option.
+     - Allow rsync to compress data which is transmitted to destination node during sync. However, this is applicable only when destination node is in a different region than the local one.
    * - ``rsync_module`` = ``{replication_ip}::container``
      - Format of the rsync module where the replicator will send data. The configuration value can include some variables that will be extracted from the ring. Variables must follow the format {NAME} where NAME is one of: ip, port, replication_ip, replication_port, region, zone, device, meta. See etc/rsyncd.conf-sample for some examples. uses what's set here, or what's set in the DEFAULT section, or 10 (though other sections use 3 as the final default).
    * - ``run_pause`` = ``30``
