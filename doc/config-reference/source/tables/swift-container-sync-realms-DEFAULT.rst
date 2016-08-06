@@ -10,4 +10,4 @@
    * - Configuration option = Default value
      - Description
    * - ``mtime_check_interval`` = ``300``
-     - No help text available for this option.
+     - The number of seconds between checking the modified time of this config file for changes and therefore reloading it.

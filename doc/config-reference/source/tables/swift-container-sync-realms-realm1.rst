@@ -10,10 +10,10 @@
    * - Configuration option = Default value
      - Description
    * - ``cluster_clustername1`` = ``https://host1/v1/``
-     - No help text available for this option.
+     - Any values in the realm section whose names begin with cluster\_ will indicate the name and endpoint of a cluster and will be used by external users in their containers' X-Container-Sync-To metadata header values with the format "realm_name/cluster_name/container_name". Realm and cluster names are considered case insensitive.
    * - ``cluster_clustername2`` = ``https://host2/v1/``
-     - No help text available for this option.
+     - Any values in the realm section whose names begin with cluster\_ will indicate the name and endpoint of a cluster and will be used by external users in their containers' X-Container-Sync-To metadata header values with the format "realm_name/cluster_name/container_name". Realm and cluster names are considered case insensitive.
    * - ``key`` = ``realm1key``
-     - No help text available for this option.
+     - The key is the overall cluster-to-cluster key used in combination with the external users' key that they set on their containers' X-Container-Sync-Key metadata header values. These keys will be used to sign each request the container sync daemon makes and used to validate each incoming container sync request.
    * - ``key2`` = ``realm1key2``
-     - No help text available for this option.
+     - The key2 is optional and is an additional key incoming requests will be checked against. This is so you can rotate keys if you wish; you move the existing key to key2 and make a new key value.

@@ -10,6 +10,7 @@ Object Storage service
    object-storage/object-server.rst
    object-storage/object-expirer.rst
    object-storage/container-server.rst
+   object-storage/container-sync-realms.rst
    object-storage/configure.rst
    object-storage/features.rst
    object-storage/configure-s3.rst
