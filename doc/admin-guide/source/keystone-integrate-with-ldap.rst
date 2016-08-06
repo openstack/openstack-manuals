@@ -7,9 +7,9 @@ Integrate Identity with LDAP
 .. toctree::
    :maxdepth: 2
 
-   keystone_integrate_identity_backend_ldap.rst
-   keystone_integrate_assignment_backend_ldap.rst
-   keystone_secure_identity_to_ldap_backend.rst
+   keystone-integrate-identity-backend-ldap.rst
+   keystone-integrate-assignment-backend-ldap.rst
+   keystone-secure-identity-to-ldap-backend.rst
 
 The OpenStack Identity service supports integration with existing LDAP
 directories for authentication and authorization services. LDAP back

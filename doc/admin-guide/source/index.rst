@@ -18,19 +18,19 @@ Contents
 
    common/conventions.rst
    common/get-started-with-openstack.rst
-   identity_management.rst
+   identity-management.rst
    dashboard.rst
    compute.rst
    objectstorage.rst
    blockstorage.rst
-   shared_file_systems.rst
+   shared-file-systems.rst
    networking.rst
    telemetry.rst
    database.rst
    baremetal.rst
    orchestration.rst
    cli.rst
-   cross_project.rst
+   cross-project.rst
 
 Appendix
 ~~~~~~~~

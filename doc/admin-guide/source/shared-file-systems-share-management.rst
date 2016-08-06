@@ -26,7 +26,7 @@ is the real purpose of the Shared File Systems service in production.
 
 .. toctree::
 
-   shared_file_systems_crud_share.rst
-   shared_file_systems_manage_and_unmanage_share.rst
-   shared_file_systems_share_resize.rst
-   shared_file_systems_quotas.rst
+   shared-file-systems-crud-share.rst
+   shared-file-systems-manage-and-unmanage-share.rst
+   shared-file-systems-share-resize.rst
+   shared-file-systems-quotas.rst

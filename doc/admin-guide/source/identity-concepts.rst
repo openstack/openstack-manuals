@@ -304,7 +304,7 @@ special service tenant called ``service``.
 
 For information about how to create services and endpoints, see the
 `OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/
-cli_manage_services.html>`__.
+cli-manage-services.html>`__.
 
 Groups
 ~~~~~~

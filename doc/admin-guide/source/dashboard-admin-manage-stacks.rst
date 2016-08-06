@@ -21,7 +21,7 @@ For information about:
 
 * administrative tasks on the command-line, see
   the `OpenStack Administrator Guide
-  <http://docs.openstack.org/admin-guide/cli_admin_manage_stacks.html>`__.
+  <http://docs.openstack.org/admin-guide/cli-admin-manage-stacks.html>`__.
 
   .. note::
 

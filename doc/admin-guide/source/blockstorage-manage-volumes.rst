@@ -56,20 +56,20 @@ troubleshoot your installation and back up your Compute volumes.
 .. toctree::
 
    blockstorage-boot-from-volume.rst
-   blockstorage_nfs_backend.rst
-   blockstorage_glusterfs_backend.rst
-   blockstorage_multi_backend.rst
-   blockstorage_backup_disks.rst
-   blockstorage_volume_migration.rst
-   blockstorage_glusterfs_removal.rst
-   blockstorage_volume_backups.rst
-   blockstorage_volume_backups_export_import.rst
+   blockstorage-nfs-backend.rst
+   blockstorage-glusterfs-backend.rst
+   blockstorage-multi-backend.rst
+   blockstorage-backup-disks.rst
+   blockstorage-volume-migration.rst
+   blockstorage-glusterfs-removal.rst
+   blockstorage-volume-backups.rst
+   blockstorage-volume-backups-export-import.rst
    blockstorage-lio-iscsi-support.rst
-   blockstorage_volume_number_weigher.rst
+   blockstorage-volume-number-weigher.rst
    blockstorage-consistency-groups.rst
    blockstorage-driver-filter-weighing.rst
-   blockstorage_ratelimit_volume_copy_bandwidth.rst
-   blockstorage_over_subscription.rst
-   blockstorage_image_volume_cache.rst
-   blockstorage_volume_backed_image.rst
-   blockstorage_get_capabilities.rst
+   blockstorage-ratelimit-volume-copy-bandwidth.rst
+   blockstorage-over-subscription.rst
+   blockstorage-image-volume-cache.rst
+   blockstorage-volume-backed-image.rst
+   blockstorage-get-capabilities.rst

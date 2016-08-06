@@ -10,4 +10,4 @@ in a consistent manner.
 .. toctree::
    :maxdepth: 2
 
-   cross_project_cors.rst
+   cross-project-cors.rst

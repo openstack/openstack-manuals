@@ -719,7 +719,7 @@ to perform floating IP operations:
 
 For more information about how administrators can associate floating IPs
 with instances, see `Manage IP
-addresses <http://docs.openstack.org/admin-guide/cli_admin_manage_ip_addresses.html>`__
+addresses <http://docs.openstack.org/admin-guide/cli-admin-manage-ip-addresses.html>`__
 in the OpenStack Administrator Guide.
 
 Automatically add floating IPs
