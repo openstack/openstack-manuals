@@ -45,5 +45,5 @@ command line client.
 This command creates a project named ``demo``. Optionally, you can add a
 description string by appending :option:`--description PROJECT_DESCRIPTION`,
 which can be very useful. You can also
-create a group in a disabled state by appending :option:`--disable` to the
+create a project in a disabled state by appending :option:`--disable` to the
 command. By default, projects are created in an enabled state.
