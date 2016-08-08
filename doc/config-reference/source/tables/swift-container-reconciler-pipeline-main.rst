@@ -10,4 +10,4 @@
    * - Configuration option = Default value
      - Description
    * - ``pipeline`` = ``catch_errors proxy-logging cache proxy-server``
-     - No help text available for this option.
+     - Pipeline to use for processing operations.
