@@ -14,4 +14,4 @@
    * - ``reclaim_age`` = ``604800``
      - Time elapsed in seconds before an object can be reclaimed
    * - ``request_tries`` = ``3``
-     - No help text available for this option.
+     - Server errors from requests will be retried by default
