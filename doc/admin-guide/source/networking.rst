@@ -10,15 +10,15 @@ advanced ``neutron`` and ``nova`` command-line interface (CLI) commands.
 .. toctree::
    :maxdepth: 2
 
-   networking_introduction.rst
-   networking_arch.rst
-   networking_config-plugins.rst
-   networking_config-agents.rst
-   networking_config-identity.rst
-   networking_adv-config.rst
-   networking_multi-dhcp-agents.rst
-   networking_use.rst
-   networking_adv-features.rst
-   networking_adv-operational-features.rst
-   networking_auth.rst
+   networking-introduction.rst
+   networking-arch.rst
+   networking-config-plugins.rst
+   networking-config-agents.rst
+   networking-config-identity.rst
+   networking-adv-config.rst
+   networking-multi-dhcp-agents.rst
+   networking-use.rst
+   networking-adv-features.rst
+   networking-adv-operational-features.rst
+   networking-auth.rst
 

@@ -15,12 +15,12 @@ web-based API.
 .. toctree::
    :maxdepth: 2
 
-   compute_arch.rst
+   compute-arch.rst
    compute-images-instances.rst
    compute-networking-nova.rst
    compute-system-admin.rst
    support-compute.rst
 
 .. TODO (bmoss)
-   ../common/section_compute-configure-console.xml
+   ../common/section-compute-configure-console.xml
 

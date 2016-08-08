@@ -14,17 +14,17 @@ for your operating system.
    :maxdepth: 2
 
    common/dashboard-customizing.rst
-   dashboard_sessions.rst
-   dashboard_manage_images.rst
-   dashboard_admin_manage_roles.rst
-   dashboard_manage_instances.rst
-   dashboard_manage_flavors.rst
-   dashboard_manage_volumes.rst
-   dashboard_manage_shares.rst
-   dashboard_set_quotas.rst
-   dashboard_manage_resources.rst
-   dashboard_manage_host_aggregates.rst
-   dashboard_admin_manage_stacks.rst
+   dashboard-sessions.rst
+   dashboard-manage-images.rst
+   dashboard-admin-manage-roles.rst
+   dashboard-manage-instances.rst
+   dashboard-manage-flavors.rst
+   dashboard-manage-volumes.rst
+   dashboard-manage-shares.rst
+   dashboard-set-quotas.rst
+   dashboard-manage-resources.rst
+   dashboard-manage-host-aggregates.rst
+   dashboard-admin-manage-stacks.rst
 
 - To deploy the dashboard, see the `OpenStack dashboard documentation
   <http://docs.openstack.org/developer/horizon/topics/deployment.html>`__.

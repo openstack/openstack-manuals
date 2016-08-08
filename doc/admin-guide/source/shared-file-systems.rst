@@ -1,4 +1,4 @@
-.. _shared_file_systems:
+.. _shared-file-systems:
 
 ===================
 Shared File Systems
@@ -17,15 +17,15 @@ System (EFS) does.
 .. toctree::
    :maxdepth: 1
 
-   shared_file_systems_intro.rst
-   shared_file_systems_key_concepts.rst
-   shared_file_systems_share_management.rst
-   shared_file_systems_manage_shares_cli.rst
-   shared_file_systems_share_types.rst
-   shared_file_systems_snapshots.rst
-   shared_file_systems_security_services.rst
-   shared_file_systems_cgroups.rst
-   shared_file_systems_share_replication.rst
-   shared_file_systems_multi_backend.rst
-   shared_file_systems_networking.rst
-   shared_file_systems_troubleshoot.rst
+   shared-file-systems-intro.rst
+   shared-file-systems-key-concepts.rst
+   shared-file-systems-share-management.rst
+   shared-file-systems-manage-shares-cli.rst
+   shared-file-systems-share-types.rst
+   shared-file-systems-snapshots.rst
+   shared-file-systems-security-services.rst
+   shared-file-systems-cgroups.rst
+   shared-file-systems-share-replication.rst
+   shared-file-systems-multi-backend.rst
+   shared-file-systems-networking.rst
+   shared-file-systems-troubleshoot.rst

@@ -1,4 +1,4 @@
-.. _cross_project:
+.. _cross-project:
 
 =============================
 Cross-origin resource sharing

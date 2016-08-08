@@ -145,7 +145,7 @@ to soft-delete one or more consistency groups.
 .. note::
 
    A consistency group can be deleted only if it has no dependent
-   :ref:`shared_file_systems_cgsnapshots`.
+   :ref:`shared-file-systems-cgsnapshots`.
 
 .. code-block:: console
 
@@ -159,7 +159,7 @@ to force-delete a specified consistency group in any state.
 
    $ manila cg-delete --force cgroup1
 
-.. _shared_file_systems_cgsnapshots:
+.. _shared-file-systems-cgsnapshots:
 
 Consistency group snapshots
 ---------------------------

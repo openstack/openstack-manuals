@@ -77,8 +77,7 @@ which is consumed by *only* the trustee to obtain a
 such that the trustee has limited access to those
 roles delegated. In addition, the trustee has effective impersonation
 of the trustor user if it was selected when creating the trust.
-For more information, see the :ref:`Identity management <identity_management>`
-section.
+For more information, see :doc:`Identity management <identity-management>`.
 
 Trusts authorization involves the following steps:
 
