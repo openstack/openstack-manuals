@@ -186,7 +186,7 @@ Once you mount the disk file, you should be able to access it and treat
 it as a collection of normal directories with files and a directory
 structure. However, we do not recommend that you edit or touch any files
 because this could change the
-:term:`access control lists (ACLs) <access control list>` that are used
+:term:`access control lists (ACLs) <access control list (ACL)>` that are used
 to determine which accounts can perform what operations on files and
 directories. Changing ACLs can make the instance unbootable if it is not
 already.

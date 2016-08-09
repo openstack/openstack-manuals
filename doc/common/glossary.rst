@@ -32,7 +32,7 @@ A
       Impassable limits for guest VMs. Settings include total RAM
       size, maximum number of vCPUs, and maximum disk size.
 
-   access control list
+   access control list (ACL)
 
       A list of permissions attached to an object. An ACL specifies
       which users or system processes have access to objects. It also
@@ -83,10 +83,6 @@ A
 
       The Compute service provides accounting information through the
       event notification and system usage data facilities.
-
-   ACL
-
-      See access control list.
 
    active/active configuration
 
@@ -361,13 +357,9 @@ A
       tolerance. Do not confuse with an OpenStack Compute zone or
       cell.
 
-   AWS
-
-      Amazon Web Services.
-
    AWS CloudFormation template
 
-      AWS CloudFormation allows AWS users to create and manage a
+      AWS CloudFormation allows Amazon Web Services (AWS) users to create and manage a
       collection of related resources. The Orchestration service
       supports a CloudFormation-compatible format (CFN).
 
@@ -553,19 +545,6 @@ C
 
 .. glossary::
 
-   CA
-
-      Certificate Authority or Certification Authority. In
-      cryptography, an entity that issues digital certificates. The digital
-      certificate certifies the ownership of a public key by the named
-      subject of the certificate. This enables others (relying parties) to
-      rely upon signatures or assertions made by the private key that
-      corresponds to the certified public key. In this model of trust
-      relationships, a CA is a trusted third party for both the subject
-      (owner) of the certificate and the party relying upon the certificate.
-      CAs are characteristic of many public key infrastructure (PKI)
-      schemes.
-
    cache pruner
 
       A program that keeps the Image service VM image cache at or
@@ -581,12 +560,6 @@ C
       from three to six months long, the code name of the release
       changed to match a geography nearest the previous
       summit.
-
-   CADF
-
-      Cloud Auditing Data Federation (CADF) is a
-      specification for audit event data. CADF is
-      supported by OpenStack Identity.
 
    CALL
 
@@ -664,10 +637,19 @@ C
 
       The POSIX-compliant file system provided by Ceph.
 
-   certificate authority
+   certificate authority (CA)
 
-      A simple certificate authority provided by Compute for cloudpipe
-      VPNs and VM image decryption.
+      In cryptography, an entity that issues digital certificates. The digital
+      certificate certifies the ownership of a public key by the named
+      subject of the certificate. This enables others (relying parties) to
+      rely upon signatures or assertions made by the private key that
+      corresponds to the certified public key. In this model of trust
+      relationships, a CA is a trusted third party for both the subject
+      (owner) of the certificate and the party relying upon the certificate.
+      CAs are characteristic of many public key infrastructure (PKI)
+      schemes.
+      In OpenStack, a simple certificate authority is provided by Compute for
+      cloudpipe VPNs and VM image decryption.
 
    Challenge-Handshake Authentication Protocol (CHAP)
 
@@ -716,6 +698,12 @@ C
 
       A person who plans, designs, and oversees the creation of
       clouds.
+
+   Cloud Auditing Data Federation (CADF)
+
+      Cloud Auditing Data Federation (CADF) is a
+      specification for audit event data. CADF is
+      supported by OpenStack Identity.
 
    cloud computing
 
@@ -781,10 +769,6 @@ C
       groups of homogeneous objects exposed by other OpenStack
       services. The project name of Clustering service is
       senlin.
-
-   CMDB
-
-      Configuration Management Database.
 
    congress
 

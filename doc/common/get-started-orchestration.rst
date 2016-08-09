@@ -18,7 +18,7 @@ directly or through custom plug-ins.
 The Orchestration service consists of the following components:
 
 ``heat`` command-line client
-  A CLI that communicates with the ``heat-api`` to run :term:`AWS`
+  A CLI that communicates with the ``heat-api`` to run AWS
   CloudFormation APIs. End developers can directly use the Orchestration
   REST API.
 
