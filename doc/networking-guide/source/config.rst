@@ -20,6 +20,7 @@ Configuration
    config-ipv6
    config-lbaas
    config-mtu
+   config-ovs-dpdk.rst
    config-ovsfwdriver
    config-qos
    config-rbac
