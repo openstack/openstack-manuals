@@ -28,4 +28,8 @@
    * - ``node_timeout`` = ``10``
      - Request timeout to external services
    * - ``reap_warn_after`` = ``2592000``
-     - No help text available for this option.
+     - If the account fails to be reaped due to a persistent error, the account reaper will log a message such as:
+
+       Account <name> has not been reaped since <date>
+
+       You can search logs for this message if space is not being reclaimed after you delete account(s). This is in addition to any time requested by delay_reaping.
