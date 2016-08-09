@@ -262,4 +262,4 @@ capabilities and configuration requirements.
 .. toctree::
    :maxdepth: 1
 
-   ops_logging_rsyslog.rst
+   ops-logging-rsyslog.rst

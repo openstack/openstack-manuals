@@ -69,7 +69,7 @@ community experience.
 
 For example, KVM is the most widely adopted hypervisor in the OpenStack
 community. Besides KVM, more deployments run Xen, LXC, VMware, and
-Hyper-V than the others listed. However, each of these are lacking some
+Hyper-V than the others listed. However, each of these are lacking some
 feature support or the documentation on how to use them with OpenStack
 is out of date.
 
@@ -281,7 +281,7 @@ particular use case.
 Logging
 ~~~~~~~
 
-Logging is detailed more fully in :doc:`ops_logging_monitoring`. However,
+Logging is detailed more fully in :doc:`ops-logging-monitoring`. However,
 it is an important design consideration to take into account before
 commencing operations of your cloud.
 
@@ -294,7 +294,7 @@ Networking
 ~~~~~~~~~~
 
 Networking in OpenStack is a complex, multifaceted challenge. See
-:doc:`arch_network_design`.
+:doc:`arch-network-design`.
 
 Conclusion
 ~~~~~~~~~~

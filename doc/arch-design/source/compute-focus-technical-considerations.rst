@@ -38,10 +38,10 @@ equation of:
 
 * 1600 = (16 × (number of physical cores)) / 2
 
-* Storage required = 50 GB × 1600
+* Storage required = 50 GB × 1600
 
 On the surface, the equations reveal the need for 200 physical cores and
-80 TB of storage for ``/var/lib/nova/instances/``. However, it is also
+80 TB of storage for ``/var/lib/nova/instances/``. However, it is also
 important to look at patterns of usage to estimate the load that the API
 services, database servers, and queue servers are likely to encounter.
 
@@ -167,7 +167,7 @@ configuration, particularly where they present different ratios of CPU
 versus RAM versus HDD requirements.
 
 For more information on Flavors see `OpenStack Operations Guide:
-Flavors <http://docs.openstack.org/ops-guide/ops_user_facing_operations.html#flavors>`_.
+Flavors <http://docs.openstack.org/ops-guide/ops-user-facing-operations.html#flavors>`_.
 
 OpenStack components
 ~~~~~~~~~~~~~~~~~~~~

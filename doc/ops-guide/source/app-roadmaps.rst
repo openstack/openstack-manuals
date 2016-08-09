@@ -219,7 +219,7 @@ The roadmap for the next release as it is developed can be seen at
 
 To determine the potential features going in to future releases, or to
 look at features implemented previously, take a look at the existing
-blueprints such as  `OpenStack Compute (nova)
+blueprints such as `OpenStack Compute (nova)
 Blueprints <https://blueprints.launchpad.net/nova>`_, `OpenStack
 Identity (keystone)
 Blueprints <https://blueprints.launchpad.net/keystone>`_, and release
@@ -266,7 +266,7 @@ tool. This tool tests database migration performance on copies of
 real-world user databases.
 
 These changes have facilitated the first proper OpenStack upgrade guide,
-found in :doc:`ops_upgrades`, and will continue to improve in the next
+found in :doc:`ops-upgrades`, and will continue to improve in the next
 release.
 
 Deprecation of Nova Network

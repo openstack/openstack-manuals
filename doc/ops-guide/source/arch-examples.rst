@@ -25,6 +25,6 @@ serving users.
 .. toctree::
    :maxdepth: 2
 
-   arch_example_nova_network.rst
-   arch_example_neutron.rst
-   arch_example_thoughts.rst
+   arch-example-nova-network.rst
+   arch-example-neutron.rst
+   arch-example-thoughts.rst
