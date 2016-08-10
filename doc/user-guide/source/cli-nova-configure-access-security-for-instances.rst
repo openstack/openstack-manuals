@@ -61,7 +61,7 @@ Rules are automatically enforced as soon as you create or modify them.
 
   You can also assign a floating IP address to a running instance to
   make it accessible from outside the cloud. See
-  :doc:`cli_manage_ip_addresses`.
+  :doc:`cli-manage-ip-addresses`.
 
 Add a key pair
 ~~~~~~~~~~~~~~

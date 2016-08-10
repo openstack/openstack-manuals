@@ -11,15 +11,15 @@ sizes of server instances.
 .. toctree::
    :maxdepth: 2
 
-   dashboard_log_in.rst
-   dashboard_manage_images.rst
-   configure_access_and_security_for_instances.rst
-   dashboard_launch_instances.rst
-   dashboard_create_networks.rst
-   dashboard_manage_containers.rst
-   dashboard_manage_volumes.rst
-   dashboard_manage_shares.rst
-   dashboard_stacks.rst
-   dashboard_databases.rst
-   dashboard_manage_lbaasv2.rst
+   dashboard-log-in.rst
+   dashboard-manage-images.rst
+   configure-access-and-security-for-instances.rst
+   dashboard-launch-instances.rst
+   dashboard-create-networks.rst
+   dashboard-manage-containers.rst
+   dashboard-manage-volumes.rst
+   dashboard-manage-shares.rst
+   dashboard-stacks.rst
+   dashboard-databases.rst
+   dashboard-manage-lbaasv2.rst
 

@@ -10,9 +10,9 @@ handling complex administrative tasks.
 .. toctree::
    :maxdepth: 1
 
-   create_db.rst
-   backup_db.rst
-   backup_db_incremental.rst
-   manage_db_config.rst
-   set_up_replication.rst
-   set_up_clustering.rst
+   create-db.rst
+   backup-db.rst
+   backup-db-incremental.rst
+   manage-db-config.rst
+   set-up-replication.rst
+   set-up-clustering.rst
