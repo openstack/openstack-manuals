@@ -10,16 +10,16 @@
    * - Configuration option = Default value
      - Description
    * - ``connect_timeout`` = ``0.3``
-     - Timeout in seconds (float) for connection
+     - Timeout in seconds (float) for connection.
    * - ``io_timeout`` = ``2.0``
-     - Timeout in seconds (float) for read and write
+     - Timeout in seconds (float) for read and write.
    * - ``memcache_max_connections`` = ``2``
-     - Max number of connections to each memcached server per worker services
+     - Max number of connections to each memcached server per worker services.
    * - ``memcache_serialization_support`` = ``2``
-     - Sets how memcache values are serialized and deserialized
+     - Sets how memcache values are serialized and deserialized.
    * - ``memcache_servers`` = ``127.0.0.1:11211``
-     - Comma-separated list of memcached servers ip:port services
+     - Comma-separated list of memcached servers ip:port services.
    * - ``pool_timeout`` = ``1.0``
-     - Timeout in seconds (float) for pooled connection
+     - Timeout in seconds (float) for pooled connection.
    * - ``tries`` = ``3``
-     - Number of servers to retry on failures getting a pooled connection
+     - Number of servers to retry on failures getting a pooled connection.

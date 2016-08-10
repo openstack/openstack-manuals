@@ -18,17 +18,17 @@
    * - ``clock_accuracy`` = ``1000``
      - Represents how accurate the proxy servers' system clocks are with each other. 1000 means that all the proxies' clock are accurate to each other within 1 millisecond. No ratelimit should be higher than the clock accuracy.
    * - ``container_listing_ratelimit_0`` = ``100``
-     - No help text available for this option.
+     -  with container_listing_ratelimit_x = r, for containers of size x, limit container GET (listing) requests per second to r. The container rate will be linearly interpolated from the values given. With the default values, a container of size 5 will get a rate of 75.
    * - ``container_listing_ratelimit_10`` = ``50``
-     - No help text available for this option.
+     -  with container_listing_ratelimit_x = r, for containers of size x, limit container GET (listing) requests per second to r. The container rate will be linearly interpolated from the values given. With the default values, a container of size 5 will get a rate of 75.
    * - ``container_listing_ratelimit_50`` = ``20``
-     - No help text available for this option.
+     -  with container_listing_ratelimit_x = r, for containers of size x, limit container GET (listing) requests per second to r. The container rate will be linearly interpolated from the values given. With the default values, a container of size 5 will get a rate of 75.
    * - ``container_ratelimit_0`` = ``100``
-     - No help text available for this option.
+     -  with container_ratelimit_x = r, for containers of size x, limit write requests per second to r. The container rate will be linearly interpolated from the values given. With the default values, a container of size 5 will get a rate of 75.
    * - ``container_ratelimit_10`` = ``50``
-     - No help text available for this option.
+     -  with container_ratelimit_x = r, for containers of size x, limit write requests per second to r. The container rate will be linearly interpolated from the values given. With the default values, a container of size 5 will get a rate of 75.
    * - ``container_ratelimit_50`` = ``20``
-     - No help text available for this option.
+     -  with container_ratelimit_x = r, for containers of size x, limit write requests per second to r. The container rate will be linearly interpolated from the values given. With the default values, a container of size 5 will get a rate of 75.
    * - ``log_sleep_time_seconds`` = ``0``
      - To allow visibility into rate limiting set this value > 0 and all sleeps greater than the number will be logged.
    * - ``max_sleep_time_seconds`` = ``60``
@@ -36,16 +36,14 @@
    * - ``rate_buffer_seconds`` = ``5``
      - Number of seconds the rate counter can drop and be allowed to catch up (at a faster than listed rate). A larger number will result in larger spikes in rate but better average accuracy.
    * - ``set log_address`` = ``/dev/log``
-     - Location where syslog sends the logs to
+     - Location where syslog sends the logs to.
    * - ``set log_facility`` = ``LOG_LOCAL0``
-     - Syslog log facility
+     - Syslog log facility.
    * - ``set log_headers`` = ``false``
-     - If True, log headers in each request
+     - If True, log headers in each request.
    * - ``set log_level`` = ``INFO``
-     - Log level
+     - Log level.
    * - ``set log_name`` = ``ratelimit``
-     - Label to use when logging
+     - Label to use when logging.
    * - ``use`` = ``egg:swift#ratelimit``
-     - Entry point of paste.deploy in the server
-   * - ``with container_limit_x`` = ``r``
-     - No help text available for this option.
+     - Entry point of paste.deploy in the server.

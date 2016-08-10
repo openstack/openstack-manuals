@@ -10,6 +10,13 @@
    * - Configuration option = Default value
      - Description
    * - ``allow_versioned_writes`` = ``false``
-     - No help text available for this option.
+     - Enables using versioned writes middleware and exposing configuration settings via HTTP GET /info.
+
+       .. warning::
+
+          Setting this option bypasses the ``allow_versions`` option in the
+          container configuration file, which will be eventually deprecated.
+          For more details, see `Object Versioning
+          <http://docs.openstack.org/developer/swift/overview_object_versioning.html>`_.
    * - ``use`` = ``egg:swift#versioned_writes``
-     - Entry point of paste.deploy in the server
+     - Entry point of paste.deploy in the server.

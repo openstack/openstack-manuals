@@ -12,34 +12,34 @@
    * - ``allow_overrides`` = ``true``
      - This option allows middleware higher in the WSGI pipeline to override auth processing, useful for middleware such as tempurl and formpost. If you know you are not going to use such middleware and you want a bit of extra security, you can set this to False.
    * - ``auth_prefix`` = ``/auth/``
-     - The HTTP request path prefix for the auth service. Swift itself reserves anything beginning with the letter
-   * - ``require_group`` = `` ``
-     - No help text available for this option.
+     - The HTTP request path prefix for the auth service. Swift itself reserves anything beginning with the letter.
+   * - ``require_group`` =
+     - The require_group parameter names a group that must be presented by either X-Auth-Token or X-Service-Token. Usually this parameter is used only with multiple reseller prefixes (for example, SERVICE_require_group=blah). By default, no group is needed. Do not use .admin.
    * - ``reseller_prefix`` = ``AUTH``
-     - The naming scope for the auth service. Swift
+     - The naming scope for the auth service.
    * - ``set log_address`` = ``/dev/log``
-     - Location where syslog sends the logs to
+     - Location where syslog sends the logs to.
    * - ``set log_facility`` = ``LOG_LOCAL0``
-     - Syslog log facility
+     - Syslog log facility.
    * - ``set log_headers`` = ``false``
-     - If True, log headers in each request
+     - If True, log headers in each request.
    * - ``set log_level`` = ``INFO``
-     - Log level
+     - Log level.
    * - ``set log_name`` = ``tempauth``
-     - Label to use when logging
+     - Label to use when logging.
    * - ``storage_url_scheme`` = ``default``
      - Scheme to return with storage urls: http, https, or default (chooses based on what the server is running as) This can be useful with an SSL load balancer in front of a non-SSL server.
    * - ``token_life`` = ``86400``
      - The number of seconds a token is valid.
    * - ``use`` = ``egg:swift#tempauth``
-     - Entry point of paste.deploy in the server
-   * - ``user_admin_admin`` = ``admin .admin .reseller_admin``
-     - No help text available for this option.
-   * - ``user_test2_tester2`` = ``testing2 .admin``
-     - No help text available for this option.
-   * - ``user_test5_tester5`` = ``testing5 service``
-     - No help text available for this option.
-   * - ``user_test_tester`` = ``testing .admin``
-     - No help text available for this option.
-   * - ``user_test_tester3`` = ``testing3``
-     - No help text available for this option.
+     - Entry point of paste.deploy in the server.
+   * - ``user_<account>_<user>`` = ``<key> [group] [group] [...] [storage_url]``
+     - List of all the accounts and user you want.
+
+       The following are example entries required for running the tests:
+
+       * ``user_admin_admin`` = ``admin .admin .reseller_admin``
+       * ``user_test2_tester2`` = ``testing2 .admin``
+       * ``user_test5_tester5`` = ``testing5 service``
+       * ``user_test_tester`` = ``testing .admin``
+       * ``user_test_tester3`` = ``testing3``
