@@ -14,6 +14,7 @@ Object Storage service
    object-storage/container-reconciler.rst
    object-storage/account-server.rst
    object-storage/configure.rst
+   object-storage/rsyncd.rst
    object-storage/features.rst
    object-storage/configure-s3.rst
    object-storage/cors.rst
