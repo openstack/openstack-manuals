@@ -51,7 +51,7 @@
    * - ``kombu_failover_strategy`` = ``round-robin``
      - (String) Determines how the next RabbitMQ node is chosen in case the one we are currently connected to becomes unavailable. Takes effect only if more than one RabbitMQ node is provided in config.
    * - ``kombu_missing_consumer_retry_timeout`` = ``60``
-     - (Integer) How long to wait a missing client beforce abandoning to send it its replies. This value should not be longer than rpc_response_timeout.
+     - (Integer) How long to wait a missing client before abandoning to send it its replies. This value should not be longer than rpc_response_timeout.
    * - ``kombu_reconnect_delay`` = ``1.0``
      - (Floating point) How long to wait before reconnecting in response to an AMQP consumer cancel notification.
    * - ``kombu_ssl_ca_certs`` =
