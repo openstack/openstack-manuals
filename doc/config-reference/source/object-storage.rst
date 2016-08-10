@@ -13,7 +13,8 @@ Object Storage service
    object-storage/container-sync-realms.rst
    object-storage/container-reconciler.rst
    object-storage/account-server.rst
-   object-storage/configure.rst
+   object-storage/proxy-server.rst
+   object-storage/memcache.rst
    object-storage/rsyncd.rst
    object-storage/features.rst
    object-storage/configure-s3.rst

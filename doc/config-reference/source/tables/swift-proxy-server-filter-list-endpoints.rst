@@ -10,6 +10,6 @@
    * - Configuration option = Default value
      - Description
    * - ``list_endpoints_path`` = ``/endpoints/``
-     - No help text available for this option.
+     - Path to list endpoints for an object, account or container.
    * - ``use`` = ``egg:swift#list_endpoints``
-     - Entry point of paste.deploy in the server
+     - Entry point of paste.deploy in the server.

@@ -10,16 +10,16 @@
    * - Configuration option = Default value
      - Description
    * - ``delete_container_retry_count`` = ``0``
-     - No help text available for this option.
+     - The parameter is used during a bulk delete of objects and their container. This would frequently fail because it is very likely that all replicated objects have not been deleted by the time the middleware got a successful response. It can be configured the number of retries. And the number of seconds to wait between each retry will be 1.5**retry.
    * - ``max_containers_per_extraction`` = ``10000``
-     - No help text available for this option.
+     - The maximum numbers of containers per extraction.
    * - ``max_deletes_per_request`` = ``10000``
-     - No help text available for this option.
+     - The maximum numbers of deletion per request.
    * - ``max_failed_deletes`` = ``1000``
-     - No help text available for this option.
+     - The maximum number of tries to delete before failure.
    * - ``max_failed_extractions`` = ``1000``
-     - No help text available for this option.
+     - The maximum number of tries to extract before failure.
    * - ``use`` = ``egg:swift#bulk``
-     - Entry point of paste.deploy in the server
+     - Entry point of paste.deploy in the server.
    * - ``yield_frequency`` = ``10``
-     - No help text available for this option.
+     - In order to keep a connection active during a potentially long bulk request, Swift may return whitespace prepended to the actual response body. This whitespace will be yielded no more than every yield_frequency seconds.

@@ -10,4 +10,4 @@
    * - Configuration option = Default value
      - Description
    * - ``pipeline`` = ``catch_errors gatekeeper healthcheck proxy-logging cache container_sync bulk tempurl ratelimit tempauth container-quotas account-quotas slo dlo versioned_writes proxy-logging proxy-server``
-     - No help text available for this option.
+     - Pipeline to use for processing operations.

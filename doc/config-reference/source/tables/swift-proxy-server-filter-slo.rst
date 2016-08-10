@@ -10,16 +10,16 @@
    * - Configuration option = Default value
      - Description
    * - ``max_get_time`` = ``86400``
-     - No help text available for this option.
+     - Time limit on GET requests (seconds)
    * - ``max_manifest_segments`` = ``1000``
-     - No help text available for this option.
+     - Maximum number of segments.
    * - ``max_manifest_size`` = ``2097152``
-     - No help text available for this option.
+     - Maximum size of segments.
    * - ``min_segment_size`` = ``1048576``
-     - No help text available for this option.
+     - Minimum size of segments.
    * - ``rate_limit_after_segment`` = ``10``
      - Rate limit the download of large object segments after this segment is downloaded.
    * - ``rate_limit_segments_per_sec`` = ``0``
      - Rate limit large object downloads at this rate. contact for a normal request. You can use '* replicas' at the end to have it use the number given times the number of replicas for the ring being used for the request. paste.deploy to use for auth. To use tempauth set to:
    * - ``use`` = ``egg:swift#slo``
-     - Entry point of paste.deploy in the server
+     - Entry point of paste.deploy in the server.

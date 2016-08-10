@@ -9,15 +9,15 @@
 
    * - Configuration option = Default value
      - Description
-   * - ``incoming_allow_headers`` = `` ``
+   * - ``incoming_allow_headers`` =
      - Headers allowed as exceptions to incoming_remove_headers. Simply a whitespace delimited list of header names and names can optionally end with '*' to indicate a prefix match.
    * - ``incoming_remove_headers`` = ``x-timestamp``
      - Headers to remove from incoming requests. Simply a whitespace delimited list of header names and names can optionally end with '*' to indicate a prefix match.
    * - ``methods`` = ``GET HEAD PUT POST DELETE``
-     - HTTP methods allowed with Temporary URLs
+     - HTTP methods allowed with Temporary URLs.
    * - ``outgoing_allow_headers`` = ``x-object-meta-public-*``
      - Headers allowed as exceptions to outgoing_allow_headers. Simply a whitespace delimited list of header names and names can optionally end with '*' to indicate a prefix match.
    * - ``outgoing_remove_headers`` = ``x-object-meta-*``
      - Headers to remove from outgoing responses. Simply a whitespace delimited list of header names and names can optionally end with '*' to indicate a prefix match.
    * - ``use`` = ``egg:swift#tempurl``
-     - Entry point of paste.deploy in the server
+     - Entry point of paste.deploy in the server.

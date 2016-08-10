@@ -10,18 +10,18 @@
    * - Configuration option = Default value
      - Description
    * - ``dump_interval`` = ``5.0``
-     - No help text available for this option.
+     - The profile data will be dumped to local disk based on above naming rule in this interval (seconds).
    * - ``dump_timestamp`` = ``false``
-     - No help text available for this option.
+     - Be careful, this option will enable the profiler to dump data into the file with a time stamp which means that there will be lots of files piled up in the directory.
    * - ``flush_at_shutdown`` = ``false``
-     - No help text available for this option.
+     - Clears the data when the wsgi server shutdowns.
    * - ``log_filename_prefix`` = ``/tmp/log/swift/profile/default.profile``
-     - No help text available for this option.
+     - This prefix is used to combine the process ID and timestamp to name the profile data file. Make sure the executing user has permission to write into this path. Any missing path segments will be created, if necessary. When you enable profiling in more than one type of daemon, you must override it with a unique value like: /var/log/swift/profile/accoutn.profile.
    * - ``path`` = ``/__profile__``
-     - No help text available for this option.
+     - This is the path of the URL to access the mini web UI.
    * - ``profile_module`` = ``eventlet.green.profile``
-     - No help text available for this option.
+     - This option enables you to switch profilers which inherit from the Python standard profiler. Currently, the supported value can be ‘cProfile’, ‘eventlet.green.profile’, etc.
    * - ``unwind`` = ``false``
-     - No help text available for this option.
+     - Unwind the iterator of applications.
    * - ``use`` = ``egg:swift#xprofile``
-     - Entry point of paste.deploy in the server
+     - Entry point of paste.deploy in the server.

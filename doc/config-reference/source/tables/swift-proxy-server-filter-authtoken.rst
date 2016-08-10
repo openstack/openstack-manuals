@@ -10,26 +10,26 @@
    * - Configuration option = Default value
      - Description
    * - ``auth_plugin`` = ``password``
-     - No help text available for this option.
+     - Authentication module to use.
    * - ``auth_uri`` = ``http://keystonehost:5000``
-     - No help text available for this option.
+     - auth_uri should point to a Keystone service from which users may retrieve tokens. This value is used in the WWW-Authenticate header that auth_token sends with any denial response.
    * - ``auth_url`` = ``http://keystonehost:35357``
-     - No help text available for this option.
+     - auth_url points to the Keystone Admin service. This information is used by the middleware to actually query Keystone about the validity of the authentication tokens. It is not necessary to append any Keystone API version number to this URI.
    * - ``cache`` = ``swift.cache``
-     - No help text available for this option.
+     - ``cache`` is set to ``swift.cache``. This means that the middleware will get the Swift memcache from the request environment.
    * - ``delay_auth_decision`` = ``False``
      - delay_auth_decision defaults to False, but leaving it as false will prevent other auth systems, staticweb, tempurl, formpost, and ACLs from working. This value must be explicitly set to True.
    * - ``include_service_catalog`` = ``False``
-     - No help text available for this option.
+     - include_service_catalog defaults to True if not set. This means that when validating a token, the service catalog is retrieved and stored in the X-Service-Catalog header. Since Swift does not use the X-Service-Catalog header, there is no point in getting the service catalog. We recommend you set include_service_catalog to False.
    * - ``password`` = ``password``
-     - No help text available for this option.
+     - Password for service user.
    * - ``paste.filter_factory`` = ``keystonemiddleware.auth_token:filter_factory``
-     - No help text available for this option.
+     - Entry point of paste.filter_factory in the server.
    * - ``project_domain_id`` = ``default``
-     - No help text available for this option.
+     - Service project domain.
    * - ``project_name`` = ``service``
-     - No help text available for this option.
+     - Service project name.
    * - ``user_domain_id`` = ``default``
-     - No help text available for this option.
+     - Service user domain.
    * - ``username`` = ``swift``
-     - No help text available for this option.
+     - Service user name.
