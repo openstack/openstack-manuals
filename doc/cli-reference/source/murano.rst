@@ -9,7 +9,7 @@ Application Catalog service command-line client
 The murano client is the command-line interface (CLI) for
 the Application Catalog service API and its extensions.
 
-This chapter documents :command:`murano` version ``0.9.0``.
+This chapter documents :command:`murano` version ``0.10.0``.
 
 For help on a specific :command:`murano` command, enter:
 
@@ -73,6 +73,9 @@ murano usage
 
 ``category-show``
   Display category details.
+
+``class-schema``
+  Display class schema
 
 ``deployment-list``
   List deployments for an environment.
@@ -158,6 +161,10 @@ murano usage
 
 ``package-update``
   Update an existing package.
+
+``static-action-call``
+  Call static method \`METHOD\` of the class \`CLASS\` with
+  \`ARGUMENTS\`.
 
 ``bash-completion``
   Prints all of the commands and options to stdout.
@@ -449,6 +456,35 @@ Display category details.
 
 ``<ID>``
   ID of a category(s) to show.
+
+.. _murano_class-schema:
+
+murano class-schema
+-------------------
+
+.. code-block:: console
+
+   usage: murano class-schema [--package-name PACKAGE_NAME]
+                              [--class-version CLASS_VERSION]
+                              <CLASS> [<METHOD> [<METHOD> ...]]
+
+Display class schema
+
+**Positional arguments:**
+
+``<CLASS>``
+  Class FQN
+
+``<METHOD>``
+  Method name
+
+**Optional arguments:**
+
+``--package-name PACKAGE_NAME``
+  FQN of the package where the class is located
+
+``--class-version CLASS_VERSION``
+  Class version or version range (version spec)
 
 .. _murano_deployment-list:
 
@@ -1146,4 +1182,62 @@ Update an existing package.
 
 ``--tags [<TAG> [<TAG> ...]]``
   A list of keywords connected to the application.
+
+.. _murano_static-action-call:
+
+murano static-action-call
+-------------------------
+
+.. code-block:: console
+
+   usage: murano static-action-call [--arguments [<KEY=VALUE> [<KEY=VALUE> ...]]]
+                                    [--package-name <PACKAGE>]
+                                    [--class-version CLASS_VERSION]
+                                    <CLASS> <METHOD>
+
+Call
+static
+method
+\`METHOD\`
+of
+the
+class
+\`CLASS\`
+with
+\`ARGUMENTS\`.
+Returns
+the
+result
+of
+the
+method
+execution.
+\`PACKAGE\`
+and
+\`CLASS_VERSION\`
+can
+be
+specified
+optionally to find class in a particular package and to look for the specific
+version of a class respectively.
+
+**Positional arguments:**
+
+``<CLASS>``
+  FQN of the class with static method
+
+``<METHOD>``
+  Static method to run
+
+**Optional arguments:**
+
+``--arguments [<KEY=VALUE> [<KEY=VALUE> ...]]``
+  Method arguments. No arguments by default
+
+``--package-name <PACKAGE>``
+  Optional FQN of the package to look for the class in
+
+``--class-version CLASS_VERSION``
+  Optional version of the class, otherwise version =0 is
+  used
 
