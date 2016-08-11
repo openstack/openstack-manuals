@@ -54,7 +54,7 @@ First, list the available back-ends:
 
 .. note::
 
-   Only Block Storage V2 API supports :command:`get-pools`.
+   Only Block Storage V2 API supports :command:`cinder get-pools`.
 
 You can also get available back-ends like following:
 
@@ -72,27 +72,35 @@ Next, as the admin user, you can see the current status of the volume
 
 .. code-block:: console
 
-   $ cinder show 6088f80a-f116-4331-ad48-9afb0dfb196c
+   $ openstack volume show 6088f80a-f116-4331-ad48-9afb0dfb196c
+
    +--------------------------------+--------------------------------------+
-   |            Property            |                Value                 |
+   | Field                          | Value                                |
    +--------------------------------+--------------------------------------+
-   |          attachments           |                [...]                 |
-   |       availability_zone        |                zone1                 |
-   |            bootable            |                False                 |
-   |           created_at           |      2013-09-01T14:53:22.000000      |
-   |      display_description       |                 test                 |
-   |          display_name          |                 test                 |
-   |               id               | 6088f80a-f116-4331-ad48-9afb0dfb196c |
-   |            metadata            |                  {}                  |
-   |     os-vol-host-attr:host      | server1@lvmstorage-1#lvmstorage-1    |
-   | os-vol-mig-status-attr:migstat |                 None                 |
-   | os-vol-mig-status-attr:name_id |                 None                 |
-   |  os-vol-tenant-attr:tenant_id  |   6bdd8f41203e4149b5d559769307365e   |
-   |              size              |                  2                   |
-   |          snapshot_id           |                 None                 |
-   |          source_volid          |                 None                 |
-   |             status             |                in-use                |
-   |          volume_type           |                 None                 |
+   | attachments                    | []                                   |
+   | availability_zone              | zone1                                |
+   | bootable                       | false                                |
+   | consistencygroup_id            | None                                 |
+   | created_at                     | 2013-09-01T14:53:22.000000           |
+   | description                    | test                                 |
+   | encrypted                      | False                                |
+   | id                             | 6088f80a-f116-4331-ad48-9afb0dfb196c |
+   | migration_status               | None                                 |
+   | multiattach                    | False                                |
+   | name                           | test                                 |
+   | os-vol-host-attr:host          | controller@lvm#LVM                   |
+   | os-vol-mig-status-attr:migstat | None                                 |
+   | os-vol-mig-status-attr:name_id | None                                 |
+   | os-vol-tenant-attr:tenant_id   | d88310717a8e4ebcae84ed075f82c51e     |
+   | properties                     | readonly='False'                     |
+   | replication_status             | disabled                             |
+   | size                           | 1                                    |
+   | snapshot_id                    | None                                 |
+   | source_volid                   | None                                 |
+   | status                         | in-use                               |
+   | type                           | None                                 |
+   | updated_at                     | 2016-07-31T07:22:19.000000           |
+   | user_id                        | d8e5e5727f3a4ce1886ac8ecec058e83     |
    +--------------------------------+--------------------------------------+
 
 Note these attributes:
@@ -141,8 +149,8 @@ Migrate this volume to the second LVM back-end:
    $ cinder migrate 6088f80a-f116-4331-ad48-9afb0dfb196c \
      server2@lvmstorage-2#lvmstorage-2
 
-You can use the :command:`cinder show` command to see the status of the
-migration. While migrating, the ``migstat`` attribute shows states such as
+You can use the :command:`openstack volume show` command to see the status of
+the migration. While migrating, the ``migstat`` attribute shows states such as
 ``migrating`` or ``completing``. On error, ``migstat`` is set to None and the
 host attribute shows the original ``host``. On success, in this example, the
 output looks like:
@@ -150,25 +158,32 @@ output looks like:
 .. code-block:: console
 
    +--------------------------------+--------------------------------------+
-   |            Property            |                Value                 |
+   | Field                          | Value                                |
    +--------------------------------+--------------------------------------+
-   |          attachments           |                [...]                 |
-   |       availability_zone        |                zone1                 |
-   |            bootable            |                False                 |
-   |           created_at           |      2013-09-01T14:53:22.000000      |
-   |      display_description       |                 test                 |
-   |          display_name          |                 test                 |
-   |               id               | 6088f80a-f116-4331-ad48-9afb0dfb196c |
-   |            metadata            |                  {}                  |
-   |     os-vol-host-attr:host      |  server2@lvmstorage-2#lvmstorage-2   |
-   | os-vol-mig-status-attr:migstat |                 None                 |
-   | os-vol-mig-status-attr:name_id | 133d1f56-9ffc-4f57-8798-d5217d851862 |
-   |  os-vol-tenant-attr:tenant_id  |   6bdd8f41203e4149b5d559769307365e   |
-   |              size              |                  2                   |
-   |          snapshot_id           |                 None                 |
-   |          source_volid          |                 None                 |
-   |             status             |                in-use                |
-   |          volume_type           |                 None                 |
+   | attachments                    | []                                   |
+   | availability_zone              | zone1                                |
+   | bootable                       | false                                |
+   | consistencygroup_id            | None                                 |
+   | created_at                     | 2013-09-01T14:53:22.000000           |
+   | description                    | test                                 |
+   | encrypted                      | False                                |
+   | id                             | 6088f80a-f116-4331-ad48-9afb0dfb196c |
+   | migration_status               | None                                 |
+   | multiattach                    | False                                |
+   | name                           | test                                 |
+   | os-vol-host-attr:host          | controller@lvm#LVM                   |
+   | os-vol-mig-status-attr:migstat | None                                 |
+   | os-vol-mig-status-attr:name_id | None                                 |
+   | os-vol-tenant-attr:tenant_id   | d88310717a8e4ebcae84ed075f82c51e     |
+   | properties                     | readonly='False'                     |
+   | replication_status             | disabled                             |
+   | size                           | 1                                    |
+   | snapshot_id                    | None                                 |
+   | source_volid                   | None                                 |
+   | status                         | in-use                               |
+   | type                           | None                                 |
+   | updated_at                     | 2016-07-31T07:22:19.000000           |
+   | user_id                        | d8e5e5727f3a4ce1886ac8ecec058e83     |
    +--------------------------------+--------------------------------------+
 
 Note that ``migstat`` is None, host is the new host, and ``name_id`` holds the
