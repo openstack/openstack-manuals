@@ -209,8 +209,8 @@ CentOS 6.3 image in qcow2 format and configure it for public access:
 
 .. code-block:: console
 
-   $ openstack image create --name centos63-image --disk-format qcow2 \
-     --container-format bare --is-public True --file ./centos63.qcow2
+   $ openstack image create --disk-format qcow2 --container-format bare \
+     --public --file ./centos63.qcow2 centos63-image
 
 The following example shows how to update an existing image with a
 properties that describe the disk bus, the CD-ROM bus, and the VIF
@@ -357,7 +357,7 @@ creation process.
 
 *  Ensure that the version of qemu you are using is version 0.14 or
    later. Earlier versions of qemu result in an ``unknown option -s``
-   error message in the ``nova-compute.log`` file.
+   error message in the ``/var/log/nova/nova-compute.log`` file.
 
 *  Examine the ``/var/log/nova/nova-api.log`` and
    ``/var/log/nova/nova-compute.log`` log files for error messages.
