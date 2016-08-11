@@ -55,11 +55,11 @@ Before you can launch an instance, gather the following parameters:
 
    You can also assign a floating IP address to a running instance to
    make it accessible from outside the cloud. See
-   :doc:`cli_manage_ip_addresses`.
+   :doc:`cli-manage-ip-addresses`.
 
 After you gather the parameters that you need to launch an instance,
-you can launch it from an :doc:`image<cli_nova_launch_instance_from_image>`
-or a :doc:`volume<cli_nova_launch_instance_from_volume>`. You can launch an
+you can launch it from an :doc:`image<cli-nova-launch-instance-from-image>`
+or a :doc:`volume<cli-nova-launch-instance-from-volume>`. You can launch an
 instance directly from one of the available OpenStack images or from
 an image that you have copied to a persistent volume. The OpenStack
 Image service provides a pool of images that are accessible to members
@@ -160,7 +160,7 @@ You can launch an instance from various sources.
 .. toctree::
    :maxdepth: 2
 
-   cli_nova_launch_instance_from_image.rst
-   cli_nova_launch_instance_from_volume.rst
-   cli_nova_launch_instance_using_ISO_image.rst
+   cli-nova-launch-instance-from-image.rst
+   cli-nova-launch-instance-from-volume.rst
+   cli-nova-launch-instance-using-ISO-image.rst
 

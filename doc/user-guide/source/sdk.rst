@@ -5,13 +5,13 @@ OpenStack Python SDK
 .. toctree::
    :maxdepth: 2
 
-   sdk_overview.rst
-   sdk_install.rst
-   sdk_authenticate.rst
-   sdk_create_legacy_novaclient.rst
-   sdk_manage_images.rst
-   sdk_assign_cors_headers.rst
-   sdk_schedule_objects_for_deletion.rst
-   sdk_configure_access_security_instances.rst
-   sdk_neutron_apis.rst
-   sdk_compute_apis.rst
+   sdk-overview.rst
+   sdk-install.rst
+   sdk-authenticate.rst
+   sdk-create-legacy-novaclient.rst
+   sdk-manage-images.rst
+   sdk-assign-cors-headers.rst
+   sdk-schedule-objects-for-deletion.rst
+   sdk-configure-access-security-instances.rst
+   sdk-neutron-apis.rst
+   sdk-compute-apis.rst

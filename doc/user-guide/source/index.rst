@@ -25,7 +25,7 @@ Contents
    cli.rst
    sdk.rst
    hot.rst
-   cli_cheat_sheet.rst
+   cli-cheat-sheet.rst
 
 Appendix
 ~~~~~~~~

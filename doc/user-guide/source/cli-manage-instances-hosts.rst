@@ -14,12 +14,12 @@ discusses node management tasks.
 .. toctree::
    :maxdepth: 2
 
-   cli_manage_ip_addresses.rst
-   cli_change_the_size_of_your_server.rst
-   cli_stop_and_start_an_instance.rst
-   cli_search_instance_with_ip_address.rst
-   cli_reboot_an_instance.rst
-   cli_delete_an_instance.rst
-   cli_access_instance_through_a_console.rst
-   cli_manage_bare_metal_nodes.rst
+   cli-manage-ip-addresses.rst
+   cli-change-the-size-of-your-server.rst
+   cli-stop-and-start-an-instance.rst
+   cli-search-instance-with-ip-address.rst
+   cli-reboot-an-instance.rst
+   cli-delete-an-instance.rst
+   cli-access-instance-through-a-console.rst
+   cli-manage-bare-metal-nodes.rst
 
