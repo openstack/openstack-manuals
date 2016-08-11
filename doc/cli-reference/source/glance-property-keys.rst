@@ -280,7 +280,7 @@ For example:
           ``rtl8139``, and ``virtio``.
         * VMware: ``e1000``, ``e1000e``, ``VirtualE1000``, ``VirtualE1000e``,
           ``VirtualPCNet32``, ``VirtualSriovEthernetCard``, and
-          and ``VirtualVmxnet``.
+          ``VirtualVmxnet``.
         * Xen: ``e1000``, ``netfront``, ``ne2k_pci``, ``pcnet``, and
           ``rtl8139``.
    * - libvirt API driver
