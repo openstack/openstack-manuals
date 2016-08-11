@@ -69,9 +69,9 @@ The starting point for most is the core count of your cloud. By applying
 some ratios, you can gather information about:
 
 -  The number of virtual machines (VMs) you expect to run,
-   ``((overcommit fraction × cores) / virtual cores per instance)``
+   ``((overcommit fraction × cores) / virtual cores per instance)``
 
--  How much storage is required ``(flavor disk size × number of instances)``
+-  How much storage is required ``(flavor disk size × number of instances)``
 
 You can use these ratios to determine how much additional infrastructure
 you need to support your cloud.
@@ -117,7 +117,7 @@ of VMs every 30 seconds.
 
 After you consider these factors, you can determine how many cloud
 controller cores you require. A typical eight core, 8 GB of RAM server
-is sufficient for up to a rack of compute nodes — given the above
+is sufficient for up to a rack of compute nodes — given the above
 caveats.
 
 You must also consider key hardware specifications for the performance
@@ -128,7 +128,7 @@ bandwidth (Gbps/core), and overall CPU performance (CPU/core).
 .. tip::
 
    For a discussion of metric tracking, including how to extract
-   metrics from your cloud, see :doc:`ops_logging_monitoring`.
+   metrics from your cloud, see :doc:`ops-logging-monitoring`.
 
 Adding Cloud Controller Nodes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -416,7 +416,7 @@ When adding object storage nodes, a :term:`weight` should be specified
 that reflects the :term:`capability` of the node.
 
 Monitoring the resource usage and user growth will enable you to know
-when to procure. :doc:`ops_logging_monitoring` details some useful metrics.
+when to procure. :doc:`ops-logging-monitoring` details some useful metrics.
 
 Burn-in Testing
 ---------------

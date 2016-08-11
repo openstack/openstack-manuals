@@ -249,11 +249,11 @@ Optional Extensions
 
 You can extend this reference architecture as follows:
 
--  Add additional cloud controllers (see :doc:`ops_maintenance`).
+-  Add additional cloud controllers (see :doc:`ops-maintenance`).
 
 -  Add an OpenStack Storage service (see the Object Storage chapter in
    the `OpenStack Installation Guide
    <http://docs.openstack.org/#install-guides>`_ for your distribution).
 
 -  Add additional OpenStack Block Storage hosts (see
-   :doc:`ops_maintenance`).
+   :doc:`ops-maintenance`).

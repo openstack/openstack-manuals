@@ -20,5 +20,5 @@ launch more than 25 instances in any single region.
 
 For more information on managing quotas refer to the `Managing projects
 and users
-chapter <http://docs.openstack.org/ops-guide/ops_projects_users.html>`__
+chapter <http://docs.openstack.org/ops-guide/ops-projects-users.html>`__
 of the OpenStack Operators Guide.

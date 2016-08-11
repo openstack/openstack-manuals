@@ -28,7 +28,7 @@ characteristics to images.
 : Official LibGuestFS documentation.
 
 `Logging and Monitoring
-<http://docs.openstack.org/ops-guide/ops_logging_monitoring.html>`_
+<http://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_
 : Official OpenStack Operations documentation.
 
 `ManageIQ Cloud Management Platform <http://manageiq.org/>`_
@@ -47,7 +47,7 @@ and enable the delivery of the most efficient server,
 storage and data center hardware designs for scalable computing.
 
 `OpenStack Flavors
-<http://docs.openstack.org/ops-guide/ops_user_facing_operations.html#flavors>`_
+<http://docs.openstack.org/ops-guide/ops-user-facing-operations.html#flavors>`_
 : Official OpenStack documentation.
 
 `OpenStack High Availability Guide <http://docs.openstack.org/ha-guide/>`_

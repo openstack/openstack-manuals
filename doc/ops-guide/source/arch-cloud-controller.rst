@@ -368,7 +368,7 @@ space, and so on, are associated with a project.
 OpenStack Identity provides authentication decisions and user attribute
 information, which is then used by the other OpenStack services to
 perform authorization. The policy is set in the ``policy.json`` file.
-For information on how to configure these, see :doc:`ops_projects_users`
+For information on how to configure these, see :doc:`ops-projects-users`
 
 OpenStack Identity supports different plug-ins for authentication
 decisions and identity storage. Examples of these plug-ins include:

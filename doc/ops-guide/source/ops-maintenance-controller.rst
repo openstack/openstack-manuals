@@ -88,7 +88,7 @@ The next best approach is to use a configuration-management tool, such
 as Puppet, to automatically build a cloud controller. This should not
 take more than 15 minutes if you have a spare server available. After
 the controller rebuilds, restore any backups taken
-(see :doc:`ops_backup_recovery`).
+(see :doc:`ops-backup-recovery`).
 
 Also, in practice, the ``nova-compute`` services on the compute nodes do
 not always reconnect cleanly to rabbitmq hosted on the controller when

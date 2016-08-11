@@ -4,10 +4,10 @@ Managing Projects and Users
 
 .. toctree::
 
-   ops_projects.rst
-   ops_quotas.rst
-   ops_users.rst
-   ops_projects_users_summary.rst
+   ops-projects.rst
+   ops-quotas.rst
+   ops-users.rst
+   ops-projects-users-summary.rst
 
 An OpenStack cloud does not have much value without users. This chapter
 covers topics that relate to managing users, projects, and quotas. This

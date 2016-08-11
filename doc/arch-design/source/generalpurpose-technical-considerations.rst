@@ -522,7 +522,7 @@ case, the switching infrastructure must support L3 routing.
 OpenStack Networking and legacy networking both have their advantages
 and disadvantages. They are both valid and supported options that fit
 different network deployment models described in the
-`Networking deployment options table <http://docs.openstack.org/ops-guide/arch_network_design.html#network-topology>`
+`Networking deployment options table <http://docs.openstack.org/ops-guide/arch-network-design.html#network-topology>`
 of OpenStack Operations Guide.
 
 Ensure your deployment has adequate back-up capabilities.

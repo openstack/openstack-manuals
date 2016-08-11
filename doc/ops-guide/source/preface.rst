@@ -125,7 +125,7 @@ your OpenStack cloud.
    lot of background knowledge. However, if you are fairly new to cloud
    computing, we recommend that you make use of the :doc:`common/glossary`
    at the back of the book, as well as the online documentation for OpenStack
-   and additional resources mentioned in this book in :doc:`app_resources`.
+   and additional resources mentioned in this book in :doc:`app-resources`.
 
 Further Reading
 ---------------
@@ -190,38 +190,38 @@ OpenStack clouds.
 
 **Part I:**
 
-:doc:`arch_examples`
+:doc:`arch-examples`
     Because of all the decisions the other chapters discuss, this
     chapter describes the decisions made for this particular book and
     much of the justification for the example architecture.
 
-:doc:`arch_provision`
+:doc:`arch-provision`
     While this book doesn't describe installation, we do recommend
     automation for deployment and configuration, discussed in this
     chapter.
 
-:doc:`arch_cloud_controller`
+:doc:`arch-cloud-controller`
     The cloud controller is an invention for the sake of consolidating
     and describing which services run on which nodes. This chapter
     discusses hardware and network considerations as well as how to
     design the cloud controller for performance and separation of
     services.
 
-:doc:`arch_compute_nodes`
+:doc:`arch-compute-nodes`
     This chapter describes the compute nodes, which are dedicated to
     running virtual machines. Some hardware choices come into play here,
     as well as logging and networking descriptions.
 
-:doc:`arch_scaling`
+:doc:`arch-scaling`
     This chapter discusses the growth of your cloud resources through
     scaling and segregation considerations.
 
-:doc:`arch_storage`
+:doc:`arch-storage`
     As with other architecture decisions, storage concepts within
     OpenStack offer many options. This chapter lays out the choices for
     you.
 
-:doc:`arch_network_design`
+:doc:`arch-network-design`
     Your OpenStack cloud networking needs to fit into your existing
     networks while also enabling the best design for your users and
     administrators, and this chapter gives you in-depth information
@@ -229,68 +229,68 @@ OpenStack clouds.
 
 **Part II:**
 
-:doc:`ops_lay_of_the_land`
+:doc:`ops-lay-of-the-land`
     This chapter is written to let you get your hands wrapped around
     your OpenStack cloud through command-line tools and understanding
     what is already set up in your cloud.
 
-:doc:`ops_projects_users`
+:doc:`ops-projects-users`
     This chapter walks through user-enabling processes that all admins
     must face to manage users, give them quotas to parcel out resources,
     and so on.
 
-:doc:`ops_user_facing_operations`
+:doc:`ops-user-facing-operations`
     This chapter shows you how to use OpenStack cloud resources and how
     to train your users.
 
-:doc:`ops_maintenance`
+:doc:`ops-maintenance`
     This chapter goes into the common failures that the authors have
     seen while running clouds in production, including troubleshooting.
 
-:doc:`ops_network_troubleshooting`
+:doc:`ops-network-troubleshooting`
     Because network troubleshooting is especially difficult with virtual
     resources, this chapter is chock-full of helpful tips and tricks for
     tracing network traffic, finding the root cause of networking
     failures, and debugging related services, such as DHCP and DNS.
 
-:doc:`ops_logging_monitoring`
+:doc:`ops-logging-monitoring`
     This chapter shows you where OpenStack places logs and how to best
     read and manage logs for monitoring purposes.
 
-:doc:`ops_backup_recovery`
+:doc:`ops-backup-recovery`
     This chapter describes what you need to back up within OpenStack as
     well as best practices for recovering backups.
 
-:doc:`ops_customize`
+:doc:`ops-customize`
     For readers who need to get a specialized feature into OpenStack,
     this chapter describes how to use DevStack to write custom
     middleware or a custom scheduler to rebalance your resources.
 
-:doc:`ops_advanced_configuration`
+:doc:`ops-advanced-configuration`
     Much of OpenStack is driver-oriented, so you can plug in different
     solutions to the base set of services. This chapter describes some
     advanced configuration topics.
 
-:doc:`ops_upgrades`
+:doc:`ops-upgrades`
     This chapter provides upgrade information based on the architectures
     used in this book.
 
 **Back matter:**
 
-:doc:`app_usecases`
+:doc:`app-usecases`
     You can read a small selection of use cases from the OpenStack
     community with some technical details and further resources.
 
-:doc:`app_crypt`
+:doc:`app-crypt`
     These are shared legendary tales of image disappearances, VM
     massacres, and crazy troubleshooting techniques that result in
     hard-learned lessons and wisdom.
 
-:doc:`app_roadmaps`
+:doc:`app-roadmaps`
     Read about how to track the OpenStack roadmap through the open and
     transparent development processes.
 
-:doc:`app_resources`
+:doc:`app-resources`
     So many OpenStack resources are available online because of the
     fast-moving nature of the project, but there are also resources
     listed here that the authors found helpful while learning

@@ -5,11 +5,11 @@ Customization
 .. toctree::
    :maxdepth: 1
 
-   ops_customize_development.rst
-   ops_customize_objectstorage.rst
-   ops_customize_compute.rst
-   ops_customize_dashboard.rst
-   ops_customize_conclusion.rst
+   ops-customize-development.rst
+   ops-customize-objectstorage.rst
+   ops-customize-compute.rst
+   ops-customize-dashboard.rst
+   ops-customize-conclusion.rst
 
 OpenStack might not do everything you need it to do out of the box. To
 add a new feature, you can follow different paths.

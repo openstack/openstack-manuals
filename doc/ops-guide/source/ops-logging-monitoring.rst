@@ -5,9 +5,9 @@ Logging and Monitoring
 .. toctree::
    :maxdepth: 1
 
-   ops_logging.rst
-   ops_monitoring.rst
-   ops_logging_monitoring_summary.rst
+   ops-logging.rst
+   ops-monitoring.rst
+   ops-logging-monitoring-summary.rst
 
 As an OpenStack cloud is composed of so many different services, there
 are a large number of log files. This chapter aims to assist you in

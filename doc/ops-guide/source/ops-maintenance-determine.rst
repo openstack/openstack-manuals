@@ -29,7 +29,7 @@ Terminal 2:
    # nova list
 
 Look for any errors or traces in the log file. For more information, see
-:doc:`ops_logging_monitoring`.
+:doc:`ops-logging-monitoring`.
 
 If the error indicates that the problem is with another component,
 switch to tailing that component's log file. For example, if nova cannot
