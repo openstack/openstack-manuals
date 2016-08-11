@@ -361,6 +361,15 @@ The following meters are collected for OpenStack Compute:
 | cpu_l3_c\ | Gauge | B    | instance | Pollster | Libvirt | L3 cache used b\ |
 | ache      |       |      | ID       |          |         | y the instance   |
 +-----------+-------+------+----------+----------+---------+------------------+
+| memory.b\ | Gauge | B/s  | instance | Pollster | Libvirt | Total system ba\ |
+| andwidth\ |       |      | ID       |          |         | ndwidth from on\ |
+| .total    |       |      |          |          |         | e level of cache |
++-----------+-------+------+----------+----------+---------+------------------+
+| memory.b\ | Gauge | B/s  | instance | Pollster | Libvirt | Bandwidth of me\ |
+| andwidth\ |       |      | ID       |          |         | mory traffic fo\ |
+| .local    |       |      |          |          |         | r a memory cont\ |
+|           |       |      |          |          |         | roller           |
++-----------+-------+------+----------+----------+---------+------------------+
 
 |
 
