@@ -9,7 +9,7 @@ Networking service command-line client
 The neutron client is the command-line interface (CLI) for
 the Networking service API and its extensions.
 
-This chapter documents :command:`neutron` version ``5.0.0``.
+This chapter documents :command:`neutron` version ``5.1.0``.
 
 For help on a specific :command:`neutron` command, enter:
 
@@ -9342,7 +9342,7 @@ neutron subnet-create
                                 [--ipv6-address-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
                                 [--subnetpool SUBNETPOOL]
                                 [--use-default-subnetpool]
-                                [--prefixlen PREFIX_LENGTH]
+                                [--prefixlen PREFIX_LENGTH] [--segment SEGMENT]
                                 NETWORK [CIDR]
 
 Create a subnet for a given tenant.
@@ -9417,6 +9417,10 @@ Create a subnet for a given tenant.
 
 ``--prefixlen PREFIX_LENGTH``
   Prefix length for subnet allocation from subnetpool.
+
+``--segment SEGMENT``
+  ID of segment with which this subnet will be
+  associated.
 
 .. _neutron_subnet-delete:
 
