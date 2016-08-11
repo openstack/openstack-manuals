@@ -103,6 +103,10 @@ Cancel buttons
 On modals, the cancel button should be located at the bottom left and
 the ``X`` to close should be located at the top right.
 
+.. figure:: figures/gui-cancelbutton.png
+    :align: right
+    :width: 65%
+
 Modal error messages
 --------------------
 
@@ -115,6 +119,10 @@ we recommend a warning should be displayed at the top center of the modal.
    avoid GUI conflicts.
 
 A red background and a warning icon on the top left are also recommended.
+
+.. figure:: figures/gui-modalerror.png
+    :align: right
+    :width: 65%
 
 For more information on guidelines for UI text, see:
 `<http://docs.openstack.org/contributor-guide/ui-text-guidelines.html>`_.
@@ -129,6 +137,10 @@ button should be disabled, instead of invisible. Initially, the ``Create``
 button should remain disabled until the mandatory parameters have been
 provided. All required items should have an asterisk on the right.
 
+.. figure:: figures/gui-wizards.png
+    :align: right
+    :width: 75%
+
 Page errors
 -----------
 
@@ -136,6 +148,10 @@ Any error messages should be displayed on the upper right corner of the
 browser. A counter should be displayed for error messages that persist for
 a certain number of seconds. All error messages should close  by pressing
 the ``X`` on the upper right corner of the message.
+
+.. figure:: figures/gui-errors.png
+    :align: right
+    :width: 65%
 
 .. note::
 
@@ -158,6 +174,11 @@ Control actions should align to the right of the row. In addition,
 checkboxes should align to the left of each row and be used for deleting
 single or multiple rows.
 
+.. figure:: figures/gui-actions.png
+    :align: right
+    :width: 70%
+
+
 Search
 ------
 
@@ -165,6 +186,10 @@ There are typically two search box types within GUIs. There is the global
 search, which applies to all pages, and local (panel) search box, which
 searches within pages. We recommend global search boxes be located in the
 masthead, and the local (panel) search be located within the page.
+
+.. figure:: figures/gui-search.png
+    :align: right
+    :width: 65%
 
 .. note::
 
