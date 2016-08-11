@@ -27,56 +27,39 @@ commands.
 .. code-block:: console
 
    $ openstack image list
-   +----------+---------------------------------+-------------+------------------+----------+--------+
-   | ID       | Name                            | Disk Format | Container Format | Size     | Status |
-   +----------+---------------------------------+-------------+------------------+----------+--------+
-   | 397e7... | cirros-0.3.2-x86_64-uec         | ami         | ami              | 25165824 | active |
-   | df430... | cirros-0.3.2-x86_64-uec-kernel  | aki         | aki              | 4955792  | active |
-   | 3cf85... | cirros-0.3.2-x86_64-uec-ramdisk | ari         | ari              | 3714968  | active |
-   | 7e514... | myCirrosImage                   | ami         | ami              | 14221312 | active |
-   +----------+---------------------------------+-------------+------------------+----------+--------+
-
+   +--------------------------------------+---------------------------------+--------+
+   | ID                                   | Name                            | Status |
+   +--------------------------------------+---------------------------------+--------+
+   | dfc1dfb0-d7bf-4fff-8994-319dd6f703d7 | cirros-0.3.2-x86_64-uec         | active |
+   | a3867e29-c7a1-44b0-9e7f-10db587cad20 | cirros-0.3.2-x86_64-uec-kernel  | active |
+   | 4b916fba-6775-4092-92df-f41df7246a6b | cirros-0.3.2-x86_64-uec-ramdisk | active |
+   | d07831df-edc3-4817-9881-89141f9134c3 | myCirrosImage                   | active |
+   +--------------------------------------+---------------------------------+--------+
 .. code-block:: console
 
    $ openstack image show myCirrosImage
-   +---------------------------------------+--------------------------------------+
-   | Property                              | Value                                |
-   +---------------------------------------+--------------------------------------+
-   | Property 'base_image_ref'             | 397e713c-b95b-4186-ad46-6126863ea0a9 |
-   | Property 'image_location'             | snapshot                             |
-   | Property 'image_state'                | available                            |
-   | Property 'image_type'                 | snapshot                             |
-   | Property 'instance_type_ephemeral_gb' | 0                                    |
-   | Property 'instance_type_flavorid'     | 2                                    |
-   | Property 'instance_type_id'           | 5                                    |
-   | Property 'instance_type_memory_mb'    | 2048                                 |
-   | Property 'instance_type_name'         | m1.small                             |
-   | Property 'instance_type_root_gb'      | 20                                   |
-   | Property 'instance_type_rxtx_factor'  | 1                                    |
-   | Property 'instance_type_swap'         | 0                                    |
-   | Property 'instance_type_vcpu_weight'  | None                                 |
-   | Property 'instance_type_vcpus'        | 1                                    |
-   | Property 'instance_uuid'              | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 |
-   | Property 'kernel_id'                  | df430cc2-3406-4061-b635-a51c16e488ac |
-   | Property 'owner_id'                   | 66265572db174a7aa66eba661f58eb9e     |
-   | Property 'ramdisk_id'                 | 3cf852bd-2332-48f4-9ae4-7d926d50945e |
-   | Property 'user_id'                    | 376744b5910b4b4da7d8e6cb483b06a8     |
-   | checksum                              | 8e4838effa1969ad591655d6485c7ba8     |
-   | container_format                      | ami                                  |
-   | created_at                            | 2013-07-22T19:45:58                  |
-   | deleted                               | False                                |
-   | disk_format                           | ami                                  |
-   | id                                    | 7e5142af-1253-4634-bcc6-89482c5f2e8a |
-   | is_public                             | False                                |
-   | min_disk                              | 0                                    |
-   | min_ram                               | 0                                    |
-   | name                                  | myCirrosImage                        |
-   | owner                                 | 66265572db174a7aa66eba661f58eb9e     |
-   | protected                             | False                                |
-   | size                                  | 14221312                             |
-   | status                                | active                               |
-   | updated_at                            | 2013-07-22T19:46:42                  |
-   +---------------------------------------+--------------------------------------+
+   +------------------+------------------------------------------------------+
+   | Field            | Value                                                |
+   +------------------+------------------------------------------------------+
+   | checksum         | ee1eca47dc88f4879d8a229cc70a07c6                     |
+   | container_format | ami                                                  |
+   | created_at       | 2016-08-11T15:07:26Z                                 |
+   | disk_format      | ami                                                  |
+   | file             | /v2/images/dfc1dfb0-d7bf-4fff-8994-319dd6f703d7/file |
+   | id               | dfc1dfb0-d7bf-4fff-8994-319dd6f703d7                 |
+   | min_disk         | 0                                                    |
+   | min_ram          | 0                                                    |
+   | name             | myCirrosImage                                        |
+   | owner            | d88310717a8e4ebcae84ed075f82c51e                     |
+   | protected        | False                                                |
+   | schema           | /v2/schemas/image                                    |
+   | size             | 13287936                                             |
+   | status           | active                                               |
+   | tags             |                                                      |
+   | updated_at       | 2016-08-11T15:20:02Z                                 |
+   | virtual_size     | None                                                 |
+   | visibility       | private                                              |
+   +------------------+------------------------------------------------------+
 
 When viewing a list of images, you can also use ``grep`` to filter the
 list, as follows:
@@ -84,9 +67,9 @@ list, as follows:
 .. code-block:: console
 
    $ openstack image list | grep 'cirros'
-   | 397e713c-b95b-4186-ad46-612... | cirros-0.3.2-x86_64-uec         | ami | ami | 25165824 | active |
-   | df430cc2-3406-4061-b635-a51... | cirros-0.3.2-x86_64-uec-kernel  | aki | aki | 4955792  | active |
-   | 3cf852bd-2332-48f4-9ae4-7d9... | cirros-0.3.2-x86_64-uec-ramdisk | ari | ari | 3714968  | active |
+   | dfc1dfb0-d7bf-4fff-8994-319dd6f703d7 | cirros-0.3.2-x86_64-uec         | active |
+   | a3867e29-c7a1-44b0-9e7f-10db587cad20 | cirros-0.3.2-x86_64-uec-kernel  | active |
+   | 4b916fba-6775-4092-92df-f41df7246a6b | cirros-0.3.2-x86_64-uec-ramdisk | active |
 
 .. note::
 
