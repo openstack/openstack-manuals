@@ -10,7 +10,7 @@ For more information about how to download and build images, see
 <http://docs.openstack.org/image-guide/content/index.html>`__.
 For information about how to manage images, see the
 `OpenStack User Guide
-<http://docs.openstack.org/user-guide/common/cli_manage_images.html>`__.
+<http://docs.openstack.org/user-guide/common/cli-manage-images.html>`__.
 
 .. note::
 

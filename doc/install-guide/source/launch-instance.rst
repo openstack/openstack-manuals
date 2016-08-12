@@ -11,7 +11,7 @@ public virtual network, one private virtual network, and one instance
 that uses each network. The instructions in this section use command-line
 interface (CLI) tools on the controller node. For more information on the
 CLI tools, see the `OpenStack User Guide
-<http://docs.openstack.org/user-guide/cli_launch_instances.html>`__.
+<http://docs.openstack.org/user-guide/cli-launch-instances.html>`__.
 To use the dashboard, see the
 `OpenStack User Guide
 <http://docs.openstack.org/user-guide/dashboard.html>`__.
