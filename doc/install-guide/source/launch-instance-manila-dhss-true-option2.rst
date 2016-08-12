@@ -217,7 +217,7 @@ Mount the share from an instance
 
 For more information about how to manage shares, see the
 `Manage shares
-<http://docs.openstack.org/user-guide/cli_manage_shares.html>`__ in
+<http://docs.openstack.org/user-guide/cli-manage-shares.html>`__ in
 OpenStack End User Guide.
 
 Return to :ref:`launch-instance`.

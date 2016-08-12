@@ -30,8 +30,8 @@ for your operating system.
   <http://docs.openstack.org/developer/horizon/topics/deployment.html>`__.
 - To launch instances with the dashboard as an end user, see the
   `Launch and manage instances
-  <http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
+  <http://docs.openstack.org/user-guide/dashboard-launch-instances.html>`__.
   in the OpenStack End User Guide.
 - To create and manage ports, see the `Create and manage networks
-  <http://docs.openstack.org/user-guide/dashboard_create_networks.html#create-a-port>`__
+  <http://docs.openstack.org/user-guide/dashboard-create-networks.html#create-a-port>`__
   section of the OpenStack End User Guide.

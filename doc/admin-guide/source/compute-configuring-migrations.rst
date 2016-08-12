@@ -35,7 +35,7 @@ The migration types are:
 
    -  **Block live migration**. No shared storage is required.
       Incompatible with read-only devices such as CD-ROMs and
-      `Configuration Drive (config\_drive) <http://docs.openstack.org/user-guide/cli_config_drive.html>`_.
+      `Configuration Drive (config\_drive) <http://docs.openstack.org/user-guide/cli-config-drive.html>`_.
 
    -  **Volume-backed live migration**. Instances are backed by volumes
       rather than ephemeral disk, no shared storage is required, and
@@ -309,7 +309,7 @@ configuration is required.
       parameter with the live migration command.
 
    -  Block migration is incompatible with read-only devices such as
-      CD-ROMs and `Configuration Drive (config_drive) <http://docs.openstack.org/user-guide/cli_config_drive.html>`_.
+      CD-ROMs and `Configuration Drive (config_drive) <http://docs.openstack.org/user-guide/cli-config-drive.html>`_.
 
    -  Since the ephemeral drives are copied over the network in block
       migration, migrations of instances with heavy I/O loads may never
