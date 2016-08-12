@@ -3,7 +3,7 @@ Highly available Telemetry API
 ==============================
 
 `Telemetry service
-<http://docs.openstack.org/admin-guide/common/get-started-telemetry.html`>_
+<http://docs.openstack.org/admin-guide/common/get-started-telemetry.html>`__
 provides data collection service and alarming service.
 
 Telemetry central agent

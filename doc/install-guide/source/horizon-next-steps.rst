@@ -19,7 +19,7 @@ complete the following tasks:
 
 * Set up session storage. See
   `Set up session storage for the dashboard
-  <http://docs.openstack.org/admin-guide/dashboard_sessions.html>`__.
+  <http://docs.openstack.org/admin-guide/dashboard-sessions.html>`__.
 
 * To use the VNC client with the dashboard, the browser
   must support HTML5 Canvas and HTML5 WebSockets.

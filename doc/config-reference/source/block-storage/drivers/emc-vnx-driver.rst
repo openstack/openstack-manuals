@@ -168,7 +168,7 @@ iSCSI driver is used.
    initiator_auto_registration = True
 
 For more details on multiple-storage back ends, see `Configure multiple-storage
-back ends <http://docs.openstack.org/admin-guide/blockstorage_multi_backend.html>`__
+back ends <http://docs.openstack.org/admin-guide/blockstorage-multi-backend.html>`__
 
 Required configurations
 -----------------------
