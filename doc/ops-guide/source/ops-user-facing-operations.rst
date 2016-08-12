@@ -961,36 +961,36 @@ large number of operations with shares:
 * Use security services
 
 For more information on share management see `Share management
-<http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
+<http://docs.openstack.org/admin-guide/shared-file-systems-share-management.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide.
 As to Security services, you should remember that different drivers
 support different authentication methods, while generic driver does not
 support Security Services at all (see section `Security services
-<http://docs.openstack.org/admin-guide/shared_file_systems_security_services.html>`__
+<http://docs.openstack.org/admin-guide/shared-file-systems-security-services.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 You can create a share in a network, list shares, and show information
 for, update, and delete a specified share. You can also create snapshots
 of shares (see `Share snapshots
-<http://docs.openstack.org/admin-guide/shared_file_systems_snapshots.html>`__
+<http://docs.openstack.org/admin-guide/shared-file-systems-snapshots.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 There are default and specific share types that allow you to filter or
 choose back-ends before you create a share. Functions and behaviour of
 share type is similar to Block Storage volume type (see `Share types
-<http://docs.openstack.org/admin-guide/shared_file_systems_share_types.html>`__
+<http://docs.openstack.org/admin-guide/shared-file-systems-share-types.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 To help users keep and restore their data, Shared File Systems service
 provides a mechanism to create and operate snapshots (see `Share snapshots
-<http://docs.openstack.org/admin-guide/shared_file_systems_snapshots.html>`__
+<http://docs.openstack.org/admin-guide/shared-file-systems-snapshots.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 A security service stores configuration information for clients for
 authentication and authorization. Inside Manila a share network can be
 associated with up to three security types (for detailed information see
 `Security services
-<http://docs.openstack.org/admin-guide/shared_file_systems_security_services.html>`__
+<http://docs.openstack.org/admin-guide/shared-file-systems-security-services.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide):
 
 * LDAP
@@ -1012,7 +1012,7 @@ called StandaloneNetworkPlugin is used. In this case, provide network
 information in the configuration: IP range, network type, and
 segmentation ID. Also you can add security services to a share network
 (see section
-`“Networking” <http://docs.openstack.org/admin-guide/shared_file_systems_networking.html>`__
+`“Networking” <http://docs.openstack.org/admin-guide/shared-file-systems-networking.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 
@@ -1020,7 +1020,7 @@ The main idea of consistency groups is to enable you to create snapshots
 at the exact same point in time from multiple file system shares. Those
 snapshots can be then used for restoring all shares that were associated
 with the consistency group (see section `“Consistency
-groups” <http://docs.openstack.org/admin-guide/shared_file_systems_cgroups.html>`__
+groups” <http://docs.openstack.org/admin-guide/shared-file-systems-cgroups.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 Shared File System storage allows administrators to set limits and
@@ -1047,7 +1047,7 @@ quotas for the following resources:
 User can see his rate limits and absolute limits by running commands
 :command:`manila rate-limits` and :command:`manila absolute-limits`
 respectively. For more details on limits and quotas see `Quotas and limits
-<http://docs.openstack.org/admin-guide/shared_file_systems_quotas.html>`__
+<http://docs.openstack.org/admin-guide/shared-file-systems-quotas.html>`__
 of "Share management" section of OpenStack Administrator Guide document.
 
 This section lists several of the most important Use Cases that
@@ -1230,7 +1230,7 @@ system and use it for your purposes.
 .. note::
 
    See `Share Management
-   <http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
+   <http://docs.openstack.org/admin-guide/shared-file-systems-share-management.html>`__
    of “Shared File Systems” section of OpenStack Administrator Guide
    document for the details on share management operations.
 
@@ -1468,7 +1468,7 @@ permissions to run it:
 
    For more details and additional information about other cases,
    features, API commands etc, see `Share Management
-   <http://docs.openstack.org/admin-guide/shared_file_systems_share_management.html>`__
+   <http://docs.openstack.org/admin-guide/shared-file-systems-share-management.html>`__
    of “Shared File Systems” section of OpenStack Administrator Guide document.
 
 Create Snapshots
@@ -1527,7 +1527,7 @@ To make sure that the snapshot is available, run:
 
    For more details and additional information on snapshots, see
    `Share Snapshots
-   <http://docs.openstack.org/admin-guide/shared_file_systems_snapshots.html>`__
+   <http://docs.openstack.org/admin-guide/shared-file-systems-snapshots.html>`__
    of “Shared File Systems” section of “OpenStack Administrator Guide” document.
 
 
@@ -1601,7 +1601,7 @@ Share use case described earlier in this chapter.
 .. tip::
 
    See `Share Networks
-   <http://docs.openstack.org/admin-guide/shared_file_systems_share_networks.html>`__
+   <http://docs.openstack.org/admin-guide/shared-file-systems-share-networks.html>`__
    of “Shared File Systems” section of OpenStack Administrator Guide
    document for more details.
 
@@ -1676,7 +1676,7 @@ You also can add and remove the security services to the share network.
 .. tip::
 
    For details, see subsection `Security Services
-   <http://docs.openstack.org/admin-guide/shared_file_systems_security_services.html>`__
+   <http://docs.openstack.org/admin-guide/shared-file-systems-security-services.html>`__
    of “Shared File Systems” section of OpenStack Administrator Guide document.
 
 Instances

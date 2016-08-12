@@ -220,7 +220,7 @@ provided by OpenStack.
    * - Encryption set by…
      - Parameter in nova.conf
      - Admin establishing `encrypted volume type
-       <http://docs.openstack.org/admin-guide/dashboard_manage_volumes.html>`_,
+       <http://docs.openstack.org/admin-guide/dashboard-manage-volumes.html>`_,
        then user selecting encrypted volume
      - Not yet available
      - Shared File Systems service does not apply any additional encryption

@@ -47,6 +47,6 @@ The Identity service supports domain-specific Identity drivers
 installed on an SQL or LDAP back end, and supports domain-specific
 Identity configuration options, which are stored in domain-specific
 configuration files. See the
-`Admin guide Identity Management Chapter <http://docs.openstack.org/admin-guide/keystone_domain_specific_config.html>`_
+`Admin guide Identity Management Chapter <http://docs.openstack.org/admin-guide/keystone-domain-specific-config.html>`_
 for more information.
 
