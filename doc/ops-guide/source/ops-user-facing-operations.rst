@@ -2046,13 +2046,13 @@ is now attached as ``/dev/vda``:
 
 Read more detailed instructions for launching an instance from a
 bootable volume in the `OpenStack End User
-Guide <http://docs.openstack.org/user-guide/cli_nova_launch_instance_from_volume.html>`__.
+Guide <http://docs.openstack.org/user-guide/cli-nova-launch-instance-from-volume.html>`__.
 
 To boot normally from an image and attach block storage, map to a device
 other than vda. You can find instructions for launching an instance and
 attaching a volume to the instance and for copying the image to the
 attached volume in the `OpenStack End User
-Guide <http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
+Guide <http://docs.openstack.org/user-guide/dashboard-launch-instances.html>`__.
 
 Taking Snapshots
 ~~~~~~~~~~~~~~~~

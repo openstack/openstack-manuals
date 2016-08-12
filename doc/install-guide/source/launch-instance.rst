@@ -12,7 +12,7 @@ network with one instance that uses it. The instructions in this
 section use command-line interface (CLI) tools on the controller
 node. For more information on the CLI tools, see the
 `OpenStack End User Guide
-<http://docs.openstack.org/user-guide/cli_launch_instances.html>`__.
+<http://docs.openstack.org/user-guide/cli-launch-instances.html>`__.
 To use the dashboard, see the
 `OpenStack End User Guide
 <http://docs.openstack.org/user-guide/dashboard.html>`__.

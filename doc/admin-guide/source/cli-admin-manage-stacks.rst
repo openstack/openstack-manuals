@@ -20,7 +20,7 @@ For information about:
 
 -  basic creation and deletion of Orchestration stacks, refer
    to the `OpenStack End User Guide
-   <http://docs.openstack.org/user-guide/dashboard_stacks.html>`_
+   <http://docs.openstack.org/user-guide/dashboard-stacks.html>`_
 
 -  **openstack** CLI, see the `OpenStack Command-Line Interface
    Reference <http://docs.openstack.org/cli-reference/openstack.html>`_
