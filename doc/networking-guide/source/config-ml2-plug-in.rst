@@ -122,7 +122,7 @@ But only administrative (privileged) users can manage those
 networks because they interface with the physical network infrastructure.
 More information about provider networks see
 :doc:`intro-os-networking-overview` or the `OpenStack Administrator Guide
-<http://docs.openstack.org/admin-guide/networking_adv-features.html#provider-networks>`__.
+<http://docs.openstack.org/admin-guide/networking-adv-features.html#provider-networks>`__.
 
 * Flat
 
@@ -165,7 +165,7 @@ within the allocation that an administrator or operator defines for
 them. More information about project and provider networks see
 :doc:`intro-os-networking-overview`
 or the `OpenStack Administrator Guide
-<http://docs.openstack.org/admin-guide/networking_adv-features.html#provider-networks>`__.
+<http://docs.openstack.org/admin-guide/networking-adv-features.html#provider-networks>`__.
 
 Project network configurations are made in the
 ``/etc/neutron/plugins/ml2/ml2_conf.ini`` configuration file on the neutron

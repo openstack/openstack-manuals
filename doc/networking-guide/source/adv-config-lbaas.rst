@@ -29,8 +29,8 @@ LBaaS v1
 LBaaS v1 is deprecated in the Liberty release. These links provide more
 details about how LBaaS v1 works and how to configure it:
 
-* `Load-Balancer-as-a-Service (LBaaS) overview <http://docs.openstack.org/admin-guide/networking_introduction.html#load-balancer-as-a-service-lbaas-overview>`__
-* `Basic Load-Balancer-as-a-Service operations <http://docs.openstack.org/admin-guide/networking_adv-features.html#basic-load-balancer-as-a-service-operations>`__
+* `Load-Balancer-as-a-Service (LBaaS) overview <http://docs.openstack.org/admin-guide/networking-introduction.html#load-balancer-as-a-service-lbaas-overview>`__
+* `Basic Load-Balancer-as-a-Service operations <http://docs.openstack.org/admin-guide/networking-adv-features.html#basic-load-balancer-as-a-service-operations>`__
 
 LBaaS v2
 ~~~~~~~~
