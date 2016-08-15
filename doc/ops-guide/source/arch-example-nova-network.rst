@@ -184,7 +184,7 @@ Why use multi-host networking?
 In a default OpenStack deployment, there is a single ``nova-network``
 service that runs within the cloud (usually on the cloud controller)
 that provides services such as
-:term:`network address translation <NAT>` (NAT), :term:`DHCP <Dynamic Host
+:term:`Network Address Translation (NAT)`, :term:`DHCP <Dynamic Host
 Configuration Protocol (DHCP)>`, and :term:`DNS <Domain Name System (DNS)>`
 to the guest instances. If the single node that runs the ``nova-network``
 service goes down, you cannot access your instances, and the instances
@@ -205,7 +205,7 @@ Detailed Description
 The reference architecture consists of multiple compute nodes, a cloud
 controller, an external NFS storage server for instance storage, and an
 OpenStack Block Storage server for volume storage.
-A network time service (:term:`Network Time Protocol <NTP>`, or NTP)
+A network time service (:term:`Network Time Protocol (NTP)`)
 synchronizes time on all the nodes. FlatDHCPManager in
 multi-host mode is used for the networking. A logical diagram for this
 example architecture shows which services are running on each node:

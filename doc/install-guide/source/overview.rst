@@ -139,7 +139,8 @@ Controller
 The controller node runs the Identity service, Image service, management
 portions of Compute, management portion of Networking, various Networking
 agents, and the dashboard. It also includes supporting services such as
-an SQL database, :term:`message queue`, and :term:`NTP`.
+an SQL database, :term:`message queue`, and :term:`NTP <Network Time Protocol
+(NTP)>`.
 
 Optionally, the controller node runs portions of Block Storage, Object
 Storage, Orchestration, and Telemetry services.
@@ -225,8 +226,8 @@ The self-service networks option augments the provider networks option
 with layer-3 (routing) services that enable
 :term:`self-service` networks using overlay segmentation methods such
 as :term:`VXLAN`. Essentially, it routes virtual networks to physical networks
-using :term:`NAT`. Additionally, this option provides the foundation
-for advanced services such as LBaaS and FWaaS.
+using :term:`NAT<Network Address Translation (NAT)>`. Additionally, this option
+provides the foundation for advanced services such as LBaaS and FWaaS.
 
 .. _figure-network2-services:
 

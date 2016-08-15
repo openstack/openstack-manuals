@@ -2460,11 +2460,10 @@ N
       connectivity. In Networking terminology, a network is always a layer-2
       network.
 
-   NAT
+   Network Address Translation (NAT)
 
-      Network Address Translation; Process of modifying IP address
-      information while in transit. Supported by Compute and
-      Networking.
+      Process of modifying IP address information while in transit.
+      Supported by Compute and Networking.
 
    network controller
 
@@ -2503,6 +2502,11 @@ N
       Represents a virtual, isolated OSI layer-2 subnet in
       Networking.
 
+   Network Time Protocol (NTP)
+
+      Method of keeping a clock for a host or node correct via
+      communication with a trusted, accurate time source.
+
    Newton
 
       The code name for the fourteenth release of OpenStack. The
@@ -2510,12 +2514,6 @@ N
       release is named after "Newton House" which is located at
       1013 E. Ninth St., Austin, TX. which is listed on the
       National Register of Historic Places.
-
-   NTP
-
-      Network Time Protocol; Method of keeping a clock for a host or
-      node correct via communication with a trusted, accurate time
-      source.
 
    network UUID
 
