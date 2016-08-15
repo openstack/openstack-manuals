@@ -115,7 +115,7 @@ Stateful services may be configured as active/passive or active/active:
 
   A typical active/passive installation for a stateful service maintains
   a replacement resource that can be brought online when required.
-  Requests are handled using a :term:`virtual IP` address (VIP) that
+  Requests are handled using a :term:`virtual IP address (VIP)` that
   facilitates returning to service with minimal reconfiguration.
   A separate application (such as Pacemaker or Corosync) monitors
   these services, bringing the backup online as necessary.

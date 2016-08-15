@@ -225,9 +225,10 @@ Networking Option 2: Self-service networks
 The self-service networks option augments the provider networks option
 with layer-3 (routing) services that enable
 :term:`self-service` networks using overlay segmentation methods such
-as :term:`VXLAN`. Essentially, it routes virtual networks to physical networks
-using :term:`NAT<Network Address Translation (NAT)>`. Additionally, this option
-provides the foundation for advanced services such as LBaaS and FWaaS.
+as :term:`VXLAN <Virtual Extensible LAN (VXLAN)>`. Essentially, it routes
+virtual networks to physical networks using :term:`NAT<Network Address
+Translation (NAT)>`. Additionally, this option provides the foundation for
+advanced services such as LBaaS and FWaaS.
 
 .. _figure-network2-services:
 
