@@ -40,8 +40,9 @@ Host networking
    distribution, see the `SLES 12 <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__ or `openSUSE <http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking>`__ documentation.
 
 All nodes require Internet access for administrative purposes such as package
-installation, security updates, :term:`DNS`, and :term:`NTP`. In most cases,
-nodes should obtain internet access through the management network interface.
+installation, security updates, :term:`DNS <Domain Name System (DNS)>`, and
+:term:`NTP`. In most cases, nodes should obtain internet access through the
+management network interface.
 To highlight the importance of network separation, the example architectures
 use `private address space <https://tools.ietf.org/html/rfc1918>`__ for the
 management network and assume that the physical network infrastructure
@@ -67,7 +68,8 @@ The example architectures assume use of the following networks:
 
   This network requires a gateway to provide Internet access to all
   nodes for administrative purposes such as package installation,
-  security updates, :term:`DNS`, and :term:`NTP`.
+  security updates, :term:`DNS <Domain Name System (DNS)>`, and
+  :term:`NTP`.
 
 * Provider on 203.0.113.0/24 with gateway 203.0.113.1
 

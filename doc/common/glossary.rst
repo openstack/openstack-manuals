@@ -973,14 +973,6 @@ D
       May or may not listen on a TCP or UDP port. Do not confuse with a
       worker.
 
-   DAC
-
-      Discretionary access control. Governs the ability of subjects to
-      access objects, while enabling users to make policy decisions and
-      assign security attributes. The traditional UNIX system of users,
-      groups, and read-write-execute permissions is an example of
-      DAC.
-
    Dashboard
 
       The web-based management interface for OpenStack. An alternative
@@ -1111,15 +1103,6 @@ D
       Community project that uses shell scripts to quickly build
       complete OpenStack development environments.
 
-   DHCP
-
-      Dynamic Host Configuration Protocol. A network protocol that
-      configures devices that are connected to a network so that they can
-      communicate on that network by using the Internet Protocol (IP). The
-      protocol is implemented in a client-server model where DHCP clients
-      request configuration data, such as an IP address, a default route,
-      and one or more DNS server addresses from a DHCP server.
-
    DHCP agent
 
       OpenStack Networking agent that provides DHCP services
@@ -1159,6 +1142,13 @@ D
       address and fixed IP and thus returning the floating IP address to the
       address pool.
 
+   Discretionary Access Control (DAC)
+
+      Governs the ability of subjects to access objects, while enabling
+      users to make policy decisions and assign security attributes.
+      The traditional UNIX system of users, groups, and read-write-execute
+      permissions is an example of DAC.
+
    disk encryption
 
       The ability to encrypt data at the file system, disk partition,
@@ -1183,13 +1173,6 @@ D
    Django
 
       A web framework used extensively in horizon.
-
-   DNS
-
-      Domain Name System. A hierarchical and distributed naming system
-      for computers, services, and resources connected to the Internet or a
-      private network. Associates human-friendly, domain names to IP
-      addresses.
 
    DNS record
 
@@ -1242,10 +1225,6 @@ D
       The transfer of data, usually in the form of files, from one
       computer to another.
 
-   DRTM
-
-      Dynamic root of trust measurement.
-
    durable exchange
 
       The Compute RabbitMQ message exchange that remains active when
@@ -1258,6 +1237,12 @@ D
 
    Dynamic Host Configuration Protocol (DHCP)
 
+      A network protocol that configures devices that are connected to a
+      network so that they can communicate on that network by using the
+      Internet Protocol (IP). The protocol is implemented in a client-server
+      model where DHCP clients request configuration data, such as an IP
+      address, a default route, and one or more DNS server addresses from a
+      DHCP server.
       A method to automatically configure networking for a host at
       boot time. Provided by both Networking and Compute.
 

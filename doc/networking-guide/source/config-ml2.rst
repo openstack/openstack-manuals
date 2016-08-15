@@ -338,9 +338,9 @@ For a detailed list of configuration options, see the related section in the
 DHCP agent
 ^^^^^^^^^^
 
-The DHCP agent is responsible for :term:`DHCP` (Dynamic Host Configuration
-Protocol) and RADVD (Router Advertisement Daemon) services. It requires a
-running L2 agent on the same node.
+The DHCP agent is responsible for :term:`DHCP <Dynamic Host Configuration
+Protocol (DHCP)>` and RADVD (Router Advertisement Daemon) services.
+It requires a running L2 agent on the same node.
 
 Configuration for the DHCP agent is typically done in the
 ``dhcp_agent.ini`` configuration file. Make sure that on agent start

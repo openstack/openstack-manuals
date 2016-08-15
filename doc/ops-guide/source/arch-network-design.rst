@@ -149,7 +149,8 @@ For OpenStack Networking with the neutron project, typical
 configurations are documented with the idea that any setup you can
 configure with real hardware you can re-create with a software-defined
 equivalent. Each tenant can contain typical network elements such as
-routers, and services such as :term:`DHCP`.
+routers, and services such as :term:`DHCP <Dynamic Host Configuration
+Protocol (DHCP)>`.
 
 :ref:`table_networking_deployment` describes the networking deployment
 options for both legacy ``nova-network`` options and an equivalent
