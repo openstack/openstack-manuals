@@ -3,8 +3,8 @@ Compute service overview
 ========================
 
 Use OpenStack Compute to host and manage cloud computing systems.
-OpenStack Compute is a major part of an Infrastructure-as-a-Service
-(:term:`IaaS`) system. The main modules are implemented in Python.
+OpenStack Compute is a major part of an :term:`Infrastructure-as-a-Service
+(IaaS)` system. The main modules are implemented in Python.
 
 OpenStack Compute interacts with OpenStack Identity for authentication;
 OpenStack Image service for disk and server images; and OpenStack

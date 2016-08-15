@@ -197,7 +197,8 @@ Disk I/O limits
        is -1 which indicates unlimited usage.
 
     -  ``disk_io_reservation``: Specifies the guaranteed minimum disk
-       allocation in terms of :term:`IOPS`.
+       allocation in terms of :term:`IOPS <Input/output Operations Per
+       Second (IOPS)>`.
 
     -  ``disk_io_shares_level``: Specifies the allocation
        level. This can be ``custom``, ``high``, ``normal`` or ``low``.

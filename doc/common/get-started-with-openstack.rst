@@ -15,7 +15,7 @@ types of clouds, which aims to be simple to implement, massively
 scalable, and feature rich. Developers and cloud computing technologists
 from around the world create the OpenStack project.
 
-OpenStack provides an Infrastructure-as-a-Service (:term:`IaaS`) solution
+OpenStack provides an :term:`Infrastructure-as-a-Service (IaaS)` solution
 through a set of interrelated services. Each service offers an
 :term:`application programming interface (API)` that facilitates this
 integration. Depending on your needs, you can install some or all

@@ -108,7 +108,8 @@ Problem
 The OpenStack Block Storage uses ``tgtd`` as the default iSCSI helper
 and implements persistent targets. This means that in the case of a
 ``tgt`` restart, or even a node reboot, your existing volumes on that
-node will be restored automatically with their original :term:`IQN`.
+node will be restored automatically with their original :term:`IQN <iSCSI
+Qualified Name (IQN)>`.
 
 By default, Block Storage uses a ``state_path`` variable, which if
 installing with Yum or APT should be set to ``/var/lib/cinder/``.
@@ -119,7 +120,7 @@ file-tree: ``/var/lib/cinder/volumes/``.
 Solution
 --------
 
-In order to ensure nodes are restored to their original :term:`IQN`,
+In order to ensure nodes are restored to their original IQN,
 the iSCSI target information needs to be stored in a file on creation
 that can be queried in case of restart of the ``tgt daemon``. While the
 installer should handle all this, it can go wrong.

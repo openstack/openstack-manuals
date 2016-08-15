@@ -88,12 +88,11 @@ A term that appears in the glossary.
 +------------------------+---------------------------------------------------+
 | **Markup**             | ``:term:``                                        |
 +------------------------+---------------------------------------------------+
-| **Syntax**             | ``:term:`IaaS```                                  |
+| **Syntax**             | ``:term:`neutron```                               |
 |                        | or ``:term:`services <service>```                 |
 +------------------------+---------------------------------------------------+
-| **Example of output**  | OpenStack provides an :term:`IaaS` solution       |
-|                        | through a variety of complementary                |
-|                        | :term:`services <service>`.                       |
+| **Example of output**  | OpenStack :term:`neutron` provides                |
+|                        | network-related :term:`services <service>`.       |
 +------------------------+---------------------------------------------------+
 
 .. _gui_element:

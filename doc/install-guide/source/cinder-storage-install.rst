@@ -11,9 +11,9 @@ value for your particular node.
 
 The service provisions logical volumes on this device using the
 :term:`LVM <Logical Volume Manager (LVM)>` driver and provides them
-to instances via :term:`iSCSI` transport. You can follow these
-instructions with minor modifications to horizontally scale your
-environment with additional storage nodes.
+to instances via :term:`iSCSI <iSCSI Qualified Name (IQN)>` transport.
+You can follow these instructions with minor modifications to horizontally
+scale your environment with additional storage nodes.
 
 Prerequisites
 -------------

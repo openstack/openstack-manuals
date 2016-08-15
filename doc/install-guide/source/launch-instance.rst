@@ -116,7 +116,7 @@ secure shell (SSH).
 
 * Add rules to the ``default`` security group:
 
-  * Permit :term:`ICMP` (ping):
+  * Permit :term:`ICMP <Internet Control Message Protocol (ICMP)>` (ping):
 
     .. code-block:: console
 

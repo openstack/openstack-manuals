@@ -182,11 +182,12 @@ Input-Output requirements
 Scale
  Scaling storage solutions in a storage-focused OpenStack
  architecture design is driven by initial requirements, including
- :term:`IOPS`, capacity, bandwidth, and future needs. Planning
- capacity based on projected needs over the course of a budget cycle
- is important for a design. The architecture should balance cost and
- capacity, while also allowing flexibility to implement new
- technologies and methods as they become available.
+ :term:`IOPS <Input/output Operations Per Second (IOPS)>`, capacity,
+ bandwidth, and future needs. Planning capacity based on projected needs
+ over the course of a budget cycle is important for a design. The
+ architecture should balance cost and capacity, while also allowing
+ flexibility to implement new technologies and methods as they become
+ available.
 
 Network
 ~~~~~~~

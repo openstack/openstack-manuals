@@ -7,7 +7,7 @@ supports all types of cloud environments. The project aims for simple
 implementation, massive scalability, and a rich set of features. Cloud
 computing experts from around the world contribute to the project.
 
-OpenStack provides an :term:`Infrastructure-as-a-Service (IaaS)<IaaS>` solution
+OpenStack provides an :term:`Infrastructure-as-a-Service (IaaS)` solution
 through a variety of complementary services. Each service offers an
 :term:`Application Programming Interface (API)` that facilitates this
 integration.
@@ -210,8 +210,8 @@ instances.
    This option lacks support for self-service (private) networks, layer-3
    (routing) services, and advanced services such as
    :term:`LBaaS <Load-Balancer-as-a-Service (LBaaS)>` and
-   :term:`FWaaS`. Consider the self-service networks option if you
-   desire these features.
+   :term:`FWaaS<FireWall-as-a-Service (FWaaS)>`.
+   Consider the self-service networks option if you desire these features.
 
 .. _figure-network1-services:
 

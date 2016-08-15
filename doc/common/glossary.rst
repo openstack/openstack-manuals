@@ -1475,7 +1475,7 @@ F
       implemented in Compute using iptables, arptables, ip6tables, and
       ebtables.
 
-   FWaaS
+   FireWall-as-a-Service (FWaaS)
 
       A Networking extension that provides perimeter firewall
       functionality.
@@ -1780,27 +1780,11 @@ I
 
 .. glossary::
 
-   IaaS
-
-      Infrastructure-as-a-Service. IaaS is a provisioning model in
-      which an organization outsources physical components of a data center,
-      such as storage, hardware, servers, and networking components. A
-      service provider owns the equipment and is responsible for housing,
-      operating and maintaining it. The client typically pays on a per-use
-      basis. IaaS is a model for providing cloud services.
-
    Icehouse
 
       The code name for the ninth release of OpenStack. The
       design summit took place in Hong Kong and Ice House is a
       street in that city.
-
-   ICMP
-
-      Internet Control Message Protocol, used by network
-      devices for control messages. For example,
-      :command:`ping` uses ICMP to test
-      connectivity.
 
    ID number
 
@@ -1834,10 +1818,6 @@ I
 
       The API used to access the OpenStack Identity service provided
       through keystone.
-
-   IDS
-
-      Intrusion Detection System.
 
    image
 
@@ -1908,12 +1888,21 @@ I
       A community project may be elevated to this status and is then
       promoted to a core project.
 
+   Infrastructure-as-a-Service (IaaS)
+
+      IaaS is a provisioning model in which an organization outsources
+      physical components of a data center, such as storage, hardware,
+      servers, and networking components. A service provider owns the
+      equipment and is responsible for housing, operating and maintaining
+      it. The client typically pays on a per-use basis.
+      IaaS is a model for providing cloud services.
+
    ingress filtering
 
       The process of filtering incoming network traffic. Supported by
       Compute.
 
-   INI
+   INI format
 
       The OpenStack configuration files use an INI format to
       describe options and their values. It consists of sections
@@ -1923,6 +1912,12 @@ I
 
       The process of putting a file into a virtual machine image
       before the instance is started.
+
+   Input/Output Operations Per Second (IOPS)
+
+      IOPS are a common performance measurement used to benchmark computer
+      storage devices like hard disk drives, solid state drives, and
+      storage area networks.
 
    instance
 
@@ -1956,6 +1951,15 @@ I
 
       Unique ID assigned to each guest VM instance.
 
+   Intelligent Platform Management Interface (IPMI)
+
+      IPMI is a standardized computer system interface used by system
+      administrators for out-of-band management of computer systems and
+      monitoring of their operation. In layman's terms, it is a way to
+      manage a computer using a direct network connection, whether it is
+      turned on or not; connecting to the hardware rather than an operating
+      system or login shell.
+
    interface
 
       A physical or virtual device that provides connectivity
@@ -1965,6 +1969,12 @@ I
 
       Unique ID for a Networking VIF or vNIC in the form of a
       UUID.
+
+   Internet Control Message Protocol (ICMP)
+
+      A network protocol used by network devices for control messages.
+      For example, :command:`ping` uses ICMP to test
+      connectivity.
 
    Internet protocol (IP)
 
@@ -1980,18 +1990,12 @@ I
 
       Storage protocol that encapsulates SCSI frames for transport
       over IP networks.
+      Supported by Compute, Object Storage, and Image service.
 
    ironic
 
       OpenStack project that provisions bare metal, as opposed to
       virtual machines.
-
-   IOPS
-
-      IOPS (Input/Output Operations Per Second) are a common
-      performance measurement used to benchmark computer storage
-      devices like hard disk drives, solid state drives, and
-      storage area networks.
 
    IP address
 
@@ -2004,20 +2008,6 @@ I
       The process of automating IP address allocation, deallocation,
       and management. Currently provided by Compute, melange, and
       Networking.
-
-   IPL
-
-      Initial Program Loader.
-
-   IPMI
-
-      Intelligent Platform Management Interface. IPMI is a
-      standardized computer system interface used by system administrators
-      for out-of-band management of computer systems and monitoring of their
-      operation. In layman's terms, it
-      is a way to manage a computer using a direct network connection,
-      whether it is turned on or not; connecting to the hardware rather than
-      an operating system or login shell.
 
    ip6tables
 
@@ -2043,20 +2033,15 @@ I
       ip6tables to IPv6, arptables to ARP, and ebtables to Ethernet frames.
       Requires root privilege to manipulate.
 
-   IQN
+   iSCSI Qualified Name (IQN)
 
-      iSCSI Qualified Name (IQN) is the format most commonly used
-      for iSCSI names, which uniquely identify nodes in an iSCSI network.
+      IQN is the format most commonly used for iSCSI names, which uniquely
+      identify nodes in an iSCSI network.
       All IQNs follow the pattern iqn.yyyy-mm.domain:identifier, where
       'yyyy-mm' is the year and month in which the domain was registered,
       'domain' is the reversed domain name of the issuing organization, and
       'identifier' is an optional string which makes each IQN under the same
       domain unique. For example, 'iqn.2015-10.org.openstack.408ae959bce1'.
-
-   iSCSI
-
-      The SCSI disk protocol tunneled within Ethernet, supported by
-      Compute, Object Storage, and Image service.
 
    ISO9660
 
