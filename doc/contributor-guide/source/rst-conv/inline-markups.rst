@@ -92,7 +92,7 @@ A term that appears in the glossary.
 |                        | or ``:term:`services <service>```                 |
 +------------------------+---------------------------------------------------+
 | **Example of output**  | OpenStack provides an :term:`IaaS` solution       |
-|                        | through a variety of complemental                 |
+|                        | through a variety of complementary                |
 |                        | :term:`services <service>`.                       |
 +------------------------+---------------------------------------------------+
 

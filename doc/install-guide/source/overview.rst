@@ -8,7 +8,7 @@ implementation, massive scalability, and a rich set of features. Cloud
 computing experts from around the world contribute to the project.
 
 OpenStack provides an :term:`Infrastructure-as-a-Service (IaaS)<IaaS>` solution
-through a variety of complemental services. Each service offers an
+through a variety of complementary services. Each service offers an
 :term:`Application Programming Interface (API)` that facilitates this
 integration.
 
