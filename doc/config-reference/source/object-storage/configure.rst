@@ -49,22 +49,3 @@ Find an example memcache configuration for the proxy server at
 The available configuration options are:
 
 .. include:: ../tables/swift-memcache-memcache.rst
-
-Rsyncd configuration
-~~~~~~~~~~~~~~~~~~~~
-
-Find an example rsyncd configuration at ``etc/rsyncd.conf-sample`` in
-the source code repository.
-
-The available configuration options are:
-
-.. include:: ../tables/swift-rsyncd-account.rst
-.. include:: ../tables/swift-rsyncd-container.rst
-.. include:: ../tables/swift-rsyncd-object.rst
-.. include:: ../tables/swift-rsyncd-object6010.rst
-.. include:: ../tables/swift-rsyncd-object6020.rst
-.. include:: ../tables/swift-rsyncd-object6030.rst
-.. include:: ../tables/swift-rsyncd-object6040.rst
-.. include:: ../tables/swift-rsyncd-object_sda.rst
-.. include:: ../tables/swift-rsyncd-object_sdb.rst
-.. include:: ../tables/swift-rsyncd-object_sdc.rst
