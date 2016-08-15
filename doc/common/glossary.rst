@@ -2233,7 +2233,7 @@ L
       The process of spreading client requests between two or more
       nodes to improve performance and availability.
 
-   LBaaS
+   Load-Balancer-as-a-Service (LBaaS)
 
       Enables Networking to distribute incoming requests evenly
       between designated instances.

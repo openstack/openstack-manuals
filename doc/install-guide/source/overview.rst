@@ -208,7 +208,8 @@ instances.
 .. note::
 
    This option lacks support for self-service (private) networks, layer-3
-   (routing) services, and advanced services such as :term:`LBaaS` and
+   (routing) services, and advanced services such as
+   :term:`LBaaS <Load-Balancer-as-a-Service (LBaaS)>` and
    :term:`FWaaS`. Consider the self-service networks option if you
    desire these features.
 
