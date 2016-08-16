@@ -4,7 +4,7 @@ Nested quotas
 
 Nested quota is a change in how OpenStack services (such as Block Storage and
 Compute) handle their quota resources by being hierarchy-aware. The main
-reason for this change is to fully appreciate the hierarchical multitenancy
+reason for this change is to fully appreciate the hierarchical multi-tenancy
 concept, which was introduced in keystone in the Kilo release.
 
 Once you have a project hierarchy created in keystone, nested quotas let you
@@ -12,7 +12,7 @@ define how much of a project's quota you want to give to its subprojects. In
 that way, hierarchical projects can have hierarchical quotas (also known as
 nested quotas).
 
-Projects and subprojects have similar behaviours, but they differ from each
+Projects and subprojects have similar behaviors, but they differ from each
 other when it comes to default quota values. The default quota value for
 resources in a subproject is 0, so that when a subproject is created it will
 not consume all of its parent's quota.
@@ -165,6 +165,6 @@ project.
 
 See `cinder nested quota spec
 <http://specs.openstack.org/openstack/cinder-specs/specs/liberty/cinder-nested-quota-driver.html>`_
-and `hierarchical multitenancy spec
+and `hierarchical multi-tenancy spec
 <https://blueprints.launchpad.net/keystone/+spec/hierarchical-multitenancy>`_
 for details.
