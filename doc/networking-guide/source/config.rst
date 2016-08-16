@@ -19,6 +19,7 @@ Configuration
    config-ipam
    config-ipv6
    config-lbaas
+   config-macvtap
    config-mtu
    config-ovsfwdriver
    config-qos

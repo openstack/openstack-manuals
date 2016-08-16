@@ -64,7 +64,7 @@ The example configuration involves the following components:
    The example configuration assumes sufficient knowledge about the
    Networking service, routing, and BGP. For basic deployment of the
    Networking service, consult one of the
-   :ref:`deployment-scenarios`. For more information on BGP, see
+   :ref:`deploy`. For more information on BGP, see
    `RFC 4271 <https://tools.ietf.org/html/rfc4271>`_.
 
 Controller node
