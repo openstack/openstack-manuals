@@ -42,7 +42,6 @@ Messaging queue
   server and neutron agents that run on each hypervisor, in the ML2
   mechanism drivers for :term:`Open vSwitch` and :term:`Linux bridge`.
 
-
 Concepts
 ~~~~~~~~
 
@@ -58,8 +57,72 @@ two types of network, tenant and provider networks. It is possible to share any
 of these types of networks among tenants as part of the network creation
 process.
 
-Tenant networks
----------------
+.. _intro-os-networking-provider:
+
+Provider networks
+-----------------
+
+Provider networks offer layer-2 connectivity to instances with optional
+support for DHCP and metadata services. These networks connect, or map, to
+existing layer-2 networks in the data center, typically using VLAN (802.1q)
+tagging to identify and separate them.
+
+Provider networks generally offer simplicity, performance, and reliability
+at the cost of flexibility. Only administrators can manage provider networks
+because they require configuration of physical network infrastructure. Also,
+provider networks only handle layer-2 connectivity for instances, thus
+lacking support for features such as routers and floating IP addresses.
+
+In many cases, operators who are already familiar with virtual networking
+architectures that rely on physical network infrastructure for layer-2,
+layer-3, or other services can seamlessly deploy the OpenStack Networking
+service. In particular, provider networks appeal to operators looking to
+migrate from the Compute networking service (nova-network) to the OpenStack
+Networking service. Over time, operators can build on this minimal
+architecture to enable more cloud networking features.
+
+In general, the OpenStack Networking software components that handle layer-3
+operations impact performance and reliability the most. To improve performance
+and reliability, provider networks move layer-3 operations to the physical
+network infrastructure.
+
+In one particular use case, the OpenStack deployment resides in a mixed
+environment with conventional virtualization and bare-metal hosts that use a
+sizable physical network infrastructure. Applications that run inside the
+OpenStack deployment might require direct layer-2 access, typically using
+VLANs, to applications outside of the deployment.
+
+.. _intro-os-networking-selfservice:
+
+Self-service networks
+---------------------
+
+Self-service networks primarily enable general (non-privileged) projects
+to manage networks without involving administrators. These networks are
+entirely virtual and require virtual routers to interact with provider
+and external networks such as the Internet. Self-service networks also
+usually provide DHCP and metadata services to instances.
+
+In most cases, self-service networks use overlay protocols such as VXLAN
+or GRE because they can support many more networks than layer-2 segmentation
+using VLAN tagging (802.1q). Furthermore, VLANs typically require additional
+configuration of physical network infrastructure.
+
+IPv4 self-service networks typically use private IP address ranges (RFC1918)
+and interact with provider networks via source NAT on virtual routers.
+Floating IP addresses enable access to instances from provider networks
+via destination NAT on virtual routers. IPv6 self-service networks always
+use public IP address ranges and interact with provider networks via
+virtual routers with static routes.
+
+The Networking service implements routers using a layer-3 agent that typically
+resides at least one network node. Contrary to provider networks that connect
+instances to the physical network infrastructure at layer-2, self-service
+networks must traverse a layer-3 agent. Thus, oversubscription or failure
+of a layer-3 agent or network node can impact a significant quantity of
+self-service networks and instances using them. Consider implementing one or
+more high-availability features to increase redundancy and performance
+of self-service networks.
 
 Users create tenant networks for connectivity within projects. By default, they
 are fully isolated and are not shared with other projects. OpenStack Networking
@@ -86,13 +149,6 @@ GRE and VXLAN
     Internet. The router provides the ability to connect to instances directly
     from an external network using floating IP addresses.
 
-Provider networks
------------------
-
-The OpenStack administrator creates provider networks. These networks map to
-existing physical networks in the data center. Useful network types in this
-category are flat (untagged) and VLAN (802.1Q tagged).
-
 .. image:: figures/NetworkTypes.png
    :alt: Tenant and provider networks
 
@@ -105,7 +161,7 @@ networking service for both tenant and provider networks.
 Subnets are used to allocate IP addresses when new ports are created on a
 network.
 
-Subnet Pools
+Subnet pools
 ------------
 
 End users normally can create subnets with any valid IP addresses without other
@@ -130,10 +186,10 @@ used on that port.
 Routers
 -------
 
-This is a logical component that forwards data packets between
-networks. It also provides L3 and NAT forwarding to provide external
-network access for VMs on tenant networks. Required by certain
-plug-ins only.
+Routers provide virtual layer-3 services such as routing and NAT
+between self-service and provider networks or among self-service
+networks belonging to a project. The Networking service uses a
+layer-3 agent to manage routers via namespaces.
 
 Security groups
 ---------------
@@ -209,6 +265,20 @@ list available extensions by performing a GET on the
 :code:`/extensions` URI. Note that this is a versioned request; that
 is, an extension available in one API version might not be available
 in another.
+
+DHCP
+----
+
+The optional DHCP service manages IP addresses for instances on provider
+and self-service networks. The Networking service implements the DHCP
+service using an agent that manages ``qdhcp`` namespaces and the
+``dnsmasq`` service.
+
+Metadata
+--------
+
+The optional metadata service provides an API for instances to obtain
+metadata such as SSH keys.
 
 Service and component hierarchy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

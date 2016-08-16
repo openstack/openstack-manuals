@@ -1,20 +1,20 @@
 .. _config-dvr-snat-ha-ovs:
 
-============================================
-Distributed Virtual Routing with VRRP (L3HA)
-============================================
+=====================================
+Distributed Virtual Routing with VRRP
+=====================================
 
-:ref:`Distributed Virtual Routing <scenario-dvr-ovs>` supports augmentation
-using :ref:`VRRP (L3HA) <scenario-l3ha-ovs>`. Using this configuration,
+:ref:`deploy-ovs-ha-dvr` supports augmentation
+using Virtual Router Redundancy Protocol (VRRP). Using this configuration,
 virtual routers support both the ``--distributed`` and ``--ha`` options.
 
 Similar to legacy HA routers, DVR/SNAT HA routers provide a quick fail over of
 the SNAT service to a backup DVR/SNAT router on an l3-agent running on a
 different node.
 
-SNAT high availability is implemented in a manner similar to
-:ref:`scenario-l3ha-ovs`, where ``keepalived`` uses the Virtual Router
-Redundancy Protocol (VRRP) to provide a quick fail over of SNAT services.
+SNAT high availability is implemented in a manner similar to the
+:ref:`deploy-lb-ha-vrrp` and :ref:`deploy-ovs-ha-vrrp` examples where
+``keepalived`` uses VRRP to provide quick failover of SNAT services.
 
 During normal operation, the master router periodically transmits *heartbeat*
 packets over a hidden project network that connects all HA routers for a
@@ -53,8 +53,6 @@ Controller node configuration
       l3_ha_net_cidr = 169.254.192.0/18
       max_l3_agents_per_router = 3
       min_l3_agents_per_router = 2
-
-
 
    When the ``router_distributed = True`` flag is configured, routers created
    by all users are distributed. Without it, only privileged users can create

@@ -36,6 +36,11 @@ components:
   and tenant users to create and manage network services through a web-based
   graphical interface.
 
+.. note::
+
+   To reduce clutter, this guide removes command output without relevance
+   to the particular action.
+
 .. toctree::
    :maxdepth: 2
 
