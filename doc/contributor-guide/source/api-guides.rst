@@ -37,6 +37,13 @@ Standards for API reference in OpenStack
 The API working group has `API documentation guidelines`_ that all teams
 providing a REST API service in OpenStack strive to follow.
 
+For service names, you must adhere to the official name for the service as
+indicated in the governance repository in the ``reference/projects.yaml``
+file. These names are used in the URL for the documentation by stating the
+target directory for the content in the ``api-ref-jobs:`` indicator. If
+your service does not have a name indicated in the governance repo,
+please ask your PTL or a Technical Committee member how to proceed.
+
 .. _how-to-document-api:
 
 How to document your OpenStack API service
