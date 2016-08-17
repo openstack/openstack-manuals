@@ -9,7 +9,7 @@ A time series storage and resources index service command-line client
 The gnocchi client is the command-line interface (CLI) for
 the A time series storage and resources index service API and its extensions.
 
-This chapter documents :command:`gnocchi` version ``2.1.0``.
+This chapter documents :command:`gnocchi` version ``2.5.0``.
 
 For help on a specific :command:`gnocchi` command, enter:
 
@@ -24,7 +24,7 @@ gnocchi usage
 
 .. code-block:: console
 
-   usage: gnocchi [--version] [-v] [--log-file LOG_FILE] [-q] [-h] [--debug]
+   usage: gnocchi [--version] [-v | -q] [--log-file LOG_FILE] [-h] [--debug]
                   [--os-region-name <auth-region-name>]
                   [--os-interface <interface>]
                   [--gnocchi-api-version GNOCCHI_API_VERSION] [--insecure]
@@ -39,10 +39,10 @@ gnocchi usage
                   [--os-trust-id OS_TRUST_ID]
                   [--os-default-domain-id OS_DEFAULT_DOMAIN_ID]
                   [--os-default-domain-name OS_DEFAULT_DOMAIN_NAME]
-                  [--os-user-id OS_USER_ID] [--os-user-name OS_USERNAME]
+                  [--os-user-id OS_USER_ID] [--os-username OS_USERNAME]
                   [--os-user-domain-id OS_USER_DOMAIN_ID]
                   [--os-user-domain-name OS_USER_DOMAIN_NAME]
-                  [--os-password OS_PASSWORD] [--gnocchi-endpoint <endpoint>]
+                  [--os-password OS_PASSWORD] [--endpoint ENDPOINT]
 
 .. _gnocchi_command_options:
 
@@ -55,11 +55,11 @@ gnocchi optional arguments
 ``-v, --verbose``
   Increase verbosity of output. Can be repeated.
 
-``--log-file LOG_FILE``
-  Specify a file to log output. Disabled by default.
-
 ``-q, --quiet``
   Suppress output except warnings and errors.
+
+``--log-file LOG_FILE``
+  Specify a file to log output. Disabled by default.
 
 ``-h, --help``
   Show help message and exit.
@@ -80,55 +80,40 @@ gnocchi optional arguments
 ``--os-auth-type <name>, --os-auth-plugin <name>``
   Authentication type to use
 
-``--gnocchi-endpoint <endpoint>``
+``--endpoint ENDPOINT``
   Gnocchi endpoint (Env: GNOCCHI_ENDPOINT)
-
-.. _gnocchi_archive-policy:
-
-gnocchi archive-policy
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   Command "archive-policy" matches:
-  archive-policy create
-  archive-policy delete
-  archive-policy list
-  archive-policy show
-  archive-policy-rule create
-  archive-policy-rule delete
-  archive-policy-rule list
-  archive-policy-rule show
-
 
 .. _gnocchi_archive-policy_create:
 
 gnocchi archive-policy create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
    usage: gnocchi archive-policy create [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                        [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
-                                        [-b BACK_WINDOW] [-m AGGREGATION_METHODS]
-                                        -d <DEFINITION>
+                                        [--noindent] [--prefix PREFIX] -d
+                                        <DEFINITION> [-b BACK_WINDOW]
+                                        [-m AGGREGATION_METHODS]
                                         name
 
 Create an archive policy
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   name of the archive policy
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
+
+``-d <DEFINITION>, --definition <DEFINITION>``
+  two attributes (separated by ',') of an archive policy
+  definition with its name and value separated with a
+  ':'
 
 ``-b BACK_WINDOW, --back-window BACK_WINDOW``
   back window of the archive policy
@@ -136,15 +121,10 @@ Optional arguments
 ``-m AGGREGATION_METHODS, --aggregation-method AGGREGATION_METHODS``
   aggregation method of the archive policy
 
-``-d <DEFINITION>, --definition <DEFINITION>``
-  two attributes (separated by ',') of an archive policy
-  definition with its name and value separated with a
-  ':'
-
 .. _gnocchi_archive-policy_delete:
 
 gnocchi archive-policy delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -152,14 +132,12 @@ gnocchi archive-policy delete
 
 Delete an archive policy
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Name of the archive policy
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -167,20 +145,18 @@ Optional arguments
 .. _gnocchi_archive-policy_list:
 
 gnocchi archive-policy list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
-   usage: gnocchi archive-policy list [-h]
-                                      [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: gnocchi archive-policy list [-h] [-f {csv,html,json,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
 
 List archive policies
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -188,53 +164,68 @@ Optional arguments
 .. _gnocchi_archive-policy_show:
 
 gnocchi archive-policy show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 .. code-block:: console
 
    usage: gnocchi archive-policy show [-h]
-                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                      [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--noindent] [--prefix PREFIX]
                                       name
 
 Show an archive policy
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Name of the archive policy
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-.. _gnocchi_archive-policy-rule:
+.. _gnocchi_archive-policy_update:
 
-gnocchi archive-policy-rule
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gnocchi archive-policy update
+-----------------------------
 
 .. code-block:: console
 
-   Command "archive-policy-rule" matches:
-  archive-policy-rule create
-  archive-policy-rule delete
-  archive-policy-rule list
-  archive-policy-rule show
+   usage: gnocchi archive-policy update [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX] -d
+                                        <DEFINITION>
+                                        name
 
+Update an archive policy
+
+**Positional arguments:**
+
+``name``
+  name of the archive policy
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``-d <DEFINITION>, --definition <DEFINITION>``
+  two attributes (separated by ',') of an archive policy
+  definition with its name and value separated with a
+  ':'
 
 .. _gnocchi_archive-policy-rule_create:
 
 gnocchi archive-policy-rule create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
    usage: gnocchi archive-policy-rule create [-h]
-                                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                             [-f {html,json,shell,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
                                              [--noindent] [--prefix PREFIX] -a
                                              ARCHIVE_POLICY_NAME -m
@@ -243,14 +234,12 @@ gnocchi archive-policy-rule create
 
 Create an archive policy rule
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Rule name
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -264,7 +253,7 @@ Optional arguments
 .. _gnocchi_archive-policy-rule_delete:
 
 gnocchi archive-policy-rule delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -272,14 +261,12 @@ gnocchi archive-policy-rule delete
 
 Delete an archive policy rule
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Name of the archive policy rule
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -287,20 +274,19 @@ Optional arguments
 .. _gnocchi_archive-policy-rule_list:
 
 gnocchi archive-policy-rule list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
    usage: gnocchi archive-policy-rule list [-h]
-                                           [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                           [-f {csv,html,json,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
 
 List archive policy rules
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -308,26 +294,24 @@ Optional arguments
 .. _gnocchi_archive-policy-rule_show:
 
 gnocchi archive-policy-rule show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
    usage: gnocchi archive-policy-rule show [-h]
-                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                           [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--noindent] [--prefix PREFIX]
                                            name
 
 Show an archive policy rule
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``name``
   Name of the archive policy rule
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -335,30 +319,28 @@ Optional arguments
 .. _gnocchi_benchmark_measures_add:
 
 gnocchi benchmark measures add
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
    usage: gnocchi benchmark measures add [-h] [--resource-id RESOURCE_ID]
-                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                         [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent] [--prefix PREFIX]
                                          [--workers WORKERS] --count COUNT
                                          [--batch BATCH]
                                          [--timestamp-start TIMESTAMP_START]
-                                         [--timestamp-end TIMESTAMP_END]
+                                         [--timestamp-end TIMESTAMP_END] [--wait]
                                          metric
 
 Do benchmark testing of adding measurements
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``metric``
   ID or name of the metric
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -381,33 +363,35 @@ Optional arguments
 ``--timestamp-end TIMESTAMP_END, -e TIMESTAMP_END``
   Last timestamp to use
 
+``--wait``
+  Wait for all measures to be processed
+
 .. _gnocchi_benchmark_measures_show:
 
 gnocchi benchmark measures show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
    usage: gnocchi benchmark measures show [-h]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                          [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           [--resource-id RESOURCE_ID]
                                           [--aggregation AGGREGATION]
                                           [--start START] [--stop STOP]
+                                          [--granularity GRANULARITY]
                                           [--workers WORKERS] --count COUNT
                                           metric
 
 Do benchmark testing of measurements show
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``metric``
   ID or name of the metric
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -424,6 +408,9 @@ Optional arguments
 ``--stop STOP``
   end of the period
 
+``--granularity GRANULARITY``
+  granularity to retrieve (in seconds)
+
 ``--workers WORKERS, -w WORKERS``
   Number of workers to use
 
@@ -433,12 +420,12 @@ Optional arguments
 .. _gnocchi_benchmark_metric_create:
 
 gnocchi benchmark metric create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
    usage: gnocchi benchmark metric create [-h] [--resource-id RESOURCE_ID]
-                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                          [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           [--archive-policy-name ARCHIVE_POLICY_NAME]
@@ -447,8 +434,7 @@ gnocchi benchmark metric create
 
 Do benchmark testing of metric creation
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -471,12 +457,12 @@ Optional arguments
 .. _gnocchi_benchmark_metric_show:
 
 gnocchi benchmark metric show
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
    usage: gnocchi benchmark metric show [-h] [--resource-id RESOURCE_ID]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                        [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent] [--prefix PREFIX]
                                         [--workers WORKERS] --count COUNT
@@ -484,14 +470,12 @@ gnocchi benchmark metric show
 
 Do benchmark testing of metric show
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``metric``
   ID or name of the metrics
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -508,19 +492,17 @@ Optional arguments
 .. _gnocchi_capabilities_list:
 
 gnocchi capabilities list
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
-   usage: gnocchi capabilities list [-h]
-                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: gnocchi capabilities list [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
 
 List capabilities
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -528,7 +510,7 @@ Optional arguments
 .. _gnocchi_measures_add:
 
 gnocchi measures add
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
@@ -536,14 +518,12 @@ gnocchi measures add
 
 Add measurements to a metric
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``metric``
   ID or name of the metric
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -554,80 +534,71 @@ Optional arguments
 ``-m MEASURE, --measure MEASURE``
   timestamp and value of a measure separated with a '@'
 
-.. _gnocchi_measures_aggregation:
+.. _gnocchi_measures_batch-metrics:
 
-gnocchi measures aggregation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+gnocchi measures batch-metrics
+------------------------------
 
 .. code-block:: console
 
-   usage: gnocchi measures aggregation [-h]
-                                       [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                       [-c COLUMN] [--max-width <integer>]
-                                       [--noindent]
-                                       [--quote {all,minimal,none,nonnumeric}] -m
-                                       METRIC [METRIC ...]
-                                       [--aggregation AGGREGATION]
-                                       [--start START] [--stop STOP]
-                                       [--needed-overlap NEEDED_OVERLAP]
-                                       [--query QUERY]
-                                       [--resource-type RESOURCE_TYPE]
+   usage: gnocchi measures batch-metrics [-h] file
 
-Get measurements of aggregated metrics
 
-Optional arguments
-------------------
+**Positional arguments:**
+
+``file``
+  File containing measurements to batch or - for stdin (see
+  Gnocchi REST API docs for the format
+
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
 
-``-m METRIC [METRIC ...], --metric METRIC [METRIC ...]``
-  metrics IDs or metric name
+.. _gnocchi_measures_batch-resources-metrics:
 
-``--aggregation AGGREGATION``
-  aggregation to retrieve
+gnocchi measures batch-resources-metrics
+----------------------------------------
 
-``--start START``
-  beginning of the period
+.. code-block:: console
 
-``--stop STOP``
-  end of the period
+   usage: gnocchi measures batch-resources-metrics [-h] file
 
-``--needed-overlap NEEDED_OVERLAP``
-  percent of datapoints in each metrics required
 
-``--query QUERY``
-  Query
+**Positional arguments:**
 
-``--resource-type RESOURCE_TYPE``
-  Resource type to query
+``file``
+  File containing measurements to batch or - for stdin (see
+  Gnocchi REST API docs for the format
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
 
 .. _gnocchi_measures_show:
 
 gnocchi measures show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: gnocchi measures show [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: gnocchi measures show [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--resource-id RESOURCE_ID]
                                 [--aggregation AGGREGATION] [--start START]
-                                [--stop STOP]
+                                [--stop STOP] [--granularity GRANULARITY]
                                 metric
 
 Get measurements of a metric
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``metric``
   ID or name of the metric
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -644,30 +615,32 @@ Optional arguments
 ``--stop STOP``
   end of the period
 
+``--granularity GRANULARITY``
+  granularity to retrieve (in seconds)
+
 .. _gnocchi_metric_create:
 
 gnocchi metric create
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
    usage: gnocchi metric create [-h] [--resource-id RESOURCE_ID]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
                                 [--archive-policy-name ARCHIVE_POLICY_NAME]
+                                [--unit UNIT]
                                 [METRIC_NAME]
 
 Create a metric
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``METRIC_NAME``
   Name of the metric
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -678,10 +651,13 @@ Optional arguments
 ``--archive-policy-name ARCHIVE_POLICY_NAME, -a ARCHIVE_POLICY_NAME``
   name of the archive policy
 
+``--unit UNIT, -u UNIT``
+  unit of the metric
+
 .. _gnocchi_metric_delete:
 
 gnocchi metric delete
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
@@ -690,14 +666,12 @@ gnocchi metric delete
 
 Delete a metric
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``metric``
   IDs or names of the metric
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -708,19 +682,17 @@ Optional arguments
 .. _gnocchi_metric_list:
 
 gnocchi metric list
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: gnocchi metric list [-h]
-                              [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: gnocchi metric list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
 
 List metrics
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -728,26 +700,23 @@ Optional arguments
 .. _gnocchi_metric_show:
 
 gnocchi metric show
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. code-block:: console
 
-   usage: gnocchi metric show [-h]
-                              [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: gnocchi metric show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX] [--resource-id RESOURCE_ID]
                               metric
 
 Show a metric
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``metric``
   ID or name of the metric
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -758,29 +727,25 @@ Optional arguments
 .. _gnocchi_resource_create:
 
 gnocchi resource create
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: gnocchi resource create [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: gnocchi resource create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   [--type RESOURCE_TYPE] [-a ATTRIBUTE]
                                   [-m ADD_METRIC] [-n CREATE_METRIC]
-                                  [-d DELETE_METRIC]
                                   resource_id
 
 Create a resource
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``resource_id``
   ID of the resource
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -789,7 +754,7 @@ Optional arguments
   Type of resource
 
 ``-a ATTRIBUTE, --attribute ATTRIBUTE``
-  name and value of a attribute separated with a ':'
+  name and value of an attribute separated with a ':'
 
 ``-m ADD_METRIC, --add-metric ADD_METRIC``
   name:id of a metric to add
@@ -797,13 +762,10 @@ Optional arguments
 ``-n CREATE_METRIC, --create-metric CREATE_METRIC``
   name:archive_policy_name of a metric to create
 
-``-d DELETE_METRIC, --delete-metric DELETE_METRIC``
-  Name of a metric to delete
-
 .. _gnocchi_resource_delete:
 
 gnocchi resource delete
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
@@ -811,14 +773,12 @@ gnocchi resource delete
 
 Delete a resource
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``resource_id``
   ID of the resource
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -826,12 +786,11 @@ Optional arguments
 .. _gnocchi_resource_history:
 
 gnocchi resource history
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
-   usage: gnocchi resource history [-h]
-                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: gnocchi resource history [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
@@ -842,14 +801,12 @@ gnocchi resource history
 
 Show the history of a resource
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``resource_id``
   ID of a resource
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -866,8 +823,7 @@ Optional arguments
   results after this value
 
 ``--sort <SORT>``
-  Sort of resource attribute (example: user_id:desc-
-  nullslast
+  Sort of resource attribute (example: user_id:desc-nullslast
 
 ``--type RESOURCE_TYPE, -t RESOURCE_TYPE``
   Type of resource
@@ -875,12 +831,11 @@ Optional arguments
 .. _gnocchi_resource_list:
 
 gnocchi resource list
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: gnocchi resource list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+   usage: gnocchi resource list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--details] [--history] [--limit <LIMIT>]
@@ -889,8 +844,7 @@ gnocchi resource list
 
 List resources
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -910,83 +864,31 @@ Optional arguments
   results after this value
 
 ``--sort <SORT>``
-  Sort of resource attribute (example: user_id:desc-
-  nullslast
+  Sort of resource attribute (example: user_id:desc-nullslast
 
 ``--type RESOURCE_TYPE, -t RESOURCE_TYPE``
   Type of resource
-
-.. _gnocchi_resource_search:
-
-gnocchi resource search
-~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: console
-
-   usage: gnocchi resource search [-h]
-                                  [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                  [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
-                                  [--quote {all,minimal,none,nonnumeric}]
-                                  [--details] [--history] [--limit <LIMIT>]
-                                  [--marker <MARKER>] [--sort <SORT>]
-                                  [--type RESOURCE_TYPE] [--query QUERY]
-
-Search resources with specified query rules
-
-Optional arguments
-------------------
-
-``-h, --help``
-  show this help message and exit
-
-``--details``
-  Show all attributes of generic resources
-
-``--history``
-  Show history of the resources
-
-``--limit <LIMIT>``
-  Number of resources to return (Default is server
-  default)
-
-``--marker <MARKER>``
-  Last item of the previous listing. Return the next
-  results after this value
-
-``--sort <SORT>``
-  Sort of resource attribute (example: user_id:desc-
-  nullslast
-
-``--type RESOURCE_TYPE, -t RESOURCE_TYPE``
-  Type of resource
-
-``--query QUERY``
-  Query
 
 .. _gnocchi_resource_show:
 
 gnocchi resource show
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 .. code-block:: console
 
-   usage: gnocchi resource show [-h]
-                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: gnocchi resource show [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--type RESOURCE_TYPE]
                                 resource_id
 
 Show a resource
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``resource_id``
   ID of a resource
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -997,12 +899,11 @@ Optional arguments
 .. _gnocchi_resource_update:
 
 gnocchi resource update
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 .. code-block:: console
 
-   usage: gnocchi resource update [-h]
-                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+   usage: gnocchi resource update [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
                                   [--type RESOURCE_TYPE] [-a ATTRIBUTE]
@@ -1012,14 +913,12 @@ gnocchi resource update
 
 Update a resource
 
-Positional arguments
---------------------
+**Positional arguments:**
 
 ``resource_id``
   ID of the resource
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
@@ -1028,7 +927,7 @@ Optional arguments
   Type of resource
 
 ``-a ATTRIBUTE, --attribute ATTRIBUTE``
-  name and value of a attribute separated with a ':'
+  name and value of an attribute separated with a ':'
 
 ``-m ADD_METRIC, --add-metric ADD_METRIC``
   name:id of a metric to add
@@ -1039,21 +938,115 @@ Optional arguments
 ``-d DELETE_METRIC, --delete-metric DELETE_METRIC``
   Name of a metric to delete
 
-.. _gnocchi_status:
+.. _gnocchi_resource-type_create:
 
-gnocchi status
-~~~~~~~~~~~~~~
+gnocchi resource-type create
+----------------------------
 
 .. code-block:: console
 
-   usage: gnocchi status [-h] [-f {html,json,json,shell,table,value,yaml,yaml}]
-                         [-c COLUMN] [--max-width <integer>] [--noindent]
-                         [--prefix PREFIX]
+   usage: gnocchi resource-type create [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent] [--prefix PREFIX]
+                                       [-a ATTRIBUTE]
+                                       name
+
+Create a resource type
+
+**Positional arguments:**
+
+``name``
+  name of the resource type
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``-a ATTRIBUTE, --attribute ATTRIBUTE``
+  attribute definition, attribute_name:attribute_type:at
+  tribute_is_required:attribute_type_option_name=attribu
+  te_type_option_value:… For example:
+  display_name:string:true:max_length=255
+
+.. _gnocchi_resource-type_delete:
+
+gnocchi resource-type delete
+----------------------------
+
+.. code-block:: console
+
+   usage: gnocchi resource-type delete [-h] name
+
+Delete a resource type
+
+**Positional arguments:**
+
+``name``
+  name of the resource type
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _gnocchi_resource-type_list:
+
+gnocchi resource-type list
+--------------------------
+
+.. code-block:: console
+
+   usage: gnocchi resource-type list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+
+List resource types
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _gnocchi_resource-type_show:
+
+gnocchi resource-type show
+--------------------------
+
+.. code-block:: console
+
+   usage: gnocchi resource-type show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     name
+
+Show a resource type
+
+**Positional arguments:**
+
+``name``
+  name of the resource type
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _gnocchi_status:
+
+gnocchi status
+--------------
+
+.. code-block:: console
+
+   usage: gnocchi status [-h] [-f {html,json,shell,table,value,yaml}] [-c COLUMN]
+                         [--max-width <integer>] [--noindent] [--prefix PREFIX]
 
 Show the status of measurements processing
 
-Optional arguments
-------------------
+**Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
