@@ -1,8 +1,9 @@
-================
-Storage concepts
-================
+==============
+Storage design
+==============
 
-This section describes persistent storage options you can configure with
+Storage is found in many parts of the OpenStack cloud environment. This
+section describes persistent storage options you can configure with
 your cloud. It is important to understand the distinction between
 :term:`ephemeral <ephemeral volume>` storage and
 :term:`persistent <persistent volume>` storage.
@@ -18,12 +19,26 @@ of view they disappear when a virtual machine is terminated.
 Persistent storage
 ~~~~~~~~~~~~~~~~~~
 
-Persistent storage is a storage resource that outlives any other
+Persistent storage means that the storage resource outlives any other
 resource and is always available, regardless of the state of a running
 instance.
 
-OpenStack clouds explicitly support three types of persistent
-storage: *Object Storage*, *Block Storage*, and *file system storage*.
+Today, OpenStack clouds explicitly support three types of persistent
+storage: *Object Storage*, *Block Storage*, and *File-Based Storage*.
+
+Object storage
+~~~~~~~~~~~~~~
+
+Object storage is implemented in OpenStack by the
+OpenStack Object Storage (swift) project. Users access binary objects
+through a REST API. If your intended users need to
+archive or manage large datasets, you want to provide them with Object
+Storage. In addition, OpenStack can store your virtual machine (VM)
+images inside of an object storage system, as an alternative to storing
+the images on a file system.
+
+OpenStack storage concepts
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :ref:`table_openstack_storage` explains the different storage concepts
 provided by OpenStack.
@@ -110,148 +125,104 @@ provided by OpenStack.
    since you must have a shared file system if you want to support live
    migration.
 
-Object Storage
---------------
+Choosing storage back ends
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. TODO (shaun) Revise this section. I would start with an abstract of object
-   storage and then describe how swift fits into it. I think this will match
-   the rest of the sections better.
+Users will indicate different needs for their cloud use cases. Some may
+need fast access to many objects that do not change often, or want to
+set a time-to-live (TTL) value on a file. Others may access only storage
+that is mounted with the file system itself, but want it to be
+replicated instantly when starting a new instance. For other systems,
+ephemeral storage is the preferred choice. When you select
+:term:`storage back ends <storage back end>`,
+consider the following questions from user's perspective:
 
-Object storage is implemented in OpenStack by the
-OpenStack Object Storage (swift) project. Users access binary objects
-through a REST API. If your intended users need to
-archive or manage large datasets, you want to provide them with Object
-Storage. In addition, OpenStack can store your virtual machine (VM)
-images inside of an Object Storage system, as an alternative to storing
-the images on a file system.
+* Do my users need block storage?
+* Do my users need object storage?
+* Do I need to support live migration?
+* Should my persistent storage drives be contained in my compute nodes,
+  or should I use external storage?
+* What is the platter count I can achieve? Do more spindles result in
+  better I/O despite network access?
+* Which one results in the best cost-performance scenario I'm aiming for?
+* How do I manage the storage operationally?
+* How redundant and distributed is the storage? What happens if a
+  storage node fails? To what extent can it mitigate my data-loss
+  disaster scenarios?
 
-OpenStack Object Storage provides a highly scalable, highly available
-storage solution by relaxing some of the constraints of traditional file
-systems. In designing and procuring for such a cluster, it is important
-to understand some key concepts about its operation. Essentially, this
-type of storage is built on the idea that all storage hardware fails, at
-every level, at some point. Infrequently encountered failures that would
-hamstring other storage systems, such as issues taking down RAID cards
-or entire servers, are handled gracefully with OpenStack Object
-Storage. For more information, see the  `Swift developer
-documentation <http://docs.openstack.org/developer/swift/overview_architecture.html>`_
+To deploy your storage by using only commodity hardware, you can use a number
+of open-source packages, as shown in :ref:`table_persistent_file_storage`.
 
-When designing your cluster, consider:
+.. _table_persistent_file_storage:
 
-* Durability and availability, that is dependent on the spread and
-  placement of your data, rather than the reliability of the hardware.
+.. list-table:: Table. Persistent file-based storage support
+   :widths: 25 25 25 25
+   :header-rows: 1
 
-* Default value of the number of replicas, which is
-  three. This means that before an object is marked as having been
-  written, at least two copies exist in case a single server fails to
-  write, the third copy may or may not yet exist when the write operation
-  initially returns. Altering this number increases the robustness of your
-  data, but reduces the amount of storage you have available.
+   * -
+     - Object
+     - Block
+     - File-level
+   * - Swift
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+     -
+     -
+   * - LVM
+     -
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+     -
+   * - Ceph
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+     - Experimental
+   * - Gluster
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+   * - NFS
+     -
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+   * - ZFS
+     -
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+     -
+   * - Sheepdog
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+     - .. image:: /figures/Check_mark_23x20_02.png
+          :width: 30%
+     -
 
-* Placement of your servers, whether to spread them widely
-  throughout your data center's network and power-failure zones. Define
-  a zone as a rack, a server, or a disk.
+This list of open source file-level shared storage solutions is not
+exhaustive other open source solutions exist (MooseFS). Your
+organization may already have deployed a file-level shared storage
+solution that you can use.
 
-Consider these main traffic flows for an Object Storage network:
+.. note::
 
-* Among :term:`object`, :term:`container`, and
-  :term:`account servers <account server>`
-* Between servers and the proxies
-* Between the proxies and your users
+   **Storage Driver Support**
 
-Object Storage frequently communicates among servers hosting data. Even a small
-cluster generates megabytes/second of traffic. If an object is not received
-or the request times out, replication of the object begins.
+   In addition to the open source technologies, there are a number of
+   proprietary solutions that are officially supported by OpenStack Block
+   Storage. You can find a matrix of the functionality provided by all of the
+   supported Block Storage drivers on the `OpenStack
+   wiki <https://wiki.openstack.org/wiki/CinderSupportMatrix>`_.
 
-.. TODO Above paragraph: descibe what Object Storage is communicationg. What
-   is actually communicating? What part of the software is doing the
-   communicating? Is it all of the servers communicating with one another?
+Also, you need to decide whether you want to support object storage in
+your cloud. The two common use cases for providing object storage in a
+compute cloud are:
 
-Consider the scenario where an entire server fails and 24 TB of data
-needs to be transferred immediately to remain at three copies — this can
-put significant load on the network.
+* To provide users with a persistent storage mechanism
+* As a scalable, reliable data store for virtual machine images
 
-Another consideration is when a new file is being uploaded, the proxy server
-must write out as many streams as there are replicas, multiplying network
-traffic. For a three-replica cluster, 10 Gbps in means 30 Gbps out. Combining
-this with the previous high bandwidth private versus public network
-recommendations demands of replication is what results in the recommendation
-that your private network be of significantly higher bandwidth than your public
-network requires. OpenStack Object Storage communicates internally with
-unencrypted, unauthenticated rsync for performance, so the private
-network is required.
-
-.. TODO Revise the above paragraph for clarity.
-
-The remaining point on bandwidth is the public-facing portion. The
-``swift-proxy`` service is stateless, which means that you can easily
-add more and use HTTP load-balancing methods to share bandwidth and
-availability between them.
-
-Block Storage
--------------
-
-Block storage provides users with access to Block Storage devices. Users
-interact with Block Storage by attaching volumes to their running VM instances.
-
-These volumes are persistent: they can be detached from one instance and
-re-attached to another, and the data remains intact. Block storage is
-implemented in OpenStack by the OpenStack Block Storage (cinder), which
-supports multiple back ends in the form of drivers. Your
-choice of a storage back end must be supported by a Block Storage
-driver.
-
-Most Block Storage drivers allow the instance to have direct access to
-the underlying storage hardware's block device. This helps increase the
-overall read and write IO. However, support for utilizing files as volumes
-is also well established, with full support for NFS, GlusterFS, and
-others.
-
-These drivers work a little differently than a traditional Block
-Storage driver. On an NFS or GlusterFS file system, a single file is
-created and then mapped as a virtual volume into the instance. This
-mapping or translation is similar to how OpenStack utilizes QEMU's
-file-based virtual machines stored in ``/var/lib/nova/instances``.
-
-Shared File Systems Service
----------------------------
-
-The Shared File Systems service (manila) provides a set of services for
-management of shared file systems in a multi-tenant cloud environment.
-Users interact with the Shared File Systems service by mounting remote File
-Systems on their instances with the following usage of those systems for
-file storing and exchange. The Shared File Systems service provides you with
-a share which is a remote, mountable file system. You can mount a
-share to and access a share from several hosts by several users at a
-time. With shares, a user can also:
-
-* Create a share specifying its size, shared file system protocol, and
-  visibility level.
-* Create a share on either a share server or standalone, depending on
-  the selected back-end mode, with or without using a share network.
-* Specify access rules and security services for existing shares.
-* Combine several shares in groups to keep data consistency inside the
-  groups for the following safe group operations.
-* Create a snapshot of a selected share or a share group for storing
-  the existing shares consistently or creating new shares from that
-  snapshot in a consistent way.
-* Create a share from a snapshot.
-* Set rate limits and quotas for specific shares and snapshots.
-* View usage of share resources.
-* Remove shares.
-
-Like Block Storage, the Shared File Systems service is persistent. It
-can be:
-
-* Mounted to any number of client machines.
-* Detached from one instance and attached to another without data loss.
-  During this process the data are safe unless the Shared File Systems
-  service itself is changed or removed.
-
-Shares are provided by the Shared File Systems service. In OpenStack,
-Shared File Systems service is implemented by Shared File System
-(manila) project, which supports multiple back-ends in the form of
-drivers. The Shared File Systems service can be configured to provision
-shares from one or more back-ends. Share servers are virtual
-machines that export file shares using different protocols such as NFS,
-CIFS, GlusterFS, or HDFS.
