@@ -8,14 +8,6 @@ creating a functional cloud. The latter involves monitoring resource
 usage over time in order to make informed decisions about potential
 bottlenecks and upgrades.
 
-**Nagios** is an open source monitoring service. It's capable of executing
-arbitrary commands to check the status of server and network services,
-remotely executing arbitrary commands directly on servers, and allowing
-servers to push notifications back in the form of passive monitoring.
-Nagios has been around since 1999. Although newer monitoring services
-are available, Nagios is a tried-and-true systems administration
-staple.
-
 Process Monitoring
 ~~~~~~~~~~~~~~~~~~
 
@@ -38,31 +30,46 @@ the ``nova-api`` service is running on the cloud controller:
    /usr/bin/nova-api --config-file=/etc/nova/nova.conf
    root 24121 0.0 0.0 11688 912 pts/5 S+ 13:07 0:00 grep nova-api
 
-You can create automated alerts for critical processes by using Nagios
-and NRPE. For example, to ensure that the ``nova-compute`` process is
-running on compute nodes, create an alert on your Nagios server that
-looks like this:
 
-.. code-block:: none
+The OpenStack processes that should be monitored depend on the specific
+configuration of the environment, but can include:
 
-   define service {
-       host_name c01.example.com
-       check_command check_nrpe_1arg!check_nova-compute
-       use generic-service
-       notification_period 24x7
-       contact_groups sysadmins
-       service_description nova-compute
-   }
+**Compute service (nova)**
 
-Then on the actual compute node, create the following NRPE
-configuration:
+* nova-api
+* nova-scheduler
+* nova-conductor
+* nova-novncproxy
+* nova-cert
+* nova-compute
 
-.. code-block:: none
+**Block Storage service (cinder)**
 
-    \command[check_nova-compute]=/usr/lib/nagios/plugins/check_procs -c 1: -a nova-compute
+* cinder-volume
+* cinder-api
+* cinder-scheduler
 
-Nagios checks that at least one ``nova-compute`` service is running at
-all times.
+**Networking service (neutron)**
+
+* neutron-api
+* neutron-server
+* neutron-openvswitch-agent
+* neutron-dhcp-agent
+* neutron-l3-agent
+* neutron-metadata-agent
+
+**Image service (glance)**
+
+* glance-api
+* glance-registry
+
+**Identity service (keystone)**
+
+The keystone processes can run standalone, but are often run within Apache
+as WSGI applications.
+
+* keystone-public
+* keystone-admin
 
 Resource Alerting
 ~~~~~~~~~~~~~~~~~
@@ -81,96 +88,10 @@ Some of the resources that you want to monitor include:
 * Network I/O
 * Available vCPUs
 
-For example, to monitor disk capacity on a compute node with Nagios, add
-the following to your Nagios configuration:
+Telemetry Service
+~~~~~~~~~~~~~~~~~
 
-.. code-block:: none
-
-   define service {
-       host_name c01.example.com
-       check_command check_nrpe!check_all_disks!20% 10%
-       use generic-service
-       contact_groups sysadmins
-       service_description Disk
-   }
-
-On the compute node, add the following to your NRPE configuration:
-
-.. code-block:: none
-
-   command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w $ARG1$ -c $ARG2$ -e
-
-Nagios alerts you with a WARNING when any disk on the compute node is 80
-percent full and CRITICAL when 90 percent is full.
-
-StackTach
-~~~~~~~~~
-
-StackTach is a tool that collects and reports the notifications sent by
-``nova``. Notifications are essentially the same as logs but can be much
-more detailed. Nearly all OpenStack components are capable of generating
-notifications when significant events occur. Notifications are messages
-placed on the OpenStack queue (generally RabbitMQ) for consumption by
-downstream systems. An overview of notifications can be found at `System
-Usage
-Data <https://wiki.openstack.org/wiki/SystemUsageData>`_.
-
-To enable ``nova`` to send notifications, add the following to
-``nova.conf``:
-
-.. code-block:: ini
-
-   notification_topics=monitor
-   notification_driver=messagingv2
-
-Once ``nova`` is sending notifications, install and configure StackTach.
-StackTach workers for Queue consumption and pipeling processing are
-configured to read these notifications from RabbitMQ servers and store
-them in a database. Users can inquire on instances, requests and servers
-by using the browser interface or command line tool,
-`Stacky <https://github.com/rackerlabs/stacky>`_. Since StackTach is
-relatively new and constantly changing, installation instructions
-quickly become outdated. Please refer to the `StackTach Git
-repo <https://git.openstack.org/cgit/openstack/stacktach>`_ for
-instructions as well as a demo video. Additional details on the latest
-developments can be discovered at the `official
-page <http://stacktach.com/>`_
-
-Logstash
-~~~~~~~~
-
-Logstash is a high performance indexing and search engine for logs. Logs
-from Jenkins test runs are sent to logstash where they are indexed and
-stored. Logstash facilitates reviewing logs from multiple sources in a
-single test run, searching for errors or particular events within a test
-run, and searching for log event trends across test runs.
-
-There are four major layers in Logstash setup which are
-
-* Log Pusher
-* Log Indexer
-* ElasticSearch
-* Kibana
-
-Each layer scales horizontally. As the number of logs grows you can add
-more log pushers, more Logstash indexers, and more ElasticSearch nodes.
-
-Logpusher is a pair of Python scripts which first listens to Jenkins
-build events and converts them into Gearman jobs. Gearman provides a
-generic application framework to farm out work to other machines or
-processes that are better suited to do the work. It allows you to do
-work in parallel, to load balance processing, and to call functions
-between languages. Later Logpusher performs Gearman jobs to push log
-files into logstash. Logstash indexer reads these log events, filters
-them to remove unwanted lines, collapse multiple events together, and
-parses useful information before shipping them to ElasticSearch for
-storage and indexing. Kibana is a logstash oriented web client for
-ElasticSearch.
-
-OpenStack Telemetry
-~~~~~~~~~~~~~~~~~~~
-
-An integrated OpenStack project (code-named :term:`ceilometer`) collects
+The Telemetry service (:term:`ceilometer`) collects
 metering and event data relating to OpenStack services. Data collected
 by the Telemetry service could be used for billing. Depending on
 deployment configuration, collected data may be accessible to users
@@ -182,7 +103,7 @@ Guide <http://docs.openstack.org/admin-guide/telemetry.html>`_ or
 in the `developer
 documentation <http://docs.openstack.org/developer/ceilometer>`_.
 
-OpenStack-Specific Resources
+OpenStack Specific Resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Resources such as memory, disk, and CPU are generic resources that all
@@ -392,3 +313,130 @@ collectd is out of the scope of this book, a good starting point would
 be to use collectd to store the result as a COUNTER data type. More
 information can be found in `collectd's
 documentation <https://collectd.org/wiki/index.php/Data_source>`_.
+
+
+Monitoring Tools
+~~~~~~~~~~~~~~~~
+
+Nagios
+------
+
+
+Nagios is an open source monitoring service. It is capable of executing
+arbitrary commands to check the status of server and network services,
+remotely executing arbitrary commands directly on servers, and allowing
+servers to push notifications back in the form of passive monitoring.
+Nagios has been around since 1999. Although newer monitoring services
+are available, Nagios is a tried-and-true systems administration
+staple.
+
+You can create automated alerts for critical processes by using Nagios
+and NRPE. For example, to ensure that the ``nova-compute`` process is
+running on Compute nodes, create an alert on your Nagios server:
+
+.. code-block:: ini
+
+   define service {
+       host_name c01.example.com
+       check_command check_nrpe_1arg!check_nova-compute
+       use generic-service
+       notification_period 24x7
+       contact_groups sysadmins
+       service_description nova-compute
+   }
+
+On the Compute node, create the following NRPE
+configuration:
+
+.. code-block:: ini
+
+    command[check_nova-compute]=/usr/lib/nagios/plugins/check_procs -c 1: -a nova-compute
+
+Nagios checks that at least one ``nova-compute`` service is running at
+all times.
+
+For resource alerting, for example, monitor disk capacity on a compute node
+with Nagios, add the following to your Nagios configuration:
+
+.. code-block:: ini
+
+   define service {
+       host_name c01.example.com
+       check_command check_nrpe!check_all_disks!20% 10%
+       use generic-service
+       contact_groups sysadmins
+       service_description Disk
+   }
+
+On the compute node, add the following to your NRPE configuration:
+
+.. code-block:: ini
+
+   command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w $ARG1$ -c $ARG2$ -e
+
+Nagios alerts you with a `WARNING` when any disk on the compute node is 80
+percent full and `CRITICAL` when 90 percent is full.
+
+StackTach
+---------
+
+StackTach is a tool that collects and reports the notifications sent by
+nova. Notifications are essentially the same as logs but can be much
+more detailed. Nearly all OpenStack components are capable of generating
+notifications when significant events occur. Notifications are messages
+placed on the OpenStack queue (generally RabbitMQ) for consumption by
+downstream systems. An overview of notifications can be found at `System
+Usage
+Data <https://wiki.openstack.org/wiki/SystemUsageData>`_.
+
+To enable nova to send notifications, add the following to the
+``nova.conf`` configuration file:
+
+.. code-block:: ini
+
+   notification_topics=monitor
+   notification_driver=messagingv2
+
+Once nova is sending notifications, install and configure StackTach.
+StackTach works for queue consumption and pipeline processing are
+configured to read these notifications from RabbitMQ servers and store
+them in a database. Users can inquire on instances, requests, and servers
+by using the browser interface or command-line tool,
+`Stacky <https://github.com/rackerlabs/stacky>`_. Since StackTach is
+relatively new and constantly changing, installation instructions
+quickly become outdated. Refer to the `StackTach Git
+repository <https://git.openstack.org/cgit/openstack/stacktach>`_ for
+instructions as well as a demostration video. Additional details on the latest
+developments can be discovered at the `official
+page <http://stacktach.com/>`_
+
+Logstash
+~~~~~~~~
+
+Logstash is a high performance indexing and search engine for logs. Logs
+from Jenkins test runs are sent to logstash where they are indexed and
+stored. Logstash facilitates reviewing logs from multiple sources in a
+single test run, searching for errors or particular events within a test
+run, and searching for log event trends across test runs.
+
+There are four major layers in Logstash setup which are:
+
+* Log Pusher
+* Log Indexer
+* ElasticSearch
+* Kibana
+
+Each layer scales horizontally. As the number of logs grows you can add
+more log pushers, more Logstash indexers, and more ElasticSearch nodes.
+
+Logpusher is a pair of Python scripts that first listens to Jenkins
+build events, then converts them into Gearman jobs. Gearman provides a
+generic application framework to farm out work to other machines or
+processes that are better suited to do the work. It allows you to do
+work in parallel, to load balance processing, and to call functions
+between languages. Later, Logpusher performs Gearman jobs to push log
+files into logstash. Logstash indexer reads these log events, filters
+them to remove unwanted lines, collapse multiple events together, and
+parses useful information before shipping them to ElasticSearch for
+storage and indexing. Kibana is a logstash oriented web client for
+ElasticSearch.
