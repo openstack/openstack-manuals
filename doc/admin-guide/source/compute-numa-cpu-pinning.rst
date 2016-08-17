@@ -31,8 +31,13 @@ components. CPUs that share components are known as thread siblings. All CPUs
 appear as usable CPUs on the system and can execute workloads in parallel,
 however, as with NUMA, threads compete for shared resources.
 
-Customizing instance NUMA topologies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In OpenStack, SMP CPUs are known as *cores*, NUMA cells or nodes are known as
+*sockets*, and SMT CPUs are known as *threads*. For example, a quad-socket,
+eight core system with Hyper-Threading would have four sockets, eight cores per
+socket and two threads per core, for a total of 64 CPUs.
+
+Customizing instance NUMA placement policies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. important::
 
@@ -112,8 +117,8 @@ memory mapping between the two nodes, run:
 For more information about the syntax for ``hw:numa_nodes``, ``hw:numa_cpus.N``
 and ``hw:num_mem.N``, refer to the `Flavors`_ guide.
 
-Customizing instance CPU policies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Customizing instance CPU pinning policies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. important::
 
@@ -203,6 +208,96 @@ flavors and impacting resource utilization. To configure this policy, run:
    instance and how the instance is actually pinned on the host. This is by
    design. See this `bug <https://bugs.launchpad.net/nova/+bug/1466780>`_ for
    more information.
+
+For more information about image metadata, refer to the `Image metadata`_
+guide.
+
+Customizing instance CPU topologies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. important::
+
+   The functionality described below is currently only supported by the
+   libvirt/KVM driver.
+
+In addition to configuring how an instance is scheduled on host CPUs, it is
+possible to configure how CPUs are represented in the instance itself. By
+default, when instance NUMA placement is not specified, a topology of N
+sockets, each with one core and one thread, is used for an instance, where N
+corresponds to the number of instance vCPUs requested. When instance NUMA
+placement is specified, the number of sockets is fixed to the number of host
+NUMA nodes to use and the total number of instance CPUs is split over these
+sockets.
+
+Some workloads benefit from a custom topology. For example, in some operating
+systems, a different license may be needed depending on the number of CPU
+sockets. To configure a flavor to use a maximum of two sockets, run:
+
+.. code-block:: console
+
+   # openstack flavor set m1.large --property hw:cpu_sockets=2
+
+Similarly, to configure a flavor to use one core and one thread, run:
+
+.. code-block:: console
+
+   # openstack flavor set m1.large \
+       --property hw:cpu_cores=1 \
+       --property hw:cpu_threads=1
+
+.. caution::
+
+   If specifying all values, the product of sockets multiplied by cores
+   multiplied by threads must equal the number of instance vCPUs. If specifying
+   any one of these values or the multiple of two values, the values must be a
+   factor of the number of instance vCPUs to prevent an exception. For example,
+   specifying ``hw:cpu_sockets=2`` on a host with an odd number of cores fails.
+   Similarly, specifying ``hw:cpu_cores=2`` and ``hw:cpu_threads=4`` on a host
+   with ten cores fails.
+
+For more information about the syntax for ``hw:cpu_sockets``, ``hw:cpu_cores``
+and ``hw:cpu_threads``, refer to the `Flavors`_ guide.
+
+It is also possible to set upper limits on the number of sockets, cores, and
+threads used. Unlike the hard values above, it is not necessary for this exact
+number to used because it only provides a a limit. This can be used to provide
+some flexibility in scheduling, while ensuring certains limits are not
+exceeded. For example, to ensure no more than two sockets are defined in the
+instance topology, run:
+
+.. code-block:: console
+
+   # openstack flavor set m1.large --property=hw:cpu_max_sockets=2
+
+For more information about the syntax for ``hw:cpu_max_sockets``,
+``hw:cpu_max_cores``, and ``hw:cpu_max_threads``, refer to the `Flavors`_
+guide.
+
+Applications are frequently packaged as images. For applications that prefer
+certain CPU topologies, configure image metadata to hint that created instances
+should have a given topology regardless of flavor. To configure an image to
+request a two-socket, four-core per socket topology, run:
+
+.. code-block:: console
+
+   # openstack image set [IMAGE_ID] \
+       --property hw_cpu_sockets=2 \
+       --property hw_cpu_cores=4
+
+To constrain instances to a given limit of sockets, cores or threads, use the
+``max_`` variants. To configure an image to have a maximum of two sockets and a
+maximum of one thread, run:
+
+.. code-block:: console
+
+   # openstack image set [IMAGE_ID] \
+       --property hw_cpu_max_sockets=2 \
+       --property hw_cpu_max_threads=1
+
+Image metadata takes precedence over flavor extra specs. Configuring competing
+constraints causes an exception. By setting a ``max`` value for sockets, cores,
+or threads, administrators can prevent users configuring topologies that might,
+for example, incur an additional licensing fees.
 
 For more information about image metadata, refer to the `Image metadata`_
 guide.
