@@ -97,3 +97,13 @@ requiring each component to be always available.
 Installation and configuration is documented in the
 `Messaging installation guide
 <http://docs.openstack.org/project-install-guide/messaging/draft/>`_.
+
+Key Manager service (barbican)
+==============================
+
+The Key Manager service provides a RESTful API for the storage and provisioning
+of secret data such as passphrases, encryption keys, and X.509 certificates.
+
+Installation and configuration is documented in the
+`Key Manager installation guide
+<http://docs.openstack.org/project-install-guide/key-manager/draft/>`_.
