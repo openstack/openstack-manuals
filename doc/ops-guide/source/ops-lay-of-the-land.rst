@@ -321,14 +321,18 @@ configured with the proper administrative variables:
    | Name     | Type       | Endpoints                                                                       |
    +----------+------------+---------------------------------------------------------------------------------+
    | nova     | compute    | RegionOne                                                                       |
-   |          |            |   publicURL: http://192.168.122.10:8774/v2/9faa845768224258808fc17a1bb27e5e     |
-   |          |            |   internalURL: http://192.168.122.10:8774/v2/9faa845768224258808fc17a1bb27e5e   |
-   |          |            |   adminURL: http://192.168.122.10:8774/v2/9faa845768224258808fc17a1bb27e5e      |
+   |          |            |   public: http://192.168.122.10:8774/v2/9faa845768224258808fc17a1bb27e5e        |
+   |          |            | RegionOne                                                                       |
+   |          |            |   internal: http://192.168.122.10:8774/v2/9faa845768224258808fc17a1bb27e5e      |
+   |          |            | RegionOne                                                                       |
+   |          |            |   admin: http://192.168.122.10:8774/v2/9faa845768224258808fc17a1bb27e5e         |
    |          |            |                                                                                 |
    | cinderv2 | volumev2   | RegionOne                                                                       |
-   |          |            |   publicURL: http://192.168.122.10:8776/v2/9faa845768224258808fc17a1bb27e5e     |
-   |          |            |   internalURL: http://192.168.122.10:8776/v2/9faa845768224258808fc17a1bb27e5e   |
-   |          |            |   adminURL: http://192.168.122.10:8776/v2/9faa845768224258808fc17a1bb27e5e      |
+   |          |            |   public: http://192.168.122.10:8776/v2/9faa845768224258808fc17a1bb27e5e        |
+   |          |            | RegionOne                                                                       |
+   |          |            |   internal: http://192.168.122.10:8776/v2/9faa845768224258808fc17a1bb27e5e      |
+   |          |            | RegionOne                                                                       |
+   |          |            |   admin: http://192.168.122.10:8776/v2/9faa845768224258808fc17a1bb27e5e         |
    |          |            |                                                                                 |
 
 The preceding output has been truncated to show only two services. You
