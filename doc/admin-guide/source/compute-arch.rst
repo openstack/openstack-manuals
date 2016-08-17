@@ -75,20 +75,20 @@ For more information about hypervisors, see the
 `Hypervisors <http://docs.openstack.org/mitaka/config-reference/compute/hypervisors.html>`__
 section in the OpenStack Configuration Reference.
 
-Tenants, users, and roles
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Projects, users, and roles
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 The Compute system is designed to be used by different consumers in the
-form of tenants on a shared system, and role-based access assignments.
+form of projects on a shared system, and role-based access assignments.
 Roles control the actions that a user is allowed to perform.
 
-Tenants are isolated resource containers that form the principal
+Projects are isolated resource containers that form the principal
 organizational structure within the Compute service. They consist of an
 individual VLAN, and volumes, instances, images, keys, and users. A user
-can specify the tenant by appending ``project_id`` to their access key.
-If no tenant is specified in the API request, Compute attempts to use a
-tenant with the same ID as the user.
+can specify the project by appending ``project_id`` to their access key.
+If no project is specified in the API request, Compute attempts to use a
+project with the same ID as the user.
 
-For tenants, you can use quota controls to limit the:
+For projects, you can use quota controls to limit the:
 
 -  Number of volumes that can be launched.
 
@@ -108,18 +108,18 @@ editing the ``policy.json`` file for user roles. For example, a rule can
 be defined so that a user must have the ``admin`` role in order to be
 able to allocate a public IP address.
 
-A tenant limits users' access to particular images. Each user is
+A project limits users' access to particular images. Each user is
 assigned a user name and password. Keypairs granting access to an
 instance are enabled for each user, but quotas are set, so that each
-tenant can control resource consumption across available hardware
+project can control resource consumption across available hardware
 resources.
 
 .. note::
 
-   Earlier versions of OpenStack used the term ``project`` instead of
-   ``tenant``. Because of this legacy terminology, some command-line tools
-   use :option:`--project_id` where you would normally expect to enter a
-   tenant ID.
+   Earlier versions of OpenStack used the term ``tenant`` instead of
+   ``project``. Because of this legacy terminology, some command-line tools
+   use :option:`--tenant_id` where you would normally expect to enter a
+   project ID.
 
 Block storage
 ~~~~~~~~~~~~~
