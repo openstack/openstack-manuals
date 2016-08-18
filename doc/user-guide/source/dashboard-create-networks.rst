@@ -31,7 +31,7 @@ Create a network
 
    :guilabel:`Network Name`: Specify a name to identify the network.
 
-   :guilabel:`Shared`: Share the network with other tenants. Non admin users
+   :guilabel:`Shared`: Share the network with other projects. Non admin users
    are not allowed to set shared option.
 
    :guilabel:`Admin State`: The state to start the network in.

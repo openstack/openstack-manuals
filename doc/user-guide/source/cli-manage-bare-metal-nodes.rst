@@ -4,7 +4,7 @@ Manage bare-metal nodes
 
 The bare-metal driver for OpenStack Compute manages provisioning of
 physical hardware by using common cloud APIs and tools such as
-Orchestration (Heat). The use case for this driver is for single tenant
+Orchestration (Heat). The use case for this driver is for single project
 clouds such as a high-performance computing cluster, or for deploying
 OpenStack itself.
 
