@@ -141,9 +141,9 @@ Security groups
 A security group acts as a virtual firewall for your compute instances to
 control inbound and outbound traffic. Security groups act at the port level,
 not the subnet level. Therefore, each port in a subnet could be
-assigned to a different set of security groups. If you don't specify a
+assigned to a different set of security groups. If you do not specify a
 particular group at launch time, the instance is automatically assigned
-to the default security group for that network.
+to the default security group for that project.
 
 Security groups and security group rules give administrators and tenants the
 ability to specify the type of traffic and direction (ingress/egress) that is
