@@ -9,7 +9,7 @@ Compute service command-line client
 The nova client is the command-line interface (CLI) for
 the Compute service API and its extensions.
 
-This chapter documents :command:`nova` version ``5.0.0``.
+This chapter documents :command:`nova` version ``5.1.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -271,7 +271,10 @@ nova usage
   Update host settings.
 
 ``hypervisor-list``
-  List hypervisors.
+  List hypervisors. (Supported by API versions
+  '2.0' - '2.latest') [hint: use ':option:`--os-compute-`
+  api-version' flag to show help message for
+  proper version]
 
 ``hypervisor-servers``
   List servers belonging to specific
@@ -2396,14 +2399,36 @@ nova hypervisor-list
 
 .. code-block:: console
 
-   usage: nova hypervisor-list [--matching <hostname>]
+   usage: nova hypervisor-list [--matching <hostname>] [--marker <marker>]
+                               [--limit <limit>]
 
-List hypervisors.
+List hypervisors. (Supported by API versions '2.0' - '2.latest') [hint: use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for
+proper
+version]
 
 **Optional arguments:**
 
 ``--matching <hostname>``
-  List hypervisors matching the given <hostname>.
+  List hypervisors matching the given <hostname>. If
+  matching is used limit and marker options will be
+  ignored.
+
+``--marker <marker>``
+  The last hypervisor of the previous page; displays
+  list of hypervisors after "marker".
+
+``--limit <limit>``
+  Maximum number of hypervisors to display. If limit ==
+  -1, all hypervisors will be displayed. If limit is
+  bigger than 'osapi_max_limit' option of Nova API,
+  limit 'osapi_max_limit' will be used instead.
 
 .. _nova_hypervisor-servers:
 
@@ -2667,8 +2692,7 @@ for proper version]
 **Optional arguments:**
 
 ``--user <user-id>``
-  ID of key-pair owner (Admin only). (Supported by API
-  versions '2.10' - '2.latest')
+  ID of key-pair owner (Admin only).
 
 .. _nova_keypair-list:
 
@@ -2677,7 +2701,8 @@ nova keypair-list
 
 .. code-block:: console
 
-   usage: nova keypair-list [--user <user-id>]
+   usage: nova keypair-list [--user <user-id>] [--marker <marker>]
+                            [--limit <limit>]
 
 Print a list of keypairs for a user (Supported by API versions '2.0' -
 '2.latest')
@@ -2695,7 +2720,16 @@ for proper version]
 
 ``--user <user-id>``
   List key-pairs of specified user ID (Admin only).
-  (Supported by API versions '2.10' - '2.latest')
+
+``--marker <marker>``
+  The last keypair of the previous page; displays list of
+  keypairs after "marker".
+
+``--limit <limit>``
+  Maximum number of keypairs to display. If limit == -1,
+  all keypairs will be displayed. If limit is bigger than
+  'osapi_max_limit' option of Nova API, limit
+  'osapi_max_limit' will be used instead.
 
 .. _nova_keypair-show:
 
@@ -2726,8 +2760,7 @@ for proper version]
 **Optional arguments:**
 
 ``--user <user-id>``
-  ID of key-pair owner (Admin only). (Supported by API
-  versions '2.10' - '2.latest')
+  ID of key-pair owner (Admin only).
 
 .. _nova_limits:
 
