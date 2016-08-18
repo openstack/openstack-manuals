@@ -70,7 +70,7 @@ Most cloud images support :term:`public key authentication` rather than
 conventional password authentication. Before launching an instance, you
 must add a public key to the Compute service.
 
-#. Source the ``demo`` tenant credentials:
+#. Source the ``demo`` project credentials:
 
    .. code-block:: console
 

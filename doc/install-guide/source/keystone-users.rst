@@ -3,7 +3,7 @@ Create a domain, projects, users, and roles
 
 The Identity service provides authentication services for each OpenStack
 service. The authentication service uses a combination of :term:`domains
-<domain>`, :term:`projects<project>` (tenants), :term:`users<user>`, and
+<domain>`, :term:`projects<project>`, :term:`users<user>`, and
 :term:`roles<role>`.
 
 #. Create the ``default`` domain:
