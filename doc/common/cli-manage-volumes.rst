@@ -333,6 +333,13 @@ Resize a volume
 
    The :command:`cinder extend` command does not return any output.
 
+   .. note::
+
+      When extending an LVM volume with a snapshot, the volume will be
+      deactivated. The reactivation is automatic unless
+      ``auto_activation_volume_list`` is defined in ``lvm.conf``. See
+      ``lvm.conf`` for more information.
+
 Delete a volume
 ~~~~~~~~~~~~~~~
 
