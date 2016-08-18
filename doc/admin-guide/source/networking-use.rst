@@ -29,8 +29,8 @@ by using the Networking API directly or neutron command-line interface
 (CLI). The neutron CLI is a wrapper around the Networking API. Every
 Networking API call has a corresponding neutron command.
 
-The CLI includes a number of options. For details, see the `OpenStack
-End User Guide <http://docs.openstack.org/user-guide/index.html>`__.
+The CLI includes a number of options. For details, see the `Create and manage
+networks <http://docs.openstack.org/user-guide/cli-create-and-manage-networks.html>`__.
 
 Basic Networking operations
 ---------------------------
