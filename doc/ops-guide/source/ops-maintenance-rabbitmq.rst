@@ -61,8 +61,8 @@ you manually restart RabbitMQ on each controller node.
 
 Since the Liberty release, OpenStack services will automatically recover from
 a RabbitMQ outage. You should only consider restarting OpenStack services
-after checking if RabbitMQ heartbeat functionality is enabled, and if Openstack
-services are not picking up messages from RabbitMQ queues.
+after checking if RabbitMQ heartbeat functionality is enabled, and if
+OpenStack services are not picking up messages from RabbitMQ queues.
 
 RabbitMQ alerts
 ~~~~~~~~~~~~~~~
