@@ -82,7 +82,7 @@ The basic steps are:
 
        admin_tenant_id:
          description: |
-           The UUID of the administrative tenant.
+           The UUID of the administrative project.
          in: path
          required: true
          type: string
