@@ -526,36 +526,50 @@ For example:
 
 .. code-block:: console
 
-   # nova show 81db556b-8aa5-427d-a95c-2a9a6972f630
-   +-------------------------------------+-----------------------------------+
-   | Property                            | Value                             |
-   +-------------------------------------+-----------------------------------+
-   | OS-DCF:diskConfig                   | MANUAL                            |
-   | OS-EXT-SRV-ATTR:host                | c02.example.com                   |
-   | OS-EXT-SRV-ATTR:hypervisor_hostname | c02.example.com                   |
-   | OS-EXT-SRV-ATTR:instance_name       | instance-00000029                 |
-   | OS-EXT-STS:power_state              | 1                                 |
-   | OS-EXT-STS:task_state               | None                              |
-   | OS-EXT-STS:vm_state                 | active                            |
-   | accessIPv4                          |                                   |
-   | accessIPv6                          |                                   |
-   | config_drive                        |                                   |
-   | created                             | 2013-02-13T20:08:36Z              |
-   | flavor                              | m1.small (6)                      |
-   | hostId                              | ...                               |
-   | id                                  | ...                               |
-   | image                               | Ubuntu 12.04 cloudimg amd64 (...) |
-   | key_name                            | jtopjian-sandbox                  |
-   | metadata                            | {}                                |
-   | name                                | devstack                          |
-   | novanetwork_0 network               | 10.1.0.5                          |
-   | progress                            | 0                                 |
-   | security_groups                     | [{u'name': u'default'}]           |
-   | status                              | ACTIVE                            |
-   | tenant_id                           | ...                               |
-   | updated                             | 2013-02-13T20:08:59Z              |
-   | user_id                             | ...                               |
-   +-------------------------------------+-----------------------------------+
+   # nova show 81db556b-8aa5-427d-a95c-2a9a6972f630
+   +--------------------------------------+----------------------------------------------------------+
+   | Property                             | Value                                                    |
+   +--------------------------------------+----------------------------------------------------------+
+   | OS-DCF:diskConfig                    | AUTO                                                     |
+   | OS-EXT-AZ:availability_zone          | nova                                                     |
+   | OS-EXT-SRV-ATTR:host                 | c02.example.com                                          |
+   | OS-EXT-SRV-ATTR:hostname             | c02.example.com                                          |
+   | OS-EXT-SRV-ATTR:hypervisor_hostname  | c02.example.com                                          |
+   | OS-EXT-SRV-ATTR:instance_name        | devstack                                                 |
+   | OS-EXT-SRV-ATTR:kernel_id            |                                                          |
+   | OS-EXT-SRV-ATTR:launch_index         | 0                                                        |
+   | OS-EXT-SRV-ATTR:ramdisk_id           |                                                          |
+   | OS-EXT-SRV-ATTR:reservation_id       | r-p4uo2um2                                               |
+   | OS-EXT-SRV-ATTR:root_device_name     | /dev/vda                                                 |
+   | OS-EXT-SRV-ATTR:user_data            | -                                                        |
+   | OS-EXT-STS:power_state               | 1                                                        |
+   | OS-EXT-STS:task_state                | -                                                        |
+   | OS-EXT-STS:vm_state                  | active                                                   |
+   | OS-SRV-USG:launched_at               | 2016-08-08T02:05:49.000000                               |
+   | OS-SRV-USG:terminated_at             | -                                                        |
+   | accessIPv4                           |                                                          |
+   | accessIPv6                           |                                                          |
+   | config_drive                         |                                                          |
+   | created                              | 2016-08-08T02:05:40Z                                     |
+   | description                          | tesy                                                     |
+   | flavor                               | m1.small                                                 |
+   | hostId                               | 79a36bcbfd140e24267dd98442453de78d38dc14be1b745897c18897 |
+   | host_status                          | UP                                                       |
+   | id                                   | 81db556b-8aa5-427d-a95c-2a9a6972f630                     |
+   | image                                | myCirrosImage (d07831df-edc3-4817-9881-89141f9134c3)     |
+   | key_name                             | -                                                        |
+   | locked                               | False                                                    |
+   | metadata                             | {}                                                       |
+   | name                                 | tesy                                                     |
+   | os-extended-volumes:volumes_attached | []                                                       |
+   | progress                             | 0                                                        |
+   | security_groups                      | default                                                  |
+   | sss network                          | 10.0.2.4                                                 |
+   | status                               | ACTIVE                                                   |
+   | tenant_id                            | d88310717a8e4ebcae84ed075f82c51e                         |
+   | updated                              | 2016-08-17T09:36:10Z                                     |
+   | user_id                              | d8e5e5727f3a4ce1886ac8ecec058e83                         |
+   +--------------------------------------+----------------------------------------------------------+
 
 This output shows that an instance named ``devstack`` was created from
 an Ubuntu 12.04 image using a flavor of ``m1.small`` and is hosted on
