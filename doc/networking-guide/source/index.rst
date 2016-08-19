@@ -21,14 +21,13 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   common/conventions.rst
-   intro-networking.rst
-   intro-os-networking.rst
-   config.rst
-   deploy.rst
-   migration.rst
-   miscellaneous.rst
-   adv-config.rst
+   common/conventions
+   intro
+   config
+   deploy
+   ops
+   migration
+   misc
 
 Appendix
 ~~~~~~~~
@@ -36,7 +35,7 @@ Appendix
 .. toctree::
    :maxdepth: 1
 
-   common/app_support.rst
+   common/app_support
 
 Glossary
 ~~~~~~~~
@@ -44,7 +43,7 @@ Glossary
 .. toctree::
    :maxdepth: 1
 
-   common/glossary.rst
+   common/glossary
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~

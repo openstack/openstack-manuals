@@ -546,7 +546,7 @@ Controller node
         service_plugins = router
         allow_overlapping_ips = True
 
-   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
+   * If necessary, :ref:`configure MTU <config-mtu>`.
 
 #. In the ``ml2_conf.ini`` file:
 
@@ -594,7 +594,7 @@ Controller node
         [securitygroup]
         firewall_driver = iptables
 
-   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
+   * If necessary, :ref:`configure MTU <config-mtu>`.
 
 #. Start the following services:
 

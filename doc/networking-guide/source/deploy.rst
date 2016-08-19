@@ -7,11 +7,11 @@ Deployment scenarios
 .. toctree::
    :maxdepth: 2
 
-   scenario-classic-ovs.rst
-   scenario-classic-lb.rst
-   scenario-classic-mt.rst
-   scenario-dvr-ovs.rst
-   scenario-l3ha-ovs.rst
-   scenario-l3ha-lb.rst
-   scenario-provider-ovs.rst
-   scenario-provider-lb.rst
+   scenario-classic-ovs
+   scenario-classic-lb
+   scenario-classic-mt
+   scenario-dvr-ovs
+   scenario-l3ha-ovs
+   scenario-l3ha-lb
+   scenario-provider-ovs
+   scenario-provider-lb

@@ -1,3 +1,5 @@
+.. _migration:
+
 =========
 Migration
 =========
@@ -5,8 +7,6 @@ Migration
 .. toctree::
    :maxdepth: 2
 
-   migration-neutron-database.rst
-   migration-nova-network-to-neutron.rst
-   migration-classic-to-dvr.rst
-   migration-classic-to-l3ha.rst
-
+   migration-database
+   migration-nova-network-to-neutron
+   migration-classic-to-l3ha

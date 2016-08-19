@@ -383,7 +383,7 @@ Controller node
         `Installation Guide <http://docs.openstack.org/mitaka/install-guide-ubuntu/horizon-install.html>`__
         for more information.
 
-   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
+   * If necessary, :ref:`configure MTU <config-mtu>`.
 
 #. In the ``ml2_conf.ini`` file:
 

@@ -172,7 +172,7 @@ The compute nodes contain the following network components:
 #. Conventional Linux bridges handling security groups. Optionally, a native
    OVS implementation can handle security groups. However, due to kernel and
    OVS version requirements for it, this scenario uses conventional Linux
-   bridges. See :ref:`adv-config-ovsfwdriver` for more information.
+   bridges. See :ref:`config-ovsfwdriver` for more information.
 
 .. image:: figures/scenario-dvr-compute1.png
    :alt: Network node components - overview
@@ -498,7 +498,7 @@ Controller node
         create distributed routers using the ``--distributed True`` option
         during router creation.
 
-   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
+   * If necessary, :ref:`configure MTU <config-mtu>`.
 
 #. In the ``ml2_conf.ini`` file:
 
@@ -550,7 +550,7 @@ Controller node
         [securitygroup]
         firewall_driver = iptables_hybrid
 
-   * If necessary, :ref:`configure MTU <adv-config-mtu>`.
+   * If necessary, :ref:`configure MTU <config-mtu>`.
 
 #. Start the following services:
 

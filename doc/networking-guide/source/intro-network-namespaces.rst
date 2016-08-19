@@ -1,3 +1,5 @@
+.. _intro-network-namespaces:
+
 ==================
 Network namespaces
 ==================
