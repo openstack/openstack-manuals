@@ -9,7 +9,7 @@ Image service command-line client
 The glance client is the command-line interface (CLI) for
 the Image service API and its extensions.
 
-This chapter documents :command:`glance` version ``2.3.0``.
+This chapter documents :command:`glance` version ``2.4.0``.
 
 For help on a specific :command:`glance` command, enter:
 
