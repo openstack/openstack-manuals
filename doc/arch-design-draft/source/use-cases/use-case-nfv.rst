@@ -1,12 +1,28 @@
+.. _nfv-cloud:
+
 ==============================
-Network-focused cloud examples
+Network virtual function cloud
 ==============================
 
-An organization designs a large-scale web application with cloud
-principles in mind. The application scales horizontally in a bursting
-fashion and generates a high instance count. The application requires an
-SSL connection to secure data and must not lose connection state to
-individual servers.
+Stakeholder
+~~~~~~~~~~~
+
+Design model
+~~~~~~~~~~~~
+
+Component block diagram
+~~~~~~~~~~~~~~~~~~~~~~~
+
+User stories
+~~~~~~~~~~~~
+
+Network-focused cloud examples
+------------------------------
+
+An organization designs a large scale cloud-baesed web application. The
+application scales horizontally in a bursting fashion and generates a
+high instance count. The application requires an SSL connection to secure
+data and must not lose connection state to individual servers.
 
 The figure below depicts an example design for this workload. In this
 example, a hardware load balancer provides SSL offload functionality and
@@ -28,7 +44,7 @@ vSwitch agent in GRE tunnel mode. This ensures all devices can reach all
 other devices and that you can create tenant networks for private
 addressing links to the load balancer.
 
-.. figure:: figures/Network_Web_Services1.png
+.. figure:: ../figures/Network_Web_Services1.png
 
 A web service architecture has many options and optional components. Due
 to this, it can fit into a large number of other OpenStack designs. A
@@ -153,7 +169,7 @@ east-west traffic
  specific direction. However this traffic might interfere with
  north-south traffic.
 
-.. figure:: figures/Network_Cloud_Storage2.png
+.. figure:: ../figures/Network_Cloud_Storage2.png
 
 This application prioritizes the north-south traffic over east-west
 traffic: the north-south traffic involves customer-facing data.

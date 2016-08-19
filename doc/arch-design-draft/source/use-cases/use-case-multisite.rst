@@ -1,13 +1,26 @@
-=========================
-Multi-site cloud examples
-=========================
+.. _multisite-cloud:
+
+================
+Multi-site cloud
+================
+
+Design Model
+~~~~~~~~~~~~
+
+Component block diagram
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Stakeholder
+~~~~~~~~~~~
+
+User stories
+~~~~~~~~~~~~
 
 There are multiple ways to build a multi-site OpenStack installation,
 based on the needs of the intended workloads. Below are example
-architectures based on different requirements. These examples are meant
-as a reference, and not a hard and fast rule for deployments. Use the
-previous sections of this chapter to assist in selecting specific
-components and implementations based on specific needs.
+architectures based on different requirements, which are not hard and
+fast rules for deployment. Refer to previous sections to assist in
+selecting specific components and implementations based on your needs.
 
 A large content provider needs to deliver content to customers that are
 geographically dispersed. The workload is very sensitive to latency and
@@ -64,18 +77,18 @@ center in each of the edge regional locations house a second region near
 the first region. This ensures that the application does not suffer
 degraded performance in terms of latency and availability.
 
-:ref:`ms-customer-edge` depicts the solution designed to have both a
+The follow figure depicts the solution designed to have both a
 centralized set of core data centers for OpenStack services and paired edge
-data centers:
+data centers.
 
-.. _ms-customer-edge:
-
-.. figure:: figures/Multi-Site_Customer_Edge.png
 
    **Multi-site architecture example**
 
-Geo-redundant load balancing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. figure:: ../figures/Multi-Site_Customer_Edge.png
+
+
+Geo-redundant load balancing example
+------------------------------------
 
 A large-scale web application has been designed with cloud principles in
 mind. The application is designed provide service to application store,
@@ -83,7 +96,7 @@ on a 24/7 basis. The company has typical two tier architecture with a
 web front-end servicing the customer requests, and a NoSQL database back
 end storing the information.
 
-As of late there has been several outages in number of major public
+Recently there has been several outages in number of major public
 cloud providers due to applications running out of a single geographical
 location. The design therefore should mitigate the chance of a single
 site causing an outage for their business.
@@ -155,12 +168,13 @@ not have any awareness of geo location.
 
 .. _ms-geo-redundant:
 
-.. figure:: figures/Multi-site_Geo_Redundant_LB.png
-
    **Multi-site geo-redundant architecture**
 
-Location-local service
-~~~~~~~~~~~~~~~~~~~~~~
+.. figure:: ../figures/Multi-site_Geo_Redundant_LB.png
+
+
+Location-local service example
+------------------------------
 
 A common use for multi-site OpenStack deployment is creating a Content
 Delivery Network. An application that uses a location-local architecture
@@ -187,6 +201,6 @@ application completes the request.
 
 .. _ms-shared-keystone:
 
-.. figure:: figures/Multi-Site_shared_keystone1.png
+.. figure:: ../figures/Multi-Site_shared_keystone1.png
 
    **Multi-site shared keystone architecture**
