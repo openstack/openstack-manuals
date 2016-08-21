@@ -85,6 +85,9 @@ neutron quota-list
 neutron quota-show
     Shows quotas for a specified tenant
 
+neutron quota-default-show
+    Show default quotas for a specified tenant
+
 neutron quota-update
     Updates quotas for a specified tenant
 
