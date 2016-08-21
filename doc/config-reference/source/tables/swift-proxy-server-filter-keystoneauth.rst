@@ -22,8 +22,8 @@
    * - ``reseller_admin_role`` = ``ResellerAdmin``
      - The reseller admin role gives the ability to create and delete accounts.
    * - ``reseller_prefix`` = ``AUTH``
-     - The naming scope for the auth service. Swift
-   * - ``service_roles`` = `` ``
+     - The naming scope for the auth service.
+   * - ``service_roles`` =
      - When present, this option requires that the X-Service-Token header supplies a token from a user who has a role listed in service_roles. This parameter may be prefixed with an appropriate prefix.
    * - ``use`` = ``egg:swift#keystoneauth``
-     - Entry point of paste.deploy in the server
+     - Entry point of paste.deploy in the server.

@@ -1,15 +1,6 @@
-========================
-Configure Object Storage
-========================
-
-OpenStack Object Storage uses multiple configuration files for multiple
-services and background daemons, and ``paste.deploy`` to manage server
-configurations. Default configuration options appear in the ``[DEFAULT]``
-section. You can override the default values by setting values in the other
-sections.
-
+==========================
 Proxy server configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+==========================
 
 Find an example proxy server configuration at
 ``etc/proxy-server.conf-sample`` in the source code repository.
@@ -34,18 +25,8 @@ The available configuration options are:
 .. include:: ../tables/swift-proxy-server-filter-xprofile.rst
 
 Sample proxy server configuration file
---------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. remote-code-block:: ini
 
    https://git.openstack.org/cgit/openstack/swift/plain/etc/proxy-server.conf-sample?h=stable/mitaka
-
-Proxy server memcache configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Find an example memcache configuration for the proxy server at
-``etc/memcache.conf-sample`` in the source code repository.
-
-The available configuration options are:
-
-.. include:: ../tables/swift-memcache-memcache.rst

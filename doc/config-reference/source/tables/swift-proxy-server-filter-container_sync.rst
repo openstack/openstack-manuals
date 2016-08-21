@@ -10,8 +10,8 @@
    * - Configuration option = Default value
      - Description
    * - ``allow_full_urls`` = ``true``
-     - No help text available for this option.
+     - Set this to false if you want to disallow any full URL values to be set for any new X-Container-Sync-To headers. This will keep any new full URLs from coming in, but won't change any existing values already in the cluster. Updating those will have to be done manually, as knowing what the true realm endpoint should be cannot always be guessed.
    * - ``current`` = ``//REALM/CLUSTER``
-     - No help text available for this option.
+     - Set this to specify this cluster //realm/cluster as "current" in /info.
    * - ``use`` = ``egg:swift#container_sync``
-     - Entry point of paste.deploy in the server
+     - Entry point of paste.deploy in the server.

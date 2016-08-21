@@ -2,11 +2,9 @@
 Object Storage general service configuration
 ============================================
 
-Most Object Storage services fall into two categories, Object Storage's WSGI
-servers and background daemons.
-
-Object Storage uses ``paste.deploy`` to manage server configurations.
-Read more at `<http://pythonpaste.org/deploy/>`_.
+Object Storage service uses multiple configuration files for multiple services
+and background daemons, and ``paste.deploy`` to manage server configurations.
+For more information about ``paste.deploy``, see: http://pythonpaste.org/deploy/.
 
 Default configuration options are set in the ``[DEFAULT]`` section, and any
 options specified there can be overridden in any of the other sections when the
