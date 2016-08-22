@@ -28,10 +28,10 @@ Create a container
 #. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
    click :guilabel:`Containers` category.
 
-#. Click :guilabel:`Create Container`.
+#. Click :guilabel:`Container`.
 
 #. In the :guilabel:`Create Container` dialog box, enter a name for the
-   container, and then click :guilabel:`Create Container`.
+   container, and then click :guilabel:`Create`.
 
 You have successfully created a container.
 
@@ -52,9 +52,9 @@ Upload an object
 
 #. Select the container in which you want to store your object.
 
-#. Click :guilabel:`Upload Object`.
+#. Click the :guilabel:`Upload File` icon.
 
-   The :guilabel:`Upload Object To Container: <name>` dialog box
+   The :guilabel:`Upload File To Container: <name>` dialog box
    appears.
    ``<name>`` is the name of the container to which you are uploading
    the object.
@@ -63,7 +63,7 @@ Upload an object
 
 #. Browse to and select the file that you want to upload.
 
-#. Click :guilabel:`Upload Object`.
+#. Click :guilabel:`Upload File`.
 
 You have successfully uploaded an object to the container.
 
