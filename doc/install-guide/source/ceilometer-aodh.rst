@@ -277,6 +277,16 @@ Install and configure components
          ...
          oslo_config_project = aodh
 
+   4. Populate the Alarming database:
+
+      .. code-block:: console
+
+         # su -s /bin/sh -c "aodh-dbsync" aodh
+
+      .. note::
+
+         Ignore any deprecation messages in this output.
+
 Finalize installation
 ~~~~~~~~~~~~~~~~~~~~~
 
