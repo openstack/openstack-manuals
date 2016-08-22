@@ -17,8 +17,6 @@ Installation and configuration is documented in the
 `Shared File Systems installation guide
 <http://docs.openstack.org/project-install-guide/shared-file-systems/draft/>`_.
 
-.. note:: TBD: The above guide is not published yet.
-
 Object Storage services (swift)
 ===============================
 
