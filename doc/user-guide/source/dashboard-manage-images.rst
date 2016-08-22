@@ -109,14 +109,14 @@ Follow this procedure to update an existing image.
 #. In the :guilabel:`Actions` column, click the menu button and then
    select :guilabel:`Edit Image` from the list.
 
-#. In the :guilabel:`Update Image` dialog box, you can perform various
+#. In the :guilabel:`Edit Image` dialog box, you can perform various
    actions. For example:
 
    *  Change the name of the image.
    *  Select the :guilabel:`Public` check box to make the image public.
    *  Clear the :guilabel:`Public` check box to make the image private.
 
-#. Click :guilabel:`Update Image`.
+#. Click :guilabel:`Edit Image`.
 
 Delete an image
 ~~~~~~~~~~~~~~~
