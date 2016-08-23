@@ -70,7 +70,7 @@ organization.
 Associating existing users with an additional project or removing them
 from an older project is done from the :guilabel:`Projects` page of the
 dashboard by selecting :guilabel:`Manage Members` from the
-:guilabel:`Actions` column, as shown in :ref:`figure_edit_project_members`.
+:guilabel:`Actions` column, as shown in the screenshot below.
 
 From this view, you can do a number of useful things, as well as a few
 dangerous ones.
@@ -85,12 +85,8 @@ column.
 From here, click the :guilabel:`+` icon to add users to the project.
 Click the :guilabel:`-` to remove them.
 
-.. _figure_edit_project_members:
-
-.. figure:: figures/osog_0902.png
+.. figure:: figures/edit_project_member.png
    :alt: Edit Project Members tab
-
-   Edit Project Members tab
 
 The dangerous possibility comes with the ability to change member roles.
 This is the dropdown list below the username in the
