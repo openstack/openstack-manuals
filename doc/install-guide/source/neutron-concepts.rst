@@ -4,7 +4,7 @@ Networking (neutron) concepts
 OpenStack Networking (neutron) manages all networking facets for the
 Virtual Networking Infrastructure (VNI) and the access layer aspects
 of the Physical Networking Infrastructure (PNI) in your OpenStack
-environment. OpenStack Networking enables tenants to create advanced
+environment. OpenStack Networking enables projects to create advanced
 virtual network topologies which may include services such as a
 :term:`firewall`, a :term:`load balancer`, and a
 :term:`virtual private network (VPN)`.

@@ -105,7 +105,7 @@ Create the service entity and API endpoints
 
    OpenStack uses three API endpoint variants for each service: admin,
    internal, and public. The admin API endpoint allows modifying users and
-   tenants by default, while the public and internal APIs do not allow these
+   projects by default, while the public and internal APIs do not allow these
    operations. In a production environment, the variants might reside on
    separate networks that service different types of users for security
    reasons. For instance, the public API network might be visible from the
