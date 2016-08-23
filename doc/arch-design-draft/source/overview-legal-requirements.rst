@@ -61,15 +61,12 @@ regulations:
 Cloud security architecture
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An efficient cloud security architecture should recognize the issues
-that arise with security management. The security management addresses
-these issues with security controls. Cloud security controls are put
-in place to safeguard any weaknesses in the system and reduce the
-effect of an attack.
+Cloud security architecture should recognize the issues
+that arise with security management, which addresses these issues
+with security controls. Cloud security controls are put in place to
+safeguard any weaknesses in the system, and reduce the effect of an attack.
 
-The following are different types of security controls.
-See also `NIST Special Publication 800-53
-<https://web.nvd.nist.gov/view/800-53/home>`_.
+The following security controls are described below.
 
 Deterrent controls:
  Typically reduce the threat level by informing potential attackers
@@ -91,3 +88,6 @@ Corrective controls:
  the damage. They come into effect during or after an incident.
  Restoring system backups in order to rebuild a compromised
  system is an example of a corrective control.
+
+For more information, see See also `NIST Special Publication 800-53
+<https://web.nvd.nist.gov/view/800-53/home>`_.
