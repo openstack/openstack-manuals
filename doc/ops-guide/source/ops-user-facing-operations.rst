@@ -217,7 +217,7 @@ To share an image or snapshot with another project, do the following:
    target project.
 
 #. Once you have both pieces of information, run
-   the :command:`glance` command:
+   the :command:`glance member-create` command:
 
    .. code-block:: console
 
@@ -420,7 +420,7 @@ cloud. Sometimes this sharing isn't desirable. In this scenario,
 allowing all users to have access to a flavor with 128 GB of memory
 might cause your cloud to reach full capacity very quickly. To prevent
 this, you can restrict access to the custom flavor using the
-:command:`nova` command:
+:command:`nova flavor-access-add` command:
 
 .. code-block:: console
 
@@ -502,7 +502,7 @@ command-line equivalents.
 **Setting with nova command**
 
 From the command line, you can get a list of security groups for the
-project you're acting in using the :command:`nova` command:
+project you're acting in using the :command:`nova secgroup-list` command:
 
 .. code-block:: console
 
@@ -595,9 +595,9 @@ additive:
    | tcp         | 443       | 443     | 0.0.0.0/0 |              |
    +-------------+-----------+---------+-----------+--------------+
 
-The inverse operation is called :command:`secgroup-delete-rule`, using the
+The inverse operation is called :command:`nova secgroup-delete-rule`, using the
 same format. Whole security groups can be removed with
-:command:`secgroup-delete`.
+:command:`nova secgroup-delete`.
 
 To create security group rules for a cluster of instances, you want to
 use SourceGroups.
@@ -801,9 +801,9 @@ additive:
    | tenant_id            | 341f49145ec7445192dc3c2abc33500d                                                                                                                                                                                                                                                                                                     |
    +----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-The inverse operation is called :command:`security-group-rule-delete`,
+The inverse operation is called :command:`neutron security-group-rule-delete`,
 specifying security-group-rule ID. Whole security groups can be removed
-with :command:`security-group-delete`.
+with :command:`neutron security-group-delete`.
 
 To create security group rules for a cluster of instances, use
 RemoteGroups.
@@ -815,7 +815,7 @@ dynamically. This dynamic selection alleviates the need for individual
 rules to allow each new member of the cluster.
 
 The code is similar to the above example of
-:command:`security-group-rule-create`. To use RemoteGroup, specify
+:command:`neutron security-group-rule-create`. To use RemoteGroup, specify
 :option:`--remote-group-id` instead of :option:`--remote-ip-prefix`.
 For example:
 
