@@ -109,7 +109,7 @@ create databases, service credentials, and API endpoints.
       | interface    | public                                    |
       | region       | RegionOne                                 |
       | region_id    | RegionOne                                 |
-      | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78          |
+      | service_id   | 060d59eac51b4594815603d75a00aba2          |
       | service_name | nova                                      |
       | service_type | compute                                   |
       | url          | http://controller:8774/v2.1/%(tenant_id)s |
@@ -125,7 +125,7 @@ create databases, service credentials, and API endpoints.
       | interface    | internal                                  |
       | region       | RegionOne                                 |
       | region_id    | RegionOne                                 |
-      | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78          |
+      | service_id   | 060d59eac51b4594815603d75a00aba2          |
       | service_name | nova                                      |
       | service_type | compute                                   |
       | url          | http://controller:8774/v2.1/%(tenant_id)s |
@@ -141,7 +141,7 @@ create databases, service credentials, and API endpoints.
       | interface    | admin                                     |
       | region       | RegionOne                                 |
       | region_id    | RegionOne                                 |
-      | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78          |
+      | service_id   | 060d59eac51b4594815603d75a00aba2          |
       | service_name | nova                                      |
       | service_type | compute                                   |
       | url          | http://controller:8774/v2.1/%(tenant_id)s |

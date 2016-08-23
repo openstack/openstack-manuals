@@ -131,7 +131,7 @@ Create the service entity and API endpoints
       | interface    | public                           |
       | region       | RegionOne                        |
       | region_id    | RegionOne                        |
-      | service_id   | 8c8c0927262a45ad9066cfe70d46892c |
+      | service_id   | 4ddaae90388b4ebc9d252ec2252d8d10 |
       | service_name | keystone                         |
       | service_type | identity                         |
       | url          | http://controller:5000/v3        |
@@ -147,7 +147,7 @@ Create the service entity and API endpoints
       | interface    | internal                         |
       | region       | RegionOne                        |
       | region_id    | RegionOne                        |
-      | service_id   | 6f8de927262ac12f6066cfe70d99ac51 |
+      | service_id   | 4ddaae90388b4ebc9d252ec2252d8d10 |
       | service_name | keystone                         |
       | service_type | identity                         |
       | url          | http://controller:5000/v3        |
@@ -163,7 +163,7 @@ Create the service entity and API endpoints
       | interface    | admin                            |
       | region       | RegionOne                        |
       | region_id    | RegionOne                        |
-      | service_id   | 34ab3d27262ac449cba6cfe704dbc11f |
+      | service_id   | 4ddaae90388b4ebc9d252ec2252d8d10 |
       | service_name | keystone                         |
       | service_type | identity                         |
       | url          | http://controller:35357/v3       |
