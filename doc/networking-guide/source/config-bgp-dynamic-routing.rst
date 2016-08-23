@@ -7,8 +7,8 @@ BGP dynamic routing
 BGP dynamic routing enables advertisement of self-service (private) network
 prefixes to physical network devices that support BGP such as routers, thus
 removing the conventional dependency on static routes. The feature relies
-on address scopes and requires knowledge of their operation for proper
-deployment.
+on :ref:`address scopes <config-address-scopes>` and requires knowledge of
+their operation for proper deployment.
 
 BGP dynamic routing consists of a service plug-in and an agent. The service
 plug-in implements the Networking service extension and the agent manages BGP
@@ -17,17 +17,47 @@ using the CLI or API and manually schedules it to one or more hosts running
 the agent. Agents can reside on hosts with or without other Networking
 service agents. Prefix advertisement depends on the binding of external
 networks to a BGP speaker and the address scope of external and internal
-subnets.
+IP address ranges or subnets.
+
+.. image:: figures/bgp-dynamic-routing-overview.png
+   :alt: BGP dynamic routing overview
+
+.. note::
+
+   Although self-service networks generally use private IP address ranges
+   (RFC1918) for IPv4 subnets, BGP dynamic routing can advertise any IPv4
+   address ranges.
 
 Example configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
-Use the following example configuration as a template to deploy BGP dynamic
-routing in your environment. The example configuration references the
-following environment:
+The example configuration involves the following components:
 
-.. image:: figures/bgp-basic-routing-example.png
-   :alt: Basic BGP routing example
+* One BGP agent.
+
+* One address scope containing IP address range 203.0.113.0/24 for
+  provider networks, and IP address ranges 10.0.1.0/24 and 10.0.2.0/24
+  for self-service networks.
+
+* One provider network using IP address range 203.0.113.0/24.
+
+* Three self-service networks.
+
+  * Self-service networks 1 and 2 use IP address ranges inside of
+    the address scope.
+
+  * Self-service network 3 uses a unique IP address range 10.0.3.0/24 to
+    demonstrate that the BGP speaker does not advertise prefixes outside
+    of address scopes.
+
+* Three routers. Each router connects one self-service network to the
+  provider network.
+
+  * Router 1 contains IP addresses 203.0.113.11 and 10.0.1.1.
+
+  * Router 2 contains IP addresses 203.0.113.12 and 10.0.2.1.
+
+  * Router 3 contains IP addresses 203.0.113.13 and 10.0.3.1.
 
 .. note::
 
@@ -72,7 +102,7 @@ Agent nodes
        bgp_router_id = ROUTER_ID
 
     Replace ``ROUTER_ID`` with a suitable unique 32-bit number, typically an
-    IPv4 address on the host running the agent. For example, 192.168.122.150.
+    IPv4 address on the host running the agent. For example, 192.0.2.2.
 
 Verify service operation
 ------------------------
@@ -98,14 +128,14 @@ Create the address scope and subnet pools
 
    .. code-block:: console
 
-      $ neutron address-scope-create --shared public 4
+      $ neutron address-scope-create --shared bgp 4
       Created a new address_scope:
       +------------+--------------------------------------+
       | Field      | Value                                |
       +------------+--------------------------------------+
       | id         | c02c358a-9d35-43ea-8313-986b3e4a91c0 |
       | ip_version | 4                                    |
-      | name       | public                               |
+      | name       | bgp                                  |
       | shared     | True                                 |
       | tenant_id  | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
       +------------+--------------------------------------+
@@ -117,8 +147,8 @@ Create the address scope and subnet pools
 
      .. code-block:: console
 
-        $ neutron subnetpool-create --pool-prefix 172.24.4.0/24 \
-          --address-scope public provider
+        $ neutron subnetpool-create --pool-prefix 203.0.113.0/24 \
+          --address-scope bgp provider
         Created a new subnetpool:
         +-------------------+--------------------------------------+
         | Field             | Value                                |
@@ -134,7 +164,7 @@ Create the address scope and subnet pools
         | max_prefixlen     | 32                                   |
         | min_prefixlen     | 8                                    |
         | name              | provider                             |
-        | prefixes          | 172.24.4.0/24                        |
+        | prefixes          | 203.0.113.0/24                       |
         | shared            | False                                |
         | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
         | updated_at        | 2016-03-17T23:11:12                  |
@@ -144,8 +174,9 @@ Create the address scope and subnet pools
 
      .. code-block:: console
 
-        $ neutron subnetpool-create --pool-prefix 10.0.0.0/16 \
-          --address-scope public --shared selfservice
+        $ neutron subnetpool-create --pool-prefix 10.0.1.0/24 \
+          --pool-prefix 10.0.2.0/24 --address-scope bgp \
+          --shared selfservice
         Created a new subnetpool:
         +-------------------+--------------------------------------+
         | Field             | Value                                |
@@ -161,7 +192,8 @@ Create the address scope and subnet pools
         | max_prefixlen     | 32                                   |
         | min_prefixlen     | 8                                    |
         | name              | selfservice                          |
-        | prefixes          | 10.0.0.0/16                          |
+        | prefixes          | 10.0.1.0/24                          |
+        |                   | 10.0.2.0/24                          |
         | shared            | True                                 |
         | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
         | updated_at        | 2016-03-17T23:11:51                  |
@@ -193,134 +225,246 @@ Create the provider and self-service networks
       | tenant_id                 | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
       +---------------------------+--------------------------------------+
 
-#. Create a subnet on the provider network using an IP address allocation from
+#. Create a subnet on the provider network using an IP address range from
    the provider subnet pool.
 
    .. code-block:: console
 
       $ neutron subnet-create --name provider --subnetpool provider \
-        --prefixlen 24 provider
+        --prefixlen 24 --allocation-pool start=203.0.113.11,end=203.0.113.254 \
+        --gateway 203.0.113.1 provider
       Created a new subnet:
-      +-------------------+------------------------------------------------+
-      | Field             | Value                                          |
-      +-------------------+------------------------------------------------+
-      | allocation_pools  | {"start": "172.24.4.2", "end": "172.24.4.254"} |
-      | cidr              | 172.24.4.0/24                                  |
-      | created_at        | 2016-03-17T23:17:16                            |
-      | description       |                                                |
-      | dns_nameservers   |                                                |
-      | enable_dhcp       | True                                           |
-      | gateway_ip        | 172.24.4.1                                     |
-      | host_routes       |                                                |
-      | id                | 8ed65d41-2b2a-4f3a-9f92-45adb266e01a           |
-      | ip_version        | 4                                              |
-      | ipv6_address_mode |                                                |
-      | ipv6_ra_mode      |                                                |
-      | name              | provider                                       |
-      | network_id        | 68ec148c-181f-4656-8334-8f4eb148689d           |
-      | subnetpool_id     | 3771c0e7-7096-46d3-a3bd-699c58e70259           |
-      | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d               |
-      | updated_at        | 2016-03-17T23:17:16                            |
-      +-------------------+------------------------------------------------+
+      +-------------------+---------------------------------------------------+
+      | Field             | Value                                             |
+      +-------------------+---------------------------------------------------+
+      | allocation_pools  | {"start": "203.0.113.11", "end": "203.0.113.254"} |
+      | cidr              | 203.0.113.0/24                                    |
+      | created_at        | 2016-03-17T23:17:16                               |
+      | description       |                                                   |
+      | dns_nameservers   |                                                   |
+      | enable_dhcp       | True                                              |
+      | gateway_ip        | 203.0.113.1                                       |
+      | host_routes       |                                                   |
+      | id                | 8ed65d41-2b2a-4f3a-9f92-45adb266e01a              |
+      | ip_version        | 4                                                 |
+      | ipv6_address_mode |                                                   |
+      | ipv6_ra_mode      |                                                   |
+      | name              | provider                                          |
+      | network_id        | 68ec148c-181f-4656-8334-8f4eb148689d              |
+      | subnetpool_id     | 3771c0e7-7096-46d3-a3bd-699c58e70259              |
+      | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d                  |
+      | updated_at        | 2016-03-17T23:17:16                               |
+      +-------------------+---------------------------------------------------+
 
-#. Create the self-service network.
+   .. note::
+
+      The IP address allocation pool starting at ``.11`` improves clarity of
+      the diagrams. You can safely omit it.
+
+#. Create the self-service networks.
 
    .. code-block:: console
 
-      $ neutron net-create selfservice
+      $ neutron net-create selfservice1
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
       | admin_state_up            | True                                 |
-      | id                        | 01da3e19-129f-4d26-b065-255ade0e5e2c |
-      | name                      | selfservice                          |
+      | id                        | be79de1e-5f56-11e6-9dfb-233e41cec48c |
+      | name                      | selfservice1                         |
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
       | tenant_id                 | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
       +---------------------------+--------------------------------------+
 
-#. Create a subnet on the self-service network using an IP address allocation
-   from the self-service subnet pool.
+      $ neutron net-create selfservice2
+      Created a new network:
+      +---------------------------+--------------------------------------+
+      | Field                     | Value                                |
+      +---------------------------+--------------------------------------+
+      | admin_state_up            | True                                 |
+      | id                        | c1fd9846-5f56-11e6-a8ac-0f998d9cc0a2 |
+      | name                      | selfservice2                         |
+      | shared                    | False                                |
+      | status                    | ACTIVE                               |
+      | subnets                   |                                      |
+      | tenant_id                 | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      +---------------------------+--------------------------------------+
+
+      $ neutron net-create selfservice3
+      Created a new network:
+      +---------------------------+--------------------------------------+
+      | Field                     | Value                                |
+      +---------------------------+--------------------------------------+
+      | admin_state_up            | True                                 |
+      | id                        | c283dc1c-5f56-11e6-bfb6-efc30e1eb73b |
+      | name                      | selfservice3                         |
+      | shared                    | False                                |
+      | status                    | ACTIVE                               |
+      | subnets                   |                                      |
+      | tenant_id                 | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      +---------------------------+--------------------------------------+
+
+#. Create a subnet on the first two self-service networks using an IP address
+   range from the self-service subnet pool.
 
    .. code-block:: console
 
-      $ neutron subnet-create --name selfservice --subnetpool selfservice \
-        --prefixlen 24 selfservice
+      $ neutron subnet-create --name selfservice1 --subnetpool selfservice \
+        --prefixlen 24 selfservice1
       Created a new subnet:
       +-------------------+--------------------------------------------+
       | Field             | Value                                      |
       +-------------------+--------------------------------------------+
-      | allocation_pools  | {"start": "10.0.0.2", "end": "10.0.0.254"} |
-      | cidr              | 10.0.0.0/24                                |
+      | allocation_pools  | {"start": "10.0.1.2", "end": "10.0.1.254"} |
+      | cidr              | 10.0.1.0/24                                |
       | created_at        | 2016-03-17T23:20:20                        |
       | description       |                                            |
       | dns_nameservers   |                                            |
       | enable_dhcp       | True                                       |
-      | gateway_ip        | 10.0.0.1                                   |
+      | gateway_ip        | 10.0.1.1                                   |
       | host_routes       |                                            |
       | id                | 8edd3dc2-df40-4d71-816e-a4586d61c809       |
       | ip_version        | 4                                          |
       | ipv6_address_mode |                                            |
       | ipv6_ra_mode      |                                            |
-      | name              | selfservice                                |
-      | network_id        | 01da3e19-129f-4d26-b065-255ade0e5e2c       |
+      | name              | selfservice1                               |
+      | network_id        | be79de1e-5f56-11e6-9dfb-233e41cec48c       |
       | subnetpool_id     | c7e9737a-cfd3-45b5-a861-d1cee1135a92       |
       | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d           |
       | updated_at        | 2016-03-17T23:20:20                        |
       +-------------------+--------------------------------------------+
 
-Create and configure a router
------------------------------
+      $ neutron subnet-create --name selfservice2 --subnetpool selfservice \
+        --prefixlen 24 selfservice2
+      Created a new subnet:
+      +-------------------+--------------------------------------------+
+      | Field             | Value                                      |
+      +-------------------+--------------------------------------------+
+      | allocation_pools  | {"start": "10.0.2.2", "end": "10.0.2.254"} |
+      | cidr              | 10.0.2.0/24                                |
+      | created_at        | 2016-03-17T23:20:20                        |
+      | description       |                                            |
+      | dns_nameservers   |                                            |
+      | enable_dhcp       | True                                       |
+      | gateway_ip        | 10.0.2.1                                   |
+      | host_routes       |                                            |
+      | id                | 8edd3dc2-df40-4d71-816e-a4586d61c809       |
+      | ip_version        | 4                                          |
+      | ipv6_address_mode |                                            |
+      | ipv6_ra_mode      |                                            |
+      | name              | selfservice2                               |
+      | network_id        | c1fd9846-5f56-11e6-a8ac-0f998d9cc0a2       |
+      | subnetpool_id     | c7e9737a-cfd3-45b5-a861-d1cee1135a92       |
+      | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d           |
+      | updated_at        | 2016-03-17T23:20:20                        |
+      +-------------------+--------------------------------------------+
 
-#. Create the router.
+#. Create a subnet on the last self-service network using an IP address
+   range outside of the address scope.
 
    .. code-block:: console
 
-      $ neutron router-create router
+      $ neutron subnet-create --name subnet3 selfservice3 10.0.3.0/24
+      Created a new subnet:
+      +-------------------+--------------------------------------------+
+      | Field             | Value                                      |
+      +-------------------+--------------------------------------------+
+      | allocation_pools  | {"start": "10.0.3.2", "end": "10.0.3.254"} |
+      | cidr              | 10.0.3.0/24                                |
+      | created_at        | 2016-03-17T23:20:20                        |
+      | description       |                                            |
+      | dns_nameservers   |                                            |
+      | enable_dhcp       | True                                       |
+      | gateway_ip        | 10.0.3.1                                   |
+      | host_routes       |                                            |
+      | id                | cd9f9156-5f59-11e6-aeec-172ec7ee939a       |
+      | ip_version        | 4                                          |
+      | ipv6_address_mode |                                            |
+      | ipv6_ra_mode      |                                            |
+      | name              | selfservice3                               |
+      | network_id        | c283dc1c-5f56-11e6-bfb6-efc30e1eb73b       |
+      | subnetpool_id     |                                            |
+      | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d           |
+      | updated_at        | 2016-03-17T23:20:20                        |
+      +-------------------+--------------------------------------------+
+
+Create and configure the routers
+--------------------------------
+
+#. Create the routers.
+
+   .. code-block:: console
+
+      $ neutron router-create router1
       +-----------------------+--------------------------------------+
       | Field                 | Value                                |
       +-----------------------+--------------------------------------+
       | admin_state_up        | True                                 |
       | external_gateway_info |                                      |
-      | id                    | 49439b14-f6ee-420d-8c48-d3767fadcb3a |
-      | name                  | router                               |
+      | id                    | 3f6f4ef8-63be-11e6-bbb3-2fbcef363ab8 |
+      | name                  | router1                              |
       | status                | ACTIVE                               |
       | tenant_id             | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
       +-----------------------+--------------------------------------+
 
-#. Add the self-service subnet as an interface on the router.
+      $ neutron router-create router2
+      +-----------------------+--------------------------------------+
+      | Field                 | Value                                |
+      +-----------------------+--------------------------------------+
+      | admin_state_up        | True                                 |
+      | external_gateway_info |                                      |
+      | id                    | 3fd21a60-63be-11e6-9c95-5714c208c499 |
+      | name                  | router1                              |
+      | status                | ACTIVE                               |
+      | tenant_id             | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      +-----------------------+--------------------------------------+
+
+      $ neutron router-create router3
+      +-----------------------+--------------------------------------+
+      | Field                 | Value                                |
+      +-----------------------+--------------------------------------+
+      | admin_state_up        | True                                 |
+      | external_gateway_info |                                      |
+      | id                    | 40069a4c-63be-11e6-9ecc-e37c1eaa7e84 |
+      | name                  | router1                              |
+      | status                | ACTIVE                               |
+      | tenant_id             | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      +-----------------------+--------------------------------------+
+
+#. For each router, add one self-service subnet as an interface on the router.
 
    .. code-block:: console
 
-      $ neutron router-interface-add router selfservice
-      Added interface 969a1d4b-7fa1-4346-9963-de06becab87a to router router.
+      $ neutron router-interface-add router1 selfservice1
+      Added interface 90e3880a-5f5c-11e6-914c-9f3e20c8c151 to router router1.
 
-#. Add the provider network as a gateway on the router.
+      $ neutron router-interface-add router2 selfservice2
+      Added interface 91628362-5f5c-11e6-826a-7322fb03a821 to router router2.
+
+      $ neutron router-interface-add router3 selfservice3
+      Added interface 91d51044-5f5c-11e6-bf55-ffd180541cc2 to router router3.
+
+#. Add the provider network as a gateway on each router.
 
    .. code-block:: console
 
-      $ neutron router-gateway-set router provider
-      Set gateway for router router
+      $ neutron router-gateway-set router1 provider
+      Set gateway for router router1
 
-#. Verify router ports.
+      $ neutron router-gateway-set router2 provider
+      Set gateway for router router2
 
-   .. code-block:: console
-
-      $ neutron router-port-list router
-      +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------+
-      | id                                   | name | mac_address       | fixed_ips                                                                                 |
-      +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------+
-      | cc4547cd-00d6-4c29-a1cd-19f7a11a06d0 |      | fa:16:3e:30:4e:12 | {"subnet_id": "994ae28d-46f9-401e-b6cf-ced386ccc1a4", "ip_address": "10.0.0.1"}           |
-      | daf5b2eb-9caf-4052-a81f-ee4963614b77 |      | fa:16:3e:6e:4f:59 | {"subnet_id": "7e977566-d119-42d0-b70f-7fdb9c45d6b7", "ip_address": "172.24.4.4"}         |
-      +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------+
+      $ neutron router-gateway-set router3 provider
+      Set gateway for router router3
 
 Create and configure the BGP speaker
 ------------------------------------
 
-The BGP speaker advertises the next-hop IP address for the self-service
-network prefix.
+The BGP speaker advertises the next-hop IP address for eligible self-service
+networks and floating IP addresses for instances using those networks.
 
 #. Create the BGP speaker.
 
@@ -383,17 +527,18 @@ network prefix.
    .. code-block:: console
 
       $ neutron bgp-speaker-advertiseroute-list bgpspeaker
-      +-------------+------------+
-      | destination | next_hop   |
-      +-------------+------------+
-      | 10.0.0.0/24 | 172.24.4.3 |
-      +-------------+------------+
+      +-------------+--------------+
+      | destination | next_hop     |
+      +-------------+--------------+
+      | 10.0.1.0/24 | 203.0.113.11 |
+      | 10.0.2.0/24 | 203.0.113.12 |
+      +-------------+--------------+
 
 #. Create a BGP peer.
 
    .. code-block:: console
 
-      $ neutron bgp-peer-create --peer-ip 192.168.122.1 \
+      $ neutron bgp-peer-create --peer-ip 192.0.2.1 \
         --remote-as REMOTE_AS bgppeer
       Created a new bgp_peer:
       +-----------+--------------------------------------+
@@ -402,13 +547,18 @@ network prefix.
       | auth_type | none                                 |
       | id        | 35c89ca0-ac5a-4298-a815-0b073c2362e9 |
       | name      | bgppeer                              |
-      | peer_ip   | 192.168.122.1                        |
+      | peer_ip   | 192.0.2.1                            |
       | remote_as | 4321                                 |
       | tenant_id | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
       +-----------+--------------------------------------+
 
    Replace ``REMOTE_AS`` with an appropriate remote autonomous system number.
    The example configuration uses AS 4321 which triggers EBGP peering.
+
+   .. note::
+
+      The host containing the BGP agent must have layer-3 connectivity to
+      the provider router.
 
 #. Add a BGP peer to the BGP speaker.
 
@@ -492,8 +642,8 @@ conditions:
 * The BGP speaker has the ``advertise_tenant_networks`` attribute set to
   ``True``.
 
-.. image:: figures/bgp-with-address-scope-diagram.png
-   :alt: Advertisement of self-service networks
+.. image:: figures/bgp-dynamic-routing-example1.png
+   :alt: Example of prefix advertisements with self-service networks
 
 Advertisement of a floating IP address requires satisfying the following
 conditions:
@@ -504,35 +654,45 @@ conditions:
 * The BGP speaker has the ``advertise_floating_ip_host_routes`` attribute
   set to ``True``.
 
-.. image:: figures/bgp-with-floating-ips.png
-   :alt: Advertisement of floating IP addresses
+.. image:: figures/bgp-dynamic-routing-example2.png
+   :alt: Example of prefix advertisements with floating IP addresses
 
-Distributed Virtual Routers (DVR)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Operation with Distributed Virtual Routers (DVR)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In deployments using DVR, the BGP speaker advertises floating IP
 addresses and self-service networks differently. For floating IP
 addresses, the BGP speaker advertises the floating IP agent gateway
 on the corresponding compute node as the next-hop IP address. For
 self-service networks using SNAT, the BGP speaker advertises the
-DVR SNAT node as the next-hop IP address. For example, consider a
-self-service network using 10.0.0.0/24, floating IP addresses using
-an arbitrary allocation within 172.24.4.0/24, and a SNAT gateway on
-172.24.4.3.
+DVR SNAT node as the next-hop IP address.
+
+For example, consider the following components:
+
+#. A provider network using IP address range 203.0.113.0/24, and supporting
+   floating IP addresses 203.0.113.101, 203.0.113.102, and 203.0.113.103.
+
+#. A self-service network using IP address range 10.0.1.0/24.
+
+#. The SNAT gateway resides on 203.0.113.11.
+
+#. The floating IP agent gateways (one per compute node) reside on
+   203.0.113.12, 203.0.113.13, and 203.0.113.14.
+
+#. Three instances, one per compute node, each with a floating IP
+   address.
 
 .. code-block:: console
 
     $ neutron bgp-speaker-advertiseroute-list bgpspeaker
-    +-----------------+------------+
-    | destination     | next_hop   |
-    +-----------------+------------+
-    | 10.0.0.0/24     | 172.24.4.3 |
-    | 172.24.4.30/32  | 172.24.4.6 |
-    | 172.24.4.35/32  | 172.24.4.5 |
-    | 172.24.4.103/32 | 172.24.4.6 |
-    | 172.24.4.50/32  | 172.24.4.7 |
-    | 172.24.4.51/32  | 172.24.4.8 |
-    +-----------------+------------+
+    +------------------+--------------+
+    | destination      | next_hop     |
+    +------------------+--------------+
+    | 10.0.1.0/24      | 203.0.113.11 |
+    | 203.0.113.101/32 | 203.0.113.12 |
+    | 203.0.113.102/32 | 203.0.113.13 |
+    | 203.0.113.103/32 | 203.0.113.14 |
+    +------------------+--------------+
 
 .. note::
 
@@ -549,10 +709,9 @@ assist with verifying operation of the BGP speaker.
    +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------------------------+
    | id                                   | name | mac_address       | fixed_ips                                                                                              |
    +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------------------------+
-   | 87cf2970-4970-462e-939e-00e808295dfa |      | fa:16:3e:7c:68:e3 | {"subnet_id": "8ed65d41-2b2a-4f3a-9f92-45adb266e01a", "ip_address": "172.24.4.6"}                      |
-   | 8d218440-0d2e-49d0-8a7b-3266a6146dc1 |      | fa:16:3e:9d:78:cf | {"subnet_id": "8ed65d41-2b2a-4f3a-9f92-45adb266e01a", "ip_address": "172.24.4.5"}                      |
-   | 87cf2970-4970-462e-939e-00e802281dfa |      | fa:16:3e:6b:18:e0 | {"subnet_id": "8ed65d41-2b2a-4f3a-9f92-45adb266e01a", "ip_address": "172.24.4.7"}                      |
-   | 8f717440-0b2a-32d0-4a5b-1268a6140da4 |      | fa:16:3e:8a:32:a1 | {"subnet_id": "8ed65d41-2b2a-4f3a-9f92-45adb266e01a", "ip_address": "172.24.4.8"}                      |
+   | 87cf2970-4970-462e-939e-00e808295dfa |      | fa:16:3e:7c:68:e3 | {"subnet_id": "8ed65d41-2b2a-4f3a-9f92-45adb266e01a", "ip_address": "203.0.113.12"}                    |
+   | 8d218440-0d2e-49d0-8a7b-3266a6146dc1 |      | fa:16:3e:9d:78:cf | {"subnet_id": "8ed65d41-2b2a-4f3a-9f92-45adb266e01a", "ip_address": "203.0.113.13"}                    |
+   | 87cf2970-4970-462e-939e-00e802281dfa |      | fa:16:3e:6b:18:e0 | {"subnet_id": "8ed65d41-2b2a-4f3a-9f92-45adb266e01a", "ip_address": "203.0.113.14"}                    |
    +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------------------------+
 
 IPv6
@@ -568,7 +727,7 @@ BGP dynamic routing supports peering via IPv6 and advertising IPv6 prefixes.
 
 .. note::
 
-   DVR functions similarly to IPv4.
+   DVR with IPv6 functions similarly to DVR with IPv4.
 
 High availability
 ~~~~~~~~~~~~~~~~~
