@@ -2752,7 +2752,7 @@ O
       Each OpenStack release has a code name. Code names ascend in
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
       Folsom, Grizzly, Havana, Icehouse, Juno, Kilo, Liberty,
-      and Mitaka.
+      Mitaka, Newton, Ocata, Pike, and Queens.
       Code names are cities or counties near where the
       corresponding OpenStack design summit took place. An
       exception, called the Waldon exception, is granted to
@@ -2847,6 +2847,14 @@ P
 
       A file used to customize a Compute instance. It can be used to
       inject SSH keys or a specific network configuration.
+
+   Pike
+
+      The code name for the sixteenth release of OpenStack. The design
+      summit will take place in Boston, Massachusetts, US. The release
+      is named after the Massachusetts Turnpike, abbreviated commonly
+      as the Mass Pike, which is the eastermost stretch of
+      Interstate 90.
 
    Platform-as-a-Service (PaaS)
 
@@ -3024,6 +3032,13 @@ Q
       If Object Storage finds objects, containers, or accounts that
       are corrupt, they are placed in this state, are not replicated, cannot
       be read by clients, and a correct copy is re-replicated.
+
+   Queens
+
+      The code name for the seventeenth release of OpenStack. The
+      design summit will take place in Sydney, Australia. The release
+      is named after the Queens Pound river in the South Coast region
+      of New South Wales.
 
    Quick EMUlator (QEMU)
 
