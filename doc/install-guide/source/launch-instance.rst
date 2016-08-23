@@ -187,9 +187,8 @@ Shared File Systems
 -------------------
 
 If your environment includes the Shared File Systems service, you can create
-a share and mount it in an instance:
+a share and mount it in an instance.
 
-.. toctree::
-   :maxdepth: 1
-
-   launch-instance-manila.rst
+For more information, see the
+`Shared File Systems installation guide
+<http://docs.openstack.org/project-install-guide/shared-file-systems/draft>`_.
