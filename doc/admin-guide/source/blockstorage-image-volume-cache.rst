@@ -35,7 +35,7 @@ the following options in the ``cinder.conf`` file:
    cinder_internal_tenant_project_id = PROJECT_ID
    cinder_internal_tenant_user_id = USER_ID
 
-Example ``cinder.conf`` configuration file:
+An example ``cinder.conf`` configuration file:
 
 .. code-block:: ini
 
@@ -52,17 +52,27 @@ Configure the Image-Volume cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To enable the Image-Volume cache, set the following configuration option in
-``cinder.conf``:
+the ``cinder.conf`` file:
 
 .. code-block:: ini
 
    image_volume_cache_enabled = True
 
+.. note::
+
+   If you use Ceph as a back end, set the following configuration option in
+   the ``cinder.conf`` file:
+
+  .. code-block:: ini
+
+     [ceph]
+     image_volume_cache_enabled = True
+
 This can be scoped per back end definition or in the default options.
 
 There are optional configuration settings that can limit the size of the cache.
 These can also be scoped per back end or in the default options in
-``cinder.conf``:
+the ``cinder.conf`` file:
 
 .. code-block:: ini
 
