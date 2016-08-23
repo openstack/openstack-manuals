@@ -168,6 +168,8 @@ Run this command to create a backup of a snapshot:
 
 .. code-block:: console
 
-   $ cinder backup-create [--incremental] [--force] SNAPSHOT
+   $ cinder backup-create [--incremental] [--force] \
+     [--snapshot-id SNAPSHOT_ID] VOLUME
 
-Where ``SNAPSHOT`` is the name or ID of the snapshot.
+Where ``VOLUME`` is the name or ID of the volume, ``SNAPSHOT_ID`` is the ID of
+the volume's snapshot.
