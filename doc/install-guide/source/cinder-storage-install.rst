@@ -147,7 +147,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install openstack-cinder targetcli
+         # yum install openstack-cinder targetcli python-keystone
 
 .. only:: ubuntu
 
