@@ -22,19 +22,6 @@ the following steps:
    For now, the documentation toolkit is tested with basic ``flake8``
    and ``bashate`` tests. A test suite would be welcome.
 
-   Since the ``openstack-doc-test`` tool is used for gating of
-   the OpenStack documentation repositories, test building of
-   these repositories with any changes done within the tool repository:
-
-   #. Install ``openstack-doc-tools`` locally.
-   #. Check out the gated repositories.
-      The repositories gated by ``openstack-doc-tools`` are:
-
-      * api-site
-      * openstack-manuals
-
-   #. Run :command:`tox` inside of each gated repository.
-
 #. Submit your change for review through the Gerrit tool as described
    in the `gerrit workflow <http://docs.openstack.org/infra/manual/developers.html#development-workflow>`_.
 
@@ -52,6 +39,6 @@ the following steps:
 File a bug against the tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you experience an issue while using the ``openstack-doc-test`` tool,
+If you experience an issue while using the tools,
 file a bug on Launchpad in the `openstack-manuals project
 <https://bugs.launchpad.net/openstack-manuals>`_, not on GitHub.

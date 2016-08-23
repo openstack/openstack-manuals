@@ -51,7 +51,7 @@ mkdir -p publish-docs
 # Build all RST guides
 tools/build-all-rst.sh
 
-# Build the www pages so that openstack-doc-test creates a link to
+# Build the www pages so that openstack-indexpage creates a link to
 # www/www-index.html.
 if [ "$PUBLISH" = "build" ] ; then
     python tools/www-generator.py --source-directory www/ \
