@@ -7,4 +7,4 @@ Configuring the compute node for high availability
    :maxdepth: 2
 
    compute-node-ha-api.rst
-
+   instance-ha.rst
