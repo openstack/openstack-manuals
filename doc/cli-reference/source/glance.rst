@@ -9,7 +9,7 @@ Image service command-line client
 The glance client is the command-line interface (CLI) for
 the Image service API and its extensions.
 
-This chapter documents :command:`glance` version ``2.4.0``.
+This chapter documents :command:`glance` version ``2.5.0``.
 
 For help on a specific :command:`glance` command, enter:
 
@@ -184,14 +184,6 @@ glance optional arguments
 Image service API v2 commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can select an API version to use by adding the
-:option:`--os-image-api-version` parameter or by
-setting the corresponding environment variable:
-
-.. code-block:: console
-
-   export OS_IMAGE_API_VERSION=2
-
 .. _glance_explain:
 
 glance explain
@@ -236,7 +228,7 @@ Create a new image.
 
 ``--architecture <ARCHITECTURE>``
   Operating system architecture as specified in
-  http://docs.openstack.org/user-guide/common/cli_manage_images.html
+  http://docs.openstack.org/user-guide/common/cli-manage-images.html
 
 ``--protected [True|False]``
   If true, image will not be deletable.
@@ -275,7 +267,7 @@ Create a new image.
   Common name of operating system distribution as
   specified
   in
-  http://docs.openstack.org/user-guide/common/cli_manage_images.html
+  http://docs.openstack.org/user-guide/common/cli-manage-images.html
 
 ``--id <ID>``
   An identifier for the image
@@ -530,7 +522,7 @@ Update an existing image.
 
 ``--architecture <ARCHITECTURE>``
   Operating system architecture as specified in
-  http://docs.openstack.org/user-guide/common/cli_manage_images.html
+  http://docs.openstack.org/user-guide/common/cli-manage-images.html
 
 ``--protected [True|False]``
   If true, image will not be deletable.
@@ -566,7 +558,7 @@ Update an existing image.
   Common name of operating system distribution as
   specified
   in
-  http://docs.openstack.org/user-guide/common/cli_manage_images.html
+  http://docs.openstack.org/user-guide/common/cli-manage-images.html
 
 ``--owner <OWNER>``
   Owner of the image
@@ -1566,6 +1558,15 @@ Describe a specific task.
 
 Image service API v1 commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As of this version, the default API version is 2.
+You can select an API version to use by adding the
+:option:`--os-image-api-version` parameter or by
+setting the corresponding environment variable:
+
+.. code-block:: console
+
+   export OS_IMAGE_API_VERSION=1
 
 .. _glance_image-create_v1:
 
