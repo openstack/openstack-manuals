@@ -358,6 +358,17 @@ gateway for the subnet.
    with little to no participation on the part of OpenStack. The authors
    of this section have not proven that to be true for all scenarios.
 
+.. note::
+
+   When using the neutron L3 agent in a configuration where it is
+   auto-configuring an IPv6 address via SLAAC, and the agent is
+   learning its default IPv6 route from the ICMPv6 Router Advertisement,
+   it may be necessary to set the
+   ``net.ipv6.conf.<physical_interface>.accept_ra`` sysctl to the
+   value ``2`` in order for routing to function correctly.
+   For a more detailed description, please see the `bug <https://bugs.launchpad.net/neutron/+bug/1616282>`__.
+
+
 Neutron's Distributed Router feature and IPv6
 ---------------------------------------------
 
