@@ -1695,7 +1695,7 @@ name. The name needn't be unique, but your life will be simpler if it is
 because many tools will use the name in place of the UUID so long as the
 name is unique. You can start an instance from the dashboard from the
 :guilabel:`Launch Instance` button on the :guilabel:`Instances` page
-or by selecting the :guilabel:`Launch Instance` action next to an
+or by selecting the :guilabel:`Launch` action next to an
 image or a snapshot on the :guilabel:`Images` page.
 
 On the command line, do this:
@@ -1709,8 +1709,8 @@ read the rest of this section before trying to start an instance, but
 this is the base command that later details are layered upon.
 
 To delete instances from the dashboard, select the
-:guilabel:`Delete instance` action next to the
-:guilabel:`instance` on the :guilabel:`Instances` page.
+:guilabel:`Delete Instance` action next to the
+instance on the :guilabel:`Instances` page.
 
 .. note::
 
@@ -1956,7 +1956,7 @@ of the dashboard. The command line can also be used:
    $ nova floating-ip-create
 
 Once allocated, a floating IP can be assigned to running instances from
-the dashboard either by selecting :guilabel:`Associate Floating IP` from the
+the dashboard either by selecting :guilabel:`Associate` from the
 actions drop-down next to the IP on the :guilabel:`Floating IPs` tab of the
 :guilabel:`Access & Security` page or by making this selection next to the
 instance you want to associate it with on the Instances page. The inverse
