@@ -29,10 +29,6 @@ bin
 os_doc_tools directory
 ----------------------
 
-openstack-doc-test
-  Checks niceness of the documentation. Tests links, whitespace, line-endings.
-  See :ref:`openstack-doc-test`.
-
 openstack-autohelp
   A helper script run from the git repository by ``autogenerate_config_docs``.
 

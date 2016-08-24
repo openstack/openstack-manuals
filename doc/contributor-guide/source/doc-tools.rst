@@ -18,7 +18,5 @@ location, explains how to install, configure, use, and contribute to them.
 
    doc-tools/scripts.rst
    doc-tools/installation.rst
-   doc-tools/configuration.rst
    doc-tools/cli-reference.rst
-   doc-tools/openstack-doc-test.rst
    doc-tools/contributing.rst
