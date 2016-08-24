@@ -27,6 +27,7 @@ Configuration
    config-sfc
    config-sriov
    config-subnet-pools
+   config-service-subnets
 
 .. note::
 
