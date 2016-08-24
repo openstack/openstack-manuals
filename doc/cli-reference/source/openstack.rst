@@ -8,13 +8,13 @@ OpenStack command-line client
 
 The openstack client is a common OpenStackcommand-line interface (CLI).
 
-This chapter documents :command:`openstack` version ``2.6.0``.
+This chapter documents :command:`openstack` version ``3.0.1``.
 
 For help on a specific :command:`openstack` command, enter:
 
 .. code-block:: console
 
-   $ openstack COMMAND --help
+   $ openstack help COMMAND
 
 .. _openstack_command_usage:
 
@@ -36,38 +36,45 @@ openstack usage
                     [--os-image-api-version <image-api-version>]
                     [--os-volume-api-version <volume-api-version>]
                     [--os-identity-api-version <identity-api-version>]
-                    [--os-auth-type <auth-type>]
+                    [--os-object-api-version <object-api-version>]
+                    [--os-baremetal-api-version <baremetal-api-version>]
+                    [--os-dns-api-version <dns-api-version>]
+                    [--os-data-processing-api-version <data-processing-api-version>]
+                    [--os-data-processing-url OS_DATA_PROCESSING_URL]
+                    [--os-queues-api-version <queues-api-version>]
+                    [--os-key-manager-api-version <key-manager-api-version>]
+                    [--os-orchestration-api-version <orchestration-api-version>]
+                    [--inspector-api-version INSPECTOR_API_VERSION]
+                    [--inspector-url INSPECTOR_URL] [--os-auth-type <auth-type>]
+                    [--os-authorization-code <auth-authorization-code>]
                     [--os-project-domain-id <auth-project-domain-id>]
                     [--os-protocol <auth-protocol>]
                     [--os-project-name <auth-project-name>]
                     [--os-trust-id <auth-trust-id>]
-                    [--os-service-provider-endpoint <auth-service-provider-endpoint>]
                     [--os-domain-name <auth-domain-name>]
                     [--os-user-domain-id <auth-user-domain-id>]
+                    [--os-access-token-type <auth-access-token-type>]
                     [--os-identity-provider-url <auth-identity-provider-url>]
+                    [--os-default-domain-name <auth-default-domain-name>]
                     [--os-access-token-endpoint <auth-access-token-endpoint>]
+                    [--os-access-token <auth-access-token>]
                     [--os-domain-id <auth-domain-id>]
                     [--os-user-domain-name <auth-user-domain-name>]
-                    [--os-scope <auth-scope>] [--os-user-id <auth-user-id>]
+                    [--os-openid-scope <auth-openid-scope>]
+                    [--os-user-id <auth-user-id>]
                     [--os-identity-provider <auth-identity-provider>]
                     [--os-username <auth-username>]
                     [--os-auth-url <auth-auth-url>]
                     [--os-client-secret <auth-client-secret>]
+                    [--os-default-domain-id <auth-default-domain-id>]
+                    [--os-discovery-endpoint <auth-discovery-endpoint>]
                     [--os-client-id <auth-client-id>]
                     [--os-project-domain-name <auth-project-domain-name>]
                     [--os-password <auth-password>]
+                    [--os-redirect-uri <auth-redirect-uri>]
                     [--os-endpoint <auth-endpoint>] [--os-url <auth-url>]
-                    [--os-token <auth-token>] [--os-project-id <auth-project-id>]
-                    [--os-object-api-version <object-api-version>]
-                    [--os-orchestration-api-version <orchestration-api-version>]
-                    [--os-data-processing-api-version <data-processing-api-version>]
-                    [--os-data-processing-url OS_DATA_PROCESSING_URL]
-                    [--os-queues-api-version <queues-api-version>]
-                    [--inspector-api-version INSPECTOR_API_VERSION]
-                    [--inspector-url INSPECTOR_URL]
-                    [--os-baremetal-api-version <baremetal-api-version>]
-                    [--os-key-manager-api-version <key-manager-api-version>]
-                    [--os-dns-api-version <dns-api-version>]
+                    [--os-token <auth-token>] [--os-passcode <auth-passcode>]
+                    [--os-project-id <auth-project-id>]
 
 .. _openstack_command_options:
 
@@ -114,7 +121,7 @@ openstack optional arguments
   Disable server certificate verification
 
 ``--os-default-domain <auth-domain>``
-  Default domain ID, default=default (Env:
+  Default domain ID, default=default. (Env:
   OS_DEFAULT_DOMAIN)
 
 ``--os-interface <interface>``
@@ -151,187 +158,16 @@ openstack optional arguments
   Identity API version, default=3 (Env:
   OS_IDENTITY_API_VERSION)
 
-``--os-auth-type <auth-type>``
-  Select an authentication type. Available types:
-  osc_password, token_endpoint, v2token, admin_token,
-  v2password, v3password, v3scopedsaml, v3oidcpassword,
-  v3unscopedadfs, token, v3token, password,
-  v3unscopedsaml. Default: selected based on :option:`--os-`
-  username/:option:`--os-token` (Env: OS_AUTH_TYPE)
-
-``--os-project-domain-id <auth-project-domain-id>``
-  With osc_password: Domain ID containing project With
-  v3password: Domain ID containing project With
-  v3scopedsaml: Domain ID containing project With
-  v3oidcpassword: Domain ID containing project With
-  v3unscopedadfs: Domain ID containing project With
-  token: Domain ID containing project With v3token:
-  Domain ID containing project With password: Domain ID
-  containing project With v3unscopedsaml: Domain ID
-  containing project (Env: OS_PROJECT_DOMAIN_ID)
-
-``--os-protocol <auth-protocol>``
-  With v3oidcpassword: Name of the federated protocol
-  used for federated authentication. Must match its
-  counterpart name configured at the keystone service
-  provider. Typically values would be 'saml2' or 'oidc'.
-  (Env: OS_PROTOCOL)
-
-``--os-project-name <auth-project-name>``
-  With osc_password: Project name to scope to With
-  v3password: Project name to scope to With
-  v3scopedsaml: Project name to scope to With
-  v3oidcpassword: Project name to scope to With
-  v3unscopedadfs: Project name to scope to With token:
-  Project name to scope to With v3token: Project name to
-  scope to With password: Project name to scope to With
-  v3unscopedsaml: Project name to scope to (Env:
-  OS_PROJECT_NAME)
-
-``--os-trust-id <auth-trust-id>``
-  With osc_password: Trust ID With v2token: Trust ID
-  With v2password: Trust ID With v3password: Trust ID
-  With v3scopedsaml: Trust ID With v3oidcpassword: Trust
-  ID With v3unscopedadfs: Trust ID With token: Trust ID
-  With v3token: Trust ID With password: Trust ID With
-  v3unscopedsaml: Trust ID (Env: OS_TRUST_ID)
-
-``--os-service-provider-endpoint <auth-service-provider-endpoint>``
-  With v3unscopedadfs: Service Provider's Endpoint (Env:
-  OS_SERVICE_PROVIDER_ENDPOINT)
-
-``--os-domain-name <auth-domain-name>``
-  With osc_password: Domain name to scope to With
-  v3password: Domain name to scope to With v3scopedsaml:
-  Domain name to scope to With v3oidcpassword: Domain
-  name to scope to With v3unscopedadfs: Domain name to
-  scope to With token: Domain name to scope to With
-  v3token: Domain name to scope to With password: Domain
-  name to scope to With v3unscopedsaml: Domain name to
-  scope to (Env: OS_DOMAIN_NAME)
-
-``--os-user-domain-id <auth-user-domain-id>``
-  With osc_password: User's domain id With v3password:
-  User's domain id With password: User's domain id (Env:
-  OS_USER_DOMAIN_ID)
-
-``--os-identity-provider-url <auth-identity-provider-url>``
-  With v3unscopedadfs: Identity Provider's URL With
-  v3unscopedsaml: Identity Provider's URL (Env:
-  OS_IDENTITY_PROVIDER_URL)
-
-``--os-access-token-endpoint <auth-access-token-endpoint>``
-  With v3oidcpassword: OpenID Connect Provider Token
-  Endpoint (Env: OS_ACCESS_TOKEN_ENDPOINT)
-
-``--os-domain-id <auth-domain-id>``
-  With osc_password: Domain ID to scope to With
-  v3password: Domain ID to scope to With v3scopedsaml:
-  Domain ID to scope to With v3oidcpassword: Domain ID
-  to scope to With v3unscopedadfs: Domain ID to scope to
-  With token: Domain ID to scope to With v3token: Domain
-  ID to scope to With password: Domain ID to scope to
-  With v3unscopedsaml: Domain ID to scope to (Env:
-  OS_DOMAIN_ID)
-
-``--os-user-domain-name <auth-user-domain-name>``
-  With osc_password: User's domain name With v3password:
-  User's domain name With password: User's domain name
-  (Env: OS_USER_DOMAIN_NAME)
-
-``--os-scope <auth-scope>``
-  With v3oidcpassword: OpenID Connect scope that is
-  requested from OP (Env: OS_SCOPE)
-
-``--os-user-id <auth-user-id>``
-  With osc_password: User id With v2password: User ID to
-  login with With v3password: User ID With password:
-  User id (Env: OS_USER_ID)
-
-``--os-identity-provider <auth-identity-provider>``
-  With v3oidcpassword: Identity Provider's name With
-  v3unscopedadfs: Identity Provider's name With
-  v3unscopedsaml: Identity Provider's name (Env:
-  OS_IDENTITY_PROVIDER)
-
-``--os-username <auth-username>``
-  With osc_password: Username With v2password: Username
-  to login with With v3password: Username With
-  v3oidcpassword: Username With v3unscopedadfs: Username
-  With password: Username With v3unscopedsaml: Username
-  (Env: OS_USERNAME)
-
-``--os-auth-url <auth-auth-url>``
-  With osc_password: Authentication URL With v2token:
-  Authentication URL With v2password: Authentication URL
-  With v3password: Authentication URL With v3scopedsaml:
-  Authentication URL With v3oidcpassword: Authentication
-  URL With v3unscopedadfs: Authentication URL With
-  token: Authentication URL With v3token: Authentication
-  URL With password: Authentication URL With
-  v3unscopedsaml: Authentication URL (Env: OS_AUTH_URL)
-
-``--os-client-secret <auth-client-secret>``
-  With v3oidcpassword: OAuth 2.0 Client Secret (Env:
-  OS_CLIENT_SECRET)
-
-``--os-client-id <auth-client-id>``
-  With v3oidcpassword: OAuth 2.0 Client ID (Env:
-  OS_CLIENT_ID)
-
-``--os-project-domain-name <auth-project-domain-name>``
-  With osc_password: Domain name containing project With
-  v3password: Domain name containing project With
-  v3scopedsaml: Domain name containing project With
-  v3oidcpassword: Domain name containing project With
-  v3unscopedadfs: Domain name containing project With
-  token: Domain name containing project With v3token:
-  Domain name containing project With password: Domain
-  name containing project With v3unscopedsaml: Domain
-  name containing project (Env: OS_PROJECT_DOMAIN_NAME)
-
-``--os-password <auth-password>``
-  With osc_password: User's password With v2password:
-  Password to use With v3password: User's password With
-  v3oidcpassword: Password With v3unscopedadfs: Password
-  With password: User's password With v3unscopedsaml:
-  Password (Env: OS_PASSWORD)
-
-``--os-endpoint <auth-endpoint>``
-  With token_endpoint: The endpoint that will always be
-  used With admin_token: The endpoint that will always
-  be used (Env: OS_ENDPOINT)
-
-``--os-url <auth-url>``
-  With token_endpoint: Specific service endpoint to use
-  (Env: OS_URL)
-
-``--os-token <auth-token>``
-  With token_endpoint: The token that will always be
-  used With token_endpoint: Authentication token to use
-  With v2token: Token With admin_token: The token that
-  will always be used With v3scopedsaml: Token to
-  authenticate with With token: Token to authenticate
-  with With v3token: Token to authenticate with (Env:
-  OS_TOKEN)
-
-``--os-project-id <auth-project-id>``
-  With osc_password: Project ID to scope to With
-  v3password: Project ID to scope to With v3scopedsaml:
-  Project ID to scope to With v3oidcpassword: Project ID
-  to scope to With v3unscopedadfs: Project ID to scope
-  to With token: Project ID to scope to With v3token:
-  Project ID to scope to With password: Project ID to
-  scope to With v3unscopedsaml: Project ID to scope to
-  (Env: OS_PROJECT_ID)
-
 ``--os-object-api-version <object-api-version>``
   Object API version, default=1 (Env:
   OS_OBJECT_API_VERSION)
 
-``--os-orchestration-api-version <orchestration-api-version>``
-  Orchestration API version, default=1 (Env:
-  OS_ORCHESTRATION_API_VERSION)
+``--os-baremetal-api-version <baremetal-api-version>``
+  Baremetal API version, default=1.6 (Env:
+  OS_BAREMETAL_API_VERSION)
+
+``--os-dns-api-version <dns-api-version>``
+  DNS API version, default=2 (Env: OS_DNS_API_VERSION)
 
 ``--os-data-processing-api-version <data-processing-api-version>``
   Data processing API version, default=1.1 (Env:
@@ -342,8 +178,16 @@ openstack optional arguments
   OS_DATA_PROCESSING_API_URL)
 
 ``--os-queues-api-version <queues-api-version>``
-  Queues API version, default=1.1 (Env:
+  Queues API version, default=2 (Env:
   OS_QUEUES_API_VERSION)
+
+``--os-key-manager-api-version <key-manager-api-version>``
+  Barbican API version, default=1 (Env:
+  OS_KEY_MANAGER_API_VERSION)
+
+``--os-orchestration-api-version <orchestration-api-version>``
+  Orchestration API version, default=1 (Env:
+  OS_ORCHESTRATION_API_VERSION)
 
 ``--inspector-api-version INSPECTOR_API_VERSION``
   inspector API version, only 1 is supported now (env:
@@ -353,16 +197,287 @@ openstack optional arguments
   inspector URL, defaults to localhost (env:
   INSPECTOR_URL).
 
-``--os-baremetal-api-version <baremetal-api-version>``
-  Baremetal API version, default=1.6 (Env:
-  OS_BAREMETAL_API_VERSION)
+``--os-auth-type <auth-type>``
+  Select an authentication type. Available types:
+  v2token, password, admin_token, v3oidcauthcode,
+  v2password, v3samlpassword, v3password,
+  v3oidcaccesstoken, token_endpoint, token,
+  v3oidcclientcredentials, v3tokenlessauth, v3token,
+  v3totp, v3oidcpassword. Default: selected based on
+  :option:`--os-username/--os-token` (Env: OS_AUTH_TYPE)
 
-``--os-key-manager-api-version <key-manager-api-version>``
-  Barbican API version, default=1 (Env:
-  OS_KEY_MANAGER_API_VERSION)
+``--os-authorization-code <auth-authorization-code>``
+  With v3oidcauthcode: OAuth 2.0 Authorization Code
+  (Env: OS_AUTHORIZATION_CODE)
 
-``--os-dns-api-version <dns-api-version>``
-  DNS API version, default=2 (Env: OS_DNS_API_VERSION)
+``--os-project-domain-id <auth-project-domain-id>``
+  With password: Domain ID containing project With
+  v3oidcauthcode: Domain ID containing project With
+  v3samlpassword: Domain ID containing project With
+  v3password: Domain ID containing project With
+  v3oidcaccesstoken: Domain ID containing project With
+  token: Domain ID containing project With
+  v3oidcclientcredentials: Domain ID containing project
+  With v3tokenlessauth: Domain ID containing project
+  With v3token: Domain ID containing project With
+  v3totp: Domain ID containing project With
+  v3oidcpassword: Domain ID containing project (Env:
+  OS_PROJECT_DOMAIN_ID)
+
+``--os-protocol <auth-protocol>``
+  With v3oidcauthcode: Protocol for federated plugin
+  With v3samlpassword: Protocol for federated plugin
+  With v3oidcaccesstoken: Protocol for federated plugin
+  With v3oidcclientcredentials: Protocol for federated
+  plugin With v3oidcpassword: Protocol for federated
+  plugin (Env: OS_PROTOCOL)
+
+``--os-project-name <auth-project-name>``
+  With password: Project name to scope to With
+  v3oidcauthcode: Project name to scope to With
+  v3samlpassword: Project name to scope to With
+  v3password: Project name to scope to With
+  v3oidcaccesstoken: Project name to scope to With
+  token: Project name to scope to With
+  v3oidcclientcredentials: Project name to scope to With
+  v3tokenlessauth: Project name to scope to With
+  v3token: Project name to scope to With v3totp: Project
+  name to scope to With v3oidcpassword: Project name to
+  scope to (Env: OS_PROJECT_NAME)
+
+``--os-trust-id <auth-trust-id>``
+  With v2token: Trust ID With password: Trust ID With
+  v3oidcauthcode: Trust ID With v2password: Trust ID
+  With v3samlpassword: Trust ID With v3password: Trust
+  ID With v3oidcaccesstoken: Trust ID With token: Trust
+  ID With v3oidcclientcredentials: Trust ID With
+  v3token: Trust ID With v3totp: Trust ID With
+  v3oidcpassword: Trust ID (Env: OS_TRUST_ID)
+
+``--os-domain-name <auth-domain-name>``
+  With password: Domain name to scope to With
+  v3oidcauthcode: Domain name to scope to With
+  v3samlpassword: Domain name to scope to With
+  v3password: Domain name to scope to With
+  v3oidcaccesstoken: Domain name to scope to With token:
+  Domain name to scope to With v3oidcclientcredentials:
+  Domain name to scope to With v3tokenlessauth: Domain
+  name to scope to With v3token: Domain name to scope to
+  With v3totp: Domain name to scope to With
+  v3oidcpassword: Domain name to scope to (Env:
+  OS_DOMAIN_NAME)
+
+``--os-user-domain-id <auth-user-domain-id>``
+  With password: User's domain id With v3password:
+  User's domain id With v3totp: User's domain id (Env:
+  OS_USER_DOMAIN_ID)
+
+``--os-access-token-type <auth-access-token-type>``
+  With v3oidcauthcode: OAuth 2.0 Authorization Server
+  Introspection token type, it is used to decide which
+  type of token will be used when processing token
+  introspection. Valid values are: "access_token" or
+  "id_token" With v3oidcclientcredentials: OAuth 2.0
+  Authorization Server Introspection token type, it is
+  used to decide which type of token will be used when
+  processing token introspection. Valid values are:
+  "access_token" or "id_token" With v3oidcpassword:
+  OAuth 2.0 Authorization Server Introspection token
+  type, it is used to decide which type of token will be
+  used when processing token introspection. Valid values
+  are: "access_token" or "id_token" (Env:
+  OS_ACCESS_TOKEN_TYPE)
+
+``--os-identity-provider-url <auth-identity-provider-url>``
+  With v3samlpassword: An Identity Provider URL, where
+  the SAML2 authentication request will be sent. (Env:
+  OS_IDENTITY_PROVIDER_URL)
+
+``--os-default-domain-name <auth-default-domain-name>``
+  With password: Optional domain name to use with v3 API
+  and v2 parameters. It will be used for both the user
+  and project domain in v3 and ignored in v2
+  authentication. With token: Optional domain name to
+  use with v3 API and v2 parameters. It will be used for
+  both the user and project domain in v3 and ignored in
+  v2 authentication. (Env: OS_DEFAULT_DOMAIN_NAME)
+
+``--os-access-token-endpoint <auth-access-token-endpoint>``
+  With v3oidcauthcode: OpenID Connect Provider Token
+  Endpoint. Note that if a discovery document is being
+  passed this option will override the endpoint provided
+  by the server in the discovery document. With
+  v3oidcclientcredentials: OpenID Connect Provider Token
+  Endpoint. Note that if a discovery document is being
+  passed this option will override the endpoint provided
+  by the server in the discovery document. With
+  v3oidcpassword: OpenID Connect Provider Token
+  Endpoint. Note that if a discovery document is being
+  passed this option will override the endpoint provided
+  by the server in the discovery document. (Env:
+  OS_ACCESS_TOKEN_ENDPOINT)
+
+``--os-access-token <auth-access-token>``
+  With v3oidcaccesstoken: OAuth 2.0 Access Token (Env:
+  OS_ACCESS_TOKEN)
+
+``--os-domain-id <auth-domain-id>``
+  With password: Domain ID to scope to With
+  v3oidcauthcode: Domain ID to scope to With
+  v3samlpassword: Domain ID to scope to With v3password:
+  Domain ID to scope to With v3oidcaccesstoken: Domain
+  ID to scope to With token: Domain ID to scope to With
+  v3oidcclientcredentials: Domain ID to scope to With
+  v3tokenlessauth: Domain ID to scope to With v3token:
+  Domain ID to scope to With v3totp: Domain ID to scope
+  to With v3oidcpassword: Domain ID to scope to (Env:
+  OS_DOMAIN_ID)
+
+``--os-user-domain-name <auth-user-domain-name>``
+  With password: User's domain name With v3password:
+  User's domain name With v3totp: User's domain name
+  (Env: OS_USER_DOMAIN_NAME)
+
+``--os-openid-scope <auth-openid-scope>``
+  With v3oidcauthcode: OpenID Connect scope that is
+  requested from authorization server. Note that the
+  OpenID Connect specification states that "openid" must
+  be always specified. With v3oidcclientcredentials:
+  OpenID Connect scope that is requested from
+  authorization server. Note that the OpenID Connect
+  specification states that "openid" must be always
+  specified. With v3oidcpassword: OpenID Connect scope
+  that is requested from authorization server. Note that
+  the OpenID Connect specification states that "openid"
+  must be always specified. (Env: OS_OPENID_SCOPE)
+
+``--os-user-id <auth-user-id>``
+  With password: User id With v2password: User ID to
+  login with With v3password: User ID With v3totp: User
+  ID (Env: OS_USER_ID)
+
+``--os-identity-provider <auth-identity-provider>``
+  With v3oidcauthcode: Identity Provider's name With
+  v3samlpassword: Identity Provider's name With
+  v3oidcaccesstoken: Identity Provider's name With
+  v3oidcclientcredentials: Identity Provider's name With
+  v3oidcpassword: Identity Provider's name (Env:
+  OS_IDENTITY_PROVIDER)
+
+``--os-username <auth-username>``
+  With password: Username With v2password: Username to
+  login with With v3samlpassword: Username With
+  v3password: Username With v3totp: Username With
+  v3oidcpassword: Username (Env: OS_USERNAME)
+
+``--os-auth-url <auth-auth-url>``
+  With v2token: Authentication URL With password:
+  Authentication URL With v3oidcauthcode: Authentication
+  URL With v2password: Authentication URL With
+  v3samlpassword: Authentication URL With v3password:
+  Authentication URL With v3oidcaccesstoken:
+  Authentication URL With token: Authentication URL With
+  v3oidcclientcredentials: Authentication URL With
+  v3tokenlessauth: Authentication URL With v3token:
+  Authentication URL With v3totp: Authentication URL
+  With v3oidcpassword: Authentication URL (Env:
+  OS_AUTH_URL)
+
+``--os-client-secret <auth-client-secret>``
+  With v3oidcauthcode: OAuth 2.0 Client Secret With
+  v3oidcclientcredentials: OAuth 2.0 Client Secret With
+  v3oidcpassword: OAuth 2.0 Client Secret (Env:
+  OS_CLIENT_SECRET)
+
+``--os-default-domain-id <auth-default-domain-id>``
+  With password: Optional domain ID to use with v3 and
+  v2 parameters. It will be used for both the user and
+  project domain in v3 and ignored in v2 authentication.
+  With token: Optional domain ID to use with v3 and v2
+  parameters. It will be used for both the user and
+  project domain in v3 and ignored in v2 authentication.
+  (Env: OS_DEFAULT_DOMAIN_ID)
+
+``--os-discovery-endpoint <auth-discovery-endpoint>``
+  With v3oidcauthcode: OpenID Connect Discovery Document
+  URL. The discovery document will be used to obtain the
+  values of the access token endpoint and the
+  authentication endpoint. This URL should look like
+  https://idp.example.org/.well-known/openid-configuration
+  With
+  v3oidcclientcredentials:
+  OpenID
+  Connect Discovery Document URL. The discovery document
+  will be used to obtain the values of the access token
+  endpoint and the authentication endpoint. This URL
+  should look like https://idp.example.org/.well-known
+  /openid-configuration With v3oidcpassword: OpenID
+  Connect Discovery Document URL. The discovery document
+  will be used to obtain the values of the access token
+  endpoint and the authentication endpoint. This URL
+  should look like https://idp.example.org/.well-known
+  /openid-configuration (Env: OS_DISCOVERY_ENDPOINT)
+
+``--os-client-id <auth-client-id>``
+  With v3oidcauthcode: OAuth 2.0 Client ID With
+  v3oidcclientcredentials: OAuth 2.0 Client ID With
+  v3oidcpassword: OAuth 2.0 Client ID (Env:
+  OS_CLIENT_ID)
+
+``--os-project-domain-name <auth-project-domain-name>``
+  With password: Domain name containing project With
+  v3oidcauthcode: Domain name containing project With
+  v3samlpassword: Domain name containing project With
+  v3password: Domain name containing project With
+  v3oidcaccesstoken: Domain name containing project With
+  token: Domain name containing project With
+  v3oidcclientcredentials: Domain name containing
+  project With v3tokenlessauth: Domain name containing
+  project With v3token: Domain name containing project
+  With v3totp: Domain name containing project With
+  v3oidcpassword: Domain name containing project (Env:
+  OS_PROJECT_DOMAIN_NAME)
+
+``--os-password <auth-password>``
+  With password: User's password With v2password:
+  Password to use With v3samlpassword: Password With
+  v3password: User's password With v3oidcpassword:
+  Password (Env: OS_PASSWORD)
+
+``--os-redirect-uri <auth-redirect-uri>``
+  With v3oidcauthcode: OpenID Connect Redirect URL (Env:
+  OS_REDIRECT_URI)
+
+``--os-endpoint <auth-endpoint>``
+  With admin_token: The endpoint that will always be
+  used (Env: OS_ENDPOINT)
+
+``--os-url <auth-url>``
+  With token_endpoint: Specific service endpoint to use
+  (Env: OS_URL)
+
+``--os-token <auth-token>``
+  With v2token: Token With admin_token: The token that
+  will always be used With token_endpoint:
+  Authentication token to use With token: Token to
+  authenticate with With v3token: Token to authenticate
+  with (Env: OS_TOKEN)
+
+``--os-passcode <auth-passcode>``
+  With v3totp: User's TOTP passcode (Env: OS_PASSCODE)
+
+``--os-project-id <auth-project-id>``
+  With password: Project ID to scope to With
+  v3oidcauthcode: Project ID to scope to With
+  v3samlpassword: Project ID to scope to With
+  v3password: Project ID to scope to With
+  v3oidcaccesstoken: Project ID to scope to With token:
+  Project ID to scope to With v3oidcclientcredentials:
+  Project ID to scope to With v3tokenlessauth: Project
+  ID to scope to With v3token: Project ID to scope to
+  With v3totp: Project ID to scope to With
+  v3oidcpassword: Project ID to scope to (Env:
+  OS_PROJECT_ID)
 
 OpenStack with Identity API v3 commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -370,7 +485,7 @@ OpenStack with Identity API v3 commands
 .. important::
 
    OpenStack Identity API v2 is deprecated in
-   the Mitaka release.
+   the Mitaka release and later.
 
    You can select the Identity API version to use
    by adding the
@@ -796,14 +911,14 @@ openstack aggregate delete
 
 .. code-block:: console
 
-   usage: openstack aggregate delete [-h] <aggregate>
+   usage: openstack aggregate delete [-h] <aggregate> [<aggregate> ...]
 
-Delete an existing aggregate
+Delete existing aggregate(s)
 
 **Positional arguments:**
 
 ``<aggregate>``
-  Aggregate to delete (name or ID)
+  Aggregate(s) to delete (name or ID)
 
 **Optional arguments:**
 
@@ -990,6 +1105,8 @@ openstack backup create
                                   [--noindent] [--prefix PREFIX] [--name <name>]
                                   [--description <description>]
                                   [--container <container>]
+                                  [--snapshot <snapshot>] [--force]
+                                  [--incremental]
                                   <volume>
 
 Create new backup
@@ -1013,6 +1130,15 @@ Create new backup
 ``--container <container>``
   Optional backup container name
 
+``--snapshot <snapshot>``
+  Snapshot to backup (name or ID)
+
+``--force``
+  Allow to back up an in-use volume
+
+``--incremental``
+  Perform an incremental backup
+
 .. _openstack_backup_delete:
 
 openstack backup delete
@@ -1020,7 +1146,7 @@ openstack backup delete
 
 .. code-block:: console
 
-   usage: openstack backup delete [-h] <backup> [<backup> ...]
+   usage: openstack backup delete [-h] [--force] <backup> [<backup> ...]
 
 Delete backup(s)
 
@@ -1033,6 +1159,9 @@ Delete backup(s)
 
 ``-h, --help``
   show this help message and exit
+
+``--force``
+  Allow delete in state other than error or available
 
 .. _openstack_backup_list:
 
@@ -1072,7 +1201,7 @@ Restore backup
 **Positional arguments:**
 
 ``<backup>``
-  Backup to restore (ID only)
+  Backup to restore (name or ID)
 
 ``<volume>``
   Volume to restore to (name or ID)
@@ -1100,76 +1229,6 @@ Display backup details
 
 ``<backup>``
   Backup to display (name or ID)
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_baremetal_create:
-
-openstack baremetal create
---------------------------
-
-.. code-block:: console
-
-   usage: openstack baremetal create [-h] [-f {html,json,shell,table,value,yaml}]
-                                     [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
-                                     [--chassis-uuid <chassis>] --driver <driver>
-                                     [--driver-info <key=value>]
-                                     [--property <key=value>]
-                                     [--extra <key=value>] [--uuid <uuid>]
-                                     [--name <name>]
-
-Register a new node with the baremetal service
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--chassis-uuid <chassis>``
-  UUID of the chassis that this node belongs to.
-
-``--driver <driver>``
-  Driver used to control the node [REQUIRED].
-
-``--driver-info <key=value>``
-  Key/value pair used by the driver, such as out-of-band
-  management credentials. Can be specified multiple
-  times.
-
-``--property <key=value>``
-  Key/value pair describing the physical characteristics
-  of the node. This is exported to Nova and used by the
-  scheduler. Can be specified multiple times.
-
-``--extra <key=value>``
-  Record arbitrary key/value metadata. Can be specified
-  multiple times.
-
-``--uuid <uuid>``
-  Unique UUID for the node.
-
-``--name <name>``
-  Unique name for the node.
-
-.. _openstack_baremetal_delete:
-
-openstack baremetal delete
---------------------------
-
-.. code-block:: console
-
-   usage: openstack baremetal delete [-h] <node>
-
-Unregister a baremetal node
-
-**Positional arguments:**
-
-``<node>``
-  Node to delete (name or ID)
 
 **Optional arguments:**
 
@@ -1271,7 +1330,13 @@ openstack baremetal introspection rule import
 
 .. code-block:: console
 
-   usage: openstack baremetal introspection rule import [-h] file
+   usage: openstack baremetal introspection rule import [-h]
+                                                        [-f {csv,html,json,table,value,yaml}]
+                                                        [-c COLUMN]
+                                                        [--max-width <integer>]
+                                                        [--noindent]
+                                                        [--quote {all,minimal,none,nonnumeric}]
+                                                        file
 
 Import one or several introspection rules from a json file.
 
@@ -1417,20 +1482,204 @@ Get introspection status.
 ``-h, --help``
   show this help message and exit
 
-.. _openstack_baremetal_list:
+.. _openstack_baremetal_node_abort:
 
-openstack baremetal list
-------------------------
+openstack baremetal node abort
+------------------------------
 
 .. code-block:: console
 
-   usage: openstack baremetal list [-h] [-f {csv,html,json,table,value,yaml}]
-                                   [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
-                                   [--quote {all,minimal,none,nonnumeric}]
-                                   [--limit <limit>] [--marker <node>]
-                                   [--sort <key>[:<direction>]] [--maintenance]
-                                   [--associated] [--long]
+   usage: openstack baremetal node abort [-h] <node>
+
+Set provision state of baremetal node to 'abort'
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_node_clean:
+
+openstack baremetal node clean
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node clean [-h] --clean-steps <clean-steps> <node>
+
+Set provision state of baremetal node to 'clean'
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--clean-steps <clean-steps>``
+  The clean steps in JSON format. May be the path to a
+  file containing the clean steps; OR '-', with the
+  clean steps being read from standard input; OR a
+  string. The value should be a list of clean-step
+  dictionaries; each dictionary should have keys
+  'interface' and 'step', and optional key 'args'.
+
+.. _openstack_baremetal_node_create:
+
+openstack baremetal node create
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node create [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent] [--prefix PREFIX]
+                                          [--chassis-uuid <chassis>] --driver
+                                          <driver> [--driver-info <key=value>]
+                                          [--property <key=value>]
+                                          [--extra <key=value>] [--uuid <uuid>]
+                                          [--name <name>]
+                                          [--network-interface <network_interface>]
+                                          [--resource-class <resource_class>]
+
+Register a new node with the baremetal service
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--chassis-uuid <chassis>``
+  UUID of the chassis that this node belongs to.
+
+``--driver <driver>``
+  Driver used to control the node [REQUIRED].
+
+``--driver-info <key=value>``
+  Key/value pair used by the driver, such as out-of-band
+  management credentials. Can be specified multiple
+  times.
+
+``--property <key=value>``
+  Key/value pair describing the physical characteristics
+  of the node. This is exported to Nova and used by the
+  scheduler. Can be specified multiple times.
+
+``--extra <key=value>``
+  Record arbitrary key/value metadata. Can be specified
+  multiple times.
+
+``--uuid <uuid>``
+  Unique UUID for the node.
+
+``--name <name>``
+  Unique name for the node.
+
+``--network-interface <network_interface>``
+  Network interface used for switching node to
+  cleaning/provisioning networks.
+
+``--resource-class <resource_class>``
+  Resource class for mapping nodes to Nova flavors
+
+.. _openstack_baremetal_node_delete:
+
+openstack baremetal node delete
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node delete [-h] <node> [<node> ...]
+
+Unregister a baremetal node
+
+**Positional arguments:**
+
+``<node>``
+  Node(s) to delete (name or UUID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_node_deploy:
+
+openstack baremetal node deploy
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node deploy [-h] [--config-drive <config-drive>]
+                                          <node>
+
+Set provision state of baremetal node to 'deploy'
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--config-drive <config-drive>``
+  A gzipped, base64-encoded configuration drive string
+  OR the path to the configuration drive file OR the
+  path to a directory containing the config drive files.
+  In case it's a directory, a config drive will be
+  generated from it.
+
+.. _openstack_baremetal_node_inspect:
+
+openstack baremetal node inspect
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node inspect [-h] <node>
+
+Set provision state of baremetal node to 'inspect'
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_node_list:
+
+openstack baremetal node list
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node list [-h]
+                                        [-f {csv,html,json,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent]
+                                        [--quote {all,minimal,none,nonnumeric}]
+                                        [--limit <limit>] [--marker <node>]
+                                        [--sort <key>[:<direction>]]
+                                        [--maintenance] [--associated]
+                                        [--provision-state <provision state>]
+                                        [--resource-class <resource class>]
+                                        [--long | --fields <field> [<field> ...]]
 
 List baremetal nodes
 
@@ -1450,9 +1699,9 @@ List baremetal nodes
   after this UUID.
 
 ``--sort <key>[:<direction>]``
-  Sort output by selected keys and directions(asc or
-  desc) (default: asc), multiple keys and directions can
-  be specified separated by comma
+  Sort output by specified node fields and directions
+  (asc or desc) (default: asc). Multiple fields and
+  directions can be specified, separated by comma.
 
 ``--maintenance``
   List nodes in maintenance mode.
@@ -1460,17 +1709,193 @@ List baremetal nodes
 ``--associated``
   List only nodes associated with an instance.
 
+``--provision-state <provision state>``
+  Limit list to nodes in <provision state>. One of
+  active, deleted, rebuild, inspect, provide, manage,
+  clean, abort.
+
+``--resource-class <resource class>``
+  Limit list to nodes with resource class <resource
+  class>
+
 ``--long``
   Show detailed information about the nodes.
 
-.. _openstack_baremetal_set:
+``--fields <field> [<field> ...]``
+  One or more node fields. Only these fields will be
+  fetched from the server. Can not be used when ':option:`--long`'
+  is specified.
 
-openstack baremetal set
------------------------
+.. _openstack_baremetal_node_maintenance_set:
+
+openstack baremetal node maintenance set
+----------------------------------------
 
 .. code-block:: console
 
-   usage: openstack baremetal set [-h] [--property <path=value>] <node>
+   usage: openstack baremetal node maintenance set [-h] [--reason <reason>]
+                                                   <node>
+
+Set baremetal node to maintenance mode
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--reason <reason>``
+  Reason for setting maintenance mode.
+
+.. _openstack_baremetal_node_maintenance_unset:
+
+openstack baremetal node maintenance unset
+------------------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node maintenance unset [-h] <node>
+
+Unset baremetal node from maintenance mode
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_node_manage:
+
+openstack baremetal node manage
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node manage [-h] <node>
+
+Set provision state of baremetal node to 'manage'
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_node_power:
+
+openstack baremetal node power
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node power [-h] <on|off> <node>
+
+Set power state of baremetal node
+
+**Positional arguments:**
+
+``<on|off>``
+  Power node on or off
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_node_provide:
+
+openstack baremetal node provide
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node provide [-h] <node>
+
+Set provision state of baremetal node to 'provide'
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_node_reboot:
+
+openstack baremetal node reboot
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node reboot [-h] <node>
+
+Reboot baremetal node
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_node_rebuild:
+
+openstack baremetal node rebuild
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node rebuild [-h] <node>
+
+Set provision state of baremetal node to 'rebuild'
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_node_set:
+
+openstack baremetal node set
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node set [-h] [--instance-uuid <uuid>]
+                                       [--name <name>] [--driver <driver>]
+                                       [--network-interface <network_interface>]
+                                       [--resource-class <resource_class>]
+                                       [--property <key=value>]
+                                       [--extra <key=value>]
+                                       [--driver-info <key=value>]
+                                       [--instance-info <key=value>]
+                                       <node>
 
 Set baremetal properties
 
@@ -1484,22 +1909,51 @@ Set baremetal properties
 ``-h, --help``
   show this help message and exit
 
-``--property <path=value>``
-  Property to add to this baremetal host (repeat option
+``--instance-uuid <uuid>``
+  Set instance UUID of node to <uuid>
+
+``--name <name>``
+  Set the name of the node
+
+``--driver <driver>``
+  Set the driver for the node
+
+``--network-interface <network_interface>``
+  Set the network interface for the node
+
+``--resource-class <resource_class>``
+  Set the resource class for the node
+
+``--property <key=value>``
+  Property to set on this baremetal node (repeat option
   to set multiple properties)
 
-.. _openstack_baremetal_show:
+``--extra <key=value>``
+  Extra to set on this baremetal node (repeat option to
+  set multiple extras)
 
-openstack baremetal show
-------------------------
+``--driver-info <key=value>``
+  Driver information to set on this baremetal node
+  (repeat option to set multiple driver infos)
+
+``--instance-info <key=value>``
+  Instance information to set on this baremetal node
+  (repeat option to set multiple instance infos)
+
+.. _openstack_baremetal_node_show:
+
+openstack baremetal node show
+-----------------------------
 
 .. code-block:: console
 
-   usage: openstack baremetal show [-h] [-f {html,json,shell,table,value,yaml}]
-                                   [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX] [--instance]
-                                   [--long]
-                                   <node>
+   usage: openstack baremetal node show [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        [--instance]
+                                        [--fields <field> [<field> ...]]
+                                        <node>
 
 Show baremetal node details
 
@@ -1517,16 +1971,43 @@ Show baremetal node details
 ``--instance <node>``
   is an instance UUID.
 
-``--long``
+``--fields <field> [<field> ...]``
+  One or more node fields. Only these fields will be
+  fetched from the server.
 
-.. _openstack_baremetal_unset:
+.. _openstack_baremetal_node_undeploy:
 
-openstack baremetal unset
--------------------------
+openstack baremetal node undeploy
+---------------------------------
 
 .. code-block:: console
 
-   usage: openstack baremetal unset [-h] [--property <path>] <node>
+   usage: openstack baremetal node undeploy [-h] <node>
+
+Set provision state of baremetal node to 'deleted'
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_baremetal_node_unset:
+
+openstack baremetal node unset
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal node unset [-h] [--instance-uuid] [--name]
+                                         [--resource-class] [--property <key>]
+                                         [--extra <key>] [--driver-info <key>]
+                                         [--instance-info <key>]
+                                         <node>
 
 Unset baremetal properties
 
@@ -1540,9 +2021,111 @@ Unset baremetal properties
 ``-h, --help``
   show this help message and exit
 
-``--property <path>``
-  Property to unset on this baremetal host (repeat option
-  to unset multiple properties)
+``--instance-uuid``
+  Unset instance UUID on this baremetal node
+
+``--name``
+  Unset the name of the node
+
+``--resource-class``
+  Unset the resource class of the node
+
+``--property <key>``
+  Property to unset on this baremetal node (repeat
+  option to unset multiple properties)
+
+``--extra <key>``
+  Extra to unset on this baremetal node (repeat option
+  to unset multiple extras)
+
+``--driver-info <key>``
+  Driver information to unset on this baremetal node
+  (repeat option to unset multiple driver informations)
+
+``--instance-info <key>``
+  Instance information to unset on this baremetal node
+  (repeat option to unset multiple instance
+  informations)
+
+.. _openstack_baremetal_port_create:
+
+openstack baremetal port create
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal port create [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent] [--prefix PREFIX] --node
+                                          <uuid> [--extra <key=value>]
+                                          [-l <key=value>]
+                                          [--pxe-enabled <boolean>]
+                                          <address>
+
+Create a new port
+
+**Positional arguments:**
+
+``<address>``
+  MAC address for this port.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--node <uuid>``
+  UUID of the node that this port belongs to.
+
+``--extra <key=value>``
+  Record arbitrary key/value metadata. Can be specified
+  multiple times.
+
+``-l <key=value>, --local-link-connection <key=value>``
+  Key/value metadata describing Local link connection
+  information. Valid keys are switch_info, switch_id,
+  port_id. Can be specified multiple times.
+
+``--pxe-enabled <boolean>``
+  Indicates whether this Port should be used when PXE
+  booting this Node.
+
+.. _openstack_baremetal_port_show:
+
+openstack baremetal port show
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack baremetal port show [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        [--address]
+                                        [--fields <field> [<field> ...]]
+                                        <id>
+
+Show baremetal port details.
+
+**Positional arguments:**
+
+``<id>``
+  UUID of the port (or MAC address if :option:`--address` is
+  specified).
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--address <id>``
+  is the MAC address (instead of the UUID) of the
+  port.
+
+``--fields <field> [<field> ...]``
+  One or more port fields. Only these fields will be
+  fetched from the server.
 
 .. _openstack_ca_get:
 
@@ -1791,7 +2374,7 @@ openstack compute agent create
                                          <os> <architecture> <version> <url>
                                          <md5hash> <hypervisor>
 
-Create compute agent command
+Create compute agent
 
 **Positional arguments:**
 
@@ -1852,7 +2435,7 @@ openstack compute agent list
                                        [--quote {all,minimal,none,nonnumeric}]
                                        [--hypervisor <hypervisor>]
 
-List compute agent command
+List compute agents
 
 **Optional arguments:**
 
@@ -1869,28 +2452,30 @@ openstack compute agent set
 
 .. code-block:: console
 
-   usage: openstack compute agent set [-h] <id> <version> <url> <md5hash>
+   usage: openstack compute agent set [-h] [--agent-version <version>]
+                                      [--url <url>] [--md5hash <md5hash>]
+                                      <id>
 
-Set compute agent command
+Set compute agent properties
 
 **Positional arguments:**
 
 ``<id>``
   ID of the agent
 
-``<version>``
-  Version of the agent
-
-``<url>``
-  URL
-
-``<md5hash>``
-  MD5 hash
-
 **Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
+
+``--agent-version <version>``
+  Version of the agent
+
+``--url <url>``
+  URL of the agent
+
+``--md5hash <md5hash>``
+  MD5 hash of the agent
 
 .. _openstack_compute_service_delete:
 
@@ -1899,14 +2484,14 @@ openstack compute service delete
 
 .. code-block:: console
 
-   usage: openstack compute service delete [-h] <service>
+   usage: openstack compute service delete [-h] <service> [<service> ...]
 
-Delete service command
+Delete compute service(s)
 
 **Positional arguments:**
 
 ``<service>``
-  Compute service to delete (ID only)
+  Compute service(s) to delete (ID only)
 
 **Optional arguments:**
 
@@ -1928,7 +2513,7 @@ openstack compute service list
                                          [--host <host>] [--service <service>]
                                          [--long]
 
-List service command
+List compute services
 
 **Optional arguments:**
 
@@ -1953,9 +2538,10 @@ openstack compute service set
 
    usage: openstack compute service set [-h] [--enable | --disable]
                                         [--disable-reason <reason>]
+                                        [--up | --down]
                                         <host> <service>
 
-Set service command
+Set compute service properties
 
 **Positional arguments:**
 
@@ -1963,7 +2549,7 @@ Set service command
   Name of host
 
 ``<service>``
-  Name of service
+  Name of service (Binary name)
 
 **Optional arguments:**
 
@@ -1979,6 +2565,12 @@ Set service command
 ``--disable-reason <reason>``
   Reason for disabling the service (in quotas). Should
   be used with :option:`--disable` option.
+
+``--up``
+  Force up service
+
+``--down``
+  Force down service
 
 .. _openstack_configuration_show:
 
@@ -2005,671 +2597,6 @@ Display configuration details
 
 ``--unmask``
   Show password in clear text
-
-.. _openstack_congress_datasource_create:
-
-openstack congress datasource create
-------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress datasource create [-h]
-                                               [-f {html,json,shell,table,value,yaml}]
-                                               [-c COLUMN]
-                                               [--max-width <integer>]
-                                               [--noindent] [--prefix PREFIX]
-                                               [--description <datasource-description>]
-                                               [--config <key=value>]
-                                               <datasource-driver>
-                                               <datasource-name>
-
-Create a datasource.
-
-**Positional arguments:**
-
-``<datasource-driver>``
-  Selected datasource driver
-
-``<datasource-name>``
-  Name you want to call the datasource
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--description <datasource-description>``
-  Description of the datasource
-
-``--config <key=value>``
-  config dictionary to pass in
-
-.. _openstack_congress_datasource_delete:
-
-openstack congress datasource delete
-------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress datasource delete [-h] <datasource-name>
-
-Delete a datasource.
-
-**Positional arguments:**
-
-``<datasource-name>``
-  Name of the datasource to delete
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_datasource_list:
-
-openstack congress datasource list
-----------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress datasource list [-h]
-                                             [-f {csv,html,json,table,value,yaml}]
-                                             [-c COLUMN] [--max-width <integer>]
-                                             [--noindent]
-                                             [--quote {all,minimal,none,nonnumeric}]
-
-List Datasources.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_datasource_row_list:
-
-openstack congress datasource row list
---------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress datasource row list [-h]
-                                                 [-f {csv,html,json,table,value,yaml}]
-                                                 [-c COLUMN]
-                                                 [--max-width <integer>]
-                                                 [--noindent]
-                                                 [--quote {all,minimal,none,nonnumeric}]
-                                                 <datasource-name> <table>
-
-List datasource rows.
-
-**Positional arguments:**
-
-``<datasource-name>``
-  Name of the datasource to show
-
-``<table>``
-  Table to get the datasource rows from
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_datasource_schema_show:
-
-openstack congress datasource schema show
------------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress datasource schema show [-h]
-                                                    [-f {csv,html,json,table,value,yaml}]
-                                                    [-c COLUMN]
-                                                    [--max-width <integer>]
-                                                    [--noindent]
-                                                    [--quote {all,minimal,none,nonnumeric}]
-                                                    <datasource-name>
-
-Show schema for datasource.
-
-**Positional arguments:**
-
-``<datasource-name>``
-  Name of the datasource
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_datasource_status_show:
-
-openstack congress datasource status show
------------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress datasource status show [-h]
-                                                    [-f {html,json,shell,table,value,yaml}]
-                                                    [-c COLUMN]
-                                                    [--max-width <integer>]
-                                                    [--noindent]
-                                                    [--prefix PREFIX]
-                                                    <datasource-name>
-
-List status for datasource.
-
-**Positional arguments:**
-
-``<datasource-name>``
-  Name of the datasource
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_datasource_table_list:
-
-openstack congress datasource table list
-----------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress datasource table list [-h]
-                                                   [-f {csv,html,json,table,value,yaml}]
-                                                   [-c COLUMN]
-                                                   [--max-width <integer>]
-                                                   [--noindent]
-                                                   [--quote {all,minimal,none,nonnumeric}]
-                                                   <datasource-name>
-
-List datasource tables.
-
-**Positional arguments:**
-
-``<datasource-name>``
-  Name of the datasource
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_datasource_table_schema_show:
-
-openstack congress datasource table schema show
------------------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress datasource table schema show [-h]
-                                                          [-f {csv,html,json,table,value,yaml}]
-                                                          [-c COLUMN]
-                                                          [--max-width <integer>]
-                                                          [--noindent]
-                                                          [--quote {all,minimal,none,nonnumeric}]
-                                                          <datasource-name>
-                                                          <table-name>
-
-Show schema for datasource table.
-
-**Positional arguments:**
-
-``<datasource-name>``
-  Name of the datasource
-
-``<table-name>``
-  Name of the table
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_datasource_table_show:
-
-openstack congress datasource table show
-----------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress datasource table show [-h]
-                                                   [-f {html,json,shell,table,value,yaml}]
-                                                   [-c COLUMN]
-                                                   [--max-width <integer>]
-                                                   [--noindent] [--prefix PREFIX]
-                                                   <datasource-name> <table-id>
-
-Show Datasource Table properties.
-
-**Positional arguments:**
-
-``<datasource-name>``
-  Name of datasource
-
-``<table-id>``
-  Table id
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_driver_config_show:
-
-openstack congress driver config show
--------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress driver config show [-h]
-                                                [-f {html,json,shell,table,value,yaml}]
-                                                [-c COLUMN]
-                                                [--max-width <integer>]
-                                                [--noindent] [--prefix PREFIX]
-                                                <datasource-driver>
-
-List driver tables.
-
-**Positional arguments:**
-
-``<datasource-driver>``
-  Name of the datasource driver
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_driver_list:
-
-openstack congress driver list
-------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress driver list [-h]
-                                         [-f {csv,html,json,table,value,yaml}]
-                                         [-c COLUMN] [--max-width <integer>]
-                                         [--noindent]
-                                         [--quote {all,minimal,none,nonnumeric}]
-
-List drivers.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_driver_schema_show:
-
-openstack congress driver schema show
--------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress driver schema show [-h]
-                                                [-f {csv,html,json,table,value,yaml}]
-                                                [-c COLUMN]
-                                                [--max-width <integer>]
-                                                [--noindent]
-                                                [--quote {all,minimal,none,nonnumeric}]
-                                                <datasource-driver>
-
-List datasource tables.
-
-**Positional arguments:**
-
-``<datasource-driver>``
-  Name of the datasource driver
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_policy_create:
-
-openstack congress policy create
---------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy create [-h]
-                                           [-f {html,json,shell,table,value,yaml}]
-                                           [-c COLUMN] [--max-width <integer>]
-                                           [--noindent] [--prefix PREFIX]
-                                           [--description <description>]
-                                           [--abbreviation <abbreviation>]
-                                           [--kind <kind>]
-                                           <policy_name>
-
-Create a policy.
-
-**Positional arguments:**
-
-``<policy_name>``
-  Name of the policy
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--description <description>``
-  Policy description
-
-``--abbreviation <abbreviation>``
-  Policy abbreviation (used in traces)
-
-``--kind <kind>``
-  Kind of policy: {nonrecursive, database, action,
-  materialized}
-
-.. _openstack_congress_policy_delete:
-
-openstack congress policy delete
---------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy delete [-h] <policy>
-
-Delete a policy.
-
-**Positional arguments:**
-
-``<policy>``
-  ID or name of the policy to delete
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_policy_list:
-
-openstack congress policy list
-------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy list [-h]
-                                         [-f {csv,html,json,table,value,yaml}]
-                                         [-c COLUMN] [--max-width <integer>]
-                                         [--noindent]
-                                         [--quote {all,minimal,none,nonnumeric}]
-
-List Policy.
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_policy_row_list:
-
-openstack congress policy row list
-----------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy row list [-h]
-                                             [-f {csv,html,json,table,value,yaml}]
-                                             [-c COLUMN] [--max-width <integer>]
-                                             [--noindent]
-                                             [--quote {all,minimal,none,nonnumeric}]
-                                             [--trace]
-                                             <policy-name> <table>
-
-List policy rows.
-
-**Positional arguments:**
-
-``<policy-name>``
-  Name of the policy to show
-
-``<table>``
-  Table to get the policy rows from
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--trace``
-  Display explanation of result
-
-.. _openstack_congress_policy_rule_create:
-
-openstack congress policy rule create
--------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy rule create [-h]
-                                                [-f {html,json,shell,table,value,yaml}]
-                                                [-c COLUMN]
-                                                [--max-width <integer>]
-                                                [--noindent] [--prefix PREFIX]
-                                                [--name RULE_NAME]
-                                                [--comment COMMENT]
-                                                <policy-name> <rule>
-
-Create a policy rule.
-
-**Positional arguments:**
-
-``<policy-name>``
-  Name or identifier of the policy
-
-``<rule>``
-  Policy rule
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--name RULE_NAME``
-  Name of the policy rule
-
-``--comment COMMENT``
-  Comment about policy rule
-
-.. _openstack_congress_policy_rule_delete:
-
-openstack congress policy rule delete
--------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy rule delete [-h]
-                                                <policy-name> <rule-id/rule-name>
-
-Delete a policy rule.
-
-**Positional arguments:**
-
-``<policy-name>``
-  Name of the policy to delete
-
-``<rule-id/rule-name>``
-  ID/Name of the policy rule to delete
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_policy_rule_list:
-
-openstack congress policy rule list
------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy rule list [-h] <policy-name>
-
-List policy rules.
-
-**Positional arguments:**
-
-``<policy-name>``
-  Name of the policy
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_policy_rule_show:
-
-openstack congress policy rule show
------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy rule show [-h]
-                                              [-f {html,json,shell,table,value,yaml}]
-                                              [-c COLUMN] [--max-width <integer>]
-                                              [--noindent] [--prefix PREFIX]
-                                              <policy-name> <rule-id/rule-name>
-
-Show a policy rule.
-
-**Positional arguments:**
-
-``<policy-name>``
-  Name or identifier of the policy
-
-``<rule-id/rule-name>``
-  Policy rule id or rule name
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_policy_show:
-
-openstack congress policy show
-------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy show [-h]
-                                         [-f {html,json,shell,table,value,yaml}]
-                                         [-c COLUMN] [--max-width <integer>]
-                                         [--noindent] [--prefix PREFIX]
-                                         <policy-name>
-
-Show policy properties.
-
-**Positional arguments:**
-
-``<policy-name>``
-  Name of policy
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_policy_simulate:
-
-openstack congress policy simulate
-----------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy simulate [-h] [--delta] [--trace]
-                                             <policy> <query> <sequence>
-                                             <action_policy>
-
-Show the result of simulation.
-
-**Positional arguments:**
-
-``<policy>``
-  Name of the policy
-
-``<query>``
-  String representing query (policy rule or literal)
-
-``<sequence>``
-  String representing sequence of updates/actions
-
-``<action_policy>``
-  Name of the policy with actions
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-``--delta``
-  Return difference in query caused by update sequence
-
-``--trace``
-  Include trace describing computation
-
-.. _openstack_congress_policy_table_list:
-
-openstack congress policy table list
-------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy table list [-h]
-                                               [-f {csv,html,json,table,value,yaml}]
-                                               [-c COLUMN]
-                                               [--max-width <integer>]
-                                               [--noindent]
-                                               [--quote {all,minimal,none,nonnumeric}]
-                                               <policy-name>
-
-List policy tables.
-
-**Positional arguments:**
-
-``<policy-name>``
-  Name of the policy
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_congress_policy_table_show:
-
-openstack congress policy table show
-------------------------------------
-
-.. code-block:: console
-
-   usage: openstack congress policy table show [-h]
-                                               [-f {html,json,shell,table,value,yaml}]
-                                               [-c COLUMN]
-                                               [--max-width <integer>]
-                                               [--noindent] [--prefix PREFIX]
-                                               <policy-name> <table-id>
-
-Show policy table properties.
-
-**Positional arguments:**
-
-``<policy-name>``
-  Name of policy
-
-``<table-id>``
-  Table id
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
 
 .. _openstack_console_log_show:
 
@@ -2706,7 +2633,7 @@ openstack console url show
    usage: openstack console url show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent] [--prefix PREFIX]
-                                     [--novnc | --xvpvnc | --spice]
+                                     [--novnc | --xvpvnc | --spice | --rdp | --serial | --mks]
                                      <server>
 
 Show server's remote console URL
@@ -2725,10 +2652,19 @@ Show server's remote console URL
   Show noVNC console URL (default)
 
 ``--xvpvnc``
-  Show xpvnc console URL
+  Show xvpvnc console URL
 
 ``--spice``
   Show SPICE console URL
+
+``--rdp``
+  Show RDP console URL
+
+``--serial``
+  Show serial console URL
+
+``--mks``
+  Show WebMKS console URL
 
 .. _openstack_consumer_create:
 
@@ -2759,14 +2695,14 @@ openstack consumer delete
 
 .. code-block:: console
 
-   usage: openstack consumer delete [-h] <consumer>
+   usage: openstack consumer delete [-h] <consumer> [<consumer> ...]
 
-Delete consumer
+Delete consumer(s)
 
 **Positional arguments:**
 
 ``<consumer>``
-  Consumer to delete
+  Consumer(s) to delete
 
 **Optional arguments:**
 
@@ -3039,12 +2975,12 @@ openstack credential create
                                       [--type <type>] [--project <project>]
                                       <user> <data>
 
-Create credential command
+Create new credential
 
 **Positional arguments:**
 
 ``<user>``
-  Name or ID of user that owns the credential
+  user that owns the credential (name or ID)
 
 ``<data>``
   New credential data
@@ -3058,8 +2994,8 @@ Create credential command
   New credential type
 
 ``--project <project>``
-  Project name or ID which limits the scope of the
-  credential
+  Project which limits the scope of the credential (name
+  or ID)
 
 .. _openstack_credential_delete:
 
@@ -3068,14 +3004,14 @@ openstack credential delete
 
 .. code-block:: console
 
-   usage: openstack credential delete [-h] <credential-id>
+   usage: openstack credential delete [-h] <credential-id> [<credential-id> ...]
 
-Delete credential command
+Delete credential(s)
 
 **Positional arguments:**
 
 ``<credential-id>``
-  ID of credential to delete
+  ID of credential(s) to delete
 
 **Optional arguments:**
 
@@ -3094,7 +3030,7 @@ openstack credential list
                                     [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
 
-List credential command
+List credentials
 
 **Optional arguments:**
 
@@ -3112,7 +3048,7 @@ openstack credential set
                                    [--project <project>]
                                    <credential-id>
 
-Set credential command
+Set credential properties
 
 **Positional arguments:**
 
@@ -3125,7 +3061,7 @@ Set credential command
   show this help message and exit
 
 ``--user <user>``
-  Name or ID of user that owns the credential
+  User that owns the credential (name or ID)
 
 ``--type <type>``
   New credential type
@@ -3134,8 +3070,8 @@ Set credential command
   New credential data
 
 ``--project <project>``
-  Project name or ID which limits the scope of the
-  credential
+  Project which limits the scope of the credential (name
+  or ID)
 
 .. _openstack_credential_show:
 
@@ -3149,7 +3085,7 @@ openstack credential show
                                     [--noindent] [--prefix PREFIX]
                                     <credential-id>
 
-Show credential command
+Display credential details
 
 **Positional arguments:**
 
@@ -3346,6 +3282,8 @@ openstack dataprocessing cluster show
                                                 [--max-width <integer>]
                                                 [--noindent] [--prefix PREFIX]
                                                 [--verification]
+                                                [--show-progress]
+                                                [--full-dump-events]
                                                 <cluster>
 
 Display cluster details
@@ -3362,6 +3300,13 @@ Display cluster details
 
 ``--verification``
   List additional fields for verifications
+
+``--show-progress``
+  Provides ability to show brief details of event logs.
+
+``--full-dump-events``
+  Provides ability to make full dump with event log
+  details.
 
 .. _openstack_dataprocessing_cluster_template_create:
 
@@ -3386,6 +3331,7 @@ openstack dataprocessing cluster template create
                                                            [--json <filename>]
                                                            [--shares <filename>]
                                                            [--configs <filename>]
+                                                           [--domain-name <domain-name>]
 
 Creates cluster template
 
@@ -3404,8 +3350,7 @@ Creates cluster template
   not provided]
 
 ``--anti-affinity <anti-affinity> [<anti-affinity> ...]``
-  List of processes that should be added to an anti-
-  affinity group
+  List of processes that should be added to an anti-affinity group
 
 ``--description <description>``
   Description of the cluster template
@@ -3431,6 +3376,11 @@ Creates cluster template
 
 ``--configs <filename>``
   JSON representation of the cluster template configs
+
+``--domain-name <domain-name>``
+  Domain name for instances of this cluster template.
+  This option is available if 'use_designate' config is
+  True
 
 .. _openstack_dataprocessing_cluster_template_delete:
 
@@ -3544,6 +3494,7 @@ openstack dataprocessing cluster template update
                                                            [--json <filename>]
                                                            [--shares <filename>]
                                                            [--configs <filename>]
+                                                           [--domain-name <domain-name>]
                                                            <cluster-template>
 
 Updates cluster template
@@ -3566,8 +3517,7 @@ Updates cluster template
   ofinstances for each one of them
 
 ``--anti-affinity <anti-affinity> [<anti-affinity> ...]``
-  List of processes that should be added to an anti-
-  affinity group
+  List of processes that should be added to an anti-affinity group
 
 ``--description <description>``
   Description of the cluster template
@@ -3604,6 +3554,11 @@ Updates cluster template
 
 ``--configs <filename>``
   JSON representation of the cluster template configs
+
+``--domain-name <domain-name>``
+  Domain name for instances of this cluster template.
+  This option is available if 'use_designate' config is
+  True
 
 .. _openstack_dataprocessing_cluster_update:
 
@@ -4520,9 +4475,9 @@ Creates job template
   provided]
 
 ``--type <type>``
-  Type of the job (Hive, Java, MapReduce, Storm, Pig,
-  Shell, MapReduce.Streaming, Spark) [REQUIRED if JSON
-  is not provided]
+  Type of the job (Hive, Java, MapReduce, Storm,
+  Storm.Pyleus, Pig, Shell, MapReduce.Streaming, Spark)
+  [REQUIRED if JSON is not provided]
 
 ``--mains <main> [<main> ...]``
   Name(s) or ID(s) for job's main job binary(s)
@@ -5247,6 +5202,232 @@ Display plugin details
 ``--plugin-version <plugin_version>``
   Version of the plugin to display
 
+.. _openstack_dataprocessing_plugin_update:
+
+openstack dataprocessing plugin update
+--------------------------------------
+
+.. code-block:: console
+
+   usage: openstack dataprocessing plugin update [-h]
+                                                 [-f {html,json,shell,table,value,yaml}]
+                                                 [-c COLUMN]
+                                                 [--max-width <integer>]
+                                                 [--noindent] [--prefix PREFIX]
+                                                 <plugin> <json>
+
+
+**Positional arguments:**
+
+``<plugin>``
+  Name of the plugin to provide config information about
+
+``<json>``
+  JSON representation of the plugin update dictionary
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_dns_quota_list:
+
+openstack dns quota list
+------------------------
+
+.. code-block:: console
+
+   usage: openstack dns quota list [-h] [-f {html,json,shell,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent] [--prefix PREFIX]
+                                   [--all-projects] [--edit-managed]
+                                   [--sudo-project-id SUDO_PROJECT_ID]
+                                   [--project-id PROJECT_ID]
+
+List quotas
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+``--project-id PROJECT_ID``
+  Project ID Default: current project
+
+.. _openstack_dns_quota_reset:
+
+openstack dns quota reset
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack dns quota reset [-h] [--all-projects] [--edit-managed]
+                                    [--sudo-project-id SUDO_PROJECT_ID]
+                                    [--project-id PROJECT_ID]
+
+Delete blacklist
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+``--project-id PROJECT_ID``
+  Project ID
+
+.. _openstack_dns_quota_set:
+
+openstack dns quota set
+-----------------------
+
+.. code-block:: console
+
+   usage: openstack dns quota set [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX] [--all-projects]
+                                  [--edit-managed]
+                                  [--sudo-project-id SUDO_PROJECT_ID]
+                                  [--project-id PROJECT_ID]
+                                  [--api-export-size <api-export-size>]
+                                  [--zones <zones>]
+                                  [--recordset-records <recordset-records>]
+                                  [--zone-records <zone-records>]
+                                  [--zone-recordsets <zone-recordsets>]
+
+Set blacklist properties
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+``--project-id PROJECT_ID``
+  Project ID
+
+``--api-export-size <api-export-size>``
+  New value for the api-export-size quota
+
+``--zones <zones>``
+  New value for the zones quota
+
+``--recordset-records <recordset-records>``
+  New value for the recordset-records quota
+
+``--zone-records <zone-records>``
+  New value for the zone-records quota
+
+``--zone-recordsets <zone-recordsets>``
+  New value for the zone-recordsets quota
+
+.. _openstack_dns_service_list:
+
+openstack dns service list
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack dns service list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+                                     [--hostname HOSTNAME]
+                                     [--service_name SERVICE_NAME]
+                                     [--status STATUS] [--all-projects]
+                                     [--edit-managed]
+                                     [--sudo-project-id SUDO_PROJECT_ID]
+
+List service statuses
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--hostname HOSTNAME``
+  Hostname
+
+``--service_name SERVICE_NAME``
+  Service Name
+
+``--status STATUS``
+  Status
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_dns_service_show:
+
+openstack dns service show
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack dns service show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     [--all-projects] [--edit-managed]
+                                     [--sudo-project-id SUDO_PROJECT_ID]
+                                     id
+
+Show service status details
+
+**Positional arguments:**
+
+``id``
+  Service Status ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_domain_create:
 
 openstack domain create
@@ -5292,14 +5473,14 @@ openstack domain delete
 
 .. code-block:: console
 
-   usage: openstack domain delete [-h] <domain>
+   usage: openstack domain delete [-h] <domain> [<domain> ...]
 
-Delete domain
+Delete domain(s)
 
 **Positional arguments:**
 
 ``<domain>``
-  Domain to delete (name or ID)
+  Domain(s) to delete (name or ID)
 
 **Optional arguments:**
 
@@ -5431,14 +5612,14 @@ openstack ec2 credentials delete
 
    usage: openstack ec2 credentials delete [-h] [--user <user>]
                                            [--user-domain <user-domain>]
-                                           <access-key>
+                                           <access-key> [<access-key> ...]
 
 Delete EC2 credentials
 
 **Positional arguments:**
 
 ``<access-key>``
-  Credentials access key
+  Credentials access key(s)
 
 **Optional arguments:**
 
@@ -5533,7 +5714,8 @@ Create new endpoint
 **Positional arguments:**
 
 ``<service>``
-  New endpoint service (name or ID)
+  Service to be associated with new endpoint (name or
+  ID)
 
 ``<interface>``
   New endpoint interface type (admin, public or
@@ -5563,14 +5745,14 @@ openstack endpoint delete
 
 .. code-block:: console
 
-   usage: openstack endpoint delete [-h] <endpoint-id>
+   usage: openstack endpoint delete [-h] <endpoint-id> [<endpoint-id> ...]
 
-Delete endpoint
+Delete endpoint(s)
 
 **Positional arguments:**
 
 ``<endpoint-id>``
-  Endpoint ID to delete
+  Endpoint(s) to delete (ID only)
 
 **Optional arguments:**
 
@@ -5599,7 +5781,7 @@ List endpoints
   show this help message and exit
 
 ``--service <service>``
-  Filter by service
+  Filter by service (name or ID)
 
 ``--interface <interface>``
   Filter by interface type (admin, public or internal)
@@ -5624,7 +5806,7 @@ Set endpoint properties
 **Positional arguments:**
 
 ``<endpoint-id>``
-  Endpoint ID to modify
+  Endpoint to modify (ID only)
 
 **Optional arguments:**
 
@@ -5798,13 +5980,14 @@ openstack federation protocol delete
    usage: openstack federation protocol delete [-h] --identity-provider
                                                <identity-provider>
                                                <federation-protocol>
+                                               [<federation-protocol> ...]
 
-Delete federation protocol
+Delete federation protocol(s)
 
 **Positional arguments:**
 
 ``<federation-protocol>``
-  Federation protocol to delete (name or ID)
+  Federation protocol(s) to delete (name or ID)
 
 **Optional arguments:**
 
@@ -5915,7 +6098,9 @@ openstack flavor create
                                   [--ram <size-mb>] [--disk <size-gb>]
                                   [--ephemeral <size-gb>] [--swap <size-gb>]
                                   [--vcpus <vcpus>] [--rxtx-factor <factor>]
-                                  [--public | --private]
+                                  [--public | --private] [--property <key=value>]
+                                  [--project <project>]
+                                  [--project-domain <project-domain>]
                                   <flavor-name>
 
 Create new flavor
@@ -5958,6 +6143,19 @@ Create new flavor
 ``--private``
   Flavor is not available to other projects
 
+``--property <key=value>``
+  Property to add for this flavor (repeat option to set
+  multiple properties)
+
+``--project <project>``
+  Allow <project> to access private flavor (name or ID)
+  (Must be used with :option:`--private` option)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
 .. _openstack_flavor_delete:
 
 openstack flavor delete
@@ -5965,14 +6163,14 @@ openstack flavor delete
 
 .. code-block:: console
 
-   usage: openstack flavor delete [-h] <flavor>
+   usage: openstack flavor delete [-h] <flavor> [<flavor> ...]
 
-Delete flavor
+Delete flavor(s)
 
 **Positional arguments:**
 
 ``<flavor>``
-  Flavor to delete (name or ID)
+  Flavor(s) to delete (name or ID)
 
 **Optional arguments:**
 
@@ -6112,6 +6310,132 @@ Unset flavor properties
   Domain the project belongs to (name or ID). This can
   be used in case collisions between project names
   exist.
+
+.. _openstack_floating_ip_create:
+
+openstack floating ip create
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack floating ip create [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent] [--prefix PREFIX]
+                                       [--subnet <subnet>] [--port <port>]
+                                       [--floating-ip-address <floating-ip-address>]
+                                       [--fixed-ip-address <fixed-ip-address>]
+                                       <network>
+
+Create floating IP
+
+**Positional arguments:**
+
+``<network>``
+  Network to allocate floating IP from (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--subnet <subnet>``
+  Subnet on which you want to create the floating IP
+  (name or ID)
+
+``--port <port>``
+  Port to be associated with the floating IP (name or
+  ID)
+
+``--floating-ip-address <floating-ip-address>``
+  Floating IP address
+
+``--fixed-ip-address <fixed-ip-address>``
+  Fixed IP address mapped to the floating IP
+
+.. _openstack_floating_ip_delete:
+
+openstack floating ip delete
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack floating ip delete [-h] <floating-ip> [<floating-ip> ...]
+
+Delete floating IP(s)
+
+**Positional arguments:**
+
+``<floating-ip>``
+  Floating IP(s) to delete (IP address or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_floating_ip_list:
+
+openstack floating ip list
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack floating ip list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+
+List floating IP(s)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_floating_ip_pool_list:
+
+openstack floating ip pool list
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack floating ip pool list [-h]
+                                          [-f {csv,html,json,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent]
+                                          [--quote {all,minimal,none,nonnumeric}]
+
+List pools of floating IP addresses
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_floating_ip_show:
+
+openstack floating ip show
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack floating ip show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     <floating-ip>
+
+Display floating IP details
+
+**Positional arguments:**
+
+``<floating-ip>``
+  Floating IP to display (IP address or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
 
 .. _openstack_group_add_user:
 
@@ -6377,7 +6701,7 @@ openstack host list
                               [--quote {all,minimal,none,nonnumeric}]
                               [--zone <zone>]
 
-List host command
+List hosts
 
 **Optional arguments:**
 
@@ -6403,7 +6727,7 @@ Set host properties
 **Positional arguments:**
 
 ``<host>``
-  The host to modify (name or ID)
+  Host to modify (name only)
 
 **Optional arguments:**
 
@@ -6434,7 +6758,7 @@ openstack host show
                               [--quote {all,minimal,none,nonnumeric}]
                               <host>
 
-Show host command
+Display host details
 
 **Positional arguments:**
 
@@ -6564,14 +6888,16 @@ openstack identity provider delete
 
 .. code-block:: console
 
-   usage: openstack identity provider delete [-h] <identity-provider>
+   usage: openstack identity provider delete [-h]
+                                             <identity-provider>
+                                             [<identity-provider> ...]
 
-Delete identity provider
+Delete identity provider(s)
 
 **Positional arguments:**
 
 ``<identity-provider>``
-  Identity provider to delete
+  Identity provider(s) to delete
 
 **Optional arguments:**
 
@@ -7088,9 +7414,10 @@ List IP availability for network
 
 ``--ip-version <ip-version>``
   List IP availability of given IP version networks
+  (default is 4)
 
 ``--project <project>``
-  List IP availability of given project
+  List IP availability of given project (name or ID)
 
 ``--project-domain <project-domain>``
   Domain the project belongs to (name or ID). This can
@@ -7206,6 +7533,9 @@ openstack ip floating create
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
+                                       [--subnet <subnet>] [--port <port>]
+                                       [--floating-ip-address <floating-ip-address>]
+                                       [--fixed-ip-address <fixed-ip-address>]
                                        <network>
 
 Create floating IP
@@ -7220,6 +7550,20 @@ Create floating IP
 ``-h, --help``
   show this help message and exit
 
+``--subnet <subnet>``
+  Subnet on which you want to create the floating IP
+  (name or ID)
+
+``--port <port>``
+  Port to be associated with the floating IP (name or
+  ID)
+
+``--floating-ip-address <floating-ip-address>``
+  Floating IP address
+
+``--fixed-ip-address <fixed-ip-address>``
+  Fixed IP address mapped to the floating IP
+
 .. _openstack_ip_floating_delete:
 
 openstack ip floating delete
@@ -7227,14 +7571,14 @@ openstack ip floating delete
 
 .. code-block:: console
 
-   usage: openstack ip floating delete [-h] <floating-ip>
+   usage: openstack ip floating delete [-h] <floating-ip> [<floating-ip> ...]
 
-Delete floating IP
+Delete floating IP(s)
 
 **Positional arguments:**
 
 ``<floating-ip>``
-  Floating IP to delete (IP address or ID)
+  Floating IP(s) to delete (IP address or ID)
 
 **Optional arguments:**
 
@@ -7316,7 +7660,7 @@ openstack ip floating show
                                      [--noindent] [--prefix PREFIX]
                                      <floating-ip>
 
-Show floating IP details
+Display floating IP details
 
 **Positional arguments:**
 
@@ -7363,14 +7707,14 @@ openstack keypair delete
 
 .. code-block:: console
 
-   usage: openstack keypair delete [-h] <key>
+   usage: openstack keypair delete [-h] <key> [<key> ...]
 
-Delete public key
+Delete public key(s)
 
 **Positional arguments:**
 
 ``<key>``
-  Public key to delete (name only)
+  Public key(s) to delete (name only)
 
 **Optional arguments:**
 
@@ -7420,7 +7764,7 @@ Display public key details
   show this help message and exit
 
 ``--public-key``
-  Show only bare public key
+  Show only bare public key (name only)
 
 .. _openstack_limits_show:
 
@@ -7496,14 +7840,14 @@ openstack mapping delete
 
 .. code-block:: console
 
-   usage: openstack mapping delete [-h] <mapping>
+   usage: openstack mapping delete [-h] <mapping> [<mapping> ...]
 
-Delete mapping
+Delete mapping(s)
 
 **Positional arguments:**
 
 ``<mapping>``
-  Mapping to delete
+  Mapping(s) to delete
 
 **Optional arguments:**
 
@@ -7720,6 +8064,40 @@ Update a flavor's attributes
 ``--capabilities <capabilities>``
   Describes flavor-specific capabilities.
 
+.. _openstack_messaging_health:
+
+openstack messaging health
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack messaging health [-h]
+
+Display detailed health status of Zaqar server
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_messaging_ping:
+
+openstack messaging ping
+------------------------
+
+.. code-block:: console
+
+   usage: openstack messaging ping [-h] [-f {html,json,shell,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent] [--prefix PREFIX]
+
+Check if Zaqar server is alive or not
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
 .. _openstack_module_list:
 
 openstack module list
@@ -7741,6 +8119,104 @@ List module versions
 ``--all``
   Show all modules that have version information
 
+.. _openstack_network_agent_delete:
+
+openstack network agent delete
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack network agent delete [-h]
+                                         <network-agent> [<network-agent> ...]
+
+Delete network agent(s)
+
+**Positional arguments:**
+
+``<network-agent>``
+  Network agent(s) to delete (ID only)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_network_agent_list:
+
+openstack network agent list
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack network agent list [-h] [-f {csv,html,json,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent]
+                                       [--quote {all,minimal,none,nonnumeric}]
+
+List network agents
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_network_agent_set:
+
+openstack network agent set
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack network agent set [-h] [--description <description>]
+                                      [--enable | --disable]
+                                      <network-agent>
+
+Set network agent properties
+
+**Positional arguments:**
+
+``<network-agent>``
+  Network agent to modify (ID only)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--description <description>``
+  Set network agent description
+
+``--enable``
+  Enable network agent
+
+``--disable``
+  Disable network agent
+
+.. _openstack_network_agent_show:
+
+openstack network agent show
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack network agent show [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent] [--prefix PREFIX]
+                                       <network-agent>
+
+Display network agent details
+
+**Positional arguments:**
+
+``<network-agent>``
+  Network agent to display (ID only)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
 .. _openstack_network_create:
 
 openstack network create
@@ -7751,7 +8227,17 @@ openstack network create
    usage: openstack network create [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
-                                   [--share | --no-share] [--subnet <subnet>]
+                                   [--share | --no-share] [--enable | --disable]
+                                   [--project <project>]
+                                   [--project-domain <project-domain>]
+                                   [--availability-zone-hint <availability-zone>]
+                                   [--enable-port-security | --disable-port-security]
+                                   [--external | --internal]
+                                   [--default | --no-default]
+                                   [--provider-network-type <provider-network-type>]
+                                   [--provider-physical-network <provider-physical-network>]
+                                   [--provider-segment <provider-segment>]
+                                   [--transparent-vlan | --no-transparent-vlan]
                                    <name>
 
 Create new network
@@ -7772,8 +8258,66 @@ Create new network
 ``--no-share``
   Do not share the network between projects
 
-``--subnet <subnet>``
-  IPv4 subnet for fixed IPs (in CIDR notation)
+``--enable``
+  Enable network (default)
+
+``--disable``
+  Disable network
+
+``--project <project>``
+  Owner's project (name or ID)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+``--availability-zone-hint <availability-zone>``
+  Availability Zone in which to create this network
+  (Network Availability Zone extension required, repeat
+  option to set multiple availability zones)
+
+``--enable-port-security``
+  Enable port security by default for ports created on
+  this network (default)
+
+``--disable-port-security``
+  Disable port security by default for ports created on
+  this network
+
+``--external``
+  Set this network as an external network (external-net
+  extension required)
+
+``--internal``
+  Set this network as an internal network (default)
+
+``--default``
+  Specify if this network should be used as the default
+  external network
+
+``--no-default``
+  Do not use the network as the default external network
+  (default)
+
+``--provider-network-type <provider-network-type>``
+  The physical mechanism by which the virtual network is
+  implemented. The supported options are: flat, geneve,
+  gre, local, vlan, vxlan.
+
+``--provider-physical-network <provider-physical-network>``
+  Name of the physical network over which the virtual
+  network is implemented
+
+``--provider-segment <provider-segment>``
+  VLAN ID for VLAN networks or Tunnel ID for
+  GENEVE/GRE/VXLAN networks
+
+``--transparent-vlan``
+  Make the network VLAN transparent
+
+``--no-transparent-vlan``
+  Do not make the network VLAN transparent
 
 .. _openstack_network_delete:
 
@@ -7820,6 +8364,160 @@ List networks
 
 ``--long``
   List additional fields in output
+
+.. _openstack_network_rbac_create:
+
+openstack network rbac create
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack network rbac create [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX] --type
+                                        <type> --action <action> --target-project
+                                        <target-project>
+                                        [--target-project-domain <target-project-domain>]
+                                        [--project <project>]
+                                        [--project-domain <project-domain>]
+                                        <rbac-object>
+
+Create network RBAC policy
+
+**Positional arguments:**
+
+``<rbac-object>``
+  The object to which this RBAC policy affects (name or
+  ID for network objects, ID only for QoS policy
+  objects)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--type <type>``
+  Type of the object that RBAC policy affects
+  ("qos_policy" or "network")
+
+``--action <action>``
+  Action for the RBAC policy ("access_as_external" or
+  "access_as_shared")
+
+``--target-project <target-project>``
+  The project to which the RBAC policy will be enforced
+  (name or ID)
+
+``--target-project-domain <target-project-domain>``
+  Domain the target project belongs to (name or ID).
+  This can be used in case collisions between project
+  names exist.
+
+``--project <project>``
+  The owner project (name or ID)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
+.. _openstack_network_rbac_delete:
+
+openstack network rbac delete
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack network rbac delete [-h] <rbac-policy> [<rbac-policy> ...]
+
+Delete network RBAC policy(s)
+
+**Positional arguments:**
+
+``<rbac-policy>``
+  RBAC policy(s) to delete (ID only)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_network_rbac_list:
+
+openstack network rbac list
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack network rbac list [-h] [-f {csv,html,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]
+
+List network RBAC policies
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_network_rbac_set:
+
+openstack network rbac set
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack network rbac set [-h] [--target-project <target-project>]
+                                     [--target-project-domain <target-project-domain>]
+                                     <rbac-policy>
+
+Set network RBAC policy properties
+
+**Positional arguments:**
+
+``<rbac-policy>``
+  RBAC policy to be modified (ID only)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--target-project <target-project>``
+  The project to which the RBAC policy will be enforced
+  (name or ID)
+
+``--target-project-domain <target-project-domain>``
+  Domain the target project belongs to (name or ID).
+  This can be used in case collisions between project
+  names exist.
+
+.. _openstack_network_rbac_show:
+
+openstack network rbac show
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack network rbac show [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent] [--prefix PREFIX]
+                                      <rbac-policy>
+
+Display network RBAC policy details
+
+**Positional arguments:**
+
+``<rbac-policy>``
+  RBAC policy (ID only)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
 
 .. _openstack_network_segment_list:
 
@@ -7893,7 +8591,9 @@ openstack network set
 .. code-block:: console
 
    usage: openstack network set [-h] [--name <name>] [--enable | --disable]
-                                [--share | --no-share] [--external | --internal]
+                                [--share | --no-share]
+                                [--enable-port-security | --disable-port-security]
+                                [--external | --internal]
                                 [--default | --no-default]
                                 [--provider-network-type <provider-network-type>]
                                 [--provider-physical-network <provider-physical-network>]
@@ -7928,6 +8628,14 @@ Set network properties
 ``--no-share``
   Do not share the network between projects
 
+``--enable-port-security``
+  Enable port security by default for ports created on
+  this network
+
+``--disable-port-security``
+  Disable port security by default for ports created on
+  this network
+
 ``--external``
   Set this network as an external network (external-net
   extension required)
@@ -7943,16 +8651,16 @@ Set network properties
 
 ``--provider-network-type <provider-network-type>``
   The physical mechanism by which the virtual network is
-  implemented. The supported options are: flat, gre,
-  local, vlan, vxlan
+  implemented. The supported options are: flat, geneve,
+  gre, local, vlan, vxlan.
 
 ``--provider-physical-network <provider-physical-network>``
   Name of the physical network over which the virtual
   network is implemented
 
 ``--provider-segment <provider-segment>``
-  VLAN ID for VLAN networks or Tunnel ID for GRE/VXLAN
-  networks
+  VLAN ID for VLAN networks or Tunnel ID for
+  GENEVE/GRE/VXLAN networks
 
 ``--transparent-vlan``
   Make the network VLAN transparent
@@ -8286,6 +8994,7 @@ openstack orchestration resource type list
                                                      [--noindent]
                                                      [--quote {all,minimal,none,nonnumeric}]
                                                      [--filter <key=value>]
+                                                     [--long]
 
 List resource types.
 
@@ -8298,6 +9007,10 @@ List resource types.
   Filter parameters to apply on returned resource types.
   This can be specified multiple times. It can be any of
   name, version or support_status
+
+``--long``
+  Show resource types with corresponding description of
+  each resource type.
 
 .. _openstack_orchestration_resource_type_show:
 
@@ -8313,6 +9026,7 @@ openstack orchestration resource type show
                                                      [--noindent]
                                                      [--prefix PREFIX]
                                                      [--template-type <template-type>]
+                                                     [--long]
                                                      <resource-type>
 
 Show details and optionally generate a template for a resource type.
@@ -8329,6 +9043,9 @@ Show details and optionally generate a template for a resource type.
 
 ``--template-type <template-type>``
   Optional template type to generate, hot or cfn
+
+``--long``
+  Show resource type with corresponding description.
 
 .. _openstack_orchestration_service_list:
 
@@ -8390,11 +9107,12 @@ openstack orchestration template validate
                                                     [-c COLUMN]
                                                     [--max-width <integer>]
                                                     [--noindent]
-                                                    [--prefix PREFIX] -t
-                                                    <template> [-e <environment>]
+                                                    [--prefix PREFIX]
+                                                    [-e <environment>]
                                                     [--show-nested]
                                                     [--parameter <key=value>]
                                                     [--ignore-errors <error1,error2,...>]
+                                                    -t <template>
 
 Validate a template
 
@@ -8402,9 +9120,6 @@ Validate a template
 
 ``-h, --help``
   show this help message and exit
-
-``-t <template>, --template <template>``
-  Path to the template
 
 ``-e <environment>, --environment <environment>``
   Path to the environment. Can be specified multiple
@@ -8419,6 +9134,9 @@ Validate a template
 
 ``--ignore-errors <error1,error2,...>``
   List of heat errors to ignore
+
+``-t <template>, --template <template>``
+  Path to the template
 
 .. _openstack_orchestration_template_version_list:
 
@@ -8476,14 +9194,14 @@ openstack policy delete
 
 .. code-block:: console
 
-   usage: openstack policy delete [-h] <policy>
+   usage: openstack policy delete [-h] <policy> [<policy> ...]
 
-Delete policy
+Delete policy(s)
 
 **Positional arguments:**
 
 ``<policy>``
-  Policy to delete
+  Policy(s) to delete
 
 **Optional arguments:**
 
@@ -8597,8 +9315,7 @@ Create a pool
   Group of the pool
 
 ``--pool_options <pool_options>``
-  An optional request component related to storage-
-  specific options
+  An optional request component related to storage-specific options
 
 .. _openstack_pool_delete:
 
@@ -8711,8 +9428,7 @@ Update a pool attribute
   Group of the pool
 
 ``--pool_options <pool_options>``
-  An optional request component related to storage-
-  specific options
+  An optional request component related to storage-specific options
 
 .. _openstack_port_create:
 
@@ -8754,7 +9470,8 @@ Create a new port
   Port device ID
 
 ``--device-owner <device-owner>``
-  Device owner of this port
+  Device owner of this port. This is the entity that
+  uses the port (for example, network:dhcp).
 
 ``--vnic-type <vnic-type>``
   VNIC type for this port (direct | direct-physical |
@@ -8770,9 +9487,9 @@ Create a new port
   to set multiple fixed IP addresses)
 
 ``--binding-profile <binding-profile>``
-  Custom data to be passed as binding:profile:
-  <key>=<value> (repeat option to set multiple
-  binding:profile data)
+  Custom data to be passed as binding:profile. Data may
+  be passed as <key>=<value> or JSON. (repeat option to
+  set multiple binding:profile data)
 
 ``--enable``
   Enable port (default)
@@ -8822,7 +9539,7 @@ openstack port list
    usage: openstack port list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
-                              [--router <router>]
+                              [--device-owner <device-owner>] [--router <router>]
 
 List ports
 
@@ -8830,6 +9547,11 @@ List ports
 
 ``-h, --help``
   show this help message and exit
+
+``--device-owner <device-owner>``
+  List only ports with the specified device owner. This
+  is the entity that uses the port (for example,
+  network:dhcp).
 
 ``--router <router>``
   List only ports attached to this router (name or ID)
@@ -8865,7 +9587,8 @@ Set port properties
   Port device ID
 
 ``--device-owner <device-owner>``
-  Device owner of this port
+  Device owner of this port. This is the entity that
+  uses the port (for example, network:dhcp).
 
 ``--vnic-type <vnic-type>``
   VNIC type for this port (direct | direct-physical |
@@ -8893,9 +9616,9 @@ Set port properties
   Clear existing information of fixed IP addresses
 
 ``--binding-profile <binding-profile>``
-  Custom data to be passed as binding:profile:
-  <key>=<value> (repeat option to set multiple
-  binding:profile data)
+  Custom data to be passed as binding:profile. Data may
+  be passed as <key>=<value> or JSON. (repeat option to
+  set multiple binding:profile data)
 
 ``--no-binding-profile``
   Clear existing information of binding:profile
@@ -8923,6 +9646,42 @@ Display port details
 
 ``-h, --help``
   show this help message and exit
+
+.. _openstack_port_unset:
+
+openstack port unset
+--------------------
+
+.. code-block:: console
+
+   usage: openstack port unset [-h]
+                               [--fixed-ip subnet=<subnet>,ip-address=<ip-address>]
+                               [--binding-profile <binding-profile-key>]
+                               <port>
+
+Unset port properties
+
+**Positional arguments:**
+
+``<port>``
+  Port to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--fixed-ip``
+  subnet=<subnet>,ip-address=<ip-address>
+  Desired IP and/or subnet (name or ID) which should be
+  removed from this port: subnet=<subnet>,ip-address
+  =<ip-address> (repeat option to unset multiple fixed
+  IP addresses)
+
+``--binding-profile <binding-profile-key>``
+  Desired key which should be removed from
+  binding:profile(repeat option to unset multiple
+  binding:profile data)
 
 .. _openstack_project_create:
 
@@ -9134,7 +9893,9 @@ openstack ptr record set
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
                                    [--description DESCRIPTION | --no-description]
-                                   [--ttl TTL | --no-ttl]
+                                   [--ttl TTL | --no-ttl] [--all-projects]
+                                   [--edit-managed]
+                                   [--sudo-project-id SUDO_PROJECT_ID]
                                    floatingip_id ptrdname
 
 Set floatingip ptr record
@@ -9162,6 +9923,16 @@ Set floatingip ptr record
 
 ``--no-ttl``
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_ptr_record_show:
 
 openstack ptr record show
@@ -9172,6 +9943,8 @@ openstack ptr record show
    usage: openstack ptr record show [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
+                                    [--all-projects] [--edit-managed]
+                                    [--sudo-project-id SUDO_PROJECT_ID]
                                     floatingip_id
 
 Show floatingip ptr record details
@@ -9186,6 +9959,16 @@ Show floatingip ptr record details
 ``-h, --help``
   show this help message and exit
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_ptr_record_unset:
 
 openstack ptr record unset
@@ -9193,7 +9976,9 @@ openstack ptr record unset
 
 .. code-block:: console
 
-   usage: openstack ptr record unset [-h] floatingip_id
+   usage: openstack ptr record unset [-h] [--all-projects] [--edit-managed]
+                                     [--sudo-project-id SUDO_PROJECT_ID]
+                                     floatingip_id
 
 Unset floatingip ptr record
 
@@ -9206,6 +9991,16 @@ Unset floatingip ptr record
 
 ``-h, --help``
   show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
 
 .. _openstack_queue_create:
 
@@ -9241,30 +10036,6 @@ openstack queue delete
    usage: openstack queue delete [-h] <queue_name>
 
 Delete a queue
-
-**Positional arguments:**
-
-``<queue_name>``
-  Name of the queue
-
-**Optional arguments:**
-
-``-h, --help``
-  show this help message and exit
-
-.. _openstack_queue_exists:
-
-openstack queue exists
-----------------------
-
-.. code-block:: console
-
-   usage: openstack queue exists [-h] [-f {html,json,shell,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX]
-                                 <queue_name>
-
-Check queue existence
 
 **Positional arguments:**
 
@@ -9350,6 +10121,45 @@ Set queue metadata
 ``-h, --help``
   show this help message and exit
 
+.. _openstack_queue_signed_url:
+
+openstack queue signed url
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack queue signed url [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     [--paths <paths>]
+                                     [--ttl-seconds <ttl_seconds>]
+                                     [--methods <methods>]
+                                     <queue_name>
+
+Create a queue
+
+**Positional arguments:**
+
+``<queue_name>``
+  Name of the queue
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--paths <paths>``
+  Allowed paths in a comma-separated list. Options:
+  messages, subscriptions, claims
+
+``--ttl-seconds <ttl_seconds>``
+  Length of time (in seconds) until the signature
+  expires
+
+``--methods <methods>``
+  HTTP methods to allow as a comma-separated list.
+  Options: GET, HEAD, OPTIONS, POST, PUT, DELETE
+
 .. _openstack_queue_stats:
 
 openstack queue stats
@@ -9381,19 +10191,25 @@ openstack quota set
 
 .. code-block:: console
 
-   usage: openstack quota set [-h] [--class]
-                              [--injected-file-size <injected-file-size>]
-                              [--instances <instances>]
-                              [--properties <properties>]
-                              [--injected-files <injected-files>]
-                              [--cores <cores>] [--ram <ram>]
+   usage: openstack quota set [-h] [--class] [--properties <properties>]
+                              [--server-groups <server-groups>] [--ram <ram>]
+                              [--key-pairs <key-pairs>] [--instances <instances>]
                               [--fixed-ips <fixed-ips>]
+                              [--injected-file-size <injected-file-size>]
+                              [--server-group-members <server-group-members>]
+                              [--injected-files <injected-files>]
+                              [--cores <cores>]
                               [--injected-path-size <injected-path-size>]
-                              [--key-pairs <key-pairs>] [--gigabytes <gigabytes>]
-                              [--volumes <volumes>] [--snapshots <snapshots>]
-                              [--secgroups <secgroups>]
+                              [--gigabytes <gigabytes>] [--volumes <volumes>]
+                              [--snapshots <snapshots>]
+                              [--subnetpools <subnetpools>] [--vips <vips>]
+                              [--members <members>] [--ports <ports>]
+                              [--subnets <subnets>] [--networks <networks>]
                               [--floating-ips <floating-ips>]
+                              [--health-monitors <health-monitors>]
                               [--secgroup-rules <secgroup-rules>]
+                              [--secgroups <secgroups>] [--routers <routers>]
+                              [--rbac-policies <rbac-policies>]
                               [--volume-type <volume-type>]
                               <project/class>
 
@@ -9412,14 +10228,29 @@ Set quotas for project or class
 ``--class``
   Set quotas for <class>
 
-``--injected-file-size <injected-file-size>``
-  New value for the injected-file-size quota
+``--properties <properties>``
+  New value for the properties quota
+
+``--server-groups <server-groups>``
+  New value for the server-groups quota
+
+``--ram <ram>``
+  New value for the ram quota
+
+``--key-pairs <key-pairs>``
+  New value for the key-pairs quota
 
 ``--instances <instances>``
   New value for the instances quota
 
-``--properties <properties>``
-  New value for the properties quota
+``--fixed-ips <fixed-ips>``
+  New value for the fixed-ips quota
+
+``--injected-file-size <injected-file-size>``
+  New value for the injected-file-size quota
+
+``--server-group-members <server-group-members>``
+  New value for the server-group-members quota
 
 ``--injected-files <injected-files>``
   New value for the injected-files quota
@@ -9427,17 +10258,8 @@ Set quotas for project or class
 ``--cores <cores>``
   New value for the cores quota
 
-``--ram <ram>``
-  New value for the ram quota
-
-``--fixed-ips <fixed-ips>``
-  New value for the fixed-ips quota
-
 ``--injected-path-size <injected-path-size>``
   New value for the injected-path-size quota
-
-``--key-pairs <key-pairs>``
-  New value for the key-pairs quota
 
 ``--gigabytes <gigabytes>``
   New value for the gigabytes quota
@@ -9448,14 +10270,41 @@ Set quotas for project or class
 ``--snapshots <snapshots>``
   New value for the snapshots quota
 
-``--secgroups <secgroups>``
-  New value for the secgroups quota
+``--subnetpools <subnetpools>``
+  New value for the subnetpools quota
+
+``--vips <vips>``
+  New value for the vips quota
+
+``--members <members>``
+  New value for the members quota
+
+``--ports <ports>``
+  New value for the ports quota
+
+``--subnets <subnets>``
+  New value for the subnets quota
+
+``--networks <networks>``
+  New value for the networks quota
 
 ``--floating-ips <floating-ips>``
   New value for the floating-ips quota
 
+``--health-monitors <health-monitors>``
+  New value for the health-monitors quota
+
 ``--secgroup-rules <secgroup-rules>``
   New value for the secgroup-rules quota
+
+``--secgroups <secgroups>``
+  New value for the secgroups quota
+
+``--routers <routers>``
+  New value for the routers quota
+
+``--rbac-policies <rbac-policies>``
+  New value for the rbac-policies quota
 
 ``--volume-type <volume-type>``
   Set quotas for a specific <volume-type>
@@ -9502,6 +10351,8 @@ openstack recordset create
                                      [--noindent] [--prefix PREFIX] --records
                                      RECORDS [RECORDS ...] --type TYPE
                                      [--ttl TTL] [--description DESCRIPTION]
+                                     [--all-projects] [--edit-managed]
+                                     [--sudo-project-id SUDO_PROJECT_ID]
                                      zone_id name
 
 Create new recordset
@@ -9531,6 +10382,16 @@ Create new recordset
 ``--description DESCRIPTION``
   Description
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_recordset_delete:
 
 openstack recordset delete
@@ -9538,7 +10399,12 @@ openstack recordset delete
 
 .. code-block:: console
 
-   usage: openstack recordset delete [-h] zone_id id
+   usage: openstack recordset delete [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     [--all-projects] [--edit-managed]
+                                     [--sudo-project-id SUDO_PROJECT_ID]
+                                     zone_id id
 
 Delete recordset
 
@@ -9555,6 +10421,16 @@ Delete recordset
 ``-h, --help``
   show this help message and exit
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_recordset_list:
 
 openstack recordset list
@@ -9569,6 +10445,8 @@ openstack recordset list
                                    [--name NAME] [--type TYPE] [--data DATA]
                                    [--ttl TTL] [--description DESCRIPTION]
                                    [--status STATUS] [--action ACTION]
+                                   [--all-projects] [--edit-managed]
+                                   [--sudo-project-id SUDO_PROJECT_ID]
                                    zone_id
 
 List recordsets
@@ -9576,7 +10454,7 @@ List recordsets
 **Positional arguments:**
 
 ``zone_id``
-  Zone ID
+  Zone ID. To list all recordsets specify 'all'
 
 **Optional arguments:**
 
@@ -9604,6 +10482,16 @@ List recordsets
 ``--action ACTION``
   RecordSet Action
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_recordset_set:
 
 openstack recordset set
@@ -9616,7 +10504,9 @@ openstack recordset set
                                   [--noindent] [--prefix PREFIX]
                                   [--records RECORDS [RECORDS ...]]
                                   [--description DESCRIPTION | --no-description]
-                                  [--ttl TTL | --no-ttl]
+                                  [--ttl TTL | --no-ttl] [--all-projects]
+                                  [--edit-managed]
+                                  [--sudo-project-id SUDO_PROJECT_ID]
                                   zone_id id
 
 Set recordset properties
@@ -9647,6 +10537,16 @@ Set recordset properties
 
 ``--no-ttl``
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_recordset_show:
 
 openstack recordset show
@@ -9657,6 +10557,8 @@ openstack recordset show
    usage: openstack recordset show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
+                                   [--all-projects] [--edit-managed]
+                                   [--sudo-project-id SUDO_PROJECT_ID]
                                    zone_id id
 
 Show recordset details
@@ -9673,6 +10575,16 @@ Show recordset details
 
 ``-h, --help``
   show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
 
 .. _openstack_region_create:
 
@@ -9713,14 +10625,14 @@ openstack region delete
 
 .. code-block:: console
 
-   usage: openstack region delete [-h] <region-id>
+   usage: openstack region delete [-h] <region-id> [<region-id> ...]
 
-Delete region
+Delete region(s)
 
 **Positional arguments:**
 
 ``<region-id>``
-  Region ID to delete
+  Region ID(s) to delete
 
 **Optional arguments:**
 
@@ -9877,9 +10789,10 @@ openstack role add
                              [--group-domain <group-domain>]
                              [--project-domain <project-domain>]
                              [--user-domain <user-domain>] [--inherited]
+                             [--role-domain <role-domain>]
                              <role>
 
-Adds a role to a user or group on a domain or project
+Adds a role assignment to a user or group on a domain or project
 
 **Positional arguments:**
 
@@ -9920,6 +10833,11 @@ Adds a role to a user or group on a domain or project
   Specifies if the role grant is inheritable to the sub
   projects
 
+``--role-domain <role-domain>``
+  Domain the role belongs to (name or ID). This must be
+  specified when the name of a domain specific role is
+  used.
+
 .. _openstack_role_assignment_list:
 
 openstack role assignment list
@@ -9932,14 +10850,16 @@ openstack role assignment list
                                          [-c COLUMN] [--max-width <integer>]
                                          [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
-                                         [--effective] [--role <role>] [--names]
+                                         [--effective] [--role <role>]
+                                         [--role-domain <role-domain>] [--names]
                                          [--user <user>]
                                          [--user-domain <user-domain>]
                                          [--group <group>]
                                          [--group-domain <group-domain>]
                                          [--domain <domain> | --project <project>]
                                          [--project-domain <project-domain>]
-                                         [--inherited]
+                                         [--inherited] [--auth-user]
+                                         [--auth-project]
 
 List role assignments
 
@@ -9953,6 +10873,11 @@ List role assignments
 
 ``--role <role>``
   Role to filter (name or ID)
+
+``--role-domain <role-domain>``
+  Domain the role belongs to (name or ID). This must be
+  specified when the name of a domain specific role is
+  used.
 
 ``--names``
   Display names instead of IDs
@@ -9986,6 +10911,13 @@ List role assignments
   Specifies if the role grant is inheritable to the sub
   projects
 
+``--auth-user``
+  Only list assignments for the authenticated user
+
+``--auth-project``
+  Only list assignments for the project to which the
+  authenticated user's token is scoped
+
 .. _openstack_role_create:
 
 openstack role create
@@ -9995,7 +10927,7 @@ openstack role create
 
    usage: openstack role create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--or-show]
+                                [--prefix PREFIX] [--domain <domain>] [--or-show]
                                 <role-name>
 
 Create new role
@@ -10010,6 +10942,9 @@ Create new role
 ``-h, --help``
   show this help message and exit
 
+``--domain <domain>``
+  Domain the role belongs to (name or ID)
+
 ``--or-show``
   Return existing role
 
@@ -10020,7 +10955,7 @@ openstack role delete
 
 .. code-block:: console
 
-   usage: openstack role delete [-h] <role> [<role> ...]
+   usage: openstack role delete [-h] [--domain <domain>] <role> [<role> ...]
 
 Delete role(s)
 
@@ -10033,6 +10968,9 @@ Delete role(s)
 
 ``-h, --help``
   show this help message and exit
+
+``--domain <domain>``
+  Domain the role belongs to (name or ID)
 
 .. _openstack_role_list:
 
@@ -10098,9 +11036,10 @@ openstack role remove
                                 [--group-domain <group-domain>]
                                 [--project-domain <project-domain>]
                                 [--user-domain <user-domain>] [--inherited]
+                                [--role-domain <role-domain>]
                                 <role>
 
-Remove role from domain/project : user/group
+Removes a role assignment from domain/project : user/group
 
 **Positional arguments:**
 
@@ -10141,6 +11080,11 @@ Remove role from domain/project : user/group
   Specifies if the role grant is inheritable to the sub
   projects
 
+``--role-domain <role-domain>``
+  Domain the role belongs to (name or ID). This must be
+  specified when the name of a domain specific role is
+  used.
+
 .. _openstack_role_set:
 
 openstack role set
@@ -10148,7 +11092,7 @@ openstack role set
 
 .. code-block:: console
 
-   usage: openstack role set [-h] [--name <name>] <role>
+   usage: openstack role set [-h] [--domain <domain>] [--name <name>] <role>
 
 Set role properties
 
@@ -10162,6 +11106,9 @@ Set role properties
 ``-h, --help``
   show this help message and exit
 
+``--domain <domain>``
+  Domain the role belongs to (name or ID)
+
 ``--name <name>``
   Set role name
 
@@ -10174,7 +11121,7 @@ openstack role show
 
    usage: openstack role show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX]
+                              [--prefix PREFIX] [--domain <domain>]
                               <role>
 
 Display role details
@@ -10188,6 +11135,9 @@ Display role details
 
 ``-h, --help``
   show this help message and exit
+
+``--domain <domain>``
+  Domain the role belongs to (name or ID)
 
 .. _openstack_router_add_port:
 
@@ -10346,7 +11296,7 @@ Remove a port from a router
   Router from which port will be removed (name or ID)
 
 ``<port>``
-  Port to be removed (name or ID)
+  Port to be removed and deleted (name or ID)
 
 **Optional arguments:**
 
@@ -10448,6 +11398,35 @@ Display router details
 
 ``-h, --help``
   show this help message and exit
+
+.. _openstack_router_unset:
+
+openstack router unset
+----------------------
+
+.. code-block:: console
+
+   usage: openstack router unset [-h]
+                                 [--route destination=<subnet>,gateway=<ip-address>]
+                                 <router>
+
+Unset router properties
+
+**Positional arguments:**
+
+``<router>``
+  Router to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--route``
+  destination=<subnet>,gateway=<ip-address>
+  Routes to be removed from the router destination:
+  destination subnet (in CIDR notation) gateway: nexthop
+  IP address (repeat option to unset multiple routes)
 
 .. _openstack_secret_container_create:
 
@@ -10906,6 +11885,8 @@ openstack security group create
                                           [-c COLUMN] [--max-width <integer>]
                                           [--noindent] [--prefix PREFIX]
                                           [--description <description>]
+                                          [--project <project>]
+                                          [--project-domain <project-domain>]
                                           <name>
 
 Create a new security group
@@ -10923,6 +11904,14 @@ Create a new security group
 ``--description <description>``
   Security group description
 
+``--project <project>``
+  Owner's project (name or ID)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
 .. _openstack_security_group_delete:
 
 openstack security group delete
@@ -10930,14 +11919,14 @@ openstack security group delete
 
 .. code-block:: console
 
-   usage: openstack security group delete [-h] <group>
+   usage: openstack security group delete [-h] <group> [<group> ...]
 
-Delete a security group
+Delete security group(s)
 
 **Positional arguments:**
 
 ``<group>``
-  Security group to delete (name or ID)
+  Security group(s) to delete (name or ID)
 
 **Optional arguments:**
 
@@ -10956,7 +11945,6 @@ openstack security group list
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
-                                        [--all-projects]
 
 List security groups
 
@@ -10964,9 +11952,6 @@ List security groups
 
 ``-h, --help``
   show this help message and exit
-
-``--all-projects``
-  Display information from all projects (admin only)
 
 .. _openstack_security_group_rule_create:
 
@@ -10982,7 +11967,13 @@ openstack security group rule create
                                                [--noindent] [--prefix PREFIX]
                                                [--src-ip <ip-address> | --src-group <group>]
                                                [--dst-port <port-range>]
+                                               [--icmp-type <icmp-type>]
+                                               [--icmp-code <icmp-code>]
                                                [--protocol <protocol>]
+                                               [--ingress | --egress]
+                                               [--ethertype <ethertype>]
+                                               [--project <project>]
+                                               [--project-domain <project-domain>]
                                                <group>
 
 Create a new security group rule
@@ -11009,8 +12000,36 @@ Create a new security group rule
   and ending port range: 137:139. Required for IP
   protocols TCP and UDP. Ignored for ICMP IP protocols.
 
+``--icmp-type <icmp-type>``
+  ICMP type for ICMP IP protocols
+
+``--icmp-code <icmp-code>``
+  ICMP code for ICMP IP protocols
+
 ``--protocol <protocol>``
-  IP protocol (icmp, tcp, udp; default: tcp)
+  IP protocol (ah, dccp, egp, esp, gre, icmp, igmp,
+  ipv6-encap, ipv6-frag, ipv6-icmp, ipv6-nonxt,
+  ipv6-opts, ipv6-route, ospf, pgm, rsvp, sctp, tcp,
+  udp, udplite, vrrp and integer representations
+  [0-255]; default: tcp)
+
+``--ingress``
+  Rule applies to incoming network traffic (default)
+
+``--egress``
+  Rule applies to outgoing network traffic
+
+``--ethertype <ethertype>``
+  Ethertype of network traffic (IPv4, IPv6; default:
+  based on IP protocol)
+
+``--project <project>``
+  Owner's project (name or ID)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
 
 .. _openstack_security_group_rule_delete:
 
@@ -11019,14 +12038,14 @@ openstack security group rule delete
 
 .. code-block:: console
 
-   usage: openstack security group rule delete [-h] <rule>
+   usage: openstack security group rule delete [-h] <rule> [<rule> ...]
 
-Delete a security group rule
+Delete security group rule(s)
 
 **Positional arguments:**
 
 ``<rule>``
-  Security group rule to delete (ID only)
+  Security group rule(s) to delete (ID only)
 
 **Optional arguments:**
 
@@ -11045,7 +12064,7 @@ openstack security group rule list
                                              [-c COLUMN] [--max-width <integer>]
                                              [--noindent]
                                              [--quote {all,minimal,none,nonnumeric}]
-                                             [--all-projects]
+                                             [--long]
                                              [<group>]
 
 List security group rules
@@ -11060,8 +12079,8 @@ List security group rules
 ``-h, --help``
   show this help message and exit
 
-``--all-projects``
-  Display information from all projects (admin only)
+``--long``
+  List additional fields in output
 
 .. _openstack_security_group_rule_show:
 
@@ -11136,6 +12155,54 @@ Display security group details
 
 ``<group>``
   Security group to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_server_add_fixed_ip:
+
+openstack server add fixed ip
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack server add fixed ip [-h] <server> <network>
+
+Add fixed IP address to server
+
+**Positional arguments:**
+
+``<server>``
+  Server (name or ID) to receive the fixed IP address
+
+``<network>``
+  Network (name or ID) to allocate the fixed IP address from
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_server_add_floating_ip:
+
+openstack server add floating ip
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack server add floating ip [-h] <server> <ip-address>
+
+Add floating IP address to server
+
+**Positional arguments:**
+
+``<server>``
+  Server (name or ID) to receive the floating IP address
+
+``<ip-address>``
+  Floating IP address (IP address only) to assign to server
 
 **Optional arguments:**
 
@@ -11309,8 +12376,24 @@ Create a new server
 
 ``--nic <net-id=net-uuid,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>``
   Create a NIC on the server. Specify option multiple
-  times to create multiple NICs. Either net-id or port-
-  id must be provided, but not both. net-id: attach NIC
+  times
+  to
+  create
+  multiple
+  NICs.
+  Either
+  net-id
+  or
+  port-id
+  must
+  be
+  provided,
+  but
+  not
+  both.
+  net-id:
+  attach
+  NIC
   to network with this UUID, port-id: attach NIC to port
   with this UUID, v4-fixed-ip: IPv4 fixed address for
   NIC (optional), v6-fixed-ip: IPv6 fixed address for
@@ -11496,12 +12579,12 @@ openstack server image create
                                         [--name <image-name>] [--wait]
                                         <server>
 
-Create a new disk image from a running server
+Create a new server disk image from an existing server
 
 **Positional arguments:**
 
 ``<server>``
-  Server (name or ID)
+  Server to create image (name or ID)
 
 **Optional arguments:**
 
@@ -11509,10 +12592,10 @@ Create a new disk image from a running server
   show this help message and exit
 
 ``--name <image-name>``
-  Name of new image (default is server name)
+  Name of new disk image (default: server name)
 
 ``--wait``
-  Wait for image create to complete
+  Wait for operation to complete
 
 .. _openstack_server_list:
 
@@ -11752,6 +12835,54 @@ Rebuild server
 
 ``--wait``
   Wait for rebuild to complete
+
+.. _openstack_server_remove_fixed_ip:
+
+openstack server remove fixed ip
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack server remove fixed ip [-h] <server> <ip-address>
+
+Remove fixed IP address from server
+
+**Positional arguments:**
+
+``<server>``
+  Server (name or ID) to remove the fixed IP address from
+
+``<ip-address>``
+  Fixed IP address (IP address only) to remove from the server
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_server_remove_floating_ip:
+
+openstack server remove floating ip
+-----------------------------------
+
+.. code-block:: console
+
+   usage: openstack server remove floating ip [-h] <server> <ip-address>
+
+Remove floating IP address from server
+
+**Positional arguments:**
+
+``<server>``
+  Server (name or ID) to remove the floating IP address from
+
+``<ip-address>``
+  Floating IP address (IP address only) to remove from server
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
 
 .. _openstack_server_remove_security_group:
 
@@ -12256,14 +13387,14 @@ openstack service delete
 
 .. code-block:: console
 
-   usage: openstack service delete [-h] <service>
+   usage: openstack service delete [-h] <service> [<service> ...]
 
-Delete service
+Delete service(s)
 
 **Positional arguments:**
 
 ``<service>``
-  Service to delete (type, name or ID)
+  Service(s) to delete (type, name or ID)
 
 **Optional arguments:**
 
@@ -12344,14 +13475,16 @@ openstack service provider delete
 
 .. code-block:: console
 
-   usage: openstack service provider delete [-h] <service-provider>
+   usage: openstack service provider delete [-h]
+                                            <service-provider>
+                                            [<service-provider> ...]
 
-Delete service provider
+Delete service provider(s)
 
 **Positional arguments:**
 
 ``<service-provider>``
-  Service provider to delete
+  Service provider(s) to delete
 
 **Optional arguments:**
 
@@ -12462,7 +13595,7 @@ Set service properties
 **Positional arguments:**
 
 ``<service>``
-  Service to update (type, name or ID)
+  Service to modify (type, name or ID)
 
 **Optional arguments:**
 
@@ -12520,7 +13653,7 @@ openstack snapshot create
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX]
                                     [--name <name>] [--description <description>]
-                                    [--force]
+                                    [--force] [--property <key=value>]
                                     <volume>
 
 Create new snapshot
@@ -12544,6 +13677,10 @@ Create new snapshot
 ``--force``
   Create a snapshot attached to an instance. Default is
   False
+
+``--property <key=value>``
+  Set a property to this snapshot (repeat option to set
+  multiple properties)
 
 .. _openstack_snapshot_delete:
 
@@ -12577,7 +13714,8 @@ openstack snapshot list
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
-                                  [--all-projects] [--long]
+                                  [--all-projects] [--long] [--marker <marker>]
+                                  [--limit <limit>]
 
 List snapshots
 
@@ -12591,6 +13729,12 @@ List snapshots
 
 ``--long``
   List additional fields in output
+
+``--marker <marker>``
+  The last snapshot ID of the previous page
+
+``--limit <limit>``
+  Maximum number of snapshots to display
 
 .. _openstack_snapshot_set:
 
@@ -12808,11 +13952,11 @@ openstack software deployment create
                                                [--noindent] [--prefix PREFIX]
                                                [--input-value <key=value>]
                                                [--action <action>]
-                                               [--config <config>] --server
-                                               <server>
+                                               [--config <config>]
                                                [--signal-transport <signal-transport>]
                                                [--container <container>]
-                                               [--timeout <timeout>]
+                                               [--timeout <timeout>] --server
+                                               <server>
                                                <deployment-name>
 
 Create a software deployment.
@@ -12842,9 +13986,6 @@ Create a software deployment.
 ``--config <config>``
   ID of the configuration to deploy
 
-``--server <server>``
-  ID of the server being deployed to
-
 ``--signal-transport <signal-transport>``
   How the server should signal to heat with the
   deployment output values. TEMP_URL_SIGNAL will create
@@ -12862,6 +14003,9 @@ Create a software deployment.
 
 ``--timeout <timeout>``
   Deployment timeout in minutes
+
+``--server <server>``
+  ID of the server being deployed to
 
 .. _openstack_software_deployment_delete:
 
@@ -13031,9 +14175,9 @@ openstack stack adopt
    usage: openstack stack adopt [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [-e <environment>]
-                                [--timeout <timeout>] --adopt-file <adopt-file>
-                                [--enable-rollback] [--parameter <key=value>]
-                                [--wait]
+                                [--timeout <timeout>] [--enable-rollback]
+                                [--parameter <key=value>] [--wait] --adopt-file
+                                <adopt-file>
                                 <stack-name>
 
 Adopt a stack.
@@ -13055,9 +14199,6 @@ Adopt a stack.
 ``--timeout <timeout>``
   Stack creation timeout in minutes
 
-``--adopt-file <adopt-file>``
-  Path to adopt stack data file
-
 ``--enable-rollback``
   Enable rollback on create/update failure
 
@@ -13067,6 +14208,9 @@ Adopt a stack.
 
 ``--wait``
   Wait until stack adopt completes
+
+``--adopt-file <adopt-file>``
+  Path to adopt stack data file
 
 .. _openstack_stack_cancel:
 
@@ -13131,12 +14275,12 @@ openstack stack create
 
    usage: openstack stack create [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX] -t <template>
-                                 [-e <environment>] [--timeout <timeout>]
-                                 [--pre-create <resource>] [--enable-rollback]
-                                 [--parameter <key=value>]
+                                 [--prefix PREFIX] [-e <environment>]
+                                 [--timeout <timeout>] [--pre-create <resource>]
+                                 [--enable-rollback] [--parameter <key=value>]
                                  [--parameter-file <key=file>] [--wait]
-                                 [--tags <tag1,tag2...>] [--dry-run]
+                                 [--tags <tag1,tag2...>] [--dry-run] -t
+                                 <template>
                                  <stack-name>
 
 Create a stack.
@@ -13150,9 +14294,6 @@ Create a stack.
 
 ``-h, --help``
   show this help message and exit
-
-``-t <template>, --template <template>``
-  Path to the template
 
 ``-e <environment>, --environment <environment>``
   Path to the environment. Can be specified multiple
@@ -13192,6 +14333,9 @@ Create a stack.
   Do not actually perform the stack create, but show
   what would be created
 
+``-t <template>, --template <template>``
+  Path to the template
+
 .. _openstack_stack_delete:
 
 openstack stack delete
@@ -13219,6 +14363,31 @@ Delete stack(s).
 ``--wait``
   Wait for stack delete to complete
 
+.. _openstack_stack_environment_show:
+
+openstack stack environment show
+--------------------------------
+
+.. code-block:: console
+
+   usage: openstack stack environment show [-h]
+                                           [-f {html,json,shell,table,value,yaml}]
+                                           [-c COLUMN] [--max-width <integer>]
+                                           [--noindent] [--prefix PREFIX]
+                                           <NAME or ID>
+
+Show a stack's environment.
+
+**Positional arguments:**
+
+``<NAME or ID>``
+  Name or ID of stack to query
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
 .. _openstack_stack_event_list:
 
 openstack stack event list
@@ -13226,9 +14395,9 @@ openstack stack event list
 
 .. code-block:: console
 
-   usage: openstack stack event list [-h] [-f {csv,html,json,table,value,yaml}]
-                                     [-c COLUMN] [--max-width <integer>]
-                                     [--noindent]
+   usage: openstack stack event list [-h] [-f {csv,json,log,table,value,yaml}]
+                                     [-c COLUMN] [--noindent]
+                                     [--max-width <integer>]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--resource <resource>]
                                      [--filter <key=value>] [--limit <limit>]
@@ -13303,6 +14472,30 @@ Show event details.
 ``-h, --help``
   show this help message and exit
 
+.. _openstack_stack_failures_list:
+
+openstack stack failures list
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack stack failures list [-h] [--long] <stack>
+
+Show information about failed stack resources.
+
+**Positional arguments:**
+
+``<stack>``
+  Stack to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  Show full deployment logs in output
+
 .. _openstack_stack_hook_clear:
 
 openstack stack hook clear
@@ -13311,6 +14504,7 @@ openstack stack hook clear
 .. code-block:: console
 
    usage: openstack stack hook clear [-h] [--pre-create] [--pre-update]
+                                     [--pre-delete]
                                      <stack> <resource> [<resource> ...]
 
 Clear resource hooks on a given stack.
@@ -13337,6 +14531,9 @@ Clear resource hooks on a given stack.
 
 ``--pre-update``
   Clear the pre-update hooks
+
+``--pre-delete``
+  Clear the pre-delete hooks
 
 .. _openstack_stack_hook_poll:
 
@@ -13496,10 +14693,9 @@ openstack stack resource list
 
 .. code-block:: console
 
-   usage: openstack stack resource list [-h]
-                                        [-f {csv,html,json,table,value,yaml}]
-                                        [-c COLUMN] [--max-width <integer>]
-                                        [--noindent]
+   usage: openstack stack resource list [-h] [-f {csv,dot,json,table,value,yaml}]
+                                        [-c COLUMN] [--noindent]
+                                        [--max-width <integer>]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         [--long] [-n <nested-depth>]
                                         [--filter <key=value>]
@@ -13527,7 +14723,7 @@ List stack resources.
 ``--filter <key=value>``
   Filter parameters to apply on returned resources based
   on their name, status, type, action, id and
-  physcial_resource_id
+  physical_resource_id
 
 .. _openstack_stack_resource_mark_unhealthy:
 
@@ -14051,12 +15247,12 @@ Create a subnet
   be chosen from within the subnet itself, 'none': This
   subnet will not use a gateway, e.g.: :option:`--gateway`
   192.168.9.1, :option:`--gateway` auto, :option:`--gateway` none (default
-  is 'auto')
+  is 'auto').
 
 ``--ip-version {4,6} IP``
   version (default is 4). Note that when subnet pool
   is specified, IP version is determined from the subnet
-  pool and this option is ignored
+  pool and this option is ignored.
 
 ``--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}``
   IPv6 RA (Router Advertisement) mode, valid modes:
@@ -14094,14 +15290,14 @@ openstack subnet delete
 
 .. code-block:: console
 
-   usage: openstack subnet delete [-h] <subnet>
+   usage: openstack subnet delete [-h] <subnet> [<subnet> ...]
 
-Delete subnet
+Delete subnet(s)
 
 **Positional arguments:**
 
 ``<subnet>``
-  Subnet to delete (name or ID)
+  Subnet(s) to delete (name or ID)
 
 **Optional arguments:**
 
@@ -14118,7 +15314,7 @@ openstack subnet list
    usage: openstack subnet list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}] [--long]
-                                [--ip-version <ip-version>]
+                                [--ip-version <ip-version>] [--dhcp | --no-dhcp]
 
 List subnets
 
@@ -14131,8 +15327,14 @@ List subnets
   List additional fields in output
 
 ``--ip-version <ip-version>``
-  List only subnets of given IP version in outputAllowed
-  values for IP version are 4 and 6.
+  List only subnets of given IP version in
+  output.Allowed values for IP version are 4 and 6.
+
+``--dhcp``
+  List subnets which have DHCP enabled
+
+``--no-dhcp``
+  List subnets which have DHCP disabled
 
 .. _openstack_subnet_pool_create:
 
@@ -14213,14 +15415,14 @@ openstack subnet pool delete
 
 .. code-block:: console
 
-   usage: openstack subnet pool delete [-h] <subnet-pool>
+   usage: openstack subnet pool delete [-h] <subnet-pool> [<subnet-pool> ...]
 
-Delete subnet pool
+Delete subnet pool(s)
 
 **Positional arguments:**
 
 ``<subnet-pool>``
-  Subnet pool to delete (name or ID)
+  Subnet pool(s) to delete (name or ID)
 
 **Optional arguments:**
 
@@ -14332,6 +15534,32 @@ Display subnet pool details
 ``-h, --help``
   show this help message and exit
 
+.. _openstack_subnet_pool_unset:
+
+openstack subnet pool unset
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack subnet pool unset [-h] [--pool-prefix <pool-prefix>]
+                                      <subnet-pool>
+
+Unset subnet pool properties
+
+**Positional arguments:**
+
+``<subnet-pool>``
+  Subnet pool to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--pool-prefix <pool-prefix>``
+  Remove subnet pool prefixes (in CIDR notation).
+  (repeat option to unset multiple prefixes).
+
 .. _openstack_subnet_set:
 
 openstack subnet set
@@ -14371,7 +15599,7 @@ Set subnet properties
   Specify a gateway for the subnet. The options are:
   <ip-address>: Specific IP address to use as the
   gateway, 'none': This subnet will not use a gateway,
-  e.g.: :option:`--gateway` 192.168.9.1, :option:`--gateway` none
+  e.g.: :option:`--gateway` 192.168.9.1, :option:`--gateway` none.
 
 ``--allocation-pool``
   start=<ip-address>,end=<ip-address>
@@ -14415,6 +15643,212 @@ Display subnet details
 ``-h, --help``
   show this help message and exit
 
+.. _openstack_subnet_unset:
+
+openstack subnet unset
+----------------------
+
+.. code-block:: console
+
+   usage: openstack subnet unset [-h]
+                                 [--allocation-pool start=<ip-address>,end=<ip-address>]
+                                 [--dns-nameserver <dns-nameserver>]
+                                 [--host-route destination=<subnet>,gateway=<ip-address>]
+                                 <subnet>
+
+Unset subnet properties
+
+**Positional arguments:**
+
+``<subnet>``
+  Subnet to modify (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--allocation-pool``
+  start=<ip-address>,end=<ip-address>
+  Allocation pool to be removed from this subnet e.g.:
+  start=192.168.199.2,end=192.168.199.254 (repeat option
+  to unset multiple Allocation pools)
+
+``--dns-nameserver <dns-nameserver>``
+  DNS server to be removed from this subnet (repeat
+  option to set multiple DNS servers)
+
+``--host-route``
+  destination=<subnet>,gateway=<ip-address>
+  Route to be removed from this subnet e.g.:
+  destination=10.10.0.0/16,gateway=192.168.71.254
+  destination: destination subnet (in CIDR notation)
+  gateway: nexthop IP address (repeat option to unset
+  multiple host routes)
+
+.. _openstack_subscription_create:
+
+openstack subscription create
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack subscription create [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        [--options <options>]
+                                        <queue_name> <subscriber> <ttl>
+
+Create a subscription for queue
+
+**Positional arguments:**
+
+``<queue_name>``
+  Name of the queue to subscribe to
+
+``<subscriber>``
+  Subscriber which will be notified
+
+``<ttl>``
+  Time to live of the subscription in seconds
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--options <options>``
+  Metadata of the subscription in JSON format
+
+.. _openstack_subscription_delete:
+
+openstack subscription delete
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack subscription delete [-h] <queue_name> <subscription_id>
+
+Delete a subscription
+
+**Positional arguments:**
+
+``<queue_name>``
+  Name of the queue for the subscription
+
+``<subscription_id>``
+  ID of the subscription
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_subscription_list:
+
+openstack subscription list
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack subscription list [-h] [-f {csv,html,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]
+                                      [--marker <subscription_id>]
+                                      [--limit <limit>] [--detailed <detailed>]
+                                      <queue_name>
+
+List available subscriptions
+
+**Positional arguments:**
+
+``<queue_name>``
+  Name of the queue to subscribe to
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--marker <subscription_id>``
+  Subscription's paging marker, the ID of the last
+  subscription of the previous page
+
+``--limit <limit>``
+  Page size limit, default value is 20
+
+``--detailed <detailed>``
+  Whether to show subscription metadata
+
+.. _openstack_subscription_show:
+
+openstack subscription show
+---------------------------
+
+.. code-block:: console
+
+   usage: openstack subscription show [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent] [--prefix PREFIX]
+                                      <queue_name> <subscription_id>
+
+Display subscription details
+
+**Positional arguments:**
+
+``<queue_name>``
+  Name of the queue to subscribe to
+
+``<subscription_id>``
+  ID of the subscription
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_subscription_update:
+
+openstack subscription update
+-----------------------------
+
+.. code-block:: console
+
+   usage: openstack subscription update [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--noindent] [--prefix PREFIX]
+                                        [--subscriber <subscriber>] [--ttl <ttl>]
+                                        [--options <options>]
+                                        <queue_name> <subscription_id>
+
+Update a subscription
+
+**Positional arguments:**
+
+``<queue_name>``
+  Name of the queue to subscribe to
+
+``<subscription_id>``
+  ID of the subscription
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--subscriber <subscriber>``
+  Subscriber which will be notified
+
+``--ttl <ttl>``
+  Time to live of the subscription in seconds
+
+``--options <options>``
+  Metadata of the subscription in JSON format
+
 .. _openstack_tld_create:
 
 openstack tld create
@@ -14425,7 +15859,9 @@ openstack tld create
    usage: openstack tld create [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX] --name NAME
-                               [--description DESCRIPTION]
+                               [--description DESCRIPTION] [--all-projects]
+                               [--edit-managed]
+                               [--sudo-project-id SUDO_PROJECT_ID]
 
 Create new tld
 
@@ -14440,6 +15876,16 @@ Create new tld
 ``--description DESCRIPTION``
   Description
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_tld_delete:
 
 openstack tld delete
@@ -14447,7 +15893,9 @@ openstack tld delete
 
 .. code-block:: console
 
-   usage: openstack tld delete [-h] id
+   usage: openstack tld delete [-h] [--all-projects] [--edit-managed]
+                               [--sudo-project-id SUDO_PROJECT_ID]
+                               id
 
 Delete tld
 
@@ -14461,6 +15909,16 @@ Delete tld
 ``-h, --help``
   show this help message and exit
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_tld_list:
 
 openstack tld list
@@ -14472,6 +15930,8 @@ openstack tld list
                              [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--name NAME] [--description DESCRIPTION]
+                             [--all-projects] [--edit-managed]
+                             [--sudo-project-id SUDO_PROJECT_ID]
 
 List tlds
 
@@ -14486,6 +15946,16 @@ List tlds
 ``--description DESCRIPTION``
   TLD Description
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_tld_set:
 
 openstack tld set
@@ -14497,6 +15967,8 @@ openstack tld set
                             [-c COLUMN] [--max-width <integer>] [--noindent]
                             [--prefix PREFIX] [--name NAME]
                             [--description DESCRIPTION | --no-description]
+                            [--all-projects] [--edit-managed]
+                            [--sudo-project-id SUDO_PROJECT_ID]
                             id
 
 Set tld properties
@@ -14519,6 +15991,16 @@ Set tld properties
 
 ``--no-description``
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_tld_show:
 
 openstack tld show
@@ -14528,7 +16010,8 @@ openstack tld show
 
    usage: openstack tld show [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX]
+                             [--prefix PREFIX] [--all-projects] [--edit-managed]
+                             [--sudo-project-id SUDO_PROJECT_ID]
                              id
 
 Show tld details
@@ -14542,6 +16025,16 @@ Show tld details
 
 ``-h, --help``
   show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
 
 .. _openstack_token_issue:
 
@@ -14626,8 +16119,7 @@ Create new trust
   <trustor> (defaults to False)
 
 ``--expiration <expiration>``
-  Sets an expiration date for the trust (format of YYYY-
-  mm-ddTHH:MM:SS)
+  Sets an expiration date for the trust (format of YYYY-mm-ddTHH:MM:SS)
 
 ``--project-domain <project-domain>``
   Domain the project belongs to (name or ID). This can
@@ -14920,7 +16412,7 @@ Set user properties
 **Positional arguments:**
 
 ``<user>``
-  User to change (name or ID)
+  User to modify (name or ID)
 
 **Optional arguments:**
 
@@ -14982,6 +16474,154 @@ Display user details
 
 ``--domain <domain>``
   Domain owning <user> (name or ID)
+
+.. _openstack_volume_backup_create:
+
+openstack volume backup create
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack volume backup create [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
+                                         [-c COLUMN] [--max-width <integer>]
+                                         [--noindent] [--prefix PREFIX]
+                                         [--name <name>]
+                                         [--description <description>]
+                                         [--container <container>]
+                                         [--snapshot <snapshot>] [--force]
+                                         [--incremental]
+                                         <volume>
+
+Create new volume backup
+
+**Positional arguments:**
+
+``<volume>``
+  Volume to backup (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--name <name>``
+  Name of the backup
+
+``--description <description>``
+  Description of the backup
+
+``--container <container>``
+  Optional backup container name
+
+``--snapshot <snapshot>``
+  Snapshot to backup (name or ID)
+
+``--force``
+  Allow to back up an in-use volume
+
+``--incremental``
+  Perform an incremental backup
+
+.. _openstack_volume_backup_delete:
+
+openstack volume backup delete
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack volume backup delete [-h] [--force] <backup> [<backup> ...]
+
+Delete volume backup(s)
+
+**Positional arguments:**
+
+``<backup>``
+  Backup(s) to delete (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--force``
+  Allow delete in state other than error or available
+
+.. _openstack_volume_backup_list:
+
+openstack volume backup list
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack volume backup list [-h] [-f {csv,html,json,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent]
+                                       [--quote {all,minimal,none,nonnumeric}]
+                                       [--long]
+
+List volume backups
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--long``
+  List additional fields in output
+
+.. _openstack_volume_backup_restore:
+
+openstack volume backup restore
+-------------------------------
+
+.. code-block:: console
+
+   usage: openstack volume backup restore [-h]
+                                          [-f {html,json,shell,table,value,yaml}]
+                                          [-c COLUMN] [--max-width <integer>]
+                                          [--noindent] [--prefix PREFIX]
+                                          <backup> <volume>
+
+Restore volume backup
+
+**Positional arguments:**
+
+``<backup>``
+  Backup to restore (name or ID)
+
+``<volume>``
+  Volume to restore to (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _openstack_volume_backup_show:
+
+openstack volume backup show
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack volume backup show [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent] [--prefix PREFIX]
+                                       <backup>
+
+Display volume backup details
+
+**Positional arguments:**
+
+``<backup>``
+  Backup to display (name or ID)
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
 
 .. _openstack_volume_create:
 
@@ -15051,7 +16691,8 @@ openstack volume delete
 
 .. code-block:: console
 
-   usage: openstack volume delete [-h] [--force] <volume> [<volume> ...]
+   usage: openstack volume delete [-h] [--force | --purge]
+                                  <volume> [<volume> ...]
 
 Delete volume(s)
 
@@ -15068,6 +16709,9 @@ Delete volume(s)
 ``--force``
   Attempt forced removal of volume(s), regardless of state
   (defaults to False)
+
+``--purge``
+  Remove any snapshots along with volume(s) (defaults to False)
 
 .. _openstack_volume_list:
 
@@ -15185,7 +16829,7 @@ openstack volume qos delete
 
 .. code-block:: console
 
-   usage: openstack volume qos delete [-h] <qos-spec> [<qos-spec> ...]
+   usage: openstack volume qos delete [-h] [--force] <qos-spec> [<qos-spec> ...]
 
 Delete QoS specification
 
@@ -15198,6 +16842,9 @@ Delete QoS specification
 
 ``-h, --help``
   show this help message and exit
+
+``--force``
+  Allow to delete in-use QoS specification(s)
 
 .. _openstack_volume_qos_disassociate:
 
@@ -15362,7 +17009,7 @@ openstack volume set
    usage: openstack volume set [-h] [--name <name>] [--size <size>]
                                [--description <description>]
                                [--property <key=value>]
-                               [--image-property <key=value>]
+                               [--image-property <key=value>] [--state <state>]
                                <volume>
 
 Set volume properties
@@ -15393,6 +17040,11 @@ Set volume properties
 ``--image-property <key=value>``
   Set an image property on this volume (repeat option to
   set multiple image properties)
+
+``--state <state>``
+  New volume state ("available", "error", "creating",
+  "deleting", "in-use", "attaching", "detaching",
+  "error_deleting" or "maintenance")
 
 .. _openstack_volume_show:
 
@@ -15458,6 +17110,8 @@ openstack volume type create
                                        [--description <description>]
                                        [--public | --private]
                                        [--property <key=value>]
+                                       [--project <project>]
+                                       [--project-domain <project-domain>]
                                        <name>
 
 Create new volume type
@@ -15485,6 +17139,15 @@ Create new volume type
   Set a property on this volume type (repeat option to
   set multiple properties)
 
+``--project <project>``
+  Allow <project> to access private type (name or ID)
+  (Must be used with :option:`--private` option)
+
+``--project-domain <project-domain>``
+  Domain the project belongs to (name or ID). This can
+  be used in case collisions between project names
+  exist.
+
 .. _openstack_volume_type_delete:
 
 openstack volume type delete
@@ -15492,14 +17155,14 @@ openstack volume type delete
 
 .. code-block:: console
 
-   usage: openstack volume type delete [-h] <volume-type>
+   usage: openstack volume type delete [-h] <volume-type> [<volume-type> ...]
 
-Delete volume type
+Delete volume type(s)
 
 **Positional arguments:**
 
 ``<volume-type>``
-  Volume type to delete (name or ID)
+  Volume type(s) to delete (name or ID)
 
 **Optional arguments:**
 
@@ -15517,7 +17180,7 @@ openstack volume type list
                                      [-c COLUMN] [--max-width <integer>]
                                      [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
-                                     [--long]
+                                     [--long] [--public | --private]
 
 List volume types
 
@@ -15528,6 +17191,12 @@ List volume types
 
 ``--long``
   List additional fields in output
+
+``--public``
+  List only public types
+
+``--private``
+  List only private types (admin only)
 
 .. _openstack_volume_type_set:
 
@@ -15671,7 +17340,9 @@ openstack zone abandon
 
 .. code-block:: console
 
-   usage: openstack zone abandon [-h] id
+   usage: openstack zone abandon [-h] [--all-projects] [--edit-managed]
+                                 [--sudo-project-id SUDO_PROJECT_ID]
+                                 id
 
 Abandon a zone
 
@@ -15685,6 +17356,16 @@ Abandon a zone
 ``-h, --help``
   show this help message and exit
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_axfr:
 
 openstack zone axfr
@@ -15692,7 +17373,9 @@ openstack zone axfr
 
 .. code-block:: console
 
-   usage: openstack zone axfr [-h] id
+   usage: openstack zone axfr [-h] [--all-projects] [--edit-managed]
+                              [--sudo-project-id SUDO_PROJECT_ID]
+                              id
 
 AXFR a zone
 
@@ -15705,6 +17388,16 @@ AXFR a zone
 
 ``-h, --help``
   show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
 
 .. _openstack_zone_blacklist_create:
 
@@ -15719,6 +17412,8 @@ openstack zone blacklist create
                                           [--noindent] [--prefix PREFIX]
                                           --pattern PATTERN
                                           [--description DESCRIPTION]
+                                          [--all-projects] [--edit-managed]
+                                          [--sudo-project-id SUDO_PROJECT_ID]
 
 Create new blacklist
 
@@ -15733,6 +17428,16 @@ Create new blacklist
 ``--description DESCRIPTION``
   Description
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_blacklist_delete:
 
 openstack zone blacklist delete
@@ -15740,7 +17445,9 @@ openstack zone blacklist delete
 
 .. code-block:: console
 
-   usage: openstack zone blacklist delete [-h] id
+   usage: openstack zone blacklist delete [-h] [--all-projects] [--edit-managed]
+                                          [--sudo-project-id SUDO_PROJECT_ID]
+                                          id
 
 Delete blacklist
 
@@ -15754,6 +17461,16 @@ Delete blacklist
 ``-h, --help``
   show this help message and exit
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_blacklist_list:
 
 openstack zone blacklist list
@@ -15766,6 +17483,8 @@ openstack zone blacklist list
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
+                                        [--all-projects] [--edit-managed]
+                                        [--sudo-project-id SUDO_PROJECT_ID]
 
 List blacklists
 
@@ -15773,6 +17492,16 @@ List blacklists
 
 ``-h, --help``
   show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
 
 .. _openstack_zone_blacklist_set:
 
@@ -15787,6 +17516,8 @@ openstack zone blacklist set
                                        [--noindent] [--prefix PREFIX]
                                        [--pattern PATTERN]
                                        [--description DESCRIPTION | --no-description]
+                                       [--all-projects] [--edit-managed]
+                                       [--sudo-project-id SUDO_PROJECT_ID]
                                        id
 
 Set blacklist properties
@@ -15809,6 +17540,16 @@ Set blacklist properties
 
 ``--no-description``
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_blacklist_show:
 
 openstack zone blacklist show
@@ -15820,6 +17561,8 @@ openstack zone blacklist show
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--noindent] [--prefix PREFIX]
+                                        [--all-projects] [--edit-managed]
+                                        [--sudo-project-id SUDO_PROJECT_ID]
                                         id
 
 Show blacklist details
@@ -15834,6 +17577,16 @@ Show blacklist details
 ``-h, --help``
   show this help message and exit
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_create:
 
 openstack zone create
@@ -15846,6 +17599,8 @@ openstack zone create
                                 [--prefix PREFIX] [--email EMAIL] [--type TYPE]
                                 [--ttl TTL] [--description DESCRIPTION]
                                 [--masters MASTERS [MASTERS ...]]
+                                [--all-projects] [--edit-managed]
+                                [--sudo-project-id SUDO_PROJECT_ID]
                                 name
 
 Create new zone
@@ -15875,6 +17630,16 @@ Create new zone
 ``--masters MASTERS [MASTERS ...]``
   Zone Masters
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_delete:
 
 openstack zone delete
@@ -15882,7 +17647,12 @@ openstack zone delete
 
 .. code-block:: console
 
-   usage: openstack zone delete [-h] id
+   usage: openstack zone delete [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--prefix PREFIX] [--all-projects]
+                                [--edit-managed]
+                                [--sudo-project-id SUDO_PROJECT_ID]
+                                id
 
 Delete zone
 
@@ -15896,6 +17666,327 @@ Delete zone
 ``-h, --help``
   show this help message and exit
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_zone_export_create:
+
+openstack zone export create
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack zone export create [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent] [--prefix PREFIX]
+                                       [--all-projects] [--edit-managed]
+                                       [--sudo-project-id SUDO_PROJECT_ID]
+                                       zone_id
+
+Export a Zone
+
+**Positional arguments:**
+
+``zone_id``
+  Zone ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_zone_export_delete:
+
+openstack zone export delete
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack zone export delete [-h] [--all-projects] [--edit-managed]
+                                       [--sudo-project-id SUDO_PROJECT_ID]
+                                       zone_export_id
+
+Delete a Zone Export
+
+**Positional arguments:**
+
+``zone_export_id``
+  Zone Export ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_zone_export_list:
+
+openstack zone export list
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack zone export list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+                                     [--all-projects] [--edit-managed]
+                                     [--sudo-project-id SUDO_PROJECT_ID]
+
+List Zone Exports
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_zone_export_show:
+
+openstack zone export show
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack zone export show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     [--all-projects] [--edit-managed]
+                                     [--sudo-project-id SUDO_PROJECT_ID]
+                                     zone_export_id
+
+Show a Zone Export
+
+**Positional arguments:**
+
+``zone_export_id``
+  Zone Export ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_zone_export_showfile:
+
+openstack zone export showfile
+------------------------------
+
+.. code-block:: console
+
+   usage: openstack zone export showfile [-h]
+                                         [-f {html,json,shell,table,value,yaml}]
+                                         [-c COLUMN] [--max-width <integer>]
+                                         [--noindent] [--prefix PREFIX]
+                                         [--all-projects] [--edit-managed]
+                                         [--sudo-project-id SUDO_PROJECT_ID]
+                                         zone_export_id
+
+Show the zone file for the Zone Export
+
+**Positional arguments:**
+
+``zone_export_id``
+  Zone Export ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_zone_import_create:
+
+openstack zone import create
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack zone import create [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--noindent] [--prefix PREFIX]
+                                       [--all-projects] [--edit-managed]
+                                       [--sudo-project-id SUDO_PROJECT_ID]
+                                       zone_file_path
+
+Import a Zone from a file on the filesystem
+
+**Positional arguments:**
+
+``zone_file_path``
+  Path to a zone file
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_zone_import_delete:
+
+openstack zone import delete
+----------------------------
+
+.. code-block:: console
+
+   usage: openstack zone import delete [-h] [--all-projects] [--edit-managed]
+                                       [--sudo-project-id SUDO_PROJECT_ID]
+                                       zone_import_id
+
+Delete a Zone Import
+
+**Positional arguments:**
+
+``zone_import_id``
+  Zone Import ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_zone_import_list:
+
+openstack zone import list
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack zone import list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+                                     [--all-projects] [--edit-managed]
+                                     [--sudo-project-id SUDO_PROJECT_ID]
+
+List Zone Imports
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_zone_import_show:
+
+openstack zone import show
+--------------------------
+
+.. code-block:: console
+
+   usage: openstack zone import show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     [--all-projects] [--edit-managed]
+                                     [--sudo-project-id SUDO_PROJECT_ID]
+                                     zone_import_id
+
+Show a Zone Import
+
+**Positional arguments:**
+
+``zone_import_id``
+  Zone Import ID
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_list:
 
 openstack zone list
@@ -15908,7 +17999,8 @@ openstack zone list
                               [--quote {all,minimal,none,nonnumeric}]
                               [--name NAME] [--email EMAIL] [--type TYPE]
                               [--ttl TTL] [--description DESCRIPTION]
-                              [--status STATUS]
+                              [--status STATUS] [--all-projects] [--edit-managed]
+                              [--sudo-project-id SUDO_PROJECT_ID]
 
 List zones
 
@@ -15935,6 +18027,16 @@ List zones
 ``--status STATUS``
   Zone Status
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_set:
 
 openstack zone set
@@ -15946,7 +18048,8 @@ openstack zone set
                              [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--prefix PREFIX] [--email EMAIL] [--ttl TTL]
                              [--description DESCRIPTION | --no-description]
-                             [--masters MASTERS [MASTERS ...]]
+                             [--masters MASTERS [MASTERS ...]] [--all-projects]
+                             [--edit-managed] [--sudo-project-id SUDO_PROJECT_ID]
                              id
 
 Set zone properties
@@ -15975,6 +18078,16 @@ Set zone properties
 ``--masters MASTERS [MASTERS ...]``
   Zone Masters
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_show:
 
 openstack zone show
@@ -15984,7 +18097,8 @@ openstack zone show
 
    usage: openstack zone show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX]
+                              [--prefix PREFIX] [--all-projects] [--edit-managed]
+                              [--sudo-project-id SUDO_PROJECT_ID]
                               id
 
 Show zone details
@@ -15999,6 +18113,48 @@ Show zone details
 ``-h, --help``
   show this help message and exit
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
+.. _openstack_zone_transfer_accept_list:
+
+openstack zone transfer accept list
+-----------------------------------
+
+.. code-block:: console
+
+   usage: openstack zone transfer accept list [-h]
+                                              [-f {csv,html,json,table,value,yaml}]
+                                              [-c COLUMN] [--max-width <integer>]
+                                              [--noindent]
+                                              [--quote {all,minimal,none,nonnumeric}]
+                                              [--all-projects] [--edit-managed]
+                                              [--sudo-project-id SUDO_PROJECT_ID]
+
+List Zone Transfer Accepts
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_transfer_accept_request:
 
 openstack zone transfer accept request
@@ -16012,7 +18168,9 @@ openstack zone transfer accept request
                                                  [--max-width <integer>]
                                                  [--noindent] [--prefix PREFIX]
                                                  --transfer-id TRANSFER_ID --key
-                                                 KEY
+                                                 KEY [--all-projects]
+                                                 [--edit-managed]
+                                                 [--sudo-project-id SUDO_PROJECT_ID]
 
 Accept a Zone Transfer Request
 
@@ -16027,6 +18185,16 @@ Accept a Zone Transfer Request
 ``--key KEY``
   Transfer Key
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_transfer_accept_show:
 
 openstack zone transfer accept show
@@ -16038,6 +18206,8 @@ openstack zone transfer accept show
                                               [-f {html,json,shell,table,value,yaml}]
                                               [-c COLUMN] [--max-width <integer>]
                                               [--noindent] [--prefix PREFIX]
+                                              [--all-projects] [--edit-managed]
+                                              [--sudo-project-id SUDO_PROJECT_ID]
                                               id
 
 Show Zone Transfer Accept
@@ -16051,6 +18221,16 @@ Show Zone Transfer Accept
 
 ``-h, --help``
   show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
 
 .. _openstack_zone_transfer_request_create:
 
@@ -16066,6 +18246,9 @@ openstack zone transfer request create
                                                  [--noindent] [--prefix PREFIX]
                                                  [--target-project-id TARGET_PROJECT_ID]
                                                  [--description DESCRIPTION]
+                                                 [--all-projects]
+                                                 [--edit-managed]
+                                                 [--sudo-project-id SUDO_PROJECT_ID]
                                                  zone_id
 
 Create new zone transfer request
@@ -16086,6 +18269,16 @@ Create new zone transfer request
 ``--description DESCRIPTION``
   Description
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_transfer_request_delete:
 
 openstack zone transfer request delete
@@ -16093,7 +18286,10 @@ openstack zone transfer request delete
 
 .. code-block:: console
 
-   usage: openstack zone transfer request delete [-h] id
+   usage: openstack zone transfer request delete [-h] [--all-projects]
+                                                 [--edit-managed]
+                                                 [--sudo-project-id SUDO_PROJECT_ID]
+                                                 id
 
 Delete a Zone Transfer Request
 
@@ -16106,6 +18302,16 @@ Delete a Zone Transfer Request
 
 ``-h, --help``
   show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
 
 .. _openstack_zone_transfer_request_list:
 
@@ -16120,6 +18326,8 @@ openstack zone transfer request list
                                                [--max-width <integer>]
                                                [--noindent]
                                                [--quote {all,minimal,none,nonnumeric}]
+                                               [--all-projects] [--edit-managed]
+                                               [--sudo-project-id SUDO_PROJECT_ID]
 
 List Zone Transfer Requests
 
@@ -16127,6 +18335,16 @@ List Zone Transfer Requests
 
 ``-h, --help``
   show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
 
 .. _openstack_zone_transfer_request_set:
 
@@ -16140,6 +18358,8 @@ openstack zone transfer request set
                                               [-c COLUMN] [--max-width <integer>]
                                               [--noindent] [--prefix PREFIX]
                                               [--description DESCRIPTION | --no-description]
+                                              [--all-projects] [--edit-managed]
+                                              [--sudo-project-id SUDO_PROJECT_ID]
                                               id
 
 Set a Zone Transfer Request
@@ -16159,6 +18379,16 @@ Set a Zone Transfer Request
 
 ``--no-description``
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
+
 .. _openstack_zone_transfer_request_show:
 
 openstack zone transfer request show
@@ -16171,6 +18401,8 @@ openstack zone transfer request show
                                                [-c COLUMN]
                                                [--max-width <integer>]
                                                [--noindent] [--prefix PREFIX]
+                                               [--all-projects] [--edit-managed]
+                                               [--sudo-project-id SUDO_PROJECT_ID]
                                                id
 
 Show Zone Transfer Request Details
@@ -16185,3 +18417,12 @@ Show Zone Transfer Request Details
 ``-h, --help``
   show this help message and exit
 
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
