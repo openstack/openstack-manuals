@@ -18,11 +18,19 @@ Install and configure components
 
          # apt-get install mariadb-server python-pymysql
 
+      .. end
+
+   .. endonly
+
    .. only:: debian
 
       .. code-block:: console
 
          # apt-get install mysql-server python-pymysql
+
+      .. end
+
+   .. endonly
 
    .. only:: rdo
 
@@ -30,11 +38,19 @@ Install and configure components
 
          # yum install mariadb mariadb-server python2-PyMySQL
 
+      .. end
+
+   .. endonly
+
    .. only:: obs
 
       .. code-block:: console
 
          # zypper install mariadb-client mariadb python-PyMySQL
+
+      .. end
+
+   .. endonly
 
 .. only:: debian
 
@@ -49,6 +65,7 @@ Install and configure components
         additional keys to enable useful options and the UTF-8
         character set:
 
+        .. path /etc/mysql/conf.d/openstack.cnf
         .. code-block:: ini
 
            [mysqld]
@@ -59,6 +76,10 @@ Install and configure components
            max_connections = 4096
            collation-server = utf8_general_ci
            character-set-server = utf8
+
+        .. end
+
+.. endonly
 
 .. only:: ubuntu
 
@@ -81,6 +102,9 @@ Install and configure components
            max_connections = 4096
            collation-server = utf8_general_ci
            character-set-server = utf8
+        .. end
+
+.. endonly
 
 .. only:: obs or rdo
 
@@ -93,6 +117,7 @@ Install and configure components
         additional keys to enable useful options and the UTF-8
         character set:
 
+        .. path /etc/my.cnf.d/openstack.cnf
         .. code-block:: ini
 
            [mysqld]
@@ -104,6 +129,10 @@ Install and configure components
            collation-server = utf8_general_ci
            character-set-server = utf8
 
+        .. end
+
+.. endonly
+
 Finalize installation
 ---------------------
 
@@ -114,6 +143,10 @@ Finalize installation
       .. code-block:: console
 
          # service mysql restart
+
+      .. end
+
+.. endonly
 
 .. only:: rdo or obs
 
@@ -127,12 +160,20 @@ Finalize installation
             # systemctl enable mariadb.service
             # systemctl start mariadb.service
 
+         .. end
+
+      .. endonly
+
       .. only:: obs
 
          .. code-block:: console
 
             # systemctl enable mysql.service
             # systemctl start mysql.service
+
+         .. end
+
+      .. endonly
 
 .. only:: rdo or obs or ubuntu
 
@@ -143,3 +184,7 @@ Finalize installation
       .. code-block:: console
 
          # mysql_secure_installation
+
+      .. end
+
+.. endonly

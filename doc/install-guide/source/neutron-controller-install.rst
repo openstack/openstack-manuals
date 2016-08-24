@@ -14,23 +14,29 @@ must create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        $ mysql -u root -p
+        mysql> $ mysql -u root -p
+
+     .. end
 
    * Create the ``neutron`` database:
 
      .. code-block:: console
 
-        CREATE DATABASE neutron;
+        mysql> CREATE DATABASE neutron;
+
+     .. end
 
    * Grant proper access to the ``neutron`` database, replacing
      ``NEUTRON_DBPASS`` with a suitable password:
 
      .. code-block:: console
 
-        GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
+        mysql> GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
           IDENTIFIED BY 'NEUTRON_DBPASS';
-        GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' \
+        mysql> GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' \
           IDENTIFIED BY 'NEUTRON_DBPASS';
+
+     .. end
 
    * Exit the database access client.
 
@@ -41,6 +47,8 @@ must create a database, service credentials, and API endpoints.
 
       $ . admin-openrc
 
+   .. end
+
 #. To create the service credentials, complete these steps:
 
    * Create the ``neutron`` user:
@@ -48,6 +56,7 @@ must create a database, service credentials, and API endpoints.
      .. code-block:: console
 
         $ openstack user create --domain default --password-prompt neutron
+
         User Password:
         Repeat User Password:
         +-----------+----------------------------------+
@@ -59,12 +68,15 @@ must create a database, service credentials, and API endpoints.
         | name      | neutron                          |
         +-----------+----------------------------------+
 
+     .. end
 
    * Add the ``admin`` role to the ``neutron`` user:
 
      .. code-block:: console
 
         $ openstack role add --project service --user neutron admin
+
+     .. end
 
      .. note::
 
@@ -76,6 +88,7 @@ must create a database, service credentials, and API endpoints.
 
         $ openstack service create --name neutron \
           --description "OpenStack Networking" network
+
         +-------------+----------------------------------+
         | Field       | Value                            |
         +-------------+----------------------------------+
@@ -86,12 +99,15 @@ must create a database, service credentials, and API endpoints.
         | type        | network                          |
         +-------------+----------------------------------+
 
+     .. end
+
 #. Create the Networking service API endpoints:
 
    .. code-block:: console
 
       $ openstack endpoint create --region RegionOne \
         network public http://controller:9696
+
       +--------------+----------------------------------+
       | Field        | Value                            |
       +--------------+----------------------------------+
@@ -108,6 +124,7 @@ must create a database, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         network internal http://controller:9696
+
       +--------------+----------------------------------+
       | Field        | Value                            |
       +--------------+----------------------------------+
@@ -124,6 +141,7 @@ must create a database, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         network admin http://controller:9696
+
       +--------------+----------------------------------+
       | Field        | Value                            |
       +--------------+----------------------------------+
@@ -137,6 +155,8 @@ must create a database, service credentials, and API endpoints.
       | service_type | network                          |
       | url          | http://controller:9696           |
       +--------------+----------------------------------+
+
+   .. end
 
 Configure networking options
 ----------------------------
@@ -193,12 +213,15 @@ such as credentials to instances.
   * In the ``[DEFAULT]`` section, configure the metadata host and shared
     secret:
 
+    .. path /etc/neutron/metadata_agent.ini
     .. code-block:: ini
 
        [DEFAULT]
        ...
        nova_metadata_ip = controller
        metadata_proxy_shared_secret = METADATA_SECRET
+
+    .. end
 
     Replace ``METADATA_SECRET`` with a suitable secret for the metadata proxy.
 
@@ -210,6 +233,7 @@ Configure Compute to use Networking
   * In the ``[neutron]`` section, configure access parameters, enable the
     metadata proxy, and configure the secret:
 
+    .. path /etc/nova/nova.conf
     .. code-block:: ini
 
        [neutron]
@@ -223,9 +247,10 @@ Configure Compute to use Networking
        project_name = service
        username = neutron
        password = NEUTRON_PASS
-
        service_metadata_proxy = True
        metadata_proxy_shared_secret = METADATA_SECRET
+
+    .. end
 
     Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
     user in the Identity service.
@@ -247,12 +272,16 @@ Finalize installation
 
          # ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
 
+      .. end
+
    #. Populate the database:
 
       .. code-block:: console
 
          # su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
            --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+
+      .. end
 
       .. note::
 
@@ -264,6 +293,8 @@ Finalize installation
       .. code-block:: console
 
          # systemctl restart openstack-nova-api.service
+
+      .. end
 
    #. Start the Networking services and configure them to start when the system
       boots.
@@ -279,12 +310,18 @@ Finalize installation
            neutron-linuxbridge-agent.service neutron-dhcp-agent.service \
            neutron-metadata-agent.service
 
+      .. end
+
       For networking option 2, also enable and start the layer-3 service:
 
       .. code-block:: console
 
          # systemctl enable neutron-l3-agent.service
          # systemctl start neutron-l3-agent.service
+
+      .. end
+
+.. endonly
 
 .. only:: obs
 
@@ -293,6 +330,8 @@ Finalize installation
       .. code-block:: console
 
          # systemctl restart openstack-nova-api.service
+
+      .. end
 
    #. Start the Networking services and configure them to start when the system
       boots.
@@ -310,12 +349,18 @@ Finalize installation
            openstack-neutron-dhcp-agent.service \
            openstack-neutron-metadata-agent.service
 
+      .. end
+
       For networking option 2, also enable and start the layer-3 service:
 
       .. code-block:: console
 
          # systemctl enable openstack-neutron-l3-agent.service
          # systemctl start openstack-neutron-l3-agent.service
+
+      .. end
+
+.. endonly
 
 .. only:: ubuntu or debian
 
@@ -325,6 +370,8 @@ Finalize installation
 
          # su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
            --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+
+      .. end
 
       .. note::
 
@@ -337,6 +384,8 @@ Finalize installation
 
          # service nova-api restart
 
+      .. end
+
    #. Restart the Networking services.
 
       For both networking options:
@@ -348,8 +397,14 @@ Finalize installation
          # service neutron-dhcp-agent restart
          # service neutron-metadata-agent restart
 
+      .. end
+
       For networking option 2, also restart the layer-3 service:
 
       .. code-block:: console
 
          # service neutron-l3-agent restart
+
+      .. end
+
+.. endonly

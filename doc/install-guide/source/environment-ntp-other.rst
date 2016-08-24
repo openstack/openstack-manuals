@@ -17,11 +17,19 @@ Install and configure components
 
          # apt-get install chrony
 
+      .. end
+
+   .. endonly
+
    .. only:: rdo
 
       .. code-block:: console
 
          # yum install chrony
+
+      .. end
+
+   .. endonly
 
    .. only:: obs
 
@@ -33,6 +41,8 @@ Install and configure components
          # zypper refresh
          # zypper install chrony
 
+      .. end
+
       On SLES:
 
       .. code-block:: console
@@ -40,6 +50,8 @@ Install and configure components
          # zypper addrepo -f obs://network:time/SLE_12_SP1 network_time
          # zypper refresh
          # zypper install chrony
+
+      .. end
 
       .. note::
 
@@ -53,14 +65,21 @@ Install and configure components
             Key Created:      Tue 24 Sep 2013 04:04:12 PM UTC
             Key Expires:      Thu 03 Dec 2015 04:04:12 PM UTC
 
+         .. end
+
+   .. endonly
+
 .. only:: ubuntu or debian
 
    2. Edit the ``/etc/chrony/chrony.conf`` file and comment out or remove all
       but one ``server`` key. Change it to reference the controller node:
 
+      .. path /etc/chrony/chrony.conf
       .. code-block:: ini
 
          server controller iburst
+
+      .. end
 
    3. Restart the NTP service:
 
@@ -68,14 +87,21 @@ Install and configure components
 
          # service chrony restart
 
+      .. end
+
+.. endonly
+
 .. only:: rdo or obs
 
    2. Edit the ``/etc/chrony.conf`` file and comment out or remove all but one
       ``server`` key. Change it to reference the controller node:
 
+      .. path /etc/chrony.conf
       .. code-block:: ini
 
          server controller iburst
+
+      .. end
 
    3. Start the NTP service and configure it to start when the system boots:
 
@@ -83,3 +109,7 @@ Install and configure components
 
          # systemctl enable chronyd.service
          # systemctl start chronyd.service
+
+      .. end
+
+.. endonly

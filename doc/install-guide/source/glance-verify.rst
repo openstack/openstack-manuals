@@ -23,11 +23,15 @@ For information about how to manage images, see the
 
       $ . admin-openrc
 
+   .. end
+
 #. Download the source image:
 
    .. code-block:: console
 
       $ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+
+   .. end
 
    .. note::
 
@@ -43,6 +47,7 @@ For information about how to manage images, see the
         --file cirros-0.3.4-x86_64-disk.img \
         --disk-format qcow2 --container-format bare \
         --public
+
       +------------------+------------------------------------------------------+
       | Field            | Value                                                |
       +------------------+------------------------------------------------------+
@@ -66,6 +71,8 @@ For information about how to manage images, see the
       | visibility       | public                                               |
       +------------------+------------------------------------------------------+
 
+   .. end
+
    For information about the :command:`openstack image create` parameters,
    see `Image service command-line client
    <http://docs.openstack.org/cli-reference/openstack.html#openstack-image-create>`__
@@ -86,8 +93,11 @@ For information about how to manage images, see the
    .. code-block:: console
 
       $ openstack image list
+
       +--------------------------------------+--------+--------+
       | ID                                   | Name   | Status |
       +--------------------------------------+--------+--------+
       | 38047887-61a7-41ea-9b49-27987d5e8bb9 | cirros | active |
       +--------------------------------------+--------+--------+
+
+   .. end

@@ -48,6 +48,7 @@ purposes.
 .. code-block:: console
 
    $ openstack flavor create --id 0 --vcpus 1 --ram 64 --disk 1 m1.nano
+
    +----------------------------+---------+
    | Field                      | Value   |
    +----------------------------+---------+
@@ -63,6 +64,8 @@ purposes.
    | vcpus                      | 1       |
    +----------------------------+---------+
 
+.. end
+
 Generate a key pair
 -------------------
 
@@ -76,12 +79,15 @@ must add a public key to the Compute service.
 
       $ . demo-openrc
 
+   .. end
+
 #. Generate and add a key pair:
 
    .. code-block:: console
 
       $ ssh-keygen -q -N ""
       $ openstack keypair create --public-key ~/.ssh/id_rsa.pub mykey
+
       +-------------+-------------------------------------------------+
       | Field       | Value                                           |
       +-------------+-------------------------------------------------+
@@ -89,6 +95,8 @@ must add a public key to the Compute service.
       | name        | mykey                                           |
       | user_id     | 58126687cbcc4888bfa9ab73a2256f27                |
       +-------------+-------------------------------------------------+
+
+   .. end
 
    .. note::
 
@@ -100,11 +108,14 @@ must add a public key to the Compute service.
    .. code-block:: console
 
       $ openstack keypair list
+
       +-------+-------------------------------------------------+
       | Name  | Fingerprint                                     |
       +-------+-------------------------------------------------+
       | mykey | ee:3d:2e:97:d4:e2:6a:54:6d:0d:ce:43:39:2c:ba:4d |
       +-------+-------------------------------------------------+
+
+   .. end
 
 Add security group rules
 ------------------------
@@ -121,6 +132,7 @@ secure shell (SSH).
     .. code-block:: console
 
        $ openstack security group rule create --proto icmp default
+
        +-----------------------+--------------------------------------+
        | Field                 | Value                                |
        +-----------------------+--------------------------------------+
@@ -132,11 +144,14 @@ secure shell (SSH).
        | remote_security_group |                                      |
        +-----------------------+--------------------------------------+
 
+    .. end
+
   * Permit secure shell (SSH) access:
 
     .. code-block:: console
 
        $ openstack security group rule create --proto tcp --dst-port 22 default
+
        +-----------------------+--------------------------------------+
        | Field                 | Value                                |
        +-----------------------+--------------------------------------+
@@ -147,6 +162,8 @@ secure shell (SSH).
        | port_range            | 22:22                                |
        | remote_security_group |                                      |
        +-----------------------+--------------------------------------+
+
+    .. end
 
 Launch an instance
 ------------------

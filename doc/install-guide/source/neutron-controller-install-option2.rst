@@ -14,12 +14,20 @@ Install the components
         neutron-linuxbridge-agent neutron-l3-agent neutron-dhcp-agent \
         neutron-metadata-agent
 
+   .. end
+
+.. endonly
+
 .. only:: rdo
 
    .. code-block:: console
 
       # yum install openstack-neutron openstack-neutron-ml2 \
         openstack-neutron-linuxbridge ebtables
+
+   .. end
+
+.. endonly
 
 .. only:: obs
 
@@ -30,12 +38,20 @@ Install the components
         openstack-neutron-l3-agent openstack-neutron-dhcp-agent \
         openstack-neutron-metadata-agent
 
+   .. end
+
+.. endonly
+
 .. only:: debian
 
    #. .. code-block:: console
 
          # apt-get install neutron-server neutron-linuxbridge-agent \
            neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
+
+      .. end
+
+.. endonly
 
 Configure the server component
 ------------------------------
@@ -45,11 +61,14 @@ Configure the server component
 
   * In the ``[database]`` section, configure database access:
 
+    .. path /etc/neutron/neutron.conf
     .. code-block:: ini
 
        [database]
        ...
        connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
+
+    .. end
 
     Replace ``NEUTRON_DBPASS`` with the password you chose for the
     database.
@@ -57,6 +76,7 @@ Configure the server component
   * In the ``[DEFAULT]`` section, enable the Modular Layer 2 (ML2)
     plug-in, router service, and overlapping IP addresses:
 
+    .. path /etc/neutron/neutron.conf
     .. code-block:: ini
 
        [DEFAULT]
@@ -65,9 +85,12 @@ Configure the server component
        service_plugins = router
        allow_overlapping_ips = True
 
+    .. end
+
   * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
     configure RabbitMQ message queue access:
 
+    .. path /etc/neutron/neutron.conf
     .. code-block:: ini
 
        [DEFAULT]
@@ -80,12 +103,15 @@ Configure the server component
        rabbit_userid = openstack
        rabbit_password = RABBIT_PASS
 
+    .. end
+
     Replace ``RABBIT_PASS`` with the password you chose for the
     ``openstack`` account in RabbitMQ.
 
   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections, configure
     Identity service access:
 
+    .. path /etc/neutron/neutron.conf
     .. code-block:: ini
 
        [DEFAULT]
@@ -104,6 +130,8 @@ Configure the server component
        username = neutron
        password = NEUTRON_PASS
 
+    .. end
+
     Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
     user in the Identity service.
 
@@ -115,6 +143,7 @@ Configure the server component
   * In the ``[DEFAULT]`` and ``[nova]`` sections, configure Networking to
     notify Compute of network topology changes:
 
+    .. path /etc/neutron/neutron.conf
     .. code-block:: ini
 
        [DEFAULT]
@@ -133,6 +162,8 @@ Configure the server component
        username = nova
        password = NOVA_PASS
 
+    .. end
+
     Replace ``NOVA_PASS`` with the password you chose for the ``nova``
     user in the Identity service.
 
@@ -140,11 +171,14 @@ Configure the server component
 
      * In the ``[oslo_concurrency]`` section, configure the lock path:
 
+       .. path /etc/neutron/neutron.conf
        .. code-block:: ini
 
           [oslo_concurrency]
           ...
           lock_path = /var/lib/neutron/tmp
+
+       .. end
 
 Configure the Modular Layer 2 (ML2) plug-in
 -------------------------------------------
@@ -157,28 +191,37 @@ and switching) virtual networking infrastructure for instances.
 
   * In the ``[ml2]`` section, enable flat, VLAN, and VXLAN networks:
 
+    .. path /etc/neutron/plugins/ml2/ml2_conf.ini
     .. code-block:: ini
 
        [ml2]
        ...
        type_drivers = flat,vlan,vxlan
 
+    .. end
+
   * In the ``[ml2]`` section, enable VXLAN self-service networks:
 
+    .. path /etc/neutron/plugins/ml2/ml2_conf.ini
     .. code-block:: ini
 
        [ml2]
        ...
        tenant_network_types = vxlan
 
+    .. end
+
   * In the ``[ml2]`` section, enable the Linux bridge and layer-2 population
     mechanisms:
 
+    .. path /etc/neutron/plugins/ml2/ml2_conf.ini
     .. code-block:: ini
 
        [ml2]
        ...
        mechanism_drivers = linuxbridge,l2population
+
+    .. end
 
     .. warning::
 
@@ -191,38 +234,50 @@ and switching) virtual networking infrastructure for instances.
 
   * In the ``[ml2]`` section, enable the port security extension driver:
 
+    .. path /etc/neutron/plugins/ml2/ml2_conf.ini
     .. code-block:: ini
 
        [ml2]
        ...
        extension_drivers = port_security
 
+    .. end
+
   * In the ``[ml2_type_flat]`` section, configure the provider virtual
     network as a flat network:
 
+    .. path /etc/neutron/plugins/ml2/ml2_conf.ini
     .. code-block:: ini
 
        [ml2_type_flat]
        ...
        flat_networks = provider
 
+    .. end
+
   * In the ``[ml2_type_vxlan]`` section, configure the VXLAN network identifier
     range for self-service networks:
 
+    .. path /etc/neutron/plugins/ml2/ml2_conf.ini
     .. code-block:: ini
 
        [ml2_type_vxlan]
        ...
        vni_ranges = 1:1000
 
+    .. end
+
   * In the ``[securitygroup]`` section, enable :term:`ipset` to increase
     efficiency of security group rules:
 
+    .. path /etc/neutron/plugins/ml2/ml2_conf.ini
     .. code-block:: ini
 
        [securitygroup]
        ...
        enable_ipset = True
+
+    .. end
 
 Configure the Linux bridge agent
 --------------------------------
@@ -236,10 +291,13 @@ networking infrastructure for instances and handles security groups.
   * In the ``[linux_bridge]`` section, map the provider virtual network to the
     provider physical network interface:
 
+    .. path /etc/neutron/plugins/ml2/linuxbridge_agent.ini
     .. code-block:: ini
 
        [linux_bridge]
        physical_interface_mappings = provider:PROVIDER_INTERFACE_NAME
+
+    .. end
 
     Replace ``PROVIDER_INTERFACE_NAME`` with the name of the underlying
     provider physical network interface. See :ref:`environment-networking`
@@ -249,12 +307,15 @@ networking infrastructure for instances and handles security groups.
     IP address of the physical network interface that handles overlay
     networks, and enable layer-2 population:
 
+    .. path /etc/neutron/plugins/ml2/linuxbridge_agent.ini
     .. code-block:: ini
 
        [vxlan]
        enable_vxlan = True
        local_ip = OVERLAY_INTERFACE_IP_ADDRESS
        l2_population = True
+
+    .. end
 
     Replace ``OVERLAY_INTERFACE_IP_ADDRESS`` with the IP address of the
     underlying physical network interface that handles overlay networks. The
@@ -266,12 +327,15 @@ networking infrastructure for instances and handles security groups.
   * In the ``[securitygroup]`` section, enable security groups and
     configure the Linux bridge :term:`iptables` firewall driver:
 
+    .. path /etc/neutron/plugins/ml2/linuxbridge_agent.ini
     .. code-block:: ini
 
        [securitygroup]
        ...
        enable_security_group = True
        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
+
+    .. end
 
 Configure the layer-3 agent
 ---------------------------
@@ -285,12 +349,15 @@ self-service virtual networks.
   * In the ``[DEFAULT]`` section, configure the Linux bridge interface driver
     and external network bridge:
 
+    .. path /etc/neutron/l3_agent.ini
     .. code-block:: ini
 
        [DEFAULT]
        ...
        interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
        external_network_bridge =
+
+    .. end
 
     .. note::
 
@@ -309,6 +376,7 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
     Dnsmasq DHCP driver, and enable isolated metadata so instances on provider
     networks can access metadata over the network:
 
+    .. path /etc/neutron/dhcp_agent.ini
     .. code-block:: ini
 
        [DEFAULT]
@@ -316,6 +384,8 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
        interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
        dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
        enable_isolated_metadata = True
+
+    .. end
 
 Return to
 :ref:`Networking controller node configuration

@@ -13,11 +13,14 @@ Create a volume
 
       $ . demo-openrc
 
+   .. end
+
 #. Create a 1 GB volume:
 
    .. code-block:: console
 
       $ openstack volume create --size 1 volume1
+
       +---------------------+--------------------------------------+
       | Field               | Value                                |
       +---------------------+--------------------------------------+
@@ -42,17 +45,22 @@ Create a volume
       | user_id             | 684286a9079845359882afc3aa5011fb     |
       +---------------------+--------------------------------------+
 
+   .. end
+
 #. After a short time, the volume status should change from ``creating``
    to ``available``:
 
    .. code-block:: console
 
       $ openstack volume list
+
       +--------------------------------------+--------------+-----------+------+-------------+
       | ID                                   | Display Name | Status    | Size | Attached to |
       +--------------------------------------+--------------+-----------+------+-------------+
       | a1e8be72-a395-4a6f-8e07-856a57c39524 | volume1      | available |    1 |             |
       +--------------------------------------+--------------+-----------+------+-------------+
+
+   .. end
 
 Attach the volume to an instance
 --------------------------------
@@ -62,6 +70,8 @@ Attach the volume to an instance
    .. code-block:: console
 
       $ openstack server add volume INSTANCE_NAME VOLUME_NAME
+
+   .. end
 
    Replace ``INSTANCE_NAME`` with the name of the instance and ``VOLUME_NAME``
    with the name of the volume you want to attach to it.
@@ -74,6 +84,8 @@ Attach the volume to an instance
 
       $ openstack server add volume provider-instance volume1
 
+   .. end
+
    .. note::
 
       This command provides no output.
@@ -83,11 +95,14 @@ Attach the volume to an instance
    .. code-block:: console
 
       $ openstack volume list
+
       +--------------------------------------+--------------+--------+------+--------------------------------------------+
       | ID                                   | Display Name | Status | Size | Attached to                                |
       +--------------------------------------+--------------+--------+------+--------------------------------------------+
       | a1e8be72-a395-4a6f-8e07-856a57c39524 | volume1      | in-use |    1 | Attached to provider-instance on /dev/vdb  |
       +--------------------------------------+--------------+--------+------+--------------------------------------------+
+
+   .. end
 
 #. Access your instance using SSH and use the ``fdisk`` command to verify
    presence of the volume as the ``/dev/vdb`` block storage device:
@@ -114,6 +129,8 @@ Attach the volume to an instance
       Disk identifier: 0x00000000
 
       Disk /dev/vdb doesn't contain a valid partition table
+
+   .. end
 
    .. note::
 

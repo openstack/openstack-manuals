@@ -34,6 +34,10 @@ Install and configure components
 
          # zypper install openstack-nova-compute genisoimage kvm libvirt
 
+      .. end
+
+.. endonly
+
 .. only:: rdo
 
    #. Install the packages:
@@ -42,6 +46,10 @@ Install and configure components
 
          # yum install openstack-nova-compute
 
+      .. end
+
+.. endonly
+
 .. only:: ubuntu or debian
 
    #. Install the packages:
@@ -49,6 +57,10 @@ Install and configure components
       .. code-block:: console
 
          # apt-get install nova-compute
+
+      .. end
+
+.. endonly
 
       .. only:: debian
 
@@ -60,21 +72,27 @@ Install and configure components
             sure that you do not activate database management handling by debconf,
             as a compute node should not access the central database.
 
+      .. endonly
+
 2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
 
    * In the ``[DEFAULT]`` section, enable only the compute and
      metadata APIs:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [DEFAULT]
         ...
         enabled_apis = osapi_compute,metadata
 
+     .. end
+
    * In the ``[DEFAULT]`` and [oslo_messaging_rabbit]
      sections, configure ``RabbitMQ`` message queue access:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [DEFAULT]
@@ -87,12 +105,15 @@ Install and configure components
         rabbit_userid = openstack
         rabbit_password = RABBIT_PASS
 
+     .. end
+
      Replace ``RABBIT_PASS`` with the password you chose for
      the ``openstack`` account in ``RabbitMQ``.
 
    * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
      configure Identity service access:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [DEFAULT]
@@ -111,6 +132,8 @@ Install and configure components
         username = nova
         password = NOVA_PASS
 
+     .. end
+
      Replace ``NOVA_PASS`` with the password you chose for the
      ``nova`` user in the Identity service.
 
@@ -125,26 +148,34 @@ Install and configure components
         is correctly set (this value is handled by the config and postinst
         scripts of the ``nova-common`` package using debconf):
 
+        .. path /etc/nova/nova.conf
         .. code-block:: ini
 
            [DEFAULT]
            ...
            my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+
+        .. end
 
         Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
         of the management network interface on your compute node,
         typically 10.0.0.31 for the first node in the
         :ref:`example architecture <overview-example-architectures>`.
 
+   .. endonly
+
    .. only:: obs or rdo or ubuntu
 
       * In the ``[DEFAULT]`` section, configure the ``my_ip`` option:
 
+        .. path /etc/nova/nova.conf
         .. code-block:: ini
 
            [DEFAULT]
            ...
            my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+
+        .. end
 
         Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
         of the management network interface on your compute node,
@@ -153,12 +184,15 @@ Install and configure components
 
       * In the ``[DEFAULT]`` section, enable support for the Networking service:
 
+        .. path /etc/nova/nova.conf
         .. code-block:: ini
 
            [DEFAULT]
            ...
            use_neutron = True
            firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+        .. end
 
         .. note::
 
@@ -167,8 +201,11 @@ Install and configure components
            firewall service by using the
            ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
 
+   .. endonly
+
    * In the ``[vnc]`` section, enable and configure remote console access:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [vnc]
@@ -177,6 +214,8 @@ Install and configure components
         vncserver_listen = 0.0.0.0
         vncserver_proxyclient_address = $my_ip
         novncproxy_base_url = http://controller:6080/vnc_auto.html
+
+     .. end
 
      The server component listens on all IP addresses and the proxy
      component only listens on the management interface IP address of
@@ -194,31 +233,44 @@ Install and configure components
    * In the ``[glance]`` section, configure the location of the
      Image service API:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [glance]
         ...
         api_servers = http://controller:9292
 
+     .. end
+
    .. only:: obs
 
       * In the ``[oslo_concurrency]`` section, configure the lock path:
 
+        .. path /etc/nova/nova.conf
         .. code-block:: ini
 
            [oslo_concurrency]
            ...
            lock_path = /var/run/nova
 
+        .. end
+
+   .. endonly
+
    .. only:: rdo or ubuntu
 
       * In the ``[oslo_concurrency]`` section, configure the lock path:
 
+        .. path /etc/nova/nova.conf
         .. code-block:: ini
 
            [oslo_concurrency]
            ...
            lock_path = /var/lib/nova/tmp
+
+        .. end
+
+   .. endonly
 
    .. only:: ubuntu
 
@@ -229,6 +281,8 @@ Install and configure components
       * Due to a packaging bug, remove the ``logdir`` option from the
         ``[DEFAULT]`` section.
 
+   .. endonly
+
 .. only:: obs or debian
 
    3. Ensure the kernel module ``nbd`` is loaded.
@@ -237,8 +291,12 @@ Install and configure components
 
          # modprobe nbd
 
+      .. end
+
    4. Ensure the module loads on every boot by adding ``nbd``
       to the ``/etc/modules-load.d/nbd.conf`` file.
+
+.. endonly
 
 Finalize installation
 ---------------------
@@ -249,6 +307,8 @@ Finalize installation
    .. code-block:: console
 
       $ egrep -c '(vmx|svm)' /proc/cpuinfo
+
+   .. end
 
    If this command returns a value of ``one or greater``, your compute
    node supports hardware acceleration which typically requires no
@@ -263,22 +323,32 @@ Finalize installation
       * Edit the ``[libvirt]`` section in the
         ``/etc/nova/nova.conf`` file as follows:
 
+        .. path /etc/nova/nova.conf
         .. code-block:: ini
 
            [libvirt]
            ...
            virt_type = qemu
+
+        .. end
+
+   .. endonly
 
    .. only:: ubuntu
 
       * Edit the ``[libvirt]`` section in the
         ``/etc/nova/nova-compute.conf`` file as follows:
 
+        .. path /etc/nova/nova-compute.conf
         .. code-block:: ini
 
            [libvirt]
            ...
            virt_type = qemu
+
+        .. end
+
+   .. endonly
 
    .. only:: debian
 
@@ -290,6 +360,10 @@ Finalize installation
 
            # apt-get install nova-compute-qemu
 
+        .. end
+
+   .. endonly
+
 .. only:: obs or rdo
 
    2. Start the Compute service including its dependencies and configure
@@ -300,6 +374,10 @@ Finalize installation
          # systemctl enable libvirtd.service openstack-nova-compute.service
          # systemctl start libvirtd.service openstack-nova-compute.service
 
+      .. end
+
+.. endonly
+
 .. only:: ubuntu or debian
 
    2. Restart the Compute service:
@@ -307,3 +385,7 @@ Finalize installation
       .. code-block:: console
 
          # service nova-compute restart
+
+      .. end
+
+.. endonly

@@ -14,12 +14,15 @@ Verify operation of the Compute service.
 
       $ . admin-openrc
 
+   .. end
+
 #. List service components to verify successful launch and
    registration of each process:
 
    .. code-block:: console
 
       $ openstack compute service list
+
       +----+--------------------+------------+----------+---------+-------+----------------------------+
       | Id | Binary             | Host       | Zone     | Status  | State | Updated At                 |
       +----+--------------------+------------+----------+---------+-------+----------------------------+
@@ -28,6 +31,8 @@ Verify operation of the Compute service.
       |  3 | nova-conductor     | controller | internal | enabled | up    | 2016-02-09T23:11:16.000000 |
       |  4 | nova-compute       | compute1   | nova     | enabled | up    | 2016-02-09T23:11:20.000000 |
       +----+--------------------+------------+----------+---------+-------+----------------------------+
+
+   .. end
 
    .. note::
 

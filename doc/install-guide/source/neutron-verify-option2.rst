@@ -12,6 +12,7 @@ List agents to verify successful launch of the neutron agents:
 .. code-block:: console
 
    $ neutron agent-list
+
    +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
    | id                                   | agent_type         | host       | alive | admin_state_up | binary                    |
    +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
@@ -21,6 +22,8 @@ List agents to verify successful launch of the neutron agents:
    | dd3644c9-1a3a-435a-9282-eb306b4b0391 | DHCP agent         | controller | :-)   | True           | neutron-dhcp-agent        |
    | f49a4b81-afd6-4b3d-b923-66c8f0517099 | Metadata agent     | controller | :-)   | True           | neutron-metadata-agent    |
    +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
+
+.. end
 
 The output should indicate four agents on the controller node and one
 agent on each compute node.

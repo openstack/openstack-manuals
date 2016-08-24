@@ -16,11 +16,19 @@ Install and configure components
 
          # apt-get install chrony
 
+      .. end
+
+   .. endonly
+
    .. only:: rdo
 
       .. code-block:: console
 
          # yum install chrony
+
+      .. end
+
+   .. endonly
 
    .. only:: obs
 
@@ -32,6 +40,8 @@ Install and configure components
          # zypper refresh
          # zypper install chrony
 
+      .. end
+
       On SLES:
 
       .. code-block:: console
@@ -39,6 +49,8 @@ Install and configure components
          # zypper addrepo -f obs://network:time/SLE_12_SP1 network_time
          # zypper refresh
          # zypper install chrony
+
+      .. end
 
       .. note::
 
@@ -52,6 +64,10 @@ Install and configure components
             Key Created:      Tue 24 Sep 2013 04:04:12 PM UTC
             Key Expires:      Thu 03 Dec 2015 04:04:12 PM UTC
 
+         .. end
+
+   .. endonly
+
 .. only:: ubuntu or debian
 
    2. Edit the ``/etc/chrony/chrony.conf`` file and add, change, or remove the
@@ -60,6 +76,8 @@ Install and configure components
       .. code-block:: ini
 
          server NTP_SERVER iburst
+
+      .. end
 
       Replace ``NTP_SERVER`` with the hostname or IP address of a suitable more
       accurate (lower stratum) NTP server. The configuration supports multiple
@@ -77,6 +95,10 @@ Install and configure components
 
          # service chrony restart
 
+      .. end
+
+.. endonly
+
 .. only:: rdo or obs
 
    2. Edit the ``/etc/chrony.conf`` file and add, change, or remove the
@@ -85,6 +107,8 @@ Install and configure components
       .. code-block:: ini
 
          server NTP_SERVER iburst
+
+      .. end
 
       Replace ``NTP_SERVER`` with the hostname or IP address of a suitable more
       accurate (lower stratum) NTP server. The configuration supports multiple
@@ -103,6 +127,8 @@ Install and configure components
 
          allow 10.0.0.0/24
 
+      .. end
+
       If necessary, replace ``10.0.0.0/24`` with a description of your subnet.
 
    4. Start the NTP service and configure it to start when the system boots:
@@ -111,3 +137,7 @@ Install and configure components
 
          # systemctl enable chronyd.service
          # systemctl start chronyd.service
+
+      .. end
+
+.. endonly
