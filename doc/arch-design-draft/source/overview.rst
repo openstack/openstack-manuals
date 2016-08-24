@@ -52,6 +52,8 @@ covered include:
 .. toctree::
    :maxdepth: 2
 
+   overview-planning
+   overview-customer-requirements
    overview-legal-requirements
    overview-security-requirements
    overview-operator-requirements
