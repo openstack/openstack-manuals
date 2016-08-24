@@ -200,8 +200,9 @@ The provider networks option deploys the OpenStack Networking service
 in the simplest way possible with primarily layer-2 (bridging/switching)
 services and VLAN segmentation of networks. Essentially, it bridges virtual
 networks to physical networks and relies on physical network infrastructure
-for layer-3 (routing) services. Additionally, a :term:`DHCP` service provides
-IP address information to instances.
+for layer-3 (routing) services. Additionally, a :term:`DHCP<Dynamic Host
+Configuration Protocol (DHCP)>` service provides IP address information to
+instances.
 
 .. note::
 

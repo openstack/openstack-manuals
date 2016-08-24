@@ -234,8 +234,8 @@ command:
 DHCP
 ~~~~
 
-Hosts connected to a network use the Dynamic Host Configuration
-Protocol (:term:`DHCP`) to dynamically obtain IP addresses. A DHCP
+Hosts connected to a network use the :term:`Dynamic Host Configuration
+Protocol (DHCP)` to dynamically obtain IP addresses. A DHCP
 server hands out the IP addresses to network hosts, which are the DHCP
 clients.
 

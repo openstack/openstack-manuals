@@ -184,12 +184,13 @@ Why use multi-host networking?
 In a default OpenStack deployment, there is a single ``nova-network``
 service that runs within the cloud (usually on the cloud controller)
 that provides services such as
-:term:`network address translation <NAT>` (NAT), :term:`DHCP`,
-and :term:`DNS` to the guest instances. If the single node that runs the
-``nova-network`` service goes down, you cannot access your instances,
-and the instances cannot access the Internet. The single node that runs
-the ``nova-network`` service can become a bottleneck if excessive
-network traffic comes in and goes out of the cloud.
+:term:`network address translation <NAT>` (NAT), :term:`DHCP <Dynamic Host
+Configuration Protocol (DHCP)>`, and :term:`DNS <Domain Name System (DNS)>`
+to the guest instances. If the single node that runs the ``nova-network``
+service goes down, you cannot access your instances, and the instances
+cannot access the Internet. The single node that runs the ``nova-network``
+service can become a bottleneck if excessive network traffic comes in and
+goes out of the cloud.
 
 .. tip::
 
