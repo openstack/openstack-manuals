@@ -6,7 +6,7 @@ PKI stands for Public Key Infrastructure. Tokens are documents,
 cryptographically signed using the X509 standard. In order to work
 correctly token generation requires a public/private key pair. The
 public key must be signed in an X509 certificate, and the certificate
-used to sign it must be available as a :term:`Certificate Authority (CA)<CA>`
+used to sign it must be available as a :term:`Certificate Authority (CA)`
 certificate. These files can be generated either using the
 :command:`keystone-manage` utility, or externally generated. The files need to
 be in the locations specified by the top level Identity service
