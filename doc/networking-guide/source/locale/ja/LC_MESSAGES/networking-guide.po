@@ -17,11 +17,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-22 09:32+0000\n"
+"POT-Creation-Date: 2016-08-23 18:55+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-08-13 02:36+0000\n"
+"PO-Revision-Date: 2016-08-23 05:51+0000\n"
 "Last-Translator: Akihiro Motoki <amotoki@gmail.com>\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -88,6 +88,15 @@ msgstr "1,0,0"
 
 msgid "1,0,1"
 msgstr "1,0,1"
+
+msgid ""
+":ref:`Distributed Virtual Routing <scenario-dvr-ovs>` supports augmentation "
+"using :ref:`VRRP (L3HA) <scenario-l3ha-ovs>`. Using this configuration, "
+"virtual routers support both the ``--distributed`` and ``--ha`` options."
+msgstr ""
+":ref:`分散仮想ルーティング <scenario-dvr-ovs>` は :ref:`VRRP (L3HA) "
+"<scenario-l3ha-ovs>` と組み合わせて使うことができます。この設定を使うと、仮想"
+"ルーターで ``--distributed`` と ``--ha`` の両方のオプションが利用できます。"
 
 msgid ":ref:`search`"
 msgstr ":ref:`search`"
@@ -467,18 +476,12 @@ msgstr ""
 msgid "Add the project subnet as an interface on the router:"
 msgstr "プロジェクトサブネットをルーターにインターフェースとして接続します。"
 
-msgid "Add the provider network as a gateway on the router."
-msgstr "プロバイダーネットワークをルーターのゲートウェイとして追加します。"
-
 msgid ""
 "Add the provider network interface as a port on the Open vSwitch provider "
 "bridge ``br-provider``:"
 msgstr ""
 "プロバイダーネットワークインターフェースを Open vSwitch のプロバイダーブリッ"
 "ジ ``br-provider`` にポートとして追加します。"
-
-msgid "Add the self-service subnet as an interface on the router."
-msgstr "セルフサービスサブネットをルーターのインターフェースとして追加します。"
 
 msgid "Adding an HTTP listener"
 msgstr "HTTP リスナーの追加"
@@ -694,6 +697,13 @@ msgstr ""
 "別の方法として、 お使いのネットワークインターフェースのカーネルモジュールに "
 "``max_vfs`` を渡して VF を作成することもできます。 ``max_vfs`` パラメーターは"
 "廃止予定になっているので、 PCI SYS インターフェースを使うことを推奨します。"
+
+msgid ""
+"Alternatively, you can launch each instance with one network interface and "
+"attach additional ports later."
+msgstr ""
+"ネットワークインターフェース 1 つで各インスタンスを起動し、後で追加のポートを"
+"接続することもできます。"
 
 msgid ""
 "Although OpenStack does not make use of libvirt's networking, this "
@@ -1116,6 +1126,9 @@ msgstr "属性名"
 msgid "Auto Configuration Flag = 1"
 msgstr "Auto Configuration Flag = 1"
 
+msgid "Automatic allocation of network topologies"
+msgstr "ネットワークトポロジーの自動割り当て"
+
 msgid "Availability zone aware scheduler"
 msgstr "アベイラビリティーゾーン対応スケジューラー"
 
@@ -1134,6 +1147,9 @@ msgstr "エージェントのアベイラビリティーゾーン"
 msgid "Availability zone related attributes"
 msgstr "アベイラビリティーゾーン関連の属性"
 
+msgid "Availability zones"
+msgstr "アベイラビリティーゾーン"
+
 msgid "BGP dynamic routing"
 msgstr "BGP 動的ルーティング"
 
@@ -1143,39 +1159,6 @@ msgid ""
 msgstr ""
 "BGP 動的ルーティングは、セルフサービスネットワークのプレフィックスや "
 "Floating IP アドレスへのホストルートを広告します。"
-
-msgid ""
-"BGP dynamic routing consists of a service plug-in and an agent. The service "
-"plug-in implements the Networking service extension and the agent manages "
-"BGP peering sessions. A cloud administrator creates and configures a BGP "
-"speaker using the CLI or API and manually schedules it to one or more hosts "
-"running the agent. Agents can reside on hosts with or without other "
-"Networking service agents. Prefix advertisement depends on the binding of "
-"external networks to a BGP speaker and the address scope of external and "
-"internal subnets."
-msgstr ""
-"BGP 動的ルーティングは、サービスプラグインとエージェントで構成されます。サー"
-"ビスプラグインは Networking サービスの API 拡張を実装し、エージェントは BGP "
-"ピアリングセッションの管理を行います。クラウド管理者は CLI や API を使って "
-"BGP スピーカーを作成、設定し、手動で BGP スピーカーを 1 つ以上のエージェント"
-"が動作するホストに割り当てます。エージェントは他の Networking サービスのエー"
-"ジェントと同じホストに置くことも別のホストに置くこともできます。プレフィック"
-"ス広告 (prefix advertisement) は、BGP スピーカーが関連付けられた外部ネット"
-"ワーク、および外部サブネットと内部サブネットのアドレススコープに基いて行われ"
-"ます。"
-
-msgid ""
-"BGP dynamic routing enables advertisement of self-service (private) network "
-"prefixes to physical network devices that support BGP such as routers, thus "
-"removing the conventional dependency on static routes. The feature relies on "
-"address scopes and requires knowledge of their operation for proper "
-"deployment."
-msgstr ""
-"BGP 動的ルーティングを使うと、セルフサービス (プライベート) ネットワークの"
-"ネットワークプレフィックスを、ルーターなどの BGP に対応した物理ネットワークデ"
-"バイスに広告できるようになります。これにより、従来からの静的経路による方法に"
-"依存する必要がなくなります。この機能はアドレススコープに依存しており、また、"
-"適切なデプロイメントを運用するだけの知識も必要です。"
 
 msgid ""
 "BGP dynamic routing supports peering via IPv6 and advertising IPv6 prefixes."
@@ -1530,6 +1513,9 @@ msgstr ""
 msgid "Checking connectivity"
 msgstr "接続性の確認"
 
+msgid "Classic to VRRP (L3HA)"
+msgstr "従来のルーターから VRRP (L3HA) へ"
+
 msgid "Clear tags from a resource:"
 msgstr "リソースのタグをクリアします。"
 
@@ -1593,6 +1579,9 @@ msgstr "コンピュートノード 2"
 msgid "Compute nodes"
 msgstr "コンピュートノード"
 
+msgid "Concepts"
+msgstr "概念"
+
 msgid ""
 "Conceptually, you can think of an Ethernet network as a single bus that each "
 "of the network hosts connects to. In early implementations, an Ethernet "
@@ -1621,12 +1610,28 @@ msgid "Configuration example"
 msgstr "設定例"
 
 msgid ""
+"Configuration for the DHCP agent is typically done in the ``dhcp_agent.ini`` "
+"configuration file. Make sure that on agent start you pass this "
+"configuration file as argument."
+msgstr ""
+"DHCP エージェントの設定は通常 ``dhcp_agent.ini`` 設定ファイルで行われます。"
+"エージェント開始時にこの設定ファイルを引数として指定してください。"
+
+msgid ""
 "Configuration for the L3 agent is typically done in the ``l3_agent.ini`` "
 "configuration file. Make sure that on agent start you pass this "
 "configuration file as argument."
 msgstr ""
 "L3 エージェントの設定は通常 ``l3_agent.ini`` 設定ファイルで行われます。エー"
 "ジェント開始時にこの設定ファイルを引数として指定してください。"
+
+msgid ""
+"Configuration for the L3 metering agent is typically done in the "
+"``metering_agent.ini`` configuration file. Make sure that on agent start you "
+"pass this configuration file as argument."
+msgstr ""
+"メータリングエージェントの設定は通常 ``metering_agent.ini`` 設定ファイルで行"
+"われます。エージェント開始時にこの設定ファイルを引数として指定してください。"
 
 msgid ""
 "Configuration for the Linux bridge agent is typically done in the "
@@ -1644,6 +1649,14 @@ msgid ""
 msgstr ""
 "macvtap エージェントの設定は通常 ``macvtap_agent.ini`` 設定ファイルで行われま"
 "す。エージェント開始時にこの設定ファイルを引数として指定してください。"
+
+msgid ""
+"Configuration for the Metadata agent is typically done in the "
+"``metadata_agent.ini`` configuration file. Make sure that on agent start you "
+"pass this configuration file as argument."
+msgstr ""
+"メタデータエージェントの設定は通常 ``metadata_agent.ini`` 設定ファイルで行わ"
+"れます。エージェント開始時にこの設定ファイルを引数として指定してください。"
 
 msgid ""
 "Configuration for the Open vSwitch agent is typically done in the "
@@ -1674,6 +1687,17 @@ msgstr "既存のサブネットの DNS レゾルバーを設定します。"
 
 msgid "Configure a DNS resolver when creating a subnet."
 msgstr "サブネット作成時に DNS レゾルバーを設定します。"
+
+msgid ""
+"Configure an external DNS driver. The Networking service provides a driver "
+"reference implementation based on the OpenStack DNS service. It is expected "
+"that third party vendors will provide other implementations in the future. "
+"For detailed configuration instructions, see :ref:`config-dns-int-ext-serv`."
+msgstr ""
+"外部 DNS ドライバーを設定します。 Networking サービスには、 OpenStack DNS "
+"サービスを利用する参照実装のドライバーがあります。将来的には、 third party ベ"
+"ンダーが他の実装を提供することが期待されています。詳細な設定手順は :ref:"
+"`config-dns-int-ext-serv` を参照してください。"
 
 msgid "Configure common options and enable distributed routers by default:"
 msgstr "共通オプションを設定し、 デフォルトで分散ルーターを有効化します。"
@@ -1818,6 +1842,18 @@ msgid "Controller node configuration"
 msgstr "コントローラーノードの設定"
 
 msgid ""
+"Conventional Linux bridges handling security groups. Optionally, a native "
+"OVS implementation can handle security groups. However, due to kernel and "
+"OVS version requirements for it, this scenario uses conventional Linux "
+"bridges. See :ref:`config-ovsfwdriver` for more information."
+msgstr ""
+"従来の Linux ブリッジがセキュリティーグループを処理します。オプションとし"
+"て、 OVS ネイティブ実装でセキュリティーグループを処理することもできます。しか"
+"しながら、 OVS ネイティブ実装を使用するにはカーネルと OVS のバージョン要件が"
+"あるため、このシナリオでは従来の Linux ブリッジによる方法を使用します。詳しく"
+"は :ref:`config-ovsfwdriver` を参照してください。"
+
+msgid ""
 "Copy the ``_1481_project_ng_loadbalancersv2_panel.py`` file from the "
 "``neutron-lbaas-dashboard/enabled`` directory into the Dashboard "
 "``openstack_dashboard/local/enabled`` directory."
@@ -1865,6 +1901,9 @@ msgstr ""
 "では、共有対象のプロジェクト ID は ``e28769db97d9449da658bc6931fcb683`` で"
 "す)。"
 
+msgid "Create a port chain"
+msgstr "ポートチェインの作成"
+
 msgid "Create a project network:"
 msgstr "プロジェクトネットワークを作成します。"
 
@@ -1897,22 +1936,8 @@ msgstr "外部ネットワークにサブネットを作成します。"
 msgid "Create a subnet on the project network:"
 msgstr "プロジェクトネットワークにサブネットを作成します。"
 
-msgid ""
-"Create a subnet on the provider network using an IP address allocation from "
-"the provider subnet pool."
-msgstr ""
-"プロバイダーネットワーク上にサブネットを作成します。 プロバイダーサブネット"
-"プールから IP アドレス割り当てを行います。"
-
 msgid "Create a subnet on the provider network:"
 msgstr "そのプロバイダーネットワークにサブネットを作成します:"
-
-msgid ""
-"Create a subnet on the self-service network using an IP address allocation "
-"from the self-service subnet pool."
-msgstr ""
-"セルフサービスネットワーク上にサブネットを作成します。 セルフサービスサブネッ"
-"トプールから IP アドレス割り当てを行います。"
 
 msgid ""
 "Create a subnet using a subnet pool associated with a address scope from an "
@@ -1931,14 +1956,16 @@ msgstr ""
 "エージェントはセルフサービスサービスネットワークのプレフィックスを広告するた"
 "めに必要です。"
 
-msgid "Create and configure a router"
-msgstr "ルーターの作成と設定"
-
 msgid "Create and configure the BGP speaker"
 msgstr "BGP スピーカーの作成と設定"
 
 msgid "Create default subnetpools"
 msgstr "デフォルトのサブネットプールを作成します。"
+
+msgid ""
+"Create flow classifier ``FC1`` that matches the appropriate packet headers."
+msgstr ""
+"必要なパケットヘッダーに一致する Flow Classifier ``FC1`` を作成します。"
 
 # #-#-#-#-#  deploy_scenario4b.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  scenario_dvr_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
@@ -1949,6 +1976,32 @@ msgstr "デフォルトのサブネットプールを作成します。"
 # #-#-#-#-#  scenario_provider_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 msgid "Create initial networks"
 msgstr "初期ネットワークの作成"
+
+msgid ""
+"Create port chain ``PC1`` with port pair groups ``PPG1`` and ``PPG2`` and "
+"flow classifier ``FC1``."
+msgstr ""
+"ポートペアグループ ``PPG1``, ``PPG2`` と Flow Classifier ``FC1`` を使って、"
+"ポートチェイン ``PC1`` を作成します。"
+
+msgid ""
+"Create port pair ``PP1`` with ports ``p1`` and ``p2``, ``PP2`` with ports "
+"``p3`` and ``p4``, and ``PP3`` with ports ``p5`` and ``p6``."
+msgstr ""
+"ポート ``p1`` と ``p2`` でポートペア ``PP1`` を作成します。同様に、ポート "
+"``p3`` と ``p4`` でポートペア ``PP2`` を、ポート ``p5`` と ``p6`` でポートペ"
+"ア ``PP3`` を作成します。"
+
+msgid ""
+"Create port pair group ``PPG1`` with port pair ``PP1`` and ``PP2`` and "
+"``PPG3`` with port pair ``PP3``."
+msgstr ""
+"ポートペア ``PP1`` と ``PP2`` でポートペアグループ ``PPG1`` を作成します。ま"
+"た、ポートペア ``PP3`` でポートペアグループ ``PPG3`` を作成します。"
+
+msgid "Create ports on network ``net1`` and record the UUID values."
+msgstr ""
+"ネットワーク ``net1`` にポートを作成し、その UUID 値を記録しておきます。"
 
 msgid "Create shared address scopes as an administrative user"
 msgstr "管理者での共有アドレススコープの作成"
@@ -2036,14 +2089,8 @@ msgstr "プロバイダーネットワーク用のプールを作成します。
 msgid "Create the provider network."
 msgstr "プロバイダーネットワークを作成します。"
 
-msgid "Create the router."
-msgstr "ルーターを作成します。"
-
 msgid "Create the self-service network pool."
 msgstr "セルフサービスネットワーク用のプールを作成します。"
-
-msgid "Create the self-service network."
-msgstr "セルフサービスネットワークを作成します。"
 
 msgid ""
 "Creating CIDR subnets including a multicast address or a loopback address "
@@ -2056,6 +2103,11 @@ msgstr ""
 
 msgid "Creating instances with SR-IOV ports"
 msgstr "SR-IOV ポートを持つインスタンスを作成する"
+
+msgid "Currently, SFC lacks support for multi-project service functions."
+msgstr ""
+"現時点では、 SFC は、複数のプロジェクトに属するサービス機能を扱うことはできま"
+"せん。"
 
 msgid ""
 "Currently, no migration path exists between v1 and v2 load balancers. If you "
@@ -2170,14 +2222,14 @@ msgstr "DHCPv6-stateless"
 msgid "DNAT"
 msgstr "DNAT"
 
+msgid "DNS integration"
+msgstr "DNS 連携"
+
 msgid "DVR MAC address *D1*"
 msgstr "DVR MAC アドレス *D1*"
 
 msgid "DVR MAC address *D2*"
 msgstr "DVR MAC アドレス *D2*"
-
-msgid "DVR functions similarly to IPv4."
-msgstr "DVR は IPv4 の場合と同様に機能します。"
 
 msgid "DVR internal IP addresses *DA1* and *DA2*"
 msgstr "DVR 内部 IP アドレス *DA1*、*DA2*"
@@ -2190,6 +2242,9 @@ msgstr ""
 "DVR は、 Floating IP エージェントのゲートウェイポート経由での Fixed IP アドレ"
 "スへの直接のルーティングに対応していません。そのため、 BGP スピーカーは "
 "Fixed IP アドレスを広告できません。"
+
+msgid "Database"
+msgstr "データベース"
 
 msgid "Database downgrade is not supported."
 msgstr "データベースのダウングレードはサポートされていません。"
@@ -2302,6 +2357,9 @@ msgstr ""
 msgid "Direct assignment during subnet creation via command line or Horizon"
 msgstr "サブネット作成時にコマンドラインや Horizon で直接指定する"
 
+msgid "Disable libvirt networking"
+msgstr "libvirt ネットワークの無効化"
+
 msgid "Disable nova-compute."
 msgstr "nova-compute を無効にします。"
 
@@ -2319,8 +2377,8 @@ msgstr ""
 msgid "Disabling and removing an agent"
 msgstr "エージェントの無効化と削除"
 
-msgid "Distributed Virtual Routers (DVR)"
-msgstr "分散仮想ルーター (DVR)"
+msgid "Distributed Virtual Routing with VRRP (L3HA)"
+msgstr "分散仮想ルーティングと VRRP (L3-HA) の組み合わせ"
 
 msgid ""
 "Do essentially the same thing for IPv6 and there are now two subnet pools. "
@@ -2446,15 +2504,6 @@ msgstr ""
 "来た場合は、ルーターはそのトラフィックをブロックします。"
 
 msgid ""
-"Edit the ``/etc/neutron.conf`` file and assign a value different to "
-"``openstacklocal`` (its default value) to the ``dns_domain`` parameter in "
-"the ``[default]`` section. As an example:"
-msgstr ""
-"``/etc/neutron.conf`` ファイルを編集し、 ``[default]`` セクションの "
-"``dns_domain`` パラメーターに (デフォルト値の)  ``openstacklocal`` 以外の値を"
-"割り当てます"
-
-msgid ""
 "Edit the ``[default]`` section of ``/etc/neutron/neutron.conf`` and specify "
 "the external DNS service driver to be used in parameter "
 "``external_dns_driver``. The valid options are defined in namespace "
@@ -2493,6 +2542,11 @@ msgstr "neutron sriov-agent を有効にする (コンピュートノード)"
 msgid "Enable the Networking agent."
 msgstr "Networking エージェントを有効にします。"
 
+msgid ""
+"Enable the functionality described in :ref:`config-dns-int-dns-resolution`."
+msgstr ""
+":ref:`config-dns-int-dns-resolution` で説明されている機能を有効にします。"
+
 msgid "Enable the native OVS firewall driver"
 msgstr "ネイティブ OVS ファイアウォールドライバーの有効化"
 
@@ -2513,6 +2567,17 @@ msgstr "デフォルトで DHCP の高可用性を有効にする"
 
 msgid "Enabling the deployment for auto-allocation"
 msgstr "デプロイメントで自動割り当てを有効にする"
+
+msgid ""
+"End users normally can create subnets with any valid IP addresses without "
+"other restrictions. However, in some cases, it is nice for the admin or the "
+"tenant to pre-define a pool of addresses from which to create subnets with "
+"automatic allocation."
+msgstr ""
+"通常、エンドユーザーは任意の有効な IP アドレスでサブネットを作成でき、他に何"
+"の制約もありません。しかしながら、場合によっては、管理者やテナントが、アドレ"
+"スプールをあらかじめ定義し、サブネット作成時にこのプールからアドレスを自動割"
+"り当てする方がよい場面があります。"
 
 msgid ""
 "Ensure that the LBaaS v1 and v2 service providers are removed from the "
@@ -2546,6 +2611,9 @@ msgstr ""
 
 msgid "Example configuration"
 msgstr "設定例"
+
+msgid "Experimental feature or incomplete documentation."
+msgstr "実験的な機能で、ドキュメントも不十分です。"
 
 msgid "Extensions"
 msgstr "API 拡張"
@@ -2689,6 +2757,29 @@ msgstr "Floating IP 範囲 203.0.113.101 ～ 203.0.113.200"
 
 msgid "Floating IPs"
 msgstr "Floating IP"
+
+msgid "Flow classifier"
+msgstr "Flow Classifier"
+
+msgid ""
+"Following are the PTR records created for this example. Note that for IPv4, "
+"the value of ipv4_ptr_zone_prefix_size is 24. For more details, see :ref:"
+"`config-dns-int-ext-serv`:"
+msgstr ""
+"以下は、この例で作成された PTR レコードです。 IPv4 の場合は "
+"ipv4_ptr_zone_prefix_size の値が 24 です。詳細は :ref:`config-dns-int-ext-"
+"serv` を参照してください。"
+
+msgid ""
+"Following are the PTR records created for this example. Note that for IPv4, "
+"the value of ipv4_ptr_zone_prefix_size is 24. In the case of IPv6, the value "
+"of ipv6_ptr_zone_prefix_size is 116. For more details, see :ref:`config-dns-"
+"int-ext-serv`:"
+msgstr ""
+"以下は、この例で作成された PTR レコードです。 IPv4 の場合は "
+"ipv4_ptr_zone_prefix_size の値が 24 で、 IPv6 の場合は "
+"ipv6_ptr_zone_prefix_size の値が 116 です。詳細は :ref:`config-dns-int-ext-"
+"serv` を参照してください。"
 
 msgid "Following is an example of these steps:"
 msgstr "以下は実行例です。"
@@ -2847,6 +2938,14 @@ msgstr ""
 "けです。そのため、あるプロセス名前空間内のシェルで :command:`ps waux` を実行"
 "すると、同じ名前空間内の他のプロセスだけが表示されます。"
 
+msgid "For example, add flow classifier ``FC2`` to port chain ``PC1``:"
+msgstr ""
+"例えば、 Flow Classifier ``FC2`` をポートチェイン ``PC1`` に追加します。"
+
+msgid "For example, add port pair group ``PPG3`` to port chain ``PC1``:"
+msgstr ""
+"例えば、ポートペアグループ ``PPG3`` をポートチェイン ``PC1`` に追加します。"
+
 msgid ""
 "For example, referencing a 4000-byte MTU for ``provider2``, a 1500-byte MTU "
 "for ``provider3``, and a 9000-byte MTU for other networks using the Open "
@@ -2873,6 +2972,13 @@ msgid ""
 "For existing deployments, MTU values only apply to new network resources."
 msgstr ""
 "既存の環境では、 MTU 値は新規のネットワークリソースにのみ適用されます。"
+
+msgid ""
+"For general configuration, see the `Configuration Reference <http://docs."
+"openstack.org/mitaka/config-reference/>`_."
+msgstr ""
+"一般的な設定については `Configuration Reference <http://docs.openstack.org/"
+"mitaka/config-reference/>`_ を参照してください。"
 
 msgid ""
 "For illustration purposes, the diagram contains two different provider "
@@ -3010,6 +3116,9 @@ msgstr ""
 "reference/networking/networking_options_reference.html#security-groups>`__ の"
 "関連する節を参照してください。"
 
+msgid "For more information see the :ref:`config-sriov`."
+msgstr "詳しい情報は :ref:`config-sriov` を参照してください。"
+
 msgid ""
 "For more information, see the `developer documentation <http://docs."
 "openstack.org/developer/neutron/devref/openvswitch_firewall.html>`_ and the "
@@ -3089,6 +3198,12 @@ msgstr ""
 "します。これにより、 OpenStack 管理者は (OpenStack Networking サービスの) 外"
 "部の DHCPv6 サーバーを使って、テナントネットワークのプレフィックスの管理を行"
 "えるようになります。"
+
+msgid "Function: Firewall"
+msgstr "機能: ファイアウォール"
+
+msgid "Function: Intrusion detection system (IDS)"
+msgstr "機能: 侵入検知システム (IDS)"
 
 msgid "Future support"
 msgstr "今後の予定"
@@ -3250,6 +3365,9 @@ msgstr "今回のデモでは以下のルーターを使用します。"
 msgid "High availability"
 msgstr "高可用性"
 
+msgid "High-availability for DHCP"
+msgstr "DHCP の高可用性"
+
 msgid ""
 "Historically, Open vSwitch (OVS) could not interact directly with *iptables* "
 "to implement security groups. Thus, the OVS agent and Compute service use a "
@@ -3399,6 +3517,9 @@ msgstr ""
 "に属する任意の 2 つのホストが同じローカルネットワーク上にあるように気を付ける"
 "必要があります。さもなければ ARP は正しく動作しません。"
 
+msgid "IP availability metrics"
+msgstr "IP 利用状況"
+
 msgid "IPAM configuration"
 msgstr "IPAM 設定"
 
@@ -3473,6 +3594,9 @@ msgstr ""
 "運用者が通常ユーザーにこれを許したくない場合は、 ``policy.json`` のエント"
 "リー  ``create_rbac_policy`` を ``\"\"`` から ``\"rule:admin_only\"`` に変更"
 "します。"
+
+msgid "If necessary, :ref:`configure MTU <config-mtu>`."
+msgstr "必要であれば :ref:`MTU を設定します。 <config-mtu>`"
 
 msgid ""
 "If tenants are trusted to administrate their own QoS policies in your cloud, "
@@ -3699,6 +3823,13 @@ msgstr ""
 "を使って Floating IP アドレスを実装しています。"
 
 msgid ""
+"In :ref:`config-dns-use-case-1`, the externally accessible network must meet "
+"the following requirements:"
+msgstr ""
+":ref:`config-dns-use-case-1` では、外部からアクセス可能なネットワークは以下の"
+"要件を満たす必要があります。"
+
+msgid ""
 "In ``/etc/neutron/plugins/ml2/ml2_conf.ini``, add ``qos`` to "
 "``extension_drivers`` in the ``[ml2]`` section. For example:"
 msgstr ""
@@ -3782,25 +3913,6 @@ msgid ""
 msgstr ""
 "Open vSwitch (OVS) を使ったプロバイダーネットワークと違い、このシナリオでは"
 "Linux 自身のネットワークサービスを"
-
-msgid ""
-"In deployments using DVR, the BGP speaker advertises floating IP addresses "
-"and self-service networks differently. For floating IP addresses, the BGP "
-"speaker advertises the floating IP agent gateway on the corresponding "
-"compute node as the next-hop IP address. For self-service networks using "
-"SNAT, the BGP speaker advertises the DVR SNAT node as the next-hop IP "
-"address. For example, consider a self-service network using 10.0.0.0/24, "
-"floating IP addresses using an arbitrary allocation within 172.24.4.0/24, "
-"and a SNAT gateway on 172.24.4.3."
-msgstr ""
-"DVR を使った環境では、 BGP スピーカーは Floating IP アドレスとセルフサービス"
-"ネットワークを違う方法で広告します。 Floating IP アドレスについては、 BGP ス"
-"ピーカーは、対応するコンピュートノードの Floating IP エージェントゲートウェイ"
-"をネクストホップ IP アドレスとして広告します。 SNAT を使うセルフサービスネッ"
-"トワークについては、 BGP スピーカーは、 DVR SNAT ノードをネクストホップ IP ア"
-"ドレスとして広告します。例えば、セルフサービスネットワークが 10.0.0.0/24 を使"
-"用し、 Floating IP アドレスが 172.24.4.0/24 から割り当てられ、 SNAT ゲート"
-"ウェイが 172.24.4.3 の場合には以下のようになります。"
 
 msgid ""
 "In existing deployments, check the current database version using the "
@@ -4215,6 +4327,9 @@ msgstr "ダッシュボードパネルのプラグインをインストールし
 msgid "Install the ``ebrctl`` utility on the compute nodes."
 msgstr "コンピュートノードに ``ebrctl`` ユーティリティーをインストールします。"
 
+msgid "Instance 1"
+msgstr "インスタンス 1"
+
 msgid "Instance 1 192.0.2.11 with MAC address *I1*"
 msgstr "インスタンス 1 192.0.2.11 (MAC アドレスは *I1*)"
 
@@ -4273,6 +4388,9 @@ msgstr "インスタンス 1: 192.0.2.11 (MAC アドレスは *I1*)"
 msgid "Instance 1: 192.168.1.11 with MAC address *I1*"
 msgstr "インスタンス 1: 192.168.1.11 (MAC アドレスは *I1*)"
 
+msgid "Instance 2"
+msgstr "インスタンス 2"
+
 msgid "Instance 2 192.168.2.11 with MAC address *I2*"
 msgstr "インスタンス 2 192.168.2.11 (MAC アドレスは *I2*)"
 
@@ -4305,6 +4423,9 @@ msgstr "インスタンス 2: 192.168.2.11 (MAC アドレスは *I2*)"
 
 msgid "Instance 2: 198.51.100.11 with MAC address *I2*"
 msgstr "インスタンス 2: 198.51.100.11 (MAC アドレスは *I2*)"
+
+msgid "Instance 3"
+msgstr "インスタンス 3"
 
 msgid "Instance network interfaces (VIFs)"
 msgstr "インスタンスのネットワークインターフェース (VIF)"
@@ -4360,6 +4481,9 @@ msgstr ""
 "ターインターフェースが作成されるということになります。一方、外部ルーターポー"
 "トではデュアルスタック設定が可能で、 IPv4 と IPv6 アドレスの両方が割り当てら"
 "れます。"
+
+msgid "Introduction"
+msgstr "はじめに"
 
 msgid ""
 "Irrelevant fields have been trimmed from the output of these commands for "
@@ -4600,6 +4724,15 @@ msgstr ""
 "を起動します。"
 
 msgid ""
+"Launch service function instance ``vm1`` using ports ``p1`` and ``p2``, "
+"``vm2`` using ports ``p3`` and ``p4``, and ``vm3`` using ports ``p5`` and "
+"``p6``."
+msgstr ""
+"サービス機能インスタンス ``vm1`` をポート ``p1`` と ``p2`` を使って作成しま"
+"す。 ``vm2`` をポート ``p3`` と ``p4`` を使って作成します。 ``vm3`` をポート "
+"``p5`` と ``p6`` を使って作成します。"
+
+msgid ""
 "Launch two instances, ``instance1`` on ``network1`` and ``instance2`` on "
 "``network2``. Associate a floating IP address to both instances."
 msgstr ""
@@ -4612,6 +4745,9 @@ msgstr "レイヤー 2 (Ethernet とスイッチング)"
 
 msgid "Layer 3 (IP and Routing)"
 msgstr "レイヤー 3 (IP とルーティング)"
+
+msgid "Legacy nova-network to OpenStack Networking (neutron)"
+msgstr "以前の nova-network から OpenStack Networking (neutron) へ"
 
 msgid ""
 "Like TCP, the sockets API is the most common API for writing UDP-based "
@@ -5107,6 +5243,15 @@ msgstr "名前"
 
 msgid "Name resolution for instances"
 msgstr "インスタンス用の名前解決"
+
+msgid "Name: vm1"
+msgstr "名前: vm1"
+
+msgid "Name: vm2"
+msgstr "名前: vm2"
+
+msgid "Name: vm3"
+msgstr "名前: vm3"
 
 msgid "Native Open vSwitch firewall driver"
 msgstr "ネイティブ Open vSwitch ファイアウォールドライバー"
@@ -5833,6 +5978,20 @@ msgstr ""
 "OVS エージェントか Linux ブリッジエージェントを VLAN かフラットモードで動かし"
 "ます。"
 
+msgid ""
+"Only for :ref:`config-dns-use-case-1`, if the port binding extension is "
+"enabled in the Networking service, the Compute service will execute one "
+"additional port update operation when allocating the port for the instance "
+"during the boot process. This may have a noticeable adverse effect in the "
+"performance of the boot process that must be evaluated before adoption of "
+"this use case."
+msgstr ""
+":ref:`config-dns-use-case-1` の場合だけですが、 Networking サービスで port "
+"binding API 拡張が有効になっている場合、 Compute サービスは起動処理中にインス"
+"タンスにポートを割り当てる際に余計に 1 回ポート更新操作を行うことになります。"
+"このことは、起動処理の性能に目に見えるマイナス影響を与える可能性もあり、この"
+"ユースケースを採用する前に評価を行うべきです。"
+
 msgid "Open source"
 msgstr "オープンソース"
 
@@ -5940,6 +6099,9 @@ msgid ""
 msgstr ""
 "OpenStack :term:`Identity サービス <Identity service>` (keystone) は、API リ"
 "クエストの認証と認可のために使用されます。"
+
+msgid "OpenStack Networking"
+msgstr "OpenStack Networking"
 
 msgid "OpenStack Networking Guide"
 msgstr "OpenStack ネットワークガイド"
@@ -6160,6 +6322,9 @@ msgid ""
 "``neutron.conf`` file."
 msgstr "メッセージキューサービスと ``neutron.conf`` ファイルの適切な設定。"
 
+msgid "Operations"
+msgstr "運用"
+
 msgid "Operations impact"
 msgstr "運用面での影響"
 
@@ -6207,6 +6372,9 @@ msgstr ""
 
 msgid "Otherwise if you are running OpenStack Mitaka, make this change:"
 msgstr "OpenStack Mitaka を実行している場合には、以下の変更を行います。"
+
+msgid "Overlay (tunnel) protocols"
+msgstr "オーバーレイ (トンネル) プロトコル"
 
 msgid "Overview"
 msgstr "概要"
@@ -6294,6 +6462,24 @@ msgstr ""
 msgid "Pool"
 msgstr "プール"
 
+msgid "Port chain"
+msgstr "ポートチェイン (port chain)"
+
+msgid "Port pair"
+msgstr "ポートペア (port_pair)"
+
+msgid "Port pair group"
+msgstr "ポートペアグループ (port pair group)"
+
+msgid "Port pair: [p1, p2]"
+msgstr "ポートペア: [p1, p2]"
+
+msgid "Port pair: [p3, p4]"
+msgstr "ポートペア: [p3, p4]"
+
+msgid "Port pair: [p5, p6]"
+msgstr "ポートペア: [p5, p6]"
+
 msgid "Ports"
 msgstr "ポート"
 
@@ -6343,6 +6529,22 @@ msgstr "通常ユーザー同士のオブジェクトの共有をさせたくな
 
 msgid "Project (tenant) networks"
 msgstr "プロジェクト (テナント) ネットワーク"
+
+msgid ""
+"Project (tenant) networks provide connectivity to instances for a particular "
+"project. Regular (non-privileged) users can manage project networks within "
+"the allocation that an administrator or operator defines for them. More "
+"information about project and provider networks see :doc:`intro-os-"
+"networking` or the `OpenStack Administrator Guide <http://docs.openstack.org/"
+"admin-guide/networking-adv-features.html#provider-networks>`__."
+msgstr ""
+"プロジェクトネットワークは、特定のプロジェクトのインスタンスに対して接続性を"
+"提供します。一般ユーザー (非特権ユーザー) は、管理者やオペレーターが定義した"
+"範囲内でプロジェクトネットワークを管理できます。プロジェクトネットワークやプ"
+"ロバイダーネットワークについてのより詳しい情報は、 :doc:`intro-os-"
+"networking` や `OpenStack 管理者ガイド <http://docs.openstack.org/admin-"
+"guide/networking-adv-features.html#provider-networks>`__ などの関連する節を参"
+"照してください。"
 
 msgid ""
 "Project ``a6bf6cfbcd1f4e32a57d2138b6bd41d1`` will now be able to see the QoS "
@@ -6501,6 +6703,22 @@ msgstr ""
 msgid ""
 "Provider networks provide connectivity like project networks. But only "
 "administrative (privileged) users can manage those networks because they "
+"interface with the physical network infrastructure. More information about "
+"provider networks see :doc:`intro-os-networking` or the `OpenStack "
+"Administrator Guide <http://docs.openstack.org/admin-guide/networking-adv-"
+"features.html#provider-networks>`__."
+msgstr ""
+"プロバイダーネットワークは、プロジェクトネットワークと同じく接続性を適用しま"
+"すが、管理権限を持ったユーザー (特権ユーザー) だけがこれらのネットワークを管"
+"理できます。プロバイダーネットワークは物理ネットワーク基盤と直接接続されるか"
+"らです。プロバイダーネットワークについてのより詳しい情報は、 :doc:`intro-os-"
+"networking` や `OpenStack 管理者ガイド <http://docs.openstack.org/admin-"
+"guide/networking-adv-features.html#provider-networks>`__ などの関連する節を参"
+"照してください。"
+
+msgid ""
+"Provider networks provide connectivity like project networks. But only "
+"administrative (privileged) users can manage those networks because they "
 "interface with the physical network infrastructure. Provider networks can "
 "use flat or VLAN transport methods depending on the physical network "
 "infrastructure. Like project networks, provider networks typically use "
@@ -6563,6 +6781,9 @@ msgstr ""
 "デフォルトの ``policy.json`` では管理者だけが QoS ポリシーを作成できます。そ"
 "のため、クラウドオペレーターはクラウドテナントのために QoS ポリシーを作成する"
 "必要があります。"
+
+msgid "Quality of Service (QoS)"
+msgstr "QoS (Quality of Service)"
 
 msgid "Quotas"
 msgstr "クォータ"
@@ -6698,6 +6919,13 @@ msgstr ""
 "``MIN_VXLAN_ID``, ``MAX_VXLAN_ID`` は、お使いの環境に応じた VXLAN ID の最小"
 "値、最大値に置き換えてください。"
 
+msgid ""
+"Replace ``P1_ID``, ``P2_ID``, ``P3_ID``, ``P4_ID``, ``P5_ID``, and ``P6_ID`` "
+"with the UUIDs of the respective ports."
+msgstr ""
+"``P1_ID``, ``P2_ID``, ``P3_ID``, ``P4_ID``, ``P5_ID``, ``P6_ID`` は、それぞれ"
+"のポートの UUID に置き換えてください。"
+
 msgid "Replace ``PROJECT_ID`` with the project (tenant) ID."
 msgstr "``PROJECT_ID`` はプロジェクト (テナント) ID に置き換えてください。"
 
@@ -6745,14 +6973,6 @@ msgstr ""
 "えてください。設定例では AS 4321 を使用し、 EBGP ピアリングで接続されます。"
 
 msgid ""
-"Replace ``ROUTER_ID`` with a suitable unique 32-bit number, typically an "
-"IPv4 address on the host running the agent. For example, 192.168.122.150."
-msgstr ""
-"``ROUTER_ID`` を適切な一意な 32 ビットの数値に置き換えてください。通常はエー"
-"ジェントを実行するホストの IPv4 アドレスを使用します。例えば、 "
-"192.168.122.150。"
-
-msgid ""
 "Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface "
 "that handles GRE/VXLAN project networks."
 msgstr ""
@@ -6779,6 +6999,15 @@ msgid "Requirements"
 msgstr "要件"
 
 msgid "Resource"
+msgstr "リソース"
+
+msgid "Resource purge"
+msgstr "リソースの一括削除"
+
+msgid "Resource tags"
+msgstr "リソースタグ"
+
+msgid "Resources"
 msgstr "リソース"
 
 msgid "Restart Apache to activate the new panel:"
@@ -6916,6 +7145,20 @@ msgstr ""
 "ネットワークに接続します。   ``nova-network`` は Neutron で置き換えられるの"
 "で、このノードで ``nova-network`` は動作させないでください。"
 
+msgid ""
+"SFC performs load balancing/distribution over the additional service "
+"functions in the port pair group."
+msgstr ""
+"SFC は、ポートペアグループに新たに追加されたサービス機能に負荷の分散を行いま"
+"す。"
+
+msgid ""
+"SFC steers traffic matching the additional flow classifier to the port pair "
+"groups in the port chain."
+msgstr ""
+"SFC は、追加された Flow Classifier に一致したトラフィックを、ポートチェインの"
+"ポートペアグループに転送します。"
+
 msgid "SLAAC"
 msgstr "SLAAC"
 
@@ -7001,6 +7244,9 @@ msgstr "BGP スピーカーを複数のエージェントにスケジューリ�
 
 msgid "Schedule the BGP speaker to an agent"
 msgstr "BGP スピーカーのエージェントへのスケジューリング"
+
+msgid "Scope:"
+msgstr "扱う内容"
 
 msgid "Search in this guide"
 msgstr "ガイド内検索"
@@ -7206,10 +7452,34 @@ msgstr ""
 "トラフィックを廃棄し、すべての出力トラフィックを許可します。このグループに"
 "ルールを追加して、動作を変更できます。"
 
+msgid ""
+"See :ref:`config-dns-int-ext-serv` for detailed instructions on how to "
+"create the externally accessible network."
+msgstr ""
+"外部からアクセス可能なネットワークを作成する詳細な手順は :ref:`config-dns-"
+"int-ext-serv` を参照してください。"
+
+msgid ""
+"See :ref:`config-dns-performance-considerations` for an explanation of the "
+"potential performance impact associated with this use case."
+msgstr ""
+"このユースケースでの潜在的な性能面への影響については :ref:`config-dns-"
+"performance-considerations` を参照してください。"
+
+msgid "See :ref:`config-subnet-pools` for more information."
+msgstr "詳しい情報は :ref:`config-subnet-pools` を参照してください。"
+
 msgid "See :ref:`scenario-classic-ovs` or :ref:`scenario-classic-lb`"
 msgstr ""
 ":ref:`scenario-classic-ovs` や :ref:`scenario-classic-lb` を参照してくださ"
 "い。"
+
+msgid ""
+"See the `developer documentation <http://docs.openstack.org/developer/"
+"networking-sfc/>`_ for more information."
+msgstr ""
+"詳しい情報は、 `開発者ドキュメント <http://docs.openstack.org/developer/"
+"networking-sfc/>`_ を参照してください。"
 
 msgid ""
 "Select the driver that manages virtual interfaces in ``/etc/neutron/"
@@ -7232,6 +7502,9 @@ msgstr "サーバー"
 
 msgid "Service and component hierarchy"
 msgstr "サービスとコンポーネントの構造"
+
+msgid "Service function chaining"
+msgstr "Service Function Chaining"
 
 msgid "Services"
 msgstr "サービス"
@@ -7454,6 +7727,9 @@ msgid ""
 msgstr ""
 "非特権プロジェクトのクレデンシャルを読み込みます。 以下の手順では ``demo`` プ"
 "ロジェクトを使用します。"
+
+msgid "Source the credentials of the project that owns the ``net1`` network."
+msgstr "ネットワーク ``net1`` を所有するプロジェクトの認証情報を読み込みます。"
 
 msgid ""
 "Source the necessary project credentials. The administrative project can "
@@ -7811,13 +8087,6 @@ msgid ""
 msgstr ""
 "この API では、 ``GET /v2.0/networks`` API で検索やフィルタリングが可能です。"
 "以下の問い合わせパラメーターが使用できます。"
-
-msgid ""
-"The BGP speaker advertises the next-hop IP address for the self-service "
-"network prefix."
-msgstr ""
-"BGP スピーカーは、セルフサービスネットワークのプレフィックスに対するネクスト"
-"ホップの IP アドレスを広告します。"
 
 msgid ""
 "The BGP speaker associates with the external network that provides a gateway "
@@ -8730,6 +8999,13 @@ msgstr ""
 "VLAN (802.1Q タグ) です。"
 
 msgid ""
+"The PTR records will be created in zones owned by a project with admin "
+"privileges. See :ref:`config-dns-int-ext-serv` for more details."
+msgstr ""
+"PTR レコードは、管理者権限を持つプロジェクトが所有するゾーンに作成されます。"
+"詳細は :ref:`config-dns-int-ext-serv` を参照してください。"
+
+msgid ""
 "The QoS implementation requires a burst value to ensure proper behavior of "
 "bandwidth limit rules in the Open vSwitch and Linux bridge agents. If you do "
 "not provide a value, it defaults to 80% of the bandwidth limit which works "
@@ -9460,6 +9736,15 @@ msgstr ""
 "しか利用できません。"
 
 msgid ""
+"The enablement of this functionality is prerequisite for the enablement of "
+"the Networking service integration with an external DNS service, which is "
+"described in detail in :ref:`config-dns-int-ext-serv`."
+msgstr ""
+"この機能を有効にするには、 Networking サービスの外部 DNS サービスとの連携が有"
+"効になっている必要があります。詳細は :ref:`config-dns-int-ext-serv` で説明し"
+"ています。"
+
+msgid ""
 "The example configuration assumes sufficient knowledge about the Networking "
 "service, routing, and BGP. For basic deployment of the Networking service, "
 "consult one of the :ref:`deployment-scenarios`. For more information on BGP, "
@@ -9550,6 +9835,11 @@ msgstr ""
 "ワークにも対応しています。 Linux ブリッジエージェントは GRE プロジェクトネッ"
 "トワークには対応していません。"
 
+msgid "The example network ``net1`` must exist before creating ports on it."
+msgstr ""
+"サンプルのネットワーク ``net1`` は、そのネットワークにポートを作成する前に存"
+"在している必要があります。"
+
 msgid "The example output uses network interface ``eth1``."
 msgstr "出力例ではネットワークインターフェース ``eth1`` を使用しています。"
 
@@ -9608,6 +9898,16 @@ msgstr ""
 "適用できます。"
 
 msgid ""
+"The first step to configure the integration with an external DNS service is "
+"to enable the functionality described in :ref:`config-dns-int-dns-"
+"resolution`. Once this is done, the user has to take the following steps and "
+"restart ``neutron-server``."
+msgstr ""
+"外部 DNS サービスとの連携を設定する際に最初にすべきことは、 :ref:`config-dns-"
+"int-dns-resolution` に書かれた機能を有効にすることです。これが終わったら、"
+"ユーザーは以下の手順を実行し ``neutron-server`` を再起動する必要があります。"
+
+msgid ""
 "The first time host *A* attempts to communicate with host *B*, the "
 "destination MAC address is not known. Host *A* makes an ARP request to the "
 "local network. The request is a broadcast with a message like this:"
@@ -9652,6 +9952,16 @@ msgstr ""
 
 msgid "The following attributes are added into network and router:"
 msgstr "以下の属性がネットワークとルーターに追加されます。"
+
+msgid ""
+"The following example uses the ``neutron`` command-line interface (CLI) to "
+"create a port chain consisting of three service function instances to handle "
+"HTTP (TCP) traffic flows from 192.168.1.11:1000 to 192.168.2.11:80."
+msgstr ""
+"以下の例では ``neutron`` コマンドラインインターフェース (CLI) を使って、 3 つ"
+"のサービス機能インスタンスから構成されるポートチェインを作成し、 "
+"192.168.1.11:1000 から 192.168.2.11:80 への HTTP (TCP) トラフィックフローを処"
+"理します。"
 
 msgid ""
 "The following illustrates the creation of a port with ``my-port`` in its "
@@ -10283,6 +10593,17 @@ msgstr ""
 "物理トンネルインターフェースは、パケットをネットワークノードに転送します。"
 
 msgid ""
+"The port chain plug-in supports backing service providers including the OVS "
+"driver and a variety of SDN controller drivers. The common driver API "
+"enables different drivers to provide different implementations for the "
+"service chain path rendering."
+msgstr ""
+"ポートチェインプラグインは、OVS ドライバーや各種 SDN コントローラードライバー"
+"など、さまざまなサービスプロバイダーに対応しています。共通ドライバー API によ"
+"り、それぞれのドライバーがサービスチェインパスの異なる方法で実装できるように"
+"なっています。"
+
+msgid ""
 "The port's ``dns_assignment`` attribute shows that its FQDN is ``my-vm."
 "example.org.`` in the Networking service internal DNS, which is the result "
 "of concatenating the port's ``dns_name`` with the value configured in the "
@@ -10817,6 +11138,15 @@ msgstr ""
 
 msgid "This command provides no output."
 msgstr "このコマンドは何も出力しません。"
+
+msgid ""
+"This command requires additional options to successfully launch an instance. "
+"See the `CLI reference <http://docs.openstack.org/cli-reference/openstack."
+"html>`_ for more information."
+msgstr ""
+"インスタンスを正常に起動するには、他のパラメーターも必要です。詳しい情報は "
+"``CLI リファレンス <http://docs.openstack.org/cli-reference/openstack."
+"html>`_ を参照してください。"
 
 msgid "This command requires other options outside the scope of this content."
 msgstr ""
@@ -11759,6 +12089,9 @@ msgstr ""
 msgid "Unlimited address overlap is allowed."
 msgstr "無制限のアドレス重複が許可されます。"
 
+msgid "Update a port chain or port pair group"
+msgstr "ポートチェインやポートペアグループの更新"
+
 msgid "Update the DHCP configuration file ``/etc/neutron/dhcp_agent.ini``:"
 msgstr "DHCP 設定ファイル ``/etc/neutron/dhcp_agent.ini`` を更新します。"
 
@@ -11838,12 +12171,18 @@ msgid "Use the :command:`rbac-show` command to see the details:"
 msgstr ":command:`rbac-show` を使うと、詳細を確認できます。"
 
 msgid ""
-"Use the following example configuration as a template to deploy BGP dynamic "
-"routing in your environment. The example configuration references the "
-"following environment:"
+"Use the ``port-chain-update`` command to dynamically add or remove port pair "
+"groups or flow classifiers on a port chain."
 msgstr ""
-"以下の設定例を、お使いの環境に BGP 動的ルーティングをデプロイする際の雛形とし"
-"て使ってください。設定例では以下の環境を使用します。"
+"``port-chain-update`` コマンドを使うと、ポートチェインのポートペアや Flow "
+"Classifier の追加、削除を動的に行えます。"
+
+msgid ""
+"Use the ``port-pair-group-update`` command to perform dynamic scale-out or "
+"scale-in operations by adding or removing port pairs on a port pair group."
+msgstr ""
+"``port-pair-group-update`` コマンドを使うと、ポートペアグループのポートペアの"
+"追加、削除により、動的なスケールアウト、スケールインを行えます。"
 
 msgid ""
 "Use the following example configuration as a template to deploy this "
@@ -11999,6 +12338,13 @@ msgstr ""
 msgid "Validating the requirements for auto-allocation"
 msgstr "自動割り当てに必要な要件の検証"
 
+msgid ""
+"Various virtual networking resources support tags for use by external "
+"systems or any other clients of the Networking service API."
+msgstr ""
+"いくつかの仮想ネットワークリソースは、外部のシステムや Networking サービス "
+"API のクライアントが使用できるタグをサポートしています。"
+
 msgid "Verify addition of the BGP peer to the BGP speaker."
 msgstr "BGP ピアが BGP スピーカーに関連付いていることを確認します。"
 
@@ -12024,9 +12370,6 @@ msgstr "BGP 動的ルーティングエージェントが存在し機能して�
 # #-#-#-#-#  scenario_provider_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
 msgid "Verify presence and operation of the agents:"
 msgstr "エージェントが存在し、動作していることを確認します。"
-
-msgid "Verify router ports."
-msgstr "ルーターのポートを確認します。"
 
 msgid "Verify scheduling of the BGP speaker to the agent."
 msgstr "BGP スピーカーのエージェントへのスケジューリングを確認します。"
@@ -12406,6 +12749,13 @@ msgstr ""
 "``instance2`` には直接 ping することもできます。"
 
 msgid ""
+"You can repeat the ``--port-pair`` option for multiple port pairs of "
+"functionally equivalent service functions."
+msgstr ""
+"``--port-pair`` オプションを複数指定することで、機能的に等価なサービス機能の"
+"ポートペアを複数追加できます。"
+
+msgid ""
 "You can request a specific subnet from the pool. You need to specify a "
 "subnet that falls within the pool's prefixes. If the subnet is not already "
 "allocated, the request succeeds. You can leave off the IP version because it "
@@ -12560,14 +12910,50 @@ msgstr "``auto_allocated_subnet_v4``"
 msgid "``auto_allocated_subnet_v6``"
 msgstr "``auto_allocated_subnet_v6``"
 
+msgid "``chain_parameters`` - Dictionary of chain parameters"
+msgstr "``chain_parameters`` - チェインパラメーターの dict"
+
+msgid "``description`` - Readable description"
+msgstr "``description`` - 分かりやすい説明"
+
+msgid "``destination_ip_prefix`` - Destination IP address or prefix"
+msgstr "``destination_ip_prefix`` - 宛先 IP アドレスもしくはプレフィックス"
+
+msgid "``destination_port_range_max`` - Maximum destination protocol port"
+msgstr "``destination_port_range_max`` - 宛先プロトコルポートの最大値"
+
+msgid "``destination_port_range_min`` - Minimum destination protocol port"
+msgstr "``destination_port_range_min`` - 宛先プロトコルポートの最小値"
+
 msgid "``dhcpv6-stateful``"
 msgstr "``dhcpv6-stateful``"
 
 msgid "``dhcpv6-stateless``"
 msgstr "``dhcpv6-stateless``"
 
+msgid "``egress`` - Egress port"
+msgstr "``egress`` - 出力ポート"
+
+msgid "``ethertype`` - Ethertype (IPv4/IPv6)"
+msgstr "``ethertype`` - Ethernet タイプ (IPv4/IPv6)"
+
 msgid "``external-net``"
 msgstr "``external-net``"
+
+msgid "``flow_classifiers`` - List of flow classifier IDs"
+msgstr "``flow_classifiers`` - flow classifier ID のリスト"
+
+msgid "``id`` - Flow classifier ID"
+msgstr "``id`` - Flow Classifier ID"
+
+msgid "``id`` - Port chain ID"
+msgstr "``id`` - ポートチェイン ID"
+
+msgid "``id`` - Port pair ID"
+msgstr "``id`` - ポートペア ID"
+
+msgid "``id`` - Port pair group ID"
+msgstr "``id`` - ポートペアグループ ID"
 
 msgid ""
 "``iface`` The name of the network interface on which to listen for prefix "
@@ -12575,6 +12961,9 @@ msgid ""
 msgstr ""
 "``iface``: prefix delegation メッセージを待ち受けるネットワークインターフェー"
 "ス名。"
+
+msgid "``ingress`` - Ingress port"
+msgstr "``ingress`` - 入力ポート"
 
 msgid ""
 "``ipv4_ptr_zone_prefix_size``: the size in bits of the prefix for the IPv4 "
@@ -12606,6 +12995,18 @@ msgstr "``ipv6_ra_mode``"
 msgid "``ipv6_ra_mode``: Determines who sends RA."
 msgstr "``ipv6_ra_mode``: RA を誰が送信するかを決定します。"
 
+msgid "``l7_parameters`` - Dictionary of L7 parameters"
+msgstr "``l7_parameters`` - L7 パラメーターの dict"
+
+msgid "``logical_destination_port`` - Destination port"
+msgstr "``logical_destination_port`` - 宛先ポート"
+
+msgid "``logical_source_port`` - Source port"
+msgstr "``logical_source_port`` - 送信元ポート"
+
+msgid "``name`` - Readable name"
+msgstr "``name`` - 分かりやすい名前"
+
 msgid "``not-tags-any``"
 msgstr "``not-tags-any``"
 
@@ -12628,6 +13029,15 @@ msgstr ""
 "アクセスが不要の場合は設定例のままで十分です。アクセスが必要な場合は、一意で"
 "グローバルに到達可能なプレフィックスを指定する必要があります。"
 
+msgid "``port_pair_groups`` - List of port pair group IDs"
+msgstr "``port_pair_groups`` - ポートペアグループ ID のリスト"
+
+msgid "``port_pairs`` - List of service function port pairs"
+msgstr "``port_pairs`` - サービス機能のポートペアのリスト"
+
+msgid "``protocol`` - IP protocol"
+msgstr "``protocol`` - IP プロトコル"
+
 msgid "``router``"
 msgstr "``router``"
 
@@ -12640,8 +13050,21 @@ msgstr ""
 "します。このスクリプトが必要なのは、サブネットのインスタンスが外部ネットワー"
 "クへのアクセスが必要な場合だけです。詳しくは後述します。"
 
+msgid ""
+"``service_function_parameters`` - Dictionary of service function parameters"
+msgstr "``service_function_parameters`` - サービス機能パラメーターの dict"
+
 msgid "``slaac``"
 msgstr "``slaac``"
+
+msgid "``source_ip_prefix`` - Source IP address or prefix"
+msgstr "``source_ip_prefix`` - 送信元 IP アドレスもしくはプレフィックス"
+
+msgid "``source_port_range_max`` - Maximum source protocol port"
+msgstr "``source_port_range_max`` - 送信元プロトコルポートの最大値"
+
+msgid "``source_port_range_min`` - Minimum source protocol port"
+msgstr "``source_port_range_min`` - 送信元プロトコルポートの最小値"
 
 msgid "``subnet_allocation``"
 msgstr "``subnet_allocation``"
@@ -12651,6 +13074,9 @@ msgstr "``tags-any``"
 
 msgid "``tags``"
 msgstr "``tags``"
+
+msgid "``tenant_id`` - Project ID"
+msgstr "``tenant_id`` - プロジェクト ID"
 
 msgid "``url``: the OpenStack DNS service public endpoint URL."
 msgstr "``url``: OpenStack DNS サービスのパブリックエンドポイント URL"
