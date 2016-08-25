@@ -17,7 +17,7 @@ Orchestration service command-line client
 The heat client is the command-line interface (CLI) for
 the Orchestration service API and its extensions.
 
-This chapter documents :command:`heat` version ``1.3.0``.
+This chapter documents :command:`heat` version ``1.4.0``.
 
 For help on a specific :command:`heat` command, enter:
 
