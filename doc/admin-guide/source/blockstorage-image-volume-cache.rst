@@ -63,7 +63,7 @@ the ``cinder.conf`` file:
    If you use Ceph as a back end, set the following configuration option in
    the ``cinder.conf`` file:
 
-  .. code-block:: ini
+   .. code-block:: ini
 
      [ceph]
      image_volume_cache_enabled = True
