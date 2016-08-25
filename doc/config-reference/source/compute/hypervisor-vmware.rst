@@ -299,7 +299,7 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
    * -
      -
      -
-     - Disk cahnge tracking
+     - Disk change tracking
    * -
      -
      - Interaction
@@ -365,18 +365,6 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
      -
      - Create template from virtual machine
    * -
-     - Sessions
-     - 
-     -
-   * -
-     -
-     -
-     - Validate session
-   * -
-     -
-     -
-     - View and stop sessions
-   * -
      -
      - Snapshot management
      -
@@ -389,6 +377,18 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
      -
      - Remove snapshot
    * -
+     - Sessions
+     - 
+     -
+   * -
+     -
+     -
+     - Validate session
+   * -
+     -
+     -
+     - View and stop sessions
+	 * -
      - vApp
      -
      -
