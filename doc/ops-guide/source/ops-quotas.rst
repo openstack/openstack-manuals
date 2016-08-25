@@ -143,20 +143,22 @@ commands, which are provided by the
 
       $ nova quota-defaults
       +-----------------------------+-------+
-      | Property                    | Value |
+      | Quota                       | Limit |
       +-----------------------------+-------+
-      | metadata_items              | 128   |
-      | injected_file_content_bytes | 10240 |
+      | instances                   | 10    |
+      | cores                       | 20    |
       | ram                         | 51200 |
       | floating_ips                | 10    |
-      | key_pairs                   | 100   |
-      | instances                   | 10    |
-      | security_group_rules        | 20    |
-      | injected_files              | 5     |
-      | cores                       | 20    |
       | fixed_ips                   | -1    |
+      | metadata_items              | 128   |
+      | injected_files              | 5     |
+      | injected_file_content_bytes | 10240 |
       | injected_file_path_bytes    | 255   |
+      | key_pairs                   | 100   |
       | security_groups             | 10    |
+      | security_group_rules        | 20    |
+      | server_groups               | 10    |
+      | server_group_members        | 10    |
       +-----------------------------+-------+
 
 #. Update a default value for a new tenant, as follows:
@@ -191,20 +193,22 @@ commands, which are provided by the
 
       $ nova quota-show --tenant $tenant
       +-----------------------------+-------+
-      | Property                    | Value |
+      | Quota                       | Limit |
       +-----------------------------+-------+
-      | metadata_items              | 128   |
-      | injected_file_content_bytes | 10240 |
-      | ram                         | 51200 |
-      | floating_ips                | 12    |
-      | key_pairs                   | 100   |
       | instances                   | 10    |
-      | security_group_rules        | 20    |
-      | injected_files              | 5     |
       | cores                       | 20    |
+      | ram                         | 51200 |
+      | floating_ips                | 10    |
       | fixed_ips                   | -1    |
+      | metadata_items              | 128   |
+      | injected_files              | 5     |
+      | injected_file_content_bytes | 10240 |
       | injected_file_path_bytes    | 255   |
+      | key_pairs                   | 100   |
       | security_groups             | 10    |
+      | security_group_rules        | 20    |
+      | server_groups               | 10    |
+      | server_group_members        | 10    |
       +-----------------------------+-------+
 
 **To update quota values for a tenant (project)**
@@ -228,20 +232,22 @@ commands, which are provided by the
       # nova quota-update --floating-ips 20 $tenant
       # nova quota-show --tenant $tenant
       +-----------------------------+-------+
-      | Property                    | Value |
+      | Quota                       | Limit |
       +-----------------------------+-------+
-      | metadata_items              | 128   |
-      | injected_file_content_bytes | 10240 |
+      | instances                   | 10    |
+      | cores                       | 20    |
       | ram                         | 51200 |
       | floating_ips                | 20    |
-      | key_pairs                   | 100   |
-      | instances                   | 10    |
-      | security_group_rules        | 20    |
-      | injected_files              | 5     |
-      | cores                       | 20    |
       | fixed_ips                   | -1    |
+      | metadata_items              | 128   |
+      | injected_files              | 5     |
+      | injected_file_content_bytes | 10240 |
       | injected_file_path_bytes    | 255   |
+      | key_pairs                   | 100   |
       | security_groups             | 10    |
+      | security_group_rules        | 20    |
+      | server_groups               | 10    |
+      | server_group_members        | 10    |
       +-----------------------------+-------+
 
    .. note::
