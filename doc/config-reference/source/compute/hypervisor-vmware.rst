@@ -298,6 +298,10 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
      - Swapfile placement
    * -
      -
+     -
+     - Disk change tracking
+   * -
+     -
      - Interaction
      -
    * -
@@ -358,16 +362,8 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
      - Customize
    * -
      -
-     - Sessions
      -
-   * -
-     -
-     -
-     - Validate session
-   * -
-     -
-     -
-     - View and stop sessions
+     - Create template from virtual machine
    * -
      -
      - Snapshot management
@@ -380,6 +376,18 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
      -
      -
      - Remove snapshot
+   * -
+     - Sessions
+     - 
+     -
+   * -
+     -
+     -
+     - Validate session
+   * -
+     -
+     -
+     - View and stop sessions
    * -
      - vApp
      -
