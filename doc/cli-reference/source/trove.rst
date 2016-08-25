@@ -9,7 +9,7 @@ Database service command-line client
 The trove client is the command-line interface (CLI) for
 the Database service API and its extensions.
 
-This chapter documents :command:`trove` version ``2.3.0``.
+This chapter documents :command:`trove` version ``2.4.0``.
 
 For help on a specific :command:`trove` command, enter:
 
@@ -309,6 +309,10 @@ trove usage
 ``update``
   Updates an instance: Edits name,
   configuration, or replica source.
+
+``upgrade``
+  Upgrades an instance to a new datastore
+  version.
 
 ``user-create``
   Creates a user on an instance.
@@ -2191,6 +2195,25 @@ Updates an instance: Edits name, configuration, or replica source.
 
 ``--remove_configuration``
   Drops the current configuration reference.
+
+.. _trove_upgrade:
+
+trove upgrade
+-------------
+
+.. code-block:: console
+
+   usage: trove upgrade <instance> <datastore_version>
+
+Upgrades an instance to a new datastore version.
+
+**Positional arguments:**
+
+``<instance>``
+  ID or name of the instance.
+
+``<datastore_version>``
+  A datastore version name or ID.
 
 .. _trove_user-create:
 
