@@ -179,7 +179,7 @@ make by passing the :option:`--debug` flag to them. For example:
 
 .. code-block:: console
 
-   # nova --debug list
+   # openstack --debug server list
 
 This example shows the HTTP requests from the client and the responses
 from the endpoints, which can be helpful in creating custom tools
@@ -193,7 +193,7 @@ is a RESTful API that runs over HTTP. There may be cases where you want
 to interact with the API directly or need to use it because of a
 suspected bug in one of the CLI tools. The best way to do this is to use
 a combination of `cURL <http://curl.haxx.se/>`_ and another tool,
-such as `jq <http://stedolan.github.io/jq/>`_, to parse the JSON from
+such as `jq <http://stedolan.github.io/jq/>`_, to parse the JSON from
 the responses.
 
 The first thing you must do is authenticate with the cloud using your
@@ -263,26 +263,22 @@ running:
 
 .. code-block:: console
 
-   # nova service-list
+   # openstack service list
 
 The output looks like the following:
 
 .. code-block:: console
 
-   +----+------------------+-------------------+------+---------+-------+----------------------------+-----------------+
-   | Id | Binary           | Host              | Zone | Status  | State | Updated_at                 | Disabled Reason |
-   +----+------------------+-------------------+------+---------+-------+----------------------------+-----------------+
-   | 1  | nova-cert        | cloud.example.com | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
-   | 2  | nova-compute     | c01.example.com   | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
-   | 3  | nova-compute     | c01.example.com.  | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
-   | 4  | nova-compute     | c01.example.com   | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
-   | 5  | nova-compute     | c01.example.com   | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
-   | 6  | nova-compute     | c01.example.com   | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
-   | 7  | nova-conductor   | cloud.example.com | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
-   | 8  | nova-cert        | cloud.example.com | nova | enabled | up    | 2016-01-05T17:20:42.000000 | -               |
-   | 9  | nova-scheduler   | cloud.example.com | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
-   | 10 | nova-consoleauth | cloud.example.com | nova | enabled | up    | 2016-01-05T17:20:35.000000 | -               |
-   +----+------------------+-------------------+------+---------+-------+----------------------------+-----------------+
+   +----------------------------------+----------+----------+
+   | ID                               | Name     | Type     |
+   +----------------------------------+----------+----------+
+   | 0a01b2d1ee5d4ce79ea65f6356a6fffb | nova     | compute  |
+   | 769eeea7aaef4724aa98376941d7c364 | glance   | image    |
+   | 87f4688f09104d81ab52661d74134652 | keystone | identity |
+   | 936cf7f450c2428e9e5746e0ea0a2cc7 | cinder   | volume   |
+   | c92b9bdcb42c48ddb7abd926d43999f9 | neutron  | network  |
+   | f633b72d040e46cb8700c62e82418b98 | cinderv2 | volumev2 |
+   +----------------------------------+----------+----------+
 
 The output shows that there are five compute nodes and one cloud
 controller. You see all the services in the up state, which indicates that
@@ -343,11 +339,11 @@ be done for different reasons, such as endpoint privacy or network
 traffic segregation.
 
 You can find the version of the Compute installation by using the
-nova client command:
+OpenStack command-line client:
 
 .. code-block:: console
 
-   # nova version-list
+   # openstack --version
 
 Diagnose Your Compute Nodes
 ---------------------------
@@ -423,14 +419,20 @@ the :command:`nova` command-line client to get the IP ranges:
    | 8283efb2-e53d-46e1-a6bd-bb2bdef9cb9a | test02 |  10.1.1.0/24 |
    +--------------------------------------+--------+--------------+
 
-The nova command-line client can provide some additional details:
+The OpenStack command-line client can provide some additional details:
 
 .. code-block:: console
 
-   # nova network-list
-   id IPv4        IPv6 start address DNS1 DNS2 VlanID project   uuid
-   1  10.1.0.0/24 None 10.1.0.3      None None 300    2725bbd   beacb3f2
-   2  10.1.1.0/24 None 10.1.1.3      None None 301    none      d0b1a796
+   # openstack compute service list
+   +----+------------------+------------+----------+---------+-------+----------------------------+
+   | Id | Binary           | Host       | Zone     | Status  | State | Updated At                 |
+   +----+------------------+------------+----------+---------+-------+----------------------------+
+   |  1 | nova-consoleauth | controller | internal | enabled | up    | 2016-08-18T12:16:53.000000 |
+   |  2 | nova-scheduler   | controller | internal | enabled | up    | 2016-08-18T12:16:59.000000 |
+   |  3 | nova-conductor   | controller | internal | enabled | up    | 2016-08-18T12:16:52.000000 |
+   |  7 | nova-compute     | controller | nova     | enabled | up    | 2016-08-18T12:16:58.000000 |
+   +----+------------------+------------+----------+---------+-------+----------------------------+
+
 
 This output shows that two networks are configured, each network
 containing 255 IPs (a /24 subnet). The first network has been assigned
@@ -442,13 +444,13 @@ To find out whether any floating IPs are available in your cloud, run:
 
 .. code-block:: console
 
-   # nova floating-ip-list
-   +--------------------------------------+-----------+--------------------------------------+----------+--------+
-   | Id                                   | IP        | Server Id                            | Fixed IP | Pool   |
-   +--------------------------------------+-----------+--------------------------------------+----------+--------+
-   | 0593224f-4d92-41d0-bb41-2c74aea645ba | 3.3.3.101 | 39954bca-4071-428a-9496-de86309473c9 | 3.3.2.4  | public |
-   | 62378f70-17b9-4649-8ae4-474579b3576e | 3.3.3.103 | -                                    | -        | public |
-   +--------------------------------------+-----------+--------------------------------------+----------+--------+
+   # openstack ip floating list
+   +--------------------------------------+---------------------+------------------+--------------------------------------+
+   | ID                                   | Floating IP Address | Fixed IP Address | Port                                 |
+   +--------------------------------------+---------------------+------------------+--------------------------------------+
+   | 340cb36d-6a52-4091-b256-97b6e61cbb20 | 172.24.4.227        | 10.2.1.8         | 1fec8fb8-7a8c-44c2-acd8-f10e2e6cd326 |
+   | 8b1bfc0c-7a91-4da0-b3cc-4acae26cbdec | 172.24.4.228        | None             | None                                 |
+   +--------------------------------------+---------------------+------------------+--------------------------------------+
 
 Here, two floating IPs are available. The first has been allocated to a
 project, while the other is unallocated.
