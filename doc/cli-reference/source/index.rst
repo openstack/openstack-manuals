@@ -33,6 +33,7 @@ Contents
    barbican
    monasca
    networking
+   tacker
    swift
    heat
    cloudkitty
