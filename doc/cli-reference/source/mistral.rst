@@ -9,7 +9,7 @@ Workflow service command-line client
 The mistral client is the command-line interface (CLI) for
 the Workflow service API and its extensions.
 
-This chapter documents :command:`mistral` version ``2.0.0``.
+This chapter documents :command:`mistral` version ``2.1.0``.
 
 For help on a specific :command:`mistral` command, enter:
 
@@ -32,7 +32,18 @@ mistral usage
                   [--os-username USERNAME] [--os-password PASSWORD]
                   [--os-tenant-id TENANT_ID] [--os-tenant-name TENANT_NAME]
                   [--os-auth-token TOKEN] [--os-auth-url AUTH_URL]
-                  [--os-cacert CACERT] [--insecure]
+                  [--os-cert OS_CERT] [--os-key OS_KEY] [--os-cacert OS_CACERT]
+                  [--insecure] [--auth-type AUTH_TYPE]
+                  [--openid-client-id CLIENT_ID]
+                  [--openid-client-secret CLIENT_SECRET]
+                  [--os-target-username TARGET_USERNAME]
+                  [--os-target-password TARGET_PASSWORD]
+                  [--os-target-tenant-id TARGET_TENANT_ID]
+                  [--os-target-tenant-name TARGET_TENANT_NAME]
+                  [--os-target-auth-token TARGET_TOKEN]
+                  [--os-target-auth-url TARGET_AUTH_URL]
+                  [--os-target_cacert TARGET_CACERT] [--target_insecure]
+                  [--profile HMAC_KEY]
 
 .. _mistral_command_options:
 
@@ -95,12 +106,75 @@ mistral optional arguments
 ``--os-auth-url AUTH_URL``
   Authentication URL (Env: OS_AUTH_URL)
 
-``--os-cacert CACERT``
+``--os-cert OS_CERT``
+  Client Certificate (Env: OS_CERT)
+
+``--os-key OS_KEY``
+  Client Key (Env: OS_KEY)
+
+``--os-cacert OS_CACERT``
   Authentication CA Certificate (Env: OS_CACERT)
 
 ``--insecure``
   Disables SSL/TLS certificate verification
   (Env: MISTRALCLIENT_INSECURE)
+
+``--auth-type AUTH_TYPE``
+  Authentication type. Valid options are:
+  ['keystone', 'keycloak-oidc']. (Env:
+  MISTRAL_AUTH_TYPE)
+
+``--openid-client-id CLIENT_ID``
+  Client ID (according to OpenID Connect). (Env:
+  OPENID_CLIENT_ID)
+
+``--openid-client-secret CLIENT_SECRET``
+  Client secret (according to OpenID Connect)
+  (Env: OPENID_CLIENT_SECRET)
+
+``--os-target-username TARGET_USERNAME``
+  Authentication username for target cloud (Env:
+  OS_TARGET_USERNAME)
+
+``--os-target-password TARGET_PASSWORD``
+  Authentication password for target cloud (Env:
+  OS_TARGET_PASSWORD)
+
+``--os-target-tenant-id TARGET_TENANT_ID``
+  Authentication tenant identifier for target
+  cloud (Env: OS_TARGET_TENANT_ID)
+
+``--os-target-tenant-name TARGET_TENANT_NAME``
+  Authentication tenant name for target cloud
+  (Env: OS_TARGET_TENANT_NAME)
+
+``--os-target-auth-token TARGET_TOKEN``
+  Authentication token for target cloud (Env:
+  OS_TARGET_AUTH_TOKEN)
+
+``--os-target-auth-url TARGET_AUTH_URL``
+  Authentication URL for target cloud (Env:
+  OS_TARGET_AUTH_URL)
+
+``--os-target_cacert TARGET_CACERT``
+  Authentication CA Certificate for target cloud
+  (Env: OS_TARGET_CACERT)
+
+``--target_insecure``
+  Disables SSL/TLS certificate verification for
+  target cloud (Env:
+  TARGET_MISTRALCLIENT_INSECURE)
+
+``--profile HMAC_KEY``
+  HMAC key to use for encrypting context data
+  for performance profiling of operation. This
+  key should be one of the values configured for
+  the osprofiler middleware in mistral, it is
+  specified in the profiler section of the
+  mistral configuration (i.e.
+  /etc/mistral/mistral.conf). Without the key,
+  profiling will not be triggered even if
+  osprofiler is enabled on the server side.
 
 .. _mistral_action-create:
 
@@ -137,14 +211,14 @@ mistral action-delete
 
 .. code-block:: console
 
-   usage: mistral action-delete [-h] name [name ...]
+   usage: mistral action-delete [-h] action [action ...]
 
 Delete action.
 
 **Positional arguments:**
 
-``name``
-  Name of action(s).
+``action``
+  Name or ID of action(s).
 
 **Optional arguments:**
 
@@ -158,13 +232,14 @@ mistral action-execution-delete
 
 .. code-block:: console
 
-   usage: mistral action-execution-delete [-h] id [id ...]
+   usage: mistral action-execution-delete [-h]
+                                          action_execution [action_execution ...]
 
 Delete action execution.
 
 **Positional arguments:**
 
-``id``
+``action_execution``
   Id of action execution identifier(s).
 
 **Optional arguments:**
@@ -183,13 +258,13 @@ mistral action-execution-get
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
-                                       id
+                                       action_execution
 
 Show specific Action execution.
 
 **Positional arguments:**
 
-``id``
+``action_execution``
   Action execution ID.
 
 **Optional arguments:**
@@ -308,14 +383,14 @@ mistral action-get
    usage: mistral action-get [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--prefix PREFIX]
-                             name
+                             action
 
 Show specific action.
 
 **Positional arguments:**
 
-``name``
-  Action name
+``action``
+  Action (name or ID)
 
 **Optional arguments:**
 
@@ -370,7 +445,7 @@ mistral action-update
 
    usage: mistral action-update [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--quote {all,minimal,none,nonnumeric}]
+                                [--quote {all,minimal,none,nonnumeric}] [--id ID]
                                 [--public]
                                 definition
 
@@ -386,8 +461,35 @@ Update action.
 ``-h, --help``
   show this help message and exit
 
+``--id ID``
+  Action ID.
+
 ``--public``
   With this flag action will be marked as "public".
+
+.. _mistral_action-validate:
+
+mistral action-validate
+-----------------------
+
+.. code-block:: console
+
+   usage: mistral action-validate [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width <integer>]
+                                  [--noindent] [--prefix PREFIX]
+                                  definition
+
+Validate action.
+
+**Positional arguments:**
+
+``definition``
+  action definition file
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
 
 .. _mistral_cron-trigger-create:
 
@@ -442,13 +544,13 @@ mistral cron-trigger-delete
 
 .. code-block:: console
 
-   usage: mistral cron-trigger-delete [-h] name [name ...]
+   usage: mistral cron-trigger-delete [-h] cron_trigger [cron_trigger ...]
 
 Delete trigger.
 
 **Positional arguments:**
 
-``name``
+``cron_trigger``
   Name of cron trigger(s).
 
 **Optional arguments:**
@@ -466,13 +568,13 @@ mistral cron-trigger-get
    usage: mistral cron-trigger-get [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
-                                   name
+                                   cron_trigger
 
 Show specific cron trigger.
 
 **Positional arguments:**
 
-``name``
+``cron_trigger``
   Cron trigger name
 
 **Optional arguments:**
@@ -530,13 +632,13 @@ mistral environment-delete
 
 .. code-block:: console
 
-   usage: mistral environment-delete [-h] name [name ...]
+   usage: mistral environment-delete [-h] environment [environment ...]
 
 Delete environment.
 
 **Positional arguments:**
 
-``name``
+``environment``
   Name of environment(s).
 
 **Optional arguments:**
@@ -554,13 +656,13 @@ mistral environment-get
    usage: mistral environment-get [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--noindent] [--prefix PREFIX]
-                                  name
+                                  environment
 
 Show specific environment.
 
 **Positional arguments:**
 
-``name``
+``environment``
   Environment name
 
 **Optional arguments:**
@@ -653,13 +755,13 @@ mistral execution-delete
 
 .. code-block:: console
 
-   usage: mistral execution-delete [-h] id [id ...]
+   usage: mistral execution-delete [-h] execution [execution ...]
 
 Delete execution.
 
 **Positional arguments:**
 
-``id``
+``execution``
   Id of execution identifier(s).
 
 **Optional arguments:**
@@ -677,13 +779,13 @@ mistral execution-get
    usage: mistral execution-get [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX]
-                                id
+                                execution
 
 Show specific execution.
 
 **Positional arguments:**
 
-``id``
+``execution``
   Execution identifier
 
 **Optional arguments:**
@@ -782,8 +884,8 @@ mistral execution-update
    usage: mistral execution-update [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--noindent] [--prefix PREFIX]
-                                   [-s {RUNNING,PAUSED,SUCCESS,ERROR}] [-e ENV]
-                                   [-d DESCRIPTION]
+                                   [-s {RUNNING,PAUSED,SUCCESS,ERROR,CANCELLED}]
+                                   [-e ENV] [-d DESCRIPTION]
                                    id
 
 Update execution.
@@ -798,7 +900,7 @@ Update execution.
 ``-h, --help``
   show this help message and exit
 
-``-s {RUNNING,PAUSED,SUCCESS,ERROR}, --state {RUNNING,PAUSED,SUCCESS,ERROR}``
+``-s {RUNNING,PAUSED,SUCCESS,ERROR,CANCELLED}, --state {RUNNING,PAUSED,SUCCESS,ERROR,CANCELLED}``
   Execution state
 
 ``-e ENV, --env ENV``
@@ -844,13 +946,13 @@ mistral member-delete
 
 .. code-block:: console
 
-   usage: mistral member-delete [-h] resource_id resource_type member_id
+   usage: mistral member-delete [-h] resource resource_type member_id
 
 Delete a resource sharing relationship.
 
 **Positional arguments:**
 
-``resource_id``
+``resource``
   Resource ID to be shared.
 
 ``resource_type``
@@ -874,13 +976,13 @@ mistral member-get
    usage: mistral member-get [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
                              [--prefix PREFIX] [-m MEMBER_ID]
-                             resource_id resource_type
+                             resource resource_type
 
 Show specific member information.
 
 **Positional arguments:**
 
-``resource_id``
+``resource``
   Resource ID to be shared.
 
 ``resource_type``
@@ -1018,13 +1120,13 @@ mistral task-get
    usage: mistral task-get [-h] [-f {html,json,shell,table,value,yaml}]
                            [-c COLUMN] [--max-width <integer>] [--noindent]
                            [--prefix PREFIX]
-                           id
+                           task
 
 Show specific task.
 
 **Positional arguments:**
 
-``id``
+``task``
   Task identifier
 
 **Optional arguments:**
@@ -1160,13 +1262,13 @@ mistral workbook-delete
 
 .. code-block:: console
 
-   usage: mistral workbook-delete [-h] name [name ...]
+   usage: mistral workbook-delete [-h] workbook [workbook ...]
 
 Delete workbook.
 
 **Positional arguments:**
 
-``name``
+``workbook``
   Name of workbook(s).
 
 **Optional arguments:**
@@ -1184,13 +1286,13 @@ mistral workbook-get
    usage: mistral workbook-get [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
-                               name
+                               workbook
 
 Show specific workbook.
 
 **Positional arguments:**
 
-``name``
+``workbook``
   Workbook name
 
 **Optional arguments:**
@@ -1321,13 +1423,13 @@ mistral workflow-delete
 
 .. code-block:: console
 
-   usage: mistral workflow-delete [-h] identifier [identifier ...]
+   usage: mistral workflow-delete [-h] workflow [workflow ...]
 
 Delete workflow.
 
 **Positional arguments:**
 
-``identifier``
+``workflow``
   Name or ID of workflow(s).
 
 **Optional arguments:**
@@ -1345,13 +1447,13 @@ mistral workflow-get
    usage: mistral workflow-get [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
                                [--prefix PREFIX]
-                               identifier
+                               workflow
 
 Show specific workflow.
 
 **Positional arguments:**
 
-``identifier``
+``workflow``
   Workflow ID or name.
 
 **Optional arguments:**
