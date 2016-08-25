@@ -1,1 +1,0 @@
-../../install-guide/source/manila-share-install-dhss-true-option2.rst

@@ -100,7 +100,6 @@ Contents
    neutron.rst
    horizon.rst
    cinder.rst
-   manila.rst
    additional-services.rst
    launch-instance.rst
 

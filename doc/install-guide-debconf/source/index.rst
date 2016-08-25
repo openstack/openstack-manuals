@@ -44,7 +44,6 @@ Contents
    neutron.rst
    horizon.rst
    cinder.rst
-   manila.rst
    launch-instance.rst
 
 Appendix

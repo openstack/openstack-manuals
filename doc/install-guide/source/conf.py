@@ -102,6 +102,7 @@ exclude_patterns = ['common/cli*', 'common/nova*',
                     'common/get-started-data-processing.rst',
                     'common/get-started-object-storage.rst',
                     'common/get-started-orchestration.rst',
+                    'common/get-started-shared-file-systems.rst',
                     'common/get-started-telemetry.rst',
                     'common/dashboard-customizing.rst',
                     'shared/note_configuration_vary_by_distribution.rst']
