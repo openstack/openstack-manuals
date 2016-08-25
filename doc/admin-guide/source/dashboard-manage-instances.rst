@@ -20,7 +20,7 @@ Create instance snapshots
    and click the :guilabel:`Instances` category.
 
 #. Select an instance to create a snapshot from it. From the
-   :guilabel:`Actions` drop-down list, select :guilabel:`Create Snapshot`.
+   Actions drop-down list, select :guilabel:`Create Snapshot`.
 
 #. In the :guilabel:`Create Snapshot` window, enter a name for the snapshot.
 
@@ -28,7 +28,7 @@ Create instance snapshots
    in the :guilabel:`Images` category.
 
 #. To launch an instance from the snapshot, select the snapshot and
-   click :guilabel:`Launch Instance`. For information about launching
+   click :guilabel:`Launch`. For information about launching
    instances, see the
    `OpenStack End User Guide <http://docs.openstack.org/user-guide/dashboard-launch-instances.html>`__.
 
@@ -43,7 +43,7 @@ Control the state of an instance
 
 #. Select the instance for which you want to change the state.
 
-#. From the drop-down list in the :guilabel:`Actions` column,
+#. From the drop-down list in the Actions column,
    select the state.
 
    Depending on the current state of the instance, you can perform various
