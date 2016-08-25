@@ -96,7 +96,7 @@ Install and configure components
          public servers. However, you can optionally configure alternative
          servers such as those provided by your organization.
 
-   3. To enable other nodes to connect to the chrony daemon on the controller,
+   3. To enable other nodes to connect to the chrony daemon on the controller node,
       add the following key to the ``/etc/chrony.conf`` file:
 
       .. code-block:: ini
