@@ -58,14 +58,13 @@ resolve conflicts when multiple commits happen on the same file.
 
    You need to resolve a conflict by manually editing the file.
    You also need to delete the '<<<<<<<', '=======', and'>>>>>>>'
-   in the file. Add the files to the stage by
-   running :command:`git add <filename>`.
+   in the file.
 
-#. Commit the changes:
+#. Add the files to the stage:
 
    .. code-block:: console
 
-      $ git commit
+      $ git add $FILENAME
 
 #. Complete the rebase process:
 
