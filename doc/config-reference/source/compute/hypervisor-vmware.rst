@@ -298,6 +298,10 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
      - Swapfile placement
    * -
      -
+     -
+     - Disk cahnge tracking
+   * -
+     -
      - Interaction
      -
    * -
@@ -358,7 +362,11 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
      - Customize
    * -
      -
+     -
+     - Create template from virtual machine
+   * -
      - Sessions
+     - 
      -
    * -
      -
