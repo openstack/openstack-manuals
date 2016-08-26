@@ -255,12 +255,12 @@ Create an instance snapshot
 
 #. Select the instance from which to create a snapshot.
 
-#. In the :guilabel:`Actions` column, click :guilabel:`Create Snapshot`.
+#. In the actions column, click :guilabel:`Create Snapshot`.
 
 #. In the :guilabel:`Create Snapshot` dialog box, enter a name for the
    snapshot, and click :guilabel:`Create Snapshot`.
 
-   The Images category shows the instance snapshot.
+   The :guilabel:`Images` category shows the instance snapshot.
 
 To launch an instance from the snapshot, select the snapshot and click
 :guilabel:`Launch`. Proceed with launching an instance.
@@ -277,7 +277,7 @@ Manage an instance
 
 #. Select an instance.
 
-#. In the menu list in the :guilabel:`Actions` column, select the state.
+#. In the menu list in the actions column, select the state.
 
    You can resize or rebuild an instance. You can also choose to view
    the instance console log, edit instance or the security groups.
