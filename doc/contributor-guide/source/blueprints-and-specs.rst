@@ -11,7 +11,9 @@ The Documentation team uses specifications in the `docs-specs repository
 <http://git.openstack.org/cgit/openstack/docs-specs>`_ to maintain large
 changes. Approved specifications are published at `Documentation Program
 Specifications <http://specs.openstack.org/openstack/docs-specs>`_.
-For tracking purposes, a blueprint is created for each specification.
+For tracking purposes, a blueprint is created for each specification. It is
+also good practice to contact the speciality team for the book you want to
+change to discuss your changes before starting work.
 
 Use blueprints and specifications:
 
@@ -27,8 +29,6 @@ Use blueprints and specifications:
 A specification needs two +2 votes from the docs-specs-core team.
 See the current list of `docs-specs core team
 <https://review.openstack.org/#/admin/groups/384,members>`_.
-For more information, see `Blueprints and specifications
-<https://wiki.openstack.org/wiki/Blueprints#Blueprints_and_Specs>`_.
 
 Use bugs against openstack-manuals or openstack-api-site:
 
