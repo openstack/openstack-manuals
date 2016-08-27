@@ -220,5 +220,5 @@ and the association of that address with a specific instance.
    To disassociate an IP address from an instance, click the
    :guilabel:`Disassociate` button.
 
-To release the floating IP address back into the pool of addresses, click
-the :guilabel:`Release Floating IP` option at the :guilabel:`Actions` column.
+To release the floating IP address back into the floating IP table, click
+the :guilabel:`Release Floating IP` option in the :guilabel:`Actions` column.
