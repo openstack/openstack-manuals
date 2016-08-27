@@ -13,10 +13,6 @@ The Networking service only references the underlying physical network MTU.
 Changing the underlying physical network device MTU requires configuration
 of physical network devices such as switches and routers.
 
-.. warning::
-
-   For existing deployments, MTU values only apply to new network resources.
-
 Jumbo frames
 ~~~~~~~~~~~~
 
@@ -30,6 +26,13 @@ bytes of overhead for any protocol.
 The Networking service supports the following underlying physical network
 architectures. Case 1 refers to the most common architecture. In general,
 architectures should avoid cases 2 and 3.
+
+.. note::
+
+   You can trigger MTU recalculation for existing networks by changing the
+   MTU configuration and restarting the ``neutron-server`` service.
+   However, propagating MTU calculations to the data plane may require
+   users to delete and recreate ports on the network.
 
 Case 1
 ------
