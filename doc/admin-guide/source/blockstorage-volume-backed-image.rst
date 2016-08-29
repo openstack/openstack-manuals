@@ -11,7 +11,7 @@ such as file and swift, creating a volume from a Volume-backed image performs
 better when the block storage driver supports efficient volume cloning.
 
 If the image is set to public in the Image service, the volume data can be
-shared among tenants.
+shared among projects.
 
 Configure the Volume-backed image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,15 +50,15 @@ each back-end section of the ``cinder.conf`` file:
    image_upload_use_cinder_backend = True
 
 By default, the :command:`openstack image create --volume <volume>` command
-creates the Image-Volume in the current tenant. To store the Image-Volume into
-the internal tenant, set the following options in each back-end section of the
+creates the Image-Volume in the current project. To store the Image-Volume into
+the internal project, set the following options in each back-end section of the
 ``cinder.conf`` file:
 
 .. code-block:: ini
 
     image_upload_use_internal_tenant = True
 
-To make the Image-Volume in the internal tenant accessible from the Image
+To make the Image-Volume in the internal project accessible from the Image
 service, set the following options in the ``glance_store`` section of
 the ``glance-api.conf`` file:
 

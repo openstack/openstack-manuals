@@ -31,7 +31,7 @@ View resource statistics
 
 #. Click the:
 
-   * :guilabel:`Usage Report` tab to view a usage report per tenant (project)
+   * :guilabel:`Usage Report` tab to view a usage report per project
      by specifying the time period (or even use a calendar to define
      a date range).
 

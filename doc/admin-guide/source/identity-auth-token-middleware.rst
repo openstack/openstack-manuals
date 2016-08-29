@@ -63,8 +63,8 @@ This sample paste config filter makes use of the ``admin_user`` and
 
 .. note::
 
-   Using this option requires an admin tenant/role relationship. The
-   admin user is granted access to the admin role on the admin tenant.
+   Using this option requires an admin project/role relationship. The
+   admin user is granted access to the admin role on the admin project.
 
 .. note::
 

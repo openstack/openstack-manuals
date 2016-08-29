@@ -211,7 +211,7 @@ Identity attribute mapping
       user_enabled_invert    = false
       user_enabled_default   = 51
       user_default_project_id_attribute =
-      user_attribute_ignore = default_project_id,tenants
+      user_attribute_ignore = default_project_id,projects
       user_additional_attribute_mapping =
 
       group_id_attribute     = cn

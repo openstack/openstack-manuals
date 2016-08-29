@@ -13,11 +13,11 @@ about authentication with the Identity service, see `OpenStack Identity
 service API v2.0
 Reference <http://developer.openstack.org/api-ref/identity/v2/>`__.
 When the Identity service is enabled, it is not mandatory to specify the
-tenant ID for resources in create requests because the tenant ID is
+project ID for resources in create requests because the project ID is
 derived from the authentication token.
 
 The default authorization settings only allow administrative users
-to create resources on behalf of a different tenant. Networking uses
+to create resources on behalf of a different project. Networking uses
 information received from Identity to authorize user requests.
 Networking handles two kind of authorization policies:
 
@@ -80,15 +80,15 @@ terminal rules:
 -  **Generic rules** compare an attribute in the resource with an
    attribute extracted from the user's security credentials and
    evaluates successfully if the comparison is successful. For instance
-   ``"tenant_id:%(tenant_id)s"`` is successful if the tenant identifier
-   in the resource is equal to the tenant identifier of the user
+   ``"tenant_id:%(tenant_id)s"`` is successful if the project identifier
+   in the resource is equal to the project identifier of the user
    submitting the request.
 
 This extract is from the default ``policy.json`` file:
 
 -  A rule that evaluates successfully if the current user is an
    administrator or the owner of the resource specified in the request
-   (tenant identifier is equal).
+   (project identifier is equal).
 
    .. code-block:: json
 
@@ -226,7 +226,7 @@ This extract is from the default ``policy.json`` file:
        }
 
 In some cases, some operations are restricted to administrators only.
-This example shows you how to modify a policy file to permit tenants to
+This example shows you how to modify a policy file to permit project to
 define networks, see their resources, and permit administrative users to
 perform all other operations:
 

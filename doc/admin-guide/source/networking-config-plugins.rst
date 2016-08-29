@@ -148,7 +148,7 @@ formerly known as Nicira NVP.
       load balancing requests on the various API endpoints.
 
    -  The UUID of the NSX-mh transport zone that should be used by default
-      when a tenant creates a network. You can get this value from the
+      when a project creates a network. You can get this value from the
       Transport Zones page for the NSX-mh manager:
 
       Alternatively the transport zone identifier can be retrieved by query

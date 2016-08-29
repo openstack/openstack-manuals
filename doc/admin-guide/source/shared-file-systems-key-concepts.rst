@@ -89,9 +89,9 @@ Share Networks
 ~~~~~~~~~~~~~~
 
 A ``share network`` is an object that defines a relationship between a
-tenant network and subnet, as defined in an OpenStack Networking service or
+project network and subnet, as defined in an OpenStack Networking service or
 Compute service. The ``share network`` is also defined in ``shares``
-created by the same tenant. A tenant may find it desirable to
+created by the same project. A project may find it desirable to
 provision ``shares`` such that only instances connected to a particular
 OpenStack-defined network have access to the ``share``. Also,
 ``security services`` can be attached to ``share networks``,

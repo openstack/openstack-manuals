@@ -33,9 +33,9 @@ You can add the security service to the
 :ref:`share network <shared_file_systems_share_networks>`.
 
 To create a security service, specify the security service type, a
-description of a security service, DNS IP address used inside tenant's
+description of a security service, DNS IP address used inside project's
 network, security service IP address or host name, domain, security
-service user or group used by tenant, and a password for the user. The
+service user or group used by project, and a password for the user. The
 share name is optional.
 
 Create a ``ldap`` security service:

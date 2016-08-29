@@ -35,16 +35,16 @@ include the following agents:
 |                            | Certain plug-ins do not require an agent.   |
 +----------------------------+---------------------------------------------+
 |**dhcp agent**              |                                             |
-|(``neutron-dhcp-agent``)    | Provides DHCP services to tenant networks.  |
+|(``neutron-dhcp-agent``)    | Provides DHCP services to project networks. |
 |                            | Required by certain plug-ins.               |
 +----------------------------+---------------------------------------------+
 |**l3 agent**                |                                             |
 |(``neutron-l3-agent``)      | Provides L3/NAT forwarding to provide       |
-|                            | external network access for VMs on tenant   |
+|                            | external network access for VMs on project  |
 |                            | networks. Required by certain plug-ins.     |
 +----------------------------+---------------------------------------------+
 |**metering agent**          |                                             |
-|(``neutron-metering-agent``)| Provides L3 traffic metering for tenant     |
+|(``neutron-metering-agent``)| Provides L3 traffic metering for project    |
 |                            | networks.                                   |
 +----------------------------+---------------------------------------------+
 
@@ -62,7 +62,7 @@ ways:
    VM into a particular network.
 
 -  The dashboard (horizon) integrates with the Networking API, enabling
-   administrators and tenant users to create and manage network services
+   administrators and project users to create and manage network services
    through a web-based GUI.
 
 VMware NSX integration

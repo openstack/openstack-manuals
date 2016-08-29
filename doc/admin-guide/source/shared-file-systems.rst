@@ -5,7 +5,7 @@ Shared File Systems
 ===================
 
 Shared File Systems service provides a set of services for management of
-shared file systems in a multi-tenant cloud environment. The service resembles
+shared file systems in a multi-project cloud environment. The service resembles
 OpenStack block-based storage management from the OpenStack Block Storage
 service project. With the Shared File Systems service, you can
 create a remote file system, mount the file system on your instances, and then

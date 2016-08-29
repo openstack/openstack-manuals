@@ -6,7 +6,7 @@ Network plug-ins
 
 The Shared File Systems service architecture defines an abstraction layer for
 network resource provisioning and allowing administrators to choose from a
-different options for how network resources are assigned to their tenants’
+different options for how network resources are assigned to their projects’
 networked storage. There are a set of network plug-ins that provide a variety
 of integration approaches with the network services that are available with
 OpenStack.
@@ -36,7 +36,7 @@ Shared File Systems service:
       the ``neutron_subnet_id`` to be provided when defining the share network
       that will be used for the creation of share servers. The user may define
       any number of share networks corresponding to the various physical
-      network segments in a tenant environment.
+      network segments in a project environment.
 
    b) ``manila.network.neutron.neutron_network_plugin.
       NeutronSingleNetworkPlugin``. This is a simplification of the previous

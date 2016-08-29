@@ -148,10 +148,10 @@ external networking services:
    -  `OpenContrail <http://www.opencontrail.org/>`__
 
 
-.. _telemetry-users-roles-tenants:
+.. _telemetry-users-roles-projects:
 
-Users, roles, and tenants
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Users, roles, and projects
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This service of OpenStack uses OpenStack Identity for authenticating and
 authorizing users. The required configuration options are listed in the

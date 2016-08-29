@@ -7,7 +7,7 @@ Quotas and limits
 Limits
 ~~~~~~
 
-Limits are the resource limitations that are allowed for each tenant (project).
+Limits are the resource limitations that are allowed for each project.
 An administrator can configure limits in the ``manila.conf`` file.
 
 Users can query their rate and absolute limits.
@@ -85,22 +85,22 @@ Quotas
 
 Quota sets provide quota management support.
 
-To list the quotas for a tenant or user, use the :command:`manila quota-show`
+To list the quotas for a project or user, use the :command:`manila quota-show`
 command. If you specify the optional :option:`--user` parameter, you get the
-quotas for this user in the specified tenant. If you omit this parameter,
+quotas for this user in the specified project. If you omit this parameter,
 you get the quotas for the specified project.
 
 .. note::
 
    The Shared File Systems service does not perform mapping of usernames and
-   tenant/project names to IDs. Provide only ID values to get correct setup
-   of quotas. Setting it by names you set quota for nonexistent tenant/user.
-   In case quota is not set explicitly by tenant/user ID,
+   project names to IDs. Provide only ID values to get correct setup
+   of quotas. Setting it by names you set quota for nonexistent project/user.
+   In case quota is not set explicitly by project/user ID,
    The Shared File Systems service just applies default quotas.
 
 .. code-block:: console
 
-   $ manila quota-show --tenant %tenant_id% --user %user_id%
+   $ manila quota-show --tenant %project_id% --user %user_id%
    +--------------------+-------+
    | Property           | Value |
    +--------------------+-------+
@@ -117,7 +117,7 @@ the :command:`manila quota-defaults` command:
 
 .. code-block:: console
 
-   $ manila quota-defaults --tenant %tenant_id%
+   $ manila quota-defaults --tenant %project_id%
    +--------------------+-------+
    | Property           | Value |
    +--------------------+-------+
@@ -128,14 +128,14 @@ the :command:`manila quota-defaults` command:
    | share_networks     | 10    |
    +--------------------+-------+
 
-The administrator can update the quotas for a specific tenant, or for a
+The administrator can update the quotas for a specific project, or for a
 specific user by providing both the ``--tenant`` and ``--user`` optional
 arguments. It is possible to update the ``shares``, ``snapshots``,
 ``gigabytes``, ``snapshot-gigabytes``, and ``share-networks`` quotas.
 
 .. code-block:: console
 
-   $ manila quota-update %tenant_id% --user %user_id% --shares 49 --snapshots 49
+   $ manila quota-update %project_id% --user %user_id% --shares 49 --snapshots 49
 
 As administrator, you can also permit or deny the force-update of a quota that
 is already used, or if the requested value exceeds the configured quota limit.
@@ -143,10 +143,10 @@ To force-update a quota, use ``force`` optional key.
 
 .. code-block:: console
 
-   $ manila quota-update %tenant_id% --shares 51 --snapshots 51 --force
+   $ manila quota-update %project_id% --shares 51 --snapshots 51 --force
 
 To revert quotas to default for a project or for a user, delete quotas:
 
 .. code-block:: console
 
-   $ manila quota-delete --tenant %tenant_id% --user %user_id%
+   $ manila quota-delete --tenant %project_id% --user %user_id%

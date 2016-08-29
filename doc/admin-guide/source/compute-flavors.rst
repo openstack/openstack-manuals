@@ -61,7 +61,7 @@ Flavors define these elements:
 |             | or NSX based systems.                                         |
 +-------------+---------------------------------------------------------------+
 | Is Public   | Boolean value, whether flavor is available to all users or p\ |
-|             | rivate to the tenant it was created in. Defaults to ``True``. |
+|             | rivate to the project it was created in. Defaults to ``True``.|
 +-------------+---------------------------------------------------------------+
 | Extra Specs | Key and value pairs that define on which compute nodes a fla\ |
 |             | vor can run. These pairs must match corresponding pairs on t\ |

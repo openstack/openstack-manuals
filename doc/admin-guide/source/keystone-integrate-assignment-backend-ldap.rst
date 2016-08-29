@@ -7,7 +7,7 @@ Integrate assignment back end with LDAP
 When you configure the OpenStack Identity service to use LDAP servers,
 you can split authentication and authorization using the *assignment*
 feature. Integrating the *assignment* back end with LDAP allows
-administrators to use projects (tenant), roles, domains, and role
+administrators to use projects, roles, domains, and role
 assignments in LDAP.
 
 .. note::
