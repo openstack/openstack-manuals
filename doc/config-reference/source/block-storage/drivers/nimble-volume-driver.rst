@@ -30,6 +30,8 @@ Supported operations
 * Enable encryption and default performance policy for a volume-type
   extra-specs
 
+* Force backup of an in-use volume.
+
 .. note::
 
    The Nimble Storage implementation uses iSCSI only.
