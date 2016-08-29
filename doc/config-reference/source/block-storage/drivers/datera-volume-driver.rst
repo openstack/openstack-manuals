@@ -114,7 +114,7 @@ following capabilities in QoS Specs
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
-* Create, delete, attach, and detach volumes.
+* Create, delete, attach, detach, manage, unmanage, and list volumes.
 
 * Create, list, and delete volume snapshots.
 
@@ -128,6 +128,7 @@ Supported operations
 
 * Extend a volume.
 
+* Support for naming convention changes.
 
 Configuring multipathing
 ~~~~~~~~~~~~~~~~~~~~~~~~
