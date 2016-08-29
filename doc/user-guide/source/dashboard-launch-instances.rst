@@ -32,13 +32,13 @@ Launch an instance
 
    :guilabel:`Details` tab
 
+   Instance Name
+      Assign a name to the virtual machine.
+
    Availability Zone
       By default, this value is set to the availability zone given by the
       cloud provider (for example, ``us-west`` or ``apac-south``). For some
       cases, it could be ``nova``.
-
-   Instance Name
-      Assign a name to the virtual machine.
 
       .. note::
 
@@ -53,20 +53,11 @@ Launch an instance
          Server names are not guaranteed to be unique when created so you
          could have two instances with the same host name.
 
-   Flavor
-      Specify the size of the instance to launch.
-
-      .. note::
-
-         The flavor is selected based on the size of the image selected
-         for launching an instance. For example, while creating an image, if
-         you have entered the value in the :guilabel:`Minimum RAM (MB)` field
-         as 2048, then on selecting the image, the default flavor is
-         ``m1.small``.
-
-   Instance Count
+   Count
       To launch multiple instances, enter a value greater than ``1``. The
       default is ``1``.
+
+   :guilabel:`Source` tab
 
    Instance Boot Source
       Your options are:
@@ -115,14 +106,31 @@ Launch an instance
       If you want to delete the volume on instance delete,
       check the :guilabel:`Delete Volume on Instance Delete` option.
 
-   :guilabel:`Access & Security` tab
+   :guilabel:`Flavor` tab
 
-   Key Pair
-      Specify a key pair.
+   Flavor
+      Specify the size of the instance to launch.
 
-      If the image uses a static root password or a static key set
-      (neither is recommended), you do not need to provide a key pair
-      to launch the instance.
+      .. note::
+
+         The flavor is selected based on the size of the image selected
+         for launching an instance. For example, while creating an image, if
+         you have entered the value in the :guilabel:`Minimum RAM (MB)` field
+         as 2048, then on selecting the image, the default flavor is
+         ``m1.small``.
+
+   :guilabel:`Networks` tab
+
+   Selected Networks
+      To add a network to the instance, click the :guilabel:`+` in the
+      :guilabel:`Available` field.
+
+   :guilabel:`Network Ports` tab
+
+   Ports
+      Activate the ports that you want to assign to the instance.
+
+   :guilabel:`Security Groups` tab
 
    Security Groups
       Activate the security groups that you want to assign to the instance.
@@ -133,36 +141,27 @@ Launch an instance
       If you have not created any security groups, you can assign
       only the default security group to the instance.
 
-   :guilabel:`Networking` tab
+   :guilabel:`Key Pair` tab
 
-   Selected Networks
-      To add a network to the instance, click the :guilabel:`+` in the
-      :guilabel:`Available Networks` field.
+   Key Pair
+      Specify a key pair.
 
+      If the image uses a static root password or a static key set
+      (neither is recommended), you do not need to provide a key pair
+      to launch the instance.
 
-   :guilabel:`Network Ports` tab
-
-   Ports
-      Activate the ports that you want to assign to the instance.
-
-   :guilabel:`Post-Creation` tab
+   :guilabel:`Configuration` tab
 
    Customization Script Source
       Specify a customization script that runs after your instance
       launches.
 
-   :guilabel:`Advanced Options` tab
+   :guilabel:`Metadata` tab
 
-   Disk Partition
-      Select the type of disk partition from the dropdown list:
+   Available Metadata
+      Add Metadata items to your instance.
 
-      Automatic
-          Entire disk is single partition and automatically resizes.
-
-      Manual
-          Faster build times but requires manual partitioning.
-
-#. Click :guilabel:`Launch`.
+#. Click :guilabel:`Launch Instance`.
 
    The instance starts on a compute node in the cloud.
 
