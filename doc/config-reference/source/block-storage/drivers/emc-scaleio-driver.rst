@@ -57,9 +57,9 @@ To find the ScaleIO documentation:
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
-* Create, delete, clone, attach, and detach volumes
+* Create, delete, clone, attach, detach, manage, and unmanage volumes
 
-* Create and delete volume snapshots
+* Create, delete, manage, and unmanage volume snapshots
 
 * Create a volume from a snapshot
 
@@ -70,8 +70,6 @@ Supported operations
 * Extend a volume
 
 * Get volume statistics
-
-* Manage and unmanage a volume
 
 * Create, list, update, and delete consistency groups
 
