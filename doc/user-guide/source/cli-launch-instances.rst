@@ -122,7 +122,7 @@ Before you begin, source the OpenStack RC file.
    .. note::
 
       If you are an admin user, specify the :option:`--all-tenants` parameter to
-      list groups for all tenants.
+      list groups for all projects.
 
 
 
