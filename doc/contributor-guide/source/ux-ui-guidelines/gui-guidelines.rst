@@ -55,11 +55,11 @@ Ensure workflows provide enough information for users to drive the decision-
 making process. We recommend referring to the OpenStack personas when
 designing and creating. The personas are:
 
-* :ref:`arnie-infrastructure-arch`
-* :ref:`carlos-cloud-ops`
-* :ref:`doug-domain-operator`
-* :ref:`pei-project-owner`
-* :ref:`alan-app-developer`
+* :ref:`infrastructure-arch`
+* :ref:`cloud-ops`
+* :ref:`domain-operator`
+* :ref:`project-owner`
+* :ref:`app-developer`
 
 Specific use case interfaces vary based on the individual use case.
 For example, a GUI may be appropriate to launch 1-x of the same instance, but
