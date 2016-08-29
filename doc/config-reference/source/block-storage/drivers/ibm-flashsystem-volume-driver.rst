@@ -238,3 +238,5 @@ These operations are supported:
 -  Extend a volume.
 
 -  Get volume statistics.
+
+-  Manage and unmanage a volume.
