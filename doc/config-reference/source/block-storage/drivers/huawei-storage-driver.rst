@@ -21,7 +21,11 @@ driver, Huawei storage system and OpenStack:
      - Storage System Version
    * - Create, delete, expand, attach, detach, manage, and unmanage volumes.
 
-       Create, delete, manage and unmanage a snapshot.
+       Create, delete, manage, and unmanage a snapshot.
+
+       Create, delete, and update a consistency group.
+
+       Create and delete a cgsnapshot.
 
        Copy an image to a volume
 
