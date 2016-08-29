@@ -67,7 +67,7 @@ The following sections describe these limitations.
 #. Neutron-lbaas-agent as a single point of failure
 
    The current design of the neutron LBaaS agent using the HAProxy
-   driver does not allow high availability for the tenant load
+   driver does not allow high availability for the project load
    balancers. The neutron-lbaas-agent service will be enabled and
    running on all controllers, allowing for load balancers to be
    distributed across all nodes. However, a controller node failure
