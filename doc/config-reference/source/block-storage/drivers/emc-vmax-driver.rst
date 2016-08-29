@@ -130,12 +130,14 @@ VMAX drivers also support the following features:
 VMAX2
 -  FAST automated storage tiering policy.
 -  Striped volume creation.
+-  iSCSI multipath support.
 
 VMAX3
 -  SLO support.
 -  Dynamic masking view creation.
 -  SnapVX support.
 -  Extend volume and iSCSI support.
+-  iSCSI multipath support.
 
 
 Set up the VMAX drivers
