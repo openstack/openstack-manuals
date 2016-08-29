@@ -60,7 +60,7 @@ by using email, phone, Twitter, or other channels.
 #. The producer posts the availability of specific images for consumers to
    review.
 
-#. A potential consumer provides the producer with the consumer's tenant
+#. A potential consumer provides the producer with the consumer's project
    ID. Optionally, the producer might request the consumer's email
    address for notification purposes, but this is outside the scope of
    the API.
