@@ -88,7 +88,7 @@ Connectivity
 
 Durability and resilience
  Despite the existence of SLAs, things break: servers go down,
- network connections are disrupted, or too many tenants on a server
+ network connections are disrupted, or too many projects on a server
  make a server unusable. An application must be sturdy enough to
  contend with these issues.
 

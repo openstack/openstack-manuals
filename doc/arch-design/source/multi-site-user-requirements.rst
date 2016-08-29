@@ -146,9 +146,9 @@ Auditing
 
 A well thought-out auditing strategy is important in order to be able to
 quickly track down issues. Keeping track of changes made to security
-groups and tenant changes can be useful in rolling back the changes if
+groups and project changes can be useful in rolling back the changes if
 they affect production. For example, if all security group rules for a
-tenant disappeared, the ability to quickly track down the issue would be
+project disappeared, the ability to quickly track down the issue would be
 important for operational and legal reasons.
 
 Separation of duties

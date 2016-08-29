@@ -101,7 +101,7 @@ internet access to instances should consider this domain to be
 untrusted. Private cloud providers may want to consider this
 network as internal and therefore trusted only if they have
 controls in place to assert that they trust instances and all
-their tenants.
+their projects.
 
 Management security domains
 ---------------------------
@@ -151,7 +151,7 @@ bare metal instance instead of a cloud. In other cases, it is
 possible to replicate a second private cloud by integrating
 with a private Cloud-as-a-Service deployment. The
 organization does not buy the hardware, but also does not share
-with other tenants. It is also possible to use a provider that
+with other projects. It is also possible to use a provider that
 hosts a bare-metal public cloud instance for which the
 hardware is dedicated only to one customer, or a provider that
 offers private Cloud-as-a-Service.
@@ -176,7 +176,7 @@ destinations without crossing through locations that are undesirable.
 Consider the following example factors:
 
 * Firewalls
-* Overlay interconnects for joining separated tenant networks
+* Overlay interconnects for joining separated project networks
 * Routing through or avoiding specific networks
 
 How networks attach to hypervisors can expose security
@@ -189,7 +189,7 @@ Multi-site security
 ~~~~~~~~~~~~~~~~~~~
 
 Securing a multi-site OpenStack installation brings
-extra challenges. Tenants may expect a tenant-created network
+extra challenges. Projects may expect a project-created network
 to be secure. In a multi-site installation the use of a
 non-private connection between sites may be required. This may
 mean that traffic would be visible to third parties and, in
@@ -206,16 +206,16 @@ create, read, update, and delete operations. Centralized
 authentication is also useful for auditing purposes because
 all authentication tokens originate from the same source.
 
-Just as tenants in a single-site deployment need isolation
-from each other, so do tenants in multi-site installations.
+Just as projects in a single-site deployment need isolation
+from each other, so do projects in multi-site installations.
 The extra challenges in multi-site designs revolve around
-ensuring that tenant networks function across regions.
+ensuring that project networks function across regions.
 OpenStack Networking (neutron) does not presently support
 a mechanism to provide this functionality, therefore an
 external system may be necessary to manage these mappings.
-Tenant networks may contain sensitive information requiring
+Project networks may contain sensitive information requiring
 that this mapping be accurate and consistent to ensure that a
-tenant in one site does not connect to a different tenant in
+project in one site does not connect to a different project in
 another site.
 
 OpenStack components

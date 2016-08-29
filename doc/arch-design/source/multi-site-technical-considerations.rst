@@ -24,7 +24,7 @@ Swift endpoint and a shared Object Storage capability between them. An
 example of this technique, as well as a configuration walk-through, is
 available at
 http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network.
-Another option in this scenario is to build a dedicated set of tenant
+Another option in this scenario is to build a dedicated set of project
 private networks across the secondary link, using overlay networks with
 a third party mapping the site overlays to each other.
 
@@ -37,8 +37,8 @@ To mitigate this, Identity service call timeouts can be tuned to prevent
 issues authenticating against a central Identity service.
 
 Another network capacity consideration for a multi-site deployment is
-the amount and performance of overlay networks available for tenant
-networks. If using shared tenant networks across zones, it is imperative
+the amount and performance of overlay networks available for project
+networks. If using shared project networks across zones, it is imperative
 that an external overlay manager or controller be used to map these
 overlays together. It is necessary to ensure the amount of possible IDs
 between the zones are identical.
@@ -47,7 +47,7 @@ between the zones are identical.
 
    As of the Kilo release, OpenStack Networking was not capable of
    managing tunnel IDs across installations. So if one site runs out of
-   IDs, but another does not, that tenant's network is unable to reach
+   IDs, but another does not, that project's network is unable to reach
    the other site.
 
 Capacity can take other forms as well. The ability for a region to grow

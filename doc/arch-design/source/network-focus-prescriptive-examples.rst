@@ -9,10 +9,10 @@ individual servers.
 
 The figure below depicts an example design for this workload. In this
 example, a hardware load balancer provides SSL offload functionality and
-connects to tenant networks in order to reduce address consumption. This
+connects to project networks in order to reduce address consumption. This
 load balancer links to the routing architecture as it services the VIP
 for the application. The router and load balancer use the GRE tunnel ID
-of the application's tenant network and an IP address within the tenant
+of the application's project network and an IP address within the project
 subnet but outside of the address pool. This is to ensure that the load
 balancer can communicate with the application's HTTP servers without
 requiring the consumption of a public IP address.
@@ -24,7 +24,7 @@ ensure that layer-2 connectivity does not fail. Routers use VRRP and
 fully mesh with switches to ensure layer-3 connectivity. Since GRE is
 provides an overlay network, Networking is present and uses the Open
 vSwitch agent in GRE tunnel mode. This ensures all devices can reach all
-other devices and that you can create tenant networks for private
+other devices and that you can create project networks for private
 addressing links to the load balancer.
 
 .. figure:: figures/Network_Web_Services1.png
@@ -52,7 +52,7 @@ requirement for auto-scaling, the design includes the Telemetry service.
 Web services tend to be bursty in load, have very defined peak and
 valley usage patterns and, as a result, benefit from automatic scaling
 of instances based upon traffic. At a network level, a split network
-configuration works well with databases residing on private tenant
+configuration works well with databases residing on private project
 networks since these do not emit a large quantity of broadcast traffic
 and may need to interconnect to some databases for content.
 
@@ -110,7 +110,7 @@ from having services local to the consumers of the service. Use a
 multi-site approach as well as deploying many copies of the application
 to handle load as close as possible to consumers. Since these
 applications function independently, they do not warrant running
-overlays to interconnect tenant networks. Overlays also have the
+overlays to interconnect project networks. Overlays also have the
 drawback of performing poorly with rapid flow setup and may incur too
 much overhead with large quantities of small packets and therefore we do
 not recommend them.

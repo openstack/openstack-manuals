@@ -91,7 +91,7 @@ packets are transmitted between regions and how the logical network and
 addresses present to the application. If there are security or
 regulatory requirements, encryption should be implemented to secure the
 traffic between regions. For networking inside a region, the overlay
-network technology for tenant networks is equally important. The overlay
+network technology for project networks is equally important. The overlay
 technology and the network traffic that an application generates or
 receives can be either complementary or serve cross purposes. For
 example, using an overlay technology for an application that transmits a
@@ -114,5 +114,5 @@ Ensure that enough storage is allocated to support the data protection
 strategy.
 
 Networking decisions include the encapsulation mechanism that can be
-used for the tenant networks, how large the broadcast domains should be,
+used for the project networks, how large the broadcast domains should be,
 and the contracted SLAs for the interconnects.
