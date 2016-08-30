@@ -135,30 +135,3 @@ service quotas.
    .. code-block:: console
 
       $ cinder quota-delete PROJECT_ID
-
-Remove a service
-~~~~~~~~~~~~~~~~
-
-#. Determine the binary and host of the service you want to remove.
-
-   .. code-block:: console
-
-      $ cinder service-list
-      +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
-      |      Binary      |         Host         | Zone |  Status | State |         Updated_at         | Disabled Reason |
-      +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
-      | cinder-scheduler |       devstack       | nova | enabled |   up  | 2015-10-13T15:21:48.000000 |        -        |
-      |  cinder-volume   | devstack@lvmdriver-1 | nova | enabled |   up  | 2015-10-13T15:21:52.000000 |        -        |
-      +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
-
-#. Disable the service.
-
-   .. code-block:: console
-
-      $ cinder service-disable HOST_NAME BINARY_NAME
-
-#. Remove the service from the database.
-
-   .. code-block:: console
-
-      $ cinder-manage service remove BINARY_NAME HOST_NAME
