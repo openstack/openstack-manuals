@@ -44,7 +44,7 @@ For information about how to manage images, see the
         --disk-format qcow2 --container-format bare \
         --public
       +------------------+------------------------------------------------------+
-      | Property         | Value                                                |
+      | Field            | Value                                                |
       +------------------+------------------------------------------------------+
       | checksum         | 133eae9fb1c98f45894a4e60d8736619                     |
       | container_format | bare                                                 |
