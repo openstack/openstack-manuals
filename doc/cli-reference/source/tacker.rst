@@ -9,7 +9,7 @@ NFV Orchestration service command-line client
 The tacker client is the command-line interface (CLI) for
 the NFV Orchestration service API and its extensions.
 
-This chapter documents :command:`tacker` version ``0.6.0``.
+This chapter documents :command:`tacker` version ``0.7.0``.
 
 For help on a specific :command:`tacker` command, enter:
 
@@ -159,6 +159,134 @@ tacker optional arguments
   not be verified against any certificate authorities.
   This option should be used with caution.
 
+.. _tacker_chain-list:
+
+tacker chain-list
+-----------------
+
+.. code-block:: console
+
+   usage: tacker chain-list [-h] [-f {csv,html,json,table,value,yaml}]
+                            [-c COLUMN] [--max-width <integer>] [--noindent]
+                            [--quote {all,minimal,none,nonnumeric}]
+                            [--request-format {json,xml}] [-D] [-F FIELD]
+
+List SFCs that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_chain-show:
+
+tacker chain-show
+-----------------
+
+.. code-block:: console
+
+   usage: tacker chain-show [-h] [-f {html,json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width <integer>] [--noindent]
+                            [--prefix PREFIX] [--request-format {json,xml}] [-D]
+                            [-F FIELD]
+                            SFC
+
+Show information of a given SFC.
+
+**Positional arguments:**
+
+``SFC``
+  ID or name of sfc to look up
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_classifier-list:
+
+tacker classifier-list
+----------------------
+
+.. code-block:: console
+
+   usage: tacker classifier-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--quote {all,minimal,none,nonnumeric}]
+                                 [--request-format {json,xml}] [-D] [-F FIELD]
+
+List FCs that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_classifier-show:
+
+tacker classifier-show
+----------------------
+
+.. code-block:: console
+
+   usage: tacker classifier-show [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [--prefix PREFIX] [--request-format {json,xml}]
+                                 [-D] [-F FIELD]
+                                 CLASSIFIER
+
+Show information of a given FC.
+
+**Positional arguments:**
+
+``CLASSIFIER``
+  ID or name of classifier to look up
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
 .. _tacker_event-show:
 
 tacker event-show
@@ -287,6 +415,70 @@ Show information of a given resource.
 
 ``EXT-ALIAS``
   ID of extension to look up
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_nfp-list:
+
+tacker nfp-list
+---------------
+
+.. code-block:: console
+
+   usage: tacker nfp-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
+                          [--max-width <integer>] [--noindent]
+                          [--quote {all,minimal,none,nonnumeric}]
+                          [--request-format {json,xml}] [-D] [-F FIELD]
+
+List NFPs that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_nfp-show:
+
+tacker nfp-show
+---------------
+
+.. code-block:: console
+
+   usage: tacker nfp-show [-h] [-f {html,json,shell,table,value,yaml}]
+                          [-c COLUMN] [--max-width <integer>] [--noindent]
+                          [--prefix PREFIX] [--request-format {json,xml}] [-D]
+                          [-F FIELD]
+                          NFP
+
+Show information of a given NFP.
+
+**Positional arguments:**
+
+``NFP``
+  ID or name of nfp to look up
 
 **Optional arguments:**
 
@@ -504,7 +696,7 @@ tacker vnf-create
    usage: tacker vnf-create [-h] [-f {html,json,shell,table,value,yaml}]
                             [-c COLUMN] [--max-width <integer>] [--noindent]
                             [--prefix PREFIX] [--request-format {json,xml}]
-                            [--tenant-id TENANT_ID]
+                            [--tenant-id TENANT_ID] [--description DESCRIPTION]
                             (--vnfd-id VNFD_ID | --vnfd-name VNFD_NAME)
                             [--vim-id VIM_ID | --vim-name VIM_NAME]
                             [--vim-region-name VIM_REGION_NAME]
@@ -529,6 +721,9 @@ Create a VNF.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID
+
+``--description DESCRIPTION``
+  Set description for the VNF
 
 ``--vnfd-id VNFD_ID``
   VNFD ID to use as template to create VNF
@@ -621,6 +816,42 @@ tacker vnf-list
                           [--request-format {json,xml}] [-D] [-F FIELD]
 
 List VNF that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_vnf-resource-list:
+
+tacker vnf-resource-list
+------------------------
+
+.. code-block:: console
+
+   usage: tacker vnf-resource-list [-h] [-f {csv,html,json,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--noindent]
+                                   [--quote {all,minimal,none,nonnumeric}]
+                                   [--request-format {json,xml}] [-D] [-F FIELD]
+                                   VNF
+
+List resources of a VNF like VDU, CP, etc.
+
+**Positional arguments:**
+
+``VNF``
+  ID or name of vnf to look up
 
 **Optional arguments:**
 
@@ -930,6 +1161,342 @@ Show template of a given VNFD.
 
 ``VNFD``
   ID or name of vnfd to look up
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_vnffg-create:
+
+tacker vnffg-create
+-------------------
+
+.. code-block:: console
+
+   usage: tacker vnffg-create [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [--prefix PREFIX] [--request-format {json,xml}]
+                              [--tenant-id TENANT_ID]
+                              (--vnffgd-id VNFFGD_ID | --vnffgd-name VNFFGD_NAME)
+                              [--vnf-mapping VNF_MAPPING]
+                              [--symmetrical {True,False}]
+                              NAME
+
+Create a VNFFG.
+
+**Positional arguments:**
+
+``NAME``
+  Set a name for the VNFFG
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID
+
+``--vnffgd-id VNFFGD_ID``
+  VNFFGD ID to use as template to create VNFFG
+
+``--vnffgd-name VNFFGD_NAME``
+  VNFFGD Name to use as template to create VNFFG
+
+``--vnf-mapping VNF_MAPPING``
+  List of logical VNFD name to VNF instance name
+  mapping. Example: VNF1:my_vnf1,VNF2:my_vnf2
+
+``--symmetrical {True,False}``
+  Should a reverse path be created for the NFP
+
+.. _tacker_vnffg-delete:
+
+tacker vnffg-delete
+-------------------
+
+.. code-block:: console
+
+   usage: tacker vnffg-delete [-h] [--request-format {json,xml}] VNFFG
+
+Delete a given VNFFG.
+
+**Positional arguments:**
+
+``VNFFG``
+  ID or name of vnffg to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+.. _tacker_vnffg-list:
+
+tacker vnffg-list
+-----------------
+
+.. code-block:: console
+
+   usage: tacker vnffg-list [-h] [-f {csv,html,json,table,value,yaml}]
+                            [-c COLUMN] [--max-width <integer>] [--noindent]
+                            [--quote {all,minimal,none,nonnumeric}]
+                            [--request-format {json,xml}] [-D] [-F FIELD]
+
+List VNFFGs that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_vnffg-show:
+
+tacker vnffg-show
+-----------------
+
+.. code-block:: console
+
+   usage: tacker vnffg-show [-h] [-f {html,json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width <integer>] [--noindent]
+                            [--prefix PREFIX] [--request-format {json,xml}] [-D]
+                            [-F FIELD]
+                            VNFFG
+
+Show information of a given VNFFG.
+
+**Positional arguments:**
+
+``VNFFG``
+  ID or name of vnffg to look up
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_vnffg-update:
+
+tacker vnffg-update
+-------------------
+
+.. code-block:: console
+
+   usage: tacker vnffg-update [-h] [--request-format {json,xml}]
+                              [--vnf-mapping VNF_MAPPING]
+                              [--symmetrical {True,False}]
+                              VNFFG
+
+Update a given VNFFG.
+
+**Positional arguments:**
+
+``VNFFG``
+  ID or name of vnffg to update
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``--vnf-mapping VNF_MAPPING``
+  List of logical VNFD name to VNF instance name
+  mapping. Example: VNF1:my_vnf1,VNF2:my_vnf2
+
+``--symmetrical {True,False}``
+  Should a reverse path be created for the NFP
+
+.. _tacker_vnffgd-create:
+
+tacker vnffgd-create
+--------------------
+
+.. code-block:: console
+
+   usage: tacker vnffgd-create [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--prefix PREFIX] [--request-format {json,xml}]
+                               [--tenant-id TENANT_ID]
+                               (--vnffgd-file VNFFGD_FILE | --vnffgd VNFFGD)
+                               [--description DESCRIPTION]
+                               NAME
+
+Create a VNFFGD.
+
+**Positional arguments:**
+
+``NAME``
+  Set a name for the VNFFGD
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID
+
+``--vnffgd-file VNFFGD_FILE``
+  Specify VNFFGD file
+
+``--vnffgd VNFFGD``
+  Specify VNFFGD
+
+``--description DESCRIPTION``
+  Set a description for the VNFFGD
+
+.. _tacker_vnffgd-delete:
+
+tacker vnffgd-delete
+--------------------
+
+.. code-block:: console
+
+   usage: tacker vnffgd-delete [-h] [--request-format {json,xml}] VNFFGD
+
+Delete a given VNFFGD.
+
+**Positional arguments:**
+
+``VNFFGD``
+  ID or name of vnffgd to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+.. _tacker_vnffgd-list:
+
+tacker vnffgd-list
+------------------
+
+.. code-block:: console
+
+   usage: tacker vnffgd-list [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
+                             [--quote {all,minimal,none,nonnumeric}]
+                             [--request-format {json,xml}] [-D] [-F FIELD]
+
+List VNFFGDs that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_vnffgd-show:
+
+tacker vnffgd-show
+------------------
+
+.. code-block:: console
+
+   usage: tacker vnffgd-show [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width <integer>] [--noindent]
+                             [--prefix PREFIX] [--request-format {json,xml}] [-D]
+                             [-F FIELD]
+                             VNFFGD
+
+Show information of a given VNFFGD.
+
+**Positional arguments:**
+
+``VNFFGD``
+  ID or name of vnffgd to look up
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_vnffgd-template-show:
+
+tacker vnffgd-template-show
+---------------------------
+
+.. code-block:: console
+
+   usage: tacker vnffgd-template-show [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
+                                      [-c COLUMN] [--max-width <integer>]
+                                      [--noindent] [--prefix PREFIX]
+                                      [--request-format {json,xml}] [-D]
+                                      [-F FIELD]
+                                      VNFFGD
+
+Show template of a given VNFFGD.
+
+**Positional arguments:**
+
+``VNFFGD``
+  ID or name of vnffgd to look up
 
 **Optional arguments:**
 
