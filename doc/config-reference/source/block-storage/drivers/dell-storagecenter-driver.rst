@@ -28,6 +28,7 @@ volume operations:
 -  Create, delete, and list consistency group snapshots.
 -  Manage an existing volume.
 -  Failover-host for replicated back ends.
+-  Create a live volume in replication.
 
 Extra spec options
 ~~~~~~~~~~~~~~~~~~
