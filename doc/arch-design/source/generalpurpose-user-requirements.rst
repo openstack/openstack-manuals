@@ -3,7 +3,7 @@ User requirements
 =================
 
 When building a general purpose cloud, you should follow the
-Infrastructure-as-a-Service (:term:`IaaS`) model; a platform best suited
+:term:`Infrastructure-as-a-Service (IaaS)` model; a platform best suited
 for use cases with simple requirements. General purpose cloud user
 requirements are not complex. However, it is important to capture them
 even if the project has minimum business and technical requirements, such

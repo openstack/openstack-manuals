@@ -29,8 +29,8 @@ balance of resources. Server hardware must provide the following:
 
 * Network capacity (number and speed of links)
 
-* Storage capacity (gigabytes or terabytes as well as Input/Output
-  Operations Per Second (:term:`IOPS`)
+* Storage capacity (gigabytes or terabytes as well as :term:`Input/Output
+  Operations Per Second (IOPS)`
 
 Evaluate server hardware around four conflicting dimensions:
 

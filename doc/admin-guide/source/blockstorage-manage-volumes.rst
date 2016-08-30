@@ -28,8 +28,8 @@ to a server instance.
 #. Use the :command:`openstack volume create ` command to create a volume.
    This command creates an LV into the volume group (VG) ``cinder-volumes``.
 #. Use the :command:`openstack server add volume` command to attach the
-   volume to an instance. This command creates a unique  :term:`IQN` that is
-   exposed to the compute node.
+   volume to an instance. This command creates a unique :term:`IQN <iSCSI
+   Qualified Name (IQN)>` that is exposed to the compute node.
 
    * The compute node, which runs the instance, now has an active
      iSCSI session and new local storage (usually a ``/dev/sdX``

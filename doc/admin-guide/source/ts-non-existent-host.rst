@@ -7,8 +7,8 @@ Problem
 
 This error could be caused by a volume being exported outside of
 OpenStack using a host name different from the system name that
-OpenStack expects. This error could be displayed with the :term:`IQN`
-if the host was exported using iSCSI.
+OpenStack expects. This error could be displayed with the :term:`IQN <iSCSI
+Qualified Name (IQN)>` if the host was exported using iSCSI.
 
 .. code-block:: console
 

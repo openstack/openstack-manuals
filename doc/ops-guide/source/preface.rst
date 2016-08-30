@@ -3,7 +3,7 @@ Preface
 =======
 
 OpenStack is an open source platform that lets you build an
-:term:`Infrastructure-as-a-Service (IaaS)<IaaS>` cloud that runs on commodity
+:term:`Infrastructure-as-a-Service (IaaS)` cloud that runs on commodity
 hardware.
 
 Introduction to OpenStack
