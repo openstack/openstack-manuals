@@ -514,6 +514,15 @@ file.
 
 The following publisher types are supported:
 
+direct
+    It can be specified in the form of ``direct://?dispatcher=http``. The
+    dispatcher's options include database, file, http, and gnocchi. For
+    more details on dispatcher, see :ref:`telemetry-storing-samples`.
+    It emits data in the configured dispatcher directly, default configuration
+    (the form is ``direct://``) is database dispatcher.
+    In the Mitaka release, this method can only emit data to the database
+    dispatcher, and the form is ``direct://``.
+
 notifier
     It can be specified in the form of
     ``notifier://?option1=value1&option2=value2``. It emits data over
@@ -614,3 +623,4 @@ specified. A sample ``publishers`` section in the
        - udp://10.0.0.2:1234
        - rpc://?per_meter_topic=1 (deprecated in Liberty)
        - notifier://?policy=drop&max_queue_length=512&topic=custom_target
+       - direct://?dispatcher=http
