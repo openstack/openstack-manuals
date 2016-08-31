@@ -60,7 +60,7 @@ ML2 driver support matrix
      - yes
      - yes
      - yes
-     - yes
+     - no
    * - SRIOV
      - yes
      - yes
