@@ -271,11 +271,12 @@ Configure neutron-server (Controller)
 Configure nova-scheduler (Controller)
 -------------------------------------
 
-#. On every controller node running the ``nova-scheduler`` service, enable the
-   ``PciPassthroughFilter`` by setting the ``scheduler_default_filters``
-   parameter to ``all_filters``. Add a new line for
-   ``scheduler_available_filters`` parameter under the ``[DEFAULT]`` section in
-   ``nova.conf``:
+#. On every controller node running the ``nova-scheduler`` service, add
+   ``PciPassthroughFilter`` to ``scheduler_default_filters`` to enable
+   ``PciPassthroughFilter`` by default.
+   Also ensure ``scheduler_available_filters`` parameter under the
+   ``[DEFAULT]`` section in ``nova.conf`` is set to ``all_filters``
+   to enable all filters provided by the Compute service.
 
    .. code-block:: ini
 
