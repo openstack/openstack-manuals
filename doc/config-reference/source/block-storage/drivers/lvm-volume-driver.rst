@@ -23,3 +23,21 @@ Use the following options to configure for the iSER transport:
    iscsi_protocol = iser
 
 .. include:: ../../tables/cinder-lvm.rst
+
+.. caution::
+
+    When extending an existing volume which has a linked snapshot, the related
+    logical volume is deactivated. This logical volume is automatically
+    reactivated unless ``auto_activation_volume_list`` is defined in LVM
+    configuration file ``lvm.conf``. See the ``lvm.conf`` file for more
+    information.
+
+    If auto activated volumes are restricted, then include the cinder volume
+    group into this list:
+
+    .. code-block:: ini
+
+        auto_activation_volume_list = [ "existingVG", "cinder-volumes" ]
+
+    This note does not apply for thinly provisioned volumes
+    because they do not need to be deactivated.
