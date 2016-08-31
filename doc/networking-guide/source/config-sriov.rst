@@ -209,7 +209,7 @@ Whitelist PCI devices nova-compute (Compute)
 
      For example, to match any domain, bus 0a, slot 00, and all functions:
 
-     .. code-block: ini
+     .. code-block:: ini
 
         pci_passthrough_whitelist = { "address": "*:0a:00.*", "physical_network": "physnet2" }
 
