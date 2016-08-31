@@ -8,7 +8,7 @@ OpenStack command-line client
 
 The openstack client is a common OpenStackcommand-line interface (CLI).
 
-This chapter documents :command:`openstack` version ``3.0.1``.
+This chapter documents :command:`openstack` version ``3.2.0``.
 
 For help on a specific :command:`openstack` command, enter:
 
@@ -39,9 +39,9 @@ openstack usage
                     [--os-object-api-version <object-api-version>]
                     [--os-baremetal-api-version <baremetal-api-version>]
                     [--os-dns-api-version <dns-api-version>]
+                    [--os-queues-api-version <queues-api-version>]
                     [--os-data-processing-api-version <data-processing-api-version>]
                     [--os-data-processing-url OS_DATA_PROCESSING_URL]
-                    [--os-queues-api-version <queues-api-version>]
                     [--os-key-manager-api-version <key-manager-api-version>]
                     [--os-orchestration-api-version <orchestration-api-version>]
                     [--inspector-api-version INSPECTOR_API_VERSION]
@@ -169,6 +169,10 @@ openstack optional arguments
 ``--os-dns-api-version <dns-api-version>``
   DNS API version, default=2 (Env: OS_DNS_API_VERSION)
 
+``--os-queues-api-version <queues-api-version>``
+  Queues API version, default=2 (Env:
+  OS_QUEUES_API_VERSION)
+
 ``--os-data-processing-api-version <data-processing-api-version>``
   Data processing API version, default=1.1 (Env:
   OS_DATA_PROCESSING_API_VERSION)
@@ -176,10 +180,6 @@ openstack optional arguments
 ``--os-data-processing-url OS_DATA_PROCESSING_URL``
   Data processing API URL, (Env:
   OS_DATA_PROCESSING_API_URL)
-
-``--os-queues-api-version <queues-api-version>``
-  Queues API version, default=2 (Env:
-  OS_QUEUES_API_VERSION)
 
 ``--os-key-manager-api-version <key-manager-api-version>``
   Barbican API version, default=1 (Env:
@@ -199,77 +199,76 @@ openstack optional arguments
 
 ``--os-auth-type <auth-type>``
   Select an authentication type. Available types:
-  v2token, password, admin_token, v3oidcauthcode,
-  v2password, v3samlpassword, v3password,
-  v3oidcaccesstoken, token_endpoint, token,
-  v3oidcclientcredentials, v3tokenlessauth, v3token,
-  v3totp, v3oidcpassword. Default: selected based on
-  :option:`--os-username/--os-token` (Env: OS_AUTH_TYPE)
+  v2token, admin_token, v3oidcauthcode, v2password,
+  v3samlpassword, v3password, v3oidcaccesstoken,
+  v3oidcpassword, token, v3oidcclientcredentials,
+  v3tokenlessauth, v3token, v3totp, password,
+  token_endpoint. Default: selected based on :option:`--os-`
+  username/:option:`--os-token` (Env: OS_AUTH_TYPE)
 
 ``--os-authorization-code <auth-authorization-code>``
   With v3oidcauthcode: OAuth 2.0 Authorization Code
   (Env: OS_AUTHORIZATION_CODE)
 
 ``--os-project-domain-id <auth-project-domain-id>``
-  With password: Domain ID containing project With
-  v3oidcauthcode: Domain ID containing project With
+  With v3oidcauthcode: Domain ID containing project With
   v3samlpassword: Domain ID containing project With
   v3password: Domain ID containing project With
   v3oidcaccesstoken: Domain ID containing project With
+  v3oidcpassword: Domain ID containing project With
   token: Domain ID containing project With
   v3oidcclientcredentials: Domain ID containing project
   With v3tokenlessauth: Domain ID containing project
   With v3token: Domain ID containing project With
-  v3totp: Domain ID containing project With
-  v3oidcpassword: Domain ID containing project (Env:
+  v3totp: Domain ID containing project With password:
+  Domain ID containing project (Env:
   OS_PROJECT_DOMAIN_ID)
 
 ``--os-protocol <auth-protocol>``
   With v3oidcauthcode: Protocol for federated plugin
   With v3samlpassword: Protocol for federated plugin
   With v3oidcaccesstoken: Protocol for federated plugin
+  With v3oidcpassword: Protocol for federated plugin
   With v3oidcclientcredentials: Protocol for federated
-  plugin With v3oidcpassword: Protocol for federated
   plugin (Env: OS_PROTOCOL)
 
 ``--os-project-name <auth-project-name>``
-  With password: Project name to scope to With
-  v3oidcauthcode: Project name to scope to With
+  With v3oidcauthcode: Project name to scope to With
   v3samlpassword: Project name to scope to With
   v3password: Project name to scope to With
   v3oidcaccesstoken: Project name to scope to With
-  token: Project name to scope to With
-  v3oidcclientcredentials: Project name to scope to With
-  v3tokenlessauth: Project name to scope to With
-  v3token: Project name to scope to With v3totp: Project
-  name to scope to With v3oidcpassword: Project name to
-  scope to (Env: OS_PROJECT_NAME)
+  v3oidcpassword: Project name to scope to With token:
+  Project name to scope to With v3oidcclientcredentials:
+  Project name to scope to With v3tokenlessauth: Project
+  name to scope to With v3token: Project name to scope
+  to With v3totp: Project name to scope to With
+  password: Project name to scope to (Env:
+  OS_PROJECT_NAME)
 
 ``--os-trust-id <auth-trust-id>``
-  With v2token: Trust ID With password: Trust ID With
-  v3oidcauthcode: Trust ID With v2password: Trust ID
-  With v3samlpassword: Trust ID With v3password: Trust
-  ID With v3oidcaccesstoken: Trust ID With token: Trust
-  ID With v3oidcclientcredentials: Trust ID With
-  v3token: Trust ID With v3totp: Trust ID With
-  v3oidcpassword: Trust ID (Env: OS_TRUST_ID)
+  With v2token: Trust ID With v3oidcauthcode: Trust ID
+  With v2password: Trust ID With v3samlpassword: Trust
+  ID With v3password: Trust ID With v3oidcaccesstoken:
+  Trust ID With v3oidcpassword: Trust ID With token:
+  Trust ID With v3oidcclientcredentials: Trust ID With
+  v3token: Trust ID With v3totp: Trust ID With password:
+  Trust ID (Env: OS_TRUST_ID)
 
 ``--os-domain-name <auth-domain-name>``
-  With password: Domain name to scope to With
-  v3oidcauthcode: Domain name to scope to With
+  With v3oidcauthcode: Domain name to scope to With
   v3samlpassword: Domain name to scope to With
   v3password: Domain name to scope to With
-  v3oidcaccesstoken: Domain name to scope to With token:
+  v3oidcaccesstoken: Domain name to scope to With
+  v3oidcpassword: Domain name to scope to With token:
   Domain name to scope to With v3oidcclientcredentials:
   Domain name to scope to With v3tokenlessauth: Domain
   name to scope to With v3token: Domain name to scope to
-  With v3totp: Domain name to scope to With
-  v3oidcpassword: Domain name to scope to (Env:
-  OS_DOMAIN_NAME)
+  With v3totp: Domain name to scope to With password:
+  Domain name to scope to (Env: OS_DOMAIN_NAME)
 
 ``--os-user-domain-id <auth-user-domain-id>``
-  With password: User's domain id With v3password:
-  User's domain id With v3totp: User's domain id (Env:
+  With v3password: User's domain id With v3totp: User's
+  domain id With password: User's domain id (Env:
   OS_USER_DOMAIN_ID)
 
 ``--os-access-token-type <auth-access-token-type>``
@@ -277,16 +276,16 @@ openstack optional arguments
   Introspection token type, it is used to decide which
   type of token will be used when processing token
   introspection. Valid values are: "access_token" or
-  "id_token" With v3oidcclientcredentials: OAuth 2.0
+  "id_token" With v3oidcpassword: OAuth 2.0
   Authorization Server Introspection token type, it is
   used to decide which type of token will be used when
   processing token introspection. Valid values are:
-  "access_token" or "id_token" With v3oidcpassword:
-  OAuth 2.0 Authorization Server Introspection token
-  type, it is used to decide which type of token will be
-  used when processing token introspection. Valid values
-  are: "access_token" or "id_token" (Env:
-  OS_ACCESS_TOKEN_TYPE)
+  "access_token" or "id_token" With
+  v3oidcclientcredentials: OAuth 2.0 Authorization
+  Server Introspection token type, it is used to decide
+  which type of token will be used when processing token
+  introspection. Valid values are: "access_token" or
+  "id_token" (Env: OS_ACCESS_TOKEN_TYPE)
 
 ``--os-identity-provider-url <auth-identity-provider-url>``
   With v3samlpassword: An Identity Provider URL, where
@@ -294,10 +293,10 @@ openstack optional arguments
   OS_IDENTITY_PROVIDER_URL)
 
 ``--os-default-domain-name <auth-default-domain-name>``
-  With password: Optional domain name to use with v3 API
+  With token: Optional domain name to use with v3 API
   and v2 parameters. It will be used for both the user
   and project domain in v3 and ignored in v2
-  authentication. With token: Optional domain name to
+  authentication. With password: Optional domain name to
   use with v3 API and v2 parameters. It will be used for
   both the user and project domain in v3 and ignored in
   v2 authentication. (Env: OS_DEFAULT_DOMAIN_NAME)
@@ -307,11 +306,11 @@ openstack optional arguments
   Endpoint. Note that if a discovery document is being
   passed this option will override the endpoint provided
   by the server in the discovery document. With
-  v3oidcclientcredentials: OpenID Connect Provider Token
+  v3oidcpassword: OpenID Connect Provider Token
   Endpoint. Note that if a discovery document is being
   passed this option will override the endpoint provided
   by the server in the discovery document. With
-  v3oidcpassword: OpenID Connect Provider Token
+  v3oidcclientcredentials: OpenID Connect Provider Token
   Endpoint. Note that if a discovery document is being
   passed this option will override the endpoint provided
   by the server in the discovery document. (Env:
@@ -322,79 +321,78 @@ openstack optional arguments
   OS_ACCESS_TOKEN)
 
 ``--os-domain-id <auth-domain-id>``
-  With password: Domain ID to scope to With
-  v3oidcauthcode: Domain ID to scope to With
+  With v3oidcauthcode: Domain ID to scope to With
   v3samlpassword: Domain ID to scope to With v3password:
   Domain ID to scope to With v3oidcaccesstoken: Domain
-  ID to scope to With token: Domain ID to scope to With
+  ID to scope to With v3oidcpassword: Domain ID to scope
+  to With token: Domain ID to scope to With
   v3oidcclientcredentials: Domain ID to scope to With
   v3tokenlessauth: Domain ID to scope to With v3token:
   Domain ID to scope to With v3totp: Domain ID to scope
-  to With v3oidcpassword: Domain ID to scope to (Env:
+  to With password: Domain ID to scope to (Env:
   OS_DOMAIN_ID)
 
 ``--os-user-domain-name <auth-user-domain-name>``
-  With password: User's domain name With v3password:
-  User's domain name With v3totp: User's domain name
+  With v3password: User's domain name With v3totp:
+  User's domain name With password: User's domain name
   (Env: OS_USER_DOMAIN_NAME)
 
 ``--os-openid-scope <auth-openid-scope>``
   With v3oidcauthcode: OpenID Connect scope that is
   requested from authorization server. Note that the
   OpenID Connect specification states that "openid" must
-  be always specified. With v3oidcclientcredentials:
-  OpenID Connect scope that is requested from
-  authorization server. Note that the OpenID Connect
-  specification states that "openid" must be always
-  specified. With v3oidcpassword: OpenID Connect scope
-  that is requested from authorization server. Note that
-  the OpenID Connect specification states that "openid"
-  must be always specified. (Env: OS_OPENID_SCOPE)
+  be always specified. With v3oidcpassword: OpenID
+  Connect scope that is requested from authorization
+  server. Note that the OpenID Connect specification
+  states that "openid" must be always specified. With
+  v3oidcclientcredentials: OpenID Connect scope that is
+  requested from authorization server. Note that the
+  OpenID Connect specification states that "openid" must
+  be always specified. (Env: OS_OPENID_SCOPE)
 
 ``--os-user-id <auth-user-id>``
-  With password: User id With v2password: User ID to
-  login with With v3password: User ID With v3totp: User
-  ID (Env: OS_USER_ID)
+  With v2password: User ID to login with With
+  v3password: User ID With v3totp: User ID With
+  password: User id (Env: OS_USER_ID)
 
 ``--os-identity-provider <auth-identity-provider>``
   With v3oidcauthcode: Identity Provider's name With
   v3samlpassword: Identity Provider's name With
   v3oidcaccesstoken: Identity Provider's name With
-  v3oidcclientcredentials: Identity Provider's name With
-  v3oidcpassword: Identity Provider's name (Env:
-  OS_IDENTITY_PROVIDER)
+  v3oidcpassword: Identity Provider's name With
+  v3oidcclientcredentials: Identity Provider's name
+  (Env: OS_IDENTITY_PROVIDER)
 
 ``--os-username <auth-username>``
-  With password: Username With v2password: Username to
-  login with With v3samlpassword: Username With
-  v3password: Username With v3totp: Username With
-  v3oidcpassword: Username (Env: OS_USERNAME)
+  With v2password: Username to login with With
+  v3samlpassword: Username With v3password: Username
+  With v3oidcpassword: Username With v3totp: Username
+  With password: Username (Env: OS_USERNAME)
 
 ``--os-auth-url <auth-auth-url>``
-  With v2token: Authentication URL With password:
-  Authentication URL With v3oidcauthcode: Authentication
-  URL With v2password: Authentication URL With
-  v3samlpassword: Authentication URL With v3password:
-  Authentication URL With v3oidcaccesstoken:
-  Authentication URL With token: Authentication URL With
+  With v2token: Authentication URL With v3oidcauthcode:
+  Authentication URL With v2password: Authentication URL
+  With v3samlpassword: Authentication URL With
+  v3password: Authentication URL With v3oidcaccesstoken:
+  Authentication URL With v3oidcpassword: Authentication
+  URL With token: Authentication URL With
   v3oidcclientcredentials: Authentication URL With
   v3tokenlessauth: Authentication URL With v3token:
   Authentication URL With v3totp: Authentication URL
-  With v3oidcpassword: Authentication URL (Env:
-  OS_AUTH_URL)
+  With password: Authentication URL (Env: OS_AUTH_URL)
 
 ``--os-client-secret <auth-client-secret>``
   With v3oidcauthcode: OAuth 2.0 Client Secret With
-  v3oidcclientcredentials: OAuth 2.0 Client Secret With
-  v3oidcpassword: OAuth 2.0 Client Secret (Env:
+  v3oidcpassword: OAuth 2.0 Client Secret With
+  v3oidcclientcredentials: OAuth 2.0 Client Secret (Env:
   OS_CLIENT_SECRET)
 
 ``--os-default-domain-id <auth-default-domain-id>``
-  With password: Optional domain ID to use with v3 and
-  v2 parameters. It will be used for both the user and
-  project domain in v3 and ignored in v2 authentication.
   With token: Optional domain ID to use with v3 and v2
   parameters. It will be used for both the user and
+  project domain in v3 and ignored in v2 authentication.
+  With password: Optional domain ID to use with v3 and
+  v2 parameters. It will be used for both the user and
   project domain in v3 and ignored in v2 authentication.
   (Env: OS_DEFAULT_DOMAIN_ID)
 
@@ -405,13 +403,17 @@ openstack optional arguments
   authentication endpoint. This URL should look like
   https://idp.example.org/.well-known/openid-configuration
   With
+  v3oidcpassword:
+  OpenID
+  Connect
+  Discovery Document URL. The discovery document will be
+  used to obtain the values of the access token endpoint
+  and the authentication endpoint. This URL should look
+  like
+  https://idp.example.org/.well-known/openid-configuration
+  With
   v3oidcclientcredentials:
   OpenID
-  Connect Discovery Document URL. The discovery document
-  will be used to obtain the values of the access token
-  endpoint and the authentication endpoint. This URL
-  should look like https://idp.example.org/.well-known
-  /openid-configuration With v3oidcpassword: OpenID
   Connect Discovery Document URL. The discovery document
   will be used to obtain the values of the access token
   endpoint and the authentication endpoint. This URL
@@ -420,29 +422,29 @@ openstack optional arguments
 
 ``--os-client-id <auth-client-id>``
   With v3oidcauthcode: OAuth 2.0 Client ID With
-  v3oidcclientcredentials: OAuth 2.0 Client ID With
-  v3oidcpassword: OAuth 2.0 Client ID (Env:
+  v3oidcpassword: OAuth 2.0 Client ID With
+  v3oidcclientcredentials: OAuth 2.0 Client ID (Env:
   OS_CLIENT_ID)
 
 ``--os-project-domain-name <auth-project-domain-name>``
-  With password: Domain name containing project With
-  v3oidcauthcode: Domain name containing project With
-  v3samlpassword: Domain name containing project With
-  v3password: Domain name containing project With
+  With v3oidcauthcode: Domain name containing project
+  With v3samlpassword: Domain name containing project
+  With v3password: Domain name containing project With
   v3oidcaccesstoken: Domain name containing project With
+  v3oidcpassword: Domain name containing project With
   token: Domain name containing project With
   v3oidcclientcredentials: Domain name containing
   project With v3tokenlessauth: Domain name containing
   project With v3token: Domain name containing project
   With v3totp: Domain name containing project With
-  v3oidcpassword: Domain name containing project (Env:
+  password: Domain name containing project (Env:
   OS_PROJECT_DOMAIN_NAME)
 
 ``--os-password <auth-password>``
-  With password: User's password With v2password:
-  Password to use With v3samlpassword: Password With
-  v3password: User's password With v3oidcpassword:
-  Password (Env: OS_PASSWORD)
+  With v2password: Password to use With v3samlpassword:
+  Password With v3password: User's password With
+  v3oidcpassword: Password With password: User's
+  password (Env: OS_PASSWORD)
 
 ``--os-redirect-uri <auth-redirect-uri>``
   With v3oidcauthcode: OpenID Connect Redirect URL (Env:
@@ -458,26 +460,25 @@ openstack optional arguments
 
 ``--os-token <auth-token>``
   With v2token: Token With admin_token: The token that
-  will always be used With token_endpoint:
-  Authentication token to use With token: Token to
-  authenticate with With v3token: Token to authenticate
-  with (Env: OS_TOKEN)
+  will always be used With token: Token to authenticate
+  with With v3token: Token to authenticate with With
+  token_endpoint: Authentication token to use (Env:
+  OS_TOKEN)
 
 ``--os-passcode <auth-passcode>``
   With v3totp: User's TOTP passcode (Env: OS_PASSCODE)
 
 ``--os-project-id <auth-project-id>``
-  With password: Project ID to scope to With
-  v3oidcauthcode: Project ID to scope to With
+  With v3oidcauthcode: Project ID to scope to With
   v3samlpassword: Project ID to scope to With
   v3password: Project ID to scope to With
-  v3oidcaccesstoken: Project ID to scope to With token:
+  v3oidcaccesstoken: Project ID to scope to With
+  v3oidcpassword: Project ID to scope to With token:
   Project ID to scope to With v3oidcclientcredentials:
   Project ID to scope to With v3tokenlessauth: Project
   ID to scope to With v3token: Project ID to scope to
-  With v3totp: Project ID to scope to With
-  v3oidcpassword: Project ID to scope to (Env:
-  OS_PROJECT_ID)
+  With v3totp: Project ID to scope to With password:
+  Project ID to scope to (Env: OS_PROJECT_ID)
 
 OpenStack with Identity API v3 commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -9874,6 +9875,8 @@ openstack ptr record list
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
+                                    [--all-projects] [--edit-managed]
+                                    [--sudo-project-id SUDO_PROJECT_ID]
 
 List floatingip ptr records
 
@@ -9881,6 +9884,16 @@ List floatingip ptr records
 
 ``-h, --help``
   show this help message and exit
+
+``--all-projects``
+  Show results from all projects. Default: False
+
+``--edit-managed``
+  Edit resources marked as managed. Default: False
+
+``--sudo-project-id SUDO_PROJECT_ID``
+  Project ID to impersonate for this command. Default:
+  None
 
 .. _openstack_ptr_record_set:
 
@@ -9903,7 +9916,7 @@ Set floatingip ptr record
 **Positional arguments:**
 
 ``floatingip_id``
-  Floating IP ID
+  Floating IP ID in format region:floatingip_id
 
 ``ptrdname``
   PTRD Name
@@ -9952,7 +9965,7 @@ Show floatingip ptr record details
 **Positional arguments:**
 
 ``floatingip_id``
-  Floating IP ID
+  Floating IP ID in format region:floatingip_id
 
 **Optional arguments:**
 
@@ -9985,7 +9998,7 @@ Unset floatingip ptr record
 **Positional arguments:**
 
 ``floatingip_id``
-  Floating IP ID
+  Floating IP ID in format region:floatingip_id
 
 **Optional arguments:**
 
@@ -14495,6 +14508,30 @@ Show information about failed stack resources.
 
 ``--long``
   Show full deployment logs in output
+
+.. _openstack_stack_file_list:
+
+openstack stack file list
+-------------------------
+
+.. code-block:: console
+
+   usage: openstack stack file list [-h] [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent] [--prefix PREFIX]
+                                    <NAME or ID>
+
+Show a stack's files map.
+
+**Positional arguments:**
+
+``<NAME or ID>``
+  Name or ID of stack to query
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
 
 .. _openstack_stack_hook_clear:
 
