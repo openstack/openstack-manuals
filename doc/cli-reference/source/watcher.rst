@@ -9,7 +9,7 @@ Infrastructure Optimization service command-line client
 The watcher client is the command-line interface (CLI) for
 the Infrastructure Optimization service API and its extensions.
 
-This chapter documents :command:`watcher` version ``0.24.0``.
+This chapter documents :command:`watcher` version ``0.25.0``.
 
 For help on a specific :command:`watcher` command, enter:
 
@@ -389,9 +389,10 @@ watcher audit create
 
    usage: watcher audit create [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] -a <audit_template>
-                               [-d <deadline>] [-t <audit_type>]
-                               [-p <name=value>] [-i <interval>]
+                               [--prefix PREFIX] [-d <deadline>]
+                               [-t <audit_type>] [-p <name=value>]
+                               [-i <interval>] [-g <goal>] [-s <strategy>]
+                               [-r <host-aggregate>] [-a <audit_template>]
 
 Create new audit.
 
@@ -400,14 +401,12 @@ Create new audit.
 ``-h, --help``
   show this help message and exit
 
-``-a <audit_template>, --audit-template <audit_template>``
-  Audit template used for this audit (name or uuid).
-
 ``-d <deadline>, --deadline <deadline>``
   Descrition of the audit.
 
 ``-t <audit_type>, --audit_type <audit_type>``
-  Audit type.
+  Audit type. It must be ONESHOT or CONTINUOUS. Default
+  is ONESHOT.
 
 ``-p <name=value>, --parameter <name=value>``
   Record strategy parameter/value metadata. Can be
@@ -415,6 +414,19 @@ Create new audit.
 
 ``-i <interval>, --interval <interval>``
   Audit interval.
+
+``-g <goal>, --goal <goal>``
+  Goal UUID or name associated to this audit.
+
+``-s <strategy>, --strategy <strategy>``
+  Strategy UUID or name associated to this audit.
+
+``-r <host-aggregate>, --host-aggregate <host-aggregate>``
+  Name or UUID of the host aggregate targeted by this
+  audit.
+
+``-a <audit_template>, --audit-template <audit_template>``
+  Audit template used for this audit (name or uuid).
 
 .. _watcher_audit_delete:
 
@@ -446,8 +458,8 @@ watcher audit list
 
    usage: watcher audit list [-h] [-f {csv,html,json,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--quote {all,minimal,none,nonnumeric}]
-                             [--audit-template <audit_template>] [--detail]
+                             [--quote {all,minimal,none,nonnumeric}] [--detail]
+                             [--goal <goal>] [--strategy <strategy>]
                              [--limit <limit>] [--sort-key <field>]
                              [--sort-dir <direction>]
 
@@ -458,11 +470,14 @@ List information on retrieved audits.
 ``-h, --help``
   show this help message and exit
 
-``--audit-template <audit_template>``
-  Name or UUID of an audit template used for filtering.
-
 ``--detail``
   Show detailed information about audits.
+
+``--goal <goal>``
+  UUID or name of the goal used for filtering.
+
+``--strategy <strategy>``
+  UUID or name of the strategy used for filtering.
 
 ``--limit <limit>``
   Maximum number of audits to return per request, 0 for
@@ -519,7 +534,7 @@ Update audit command.
   UUID of the audit.
 
 ``<op>``
-  Operation: 'add'), 'replace', or 'remove'.
+  Operation: 'add', 'replace', or 'remove'.
 
 ``<path=value>``
   Attribute to add, replace, or remove. Can be specified
@@ -751,6 +766,66 @@ Show detailed information about a given goal.
 
 ``<goal>``
   UUID or name of the goal
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _watcher_scoringengine_list:
+
+watcher scoringengine list
+--------------------------
+
+.. code-block:: console
+
+   usage: watcher scoringengine list [-h] [-f {csv,html,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent]
+                                     [--quote {all,minimal,none,nonnumeric}]
+                                     [--detail] [--limit <limit>]
+                                     [--sort-key <field>]
+                                     [--sort-dir <direction>]
+
+List information on retrieved scoring engines.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--detail``
+  Show detailed information about scoring engines.
+
+``--limit <limit>``
+  Maximum number of actions to return per request, 0 for
+  no limit. Default is the maximum number used by the
+  Watcher API Service.
+
+``--sort-key <field>``
+  Action field that will be used for sorting.
+
+``--sort-dir <direction>``
+  Sort direction: "asc" (the default) or "desc".
+
+.. _watcher_scoringengine_show:
+
+watcher scoringengine show
+--------------------------
+
+.. code-block:: console
+
+   usage: watcher scoringengine show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     <scoring_engine>
+
+Show detailed information about a given scoring engine.
+
+**Positional arguments:**
+
+``<scoring_engine>``
+  Name of the scoring engine
 
 **Optional arguments:**
 
