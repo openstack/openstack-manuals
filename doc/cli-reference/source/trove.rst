@@ -9,7 +9,7 @@ Database service command-line client
 The trove client is the command-line interface (CLI) for
 the Database service API and its extensions.
 
-This chapter documents :command:`trove` version ``2.4.0``.
+This chapter documents :command:`trove` version ``2.5.0``.
 
 For help on a specific :command:`trove` command, enter:
 
@@ -72,6 +72,9 @@ trove usage
 ``cluster-delete``
   Deletes a cluster.
 
+``cluster-force-delete``
+  Force delete a cluster
+
 ``cluster-grow``
   Adds more instances to a cluster.
 
@@ -84,6 +87,9 @@ trove usage
 ``cluster-modules``
   Lists all modules for each instance of a
   cluster.
+
+``cluster-reset-status``
+  Set the cluster task to NONE.
 
 ``cluster-show``
   Shows details of a cluster.
@@ -166,11 +172,21 @@ trove usage
 ``eject-replica-source``
   Ejects a replica source from its set.
 
+``execution-delete``
+  Deletes an execution.
+
+``execution-list``
+  Lists executions of a scheduled backup of an
+  instance.
+
 ``flavor-list``
   Lists available flavors.
 
 ``flavor-show``
   Shows details of a flavor.
+
+``force-delete``
+  Force delete an instance.
 
 ``limit-list``
   Lists the limits for a tenant.
@@ -268,6 +284,15 @@ trove usage
   Promotes a replica to be the new replica
   source of its set.
 
+``quota-show``
+  Show quotas for a tenant.
+
+``quota-update``
+  Update quotas for a tenant.
+
+``reset-status``
+  Set the status to NONE.
+
 ``resize-instance``
   Resizes an instance with a new flavor.
 
@@ -287,6 +312,18 @@ trove usage
 ``root-show``
   Gets status if root was ever enabled for an
   instance or cluster.
+
+``schedule-create``
+  Schedules backups for an instance.
+
+``schedule-delete``
+  Deletes a schedule.
+
+``schedule-list``
+  Lists scheduled backups for an instance.
+
+``schedule-show``
+  Shows details of a schedule.
 
 ``secgroup-add-rule``
   Creates a security group rule.
@@ -440,6 +477,7 @@ trove backup-create
 
    usage: trove backup-create <instance> <name>
                               [--description <description>] [--parent <parent>]
+                              [--incremental]
 
 Creates a backup of an instance.
 
@@ -459,6 +497,11 @@ Creates a backup of an instance.
 ``--parent <parent>``
   Optional ID of the parent backup to perform an
   incremental backup from.
+
+``--incremental``
+  Create an incremental backup based on the last
+  full or incremental backup. It will create a
+  full backup if no existing backup found.
 
 .. _trove_backup-delete:
 
@@ -601,6 +644,22 @@ Deletes a cluster.
 ``<cluster>``
   ID or name of the cluster.
 
+.. _trove_cluster-force-delete:
+
+trove cluster-force-delete
+--------------------------
+
+.. code-block:: console
+
+   usage: trove cluster-force-delete <cluster>
+
+Force delete a cluster
+
+**Positional arguments:**
+
+``<cluster>``
+  ID or name of the cluster.
+
 .. _trove_cluster-grow:
 
 trove cluster-grow
@@ -679,6 +738,22 @@ trove cluster-modules
    usage: trove cluster-modules <cluster>
 
 Lists all modules for each instance of a cluster.
+
+**Positional arguments:**
+
+``<cluster>``
+  ID or name of the cluster.
+
+.. _trove_cluster-reset-status:
+
+trove cluster-reset-status
+--------------------------
+
+.. code-block:: console
+
+   usage: trove cluster-reset-status <cluster>
+
+Set the cluster task to NONE.
 
 **Positional arguments:**
 
@@ -1249,6 +1324,48 @@ Ejects a replica source from its set.
 ``<instance>``
   ID or name of the instance.
 
+.. _trove_execution-delete:
+
+trove execution-delete
+----------------------
+
+.. code-block:: console
+
+   usage: trove execution-delete <execution>
+
+Deletes an execution.
+
+**Positional arguments:**
+
+``<execution>``
+  Id of the execution to delete.
+
+.. _trove_execution-list:
+
+trove execution-list
+--------------------
+
+.. code-block:: console
+
+   usage: trove execution-list [--limit <limit>] [--marker <ID>] <schedule id>
+
+Lists executions of a scheduled backup of an instance.
+
+**Positional arguments:**
+
+``<schedule id>``
+  Id of the schedule.
+
+**Optional arguments:**
+
+``--limit <limit>``
+  Return up to N number of the most recent executions.
+
+``--marker <ID>``
+  Begin displaying the results for IDs greater than the
+  specified marker. When used with :option:`--limit,` set this to the
+  last ID displayed in the previous run.
+
 .. _trove_flavor-list:
 
 trove flavor-list
@@ -1284,6 +1401,22 @@ Shows details of a flavor.
 
 ``<flavor>``
   ID or name of the flavor.
+
+.. _trove_force-delete:
+
+trove force-delete
+------------------
+
+.. code-block:: console
+
+   usage: trove force-delete <instance>
+
+Force delete an instance.
+
+**Positional arguments:**
+
+``<instance>``
+  ID or name of the instance.
 
 .. _trove_limit-list:
 
@@ -1655,7 +1788,10 @@ trove module-create
                               [--description <description>]
                               [--datastore <datastore>]
                               [--datastore_version <version>] [--auto_apply]
-                              [--all_tenants] [--live_update]
+                              [--all_tenants] [--hidden] [--live_update]
+                              [--priority_apply]
+                              [--apply_order {0,1,2,3,4,5,6,7,8,9}]
+                              [--full_access]
 
 Create a module.
 
@@ -1666,11 +1802,12 @@ Create a module.
 
 ``<type>``
   Type of the module. The type must be
-  supported by a corresponding module plugin on
-  the datastore it is applied to.
+  supported by a corresponding module plugin
+  on the datastore it is applied to.
 
 ``<filename>``
-  File containing data contents for the module.
+  File containing data contents for the
+  module.
 
 **Optional arguments:**
 
@@ -1688,17 +1825,37 @@ Create a module.
   can be applied to all versions.
 
 ``--auto_apply``
-  Automatically apply this module when creating
-  an instance or cluster.
+  Automatically apply this module when
+  creating an instance or cluster. Admin only.
 
 ``--all_tenants``
-  Module is valid for all tenants (Admin only).
+  Module is valid for all tenants. Admin only.
+
+``--hidden``
+  Hide this module from non-Admin. Useful in
+  creating auto-apply modules without
+  cluttering up module lists. Admin only.
 
 ``--live_update``
   Allow module to be updated even if it is
   already applied to a current instance or
   cluster. Automatically attempt to reapply
   this module if the contents change.
+
+``--priority_apply``
+  Sets a priority for applying the module. All
+  priority modules will be applied before non-priority ones. Admin only.
+
+``--apply_order {0,1,2,3,4,5,6,7,8,9}``
+  Sets an order for applying the module.
+  Modules with a lower value will be applied
+  before modules with a higher value. Modules
+  having the same value may be applied in any
+  order (default 5).
+
+``--full_access``
+  Marks a module as 'non-admin', unless an
+  admin-only option was specified. Admin only.
 
 .. _trove_module-delete:
 
@@ -1875,8 +2032,11 @@ trove module-update
                               [--datastore_version <version>]
                               [--all_datastore_versions] [--auto_apply]
                               [--no_auto_apply] [--all_tenants]
-                              [--no_all_tenants] [--live_update]
-                              [--no_live_update]
+                              [--no_all_tenants] [--hidden] [--no_hidden]
+                              [--live_update] [--no_live_update]
+                              [--priority_apply] [--no_priority_apply]
+                              [--apply_order {0,1,2,3,4,5,6,7,8,9}]
+                              [--full_access] [--no_full_access]
 
 Update a module.
 
@@ -1892,11 +2052,12 @@ Update a module.
 
 ``--type <type>``
   Type of the module. The type must be
-  supported by a corresponding module plugin on
-  the datastore it is applied to.
+  supported by a corresponding module driver
+  plugin on the datastore it is applied to.
 
 ``--file <filename>``
-  File containing data contents for the module.
+  File containing data contents for the
+  module.
 
 ``--description <description>``
   Description of the module.
@@ -1915,33 +2076,67 @@ Update a module.
   can be applied to all versions.
 
 ``--all_datastore_versions``
-  Module is valid for all datastore version.
+  Module is valid for all datastore versions.
 
 ``--auto_apply``
-  Automatically apply this module when creating
-  an instance or cluster.
+  Automatically apply this module when
+  creating an instance or cluster. Admin only.
 
 ``--no_auto_apply``
   Do not automatically apply this module when
-  creating an instance or cluster.
+  creating an instance or cluster. Admin only.
 
 ``--all_tenants``
-  Module is valid for all tenants (Admin only).
+  Module is valid for all tenants. Admin only.
 
 ``--no_all_tenants``
-  Module is valid for current tenant only
-  (Admin only).
+  Module is valid for current tenant only.
+  Admin only.
+
+``--hidden``
+  Hide this module from non-admin users.
+  Useful in creating auto-apply modules
+  without cluttering up module lists. Admin
+  only.
+
+``--no_hidden``
+  Allow all users to see this module. Admin
+  only.
 
 ``--live_update``
-  Allow module to be updated or deleted even if
-  it is already applied to a current instance
-  or cluster. Automatically attempt to reapply
-  this module if the contents change.
+  Allow module to be updated or deleted even
+  if it is already applied to a current
+  instance or cluster. Automatically attempt
+  to reapply this module if the contents
+  change.
 
 ``--no_live_update``
   Restricts a module from being updated or
-  deleted if it is already applied to a current
-  instance or cluster.
+  deleted if it is already applied to a
+  current instance or cluster.
+
+``--priority_apply``
+  Sets a priority for applying the module. All
+  priority modules will be applied before non-priority ones. Admin only.
+
+``--no_priority_apply``
+  Removes apply priority from the module.
+  Admin only.
+
+``--apply_order {0,1,2,3,4,5,6,7,8,9}``
+  Sets an order for applying the module.
+  Modules with a lower value will be applied
+  before modules with a higher value. Modules
+  having the same value may be applied in any
+  order (default None).
+
+``--full_access``
+  Marks a module as 'non-admin', unless an
+  admin-only option was specified. Admin only.
+
+``--no_full_access``
+  Restricts modification access for non-admin.
+  Admin only.
 
 .. _trove_promote-to-replica-source:
 
@@ -1953,6 +2148,60 @@ trove promote-to-replica-source
    usage: trove promote-to-replica-source <instance>
 
 Promotes a replica to be the new replica source of its set.
+
+**Positional arguments:**
+
+``<instance>``
+  ID or name of the instance.
+
+.. _trove_quota-show:
+
+trove quota-show
+----------------
+
+.. code-block:: console
+
+   usage: trove quota-show <tenant_id>
+
+Show quotas for a tenant.
+
+**Positional arguments:**
+
+``<tenant_id>``
+  Id of tenant for which to show quotas.
+
+.. _trove_quota-update:
+
+trove quota-update
+------------------
+
+.. code-block:: console
+
+   usage: trove quota-update <tenant_id> <resource> <limit>
+
+Update quotas for a tenant.
+
+**Positional arguments:**
+
+``<tenant_id>``
+  Id of tenant for which to update quotas.
+
+``<resource>``
+  Id of resource to change.
+
+``<limit>``
+  New limit to set for the named resource.
+
+.. _trove_reset-status:
+
+trove reset-status
+------------------
+
+.. code-block:: console
+
+   usage: trove reset-status <instance>
+
+Set the status to NONE.
 
 **Positional arguments:**
 
@@ -2066,6 +2315,87 @@ Gets status if root was ever enabled for an instance or cluster.
 
 ``<instance_or_cluster>``
   ID or name of the instance or cluster.
+
+.. _trove_schedule-create:
+
+trove schedule-create
+---------------------
+
+.. code-block:: console
+
+   usage: trove schedule-create <instance> <pattern> <name>
+                                [--description <description>] [--incremental]
+
+Schedules backups for an instance.
+
+**Positional arguments:**
+
+``<instance>``
+  ID or name of the instance.
+
+``<pattern>``
+  Cron style pattern describing schedule
+  occurrence.
+
+``<name>``
+  Name of the backup.
+
+**Optional arguments:**
+
+``--description <description>``
+  An optional description for the backup.
+
+``--incremental``
+  Flag to select incremental backup based on most
+  recent backup.
+
+.. _trove_schedule-delete:
+
+trove schedule-delete
+---------------------
+
+.. code-block:: console
+
+   usage: trove schedule-delete <schedule id>
+
+Deletes a schedule.
+
+**Positional arguments:**
+
+``<schedule id>``
+  Id of the schedule.
+
+.. _trove_schedule-list:
+
+trove schedule-list
+-------------------
+
+.. code-block:: console
+
+   usage: trove schedule-list <instance>
+
+Lists scheduled backups for an instance.
+
+**Positional arguments:**
+
+``<instance>``
+  ID or name of the instance.
+
+.. _trove_schedule-show:
+
+trove schedule-show
+-------------------
+
+.. code-block:: console
+
+   usage: trove schedule-show <schedule id>
+
+Shows details of a schedule.
+
+**Positional arguments:**
+
+``<schedule id>``
+  Id of the schedule.
 
 .. _trove_secgroup-add-rule:
 
