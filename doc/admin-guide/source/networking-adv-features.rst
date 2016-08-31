@@ -413,6 +413,48 @@ basic security group operations:
 
           $ neutron port-update --no-security-groups PORT_ID
 
+Disabling port security
+-----------------------
+
+Security groups and anti-spoofing rules can be problematic for some
+applications. MAC anti-spoofing prevents applications from sending or receiving
+packets with source or destination addresses that do not match the configured
+address of a port. For example, multicast packets use a multicast group address
+as the destination address rather than the address of the virtual machine.
+While all security groups can be removed from a port, disabling MAC
+anti-spoofing requires the port security extension.
+
+.. note::
+
+   - By default port security is enabled on every port.
+
+   - All security groups must be removed from a port before disabling port
+     security.
+
+This table shows example neutron commands to selectively disable or enable
+port security for a single port:
+
+.. list-table:: **Port security operations**
+   :widths: 30 50
+   :header-rows: 1
+
+   * - Operation
+     - Command
+   * - Disable port security on a port.
+     - .. code-block:: console
+
+          $ neutron port-update --port-security-enabled=False PORT_ID
+   * - Enable port security on a port.
+     - .. code-block:: console
+
+          $ neutron port-update --port-security-enabled=True PORT_ID
+
+Port security can also be disabled when a port is created using
+``port_security_enabled`` attribute.
+
+The ``port_security_enabled`` attribute can also be used at the network level
+to disable port security by default for all ports in a specific network.
+
 Basic Load-Balancer-as-a-Service operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
