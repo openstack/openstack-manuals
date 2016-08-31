@@ -20,6 +20,7 @@ Contents
    openstack
 
    murano
+   freezer
    ironic
    cinder
    senlin
