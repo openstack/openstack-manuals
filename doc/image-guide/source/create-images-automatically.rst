@@ -59,8 +59,8 @@ On Fedora, install Oz with yum:
 
 A full treatment of Oz is beyond the scope of this document,
 but we will provide an example. You can find additional examples of
-Oz template files on GitHub at `rackerjoe/oz-image-build/templates
-<https://github.com/rackerjoe/oz-image-build/tree/master/templates>`_.
+Oz template files on GitHub at `rcbops/oz-image-build/tree/master/templates
+<https://github.com/rcbops/oz-image-build/tree/master/templates>`_.
 Here's how you would create a CentOS 6.4 image with Oz.
 
 Create a template file (we'll call it ``centos64.tdl``) with
