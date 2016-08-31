@@ -9,7 +9,7 @@ Compute service command-line client
 The nova client is the command-line interface (CLI) for
 the Compute service API and its extensions.
 
-This chapter documents :command:`nova` version ``5.1.0``.
+This chapter documents :command:`nova` version ``6.0.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -143,26 +143,28 @@ nova usage
   Retrieve server diagnostics.
 
 ``dns-create``
-  Create a DNS entry for domain, name, and IP.
+  **DEPRECATED**: Create a DNS entry for domain,
+  name, and IP.
 
 ``dns-create-private-domain``
-  Create the specified DNS domain.
+  **DEPRECATED**: Create the specified DNS domain.
 
 ``dns-create-public-domain``
-  Create the specified DNS domain.
+  **DEPRECATED**: Create the specified DNS domain.
 
 ``dns-delete``
-  Delete the specified DNS entry.
+  **DEPRECATED**: Delete the specified DNS entry.
 
 ``dns-delete-domain``
-  Delete the specified DNS domain.
+  **DEPRECATED**: Delete the specified DNS domain.
 
 ``dns-domains``
-  Print a list of available dns domains.
+  **DEPRECATED**: Print a list of available dns
+  domains.
 
 ``dns-list``
-  List current DNS entries for domain and IP or
-  domain and name.
+  **DEPRECATED**: List current DNS entries for
+  domain and IP or domain and name.
 
 ``endpoints``
   Discover endpoints that get returned from the
@@ -172,13 +174,13 @@ nova usage
   Evacuate server from failed host.
 
 ``fixed-ip-get``
-  Retrieve info on a fixed IP.
+  **DEPRECATED**: Retrieve info on a fixed IP.
 
 ``fixed-ip-reserve``
-  Reserve a fixed IP.
+  **DEPRECATED**: Reserve a fixed IP.
 
 ``fixed-ip-unreserve``
-  Unreserve a fixed IP.
+  **DEPRECATED**: Unreserve a fixed IP.
 
 ``flavor-access-add``
   Add flavor access for the given tenant.
@@ -210,29 +212,32 @@ nova usage
   Associate a floating IP address to a server.
 
 ``floating-ip-bulk-create``
-  Bulk create floating IPs by range (nova-network only).
+  **DEPRECATED**: Bulk create floating IPs by range
+  (nova-network only).
 
 ``floating-ip-bulk-delete``
-  Bulk delete floating IPs by range (nova-network only).
+  **DEPRECATED**: Bulk delete floating IPs by range
+  (nova-network only).
 
 ``floating-ip-bulk-list``
-  List all floating IPs (nova-network only).
+  **DEPRECATED**: List all floating IPs (nova-network only).
 
 ``floating-ip-create``
-  Allocate a floating IP for the current tenant.
+  **DEPRECATED**: Allocate a floating IP for the
+  current tenant.
 
 ``floating-ip-delete``
-  De-allocate a floating IP.
+  **DEPRECATED**: De-allocate a floating IP.
 
 ``floating-ip-disassociate``
   Disassociate a floating IP address from a
   server.
 
 ``floating-ip-list``
-  List floating IPs.
+  **DEPRECATED**: List floating IPs.
 
 ``floating-ip-pool-list``
-  List all floating IP pools.
+  **DEPRECATED**: List all floating IP pools.
 
 ``get-mks-console``
   Get an MKS console to a server. (Supported by
@@ -386,26 +391,28 @@ nova usage
   selected by the scheduler.
 
 ``network-associate-host``
-  Associate host with network.
+  **DEPRECATED**: Associate host with network.
 
 ``network-associate-project``
-  Associate project with network.
+  **DEPRECATED**: Associate project with network.
 
 ``network-create``
-  Create a network.
+  **DEPRECATED**: Create a network.
 
 ``network-delete``
-  Delete network by label or id.
+  **DEPRECATED**: Delete network by label or id.
 
 ``network-disassociate``
-  Disassociate host and/or project from the
-  given network.
+  **DEPRECATED**: Disassociate host and/or project
+  from the given network.
 
 ``network-list``
-  Print a list of available networks.
+  **DEPRECATED**: Print a list of available
+  networks.
 
 ``network-show``
-  Show details about the given network.
+  **DEPRECATED**: Show details about the given
+  network.
 
 ``pause``
   Pause a server.
@@ -415,6 +422,9 @@ nova usage
 
 ``quota-class-update``
   Update the quotas for a quota class.
+  (Supported by API versions '2.0' - '2.latest')
+  [hint: use ':option:`--os-compute-api-version`' flag to
+  show help message for proper version]
 
 ``quota-defaults``
   List the default quotas for a tenant.
@@ -428,6 +438,9 @@ nova usage
 
 ``quota-update``
   Update the quotas for a tenant/user.
+  (Supported by API versions '2.0' - '2.latest')
+  [hint: use ':option:`--os-compute-api-version`' flag to
+  show help message for proper version]
 
 ``rate-limits``
   **DEPRECATED**, use limits instead.
@@ -483,50 +496,54 @@ nova usage
   **DEPRECATED**, use set-password instead.
 
 ``scrub``
-  Delete networks and security groups associated
-  with a project.
+  **DEPRECATED**: Delete networks and security
+  groups associated with a project.
 
 ``secgroup-add-default-rule``
-  Add a rule to the set of rules that will be
-  added to the 'default' security group for new
-  tenants (nova-network only).
+  **DEPRECATED**: Add a rule to the set of rules
+  that will be added to the 'default' security
+  group for new tenants (nova-network only).
 
 ``secgroup-add-group-rule``
-  Add a source group rule to a security group.
+  **DEPRECATED**: Add a source group rule to a
+  security group.
 
 ``secgroup-add-rule``
-  Add a rule to a security group.
+  **DEPRECATED**: Add a rule to a security group.
 
 ``secgroup-create``
-  Create a security group.
+  **DEPRECATED**: Create a security group.
 
 ``secgroup-delete``
-  Delete a security group.
+  **DEPRECATED**: Delete a security group.
 
 ``secgroup-delete-default-rule``
-  Delete a rule from the set of rules that will
-  be added to the 'default' security group for
-  new tenants (nova-network only).
+  **DEPRECATED**: Delete a rule from the set of
+  rules that will be added to the 'default'
+  security group for new tenants (nova-network
+  only).
 
 ``secgroup-delete-group-rule``
-  Delete a source group rule from a security
-  group.
+  **DEPRECATED**: Delete a source group rule from a
+  security group.
 
 ``secgroup-delete-rule``
-  Delete a rule from a security group.
+  **DEPRECATED**: Delete a rule from a security
+  group.
 
 ``secgroup-list``
-  List security groups for the current tenant.
+  **DEPRECATED**: List security groups for the
+  current tenant.
 
 ``secgroup-list-default-rules``
-  List rules that will be added to the 'default'
-  security group for new tenants.
+  **DEPRECATED**: List rules that will be added to
+  the 'default' security group for new tenants.
 
 ``secgroup-list-rules``
-  List rules for a security group.
+  **DEPRECATED**: List rules for a security group.
 
 ``secgroup-update``
-  Update a security group.
+  **DEPRECATED**: Update a security group.
 
 ``server-group-create``
   Create a new server group with the specified
@@ -748,16 +765,16 @@ nova usage
   **DEPRECATED**, use tenant-network-list instead.
 
 ``tenant-network-create``
-  Create a tenant network.
+  **DEPRECATED**: Create a tenant network.
 
 ``tenant-network-delete``
-  Delete a tenant network.
+  **DEPRECATED**: Delete a tenant network.
 
 ``tenant-network-list``
-  List tenant networks.
+  **DEPRECATED**: List tenant networks.
 
 ``tenant-network-show``
-  Show a tenant network.
+  **DEPRECATED**: Show a tenant network.
 
 ``baremetal-interface-list``
   **DEPRECATED**: List network interfaces associated
@@ -1155,7 +1172,7 @@ nova boot
                     [--swap <swap_size>]
                     [--ephemeral size=<size>[,format=<format>]]
                     [--hint <key=value>]
-                    [--nic <net-id=net-uuid,net-name=network-name,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>]
+                    [--nic <auto,none,net-id=net-uuid,net-name=network-name,port-id=port-uuid,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,tag=tag>]
                     [--config-drive <value>] [--poll] [--admin-pass <value>]
                     [--access-ip-v4 <value>] [--access-ip-v6 <value>]
                     [--description <description>]
@@ -1269,38 +1286,27 @@ Boot a new server.
   Send arbitrary key/value pairs to the
   scheduler for custom use.
 
-``--nic <net-id=net-uuid,net-name=network-name,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid>``
+``--nic <auto,none,net-id=net-uuid,net-name=network-name,port-id=port-uuid,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,tag=tag>``
   Create a NIC on the server. Specify option
-  multiple
-  times
-  to
-  create
-  multiple
-  nics.
-  net-id:
-  attach
-  NIC
-  to
-  network
-  with
-  this
-  UUID
-  net-name:
-  attach
-  NIC
-  to
-  network
-  with
-  this
-  name
-  (either port-id or net-id or net-name must be
+  multiple times to create multiple nics unless
+  using the special 'auto' or 'none' values.
+  auto: automatically allocate network resources
+  if none are available. This cannot be
+  specified with any other nic value and cannot
+  be specified multiple times. none: do not
+  attach a NIC at all. This cannot be specified
+  with any other nic value and cannot be
+  specified multiple times. net-id: attach NIC
+  to network with a specific UUID. net-name:
+  attach NIC to network with this name (either
+  port-id or net-id or net-name must be
   provided), v4-fixed-ip: IPv4 fixed address for
   NIC (optional), v6-fixed-ip: IPv6 fixed
   address for NIC (optional), port-id: attach
   NIC to port with this UUID tag: interface
   metadata tag (optional) (either port-id or
   net-id must be provided). (Supported by API
-  versions '2.32' - '2.latest')
+  versions '2.37' - '2.latest')
 
 ``--config-drive <value>``
   Enable config drive.
@@ -1491,149 +1497,6 @@ Retrieve server diagnostics.
 ``<server>``
   Name or ID of server.
 
-.. _nova_dns-create:
-
-nova dns-create
----------------
-
-.. code-block:: console
-
-   usage: nova dns-create [--type <type>] <ip> <name> <domain>
-
-Create a DNS entry for domain, name, and IP.
-
-**Positional arguments:**
-
-``<ip>``
-  IP address.
-
-``<name>``
-  DNS name.
-
-``<domain>``
-  DNS domain.
-
-**Optional arguments:**
-
-``--type <type>``
-  DNS type (e.g. "A")
-
-.. _nova_dns-create-private-domain:
-
-nova dns-create-private-domain
-------------------------------
-
-.. code-block:: console
-
-   usage: nova dns-create-private-domain
-                                         [--availability-zone <availability-zone>]
-                                         <domain>
-
-Create the specified DNS domain.
-
-**Positional arguments:**
-
-``<domain>``
-  DNS domain.
-
-**Optional arguments:**
-
-``--availability-zone <availability-zone>``
-  Limit access to this domain to servers in the
-  specified availability zone.
-
-.. _nova_dns-create-public-domain:
-
-nova dns-create-public-domain
------------------------------
-
-.. code-block:: console
-
-   usage: nova dns-create-public-domain [--project <project>] <domain>
-
-Create the specified DNS domain.
-
-**Positional arguments:**
-
-``<domain>``
-  DNS domain.
-
-**Optional arguments:**
-
-``--project <project>``
-  Limit access to this domain to users of the specified
-  project.
-
-.. _nova_dns-delete:
-
-nova dns-delete
----------------
-
-.. code-block:: console
-
-   usage: nova dns-delete <domain> <name>
-
-Delete the specified DNS entry.
-
-**Positional arguments:**
-
-``<domain>``
-  DNS domain.
-
-``<name>``
-  DNS name.
-
-.. _nova_dns-delete-domain:
-
-nova dns-delete-domain
-----------------------
-
-.. code-block:: console
-
-   usage: nova dns-delete-domain <domain>
-
-Delete the specified DNS domain.
-
-**Positional arguments:**
-
-``<domain>``
-  DNS domain.
-
-.. _nova_dns-domains:
-
-nova dns-domains
-----------------
-
-.. code-block:: console
-
-   usage: nova dns-domains
-
-Print a list of available dns domains.
-
-.. _nova_dns-list:
-
-nova dns-list
--------------
-
-.. code-block:: console
-
-   usage: nova dns-list [--ip <ip>] [--name <name>] <domain>
-
-List current DNS entries for domain and IP or domain and name.
-
-**Positional arguments:**
-
-``<domain>``
-  DNS domain.
-
-**Optional arguments:**
-
-``--ip <ip>``
-  IP address.
-
-``--name <name>``
-  DNS name.
-
 .. _nova_endpoints:
 
 nova endpoints
@@ -1675,54 +1538,6 @@ Evacuate server from failed host.
 ``--force``
   Force to not verify the scheduler if a host is
   provided. (Supported by API versions '2.29' -'2.latest')
-
-.. _nova_fixed-ip-get:
-
-nova fixed-ip-get
------------------
-
-.. code-block:: console
-
-   usage: nova fixed-ip-get <fixed_ip>
-
-Retrieve info on a fixed IP.
-
-**Positional arguments:**
-
-``<fixed_ip>``
-  Fixed IP Address.
-
-.. _nova_fixed-ip-reserve:
-
-nova fixed-ip-reserve
----------------------
-
-.. code-block:: console
-
-   usage: nova fixed-ip-reserve <fixed_ip>
-
-Reserve a fixed IP.
-
-**Positional arguments:**
-
-``<fixed_ip>``
-  Fixed IP Address.
-
-.. _nova_fixed-ip-unreserve:
-
-nova fixed-ip-unreserve
------------------------
-
-.. code-block:: console
-
-   usage: nova fixed-ip-unreserve <fixed_ip>
-
-Unreserve a fixed IP.
-
-**Positional arguments:**
-
-``<fixed_ip>``
-  Fixed IP Address.
 
 .. _nova_flavor-access-add:
 
@@ -1938,95 +1753,6 @@ Associate a floating IP address to a server.
 ``--fixed-address <fixed_address>``
   Fixed IP Address to associate with.
 
-.. _nova_floating-ip-bulk-create:
-
-nova floating-ip-bulk-create
-----------------------------
-
-.. code-block:: console
-
-   usage: nova floating-ip-bulk-create [--pool <pool>] [--interface <interface>]
-                                       <range>
-
-Bulk create floating IPs by range (nova-network only).
-
-**Positional arguments:**
-
-``<range>``
-  Address range to create.
-
-**Optional arguments:**
-
-``--pool <pool>``
-  Pool for new Floating IPs.
-
-``--interface <interface>``
-  Interface for new Floating IPs.
-
-.. _nova_floating-ip-bulk-delete:
-
-nova floating-ip-bulk-delete
-----------------------------
-
-.. code-block:: console
-
-   usage: nova floating-ip-bulk-delete <range>
-
-Bulk delete floating IPs by range (nova-network only).
-
-**Positional arguments:**
-
-``<range>``
-  Address range to delete.
-
-.. _nova_floating-ip-bulk-list:
-
-nova floating-ip-bulk-list
---------------------------
-
-.. code-block:: console
-
-   usage: nova floating-ip-bulk-list [--host <host>]
-
-List all floating IPs (nova-network only).
-
-**Optional arguments:**
-
-``--host <host>``
-  Filter by host.
-
-.. _nova_floating-ip-create:
-
-nova floating-ip-create
------------------------
-
-.. code-block:: console
-
-   usage: nova floating-ip-create [<floating-ip-pool>]
-
-Allocate a floating IP for the current tenant.
-
-**Positional arguments:**
-
-``<floating-ip-pool>``
-  Name of Floating IP Pool. (Optional)
-
-.. _nova_floating-ip-delete:
-
-nova floating-ip-delete
------------------------
-
-.. code-block:: console
-
-   usage: nova floating-ip-delete <address>
-
-De-allocate a floating IP.
-
-**Positional arguments:**
-
-``<address>``
-  IP of Floating IP.
-
 .. _nova_floating-ip-disassociate:
 
 nova floating-ip-disassociate
@@ -2045,28 +1771,6 @@ Disassociate a floating IP address from a server.
 
 ``<address>``
   IP Address.
-
-.. _nova_floating-ip-list:
-
-nova floating-ip-list
----------------------
-
-.. code-block:: console
-
-   usage: nova floating-ip-list
-
-List floating IPs.
-
-.. _nova_floating-ip-pool-list:
-
-nova floating-ip-pool-list
---------------------------
-
-.. code-block:: console
-
-   usage: nova floating-ip-pool-list
-
-List all floating IP pools.
 
 .. _nova_force-delete:
 
@@ -3110,217 +2814,6 @@ Print a list of migrations.
 ``--cell_name <cell_name>``
   Fetch migrations for the given cell_name.
 
-.. _nova_network-associate-host:
-
-nova network-associate-host
----------------------------
-
-.. code-block:: console
-
-   usage: nova network-associate-host <network> <host>
-
-Associate host with network.
-
-**Positional arguments:**
-
-``<network>``
-  UUID of network.
-
-``<host>``
-  Name of host
-
-.. _nova_network-associate-project:
-
-nova network-associate-project
-------------------------------
-
-.. code-block:: console
-
-   usage: nova network-associate-project <network>
-
-Associate project with network.
-
-**Positional arguments:**
-
-``<network>``
-  UUID of network.
-
-.. _nova_network-create:
-
-nova network-create
--------------------
-
-.. code-block:: console
-
-   usage: nova network-create [--fixed-range-v4 <x.x.x.x/yy>]
-                              [--fixed-range-v6 CIDR_V6] [--vlan <vlan id>]
-                              [--vlan-start <vlan start>] [--vpn <vpn start>]
-                              [--gateway GATEWAY] [--gateway-v6 GATEWAY_V6]
-                              [--bridge <bridge>]
-                              [--bridge-interface <bridge interface>]
-                              [--multi-host <'T'|'F'>] [--dns1 <DNS Address>]
-                              [--dns2 <DNS Address>] [--uuid <network uuid>]
-                              [--fixed-cidr <x.x.x.x/yy>]
-                              [--project-id <project id>] [--priority <number>]
-                              [--mtu MTU] [--enable-dhcp <'T'|'F'>]
-                              [--dhcp-server DHCP_SERVER]
-                              [--share-address <'T'|'F'>]
-                              [--allowed-start ALLOWED_START]
-                              [--allowed-end ALLOWED_END]
-                              <network_label>
-
-Create a network.
-
-**Positional arguments:**
-
-``<network_label>``
-  Label for network
-
-**Optional arguments:**
-
-``--fixed-range-v4 <x.x.x.x/yy>``
-  IPv4 subnet (ex: 10.0.0.0/8)
-
-``--fixed-range-v6``
-  CIDR_V6      IPv6 subnet (ex: fe80::/64
-
-``--vlan <vlan id>``
-  The vlan ID to be assigned to the project.
-
-``--vlan-start <vlan start>``
-  First vlan ID to be assigned to the project.
-  Subsequent vlan IDs will be assigned
-  incrementally.
-
-``--vpn <vpn start>``
-  vpn start
-
-``--gateway GATEWAY``
-  gateway
-
-``--gateway-v6``
-  GATEWAY_V6       IPv6 gateway
-
-``--bridge <bridge>``
-  VIFs on this network are connected to this
-  bridge.
-
-``--bridge-interface <bridge interface>``
-  The bridge is connected to this interface.
-
-``--multi-host <'T'|'F'>``
-  Multi host
-
-``--dns1 <DNS Address>``
-  First DNS.
-
-``--dns2 <DNS Address>``
-  Second DNS.
-
-``--uuid <network uuid>``
-  Network UUID.
-
-``--fixed-cidr <x.x.x.x/yy>``
-  IPv4 subnet for fixed IPs (ex: 10.20.0.0/16).
-
-``--project-id <project id>``
-  Project ID.
-
-``--priority <number>``
-  Network interface priority.
-
-``--mtu MTU``
-  MTU for network.
-
-``--enable-dhcp <'T'|'F'>``
-  Enable DHCP.
-
-``--dhcp-server DHCP_SERVER``
-  DHCP-server address (defaults to gateway
-  address)
-
-``--share-address <'T'|'F'>``
-  Share address
-
-``--allowed-start ALLOWED_START``
-  Start of allowed addresses for instances.
-
-``--allowed-end ALLOWED_END``
-  End of allowed addresses for instances.
-
-.. _nova_network-delete:
-
-nova network-delete
--------------------
-
-.. code-block:: console
-
-   usage: nova network-delete <network>
-
-Delete network by label or id.
-
-**Positional arguments:**
-
-``<network>``
-  UUID or label of network.
-
-.. _nova_network-disassociate:
-
-nova network-disassociate
--------------------------
-
-.. code-block:: console
-
-   usage: nova network-disassociate [--host-only [<0|1>]]
-                                    [--project-only [<0|1>]]
-                                    <network>
-
-Disassociate host and/or project from the given network.
-
-**Positional arguments:**
-
-``<network>``
-  UUID of network.
-
-**Optional arguments:**
-
-``--host-only [<0|1>]``
-
-``--project-only [<0|1>]``
-
-.. _nova_network-list:
-
-nova network-list
------------------
-
-.. code-block:: console
-
-   usage: nova network-list [--fields <fields>]
-
-Print a list of available networks.
-
-**Optional arguments:**
-
-``--fields <fields>``
-  Comma-separated list of fields to display. Use the show
-  command to see which fields are available.
-
-.. _nova_network-show:
-
-nova network-show
------------------
-
-.. code-block:: console
-
-   usage: nova network-show <network>
-
-Show details about the given network.
-
-**Positional arguments:**
-
-``<network>``
-  UUID or label of network.
-
 .. _nova_pause:
 
 nova pause
@@ -3361,20 +2854,27 @@ nova quota-class-update
 .. code-block:: console
 
    usage: nova quota-class-update [--instances <instances>] [--cores <cores>]
-                                  [--ram <ram>] [--floating-ips <floating-ips>]
-                                  [--fixed-ips <fixed-ips>]
+                                  [--ram <ram>]
                                   [--metadata-items <metadata-items>]
                                   [--injected-files <injected-files>]
                                   [--injected-file-content-bytes <injected-file-content-bytes>]
                                   [--injected-file-path-bytes <injected-file-path-bytes>]
                                   [--key-pairs <key-pairs>]
-                                  [--security-groups <security-groups>]
-                                  [--security-group-rules <security-group-rules>]
                                   [--server-groups <server-groups>]
                                   [--server-group-members <server-group-members>]
                                   <class>
 
-Update the quotas for a quota class.
+Update the quotas for a quota class. (Supported by API versions '2.0' -
+'2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for proper version]
 
 **Positional arguments:**
 
@@ -3392,12 +2892,6 @@ Update the quotas for a quota class.
 ``--ram <ram>``
   New value for the "ram" quota.
 
-``--floating-ips <floating-ips>``
-  New value for the "floating-ips" quota.
-
-``--fixed-ips <fixed-ips>``
-  New value for the "fixed-ips" quota.
-
 ``--metadata-items <metadata-items>``
   New value for the "metadata-items" quota.
 
@@ -3413,13 +2907,6 @@ Update the quotas for a quota class.
 
 ``--key-pairs <key-pairs>``
   New value for the "key-pairs" quota.
-
-``--security-groups <security-groups>``
-  New value for the "security-groups" quota.
-
-``--security-group-rules <security-group-rules>``
-  New value for the "security-group-rules"
-  quota.
 
 ``--server-groups <server-groups>``
   New value for the "server-groups" quota.
@@ -3494,21 +2981,27 @@ nova quota-update
 
    usage: nova quota-update [--user <user-id>] [--instances <instances>]
                             [--cores <cores>] [--ram <ram>]
-                            [--floating-ips <floating-ips>]
-                            [--fixed-ips <fixed-ips>]
                             [--metadata-items <metadata-items>]
                             [--injected-files <injected-files>]
                             [--injected-file-content-bytes <injected-file-content-bytes>]
                             [--injected-file-path-bytes <injected-file-path-bytes>]
                             [--key-pairs <key-pairs>]
-                            [--security-groups <security-groups>]
-                            [--security-group-rules <security-group-rules>]
                             [--server-groups <server-groups>]
                             [--server-group-members <server-group-members>]
                             [--force]
                             <tenant-id>
 
-Update the quotas for a tenant/user.
+Update the quotas for a tenant/user. (Supported by API versions '2.0' -
+'2.latest')
+[hint:
+use
+':option:`--os-compute-api-version`'
+flag
+to
+show
+help
+message
+for proper version]
 
 **Positional arguments:**
 
@@ -3529,12 +3022,6 @@ Update the quotas for a tenant/user.
 ``--ram <ram>``
   New value for the "ram" quota.
 
-``--floating-ips <floating-ips>``
-  New value for the "floating-ips" quota.
-
-``--fixed-ips <fixed-ips>``
-  New value for the "fixed-ips" quota.
-
 ``--metadata-items <metadata-items>``
   New value for the "metadata-items" quota.
 
@@ -3550,13 +3037,6 @@ Update the quotas for a tenant/user.
 
 ``--key-pairs <key-pairs>``
   New value for the "key-pairs" quota.
-
-``--security-groups <security-groups>``
-  New value for the "security-groups" quota.
-
-``--security-group-rules <security-group-rules>``
-  New value for the "security-group-rules"
-  quota.
 
 ``--server-groups <server-groups>``
   New value for the "server-groups" quota.
@@ -3865,291 +3345,6 @@ Resume a server.
 
 ``<server>``
   Name or ID of server.
-
-.. _nova_scrub:
-
-nova scrub
-----------
-
-.. code-block:: console
-
-   usage: nova scrub <project_id>
-
-Delete networks and security groups associated with a project.
-
-**Positional arguments:**
-
-``<project_id>``
-  The ID of the project.
-
-.. _nova_secgroup-add-default-rule:
-
-nova secgroup-add-default-rule
-------------------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-add-default-rule <ip-proto> <from-port> <to-port> <cidr>
-
-Add a rule to the set of rules that will be added to the 'default' security
-group for new tenants (nova-network only).
-
-**Positional arguments:**
-
-``<ip-proto>``
-  IP protocol (icmp, tcp, udp).
-
-``<from-port>``
-  Port at start of range.
-
-``<to-port>``
-  Port at end of range.
-
-``<cidr>``
-  CIDR for address range.
-
-.. _nova_secgroup-add-group-rule:
-
-nova secgroup-add-group-rule
-----------------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-add-group-rule <secgroup> <source-group> <ip-proto>
-                                       <from-port> <to-port>
-
-Add a source group rule to a security group.
-
-**Positional arguments:**
-
-``<secgroup>``
-  ID or name of security group.
-
-``<source-group>``
-  ID or name of source group.
-
-``<ip-proto>``
-  IP protocol (icmp, tcp, udp).
-
-``<from-port>``
-  Port at start of range.
-
-``<to-port>``
-  Port at end of range.
-
-.. _nova_secgroup-add-rule:
-
-nova secgroup-add-rule
-----------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-add-rule <secgroup> <ip-proto> <from-port> <to-port>
-                                 <cidr>
-
-Add a rule to a security group.
-
-**Positional arguments:**
-
-``<secgroup>``
-  ID or name of security group.
-
-``<ip-proto>``
-  IP protocol (icmp, tcp, udp).
-
-``<from-port>``
-  Port at start of range.
-
-``<to-port>``
-  Port at end of range.
-
-``<cidr>``
-  CIDR for address range.
-
-.. _nova_secgroup-create:
-
-nova secgroup-create
---------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-create <name> <description>
-
-Create a security group.
-
-**Positional arguments:**
-
-``<name>``
-  Name of security group.
-
-``<description>``
-  Description of security group.
-
-.. _nova_secgroup-delete:
-
-nova secgroup-delete
---------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-delete <secgroup>
-
-Delete a security group.
-
-**Positional arguments:**
-
-``<secgroup>``
-  ID or name of security group.
-
-.. _nova_secgroup-delete-default-rule:
-
-nova secgroup-delete-default-rule
----------------------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-delete-default-rule <ip-proto> <from-port> <to-port>
-                                            <cidr>
-
-Delete a rule from the set of rules that will be added to the 'default'
-security group for new tenants (nova-network only).
-
-**Positional arguments:**
-
-``<ip-proto>``
-  IP protocol (icmp, tcp, udp).
-
-``<from-port>``
-  Port at start of range.
-
-``<to-port>``
-  Port at end of range.
-
-``<cidr>``
-  CIDR for address range.
-
-.. _nova_secgroup-delete-group-rule:
-
-nova secgroup-delete-group-rule
--------------------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-delete-group-rule <secgroup> <source-group> <ip-proto>
-                                          <from-port> <to-port>
-
-Delete a source group rule from a security group.
-
-**Positional arguments:**
-
-``<secgroup>``
-  ID or name of security group.
-
-``<source-group>``
-  ID or name of source group.
-
-``<ip-proto>``
-  IP protocol (icmp, tcp, udp).
-
-``<from-port>``
-  Port at start of range.
-
-``<to-port>``
-  Port at end of range.
-
-.. _nova_secgroup-delete-rule:
-
-nova secgroup-delete-rule
--------------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-delete-rule <secgroup> <ip-proto> <from-port> <to-port>
-                                    <cidr>
-
-Delete a rule from a security group.
-
-**Positional arguments:**
-
-``<secgroup>``
-  ID or name of security group.
-
-``<ip-proto>``
-  IP protocol (icmp, tcp, udp).
-
-``<from-port>``
-  Port at start of range.
-
-``<to-port>``
-  Port at end of range.
-
-``<cidr>``
-  CIDR for address range.
-
-.. _nova_secgroup-list:
-
-nova secgroup-list
-------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-list [--all-tenants [<0|1>]]
-
-List security groups for the current tenant.
-
-**Optional arguments:**
-
-``--all-tenants [<0|1>]``
-  Display information from all tenants (Admin only).
-
-.. _nova_secgroup-list-default-rules:
-
-nova secgroup-list-default-rules
---------------------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-list-default-rules
-
-List rules that will be added to the 'default' security group for new tenants.
-
-.. _nova_secgroup-list-rules:
-
-nova secgroup-list-rules
-------------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-list-rules <secgroup>
-
-List rules for a security group.
-
-**Positional arguments:**
-
-``<secgroup>``
-  ID or name of security group.
-
-.. _nova_secgroup-update:
-
-nova secgroup-update
---------------------
-
-.. code-block:: console
-
-   usage: nova secgroup-update <secgroup> <name> <description>
-
-Update a security group.
-
-**Positional arguments:**
-
-``<secgroup>``
-  ID or name of security group.
-
-``<name>``
-  Name of security group.
-
-``<description>``
-  Description of security group.
 
 .. _nova_server-group-create:
 
@@ -4702,69 +3897,6 @@ Suspend a server.
 
 ``<server>``
   Name or ID of server.
-
-.. _nova_tenant-network-create:
-
-nova tenant-network-create
---------------------------
-
-.. code-block:: console
-
-   usage: nova tenant-network-create <network_label> <cidr>
-
-Create a tenant network.
-
-**Positional arguments:**
-
-``<network_label>``
-  Network label (ex. my_new_network)
-
-``<cidr>``
-  IP block to allocate from (ex. 172.16.0.0/24 or
-  2001:DB8::/64)
-
-.. _nova_tenant-network-delete:
-
-nova tenant-network-delete
---------------------------
-
-.. code-block:: console
-
-   usage: nova tenant-network-delete <network_id>
-
-Delete a tenant network.
-
-**Positional arguments:**
-
-``<network_id>``
-  ID of network
-
-.. _nova_tenant-network-list:
-
-nova tenant-network-list
-------------------------
-
-.. code-block:: console
-
-   usage: nova tenant-network-list
-
-List tenant networks.
-
-.. _nova_tenant-network-show:
-
-nova tenant-network-show
-------------------------
-
-.. code-block:: console
-
-   usage: nova tenant-network-show <network_id>
-
-Show a tenant network.
-
-**Positional arguments:**
-
-``<network_id>``
-  ID of network
 
 .. _nova_trigger-crash-dump:
 
