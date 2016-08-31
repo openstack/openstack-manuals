@@ -15,7 +15,7 @@ datapath since OVS 2.2, and a DPDK-backed ``vhost-user`` virtual interface
 since OVS 2.4. The DPDK datapath provides lower latency and higher performance
 than the standard kernel OVS datapath, while DPDK-backed ``vhost-user``
 interfaces can connect guests to this datapath. For more information on DPDK,
-refer to the `DPDK`_ website.
+refer to the `DPDK <http://dpdk.org/>`__ website.
 
 OVS with DPDK, or OVS-DPDK, can be used to provide high-performance networking
 between instances on OpenStack Compute nodes.
@@ -38,7 +38,9 @@ Multiqueue support is available if the following newer versions are used:
 * libvirt 1.2.17
 
 In both cases, install and configure Open vSwitch with DPDK support for each
-node. For more information, see the `OVS-DPDK`_ installation guide.
+node. For more information, see the
+`OVS-DPDK <https://github.com/openvswitch/ovs/blob/v2.5.0/INSTALL.DPDK.md>`__
+installation guide.
 
 Using vhost-user interfaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -52,7 +54,7 @@ pages. This can be done through flavors. For example:
    $ openstack flavor set m1.large --property hw:mem_page_size=large
 
 For more information about the syntax for ``hw:mem_page_size``, refer to the
-`Flavors`_ guide.
+`Flavors <http://docs.openstack.org/admin-guide/compute-flavors.html>`__ guide.
 
 .. note::
 
@@ -80,9 +82,3 @@ Known limitations
   will not function.
 * Expect performance degradation of services using tap devices: these devices
   do not support DPDK. Example services include DVR, FWaaS, or LBaaS.
-
-.. Links
-
-.. _`DPDK`: http://dpdk.org/
-.. _`Flavors`: http://docs.openstack.org/admin-guide/compute-flavors.html
-.. _`OVS-DPDK`: https://github.com/openvswitch/ovs/blob/v2.5.0/INSTALL.DPDK.md
