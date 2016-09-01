@@ -341,7 +341,7 @@ normal instances. The use cases of the FDB population extension are:
 * Direct port and normal port instances reside on the same compute node.
 
 * Direct port instance that uses floating IP address and network node
-   are located on the same host.
+  are located on the same host.
 
 For additional information describing the problem, refer to:
 `Virtual switching technologies and Linux bridge.
