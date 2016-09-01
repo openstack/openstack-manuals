@@ -184,7 +184,7 @@ The following program creates a port:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     from credentials import get_credentials
     from credentials import get_nova_credentials
 
@@ -252,7 +252,7 @@ The following program lists the ports for a server:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     from credentials import get_credentials
     from credentials import get_nova_credentials
     from utils import print_values_server
@@ -297,7 +297,7 @@ port to a subnet.
    .. code-block:: python
 
       from neutronclient.v2_0 import client
-      import novaclient.v1_1.client as nvclient
+      import novaclient.v2.client as nvclient
       from credentials import get_credentials
       from credentials import get_nova_credentials
       from utils import print_values_server
@@ -349,7 +349,7 @@ Create router: complete code listing example
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     from credentials import get_credentials
     from credentials import get_nova_credentials
     from utils import print_values_server
