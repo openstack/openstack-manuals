@@ -140,12 +140,12 @@ Instead of installing and learning all these clients, we recommend
 installing and using the OpenStack client. You may need to install an
 individual project's client because coverage is not yet sufficient in the
 OpenStack client. If you need to install an individual client's project,
-replace the ``<project>`` name in this ``pip install`` command using the
+replace the ``PROJECT`` name in this ``pip install`` command using the
 list below.
 
 .. code-block:: console
 
-    # pip install python-<project>client
+    # pip install python-PROJECTclient
 
 *  ``barbican`` - Key Manager Service API
 *  ``ceilometer`` - Telemetry API
