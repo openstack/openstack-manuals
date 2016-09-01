@@ -31,14 +31,15 @@ on their specific contribution.
 .. toctree::
    :maxdepth: 1
 
-   ux-personas/arnie-infrastructure-arch.rst
-   ux-personas/carlos-cloud-ops.rst
-   ux-personas/doug-domain-operator.rst
-   ux-personas/pei-project-owner.rst
-   ux-personas/alan-app-developer.rst
+   ux-personas/infrastructure-arch.rst
+   ux-personas/cloud-ops.rst
+   ux-personas/domain-operator.rst
+   ux-personas/project-owner.rst
+   ux-personas/app-developer.rst
 
 .. The original SVG copy of this figure is available in
-   in the same directory
+   in the same directory.
+
 .. figure:: figures/persona-ecosystem.png
     :align: center
     :width: 100%
@@ -59,7 +60,7 @@ Nikishi University - research
 
 At Nikishi university, each cloud user can potentially assume all personas'
 roles. Although typically each individual specializes in two or more of the
-roles. The Infrastructure Architect and the Cloud Operations roles
+roles. The Infrastructure Architect and the Cloud Operator roles
 could be assumed by a single individual. Similarly, the Domain Operations and
 Project Owner roles could be merged. This organizational model has a low
 staffing budget and is concerned with capital expenditure causing them to
@@ -84,7 +85,7 @@ CNBB Securities - large enterprise
 At CNBB Securities, the company's large organization chart represents each of
 the personas. Depending on the company's culture of collaboration, the
 personas could interact as if they were part of a single entity. However,
-usually the Cloud Operations and the Infrastructure Architect interact as
+usually the Cloud Operator and the Infrastructure Architect interact as
 service providers with the other personas. The personas within CNBB
 Securities look for a fast implementation and are responsible for the
 operations capital expenditure. The implementation has no customization and
