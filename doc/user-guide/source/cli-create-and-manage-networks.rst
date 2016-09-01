@@ -2,14 +2,8 @@
 Create and manage networks
 ==========================
 
-Before you run commands, set the following environment variables:
-
-.. code-block:: bash
-
-   export OS_USERNAME=admin
-   export OS_PASSWORD=password
-   export OS_TENANT_NAME=admin
-   export OS_AUTH_URL=http://localhost:5000/v2.0
+Before you run commands, `set environment variables using the OpenStack RC file
+<http://docs.openstack.org/user-guide/common/cli-set-environment-variables-using-openstack-rc.html>`_.
 
 Create networks
 ~~~~~~~~~~~~~~~
