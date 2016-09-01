@@ -84,12 +84,12 @@ tenant. See :ref:`table_compute_quota`.
      - Description
      - Property name
    * - Fixed IPs
-     - Number of fixed IP addresses allowed per tenant.
+     - Number of fixed IP addresses allowed per project.
        This number must be equal to or greater than the number
        of allowed instances.
      - ``fixed-ips``
    * - Floating IPs
-     - Number of floating IP addresses allowed per tenant.
+     - Number of floating IP addresses allowed per project.
      - ``floating-ips``
    * - Injected file content bytes
      - Number of content bytes allowed per injected file.
@@ -98,10 +98,10 @@ tenant. See :ref:`table_compute_quota`.
      - Number of bytes allowed per injected file path.
      - ``injected-file-path-bytes``
    * - Injected files
-     - Number of injected files allowed per tenant.
+     - Number of injected files allowed per project.
      - ``injected-files``
    * - Instances
-     - Number of instances allowed per tenant.
+     - Number of instances allowed per project.
      - ``instances``
    * - Key pairs
      - Number of key pairs allowed per user.
@@ -110,17 +110,23 @@ tenant. See :ref:`table_compute_quota`.
      - Number of metadata items allowed per instance.
      - ``metadata-items``
    * - RAM
-     - Megabytes of instance RAM allowed per tenant.
+     - Megabytes of instance RAM allowed per project.
      - ``ram``
    * - Security group rules
      - Number of rules per security group.
      - ``security-group-rules``
    * - Security groups
-     - Number of security groups per tenant.
+     - Number of security groups per project.
      - ``security-groups``
    * - VCPUs
-     - Number of instance cores allowed per tenant.
+     - Number of instance cores allowed per project.
      - ``cores``
+   * - Server Groups
+     - Number of server groups per project.
+     - ``server_groups``
+   * - Server Group Members
+     - Number of servers per server group.
+     - ``server_group_members``
 
 View and update compute quotas for a tenant (project)
 -----------------------------------------------------
