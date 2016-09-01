@@ -117,7 +117,7 @@ To address this issue:
 
 #. Check memory consumption:
 
-   .. code-block: console
+   .. code-block:: console
 
       # rabbitmqctl status
 
