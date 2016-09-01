@@ -85,7 +85,7 @@ Upload binary image data
 
     $ curl -i -X PUT -H "X-Auth-Token: $OS_AUTH_TOKEN" \
            -H "Content-Type: application/octet-stream" \
-           -d @/home/glance/ubuntu-14.04.qcow2 \
+           --data-binary @/home/glance/ubuntu-14.04.qcow2 \
            $OS_IMAGE_URL/v2/images/7b97f37c-899d-44e8-aaa0-543edbc4eaad/file
 
     HTTP/1.1 100 Continue
