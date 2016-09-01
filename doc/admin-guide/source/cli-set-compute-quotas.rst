@@ -73,6 +73,8 @@ To view and update default quota values
       | key_pairs                   | 100   |
       | security_groups             | 10    |
       | security_group_rules        | 20    |
+      | server_groups               | 10    |
+      | server_group_members        | 10    |
       +-----------------------------+-------+
 
 #. Update a default value for a new tenant.
@@ -122,6 +124,8 @@ To view quota values for an existing tenant (project)
       | key_pairs                   | 100   |
       | security_groups             | 10    |
       | security_group_rules        | 20    |
+      | server_groups               | 10    |
+      | server_group_members        | 10    |
       +-----------------------------+-------+
 
 To update quota values for an existing tenant (project)
@@ -160,6 +164,8 @@ To update quota values for an existing tenant (project)
       | key_pairs                   | 100   |
       | security_groups             | 10    |
       | security_group_rules        | 20    |
+      | server_groups               | 10    |
+      | server_group_members        | 10    |
       +-----------------------------+-------+
 
    .. note::
@@ -215,6 +221,8 @@ To view quota values for a tenant user
       | key_pairs                   | 100   |
       | security_groups             | 10    |
       | security_group_rules        | 20    |
+      | server_groups               | 10    |
+      | server_group_members        | 10    |
       +-----------------------------+-------+
 
 To update quota values for a tenant user
@@ -259,6 +267,8 @@ To update quota values for a tenant user
       | key_pairs                   | 100   |
       | security_groups             | 10    |
       | security_group_rules        | 20    |
+      | server_groups               | 10    |
+      | server_group_members        | 10    |
       +-----------------------------+-------+
 
    .. note::
@@ -279,23 +289,20 @@ current quota values and the current quota usage:
 .. code-block:: console
 
    $ nova absolute-limits --tenant TENANT_NAME
-   +-------------------------+-------+
-   | Name                    | Value |
-   +-------------------------+-------+
-   | maxServerMeta           | 128   |
-   | maxPersonality          | 5     |
-   | maxImageMeta            | 128   |
-   | maxPersonalitySize      | 10240 |
-   | maxTotalRAMSize         | 51200 |
-   | maxSecurityGroupRules   | 20    |
-   | maxTotalKeypairs        | 100   |
-   | totalRAMUsed            | 0     |
-   | maxSecurityGroups       | 10    |
-   | totalFloatingIpsUsed    | 0     |
-   | totalInstancesUsed      | 0     |
-   | totalSecurityGroupsUsed | 0     |
-   | maxTotalFloatingIps     | 10    |
-   | maxTotalInstances       | 10    |
-   | totalCoresUsed          | 0     |
-   | maxTotalCores           | 20    |
-   +-------------------------+-------+
+   +--------------------+------+-------+
+   | Name               | Used | Max   |
+   +--------------------+------+-------+
+   | Cores              | 0    | 20    |
+   | FloatingIps        | 0    | 10    |
+   | ImageMeta          | -    | 128   |
+   | Instances          | 0    | 10    |
+   | Keypairs           | -    | 100   |
+   | Personality        | -    | 5     |
+   | Personality Size   | -    | 10240 |
+   | RAM                | 0    | 51200 |
+   | SecurityGroupRules | -    | 20    |
+   | SecurityGroups     | 0    | 10    |
+   | Server Meta        | -    | 128   |
+   | ServerGroupMembers | -    | 10    |
+   | ServerGroups       | 0    | 10    |
+   +--------------------+------+-------+
