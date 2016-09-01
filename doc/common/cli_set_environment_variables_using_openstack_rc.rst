@@ -64,14 +64,14 @@ scratch, if you cannot download the file from the dashboard.
 
    .. code-block:: shell
 
+      export OS_PROJECT_DOMAIN_NAME=default
+      export OS_USER_DOMAIN_NAME=default
+      export OS_PROJECT_NAME=projectName
       export OS_USERNAME=username
       export OS_PASSWORD=password
-      export OS_TENANT_NAME=projectName
-      export OS_AUTH_URL=https://identityHost:portNumber/v2.0
-      # The following lines can be omitted
-      export OS_TENANT_ID=tenantIDString
-      export OS_REGION_NAME=regionName
-      export OS_CACERT=/path/to/cacertFile
+      export OS_AUTH_URL=http://identityHost:portNumber/v3
+      export OS_IDENTITY_API_VERSION=3
+      export OS_IMAGE_API_VERSION=2
 
 #. On any shell from which you want to run OpenStack commands, source the
    ``PROJECT-openrc.sh`` file for the respective project. In this
