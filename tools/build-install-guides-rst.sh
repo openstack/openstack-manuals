@@ -34,8 +34,8 @@ for tag in $TAGS; do
         # only directive, replace title directive with the proper title
         # for each distribution to set the title explicitly.
 
-        title=$(grep -m 1 -A 5 "^.. only:: ${tag}" ${INDEX} | \
-                  sed -n 4p | sed -e 's/^ *//g')
+        title=$(grep -A 5 "^.. only:: ${tag}" ${INDEX} | \
+                  head -n 6 | sed -n 4p | sed -e 's/^ *//g')
         sed -i -e "s/\.\. title::.*/.. title:: ${title}/" ${INDEX}
 
         # Build the guide
