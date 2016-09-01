@@ -257,7 +257,7 @@ Configure neutron-server (Controller)
 
 #. Add the newly configured ``ml2_conf_sriov.ini`` file as parameter to the
    ``neutron-server`` service. Edit the appropriate initialization script to
-   configure the ``neutron-server`` service to load the SRI-OV configuration
+   configure the ``neutron-server`` service to load the SR-IOV configuration
    file:
 
    .. code-block:: ini
