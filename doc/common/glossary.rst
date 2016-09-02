@@ -223,19 +223,17 @@ A
 
       A Java program that can be embedded into a web page.
 
+   Application Catalog service (murano)
+
+      The project that provides an application catalog service so that users
+      can compose and deploy composite environments on an application
+      abstraction level while managing the application lifecycle.
+
    Application Programming Interface (API)
 
       A collection of specifications used to access a service,
       application, or program. Includes service calls, required parameters
       for each call, and the expected return values.
-
-   Application Catalog service
-
-      OpenStack project that provides an application catalog
-      service so that users can compose and deploy composite
-      environments on an application abstraction level while
-      managing the application lifecycle. The code name of the
-      project is murano.
 
    application server
 
@@ -2378,7 +2376,8 @@ M
 
    murano
 
-      OpenStack project that provides an Application catalog.
+      Codename for the :term:`Application Catalog service <Application Catalog
+      service (murano)>`.
 
    Modular Layer 2 (ML2) neutron plug-in
 
