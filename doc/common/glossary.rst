@@ -412,10 +412,11 @@ B
       An Image service container format that indicates that no
       container exists for the VM image.
 
-   Bare Metal service
+   Bare Metal service (ironic)
 
-      OpenStack project that provisions bare metal, as opposed to
-      virtual machines. The code name for the project is ironic.
+      The OpenStack service that provides a service and associated libraries
+      capable of managing and provisioning physical machines in a
+      security-aware and fault-tolerant manner.
 
    base image
 
@@ -1993,8 +1994,8 @@ I
 
    ironic
 
-      OpenStack project that provisions bare metal, as opposed to
-      virtual machines.
+      Codename for the :term:`Bare Metal service <Bare Metal service
+      (ironic)>`.
 
    IP address
 
