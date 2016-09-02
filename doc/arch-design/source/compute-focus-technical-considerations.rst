@@ -184,7 +184,7 @@ includes the typical OpenStack components:
 
 Also consider several specialized components:
 
-* :term:`Orchestration service` (heat)
+* :term:`Orchestration service (heat)`
    Given the nature of the applications involved in this scenario, these
    are heavily automated deployments. Making use of Orchestration is
    highly beneficial in this case. You can script the deployment of a
