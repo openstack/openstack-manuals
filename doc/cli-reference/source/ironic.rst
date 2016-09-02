@@ -9,7 +9,7 @@ Bare Metal service command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.6.0``.
+This chapter documents :command:`ironic` version ``1.7.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -155,6 +155,10 @@ ironic usage
 
 ``driver-vendor-passthru``
   Call a vendor-passthru extension for a driver.
+
+``create``
+  Create baremetal resources (chassis, nodes, and
+  ports).
 
 ``bash-completion``
   Prints all of the commands and options for bash-completion.
@@ -440,6 +444,27 @@ Update information about a chassis.
   Attribute to add, replace, or remove. Can be specified
   multiple times. For 'remove', only <path> is necessary.
 
+.. _ironic_create:
+
+ironic create
+-------------
+
+.. code-block:: console
+
+   usage: ironic create <file> [<file> ...]
+
+Create baremetal resources (chassis, nodes, and ports). The resources may be
+described in one or more JSON or YAML files. If any file cannot be validated,
+no resources are created. An attempt is made to create all the resources;
+those that could not be created are skipped (with a corresponding error
+message).
+
+**Positional arguments:**
+
+``<file>``
+  File (.yaml or .json) containing descriptions of the resources to
+  create. Can be specified multiple times.
+
 .. _ironic_driver-get-vendor-passthru-methods:
 
 ironic driver-get-vendor-passthru-methods
@@ -620,8 +645,8 @@ ironic node-delete
 
    usage: ironic node-delete <node> [<node> ...]
 
-Unregister node(s) from the Ironic service. :raises: ClientException, if error
-happens during the delete
+Unregister node(s) from the Ironic service. Returns errors for any nodes that
+could not be unregistered.
 
 **Positional arguments:**
 
@@ -892,6 +917,7 @@ ironic node-set-provision-state
 
    usage: ironic node-set-provision-state [--config-drive <config-drive>]
                                           [--clean-steps <clean-steps>]
+                                          [--wait [WAIT_TIMEOUT]]
                                           <node> <provision-state>
 
 Initiate a provisioning state change for a node.
@@ -902,8 +928,8 @@ Initiate a provisioning state change for a node.
   Name or UUID of the node.
 
 ``<provision-state>``
-  Supported states: 'active', 'deleted', 'rebuild',
-  'inspect', 'provide', 'manage', 'clean', 'abort', or
+  Supported states: 'deleted', 'provide', 'clean',
+  'manage', 'active', 'rebuild', 'inspect', 'abort',
   'adopt'.
 
 **Optional arguments:**
@@ -925,6 +951,13 @@ Initiate a provisioning state change for a node.
   'interface' and 'step', and optional key 'args'. This
   argument must be specified (and is only valid) when
   setting provision-state to 'clean'.
+
+``--wait [WAIT_TIMEOUT]``
+  Wait for a node to reach the expected state. Not
+  supported for 'abort'. Optionally takes a timeout in
+  seconds. The default value is 0, meaning no timeout.
+  Fails if the node reaches an unexpected stable state,
+  a failure state or a state with last_error set.
 
 .. _ironic_node-set-target-raid-config:
 
