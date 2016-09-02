@@ -176,7 +176,7 @@ Due to the nature of the workloads in this scenario, a number of
 components are highly beneficial for a Compute-focused cloud. This
 includes the typical OpenStack components:
 
-* :term:`Compute service` (nova)
+* :term:`Compute service (nova)`
 
 * :term:`Image service` (glance)
 

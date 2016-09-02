@@ -344,7 +344,7 @@ A general purpose OpenStack cloud design should incorporate the core
 OpenStack services to provide a wide range of services to end-users. The
 OpenStack core services recommended in a general purpose cloud are:
 
-* :term:`Compute service` (:term:`nova`)
+* :term:`Compute service (nova)`
 
 * :term:`Networking service` (:term:`neutron`)
 
