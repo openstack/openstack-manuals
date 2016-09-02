@@ -75,7 +75,7 @@ those deviations next.
     -  :term:`Dashboard`: You probably want to offer a dashboard, but your
        users may be more interested in API access only.
 
-    -  :term:`Block storage <Block Storage service>`:
+    -  :term:`Block storage <Block Storage service (cinder)>`:
        You don't have to offer users block storage if their use case only
        needs ephemeral storage on compute nodes, for example.
 
