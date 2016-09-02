@@ -9,7 +9,7 @@ Networking service command-line client
 The neutron client is the command-line interface (CLI) for
 the Networking service API and its extensions.
 
-This chapter documents :command:`neutron` version ``5.1.0``.
+This chapter documents :command:`neutron` version ``6.0.0``.
 
 For help on a specific :command:`neutron` command, enter:
 
@@ -194,6 +194,9 @@ neutron API v2.0 commands
 
 ``agent-update``
   Updates the admin status and description for a specified agent.
+
+``auto-allocated-topology-delete``
+  Delete the auto-allocated topology of a given tenant.
 
 ``auto-allocated-topology-show``
   Show the auto-allocated topology of a given tenant.
@@ -702,6 +705,21 @@ neutron API v2.0 commands
 ``qos-dscp-marking-rule-update``
   Update the given QoS DSCP marking rule.
 
+``qos-minimum-bandwidth-rule-create``
+  Create a qos minimum bandwidth rule.
+
+``qos-minimum-bandwidth-rule-delete``
+  Delete a given qos minimum bandwidth rule.
+
+``qos-minimum-bandwidth-rule-list``
+  List all qos minimum bandwidth rules belonging to the specified policy.
+
+``qos-minimum-bandwidth-rule-show``
+  Show information about the given qos minimum bandwidth rule.
+
+``qos-minimum-bandwidth-rule-update``
+  Update the given qos minimum bandwidth rule.
+
 ``qos-policy-create``
   Create a qos policy.
 
@@ -717,6 +735,9 @@ neutron API v2.0 commands
 ``qos-policy-update``
   Update a given qos policy.
 
+``quota-default-show``
+  Show default quotas for a given tenant.
+
 ``quota-delete``
   Delete defined quotas of a given tenant.
 
@@ -724,7 +745,7 @@ neutron API v2.0 commands
   List quotas of all tenants who have non-default quota values.
 
 ``quota-show``
-  Show quotas of a given tenant.
+  Show quotas for a given tenant.
 
 ``quota-update``
   Define tenant's quotas not to use defaults.
@@ -953,14 +974,14 @@ neutron address-scope-delete
 .. code-block:: console
 
    usage: neutron address-scope-delete [-h] [--request-format {json}]
-                                       ADDRESS_SCOPE
+                                       ADDRESS_SCOPE [ADDRESS_SCOPE ...]
 
 Delete an address scope.
 
 **Positional arguments:**
 
 ``ADDRESS_SCOPE``
-  ID or name of address_scope to delete.
+  ID(s) or name(s) of address_scope to delete.
 
 **Optional arguments:**
 
@@ -1060,7 +1081,7 @@ neutron address-scope-update
 .. code-block:: console
 
    usage: neutron address-scope-update [-h] [--request-format {json}]
-                                       [--name NAME]
+                                       [--name NAME] [--shared {True,False}]
                                        ADDRESS_SCOPE
 
 Update an address scope.
@@ -1079,7 +1100,10 @@ Update an address scope.
   **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
-  Name of the address scope to update.
+  Updated name of the address scope.
+
+``--shared {True,False}``
+  Set sharing of address scope. (True means shared)
 
 .. _neutron_agent-delete:
 
@@ -1088,14 +1112,14 @@ neutron agent-delete
 
 .. code-block:: console
 
-   usage: neutron agent-delete [-h] [--request-format {json}] AGENT
+   usage: neutron agent-delete [-h] [--request-format {json}] AGENT [AGENT ...]
 
 Delete a given agent.
 
 **Positional arguments:**
 
 ``AGENT``
-  ID of agent to delete.
+  ID(s) of agent to delete.
 
 **Optional arguments:**
 
@@ -1212,6 +1236,30 @@ Updates the admin status and description for a specified agent.
 
 ``--description DESCRIPTION``
   Description for the agent.
+
+.. _neutron_auto-allocated-topology-delete:
+
+neutron auto-allocated-topology-delete
+--------------------------------------
+
+.. code-block:: console
+
+   usage: neutron auto-allocated-topology-delete [-h] [--request-format {json}]
+                                                 [--tenant-id tenant-id]
+
+Delete the auto-allocated topology of a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id``
+  tenant-id
+  The owner tenant ID.
 
 .. _neutron_auto-allocated-topology-show:
 
@@ -1445,14 +1493,15 @@ neutron bgp-peer-delete
 
 .. code-block:: console
 
-   usage: neutron bgp-peer-delete [-h] [--request-format {json}] BGP_PEER
+   usage: neutron bgp-peer-delete [-h] [--request-format {json}]
+                                  BGP_PEER [BGP_PEER ...]
 
 Delete a BGP peer.
 
 **Positional arguments:**
 
 ``BGP_PEER``
-  ID or name of bgp_peer to delete.
+  ID(s) or name(s) of bgp_peer to delete.
 
 **Optional arguments:**
 
@@ -1691,14 +1740,15 @@ neutron bgp-speaker-delete
 
 .. code-block:: console
 
-   usage: neutron bgp-speaker-delete [-h] [--request-format {json}] BGP_SPEAKER
+   usage: neutron bgp-speaker-delete [-h] [--request-format {json}]
+                                     BGP_SPEAKER [BGP_SPEAKER ...]
 
 Delete a BGP speaker.
 
 **Positional arguments:**
 
 ``BGP_SPEAKER``
-  ID or name of bgp_speaker to delete.
+  ID(s) or name(s) of bgp_speaker to delete.
 
 **Optional arguments:**
 
@@ -2162,7 +2212,8 @@ Create a firewall.
 **Positional arguments:**
 
 ``POLICY``
-  Firewall policy name or ID.
+  ID or name of the firewall policy associated to this
+  firewall.
 
 **Optional arguments:**
 
@@ -2182,13 +2233,13 @@ Create a firewall.
   Description for the firewall.
 
 ``--router ROUTER``
-  Firewall associated router name or ID (requires FWaaS
-  router insertion extension, this option can be
-  repeated)
+  ID or name of the router associated with the firewall
+  (requires FWaaS router insertion extension to be
+  enabled). This option can be repeated.
 
 ``--no-routers``
   Associate no routers with the firewall (requires FWaaS
-  router insertion extension)
+  router insertion extension).
 
 ``--admin-state-down``
   Set admin state up to false.
@@ -2200,14 +2251,15 @@ neutron firewall-delete
 
 .. code-block:: console
 
-   usage: neutron firewall-delete [-h] [--request-format {json}] FIREWALL
+   usage: neutron firewall-delete [-h] [--request-format {json}]
+                                  FIREWALL [FIREWALL ...]
 
 Delete a given firewall.
 
 **Positional arguments:**
 
 ``FIREWALL``
-  ID or name of firewall to delete.
+  ID(s) or name(s) of firewall to delete.
 
 **Optional arguments:**
 
@@ -2319,14 +2371,14 @@ neutron firewall-policy-delete
 .. code-block:: console
 
    usage: neutron firewall-policy-delete [-h] [--request-format {json}]
-                                         FIREWALL_POLICY
+                                         FIREWALL_POLICY [FIREWALL_POLICY ...]
 
 Delete a given firewall policy.
 
 **Positional arguments:**
 
 ``FIREWALL_POLICY``
-  ID or name of firewall_policy to delete.
+  ID(s) or name(s) of firewall_policy to delete.
 
 **Optional arguments:**
 
@@ -2437,7 +2489,8 @@ Remove a rule from a given firewall policy.
   ID or name of firewall_policy to update.
 
 ``FIREWALL_RULE``
-  Firewall rule to remove from policy.
+  ID or name of the firewall rule to be removed from the
+  policy.
 
 **Optional arguments:**
 
@@ -2524,11 +2577,11 @@ Update a given firewall policy.
 
 ``--shared {True,False}``
   Update the sharing status of the policy. (True means
-  shared)
+  shared).
 
 ``--audited {True,False}``
   Update the audit status of the policy. (True means
-  auditing is enabled)
+  auditing is enabled).
 
 .. _neutron_firewall-rule-create:
 
@@ -2607,14 +2660,14 @@ neutron firewall-rule-delete
 .. code-block:: console
 
    usage: neutron firewall-rule-delete [-h] [--request-format {json}]
-                                       FIREWALL_RULE
+                                       FIREWALL_RULE [FIREWALL_RULE ...]
 
 Delete a given firewall rule.
 
 **Positional arguments:**
 
 ``FIREWALL_RULE``
-  ID or name of firewall_rule to delete.
+  ID(s) or name(s) of firewall_rule to delete.
 
 **Optional arguments:**
 
@@ -2846,19 +2899,21 @@ Update a given firewall.
   Description for the firewall.
 
 ``--router ROUTER``
-  Firewall associated router name or ID (requires FWaaS
-  router insertion extension, this option can be
-  repeated)
+  ID or name of the router associated with the firewall
+  (requires FWaaS router insertion extension to be
+  enabled). This option can be repeated.
 
 ``--no-routers``
   Associate no routers with the firewall (requires FWaaS
-  router insertion extension)
+  router insertion extension).
 
 ``--policy POLICY``
-  Firewall policy name or ID.
+  ID or name of the firewall policy associated to this
+  firewall.
 
 ``--admin-state-up {True,False}``
-  Update the admin state for the firewall(True means UP)
+  Update the admin state for the firewall (True means
+  UP).
 
 .. _neutron_flavor-associate:
 
@@ -2875,7 +2930,7 @@ Associate a Neutron service flavor with a flavor profile.
 **Positional arguments:**
 
 ``FLAVOR``
-  Name or ID of the flavor to associate.
+  ID or name of the flavor to associate.
 
 ``FLAVOR_PROFILE``
   ID of the flavor profile to be associated with the
@@ -2939,14 +2994,15 @@ neutron flavor-delete
 
 .. code-block:: console
 
-   usage: neutron flavor-delete [-h] [--request-format {json}] FLAVOR
+   usage: neutron flavor-delete [-h] [--request-format {json}]
+                                FLAVOR [FLAVOR ...]
 
 Delete a given Neutron service flavor.
 
 **Positional arguments:**
 
 ``FLAVOR``
-  ID or name of flavor to delete.
+  ID(s) or name(s) of flavor to delete.
 
 **Optional arguments:**
 
@@ -2971,7 +3027,7 @@ Disassociate a Neutron service flavor from a flavor profile.
 **Positional arguments:**
 
 ``FLAVOR``
-  Name or ID of the flavor.
+  ID or name of the flavor to be disassociated.
 
 ``FLAVOR_PROFILE``
   ID of the flavor profile to be disassociated from the
@@ -3080,14 +3136,14 @@ neutron flavor-profile-delete
 .. code-block:: console
 
    usage: neutron flavor-profile-delete [-h] [--request-format {json}]
-                                        SERVICE_PROFILE
+                                        SERVICE_PROFILE [SERVICE_PROFILE ...]
 
 Delete a given Neutron service flavor profile.
 
 **Positional arguments:**
 
 ``SERVICE_PROFILE``
-  ID or name of service_profile to delete.
+  ID(s) or name(s) of service_profile to delete.
 
 **Optional arguments:**
 
@@ -3351,7 +3407,8 @@ Create a floating IP for a given tenant.
 **Positional arguments:**
 
 ``FLOATING_NETWORK``
-  Network name or ID to allocate floating IP from.
+  ID or name of the network from which the floating IP
+  is allocated.
 
 **Optional arguments:**
 
@@ -3395,14 +3452,15 @@ neutron floatingip-delete
 
 .. code-block:: console
 
-   usage: neutron floatingip-delete [-h] [--request-format {json}] FLOATINGIP
+   usage: neutron floatingip-delete [-h] [--request-format {json}]
+                                    FLOATINGIP [FLOATINGIP ...]
 
 Delete a given floating IP.
 
 **Positional arguments:**
 
 ``FLOATINGIP``
-  ID of floatingip to delete.
+  ID(s) of floatingip to delete.
 
 **Optional arguments:**
 
@@ -3533,19 +3591,19 @@ neutron ipsec-site-connection-create
                                                [--noindent] [--prefix PREFIX]
                                                [--request-format {json}]
                                                [--tenant-id TENANT_ID]
-                                               [--admin-state-down] [--name NAME]
-                                               [--description DESCRIPTION]
-                                               [--mtu MTU]
-                                               [--initiator {bi-directional,response-only}]
+                                               [--admin-state-down]
                                                --vpnservice-id VPNSERVICE
                                                --ikepolicy-id IKEPOLICY
                                                --ipsecpolicy-id IPSECPOLICY
-                                               --peer-address PEER_ADDRESS
-                                               --peer-id PEER_ID
-                                               [--peer-cidr PEER_CIDRS] --psk PSK
+                                               [--name NAME]
+                                               [--description DESCRIPTION]
                                                [--dpd action=ACTION,interval=INTERVAL,timeout=TIMEOUT]
                                                [--local-ep-group LOCAL_EP_GROUP]
                                                [--peer-ep-group PEER_EP_GROUP]
+                                               [--peer-cidr PEER_CIDRS] --peer-id
+                                               PEER_ID --peer-address
+                                               PEER_ADDRESS --psk PSK [--mtu MTU]
+                                               [--initiator {bi-directional,response-only}]
 
 Create an IPsec site connection.
 
@@ -3563,18 +3621,6 @@ Create an IPsec site connection.
 ``--admin-state-down``
   Set admin state up to false.
 
-``--name NAME``
-  Set friendly name for the connection.
-
-``--description DESCRIPTION``
-  Set a description for the connection.
-
-``--mtu MTU``
-  MTU size for the connection, default:1500
-
-``--initiator {bi-directional,response-only}``
-  Initiator state in lowercase, default:bi-directional
-
 ``--vpnservice-id VPNSERVICE``
   VPN service instance ID associated with this
   connection.
@@ -3585,21 +3631,11 @@ Create an IPsec site connection.
 ``--ipsecpolicy-id IPSECPOLICY``
   IPsec policy ID associated with this connection.
 
-``--peer-address PEER_ADDRESS``
-  Peer gateway public IPv4/IPv6 address or FQDN.
+``--name NAME``
+  Set friendly name for the connection.
 
-``--peer-id PEER_ID``
-  Peer router identity for authentication. Can be
-  IPv4/IPv6 address, e-mail address, key id, or FQDN.
-
-``--peer-cidr PEER_CIDRS``
-  [**DEPRECATED** in Mitaka] Remote subnet(s) in CIDR
-  format. Cannot be specified when using endpoint
-  groups. Only applicable, if subnet provided for VPN
-  service.
-
-``--psk PSK``
-  Pre-shared key string.
+``--description DESCRIPTION``
+  Set a description for the connection.
 
 ``--dpd``
   action=ACTION,interval=INTERVAL,timeout=TIMEOUT
@@ -3615,8 +3651,30 @@ Create an IPsec site connection.
   connection.
 
 ``--peer-ep-group PEER_EP_GROUP``
-  Peer endpoint group ID/name with CIDR(s) for IPsec
+  Peer endpoint group ID/name with CIDR(s) for IPSec
   connection.
+
+``--peer-cidr PEER_CIDRS``
+  [**DEPRECATED** in Mitaka] Remote subnet(s) in CIDR
+  format. Cannot be specified when using endpoint
+  groups. Only applicable, if subnet provided for VPN
+  service.
+
+``--peer-id PEER_ID``
+  Peer router identity for authentication. Can be
+  IPv4/IPv6 address, e-mail address, key id, or FQDN.
+
+``--peer-address PEER_ADDRESS``
+  Peer gateway public IPv4/IPv6 address or FQDN.
+
+``--psk PSK``
+  Pre-shared key string.
+
+``--mtu MTU``
+  MTU size for the connection, default:1500.
+
+``--initiator {bi-directional,response-only}``
+  Initiator state in lowercase, default:bi-directional
 
 .. _neutron_ipsec-site-connection-delete:
 
@@ -3627,13 +3685,14 @@ neutron ipsec-site-connection-delete
 
    usage: neutron ipsec-site-connection-delete [-h] [--request-format {json}]
                                                IPSEC_SITE_CONNECTION
+                                               [IPSEC_SITE_CONNECTION ...]
 
 Delete a given IPsec site connection.
 
 **Positional arguments:**
 
 ``IPSEC_SITE_CONNECTION``
-  ID or name of IPsec site connection to delete.
+  ID(s) or name(s) of IPsec site connection to delete.
 
 **Optional arguments:**
 
@@ -3737,9 +3796,17 @@ neutron ipsec-site-connection-update
 .. code-block:: console
 
    usage: neutron ipsec-site-connection-update [-h] [--request-format {json}]
+                                               [--admin-state-up {True,False}]
+                                               [--name NAME]
+                                               [--description DESCRIPTION]
                                                [--dpd action=ACTION,interval=INTERVAL,timeout=TIMEOUT]
                                                [--local-ep-group LOCAL_EP_GROUP]
                                                [--peer-ep-group PEER_EP_GROUP]
+                                               [--peer-cidr PEER_CIDRS]
+                                               [--peer-id PEER_ID]
+                                               [--peer-address PEER_ADDRESS]
+                                               [--psk PSK] [--mtu MTU]
+                                               [--initiator {bi-directional,response-only}]
                                                IPSEC_SITE_CONNECTION
 
 Update a given IPsec site connection.
@@ -3757,6 +3824,15 @@ Update a given IPsec site connection.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+``--admin-state-up {True,False}``
+  Update the administrative state. (True meaning "Up")
+
+``--name NAME``
+  Set friendly name for the connection.
+
+``--description DESCRIPTION``
+  Set a description for the connection.
+
 ``--dpd``
   action=ACTION,interval=INTERVAL,timeout=TIMEOUT
   Ipsec connection. Dead Peer Detection attributes.
@@ -3771,8 +3847,30 @@ Update a given IPsec site connection.
   connection.
 
 ``--peer-ep-group PEER_EP_GROUP``
-  Peer endpoint group ID/name with CIDR(s) for IPsec
+  Peer endpoint group ID/name with CIDR(s) for IPSec
   connection.
+
+``--peer-cidr PEER_CIDRS``
+  [**DEPRECATED** in Mitaka] Remote subnet(s) in CIDR
+  format. Cannot be specified when using endpoint
+  groups. Only applicable, if subnet provided for VPN
+  service.
+
+``--peer-id PEER_ID``
+  Peer router identity for authentication. Can be
+  IPv4/IPv6 address, e-mail address, key id, or FQDN.
+
+``--peer-address PEER_ADDRESS``
+  Peer gateway public IPv4/IPv6 address or FQDN.
+
+``--psk PSK``
+  Pre-shared key string.
+
+``--mtu MTU``
+  MTU size for the connection, default:1500.
+
+``--initiator {bi-directional,response-only}``
+  Initiator state in lowercase, default:bi-directional
 
 .. _neutron_l3-agent-list-hosting-router:
 
@@ -4013,14 +4111,14 @@ neutron lb-healthmonitor-delete
 .. code-block:: console
 
    usage: neutron lb-healthmonitor-delete [-h] [--request-format {json}]
-                                          HEALTH_MONITOR
+                                          HEALTH_MONITOR [HEALTH_MONITOR ...]
 
 Delete a given health monitor.
 
 **Positional arguments:**
 
 ``HEALTH_MONITOR``
-  ID of health_monitor to delete.
+  ID(s) of health_monitor to delete.
 
 **Optional arguments:**
 
@@ -4189,7 +4287,7 @@ Create a member.
 **Positional arguments:**
 
 ``POOL``
-  Pool ID or name this vip belongs to.
+  ID or name of the pool this vip belongs to.
 
 **Optional arguments:**
 
@@ -4223,14 +4321,15 @@ neutron lb-member-delete
 
 .. code-block:: console
 
-   usage: neutron lb-member-delete [-h] [--request-format {json}] MEMBER
+   usage: neutron lb-member-delete [-h] [--request-format {json}]
+                                   MEMBER [MEMBER ...]
 
 Delete a given member.
 
 **Positional arguments:**
 
 ``MEMBER``
-  ID or name of member to delete.
+  ID(s) or name(s) of member to delete.
 
 **Optional arguments:**
 
@@ -4395,7 +4494,7 @@ Create a pool.
   located.
 
 ``--provider PROVIDER``
-  Provider name of loadbalancer service.
+  Provider name of the loadbalancer service.
 
 .. _neutron_lb-pool-delete:
 
@@ -4404,14 +4503,14 @@ neutron lb-pool-delete
 
 .. code-block:: console
 
-   usage: neutron lb-pool-delete [-h] [--request-format {json}] POOL
+   usage: neutron lb-pool-delete [-h] [--request-format {json}] POOL [POOL ...]
 
 Delete a given pool.
 
 **Positional arguments:**
 
 ``POOL``
-  ID or name of pool to delete.
+  ID(s) or name(s) of pool to delete.
 
 **Optional arguments:**
 
@@ -4621,7 +4720,7 @@ Create a vip.
 **Positional arguments:**
 
 ``POOL``
-  Pool ID or name this vip belongs to.
+  ID or name of the pool to which this vip belongs.
 
 **Optional arguments:**
 
@@ -4642,14 +4741,14 @@ Create a vip.
 
 ``--connection-limit CONNECTION_LIMIT``
   The maximum number of connections per second allowed
-  for the vip. Positive integer or -1 for unlimited
-  (default).
+  for the vip. Valid values: a positive integer or -1
+  for unlimited (default).
 
 ``--description DESCRIPTION``
-  Description of the vip.
+  Description of the vip to be created.
 
 ``--name NAME``
-  Name of the vip.
+  Name of the vip to be created.
 
 ``--protocol-port PROTOCOL_PORT``
   TCP port on which to listen for client traffic that is
@@ -4668,14 +4767,14 @@ neutron lb-vip-delete
 
 .. code-block:: console
 
-   usage: neutron lb-vip-delete [-h] [--request-format {json}] VIP
+   usage: neutron lb-vip-delete [-h] [--request-format {json}] VIP [VIP ...]
 
 Delete a given vip.
 
 **Positional arguments:**
 
 ``VIP``
-  ID or name of vip to delete.
+  ID(s) or name(s) of vip to delete.
 
 **Optional arguments:**
 
@@ -4913,14 +5012,14 @@ neutron lbaas-healthmonitor-delete
 .. code-block:: console
 
    usage: neutron lbaas-healthmonitor-delete [-h] [--request-format {json}]
-                                             HEALTHMONITOR
+                                             HEALTHMONITOR [HEALTHMONITOR ...]
 
 LBaaS v2 Delete a given healthmonitor.
 
 **Positional arguments:**
 
 ``HEALTHMONITOR``
-  ID or name of healthmonitor to delete.
+  ID(s) or name(s) of healthmonitor to delete.
 
 **Optional arguments:**
 
@@ -5151,14 +5250,15 @@ neutron lbaas-l7policy-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-l7policy-delete [-h] [--request-format {json}] L7POLICY
+   usage: neutron lbaas-l7policy-delete [-h] [--request-format {json}]
+                                        L7POLICY [L7POLICY ...]
 
 LBaaS v2 Delete a given L7 policy.
 
 **Positional arguments:**
 
 ``L7POLICY``
-  ID or name of l7policy to delete.
+  ID(s) or name(s) of l7policy to delete.
 
 **Optional arguments:**
 
@@ -5374,14 +5474,14 @@ neutron lbaas-l7rule-delete
 .. code-block:: console
 
    usage: neutron lbaas-l7rule-delete [-h] [--request-format {json}]
-                                      RULE L7POLICY
+                                      RULE [RULE ...] L7POLICY
 
 LBaaS v2 Delete a given L7 rule.
 
 **Positional arguments:**
 
 ``RULE``
-  ID or name of rule to delete.
+  ID(s) or name(s) of rule to delete.
 
 ``L7POLICY``
   ID or name of L7 policy this rule belongs to.
@@ -5615,14 +5715,15 @@ neutron lbaas-listener-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-listener-delete [-h] [--request-format {json}] LISTENER
+   usage: neutron lbaas-listener-delete [-h] [--request-format {json}]
+                                        LISTENER [LISTENER ...]
 
 LBaaS v2 Delete a given listener.
 
 **Positional arguments:**
 
 ``LISTENER``
-  ID or name of listener to delete.
+  ID(s) or name(s) of listener to delete.
 
 **Optional arguments:**
 
@@ -5811,10 +5912,10 @@ LBaaS v2 Create a loadbalancer.
   Set admin state up to false.
 
 ``--provider PROVIDER``
-  Provider name of load balancer service.
+  Provider name of the load balancer service.
 
 ``--flavor FLAVOR``
-  ID or name of flavor.
+  ID or name of the flavor.
 
 ``--vip-address VIP_ADDRESS``
   VIP address for the load balancer.
@@ -5827,14 +5928,14 @@ neutron lbaas-loadbalancer-delete
 .. code-block:: console
 
    usage: neutron lbaas-loadbalancer-delete [-h] [--request-format {json}]
-                                            LOADBALANCER
+                                            LOADBALANCER [LOADBALANCER ...]
 
 LBaaS v2 Delete a given loadbalancer.
 
 **Positional arguments:**
 
 ``LOADBALANCER``
-  ID or name of loadbalancer to delete.
+  ID(s) or name(s) of loadbalancer to delete.
 
 **Optional arguments:**
 
@@ -6109,7 +6210,8 @@ LBaaS v2 Create a member.
   Name of the member.
 
 ``--weight WEIGHT``
-  Weight of member in the pool (default:1, [0..256]).
+  Weight of the member in the pool (default:1,
+  [0..256]).
 
 ``--admin-state-down``
   Set admin state up to false.
@@ -6131,14 +6233,15 @@ neutron lbaas-member-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-member-delete [-h] [--request-format {json}] MEMBER POOL
+   usage: neutron lbaas-member-delete [-h] [--request-format {json}]
+                                      MEMBER [MEMBER ...] POOL
 
 LBaaS v2 Delete a given member.
 
 **Positional arguments:**
 
 ``MEMBER``
-  ID or name of member to delete.
+  ID(s) or name(s) of member to delete.
 
 ``POOL``
   ID or name of the pool that this member belongs to.
@@ -6250,7 +6353,6 @@ neutron lbaas-member-update
 .. code-block:: console
 
    usage: neutron lbaas-member-update [-h] [--request-format {json}]
-                                      [--admin-state-down]
                                       [--admin-state-up {True,False}]
                                       [--name NAME] [--weight WEIGHT]
                                       MEMBER POOL
@@ -6273,9 +6375,6 @@ LBaaS v2 Update a given member.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
-``--admin-state-down [DEPRECATED in Mitaka]``
-  Set admin state up to false.
-
 ``--admin-state-up {True,False}``
   Update the administrative state of the member (True
   meaning "Up").
@@ -6284,7 +6383,8 @@ LBaaS v2 Update a given member.
   Name of the member.
 
 ``--weight WEIGHT``
-  Weight of member in the pool (default:1, [0..256]).
+  Weight of the member in the pool (default:1,
+  [0..256]).
 
 .. _neutron_lbaas-pool-create:
 
@@ -6357,14 +6457,15 @@ neutron lbaas-pool-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-pool-delete [-h] [--request-format {json}] POOL
+   usage: neutron lbaas-pool-delete [-h] [--request-format {json}]
+                                    POOL [POOL ...]
 
 LBaaS v2 Delete a given pool.
 
 **Positional arguments:**
 
 ``POOL``
-  ID or name of pool to delete.
+  ID(s) or name(s) of pool to delete.
 
 **Optional arguments:**
 
@@ -6525,7 +6626,7 @@ Create a metering label for a given tenant.
 **Positional arguments:**
 
 ``NAME``
-  Name of metering label to create.
+  Name of the metering label to be created.
 
 **Optional arguments:**
 
@@ -6539,7 +6640,7 @@ Create a metering label for a given tenant.
   The owner tenant ID.
 
 ``--description DESCRIPTION``
-  Description of metering label to create.
+  Description of the metering label to be created.
 
 ``--shared``
   Set the label as shared.
@@ -6552,14 +6653,14 @@ neutron meter-label-delete
 .. code-block:: console
 
    usage: neutron meter-label-delete [-h] [--request-format {json}]
-                                     METERING_LABEL
+                                     METERING_LABEL [METERING_LABEL ...]
 
 Delete a given metering label.
 
 **Positional arguments:**
 
 ``METERING_LABEL``
-  ID or name of metering_label to delete.
+  ID(s) or name(s) of metering_label to delete.
 
 **Optional arguments:**
 
@@ -6638,7 +6739,7 @@ Create a metering label rule for a given label.
 **Positional arguments:**
 
 ``LABEL``
-  Id or Name of the label.
+  ID or name of the label.
 
 ``REMOTE_IP_PREFIX``
   CIDR to match on.
@@ -6670,13 +6771,14 @@ neutron meter-label-rule-delete
 
    usage: neutron meter-label-rule-delete [-h] [--request-format {json}]
                                           METERING_LABEL_RULE
+                                          [METERING_LABEL_RULE ...]
 
 Delete a given metering label.
 
 **Positional arguments:**
 
 ``METERING_LABEL_RULE``
-  ID or name of metering_label_rule to delete.
+  ID(s) or name(s) of metering_label_rule to delete.
 
 **Optional arguments:**
 
@@ -6831,7 +6933,7 @@ Create a network for a given tenant.
 **Positional arguments:**
 
 ``NAME``
-  Name of network to create.
+  Name of the network to be created.
 
 **Optional arguments:**
 
@@ -6863,13 +6965,14 @@ Create a network for a given tenant.
   networks.
 
 ``--vlan-transparent {True,False}``
-  Create a vlan transparent network.
+  Create a VLAN transparent network.
 
 ``--description DESCRIPTION``
   Description of network.
 
 ``--qos-policy QOS_POLICY``
-  Attach QoS policy ID or name to the resource.
+  ID or name of the QoS policy that shouldbe attached to
+  the resource.
 
 ``--availability-zone-hint AVAILABILITY_ZONE``
   Availability Zone for the network (requires
@@ -6887,14 +6990,14 @@ neutron net-delete
 
 .. code-block:: console
 
-   usage: neutron net-delete [-h] [--request-format {json}] NETWORK
+   usage: neutron net-delete [-h] [--request-format {json}] NETWORK [NETWORK ...]
 
 Delete a given network.
 
 **Positional arguments:**
 
 ``NETWORK``
-  ID or name of network to delete.
+  ID(s) or name(s) of network to delete.
 
 **Optional arguments:**
 
@@ -7187,7 +7290,8 @@ neutron net-update
 
 .. code-block:: console
 
-   usage: neutron net-update [-h] [--request-format {json}]
+   usage: neutron net-update [-h] [--request-format {json}] [--name NAME]
+                             [--description DESCRIPTION]
                              [--qos-policy QOS_POLICY | --no-qos-policy]
                              [--dns-domain DNS_DOMAIN | --no-dns-domain]
                              NETWORK
@@ -7207,8 +7311,15 @@ Update network's information.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+``--name NAME``
+  Name of the network.
+
+``--description DESCRIPTION``
+  Description of this network.
+
 ``--qos-policy QOS_POLICY``
-  Attach QoS policy ID or name to the resource.
+  ID or name of the QoS policy that shouldbe attached to
+  the resource.
 
 ``--no-qos-policy``
   Detach QoS policy from the resource.
@@ -7251,7 +7362,7 @@ Create a port for a given tenant.
 **Positional arguments:**
 
 ``NETWORK``
-  Network ID or name this port belongs to.
+  ID or name of the network this port belongs to.
 
 **Optional arguments:**
 
@@ -7307,7 +7418,8 @@ Create a port for a given tenant.
   6}. You can repeat this option.
 
 ``--qos-policy QOS_POLICY``
-  Attach QoS policy ID or name to the resource.
+  ID or name of the QoS policy that shouldbe attached to
+  the resource.
 
 ``--allowed-address-pair``
   ip_address=IP_ADDR[,mac_address=MAC_ADDR]
@@ -7328,14 +7440,14 @@ neutron port-delete
 
 .. code-block:: console
 
-   usage: neutron port-delete [-h] [--request-format {json}] PORT
+   usage: neutron port-delete [-h] [--request-format {json}] PORT [PORT ...]
 
 Delete a given port.
 
 **Positional arguments:**
 
 ``PORT``
-  ID or name of port to delete.
+  ID(s) or name(s) of port to delete.
 
 **Optional arguments:**
 
@@ -7495,7 +7607,8 @@ Update port's information.
   6}. You can repeat this option.
 
 ``--qos-policy QOS_POLICY``
-  Attach QoS policy ID or name to the resource.
+  ID or name of the QoS policy that shouldbe attached to
+  the resource.
 
 ``--no-qos-policy``
   Detach QoS policy from the resource.
@@ -7626,10 +7739,10 @@ Create a qos bandwidth limit rule.
   The owner tenant ID.
 
 ``--max-kbps MAX_KBPS``
-  max bandwidth in kbps.
+  Maximum bandwidth in kbps.
 
 ``--max-burst-kbps MAX_BURST_KBPS``
-  max burst bandwidth in kbps.
+  Maximum burst bandwidth in kbps.
 
 .. _neutron_qos-bandwidth-limit-rule-delete:
 
@@ -7639,14 +7752,16 @@ neutron qos-bandwidth-limit-rule-delete
 .. code-block:: console
 
    usage: neutron qos-bandwidth-limit-rule-delete [-h] [--request-format {json}]
-                                                  BANDWIDTH_LIMIT_RULE QOS_POLICY
+                                                  BANDWIDTH_LIMIT_RULE
+                                                  [BANDWIDTH_LIMIT_RULE ...]
+                                                  QOS_POLICY
 
 Delete a given qos bandwidth limit rule.
 
 **Positional arguments:**
 
 ``BANDWIDTH_LIMIT_RULE``
-  ID of bandwidth_limit_rule to delete.
+  ID(s) of bandwidth_limit_rule to delete.
 
 ``QOS_POLICY``
   ID or name of the QoS policy.
@@ -7787,10 +7902,10 @@ Update the given qos bandwidth limit rule.
   **DEPRECATED!** Only JSON request format is supported.
 
 ``--max-kbps MAX_KBPS``
-  max bandwidth in kbps.
+  Maximum bandwidth in kbps.
 
 ``--max-burst-kbps MAX_BURST_KBPS``
-  max burst bandwidth in kbps.
+  Maximum burst bandwidth in kbps.
 
 .. _neutron_qos-dscp-marking-rule-create:
 
@@ -7839,14 +7954,15 @@ neutron qos-dscp-marking-rule-delete
 .. code-block:: console
 
    usage: neutron qos-dscp-marking-rule-delete [-h] [--request-format {json}]
-                                               DSCP_MARKING_RULE QOS_POLICY
+                                               DSCP_MARKING_RULE
+                                               [DSCP_MARKING_RULE ...] QOS_POLICY
 
 Delete a given qos dscp marking rule.
 
 **Positional arguments:**
 
 ``DSCP_MARKING_RULE``
-  ID of dscp_marking_rule to delete.
+  ID(s) of dscp_marking_rule to delete.
 
 ``QOS_POLICY``
   ID or name of the QoS policy.
@@ -7987,6 +8103,218 @@ Update the given QoS DSCP marking rule.
   DSCP mark: value can be 0, even numbers from 8-56,
   excluding 42, 44, 50, 52, and 54.
 
+.. _neutron_qos-minimum-bandwidth-rule-create:
+
+neutron qos-minimum-bandwidth-rule-create
+-----------------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-minimum-bandwidth-rule-create [-h]
+                                                    [-f {html,json,shell,table,value,yaml}]
+                                                    [-c COLUMN]
+                                                    [--max-width <integer>]
+                                                    [--noindent]
+                                                    [--prefix PREFIX]
+                                                    [--request-format {json}]
+                                                    [--tenant-id TENANT_ID]
+                                                    --min-kbps MIN_KBPS
+                                                    --direction {egress}
+                                                    QOS_POLICY
+
+Create a qos minimum bandwidth rule.
+
+**Positional arguments:**
+
+``QOS_POLICY``
+  ID or name of the QoS policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID.
+
+``--min-kbps MIN_KBPS``
+  QoS minimum bandwidth assurance, expressed in kilobits
+  per second.
+
+``--direction {egress}``
+  Traffic direction.
+
+.. _neutron_qos-minimum-bandwidth-rule-delete:
+
+neutron qos-minimum-bandwidth-rule-delete
+-----------------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-minimum-bandwidth-rule-delete [-h]
+                                                    [--request-format {json}]
+                                                    MINIMUM_BANDWIDTH_RULE
+                                                    [MINIMUM_BANDWIDTH_RULE ...]
+                                                    QOS_POLICY
+
+Delete a given qos minimum bandwidth rule.
+
+**Positional arguments:**
+
+``MINIMUM_BANDWIDTH_RULE``
+  ID(s) of minimum_bandwidth_rule to delete.
+
+``QOS_POLICY``
+  ID or name of the QoS policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+.. _neutron_qos-minimum-bandwidth-rule-list:
+
+neutron qos-minimum-bandwidth-rule-list
+---------------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-minimum-bandwidth-rule-list [-h]
+                                                  [-f {csv,html,json,table,value,yaml}]
+                                                  [-c COLUMN]
+                                                  [--max-width <integer>]
+                                                  [--noindent]
+                                                  [--quote {all,minimal,none,nonnumeric}]
+                                                  [--request-format {json}] [-D]
+                                                  [-F FIELD] [-P SIZE]
+                                                  [--sort-key FIELD]
+                                                  [--sort-dir {asc,desc}]
+                                                  QOS_POLICY
+
+List all qos minimum bandwidth rules belonging to the specified policy.
+
+**Positional arguments:**
+
+``QOS_POLICY``
+  ID or name of the QoS policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+``-P SIZE, --page-size SIZE``
+  Specify retrieve unit of each request, then split one
+  request to several requests.
+
+``--sort-key FIELD``
+  Sorts the list by the specified fields in the
+  specified directions. You can repeat this option, but
+  you must specify an equal number of sort_dir and
+  sort_key values. Extra sort_dir options are ignored.
+  Missing sort_dir options use the default asc value.
+
+``--sort-dir {asc,desc}``
+  Sorts the list in the specified direction. You can
+  repeat this option.
+
+.. _neutron_qos-minimum-bandwidth-rule-show:
+
+neutron qos-minimum-bandwidth-rule-show
+---------------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-minimum-bandwidth-rule-show [-h]
+                                                  [-f {html,json,shell,table,value,yaml}]
+                                                  [-c COLUMN]
+                                                  [--max-width <integer>]
+                                                  [--noindent] [--prefix PREFIX]
+                                                  [--request-format {json}] [-D]
+                                                  [-F FIELD]
+                                                  MINIMUM_BANDWIDTH_RULE
+                                                  QOS_POLICY
+
+Show information about the given qos minimum bandwidth rule.
+
+**Positional arguments:**
+
+``MINIMUM_BANDWIDTH_RULE``
+  ID of minimum_bandwidth_rule to look up.
+
+``QOS_POLICY``
+  ID or name of the QoS policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``-D, --show-details``
+  Show detailed information.
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _neutron_qos-minimum-bandwidth-rule-update:
+
+neutron qos-minimum-bandwidth-rule-update
+-----------------------------------------
+
+.. code-block:: console
+
+   usage: neutron qos-minimum-bandwidth-rule-update [-h]
+                                                    [--request-format {json}]
+                                                    --min-kbps MIN_KBPS
+                                                    --direction {egress}
+                                                    MINIMUM_BANDWIDTH_RULE
+                                                    QOS_POLICY
+
+Update the given qos minimum bandwidth rule.
+
+**Positional arguments:**
+
+``MINIMUM_BANDWIDTH_RULE``
+  ID of minimum_bandwidth_rule to update.
+
+``QOS_POLICY``
+  ID or name of the QoS policy.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--min-kbps MIN_KBPS``
+  QoS minimum bandwidth assurance, expressed in kilobits
+  per second.
+
+``--direction {egress}``
+  Traffic direction.
+
 .. _neutron_qos-policy-create:
 
 neutron qos-policy-create
@@ -8007,7 +8335,7 @@ Create a qos policy.
 **Positional arguments:**
 
 ``NAME``
-  Name of QoS policy to create.
+  Name of the QoS policy to be created.
 
 **Optional arguments:**
 
@@ -8021,7 +8349,7 @@ Create a qos policy.
   The owner tenant ID.
 
 ``--description DESCRIPTION``
-  Description of the QoS policy.
+  Description of the QoS policy to be created.
 
 ``--shared``
   Accessible by other tenants. Set shared to True
@@ -8034,14 +8362,15 @@ neutron qos-policy-delete
 
 .. code-block:: console
 
-   usage: neutron qos-policy-delete [-h] [--request-format {json}] POLICY
+   usage: neutron qos-policy-delete [-h] [--request-format {json}]
+                                    POLICY [POLICY ...]
 
 Delete a given qos policy.
 
 **Positional arguments:**
 
 ``POLICY``
-  ID or name of policy to delete.
+  ID(s) or name(s) of policy to delete.
 
 **Optional arguments:**
 
@@ -8161,7 +8490,7 @@ Update a given qos policy.
   **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
-  Name of QoS policy.
+  Name of the QoS policy.
 
 ``--description DESCRIPTION``
   Description of the QoS policy.
@@ -8172,6 +8501,33 @@ Update a given qos policy.
 
 ``--no-shared``
   Not accessible by other tenants. Set shared to False.
+
+.. _neutron_quota-default-show:
+
+neutron quota-default-show
+--------------------------
+
+.. code-block:: console
+
+   usage: neutron quota-default-show [-h] [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width <integer>]
+                                     [--noindent] [--prefix PREFIX]
+                                     [--request-format {json}]
+                                     [--tenant-id tenant-id]
+
+Show default quotas for a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json}``
+  **DEPRECATED!** Only JSON request format is supported.
+
+``--tenant-id``
+  tenant-id
+  The owner tenant ID.
 
 .. _neutron_quota-delete:
 
@@ -8231,7 +8587,7 @@ neutron quota-show
                              [--prefix PREFIX] [--request-format {json}]
                              [--tenant-id tenant-id]
 
-Show quotas of a given tenant.
+Show quotas for a given tenant.
 
 **Optional arguments:**
 
@@ -8262,6 +8618,8 @@ neutron quota-update
                                [--security-group-rule security_group_rules]
                                [--vip vips] [--pool pools] [--member members]
                                [--health-monitor health_monitors]
+                               [--loadbalancer loadbalancers]
+                               [--listener listeners]
 
 Define tenant's quotas not to use defaults.
 
@@ -8314,6 +8672,13 @@ Define tenant's quotas not to use defaults.
   health_monitors
   The limit of health monitors.
 
+``--loadbalancer``
+  loadbalancers
+  The limit of load balancers.
+
+``--listener``
+  listeners  The limit of listeners.
+
 .. _neutron_rbac-create:
 
 neutron rbac-create
@@ -8364,14 +8729,15 @@ neutron rbac-delete
 
 .. code-block:: console
 
-   usage: neutron rbac-delete [-h] [--request-format {json}] RBAC_POLICY
+   usage: neutron rbac-delete [-h] [--request-format {json}]
+                              RBAC_POLICY [RBAC_POLICY ...]
 
 Delete a RBAC policy.
 
 **Positional arguments:**
 
 ``RBAC_POLICY``
-  ID of rbac_policy to delete.
+  ID(s) of rbac_policy to delete.
 
 **Optional arguments:**
 
@@ -8502,7 +8868,7 @@ neutron router-create
                                 [-c COLUMN] [--max-width <integer>] [--noindent]
                                 [--prefix PREFIX] [--request-format {json}]
                                 [--tenant-id TENANT_ID] [--admin-state-down]
-                                [--description DESCRIPTION]
+                                [--description DESCRIPTION] [--flavor FLAVOR]
                                 [--distributed {True,False}] [--ha {True,False}]
                                 [--availability-zone-hint AVAILABILITY_ZONE]
                                 NAME
@@ -8512,7 +8878,7 @@ Create a router for a given tenant.
 **Positional arguments:**
 
 ``NAME``
-  Name of router to create.
+  Name of the router to be created.
 
 **Optional arguments:**
 
@@ -8530,6 +8896,9 @@ Create a router for a given tenant.
 
 ``--description DESCRIPTION``
   Description of router.
+
+``--flavor FLAVOR``
+  ID or name of flavor.
 
 ``--distributed {True,False}``
   Create a distributed router.
@@ -8549,14 +8918,15 @@ neutron router-delete
 
 .. code-block:: console
 
-   usage: neutron router-delete [-h] [--request-format {json}] ROUTER
+   usage: neutron router-delete [-h] [--request-format {json}]
+                                ROUTER [ROUTER ...]
 
 Delete a given router.
 
 **Positional arguments:**
 
 ``ROUTER``
-  ID or name of router to delete.
+  ID(s) or name(s) of router to delete.
 
 **Optional arguments:**
 
@@ -8796,7 +9166,7 @@ List ports that belong to a given tenant, with specified router.
 **Positional arguments:**
 
 ``ROUTER``
-  ID or name of router to look up.
+  ID or name of the router to look up.
 
 **Optional arguments:**
 
@@ -8893,14 +9263,14 @@ Update router's information.
   **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
-  Name of this router.
+  Updated name of the router.
 
 ``--description DESCRIPTION``
   Description of router.
 
 ``--admin-state-up {True,False}``
   Specify the administrative state of the router (True
-  meaning "Up")
+  means "Up").
 
 ``--distributed {True,False}``
   True means this router should operate in distributed
@@ -8935,7 +9305,7 @@ Create a security group.
 **Positional arguments:**
 
 ``NAME``
-  Name of security group.
+  Name of the security group to be created.
 
 **Optional arguments:**
 
@@ -8949,7 +9319,7 @@ Create a security group.
   The owner tenant ID.
 
 ``--description DESCRIPTION``
-  Description of security group.
+  Description of the security group to be created.
 
 .. _neutron_security-group-delete:
 
@@ -8959,14 +9329,14 @@ neutron security-group-delete
 .. code-block:: console
 
    usage: neutron security-group-delete [-h] [--request-format {json}]
-                                        SECURITY_GROUP
+                                        SECURITY_GROUP [SECURITY_GROUP ...]
 
 Delete a given security group.
 
 **Positional arguments:**
 
 ``SECURITY_GROUP``
-  ID or name of security_group to delete.
+  ID(s) or name(s) of security_group to delete.
 
 **Optional arguments:**
 
@@ -9051,7 +9421,8 @@ Create a security group rule.
 **Positional arguments:**
 
 ``SECURITY_GROUP``
-  Security group name or ID to add rule.
+  ID or name of the security group to which the rule is
+  added.
 
 **Optional arguments:**
 
@@ -9075,7 +9446,7 @@ Create a security group rule.
 
 ``--protocol PROTOCOL``
   Protocol of packet. Allowed values are [icmp, icmpv6,
-  tcp, udp] and integer representations [0-255]
+  tcp, udp] and integer representations [0-255].
 
 ``--port-range-min PORT_RANGE_MIN``
   Starting port range. For ICMP it is type.
@@ -9087,7 +9458,8 @@ Create a security group rule.
   CIDR to match on.
 
 ``--remote-group-id REMOTE_GROUP``
-  Remote security group name or ID to apply rule.
+  ID or name of the remote security group to which the
+  rule is applied.
 
 .. _neutron_security-group-rule-delete:
 
@@ -9098,13 +9470,14 @@ neutron security-group-rule-delete
 
    usage: neutron security-group-rule-delete [-h] [--request-format {json}]
                                              SECURITY_GROUP_RULE
+                                             [SECURITY_GROUP_RULE ...]
 
 Delete a given security group rule.
 
 **Positional arguments:**
 
 ``SECURITY_GROUP_RULE``
-  ID of security_group_rule to delete.
+  ID(s) of security_group_rule to delete.
 
 **Optional arguments:**
 
@@ -9267,10 +9640,10 @@ Update a given security group.
   **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
-  Name of security group.
+  Updated name of the security group.
 
 ``--description DESCRIPTION``
-  Description of security group.
+  Updated description of the security group.
 
 .. _neutron_service-provider-list:
 
@@ -9429,14 +9802,15 @@ neutron subnet-delete
 
 .. code-block:: console
 
-   usage: neutron subnet-delete [-h] [--request-format {json}] SUBNET
+   usage: neutron subnet-delete [-h] [--request-format {json}]
+                                SUBNET [SUBNET ...]
 
 Delete a given subnet.
 
 **Positional arguments:**
 
 ``SUBNET``
-  ID or name of subnet to delete.
+  ID(s) or name(s) of subnet to delete.
 
 **Optional arguments:**
 
@@ -9614,7 +9988,7 @@ Create a subnetpool for a given tenant.
 **Positional arguments:**
 
 ``NAME``
-  Name of subnetpool to create.
+  Name of the subnetpool to be created.
 
 **Optional arguments:**
 
@@ -9652,7 +10026,7 @@ Create a subnetpool for a given tenant.
 ``--address-scope ADDRSCOPE``
   ID or name of the address scope with which the
   subnetpool is associated. Prefixes must be unique
-  across address scopes
+  across address scopes.
 
 .. _neutron_subnetpool-delete:
 
@@ -9661,14 +10035,15 @@ neutron subnetpool-delete
 
 .. code-block:: console
 
-   usage: neutron subnetpool-delete [-h] [--request-format {json}] SUBNETPOOL
+   usage: neutron subnetpool-delete [-h] [--request-format {json}]
+                                    SUBNETPOOL [SUBNETPOOL ...]
 
 Delete a given subnetpool.
 
 **Positional arguments:**
 
 ``SUBNETPOOL``
-  ID or name of subnetpool to delete.
+  ID(s) or name(s) of subnetpool to delete.
 
 **Optional arguments:**
 
@@ -9812,15 +10187,15 @@ Update subnetpool's information.
   (True meaning default).
 
 ``--name NAME``
-  Name of subnetpool to update.
+  Updated name of the subnetpool.
 
 ``--address-scope ADDRSCOPE``
   ID or name of the address scope with which the
   subnetpool is associated. Prefixes must be unique
-  across address scopes
+  across address scopes.
 
 ``--no-address-scope``
-  Detach subnetpool from the address scope
+  Detach subnetpool from the address scope.
 
 .. _neutron_tag-add:
 
@@ -9962,14 +10337,14 @@ neutron vpn-endpoint-group-delete
 .. code-block:: console
 
    usage: neutron vpn-endpoint-group-delete [-h] [--request-format {json}]
-                                            ENDPOINT_GROUP
+                                            ENDPOINT_GROUP [ENDPOINT_GROUP ...]
 
 Delete a given VPN endpoint group.
 
 **Positional arguments:**
 
 ``ENDPOINT_GROUP``
-  ID or name of endpoint_group to delete.
+  ID(s) or name(s) of endpoint_group to delete.
 
 **Optional arguments:**
 
@@ -10111,11 +10486,10 @@ neutron vpn-ikepolicy-create
                                        [--request-format {json}]
                                        [--tenant-id TENANT_ID]
                                        [--description DESCRIPTION]
-                                       [--auth-algorithm {sha1,sha256}]
+                                       [--auth-algorithm AUTH_ALGORITHM]
                                        [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                        [--phase1-negotiation-mode {main}]
-                                       [--ike-version {v1,v2}]
-                                       [--pfs {group2,group5,group14}]
+                                       [--ike-version {v1,v2}] [--pfs PFS]
                                        [--lifetime units=UNITS,value=VALUE]
                                        NAME
 
@@ -10138,22 +10512,22 @@ Create an IKE policy.
   The owner tenant ID.
 
 ``--description DESCRIPTION``
-  Description of the IKE policy
+  Description of the IKE policy.
 
-``--auth-algorithm {sha1,sha256}``
-  Authentication algorithm in lowercase. Default:sha1
+``--auth-algorithm AUTH_ALGORITHM``
+  Authentication algorithm, default:sha1.
 
 ``--encryption-algorithm ENCRYPTION_ALGORITHM``
-  Encryption algorithm in lowercase, default:aes-128
+  Encryption algorithm, default:aes-128.
 
 ``--phase1-negotiation-mode {main}``
-  IKE Phase1 negotiation mode in lowercase, default:main
+  IKE Phase1 negotiation mode, default:main.
 
 ``--ike-version {v1,v2}``
-  IKE version in lowercase, default:v1
+  IKE version for the policy, default:v1.
 
-``--pfs {group2,group5,group14}``
-  Perfect Forward Secrecy in lowercase, default:group5
+``--pfs PFS``
+  Perfect Forward Secrecy, default:group5.
 
 ``--lifetime``
   units=UNITS,value=VALUE
@@ -10168,14 +10542,15 @@ neutron vpn-ikepolicy-delete
 
 .. code-block:: console
 
-   usage: neutron vpn-ikepolicy-delete [-h] [--request-format {json}] IKEPOLICY
+   usage: neutron vpn-ikepolicy-delete [-h] [--request-format {json}]
+                                       IKEPOLICY [IKEPOLICY ...]
 
 Delete a given IKE policy.
 
 **Positional arguments:**
 
 ``IKEPOLICY``
-  ID or name of IKE policy to delete.
+  ID(s) or name(s) of IKE policy to delete.
 
 **Optional arguments:**
 
@@ -10275,6 +10650,11 @@ neutron vpn-ikepolicy-update
 .. code-block:: console
 
    usage: neutron vpn-ikepolicy-update [-h] [--request-format {json}]
+                                       [--name NAME] [--description DESCRIPTION]
+                                       [--auth-algorithm AUTH_ALGORITHM]
+                                       [--encryption-algorithm ENCRYPTION_ALGORITHM]
+                                       [--phase1-negotiation-mode {main}]
+                                       [--ike-version {v1,v2}] [--pfs PFS]
                                        [--lifetime units=UNITS,value=VALUE]
                                        IKEPOLICY
 
@@ -10292,6 +10672,27 @@ Update a given IKE policy.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+``--name NAME``
+  Updated name of the IKE policy.
+
+``--description DESCRIPTION``
+  Description of the IKE policy.
+
+``--auth-algorithm AUTH_ALGORITHM``
+  Authentication algorithm, default:sha1.
+
+``--encryption-algorithm ENCRYPTION_ALGORITHM``
+  Encryption algorithm, default:aes-128.
+
+``--phase1-negotiation-mode {main}``
+  IKE Phase1 negotiation mode, default:main.
+
+``--ike-version {v1,v2}``
+  IKE version for the policy, default:v1.
+
+``--pfs PFS``
+  Perfect Forward Secrecy, default:group5.
 
 ``--lifetime``
   units=UNITS,value=VALUE
@@ -10312,13 +10713,13 @@ neutron vpn-ipsecpolicy-create
                                          [--noindent] [--prefix PREFIX]
                                          [--request-format {json}]
                                          [--tenant-id TENANT_ID]
+                                         [--auth-algorithm AUTH_ALGORITHM]
                                          [--description DESCRIPTION]
-                                         [--transform-protocol {esp,ah,ah-esp}]
-                                         [--auth-algorithm {sha1,sha256}]
-                                         [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                          [--encapsulation-mode {tunnel,transport}]
-                                         [--pfs {group2,group5,group14}]
+                                         [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                          [--lifetime units=UNITS,value=VALUE]
+                                         [--pfs PFS]
+                                         [--transform-protocol {esp,ah,ah-esp}]
                                          NAME
 
 Create an IPsec policy.
@@ -10339,29 +10740,32 @@ Create an IPsec policy.
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
+``--auth-algorithm AUTH_ALGORITHM``
+  Authentication algorithm for IPsec policy,
+  default:sha1.
+
 ``--description DESCRIPTION``
   Description of the IPsec policy.
 
-``--transform-protocol {esp,ah,ah-esp}``
-  Transform protocol in lowercase, default:esp
-
-``--auth-algorithm {sha1,sha256}``
-  Authentication algorithm in lowercase, default:sha1
+``--encapsulation-mode {tunnel,transport}``
+  Encapsulation mode for IPsec policy, default:tunnel.
 
 ``--encryption-algorithm ENCRYPTION_ALGORITHM``
-  Encryption algorithm in lowercase, default:aes-128
-
-``--encapsulation-mode {tunnel,transport}``
-  Encapsulation mode in lowercase, default:tunnel
-
-``--pfs {group2,group5,group14}``
-  Perfect Forward Secrecy in lowercase, default:group5
+  Encryption algorithm for IPsec policy,
+  default:aes-128.
 
 ``--lifetime``
   units=UNITS,value=VALUE
   IPsec lifetime attributes. 'units'-seconds,
   default:seconds. 'value'-non negative integer,
   default:3600.
+
+``--pfs PFS``
+  Perfect Forward Secrecy for IPsec policy,
+  default:group5.
+
+``--transform-protocol {esp,ah,ah-esp}``
+  Transform protocol for IPsec policy, default:esp.
 
 .. _neutron_vpn-ipsecpolicy-delete:
 
@@ -10371,14 +10775,14 @@ neutron vpn-ipsecpolicy-delete
 .. code-block:: console
 
    usage: neutron vpn-ipsecpolicy-delete [-h] [--request-format {json}]
-                                         IPSECPOLICY
+                                         IPSECPOLICY [IPSECPOLICY ...]
 
 Delete a given IPsec policy.
 
 **Positional arguments:**
 
 ``IPSECPOLICY``
-  ID or name of IPsec policy to delete.
+  ID(s) or name(s) of IPsec policy to delete.
 
 **Optional arguments:**
 
@@ -10479,7 +10883,14 @@ neutron vpn-ipsecpolicy-update
 .. code-block:: console
 
    usage: neutron vpn-ipsecpolicy-update [-h] [--request-format {json}]
+                                         [--name NAME]
+                                         [--auth-algorithm AUTH_ALGORITHM]
+                                         [--description DESCRIPTION]
+                                         [--encapsulation-mode {tunnel,transport}]
+                                         [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                          [--lifetime units=UNITS,value=VALUE]
+                                         [--pfs PFS]
+                                         [--transform-protocol {esp,ah,ah-esp}]
                                          IPSECPOLICY
 
 Update a given IPsec policy.
@@ -10497,11 +10908,35 @@ Update a given IPsec policy.
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
 
+``--name NAME``
+  Updated name of the IPsec policy.
+
+``--auth-algorithm AUTH_ALGORITHM``
+  Authentication algorithm for IPsec policy,
+  default:sha1.
+
+``--description DESCRIPTION``
+  Description of the IPsec policy.
+
+``--encapsulation-mode {tunnel,transport}``
+  Encapsulation mode for IPsec policy, default:tunnel.
+
+``--encryption-algorithm ENCRYPTION_ALGORITHM``
+  Encryption algorithm for IPsec policy,
+  default:aes-128.
+
 ``--lifetime``
   units=UNITS,value=VALUE
   IPsec lifetime attributes. 'units'-seconds,
   default:seconds. 'value'-non negative integer,
   default:3600.
+
+``--pfs PFS``
+  Perfect Forward Secrecy for IPsec policy,
+  default:group5.
+
+``--transform-protocol {esp,ah,ah-esp}``
+  Transform protocol for IPsec policy, default:esp.
 
 .. _neutron_vpn-service-create:
 
@@ -10544,10 +10979,10 @@ Create a VPN service.
   Set admin state up to false.
 
 ``--name NAME``
-  Set a name for the VPN service.
+  Name for the VPN service.
 
 ``--description DESCRIPTION``
-  Set a description for the VPN service.
+  Description for the VPN service.
 
 .. _neutron_vpn-service-delete:
 
@@ -10556,14 +10991,15 @@ neutron vpn-service-delete
 
 .. code-block:: console
 
-   usage: neutron vpn-service-delete [-h] [--request-format {json}] VPNSERVICE
+   usage: neutron vpn-service-delete [-h] [--request-format {json}]
+                                     VPNSERVICE [VPNSERVICE ...]
 
 Delete a given VPN service.
 
 **Positional arguments:**
 
 ``VPNSERVICE``
-  ID or name of VPN service to delete.
+  ID(s) or name(s) of VPN service to delete.
 
 **Optional arguments:**
 
@@ -10662,7 +11098,10 @@ neutron vpn-service-update
 
 .. code-block:: console
 
-   usage: neutron vpn-service-update [-h] [--request-format {json}] VPNSERVICE
+   usage: neutron vpn-service-update [-h] [--request-format {json}] [--name NAME]
+                                     [--description DESCRIPTION]
+                                     [--admin-state-up {True,False}]
+                                     VPNSERVICE
 
 Update a given VPN service.
 
@@ -10678,4 +11117,14 @@ Update a given VPN service.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+``--name NAME``
+  Name for the VPN service.
+
+``--description DESCRIPTION``
+  Description for the VPN service.
+
+``--admin-state-up {True,False}``
+  Update the admin state for the VPN Service.(True means
+  UP)
 
