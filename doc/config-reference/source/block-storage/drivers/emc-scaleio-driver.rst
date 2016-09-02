@@ -119,7 +119,38 @@ of the volume type, as follows:
 
 .. code-block:: ini
 
-   sio:provisioning_type = thin\thick
+   provisioning:type = thin\thick
+
+The old specification: ``sio:provisioning_type`` is deprecated.
+
+Oversubscription
+----------------
+
+Configure the oversubscription ratio by adding the following parameter
+under the seperate section for ScaleIO:
+
+.. code-block:: ini
+
+   sio_max_over_subscription_ratio = OVER_SUBSCRIPTION_RATIO
+
+Or, by adding the following parameter under the default section:
+
+.. code-block:: ini
+
+   max_over_subscription_ratio = OVER_SUBSCRIPTION_RATIO
+
+.. note::
+
+   If both are specified, ScaleIO will consider only the first,
+   and if none are specified there will be no oversubscription.
+
+Oversubscription is calculated by the Block Storage service
+correctly only if the extra specification ``provisioning:type``
+appears in the volume type regardless to the default provisioning type.
+Maximum oversubscription value supported for ScaleIO is 10.0.
+
+Default provisioning type
+-------------------------
 
 If provisioning type settings are not specified in the volume type,
 the default value is set according to the ``san_thin_provision``
