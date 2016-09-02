@@ -9,7 +9,7 @@ Shared File Systems service command-line client
 The manila client is the command-line interface (CLI) for
 the Shared File Systems service API and its extensions.
 
-This chapter documents :command:`manila` version ``1.10.0``.
+This chapter documents :command:`manila` version ``1.11.0``.
 
 For help on a specific :command:`manila` command, enter:
 
@@ -147,10 +147,6 @@ manila usage
 
 ``metadata-update-all``
   Update all metadata of a share.
-
-``migrate``
-  (Deprecated) Migrates share to a new host (Admin only,
-  Experimental).
 
 ``migration-cancel``
   Cancels migration of a given share when copying (Admin
@@ -334,6 +330,16 @@ manila usage
   Attempt force-delete of snapshot, regardless of state
   (Admin only).
 
+``snapshot-instance-list``
+  List share snapshot instances.
+
+``snapshot-instance-reset-state``
+  Explicitly update the state of a share snapshot
+  instance.
+
+``snapshot-instance-show``
+  Show details about a share snapshot instance.
+
 ``snapshot-list``
   List all the snapshots.
 
@@ -464,19 +470,19 @@ manila optional arguments
 
 ``--bypass-url <bypass-url>``
   Use this API endpoint instead of the Service Catalog.
-  Defaults to ``env[MANILACLIENT_BYPASS_URL]``.
+  Defaults to ``env[OS_MANILA_BYPASS_URL]``.
 
 ``--service-type <service-type>``
   Defaults to compute for most actions.
 
 ``--service-name <service-name>``
-  Defaults to ``env[MANILA_SERVICE_NAME]``.
+  Defaults to ``env[OS_MANILA_SERVICE_NAME]``.
 
 ``--share-service-name <share-service-name>``
-  Defaults to ``env[MANILA_share_service_name]``.
+  Defaults to ``env[OS_MANILA_SHARE_SERVICE_NAME]``.
 
 ``--endpoint-type <endpoint-type>``
-  Defaults to ``env[MANILA_ENDPOINT_TYPE]`` or publicURL.
+  Defaults to ``env[OS_MANILA_ENDPOINT_TYPE]`` or publicURL.
 
 ``--os-share-api-version <share-api-ver>``
   Accepts 1.x to override default to
@@ -1328,9 +1334,13 @@ manila migration-start
 
 .. code-block:: console
 
-   usage: manila migration-start [--force-host-copy <True|False>]
-                                 [--notify <True|False>]
-                                 <share> <host#pool>
+   usage: manila migration-start [--force_host_assisted_migration <True|False>]
+                                 [--preserve-metadata <True|False>]
+                                 [--writable <True|False>]
+                                 [--non-disruptive <True|False>]
+                                 [--new_share_network <new_share_network>]
+                                 [--new_share_type <new_share_type>]
+                                 <share> <host@backend#pool>
 
 Migrates share to a new host (Admin only, Experimental).
 
@@ -1339,12 +1349,13 @@ Migrates share to a new host (Admin only, Experimental).
 ``<share>``
   Name or ID of share to migrate.
 
-``<host#pool>``
-  Destination host and pool.
+``<host@backend#pool>``
+  Destination host, backend and pool in format
+  'host@backend#pool'.
 
 **Optional arguments:**
 
-``--force-host-copy <True|False>, --force_host_copy <True|False>``
+``--force_host_assisted_migration <True|False>, --force-host-assisted-migration <True|False>``
   Enables
   or
   disables
@@ -1355,11 +1366,31 @@ Migrates share to a new host (Admin only, Experimental).
   bypasses
   driver
   optimizations.
-  Default=False.
+  Default=False. Renamed from "force_host_copy" in
+  version 2.22.
 
-``--notify <True|False>``
-  Enables or disables notification of data copying
-  completed. Default=True.
+``--preserve-metadata <True|False>, --preserve_metadata <True|False>``
+  Chooses whether migration should be forced to preserve
+  all file metadata when moving its contents.
+  Default=True. Introduced in version 2.22.
+
+``--writable <True|False>``
+  Chooses whether migration should be forced to remain
+  writable while contents are being moved. Default=True.
+  Introduced in version 2.22.
+
+``--non-disruptive <True|False>, --non_disruptive <True|False>``
+  Chooses whether migration should only be performed if
+  it is not disruptive. Default=False. Introduced in
+  version 2.22.
+
+``--new_share_network <new_share_network>, --new-share-network <new_share_network>``
+  Specifies a new share network if desired to change.
+  Default=None. Introduced in version 2.22.
+
+``--new_share_type <new_share_type>, --new-share-type <new_share_type>``
+  Specifies a new share type if desired to change.
+  Default=None. Introduced in version 2.22.
 
 .. _manila_pool-list:
 
@@ -1610,8 +1641,8 @@ Explicitly update the task state of a share (Admin only, Experimental).
   migration_driver_phase1_done, data_copying_starting,
   data_copying_in_progress, data_copying_completing,
   data_copying_completed, data_copying_cancelled,
-  data_copying_error. If no value is provided,
-  migration_error will be used.
+  data_copying_error. If no value is provided, None will
+  be used.
 
 .. _manila_security-service-create:
 
@@ -2331,7 +2362,7 @@ manila share-replica-list
 
 .. code-block:: console
 
-   usage: manila share-replica-list [--share-id <share_id>]
+   usage: manila share-replica-list [--share-id <share_id>] [--columns <columns>]
 
 List share replicas (Experimental).
 
@@ -2339,6 +2370,10 @@ List share replicas (Experimental).
 
 ``--share-id <share_id>, --share_id <share_id>, --si <share_id>``
   List replicas belonging to share.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "replica_state,id"
 
 .. _manila_share-replica-promote:
 
@@ -2612,6 +2647,73 @@ Attempt force-delete of snapshot, regardless of state (Admin only).
 
 ``<snapshot>``
   Name or ID of the snapshot to force delete.
+
+.. _manila_snapshot-instance-list:
+
+manila snapshot-instance-list
+-----------------------------
+
+.. code-block:: console
+
+   usage: manila snapshot-instance-list [--snapshot <snapshot>]
+                                        [--columns <columns>]
+                                        [--detailed <detailed>]
+
+List share snapshot instances.
+
+**Optional arguments:**
+
+``--snapshot <snapshot>``
+  Filter results by share snapshot ID.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  :option:`--columns` "id"
+
+``--detailed <detailed>``
+  Show detailed information about snapshot instances.
+  (Default=False)
+
+.. _manila_snapshot-instance-reset-state:
+
+manila snapshot-instance-reset-state
+------------------------------------
+
+.. code-block:: console
+
+   usage: manila snapshot-instance-reset-state [--state <state>]
+                                               <snapshot_instance>
+
+Explicitly update the state of a share snapshot instance.
+
+**Positional arguments:**
+
+``<snapshot_instance>``
+  ID of the snapshot instance to modify.
+
+**Optional arguments:**
+
+``--state <state>``
+  Indicate which state to assign the snapshot instance.
+  Options include available, error, creating, deleting,
+  error_deleting. If no state is provided, available will
+  be used.
+
+.. _manila_snapshot-instance-show:
+
+manila snapshot-instance-show
+-----------------------------
+
+.. code-block:: console
+
+   usage: manila snapshot-instance-show <snapshot_instance>
+
+Show details about a share snapshot instance.
+
+**Positional arguments:**
+
+``<snapshot_instance>``
+  ID of the share snapshot instance.
 
 .. _manila_snapshot-list:
 
