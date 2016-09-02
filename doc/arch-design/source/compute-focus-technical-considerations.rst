@@ -191,7 +191,7 @@ Also consider several specialized components:
    batch of instances and the running of tests, but it makes sense to
    use the Orchestration service to handle all these actions.
 
-* :term:`Telemetry service` (ceilometer)
+* :term:`Telemetry service (telemetry)`
    Telemetry and the alarms it generates support autoscaling of
    instances using Orchestration. Users that are not using the
    Orchestration service do not need to deploy the Telemetry service and

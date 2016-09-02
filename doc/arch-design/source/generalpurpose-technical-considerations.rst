@@ -354,7 +354,7 @@ OpenStack core services recommended in a general purpose cloud are:
 
 * :term:`Dashboard (horizon)`
 
-* :term:`Telemetry service` (:term:`ceilometer`)
+* :term:`Telemetry service (telemetry)`
 
 A general purpose cloud may also include :term:`Object Storage service`
 (:term:`swift`). :term:`Block Storage service (cinder)`.
