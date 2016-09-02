@@ -26,7 +26,7 @@ to that specific host instead.
 OpenStack Networking integrates with various OpenStack
 components:
 
-* OpenStack :term:`Identity service` (keystone) is used for authentication
+* OpenStack :term:`Identity service (keystone)` is used for authentication
   and authorization of API requests.
 
 * OpenStack :term:`Compute service (nova)` is used to plug each virtual

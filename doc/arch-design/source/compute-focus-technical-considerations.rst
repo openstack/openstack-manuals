@@ -180,7 +180,7 @@ includes the typical OpenStack components:
 
 * :term:`Image service` (glance)
 
-* :term:`Identity service` (keystone)
+* :term:`Identity service (keystone)`
 
 Also consider several specialized components:
 

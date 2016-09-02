@@ -2,9 +2,9 @@
 Identity service overview
 =========================
 
-The OpenStack :term:`Identity service` provides a single point of
-integration for managing authentication, authorization, and a catalog of
-services.
+The OpenStack :term:`Identity service <Identity service (keystone)>` provides
+a single point of integration for managing authentication, authorization, and
+a catalog of services.
 
 The Identity service is typically the first service a user interacts with. Once
 authenticated, an end user can use their identity to access other OpenStack

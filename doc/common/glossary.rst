@@ -1804,13 +1804,13 @@ I
       name and password. It is a typical source of authentication
       tokens.
 
-   Identity service
+   Identity service (keystone)
 
-      The OpenStack core project that provides a central directory of
-      users mapped to the OpenStack services they can access. It also
-      registers endpoints for OpenStack services. It acts as a common
-      authentication system. The project name of Identity is
-      keystone.
+      The project that facilitates API client authentication, service
+      discovery, distributed multi-tenant authorization, and auditing.
+      It provides a central directory of users mapped to the OpenStack
+      services they can access. It also registers endpoints for OpenStack
+      services and acts as a common authentication system.
 
    Identity service API
 
@@ -2115,7 +2115,7 @@ K
 
    keystone
 
-      The project that provides OpenStack Identity services.
+      Codename of the :term:`Identity service <Identity service (keystone)>`.
 
    Kickstart
 

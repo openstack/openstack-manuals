@@ -16,9 +16,10 @@ designed to be an exhaustive list.
 OpenStack Identity service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If OpenStack :term:`Identity service` is responding slowly, it could be due
-to the token table getting large. This can be fixed by running the
-:command:`keystone-manage token_flush` command.
+If OpenStack :term:`Identity service <Identity service (keystone)>` is
+responding slowly, it could be due to the token table getting large.
+This can be fixed by running the :command:`keystone-manage token_flush`
+command.
 
 Additionally, for Identity-related issues, try the tips
 in :ref:`sql_backend`.
