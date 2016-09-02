@@ -9,7 +9,7 @@ Object Storage service command-line client
 The swift client is the command-line interface (CLI) for
 the Object Storage service API and its extensions.
 
-This chapter documents :command:`swift` version ``3.0.0``.
+This chapter documents :command:`swift` version ``3.1.0``.
 
 For help on a specific :command:`swift` command, enter:
 
@@ -45,6 +45,8 @@ swift usage
                 [--os-service-type <service-type>]
                 [--os-endpoint-type <endpoint-type>]
                 [--os-cacert <ca-certificate>] [--insecure]
+                [--os-cert <client-certificate-file>]
+                [--os-key <client-certificate-key-file>]
                 [--no-ssl-compression]
                 <subcommand> [--help] [<subcommand options>]
 
@@ -63,6 +65,9 @@ swift usage
 ``post``
   Updates meta information for the account, container,
   or object; creates containers if not present.
+
+``copy``
+  Copies object, optionally adds meta
 
 ``stat``
   Displays information for the account, container,
@@ -91,22 +96,22 @@ swift examples
 
    swift -A https://auth.api.rackspacecloud.com/v1.0 -U user -K api_key stat -v
 
-   swift --os-auth-url https://api.example.com/v2.0 --os-tenant-name tenant \
-       --os-username user --os-password password list
+   swift --os-auth-url https://api.example.com/v2.0 \
+         --os-tenant-name tenant --os-username user --os-password password list
 
-   swift --os-auth-url https://api.example.com/v3 --auth-version 3\
-       --os-project-name project1 --os-project-domain-name domain1 \
-       --os-username user --os-user-domain-name domain1 \
-       --os-password password list
+   swift --os-auth-url https://api.example.com/v3 --auth-version 3 \
+         --os-project-name project1 --os-project-domain-name domain1 \
+         --os-username user --os-user-domain-name domain1 \
+         --os-password password list
 
-   swift --os-auth-url https://api.example.com/v3 --auth-version 3\
-       --os-project-id 0123456789abcdef0123456789abcdef \
-       --os-user-id abcdef0123456789abcdef0123456789 \
-       --os-password password list
+   swift --os-auth-url https://api.example.com/v3 --auth-version 3 \
+         --os-project-id 0123456789abcdef0123456789abcdef \
+         --os-user-id abcdef0123456789abcdef0123456789 \
+         --os-password password list
 
    swift --os-auth-token 6ee5eb33efad4e45ab46806eac010566 \
-       --os-storage-url https://10.1.5.2:8080/v1/AUTH_ced809b6a4baea7aeab61a \
-       list
+         --os-storage-url https://10.1.5.2:8080/v1/AUTH_ced809b6a4baea7aeab61a \
+         list
 
    swift list --lh
 
@@ -144,11 +149,7 @@ swift optional arguments
 ``-A AUTH, --auth=AUTH``
   URL for obtaining an auth token.
 
-``-V AUTH_VERSION,``
-
-``--auth-version=AUTH_VERSION,``
-
-``--os-identity-api-version=AUTH_VERSION``
+``-V AUTH_VERSION, --auth-version=AUTH_VERSION, --os-identity-api-version=AUTH_VERSION``
   Specify a version for authentication. Defaults to
   ``env[ST_AUTH_VERSION]``, ``env[OS_AUTH_VERSION]``,
   ``env[OS_IDENTITY_API_VERSION]`` or 1.0.
@@ -172,6 +173,31 @@ swift optional arguments
   compression should be disabled by default by the
   system SSL library.
 
+.. _swift_auth:
+
+swift auth
+----------
+
+.. code-block:: console
+
+   Usage: swift auth
+
+Display auth related authentication variables in shell friendly format.
+
+Commands to run to export storage url and auth token into
+``OS_STORAGE_URL`` and ``OS_AUTH_TOKEN``:
+
+.. code-block:: console
+
+   $ swift auth
+
+Commands to append to a runcom file (e.g. ~/.bashrc, /etc/profile) for
+automatic authentication:
+
+.. code-block:: console
+
+   $ swift auth -v -U test:tester -K testing -A http://localhost:8080/auth/v1.0
+
 .. _swift_capabilities:
 
 swift capabilities
@@ -187,6 +213,9 @@ Retrieve capability of the proxy.
 
 ``<proxy_url>``
   Proxy URL of the cluster to retrieve capabilities.
+
+``--json``
+  Print the cluster capabilities in JSON format.
 
 .. _swift_delete:
 
@@ -252,7 +281,7 @@ Download objects from containers.
   Indicates that you really want to download
   everything in the account.
 
-``-m, --marker``
+``-m, --marker <marker>``
   Marker to use when starting a container or account
   download.
 
@@ -288,16 +317,19 @@ Download objects from containers.
 ``-H, --header <header:value>``
   Adds a customized request header to the query, like
   "Range" or "If-Match". This option may be repeated.
-  Example :option:`--header` "content-type:text/plain"
+  Example: :option:`--header` "content-type:text/plain"
 
 ``--skip-identical``
   Skip downloading files that are identical on both
   sides.
 
+``--ignore-checksum``
+  Turn off checksum validation for downloads.
+
 ``--no-shuffle``
   By default, when downloading a complete account or
   container, download order is randomised in order to
-  to reduce the load on individual drives when multiple
+  reduce the load on individual drives when multiple
   clients are executed simultaneously to download the
   same set of objects (e.g. a nightly automated download
   script to multiple servers). Enable this option to
@@ -504,7 +536,7 @@ Uploads specified files and directories to the given container.
 
 ``-H, --header <header:value>``
   Adds a customized request header. This option may be
-  repeated. Example -H "content-type:text/plain"
+  repeated. Example: -H "content-type:text/plain"
   -H "Content-Length: 4000".
 
 ``--use-slo``
@@ -519,28 +551,3 @@ Uploads specified files and directories to the given container.
 
 ``--ignore-checksum``
   Turn off checksum validation for uploads.
-
-.. _swift_auth:
-
-swift auth
-----------
-
-.. code-block:: console
-
-   Usage: swift auth
-
-Display auth related authentication variables in shell friendly format.
-
-Commands to run to export storage url and auth token into
-``OS_STORAGE_URL`` and ``OS_AUTH_TOKEN``:
-
-.. code-block:: console
-
-   $ swift auth
-
-Commands to append to a runcom file (e.g. ``~/.bashrc``, ``/etc/profile``) for
-automatic authentication:
-
-.. code-block:: console
-
-   $ swift auth -v -U test:tester -K testing -A http://localhost:8080/auth/v1.0
