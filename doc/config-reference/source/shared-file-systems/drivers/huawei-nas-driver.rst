@@ -47,6 +47,13 @@ The following operations are supported:
 
 - Shrink a share.
 
+- Create a replica.
+
+- Delete a replica.
+
+- Promote a replica.
+
+- Update a replica state.
 
 Pre-configurations on Huawei
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
