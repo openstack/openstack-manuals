@@ -72,8 +72,8 @@ those deviations next.
     The following features of OpenStack are supported by the example
     architecture documented in this guide, but are optional:
 
-    -  :term:`Dashboard`: You probably want to offer a dashboard, but your
-       users may be more interested in API access only.
+    -  :term:`Dashboard <Dashboard (horizon)>`: You probably want to offer
+       a dashboard, but your users may be more interested in API access only.
 
     -  :term:`Block storage <Block Storage service>`:
        You don't have to offer users block storage if their use case only
