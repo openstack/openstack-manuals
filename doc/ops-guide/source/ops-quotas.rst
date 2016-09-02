@@ -401,13 +401,13 @@ commands, which are provided by the
 
    .. code-block:: console
 
-      # openstack quota show tenantID
+      # cinder quota-show  tenantID
 
    For example:
 
    .. code-block:: console
 
-      # openstack quota show tenantID
+      # cinder quota-show $tenant
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+
