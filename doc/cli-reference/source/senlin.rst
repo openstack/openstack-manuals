@@ -9,7 +9,7 @@ Clustering service command-line client
 The senlin client is the command-line interface (CLI) for
 the Clustering service API and its extensions.
 
-This chapter documents :command:`senlin` version ``0.5.0``.
+This chapter documents :command:`senlin` version ``1.0.0``.
 
 For help on a specific :command:`senlin` command, enter:
 
@@ -38,10 +38,7 @@ senlin usage
                  [--os-password PASSWORD] [--os-trust-id TRUST_ID]
                  [--os-cacert CA_BUNDLE_FILE | --verify | --insecure]
                  [--os-token TOKEN] [--os-access-info ACCESS_INFO]
-                 [--os-api-name <service>=<name>]
-                 [--os-api-region <service>=<region>]
-                 [--os-api-version <service>=<version>]
-                 [--os-api-interface <service>=<interface>] [--profile HMAC_KEY]
+                 [--profile HMAC_KEY]
                  <subcommand> ...
 
 **Subcommands:**
@@ -57,6 +54,9 @@ senlin usage
 
 ``cluster-check``
   Check the cluster(s).
+
+``cluster-collect``
+  Collect attributes across a cluster.
 
 ``cluster-create``
   Create the cluster.
@@ -97,6 +97,9 @@ senlin usage
 
 ``cluster-resize``
   Resize a cluster.
+
+``cluster-run``
+  Run shell scripts on all nodes of a cluster.
 
 ``cluster-scale-in``
   Scale in a cluster by the specified number of nodes.
@@ -158,6 +161,9 @@ senlin usage
 ``policy-update``
   Update a policy.
 
+``policy-validate``
+  VAlidate a policy spec.
+
 ``profile-create``
   Create a profile.
 
@@ -178,6 +184,9 @@ senlin usage
 
 ``profile-update``
   Update a profile.
+
+``profile-validate``
+  Validate a profile.
 
 ``receiver-create``
   Create a receiver.
@@ -294,18 +303,6 @@ senlin optional arguments
 ``--os-access-info ACCESS_INFO``
   Access info, defaults to ``env[OS_ACCESS_INFO]``
 
-``--os-api-name <service>=<name>``
-  Desired API names, defaults to ``env[OS_API_NAME]``
-
-``--os-api-region <service>=<region>``
-  Desired API region, defaults to ``env[OS_API_REGION]``
-
-``--os-api-version <service>=<version>``
-  Desired API versions, defaults to ``env[OS_API_VERSION]``
-
-``--os-api-interface <service>=<interface>``
-  Desired API interface, defaults to ``env[OS_INTERFACE]``
-
 ``--profile HMAC_KEY``
   HMAC key to use for encrypting context data for
   performance profiling of operation. This key should be
@@ -393,6 +390,36 @@ Check the cluster(s).
 ``<CLUSTER>``
   ID or name of cluster(s) to operate on.
 
+.. _senlin_cluster-collect:
+
+senlin cluster-collect
+----------------------
+
+.. code-block:: console
+
+   usage: senlin cluster-collect [-p <PATH>] [-L] [-F] <CLUSTER>
+
+Collect attributes across a cluster.
+
+**Positional arguments:**
+
+``<CLUSTER>``
+  Name or ID of cluster(s) to operate on.
+
+**Optional arguments:**
+
+``-p <PATH>, --path <PATH>``
+  A Json path string specifying the attribute to
+  collect.
+
+``-L, --list``
+  Print a full list that contains both node ids and
+  attribute values instead of values only. Default is
+  True.
+
+``-F, --full-id``
+  Print full IDs in list.
+
 .. _senlin_cluster-create:
 
 senlin cluster-create
@@ -433,8 +460,20 @@ Create the cluster.
 
 ``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
   Metadata values to be attached to the cluster. This
-  can be specified multiple times, or once with key-
-  value pairs separated by a semicolon.
+  can
+  be
+  specified
+  multiple
+  times,
+  or
+  once
+  with
+  key-value
+  pairs
+  separated
+  by
+  a
+  semicolon.
 
 .. _senlin_cluster-delete:
 
@@ -758,6 +797,57 @@ Resize a cluster.
   New upper bound of cluster size. A value of -1
   indicates no upper limit on cluster size.
 
+.. _senlin_cluster-run:
+
+senlin cluster-run
+------------------
+
+.. code-block:: console
+
+   usage: senlin cluster-run [-p <PORT>] [-t ADDRESS_TYPE] [-n <NETWORK>] [-6]
+                             [-u <USER>] [-i IDENTITY_FILE] [-O SSH_OPTIONS] -s
+                             <FILE>
+                             <CLUSTER>
+
+Run shell scripts on all nodes of a cluster.
+
+**Positional arguments:**
+
+``<CLUSTER>``
+  Name or ID of the cluster.
+
+**Optional arguments:**
+
+``-p <PORT>, --port <PORT>``
+  Optional flag to indicate the port to use
+  (Default=22).
+
+``-t ADDRESS_TYPE, --address-type ADDRESS_TYPE``
+  Optional flag to indicate which IP type to use.
+  Possible values includes 'fixed' and 'floating' (the
+  Default).
+
+``-n <NETWORK>, --network <NETWORK>``
+  Network to use for the ssh.
+
+``-6, --ipv6``
+  Optional flag to indicate whether to use an IPv6
+  address attached to a server. (Defaults to IPv4
+  address)
+
+``-u <USER>, --user <USER>``
+  Login to use.
+
+``-i IDENTITY_FILE, --identity-file IDENTITY_FILE``
+  Private key file, same as the '-i' option to the ssh
+  command.
+
+``-O SSH_OPTIONS, --ssh-options SSH_OPTIONS``
+  Extra options to pass to ssh. see: man ssh.
+
+``-s <FILE>, --script <FILE>``
+  Script file to run.
+
 .. _senlin_cluster-scale-in:
 
 senlin cluster-scale-in
@@ -845,8 +935,20 @@ Update the cluster.
 
 ``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
   Metadata values to be attached to the cluster. This
-  can be specified multiple times, or once with key-
-  value pairs separated by a semicolon.
+  can
+  be
+  specified
+  multiple
+  times,
+  or
+  once
+  with
+  key-value
+  pairs
+  separated
+  by
+  a
+  semicolon.
 
 ``-n <NAME>, --name <NAME>``
   New name for the cluster to update.
@@ -1082,8 +1184,20 @@ Update the node.
 
 ``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
   Metadata values to be attached to the node. Metadata
-  can be specified multiple times, or once with key-
-  value pairs separated by a semicolon.
+  can
+  be
+  specified
+  multiple
+  times,
+  or
+  once
+  with
+  key-value
+  pairs
+  separated
+  by
+  a
+  semicolon.
 
 .. _senlin_policy-create:
 
@@ -1229,6 +1343,22 @@ Update a policy.
 ``-n <NAME>, --name <NAME>``
   New name of the policy to be updated.
 
+.. _senlin_policy-validate:
+
+senlin policy-validate
+----------------------
+
+.. code-block:: console
+
+   usage: senlin policy-validate -s <SPEC_FILE>
+
+VAlidate a policy spec.
+
+**Optional arguments:**
+
+``-s <SPEC_FILE>, --spec-file <SPEC_FILE>``
+  The spec file used to create the policy.
+
 .. _senlin_profile-create:
 
 senlin profile-create
@@ -1253,8 +1383,20 @@ Create a profile.
 
 ``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
   Metadata values to be attached to the profile. This
-  can be specified multiple times, or once with key-
-  value pairs separated by a semicolon.
+  can
+  be
+  specified
+  multiple
+  times,
+  or
+  once
+  with
+  key-value
+  pairs
+  separated
+  by
+  a
+  semicolon.
 
 .. _senlin_profile-delete:
 
@@ -1383,8 +1525,36 @@ Update a profile.
 
 ``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
   Metadata values to be attached to the profile. This
-  can be specified multiple times, or once with key-
-  value pairs separated by a semicolon.
+  can
+  be
+  specified
+  multiple
+  times,
+  or
+  once
+  with
+  key-value
+  pairs
+  separated
+  by
+  a
+  semicolon.
+
+.. _senlin_profile-validate:
+
+senlin profile-validate
+-----------------------
+
+.. code-block:: console
+
+   usage: senlin profile-validate -s <SPEC FILE>
+
+Validate a profile.
+
+**Optional arguments:**
+
+``-s <SPEC FILE>, --spec-file <SPEC FILE>``
+  The spec file used to create the profile.
 
 .. _senlin_receiver-create:
 
@@ -1393,7 +1563,7 @@ senlin receiver-create
 
 .. code-block:: console
 
-   usage: senlin receiver-create [-t <TYPE>] -c <CLUSTER> -a <ACTION>
+   usage: senlin receiver-create [-t <TYPE>] [-c <CLUSTER>] [-a <ACTION>]
                                  [-P <KEY1=VALUE1;KEY2=VALUE2...>]
                                  <NAME>
 
@@ -1410,10 +1580,12 @@ Create a receiver.
   Type of the receiver to create.
 
 ``-c <CLUSTER>, --cluster <CLUSTER>``
-  Targeted cluster for this receiver.
+  Targeted cluster for this receiver. Required if
+  receiver type is webhook.
 
 ``-a <ACTION>, --action <ACTION>``
   Name or ID of the targeted action to be triggered.
+  Required if receiver type is webhook.
 
 ``-P <KEY1=VALUE1;KEY2=VALUE2...>, --params <KEY1=VALUE1;KEY2=VALUE2...>``
   A dictionary of parameters that will be passed to
