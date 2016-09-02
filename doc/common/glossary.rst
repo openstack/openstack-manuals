@@ -2337,14 +2337,12 @@ M
       Passes requests from clients to the appropriate workers and
       returns the output to the client after the job completes.
 
-   Message service
+   Message service (zaqar)
 
-      OpenStack project that aims to produce an OpenStack
-      messaging service that affords a variety of distributed
-      application patterns in an efficient, scalable and
-      highly available manner, and to create and maintain associated
-      Python libraries and documentation. The code name for the
-      project is zaqar.
+      The project that provides a messaging service that affords a
+      variety of distributed application patterns in an efficient,
+      scalable and highly available manner, and to create and maintain
+      associated Python libraries and documentation.
 
    Metadata agent
 
@@ -4063,8 +4061,7 @@ Z
 
    zaqar
 
-      OpenStack project that provides a message service to
-      applications.
+      Codename for the :term:`Message service <Message service (zaqar)>`.
 
    ZeroMQ
 
