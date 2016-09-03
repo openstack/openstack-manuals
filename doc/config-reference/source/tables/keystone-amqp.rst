@@ -21,10 +21,10 @@
    * - ``control_exchange`` = ``keystone``
      - (String) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
    * - ``default_publisher_id`` = ``None``
-     - (String) Default publisher_id for outgoing notifications
+     - (String) Default `publisher_id` for outgoing notifications. If left undefined, Keystone will default to using the server's host name.
    * - ``notification_format`` = ``basic``
-     - (String) Define the notification format for Identity Service events. A "basic" notification has information about the resource being operated on. A "cadf" notification has the same information, as well as information about the initiator of the event.
+     - (String) Define the notification format for identity service events. A `basic` notification only has information about the resource being operated on. A `cadf` notification has the same information, as well as information about the initiator of the event. The `cadf` option is entirely backwards compatible with the `basic` option, but is fully CADF-compliant, and is recommended for auditing use cases.
    * - ``notification_opt_out`` = ``[]``
-     - (Multi-valued) Define the notification options to opt-out from. The value expected is: identity.<resource_type>.<operation>. This field can be set multiple times in order to add more notifications to opt-out from. For example: notification_opt_out=identity.user.created notification_opt_out=identity.authenticate.success
+     - (Multi-valued) If left undefined, keystone will emit notifications for all types of events. You can reduce the number of notifications keystone emits by using this option to enumerate notification topics that should be suppressed. Values are expected to be in the form `identity.<resource_type>.<operation>`. This field can be set multiple times in order to opt-out of multiple notification topics. For example: notification_opt_out=identity.user.create notification_opt_out=identity.authenticate.success
    * - ``transport_url`` = ``None``
-     - (String) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.
+     - (String) A URL representing the messaging driver to use and its full configuration.

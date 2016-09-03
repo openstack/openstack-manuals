@@ -21,9 +21,7 @@
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
    * - ``insecure_debug`` = ``False``
-     - (Boolean) If set to true the server will return information in the response that may allow an unauthenticated or authenticated user to get more information than normal, such as why authentication failed. This may be useful for debugging but is insecure.
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
+     - (Boolean) If set to true, then the server will return information in HTTP responses that may allow an unauthenticated or authenticated user to get more information than normal, such as additional details about why authentication failed. This may be useful for debugging but is insecure.
    * - **[oslo_concurrency]**
      -
    * - ``disable_process_locking`` = ``False``

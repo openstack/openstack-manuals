@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``crypt_strength`` = ``10000``
-     - (Integer) The value passed as the keyword "rounds" to passlib's encrypt method.
+     - (Integer) The value passed as the keyword "rounds" to passlib's encrypt method. This option represents a trade off between security and performance. Higher values lead to slower performance, but higher security. Changing this option will only affect newly created passwords as existing password hashes already have a fixed number of rounds applied, so it is safe to tune this option in a running cluster. For more information, see https://pythonhosted.org/passlib/password_hash_api.html#choosing-the-right-rounds-value
