@@ -64,7 +64,7 @@ VMAX2
 -  Striped volume creation.
 
 VMAX3
--  SLO support.
+-  Service Level Objective (SLO) support.
 -  Dynamic masking view creation.
 -  SnapVX support.
 -  Extend volume and iSCSI support.
@@ -221,7 +221,7 @@ Set up the VMAX drivers
          </PortGroups>
          <Array>111111111111</Array>
          <Pool>SRP_1</Pool>
-         <Slo>Gold</Slo>
+         <SLO>Gold</SLO>
          <Workload>OLTP</Workload>
        </EMC>
 
@@ -262,9 +262,9 @@ Set up the VMAX drivers
     by this back end are treated as under FAST control. Omitting the
     ``FastPolicy`` tag means FAST is not enabled on the provided storage pool.
 
-``VMAX3 Slo``
+``VMAX3 SLO``
     The Service Level Objective (SLO) that manages the underlying storage to
-    provide expected performance. Omitting the ``Slo`` tag means ``Optimised``
+    provide expected performance. Omitting the ``SLO`` tag means ``Optimized``
     SLO will be used instead.
 
 ``VMAX3 Workload``
