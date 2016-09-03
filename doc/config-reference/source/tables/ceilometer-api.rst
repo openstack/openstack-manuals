@@ -48,6 +48,10 @@
      - (Boolean) Set True to disable resource/meter/sample URLs. Default autodetection by querying keystone.
    * - ``host`` = ``0.0.0.0``
      - (String) The listen IP for the ceilometer API server.
+   * - ``panko_is_enabled`` = ``None``
+     - (Boolean) Set True to redirect events URLs to Panko. Default autodetection by querying keystone.
+   * - ``panko_url`` = ``None``
+     - (String) The endpoint of Panko to redirect events URLs to Panko API. Default autodetection by querying keystone.
    * - ``pecan_debug`` = ``False``
      - (Boolean) Toggle Pecan Debug Middleware.
    * - ``port`` = ``8777``
@@ -56,7 +60,9 @@
      - (Integer) Number of workers for api, default value is 1.
    * - **[oslo_middleware]**
      -
+   * - ``enable_proxy_headers_parsing`` = ``False``
+     - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.

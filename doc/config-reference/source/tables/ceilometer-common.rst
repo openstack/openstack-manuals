@@ -20,24 +20,12 @@
      -
    * - ``batch_polled_samples`` = ``True``
      - (Boolean) To reduce polling agent load, samples are sent to the notification agent in a batch. To gain higher throughput at the cost of load set this to False.
-   * - ``database_connection`` = ``None``
-     - (String) DEPRECATED - Database connection string.
-   * - ``event_connection`` = ``None``
-     - (String) The connection string used to connect to the event database. (if unset, connection is used)
-   * - ``event_time_to_live`` = ``-1``
-     - (Integer) Number of seconds that events are kept in the database for (<= 0 means forever).
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
-   * - ``host`` = ``localhost``
+   * - ``host`` = ``<your_hostname>``
      - (String) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.
    * - ``http_timeout`` = ``600``
      - (Integer) Timeout seconds for HTTP requests. Set it to None to disable timeout.
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
-   * - ``metering_connection`` = ``None``
-     - (String) The connection string used to connect to the metering database. (if unset, connection is used)
-   * - ``metering_time_to_live`` = ``-1``
-     - (Integer) Number of seconds that samples are kept in the database for (<= 0 means forever).
    * - ``polling_namespaces`` = ``['compute', 'central']``
      - (Unknown) Polling namespace(s) to be used while resource polling
    * - ``pollster_list`` = ``[]``
@@ -66,6 +54,16 @@
      - (Integer) Maximum number of seconds between retry to join partitioning group
    * - ``retry_backoff`` = ``1``
      - (Integer) Retry backoff factor when retrying to connect withcoordination backend
+   * - **[database]**
+     -
+   * - ``event_connection`` = ``None``
+     - (String) The connection string used to connect to the event database. (if unset, connection is used)
+   * - ``event_time_to_live`` = ``-1``
+     - (Integer) Number of seconds that events are kept in the database for (<= 0 means forever).
+   * - ``metering_connection`` = ``None``
+     - (String) The connection string used to connect to the metering database. (if unset, connection is used)
+   * - ``metering_time_to_live`` = ``-1``
+     - (Integer) Number of seconds that samples are kept in the database for (<= 0 means forever).
    * - **[meter]**
      -
    * - ``meter_definitions_cfg_file`` = ``meters.yaml``
