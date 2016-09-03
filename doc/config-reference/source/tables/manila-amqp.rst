@@ -21,4 +21,4 @@
    * - ``control_exchange`` = ``openstack``
      - (String) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
    * - ``transport_url`` = ``None``
-     - (String) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.
+     - (String) A URL representing the messaging driver to use and its full configuration.

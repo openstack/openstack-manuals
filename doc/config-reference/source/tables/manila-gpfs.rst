@@ -23,10 +23,10 @@
    * - ``gpfs_nfs_server_list`` = ``None``
      - (List) A list of the fully qualified NFS server names that make up the OpenStack Manila configuration.
    * - ``gpfs_nfs_server_type`` = ``KNFS``
-     - (String) NFS Server type. Valid choices are "KNFS" (kernel NFS) or "GNFS" (Ganesha NFS).
+     - (String) NFS Server type. Valid choices are "KNFS" (kernel NFS) or "CES" (Ganesha NFS).
    * - ``gpfs_share_export_ip`` = ``None``
      - (String) IP to be added to GPFS export string.
-   * - ``gpfs_share_helpers`` = ``KNFS=manila.share.drivers.ibm.gpfs.KNFSHelper, GNFS=manila.share.drivers.ibm.gpfs.GNFSHelper``
+   * - ``gpfs_share_helpers`` = ``KNFS=manila.share.drivers.ibm.gpfs.KNFSHelper, CES=manila.share.drivers.ibm.gpfs.CESHelper``
      - (List) Specify list of share export helpers.
    * - ``gpfs_ssh_login`` = ``None``
      - (String) GPFS server SSH login name.
@@ -36,5 +36,7 @@
      - (Port number) GPFS server SSH port.
    * - ``gpfs_ssh_private_key`` = ``None``
      - (String) Path to GPFS server SSH private key for login.
+   * - ``is_gpfs_node`` = ``False``
+     - (Boolean) True:when Manila services are running on one of the Spectrum Scale node. False:when Manila services are not running on any of the Spectrum Scale node.
    * - ``knfs_export_options`` = ``rw,sync,no_root_squash,insecure,no_wdelay,no_subtree_check``
-     - (String) Options to use when exporting a share using kernel NFS server. Note that these defaults can be overridden when a share is created by passing metadata with key name export_options.
+     - (String) DEPRECATED: Options to use when exporting a share using kernel NFS server. Note that these defaults can be overridden when a share is created by passing metadata with key name export_options. This option isn't used any longer. Please use share-type extra specs for export options.

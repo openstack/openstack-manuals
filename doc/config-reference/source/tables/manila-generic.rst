@@ -32,8 +32,12 @@
      - (String) Name or id of cinder volume type which will be used for all volumes created by driver.
    * - ``connect_share_server_to_tenant_network`` = ``False``
      - (Boolean) Attach share server directly to share network. Used only with Neutron and if driver_handles_share_servers=True.
+   * - ``container_volume_group`` = ``manila_docker_volumes``
+     - (String) LVM volume group to use for volumes. This volume group must be created by the cloud administrator independently from manila operations.
    * - ``driver_handles_share_servers`` = ``None``
      - (Boolean) There are two possible approaches for share drivers in Manila. First is when share driver is able to handle share-servers and second when not. Drivers can support either both or only one of these approaches. So, set this opt to True if share driver is able to handle share servers and it is desired mode else set False. It is set to None by default to make this choice intentional.
+   * - ``goodness_function`` = ``None``
+     - (String) String representation for an equation that will be used to determine the goodness of a host.
    * - ``interface_driver`` = ``manila.network.linux.interface.OVSInterfaceDriver``
      - (String) Vif driver. Used only with Neutron and if driver_handles_share_servers=True.
    * - ``manila_service_keypair_name`` = ``manila-service``
@@ -52,6 +56,8 @@
      - (String) Path to host's private key.
    * - ``path_to_public_key`` = ``~/.ssh/id_rsa.pub``
      - (String) Path to hosts public key. Only used if driver_handles_share_servers=True.
+   * - ``protocol_access_mapping`` = ``{'ip': ['nfs'], 'user': ['cifs']}``
+     - (Dict) Protocol access mapping for this backend. Should be a dictionary comprised of {'access_type1': ['share_proto1', 'share_proto2'], 'access_type2': ['share_proto2', 'share_proto3']}.
    * - ``service_image_name`` = ``manila-service-image``
      - (String) Name of image in Glance, that will be used for service instance creation. Only used if driver_handles_share_servers=True.
    * - ``service_instance_flavor_id`` = ``100``
@@ -82,7 +88,7 @@
      - (List) Specify list of share export helpers.
    * - ``share_mount_path`` = ``/shares``
      - (String) Parent path in service instance where shares will be mounted.
-   * - ``share_mount_template`` = ``mount -vt %(proto)s %(export)s %(path)s``
+   * - ``share_mount_template`` = ``mount -vt %(proto)s %(options)s %(export)s %(path)s``
      - (String) The template for mounting shares for this backend. Must specify the executable with all necessary parameters for the protocol supported. 'proto' template element may not be required if included in the command. 'export' and 'path' template elements are required. It is advisable to separate different commands per backend.
    * - ``share_unmount_template`` = ``umount -v %(path)s``
      - (String) The template for unmounting shares for this backend. Must specify the executable with all necessary parameters for the protocol supported. 'path' template element is required. It is advisable to separate different commands per backend.

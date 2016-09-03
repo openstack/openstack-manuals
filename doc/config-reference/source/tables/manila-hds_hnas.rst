@@ -16,29 +16,33 @@
 
    * - Configuration option = Default value
      - Description
+   * - **[DEFAULT]**
+     -
+   * - ``hitachi_hnas_allow_cifs_snapshot_while_mounted`` = ``False``
+     - (Boolean) By default, CIFS snapshots are not allowed to be taken when the share has clients connected because consistent point-in-time replica cannot be guaranteed for all files. Enabling this might cause inconsistent snapshots on CIFS shares.
+   * - ``hitachi_hnas_cluster_admin_ip0`` = ``None``
+     - (String) The IP of the clusters admin node. Only set in HNAS multinode clusters.
+   * - ``hitachi_hnas_driver_helper`` = ``manila.share.drivers.hitachi.hnas.ssh.HNASSSHBackend``
+     - (String) Python class to be used for driver helper.
+   * - ``hitachi_hnas_evs_id`` = ``None``
+     - (Integer) Specify which EVS this backend is assigned to.
+   * - ``hitachi_hnas_evs_ip`` = ``None``
+     - (String) Specify IP for mounting shares.
+   * - ``hitachi_hnas_file_system_name`` = ``None``
+     - (String) Specify file-system name for creating shares.
+   * - ``hitachi_hnas_ip`` = ``None``
+     - (String) HNAS management interface IP for communication between Manila controller and HNAS.
+   * - ``hitachi_hnas_password`` = ``None``
+     - (String) HNAS user password. Required only if private key is not provided.
+   * - ``hitachi_hnas_ssh_private_key`` = ``None``
+     - (String) RSA/DSA private key value used to connect into HNAS. Required only if password is not provided.
+   * - ``hitachi_hnas_stalled_job_timeout`` = ``30``
+     - (Integer) The time (in seconds) to wait for stalled HNAS jobs before aborting.
+   * - ``hitachi_hnas_user`` = ``None``
+     - (String) HNAS username Base64 String in order to perform tasks such as create file-systems and network interfaces.
    * - **[hnas1]**
      -
-   * - ``hds_hnas_cluster_admin_ip0`` = ``None``
-     - (String) The IP of the clusters admin node. Only set in HNAS multinode clusters.
-   * - ``hds_hnas_evs_id`` = ``None``
-     - (Integer) Specify which EVS this backend is assigned to.
-   * - ``hds_hnas_evs_ip`` = ``None``
-     - (String) Specify IP for mounting shares.
-   * - ``hds_hnas_file_system_name`` = ``None``
-     - (String) Specify file-system name for creating shares.
-   * - ``hds_hnas_ip`` = ``None``
-     - (String) HNAS management interface IP for communication between Manila controller and HNAS.
-   * - ``hds_hnas_password`` = ``None``
-     - (String) HNAS user password. Required only if private key is not provided.
-   * - ``hds_hnas_ssh_private_key`` = ``None``
-     - (String) RSA/DSA private key value used to connect into HNAS. Required only if password is not provided.
-   * - ``hds_hnas_stalled_job_timeout`` = ``30``
-     - (Integer) The time (in seconds) to wait for stalled HNAS jobs before aborting.
-   * - ``hds_hnas_user`` = ``None``
-     - (String) HNAS username Base64 String in order to perform tasks such as create file-systems and network interfaces.
    * - ``share_backend_name`` = ``None``
-     - (StrOpt) The backend name for a given driver implementation.
-   * - ``share_driver`` = ``manila.share.drivers.hitachi.hds_hnas.HDSHNASDriver``
-     - (StrOpt) Driver to use for share creation.
-   * - ``hds_hnas_driver_helper`` = ``manila.share.drivers.hitachi.ssh.HNASSSHBackend``
-     - (StrOpt) Python class to be used for driver helper.
+     - (String) The backend name for a given driver implementation.
+   * - ``share_driver`` = ``manila.share.drivers.generic.GenericShareDriver``
+     - (String) Driver to use for share creation.

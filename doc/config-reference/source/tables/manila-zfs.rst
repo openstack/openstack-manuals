@@ -24,6 +24,8 @@
      - (String) Prefix to be used in each dataset name. Optional.
    * - ``zfs_dataset_snapshot_name_prefix`` = ``manila_share_snapshot_``
      - (String) Prefix to be used in each dataset snapshot name. Optional.
+   * - ``zfs_migration_snapshot_prefix`` = ``tmp_snapshot_for_share_migration_``
+     - (String) Set snapshot prefix for usage in ZFS migration. Required.
    * - ``zfs_replica_snapshot_prefix`` = ``tmp_snapshot_for_replication_``
      - (String) Set snapshot prefix for usage in ZFS replication. Required.
    * - ``zfs_service_ip`` = ``None``

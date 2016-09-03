@@ -18,18 +18,22 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``emc_interface_ports`` = ``None``
+     - (List) Comma separated list specifying the ports that can be used for share server interfaces. Members of the list can be Unix-style glob expressions.
    * - ``emc_nas_login`` = ``None``
      - (String) User name for the EMC server.
    * - ``emc_nas_password`` = ``None``
      - (String) Password for the EMC server.
    * - ``emc_nas_pool_names`` = ``None``
-     - (String) EMC pool names.
+     - (List) EMC pool names.
    * - ``emc_nas_root_dir`` = ``None``
      - (String) The root directory where shares will be located.
    * - ``emc_nas_server`` = ``None``
      - (String) EMC server hostname or IP address.
-   * - ``emc_nas_server_container`` = ``server_2``
+   * - ``emc_nas_server_container`` = ``None``
      - (String) Container of share servers.
+   * - ``emc_nas_server_pool`` = ``None``
+     - (String) Pool to persist the meta-data of NAS server.
    * - ``emc_nas_server_port`` = ``8080``
      - (Port number) Port number for the EMC server.
    * - ``emc_nas_server_secure`` = ``True``

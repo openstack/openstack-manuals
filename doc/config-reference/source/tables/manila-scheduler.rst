@@ -22,9 +22,9 @@
      - (Floating point) Multiplier used for weighing share capacity. Negative numbers mean to stack vs spread.
    * - ``pool_weight_multiplier`` = ``1.0``
      - (Floating point) Multiplier used for weighing pools which have existing share servers. Negative numbers mean to spread vs stack.
-   * - ``scheduler_default_filters`` = ``AvailabilityZoneFilter, CapacityFilter, CapabilitiesFilter, ConsistencyGroupFilter, ShareReplicationFilter``
+   * - ``scheduler_default_filters`` = ``AvailabilityZoneFilter, CapacityFilter, CapabilitiesFilter, ConsistencyGroupFilter, DriverFilter, ShareReplicationFilter``
      - (List) Which filter class names to use for filtering hosts when not specified in the request.
-   * - ``scheduler_default_weighers`` = ``CapacityWeigher``
+   * - ``scheduler_default_weighers`` = ``CapacityWeigher, GoodnessWeigher``
      - (List) Which weigher class names to use for weighing hosts.
    * - ``scheduler_driver`` = ``manila.scheduler.drivers.filter.FilterScheduler``
      - (String) Default scheduler driver to use.
