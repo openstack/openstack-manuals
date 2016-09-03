@@ -16,10 +16,6 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``zoning_mode`` = ``None``
-     - (String) FC Zoning mode configured
    * - **[fc-zone-manager]**
      -
    * - ``brcd_sb_connector`` = ``HTTP``

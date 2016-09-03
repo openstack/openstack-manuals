@@ -24,7 +24,7 @@
      - (Integer) Cache volume availability zones in memory for the provided duration in seconds
    * - ``backend_host`` = ``None``
      - (String) Backend override of host value.
-   * - ``default_timeout`` = ``525600``
+   * - ``default_timeout`` = ``31536000``
      - (Integer) Default timeout for CLI operations in minutes. For example, LUN migration is a typical long running operation, which depends on the LUN size and the load of the array. An upper bound in the specific deployment can be set to avoid unnecessary long wait. By default, it is 365 days long.
    * - ``enable_v1_api`` = ``True``
      - (Boolean) DEPRECATED: Deploy v1 of the Cinder API.
@@ -35,9 +35,11 @@
    * - ``extra_capabilities`` = ``{}``
      - (String) User defined capabilities, a JSON formatted string specifying key/value pairs. The key/value pairs can be used by the CapabilitiesFilter to select between backends when requests specify volume types. For example, specifying a service level or the geographical location of a backend, then creating a volume type to allow the user to select by these different properties.
    * - ``ignore_pool_full_threshold`` = ``False``
-     - (Boolean) Force LUN creation even if the full threshold of pool is reached.
+     - (Boolean) Force LUN creation even if the full threshold of pool is reached. By default, the value is False.
    * - ``management_ips`` =
      - (String) List of Management IP addresses (separated by commas)
+   * - ``message_ttl`` = ``2592000``
+     - (Integer) message minimum life in seconds.
    * - ``osapi_max_limit`` = ``1000``
      - (Integer) The maximum number of items that a collection resource returns in a single response
    * - ``osapi_max_request_body_size`` = ``114688``
@@ -58,14 +60,14 @@
      - (Integer) Max size allowed per volume, in gigabytes
    * - ``public_endpoint`` = ``None``
      - (String) Public url to use for versions endpoint. The default is None, which will use the request's host_url attribute to populate the URL base. If Cinder is operating behind a proxy, you will want to change this to represent the proxy's URL.
-   * - ``query_volume_filters`` = ``name, status, metadata, availability_zone, bootable``
-     - (List) Volume filter options which non-admin user could use to query volumes. Default values are: ['name', 'status', 'metadata', 'availability_zone' ,'bootable']
+   * - ``query_volume_filters`` = ``name, status, metadata, availability_zone, bootable, group_id``
+     - (List) Volume filter options which non-admin user could use to query volumes. Default values are: ['name', 'status', 'metadata', 'availability_zone' ,'bootable', 'group_id']
    * - ``transfer_api_class`` = ``cinder.transfer.api.API``
      - (String) The full class name of the volume transfer API class
    * - ``volume_api_class`` = ``cinder.volume.api.API``
      - (String) The full class name of the volume API class to use
    * - ``volume_name_prefix`` = ``openstack-``
-     - (String) Prefix before volume name to differenciate DISCO volume created through openstack and the other ones
+     - (String) Prefix before volume name to differentiate DISCO volume created through openstack and the other ones
    * - ``volume_name_template`` = ``volume-%s``
      - (String) Template string to be used to generate volume names
    * - ``volume_number_multiplier`` = ``-1.0``
@@ -79,7 +81,7 @@
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
    * - **[oslo_versionedobjects]**
      -
    * - ``fatal_exception_format_errors`` = ``False``

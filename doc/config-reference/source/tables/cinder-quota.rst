@@ -30,6 +30,8 @@
      - (String) Default driver to use for quota checks
    * - ``quota_gigabytes`` = ``1000``
      - (Integer) Total amount of storage, in gigabytes, allowed for volumes and snapshots per project
+   * - ``quota_groups`` = ``10``
+     - (Integer) Number of groups allowed per project
    * - ``quota_snapshots`` = ``10``
      - (Integer) Number of volume snapshots allowed per project
    * - ``quota_volumes`` = ``10``

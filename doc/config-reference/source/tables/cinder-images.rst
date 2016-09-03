@@ -21,7 +21,7 @@
    * - ``allowed_direct_url_schemes`` =
      - (List) A list of url schemes that can be downloaded directly via the direct_url. Currently supported schemes: [file].
    * - ``glance_api_insecure`` = ``False``
-     - (Boolean) Allow to perform insecure SSL (https) requests to glance
+     - (Boolean) Allow to perform insecure SSL (https) requests to glance (https will be used but cert validation will not be performed).
    * - ``glance_api_servers`` = ``None``
      - (List) A list of the URLs of glance API servers available to cinder ([http[s]://][hostname|ip]:port). If protocol is not specified it defaults to http.
    * - ``glance_api_ssl_compression`` = ``False``

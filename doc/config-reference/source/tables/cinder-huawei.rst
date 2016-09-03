@@ -22,3 +22,13 @@
      - (String) The configuration file for the Cinder Huawei driver.
    * - ``hypermetro_devices`` = ``None``
      - (String) The remote device hypermetro will use.
+   * - ``metro_domain_name`` = ``None``
+     - (String) The remote metro device domain name.
+   * - ``metro_san_address`` = ``None``
+     - (String) The remote metro device request url.
+   * - ``metro_san_password`` = ``None``
+     - (String) The remote metro device san password.
+   * - ``metro_san_user`` = ``None``
+     - (String) The remote metro device san user.
+   * - ``metro_storage_pools`` = ``None``
+     - (String) The remote metro device pool names.

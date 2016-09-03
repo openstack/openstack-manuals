@@ -25,7 +25,7 @@
    * - ``enabled_backends`` = ``None``
      - (List) A list of backend names to use. These backend names should be backed by a unique [CONFIG] group with its options
    * - ``iscsi_helper`` = ``tgtadm``
-     - (String) iSCSI target user-land tool to use. tgtadm is default, use lioadm for LIO iSCSI support, scstadmin for SCST target support, iseradm for the ISER protocol, ietadm for iSCSI Enterprise Target, iscsictl for Chelsio iSCSI Target or fake for testing.
+     - (String) iSCSI target user-land tool to use. tgtadm is default, use lioadm for LIO iSCSI support, scstadmin for SCST target support, ietadm for iSCSI Enterprise Target, iscsictl for Chelsio iSCSI Target or fake for testing.
    * - ``iscsi_iotype`` = ``fileio``
      - (String) Sets the behavior of the iSCSI target to either perform blockio or fileio optionally, auto can be set and Cinder will autodetect type of backing device
    * - ``iscsi_ip_address`` = ``$my_ip``
@@ -39,7 +39,7 @@
    * - ``iscsi_target_prefix`` = ``iqn.2010-10.org.openstack:``
      - (String) Prefix for iSCSI volumes
    * - ``iscsi_write_cache`` = ``on``
-     - (String) Sets the behavior of the iSCSI target to either perform write-back(on) or write-through(off). This parameter is valid if iscsi_helper is set to tgtadm or iseradm.
+     - (String) Sets the behavior of the iSCSI target to either perform write-back(on) or write-through(off). This parameter is valid if iscsi_helper is set to tgtadm.
    * - ``iser_helper`` = ``tgtadm``
      - (String) The name of the iSER target user-land tool to use
    * - ``iser_ip_address`` = ``$my_ip``
@@ -61,7 +61,7 @@
    * - ``volume_clear_ionice`` = ``None``
      - (String) The flag to pass to ionice to alter the i/o priority of the process used to zero a volume after deletion, for example "-c3" for idle only priority.
    * - ``volume_clear_size`` = ``0``
-     - (Integer) Size in MiB to wipe at start of old volumes. 0 => all
+     - (Integer) Size in MiB to wipe at start of old volumes. 1024 MiBat max. 0 => all
    * - ``volume_copy_blkio_cgroup_name`` = ``cinder-volume-copy``
      - (String) The blkio cgroup name to be used to limit bandwidth of volume copy
    * - ``volume_copy_bps_limit`` = ``0``

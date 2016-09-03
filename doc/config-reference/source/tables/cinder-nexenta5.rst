@@ -10,7 +10,7 @@
 
 .. _cinder-nexenta5:
 
-.. list-table:: Description of NexentaStor 5.x driver configuration options
+.. list-table:: Description of nexenta5 configuration options
    :header-rows: 1
    :class: config-ref-table
 

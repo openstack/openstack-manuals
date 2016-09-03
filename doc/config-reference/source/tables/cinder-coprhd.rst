@@ -10,7 +10,7 @@
 
 .. _cinder-coprhd:
 
-.. list-table:: Description of CoprHD volume driver configuration options
+.. list-table:: Description of Coprhd volume driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -42,3 +42,7 @@
      - (String) Username for accessing the CoprHD Instance
    * - ``coprhd_varray`` = ``None``
      - (String) Virtual Array to utilize within the CoprHD Instance
+   * - ``scaleio_server_certificate_path`` = ``None``
+     - (String) Server certificate path
+   * - ``scaleio_verify_server_certificate`` = ``False``
+     - (Boolean) verify server certificate

@@ -36,5 +36,5 @@
      - (String) Full class name for the Manager for scheduler
    * - ``scheduler_max_attempts`` = ``3``
      - (Integer) Maximum number of attempts to schedule a volume
-   * - ``scheduler_topic`` = ``cinder-scheduler``
-     - (String) The topic that scheduler nodes listen on
+   * - ``scheduler_weight_handler`` = ``cinder.scheduler.weights.OrderedHostWeightHandler``
+     - (String) Which handler to use for selecting the host/pool after weighing

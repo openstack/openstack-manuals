@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``coho_rpc_port`` = ``2049``
-     - (Integer) RPC port to connect to Coha Data MicroArray
+     - (Integer) RPC port to connect to Coho Data MicroArray

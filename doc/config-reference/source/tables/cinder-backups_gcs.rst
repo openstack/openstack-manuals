@@ -34,6 +34,8 @@
      - (Integer) The size in bytes of GCS backup objects.
    * - ``backup_gcs_project_id`` = ``None``
      - (String) Owner project id for GCS bucket.
+   * - ``backup_gcs_proxy_url`` = ``None``
+     - (Unknown) URL for http proxy access.
    * - ``backup_gcs_reader_chunk_size`` = ``2097152``
      - (Integer) GCS object will be downloaded in chunks of bytes.
    * - ``backup_gcs_retry_error_codes`` = ``429``

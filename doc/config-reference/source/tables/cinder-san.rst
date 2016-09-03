@@ -30,8 +30,6 @@
      - (String) Password for SAN controller
    * - ``san_private_key`` =
      - (String) Filename of private key to use for SSH authentication
-   * - ``san_secondary_ip`` = ``None``
-     - (String) VNX secondary SP IP Address.
    * - ``san_ssh_port`` = ``22``
      - (Port number) SSH port to use with SAN
    * - ``san_thin_provision`` = ``True``

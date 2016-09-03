@@ -10,7 +10,7 @@
 
 .. _cinder-nexenta:
 
-.. list-table:: Description of NexentaStor 4.x driver configuration options
+.. list-table:: Description of Nexenta driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -20,7 +20,7 @@
      -
    * - ``nexenta_blocksize`` = ``4096``
      - (Integer) Block size for datasets
-   * - ``nexenta_chunksize`` = ``16384``
+   * - ``nexenta_chunksize`` = ``32768``
      - (Integer) NexentaEdge iSCSI LUN object chunk size
    * - ``nexenta_client_address`` =
      - (String) NexentaEdge iSCSI Gateway client address for non-VIP service
@@ -36,6 +36,8 @@
      - (Integer) Nexenta target portal port
    * - ``nexenta_mount_point_base`` = ``$state_path/mnt``
      - (String) Base directory that contains NFS share mount points
+   * - ``nexenta_nbd_symlinks_dir`` = ``/dev/disk/by-path``
+     - (String) NexentaEdge logical path of directory to store symbolic links to NBDs
    * - ``nexenta_nms_cache_volroot`` = ``True``
      - (Boolean) If set True cache NexentaStor appliance volroot option value.
    * - ``nexenta_password`` = ``nexenta``

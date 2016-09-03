@@ -19,4 +19,4 @@
    * - **[fc-zone-manager]**
      -
    * - ``cisco_sb_connector`` = ``cinder.zonemanager.drivers.cisco.cisco_fc_zone_client_cli.CiscoFCZoneClientCLI``
-     - (StrOpt) Southbound connector for zoning operation
+     - (String) Southbound connector for zoning operation

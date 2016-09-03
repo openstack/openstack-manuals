@@ -62,3 +62,43 @@
      - (String) Name of an array unit
    * - ``hitachi_zoning_request`` = ``False``
      - (Boolean) Request for FC Zone creating HostGroup
+   * - ``hnas_chap_enabled`` = ``True``
+     - (Boolean) Whether the chap authentication is enabled in the iSCSI target or not.
+   * - ``hnas_cluster_admin_ip0`` = ``None``
+     - (String) The IP of the HNAS cluster admin. Required only for HNAS multi-cluster setups.
+   * - ``hnas_mgmt_ip0`` = ``None``
+     - (Unknown) Management IP address of HNAS. This can be any IP in the admin address on HNAS or the SMU IP.
+   * - ``hnas_password`` = ``None``
+     - (String) HNAS password.
+   * - ``hnas_ssc_cmd`` = ``ssc``
+     - (String) Command to communicate to HNAS.
+   * - ``hnas_ssh_port`` = ``22``
+     - (Port number) Port to be used for SSH authentication.
+   * - ``hnas_ssh_private_key`` = ``None``
+     - (String) Path to the SSH private key used to authenticate in HNAS SMU.
+   * - ``hnas_svc0_hdp`` = ``None``
+     - (String) Service 0 HDP
+   * - ``hnas_svc0_iscsi_ip`` = ``None``
+     - (Unknown) Service 0 iSCSI IP
+   * - ``hnas_svc0_volume_type`` = ``None``
+     - (String) Service 0 volume type
+   * - ``hnas_svc1_hdp`` = ``None``
+     - (String) Service 1 HDP
+   * - ``hnas_svc1_iscsi_ip`` = ``None``
+     - (Unknown) Service 1 iSCSI IP
+   * - ``hnas_svc1_volume_type`` = ``None``
+     - (String) Service 1 volume type
+   * - ``hnas_svc2_hdp`` = ``None``
+     - (String) Service 2 HDP
+   * - ``hnas_svc2_iscsi_ip`` = ``None``
+     - (Unknown) Service 2 iSCSI IP
+   * - ``hnas_svc2_volume_type`` = ``None``
+     - (String) Service 2 volume type
+   * - ``hnas_svc3_hdp`` = ``None``
+     - (String) Service 3 HDP
+   * - ``hnas_svc3_iscsi_ip`` = ``None``
+     - (Unknown) Service 3 iSCSI IP
+   * - ``hnas_svc3_volume_type`` = ``None``
+     - (String) Service 3 volume type
+   * - ``hnas_username`` = ``None``
+     - (String) HNAS username.
