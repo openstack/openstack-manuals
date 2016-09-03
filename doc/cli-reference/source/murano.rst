@@ -9,7 +9,7 @@ Application Catalog service command-line client
 The murano client is the command-line interface (CLI) for
 the Application Catalog service API and its extensions.
 
-This chapter documents :command:`murano` version ``0.10.0``.
+This chapter documents :command:`murano` version ``0.11.0``.
 
 For help on a specific :command:`murano` command, enter:
 
