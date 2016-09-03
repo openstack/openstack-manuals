@@ -17,6 +17,60 @@
 # status (integer value)
 #backup_timer_interval = 120
 
+# Name of this cluster.  Used to group volume hosts that share the same backend
+# configurations to work in HA Active-Active mode.  Active-Active is not yet
+# supported. (string value)
+#cluster = <None>
+
+# Management IP address of HNAS. This can be any IP in the admin address on
+# HNAS or the SMU IP. (IP address value)
+#hnas_mgmt_ip0 = <None>
+
+# Command to communicate to HNAS. (string value)
+#hnas_ssc_cmd = ssc
+
+# HNAS username. (string value)
+#hnas_username = <None>
+
+# HNAS password. (string value)
+#hnas_password = <None>
+
+# Port to be used for SSH authentication. (port value)
+# Minimum value: 0
+# Maximum value: 65535
+#hnas_ssh_port = 22
+
+# Path to the SSH private key used to authenticate in HNAS SMU. (string value)
+#hnas_ssh_private_key = <None>
+
+# The IP of the HNAS cluster admin. Required only for HNAS multi-cluster
+# setups. (string value)
+#hnas_cluster_admin_ip0 = <None>
+
+# Service 0 volume type (string value)
+#hnas_svc0_volume_type = <None>
+
+# Service 0 HDP (string value)
+#hnas_svc0_hdp = <None>
+
+# Service 1 volume type (string value)
+#hnas_svc1_volume_type = <None>
+
+# Service 1 HDP (string value)
+#hnas_svc1_hdp = <None>
+
+# Service 2 volume type (string value)
+#hnas_svc2_volume_type = <None>
+
+# Service 2 HDP (string value)
+#hnas_svc2_hdp = <None>
+
+# Service 3 volume type (string value)
+#hnas_svc3_volume_type = <None>
+
+# Service 3 HDP (string value)
+#hnas_svc3_hdp = <None>
+
 # The maximum number of items that a collection resource returns in a single
 # response (integer value)
 #osapi_max_limit = 1000
@@ -28,8 +82,8 @@
 
 # Volume filter options which non-admin user could use to query volumes.
 # Default values are: ['name', 'status', 'metadata', 'availability_zone'
-# ,'bootable'] (list value)
-#query_volume_filters = name,status,metadata,availability_zone,bootable
+# ,'bootable', 'group_id'] (list value)
+#query_volume_filters = name,status,metadata,availability_zone,bootable,group_id
 
 # Ceph configuration file to use. (string value)
 #backup_ceph_conf = /etc/ceph/ceph.conf
@@ -127,7 +181,10 @@
 # Maximum ssh connections in the pool (integer value)
 #ssh_max_pool_conn = 5
 
-# Configuration file for HDS NFS cinder plugin (string value)
+# DEPRECATED: Legacy configuration file for HNAS NFS Cinder plugin. This is not
+# needed if you fill all configuration on cinder.conf (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #hds_hnas_nfs_config_file = /opt/hds/hnas/cinder_nfs_conf.xml
 
 # Sets the value of TCP_KEEPALIVE (True/False) for each server socket. (boolean
@@ -284,6 +341,23 @@
 # Deprecated group/name - [DEFAULT]/netapp_storage_pools
 #netapp_pool_name_search_pattern = (.+)
 
+# Multi opt of dictionaries to represent the aggregate mapping between source
+# and destination back ends when using whole back end replication. For every
+# source aggregate associated with a cinder pool (NetApp FlexVol), you would
+# need to specify the destination aggregate on the replication target device. A
+# replication target device is configured with the configuration option
+# replication_device. Specify this option as many times as you have replication
+# devices. Each entry takes the standard dict config form:
+# netapp_replication_aggregate_map =
+# backend_id:<name_of_replication_device_section>,src_aggr_name1:dest_aggr_name1,src_aggr_name2:dest_aggr_name2,...
+# (dict value)
+#netapp_replication_aggregate_map = <None>
+
+# The maximum time in seconds to wait for existing SnapMirror transfers to
+# complete before aborting during a failover. (integer value)
+# Minimum value: 0
+#netapp_snapmirror_quiesce_timeout = 3600
+
 # Configure CHAP authentication for iSCSI connections (Default: Enabled)
 # (boolean value)
 #storwize_svc_iscsi_chap_enabled = true
@@ -294,6 +368,26 @@
 # GlusterFS share in <hostname|ipv4addr|ipv6addr>:<gluster_vol_name> format.
 # Eg: 1.2.3.4:backup_vol (string value)
 #glusterfs_backup_share = <None>
+
+# Rest Gateway IP or FQDN for Scaleio (string value)
+#coprhd_scaleio_rest_gateway_host = None
+
+# Rest Gateway Port for Scaleio (port value)
+# Minimum value: 0
+# Maximum value: 65535
+#coprhd_scaleio_rest_gateway_port = 4984
+
+# Username for Rest Gateway (string value)
+#coprhd_scaleio_rest_server_username = <None>
+
+# Rest Gateway Password (string value)
+#coprhd_scaleio_rest_server_password = <None>
+
+# verify server certificate (boolean value)
+#scaleio_verify_server_certificate = false
+
+# Server certificate path (string value)
+#scaleio_server_certificate_path = <None>
 
 # Volume prefix for the backup id when backing up to TSM (string value)
 #backup_tsm_volume_prefix = backup
@@ -340,8 +434,74 @@
 # system storage pool is used. (string value)
 #gpfs_storage_pool = system
 
+# Main controller IP. (IP address value)
+#zteControllerIP0 = <None>
+
+# Slave controller IP. (IP address value)
+#zteControllerIP1 = <None>
+
+# Local IP. (IP address value)
+#zteLocalIP = <None>
+
+# User name. (string value)
+#zteUserName = <None>
+
+# User password. (string value)
+#zteUserPassword = <None>
+
+# Virtual block size of pool. Unit : KB. Valid value :  4,  8, 16, 32, 64, 128,
+# 256, 512.  (integer value)
+#zteChunkSize = 4
+
+# Cache readahead size. (integer value)
+#zteAheadReadSize = 8
+
+# Cache policy. 0, Write Back; 1, Write Through. (integer value)
+#zteCachePolicy = 1
+
+# SSD cache switch. 0, OFF; 1, ON. (integer value)
+#zteSSDCacheSwitch = 1
+
+# Pool name list. (list value)
+#zteStoragePool =
+
+# Pool volume allocated policy. 0, Auto; 1, High Performance Tier First; 2,
+# Performance Tier First; 3, Capacity Tier First. (integer value)
+#ztePoolVoAllocatedPolicy = 0
+
+# Pool volume move policy.0, Auto; 1, Highest Available; 2, Lowest Available;
+# 3, No Relocation. (integer value)
+#ztePoolVolMovePolicy = 0
+
+# Whether it is a thin volume. (integer value)
+#ztePoolVolIsThin = False
+
+# Pool volume init allocated Capacity.Unit : KB.  (integer value)
+#ztePoolVolInitAllocatedCapacity = 0
+
+# Pool volume alarm threshold. [0, 100] (integer value)
+#ztePoolVolAlarmThreshold = 0
+
+# Pool volume alarm stop allocated flag. (integer value)
+#ztePoolVolAlarmStopAllocatedFlag = 0
+
 # Global backend request timeout, in seconds. (integer value)
 #violin_request_timeout = 300
+
+# Storage pools to be used to setup dedup luns only.(Comma separated list)
+# (list value)
+#violin_dedup_only_pools =
+
+# Storage pools capable of dedup and other luns.(Comma separated list) (list
+# value)
+#violin_dedup_capable_pools =
+
+# Method of choosing a storage pool for a lun. (string value)
+# Allowed values: random, largest, smallest
+#violin_pool_allocation_method = random
+
+# Target iSCSI addresses to use.(Comma separated list) (list value)
+#violin_iscsi_target_ips =
 
 # IP address of Nexenta SA (string value)
 #nexenta_host =
@@ -418,6 +578,10 @@
 # Number of TCP connections. (integer value)
 #nexenta_rrmgr_connections = 2
 
+# NexentaEdge logical path of directory to store symbolic links to NBDs (string
+# value)
+#nexenta_nbd_symlinks_dir = /dev/disk/by-path
+
 # IP address of NexentaEdge management REST API endpoint (string value)
 #nexenta_rest_address =
 
@@ -443,7 +607,7 @@
 #fatal_exception_format_errors = false
 
 # IP address of this host (string value)
-#my_ip = 192.168.0.239
+#my_ip = 10.0.2.15
 
 # A list of the URLs of glance API servers available to cinder
 # ([http[s]://][hostname|ip]:port). If protocol is not specified it defaults to
@@ -454,9 +618,11 @@
 #glance_api_version = 1
 
 # Number retries when downloading an image from glance (integer value)
+# Minimum value: 0
 #glance_num_retries = 0
 
-# Allow to perform insecure SSL (https) requests to glance (boolean value)
+# Allow to perform insecure SSL (https) requests to glance (https will be used
+# but cert validation will not be performed). (boolean value)
 #glance_api_insecure = false
 
 # Enables or disables negotiation of SSL layer compression. In some cases
@@ -473,19 +639,14 @@
 # supplied here, the glanceclient default value is used. (integer value)
 #glance_request_timeout = <None>
 
-# The topic that scheduler nodes listen on (string value)
-#scheduler_topic = cinder-scheduler
-
-# The topic that volume nodes listen on (string value)
-#volume_topic = cinder-volume
-
-# The topic that volume backup nodes listen on (string value)
-#backup_topic = cinder-backup
-
 # DEPRECATED: Deploy v1 of the Cinder API. (boolean value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #enable_v1_api = true
 
 # DEPRECATED: Deploy v2 of the Cinder API. (boolean value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #enable_v2_api = true
 
 # Deploy v3 of the Cinder API. (boolean value)
@@ -512,7 +673,7 @@
 
 # Name of this node.  This can be an opaque identifier. It is not necessarily a
 # host name, FQDN, or IP address. (string value)
-#host = zl-VM
+#host = openstack-VirtualBox
 
 # Availability zone of this node (string value)
 #storage_availability_zone = nova
@@ -529,6 +690,9 @@
 
 # Default volume type to use (string value)
 #default_volume_type = <None>
+
+# Default group type to use (string value)
+#default_group_type = <None>
 
 # Time period for which to generate volume usages. The options are hour, day,
 # month, or year. (string value)
@@ -573,6 +737,9 @@
 
 # The full class name of the consistencygroup API class (string value)
 #consistencygroup_api_class = cinder.consistencygroup.api.API
+
+# The full class name of the group API class (string value)
+#group_api_class = cinder.group.api.API
 
 # OpenStack privileged account username. Used for requests to other services
 # (such as Nova) that require an account with special rights. (string value)
@@ -651,6 +818,33 @@
 # Utilize volume access groups on a per-tenant basis. (boolean value)
 #sf_enable_vag = false
 
+# Hostname for the CoprHD Instance (string value)
+#coprhd_hostname = <None>
+
+# Port for the CoprHD Instance (port value)
+# Minimum value: 0
+# Maximum value: 65535
+#coprhd_port = 4443
+
+# Username for accessing the CoprHD Instance (string value)
+#coprhd_username = <None>
+
+# Password for accessing the CoprHD Instance (string value)
+#coprhd_password = <None>
+
+# Tenant to utilize within the CoprHD Instance (string value)
+#coprhd_tenant = <None>
+
+# Project to utilize within the CoprHD Instance (string value)
+#coprhd_project = <None>
+
+# Virtual Array to utilize within the CoprHD Instance (string value)
+#coprhd_varray = <None>
+
+# True | False to indicate if the storage array in CoprHD is VMAX or VPLEX
+# (boolean value)
+#coprhd_emulate_snapshot = false
+
 # The URL of the Swift endpoint (string value)
 #backup_swift_url = <None>
 
@@ -671,12 +865,24 @@
 #backup_swift_auth = per_user
 
 # Swift authentication version. Specify "1" for auth 1.0, or "2" for auth 2.0
-# (string value)
+# or "3" for auth 3.0 (string value)
 #backup_swift_auth_version = 1
 
 # Swift tenant/account name. Required when connecting to an auth 2.0 system
 # (string value)
 #backup_swift_tenant = <None>
+
+# Swift user domain name. Required when connecting to an auth 3.0 system
+# (string value)
+#backup_swift_user_domain = <None>
+
+# Swift project domain name. Required when connecting to an auth 3.0 system
+# (string value)
+#backup_swift_project_domain = <None>
+
+# Swift project/account name. Required when connecting to an auth 3.0 system
+# (string value)
+#backup_swift_project = <None>
 
 # Swift user name (string value)
 #backup_swift_user = <None>
@@ -795,6 +1001,18 @@
 # Resource deployment completion wait policy. (string value)
 #drbdmanage_resource_policy = {"ratio": "0.51", "timeout": "60"}
 
+# Disk options to set on new resources. See http://www.drbd.org/en/doc/users-
+# guide-90/re-drbdconf for all the details. (string value)
+#drbdmanage_disk_options = {"c-min-rate": "4M"}
+
+# Net options to set on new resources. See http://www.drbd.org/en/doc/users-
+# guide-90/re-drbdconf for all the details. (string value)
+#drbdmanage_net_options = {"connect-int": "4", "allow-two-primaries": "yes", "ko-count": "30", "max-buffers": "20000", "ping-timeout": "100"}
+
+# Resource options to set on new resources. See http://www.drbd.org/en/doc
+# /users-guide-90/re-drbdconf for all the details. (string value)
+#drbdmanage_resource_options = {"auto-promote-timeout": "300"}
+
 # Snapshot completion wait policy. (string value)
 #drbdmanage_snapshot_policy = {"count": "1", "timeout": "60"}
 
@@ -884,71 +1102,20 @@
 # Maximum number of attempts to schedule a volume (integer value)
 #scheduler_max_attempts = 3
 
-# Path or URL to Scality SOFS configuration file (string value)
-#scality_sofs_config = <None>
+# Proxy driver that connects to the IBM Storage Array (string value)
+#proxy = storage.proxy.IBMStorageProxy
 
-# Base dir where Scality SOFS shall be mounted (string value)
-#scality_sofs_mount_point = $state_path/scality
+# Connection type to the IBM Storage Array (string value)
+# Allowed values: fibre_channel, iscsi
+#connection_type = iscsi
 
-# Path from Scality SOFS root to volume dir (string value)
-#scality_sofs_volume_dir = cinder/volumes
-
-# VNX authentication scope type. (string value)
-#storage_vnx_authentication_type = global
-
-# Directory path that contains the VNX security file. Make sure the security
-# file is generated first. (string value)
-#storage_vnx_security_file_dir = <None>
-
-# Naviseccli Path. (string value)
-#naviseccli_path =
-
-# Comma-separated list of storage pool names to be used. (string value)
-# Deprecated group/name - [DEFAULT]/storage_vnx_pool_name
-#storage_vnx_pool_names = <None>
-
-# VNX secondary SP IP Address. (string value)
-#san_secondary_ip = <None>
-
-# Default timeout for CLI operations in minutes. For example, LUN migration is
-# a typical long running operation, which depends on the LUN size and the load
-# of the array. An upper bound in the specific deployment can be set to avoid
-# unnecessary long wait. By default, it is 365 days long. (integer value)
-#default_timeout = 525600
-
-# Default max number of LUNs in a storage group. By default, the value is 255.
-# (integer value)
-#max_luns_per_storage_group = 255
-
-# To destroy storage group when the last LUN is removed from it. By default,
-# the value is False. (boolean value)
-#destroy_empty_storage_group = false
-
-# Mapping between hostname and its iSCSI initiator IP addresses. (string value)
-#iscsi_initiators =
-
-# Comma separated iSCSI or FC ports to be used in Nova or Cinder. (string
+# CHAP authentication mode, effective only for iscsi (disabled|enabled) (string
 # value)
-#io_port_list = *
+# Allowed values: disabled, enabled
+#chap = disabled
 
-# Automatically register initiators. By default, the value is False. (boolean
-# value)
-#initiator_auto_registration = false
-
-# Automatically deregister initiators after the related storage group is
-# destroyed. By default, the value is False. (boolean value)
-#initiator_auto_deregistration = false
-
-# Report free_capacity_gb as 0 when the limit to maximum number of pool LUNs is
-# reached. By default, the value is False. (boolean value)
-#check_max_pool_luns_threshold = false
-
-# Delete a LUN even if it is in Storage Groups. (boolean value)
-#force_delete_lun_in_storagegroup = false
-
-# Force LUN creation even if the full threshold of pool is reached. (boolean
-# value)
-#ignore_pool_full_threshold = false
+# List of Management IP addresses (separated by commas) (string value)
+#management_ips =
 
 # IP address for connecting to VMware vCenter server. (string value)
 #vmware_host_ip = <None>
@@ -974,7 +1141,7 @@
 
 # The interval (in seconds) for polling remote tasks invoked on VMware vCenter
 # server. (floating point value)
-#vmware_task_poll_interval = 0.5
+#vmware_task_poll_interval = 2.0
 
 # Name of the vCenter inventory folder that will contain Cinder volumes. This
 # folder will be created under "OpenStack/<project_folder>", where
@@ -1085,6 +1252,12 @@
 # Storage Pool ID. (string value)
 #sio_storage_pool_id = <None>
 
+# max_over_subscription_ratio setting for the ScaleIO driver. If set, this
+# takes precedence over the general max_over_subscription_ratio option. If
+# None, the general option is used.Maximum value allowed for ScaleIO is 10.0.
+# (floating point value)
+#sio_max_over_subscription_ratio = <None>
+
 # Driver to use for database access (string value)
 #db_driver = cinder.db
 
@@ -1098,6 +1271,7 @@
 #eqlx_cli_timeout = 30
 
 # Maximum retry count for reconnection. Default is 5. (integer value)
+# Minimum value: 0
 #eqlx_cli_max_retries = 5
 
 # Use CHAP authentication for targets. Note that this option is deprecated in
@@ -1140,8 +1314,17 @@
 # vs stack. (floating point value)
 #volume_number_multiplier = -1.0
 
-# RPC port to connect to Coha Data MicroArray (integer value)
+# RPC port to connect to Coho Data MicroArray (integer value)
 #coho_rpc_port = 2049
+
+# Path or URL to Scality SOFS configuration file (string value)
+#scality_sofs_config = <None>
+
+# Base dir where Scality SOFS shall be mounted (string value)
+#scality_sofs_mount_point = $state_path/scality
+
+# Path from Scality SOFS root to volume dir (string value)
+#scality_sofs_volume_dir = cinder/volumes
 
 # Default storage pool for volumes. (integer value)
 #ise_storage_pool = 1
@@ -1163,6 +1346,15 @@
 # Connect with multipath (FC only; iSCSI multipath is controlled by Nova)
 # (boolean value)
 #storwize_svc_multipath_enabled = false
+
+# FSS pool id in which FalconStor volumes are stored. (integer value)
+#fss_pool =
+
+# Enable HTTP debugging to FSS (boolean value)
+#fss_debug = false
+
+# FSS additional retry list, separate by ; (string value)
+#additional_retry_list =
 
 # Storage pool name. (string value)
 #zfssa_pool = <None>
@@ -1273,7 +1465,9 @@
 # Allowed values: none, zero, shred
 #volume_clear = zero
 
-# Size in MiB to wipe at start of old volumes. 0 => all (integer value)
+# Size in MiB to wipe at start of old volumes. 1024 MiBat max. 0 => all
+# (integer value)
+# Maximum value: 1024
 #volume_clear_size = 0
 
 # The flag to pass to ionice to alter the i/o priority of the process used to
@@ -1430,6 +1624,22 @@
 # client directly, it will only notify that it can be used. (boolean value)
 #report_discard_supported = false
 
+# Protocol for transferring data between host and storage back-end. (string
+# value)
+# Allowed values: iscsi, fc
+#storage_protocol = iscsi
+
+# If this is set to True, the backup_use_temp_snapshot path will be used during
+# the backup. Otherwise, it will use backup_use_temp_volume path. (boolean
+# value)
+#backup_use_temp_snapshot = false
+
+# Set this to True when you want to allow an unsupported driver to start.
+# Drivers that haven't maintained a working CI system and testing are marked as
+# unsupported until CI is working again.  This also marks a driver as
+# deprecated and may be removed in the next release. (boolean value)
+#enable_unsupported_driver = false
+
 # The maximum number of times to rescan iSER targetto find volume (integer
 # value)
 #num_iser_scan_tries = 3
@@ -1462,6 +1672,60 @@
 
 # Path to store VHD backed volumes (string value)
 #windows_iscsi_lun_path = C:\iSCSIVirtualDisks
+
+# VNX authentication scope type. By default, the value is global. (string
+# value)
+#storage_vnx_authentication_type = global
+
+# Directory path that contains the VNX security file. Make sure the security
+# file is generated first. (string value)
+#storage_vnx_security_file_dir = <None>
+
+# Naviseccli Path. (string value)
+#naviseccli_path = <None>
+
+# Comma-separated list of storage pool names to be used. (list value)
+#storage_vnx_pool_names = <None>
+
+# Default timeout for CLI operations in minutes. For example, LUN migration is
+# a typical long running operation, which depends on the LUN size and the load
+# of the array. An upper bound in the specific deployment can be set to avoid
+# unnecessary long wait. By default, it is 365 days long. (integer value)
+#default_timeout = 31536000
+
+# Default max number of LUNs in a storage group. By default, the value is 255.
+# (integer value)
+#max_luns_per_storage_group = 255
+
+# To destroy storage group when the last LUN is removed from it. By default,
+# the value is False. (boolean value)
+#destroy_empty_storage_group = false
+
+# Mapping between hostname and its iSCSI initiator IP addresses. (string value)
+#iscsi_initiators = <None>
+
+# Comma separated iSCSI or FC ports to be used in Nova or Cinder. (list value)
+#io_port_list = <None>
+
+# Automatically register initiators. By default, the value is False. (boolean
+# value)
+#initiator_auto_registration = false
+
+# Automatically deregister initiators after the related storage group is
+# destroyed. By default, the value is False. (boolean value)
+#initiator_auto_deregistration = false
+
+# Report free_capacity_gb as 0 when the limit to maximum number of pool LUNs is
+# reached. By default, the value is False. (boolean value)
+#check_max_pool_luns_threshold = false
+
+# Delete a LUN even if it is in Storage Groups. By default, the value is False.
+# (boolean value)
+#force_delete_lun_in_storagegroup = false
+
+# Force LUN creation even if the full threshold of pool is reached. By default,
+# the value is False. (boolean value)
+#ignore_pool_full_threshold = false
 
 # Pool or Vdisk name to use for volume creation. (string value)
 #hpmsa_backend_name = A
@@ -1655,6 +1919,9 @@
 # value is True to enable the timer. (boolean value)
 #backup_gcs_enable_progress_timer = true
 
+# URL for http proxy access. (uri value)
+#backup_gcs_proxy_url = <None>
+
 # Treat X-Forwarded-For as the canonical remote address. Only enable this if
 # you have a sanitizing proxy. (boolean value)
 #use_forwarded_for = false
@@ -1726,8 +1993,27 @@
 # supported levels are 0,2,3,4. (string value)
 #infortrend_tiering = 0
 
-# Configuration file for HDS iSCSI cinder plugin (string value)
+# DEPRECATED: Legacy configuration file for HNAS iSCSI Cinder plugin. This is
+# not needed if you fill all configuration on cinder.conf (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #hds_hnas_iscsi_config_file = /opt/hds/hnas/cinder_iscsi_conf.xml
+
+# Whether the chap authentication is enabled in the iSCSI target or not.
+# (boolean value)
+#hnas_chap_enabled = true
+
+# Service 0 iSCSI IP (IP address value)
+#hnas_svc0_iscsi_ip = <None>
+
+# Service 1 iSCSI IP (IP address value)
+#hnas_svc1_iscsi_ip = <None>
+
+# Service 2 iSCSI IP (IP address value)
+#hnas_svc2_iscsi_ip = <None>
+
+# Service 3 iSCSI IP (IP address value)
+#hnas_svc3_iscsi_ip = <None>
 
 # The name of ceph cluster (string value)
 #rbd_cluster_name = ceph
@@ -1856,8 +2142,8 @@
 # Maximum value: 600
 #storwize_svc_flashcopy_timeout = 120
 
-# This option no longer has any affect. It is deprecated and will be removed in
-# the next release. (boolean value)
+# DEPRECATED: This option no longer has any affect. It is deprecated and will
+# be removed in the next release. (boolean value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
 #storwize_svc_multihostmap_enabled = true
@@ -1895,6 +2181,9 @@
 # Number of consistencygroups allowed per project (integer value)
 #quota_consistencygroups = 10
 
+# Number of groups allowed per project (integer value)
+#quota_groups = 10
+
 # Total amount of storage, in gigabytes, allowed for volumes and snapshots per
 # project (integer value)
 #quota_gigabytes = 1000
@@ -1931,6 +2220,46 @@
 # The remote device hypermetro will use. (string value)
 #hypermetro_devices = <None>
 
+# The remote metro device san user. (string value)
+#metro_san_user = <None>
+
+# The remote metro device san password. (string value)
+#metro_san_password = <None>
+
+# The remote metro device domain name. (string value)
+#metro_domain_name = <None>
+
+# The remote metro device request url. (string value)
+#metro_san_address = <None>
+
+# The remote metro device pool names. (string value)
+#metro_storage_pools = <None>
+
+# Volume on Synology storage to be used for creating lun. (string value)
+#pool_name =
+
+# Management port for Synology storage. (port value)
+# Minimum value: 0
+# Maximum value: 65535
+#admin_port = 5000
+
+# Administrator of Synology storage. (string value)
+#username = admin
+
+# Password of administrator for logging in Synology storage. (string value)
+#password =
+
+# Do certificate validation or not if $driver_use_ssl is True (boolean value)
+#ssl_verify = true
+
+# One time password of administrator for logging in Synology storage if OTP is
+# enabled. (string value)
+#one_time_pass = <None>
+
+# Device id for skip one time password check for logging in Synology storage if
+# OTP is enabled. (string value)
+#device_id = <None>
+
 # Storage Center System Serial Number (integer value)
 #dell_sc_ssn = 64702
 
@@ -1945,8 +2274,29 @@
 # Name of the volume folder to use on the Storage Center (string value)
 #dell_sc_volume_folder = openstack
 
-# Enable HTTPS SC certificate verification. (boolean value)
+# Enable HTTPS SC certificate verification (boolean value)
 #dell_sc_verify_cert = false
+
+# IP address of secondary DSM controller (string value)
+#secondary_san_ip =
+
+# Secondary DSM user name (string value)
+#secondary_san_login = Admin
+
+# Secondary DSM user password name (string value)
+#secondary_san_password =
+
+# Secondary Dell API port (port value)
+# Minimum value: 0
+# Maximum value: 65535
+#secondary_sc_api_port = 3033
+
+# Domain IP to be excluded from iSCSI returns. (IP address value)
+#excluded_domain_ip = <None>
+
+# Server OS type to use when creating a new server on the Storage Center.
+# (string value)
+#dell_server_os = Red Hat Linux 6.x
 
 # Which filter class names to use for filtering hosts when not specified in the
 # request. (list value)
@@ -1954,6 +2304,10 @@
 
 # Which weigher class names to use for weighing hosts. (list value)
 #scheduler_default_weighers = CapacityWeigher
+
+# Which handler to use for selecting the host/pool after weighing (string
+# value)
+#scheduler_weight_handler = cinder.scheduler.weights.OrderedHostWeightHandler
 
 # Default scheduler driver to use (string value)
 #scheduler_driver = cinder.scheduler.filter_scheduler.FilterScheduler
@@ -2028,6 +2382,32 @@
 # (string value)
 #zfssa_cache_directory = os-cinder-cache
 
+# The flag of thin storage allocation. (boolean value)
+#dsware_isthin = false
+
+# Fusionstorage manager ip addr for cinder-volume. (string value)
+#dsware_manager =
+
+# Fusionstorage agent ip addr range. (string value)
+#fusionstorageagent =
+
+# Pool type, like sata-2copy. (string value)
+#pool_type = default
+
+# Pool id permit to use. (list value)
+#pool_id_filter =
+
+# Create clone volume timeout. (integer value)
+#clone_volume_timeout = 680
+
+# DEPRECATED: If volume-type name contains this substring nodedup volume will
+# be created, otherwise dedup volume wil be created. (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: This option is deprecated in favour of 'kaminario:thin_prov_type' in
+# extra-specs and will be removed in the next release.
+#kaminario_nodedup_substring = K2-nodedup
+
 # The IP of DMS client socket server (IP address value)
 #disco_client = 127.0.0.1
 
@@ -2040,7 +2420,7 @@
 # value)
 #disco_wsdl_path = /etc/cinder/DISCOService.wsdl
 
-# Prefix before volume name to differenciate DISCO volume created through
+# Prefix before volume name to differentiate DISCO volume created through
 # openstack and the other ones (string value)
 #volume_name_prefix = openstack-
 
@@ -2078,6 +2458,9 @@
 # UNIX mode for created spaces (string value)
 #hgst_space_mode = 0600
 
+# message minimum life in seconds. (integer value)
+#message_ttl = 2592000
+
 # Directory used for temporary storage during image conversion (string value)
 #image_conversion_dir = $state_path/conversion
 
@@ -2106,8 +2489,8 @@
 # Allow to perform insecure SSL requests to nova (boolean value)
 #nova_api_insecure = false
 
-# This option no longer has any affect. It is deprecated and will be removed in
-# the next release. (boolean value)
+# DEPRECATED: This option no longer has any affect. It is deprecated and will
+# be removed in the next release. (boolean value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
 #flashsystem_multipath_enabled = false
@@ -2261,21 +2644,6 @@
 # seconds (integer value)
 #az_cache_duration = 3600
 
-# Proxy driver that connects to the IBM Storage Array (string value)
-#xiv_ds8k_proxy = xiv_ds8k_openstack.nova_proxy.XIVDS8KNovaProxy
-
-# Connection type to the IBM Storage Array (string value)
-# Allowed values: fibre_channel, iscsi
-#xiv_ds8k_connection_type = iscsi
-
-# CHAP authentication mode, effective only for iscsi (disabled|enabled) (string
-# value)
-# Allowed values: disabled, enabled
-#xiv_chap = disabled
-
-# List of Management IP addresses (separated by commas) (string value)
-#management_ips =
-
 # 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1 (string value)
 # Deprecated group/name - [DEFAULT]/hp3par_api_url
 #hpe3par_api_url =
@@ -2325,8 +2693,60 @@
 # Datera API version. (string value)
 #datera_api_version = 2
 
-# Number of replicas to create of an inode. (string value)
-#datera_num_replicas = 1
+# DEPRECATED: Number of replicas to create of an inode. (integer value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#datera_num_replicas = 3
+
+# Timeout for HTTP 503 retry messages (integer value)
+#datera_503_timeout = 120
+
+# Interval between 503 retries (integer value)
+#datera_503_interval = 5
+
+# True to set function arg and return logging (boolean value)
+#datera_debug = false
+
+# DEPRECATED: True to set acl 'allow_all' on volumes created (boolean value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#datera_acl_allow_all = false
+
+# ONLY FOR DEBUG/TESTING PURPOSES
+# True to set replica_count to 1 (boolean value)
+#datera_debug_replica_count_override = false
+
+# VPSA - Use ISER instead of iSCSI (boolean value)
+#zadara_use_iser = true
+
+# VPSA - Management Host name or IP address (string value)
+#zadara_vpsa_host = <None>
+
+# VPSA - Port number (port value)
+# Minimum value: 0
+# Maximum value: 65535
+#zadara_vpsa_port = <None>
+
+# VPSA - Use SSL connection (boolean value)
+#zadara_vpsa_use_ssl = false
+
+# VPSA - Username (string value)
+#zadara_user = <None>
+
+# VPSA - Password (string value)
+#zadara_password = <None>
+
+# VPSA - Storage Pool assigned for volumes (string value)
+#zadara_vpsa_poolname = <None>
+
+# VPSA - Default encryption policy for volumes (boolean value)
+#zadara_vol_encrypt = false
+
+# VPSA - Default template for VPSA volume names (string value)
+#zadara_vol_name_template = OS_%s
+
+# VPSA - Attach snapshot policy for volumes (boolean value)
+#zadara_default_snap_policy = false
 
 # List of all available devices (list value)
 #available_devices =
@@ -2367,6 +2787,10 @@
 # Mount options passed to the vzstorage client. See section of the pstorage-
 # mount man page for details. (list value)
 #vzstorage_mount_options = <None>
+
+# Default format that will be used when creating volumes if no volume format is
+# specified. (string value)
+#vzstorage_default_volume_format = raw
 
 # File with the list of available NFS shares (string value)
 #nfs_shares_config = /etc/cinder/nfs_shares
@@ -2410,10 +2834,11 @@
 
 # If set to true, the logging level will be set to DEBUG instead of the default
 # INFO level. (boolean value)
+# Note: This option can be changed without restarting.
 #debug = false
 
-# If set to false, the logging level will be set to WARNING instead of the
-# default INFO level. (boolean value)
+# DEPRECATED: If set to false, the logging level will be set to WARNING instead
+# of the default INFO level. (boolean value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
 #verbose = true
@@ -2424,6 +2849,7 @@
 # configuration files are used then all logging configuration is set in the
 # configuration file and other logging configuration options are ignored (for
 # example, logging_context_format_string). (string value)
+# Note: This option can be changed without restarting.
 # Deprecated group/name - [DEFAULT]/log_config
 #log_config_append = <None>
 
@@ -2507,62 +2933,99 @@
 # Deprecated group/name - [DEFAULT]/rpc_conn_pool_size
 #rpc_conn_pool_size = 30
 
+# The pool size limit for connections expiration policy (integer value)
+#conn_pool_min_size = 2
+
+# The time-to-live in sec of idle connections in the pool (integer value)
+#conn_pool_ttl = 1200
+
 # ZeroMQ bind address. Should be a wildcard (*), an ethernet interface, or IP.
 # The "host" option should point or resolve to this address. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_bind_address
 #rpc_zmq_bind_address = *
 
 # MatchMaker driver. (string value)
 # Allowed values: redis, dummy
+# Deprecated group/name - [DEFAULT]/rpc_zmq_matchmaker
 #rpc_zmq_matchmaker = redis
 
-# Type of concurrency used. Either "native" or "eventlet" (string value)
-#rpc_zmq_concurrency = eventlet
-
 # Number of ZeroMQ contexts, defaults to 1. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_contexts
 #rpc_zmq_contexts = 1
 
 # Maximum number of ingress messages to locally buffer per topic. Default is
 # unlimited. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_topic_backlog
 #rpc_zmq_topic_backlog = <None>
 
 # Directory for holding IPC sockets. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_ipc_dir
 #rpc_zmq_ipc_dir = /var/run/openstack
 
 # Name of this node. Must be a valid hostname, FQDN, or IP address. Must match
 # "host" option, if running Nova. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_host
 #rpc_zmq_host = localhost
 
 # Seconds to wait before a cast expires (TTL). The default value of -1
 # specifies an infinite linger period. The value of 0 specifies no linger
 # period. Pending messages shall be discarded immediately when the socket is
 # closed. Only supported by impl_zmq. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_cast_timeout
 #rpc_cast_timeout = -1
 
 # The default number of seconds that poll should wait. Poll raises timeout
 # exception when timeout expired. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_poll_timeout
 #rpc_poll_timeout = 1
 
 # Expiration timeout in seconds of a name service record about existing target
 # ( < 0 means no timeout). (integer value)
-#zmq_target_expire = 120
+# Deprecated group/name - [DEFAULT]/zmq_target_expire
+#zmq_target_expire = 300
+
+# Update period in seconds of a name service record about existing target.
+# (integer value)
+# Deprecated group/name - [DEFAULT]/zmq_target_update
+#zmq_target_update = 180
 
 # Use PUB/SUB pattern for fanout methods. PUB/SUB always uses proxy. (boolean
 # value)
+# Deprecated group/name - [DEFAULT]/use_pub_sub
 #use_pub_sub = true
+
+# Use ROUTER remote proxy. (boolean value)
+# Deprecated group/name - [DEFAULT]/use_router_proxy
+#use_router_proxy = true
 
 # Minimal port number for random ports range. (port value)
 # Minimum value: 0
 # Maximum value: 65535
-#rpc_zmq_min_port = 49152
+# Deprecated group/name - [DEFAULT]/rpc_zmq_min_port
+#rpc_zmq_min_port = 49153
 
 # Maximal port number for random ports range. (integer value)
 # Minimum value: 1
 # Maximum value: 65536
+# Deprecated group/name - [DEFAULT]/rpc_zmq_max_port
 #rpc_zmq_max_port = 65536
 
 # Number of retries to find free port number before fail with ZMQBindError.
 # (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_bind_port_retries
 #rpc_zmq_bind_port_retries = 100
+
+# Default serialization mechanism for serializing/deserializing
+# outgoing/incoming messages (string value)
+# Allowed values: json, msgpack
+# Deprecated group/name - [DEFAULT]/rpc_zmq_serialization
+#rpc_zmq_serialization = json
+
+# This option configures round-robin mode in zmq socket. True means not keeping
+# a queue when server side disconnects. False means to keep queue and messages
+# even if server is disconnected, when the server appears we send all
+# accumulated messages to it. (boolean value)
+#zmq_immediate = false
 
 # Size of executor thread pool. (integer value)
 # Deprecated group/name - [DEFAULT]/rpc_thread_pool_size
@@ -2571,13 +3034,15 @@
 # Seconds to wait for a response from a call. (integer value)
 #rpc_response_timeout = 60
 
-# A URL representing the messaging driver to use and its full configuration. If
-# not set, we fall back to the rpc_backend option and driver specific
-# configuration. (string value)
+# A URL representing the messaging driver to use and its full configuration.
+# (string value)
 #transport_url = <None>
 
-# The messaging driver to use, defaults to rabbit. Other drivers include amqp
-# and zmq. (string value)
+# DEPRECATED: The messaging driver to use, defaults to rabbit. Other drivers
+# include amqp and zmq. (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rpc_backend = rabbit
 
 # The default exchange under which topics are scoped. May be overridden by an
@@ -2659,7 +3124,7 @@
 #
 
 # Backend override of host value. (string value)
-# Deprecated group/name - [DEFAULT]/host
+# Deprecated group/name - [BACKEND]/host
 #backend_host = <None>
 
 
@@ -2702,8 +3167,8 @@
 # Virtual Fabric ID. (string value)
 #fc_virtual_fabric_id = <None>
 
-# Principal switch WWN of the fabric. This option is not used anymore. (string
-# value)
+# DEPRECATED: Principal switch WWN of the fabric. This option is not used
+# anymore. (string value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
 #principal_switch_wwn = <None>
@@ -2770,6 +3235,9 @@
 # From cinder
 #
 
+# South bound connector for zoning operation (string value)
+#brcd_sb_connector = HTTP
+
 # FC Zone Driver responsible for zone management (string value)
 #zone_driver = cinder.zonemanager.drivers.brocade.brcd_fc_zone_driver.BrcdFCZoneDriver
 
@@ -2785,30 +3253,49 @@
 # FC SAN Lookup Service (string value)
 #fc_san_lookup_service = cinder.zonemanager.drivers.brocade.brcd_fc_san_lookup_service.BrcdFCSanLookupService
 
-# South bound connector for zoning operation (string value)
-#brcd_sb_connector = HTTP
+# Set this to True when you want to allow an unsupported zone manager driver to
+# start.  Drivers that haven't maintained a working CI system and testing are
+# marked as unsupported until CI is working again.  This also marks a driver as
+# deprecated and may be removed in the next release. (boolean value)
+#enable_unsupported_driver = false
 
 # Southbound connector for zoning operation (string value)
 #cisco_sb_connector = cinder.zonemanager.drivers.cisco.cisco_fc_zone_client_cli.CiscoFCZoneClientCLI
 
 
-[KEYMGR]
+[KEY_MANAGER]
 
 #
 # From cinder
 #
 
-# Authentication url for encryption service. (string value)
-#encryption_auth_url = http://localhost:5000/v3
-
-# Url for encryption service. (string value)
-#encryption_api_url = http://localhost:9311/v1
-
-# The full class name of the key manager API class (string value)
-#api_class = cinder.keymgr.conf_key_mgr.ConfKeyManager
-
 # Fixed key returned by key manager, specified in hex (string value)
+# Deprecated group/name - [keymgr]/fixed_key
 #fixed_key = <None>
+
+
+[barbican]
+
+#
+# From castellan.config
+#
+
+# Use this endpoint to connect to Barbican, for example:
+# "http://localhost:9311/" (string value)
+#barbican_endpoint = <None>
+
+# Version of the Barbican API, for example: "v1" (string value)
+#barbican_api_version = <None>
+
+# Use this endpoint to connect to Keystone (string value)
+#auth_endpoint = http://localhost:5000/v3
+
+# Number of seconds to wait before retrying poll for key creation completion
+# (integer value)
+#retry_delay = 1
+
+# Number of times to retry poll for key creation completion (integer value)
+#number_of_retries = 60
 
 
 [cors]
@@ -2818,7 +3305,8 @@
 #
 
 # Indicate whether this resource may be shared with the domain received in the
-# requests "origin" header. (list value)
+# requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing
+# slash. Example: https://horizon.example.com (list value)
 #allowed_origin = <None>
 
 # Indicate that the actual request can include user credentials (boolean value)
@@ -2846,7 +3334,8 @@
 #
 
 # Indicate whether this resource may be shared with the domain received in the
-# requests "origin" header. (list value)
+# requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing
+# slash. Example: https://horizon.example.com (list value)
 #allowed_origin = <None>
 
 # Indicate that the actual request can include user credentials (boolean value)
@@ -2873,8 +3362,12 @@
 # From oslo.db
 #
 
-# The file name to use with SQLite. (string value)
+# DEPRECATED: The file name to use with SQLite. (string value)
 # Deprecated group/name - [DEFAULT]/sqlite_db
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Should use config option connection or slave_connection to connect
+# the database.
 #sqlite_db = oslo.sqlite
 
 # If True, SQLite uses synchronous mode. (boolean value)
@@ -2913,10 +3406,11 @@
 # Deprecated group/name - [DATABASE]/sql_min_pool_size
 #min_pool_size = 1
 
-# Maximum number of SQL connections to keep open in a pool. (integer value)
+# Maximum number of SQL connections to keep open in a pool. Setting a value of
+# 0 indicates no limit. (integer value)
 # Deprecated group/name - [DEFAULT]/sql_max_pool_size
 # Deprecated group/name - [DATABASE]/sql_max_pool_size
-#max_pool_size = <None>
+#max_pool_size = 5
 
 # Maximum number of database connection retries during startup. Set to -1 to
 # specify an infinite retry count. (integer value)
@@ -2936,6 +3430,8 @@
 
 # Verbosity of SQL debugging information: 0=None, 100=Everything. (integer
 # value)
+# Minimum value: 0
+# Maximum value: 100
 # Deprecated group/name - [DEFAULT]/sql_connection_debug
 #connection_debug = 0
 
@@ -2967,13 +3463,91 @@
 #db_max_retries = 20
 
 
+[key_manager]
+
+#
+# From castellan.config
+#
+
+# The full class name of the key manager API class (string value)
+#api_class = castellan.key_manager.barbican_key_manager.BarbicanKeyManager
+
+# The type of authentication credential to create. Possible values are 'token',
+# 'password', 'keystone_token', and 'keystone_password'. Required if no context
+# is passed to the credential factory. (string value)
+#auth_type = <None>
+
+# Token for authentication. Required for 'token' and 'keystone_token' auth_type
+# if no context is passed to the credential factory. (string value)
+#token = <None>
+
+# Username for authentication. Required for 'password' auth_type. Optional for
+# the 'keystone_password' auth_type. (string value)
+#username = <None>
+
+# Password for authentication. Required for 'password' and 'keystone_password'
+# auth_type. (string value)
+#password = <None>
+
+# User ID for authentication. Optional for 'keystone_token' and
+# 'keystone_password' auth_type. (string value)
+#user_id = <None>
+
+# User's domain ID for authentication. Optional for 'keystone_token' and
+# 'keystone_password' auth_type. (string value)
+#user_domain_id = <None>
+
+# User's domain name for authentication. Optional for 'keystone_token' and
+# 'keystone_password' auth_type. (string value)
+#user_domain_name = <None>
+
+# Trust ID for trust scoping. Optional for 'keystone_token' and
+# 'keystone_password' auth_type. (string value)
+#trust_id = <None>
+
+# Domain ID for domain scoping. Optional for 'keystone_token' and
+# 'keystone_password' auth_type. (string value)
+#domain_id = <None>
+
+# Domain name for domain scoping. Optional for 'keystone_token' and
+# 'keystone_password' auth_type. (string value)
+#domain_name = <None>
+
+# Project ID for project scoping. Optional for 'keystone_token' and
+# 'keystone_password' auth_type. (string value)
+#project_id = <None>
+
+# Project name for project scoping. Optional for 'keystone_token' and
+# 'keystone_password' auth_type. (string value)
+#project_name = <None>
+
+# Project's domain ID for project. Optional for 'keystone_token' and
+# 'keystone_password' auth_type. (string value)
+#project_domain_id = <None>
+
+# Project's domain name for project. Optional for 'keystone_token' and
+# 'keystone_password' auth_type. (string value)
+#project_domain_name = <None>
+
+# Allow fetching a new token if the current one is going to expire. Optional
+# for 'keystone_token' and 'keystone_password' auth_type. (boolean value)
+#reauthenticate = true
+
+
 [keystone_authtoken]
 
 #
 # From keystonemiddleware.auth_token
 #
 
-# Complete public Identity API endpoint. (string value)
+# Complete "public" Identity API endpoint. This endpoint should not be an
+# "admin" endpoint, as it should be accessible by all end users.
+# Unauthenticated clients are redirected to this endpoint to authenticate.
+# Although this endpoint should  ideally be unversioned, client support in the
+# wild varies.  If you're using a versioned v2 endpoint here, then this  should
+# *not* be the same endpoint the service user utilizes  for validating tokens,
+# because normal end users may not be  able to reach that endpoint. (string
+# value)
 #auth_uri = <None>
 
 # API version of the admin Identity API endpoint. (string value)
@@ -2991,7 +3565,10 @@
 # API Server. (integer value)
 #http_request_max_retries = 3
 
-# Env key for the swift cache. (string value)
+# Request environment key where the Swift cache object is stored. When
+# auth_token middleware is deployed with a Swift cache, use this option to have
+# the middleware share a caching backend with swift. Otherwise, use the
+# ``memcached_servers`` option instead. (string value)
 #cache = <None>
 
 # Required if identity server requires client certificate (string value)
@@ -3015,7 +3592,7 @@
 
 # Optionally specify a list of memcached server(s) to use for caching. If left
 # undefined, tokens will instead be cached in-process. (list value)
-# Deprecated group/name - [DEFAULT]/memcache_servers
+# Deprecated group/name - [keystone_authtoken]/memcache_servers
 #memcached_servers = <None>
 
 # In order to prevent excessive effort spent validating tokens, the middleware
@@ -3025,8 +3602,8 @@
 
 # Determines the frequency at which the list of revoked tokens is retrieved
 # from the Identity service (in seconds). A high number of revocation events
-# combined with a low cache duration may significantly reduce performance.
-# (integer value)
+# combined with a low cache duration may significantly reduce performance. Only
+# valid for PKI tokens. (integer value)
 #revocation_cache_time = 10
 
 # (Optional) If defined, indicate whether token data should be authenticated or
@@ -3093,11 +3670,11 @@
 # performance. (list value)
 #hash_algorithms = md5
 
-# Authentication type to load (unknown value)
-# Deprecated group/name - [DEFAULT]/auth_plugin
+# Authentication type to load (string value)
+# Deprecated group/name - [keystone_authtoken]/auth_plugin
 #auth_type = <None>
 
-# Config Section from which to load plugin specific options (unknown value)
+# Config Section from which to load plugin specific options (string value)
 #auth_section = <None>
 
 
@@ -3107,32 +3684,44 @@
 # From oslo.messaging
 #
 
-# Host to locate redis. (string value)
+# DEPRECATED: Host to locate redis. (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #host = 127.0.0.1
 
-# Use this port to connect to redis host. (port value)
+# DEPRECATED: Use this port to connect to redis host. (port value)
 # Minimum value: 0
 # Maximum value: 65535
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #port = 6379
 
-# Password for Redis server (optional). (string value)
+# DEPRECATED: Password for Redis server (optional). (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #password =
 
-# List of Redis Sentinel hosts (fault tolerance mode) e.g.
+# DEPRECATED: List of Redis Sentinel hosts (fault tolerance mode) e.g.
 # [host:port, host1:port ... ] (list value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #sentinel_hosts =
 
 # Redis replica set name. (string value)
 #sentinel_group_name = oslo-messaging-zeromq
 
 # Time in ms to wait between connection attempts. (integer value)
-#wait_timeout = 500
+#wait_timeout = 2000
 
 # Time in ms to wait before the transaction is killed. (integer value)
 #check_timeout = 20000
 
 # Timeout in ms on blocking socket operations (integer value)
-#socket_timeout = 1000
+#socket_timeout = 10000
 
 
 [oslo_concurrency]
@@ -3159,19 +3748,8 @@
 # From oslo.messaging
 #
 
-# address prefix used when sending to a specific server (string value)
-# Deprecated group/name - [amqp1]/server_request_prefix
-#server_request_prefix = exclusive
-
-# address prefix used when broadcasting to all servers (string value)
-# Deprecated group/name - [amqp1]/broadcast_prefix
-#broadcast_prefix = broadcast
-
-# address prefix when sending to any server in group (string value)
-# Deprecated group/name - [amqp1]/group_request_prefix
-#group_request_prefix = unicast
-
-# Name for the AMQP container (string value)
+# Name for the AMQP container. must be globally unique. Defaults to a generated
+# UUID (string value)
 # Deprecated group/name - [amqp1]/container_name
 #container_name = <None>
 
@@ -3222,6 +3800,108 @@
 # Password for message broker authentication (string value)
 # Deprecated group/name - [amqp1]/password
 #password =
+
+# Seconds to pause before attempting to re-connect. (integer value)
+# Minimum value: 1
+#connection_retry_interval = 1
+
+# Increase the connection_retry_interval by this many seconds after each
+# unsuccessful failover attempt. (integer value)
+# Minimum value: 0
+#connection_retry_backoff = 2
+
+# Maximum limit for connection_retry_interval + connection_retry_backoff
+# (integer value)
+# Minimum value: 1
+#connection_retry_interval_max = 30
+
+# Time to pause between re-connecting an AMQP 1.0 link that failed due to a
+# recoverable error. (integer value)
+# Minimum value: 1
+#link_retry_delay = 10
+
+# The deadline for an rpc reply message delivery. Only used when caller does
+# not provide a timeout expiry. (integer value)
+# Minimum value: 5
+#default_reply_timeout = 30
+
+# The deadline for an rpc cast or call message delivery. Only used when caller
+# does not provide a timeout expiry. (integer value)
+# Minimum value: 5
+#default_send_timeout = 30
+
+# The deadline for a sent notification message delivery. Only used when caller
+# does not provide a timeout expiry. (integer value)
+# Minimum value: 5
+#default_notify_timeout = 30
+
+# Indicates the addressing mode used by the driver.
+# Permitted values:
+# 'legacy'   - use legacy non-routable addressing
+# 'routable' - use routable addresses
+# 'dynamic'  - use legacy addresses if the message bus does not support routing
+# otherwise use routable addressing (string value)
+#addressing_mode = dynamic
+
+# address prefix used when sending to a specific server (string value)
+# Deprecated group/name - [amqp1]/server_request_prefix
+#server_request_prefix = exclusive
+
+# address prefix used when broadcasting to all servers (string value)
+# Deprecated group/name - [amqp1]/broadcast_prefix
+#broadcast_prefix = broadcast
+
+# address prefix when sending to any server in group (string value)
+# Deprecated group/name - [amqp1]/group_request_prefix
+#group_request_prefix = unicast
+
+# Address prefix for all generated RPC addresses (string value)
+#rpc_address_prefix = openstack.org/om/rpc
+
+# Address prefix for all generated Notification addresses (string value)
+#notify_address_prefix = openstack.org/om/notify
+
+# Appended to the address prefix when sending a fanout message. Used by the
+# message bus to identify fanout messages. (string value)
+#multicast_address = multicast
+
+# Appended to the address prefix when sending to a particular RPC/Notification
+# server. Used by the message bus to identify messages sent to a single
+# destination. (string value)
+#unicast_address = unicast
+
+# Appended to the address prefix when sending to a group of consumers. Used by
+# the message bus to identify messages that should be delivered in a round-
+# robin fashion across consumers. (string value)
+#anycast_address = anycast
+
+# Exchange name used in notification addresses.
+# Exchange name resolution precedence:
+# Target.exchange if set
+# else default_notification_exchange if set
+# else control_exchange if set
+# else 'notify' (string value)
+#default_notification_exchange = <None>
+
+# Exchange name used in RPC addresses.
+# Exchange name resolution precedence:
+# Target.exchange if set
+# else default_rpc_exchange if set
+# else control_exchange if set
+# else 'rpc' (string value)
+#default_rpc_exchange = <None>
+
+# Window size for incoming RPC Reply messages. (integer value)
+# Minimum value: 1
+#reply_link_credit = 200
+
+# Window size for incoming RPC Request messages (integer value)
+# Minimum value: 1
+#rpc_server_credit = 100
+
+# Window size for incoming Notification messages (integer value)
+# Minimum value: 1
+#notify_server_credit = 100
 
 
 [oslo_messaging_notifications]
@@ -3285,12 +3965,12 @@
 #kombu_reconnect_delay = 1.0
 
 # EXPERIMENTAL: Possible values are: gzip, bz2. If not set compression will not
-# be used. This option may notbe available in future versions. (string value)
+# be used. This option may not be available in future versions. (string value)
 #kombu_compression = <None>
 
-# How long to wait a missing client beforce abandoning to send it its replies.
+# How long to wait a missing client before abandoning to send it its replies.
 # This value should not be longer than rpc_response_timeout. (integer value)
-# Deprecated group/name - [DEFAULT]/kombu_reconnect_timeout
+# Deprecated group/name - [oslo_messaging_rabbit]/kombu_reconnect_timeout
 #kombu_missing_consumer_retry_timeout = 60
 
 # Determines how the next RabbitMQ node is chosen in case the one we are
@@ -3299,38 +3979,58 @@
 # Allowed values: round-robin, shuffle
 #kombu_failover_strategy = round-robin
 
-# The RabbitMQ broker address where a single node is used. (string value)
+# DEPRECATED: The RabbitMQ broker address where a single node is used. (string
+# value)
 # Deprecated group/name - [DEFAULT]/rabbit_host
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_host = localhost
 
-# The RabbitMQ broker port where a single node is used. (port value)
+# DEPRECATED: The RabbitMQ broker port where a single node is used. (port
+# value)
 # Minimum value: 0
 # Maximum value: 65535
 # Deprecated group/name - [DEFAULT]/rabbit_port
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_port = 5672
 
-# RabbitMQ HA cluster host:port pairs. (list value)
+# DEPRECATED: RabbitMQ HA cluster host:port pairs. (list value)
 # Deprecated group/name - [DEFAULT]/rabbit_hosts
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_hosts = $rabbit_host:$rabbit_port
 
 # Connect over SSL for RabbitMQ. (boolean value)
 # Deprecated group/name - [DEFAULT]/rabbit_use_ssl
 #rabbit_use_ssl = false
 
-# The RabbitMQ userid. (string value)
+# DEPRECATED: The RabbitMQ userid. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_userid
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_userid = guest
 
-# The RabbitMQ password. (string value)
+# DEPRECATED: The RabbitMQ password. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_password
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_password = guest
 
 # The RabbitMQ login method. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_login_method
 #rabbit_login_method = AMQPLAIN
 
-# The RabbitMQ virtual host. (string value)
+# DEPRECATED: The RabbitMQ virtual host. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_virtual_host
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_virtual_host = /
 
 # How frequently to retry connecting with RabbitMQ. (integer value)
@@ -3345,9 +4045,11 @@
 # (integer value)
 #rabbit_interval_max = 30
 
-# Maximum number of RabbitMQ connection retries. Default is 0 (infinite retry
-# count). (integer value)
+# DEPRECATED: Maximum number of RabbitMQ connection retries. Default is 0
+# (infinite retry count). (integer value)
 # Deprecated group/name - [DEFAULT]/rabbit_max_retries
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #rabbit_max_retries = 0
 
 # Try to use HA queues in RabbitMQ (x-ha-policy: all). If you change this
@@ -3389,7 +4091,7 @@
 #frame_max = <None>
 
 # How often to send heartbeats for consumer's connections (integer value)
-#heartbeat_interval = 1
+#heartbeat_interval = 3
 
 # Enable SSL (boolean value)
 #ssl = <None>
@@ -3408,8 +4110,12 @@
 # point value)
 #host_connection_reconnect_delay = 0.25
 
+# Connection factory implementation (string value)
+# Allowed values: new, single, read_write
+#connection_factory = single
+
 # Maximum number of connections to keep queued. (integer value)
-#pool_max_size = 10
+#pool_max_size = 30
 
 # Maximum number of connections to create above `pool_max_size`. (integer
 # value)
@@ -3431,7 +4137,7 @@
 # Persist notification messages. (boolean value)
 #notification_persistence = false
 
-# Exchange name for for sending notifications (string value)
+# Exchange name for sending notifications (string value)
 #default_notification_exchange = ${control_exchange}_notification
 
 # Max number of not acknowledged message which RabbitMQ can send to
@@ -3481,6 +4187,101 @@
 #rpc_retry_delay = 0.25
 
 
+[oslo_messaging_zmq]
+
+#
+# From oslo.messaging
+#
+
+# ZeroMQ bind address. Should be a wildcard (*), an ethernet interface, or IP.
+# The "host" option should point or resolve to this address. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_bind_address
+#rpc_zmq_bind_address = *
+
+# MatchMaker driver. (string value)
+# Allowed values: redis, dummy
+# Deprecated group/name - [DEFAULT]/rpc_zmq_matchmaker
+#rpc_zmq_matchmaker = redis
+
+# Number of ZeroMQ contexts, defaults to 1. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_contexts
+#rpc_zmq_contexts = 1
+
+# Maximum number of ingress messages to locally buffer per topic. Default is
+# unlimited. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_topic_backlog
+#rpc_zmq_topic_backlog = <None>
+
+# Directory for holding IPC sockets. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_ipc_dir
+#rpc_zmq_ipc_dir = /var/run/openstack
+
+# Name of this node. Must be a valid hostname, FQDN, or IP address. Must match
+# "host" option, if running Nova. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_host
+#rpc_zmq_host = localhost
+
+# Seconds to wait before a cast expires (TTL). The default value of -1
+# specifies an infinite linger period. The value of 0 specifies no linger
+# period. Pending messages shall be discarded immediately when the socket is
+# closed. Only supported by impl_zmq. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_cast_timeout
+#rpc_cast_timeout = -1
+
+# The default number of seconds that poll should wait. Poll raises timeout
+# exception when timeout expired. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_poll_timeout
+#rpc_poll_timeout = 1
+
+# Expiration timeout in seconds of a name service record about existing target
+# ( < 0 means no timeout). (integer value)
+# Deprecated group/name - [DEFAULT]/zmq_target_expire
+#zmq_target_expire = 300
+
+# Update period in seconds of a name service record about existing target.
+# (integer value)
+# Deprecated group/name - [DEFAULT]/zmq_target_update
+#zmq_target_update = 180
+
+# Use PUB/SUB pattern for fanout methods. PUB/SUB always uses proxy. (boolean
+# value)
+# Deprecated group/name - [DEFAULT]/use_pub_sub
+#use_pub_sub = true
+
+# Use ROUTER remote proxy. (boolean value)
+# Deprecated group/name - [DEFAULT]/use_router_proxy
+#use_router_proxy = true
+
+# Minimal port number for random ports range. (port value)
+# Minimum value: 0
+# Maximum value: 65535
+# Deprecated group/name - [DEFAULT]/rpc_zmq_min_port
+#rpc_zmq_min_port = 49153
+
+# Maximal port number for random ports range. (integer value)
+# Minimum value: 1
+# Maximum value: 65536
+# Deprecated group/name - [DEFAULT]/rpc_zmq_max_port
+#rpc_zmq_max_port = 65536
+
+# Number of retries to find free port number before fail with ZMQBindError.
+# (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_bind_port_retries
+#rpc_zmq_bind_port_retries = 100
+
+# Default serialization mechanism for serializing/deserializing
+# outgoing/incoming messages (string value)
+# Allowed values: json, msgpack
+# Deprecated group/name - [DEFAULT]/rpc_zmq_serialization
+#rpc_zmq_serialization = json
+
+# This option configures round-robin mode in zmq socket. True means not keeping
+# a queue when server side disconnects. False means to keep queue and messages
+# even if server is disconnected, when the server appears we send all
+# accumulated messages to it. (boolean value)
+#zmq_immediate = false
+
+
 [oslo_middleware]
 
 #
@@ -3492,12 +4293,16 @@
 # Deprecated group/name - [DEFAULT]/max_request_body_size
 #max_request_body_size = 114688
 
-# The HTTP Header that will be used to determine what the original request
-# protocol scheme was, even if it was hidden by an SSL termination proxy.
-# (string value)
+# DEPRECATED: The HTTP Header that will be used to determine what the original
+# request protocol scheme was, even if it was hidden by a SSL termination
+# proxy. (string value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
 #secure_proxy_ssl_header = X-Forwarded-Proto
+
+# Whether the application is behind a proxy or not. This determines if the
+# middleware should parse the headers or not. (boolean value)
+#enable_proxy_headers_parsing = false
 
 
 [oslo_policy]
@@ -3531,6 +4336,16 @@
 
 # Path to a log directory where to create a file (string value)
 #log_dir = <None>
+
+# The path to a file to watch for changes to trigger the reports, instead of
+# signals. Setting this option disables the signal trigger for the reports. If
+# application is running as a WSGI application it is recommended to use this
+# instead of signals. (string value)
+#file_event_handler = <None>
+
+# How many seconds to wait between polls when file_event_handler is set
+# (integer value)
+#file_event_handler_interval = 1
 
 
 [oslo_versionedobjects]
