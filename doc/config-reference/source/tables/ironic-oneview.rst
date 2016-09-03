@@ -19,14 +19,18 @@
    * - **[oneview]**
      -
    * - ``allow_insecure_connections`` = ``False``
-     - (Boolean) Option to allow insecure connection with OneView
+     - (Boolean) Option to allow insecure connection with OneView.
+   * - ``enable_periodic_tasks`` = ``True``
+     - (Boolean) Whether to enable the periodic tasks for OneView driver be aware when OneView hardware resources are taken and released by Ironic or OneView users and proactively manage nodes in clean fail state according to Dynamic Allocation model of hardware resources allocation in OneView.
    * - ``manager_url`` = ``None``
-     - (String) URL where OneView is available
+     - (String) URL where OneView is available.
    * - ``max_polling_attempts`` = ``12``
-     - (Integer) Max connection retries to check changes on OneView
+     - (Integer) Max connection retries to check changes on OneView.
    * - ``password`` = ``None``
-     - (String) OneView password to be used
+     - (String) OneView password to be used.
+   * - ``periodic_check_interval`` = ``300``
+     - (Integer) Period (in seconds) for periodic tasks to be executed when enable_periodic_tasks=True.
    * - ``tls_cacert_file`` = ``None``
-     - (String) Path to CA certificate
+     - (String) Path to CA certificate.
    * - ``username`` = ``None``
-     - (String) OneView username to be used
+     - (String) OneView username to be used.

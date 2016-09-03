@@ -18,13 +18,31 @@
      - Description
    * - **[neutron]**
      -
+   * - ``auth_section`` = ``None``
+     - (Unknown) Config Section from which to load plugin specific options
    * - ``auth_strategy`` = ``keystone``
-     - (String) Default authentication strategy to use when connecting to neutron. Running neutron in noauth mode (related to but not affected by this setting) is insecure and should only be used for testing.
+     - (String) Authentication strategy to use when connecting to neutron. Running neutron in noauth mode (related to but not affected by this setting) is insecure and should only be used for testing.
+   * - ``auth_type`` = ``None``
+     - (Unknown) Authentication type to load
+   * - ``cafile`` = ``None``
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``certfile`` = ``None``
+     - (String) PEM encoded client certificate cert file
    * - ``cleaning_network_uuid`` = ``None``
-     - (String) UUID of the network to create Neutron ports on, when booting to a ramdisk for cleaning using Neutron DHCP.
+     - (String) Neutron network UUID for the ramdisk to be booted into for cleaning nodes. Required for "neutron" network interface. It is also required if cleaning nodes when using "flat" network interface or "neutron" DHCP provider.
+   * - ``insecure`` = ``False``
+     - (Boolean) Verify HTTPS connections.
+   * - ``keyfile`` = ``None``
+     - (String) PEM encoded client certificate key file
+   * - ``port_setup_delay`` = ``0``
+     - (Integer) Delay value to wait for Neutron agents to setup sufficient DHCP configuration for port.
+   * - ``provisioning_network_uuid`` = ``None``
+     - (String) Neutron network UUID for the ramdisk to be booted into for provisioning nodes. Required for "neutron" network interface.
    * - ``retries`` = ``3``
      - (Integer) Client retries in the case of a failed request.
-   * - ``url`` = ``http://$my_ip:9696``
-     - (String) URL for connecting to neutron.
+   * - ``timeout`` = ``None``
+     - (Integer) Timeout value for http requests
+   * - ``url`` = ``None``
+     - (String) URL for connecting to neutron. Default value translates to 'http://$my_ip:9696' when auth_strategy is 'noauth', and to discovery from Keystone catalog when auth_strategy is 'keystone'.
    * - ``url_timeout`` = ``30``
      - (Integer) Timeout value for connecting to neutron in seconds.

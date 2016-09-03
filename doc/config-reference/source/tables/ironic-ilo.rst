@@ -18,10 +18,12 @@
      - Description
    * - **[ilo]**
      -
+   * - ``ca_file`` = ``None``
+     - (String) CA certificate file to validate iLO.
    * - ``clean_priority_clear_secure_boot_keys`` = ``0``
      - (Integer) Priority for clear_secure_boot_keys clean step. This step is not enabled by default. It can be enabled to clear all secure boot keys enrolled with iLO.
    * - ``clean_priority_erase_devices`` = ``None``
-     - (Integer) Priority for erase devices clean step. If unset, it defaults to 10. If set to 0, the step will be disabled and will not run during cleaning.
+     - (Integer) DEPRECATED: Priority for erase devices clean step. If unset, it defaults to 10. If set to 0, the step will be disabled and will not run during cleaning. This configuration option is duplicated by [deploy] erase_devices_priority, please use that instead.
    * - ``clean_priority_reset_bios_to_default`` = ``10``
      - (Integer) Priority for reset_bios_to_default clean step.
    * - ``clean_priority_reset_ilo`` = ``0``
@@ -34,6 +36,8 @@
      - (Port number) Port to be used for iLO operations
    * - ``client_timeout`` = ``60``
      - (Integer) Timeout (in seconds) for iLO operations
+   * - ``default_boot_mode`` = ``auto``
+     - (String) Default boot mode to be used in provisioning when "boot_mode" capability is not provided in the "properties/capabilities" of the node. The default is "auto" for backward compatibility. When "auto" is specified, default boot mode will be selected based on boot mode settings on the system.
    * - ``power_retry`` = ``6``
      - (Integer) Number of times a power operation needs to be retried
    * - ``power_wait`` = ``2``

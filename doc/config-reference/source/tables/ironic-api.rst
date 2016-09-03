@@ -30,12 +30,46 @@
      - (Port number) The TCP port on which ironic-api listens.
    * - ``public_endpoint`` = ``None``
      - (String) Public URL to use when building the links to the API resources (for example, "https://ironic.rocks:6384"). If None the links will be built using the request's host URL. If the API is operating behind a proxy, you will want to change this to represent the proxy's URL. Defaults to None.
+   * - ``ramdisk_heartbeat_timeout`` = ``300``
+     - (Integer) Maximum interval (in seconds) for agent heartbeats.
+   * - ``restrict_lookup`` = ``True``
+     - (Boolean) Whether to restrict the lookup API to only nodes in certain states.
+   * - **[cors]**
+     -
+   * - ``allow_credentials`` = ``True``
+     - (Boolean) Indicate that the actual request can include user credentials
+   * - ``allow_headers`` =
+     - (List) Indicate which header field names may be used during the actual request.
+   * - ``allow_methods`` = ``OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PATCH``
+     - (List) Indicate which methods can be used during the actual request.
+   * - ``allowed_origin`` = ``None``
+     - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing slash. Example: https://horizon.example.com
+   * - ``expose_headers`` =
+     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
+   * - ``max_age`` = ``3600``
+     - (Integer) Maximum cache age of CORS preflight requests.
+   * - **[cors.subdomain]**
+     -
+   * - ``allow_credentials`` = ``True``
+     - (Boolean) Indicate that the actual request can include user credentials
+   * - ``allow_headers`` =
+     - (List) Indicate which header field names may be used during the actual request.
+   * - ``allow_methods`` = ``OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PATCH``
+     - (List) Indicate which methods can be used during the actual request.
+   * - ``allowed_origin`` = ``None``
+     - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing slash. Example: https://horizon.example.com
+   * - ``expose_headers`` =
+     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
+   * - ``max_age`` = ``3600``
+     - (Integer) Maximum cache age of CORS preflight requests.
    * - **[oslo_middleware]**
      -
+   * - ``enable_proxy_headers_parsing`` = ``False``
+     - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
    * - **[oslo_versionedobjects]**
      -
    * - ``fatal_exception_format_errors`` = ``False``

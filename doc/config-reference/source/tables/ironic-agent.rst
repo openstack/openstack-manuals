@@ -20,12 +20,16 @@
      -
    * - ``agent_api_version`` = ``v1``
      - (String) API version to use for communicating with the ramdisk agent.
-   * - ``agent_pxe_append_params`` = ``nofb nomodeset vga=normal``
-     - (String) DEPRECATED. Additional append parameters for baremetal PXE boot. This option is deprecated and will be removed in Mitaka release. Please use [pxe]pxe_append_params instead.
-   * - ``agent_pxe_config_template`` = ``$pybasedir/drivers/modules/agent_config.template``
-     - (String) DEPRECATED. Template file for PXE configuration. This option is deprecated and will be removed in Mitaka release. Please use [pxe]pxe_config_template instead.
-   * - ``heartbeat_timeout`` = ``300``
-     - (Integer) Maximum interval (in seconds) for agent heartbeats.
+   * - ``deploy_logs_collect`` = ``on_failure``
+     - (String) Whether Ironic should collect the deployment logs on deployment failure (on_failure), always or never.
+   * - ``deploy_logs_local_path`` = ``/var/log/ironic/deploy``
+     - (String) The path to the directory where the logs should be stored, used when the deploy_logs_storage_backend is configured to "local".
+   * - ``deploy_logs_storage_backend`` = ``local``
+     - (String) The name of the storage backend where the logs will be stored.
+   * - ``deploy_logs_swift_container`` = ``ironic_deploy_logs_container``
+     - (String) The name of the Swift container to store the logs, used when the deploy_logs_storage_backend is configured to "swift".
+   * - ``deploy_logs_swift_days_to_expire`` = ``30``
+     - (Integer) Number of days before a log object is marked as expired in Swift. If None, the logs will be kept forever or until manually deleted. Used when the deploy_logs_storage_backend is configured to "swift".
    * - ``manage_agent_boot`` = ``True``
      - (Boolean) Whether Ironic will manage booting of the agent ramdisk. If set to False, you will need to configure your mechanism to allow booting the agent ramdisk.
    * - ``memory_consumed_by_agent`` = ``0``

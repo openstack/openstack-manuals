@@ -8,17 +8,15 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _ironic-amqp:
+.. _ironic-drac:
 
-.. list-table:: Description of AMQP configuration options
+.. list-table:: Description of DRAC configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
+   * - **[drac]**
      -
-   * - ``control_exchange`` = ``openstack``
-     - (String) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.
-   * - ``transport_url`` = ``None``
-     - (String) A URL representing the messaging driver to use and its full configuration.
+   * - ``query_raid_config_job_status_interval`` = ``120``
+     - (Integer) Interval (in seconds) between periodic RAID job status checks to determine whether the asynchronous RAID configuration was successfully finished or not.
