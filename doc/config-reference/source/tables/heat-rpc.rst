@@ -21,7 +21,7 @@
    * - ``engine_life_check_timeout`` = ``2``
      - (Integer) RPC timeout for the engine liveness check that is used for stack locking.
    * - ``rpc_backend`` = ``rabbit``
-     - (String) The messaging driver to use, defaults to rabbit. Other drivers include amqp and zmq.
+     - (String) DEPRECATED: The messaging driver to use, defaults to rabbit. Other drivers include amqp and zmq. Replaced by [DEFAULT]/transport_url
    * - ``rpc_cast_timeout`` = ``-1``
      - (Integer) Seconds to wait before a cast expires (TTL). The default value of -1 specifies an infinite linger period. The value of 0 specifies no linger period. Pending messages shall be discarded immediately when the socket is closed. Only supported by impl_zmq.
    * - ``rpc_conn_pool_size`` = ``30``
@@ -38,18 +38,52 @@
      - (String) Directory to use for lock files. For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.
    * - **[oslo_messaging_amqp]**
      -
+   * - ``addressing_mode`` = ``dynamic``
+     - (String) Indicates the addressing mode used by the driver. Permitted values: 'legacy' - use legacy non-routable addressing 'routable' - use routable addresses 'dynamic' - use legacy addresses if the message bus does not support routing otherwise use routable addressing
    * - ``allow_insecure_clients`` = ``False``
      - (Boolean) Accept clients using either SSL or plain TCP
+   * - ``anycast_address`` = ``anycast``
+     - (String) Appended to the address prefix when sending to a group of consumers. Used by the message bus to identify messages that should be delivered in a round-robin fashion across consumers.
    * - ``broadcast_prefix`` = ``broadcast``
      - (String) address prefix used when broadcasting to all servers
+   * - ``connection_retry_backoff`` = ``2``
+     - (Integer) Increase the connection_retry_interval by this many seconds after each unsuccessful failover attempt.
+   * - ``connection_retry_interval`` = ``1``
+     - (Integer) Seconds to pause before attempting to re-connect.
+   * - ``connection_retry_interval_max`` = ``30``
+     - (Integer) Maximum limit for connection_retry_interval + connection_retry_backoff
    * - ``container_name`` = ``None``
-     - (String) Name for the AMQP container
+     - (String) Name for the AMQP container. must be globally unique. Defaults to a generated UUID
+   * - ``default_notification_exchange`` = ``None``
+     - (String) Exchange name used in notification addresses. Exchange name resolution precedence: Target.exchange if set else default_notification_exchange if set else control_exchange if set else 'notify'
+   * - ``default_notify_timeout`` = ``30``
+     - (Integer) The deadline for a sent notification message delivery. Only used when caller does not provide a timeout expiry.
+   * - ``default_reply_timeout`` = ``30``
+     - (Integer) The deadline for an rpc reply message delivery. Only used when caller does not provide a timeout expiry.
+   * - ``default_rpc_exchange`` = ``None``
+     - (String) Exchange name used in RPC addresses. Exchange name resolution precedence: Target.exchange if set else default_rpc_exchange if set else control_exchange if set else 'rpc'
+   * - ``default_send_timeout`` = ``30``
+     - (Integer) The deadline for an rpc cast or call message delivery. Only used when caller does not provide a timeout expiry.
    * - ``group_request_prefix`` = ``unicast``
      - (String) address prefix when sending to any server in group
    * - ``idle_timeout`` = ``0``
      - (Integer) Timeout for inactive connections (in seconds)
+   * - ``link_retry_delay`` = ``10``
+     - (Integer) Time to pause between re-connecting an AMQP 1.0 link that failed due to a recoverable error.
+   * - ``multicast_address`` = ``multicast``
+     - (String) Appended to the address prefix when sending a fanout message. Used by the message bus to identify fanout messages.
+   * - ``notify_address_prefix`` = ``openstack.org/om/notify``
+     - (String) Address prefix for all generated Notification addresses
+   * - ``notify_server_credit`` = ``100``
+     - (Integer) Window size for incoming Notification messages
    * - ``password`` =
      - (String) Password for message broker authentication
+   * - ``reply_link_credit`` = ``200``
+     - (Integer) Window size for incoming RPC Reply messages.
+   * - ``rpc_address_prefix`` = ``openstack.org/om/rpc``
+     - (String) Address prefix for all generated RPC addresses
+   * - ``rpc_server_credit`` = ``100``
+     - (Integer) Window size for incoming RPC Request messages
    * - ``sasl_config_dir`` =
      - (String) Path to directory that contains the SASL configuration
    * - ``sasl_config_name`` =
@@ -68,6 +102,8 @@
      - (String) Password for decrypting ssl_key_file (if encrypted)
    * - ``trace`` = ``False``
      - (Boolean) Debug: dump AMQP frames to stdout
+   * - ``unicast_address`` = ``unicast``
+     - (String) Appended to the address prefix when sending to a particular RPC/Notification server. Used by the message bus to identify messages sent to a single destination.
    * - ``username`` =
      - (String) User name for message broker authentication
    * - **[oslo_messaging_notifications]**

@@ -18,7 +18,7 @@
      - Description
    * - **[trustee]**
      -
-   * - ``auth_plugin`` = ``None``
-     - (String) Name of the plugin to load
    * - ``auth_section`` = ``None``
-     - (String) Config Section from which to load plugin specific options
+     - (Unknown) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Unknown) Authentication type to load

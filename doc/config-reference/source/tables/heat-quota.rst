@@ -24,6 +24,8 @@
      - (Integer) Maximum depth allowed when using nested stacks.
    * - ``max_resources_per_stack`` = ``1000``
      - (Integer) Maximum resources allowed per top-level stack. -1 stands for unlimited.
+   * - ``max_server_name_length`` = ``53``
+     - (Integer) Maximum length of a server name to be used in nova.
    * - ``max_stacks_per_tenant`` = ``100``
      - (Integer) Maximum number of stacks any one tenant may have active at one time.
    * - ``max_template_size`` = ``524288``

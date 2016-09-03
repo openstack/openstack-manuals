@@ -39,7 +39,7 @@
    * - ``max_json_body_size`` = ``1048576``
      - (Integer) Maximum raw byte size of JSON request body. Should be larger than max_template_size.
    * - ``num_engine_workers`` = ``None``
-     - (Integer) Number of heat-engine processes to fork and run.
+     - (Integer) Number of heat-engine processes to fork and run. Will default to either to 4 or number of CPUs on the host, whichever is greater.
    * - ``observe_on_update`` = ``False``
      - (Boolean) On update, enables heat to collect existing resource properties from reality and converge to updated template.
    * - ``stack_action_timeout`` = ``3600``
@@ -49,7 +49,7 @@
    * - ``stack_domain_admin_password`` = ``None``
      - (String) Keystone password for stack_domain_admin user.
    * - ``stack_scheduler_hints`` = ``False``
-     - (Boolean) When this feature is enabled, scheduler hints identifying the heat stack context of a server or volume resource are passed to the configured schedulers in nova and cinder, for creates done using heat resource types OS::Cinder::Volume, OS::Nova::Server, and AWS::EC2::Instance. heat_root_stack_id will be set to the id of the root stack of the resource, heat_stack_id will be set to the id of the resource's parent stack, heat_stack_name will be set to the name of the resource's parent stack, heat_path_in_stack will be set to a list of tuples, (stackresourcename, stackname) with list[0] being (None, rootstackname), heat_resource_name will be set to the resource's name, and heat_resource_uuid will be set to the resource's orchestration id.
+     - (Boolean) When this feature is enabled, scheduler hints identifying the heat stack context of a server or volume resource are passed to the configured schedulers in nova and cinder, for creates done using heat resource types OS::Cinder::Volume, OS::Nova::Server, and AWS::EC2::Instance. heat_root_stack_id will be set to the id of the root stack of the resource, heat_stack_id will be set to the id of the resource's parent stack, heat_stack_name will be set to the name of the resource's parent stack, heat_path_in_stack will be set to a list of comma delimited strings of stackresourcename and stackname with list[0] being 'rootstackname', heat_resource_name will be set to the resource's name, and heat_resource_uuid will be set to the resource's orchestration id.
    * - ``stack_user_domain_id`` = ``None``
      - (String) Keystone domain ID which contains heat template-defined users. If this option is set, stack_user_domain_name option will be ignored.
    * - ``stack_user_domain_name`` = ``None``
@@ -106,10 +106,12 @@
      - (Integer) Number of workers for Heat service. Default value 0 means, that service will start number of workers equal number of cores on server.
    * - **[oslo_middleware]**
      -
+   * - ``enable_proxy_headers_parsing`` = ``False``
+     - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
    * - **[oslo_versionedobjects]**
      -
    * - ``fatal_exception_format_errors`` = ``False``
