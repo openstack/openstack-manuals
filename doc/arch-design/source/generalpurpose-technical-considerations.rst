@@ -86,7 +86,7 @@ segment providing access to particular resources. The network services
 themselves also require network communication paths which should be
 separated from the other networks. When designing network services for a
 general purpose cloud, plan for either a physical or logical separation
-of network segments used by operators and tenants. You can also create
+of network segments used by operators and projects. You can also create
 an additional network segment for access to internal services such as
 the message bus and database used by various services. Segregating these
 services onto separate networks helps to protect sensitive data and
@@ -105,18 +105,18 @@ Legacy networking (nova-network)
 
  When the network devices in the cloud support segmentation using
  VLANs, legacy networking can operate in the second mode. In this
- design model, each tenant within the cloud is assigned a network
+ design model, each project within the cloud is assigned a network
  subnet which is mapped to a VLAN on the physical network. It is
  especially important to remember the maximum number of 4096 VLANs
  which can be used within a spanning tree domain. This places a hard
  limit on the amount of growth possible within the data center. When
  designing a general purpose cloud intended to support multiple
- tenants, we recommend the use of legacy networking with VLANs, and
+ projects, we recommend the use of legacy networking with VLANs, and
  not in flat network mode.
 
 Another consideration regarding network is the fact that legacy
-networking is entirely managed by the cloud operator; tenants do not
-have control over network resources. If tenants require the ability to
+networking is entirely managed by the cloud operator; projects do not
+have control over network resources. If projects require the ability to
 manage and create network resources such as network segments and
 subnets, it will be necessary to install the OpenStack Networking
 service to provide network access to instances.
@@ -124,9 +124,9 @@ service to provide network access to instances.
 Networking (neutron)
  OpenStack Networking (neutron) is a first class networking service
  that gives full control over creation of virtual network resources
- to tenants. This is often accomplished in the form of tunneling
+ to projects. This is often accomplished in the form of tunneling
  protocols which will establish encapsulated communication paths over
- existing network infrastructure in order to segment tenant traffic.
+ existing network infrastructure in order to segment project traffic.
  These methods vary depending on the specific implementation, but
  some of the more common methods include tunneling over GRE,
  encapsulating with VXLAN, and VLAN tags.
@@ -134,7 +134,7 @@ Networking (neutron)
 We recommend you design at least three network segments:
 
 * The first segment is a public network, used for access to REST APIs
-  by tenants and operators. The controller nodes and swift proxies are
+  by projects and operators. The controller nodes and swift proxies are
   the only devices connecting to this network segment. In some cases,
   this network might also be serviced by hardware load balancers and
   other network devices.
@@ -204,10 +204,10 @@ Designing Block Storage
 When designing OpenStack Block Storage resource nodes, it is helpful to
 understand the workloads and requirements that will drive the use of
 block storage in the cloud. We recommend designing block storage pools
-so that tenants can choose appropriate storage solutions for their
+so that projects can choose appropriate storage solutions for their
 applications. By creating multiple storage pools of different types, in
 conjunction with configuring an advanced storage scheduler for the block
-storage service, it is possible to provide tenants with a large catalog
+storage service, it is possible to provide projects with a large catalog
 of storage services with a variety of performance levels and redundancy
 options.
 
@@ -218,7 +218,7 @@ ship out-of-the-box with OpenStack Block Storage (and many more
 available via third party channels). General purpose clouds are more
 likely to use directly attached storage in the majority of block storage
 nodes, deeming it necessary to provide additional levels of service to
-tenants which can only be provided by enterprise class storage
+projects which can only be provided by enterprise class storage
 solutions.
 
 Redundancy and availability requirements impact the decision to use a
@@ -580,7 +580,7 @@ instance is public, private, or hybrid.
   domain to be untrusted. Private cloud providers may want to consider
   this network as internal and therefore trusted only if they have
   controls in place to assert that they trust instances and all their
-  tenants.
+  projects.
 
 * The management security domain is where services interact. Sometimes
   referred to as the control plane, the networks in this domain

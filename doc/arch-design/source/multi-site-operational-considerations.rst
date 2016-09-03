@@ -103,10 +103,10 @@ Quota management
 
 Quotas are used to set operational limits to prevent system capacities
 from being exhausted without notification. They are currently enforced
-at the tenant (or project) level rather than at the user level.
+at the project level rather than at the user level.
 
 Quotas are defined on a per-region basis. Operators can define identical
-quotas for tenants in each region of the cloud to provide a consistent
+quotas for projects in each region of the cloud to provide a consistent
 experience, or even create a process for synchronizing allocated quotas
 across regions. It is important to note that only the operational limits
 imposed by the quotas will be aligned consumption of quotas by users

@@ -25,7 +25,7 @@ network resources increase, operators add additional IP address blocks
 and add additional bandwidth capacity. In addition, consider managing
 hardware and software lifecycle events, for example upgrades,
 decommissioning, and outages, while avoiding service interruptions for
-tenants.
+projects.
 
 Factor maintainability into the overall network design. This includes
 the ability to manage and maintain IP addresses as well as the use of
@@ -43,7 +43,7 @@ follow best practices for storing IP addresses. We recommend you avoid
 relying on IPv4 features that did not carry over to the IPv6 protocol or
 have differences in implementation.
 
-To segregate traffic, allow applications to create a private tenant
+To segregate traffic, allow applications to create a private project
 network for database and storage network traffic. Use a public network
 for services that require direct client access from the internet. Upon
 segregating the traffic, consider :term:`quality of service (QoS)` and

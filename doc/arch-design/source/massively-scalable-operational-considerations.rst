@@ -67,7 +67,7 @@ Growth and capacity planning
 An important consideration in running at massive scale is projecting growth
 and utilization trends in order to plan capital expenditures for the short and
 long term. Gather utilization meters for compute, network, and storage, along
-with historical records of these meters. While securing major anchor tenants
+with historical records of these meters. While securing major anchor projects
 can lead to rapid jumps in the utilization rates of all resources, the steady
 adoption of the cloud inside an organization or by consumers in a public
 offering also creates a steady trend of increased utilization.

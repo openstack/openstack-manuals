@@ -100,7 +100,7 @@ characteristics. When deploying multiple pools of storage it is also
 important to consider the impact on the Block Storage scheduler which is
 responsible for provisioning storage across resource nodes. Ensuring
 that applications can schedule volumes in multiple regions, each with
-their own network, power, and cooling infrastructure, can give tenants
+their own network, power, and cooling infrastructure, can give projects
 the ability to build fault tolerant applications that are distributed
 across multiple availability zones.
 
@@ -116,7 +116,7 @@ and storing the state of Block Storage volumes. We also recommend
 designing a highly available database solution to store the Block
 Storage databases. Leverage highly available database solutions such as
 Galera and MariaDB to help keep database services online for
-uninterrupted access, so that tenants can manage Block Storage volumes.
+uninterrupted access, so that projects can manage Block Storage volumes.
 
 In a cloud with extreme demands on Block Storage, the network
 architecture should take into account the amount of East-West bandwidth
@@ -198,7 +198,7 @@ installing and configuring the appropriate hardware and software and
 then allowing that node to report in to the proper storage pool via the
 message bus. This is because Block Storage nodes report into the
 scheduler service advertising their availability. After the node is
-online and available, tenants can make use of those storage resources
+online and available, projects can make use of those storage resources
 instantly.
 
 In some cases, the demand on Block Storage from instances may exhaust
@@ -232,15 +232,15 @@ As you add back-end storage capacity to the system, the partition maps
 redistribute data amongst the storage nodes. In some cases, this
 replication consists of extremely large data sets. In these cases, we
 recommend using back-end replication links that do not contend with
-tenants' access to data.
+projects' access to data.
 
-As more tenants begin to access data within the cluster and their data
+As more projects begin to access data within the cluster and their data
 sets grow, it is necessary to add front-end bandwidth to service data
 access requests. Adding front-end bandwidth to an Object Storage cluster
 requires careful planning and design of the Object Storage proxies that
-tenants use to gain access to the data, along with the high availability
+projects use to gain access to the data, along with the high availability
 solutions that enable easy scaling of the proxy layer. We recommend
-designing a front-end load balancing layer that tenants and consumers
+designing a front-end load balancing layer that projects and consumers
 use to gain access to data stored within the cluster. This load
 balancing layer may be distributed across zones, regions or even across
 geographic boundaries, which may also require that the design encompass
