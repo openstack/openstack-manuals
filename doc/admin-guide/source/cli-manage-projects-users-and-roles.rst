@@ -66,13 +66,17 @@ Create a project named ``new-project``:
 .. code-block:: console
 
    $ openstack project create --description 'my new project' new-project
+     --domain default
    +-------------+----------------------------------+
    | Field       | Value                            |
    +-------------+----------------------------------+
    | description | my new project                   |
+   | domain_id   | e601210181f54843b51b3edff41d4980 |
    | enabled     | True                             |
    | id          | 1a4a0618b306462c9830f876b0bd6af2 |
+   | is_domain   | False                            |
    | name        | new-project                      |
+   | parent_id   | e601210181f54843b51b3edff41d4980 |
    +-------------+----------------------------------+
 
 Update a project

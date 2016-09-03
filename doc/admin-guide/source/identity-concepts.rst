@@ -103,7 +103,7 @@ Identity user management examples:
 
   .. code-block:: console
 
-     $ openstack project create acme
+     $ openstack project create acme --domain default
 
 * Create a domain named ``emea``:
 
