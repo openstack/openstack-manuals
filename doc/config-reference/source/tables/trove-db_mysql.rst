@@ -24,12 +24,16 @@
      - (String) Namespace to load backup strategies from.
    * - ``backup_strategy`` = ``InnoBackupEx``
      - (String) Default strategy to perform backups.
+   * - ``default_password_length`` = ``36``
+     - (Integer) Character length of generated passwords.
    * - ``device_path`` = ``/dev/vdb``
      - (String) Device path for volume if volume support is enabled.
    * - ``guest_log_exposed_logs`` = ``general,slow_query``
      - (String) List of Guest Logs to expose for publishing.
    * - ``guest_log_long_query_time`` = ``1000``
      - (Integer) The time in milliseconds that a statement must take in in order to be logged in the slow_query log.
+   * - ``icmp`` = ``False``
+     - (Boolean) Whether to permit ICMP.
    * - ``ignore_dbs`` = ``mysql, information_schema, performance_schema``
      - (List) Databases to exclude when listing databases.
    * - ``ignore_users`` = ``os_admin, root``

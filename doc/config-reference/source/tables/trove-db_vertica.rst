@@ -30,12 +30,16 @@
      - (Integer) Number of members in Vertica cluster.
    * - ``cluster_support`` = ``True``
      - (Boolean) Enable clusters to be created and managed.
+   * - ``default_password_length`` = ``36``
+     - (Integer) Character length of generated passwords.
    * - ``device_path`` = ``/dev/vdb``
      - (String) Device path for volume if volume support is enabled.
    * - ``guest_log_exposed_logs`` =
      - (String) List of Guest Logs to expose for publishing.
    * - ``guestagent_strategy`` = ``trove.common.strategies.cluster.experimental.vertica.guestagent.VerticaGuestAgentStrategy``
      - (String) Class that implements datastore-specific Guest Agent API logic.
+   * - ``icmp`` = ``False``
+     - (Boolean) Whether to permit ICMP.
    * - ``min_ksafety`` = ``0``
      - (Integer) Minimum k-safety setting permitted for vertica clusters
    * - ``mount_point`` = ``/var/lib/vertica``

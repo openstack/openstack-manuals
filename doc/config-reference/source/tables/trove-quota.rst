@@ -18,13 +18,13 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``max_accepted_volume_size`` = ``5``
+   * - ``max_accepted_volume_size`` = ``10``
      - (Integer) Default maximum volume size (in GB) for an instance.
    * - ``max_backups_per_tenant`` = ``50``
      - (Integer) Default maximum number of backups created by a tenant.
-   * - ``max_instances_per_tenant`` = ``5``
+   * - ``max_instances_per_tenant`` = ``10``
      - (Integer) Default maximum number of instances per tenant.
-   * - ``max_volumes_per_tenant`` = ``20``
+   * - ``max_volumes_per_tenant`` = ``40``
      - (Integer) Default maximum volume capacity (in GB) spanning across all Trove volumes per tenant.
    * - ``quota_driver`` = ``trove.quota.quota.DbQuotaDriver``
      - (String) Default driver to use for quota checks.

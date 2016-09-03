@@ -57,7 +57,7 @@
    * - ``trove_api_workers`` = ``None``
      - (Integer) Number of workers for the API service. The default will be the number of CPUs available.
    * - ``trove_auth_url`` = ``http://0.0.0.0:5000/v2.0``
-     - (String) Trove authentication URL.
+     - (Unknown) Trove authentication URL.
    * - ``trove_conductor_workers`` = ``None``
      - (Integer) Number of workers for the Conductor service. The default will be the number of CPUs available.
    * - ``trove_security_group_name_prefix`` = ``SecGroup``
@@ -70,7 +70,9 @@
      - (Integer) Page size for listing users.
    * - **[oslo_middleware]**
      -
+   * - ``enable_proxy_headers_parsing`` = ``False``
+     - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.

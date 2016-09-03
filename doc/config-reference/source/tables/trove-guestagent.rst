@@ -18,9 +18,9 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``agent_call_high_timeout`` = ``60``
+   * - ``agent_call_high_timeout`` = ``600``
      - (Integer) Maximum time (in seconds) to wait for Guest Agent 'slow' requests (such as restarting the database).
-   * - ``agent_call_low_timeout`` = ``5``
+   * - ``agent_call_low_timeout`` = ``15``
      - (Integer) Maximum time (in seconds) to wait for Guest Agent 'quick'requests (such as retrieving a list of users or databases).
    * - ``agent_heartbeat_expiry`` = ``60``
      - (Integer) Time (in seconds) after which a guest is considered unreachable
