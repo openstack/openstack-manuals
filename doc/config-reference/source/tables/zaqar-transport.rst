@@ -44,5 +44,5 @@
      - (Integer) Defines the maximum number of queues per page.
    * - ``max_subscriptions_per_page`` = ``20``
      - (Integer) Defines the maximum number of subscriptions per page.
-   * - ``subscriber_types`` = ``http, https, mailto``
+   * - ``subscriber_types`` = ``http, https, mailto, trust+http, trust+https``
      - (List) Defines supported subscriber types.
