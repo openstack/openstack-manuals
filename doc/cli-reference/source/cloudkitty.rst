@@ -9,7 +9,7 @@ Rating service command-line client
 The cloudkitty client is the command-line interface (CLI) for
 the Rating service API and its extensions.
 
-This chapter documents :command:`cloudkitty` version ``0.5.0``.
+This chapter documents :command:`cloudkitty` version ``0.6.0``.
 
 For help on a specific :command:`cloudkitty` command, enter:
 
@@ -273,123 +273,123 @@ cloudkitty optional arguments
 .. _cloudkitty_collector-mapping-create:
 
 cloudkitty collector-mapping-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty collector-mapping-create --collector COLLECTOR --service
-                                              SERVICE
+   usage: cloudkitty collector-mapping-create -c COLLECTOR -s SERVICE
 
 Create collector mapping.
 
 **Optional arguments:**
 
-``--collector COLLECTOR``
+``-c COLLECTOR, --collector COLLECTOR``
   Map a service to this collector. required.
 
-``--service SERVICE``
+``-s SERVICE, --service SERVICE``
   Map a collector to this service. required.
 
 .. _cloudkitty_collector-mapping-delete:
 
 cloudkitty collector-mapping-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty collector-mapping-delete --service SERVICE
+   usage: cloudkitty collector-mapping-delete -s SERVICE
 
 Delete collector mapping.
 
 **Optional arguments:**
 
-``--service SERVICE``
+``-s SERVICE, --service SERVICE``
   Filter on this service. required.
 
 .. _cloudkitty_collector-mapping-get:
 
 cloudkitty collector-mapping-get
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty collector-mapping-get --service SERVICE
+   usage: cloudkitty collector-mapping-get -s SERVICE
 
 Show collector mapping detail.
 
 **Optional arguments:**
 
-``--service SERVICE``
-  Which service to get the mapping for. required.
+``-s SERVICE, --service SERVICE``
+  Which service to get the mapping for.
+  required.
 
 .. _cloudkitty_collector-mapping-list:
 
 cloudkitty collector-mapping-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty collector-mapping-list [--collector COLLECTOR]
+   usage: cloudkitty collector-mapping-list [-c COLLECTOR]
 
 List collector mapping.
 
 **Optional arguments:**
 
-``--collector COLLECTOR``
+``-c COLLECTOR, --collector COLLECTOR``
   Collector name to filter on. Defaults to None.
 
 .. _cloudkitty_collector-state-disable:
 
 cloudkitty collector-state-disable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty collector-state-disable --name NAME
+   usage: cloudkitty collector-state-disable -n NAME
 
 Disable collector state.
 
 **Optional arguments:**
 
-``--name NAME``
+``-n NAME, --name NAME``
   Name of the collector. required.
 
 .. _cloudkitty_collector-state-enable:
 
 cloudkitty collector-state-enable
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty collector-state-enable --name NAME
+   usage: cloudkitty collector-state-enable -n NAME
 
 Enable collector state.
 
 **Optional arguments:**
 
-``--name NAME``
+``-n NAME, --name NAME``
   Name of the collector. required.
 
 .. _cloudkitty_collector-state-get:
 
 cloudkitty collector-state-get
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty collector-state-get --name NAME
+   usage: cloudkitty collector-state-get -n NAME
 
 Show collector state.
 
 **Optional arguments:**
 
-``--name NAME``
+``-n NAME, --name NAME``
   Name of the collector. required.
 
 .. _cloudkitty_hashmap-field-create:
 
 cloudkitty hashmap-field-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -408,7 +408,7 @@ Create a field.
 .. _cloudkitty_hashmap-field-delete:
 
 cloudkitty hashmap-field-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -424,7 +424,7 @@ Delete a field.
 .. _cloudkitty_hashmap-field-list:
 
 cloudkitty hashmap-field-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -440,7 +440,7 @@ List fields.
 .. _cloudkitty_hashmap-group-create:
 
 cloudkitty hashmap-group-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -456,7 +456,7 @@ Create a group.
 .. _cloudkitty_hashmap-group-delete:
 
 cloudkitty hashmap-group-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -475,7 +475,7 @@ Delete a group.
 .. _cloudkitty_hashmap-group-list:
 
 cloudkitty hashmap-group-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -486,12 +486,13 @@ List groups.
 .. _cloudkitty_hashmap-mapping-create:
 
 cloudkitty hashmap-mapping-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
    usage: cloudkitty hashmap-mapping-create [-s SERVICE_ID] [-f FIELD_ID] -c COST
                                             [-v VALUE] [-t TYPE] [-g GROUP_ID]
+                                            [-p PROJECT_ID]
 
 Create a mapping.
 
@@ -515,10 +516,13 @@ Create a mapping.
 ``-g GROUP_ID, --group-id GROUP_ID``
   Group id.
 
+``-p PROJECT_ID, --project-id PROJECT_ID``
+  Project/tenant id.
+
 .. _cloudkitty_hashmap-mapping-delete:
 
 cloudkitty hashmap-mapping-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -534,12 +538,12 @@ Delete a mapping.
 .. _cloudkitty_hashmap-mapping-list:
 
 cloudkitty hashmap-mapping-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
    usage: cloudkitty hashmap-mapping-list [-s SERVICE_ID] [-f FIELD_ID]
-                                          [-g GROUP_ID]
+                                          [-g GROUP_ID] [-p PROJECT_ID]
 
 List mappings.
 
@@ -554,15 +558,19 @@ List mappings.
 ``-g GROUP_ID, --group-id GROUP_ID``
   Group id.
 
+``-p PROJECT_ID, --project-id PROJECT_ID``
+  Project/tenant id.
+
 .. _cloudkitty_hashmap-mapping-update:
 
 cloudkitty hashmap-mapping-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
    usage: cloudkitty hashmap-mapping-update -m MAPPING_ID [-c COST] [-v VALUE]
                                             [-t TYPE] [-g GROUP_ID]
+                                            [-p PROJECT_ID]
 
 Update a mapping.
 
@@ -583,10 +591,13 @@ Update a mapping.
 ``-g GROUP_ID, --group-id GROUP_ID``
   Group id.
 
+``-p PROJECT_ID, --project-id PROJECT_ID``
+  Project/tenant id.
+
 .. _cloudkitty_hashmap-service-create:
 
 cloudkitty hashmap-service-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -602,7 +613,7 @@ Create a service.
 .. _cloudkitty_hashmap-service-delete:
 
 cloudkitty hashmap-service-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -618,7 +629,7 @@ Delete a service.
 .. _cloudkitty_hashmap-service-list:
 
 cloudkitty hashmap-service-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -629,13 +640,13 @@ List services.
 .. _cloudkitty_hashmap-threshold-create:
 
 cloudkitty hashmap-threshold-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
    usage: cloudkitty hashmap-threshold-create [-s SERVICE_ID] [-f FIELD_ID] -l
-                                              LEVEL -c COST [-m MAP_TYPE]
-                                              [-g GROUP_ID]
+                                              LEVEL -c COST [-t TYPE]
+                                              [-g GROUP_ID] [-p PROJECT_ID]
 
 Create a mapping.
 
@@ -653,70 +664,74 @@ Create a mapping.
 ``-c COST, --cost COST``
   Threshold cost required.
 
-``-m MAP_TYPE, --map-type MAP_TYPE``
+``-t TYPE, --type TYPE``
   Threshold type (flat, rate).
 
 ``-g GROUP_ID, --group-id GROUP_ID``
   Group id.
 
+``-p PROJECT_ID, --project-id PROJECT_ID``
+  Project/tenant id.
+
 .. _cloudkitty_hashmap-threshold-delete:
 
 cloudkitty hashmap-threshold-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty hashmap-threshold-delete -t THRESHOLD_ID
+   usage: cloudkitty hashmap-threshold-delete -i THRESHOLD_ID
 
 Delete a threshold.
 
 **Optional arguments:**
 
-``-t THRESHOLD_ID, --threshold-id THRESHOLD_ID``
+``-i THRESHOLD_ID, --threshold-id THRESHOLD_ID``
   Threshold uuid required.
 
 .. _cloudkitty_hashmap-threshold-get:
 
 cloudkitty hashmap-threshold-get
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty hashmap-threshold-get -t THRESHOLD_ID
+   usage: cloudkitty hashmap-threshold-get -i THRESHOLD_ID
 
 Get a threshold.
 
 **Optional arguments:**
 
-``-t THRESHOLD_ID, --threshold-id THRESHOLD_ID``
+``-i THRESHOLD_ID, --threshold-id THRESHOLD_ID``
   Threshold uuid required.
 
 .. _cloudkitty_hashmap-threshold-group:
 
 cloudkitty hashmap-threshold-group
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty hashmap-threshold-group -t THRESHOLD_ID
+   usage: cloudkitty hashmap-threshold-group -i THRESHOLD_ID
 
 Get a threshold group.
 
 **Optional arguments:**
 
-``-t THRESHOLD_ID, --threshold-id THRESHOLD_ID``
+``-i THRESHOLD_ID, --threshold-id THRESHOLD_ID``
   Threshold uuid required.
 
 .. _cloudkitty_hashmap-threshold-list:
 
 cloudkitty hashmap-threshold-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
    usage: cloudkitty hashmap-threshold-list [-s SERVICE_ID] [-f FIELD_ID]
                                             [-g GROUP_ID]
                                             [--no-group {True,False}]
+                                            [-p PROJECT_ID]
 
 List thresholds.
 
@@ -734,22 +749,25 @@ List thresholds.
 ``--no-group {True,False}``
   If True, list only orhpaned thresholds.
 
+``-p PROJECT_ID, --project-id PROJECT_ID``
+  Project/tenant id.
+
 .. _cloudkitty_hashmap-threshold-update:
 
 cloudkitty hashmap-threshold-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 .. code-block:: console
 
-   usage: cloudkitty hashmap-threshold-update -t THRESHOLD_ID [-l LEVEL]
-                                              [-c COST] [-m MAP_TYPE]
-                                              [-g GROUP_ID]
+   usage: cloudkitty hashmap-threshold-update -i THRESHOLD_ID [-l LEVEL]
+                                              [-c COST] [-t TYPE] [-g GROUP_ID]
+                                              [-p PROJECT_ID]
 
 Update a threshold.
 
 **Optional arguments:**
 
-``-t THRESHOLD_ID, --threshold-id THRESHOLD_ID``
+``-i THRESHOLD_ID, --threshold-id THRESHOLD_ID``
   Threshold id required.
 
 ``-l LEVEL, --level LEVEL``
@@ -758,16 +776,19 @@ Update a threshold.
 ``-c COST, --cost COST``
   Threshold cost.
 
-``-m MAP_TYPE, --map-type MAP_TYPE``
+``-t TYPE, --type TYPE``
   Threshold type (flat, rate).
 
 ``-g GROUP_ID, --group-id GROUP_ID``
   Group id.
 
+``-p PROJECT_ID, --project-id PROJECT_ID``
+  Project/tenant id.
+
 .. _cloudkitty_module-disable:
 
 cloudkitty module-disable
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. code-block:: console
 
@@ -783,7 +804,7 @@ Disable a module.
 .. _cloudkitty_module-enable:
 
 cloudkitty module-enable
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 .. code-block:: console
 
@@ -799,7 +820,7 @@ Enable a module.
 .. _cloudkitty_module-list:
 
 cloudkitty module-list
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 .. code-block:: console
 
@@ -810,7 +831,7 @@ List the samples for this meters.
 .. _cloudkitty_pyscripts-script-create:
 
 cloudkitty pyscripts-script-create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -829,7 +850,7 @@ Create a script.
 .. _cloudkitty_pyscripts-script-delete:
 
 cloudkitty pyscripts-script-delete
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -845,7 +866,7 @@ Delete a script.
 .. _cloudkitty_pyscripts-script-get:
 
 cloudkitty pyscripts-script-get
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 .. code-block:: console
 
@@ -861,7 +882,7 @@ Get script.
 .. _cloudkitty_pyscripts-script-get-data:
 
 cloudkitty pyscripts-script-get-data
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 .. code-block:: console
 
@@ -877,7 +898,7 @@ Get script data.
 .. _cloudkitty_pyscripts-script-list:
 
 cloudkitty pyscripts-script-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------
 
 .. code-block:: console
 
@@ -893,7 +914,7 @@ List scripts.
 .. _cloudkitty_pyscripts-script-update:
 
 cloudkitty pyscripts-script-update
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 .. code-block:: console
 
@@ -912,7 +933,7 @@ Update a mapping.
 .. _cloudkitty_report-tenant-list:
 
 cloudkitty report-tenant-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 .. code-block:: console
 
@@ -923,7 +944,7 @@ List tenant report.
 .. _cloudkitty_storage-dataframe-list:
 
 cloudkitty storage-dataframe-list
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. code-block:: console
 
@@ -953,7 +974,7 @@ List dataframes.
 .. _cloudkitty_total-get:
 
 cloudkitty total-get
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. code-block:: console
 
