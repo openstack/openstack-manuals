@@ -7,6 +7,9 @@
 # From neutron.vpnaas.agent
 #
 
+# Location to store ipsec server config files (string value)
+#config_base_dir = $state_path/ipsec
+
 # Interval for checking ipsec status (integer value)
 #ipsec_status_check_interval = 60
 
@@ -16,19 +19,12 @@
 # (boolean value)
 #enable_detailed_logging = false
 
-# Location to store ipsec server config files (string value)
-#config_base_dir = $state_path/ipsec
-
 
 [pluto]
 
 #
 # From neutron.vpnaas.agent
 #
-
-# A factor to increase the retry interval for each retry (floating point value)
-# Deprecated group/name - [libreswan]/shutdown_check_back_off
-#shutdown_check_back_off = 1.5
 
 # Initial interval in seconds for checking if pluto daemon is shutdown (integer
 # value)
@@ -40,6 +36,14 @@
 # Deprecated group/name - [libreswan]/shutdown_check_retries
 #shutdown_check_retries = 5
 
+# A factor to increase the retry interval for each retry (floating point value)
+# Deprecated group/name - [libreswan]/shutdown_check_back_off
+#shutdown_check_back_off = 1.5
+
+# Enable this flag to avoid from unnecessary restart (boolean value)
+# Deprecated group/name - [libreswan]/restart_check_config
+#restart_check_config = false
+
 
 [strongswan]
 
@@ -47,18 +51,18 @@
 # From neutron.vpnaas.agent
 #
 
-# Template file for ipsec secret configuration. (string value)
-#ipsec_secret_template = /home/venkatamahesh/programs/openstack/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/strongswan/ipsec.secret.template
+# Template file for ipsec configuration. (string value)
+#ipsec_config_template = /home/openstack/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/strongswan/ipsec.conf.template
 
 # Template file for strongswan configuration. (string value)
-#strongswan_config_template = /home/venkatamahesh/programs/openstack/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/strongswan/strongswan.conf.template
+#strongswan_config_template = /home/openstack/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/strongswan/strongswan.conf.template
+
+# Template file for ipsec secret configuration. (string value)
+#ipsec_secret_template = /home/openstack/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/strongswan/ipsec.secret.template
 
 # The area where default StrongSwan configuration files are located. (string
 # value)
 #default_config_area = /etc/strongswan.d
-
-# Template file for ipsec configuration. (string value)
-#ipsec_config_template = /home/venkatamahesh/programs/openstack/neutron-vpnaas/neutron_vpnaas/services/vpn/device_drivers/template/strongswan/ipsec.conf.template
 
 
 [vpnagent]
