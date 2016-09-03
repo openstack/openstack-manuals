@@ -19,7 +19,7 @@
    * - **[DEFAULT]**
      -
    * - ``args`` = ``None``
-     - (List) Arguments for the command
+     - (Multi-valued) Arguments for the command
    * - ``chunksize`` = ``65536``
      - (Integer) Amount of data to transfer per HTTP write.
    * - ``command`` = ``None``
