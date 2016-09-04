@@ -24,8 +24,6 @@
      - (Boolean) Allow the usage of the pagination
    * - ``allow_sorting`` = ``False``
      - (Boolean) Allow the usage of the sorting
-   * - ``pagination_max_limit`` = ``-1``
-     - (String) The maximum number of items returned in a single response, value was 'infinite' or negative integer means no limit
    * - ``api_extensions_path`` =
      - (String) The path for API extensions
    * - ``api_handler`` = ``queue_producer``
@@ -46,13 +44,15 @@
      - (String) The hostname Octavia is running on
    * - ``octavia_plugins`` = ``hot_plug_plugin``
      - (String) Name of the controller plugin to use
+   * - ``pagination_max_limit`` = ``-1``
+     - (String) The maximum number of items returned in a single response. The string 'infinite' or a negative integer value means 'no limit'
    * - **[amphora_agent]**
      -
    * - ``agent_server_ca`` = ``/etc/octavia/certs/client_ca.pem``
      - (String) The ca which signed the client certificates
    * - ``agent_server_cert`` = ``/etc/octavia/certs/server.pem``
      - (String) The server certificate for the agent.py server to use
-   * - ``agent_server_network_dir`` = ``/etc/network/interfaces.d/``
+   * - ``agent_server_network_dir`` = ``/etc/netns/amphora-haproxy/network/interfaces.d/``
      - (String) The directory where new network interfaces are located
    * - ``agent_server_network_file`` = ``None``
      - (String) The file where the network interfaces are located. Specifying this will override any value set for agent_server_network_dir.
@@ -60,11 +60,11 @@
      - (String) The amphora ID.
    * - **[anchor]**
      -
-   * - ``password`` = ``simplepassword``
+   * - ``password`` = ``None``
      - (String) Anchor password
    * - ``url`` = ``http://localhost:9999/v1/sign/default``
      - (String) Anchor URL
-   * - ``username`` = ``myusername``
+   * - ``username`` = ``None``
      - (String) Anchor username
    * - **[certificates]**
      -
@@ -94,6 +94,8 @@
      - (Integer) Retry attempts to wait for Amphora to become active
    * - ``amp_active_wait_sec`` = ``10``
      - (Integer) Seconds to wait between checks on whether an Amphora has become active
+   * - ``amp_boot_network_list`` =
+     - (List) List of networks to attach to the Amphorae. All networks defined in the list will be attached to each amphora.
    * - ``amp_flavor_id`` =
      - (String) Nova instance flavor id for the Amphora
    * - ``amp_image_id`` =
@@ -101,9 +103,9 @@
    * - ``amp_image_tag`` =
      - (String) Glance image tag for the Amphora image to boot. Use this option to be able to update the image without reconfiguring Octavia. Ignored if amp_image_id is defined.
    * - ``amp_network`` =
-     - (String) Network to attach to the Amphora
+     - (String) DEPRECATED: Network to attach to the Amphorae. Replaced by amp_boot_network_list.
    * - ``amp_secgroup_list`` =
-     - (List) List of security groups to attach to the Amphora
+     - (List) List of security groups to attach to the Amphora.
    * - ``amp_ssh_access_allowed`` = ``True``
      - (Boolean) Determines whether or not to allow access to the Amphorae
    * - ``amp_ssh_key_name`` =
@@ -185,7 +187,7 @@
    * - ``health_check_interval`` = ``3``
      - (Integer) Sleep time between health checks in seconds.
    * - ``heartbeat_interval`` = ``10``
-     - (Integer) Sleep time between sending hearthbeats.
+     - (Integer) Sleep time between sending heartbeats.
    * - ``heartbeat_key`` = ``None``
      - (String) key used to validate amphora sendingthe message
    * - ``heartbeat_timeout`` = ``60``
@@ -206,6 +208,8 @@
      - (Integer) Number of threads performing amphora certificate rotation
    * - ``cleanup_interval`` = ``30``
      - (Integer) DB cleanup interval in seconds
+   * - ``load_balancer_expiry_age`` = ``604800``
+     - (Integer) Load balancer expiry age in seconds
    * - ``spare_amphora_pool_size`` = ``0``
      - (Integer) Number of spare amphorae
    * - ``spare_check_interval`` = ``30``
@@ -217,19 +221,21 @@
    * - ``vrrp_check_interval`` = ``5``
      - (Integer) VRRP health check script run interval in seconds.
    * - ``vrrp_fail_count`` = ``2``
-     - (Integer) Number of successive failure before transition to a fail state.
+     - (Integer) Number of successive failures before transition to a fail state.
    * - ``vrrp_garp_refresh_count`` = ``2``
      - (Integer) Number of gratuitous ARP announcements to make on each refresh interval.
    * - ``vrrp_garp_refresh_interval`` = ``5``
      - (Integer) Time in seconds between gratuitous ARP announcements from the MASTER.
    * - ``vrrp_success_count`` = ``2``
-     - (Integer) Number of successive failure before transition to a success state.
+     - (Integer) Number of consecutive successes before transition to a success state.
    * - **[networking]**
      -
    * - ``lb_network_name`` = ``None``
      - (String) Name of amphora internal network
    * - ``max_retries`` = ``15``
      - (Integer) The maximum attempts to retry an action with the networking service.
+   * - ``port_detach_timeout`` = ``300``
+     - (Integer) Seconds to wait for a port to detach from an amphora.
    * - ``retry_interval`` = ``1``
      - (Integer) Seconds to wait before retrying an action with the networking service.
    * - **[neutron]**
@@ -264,10 +270,12 @@
      - (String) The name of the nova service in the keystone catalog
    * - **[oslo_middleware]**
      -
+   * - ``enable_proxy_headers_parsing`` = ``False``
+     - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
    * - **[task_flow]**
      -
    * - ``engine`` = ``serial``
