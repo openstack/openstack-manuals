@@ -32,7 +32,7 @@ uses the following selection process:
 * ``network:floatingip_agent_gateway``
 * ``None``
 
-Creating or updating a port with a specific a subnet skips this selection
+Creating or updating a port with a specific subnet skips this selection
 process and explicitly uses the given subnet.
 
 Usage
