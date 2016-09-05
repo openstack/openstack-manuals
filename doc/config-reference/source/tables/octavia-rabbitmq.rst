@@ -24,8 +24,14 @@
      - (Boolean) Use durable queues in AMQP.
    * - ``channel_max`` = ``None``
      - (Integer) Maximum number of channels to allow
+   * - ``conn_pool_min_size`` = ``2``
+     - (Integer) The pool size limit for connections expiration policy
+   * - ``conn_pool_ttl`` = ``1200``
+     - (Integer) The time-to-live in sec of idle connections in the pool
+   * - ``connection_factory`` = ``single``
+     - (String) Connection factory implementation
    * - ``default_notification_exchange`` = ``${control_exchange}_notification``
-     - (String) Exchange name for for sending notifications
+     - (String) Exchange name for sending notifications
    * - ``default_notification_retry_attempts`` = ``-1``
      - (Integer) Reconnecting retry count in case of connectivity problem during sending notification, -1 means infinite retry.
    * - ``default_rpc_exchange`` = ``${control_exchange}_rpc``
@@ -36,7 +42,7 @@
      - (Boolean) Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake
    * - ``frame_max`` = ``None``
      - (Integer) The maximum byte size for an AMQP frame
-   * - ``heartbeat_interval`` = ``1``
+   * - ``heartbeat_interval`` = ``3``
      - (Integer) How often to send heartbeats for consumer's connections
    * - ``heartbeat_rate`` = ``2``
      - (Integer) How often times during the heartbeat_timeout_threshold we check the heartbeat.
@@ -45,7 +51,7 @@
    * - ``host_connection_reconnect_delay`` = ``0.25``
      - (Floating point) Set delay for reconnection to some host which has connection error
    * - ``kombu_compression`` = ``None``
-     - (String) EXPERIMENTAL: Possible values are: gzip, bz2. If not set compression will not be used. This option may notbe available in future versions.
+     - (String) EXPERIMENTAL: Possible values are: gzip, bz2. If not set compression will not be used. This option may not be available in future versions.
    * - ``kombu_failover_strategy`` = ``round-robin``
      - (String) Determines how the next RabbitMQ node is chosen in case the one we are currently connected to becomes unavailable. Takes effect only if more than one RabbitMQ node is provided in config.
    * - ``kombu_missing_consumer_retry_timeout`` = ``60``
@@ -68,7 +74,7 @@
      - (Floating point) Reconnecting retry delay in case of connectivity problem during sending notification message
    * - ``pool_max_overflow`` = ``0``
      - (Integer) Maximum number of connections to create above `pool_max_size`.
-   * - ``pool_max_size`` = ``10``
+   * - ``pool_max_size`` = ``30``
      - (Integer) Maximum number of connections to keep queued.
    * - ``pool_recycle`` = ``600``
      - (Integer) Lifetime of a connection (since creation) in seconds or None for no recycling. Expired connections are closed on acquire.
@@ -79,19 +85,19 @@
    * - ``rabbit_ha_queues`` = ``False``
      - (Boolean) Try to use HA queues in RabbitMQ (x-ha-policy: all). If you change this option, you must wipe the RabbitMQ database. In RabbitMQ 3.0, queue mirroring is no longer controlled by the x-ha-policy argument when declaring a queue. If you just want to make sure that all queues (except those with auto-generated names) are mirrored across all nodes, run: "rabbitmqctl set_policy HA '^(?!amq\.).*' '{"ha-mode": "all"}' "
    * - ``rabbit_host`` = ``localhost``
-     - (String) The RabbitMQ broker address where a single node is used.
+     - (String) DEPRECATED: The RabbitMQ broker address where a single node is used. Replaced by [DEFAULT]/transport_url
    * - ``rabbit_hosts`` = ``$rabbit_host:$rabbit_port``
-     - (List) RabbitMQ HA cluster host:port pairs.
+     - (List) DEPRECATED: RabbitMQ HA cluster host:port pairs. Replaced by [DEFAULT]/transport_url
    * - ``rabbit_interval_max`` = ``30``
      - (Integer) Maximum interval of RabbitMQ connection retries. Default is 30 seconds.
    * - ``rabbit_login_method`` = ``AMQPLAIN``
      - (String) The RabbitMQ login method.
    * - ``rabbit_max_retries`` = ``0``
-     - (Integer) Maximum number of RabbitMQ connection retries. Default is 0 (infinite retry count).
+     - (Integer) DEPRECATED: Maximum number of RabbitMQ connection retries. Default is 0 (infinite retry count).
    * - ``rabbit_password`` = ``guest``
-     - (String) The RabbitMQ password.
+     - (String) DEPRECATED: The RabbitMQ password. Replaced by [DEFAULT]/transport_url
    * - ``rabbit_port`` = ``5672``
-     - (Port number) The RabbitMQ broker port where a single node is used.
+     - (Port number) DEPRECATED: The RabbitMQ broker port where a single node is used. Replaced by [DEFAULT]/transport_url
    * - ``rabbit_qos_prefetch_count`` = ``0``
      - (Integer) Specifies the number of messages to prefetch. Setting to zero allows unlimited messages.
    * - ``rabbit_retry_backoff`` = ``2``
@@ -103,9 +109,9 @@
    * - ``rabbit_use_ssl`` = ``False``
      - (Boolean) Connect over SSL for RabbitMQ.
    * - ``rabbit_userid`` = ``guest``
-     - (String) The RabbitMQ userid.
+     - (String) DEPRECATED: The RabbitMQ userid. Replaced by [DEFAULT]/transport_url
    * - ``rabbit_virtual_host`` = ``/``
-     - (String) The RabbitMQ virtual host.
+     - (String) DEPRECATED: The RabbitMQ virtual host. Replaced by [DEFAULT]/transport_url
    * - ``rpc_conn_pool_size`` = ``30``
      - (Integer) Size of RPC connection pool.
    * - ``rpc_listener_prefetch_count`` = ``100``
