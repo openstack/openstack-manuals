@@ -30,7 +30,7 @@
      - (String) Transformer for exists notifications.
    * - ``reboot_time_out`` = ``120``
      - (Integer) Maximum time (in seconds) to wait for a server reboot.
-   * - ``resize_time_out`` = ``600``
+   * - ``resize_time_out`` = ``900``
      - (Integer) Maximum time (in seconds) to wait for a server resize.
    * - ``restore_usage_timeout`` = ``36000``
      - (Integer) Maximum time (in seconds) to wait for a Guest instance restored from a backup to become active.
@@ -40,7 +40,7 @@
      - (Integer) Maximum time (in seconds) to wait for a server delete.
    * - ``state_change_poll_time`` = ``3``
      - (Integer) Interval between state change poll requests (seconds).
-   * - ``state_change_wait_time`` = ``180``
+   * - ``state_change_wait_time`` = ``600``
      - (Integer) Maximum time (in seconds) to wait for a state change.
    * - ``update_status_on_fail`` = ``True``
      - (Boolean) Set the service and instance task statuses to ERROR when an instance fails to become active within the configured usage_timeout.
@@ -48,7 +48,7 @@
      - (Integer) Time to sleep during the check for an active Guest.
    * - ``use_heat`` = ``False``
      - (Boolean) Use Heat for provisioning.
-   * - ``use_nova_server_config_drive`` = ``False``
+   * - ``use_nova_server_config_drive`` = ``True``
      - (Boolean) Use config drive for file injection when booting instance.
    * - ``use_nova_server_volume`` = ``False``
      - (Boolean) Whether to provision a Cinder volume for the Nova instance.

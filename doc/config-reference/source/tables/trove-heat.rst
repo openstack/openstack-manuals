@@ -25,4 +25,4 @@
    * - ``heat_time_out`` = ``60``
      - (Integer) Maximum time (in seconds) to wait for a Heat request to complete.
    * - ``heat_url`` = ``None``
-     - (String) URL without the tenant segment.
+     - (Unknown) URL without the tenant segment.

@@ -26,8 +26,6 @@
      - (String) The default datastore id or name to use if one is not provided by the user. If the default value is None, the field becomes required in the instance create request.
    * - ``default_neutron_networks`` =
      - (List) List of IDs for management networks which should be attached to the instance regardless of what NICs are specified in the create API call.
-   * - ``default_password_length`` = ``36``
-     - (Integer) Character length of generated passwords.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
    * - ``expected_filetype_suffixes`` = ``json``
@@ -36,11 +34,9 @@
      - (String) Options to use when formatting a volume.
    * - ``host`` = ``0.0.0.0``
      - (Unknown) Host to listen for RPC messages.
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
    * - ``module_aes_cbc_key`` = ``module_aes_cbc_key``
      - (String) OpenSSL aes_cbc key for module encryption.
-   * - ``module_types`` = ``ping``
+   * - ``module_types`` = ``ping, new_relic_license``
      - (List) A list of module types supported. A module type corresponds to the name of a ModuleDriver.
    * - ``modules_page_size`` = ``20``
      - (Integer) Page size for listing modules.
@@ -60,33 +56,5 @@
      - (String) Path which leads to datastore templates.
    * - ``timeout_wait_for_service`` = ``120``
      - (Integer) Maximum time (in seconds) to wait for a service to become alive.
-   * - ``usage_timeout`` = ``900``
+   * - ``usage_timeout`` = ``1800``
      - (Integer) Maximum time (in seconds) to wait for a Guest to become active.
-   * - **[certificates]**
-     -
-   * - ``barbican_auth`` = ``barbican_acl_auth``
-     - (String) Name of the Barbican authentication method to use
-   * - ``cert_manager_type`` = ``barbican``
-     - (String) Certificate Manager plugin. Defaults to barbican.
-   * - **[service_auth]**
-     -
-   * - ``admin_password`` = ``password``
-     - (String) The service admin password
-   * - ``admin_project_domain`` = ``admin``
-     - (String) The admin project domain name
-   * - ``admin_tenant_name`` = ``admin``
-     - (String) The service admin tenant name
-   * - ``admin_user`` = ``admin``
-     - (String) The service admin user name
-   * - ``admin_user_domain`` = ``admin``
-     - (String) The admin user domain name
-   * - ``auth_url`` = ``http://127.0.0.1:5000/v2.0``
-     - (String) Authentication endpoint
-   * - ``auth_version`` = ``2``
-     - (String) The auth version used to authenticate
-   * - ``endpoint_type`` = ``public``
-     - (String) The endpoint_type to be used
-   * - ``region`` = ``RegionOne``
-     - (String) The deployment region
-   * - ``service_name`` = ``lbaas``
-     - (String) The name of the service

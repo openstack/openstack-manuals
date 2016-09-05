@@ -28,12 +28,16 @@
      - (String) Default strategy to perform backups.
    * - ``cluster_support`` = ``True``
      - (Boolean) Enable clusters to be created and managed.
+   * - ``default_password_length`` = ``36``
+     - (Integer) Character length of generated passwords.
    * - ``device_path`` = ``/dev/vdb``
      - (String) Device path for volume if volume support is enabled.
    * - ``guest_log_exposed_logs`` =
      - (String) List of Guest Logs to expose for publishing.
    * - ``guestagent_strategy`` = ``trove.common.strategies.cluster.experimental.redis.guestagent.RedisGuestAgentStrategy``
      - (String) Class that implements datastore-specific Guest Agent API logic.
+   * - ``icmp`` = ``False``
+     - (Boolean) Whether to permit ICMP.
    * - ``mount_point`` = ``/var/lib/redis``
      - (String) Filesystem path for mounting volumes if volume support is enabled.
    * - ``replication_namespace`` = ``trove.guestagent.strategies.replication.experimental.redis_sync``

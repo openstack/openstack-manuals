@@ -18,18 +18,22 @@
      - Description
    * - **[postgresql]**
      -
-   * - ``backup_incremental_strategy`` = ``{}``
+   * - ``backup_incremental_strategy`` = ``{'PgBaseBackup': 'PgBaseBackupIncremental'}``
      - (Dict) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
    * - ``backup_namespace`` = ``trove.guestagent.strategies.backup.experimental.postgresql_impl``
      - (String) Namespace to load backup strategies from.
-   * - ``backup_strategy`` = ``PgDump``
+   * - ``backup_strategy`` = ``PgBaseBackup``
      - (String) Default strategy to perform backups.
+   * - ``default_password_length`` = ``36``
+     - (Integer) Character length of generated passwords.
    * - ``device_path`` = ``/dev/vdb``
      - (String) No help text available for this option.
    * - ``guest_log_exposed_logs`` = ``general``
      - (String) List of Guest Logs to expose for publishing.
    * - ``guest_log_long_query_time`` = ``0``
      - (Integer) The time in milliseconds that a statement must take in in order to be logged in the 'general' log. A value of '0' logs all statements, while '-1' turns off statement logging.
+   * - ``icmp`` = ``False``
+     - (Boolean) Whether to permit ICMP.
    * - ``ignore_dbs`` = ``postgres``
      - (List) No help text available for this option.
    * - ``ignore_users`` = ``os_admin, postgres, root``
@@ -40,7 +44,7 @@
      - (Port number) The TCP port the server listens on.
    * - ``restore_namespace`` = ``trove.guestagent.strategies.restore.experimental.postgresql_impl``
      - (String) Namespace to load restore strategies from.
-   * - ``root_controller`` = ``trove.extensions.common.service.DefaultRootController``
+   * - ``root_controller`` = ``trove.extensions.postgresql.service.PostgreSQLRootController``
      - (String) Root controller implementation for postgresql.
    * - ``root_on_create`` = ``False``
      - (Boolean) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the 'password' field.
@@ -50,3 +54,5 @@
      - (List) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``volume_support`` = ``True``
      - (Boolean) Whether to provision a Cinder volume for datadir.
+   * - ``wal_archive_location`` = ``/mnt/wal_archive``
+     - (String) Filesystem path storing WAL archive files when WAL-shipping based backups or replication is enabled.

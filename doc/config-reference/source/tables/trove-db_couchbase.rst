@@ -24,10 +24,14 @@
      - (String) Namespace to load backup strategies from.
    * - ``backup_strategy`` = ``CbBackup``
      - (String) Default strategy to perform backups.
+   * - ``default_password_length`` = ``24``
+     - (Integer) Character length of generated passwords.
    * - ``device_path`` = ``/dev/vdb``
      - (String) Device path for volume if volume support is enabled.
    * - ``guest_log_exposed_logs`` =
      - (String) List of Guest Logs to expose for publishing.
+   * - ``icmp`` = ``False``
+     - (Boolean) Whether to permit ICMP.
    * - ``mount_point`` = ``/var/lib/couchbase``
      - (String) Filesystem path for mounting volumes if volume support is enabled.
    * - ``replication_strategy`` = ``None``

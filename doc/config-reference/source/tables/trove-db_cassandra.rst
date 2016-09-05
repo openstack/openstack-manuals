@@ -28,12 +28,16 @@
      - (String) Default strategy to perform backups.
    * - ``cluster_support`` = ``True``
      - (Boolean) Enable clusters to be created and managed.
+   * - ``default_password_length`` = ``36``
+     - (Integer) Character length of generated passwords.
    * - ``device_path`` = ``/dev/vdb``
      - (String) Device path for volume if volume support is enabled.
-   * - ``guest_log_exposed_logs`` =
+   * - ``guest_log_exposed_logs`` = ``system``
      - (String) List of Guest Logs to expose for publishing.
    * - ``guestagent_strategy`` = ``trove.common.strategies.cluster.experimental.cassandra.guestagent.CassandraGuestAgentStrategy``
      - (String) Class that implements datastore-specific Guest Agent API logic.
+   * - ``icmp`` = ``False``
+     - (Boolean) Whether to permit ICMP.
    * - ``ignore_dbs`` = ``system, system_auth, system_traces``
      - (List) Databases to exclude when listing databases.
    * - ``ignore_users`` = ``os_admin``
@@ -46,6 +50,8 @@
      - (String) Namespace to load restore strategies from.
    * - ``root_controller`` = ``trove.extensions.cassandra.service.CassandraRootController``
      - (String) Root controller implementation for Cassandra.
+   * - ``system_log_level`` = ``INFO``
+     - (String) Cassandra log verbosity.
    * - ``taskmanager_strategy`` = ``trove.common.strategies.cluster.experimental.cassandra.taskmanager.CassandraTaskManagerStrategy``
      - (String) Class that implements datastore-specific task manager logic.
    * - ``tcp_ports`` = ``7000, 7001, 7199, 9042, 9160``

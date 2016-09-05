@@ -25,4 +25,4 @@
    * - ``neutron_service_type`` = ``network``
      - (String) Service type to use when searching catalog.
    * - ``neutron_url`` = ``None``
-     - (String) URL without the tenant segment.
+     - (Unknown) URL without the tenant segment.
