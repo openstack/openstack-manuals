@@ -73,10 +73,7 @@ The following documentation provides reference and guidance information
 for the OpenStack APIs:
 
 *  `API Complete Reference
-   (HTML) <http://developer.openstack.org/api-ref.html>`__
-
-*  `API Complete Reference
-   (PDF) <http://developer.openstack.org/api-ref-guides/bk-api-ref.pdf>`__
+   (HTML) <http://developer.openstack.org/api-guide/quick-start/>`__
 
 The following guide provides how to contribute to OpenStack documentation:
 
