@@ -20,9 +20,15 @@
      -
    * - ``meter_definitions_file`` = ``snmp.yaml``
      - (String) Configuration file for defining hardware snmp meters.
+   * - ``readonly_user_auth_proto`` = ``None``
+     - (String) SNMPd v3 authentication algorithm of all the nodes running in the cloud
    * - ``readonly_user_name`` = ``ro_snmp_user``
      - (String) SNMPd user name of all nodes running in the cloud.
    * - ``readonly_user_password`` = ``password``
-     - (String) SNMPd password of all the nodes running in the cloud.
+     - (String) SNMPd v3 authentication password of all the nodes running in the cloud.
+   * - ``readonly_user_priv_password`` = ``None``
+     - (String) SNMPd v3 encryption password of all the nodes running in the cloud.
+   * - ``readonly_user_priv_proto`` = ``None``
+     - (String) SNMPd v3 encryption algorithm of all the nodes running in the cloud
    * - ``url_scheme`` = ``snmp://``
      - (String) URL scheme to use for hardware nodes.

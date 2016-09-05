@@ -24,3 +24,5 @@
      - (String) The target where the http request will be sent. If this is not set, no data will be posted. For example: target = http://hostname:1234/path
    * - ``timeout`` = ``5``
      - (Integer) The max time in seconds to wait for a request to timeout.
+   * - ``verify_ssl`` = ``None``
+     - (String) The path to a server certificate or directory if the system CAs are not used or if a self-signed certificate is used. Set to False to ignore SSL cert verification.
