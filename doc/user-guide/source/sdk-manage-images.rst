@@ -102,11 +102,11 @@ Get image by name
 The Image service Python bindings do not support the retrieval of an
 image object by name. However, the Compute Python bindings enable you to
 get an image object by name. To get an image object by name, call the
-``novaclient.v1_1.images.ImageManager.find`` method:
+``novaclient.v2.images.ImageManager.find`` method:
 
 .. code-block:: python
 
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     name = "cirros"
     nova = nvclient.Client(...)
     image = nova.images.find(name=name)
