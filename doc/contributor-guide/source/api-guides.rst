@@ -51,7 +51,9 @@ How to document your OpenStack API service
 
 If you have a WADL file, we recommend using the migration process to create
 RST files for the content and YAML files for the parameters. See
-:ref:`how-to-migrate-wadl`. If you have no documentation currently, or what to
+:ref:`how-to-migrate-wadl`.
+
+If you have no documentation currently, or want to
 update it to be consistent with other projects, read more here.
 
 The basic steps are:
