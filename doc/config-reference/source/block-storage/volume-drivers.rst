@@ -35,7 +35,7 @@ Volume drivers
    drivers/huawei-storage-driver.rst
    drivers/ibm-gpfs-volume-driver.rst
    drivers/ibm-storwize-svc-driver.rst
-   drivers/ibm-xiv-volume-driver.rst
+   drivers/ibm-storage-volume-driver.rst
    drivers/ibm-flashsystem-volume-driver.rst
    drivers/itri-disco-driver.rst
    drivers/lenovo-driver.rst
