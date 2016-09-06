@@ -2611,7 +2611,7 @@ O
 
    object hash
 
-      Uniquely ID for an Object Storage object.
+      Unique ID for an Object Storage object.
 
    object path hash
 
