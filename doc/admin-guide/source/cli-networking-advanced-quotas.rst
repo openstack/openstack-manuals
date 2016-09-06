@@ -116,21 +116,47 @@ the default set of quotas are enforced for all tenants, so no
    The command shows the ``quotas`` extension, which provides
    per-tenant quota management support.
 
+   .. note::
+
+      Many of the extensions shown below are supported in the Mitaka release and later.
+
    .. code-block:: console
 
-      +-----------------+--------------------------+
-      | alias           | name                     |
-      +-----------------+--------------------------+
-      | agent_scheduler | Agent Schedulers         |
-      | security-group  | security-group           |
-      | binding         | Port Binding             |
-      | quotas          | Quota management support |
-      | agent           | agent                    |
-      | provider        | Provider Network         |
-      | router          | Neutron L3 Router        |
-      | lbaas           | LoadBalancing service    |
-      | extraroute      | Neutron Extra Route      |
-      +-----------------+--------------------------+
+      +---------------------------+-----------------------------------------------+
+      | alias                     | name                                          |
+      +---------------------------+-----------------------------------------------+
+      | default-subnetpools       | Default Subnetpools                           |
+      | network-ip-availability   | Network IP Availability                       |
+      | network_availability_zone | Network Availability Zone                     |
+      | auto-allocated-topology   | Auto Allocated Topology Services              |
+      | ext-gw-mode               | Neutron L3 Configurable external gateway mode |
+      | binding                   | Port Binding                                  |
+      | metering                  | Neutron Metering                              |
+      | agent                     | agent                                         |
+      | subnet_allocation         | Subnet Allocation                             |
+      | l3_agent_scheduler        | L3 Agent Scheduler                            |
+      | tag                       | Tag support                                   |
+      | external-net              | Neutron external network                      |
+      | net-mtu                   | Network MTU                                   |
+      | availability_zone         | Availability Zone                             |
+      | quotas                    | Quota management support                      |
+      | l3-ha                     | HA Router extension                           |
+      | provider                  | Provider Network                              |
+      | multi-provider            | Multi Provider Network                        |
+      | address-scope             | Address scope                                 |
+      | extraroute                | Neutron Extra Route                           |
+      | timestamp_core            | Time Stamp Fields addition for core resources |
+      | extra_dhcp_opt            | Neutron Extra DHCP opts                       |
+      | dns-integration           | DNS Integration                               |
+      | security-group            | security-group                                |
+      | dhcp_agent_scheduler      | DHCP Agent Scheduler                          |
+      | router_availability_zone  | Router Availability Zone                      |
+      | rbac-policies             | RBAC Policies                                 |
+      | standard-attr-description | standard-attr-description                     |
+      | router                    | Neutron L3 Router                             |
+      | allowed-address-pairs     | Allowed Address Pairs                         |
+      | dvr                       | Distributed Virtual Router                    |
+      +---------------------------+-----------------------------------------------+
 
 #. Show information for the quotas extension.
 
@@ -183,18 +209,27 @@ the default set of quotas are enforced for all tenants, so no
    not enabled for the tenant, the command shows the default
    set of quotas.
 
+   .. note::
+
+      Additional quotas added in the Mitaka release include :option:`security_group`,
+      :option:`security_group_rule`, :option:`subnet`, and :option:`subnetpool`.
+
    .. code-block:: console
 
       $ neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
-      +------------+-------+
-      | Field      | Value |
-      +------------+-------+
-      | floatingip | 20    |
-      | network    | 5     |
-      | port       | 20    |
-      | router     | 10    |
-      | subnet     | 5     |
-      +------------+-------+
+      +---------------------+-------+
+      | Field               | Value |
+      +---------------------+-------+
+      | floatingip          | 50    |
+      | network             | 10    |
+      | port                | 50    |
+      | rbac_policy         | 10    |
+      | router              | 10    |
+      | security_group      | 10    |
+      | security_group_rule | 100   |
+      | subnet              | 10    |
+      | subnetpool          | -1    |
+      +---------------------+-------+
 
    The following command shows the command output for a
    non-administrative user.
@@ -202,15 +237,19 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-show
-      +------------+-------+
-      | Field      | Value |
-      +------------+-------+
-      | floatingip | 20    |
-      | network    | 5     |
-      | port       | 20    |
-      | router     | 10    |
-      | subnet     | 5     |
-      +------------+-------+
+      +---------------------+-------+
+      | Field               | Value |
+      +---------------------+-------+
+      | floatingip          | 50    |
+      | network             | 10    |
+      | port                | 50    |
+      | rbac_policy         | 10    |
+      | router              | 10    |
+      | security_group      | 10    |
+      | security_group_rule | 100   |
+      | subnet              | 10    |
+      | subnetpool          | -1    |
+      +---------------------+-------+
 
 #. Update quota values for a specified tenant.
 
@@ -220,15 +259,19 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 5
-      +------------+-------+
-      | Field      | Value |
-      +------------+-------+
-      | floatingip | 50    |
-      | network    | 5     |
-      | port       | 50    |
-      | router     | 10    |
-      | subnet     | 10    |
-      +------------+-------+
+      +---------------------+-------+
+      | Field               | Value |
+      +---------------------+-------+
+      | floatingip          | 50    |
+      | network             | 5     |
+      | port                | 50    |
+      | rbac_policy         | 10    |
+      | router              | 10    |
+      | security_group      | 10    |
+      | security_group_rule | 100   |
+      | subnet              | 10    |
+      | subnetpool          | -1    |
+      +---------------------+-------+
 
    You can update quotas for multiple resources through one
    command.
@@ -236,15 +279,19 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --subnet 5 --port 20
-      +------------+-------+
-      | Field      | Value |
-      +------------+-------+
-      | floatingip | 50    |
-      | network    | 5     |
-      | port       | 20    |
-      | router     | 10    |
-      | subnet     | 5     |
-      +------------+-------+
+      +---------------------+-------+
+      | Field               | Value |
+      +---------------------+-------+
+      | floatingip          | 50    |
+      | network             | 5     |
+      | port                | 20    |
+      | rbac_policy         | 10    |
+      | router              | 10    |
+      | security_group      | 10    |
+      | security_group_rule | 100   |
+      | subnet              | 5     |
+      | subnetpool          | -1    |
+      +---------------------+-------+
 
    To update the limits for an L3 resource such as, router
    or floating IP, you must define new values for the quotas
@@ -256,15 +303,19 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --floatingip 20
-      +------------+-------+
-      | Field      | Value |
-      +------------+-------+
-      | floatingip | 20    |
-      | network    | 5     |
-      | port       | 20    |
-      | router     | 10    |
-      | subnet     | 5     |
-      +------------+-------+
+      +---------------------+-------+
+      | Field               | Value |
+      +---------------------+-------+
+      | floatingip          | 20    |
+      | network             | 5     |
+      | port                | 20    |
+      | rbac_policy         | 10    |
+      | router              | 10    |
+      | security_group      | 10    |
+      | security_group_rule | 100   |
+      | subnet              | 5     |
+      | subnetpool          | -1    |
+      +---------------------+-------+
 
    You can update the limits of multiple resources by
    including L2 resources and L3 resource through one
@@ -274,15 +325,19 @@ the default set of quotas are enforced for all tenants, so no
 
       $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 \
         --network 3 --subnet 3 --port 3 --floatingip 3 --router 3
-      +------------+-------+
-      | Field      | Value |
-      +------------+-------+
-      | floatingip | 3     |
-      | network    | 3     |
-      | port       | 3     |
-      | router     | 3     |
-      | subnet     | 3     |
-      +------------+-------+
+      +---------------------+-------+
+      | Field               | Value |
+      +---------------------+-------+
+      | floatingip          | 3     |
+      | network             | 3     |
+      | port                | 3     |
+      | rbac_policy         | 10    |
+      | router              | 3     |
+      | security_group      | 10    |
+      | security_group_rule | 100   |
+      | subnet              | 3     |
+      | subnetpool          | -1    |
+      +---------------------+-------+
 
 #. Delete per-tenant quota values.
 
@@ -300,12 +355,16 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
-      +------------+-------+
-      | Field      | Value |
-      +------------+-------+
-      | floatingip | 50    |
-      | network    | 10    |
-      | port       | 50    |
-      | router     | 10    |
-      | subnet     | 10    |
-      +------------+-------+
+      +---------------------+-------+
+      | Field               | Value |
+      +---------------------+-------+
+      | floatingip          | 50    |
+      | network             | 10    |
+      | port                | 50    |
+      | rbac_policy         | 10    |
+      | router              | 10    |
+      | security_group      | 10    |
+      | security_group_rule | 100   |
+      | subnet              | 10     |
+      | subnetpool          | -1    |
+      +---------------------+-------+
