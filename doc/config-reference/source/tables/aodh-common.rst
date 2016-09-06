@@ -18,45 +18,63 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``alarm_max_actions`` = ``-1``
-     - (Integer) Maximum count of actions for each state of an alarm, non-positive number means no limit.
+   * - ``additional_ingestion_lag`` = ``0``
+     - (Integer) The number of seconds to extend the evaluation windows to compensate the reporting/ingestion lag.
    * - ``evaluation_interval`` = ``60``
      - (Integer) Period of evaluation cycle, should be >= than configured pipeline interval for collection of underlying meters.
    * - ``event_alarm_cache_ttl`` = ``60``
      - (Integer) TTL of event alarm caches, in seconds. Set to 0 to disable caching.
-   * - ``event_alarm_topic`` = ``alarm.all``
-     - (String) The topic that aodh uses for event alarm evaluation.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
-   * - ``host`` = ``localhost``
-     - (String) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.
    * - ``http_timeout`` = ``600``
      - (Integer) Timeout seconds for HTTP requests. Set it to None to disable timeout.
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
    * - ``notifier_topic`` = ``alarming``
      - (String) The topic that aodh uses for alarm notifier messages.
-   * - ``project_alarm_quota`` = ``None``
-     - (Integer) Maximum number of alarms defined for a project.
    * - ``record_history`` = ``True``
      - (Boolean) Record alarm change events.
+   * - ``rest_notifier_ca_bundle_certificate_path`` = ``None``
+     - (String) SSL CA_BUNDLE certificate for REST notifier
    * - ``rest_notifier_certificate_file`` =
-     - (String) SSL Client certificate for REST notifier.
+     - (String) SSL Client certificate file for REST notifier.
    * - ``rest_notifier_certificate_key`` =
-     - (String) SSL Client private key for REST notifier.
+     - (String) SSL Client private key file for REST notifier.
    * - ``rest_notifier_max_retries`` = ``0``
      - (Integer) Number of retries for REST notifier
    * - ``rest_notifier_ssl_verify`` = ``True``
      - (Boolean) Whether to verify the SSL Server certificate when calling alarm action.
-   * - ``user_alarm_quota`` = ``None``
-     - (Integer) Maximum number of alarms defined for a user.
    * - **[database]**
      -
    * - ``alarm_history_time_to_live`` = ``-1``
      - (Integer) Number of seconds that alarm histories are kept in the database for (<= 0 means forever).
+   * - **[evaluator]**
+     -
+   * - ``workers`` = ``1``
+     - (Integer) Number of workers for evaluator service. default value is 1.
+   * - **[listener]**
+     -
+   * - ``batch_size`` = ``1``
+     - (Integer) Number of notification messages to wait before dispatching them.
+   * - ``batch_timeout`` = ``None``
+     - (Integer) Number of seconds to wait before dispatching samples when batch_size is not reached (None means indefinitely).
+   * - ``event_alarm_topic`` = ``alarm.all``
+     - (String) The topic that aodh uses for event alarm evaluation.
+   * - ``workers`` = ``1``
+     - (Integer) Number of workers for listener service. default value is 1.
+   * - **[notifier]**
+     -
+   * - ``batch_size`` = ``1``
+     - (Integer) Number of notification messages to wait before dispatching them.
+   * - ``batch_timeout`` = ``None``
+     - (Integer) Number of seconds to wait before dispatching samples when batch_size is not reached (None means indefinitely).
+   * - ``workers`` = ``1``
+     - (Integer) Number of workers for notifier service. default value is 1.
    * - **[service_credentials]**
      -
    * - ``interface`` = ``public``
      - (String) Type of endpoint in Identity service catalog to use for communication with OpenStack services.
    * - ``region_name`` = ``None``
      - (String) Region name to use for OpenStack service endpoints.
+   * - **[service_types]**
+     -
+   * - ``zaqar`` = ``messaging``
+     - (String) Message queue service type.

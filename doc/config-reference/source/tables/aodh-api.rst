@@ -18,19 +18,25 @@
      - Description
    * - **[api]**
      -
-   * - ``host`` = ``0.0.0.0``
-     - (String) The listen IP for the aodh API server.
+   * - ``alarm_max_actions`` = ``-1``
+     - (Integer) Maximum count of actions for each state of an alarm, non-positive number means no limit.
+   * - ``enable_combination_alarms`` = ``False``
+     - (Boolean) DEPRECATED: Enable deprecated combination alarms. Combination alarms are deprecated. This option and combination alarms will be removed in Aodh 5.0.
    * - ``paste_config`` = ``api_paste.ini``
      - (String) Configuration file for WSGI definition of API.
    * - ``pecan_debug`` = ``False``
      - (Boolean) Toggle Pecan Debug Middleware.
-   * - ``port`` = ``8042``
-     - (Port number) The port for the aodh API server.
+   * - ``project_alarm_quota`` = ``None``
+     - (Integer) Maximum number of alarms defined for a project.
+   * - ``user_alarm_quota`` = ``None``
+     - (Integer) Maximum number of alarms defined for a user.
    * - ``workers`` = ``1``
      - (Integer) Number of workers for aodh API server.
    * - **[oslo_middleware]**
      -
+   * - ``enable_proxy_headers_parsing`` = ``False``
+     - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
