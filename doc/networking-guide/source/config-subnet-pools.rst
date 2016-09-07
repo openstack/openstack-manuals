@@ -32,13 +32,13 @@ addresses to be allocated from the pool. You do not have to worry about what
 you have already used and what addresses are in your pool. Subnet pools can do
 this.
 
-Second, subnet pools can manage addresses across tenants. The addresses are
+Second, subnet pools can manage addresses across projects. The addresses are
 guaranteed not to overlap. If the addresses come from an externally routable
-pool then you know that all of the tenants have addresses which are *routable*
+pool then you know that all of the projects have addresses which are *routable*
 and unique. This can be useful in the following scenarios.
 
 #. IPv6 since OpenStack Networking has no IPv6 floating IPs.
-#. Routing directly to a tenant network from an external network.
+#. Routing directly to a project network from an external network.
 
 How they work
 ~~~~~~~~~~~~~
@@ -47,12 +47,12 @@ A subnet pool manages a pool of addresses from which subnets can be allocated.
 It ensures that there is no overlap between any two subnets allocated from the
 same pool.
 
-As a regular tenant in an OpenStack cloud, you can create a subnet pool of your
-own and use it to manage your own pool of addresses. This does not require any
-admin privileges. Your pool will not be visible to any other tenant.
+As a regular project in an OpenStack cloud, you can create a subnet pool of
+your own and use it to manage your own pool of addresses. This does not require
+any admin privileges. Your pool will not be visible to any other project.
 
 If you are an admin, you can create a pool which can be accessed by any regular
-tenant. Being a shared resource, there is a quota mechanism to arbitrate
+project. Being a shared resource, there is a quota mechanism to arbitrate
 access.
 
 Quotas
@@ -69,7 +69,7 @@ in one subnet but 198.51.100.224/28 uses only 16. If address space is
 limited, the quota system can encourage efficient use of the space.
 
 With IPv4, the default_quota can be set to the number of absolute
-addresses any given tenant is allowed to consume from the pool. For
+addresses any given project is allowed to consume from the pool. For
 example, with a quota of 128, I might get 203.0.113.128/26,
 203.0.113.224/28, and still have room to allocate 48 more addresses in
 the future.
@@ -135,7 +135,7 @@ The ``default_prefixlen`` defines the subnet size you will get if you do not
 specify :option:`--prefixlen` when creating a subnet.
 
 Do essentially the same thing for IPv6 and there are now two subnet
-pools. Regular tenants can see them. (the output is trimmed a bit
+pools. Regular projects can see them. (the output is trimmed a bit
 for display)
 
 .. code-block:: console
