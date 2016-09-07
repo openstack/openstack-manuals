@@ -15,9 +15,9 @@ Compute) or by polling the infrastructure (for example, libvirt).
    The Telemetry service must be set up and administered through the
    :command:`ceilometer` command-line interface (CLI).
 
-   For basic administration information, refer to the "Measure Cloud
-   Resources" chapter in the `OpenStack End User Guide
-   <http://docs.openstack.org/user-guide/>`_.
+   For basic administration information, refer to the `Measure Cloud
+   Resources <http://docs.openstack.org/user-guide/cli-ceilometer.html>`_
+   chapter in the OpenStack End User Guide.
 
 .. _dashboard-view-resource-stats:
 
