@@ -36,9 +36,9 @@ Basic Networking operations
 ---------------------------
 
 To learn about advanced capabilities available through the neutron
-command-line interface (CLI), read the networking section in the
-`OpenStack End User
-Guide <http://docs.openstack.org/user-guide/index.html>`__.
+command-line interface (CLI), read the networking section `Create and manage
+networks <http://docs.openstack.org/user-guide/cli-create-and-manage-networks.html>`__
+in the OpenStack End User Guide.
 
 This table shows example neutron commands that enable you to complete
 basic network operations:
