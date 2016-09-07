@@ -10,7 +10,7 @@
 
 .. _cinder-vzstorage:
 
-.. list-table:: Description of VidZapper Storage volume driver configuration options
+.. list-table:: Description of Virtuozzo Storage volume driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,6 +18,8 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``vzstorage_default_volume_format`` = ``raw``
+     - (String) Default format that will be used when creating volumes if no volume format is specified.
    * - ``vzstorage_mount_options`` = ``None``
      - (List) Mount options passed to the vzstorage client. See section of the pstorage-mount man page for details.
    * - ``vzstorage_mount_point_base`` = ``$state_path/mnt``

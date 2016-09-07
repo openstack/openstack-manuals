@@ -1,3 +1,4 @@
+additional_retry_list falconstor
 allocated_capacity_weight_multiplier storage
 allow_availability_zone_fallback common
 allowed_direct_url_schemes images
@@ -26,6 +27,7 @@ backup_gcs_enable_progress_timer backups_gcs
 backup_gcs_num_retries backups_gcs
 backup_gcs_object_size backups_gcs
 backup_gcs_project_id backups_gcs
+backup_gcs_proxy_url backups_gcs
 backup_gcs_reader_chunk_size backups_gcs
 backup_gcs_retry_error_codes backups_gcs
 backup_gcs_storage_class backups_gcs
@@ -60,11 +62,11 @@ backup_swift_url backups_swift
 backup_swift_user backups_swift
 backup_swift_user_domain backups_swift
 backup_timer_interval backups
-backup_topic backups
 backup_tsm_compression backups_tsm
 backup_tsm_password backups_tsm
 backup_tsm_volume_prefix backups_tsm
 backup_use_same_host backups
+backup_use_temp_snapshot backups
 blockbridge_api_host blockbridge
 blockbridge_api_port blockbridge
 blockbridge_auth_password blockbridge
@@ -86,6 +88,7 @@ cb_create_volume cloudbyte
 cb_tsm_name cloudbyte
 cb_update_file_system cloudbyte
 cb_update_qos_group cloudbyte
+chap common
 chap_password common
 chap_username common
 check_max_pool_luns_threshold emc
@@ -96,21 +99,40 @@ cinder_huawei_conf_file huawei
 cinder_internal_tenant_project_id common
 cinder_internal_tenant_user_id common
 clone_check_timeout disco
+clone_volume_timeout disco
 cloned_volume_same_az zones
+cluster common
 coho_rpc_port coho
 compute_api_class common
+conn_pool_min_size disable
+conn_pool_ttl disable
+connection_type common
 consistencygroup_api_class common
 control_exchange amqp
+coprhd_emulate_snapshot coprhd
+coprhd_hostname coprhd
+coprhd_password coprhd
+coprhd_port coprhd
+coprhd_project coprhd
+coprhd_scaleio_rest_gateway_host coprhd
+coprhd_scaleio_rest_gateway_port coprhd
+coprhd_scaleio_rest_server_password coprhd
+coprhd_scaleio_rest_server_username coprhd
+coprhd_tenant coprhd
+coprhd_username coprhd
+coprhd_varray coprhd
+datera_503_interval datera
+datera_503_timeout datera
+datera_acl_allow_all datera
 datera_api_port datera
 datera_api_version datera
-datera_num_replicas datera
-datera_503_timeout datera
-datera_503_interval datera
-datera_acl_allow_all datera
 datera_debug datera
+datera_debug_replica_count_override datera
+datera_num_replicas datera
 db_driver disable
 debug disable
 default_availability_zone common
+default_group_type common
 default_log_levels disable
 default_timeout api
 default_volume_type common
@@ -119,6 +141,7 @@ dell_sc_server_folder dellsc
 dell_sc_ssn dellsc
 dell_sc_verify_cert dellsc
 dell_sc_volume_folder dellsc
+dell_server_os dellsc
 destroy_empty_storage_group emc
 disco_client disco
 disco_client_port disco
@@ -132,19 +155,27 @@ dothill_verify_certificate_path dothill
 dpl_pool prophetstor_dpl
 dpl_port prophetstor_dpl
 drbdmanage_devs_on_controller drbd
+drbdmanage_disk_options drbd
+drbdmanage_net_options drbd
 drbdmanage_redundancy drbd
 drbdmanage_resize_plugin drbd
 drbdmanage_resize_policy drbd
+drbdmanage_resource_options drbd
 drbdmanage_resource_plugin drbd
 drbdmanage_resource_policy drbd
 drbdmanage_snapshot_plugin drbd
 drbdmanage_snapshot_policy drbd
+driver_client_cert common
+driver_client_cert_key common
 driver_data_namespace common
 driver_ssl_cert_path common
 driver_ssl_cert_verify common
 driver_use_ssl xio
+dsware_isthin fusionio
+dsware_manager fusionio
 enable_force_upload common
 enable_new_services common
+enable_unsupported_driver common
 enable_v1_api api
 enable_v2_api api
 enable_v3_api api
@@ -158,6 +189,7 @@ eqlx_cli_timeout eqlx
 eqlx_group_name eqlx
 eqlx_pool eqlx
 eqlx_use_chap eqlx
+excluded_domain_ip dellsc
 executor_thread_pool_size common
 expiry_thres_minutes netapp_7mode_nfs netapp_cdot_nfs
 extra_capabilities api
@@ -169,6 +201,9 @@ flashsystem_iscsi_portid flashsystem
 flashsystem_multihostmap_enabled flashsystem
 flashsystem_multipath_enabled flashsystem
 force_delete_lun_in_storagegroup emc
+fss_debug falconstor
+fss_pool falconstor
+fusionstorageagent fusionio
 glance_api_insecure images
 glance_api_servers images
 glance_api_ssl_compression images
@@ -189,6 +224,7 @@ gpfs_max_clone_depth storage_gpfs
 gpfs_mount_point_base storage_gpfs
 gpfs_sparse_volumes storage_gpfs
 gpfs_storage_pool storage_gpfs
+group_api_class common
 hds_hnas_iscsi_config_file hds-hnas
 hds_hnas_nfs_config_file hds-hnas
 hgst_net hgst
@@ -219,6 +255,26 @@ hitachi_target_ports hitachi-hbsd
 hitachi_thin_pool_id hitachi-hbsd
 hitachi_unit_name hitachi-hbsd
 hitachi_zoning_request hitachi-hbsd
+hnas_chap_enabled hitachi-hbsd
+hnas_cluster_admin_ip0 hitachi-hbsd
+hnas_mgmt_ip0 hitachi-hbsd
+hnas_password hitachi-hbsd
+hnas_ssc_cmd hitachi-hbsd
+hnas_ssh_port hitachi-hbsd
+hnas_ssh_private_key hitachi-hbsd
+hnas_svc0_hdp hitachi-hbsd
+hnas_svc0_iscsi_ip hitachi-hbsd
+hnas_svc0_volume_type hitachi-hbsd
+hnas_svc1_hdp hitachi-hbsd
+hnas_svc1_iscsi_ip hitachi-hbsd
+hnas_svc1_volume_type hitachi-hbsd
+hnas_svc2_hdp hitachi-hbsd
+hnas_svc2_iscsi_ip hitachi-hbsd
+hnas_svc2_volume_type hitachi-hbsd
+hnas_svc3_hdp hitachi-hbsd
+hnas_svc3_iscsi_ip hitachi-hbsd
+hnas_svc3_volume_type hitachi-hbsd
+hnas_username hitachi-hbsd
 host common
 hpe3par_api_url hpe3par
 hpe3par_cpg hpe3par
@@ -302,6 +358,7 @@ iser_helper storage
 iser_ip_address storage
 iser_port storage
 iser_target_prefix storage
+kaminario_nodedup_substring kaminario
 keystone_catalog_info backups_swift
 lenovo_api_protocol lenovo
 lenovo_backend_name lenovo
@@ -326,12 +383,17 @@ management_ips api
 max_age quota
 max_luns_per_storage_group emc
 max_over_subscription_ratio common
-memcached_servers common
+message_ttl api
+metro_domain_name huawei
+metro_san_address huawei
+metro_san_password huawei
+metro_san_user huawei
+metro_storage_pools huawei
 migration_create_volume_timeout_secs storage
 monkey_patch common
 monkey_patch_modules common
 my_ip common
-nas_ip nas storage_gpfs
+nas_host nas storage_gpfs
 nas_login nas storage_gpfs
 nas_mount_options nas
 nas_password nas storage_gpfs
@@ -352,10 +414,12 @@ netapp_lun_space_reservation netapp_cdot_iscsi
 netapp_partner_backend_name netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_password netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_pool_name_search_pattern netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
+netapp_replication_aggregate_map netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_sa_password netapp_eseries_iscsi
 netapp_server_hostname netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_server_port netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_size_multiplier netapp_7mode_iscsi netapp_cdot_iscsi
+netapp_snapmirror_quiesce_timeout netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_storage_family netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_storage_protocol netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs
 netapp_transport_type netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
@@ -373,6 +437,7 @@ nexenta_iscsi_service nexenta_edge
 nexenta_iscsi_target_portal_port nexenta nexenta5 nexenta_edge
 nexenta_lun_container nexenta_edge
 nexenta_mount_point_base nexenta nexenta5
+nexenta_nbd_symlinks_dir nexenta
 nexenta_nms_cache_volroot nexenta
 nexenta_ns5_blocksize nexenta5
 nexenta_password nexenta
@@ -425,6 +490,9 @@ osapi_volume_workers api
 per_volume_size_limit api
 periodic_fuzzy_delay common
 periodic_interval common
+pool_id_filter fusionio
+pool_type synology
+proxy common
 public_endpoint api
 publish_errors disable
 pure_api_token pure
@@ -445,6 +513,7 @@ quota_backups quota
 quota_consistencygroups quota
 quota_driver quota
 quota_gigabytes quota
+quota_groups quota
 quota_snapshots quota
 quota_volumes quota
 rados_connect_timeout storage_ceph
@@ -475,13 +544,13 @@ rpc_poll_timeout rpc
 rpc_response_timeout rpc
 rpc_zmq_bind_address zeromq
 rpc_zmq_bind_port_retries zeromq
-rpc_zmq_concurrency zeromq
 rpc_zmq_contexts zeromq
 rpc_zmq_host zeromq
 rpc_zmq_ipc_dir zeromq
 rpc_zmq_matchmaker zeromq
 rpc_zmq_max_port zeromq
 rpc_zmq_min_port zeromq
+rpc_zmq_serialization zeromq
 rpc_zmq_topic_backlog zeromq
 san_clustername san xiv
 san_ip san prophetstor_dpl xiv
@@ -489,9 +558,10 @@ san_is_local san
 san_login san prophetstor_dpl xiv
 san_password san prophetstor_dpl xiv
 san_private_key san
-san_secondary_ip san
 san_ssh_port san
 san_thin_provision san prophetstor_dpl
+scaleio_server_certificate_path coprhd
+scaleio_verify_server_certificate coprhd
 scality_sofs_config scality
 scality_sofs_mount_point scality
 scality_sofs_volume_dir scality
@@ -502,9 +572,13 @@ scheduler_host_manager scheduler
 scheduler_json_config_location scheduler
 scheduler_manager scheduler
 scheduler_max_attempts scheduler
-scheduler_topic scheduler
+scheduler_weight_handler scheduler
 scst_target_driver scst
 scst_target_iqn_name scst
+secondary_san_ip dellsc
+secondary_san_login dellsc
+secondary_san_password dellsc
+secondary_sc_api_port dellsc
 send_actions common
 service_down_time common
 sf_account_prefix solidfire
@@ -519,6 +593,7 @@ sf_template_account_name solidfire
 sf_volume_prefix solidfire
 sheepdog_store_address sheepdog
 sheepdog_store_port sheepdog
+sio_max_over_subscription_ratio emc_sio
 sio_protection_domain_id emc_sio
 sio_protection_domain_name emc_sio
 sio_rest_server_port emc_sio
@@ -547,6 +622,7 @@ ssh_min_pool_conn san
 start_time common
 state_path common
 storage_availability_zone common
+storage_protocol common
 storage_vnx_authentication_type emc
 storage_vnx_pool_names emc
 storage_vnx_security_file_dir emc
@@ -570,6 +646,13 @@ storwize_svc_volpool_name storwize
 strict_ssh_host_key_policy common
 suppress_requests_ssl_warnings common
 swift_catalog_info backups_swift
+synology_admin_port synology
+synology_device_id synology
+synology_one_time_pass synology
+synology_password synology
+synology_pool_name synology
+synology_ssl_verify synology
+synology_username synology
 syslog_log_facility disable
 tcp_keepalive common
 tcp_keepalive_count common
@@ -592,15 +675,21 @@ use_default_quota_class quota
 use_forwarded_for common
 use_multipath_for_image_xfer images
 use_pub_sub zeromq
+use_router_proxy disable
 use_stderr disable
 use_syslog disable
 verbose disable
+violin_dedup_capable_pools violin
+violin_dedup_only_pools violin
+violin_iscsi_target_ips violin
+violin_pool_allocation_method violin
 violin_request_timeout violin
 vmware_api_retry_count vmware
 vmware_ca_file vmware
 vmware_cluster_name vmware
 vmware_host_ip vmware
 vmware_host_password vmware
+vmware_host_port vmware
 vmware_host_username vmware
 vmware_host_version vmware
 vmware_image_transfer_timeout_secs vmware
@@ -626,11 +715,11 @@ volume_name_template api
 volume_number_multiplier api
 volume_service_inithost_offload storage
 volume_tmp_dir storage_ceph
-volume_topic rpc
 volume_transfer_key_length api
 volume_transfer_salt_length api
 volume_usage_audit_period storage
 volumes_dir storage
+vzstorage_default_volume_format vzstorage
 vzstorage_mount_options vzstorage
 vzstorage_mount_point_base vzstorage
 vzstorage_shares_config vzstorage
@@ -638,13 +727,20 @@ vzstorage_sparsed_volumes vzstorage
 vzstorage_used_ratio vzstorage
 watch_log_file disable
 windows_iscsi_lun_path windows
-xiv_chap xiv
-xiv_ds8k_connection_type xiv
-xiv_ds8k_proxy xiv
 xtremio_array_busy_retry_count emc_xtremio
 xtremio_array_busy_retry_interval emc_xtremio
 xtremio_cluster_name emc_xtremio
 xtremio_volumes_per_glance_cache emc_xtremio
+zadara_default_snap_policy zadara
+zadara_password zadara
+zadara_use_iser zadara
+zadara_user zadara
+zadara_vol_encrypt zadara
+zadara_vol_name_template zadara
+zadara_vpsa_host zadara
+zadara_vpsa_poolname zadara
+zadara_vpsa_port zadara
+zadara_vpsa_use_ssl zadara
 zfssa_cache_directory zfssa-nfs
 zfssa_cache_project zfssa-nfs
 zfssa_data_ip zfssa-nfs
@@ -675,8 +771,26 @@ zfssa_target_interfaces zfssa-iscsi
 zfssa_target_password zfssa-iscsi
 zfssa_target_portal zfssa-iscsi
 zfssa_target_user zfssa-iscsi
+zmq_immediate zeromq
 zmq_target_expire zeromq
+zmq_target_update zeromq
 zoning_mode zoning
+zteAheadReadSize zte
+zteCachePolicy zte
+zteChunkSize zte
+zteControllerIP0 zte
+zteControllerIP1 zte
+zteLocalIP zte
+ztePoolVoAllocatedPolicy zte
+ztePoolVolAlarmStopAllocatedFlag zte
+ztePoolVolAlarmThreshold zte
+ztePoolVolInitAllocatedCapacity zte
+ztePoolVolIsThin zte
+ztePoolVolMovePolicy zte
+zteSSDCacheSwitch zte
+zteStoragePool zte
+zteUserName zte
+zteUserPassword zte
 BRCD_FABRIC_EXAMPLE/fc_fabric_address zoning_fabric_brcd
 BRCD_FABRIC_EXAMPLE/fc_fabric_password zoning_fabric_brcd
 BRCD_FABRIC_EXAMPLE/fc_fabric_port zoning_fabric_brcd
@@ -696,6 +810,11 @@ CISCO_FABRIC_EXAMPLE/cisco_zone_activate zoning_fabric_cisco
 CISCO_FABRIC_EXAMPLE/cisco_zone_name_prefix zoning_fabric_cisco
 CISCO_FABRIC_EXAMPLE/cisco_zoning_policy zoning_fabric_cisco
 CISCO_FABRIC_EXAMPLE/cisco_zoning_vsan zoning_fabric_cisco
+barbican/auth_endpoint disable
+barbican/barbican_api_version disable
+barbican/barbican_endpoint disable
+barbican/number_of_retries disable
+barbican/retry_delay disable
 coordination/backend_url coordination
 coordination/heartbeat coordination
 coordination/initial_reconnect_backoff coordination
@@ -732,18 +851,16 @@ database/slave_connection disable
 database/sqlite_db disable
 database/sqlite_synchronous disable
 database/use_db_reconnect disable
-database/use_tpool disable
-fc-zone-manager/brcd_sb_connector zoning_manage_brcd
+fc-zone-manager/brcd_sb_connector zoning_manager_brcd
 fc-zone-manager/cisco_sb_connector zoning_manager_cisco
+fc-zone-manager/enable_unsupported_driver zoning
 fc-zone-manager/fc_fabric_names zoning
 fc-zone-manager/fc_san_lookup_service zoning
 fc-zone-manager/zone_driver zoning
 fc-zone-manager/zoning_policy zoning
 hyperv/force_volumeutils_v1 hyperv
-keymgr/api_class keymgr
-keymgr/encryption_api_url keymgr
-keymgr/encryption_auth_url keymgr
-keymgr/fixed_key keymgr
+key_manager/api_class common
+key_manager/fixed_key common
 keystone_authtoken/admin_password disable
 keystone_authtoken/admin_tenant_name disable
 keystone_authtoken/admin_token disable
@@ -792,12 +909,29 @@ matchmaker_redis/socket_timeout redis
 matchmaker_redis/wait_timeout redis
 oslo_concurrency/disable_process_locking rpc
 oslo_concurrency/lock_path rpc
+oslo_messaging_amqp/addressing_mode rpc
 oslo_messaging_amqp/allow_insecure_clients rpc
+oslo_messaging_amqp/anycast_address rpc
 oslo_messaging_amqp/broadcast_prefix rpc
+oslo_messaging_amqp/connection_retry_backoff rpc
+oslo_messaging_amqp/connection_retry_interval rpc
+oslo_messaging_amqp/connection_retry_interval_max rpc
 oslo_messaging_amqp/container_name rpc
+oslo_messaging_amqp/default_notification_exchange rpc
+oslo_messaging_amqp/default_notify_timeout rpc
+oslo_messaging_amqp/default_reply_timeout rpc
+oslo_messaging_amqp/default_rpc_exchange rpc
+oslo_messaging_amqp/default_send_timeout rpc
 oslo_messaging_amqp/group_request_prefix rpc
 oslo_messaging_amqp/idle_timeout rpc
+oslo_messaging_amqp/link_retry_delay rpc
+oslo_messaging_amqp/multicast_address rpc
+oslo_messaging_amqp/notify_address_prefix rpc
+oslo_messaging_amqp/notify_server_credit rpc
 oslo_messaging_amqp/password rpc
+oslo_messaging_amqp/reply_link_credit rpc
+oslo_messaging_amqp/rpc_address_prefix rpc
+oslo_messaging_amqp/rpc_server_credit rpc
 oslo_messaging_amqp/sasl_config_dir rpc
 oslo_messaging_amqp/sasl_config_name rpc
 oslo_messaging_amqp/sasl_mechanisms rpc
@@ -807,6 +941,7 @@ oslo_messaging_amqp/ssl_cert_file rpc
 oslo_messaging_amqp/ssl_key_file rpc
 oslo_messaging_amqp/ssl_key_password rpc
 oslo_messaging_amqp/trace rpc
+oslo_messaging_amqp/unicast_address rpc
 oslo_messaging_amqp/username rpc
 oslo_messaging_notifications/driver rpc
 oslo_messaging_notifications/topics rpc
@@ -814,6 +949,7 @@ oslo_messaging_notifications/transport_url rpc
 oslo_messaging_rabbit/amqp_auto_delete rabbitmq
 oslo_messaging_rabbit/amqp_durable_queues rabbitmq
 oslo_messaging_rabbit/channel_max rabbitmq
+oslo_messaging_rabbit/connection_factory rabbitmq
 oslo_messaging_rabbit/default_notification_exchange rabbitmq
 oslo_messaging_rabbit/default_notification_retry_attempts rabbitmq
 oslo_messaging_rabbit/default_rpc_exchange rabbitmq
@@ -866,12 +1002,35 @@ oslo_messaging_rabbit/socket_timeout rpc
 oslo_messaging_rabbit/ssl rpc
 oslo_messaging_rabbit/ssl_options rpc
 oslo_messaging_rabbit/tcp_user_timeout rpc
+oslo_messaging_zmq/rpc_cast_timeout zeromq
+oslo_messaging_zmq/rpc_poll_timeout zeromq
+oslo_messaging_zmq/rpc_zmq_bind_address zeromq
+oslo_messaging_zmq/rpc_zmq_bind_port_retries zeromq
+oslo_messaging_zmq/rpc_zmq_contexts zeromq
+oslo_messaging_zmq/rpc_zmq_host zeromq
+oslo_messaging_zmq/rpc_zmq_ipc_dir zeromq
+oslo_messaging_zmq/rpc_zmq_matchmaker zeromq
+oslo_messaging_zmq/rpc_zmq_max_port zeromq
+oslo_messaging_zmq/rpc_zmq_min_port zeromq
+oslo_messaging_zmq/rpc_zmq_serialization zeromq
+oslo_messaging_zmq/rpc_zmq_topic_backlog zeromq
+oslo_messaging_zmq/use_pub_sub zeromq
+oslo_messaging_zmq/use_router_proxy zeromq
+oslo_messaging_zmq/zmq_immediate zeromq
+oslo_messaging_zmq/zmq_target_expire zeromq
+oslo_messaging_zmq/zmq_target_update zeromq
+oslo_middleware/enable_proxy_headers_parsing zeromq
 oslo_middleware/max_request_body_size api
 oslo_middleware/secure_proxy_ssl_header api
 oslo_policy/policy_default_rule disable
 oslo_policy/policy_dirs disable
 oslo_policy/policy_file disable
 oslo_versionedobjects/fatal_exception_format_errors api
+privsep_osbrick/capabilities osbrick
+privsep_osbrick/group osbrick
+privsep_osbrick/helper_command osbrick
+privsep_osbrick/user osbrick
+profiler/connection_string profiler
 profiler/enabled profiler
 profiler/hmac_keys profiler
 profiler/trace_sqlalchemy profiler

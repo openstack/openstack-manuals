@@ -32,16 +32,14 @@
      - (String) Template string to be used to generate backup names
    * - ``backup_object_number_per_notification`` = ``10``
      - (Integer) The number of chunks or objects, for which one Ceilometer notification will be sent
-   * - ``backup_posix_path`` = ``$state_path/backup``
-     - (String) Path specifying where to store backups.
-   * - ``backup_service_inithost_offload`` = ``False``
-     - (Boolean) Offload pending backup delete during backup service startup.
+   * - ``backup_service_inithost_offload`` = ``True``
+     - (Boolean) Offload pending backup delete during backup service startup. If false, the backup service will remain down until all pending backups are deleted.
    * - ``backup_timer_interval`` = ``120``
      - (Integer) Interval, in seconds, between two progress notifications reporting the backup status
-   * - ``backup_topic`` = ``cinder-backup``
-     - (String) The topic that volume backup nodes listen on
    * - ``backup_use_same_host`` = ``False``
      - (Boolean) Backup services use same backend.
+   * - ``backup_use_temp_snapshot`` = ``False``
+     - (Boolean) If this is set to True, the backup_use_temp_snapshot path will be used during the backup. Otherwise, it will use backup_use_temp_volume path.
    * - ``snapshot_check_timeout`` = ``3600``
      - (Integer) How long we check whether a snapshot is finished before we give up
    * - ``snapshot_name_template`` = ``snapshot-%s``

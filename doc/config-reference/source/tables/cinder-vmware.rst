@@ -28,6 +28,8 @@
      - (String) IP address for connecting to VMware vCenter server.
    * - ``vmware_host_password`` = ``None``
      - (String) Password for authenticating with VMware vCenter server.
+   * - ``vmware_host_port`` = ``443``
+     - (Port number) Port number for connecting to VMware vCenter server.
    * - ``vmware_host_username`` = ``None``
      - (String) Username for authenticating with VMware vCenter server.
    * - ``vmware_host_version`` = ``None``
@@ -38,7 +40,7 @@
      - (Boolean) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "vmware_ca_file" is set.
    * - ``vmware_max_objects_retrieval`` = ``100``
      - (Integer) Max number of objects to be retrieved per batch. Query results will be obtained in batches from the server and not in one shot. Server may still limit the count to something less than the configured value.
-   * - ``vmware_task_poll_interval`` = ``0.5``
+   * - ``vmware_task_poll_interval`` = ``2.0``
      - (Floating point) The interval (in seconds) for polling remote tasks invoked on VMware vCenter server.
    * - ``vmware_tmp_dir`` = ``/tmp``
      - (String) Directory where virtual disks are stored during volume backup and restore.

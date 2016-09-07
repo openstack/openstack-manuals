@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _cinder-hds-hnas:
+.. _cinder-fusionio:
 
-.. list-table:: Description of HDS HNAS iSCSI and NFS driver configuration options
+.. list-table:: Description of Fusion-io driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,7 +18,11 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``hds_hnas_iscsi_config_file`` = ``/opt/hds/hnas/cinder_iscsi_conf.xml``
-     - (String) DEPRECATED: Legacy configuration file for HNAS iSCSI Cinder plugin. This is not needed if you fill all configuration on cinder.conf
-   * - ``hds_hnas_nfs_config_file`` = ``/opt/hds/hnas/cinder_nfs_conf.xml``
-     - (String) DEPRECATED: Legacy configuration file for HNAS NFS Cinder plugin. This is not needed if you fill all configuration on cinder.conf
+   * - ``dsware_isthin`` = ``False``
+     - (Boolean) The flag of thin storage allocation.
+   * - ``dsware_manager`` =
+     - (String) Fusionstorage manager ip addr for cinder-volume.
+   * - ``fusionstorageagent`` =
+     - (String) Fusionstorage agent ip addr range.
+   * - ``pool_id_filter`` =
+     - (List) Pool id permit to use.

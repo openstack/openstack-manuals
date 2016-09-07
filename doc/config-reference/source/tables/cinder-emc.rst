@@ -25,22 +25,22 @@
    * - ``destroy_empty_storage_group`` = ``False``
      - (Boolean) To destroy storage group when the last LUN is removed from it. By default, the value is False.
    * - ``force_delete_lun_in_storagegroup`` = ``False``
-     - (Boolean) Delete a LUN even if it is in Storage Groups.
+     - (Boolean) Delete a LUN even if it is in Storage Groups. By default, the value is False.
    * - ``initiator_auto_deregistration`` = ``False``
      - (Boolean) Automatically deregister initiators after the related storage group is destroyed. By default, the value is False.
    * - ``initiator_auto_registration`` = ``False``
      - (Boolean) Automatically register initiators. By default, the value is False.
-   * - ``io_port_list`` = ``*``
-     - (String) Comma separated iSCSI or FC ports to be used in Nova or Cinder.
-   * - ``iscsi_initiators`` =
+   * - ``io_port_list`` = ``None``
+     - (List) Comma separated iSCSI or FC ports to be used in Nova or Cinder.
+   * - ``iscsi_initiators`` = ``None``
      - (String) Mapping between hostname and its iSCSI initiator IP addresses.
    * - ``max_luns_per_storage_group`` = ``255``
      - (Integer) Default max number of LUNs in a storage group. By default, the value is 255.
-   * - ``naviseccli_path`` =
+   * - ``naviseccli_path`` = ``None``
      - (String) Naviseccli Path.
    * - ``storage_vnx_authentication_type`` = ``global``
-     - (String) VNX authentication scope type.
+     - (String) VNX authentication scope type. By default, the value is global.
    * - ``storage_vnx_pool_names`` = ``None``
-     - (String) Comma-separated list of storage pool names to be used.
+     - (List) Comma-separated list of storage pool names to be used.
    * - ``storage_vnx_security_file_dir`` = ``None``
      - (String) Directory path that contains the VNX security file. Make sure the security file is generated first.

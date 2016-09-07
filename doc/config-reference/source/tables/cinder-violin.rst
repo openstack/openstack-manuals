@@ -18,5 +18,13 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``violin_dedup_capable_pools`` =
+     - (List) Storage pools capable of dedup and other luns.(Comma separated list)
+   * - ``violin_dedup_only_pools`` =
+     - (List) Storage pools to be used to setup dedup luns only.(Comma separated list)
+   * - ``violin_iscsi_target_ips`` =
+     - (List) Target iSCSI addresses to use.(Comma separated list)
+   * - ``violin_pool_allocation_method`` = ``random``
+     - (String) Method of choosing a storage pool for a lun.
    * - ``violin_request_timeout`` = ``300``
      - (Integer) Global backend request timeout, in seconds.

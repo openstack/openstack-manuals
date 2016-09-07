@@ -21,7 +21,7 @@
    * - ``backup_swift_auth`` = ``per_user``
      - (String) Swift authentication mechanism
    * - ``backup_swift_auth_version`` = ``1``
-     - (String) Swift authentication version. Specify "1" for auth 1.0, or "2" for auth 2.0
+     - (String) Swift authentication version. Specify "1" for auth 1.0, or "2" for auth 2.0 or "3" for auth 3.0
    * - ``backup_swift_block_size`` = ``32768``
      - (Integer) The size in bytes that changes are tracked for incremental backups. backup_swift_object_size has to be multiple of backup_swift_block_size.
    * - ``backup_swift_ca_cert_file`` = ``None``
@@ -34,6 +34,10 @@
      - (String) Swift key for authentication
    * - ``backup_swift_object_size`` = ``52428800``
      - (Integer) The size in bytes of Swift backup objects
+   * - ``backup_swift_project`` = ``None``
+     - (String) Swift project/account name. Required when connecting to an auth 3.0 system
+   * - ``backup_swift_project_domain`` = ``None``
+     - (String) Swift project domain name. Required when connecting to an auth 3.0 system
    * - ``backup_swift_retry_attempts`` = ``3``
      - (Integer) The number of retries to make for Swift operations
    * - ``backup_swift_retry_backoff`` = ``2``
@@ -44,6 +48,8 @@
      - (String) The URL of the Swift endpoint
    * - ``backup_swift_user`` = ``None``
      - (String) Swift user name
+   * - ``backup_swift_user_domain`` = ``None``
+     - (String) Swift user domain name. Required when connecting to an auth 3.0 system
    * - ``keystone_catalog_info`` = ``identity:Identity Service:publicURL``
      - (String) Info to match when looking for keystone in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> - Only used if backup_swift_auth_url is unset
    * - ``swift_catalog_info`` = ``object-store:swift:publicURL``

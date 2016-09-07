@@ -10,7 +10,7 @@
 
 .. _cinder-xiv:
 
-.. list-table:: Description of the IBM Storage driver configuration options
+.. list-table:: Description of IBM Storage driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -26,9 +26,3 @@
      - (String) Username for SAN controller
    * - ``san_password`` =
      - (String) Password for SAN controller
-   * - ``xiv_chap`` = ``disabled``
-     - (String) CHAP authentication mode, effective only for iscsi (disabled|enabled)
-   * - ``xiv_ds8k_connection_type`` = ``iscsi``
-     - (String) Connection type to the IBM Storage Array
-   * - ``xiv_ds8k_proxy`` = ``xiv_ds8k_openstack.nova_proxy.XIVDS8KNovaProxy``
-     - (String) Proxy driver that connects to the IBM Storage Array

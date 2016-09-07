@@ -18,6 +18,8 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``sio_max_over_subscription_ratio`` = ``None``
+     - (Floating point) max_over_subscription_ratio setting for the ScaleIO driver. If set, this takes precedence over the general max_over_subscription_ratio option. If None, the general option is used.Maximum value allowed for ScaleIO is 10.0.
    * - ``sio_protection_domain_id`` = ``None``
      - (String) Protection Domain ID.
    * - ``sio_protection_domain_name`` = ``None``

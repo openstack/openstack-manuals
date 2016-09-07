@@ -20,6 +20,8 @@
      -
    * - ``allow_availability_zone_fallback`` = ``False``
      - (Boolean) If the requested Cinder availability zone is unavailable, fall back to the value of default_availability_zone, then storage_availability_zone, instead of failing.
+   * - ``chap`` = ``disabled``
+     - (String) CHAP authentication mode, effective only for iscsi (disabled|enabled)
    * - ``chap_password`` =
      - (String) Password for specified CHAP account name.
    * - ``chap_username`` =
@@ -30,14 +32,24 @@
      - (String) ID of the project which will be used as the Cinder internal tenant.
    * - ``cinder_internal_tenant_user_id`` = ``None``
      - (String) ID of the user to be used in volume operations as the Cinder internal tenant.
+   * - ``cluster`` = ``None``
+     - (String) Name of this cluster. Used to group volume hosts that share the same backend configurations to work in HA Active-Active mode. Active-Active is not yet supported.
    * - ``compute_api_class`` = ``cinder.compute.nova.API``
      - (String) The full class name of the compute API class to use
+   * - ``connection_type`` = ``iscsi``
+     - (String) Connection type to the IBM Storage Array
    * - ``consistencygroup_api_class`` = ``cinder.consistencygroup.api.API``
      - (String) The full class name of the consistencygroup API class
    * - ``default_availability_zone`` = ``None``
      - (String) Default availability zone for new volumes. If not set, the storage_availability_zone option value is used as the default for new volumes.
+   * - ``default_group_type`` = ``None``
+     - (String) Default group type to use
    * - ``default_volume_type`` = ``None``
      - (String) Default volume type to use
+   * - ``driver_client_cert`` = ``None``
+     - (String) The path to the client certificate for verification, if the driver supports it.
+   * - ``driver_client_cert_key`` = ``None``
+     - (String) The path to the client certificate key for verification, if the driver supports it.
    * - ``driver_data_namespace`` = ``None``
      - (String) Namespace for driver private data values to be saved in.
    * - ``driver_ssl_cert_path`` = ``None``
@@ -48,6 +60,8 @@
      - (Boolean) Enables the Force option on upload_to_image. This enables running upload_volume on in-use volumes for backends that support it.
    * - ``enable_new_services`` = ``True``
      - (Boolean) Services to be added to the available pool on create
+   * - ``enable_unsupported_driver`` = ``False``
+     - (Boolean) Set this to True when you want to allow an unsupported driver to start. Drivers that haven't maintained a working CI system and testing are marked as unsupported until CI is working again. This also marks a driver as deprecated and may be removed in the next release.
    * - ``end_time`` = ``None``
      - (String) If this option is specified then the end time specified is used instead of the end time of the last completed audit period.
    * - ``enforce_multipath_for_image_xfer`` = ``False``
@@ -56,6 +70,8 @@
      - (Integer) Size of executor thread pool.
    * - ``fatal_exception_format_errors`` = ``False``
      - (Boolean) Make exception message format errors fatal.
+   * - ``group_api_class`` = ``cinder.group.api.API``
+     - (String) The full class name of the group API class
    * - ``host`` = ``localhost``
      - (String) Name of this node. This can be an opaque identifier. It is not necessarily a host name, FQDN, or IP address.
    * - ``iet_conf`` = ``/etc/iet/ietd.conf``
@@ -64,8 +80,6 @@
      - (List) The list of secondary IP addresses of the iSCSI daemon
    * - ``max_over_subscription_ratio`` = ``20.0``
      - (Floating point) Float representation of the over subscription ratio when thin provisioning is involved. Default ratio is 20.0, meaning provisioned capacity can be 20 times of the total physical capacity. If the ratio is 10.5, it means provisioned capacity can be 10.5 times of the total physical capacity. A ratio of 1.0 means provisioned capacity cannot exceed the total physical capacity. The ratio has to be a minimum of 1.0.
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
    * - ``monkey_patch`` = ``False``
      - (Boolean) Enable monkey patching
    * - ``monkey_patch_modules`` =
@@ -88,6 +102,8 @@
      - (Integer) Range, in seconds, to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
    * - ``periodic_interval`` = ``60``
      - (Integer) Interval, in seconds, between running periodic tasks
+   * - ``proxy`` = ``storage.proxy.IBMStorageProxy``
+     - (String) Proxy driver that connects to the IBM Storage Array
    * - ``replication_api_class`` = ``cinder.replication.api.API``
      - (String) The full class name of the volume replication API class
    * - ``replication_device`` = ``None``
@@ -112,6 +128,8 @@
      - (String) Top-level directory for maintaining cinder's state
    * - ``storage_availability_zone`` = ``nova``
      - (String) Availability zone of this node
+   * - ``storage_protocol`` = ``iscsi``
+     - (String) Protocol for transferring data between host and storage back-end.
    * - ``strict_ssh_host_key_policy`` = ``False``
      - (Boolean) Option to enable strict host key checking. When set to "True" Cinder will only connect to systems with a host key present in the configured "ssh_hosts_key_file". When set to "False" the host key will be saved upon first connection and used for subsequent connections. Default=False
    * - ``suppress_requests_ssl_warnings`` = ``False``
@@ -128,3 +146,9 @@
      - (Boolean) Option to enable/disable CHAP authentication for targets.
    * - ``use_forwarded_for`` = ``False``
      - (Boolean) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.
+   * - **[key_manager]**
+     -
+   * - ``api_class`` = ``castellan.key_manager.barbican_key_manager.BarbicanKeyManager``
+     - (String) The full class name of the key manager API class
+   * - ``fixed_key`` = ``None``
+     - (String) Fixed key returned by key manager, specified in hex

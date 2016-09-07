@@ -18,17 +18,19 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``datera_503_interval`` = ``5``
+     - (Integer) Interval between 503 retries
+   * - ``datera_503_timeout`` = ``120``
+     - (Integer) Timeout for HTTP 503 retry messages
+   * - ``datera_acl_allow_all`` = ``False``
+     - (Boolean) DEPRECATED: True to set acl 'allow_all' on volumes created
    * - ``datera_api_port`` = ``7717``
      - (String) Datera API port.
    * - ``datera_api_version`` = ``2``
      - (String) Datera API version.
-   * - ``datera_num_replicas`` = ``3``
-     - (Int) Number of replicas to create of an inode.
-   * - ``datera_503_timeout`` = ``120``
-     - (Int) Timeout for HTTP 503 retry messages
-   * - ``datera_503_interval`` = ``5``
-     - (Int) Interval between HTTP 503 retries
-   * - ``datera_acl_allow_all`` = ``False``
-     - (Bool) True to set acl 'allow_all' on volumes created
    * - ``datera_debug`` = ``False``
-     - (Bool) True to set function arg and return logging
+     - (Boolean) True to set function arg and return logging
+   * - ``datera_debug_replica_count_override`` = ``False``
+     - (Boolean) ONLY FOR DEBUG/TESTING PURPOSES True to set replica_count to 1
+   * - ``datera_num_replicas`` = ``3``
+     - (Integer) DEPRECATED: Number of replicas to create of an inode.

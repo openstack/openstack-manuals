@@ -22,6 +22,8 @@
      - (String) FC Zoning mode configured
    * - **[fc-zone-manager]**
      -
+   * - ``enable_unsupported_driver`` = ``False``
+     - (Boolean) Set this to True when you want to allow an unsupported zone manager driver to start. Drivers that haven't maintained a working CI system and testing are marked as unsupported until CI is working again. This also marks a driver as deprecated and may be removed in the next release.
    * - ``fc_fabric_names`` = ``None``
      - (String) Comma separated list of Fibre Channel fabric names. This list of names is used to retrieve other SAN credentials for connecting to each SAN fabric
    * - ``fc_san_lookup_service`` = ``cinder.zonemanager.drivers.brocade.brcd_fc_san_lookup_service.BrcdFCSanLookupService``

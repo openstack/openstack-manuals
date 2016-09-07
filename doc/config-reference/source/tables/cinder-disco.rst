@@ -20,6 +20,8 @@
      -
    * - ``clone_check_timeout`` = ``3600``
      - (Integer) How long we check whether a clone is finished before we give up
+   * - ``clone_volume_timeout`` = ``680``
+     - (Integer) Create clone volume timeout.
    * - ``disco_client`` = ``127.0.0.1``
      - (Unknown) The IP of DMS client socket server
    * - ``disco_client_port`` = ``9898``

@@ -19,18 +19,18 @@
    * - **[CISCO_FABRIC_EXAMPLE]**
      -
    * - ``cisco_fc_fabric_address`` =
-     - (StrOpt) Management IP of fabric
+     - (String) Management IP of fabric
    * - ``cisco_fc_fabric_password`` =
-     - (StrOpt) Password for user
+     - (String) Password for user
    * - ``cisco_fc_fabric_port`` = ``22``
-     - (PortOpt) Connecting port
+     - (Port number) Connecting port
    * - ``cisco_fc_fabric_user`` =
-     - (StrOpt) Fabric user ID
+     - (String) Fabric user ID
    * - ``cisco_zone_activate`` = ``True``
-     - (BoolOpt) overridden zoning activation state
+     - (Boolean) overridden zoning activation state
    * - ``cisco_zone_name_prefix`` = ``None``
-     - (StrOpt) overridden zone name prefix
+     - (String) overridden zone name prefix
    * - ``cisco_zoning_policy`` = ``initiator-target``
-     - (StrOpt) overridden zoning policy
+     - (String) overridden zoning policy
    * - ``cisco_zoning_vsan`` = ``None``
-     - (StrOpt) VSAN of the Fabric
+     - (String) VSAN of the Fabric
