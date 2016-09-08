@@ -18,6 +18,8 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``check_hash`` = ``False``
+     - (Boolean) Chooses whether hash of each file should be checked on data copying.
    * - ``client_socket_timeout`` = ``900``
      - (Integer) Timeout for client connections socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.
    * - ``compute_api_class`` = ``manila.compute.nova.API``
@@ -26,17 +28,23 @@
      - (Integer) Time to wait for access rules to be allowed/denied on backends when migrating a share (seconds).
    * - ``data_manager`` = ``manila.data.manager.DataManager``
      - (String) Full class name for the data manager.
+   * - ``data_node_access_admin_user`` = ``None``
+     - (String) The admin user name registered in the security service in order to allow access to user authentication-based shares.
    * - ``data_node_access_cert`` = ``None``
      - (String) The certificate installed in the data node in order to allow access to certificate authentication-based shares.
    * - ``data_node_access_ip`` = ``None``
      - (String) The IP of the node interface connected to the admin network. Used for allowing access to the mounting shares.
+   * - ``data_node_mount_options`` = ``{}``
+     - (Dict) Mount options to be included in the mount command for share protocols. Use dictionary format, example: {'nfs': '-o nfsvers=3', 'cifs': '-o user=foo,pass=bar'}
    * - ``data_topic`` = ``manila-data``
      - (String) The topic data nodes listen on.
    * - ``enable_new_services`` = ``True``
      - (Boolean) Services to be added to the available pool on create.
    * - ``fatal_exception_format_errors`` = ``False``
      - (Boolean) Whether to make exception message format errors fatal.
-   * - ``host`` = ``localhost``
+   * - ``filter_function`` = ``None``
+     - (String) String representation for an equation that will be used to filter hosts.
+   * - ``host`` = ``<your_hostname>``
      - (String) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address.
    * - ``max_over_subscription_ratio`` = ``20.0``
      - (Floating point) Float representation of the over subscription ratio when thin provisioning is involved. Default ratio is 20.0, meaning provisioned capacity can be 20 times the total physical capacity. If the ratio is 10.5, it means provisioned capacity can be 10.5 times the total physical capacity. A ratio of 1.0 means provisioned capacity cannot exceed the total physical capacity. A ratio lower than 1.0 is invalid.
@@ -46,7 +54,9 @@
      - (Boolean) Whether to log monkey patching.
    * - ``monkey_patch_modules`` =
      - (List) List of modules or decorators to monkey patch.
-   * - ``my_ip`` = ``10.0.0.1``
+   * - ``mount_tmp_location`` = ``/tmp/``
+     - (String) Temporary path to create and mount shares during migration.
+   * - ``my_ip`` = ``<your_ip>``
      - (String) IP address of this host.
    * - ``num_shell_tries`` = ``3``
      - (Integer) Number of times to attempt to run flakey shell commands.

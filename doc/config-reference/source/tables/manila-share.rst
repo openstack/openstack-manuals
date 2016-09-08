@@ -44,12 +44,12 @@
      - (List) Driver(s) to perform some additional actions before and after share driver actions and on a periodic basis. Default is [].
    * - ``migration_create_delete_share_timeout`` = ``300``
      - (Integer) Timeout for creating and deleting share instances when performing share migration (seconds).
+   * - ``migration_driver_continue_update_interval`` = ``60``
+     - (Integer) This value, specified in seconds, determines how often the share manager will poll the driver to perform the next step of migration in the storage backend, for a migrating share.
    * - ``migration_ignore_files`` = ``lost+found``
      - (List) List of files and folders to be ignored when migrating shares. Items should be names (not including any path).
    * - ``migration_readonly_rules_support`` = ``True``
      - (Boolean) Specify whether read only access rule mode is supported in this backend.
-   * - ``migration_tmp_location`` = ``/tmp/``
-     - (String) Temporary path to create and mount shares during migration.
    * - ``migration_wait_access_rules_timeout`` = ``180``
      - (Integer) Time to wait for access rules to be allowed/denied on backends when migrating shares using generic approach (seconds).
    * - ``network_config_group`` = ``None``

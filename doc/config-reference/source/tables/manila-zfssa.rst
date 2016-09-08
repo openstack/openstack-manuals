@@ -26,6 +26,8 @@
      - (String) IP address for data.
    * - ``zfssa_host`` = ``None``
      - (String) ZFSSA management IP address.
+   * - ``zfssa_manage_policy`` = ``loose``
+     - (String) Driver policy for share manage. A strict policy checks for a schema named manila_managed, and makes sure its value is true. A loose policy does not check for the schema.
    * - ``zfssa_nas_checksum`` = ``fletcher4``
      - (String) Controls checksum used for data blocks.
    * - ``zfssa_nas_compression`` = ``off``
