@@ -25,4 +25,4 @@
    * - ``default_publisher_id`` = ``None``
      - (String) Default publisher_id for outgoing notifications.
    * - ``transport_url`` = ``None``
-     - (String) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.
+     - (String) A URL representing the messaging driver to use and its full configuration.

@@ -20,7 +20,7 @@
      -
    * - ``client_retry_limit`` = ``2``
      - (Integer) Number of times to retry when a client encounters an expected intermittent error. Set to 0 to disable retries.
-   * - ``convergence_engine`` = ``False``
+   * - ``convergence_engine`` = ``True``
      - (Boolean) Enables engine with convergence architecture. All stacks with this option will be created using convergence engine.
    * - ``default_deployment_signal_transport`` = ``CFN_SIGNAL``
      - (String) Template default for how the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL (requires enabled heat-api-cfn). TEMP_URL_SIGNAL will create a Swift TempURL to be signaled via HTTP PUT (requires object-store endpoint which supports TempURL). HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. ZAQAR_SIGNAL will create a dedicated zaqar queue to be signaled using the provided keystone credentials.
@@ -31,25 +31,25 @@
    * - ``environment_dir`` = ``/etc/heat/environment.d``
      - (String) The directory to search for environment files.
    * - ``error_wait_time`` = ``240``
-     - (Integer) Error wait time in seconds for stack action (ie. create or update).
+     - (Integer) The amount of time in seconds after an error has occurred that tasks may continue to run before being cancelled.
    * - ``event_purge_batch_size`` = ``10``
      - (Integer) Controls how many events will be pruned whenever a stack's events exceed max_events_per_stack. Set this lower to keep more events at the expense of more frequent purges.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
    * - ``host`` = ``localhost``
      - (String) Name of the engine node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address.
-   * - ``keystone_backend`` = ``heat.common.heat_keystoneclient.KeystoneClientV3``
+   * - ``keystone_backend`` = ``heat.engine.clients.os.keystone.heat_keystoneclient.KsClientWrapper``
      - (String) Fully qualified class name to use as a keystone backend.
    * - ``max_interface_check_attempts`` = ``10``
      - (Integer) Number of times to check whether an interface has been attached or detached.
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
    * - ``periodic_interval`` = ``60``
      - (Integer) Seconds between running periodic tasks.
    * - ``plugin_dirs`` = ``/usr/lib64/heat, /usr/lib/heat, /usr/local/lib/heat, /usr/local/lib64/heat``
      - (List) List of directories to search for plug-ins.
    * - ``reauthentication_auth_method`` =
      - (String) Allow reauthentication on token expiry, such that long-running tasks may complete. Note this defeats the expiry of any provided user tokens.
+   * - ``template_dir`` = ``/etc/heat/templates``
+     - (String) The directory to search for template files.
    * - **[constraint_validation_cache]**
      -
    * - ``caching`` = ``True``
@@ -72,3 +72,13 @@
      - (Boolean) Toggle to enable/disable caching when Orchestration Engine retrieves extensions from other OpenStack services. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
    * - ``expiration_time`` = ``3600``
      - (Integer) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of service extensions.
+   * - **[volumes]**
+     -
+   * - ``backups_enabled`` = ``True``
+     - (Boolean) Indicate if cinder-backup service is enabled. This is a temporary workaround until cinder-backup service becomes discoverable, see LP#1334856.
+   * - **[yaql]**
+     -
+   * - ``limit_iterators`` = ``200``
+     - (Integer) The maximum number of elements in collection expression can take for its evaluation.
+   * - ``memory_quota`` = ``10000``
+     - (Integer) The maximum size of memory in bytes that expression can take for its evaluation.
