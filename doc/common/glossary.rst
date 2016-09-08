@@ -2545,6 +2545,11 @@ N
 
       Provides support for NexentaStor devices in Compute.
 
+   Nginx
+
+      An HTTP and reverse proxy server, a mail proxy server, and a generic
+      TCP/UDP proxy server.
+
    No ACK
 
       Disables server-side message acknowledgment in the Compute
