@@ -6,7 +6,7 @@ Plug-ins typically have requirements for particular software that must
 be run on each node that handles data packets. This includes any node
 that runs nova-compute and nodes that run dedicated OpenStack Networking
 service agents such as ``neutron-dhcp-agent``, ``neutron-l3-agent``,
-``neutron-metering-agent`` or ``neutron-lbaas-agent``.
+``neutron-metering-agent`` or ``neutron-lbaasv2-agent``.
 
 A data-forwarding node typically has a network interface with an IP
 address on the management network and another interface on the data
