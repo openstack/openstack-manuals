@@ -271,6 +271,10 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
    * -
      -
      -
+     - Change resource
+   * -
+     -
+     -
      - Disk change tracking
    * -
      -
@@ -280,6 +284,10 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
      -
      -
      - Memory
+   * -
+     -
+     -
+     - Modify device settings
    * -
      -
      -
@@ -358,16 +366,8 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
      - Customize
    * -
      -
-     - Sessions
      -
-   * -
-     -
-     -
-     - Validate session
-   * -
-     -
-     -
-     - View and stop sessions
+     - Create template from virtual machine
    * -
      -
      - Snapshot management
@@ -380,6 +380,18 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
      -
      -
      - Remove snapshot
+   * -
+     - Sessions
+     -
+     -
+   * -
+     -
+     -
+     - Validate session
+   * -
+     -
+     -
+     - View and stop sessions
    * -
      - vApp
      -
@@ -969,3 +981,4 @@ Configuration reference
 
 To customize the VMware driver, use the configuration option settings
 documented in :ref:`nova-vmware`.
+
