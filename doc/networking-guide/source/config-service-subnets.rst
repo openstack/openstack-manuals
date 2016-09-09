@@ -48,18 +48,31 @@ Usage
    .. code-block:: console
 
       $ openstack network create demo-net1
-      +-------------------+--------------------------------------+
-      | Field             | Value                                |
-      +-------------------+--------------------------------------+
-      | admin_state_up    | True                                 |
-      | id                | b5b729d8-31cc-4d2c-8284-72b3291fec02 |
-      | name              | demo-net1                            |
-      | router:external   | False                                |
-      | shared            | False                                |
-      | status            | ACTIVE                               |
-      | subnets           |                                      |
-      | tenant_id         | a8b3054cc1214f18b1186b291525650f     |
-      +-------------------+--------------------------------------+
+      +---------------------------+--------------------------------------+
+      | Field                     | Value                                |
+      +---------------------------+--------------------------------------+
+      | admin_state_up            | UP                                   |
+      | availability_zone_hints   |                                      |
+      | availability_zones        |                                      |
+      | description               |                                      |
+      | headers                   |                                      |
+      | id                        | b5b729d8-31cc-4d2c-8284-72b3291fec02 |
+      | ipv4_address_scope        | None                                 |
+      | ipv6_address_scope        | None                                 |
+      | mtu                       | 1450                                 |
+      | name                      | demo-net1                            |
+      | port_security_enabled     | True                                 |
+      | project_id                | a3db43cd0f224242a847ab84d091217d     |
+      | provider:network_type     | vxlan                                |
+      | provider:physical_network | None                                 |
+      | provider:segmentation_id  | 110                                  |
+      | router:external           | False                                |
+      | shared                    | False                                |
+      | status                    | ACTIVE                               |
+      | subnets                   |                                      |
+      | tenant_id                 | a8b3054cc1214f18b1186b291525650f     |
+      | tags                      | []                                   |
+      +---------------------------+--------------------------------------+
 
 #. Create a subnet on the network with one or more service types. For
    example, the ``compute:nova`` service type enables instances to use
