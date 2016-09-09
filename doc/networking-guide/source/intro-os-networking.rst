@@ -138,20 +138,65 @@ plug-ins only.
 Security groups
 ---------------
 
-A security group acts as a virtual firewall for your compute instances to
-control inbound and outbound traffic. Security groups act at the port level,
-not the subnet level. Therefore, each port in a subnet could be
-assigned to a different set of security groups. If you do not specify a
-particular group at launch time, the instance is automatically assigned
-to the default security group for that project.
+Security groups provide a container for virtual firewall rules that control
+ingress (inbound to instances) and egress (outbound from instances) network
+traffic at the port level. Security groups use a default deny policy and
+only contain rules that allow specific traffic. Each port can reference one
+or more security groups in an additive fashion. The firewall driver
+translates security group rules to a configuration for the underlying packet
+filtering technology such as ``iptables``.
 
-Security groups and security group rules give administrators and tenants the
-ability to specify the type of traffic and direction (ingress/egress) that is
-allowed to pass through a port. A security group is a container for security
-group rules. When a port is created, it is associated with a security group. If
-a security group is not specified, the port is associated with a 'default'
-security group. By default, this group drops all ingress traffic and allows all
-egress. Rules can be added to this group in order to change the behavior.
+Each project contains a ``default`` security group that allows all egress
+traffic and denies all ingress traffic. You can change the rules in the
+``default`` security group. If you launch an instance without specifying a
+security group, the ``default`` security group automatically applies to it.
+Similarly, if you create a port without specifying a security group, the
+``default`` security group automatically applies to it.
+
+.. note::
+
+   If you use the metadata service, removing the default egress rules denies
+   access to TCP port 80 on 169.254.169.254, thus preventing instances from
+   retrieving metadata.
+
+Security group rules are stateful. Thus, allowing ingress TCP port 22 for
+secure shell automatically creates rules that allow return egress traffic
+and ICMP error messages involving those TCP connections.
+
+By default, all security groups contain a series of basic (sanity) and
+anti-spoofing rules that perform the following actions:
+
+* Allow egress traffic only if it uses the source MAC and IP addresses
+  of the port for the instance, source MAC and IP combination in
+  ``allowed-address-pairs``, or valid MAC address (port or
+  ``allowed-address-pairs``) and associated EUI64 link-local IPv6 address.
+* Allow egress DHCP discovery and request messages that use the source MAC
+  address of the port for the instance and the unspecified IPv4 address
+  (0.0.0.0).
+* Allow ingress DHCP and DHCPv6 responses from the DHCP server on the
+  subnet so instances can acquire IP addresses.
+* Deny egress DHCP and DHCPv6 responses to prevent instances from
+  acting as DHCP(v6) servers.
+* Allow ingress/egress ICMPv6 MLD, neighbor solicitation, and neighbor
+  discovery messages so instances can discover neighbors and join
+  multicast groups.
+* Deny egress ICMPv6 router advertisements to prevent instances from acting
+  as IPv6 routers and forwarding IPv6 traffic for other instances.
+* Allow egress ICMPv6 MLD reports (v1 and v2) and neighbor solicitation
+  messages that use the source MAC address of a particular instance and
+  the unspecified IPv6 address (::). Duplicate address detection (DAD) relies
+  on these messages.
+* Allow egress non-IP traffic from the MAC address of the port for the
+  instance and any additional MAC addresses in ``allowed-address-pairs`` on
+  the port for the instance.
+
+Although non-IP traffic, security groups do not implicitly allow all ARP
+traffic. Separate ARP filtering rules prevent instances from using ARP
+to intercept traffic for another instance. You cannot disable or remove
+these rules.
+
+You can disable security groups including basic and anti-spoofing rules
+by setting the port attribute ``port_security_enabled`` to ``False``.
 
 Extensions
 ----------
