@@ -25,7 +25,7 @@ to a server instance.
 
 #. Configure the OpenStack Compute and the OpenStack Block Storage
    services through the ``/etc/cinder/cinder.conf`` file.
-#. Use the :command:`openstack volume create ` command to create a volume.
+#. Use the :command:`openstack volume create` command to create a volume.
    This command creates an LV into the volume group (VG) ``cinder-volumes``.
 #. Use the :command:`openstack server add volume` command to attach the
    volume to an instance. This command creates a unique :term:`IQN <iSCSI
