@@ -31,8 +31,9 @@ An OpenStack environment includes multiple data pools for the VMs:
     or Ceph RBD as the storage back end.
 
 For more information about configuring storage back ends for
-the different storage options, see the `OpenStack Administrator Guide
-<http://docs.openstack.org/admin-guide/>`_.
+the different storage options, see `Manage volumes
+<http://docs.openstack.org/admin-guide/blockstorage-manage-volumes.html>`_
+in the OpenStack Administrator Guide.
 
 This section discusses ways to protect against
 data loss in your OpenStack environment.
