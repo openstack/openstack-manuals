@@ -138,6 +138,7 @@ VMAX3
 -  SnapVX support.
 -  Extend volume and iSCSI support.
 -  iSCSI multipath support.
+-  Live migration support.
 
 
 Set up the VMAX drivers
