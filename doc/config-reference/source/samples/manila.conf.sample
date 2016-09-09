@@ -26,7 +26,7 @@
 #os_region_name = <None>
 
 # IP address of this host. (string value)
-#my_ip = 16.18.11.16
+#my_ip = <your_ip>
 
 # The topic scheduler nodes listen on. (string value)
 #scheduler_topic = manila-scheduler
@@ -36,14 +36,6 @@
 
 # The topic data nodes listen on. (string value)
 #data_topic = manila-data
-
-# Deploy v1 of the Manila API. This option is deprecated, is not used,
-# and will be removed in a future release. (boolean value)
-#enable_v1_api = false
-
-# Deploy v2 of the Manila API. This option is deprecated, is not used,
-# and will be removed in a future release. (boolean value)
-#enable_v2_api = false
 
 # Whether to rate limit the API. (boolean value)
 #api_rate_limit = true
@@ -83,7 +75,7 @@
 
 # Name of this node.  This can be an opaque identifier.  It is not
 # necessarily a hostname, FQDN, or IP address. (string value)
-#host = manila
+#host = <your_hostname>
 
 # Availability zone of this node. (string value)
 #storage_availability_zone = nova
@@ -118,9 +110,8 @@
 # The full class name of the share API class to use. (string value)
 #share_api_class = manila.share.api.API
 
-# Auth strategy for connecting to neutron in admin context. (string
-# value)
-# Deprecated group/name - [DEFAULT]/auth_strategy
+# The strategy to use for auth. Supports noauth, keystone, and
+# deprecated. (string value)
 #auth_strategy = keystone
 
 # A list of share backend names to use. These backend names should be
@@ -164,9 +155,13 @@
 # Deprecated group/name - [DEFAULT]/network_api_class
 #network_api_class = manila.network.neutron.neutron_network_plugin.NeutronNetworkPlugin
 
-# Region name for connecting to neutron in admin context (string
-# value)
-#region_name = <None>
+# vNIC type used for binding. (string value)
+# Allowed values: baremetal, normal, direct, direct-physical, macvtap
+#neutron_vnic_type = baremetal
+
+# Host ID to be used when creating neutron port. If not set host is
+# set to manila-share host by default. (string value)
+#neutron_host_id = openstack-VirtualBox
 
 # Default Neutron network that will be used for share server creation.
 # This opt is used only with class 'NeutronSingleNetworkPlugin'.
@@ -224,6 +219,11 @@
 # Deprecated group/name - [DEFAULT]/standalone_network_plugin_ip_version
 #standalone_network_plugin_ip_version = 4
 
+# Maximum Transmission Unit (MTU) value of the network. Default value
+# is 1500. (integer value)
+# Deprecated group/name - [DEFAULT]/standalone_network_plugin_mtu
+#standalone_network_plugin_mtu = 1500
+
 # Number of shares allowed per project. (integer value)
 #quota_shares = 50
 
@@ -260,10 +260,10 @@
 
 # Which filter class names to use for filtering hosts when not
 # specified in the request. (list value)
-#scheduler_default_filters = AvailabilityZoneFilter,CapacityFilter,CapabilitiesFilter,ConsistencyGroupFilter,ShareReplicationFilter
+#scheduler_default_filters = AvailabilityZoneFilter,CapacityFilter,CapabilitiesFilter,ConsistencyGroupFilter,DriverFilter,ShareReplicationFilter
 
 # Which weigher class names to use for weighing hosts. (list value)
-#scheduler_default_weighers = CapacityWeigher
+#scheduler_default_weighers = CapacityWeigher,GoodnessWeigher
 
 # Default scheduler driver to use. (string value)
 #scheduler_driver = manila.scheduler.drivers.filter.FilterScheduler
@@ -383,13 +383,18 @@
 # 'proto' template element may not be required if included in the
 # command. 'export' and 'path' template elements are required. It is
 # advisable to separate different commands per backend. (string value)
-#share_mount_template = mount -vt %(proto)s %(export)s %(path)s
+#share_mount_template = mount -vt %(proto)s %(options)s %(export)s %(path)s
 
 # The template for unmounting shares for this backend. Must specify
 # the executable with all necessary parameters for the protocol
 # supported. 'path' template element is required. It is advisable to
 # separate different commands per backend. (string value)
 #share_unmount_template = umount -v %(path)s
+
+# Protocol access mapping for this backend. Should be a dictionary
+# comprised of {'access_type1': ['share_proto1', 'share_proto2'],
+# 'access_type2': ['share_proto2', 'share_proto3']}. (dict value)
+#protocol_access_mapping = ip:['nfs'],user:['cifs']
 
 # Specify whether read only access rule mode is supported in this
 # backend. (boolean value)
@@ -408,6 +413,14 @@
 # other. If this option is not specified in the group, it means that
 # replication is not enabled on the backend. (string value)
 #replication_domain = <None>
+
+# String representation for an equation that will be used to filter
+# hosts. (string value)
+#filter_function = <None>
+
+# String representation for an equation that will be used to determine
+# the goodness of a host. (string value)
+#goodness_function = <None>
 
 # Backend server SSH connection timeout. (integer value)
 #ssh_conn_timeout = 60
@@ -435,6 +448,38 @@
 # Whether to enable snapshots in this driver. (boolean value)
 #cephfs_enable_snapshots = false
 
+# Linux bridge used by container hypervisor to plug host-side veth to.
+# It will be unplugged from here by the driver. (string value)
+#container_linux_bridge_name = docker0
+
+# OVS bridge to use to plug a container to. (string value)
+#container_ovs_bridge_name = br-int
+
+# Determines whether to allow guest access to CIFS share or not.
+# (boolean value)
+#container_cifs_guest_ok = true
+
+# Image to be used for a container-based share server. (string value)
+#container_image_name = manila-docker-container
+
+# Container helper which provides container-related operations to the
+# driver. (string value)
+#container_helper = manila.share.drivers.container.container_helper.DockerExecHelper
+
+# Helper which facilitates interaction with share server. (string
+# value)
+#container_protocol_helper = manila.share.drivers.container.protocol_helper.DockerCIFSHelper
+
+# Helper which facilitates interaction with storage solution used to
+# actually store data. By default LVM is used to provide storage for a
+# share. (string value)
+#container_storage_helper = manila.share.drivers.container.storage_helper.LVMHelper
+
+# LVM volume group to use for volumes. This volume group must be
+# created by the cloud administrator independently from manila
+# operations. (string value)
+#container_volume_group = manila_docker_volumes
+
 # User name for the EMC server. (string value)
 #emc_nas_login = <None>
 
@@ -453,17 +498,26 @@
 #emc_nas_server_secure = true
 
 # Share backend. (string value)
+# Allowed values: isilon, vnx, unity
 #emc_share_backend = <None>
 
 # Container of share servers. (string value)
-#emc_nas_server_container = server_2
+#emc_nas_server_container = <None>
 
-# EMC pool names. (string value)
+# EMC pool names. (list value)
 # Deprecated group/name - [DEFAULT]/emc_nas_pool_name
 #emc_nas_pool_names = <None>
 
 # The root directory where shares will be located. (string value)
 #emc_nas_root_dir = <None>
+
+# Pool to persist the meta-data of NAS server. (string value)
+#emc_nas_server_pool = <None>
+
+# Comma separated list specifying the ports that can be used for share
+# server interfaces. Members of the list can be Unix-style glob
+# expressions. (list value)
+#emc_interface_ports = <None>
 
 # Path to smb config. (string value)
 #smb_template_config_path = $state_path/smb.conf
@@ -580,39 +634,67 @@
 
 # HNAS management interface IP for communication between Manila
 # controller and HNAS. (string value)
-#hds_hnas_ip = <None>
+# Deprecated group/name - [DEFAULT]/hds_hnas_ip
+#hitachi_hnas_ip = <None>
 
 # HNAS username Base64 String in order to perform tasks such as create
 # file-systems and network interfaces. (string value)
-#hds_hnas_user = <None>
+# Deprecated group/name - [DEFAULT]/hds_hnas_user
+#hitachi_hnas_user = <None>
 
 # HNAS user password. Required only if private key is not provided.
 # (string value)
-#hds_hnas_password = <None>
+# Deprecated group/name - [DEFAULT]/hds_hnas_password
+#hitachi_hnas_password = <None>
 
 # Specify which EVS this backend is assigned to. (integer value)
-#hds_hnas_evs_id = <None>
+# Deprecated group/name - [DEFAULT]/hds_hnas_evs_id
+#hitachi_hnas_evs_id = <None>
 
 # Specify IP for mounting shares. (string value)
-#hds_hnas_evs_ip = <None>
+# Deprecated group/name - [DEFAULT]/hds_hnas_evs_ip
+#hitachi_hnas_evs_ip = <None>
 
 # Specify file-system name for creating shares. (string value)
-#hds_hnas_file_system_name = <None>
+# Deprecated group/name - [DEFAULT]/hds_hnas_file_system_name
+#hitachi_hnas_file_system_name = <None>
 
 # RSA/DSA private key value used to connect into HNAS. Required only
 # if password is not provided. (string value)
-#hds_hnas_ssh_private_key = <None>
+# Deprecated group/name - [DEFAULT]/hds_hnas_ssh_private_key
+#hitachi_hnas_ssh_private_key = <None>
 
 # The IP of the clusters admin node. Only set in HNAS multinode
 # clusters. (string value)
-#hds_hnas_cluster_admin_ip0 = <None>
+# Deprecated group/name - [DEFAULT]/hds_hnas_cluster_admin_ip0
+#hitachi_hnas_cluster_admin_ip0 = <None>
 
 # The time (in seconds) to wait for stalled HNAS jobs before aborting.
 # (integer value)
-#hds_hnas_stalled_job_timeout = 30
+# Deprecated group/name - [DEFAULT]/hds_hnas_stalled_job_timeout
+#hitachi_hnas_stalled_job_timeout = 30
 
 # Python class to be used for driver helper. (string value)
-#hds_hnas_driver_helper = manila.share.drivers.hitachi.ssh.HNASSSHBackend
+# Deprecated group/name - [DEFAULT]/hds_hnas_driver_helper
+#hitachi_hnas_driver_helper = manila.share.drivers.hitachi.hnas.ssh.HNASSSHBackend
+
+# By default, CIFS snapshots are not allowed to be taken when the
+# share has clients connected because consistent point-in-time replica
+# cannot be guaranteed for all files. Enabling this might cause
+# inconsistent snapshots on CIFS shares. (boolean value)
+# Deprecated group/name - [DEFAULT]/hds_hnas_allow_cifs_snapshot_while_mounted
+#hitachi_hnas_allow_cifs_snapshot_while_mounted = false
+
+# HSP management host for communication between Manila controller and
+# HSP. (string value)
+#hitachi_hsp_host = <None>
+
+# HSP username to perform tasks such as create filesystems and shares.
+# (string value)
+#hitachi_hsp_username = <None>
+
+# HSP password for the username provided. (string value)
+#hitachi_hsp_password = <None>
 
 # 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1 (string
 # value)
@@ -646,13 +728,9 @@
 # Deprecated group/name - [DEFAULT]/hp3par_san_ssh_port
 #hpe3par_san_ssh_port = 22
 
-# The File Provisioning Group (FPG) to use (string value)
+# The File Provisioning Group (FPG) to use (FPG)
 # Deprecated group/name - [DEFAULT]/hp3par_fpg
-#hpe3par_fpg = OpenStack
-
-# The IP address for shares not using a share server (string value)
-# Deprecated group/name - [DEFAULT]/hp3par_share_ip_address
-#hpe3par_share_ip_address =
+#hpe3par_fpg = <None>
 
 # Use one filestore per share (boolean value)
 # Deprecated group/name - [DEFAULT]/hp3par_fstore_per_share
@@ -692,13 +770,18 @@
 # Base folder where exported shares are located. (string value)
 #gpfs_mount_point_base = $state_path/mnt
 
-# NFS Server type. Valid choices are "KNFS" (kernel NFS) or "GNFS"
+# NFS Server type. Valid choices are "KNFS" (kernel NFS) or "CES"
 # (Ganesha NFS). (string value)
 #gpfs_nfs_server_type = KNFS
 
 # A list of the fully qualified NFS server names that make up the
 # OpenStack Manila configuration. (list value)
 #gpfs_nfs_server_list = <None>
+
+# True:when Manila services are running on one of the Spectrum Scale
+# node. False:when Manila services are not running on any of the
+# Spectrum Scale node. (boolean value)
+#is_gpfs_node = false
 
 # GPFS server SSH port. (port value)
 # Minimum value: 0
@@ -716,12 +799,33 @@
 #gpfs_ssh_private_key = <None>
 
 # Specify list of share export helpers. (list value)
-#gpfs_share_helpers = KNFS=manila.share.drivers.ibm.gpfs.KNFSHelper,GNFS=manila.share.drivers.ibm.gpfs.GNFSHelper
+#gpfs_share_helpers = KNFS=manila.share.drivers.ibm.gpfs.KNFSHelper,CES=manila.share.drivers.ibm.gpfs.CESHelper
 
-# Options to use when exporting a share using kernel NFS server. Note
-# that these defaults can be overridden when a share is created by
-# passing metadata with key name export_options. (string value)
+# DEPRECATED: Options to use when exporting a share using kernel NFS
+# server. Note that these defaults can be overridden when a share is
+# created by passing metadata with key name export_options. (string
+# value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: This option isn't used any longer. Please use share-type
+# extra specs for export options.
 #knfs_export_options = rw,sync,no_root_squash,insecure,no_wdelay,no_subtree_check
+
+# Base folder where exported shares are located. (string value)
+#lvm_share_export_root = $state_path/mnt
+
+# IP to be added to export string. (string value)
+#lvm_share_export_ip = <None>
+
+# If set, create LVMs with multiple mirrors. Note that this requires
+# lvm_mirrors + 2 PVs with available space. (integer value)
+#lvm_share_mirrors = 0
+
+# Name for the VG that will contain exported shares. (string value)
+#lvm_share_volume_group = lvm-shares
+
+# Specify list of share export helpers. (list value)
+#lvm_share_helpers = CIFS=manila.share.drivers.helpers.CIFSHelperUserAccess,NFS=manila.share.drivers.helpers.NFSHelper
 
 # The storage family type used on the storage system; valid values
 # include ontap_cluster for using clustered Data ONTAP. (string value)
@@ -753,6 +857,11 @@
 # netapp_login option. (string value)
 # Deprecated group/name - [DEFAULT]/netapp_nas_password
 #netapp_password = <None>
+
+# The NFS protocol versions that will be enabled. Supported values
+# include nfs3, nfs4.0, nfs4.1. This option only applies when the
+# option driver_handles_share_servers is set to True.  (list value)
+#netapp_enabled_share_protocols = nfs3,nfs4.0
 
 # NetApp volume name template. (string value)
 # Deprecated group/name - [DEFAULT]/netapp_nas_volume_name_template
@@ -792,6 +901,52 @@
 # (integer value)
 # Minimum value: 0
 #netapp_snapmirror_quiesce_timeout = 3600
+
+# IP address of Nexenta storage appliance. (string value)
+#nexenta_host = <None>
+
+# Port to connect to Nexenta REST API server. (integer value)
+#nexenta_rest_port = 8457
+
+# Number of retries for unsuccessful API calls. (integer value)
+#nexenta_retry_count = 6
+
+# Use http or https for REST connection (default auto). (string value)
+# Allowed values: http, https, auto
+#nexenta_rest_protocol = auto
+
+# User name to connect to Nexenta SA. (string value)
+#nexenta_user = admin
+
+# Password to connect to Nexenta SA. (string value)
+#nexenta_password = <None>
+
+# Volume name on NexentaStor. (string value)
+#nexenta_volume = volume1
+
+# Pool name on NexentaStor. (string value)
+#nexenta_pool = pool1
+
+# On if share over NFS is enabled. (boolean value)
+#nexenta_nfs = true
+
+# Parent folder on NexentaStor. (string value)
+#nexenta_nfs_share = nfs_share
+
+# Compression value for new ZFS folders. (string value)
+# Allowed values: on, off, gzip, gzip-1, gzip-2, gzip-3, gzip-4, gzip-5, gzip-6, gzip-7, gzip-8, gzip-9, lzjb, zle, lz4
+#nexenta_dataset_compression = on
+
+# Deduplication value for new ZFS folders. (string value)
+# Allowed values: on, off, sha256, verify, sha256, verify
+#nexenta_dataset_dedupe = off
+
+# If True shares will not be space guaranteed and overprovisioning
+# will be enabled. (boolean value)
+#nexenta_thin_provisioning = true
+
+# Base directory that contains NFS share mount points. (string value)
+#nexenta_mount_point_base = $state_path/mnt
 
 # URL of the Quobyte API server (http or https) (string value)
 #quobyte_api_url = <None>
@@ -1002,6 +1157,10 @@
 # value)
 #zfs_replica_snapshot_prefix = tmp_snapshot_for_replication_
 
+# Set snapshot prefix for usage in ZFS migration. Required. (string
+# value)
+#zfs_migration_snapshot_prefix = tmp_snapshot_for_share_migration_
+
 # ZFSSA management IP address. (string value)
 #zfssa_host = <None>
 
@@ -1043,6 +1202,12 @@
 
 # REST connection timeout (in seconds). (string value)
 #zfssa_rest_timeout = <None>
+
+# Driver policy for share manage. A strict policy checks for a schema
+# named manila_managed, and makes sure its value is true. A loose
+# policy does not check for the schema. (string value)
+# Allowed values: loose, strict
+#zfssa_manage_policy = loose
 
 # Whether to enable pre hooks or not. (boolean value)
 # Deprecated group/name - [DEFAULT]/enable_pre_hooks
@@ -1101,6 +1266,8 @@
 # unused more than unused_share_server_cleanup_interval option
 # defines. This value reflects the shortest time Manila will wait for
 # a share server to go unutilized before deleting it. (integer value)
+# Minimum value: 10
+# Maximum value: 60
 # Deprecated group/name - [DEFAULT]/unused_share_server_cleanup_interval
 #unused_share_server_cleanup_interval = 10
 
@@ -1109,17 +1276,13 @@
 # instance. (integer value)
 #replica_state_update_interval = 300
 
+# This value, specified in seconds, determines how often the share
+# manager will poll the driver to perform the next step of migration
+# in the storage backend, for a migrating share. (integer value)
+#migration_driver_continue_update_interval = 60
+
 # The full class name of the Volume API class to use. (string value)
 #volume_api_class = manila.volume.cinder.API
-
-# Allow attaching between instances and volumes in different
-# availability zones. (boolean value)
-# Deprecated group/name - [DEFAULT]/cinder_cross_az_attach
-#cross_az_attach = true
-
-# Number of cinderclient retries on failed HTTP calls. (integer value)
-# Deprecated group/name - [DEFAULT]/cinder_http_retries
-#http_retries = 3
 
 # Maximum line size of message headers to be accepted. Option
 # max_header_line may need to be increased when using large tokens
@@ -1171,10 +1334,11 @@
 
 # If set to true, the logging level will be set to DEBUG instead of
 # the default INFO level. (boolean value)
+# Note: This option can be changed without restarting.
 #debug = false
 
-# If set to false, the logging level will be set to WARNING instead of
-# the default INFO level. (boolean value)
+# DEPRECATED: If set to false, the logging level will be set to
+# WARNING instead of the default INFO level. (boolean value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
 #verbose = true
@@ -1186,6 +1350,7 @@
 # configuration is set in the configuration file and other logging
 # configuration options are ignored (for example,
 # logging_context_format_string). (string value)
+# Note: This option can be changed without restarting.
 # Deprecated group/name - [DEFAULT]/log_config
 #log_config_append = <None>
 
@@ -1270,64 +1435,103 @@
 # Deprecated group/name - [DEFAULT]/rpc_conn_pool_size
 #rpc_conn_pool_size = 30
 
+# The pool size limit for connections expiration policy (integer
+# value)
+#conn_pool_min_size = 2
+
+# The time-to-live in sec of idle connections in the pool (integer
+# value)
+#conn_pool_ttl = 1200
+
 # ZeroMQ bind address. Should be a wildcard (*), an ethernet
 # interface, or IP. The "host" option should point or resolve to this
 # address. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_bind_address
 #rpc_zmq_bind_address = *
 
 # MatchMaker driver. (string value)
 # Allowed values: redis, dummy
+# Deprecated group/name - [DEFAULT]/rpc_zmq_matchmaker
 #rpc_zmq_matchmaker = redis
 
-# Type of concurrency used. Either "native" or "eventlet" (string
-# value)
-#rpc_zmq_concurrency = eventlet
-
 # Number of ZeroMQ contexts, defaults to 1. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_contexts
 #rpc_zmq_contexts = 1
 
 # Maximum number of ingress messages to locally buffer per topic.
 # Default is unlimited. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_topic_backlog
 #rpc_zmq_topic_backlog = <None>
 
 # Directory for holding IPC sockets. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_ipc_dir
 #rpc_zmq_ipc_dir = /var/run/openstack
 
 # Name of this node. Must be a valid hostname, FQDN, or IP address.
 # Must match "host" option, if running Nova. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_host
 #rpc_zmq_host = localhost
 
 # Seconds to wait before a cast expires (TTL). The default value of -1
 # specifies an infinite linger period. The value of 0 specifies no
 # linger period. Pending messages shall be discarded immediately when
 # the socket is closed. Only supported by impl_zmq. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_cast_timeout
 #rpc_cast_timeout = -1
 
 # The default number of seconds that poll should wait. Poll raises
 # timeout exception when timeout expired. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_poll_timeout
 #rpc_poll_timeout = 1
 
 # Expiration timeout in seconds of a name service record about
 # existing target ( < 0 means no timeout). (integer value)
-#zmq_target_expire = 120
+# Deprecated group/name - [DEFAULT]/zmq_target_expire
+#zmq_target_expire = 300
+
+# Update period in seconds of a name service record about existing
+# target. (integer value)
+# Deprecated group/name - [DEFAULT]/zmq_target_update
+#zmq_target_update = 180
 
 # Use PUB/SUB pattern for fanout methods. PUB/SUB always uses proxy.
 # (boolean value)
+# Deprecated group/name - [DEFAULT]/use_pub_sub
 #use_pub_sub = true
+
+# Use ROUTER remote proxy. (boolean value)
+# Deprecated group/name - [DEFAULT]/use_router_proxy
+#use_router_proxy = true
 
 # Minimal port number for random ports range. (port value)
 # Minimum value: 0
 # Maximum value: 65535
-#rpc_zmq_min_port = 49152
+# Deprecated group/name - [DEFAULT]/rpc_zmq_min_port
+#rpc_zmq_min_port = 49153
 
 # Maximal port number for random ports range. (integer value)
 # Minimum value: 1
 # Maximum value: 65536
+# Deprecated group/name - [DEFAULT]/rpc_zmq_max_port
 #rpc_zmq_max_port = 65536
 
 # Number of retries to find free port number before fail with
 # ZMQBindError. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_bind_port_retries
 #rpc_zmq_bind_port_retries = 100
+
+# Default serialization mechanism for serializing/deserializing
+# outgoing/incoming messages (string value)
+# Allowed values: json, msgpack
+# Deprecated group/name - [DEFAULT]/rpc_zmq_serialization
+#rpc_zmq_serialization = json
+
+# This option configures round-robin mode in zmq socket. True means
+# not keeping a queue when server side disconnects. False means to
+# keep queue and messages even if server is disconnected, when the
+# server appears we send all accumulated messages to it. (boolean
+# value)
+#zmq_immediate = false
 
 # Size of executor thread pool. (integer value)
 # Deprecated group/name - [DEFAULT]/rpc_thread_pool_size
@@ -1337,12 +1541,14 @@
 #rpc_response_timeout = 60
 
 # A URL representing the messaging driver to use and its full
-# configuration. If not set, we fall back to the rpc_backend option
-# and driver specific configuration. (string value)
+# configuration. (string value)
 #transport_url = <None>
 
-# The messaging driver to use, defaults to rabbit. Other drivers
-# include amqp and zmq. (string value)
+# DEPRECATED: The messaging driver to use, defaults to rabbit. Other
+# drivers include amqp and zmq. (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rpc_backend = rabbit
 
 # The default exchange under which topics are scoped. May be
@@ -1357,21 +1563,30 @@
 # From manila
 #
 
-# Allow to perform insecure SSL requests to cinder. (boolean value)
-# Deprecated group/name - [DEFAULT]/cinder_api_insecure
-#api_insecure = false
-
-# Authentication URL (unknown value)
-#auth_url = <None>
-
-# Authentication type to load (unknown value)
-# Deprecated group/name - [DEFAULT]/auth_plugin
-#auth_type = <None>
+# Allow attaching between instances and volumes in different
+# availability zones. (boolean value)
+# Deprecated group/name - [DEFAULT]/cinder_cross_az_attach
+#cross_az_attach = true
 
 # Location of CA certificates file to use for cinder client requests.
 # (string value)
 # Deprecated group/name - [DEFAULT]/cinder_ca_certificates_file
 #ca_certificates_file = <None>
+
+# Number of cinderclient retries on failed HTTP calls. (integer value)
+# Deprecated group/name - [DEFAULT]/cinder_http_retries
+#http_retries = 3
+
+# Allow to perform insecure SSL requests to cinder. (boolean value)
+# Deprecated group/name - [DEFAULT]/cinder_api_insecure
+#api_insecure = false
+
+# Authentication URL (string value)
+#auth_url = <None>
+
+# Authentication type to load (string value)
+# Deprecated group/name - [cinder]/auth_plugin
+#auth_type = <None>
 
 # PEM encoded Certificate Authority to use when verifying HTTPs
 # connections. (string value)
@@ -1382,18 +1597,18 @@
 
 # Optional domain ID to use with v3 and v2 parameters. It will be used
 # for both the user and project domain in v3 and ignored in v2
-# authentication. (unknown value)
+# authentication. (string value)
 #default_domain_id = <None>
 
 # Optional domain name to use with v3 API and v2 parameters. It will
 # be used for both the user and project domain in v3 and ignored in v2
-# authentication. (unknown value)
+# authentication. (string value)
 #default_domain_name = <None>
 
-# Domain ID to scope to (unknown value)
+# Domain ID to scope to (string value)
 #domain_id = <None>
 
-# Domain name to scope to (unknown value)
+# Domain name to scope to (string value)
 #domain_name = <None>
 
 # Verify HTTPS connections. (boolean value)
@@ -1402,40 +1617,40 @@
 # PEM encoded client certificate key file (string value)
 #keyfile = <None>
 
-# User's password (unknown value)
+# User's password (string value)
 #password = <None>
 
-# Domain ID containing project (unknown value)
+# Domain ID containing project (string value)
 #project_domain_id = <None>
 
-# Domain name containing project (unknown value)
+# Domain name containing project (string value)
 #project_domain_name = <None>
 
-# Project ID to scope to (unknown value)
-# Deprecated group/name - [DEFAULT]/tenant-id
+# Project ID to scope to (string value)
+# Deprecated group/name - [cinder]/tenant-id
 #project_id = <None>
 
-# Project name to scope to (unknown value)
-# Deprecated group/name - [DEFAULT]/tenant-name
+# Project name to scope to (string value)
+# Deprecated group/name - [cinder]/tenant-name
 #project_name = <None>
 
 # Timeout value for http requests (integer value)
 #timeout = <None>
 
-# Trust ID (unknown value)
+# Trust ID (string value)
 #trust_id = <None>
 
-# User's domain id (unknown value)
+# User's domain id (string value)
 #user_domain_id = <None>
 
-# User's domain name (unknown value)
+# User's domain name (string value)
 #user_domain_name = <None>
 
-# User id (unknown value)
+# User id (string value)
 #user_id = <None>
 
-# Username (unknown value)
-# Deprecated group/name - [DEFAULT]/username
+# Username (string value)
+# Deprecated group/name - [cinder]/user-name
 #username = <None>
 
 
@@ -1446,7 +1661,9 @@
 #
 
 # Indicate whether this resource may be shared with the domain
-# received in the requests "origin" header. (list value)
+# received in the requests "origin" header. Format:
+# "<protocol>://<host>[:<port>]", no trailing slash. Example:
+# https://horizon.example.com (list value)
 #allowed_origin = <None>
 
 # Indicate that the actual request can include user credentials
@@ -1455,25 +1672,27 @@
 
 # Indicate which headers are safe to expose to the API. Defaults to
 # HTTP Simple Headers. (list value)
-#expose_headers = Content-Type,Cache-Control,Content-Language,Expires,Last-Modified,Pragma
+#expose_headers =
 
 # Maximum cache age of CORS preflight requests. (integer value)
 #max_age = 3600
 
 # Indicate which methods can be used during the actual request. (list
 # value)
-#allow_methods = GET,POST,PUT,DELETE,OPTIONS
+#allow_methods = OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE,PATCH
 
 # Indicate which header field names may be used during the actual
 # request. (list value)
-#allow_headers = Content-Type,Cache-Control,Content-Language,Expires,Last-Modified,Pragma
+#allow_headers =
 
 #
 # From oslo.middleware.cors
 #
 
 # Indicate whether this resource may be shared with the domain
-# received in the requests "origin" header. (list value)
+# received in the requests "origin" header. Format:
+# "<protocol>://<host>[:<port>]", no trailing slash. Example:
+# https://horizon.example.com (list value)
 #allowed_origin = <None>
 
 # Indicate that the actual request can include user credentials
@@ -1503,7 +1722,9 @@
 #
 
 # Indicate whether this resource may be shared with the domain
-# received in the requests "origin" header. (list value)
+# received in the requests "origin" header. Format:
+# "<protocol>://<host>[:<port>]", no trailing slash. Example:
+# https://horizon.example.com (list value)
 #allowed_origin = <None>
 
 # Indicate that the actual request can include user credentials
@@ -1512,25 +1733,27 @@
 
 # Indicate which headers are safe to expose to the API. Defaults to
 # HTTP Simple Headers. (list value)
-#expose_headers = Content-Type,Cache-Control,Content-Language,Expires,Last-Modified,Pragma
+#expose_headers =
 
 # Maximum cache age of CORS preflight requests. (integer value)
 #max_age = 3600
 
 # Indicate which methods can be used during the actual request. (list
 # value)
-#allow_methods = GET,POST,PUT,DELETE,OPTIONS
+#allow_methods = OPTIONS,GET,HEAD,POST,PUT,DELETE,TRACE,PATCH
 
 # Indicate which header field names may be used during the actual
 # request. (list value)
-#allow_headers = Content-Type,Cache-Control,Content-Language,Expires,Last-Modified,Pragma
+#allow_headers =
 
 #
 # From oslo.middleware.cors
 #
 
 # Indicate whether this resource may be shared with the domain
-# received in the requests "origin" header. (list value)
+# received in the requests "origin" header. Format:
+# "<protocol>://<host>[:<port>]", no trailing slash. Example:
+# https://horizon.example.com (list value)
 #allowed_origin = <None>
 
 # Indicate that the actual request can include user credentials
@@ -1559,8 +1782,12 @@
 # From oslo.db
 #
 
-# The file name to use with SQLite. (string value)
+# DEPRECATED: The file name to use with SQLite. (string value)
 # Deprecated group/name - [DEFAULT]/sqlite_db
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Should use config option connection or slave_connection to
+# connect the database.
 #sqlite_db = oslo.sqlite
 
 # If True, SQLite uses synchronous mode. (boolean value)
@@ -1600,11 +1827,11 @@
 # Deprecated group/name - [DATABASE]/sql_min_pool_size
 #min_pool_size = 1
 
-# Maximum number of SQL connections to keep open in a pool. (integer
-# value)
+# Maximum number of SQL connections to keep open in a pool. Setting a
+# value of 0 indicates no limit. (integer value)
 # Deprecated group/name - [DEFAULT]/sql_max_pool_size
 # Deprecated group/name - [DATABASE]/sql_max_pool_size
-#max_pool_size = <None>
+#max_pool_size = 5
 
 # Maximum number of database connection retries during startup. Set to
 # -1 to specify an infinite retry count. (integer value)
@@ -1626,6 +1853,8 @@
 
 # Verbosity of SQL debugging information: 0=None, 100=Everything.
 # (integer value)
+# Minimum value: 0
+# Maximum value: 100
 # Deprecated group/name - [DEFAULT]/sql_connection_debug
 #connection_debug = 0
 
@@ -1674,7 +1903,14 @@
 # From keystonemiddleware.auth_token
 #
 
-# Complete public Identity API endpoint. (string value)
+# Complete "public" Identity API endpoint. This endpoint should not be
+# an "admin" endpoint, as it should be accessible by all end users.
+# Unauthenticated clients are redirected to this endpoint to
+# authenticate. Although this endpoint should  ideally be unversioned,
+# client support in the wild varies.  If you're using a versioned v2
+# endpoint here, then this  should *not* be the same endpoint the
+# service user utilizes  for validating tokens, because normal end
+# users may not be  able to reach that endpoint. (string value)
 #auth_uri = <None>
 
 # API version of the admin Identity API endpoint. (string value)
@@ -1693,7 +1929,11 @@
 # Identity API Server. (integer value)
 #http_request_max_retries = 3
 
-# Env key for the swift cache. (string value)
+# Request environment key where the Swift cache object is stored. When
+# auth_token middleware is deployed with a Swift cache, use this
+# option to have the middleware share a caching backend with swift.
+# Otherwise, use the ``memcached_servers`` option instead. (string
+# value)
 #cache = <None>
 
 # Required if identity server requires client certificate (string
@@ -1720,7 +1960,7 @@
 # Optionally specify a list of memcached server(s) to use for caching.
 # If left undefined, tokens will instead be cached in-process. (list
 # value)
-# Deprecated group/name - [DEFAULT]/memcache_servers
+# Deprecated group/name - [keystone_authtoken]/memcache_servers
 #memcached_servers = <None>
 
 # In order to prevent excessive effort spent validating tokens, the
@@ -1732,7 +1972,8 @@
 # Determines the frequency at which the list of revoked tokens is
 # retrieved from the Identity service (in seconds). A high number of
 # revocation events combined with a low cache duration may
-# significantly reduce performance. (integer value)
+# significantly reduce performance. Only valid for PKI tokens.
+# (integer value)
 #revocation_cache_time = 10
 
 # (Optional) If defined, indicate whether token data should be
@@ -1803,11 +2044,11 @@
 # value)
 #hash_algorithms = md5
 
-# Authentication type to load (unknown value)
-# Deprecated group/name - [DEFAULT]/auth_plugin
+# Authentication type to load (string value)
+# Deprecated group/name - [keystone_authtoken]/auth_plugin
 #auth_type = <None>
 
-# Config Section from which to load plugin specific options (unknown
+# Config Section from which to load plugin specific options (string
 # value)
 #auth_section = <None>
 
@@ -1818,32 +2059,44 @@
 # From oslo.messaging
 #
 
-# Host to locate redis. (string value)
+# DEPRECATED: Host to locate redis. (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #host = 127.0.0.1
 
-# Use this port to connect to redis host. (port value)
+# DEPRECATED: Use this port to connect to redis host. (port value)
 # Minimum value: 0
 # Maximum value: 65535
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #port = 6379
 
-# Password for Redis server (optional). (string value)
+# DEPRECATED: Password for Redis server (optional). (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #password =
 
-# List of Redis Sentinel hosts (fault tolerance mode) e.g.
+# DEPRECATED: List of Redis Sentinel hosts (fault tolerance mode) e.g.
 # [host:port, host1:port ... ] (list value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #sentinel_hosts =
 
 # Redis replica set name. (string value)
 #sentinel_group_name = oslo-messaging-zeromq
 
 # Time in ms to wait between connection attempts. (integer value)
-#wait_timeout = 500
+#wait_timeout = 2000
 
 # Time in ms to wait before the transaction is killed. (integer value)
 #check_timeout = 20000
 
 # Timeout in ms on blocking socket operations (integer value)
-#socket_timeout = 1000
+#socket_timeout = 10000
 
 
 [neutron]
@@ -1852,11 +2105,39 @@
 # From manila
 #
 
-# Authentication URL (unknown value)
+# URL for connecting to neutron. (string value)
+# Deprecated group/name - [DEFAULT]/neutron_url
+#url = http://127.0.0.1:9696
+
+# Timeout value for connecting to neutron in seconds. (integer value)
+# Deprecated group/name - [DEFAULT]/neutron_url_timeout
+#url_timeout = 30
+
+# If set, ignore any SSL validation issues. (boolean value)
+# Deprecated group/name - [DEFAULT]/api_insecure
+#api_insecure = false
+
+# Auth strategy for connecting to neutron in admin context. (string
+# value)
+# Deprecated group/name - [DEFAULT]/auth_strategy
+#auth_strategy = keystone
+
+# DEPRECATED: Location of CA certificates file to use for neutron
+# client requests. (string value)
+# Deprecated group/name - [DEFAULT]/ca_certificates_file
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#ca_certificates_file = <None>
+
+# Region name for connecting to neutron in admin context (string
+# value)
+#region_name = <None>
+
+# Authentication URL (string value)
 #auth_url = <None>
 
-# Authentication type to load (unknown value)
-# Deprecated group/name - [DEFAULT]/auth_plugin
+# Authentication type to load (string value)
+# Deprecated group/name - [neutron]/auth_plugin
 #auth_type = <None>
 
 # PEM encoded Certificate Authority to use when verifying HTTPs
@@ -1868,18 +2149,18 @@
 
 # Optional domain ID to use with v3 and v2 parameters. It will be used
 # for both the user and project domain in v3 and ignored in v2
-# authentication. (unknown value)
+# authentication. (string value)
 #default_domain_id = <None>
 
 # Optional domain name to use with v3 API and v2 parameters. It will
 # be used for both the user and project domain in v3 and ignored in v2
-# authentication. (unknown value)
+# authentication. (string value)
 #default_domain_name = <None>
 
-# Domain ID to scope to (unknown value)
+# Domain ID to scope to (string value)
 #domain_id = <None>
 
-# Domain name to scope to (unknown value)
+# Domain name to scope to (string value)
 #domain_name = <None>
 
 # Verify HTTPS connections. (boolean value)
@@ -1888,48 +2169,40 @@
 # PEM encoded client certificate key file (string value)
 #keyfile = <None>
 
-# User's password (unknown value)
+# User's password (string value)
 #password = <None>
 
-# Domain ID containing project (unknown value)
+# Domain ID containing project (string value)
 #project_domain_id = <None>
 
-# Domain name containing project (unknown value)
+# Domain name containing project (string value)
 #project_domain_name = <None>
 
-# Project ID to scope to (unknown value)
-# Deprecated group/name - [DEFAULT]/tenant-id
+# Project ID to scope to (string value)
+# Deprecated group/name - [neutron]/tenant-id
 #project_id = <None>
 
-# Project name to scope to (unknown value)
-# Deprecated group/name - [DEFAULT]/tenant-name
+# Project name to scope to (string value)
+# Deprecated group/name - [neutron]/tenant-name
 #project_name = <None>
 
 # Timeout value for http requests (integer value)
 #timeout = <None>
 
-# Trust ID (unknown value)
+# Trust ID (string value)
 #trust_id = <None>
 
-# URL for connecting to neutron. (string value)
-# Deprecated group/name - [DEFAULT]/neutron_url
-#url = http://127.0.0.1:9696
-
-# Timeout value for connecting to neutron in seconds. (integer value)
-# Deprecated group/name - [DEFAULT]/neutron_url_timeout
-#url_timeout = 30
-
-# User's domain id (unknown value)
+# User's domain id (string value)
 #user_domain_id = <None>
 
-# User's domain name (unknown value)
+# User's domain name (string value)
 #user_domain_name = <None>
 
-# User id (unknown value)
+# User id (string value)
 #user_id = <None>
 
-# Username (unknown value)
-# Deprecated group/name - [DEFAULT]/username
+# Username (string value)
+# Deprecated group/name - [neutron]/user-name
 #username = <None>
 
 
@@ -1943,11 +2216,20 @@
 # Deprecated group/name - [DEFAULT]/nova_api_microversion
 #api_microversion = 2.10
 
-# Authentication URL (unknown value)
+# Location of CA certificates file to use for nova client requests.
+# (string value)
+# Deprecated group/name - [DEFAULT]/nova_ca_certificates_file
+#ca_certificates_file = <None>
+
+# Allow to perform insecure SSL requests to nova. (boolean value)
+# Deprecated group/name - [DEFAULT]/nova_api_insecure
+#api_insecure = false
+
+# Authentication URL (string value)
 #auth_url = <None>
 
-# Authentication type to load (unknown value)
-# Deprecated group/name - [DEFAULT]/auth_plugin
+# Authentication type to load (string value)
+# Deprecated group/name - [nova]/auth_plugin
 #auth_type = <None>
 
 # PEM encoded Certificate Authority to use when verifying HTTPs
@@ -1959,18 +2241,18 @@
 
 # Optional domain ID to use with v3 and v2 parameters. It will be used
 # for both the user and project domain in v3 and ignored in v2
-# authentication. (unknown value)
+# authentication. (string value)
 #default_domain_id = <None>
 
 # Optional domain name to use with v3 API and v2 parameters. It will
 # be used for both the user and project domain in v3 and ignored in v2
-# authentication. (unknown value)
+# authentication. (string value)
 #default_domain_name = <None>
 
-# Domain ID to scope to (unknown value)
+# Domain ID to scope to (string value)
 #domain_id = <None>
 
-# Domain name to scope to (unknown value)
+# Domain name to scope to (string value)
 #domain_name = <None>
 
 # Verify HTTPS connections. (boolean value)
@@ -1979,40 +2261,40 @@
 # PEM encoded client certificate key file (string value)
 #keyfile = <None>
 
-# User's password (unknown value)
+# User's password (string value)
 #password = <None>
 
-# Domain ID containing project (unknown value)
+# Domain ID containing project (string value)
 #project_domain_id = <None>
 
-# Domain name containing project (unknown value)
+# Domain name containing project (string value)
 #project_domain_name = <None>
 
-# Project ID to scope to (unknown value)
-# Deprecated group/name - [DEFAULT]/tenant-id
+# Project ID to scope to (string value)
+# Deprecated group/name - [nova]/tenant-id
 #project_id = <None>
 
-# Project name to scope to (unknown value)
-# Deprecated group/name - [DEFAULT]/tenant-name
+# Project name to scope to (string value)
+# Deprecated group/name - [nova]/tenant-name
 #project_name = <None>
 
 # Timeout value for http requests (integer value)
 #timeout = <None>
 
-# Trust ID (unknown value)
+# Trust ID (string value)
 #trust_id = <None>
 
-# User's domain id (unknown value)
+# User's domain id (string value)
 #user_domain_id = <None>
 
-# User's domain name (unknown value)
+# User's domain name (string value)
 #user_domain_name = <None>
 
-# User id (unknown value)
+# User id (string value)
 #user_id = <None>
 
-# Username (unknown value)
-# Deprecated group/name - [DEFAULT]/username
+# Username (string value)
+# Deprecated group/name - [nova]/user-name
 #username = <None>
 
 
@@ -2040,19 +2322,8 @@
 # From oslo.messaging
 #
 
-# address prefix used when sending to a specific server (string value)
-# Deprecated group/name - [amqp1]/server_request_prefix
-#server_request_prefix = exclusive
-
-# address prefix used when broadcasting to all servers (string value)
-# Deprecated group/name - [amqp1]/broadcast_prefix
-#broadcast_prefix = broadcast
-
-# address prefix when sending to any server in group (string value)
-# Deprecated group/name - [amqp1]/group_request_prefix
-#group_request_prefix = unicast
-
-# Name for the AMQP container (string value)
+# Name for the AMQP container. must be globally unique. Defaults to a
+# generated UUID (string value)
 # Deprecated group/name - [amqp1]/container_name
 #container_name = <None>
 
@@ -2106,6 +2377,109 @@
 # Password for message broker authentication (string value)
 # Deprecated group/name - [amqp1]/password
 #password =
+
+# Seconds to pause before attempting to re-connect. (integer value)
+# Minimum value: 1
+#connection_retry_interval = 1
+
+# Increase the connection_retry_interval by this many seconds after
+# each unsuccessful failover attempt. (integer value)
+# Minimum value: 0
+#connection_retry_backoff = 2
+
+# Maximum limit for connection_retry_interval +
+# connection_retry_backoff (integer value)
+# Minimum value: 1
+#connection_retry_interval_max = 30
+
+# Time to pause between re-connecting an AMQP 1.0 link that failed due
+# to a recoverable error. (integer value)
+# Minimum value: 1
+#link_retry_delay = 10
+
+# The deadline for an rpc reply message delivery. Only used when
+# caller does not provide a timeout expiry. (integer value)
+# Minimum value: 5
+#default_reply_timeout = 30
+
+# The deadline for an rpc cast or call message delivery. Only used
+# when caller does not provide a timeout expiry. (integer value)
+# Minimum value: 5
+#default_send_timeout = 30
+
+# The deadline for a sent notification message delivery. Only used
+# when caller does not provide a timeout expiry. (integer value)
+# Minimum value: 5
+#default_notify_timeout = 30
+
+# Indicates the addressing mode used by the driver.
+# Permitted values:
+# 'legacy'   - use legacy non-routable addressing
+# 'routable' - use routable addresses
+# 'dynamic'  - use legacy addresses if the message bus does not
+# support routing otherwise use routable addressing (string value)
+#addressing_mode = dynamic
+
+# address prefix used when sending to a specific server (string value)
+# Deprecated group/name - [amqp1]/server_request_prefix
+#server_request_prefix = exclusive
+
+# address prefix used when broadcasting to all servers (string value)
+# Deprecated group/name - [amqp1]/broadcast_prefix
+#broadcast_prefix = broadcast
+
+# address prefix when sending to any server in group (string value)
+# Deprecated group/name - [amqp1]/group_request_prefix
+#group_request_prefix = unicast
+
+# Address prefix for all generated RPC addresses (string value)
+#rpc_address_prefix = openstack.org/om/rpc
+
+# Address prefix for all generated Notification addresses (string
+# value)
+#notify_address_prefix = openstack.org/om/notify
+
+# Appended to the address prefix when sending a fanout message. Used
+# by the message bus to identify fanout messages. (string value)
+#multicast_address = multicast
+
+# Appended to the address prefix when sending to a particular
+# RPC/Notification server. Used by the message bus to identify
+# messages sent to a single destination. (string value)
+#unicast_address = unicast
+
+# Appended to the address prefix when sending to a group of consumers.
+# Used by the message bus to identify messages that should be
+# delivered in a round-robin fashion across consumers. (string value)
+#anycast_address = anycast
+
+# Exchange name used in notification addresses.
+# Exchange name resolution precedence:
+# Target.exchange if set
+# else default_notification_exchange if set
+# else control_exchange if set
+# else 'notify' (string value)
+#default_notification_exchange = <None>
+
+# Exchange name used in RPC addresses.
+# Exchange name resolution precedence:
+# Target.exchange if set
+# else default_rpc_exchange if set
+# else control_exchange if set
+# else 'rpc' (string value)
+#default_rpc_exchange = <None>
+
+# Window size for incoming RPC Reply messages. (integer value)
+# Minimum value: 1
+#reply_link_credit = 200
+
+# Window size for incoming RPC Request messages (integer value)
+# Minimum value: 1
+#rpc_server_credit = 100
+
+# Window size for incoming Notification messages (integer value)
+# Minimum value: 1
+#notify_server_credit = 100
 
 
 [oslo_messaging_notifications]
@@ -2171,14 +2545,14 @@
 #kombu_reconnect_delay = 1.0
 
 # EXPERIMENTAL: Possible values are: gzip, bz2. If not set compression
-# will not be used. This option may notbe available in future
+# will not be used. This option may not be available in future
 # versions. (string value)
 #kombu_compression = <None>
 
-# How long to wait a missing client beforce abandoning to send it its
+# How long to wait a missing client before abandoning to send it its
 # replies. This value should not be longer than rpc_response_timeout.
 # (integer value)
-# Deprecated group/name - [DEFAULT]/kombu_reconnect_timeout
+# Deprecated group/name - [oslo_messaging_rabbit]/kombu_reconnect_timeout
 #kombu_missing_consumer_retry_timeout = 60
 
 # Determines how the next RabbitMQ node is chosen in case the one we
@@ -2187,39 +2561,58 @@
 # Allowed values: round-robin, shuffle
 #kombu_failover_strategy = round-robin
 
-# The RabbitMQ broker address where a single node is used. (string
-# value)
+# DEPRECATED: The RabbitMQ broker address where a single node is used.
+# (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_host
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_host = localhost
 
-# The RabbitMQ broker port where a single node is used. (port value)
+# DEPRECATED: The RabbitMQ broker port where a single node is used.
+# (port value)
 # Minimum value: 0
 # Maximum value: 65535
 # Deprecated group/name - [DEFAULT]/rabbit_port
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_port = 5672
 
-# RabbitMQ HA cluster host:port pairs. (list value)
+# DEPRECATED: RabbitMQ HA cluster host:port pairs. (list value)
 # Deprecated group/name - [DEFAULT]/rabbit_hosts
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_hosts = $rabbit_host:$rabbit_port
 
 # Connect over SSL for RabbitMQ. (boolean value)
 # Deprecated group/name - [DEFAULT]/rabbit_use_ssl
 #rabbit_use_ssl = false
 
-# The RabbitMQ userid. (string value)
+# DEPRECATED: The RabbitMQ userid. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_userid
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_userid = guest
 
-# The RabbitMQ password. (string value)
+# DEPRECATED: The RabbitMQ password. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_password
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_password = guest
 
 # The RabbitMQ login method. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_login_method
 #rabbit_login_method = AMQPLAIN
 
-# The RabbitMQ virtual host. (string value)
+# DEPRECATED: The RabbitMQ virtual host. (string value)
 # Deprecated group/name - [DEFAULT]/rabbit_virtual_host
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+# Reason: Replaced by [DEFAULT]/transport_url
 #rabbit_virtual_host = /
 
 # How frequently to retry connecting with RabbitMQ. (integer value)
@@ -2234,9 +2627,11 @@
 # seconds. (integer value)
 #rabbit_interval_max = 30
 
-# Maximum number of RabbitMQ connection retries. Default is 0
-# (infinite retry count). (integer value)
+# DEPRECATED: Maximum number of RabbitMQ connection retries. Default
+# is 0 (infinite retry count). (integer value)
 # Deprecated group/name - [DEFAULT]/rabbit_max_retries
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #rabbit_max_retries = 0
 
 # Try to use HA queues in RabbitMQ (x-ha-policy: all). If you change
@@ -2282,7 +2677,7 @@
 
 # How often to send heartbeats for consumer's connections (integer
 # value)
-#heartbeat_interval = 1
+#heartbeat_interval = 3
 
 # Enable SSL (boolean value)
 #ssl = <None>
@@ -2302,8 +2697,12 @@
 # (floating point value)
 #host_connection_reconnect_delay = 0.25
 
+# Connection factory implementation (string value)
+# Allowed values: new, single, read_write
+#connection_factory = single
+
 # Maximum number of connections to keep queued. (integer value)
-#pool_max_size = 10
+#pool_max_size = 30
 
 # Maximum number of connections to create above `pool_max_size`.
 # (integer value)
@@ -2326,7 +2725,7 @@
 # Persist notification messages. (boolean value)
 #notification_persistence = false
 
-# Exchange name for for sending notifications (string value)
+# Exchange name for sending notifications (string value)
 #default_notification_exchange = ${control_exchange}_notification
 
 # Max number of not acknowledged message which RabbitMQ can send to
@@ -2379,6 +2778,103 @@
 #rpc_retry_delay = 0.25
 
 
+[oslo_messaging_zmq]
+
+#
+# From oslo.messaging
+#
+
+# ZeroMQ bind address. Should be a wildcard (*), an ethernet
+# interface, or IP. The "host" option should point or resolve to this
+# address. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_bind_address
+#rpc_zmq_bind_address = *
+
+# MatchMaker driver. (string value)
+# Allowed values: redis, dummy
+# Deprecated group/name - [DEFAULT]/rpc_zmq_matchmaker
+#rpc_zmq_matchmaker = redis
+
+# Number of ZeroMQ contexts, defaults to 1. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_contexts
+#rpc_zmq_contexts = 1
+
+# Maximum number of ingress messages to locally buffer per topic.
+# Default is unlimited. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_topic_backlog
+#rpc_zmq_topic_backlog = <None>
+
+# Directory for holding IPC sockets. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_ipc_dir
+#rpc_zmq_ipc_dir = /var/run/openstack
+
+# Name of this node. Must be a valid hostname, FQDN, or IP address.
+# Must match "host" option, if running Nova. (string value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_host
+#rpc_zmq_host = localhost
+
+# Seconds to wait before a cast expires (TTL). The default value of -1
+# specifies an infinite linger period. The value of 0 specifies no
+# linger period. Pending messages shall be discarded immediately when
+# the socket is closed. Only supported by impl_zmq. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_cast_timeout
+#rpc_cast_timeout = -1
+
+# The default number of seconds that poll should wait. Poll raises
+# timeout exception when timeout expired. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_poll_timeout
+#rpc_poll_timeout = 1
+
+# Expiration timeout in seconds of a name service record about
+# existing target ( < 0 means no timeout). (integer value)
+# Deprecated group/name - [DEFAULT]/zmq_target_expire
+#zmq_target_expire = 300
+
+# Update period in seconds of a name service record about existing
+# target. (integer value)
+# Deprecated group/name - [DEFAULT]/zmq_target_update
+#zmq_target_update = 180
+
+# Use PUB/SUB pattern for fanout methods. PUB/SUB always uses proxy.
+# (boolean value)
+# Deprecated group/name - [DEFAULT]/use_pub_sub
+#use_pub_sub = true
+
+# Use ROUTER remote proxy. (boolean value)
+# Deprecated group/name - [DEFAULT]/use_router_proxy
+#use_router_proxy = true
+
+# Minimal port number for random ports range. (port value)
+# Minimum value: 0
+# Maximum value: 65535
+# Deprecated group/name - [DEFAULT]/rpc_zmq_min_port
+#rpc_zmq_min_port = 49153
+
+# Maximal port number for random ports range. (integer value)
+# Minimum value: 1
+# Maximum value: 65536
+# Deprecated group/name - [DEFAULT]/rpc_zmq_max_port
+#rpc_zmq_max_port = 65536
+
+# Number of retries to find free port number before fail with
+# ZMQBindError. (integer value)
+# Deprecated group/name - [DEFAULT]/rpc_zmq_bind_port_retries
+#rpc_zmq_bind_port_retries = 100
+
+# Default serialization mechanism for serializing/deserializing
+# outgoing/incoming messages (string value)
+# Allowed values: json, msgpack
+# Deprecated group/name - [DEFAULT]/rpc_zmq_serialization
+#rpc_zmq_serialization = json
+
+# This option configures round-robin mode in zmq socket. True means
+# not keeping a queue when server side disconnects. False means to
+# keep queue and messages even if server is disconnected, when the
+# server appears we send all accumulated messages to it. (boolean
+# value)
+#zmq_immediate = false
+
+
 [oslo_middleware]
 
 #
@@ -2390,12 +2886,24 @@
 # Deprecated group/name - [DEFAULT]/max_request_body_size
 #max_request_body_size = 114688
 
-# The HTTP Header that will be used to determine what the original
-# request protocol scheme was, even if it was hidden by an SSL
+# DEPRECATED: The HTTP Header that will be used to determine what the
+# original request protocol scheme was, even if it was hidden by a SSL
 # termination proxy. (string value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
 #secure_proxy_ssl_header = X-Forwarded-Proto
+
+# Whether the application is behind a proxy or not. This determines if
+# the middleware should parse the headers or not. (boolean value)
+#enable_proxy_headers_parsing = false
+
+#
+# From oslo.middleware.http_proxy_to_wsgi
+#
+
+# Whether the application is behind a proxy or not. This determines if
+# the middleware should parse the headers or not. (boolean value)
+#enable_proxy_headers_parsing = false
 
 
 [oslo_policy]
