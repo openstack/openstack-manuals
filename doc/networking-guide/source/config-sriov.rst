@@ -238,27 +238,9 @@ Configure neutron-server (Controller)
 
       mechanism_drivers = openvswitch,sriovnicswitch
 
-#. Identify the ``vendor_id`` and ``product_id`` of the VFs on each compute
-   node:
-
-   .. code-block:: console
-
-      # lspci -nn | grep -i ethernet
-      87:00.0 Ethernet controller [0200]: Intel Corporation 82599 10 Gigabit Dual Port Backplane Connection [8086:10f8] (rev 01)
-      87:10.1 Ethernet controller [0200]: Intel Corporation 82599 Ethernet Controller Virtual Function [8086:10ed] (rev 01)
-      87:10.3 Ethernet controller [0200]: Intel Corporation 82599 Ethernet Controller Virtual Function [8086:10ed] (rev 01)
-
-#. Add the VF as a supported device. Edit the ``ml2_conf_sriov.ini`` file on
-   each controller.
-
-   .. code-block:: ini
-
-      supported_pci_vendor_devs = 8086:10ed
-
-#. Add the newly configured ``ml2_conf_sriov.ini`` file as parameter to the
-   ``neutron-server`` service. Edit the appropriate initialization script to
-   configure the ``neutron-server`` service to load the SR-IOV configuration
-   file:
+#. Add the ``ml2_conf_sriov.ini`` file as parameter to the ``neutron-server``
+   service. Edit the appropriate initialization script to configure the
+   ``neutron-server`` service to load the SR-IOV configuration file:
 
    .. code-block:: ini
 
