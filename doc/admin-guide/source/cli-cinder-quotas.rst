@@ -111,9 +111,9 @@ service quotas.
 
       $ cinder quota-update --QUOTA_NAME QUOTA_VALUE PROJECT_ID
 
-   Replace QUOTA_NAME with the quota that is to be updated, NEW_VALUE
-   with the required new value, and PROJECT_ID with required project
-   ID.
+   Replace ``QUOTA_NAME`` with the quota that is to be updated,
+   ``QUOTA_VALUE`` with the required new value, and ``PROJECT_ID``
+   with the required project ID.
 
    For example:
 
