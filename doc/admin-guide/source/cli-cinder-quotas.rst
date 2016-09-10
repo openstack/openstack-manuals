@@ -92,12 +92,6 @@ Edit and update Block Storage service quotas
 Administrative users can edit and update Block Storage
 service quotas.
 
-#. Clear per-project quota limits.
-
-   .. code-block:: console
-
-      $ cinder quota-delete PROJECT_ID
-
 #. To update a default value for a new project,
    update the property in the :guilabel:`cinder.quota`
    section of the ``/etc/cinder/cinder.conf`` file.
@@ -105,7 +99,7 @@ service quotas.
    <http://docs.openstack.org/mitaka/config-reference/block-storage.html>`_
    in OpenStack Configuration Reference.
 
-#. To update Block Storage service quotas for an existing project (tenant)
+#. To update Block Storage service quotas for an existing project (tenant):
 
    .. code-block:: console
 
@@ -130,7 +124,7 @@ service quotas.
       +-----------+-------+
 
 
-#. Clear per-project quota limits.
+#. To clear per-project quota limits:
 
    .. code-block:: console
 
