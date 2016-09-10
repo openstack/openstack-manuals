@@ -544,7 +544,7 @@ commands.
    the ``.bashrc`` file are for an unprivileged user, you must run
    these commands as that user instead.
 
-Enable ping and SSH with :command:`nova` commands:
+Enable ping and SSH with :command:`nova secgroup-add-rule` commands:
 
 .. code-block:: console
 
@@ -751,7 +751,8 @@ In order to disassociate the network, you will need the ID of the
 project it has been associated to. To get the project ID, you will need
 to be an administrator.
 
-Disassociate the network from the project using the :command:`scrub` command,
+Disassociate the network from the project using the
+:command:`nova-manage project scrub` command,
 with the project ID as the final parameter:
 
 .. code-block:: console
@@ -833,7 +834,7 @@ Edit the ``/etc/network/interfaces`` file:
 
 If the Virtual Network Service Neutron is installed, you can specify the
 networks to attach to the interfaces by using the :option:`--nic` flag with
-the :command:`nova` command:
+the :command:`nova boot` command:
 
 .. code-block:: console
 
