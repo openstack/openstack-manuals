@@ -16,14 +16,6 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``pydev_debug_host`` = ``None``
-     - (String) Host to connect to for remote debugger.
-   * - ``pydev_debug_port`` = ``None``
-     - (Port number) Port to connect to for remote debugger.
-   * - ``standard_threads`` = ``False``
-     - (Boolean) Do not monkey-patch threading system modules.
    * - **[audit]**
      -
    * - ``namespace`` = ``openstack``
