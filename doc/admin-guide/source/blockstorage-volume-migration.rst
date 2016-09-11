@@ -4,9 +4,9 @@
 Migrate volumes
 ===============
 
-OpenStack has the ability to migrate volumes between back-ends which support
+OpenStack has the ability to migrate volumes between back ends which support
 its volume-type. Migrating a volume transparently moves its data from the
-current back-end for the volume to a new one. This is an administrator
+current back end for the volume to a new one. This is an administrator
 function, and can be used for functions including storage evacuation (for
 maintenance or decommissioning), or manual optimizations (for example,
 performance, reliability, or cost).
@@ -15,7 +15,7 @@ These workflows are possible for a migration:
 
 #. If the storage can migrate the volume on its own, it is given the
    opportunity to do so. This allows the Block Storage driver to enable
-   optimizations that the storage might be able to perform. If the back-end
+   optimizations that the storage might be able to perform. If the back end
    is not able to perform the migration, the Block Storage uses one of two
    generic flows, as follows.
 
@@ -24,19 +24,18 @@ These workflows are possible for a migration:
 
    .. note::
 
-      While most back-ends support this function, not all do. See the driver
-      documentation in the `OpenStack Configuration Reference
-      <http://docs.openstack.org/mitaka/config-reference/>`__ for more
-      details.
+      While most back ends support this function, not all do. See the `driver
+      documentation <http://docs.openstack.org/mitaka/config-reference/block-storage/volume-drivers.html>`__
+      in the OpenStack Configuration Reference for more details.
 
 #. If the volume is attached to a VM instance, the Block Storage creates a
    volume, and calls Compute to copy the data from the original to the new
    volume. Currently this is supported only by the Compute libvirt driver.
 
-As an example, this scenario shows two LVM back-ends and migrates an attached
+As an example, this scenario shows two LVM back ends and migrates an attached
 volume from one to the other. This scenario uses the third migration flow.
 
-First, list the available back-ends:
+First, list the available back ends:
 
 .. code-block:: console
 
@@ -56,7 +55,7 @@ First, list the available back-ends:
 
    Only Block Storage V2 API supports :command:`cinder get-pools`.
 
-You can also get available back-ends like following:
+You can also get available back ends like following:
 
 .. code-block:: console
 
@@ -105,15 +104,15 @@ Next, as the admin user, you can see the current status of the volume
 
 Note these attributes:
 
-* ``os-vol-host-attr:host`` - the volume's current back-end.
+* ``os-vol-host-attr:host`` - the volume's current back end.
 * ``os-vol-mig-status-attr:migstat`` - the status of this volume's migration
   (None means that a migration is not currently in progress).
 * ``os-vol-mig-status-attr:name_id`` - the volume ID that this volume's name
-  on the back-end is based on. Before a volume is ever migrated, its name on
-  the back-end storage may be based on the volume's ID (see the
+  on the back end is based on. Before a volume is ever migrated, its name on
+  the back end storage may be based on the volume's ID (see the
   ``volume_name_template`` configuration parameter). For example, if
   ``volume_name_template`` is kept as the default value (``volume-%s``), your
-  first LVM back-end has a logical volume named
+  first LVM back end has a logical volume named
   ``volume-6088f80a-f116-4331-ad48-9afb0dfb196c``. During the course of a
   migration, if you create a volume and copy over the data, the volume get
   the new name but keeps its original ID. This is exposed by the ``name_id``
@@ -142,7 +141,7 @@ Note these attributes:
      Stopping the cinder volume service will prevent volumes from being
      allocated to the node.
 
-Migrate this volume to the second LVM back-end:
+Migrate this volume to the second LVM back end:
 
 .. code-block:: console
 
