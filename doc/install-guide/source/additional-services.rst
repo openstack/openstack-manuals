@@ -105,3 +105,13 @@ of secret data such as passphrases, encryption keys, and X.509 certificates.
 Installation and configuration is documented in the
 `Key Manager installation guide
 <http://docs.openstack.org/project-install-guide/key-manager/draft/>`_.
+
+Bare Metal service (ironic)
+===========================
+
+The Bare Metal service is a collection of components that provides
+support to manage and provision physical machines.
+
+Installation and configuration is documented in the
+`Bare Metal installation guide
+<http://docs.openstack.org/project-install-guide/baremetal/draft/>`_.
