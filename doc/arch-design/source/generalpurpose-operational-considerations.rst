@@ -52,7 +52,7 @@ critically important to monitor include:
 
 * Image disk utilization
 
-* Response time to the :term:`Compute API`
+* Response time to the :term:`Compute API <Compute API (Nova API)>`
 
 Leveraging existing monitoring systems is an effective check to ensure
 OpenStack environments can be monitored.

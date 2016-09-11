@@ -29,7 +29,7 @@ components:
 * OpenStack :term:`Identity service` (keystone) is used for authentication
   and authorization of API requests.
 
-* OpenStack :term:`Compute service` (nova) is used to plug each virtual
+* OpenStack :term:`Compute service (nova)` is used to plug each virtual
   NIC on the VM into a particular network.
 
 * OpenStack :term:`Dashboard` (horizon) is used by administrators and tenant

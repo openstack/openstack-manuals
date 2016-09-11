@@ -11,9 +11,9 @@ your cloud. It is important to understand the distinction between
 Ephemeral storage
 ~~~~~~~~~~~~~~~~~
 
-If you deploy only the OpenStack :term:`Compute service` (nova), by default
-your users do not have access to any form of persistent storage. The disks
-associated with VMs are ephemeral, meaning that from the user's point
+If you deploy only the OpenStack :term:`Compute service (nova)`, by
+default your users do not have access to any form of persistent storage. The
+disks associated with VMs are ephemeral, meaning that from the user's point
 of view they disappear when a virtual machine is terminated.
 
 Persistent storage

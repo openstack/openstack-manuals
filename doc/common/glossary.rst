@@ -801,16 +801,16 @@ C
       compression for things such as Object Storage objects or Image service
       VM images.
 
-   Compute service
+   Compute service (nova)
+      The OpenStack core project that implements services and associated
+      libraries to provide massively-scalable, on-demand, self-service
+      access to compute resources, including bare metal, virtual machines,
+      and containers.
 
-      The OpenStack core project that provides compute services. The
-      project name of Compute service is nova.
+   Compute API (Nova API)
 
-   Compute API
-
-      The nova-api daemon
-      provides access to nova services. Can communicate with other APIs,
-      such as the Amazon EC2 API.
+      The nova-api daemon provides access to nova services. Can communicate with
+      other APIs, such as the Amazon EC2 API.
 
    compute controller
 
@@ -2581,11 +2581,11 @@ N
 
    nova
 
-      OpenStack project that provides compute services.
+      Codename for OpenStack :term:`Compute service <Compute service (nova)>`.
 
    Nova API
 
-      Alternative term for the Compute API.
+      Alternative term for the :term:`Compute API <Compute API (nova API)>`.
 
    nova-network
 
