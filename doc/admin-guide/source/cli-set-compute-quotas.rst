@@ -16,31 +16,35 @@ tenant user, as well as update the quota defaults for a new tenant.
    * - Quota name
      - Description
    * - cores
-     - Number of instance cores (VCPUs) allowed per tenant.
+     - Number of instance cores (VCPUs) allowed per project.
    * - fixed-ips
      - Number of fixed IP addresses allowed per tenant. This number
        must be equal to or greater than the number of allowed
        instances.
    * - floating-ips
-     - Number of floating IP addresses allowed per tenant.
+     - Number of floating IP addresses allowed per project.
    * - injected-file-content-bytes
      - Number of content bytes allowed per injected file.
    * - injected-file-path-bytes
      - Length of injected file path.
    * - injected-files
-     - Number of injected files allowed per tenant.
+     - Number of injected files allowed per project.
    * - instances
-     - Number of instances allowed per tenant.
+     - Number of instances allowed per project.
    * - key-pairs
      - Number of key pairs allowed per user.
    * - metadata-items
      - Number of metadata items allowed per instance.
    * - ram
-     - Megabytes of instance ram allowed per tenant.
+     - Megabytes of instance ram allowed per project.
    * - security-groups
-     - Number of security groups per tenant.
+     - Number of security groups per project.
    * - security-group-rules
      - Number of rules per security group.
+   * - server-groups
+     - Number of server groups per project.
+   * - server-group-members
+     - Number of servers per server group.
 
 View and update Compute quotas for a tenant (project)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
