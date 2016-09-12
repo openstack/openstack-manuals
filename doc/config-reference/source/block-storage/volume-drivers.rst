@@ -58,6 +58,7 @@ Volume drivers
    drivers/zadara-volume-driver.rst
    drivers/zfssa-iscsi-driver.rst
    drivers/zfssa-nfs-driver.rst
+   drivers/zte-storage-driver.rst
 
 To use different volume drivers for the cinder-volume service, use the
 parameters described in these sections.
