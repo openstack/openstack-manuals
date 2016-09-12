@@ -17,7 +17,7 @@ openstack.org/developer/python-novaclient/api/novaclient.v1_1.keypairs
 
 .. code-block:: python
 
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     nova = nvclient.Client(...)
     keypair_name = "staging"
     keypair = nova.keypairs.create(name=keypair_name)
@@ -43,7 +43,7 @@ following example:
 
 .. code-block:: python
 
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     import os
     nova = nvclient.Client(...)
     keypair_name = "staging"
@@ -70,7 +70,7 @@ import the public key to Compute:
 
 .. code-block:: python
 
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     import os.path
     with open(os.path.expanduser('~/.ssh/id_rsa.pub')) as f:
         public_key = f.read()
@@ -89,7 +89,7 @@ org/developer/python-novaclient/api/novaclient.v1_1.keypairs.html
 
 .. code-block:: python
 
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     nova = nvclient.Client(...)
     keypairs = nova.keypairs.list()
 
@@ -106,7 +106,7 @@ SecurityGroupManager.list>`__ method:
 
 .. code-block:: python
 
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     nova = nvclient.Client(...)
     security_groups = nova.security_groups.list()
 
@@ -118,7 +118,7 @@ SecurityGroupManager.create>`__ method:
 
 .. code-block:: python
 
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     nova = nvclient.Client(...)
     nova.security_groups.create(name="web", description="Web servers")
 
@@ -134,7 +134,7 @@ SecurityGroup>`__ object or group ID as an argument:
 
 .. code-block:: python
 
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     nova = nvclient.Client(...)
     group = nova.security_groups.find(name="web")
     nova.security_groups.delete(group)
@@ -154,7 +154,7 @@ _groups.html#novaclient.v1_1.security_groups.SecurityGroup>`__ object:
 
 .. code-block:: python
 
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     nova = nvclient.Client(...)
     group = nova.security_groups.find(name="web")
     print group.rules
@@ -167,7 +167,7 @@ security_group_rules.SecurityGroupRuleManager.create>`__ method:
 
 .. code-block:: python
 
-    import novaclient.v1_1.client as nvclient
+    import novaclient.v2.client as nvclient
     nova = nvclient.Client(...)
     group = nova.security_groups.find(name="web")
     # Add rules for ICMP, tcp/80 and tcp/443
