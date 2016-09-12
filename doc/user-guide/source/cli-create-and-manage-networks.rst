@@ -251,7 +251,9 @@ Create ports
    :option:`--fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40` is one
    unknown option.
 
-**How to find unknown options**
+How to find unknown options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The unknown options can be easily found by watching the output of
 :command:`create_xxx` or :command:`show_xxx` command. For example,
 in the port creation command, we see the fixed\_ips fields, which
