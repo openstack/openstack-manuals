@@ -36,6 +36,15 @@ distributions. While each OpenStack project has its own client, they are
 being deprecated in favour of a common OpenStack client. It is generally
 recommended to install the OpenStack client.
 
+.. tip::
+
+   To perform testing and orchestration, it is usually easier to install the
+   OpenStack CLI tools in a dedicated VM in the cloud. We recommend
+   that you keep the VM installation simple. All the tools should be installed
+   from a single OpenStack release version. If you need to run tools from
+   multiple OpenStack releases, then we recommend that you run with multiple
+   VMs that are each running a dedicated version.
+
 Install OpenStack command-line clients
 --------------------------------------
 

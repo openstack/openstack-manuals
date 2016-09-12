@@ -288,6 +288,194 @@ already.
       # virsh resume 30
       Domain 30 resumed
 
+Managing floating IP addresses between instances
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In an elastic cloud environment using the ``Public_AGILE`` network, each
+instance has a publicly accessible IPv4 & IPv6 address. It does not support
+the concept of OpenStack floating IP addresses that can easily be attached,
+removed, and transferred between instances. However, there is a workaround
+using neutron ports which contain the IPv4 & IPv6 address.
+
+**Create a port that can be reused**
+
+#. Create a port on the ``Public_AGILE`` network:
+
+   .. code-block:: console
+
+      $ neutron port-create Public_AGILE
+
+      Created a new port:
+
+      +-----------------------+-------------------------------------------+
+      | Field                 | Value                                     |
+      +-----------------------+-------------------------------------------+
+      | admin_state_up        | True                                      |
+      | allowed_address_pairs |                                           |
+      | binding:host_id       |                                           |
+      | binding:profile       | {}                                        |
+      | binding:vif_details   | {}                                        |
+      | binding:vif_type      | unbound                                   |
+      | binding:vnic_type     | normal                                    |
+      | device_id             |                                           |
+      | device_owner          |                                           |
+      | fixed_ips             | {"subnet_id": "11d8087b-6288-4129-95ff... |
+      |                       | "ip_address": "2001:558:fc0b:100:f816:... |
+      |                       | {"subnet_id": "4279c70a-7218-4c7e-94e5... |
+      |                       | "ip_address": "96.118.182.106"}           |
+      | id                    | 3871bf29-e963-4701-a7dd-8888dbaab375      |
+      | mac_address           | fa:16:3e:e2:09:e0                         |
+      | name                  |                                           |
+      | network_id            | f41bd921-3a59-49c4-aa95-c2e4496a4b56      |
+      | security_groups       | 20d96891-0055-428a-8fa6-d5aed25f0dc6      |
+      | status                | DOWN                                      |
+      | tenant_id             | 52f0574689f14c8a99e7ca22c4eb572           |
+      +-----------------------+-------------------------------------------+
+
+#. If you know the fully qualified domain name (FQDN) that will be assigned to
+   the IP address, assign the port with the same name:
+
+   .. code-block:: console
+
+      $ neutron port-create Public_AGILE --name \
+      "example-fqdn-01.sys.example.com"
+
+      Created a new port:
+      +-----------------------+--------------------------------------------+
+      | Field                 | Value                                      |
+      +-----------------------+--------------------------------------------+
+      | admin_state_up        | True                                       |
+      | allowed_address_pairs |                                            |
+      | binding:host_id       |                                            |
+      | binding:profile       | {}                                         |
+      | binding:vif_details   | {}                                         |
+      | binding:vif_type      | unbound                                    |
+      | binding:vnic_type     | normal                                     |
+      | device_id             |                                            |
+      | device_owner          |                                            |
+      | fixed_ips             | {"subnet_id": "11d8087b-6288-4129-95ff...  |
+      |                       | "ip_address": "2001:558:fc0b:100:f816:...  |
+      |                       | {"subnet_id": "4279c70a-7218-4c7e-94e5...  |
+      |                       | "ip_address": "96.118.182.107"}            |
+      | id                    | 731c3b28-3753-4e63-bae3-b58a52d6ccca       |
+      | mac_address           | fa:16:3e:fb:65:fc                          |
+      | name                  | example-fqdn-01.sys.example.com            |
+      | network_id            | f41bd921-3a59-49c4-aa95-c2e4496a4b56       |
+      | security_groups       | 20d96891-0055-428a-8fa6-d5aed25f0dc6       |
+      | status                | DOWN                                       |
+      | tenant_id             | 52f0574689f14c8a99e7ca22c4eb5720           |
+      +-----------------------+--------------------------------------------+
+
+#. Use the port when creating an instance:
+
+   .. code-block:: console
+
+      $ nova boot --flavor m1.medium --image ubuntu.qcow2 --key-name team_key \
+      --nic port-id=PORT_ID "example-fqdn-01.sys.example.com"
+
+#. Verify the instance has the correct IP address:
+
+   .. code-block:: console
+
+      +-------------------------------------+-----------------------------------------------------------+
+      | Property                            | Value                                                     |
+      +-------------------------------------+-----------------------------------------------------------+
+      | OS-DCF:diskConfig                   | MANUAL                                                    |
+      | OS-EXT-AZ:availability_zone         | nova                                                      |
+      | OS-EXT-SRV-ATTR:host                | os_compute-1                                              |
+      | OS-EXT-SRV-ATTR:hypervisor_hostname | os_compute.ece.example.com                                |
+      | OS-EXT-SRV-ATTR:instance_name       | instance-00012b82                                         |
+      | OS-EXT-STS:power_state              | 1                                                         |
+      | OS-EXT-STS:task_state               | -                                                     	|
+      | OS-EXT-STS:vm_state                 | active                                                	|
+      | OS-SRV-USG:launched_at              | 2016-07-26T21:27:04.000000                                |
+      | OS-SRV-USG:terminated_at            | -                                                         |
+      | Public_AGILE network                | 2001:558:fc0b:100:f816:3eff:fefb:65fc, 96.118.182.107     |
+      | accessIPv4                          |                                                          	|
+      | accessIPv6                          |                                                           |
+      | config_drive                        |                                                           |
+      | created                             | 2016-07-26T21:26:42Z                                      |
+      | flavor                              | m1.medium (103)                                           |
+      | hostId                              | b0a4684922bce321770daf033032d9115fe3e13190191bf01dbc357a  |
+      | id                                  | 9ff9a672-d496-470a-84a7-284799a777fd                    	|
+      | image                               | Example Cloud Ubuntu 14.04 x86_64 v2.5 (fb49d7e1-273b-... |
+      | key_name                            | team_key                                                	|
+      | metadata                            | {}                                                        |
+      | name                                | example-fqdn-01.sys.example.com                         	|
+      | os-extended-volumes:volumes_attached| []                                                       	|
+      | progress                            | 0                                                         |
+      | security_groups                     | default                                                   |
+      | status                              | ACTIVE                                                	|
+      | tenant_id                           | 52f0574689f14c8a99e7ca22c4eb5720                        	|
+      | updated                             | 2016-07-26T21:27:04Z                                      |
+      | user_id                             | e37b87cb8d784cc3a85e475f67b32ab5                      	|
+      +-------------------------------------+-----------------------------------------------------------+
+
+#. Check the port connection using the netcat utility:
+
+   .. code-block:: console
+
+      $ nc -v -w 2 96.118.182.107 22
+      Ncat: Version 7.00 ( https://nmap.org/ncat )
+      Ncat: Connected to 96.118.182.107:22.
+      SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.6
+
+**Detach a port from an instance**
+
+#. Find the port corresponding to the instance. For example:
+
+   .. code-block:: console
+
+      $ neutron port-list | grep -B1 96.118.182.107
+
+      | 731c3b28-3753-4e63-bae3-b58a52d6ccca | example-fqdn-01.sys.comcast.net
+      | fa:16:3e:fb:65:fc |
+      {"subnet_id": "11d8087b-6288-4129-95ff-42c3df0c1df0",
+       "ip_address": "2001:558:fc0b:100:f816:3eff:fefb:65fc"} |
+      | {"subnet_id": "4279c70a-7218-4c7e-94e5-7bd4c045644e",
+      "ip_address": "96.118.182.107"}                    	|
+
+#. Run the :command:`neutron port-update command` to remove the port from
+   the instance:
+
+   .. code-block:: console
+
+      $ neutron port-update 731c3b28-3753-4e63-bae3-b58a52d6ccca \
+      --device_id "" --device_owner "" --binding:host_id ""
+
+#.  Delete the instance and create a new instance using the
+    :option:`--nic port-id` option.
+
+**Retrieve an IP address when an instance is deleted before detaching
+a port**
+
+The following procedure is a possible workaround to retrieve an IP address
+when an instance has been deleted with the port still attached:
+
+#. Launch several neutron ports:
+
+   .. code-block:: console
+
+      $ for i in {0..10}; do neutron port-create Public_AGILE --name
+      ip-recovery; done
+
+#. Check the ports for the lost IP address and update the name:
+
+   .. code-block:: console
+
+      $ neutron port-update 731c3b28-3753-4e63-bae3-b58a52d6ccca \
+      --name "don't delete"
+
+#. Delete the ports that are not needed:
+
+   .. code-block:: console
+
+      $ for port in $(neutron port-list | grep -i ip-recovery | \
+      awk '{print $2}'); do neutron port-delete $port; done
+
+#. If you still cannot find the lost IP address, repeat these steps
+   again.
+
 .. _volumes:
 
 Volumes
