@@ -4,10 +4,10 @@
 Introduction
 ============
 
-The OpenStack :term:`Networking service` provides an API that allows users
-to set up and define network connectivity and addressing in the
-cloud. The project code-name for Networking services is neutron.
-OpenStack Networking handles the creation and management of a virtual
+The OpenStack :term:`Networking service <Networking service (neutron)>`
+provides an API that allows users to set up and define network connectivity
+and addressing in the cloud. The project code-name for Networking services is
+neutron. OpenStack Networking handles the creation and management of a virtual
 networking infrastructure, including networks, switches, subnets, and
 routers for devices managed by the OpenStack Compute service
 (nova). Advanced services such as firewalls or :term:`virtual private

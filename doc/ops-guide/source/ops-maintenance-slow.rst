@@ -51,17 +51,17 @@ services, SQL is used extensively.
 OpenStack Networking service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Slowness in the OpenStack :term:`Networking service` can be caused by services
-that it relies upon, but it can also be related to either physical or
-virtual networking. For example: network namespaces that do not exist or
-are not tied to interfaces correctly; DHCP daemons that have hung or are
-not running; a cable being physically disconnected; a switch not being
-configured correctly. When debugging Networking service problems, begin
-by verifying all physical networking functionality (switch
-configuration, physical cabling, etc.). After the physical networking is
-verified, check to be sure all of the Networking services are running
-(neutron-server, neutron-dhcp-agent, etc.), then check on AMQP and SQL
-back ends.
+Slowness in the OpenStack :term:`Networking service <Networking service
+(neutron)>` can be caused by services that it relies upon, but it can
+also be related to either physical or virtual networking. For example:
+network namespaces that do not exist or are not tied to interfaces correctly;
+DHCP daemons that have hung or are not running; a cable being physically
+disconnected; a switch not being configured correctly. When debugging
+Networking service problems, begin by verifying all physical networking
+functionality (switch configuration, physical cabling, etc.). After the
+physical networking is verified, check to be sure all of the Networking
+services are running (neutron-server, neutron-dhcp-agent, etc.), then check
+on AMQP and SQL back ends.
 
 AMQP broker
 ~~~~~~~~~~~

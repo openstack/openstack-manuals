@@ -2508,25 +2508,26 @@ N
       services such as giving an IP address to a booting nova
       instance.
 
-   Networking service
+   Networking service (neutron)
 
-      A core OpenStack project that provides a network connectivity
-      abstraction layer to OpenStack Compute. The project name of Networking
-      is neutron.
+      The OpenStack projects which implements services and associated
+      libraries to provide on-demand, scalable, and technology-agnostic
+      network abstraction.
 
-   Networking API
+   Networking API (Neutron API)
 
       API used to access OpenStack Networking. Provides an extensible
       architecture to enable custom plug-in creation.
 
    neutron
 
-      A core OpenStack project that provides a network connectivity
-      abstraction layer to OpenStack Compute.
+      Codename for OpenStack :term:`Networking service <Networking Service
+      (neutron)>`.
 
    neutron API
 
-      An alternative name for Networking API.
+      An alternative name for :term:`Networking API <Networking API
+      (Neutron API)>`.
 
    neutron manager
 

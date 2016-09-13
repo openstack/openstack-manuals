@@ -206,7 +206,7 @@ Also consider several specialized components:
    OpenStack Block Storage (cinder) in the infrastructure, but typically
    it is not a central component.
 
-* :term:`Networking service` (neutron)
+* :term:`Networking service (neutron)`
    When choosing a networking platform, ensure that it either works with
    all desired hypervisor and container technologies and their OpenStack
    drivers, or that it includes an implementation of an ML2 mechanism
