@@ -218,7 +218,7 @@ adding the EPEL repo:
 
 .. code-block:: console
 
-   # yum install http://download.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-6.noarch.rpm
+   # yum install epel-release.noarch
    # yum install cloud-init
 
 The account varies by distribution. On Ubuntu-based virtual machines,
