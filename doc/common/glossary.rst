@@ -484,13 +484,12 @@ B
       detaching, and creating block storage for compute
       VMs.
 
-   BMC
+   BMC (Baseboard Management Controller)
 
-      Baseboard Management Controller. The intelligence in the IPMI
-      architecture, which is a specialized micro-controller that is embedded
-      on the motherboard of a computer and acts as a server. Manages the
-      interface between system management software and platform
-      hardware.
+      The intelligence in the IPMI architecture, which is a specialized
+      micro-controller that is embedded on the motherboard of a computer
+      and acts as a server. Manages the interface between system management
+      software and platform hardware.
 
    bootable disk image
 
