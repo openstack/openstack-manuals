@@ -64,8 +64,8 @@ For the list of meters that are originated from notifications, see the
 Reference <http://docs.openstack.org/developer/ceilometer/measurements.html>`__.
 
 
-Recommended ``auth_url`` to be used
------------------------------------
+Recommended auth_url to be used
+-------------------------------
 
 When using the Telemetry command-line client, the credentials and the
 ``os_auth_url`` have to be set in order for the client to authenticate
