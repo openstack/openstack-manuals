@@ -59,9 +59,9 @@ the hybrid cloud use case:
   of the cloud platforms. For platforms that do not support
   a given service, create a service on top of that platform
   and apply it to the workloads as they are launched on that cloud.
-* For example, through the :term:`Database service` for OpenStack
-  (:term:`trove`), OpenStack supports MySQL as a service but
-  not NoSQL databases in production.
+* For example, through the :term:`Database service <Database service
+  (trove)>` for OpenStack (:term:`trove`), OpenStack supports MySQL
+  as a service but not NoSQL databases in production.
   To move from or run alongside AWS, a NoSQL workload must use
   an automation tool, such as the Orchestration service (heat),
   to recreate the NoSQL database on top of OpenStack.
