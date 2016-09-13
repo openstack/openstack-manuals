@@ -48,9 +48,9 @@ how often the list is updated.
    ``scheduler_driver_task_period``; otherwise, hosts appear to
    be dead while the host list is being cached.
 
-For information about the volume scheduler, see the Block Storage section of
-`OpenStack Administrator Guide <http://docs.openstack.org/
-admin-guide/blockstorage-manage-volumes.html>`_.
+For information about the volume scheduler, see the `Block Storage section
+<http://docs.openstack.org/admin-guide/blockstorage-manage-volumes.html>`_
+of OpenStack Administrator Guide.
 
 The scheduler chooses a new host when an instance is migrated.
 
@@ -1029,8 +1029,8 @@ nova aggregate-create <name> [availability-zone]
   the newly created aggregate. Hosts can be made available to multiple
   host aggregates. Be careful when adding a host to an additional host
   aggregate when the host is also in an availability zone. Pay attention
-  when using the :command:`aggregate-set-metadata` and
-  :command:`aggregate-update` commands to avoid user confusion when they
+  when using the :command:`nova aggregate-set-metadata` and
+  :command:`nova aggregate-update` commands to avoid user confusion when they
   boot instances in different availability zones.
   An error occurs if you cannot add a particular host to an aggregate zone
   for which it is not intended.
