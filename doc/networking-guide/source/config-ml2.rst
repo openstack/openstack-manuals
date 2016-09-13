@@ -138,7 +138,7 @@ More information about provider networks see
   The administrator needs to configure a list of physical network names that
   can be used for provider networks.
   For more details, see the related section in the
-  `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-flat-type-configuration-options>`__.
+  `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-vlan-type-configuration-options>`__.
 
 * GRE
 
