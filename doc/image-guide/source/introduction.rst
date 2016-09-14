@@ -54,7 +54,7 @@ OVF
  `OVF <http://dmtf.org/sites/default/files/OVF_Overview_Document_2010.pdf>`_
  (Open Virtualization Format) is a packaging format for virtual machines,
  defined by the Distributed Management Task Force (DMTF) standards group.
- An OVF package contains one or more image files, a .ovf XML metadata file
+ An OVF package contains one or more image files, a ``.ovf`` XML metadata file
  that contains information about the virtual machine, and possibly other
  files as well.
 
