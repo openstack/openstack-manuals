@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _neutron-ml2_macvtap:
+.. _neutron-macvtap_agent:
 
-.. list-table:: Description of ML2 MacVTap mechanism driver configuration options
+.. list-table:: Description of MacVTap agent configuration options
    :header-rows: 1
    :class: config-ref-table
 
