@@ -2510,7 +2510,7 @@ N
 
    Networking service (neutron)
 
-      The OpenStack projects which implements services and associated
+      The OpenStack project which implements services and associated
       libraries to provide on-demand, scalable, and technology-agnostic
       network abstraction.
 
