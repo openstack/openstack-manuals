@@ -82,9 +82,13 @@ QoS support for the ScaleIO driver includes the ability to set the
 following capabilities in the Block Storage API
 ``cinder.api.contrib.qos_specs_manage`` QoS specs extension module:
 
-* ``minBWS``
+* ``maxIOPS``
+
+* ``maxIOPSperGB``
 
 * ``maxBWS``
+
+* ``maxBWSperGB``
 
 The QoS keys above must be created and associated with a volume type.
 For information about how to set the key-value pairs and associate
@@ -98,13 +102,28 @@ them with a volume type, run the following commands:
 
    $ cinder help qos-associate
 
-``maxBWS``
- The QoS I/O issue bandwidth rate limit in KBs. If not set, the I/O issue
- bandwidth rate has no limit. The setting must be a multiple of 1024.
-
 ``maxIOPS``
- The QoS I/O issue bandwidth rate limit in MBs. If not set, the I/O issue
- bandwidth rate has no limit. The setting must be larger than 10.
+ The QoS I/O rate limit. If not set, the I/O rate will be unlimited.
+ The setting must be larger than 10.
+
+``maxIOPSperGB``
+ The QoS I/O rate limit.
+ The limit will be calculated by the specified value multiplied by
+ the volume size.
+ The setting must be larger than 10.
+
+``maxBWS``
+ The QoS I/O bandwidth rate limit in KBs. If not set, the I/O
+ bandwidth rate will be unlimited. The setting must be a multiple of 1024.
+
+``maxBWSperGB``
+ The QoS I/O bandwidth rate limit in KBs.
+ The limit will be calculated by the specified value multiplied by
+ the volume size.
+ The setting must be a multiple of 1024.
+
+The driver always chooses the minimum between the QoS keys value
+and the relevant calculated value of ``maxIOPSperGB`` or ``maxBWSperGB``.
 
 Since the limits are per SDC, they will be applied after the volume
 is attached to an instance, and thus to a compute node/SDC.
