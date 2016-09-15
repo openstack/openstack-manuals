@@ -35,6 +35,9 @@ vdi
 vhd
  The VHD disk format, a common disk format used by virtual
  machine monitors from VMware, Xen, Microsoft, VirtualBox, and others.
+vhdx
+ The VHDX disk format, an enhanced version of the VHD format, which
+ supports larger disk sizes among other features.
 vmdk
  Common disk format supported by many common virtual machine monitors.
 
@@ -63,5 +66,7 @@ bare
  The image does not have a container or metadata envelope.
 docker
  A docker container format.
+ova
+ An OVF package in a tarfile.
 ovf
  The OVF container format.
