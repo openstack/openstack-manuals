@@ -86,7 +86,7 @@ private flavor to a project, run this command:
 
 .. code-block:: console
 
-   $ openstack flavor create --private p1.medium auto 512 40 4
+   $ openstack flavor create --private p1.medium --id auto --ram 512 --disk 40 --vcpus 4
 
 Extra Specs
 ~~~~~~~~~~~
