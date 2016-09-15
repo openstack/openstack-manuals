@@ -38,6 +38,7 @@ Volume drivers
    drivers/ibm-xiv-volume-driver.rst
    drivers/ibm-flashsystem-volume-driver.rst
    drivers/itri-disco-driver.rst
+   drivers/kaminario-driver.rst
    drivers/lenovo-driver.rst
    drivers/netapp-volume-driver.rst
    drivers/nimble-volume-driver.rst
