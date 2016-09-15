@@ -24,3 +24,7 @@ for guide in networking-guide arch-design-draft config-reference; do
 done
 
 tools/build-install-guides-rst.sh $LINKCHECK
+
+# This marker is needed for infra publishing
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID"
+echo $MARKER_TEXT > publish-docs/.root-marker
