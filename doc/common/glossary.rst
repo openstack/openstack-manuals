@@ -972,10 +972,10 @@ D
       May or may not listen on a TCP or UDP port. Do not confuse with a
       worker.
 
-   Dashboard
+   Dashboard (horizon)
 
-      The web-based management interface for OpenStack. An alternative
-      name for horizon.
+      OpenStack project which provides an extensible, unified, web-based
+      user interface for all OpenStack services.
 
    data encryption
 
@@ -1704,8 +1704,7 @@ H
 
    horizon
 
-      OpenStack project that provides a dashboard, which is a web
-      interface.
+      Codename for the :term:`Dashboard <Dashboard (horizon)>`.
 
    horizon plug-in
 

@@ -352,7 +352,7 @@ OpenStack core services recommended in a general purpose cloud are:
 
 * :term:`Identity service` (:term:`keystone`)
 
-* :term:`Dashboard` (:term:`horizon`)
+* :term:`Dashboard (horizon)`
 
 * :term:`Telemetry service` (:term:`ceilometer`)
 
