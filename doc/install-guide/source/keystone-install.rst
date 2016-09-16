@@ -5,8 +5,8 @@ Install and configure
 
 This section describes how to install and configure the OpenStack
 Identity service, code-named keystone, on the controller node. For
-performance, this configuration deploys Fernet tokens and the Apache
-HTTP server to handle requests.
+scalability purposes, this configuration deploys Fernet tokens and
+the Apache HTTP server to handle requests.
 
 Prerequisites
 -------------
@@ -41,13 +41,6 @@ database and an administration token.
      Replace ``KEYSTONE_DBPASS`` with a suitable password.
 
    * Exit the database access client.
-
-#. Generate a random value to use as the administration token during
-   initial configuration:
-
-   .. code-block:: console
-
-      $ openssl rand -hex 10
 
 Install and configure components
 --------------------------------
@@ -98,18 +91,6 @@ Install and configure components
 2. Edit the ``/etc/keystone/keystone.conf`` file and complete the following
    actions:
 
-   * In the ``[DEFAULT]`` section, define the value of the initial
-     administration token:
-
-     .. code-block:: ini
-
-        [DEFAULT]
-           ...
-        admin_token = ADMIN_TOKEN
-
-     Replace ``ADMIN_TOKEN`` with the random value that you generated in a
-     previous step.
-
    * In the ``[database]`` section, configure database access:
 
      .. code-block:: ini
@@ -138,11 +119,24 @@ Install and configure components
 
      Ignore any deprecation messages in this output.
 
-4. Initialize Fernet keys:
+4. Initialize Fernet key repositories:
 
    .. code-block:: console
 
       # keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
+      # keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+
+5. Bootstrap the Identity service:
+
+   .. code-block:: console
+
+      # keystone-manage bootstrap --bootstrap-password ADMIN_PASSWORD \
+        --bootstrap-admin-url http://controller:35357/v3/ \
+        --bootstrap-internal-url http://controller:35357/v3/ \
+        --bootstrap-public-url http://controller:5000/v3/ \
+        --bootstrap-region-id RegionOne
+
+   Replace ``ADMIN_PASSWORD`` with a suitable password for an administrative user.
 
 .. only:: obs or rdo or ubuntu
 
