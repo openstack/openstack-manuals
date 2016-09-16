@@ -33,8 +33,10 @@ Database
 
 Storage repository for image files
   Various repository types are supported including normal file
-  systems, Object Storage, RADOS block devices, HTTP, and Amazon S3.
-  Note that some repositories will only support read-only usage.
+  systems (or any filesystem mounted on the glance-api controller
+  node), Object Storage, RADOS block devices, VMware datastore,
+  and HTTP. Note that some repositories will only support read-only
+  usage.
 
 Metadata definition service
   A common API for vendors, admins, services, and users to meaningfully
