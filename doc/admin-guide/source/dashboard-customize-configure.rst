@@ -1,23 +1,171 @@
-=======================
-Configure the dashboard
-=======================
 
-You can configure the dashboard for a simple HTTP deployment,
-or you can configure the dashboard for a secured HTTPS deployment.
-While the standard installation uses a non-encrypted HTTP channel,
-you can enable SSL support for the dashboard.
+=====================================
+Customize and configure the Dashboard
+=====================================
+
+Once you have the Dashboard installed, you can customize the way
+it looks and feels to suit the needs of your environment, your
+project, or your business.
+
+You can also configure the Dashboard for a secure HTTPS deployment, or
+an HTTP deployment. The standard OpenStack installation uses a non-encrypted
+HTTP channel, but you can enable SSL support for the Dashboard.
+
+For information on configuring HTTPS or HTTP, see :ref:`configure_dashboard`.
+
+.. This content is out of date as of the Mitaka release, and needs an
+.. update to reflect the most recent work on themeing - JR -.
+
+Customize the Dashboard
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The OpenStack Dashboard on Ubuntu installs the
+``openstack-dashboard-ubuntu-theme`` package by default. If you do not
+want to use this theme, remove it and its dependencies:
+
+.. code-block:: console
+
+   # apt-get remove --auto-remove openstack-dashboard-ubuntu-theme
 
 .. note::
 
-   This section uses concrete examples to make it easier to
-   understand, but the file path varies by distribution.
+   This guide focuses on the ``local_settings.py`` file.
 
-Also, you can configure the size of the VNC window in the dashboard.
+The following Dashboard content can be customized to suit your needs:
 
-Configure the dashboard for HTTP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Logo
+* Site colors
+* HTML title
+* Logo link
+* Help URL
 
-You can configure the dashboard for a simple HTTP deployment.
+Logo and site colors
+--------------------
+
+#. Create two PNG logo files with transparent backgrounds using
+   the following sizes:
+
+   - Login screen: 365 x 50
+   - Logged in banner: 216 x 35
+
+#. Upload your new images to
+   ``/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/``.
+
+#. Create a CSS style sheet in
+   ``/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/scss/``.
+
+#. Change the colors and image file names as appropriate. Ensure the
+   relative directory paths are the same. The following example file
+   shows you how to customize your CSS file:
+
+   .. code-block:: css
+
+      /*
+      * New theme colors for dashboard that override the defaults:
+      *  dark blue: #355796 / rgb(53, 87, 150)
+      *  light blue: #BAD3E1 / rgb(186, 211, 225)
+      *
+      * By Preston Lee <plee@tgen.org>
+      */
+      h1.brand {
+      background: #355796 repeat-x top left;
+      border-bottom: 2px solid #BAD3E1;
+      }
+      h1.brand a {
+      background: url(../img/my_cloud_logo_small.png) top left no-repeat;
+      }
+      #splash .login {
+      background: #355796 url(../img/my_cloud_logo_medium.png) no-repeat center 35px;
+      }
+      #splash .login .modal-header {
+      border-top: 1px solid #BAD3E1;
+      }
+      .btn-primary {
+      background-image: none !important;
+      background-color: #355796 !important;
+      border: none !important;
+      box-shadow: none;
+      }
+      .btn-primary:hover,
+      .btn-primary:active {
+      border: none;
+      box-shadow: none;
+      background-color: #BAD3E1 !important;
+      text-decoration: none;
+      }
+
+#. Open the following HTML template in an editor of your choice:
+
+   .. code-block:: console
+
+      /usr/share/openstack-dashboard/openstack_dashboard/templates/_stylesheets.html
+
+#. Add a line to include your newly created style sheet. For example,
+   ``custom.css`` file:
+
+   .. code-block:: html
+
+      <link href='{{ STATIC_URL }}bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet' />
+      <link href='{{ STATIC_URL }}dashboard/css/{% choose_css %}' media='screen' rel='stylesheet' />
+      <link href='{{ STATIC_URL }}dashboard/css/custom.css' media='screen' rel='stylesheet' />
+
+#. Restart the Apache service.
+
+#. To view your changes, reload your Dashboard. If necessary, go back
+   and modify your CSS file as appropriate.
+
+HTML title
+----------
+
+#. Set the HTML title, which appears at the top of the browser window, by
+   adding the following line to ``local_settings.py``:
+
+   .. code-block:: python
+
+      SITE_BRANDING = "Example, Inc. Cloud"
+
+#. Restart Apache for this change to take effect.
+
+Logo link
+---------
+
+#. The logo also acts as a hyperlink. The default behavior is to redirect
+   to ``horizon:user_home``. To change this, add the following attribute to
+   ``local_settings.py``:
+
+   .. code-block:: python
+
+      SITE_BRANDING_LINK = "http://example.com"
+
+#. Restart Apache for this change to take effect.
+
+Help URL
+--------
+
+#. By default, the help URL points to http://docs.openstack.org. To change
+   this, edit the following attribute in ``local_settings.py``:
+
+   .. code-block:: python
+
+      HORIZON_CONFIG["help_url"] = "http://openstack.mycompany.org"
+
+#. Restart Apache for this change to take effect.
+
+.. _configure_dashboard:
+
+Configure the Dashboard
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The following section on configuring the Dashboard for a
+secure HTTPS deployment, or a HTTP deployment, uses concrete
+examples to ensure the procedure is clear. The file path varies
+by distribution, however. If needed, you can also configure
+the VNC window size in the Dashboard.
+
+Configure the Dashboard for HTTP
+--------------------------------
+
+You can configure the Dashboard for a simple HTTP deployment.
 The standard installation uses a non-encrypted HTTP channel.
 
 #. Specify the host for your Identity service endpoint in the
@@ -156,7 +304,7 @@ The standard installation uses a non-encrypted HTTP channel.
       }
 
    The service catalog configuration in the Identity service determines
-   whether a service appears in the dashboard.
+   whether a service appears in the Dashboard.
    For the full listing, see `Horizon Settings and Configuration
    <http://docs.openstack.org/developer/horizon/topics/settings.html>`_.
 
@@ -164,12 +312,12 @@ The standard installation uses a non-encrypted HTTP channel.
 
 #. Restart ``memcached``.
 
-Configure the dashboard for HTTPS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configure the Dashboard for HTTPS
+---------------------------------
 
-You can configure the dashboard for a secured HTTPS deployment.
+You can configure the Dashboard for a secured HTTPS deployment.
 While the standard installation uses a non-encrypted HTTP channel,
-you can enable SSL support for the dashboard.
+you can enable SSL support for the Dashboard.
 
 This example uses the ``http://openstack.example.com`` domain.
 Use a domain that fits your current setup.
@@ -275,12 +423,12 @@ Use a domain that fits your current setup.
 
 #. Restart ``memcached``.
 
-   If you try to access the dashboard through HTTP, the browser redirects
+   If you try to access the Dashboard through HTTP, the browser redirects
    you to the HTTPS page.
 
    .. note::
 
-      Configuring the dashboard for HTTPS also requires enabling SSL for
+      Configuring the Dashboard for HTTPS also requires enabling SSL for
       the noVNC proxy service. On the controller node, add the following
       additional options to the ``[DEFAULT]`` section of the
       ``/etc/nova/nova.conf`` file:
