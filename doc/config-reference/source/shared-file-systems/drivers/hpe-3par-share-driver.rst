@@ -31,7 +31,7 @@ The following operations are supported:
 
   - SMB shares require user access rules.
 
-  - User access requires a 3PAR local user, since LDAP and AD is not yet
+  - User access requires a 3PAR local or AD user, since LDAP is not yet
     supported.
 
   - Shares created from snapshots are always read-only.
@@ -106,6 +106,99 @@ the configured FPG's VFS. This IP address is used in export locations
 for shares that are created. Networking must be configured to allow
 connectivity from clients to shares.
 
+Back end configuration for AD user
+----------------------------------
+
+The following parameters need to be configured through HPE 3PAR CLI to access
+file share using AD.
+
+#. Set authentication parameters.
+
+   .. code-block:: console
+
+      $ setauthparam ldap-server IP_ADDRESS_OF_AD_SERVER
+      $ setauthparam binding simple
+      $ setauthparam user-attr AD_DOMAIN_NAME\\
+      $ setauthparam accounts-dn CN=Users,DC=AD,DC=DOMAIN,DC=NAME
+      $ setauthparam account-obj user
+      $ setauthparam account-name-attr sAMAccountName
+      $ setauthparam memberof-attr memberOf
+      $ setauthparam super-map CN=AD_USER_GROUP,DC=AD,DC=DOMAIN,DC=NAME
+
+#. Verify new authentication parameters set as expected.
+
+   .. code-block:: console
+
+      $ showauthparam
+
+#. Verify AD users set as expected.
+
+   .. code-block:: console
+
+      $ checkpassword AD_USER
+
+   On successful configuration, command result will display:
+   User ``AD_USER`` is authenticated and authorized.
+
+#. Add `ActiveDirectory` in authentication providers list.
+
+   .. code-block:: console
+
+      $ setfs auth ActiveDirectory Local
+
+#. Verify authentication provider list shows `ActiveDirectory`.
+
+   .. code-block:: console
+
+      $ showfs -auth
+
+#. Set AD user on FS.
+
+   .. code-block:: console
+
+      $ setfs ad –passwd PASSWORD AD_USER AD_DOMAIN_NAME
+
+#. Verify FS user details.
+
+   .. code-block:: console
+
+      $ showfs -ad
+
+Example of using AD user to access CIFS share
+---------------------------------------------
+
+Pre-requisite:
+
+- Share type should be configured for 3PAR backend.
+
+#. Create a CIFS file share with 2GB of size.
+
+   .. code-block:: console
+
+      $ manila create --name FILE_SHARE_NAME --share-type SHARE_TYPE CIFS 2
+
+#. Check that the file share was created as expected.
+
+   .. code-block:: console
+
+      $ manila show FILE_SHARE_NAME
+
+#. Provide share access to AD user.
+
+   .. code-block:: console
+
+      $ manila access-allow FILE_SHARE_NAME user AD_DOMAIN_NAME\\\\AD_USER \
+        --access-level rw
+
+#. Check that the AD user's permission set as expected.
+
+   .. code-block:: console
+
+      $ manila access-list FILE_SHARE_NAME
+
+   List should display ``AD_DOMAIN_NAME\\AD_USER`` in the ``access_to``
+   column, and ``active`` in its ``state`` column as a result of this
+   command.
 
 Network approach
 ~~~~~~~~~~~~~~~~
