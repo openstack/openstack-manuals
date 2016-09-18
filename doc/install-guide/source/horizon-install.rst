@@ -4,13 +4,10 @@ Install and configure
 This section describes how to install and configure the dashboard
 on the controller node.
 
-The dashboard relies on functional core services including
-Identity, Image service, Compute, and either Networking (neutron)
-or legacy networking (nova-network). Environments with
-stand-alone services such as Object Storage cannot use the
-dashboard. For more information, see the
-`developer documentation <http://docs.openstack.org/developer/
-horizon/topics/deployment.html>`__.
+The only core service required by the dashboard is the Identity service.
+You can use the dashboard in combination with other services, such as
+Image service, Compute, and Networking. You can also use the dashboard
+in environments with stand-alone services such as Object Storage.
 
 .. note::
 
