@@ -42,6 +42,8 @@ Supported operations
 -  Create consistency group from consistency group or consistency group
    snapshot.
 
+-  Volume Migration (host assisted)
+
 XtremIO Block Storage driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
