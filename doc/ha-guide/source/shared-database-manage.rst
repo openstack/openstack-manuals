@@ -45,7 +45,7 @@ To start the cluster, complete the following steps:
 
    .. code-block:: console
 
-      # systemctl start mysql --wsrep-new-cluster
+      # systemctl start mariadb --wsrep-new-cluster
 
 #. Once the database server starts, check the cluster status using
    the ``wsrep_cluster_size`` status variable. From the database
@@ -72,7 +72,7 @@ To start the cluster, complete the following steps:
 
    .. code-block:: console
 
-      # systemctl start mysql
+      # systemctl start mariadb
 
 #. When you have all cluster nodes started, log into the database
    client on one of them and check the ``wsrep_cluster_size``
