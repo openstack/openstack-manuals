@@ -108,10 +108,8 @@ because it only handles layer-2 connectivity.
    For VLAN external and project networks, the physical network infrastructure
    must support VLAN tagging. For best performance, 10+ Gbps networks should
    support jumbo frames.
-
-.. warning::
-
-   Using VXLAN project networks requires kernel 3.13 or newer.
+   Using VXLAN project networks requires sufficient kernel support.
+   Kernel version 3.9 or newer is recommended.
 
 OpenStack services - controller node
 ------------------------------------
