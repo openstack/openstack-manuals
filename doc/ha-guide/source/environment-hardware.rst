@@ -20,15 +20,13 @@ and the following minimum requirements should support
 a proof-of-concept high availability environment
 with core services and several instances:
 
-[TODO: Verify that these numbers are good]
-
-+-------------------+------------+----------+-----------+------+
-| Node type         | Processor  | Memory   | Storage   | NIC  |
-+===================+============+==========+===========+======+
-| controller node   | 1-2        | 8 GB     | 100 GB    | 2    |
-+-------------------+------------+----------+-----------+------+
-| compute node      | 2-4+       | 8+ GB    | 100+ GB   | 2    |
-+-------------------+------------+----------+-----------+------+
++-------------------+------------------+----------+-----------+------+
+| Node type         | Processor Cores  | Memory   | Storage   | NIC  |
++===================+==================+==========+===========+======+
+| controller node   | 4                | 12 GB    | 120 GB    | 2    |
++-------------------+------------------+----------+-----------+------+
+| compute node      | 8+               | 12+ GB   | 120+ GB   | 2    |
++-------------------+------------------+----------+-----------+------+
 
 
 For demonstrations and studying,
