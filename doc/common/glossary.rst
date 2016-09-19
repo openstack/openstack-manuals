@@ -1678,9 +1678,8 @@ H
       an unincorporated community in Oregon.
 
    heat
-
-      An integrated project that aims to orchestrate multiple cloud
-      applications for OpenStack.
+      Codename for the :term:`Orchestration service
+      <Orchestration service (heat)>`.
 
    Heat Orchestration Template (HOT)
 
@@ -2733,11 +2732,11 @@ O
       Orchestration service (heat), Database service (trove),
       Bare Metal service (ironic), and so on.
 
-   Orchestration service
+   Orchestration service (heat)
 
-      An integrated project that orchestrates multiple cloud
-      applications for OpenStack. The project name of Orchestration is
-      heat.
+      The OpenStack service which orchestrates composite cloud
+      applications using a declarative template format through
+      an OpenStack-native REST API.
 
    orphan
 
