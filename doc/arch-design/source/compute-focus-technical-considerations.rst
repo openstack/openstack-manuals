@@ -198,7 +198,7 @@ Also consider several specialized components:
    may choose to use external solutions to fulfill their metering and
    monitoring requirements.
 
-* :term:`Block Storage service` (cinder)
+* :term:`Block Storage service (cinder)`
    Due to the burst-able nature of the workloads and the applications
    and instances that perform batch processing, this cloud mainly uses
    memory or CPU, so the need for add-on storage to each instance is not

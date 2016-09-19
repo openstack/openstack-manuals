@@ -34,8 +34,9 @@ problematic. For example, your back-end NFS server might have gone down.
 OpenStack Block Storage service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-OpenStack :term:`Block Storage service` is similar to the Image service, so
-start by checking Identity-related services, and the back-end storage.
+OpenStack :term:`Block Storage service <Block Storage service (cinder)>` is
+similar to the Image service, so start by checking Identity-related services,
+and the back-end storage.
 Additionally, both the Block Storage and Image services rely on AMQP and
 SQL functionality, so consider these when debugging.
 

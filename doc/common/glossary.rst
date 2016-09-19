@@ -473,11 +473,11 @@ B
       user-initiated switchover. Does not require shared storage. Supported
       by Compute.
 
-   Block Storage service
+   Block Storage service (cinder)
 
-      The OpenStack core project that enables management of volumes,
-      volume snapshots, and volume types. The project name of Block Storage
-      is cinder.
+      The OpenStack service that implement services and libraries to provide
+      on-demand, self-service access to Block Storage resources via abstraction
+      and automation on top of other block storage devices.
 
    Block Storage API
 
@@ -681,8 +681,8 @@ C
 
    cinder
 
-      A core OpenStack project that provides block storage services
-      for VMs.
+      Codename for :term:`Block Storage service
+      <Block Storage service (cinder)>`.
 
    CirrOS
 
