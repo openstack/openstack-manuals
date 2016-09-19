@@ -17,7 +17,7 @@ Users and services can locate other services by using the service catalog,
 which is managed by the Identity service. As the name implies, a service
 catalog is a collection of available services in an OpenStack deployment. Each
 service can have one or many endpoints and each endpoint can be one of three
-types: admin, internal, and public. In a production environment, different
+types: admin, internal, or public. In a production environment, different
 endpoint types might reside on separate networks exposed to different types of
 users for security reasons. For instance, the public API network might be
 visible from the Internet so customers can manage their clouds. The admin API
