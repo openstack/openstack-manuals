@@ -404,7 +404,8 @@ B
 
    barbican
 
-      Code name of the key management service for OpenStack.
+      Code name of the :term:`Key Manager service
+      <Key Manager service (barbican)>`.
 
    bare
 
@@ -2106,12 +2107,11 @@ K
       module, that provides the core virtualization infrastructure
       and a processor specific module.
 
-   Key Manager service
+   Key Manager service (barbican)
 
-      OpenStack project that produces a secret storage and
+      The project that produces a secret storage and
       generation system capable of providing key management for
-      services wishing to enable encryption features. The code name
-      of the project is barbican.
+      services wishing to enable encryption features.
 
    keystone
 
