@@ -28,6 +28,16 @@ with core services and several instances:
 | compute node      | 8+               | 12+ GB   | 120+ GB   | 2    |
 +-------------------+------------------+----------+-----------+------+
 
+We recommended that the maximum latency between any two controller
+nodes is 2 milliseconds. Although the cluster software can be tuned to
+operate at higher latencies, some vendors insist on this value before
+agreeing to support the installation.
+
+The `ping` command can be used to find the latency between two
+servers.
+
+Virtualized hardware
+~~~~~~~~~~~~~~~~~~~~
 
 For demonstrations and studying,
 you can set up a test environment on virtual machines (VMs).
