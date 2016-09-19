@@ -512,17 +512,15 @@ To see a list of running instances, run:
 .. code-block:: console
 
    $ nova list --all-tenants
-   +-----+------------------+--------+-------------------------------------------+
-   | ID  | Name             | Status | Networks                                  |
-   +-----+------------------+--------+-------------------------------------------+
-   | ... | Windows          | ACTIVE | novanetwork_1=10.1.1.3, 199.116.232.39    |
-   | ... | cloud controller | ACTIVE | novanetwork_0=10.1.0.6; jtopjian=10.1.2.3 |
-   | ... | compute node 1   | ACTIVE | novanetwork_0=10.1.0.4; jtopjian=10.1.2.4 |
-   | ... | devbox           | ACTIVE | novanetwork_0=10.1.0.3                    |
-   | ... | devstack         | ACTIVE | novanetwork_0=10.1.0.5                    |
-   | ... | initial          | ACTIVE | nova_network=10.1.7.4, 10.1.8.4           |
-   | ... | lorin-head       | ACTIVE | nova_network=10.1.7.3, 10.1.8.3           |
-   +-----+------------------+--------+-------------------------------------------+
+   +-----+------------------+-----------+--------+------------+-------------+-------------------------------------------+
+   | ID  | Name             | Tenant ID | Status | Task State | Power State | Networks                                  |
+   +-----+------------------+-----------+--------+------------+-------------+-------------------------------------------+
+   | ... | Windows          | dde8aa... | ACTIVE | -          | Running     | novanetwork_1=10.1.1.3                    |
+   | ... | cloud controller | dde8ae... | ACTIVE | -          | Running     | novanetwork_0=10.0.1.3; jtopjian=10.1.2.3 |
+   | ... | compute node 1   | dde8ae... | ACTIVE | -          | Running     | novanetwork_0=10.0.1.4; jtopjian=10.1.2.4 |
+   | ... | devbox           | dde8ae... | ACTIVE | -          | Running     | novanetwork_0=10.0.1.5                    |
+   | ... | devstack         | 6c96c1... | ACTIVE | -          | Running     | novanetwork_0=10.1.0.3, 10.1.0.4          |
+   +-----+------------------+-----------+--------+------------+-------------+-------------------------------------------+
 
 Unfortunately, this command does not tell you various details about the
 running instances, such as what compute node the instance is running on,
