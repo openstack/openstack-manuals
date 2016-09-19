@@ -176,5 +176,5 @@ Create and access a database
 
    .. code-block:: console
 
-      $ mysql -u userA -ppassword -h IP_ADDRESS myDB
+      $ mysql -u userA -p password -h IP_ADDRESS myDB
 
