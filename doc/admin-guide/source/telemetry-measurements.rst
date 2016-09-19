@@ -370,6 +370,21 @@ The following meters are collected for OpenStack Compute:
 | .local    |       |      |          |          |         | r a memory cont\ |
 |           |       |      |          |          |         | roller           |
 +-----------+-------+------+----------+----------+---------+------------------+
+| perf.cpu\ | Gauge | cyc\ | instance | Pollster | Libvirt | the number of c\ |
+| .cycles   |       | le   | ID       |          |         | pu cycles one i\ |
+|           |       |      |          |          |         | nstruction needs |
++-----------+-------+------+----------+----------+---------+------------------+
+| perf.ins\ | Gauge | inst\| instance | Pollster | Libvirt | the count of in\ |
+| tructions |       | ruct\| ID       |          |         | structions       |
+|           |       | ion  |          |          |         |                  |
++-----------+-------+------+----------+----------+---------+------------------+
+| perf.cac\ | Gauge | cou\ | instance | Pollster | Libvirt | the count of ca\ |
+| he.refer\ |       | nt   | ID       |          |         | che hits         |
+| ences     |       |      |          |          |         |                  |
++-----------+-------+------+----------+----------+---------+------------------+
+| perf.cac\ | Gauge | cou\ | instance | Pollster | Libvirt | the count of ca\ |
+| he.misses |       | nt   | ID       |          |         | che misses       |
++-----------+-------+------+----------+----------+---------+------------------+
 
 |
 
