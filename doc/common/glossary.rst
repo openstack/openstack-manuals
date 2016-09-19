@@ -956,7 +956,7 @@ C
 
    customer
 
-      Alternative term for tenant.
+      Alternative term for project.
 
    customization module
 
@@ -1040,15 +1040,15 @@ D
       The default panel that is displayed when a user accesses the
       horizon dashboard.
 
-   default tenant
+   default project
 
-      New users are assigned to this tenant if no tenant is specified
+      New users are assigned to this project if no project is specified
       when a user is created.
 
    default token
 
       An Identity service token that is not associated with a specific
-      tenant and is exchanged for a scoped token.
+      project and is exchanged for a scoped token.
 
    delayed delete
 
@@ -1502,7 +1502,7 @@ F
    flat network
 
       Virtual network type that uses neither VLANs nor tunnels to
-      segregate tenant traffic. Each flat network typically requires
+      segregate project traffic. Each flat network typically requires
       a separate underlying physical interface defined by bridge
       mappings. However, a flat network can contain multiple
       subnets.
@@ -1593,7 +1593,7 @@ G
    global endpoint template
 
       The Identity service endpoint template that contains services
-      available to all tenants.
+      available to all projects.
 
    GlusterFS
 
@@ -1843,12 +1843,12 @@ I
 
    image membership
 
-      A list of tenants that can access a given VM image within Image
+      A list of projects that can access a given VM image within Image
       service.
 
    image owner
 
-      The tenant who owns an Image service virtual machine
+      The project who owns an Image service virtual machine
       image.
 
    image registry
@@ -2290,12 +2290,12 @@ M
 
    membership
 
-      The association between an Image service VM image and a tenant.
-      Enables images to be shared with specified tenants.
+      The association between an Image service VM image and a project.
+      Enables images to be shared with specified projects.
 
    membership list
 
-      A list of tenants that can access a given VM image within Image
+      A list of projects that can access a given VM image within Image
       service.
 
    memcached
@@ -2399,7 +2399,7 @@ M
       scalable, performant, fault-tolerant Monitoring-as-a-Service
       solution for metrics, complex event processing, and logging.
       It builds an extensible platform for advanced monitoring
-      services that can be used by both operators and tenants to
+      services that can be used by both operators and projects to
       gain operational insight and visibility, ensuring
       availability and stability. The project name is monasca.
 
@@ -2860,7 +2860,7 @@ P
    private image
 
       An Image service VM image that is only available to specified
-      tenants.
+      projects.
 
    private IP address
 
@@ -2930,7 +2930,7 @@ P
    public image
 
       An Image service VM image that is available to all
-      tenants.
+      projects.
 
    public IP address
 
@@ -3270,7 +3270,7 @@ S
    scoped token
 
       An Identity service API access token that is associated with a
-      specific tenant.
+      specific project.
 
    scrubber
 
@@ -3361,9 +3361,9 @@ S
       An Identity service feature that enables services, such as
       Compute, to automatically register with the catalog.
 
-   service tenant
+   service project
 
-      Special tenant that contains all services that are listed in the
+      Special project that contains all services that are listed in the
       catalog.
 
    service token
@@ -3679,17 +3679,17 @@ T
 
    Tenant API
 
-      An API that is accessible to tenants.
+      An API that is accessible to projects.
 
    tenant endpoint
 
       An Identity service API endpoint that is associated with one or
-      more tenants.
+      more projects.
 
    tenant ID
 
-      Unique ID assigned to each tenant within the Identity service.
-      The project IDs map to the tenant IDs.
+      Unique ID assigned to each project within the Identity service.
+      The project IDs map to the project IDs.
 
    token
 
@@ -3699,7 +3699,7 @@ T
    token services
 
       An Identity service component that manages and validates tokens
-      after a user or tenant has been authenticated.
+      after a user or project has been authenticated.
 
    tombstone
 
