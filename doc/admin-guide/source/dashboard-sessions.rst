@@ -96,7 +96,7 @@ Initialize and configure the database
 -------------------------------------
 
 Database-backed sessions are scalable, persistent, and can be made
-high-concurrency and highly-available.
+high-concurrency and highly available.
 
 However, database-backed sessions are one of the slower session storages
 and incur a high overhead under heavy usage. Proper configuration of

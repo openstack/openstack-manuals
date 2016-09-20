@@ -1,5 +1,5 @@
 ========================================
-Overview of highly-available controllers
+Overview of highly available controllers
 ========================================
 
 OpenStack is a set of multiple services exposed to the end users
@@ -9,7 +9,7 @@ where all the components are running are often called controllers.
 This modular OpenStack architecture allows to duplicate all the
 components and run them on different controllers.
 By making all the components redundant it is possible to make
-OpenStack highly-available.
+OpenStack highly available.
 
 In general we can divide all the OpenStack components into three categories:
 

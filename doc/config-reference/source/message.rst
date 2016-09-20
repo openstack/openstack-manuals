@@ -52,7 +52,7 @@ The Message service provides the following key features:
   filters.
 * Efficient reference implementation with an eye toward low latency and high
   throughput (dependent on back end).
-* Highly-available and horizontally scalable.
+* Highly available and horizontally scalable.
 * Support for subscriptions to queues. Several notification types are
   available:
 

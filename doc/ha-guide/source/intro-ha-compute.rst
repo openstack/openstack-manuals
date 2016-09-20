@@ -1,4 +1,4 @@
 
 ==========================================
-Overview of highly-available compute nodes
+Overview of highly available compute nodes
 ==========================================
