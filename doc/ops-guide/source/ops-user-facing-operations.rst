@@ -1821,12 +1821,12 @@ Use this command to register an existing key with OpenStack:
    You must have the matching private key to access instances
    associated with this key.
 
-To associate a key with an instance on boot, add :option:`--key_name mykey` to
+To associate a key with an instance on boot, add :option:`--key-name mykey` to
 your command line. For example:
 
 .. code-block:: console
 
-   $ nova boot --image ubuntu-cloudimage --flavor 2 --key_name mykey myimage
+   $ nova boot --image ubuntu-cloudimage --flavor 2 --key-name mykey myimage
 
 When booting a server, you can also add arbitrary metadata so that you
 can more easily identify it among other running instances. Use the
