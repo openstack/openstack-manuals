@@ -26,6 +26,34 @@ Supported operations
 * Create a thin provisioned volume.
 * Get volume statistics.
 
+Coho Data QoS support
+~~~~~~~~~~~~~~~~~~~~~
+
+QoS support for the Coho Data driver includes the ability to set the
+following capabilities in the OpenStack Block Storage API
+``cinder.api.contrib.qos_specs_manage`` QoS specs extension module:
+
+* **maxIOPS** - The maximum number of IOPS allowed for this volume.
+
+* **maxMBS** - The maximum throughput allowed for this volume.
+
+The QoS keys above must be created and associated with a volume type.
+For information about how to set the key-value pairs and associate
+them with a volume type, run the following commands:
+
+.. code-block:: console
+
+   $ cinder help qos-create
+
+   $ cinder help qos-key
+
+   $ cinder help qos-associate
+
+.. note::
+
+   If you change a volume type with QoS to a new volume type
+   without QoS, the QoS configuration settings will be removed.
+
 System requirements
 ~~~~~~~~~~~~~~~~~~~
 
