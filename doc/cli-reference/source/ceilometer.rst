@@ -9,7 +9,7 @@ Telemetry service command-line client
 The ceilometer client is the command-line interface (CLI) for
 the Telemetry service API and its extensions.
 
-This chapter documents :command:`ceilometer` version ``2.5.0``.
+This chapter documents :command:`ceilometer` version ``2.6.1``.
 
 For help on a specific :command:`ceilometer` command, enter:
 
@@ -1796,7 +1796,7 @@ List events.
 ``-q <QUERY>, --query <QUERY>``
   key[op]data_type::value; list. data_type is
   optional, but if supplied must be string,
-  integer, floator datetime.
+  integer, float or datetime.
 
 ``--no-traits``
   If specified, traits will not be printed.
