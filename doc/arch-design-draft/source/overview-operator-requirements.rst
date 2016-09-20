@@ -5,6 +5,63 @@ Operator requirements
 This section describes operational factors affecting the design of an
 OpenStack cloud.
 
+Network design
+~~~~~~~~~~~~~~
+
+The network design for an OpenStack cluster includes decisions regarding
+the interconnect needs within the cluster, the need to allow clients to
+access their resources, and the access requirements for operators to
+administrate the cluster. You should consider the bandwidth, latency,
+and reliability of these networks.
+
+Consider additional design decisions about monitoring and alarming.
+If you are using an external provider, service level agreements (SLAs)
+are typically defined in your contract. Operational considerations such
+as bandwidth, latency, and jitter can be part of the SLA.
+
+As demand for network resources increase, make sure your network design
+accommodates expansion and upgrades. Operators add additional IP address
+blocks and add additional bandwidth capacity. In addition, consider
+managing hardware and software lifecycle events, for example upgrades,
+decommissioning, and outages, while avoiding service interruptions for
+tenants.
+
+Factor maintainability into the overall network design. This includes
+the ability to manage and maintain IP addresses as well as the use of
+overlay identifiers including VLAN tag IDs, GRE tunnel IDs, and MPLS
+tags. As an example, if you may need to change all of the IP addresses
+on a network, a process known as renumbering, then the design must
+support this function.
+
+Address network-focused applications when considering certain
+operational realities. For example, consider the impending exhaustion of
+IPv4 addresses, the migration to IPv6, and the use of private networks
+to segregate different types of traffic that an application receives or
+generates. In the case of IPv4 to IPv6 migrations, applications should
+follow best practices for storing IP addresses. We recommend you avoid
+relying on IPv4 features that did not carry over to the IPv6 protocol or
+have differences in implementation.
+
+To segregate traffic, allow applications to create a private tenant
+network for database and storage network traffic. Use a public network
+for services that require direct client access from the Internet. Upon
+segregating the traffic, consider :term:`quality of service (QoS)` and
+security to ensure each network has the required level of service.
+
+Also consider the routing of network traffic. For some applications,
+develop a complex policy framework for routing. To create a routing
+policy that satisfies business requirements, consider the economic cost
+of transmitting traffic over expensive links versus cheaper links, in
+addition to bandwidth, latency, and jitter requirements.
+
+Finally, consider how to respond to network events. How load
+transfers from one link to another during a failure scenario could be
+a factor in the design. If you do not plan network capacity
+correctly, failover traffic could overwhelm other ports or network
+links and create a cascading failure scenario. In this case,
+traffic that fails over to one link overwhelms that link and then
+moves to the subsequent links until all network traffic stops.
+
 SLA considerations
 ~~~~~~~~~~~~~~~~~~
 
@@ -101,6 +158,89 @@ For more information on
 managing and maintaining your OpenStack environment, see the
 `Operations chapter <http://docs.openstack.org/ops-guide/operations.html>`_
 in the OpenStack Operations Guide.
+
+Logging and monitoring
+----------------------
+
+OpenStack clouds require appropriate monitoring platforms to identify and
+manage errors.
+
+.. note::
+
+   We recommend leveraging existing monitoring systems to see if they
+   are able to effectively monitor an OpenStack environment.
+
+Specific meters that are critically important to capture include:
+
+* Image disk utilization
+
+* Response time to the Compute API
+
+Logging and monitoring does not significantly differ for a multi-site OpenStack
+cloud. The tools described in the `Logging and monitoring chapter
+<http://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`__ of
+the Operations Guide remain applicable. Logging and monitoring can be provided
+on a per-site basis, and in a common centralized location.
+
+When attempting to deploy logging and monitoring facilities to a centralized
+location, care must be taken with the load placed on the inter-site networking
+links
+
+Management software
+-------------------
+
+Management software providing clustering, logging, monitoring, and alerting
+details for a cloud environment is often used.  This impacts and affects the
+overall OpenStack cloud design, and must account for the additional resource
+consumption such as CPU, RAM, storage, and network
+bandwidth.
+
+The inclusion of clustering software, such as Corosync or Pacemaker, is
+primarily determined by the availability of the cloud infrastructure and
+the complexity of supporting the configuration after it is deployed. The
+`OpenStack High Availability Guide <http://docs.openstack.org/ha-guide/>`_
+provides more details on the installation and configuration of Corosync
+and Pacemaker, should these packages need to be included in the design.
+
+Some other potential design impacts include:
+
+* OS-hypervisor combination
+   Ensure that the selected logging, monitoring, or alerting tools support
+   the proposed OS-hypervisor combination.
+
+* Network hardware
+   The network hardware selection needs to be supported by the logging,
+   monitoring, and alerting software.
+
+Database software
+-----------------
+
+Most OpenStack components require access to back-end database services
+to store state and configuration information. Choose an appropriate
+back-end database which satisfies the availability and fault tolerance
+requirements of the OpenStack services.
+
+MySQL is the default database for OpenStack, but other compatible
+databases are available.
+
+.. note::
+
+   Telemetry uses MongoDB.
+
+The chosen high availability database solution changes according to the
+selected database. MySQL, for example, provides several options. Use a
+replication technology such as Galera for active-active clustering. For
+active-passive use some form of shared storage. Each of these potential
+solutions has an impact on the design:
+
+* Solutions that employ Galera/MariaDB require at least three MySQL
+  nodes.
+
+* MongoDB has its own design considerations for high availability.
+
+* OpenStack design, generally, does not include shared storage.
+  However, for some high availability designs, certain components might
+  require it depending on the specific implementation.
 
 Operator access to systems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

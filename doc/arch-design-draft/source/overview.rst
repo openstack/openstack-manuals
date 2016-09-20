@@ -55,5 +55,6 @@ covered include:
    overview-planning
    overview-customer-requirements
    overview-legal-requirements
+   overview-software-licensing
    overview-security-requirements
    overview-operator-requirements
