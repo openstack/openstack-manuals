@@ -96,25 +96,26 @@ Show instance usage statistics
       .. code-block:: console
 
          $ nova diagnostics myCirrosServer
-         +------------------+----------------+
-         | Property         | Value          |
-         +------------------+----------------+
-         | vnet1_rx         | 1210744        |
-         | cpu0_time        | 19624610000000 |
-         | vda_read         | 0              |
-         | vda_write        | 0              |
-         | vda_write_req    | 0              |
-         | vnet1_tx         | 863734         |
-         | vnet1_tx_errors  | 0              |
-         | vnet1_rx_drop    | 0              |
-         | vnet1_tx_packets | 3855           |
-         | vnet1_tx_drop    | 0              |
-         | vnet1_rx_errors  | 0              |
-         | memory           | 2097152        |
-         | vnet1_rx_packets | 5485           |
-         | vda_read_req     | 0              |
-         | vda_errors       | -1             |
-         +------------------+----------------+
+         +---------------------------+--------+
+         | Property                  | Value  |
+         +---------------------------+--------+
+         | memory                    | 524288 |
+         | memory-actual             | 524288 |
+         | memory-rss                | 6444   |
+         | tap1fec8fb8-7a_rx         | 22137  |
+         | tap1fec8fb8-7a_rx_drop    | 0      |
+         | tap1fec8fb8-7a_rx_errors  | 0      |
+         | tap1fec8fb8-7a_rx_packets | 166    |
+         | tap1fec8fb8-7a_tx         | 18032  |
+         | tap1fec8fb8-7a_tx_drop    | 0      |
+         | tap1fec8fb8-7a_tx_errors  | 0      |
+         | tap1fec8fb8-7a_tx_packets | 130    |
+         | vda_errors                | -1     |
+         | vda_read                  | 2048   |
+         | vda_read_req              | 2      |
+         | vda_write                 | 182272 |
+         | vda_write_req             | 74     |
+         +---------------------------+--------+
 
 *  Get summary statistics for each tenant:
 
