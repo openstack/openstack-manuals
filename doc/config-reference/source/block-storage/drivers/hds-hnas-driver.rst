@@ -1,10 +1,11 @@
-=============================
-HDS HNAS iSCSI and NFS driver
-=============================
+==========================================
+Hitachi NAS Platform iSCSI and NFS drivers
+==========================================
 
-This OpenStack Block Storage volume driver provides iSCSI and NFS support
-for `Hitachi NAS Platform <http://www.hds.com/products/file-and-content/
-network-attached-storage/>`_ Models 3080, 3090, 4040, 4060, 4080, and 4100.
+This OpenStack Block Storage volume drivers provides iSCSI and NFS support
+for `Hitachi NAS Platform (HNAS) <http://www.hds.com/products/file-and-content/
+network-attached-storage/>`_ Models 3080, 3090, 4040, 4060, 4080, and 4100
+with NAS OS 12.2 or higher.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
@@ -20,46 +21,56 @@ The NFS and iSCSI drivers support these operations:
 * Extend a volume.
 * Get volume statistics.
 * Manage and unmanage a volume.
+* Manage and unmanage snapshots (`HNAS NFS only`)
 
 HNAS storage requirements
-~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before using iSCSI and NFS services, use the HNAS configuration and
-management GUI (SMU) or SSC CLI to create storage pool(s), file system(s),
-and assign an EVS. Make sure that the file system used is not created as
-a ``replication target``. Additionally:
+Before using iSCSI and NFS services, use the HNAS configuration and management
+GUI (SMU) or SSC CLI to configure HNAS to work with the drivers. Additionally:
 
-For NFS:
-  Create NFS exports, choose a path for them (it must be different from
-  ``/``) and set the :guilabel:`Show snapshots` option to
-  ``hide and disable access``.
+1. General:
 
-  Also, in the ``Access Configuration`` set the option ``norootsquash``,
-  For example, ``"* (rw, norootsquash)"``, so HNAS cinder driver can change
-  the permissions of its volumes.
+* It is mandatory to have at least ``1 storage pool, 1 EVS and 1 file
+  system`` to be able to run any of the HNAS drivers.
+* HNAS drivers consider the space allocated to the file systems to
+  provide the reports to cinder. So, when creating a file system, make sure
+  it has enough space to fit your needs.
+* The file system used should not be created as a ``replication target`` and
+  should be mounted.
+* It is possible to configure HNAS drivers to use distinct EVSs and file
+  systems, but ``all compute nodes and controllers`` in the cloud must have
+  access to the EVSs.
 
-  In order to use the hardware accelerated features of NFS HNAS,
-  we recommend setting ``max-nfs-version`` to 3. Refer to the HNAS
-  command-line reference to see how to configure this option.
+2. For NFS:
 
-For iSCSI:
-  You need to set an iSCSI domain.
+* Create NFS exports, choose a path for them (it must be different from
+  ``/``) and set the :guilabel: `Show snapshots` option to ``hide and
+  disable access``.
+* For each export used, set the option ``norootsquash`` in the share
+  ``Access configuration`` so Block Storage services can change the
+  permissions of its volumes. For example, ``"* (rw, norootsquash)"``.
+* Make sure that all computes and controllers have R/W access to the
+  shares used by cinder HNAS driver.
+* In order to use the hardware accelerated features of HNAS NFS, we
+  recommend setting ``max-nfs-version`` to 3. Refer to Hitachi NAS Platform
+  command line reference to see how to configure this option.
+
+3. For iSCSI:
+
+* You must set an iSCSI domain to EVS.
 
 Block Storage host requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The HNAS driver is supported for Red Hat Enterprise Linux OpenStack Platform,
-SUSE OpenStack Cloud, and Ubuntu OpenStack.
-The following packages must be installed:
+The HNAS drivers are supported for Red Hat Enterprise Linux OpenStack
+Platform, SUSE OpenStack Cloud, and Ubuntu OpenStack.
+The following packages must be installed in all compute, controller and
+storage (if any) nodes:
 
 * ``nfs-utils`` for Red Hat Enterprise Linux OpenStack Platform
 * ``nfs-client`` for SUSE OpenStack Cloud
 * ``nfs-common``, ``libc6-i386`` for Ubuntu OpenStack
-
-If you are not using SSH, you need the HDS SSC to communicate with an HNAS
-array using the :command:`SSC` commands. This utility package is available
-in the RPM package distributed with the hardware through physical media or
-it can be manually copied from the SMU to the Block Storage host.
 
 Package installation
 --------------------
@@ -91,90 +102,46 @@ follow the steps below:
 
    .. code-block:: console
 
-      # apt-get install libc6-i386
+     # apt-get install libc6-i386
 
-#. Configure the driver as described in the
-   :ref:`hds-hnas-driver-configuration` section.
+#. Configure the driver as described in the :ref:`hnas-driver-configuration`
+   section.
 
-#. Restart all cinder services (volume, scheduler and backup).
+#. Restart all Block Storage services (volume, scheduler, and backup).
 
-.. _hds-hnas-driver-configuration:
+.. _hnas-driver-configuration:
 
 Driver configuration
 ~~~~~~~~~~~~~~~~~~~~
 
-The HDS driver supports the concept of differentiated services (also
-referred as :term:`quality of service (QoS)`) by mapping volume types to
-services provided through HNAS.
-
 HNAS supports a variety of storage options and file system capabilities,
-which are selected through the definition of volume types and the use of
-multiple back ends. The driver maps up to four volume types into
-separated exports or file systems, and can support any number if using
-multiple back ends.
+which are selected through the definition of volume types combined with the
+use of multiple back ends and multiple services. Each back end can configure
+up to ``4 service pools``, which can be mapped to cinder volume types.
 
-The configuration for the driver is read from an XML-formatted file
-(one per back end), which you need to create and set its path in the
-``cinder.conf`` configuration file. Below are the settings needed
-in the ``cinder.conf`` configuration file [#]_:
+The configuration for the driver is read from the back-end sections of the
+``cinder.conf``. Each back-end section must have the appropriate configurations
+to communicate with your HNAS back end, such as the IP address of the HNAS EVS
+that is hosting your data, HNAS SSH access credentials, the configuration of
+each of the services in that back end, and so on. You can find examples of such
+configurations in the :ref:`configuration_example` section.
 
-.. code-block:: ini
+.. note::
+  HNAS cinder drivers still support the XML configuration the
+  same way it was in the older versions, but we recommend configuring the
+  HNAS cinder drivers only through the ``cinder.conf`` file,
+  since the XML configuration file from previous versions is being
+  deprecated as of Newton Release.
 
-   [DEFAULT]
-   enabled_backends = hnas_iscsi1, hnas_nfs1
+.. note::
+  We do not recommend the use of the same NFS export or file system (iSCSI
+  driver) for different back ends. If possible, configure each back end to
+  use a different NFS export/file system.
 
-For HNAS iSCSI driver create this section:
+The following is the definition of each configuration option that can be used
+in a HNAS back-end section in the ``cinder.conf`` file:
 
-.. code-block:: ini
-
-   [hnas_iscsi1]
-   volume_driver = cinder.volume.drivers.hitachi.hnas_iscsi.HDSISCSIDriver
-   hds_hnas_iscsi_config_file = /path/to/config/hnas_config_file.xml
-   volume_backend_name = HNAS-ISCSI
-
-For HNAS NFS driver create this section:
-
-.. code-block:: ini
-
-   [hnas_nfs1]
-   volume_driver = cinder.volume.drivers.hitachi.hnas_nfs.HDSNFSDriver
-   hds_hnas_nfs_config_file = /path/to/config/hnas_config_file.xml
-   volume_backend_name = HNAS-NFS
-
-The XML file has the following format:
-
-.. code-block:: ini
-
-   <?xml version = "1.0" encoding = "UTF-8" ?>
-     <config>
-       <mgmt_ip0>172.24.44.15</mgmt_ip0>
-       <hnas_cmd>ssc</hnas_cmd>
-       <chap_enabled>False</chap_enabled>
-       <ssh_enabled>False</ssh_enabled>
-       <cluster_admin_ip0>10.1.1.1</cluster_admin_ip0>
-       <username>supervisor</username>
-       <password>supervisor</password>
-       <svc_0>
-         <volume_type>default</volume_type>
-         <iscsi_ip>172.24.44.20</iscsi_ip>
-         <hdp>fs01-husvm</hdp>
-       </svc_0>
-       <svc_1>
-         <volume_type>platinum</volume_type>
-         <iscsi_ip>172.24.44.20</iscsi_ip>
-         <hdp>fs01-platinum</hdp>
-       </svc_1>
-     </config>
-
-HNAS volume driver XML configuration options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-An OpenStack Block Storage node using HNAS drivers can have up to four
-services. Each service is defined by a ``svc_n`` tag (``svc_0``,
-``svc_1``, ``svc_2``, or ``svc_3`` [#]_, for example).
-These are the configuration options available for each service label:
-
-.. list-table:: Configuration options for service labels
+.. list-table:: **Configuration options in cinder.conf**
    :header-rows: 1
    :widths: 25, 10, 15, 50
 
@@ -182,102 +149,106 @@ These are the configuration options available for each service label:
      - Type
      - Default
      - Description
-   * - ``volume_type``
-     - Required
-     - ``default``
-     - When a ``create_volume`` call with a certain volume type happens,
-       the volume type will try to be matched up with this tag. In each
-       configuration file you must define the ``default`` volume type in
-       the service labels and, if no volume type is specified, the
-       ``default`` is used. Other labels are case sensitive and should
-       match exactly. If no configured volume types match the incoming
-       requested type, an error occurs in the volume creation.
-   * - ``iscsi_ip``
-     - Required only for iSCSI
-     -
-     - An iSCSI IP address dedicated to the service.
-   * - hdp
-     - Required
-     -
-     - For iSCSI driver: virtual file system label associated with the
-       service.
-
-       For NFS driver: path to the volume (<ip_address>:/<path>) associated
-       with the service.
-
-       Additionally, this entry must be added in the file used to list
-       available NFS shares. This file is located, by default, in
-       ``/etc/cinder/nfs_shares`` or you can specify the location in the
-       ``nfs_shares_config`` option in the ``cinder.conf`` configuration file.
-
-These are the configuration options available to the ``config`` section of
-the XML configuration file:
-
-.. list-table:: Configuration options
-   :header-rows: 1
-   :widths: 25, 10, 15, 50
-
-   * - Option
-     - Type
-     - Default
-     - Description
-   * - ``mgmt_ip0``
-     - Required
-     -
-     - Management Port 0 IP address. Should be the IP address of the
-       ``Admin`` EVS.
-   * - ``hnas_cmd``
+   * - ``volume_backend_name``
      - Optional
-     - ssc
-     - Command to communicate to HNAS array.
-   * - ``chap_enabled``
+     - N/A
+     - A name that identifies the back end and can be used as an extra-spec to
+       redirect the volumes to the referenced back end.
+   * - ``volume_driver``
+     - Required
+     - N/A
+     - The python module path to the HNAS volume driver python class. When
+       installing through the rpm or deb packages, you should configure this
+       to `cinder.volume.drivers.hitachi.hnas_iscsi.HNASISCSIDriver` for the
+       iSCSI back end or `cinder.volume.drivers.hitachi.hnas_nfs.HNASNFSDriver`
+       for the NFS back end.
+   * - ``nfs_shares_config``
+     - Required (only for NFS)
+     - /etc/cinder/nfs_shares
+     - Path to the ``nfs_shares`` file. This is required by the base cinder
+       generic NFS driver and therefore also required by the HNAS NFS driver.
+       This file should list, one per line, every NFS share being used by the
+       back end. For example, all the values found in the configuration keys
+       hnas_svcX_hdp in the HNAS NFS back-end sections.
+   * - ``hnas_mgmt_ip0``
+     - Required
+     - N/A
+     - HNAS management IP address. Should be the IP address of the `Admin`
+       EVS. It is also the IP through which you access the web SMU
+       administration frontend of HNAS.
+   * - ``hnas_chap_enabled``
      - Optional (iSCSI only)
-     - ``True``
-     - Boolean tag used to enable CHAP authentication protocol.
-   * - ``username``
+     - True
+     - Boolean tag used to enable CHAP authentication protocol for iSCSI
+       driver.
+   * - ``hnas_username``
      - Required
-     - supervisor
-     - User name is always required on HNAS.
-   * - ``password``
+     - N/A
+     - HNAS SSH username
+   * - ``hds_hnas_nfs_config_file | hds_hnas_iscsi_config_file``
+     - Optional (deprecated)
+     - /opt/hds/hnas/cinder_[nfs|iscsi]_conf.xml
+     - Path to the deprecated XML configuration file (only required if using
+       the XML file)
+   * - ``hnas_cluster_admin_ip0``
+     - Optional (required only for HNAS multi-farm setups)
+     - N/A
+     - The IP of the HNAS farm admin. If your SMU controls more than one
+       system or cluster, this option must be set with the IP of the desired
+       node. This is different for HNAS multi-cluster setups, which
+       does not require this option to be set.
+   * - ``hnas_ssh_private_key``
+     - Optional
+     - N/A
+     - Path to the SSH private key used to authenticate to the HNAS SMU. Only
+       required if you do not want to set `hnas_password`.
+   * - ``hnas_ssh_port``
+     - Optional
+     - 22
+     - Port on which HNAS is listening for SSH connections
+   * - ``hnas_password``
+     - Required (unless hnas_ssh_private_key is provided)
+     - N/A
+     - HNAS password
+   * - ``hnas_svcX_hdp`` [1]_
+     - Required (at least 1)
+     - N/A
+     - HDP (export or file system) where the volumes will be created. Use
+       exports paths for the NFS backend or the file system names for the
+       iSCSI backend (note that when using the file system name, it does not
+       contain the IP addresses of the HDP)
+   * - ``hnas_svcX_iscsi_ip``
+     - Required (only for iSCSI)
+     - N/A
+     - The IP of the EVS that contains the file system specified in
+       hnas_svcX_hdp
+   * - ``hnas_svcX_volume_type``
      - Required
-     - supervisor
-     - Password is always required on HNAS.
-   * - ``svc_0``, ``svc_1``, ``svc_2``, ``svc_3``
-     - Optional
-     - (at least one label has to be defined)
-     - Service labels: these four predefined names help four different sets of
-       configuration options. Each can specify HDP and a unique volume type.
-   * - cluster_admin_ip0
-     - Optional if ``ssh_enabled`` is ``True``
-     -
-     - The address of HNAS cluster admin.
-   * - ``ssh_enabled``
-     - Optional
-     - ``False``
-     - Enables SSH authentication between Block Storage host and the SMU.
-   * - ``ssh_private_key``
-     - Required if ``ssh_enabled`` is ``True``
-     - ``False``
-     - Path to the SSH private key used to authenticate in HNAS SMU.
-       The public key must be uploaded to HNAS SMU using
-       ``ssh-register-public-key`` (this is an SSH subcommand).
-       Note that copying the public key HNAS using ``ssh-copy-id`` does
-       not work properly as the SMU periodically wipe out those keys.
+     - N/A
+     - A `unique string` that is used to refer to this pool within the
+       context of cinder. You can tell cinder to put volumes of a specific
+       volume type into this back end, within this pool. See,
+       ``Service Labels`` and :ref:`configuration_example` sections
+       for more details.
+
+.. [1]
+   Replace X with a number from 0 to 3 (keep the sequence when configuring
+   the driver)
 
 Service labels
 ~~~~~~~~~~~~~~
 
-HNAS driver supports differentiated types of service using the service
-labels. It is possible to create up to four types of them, as gold,
-platinum, silver, and ssd, for example.
+HNAS driver supports differentiated types of service using the service labels.
+It is possible to create up to 4 types of them for each back end. (For example
+gold, platinum, silver, ssd, and so on).
 
-After creating the services in the XML configuration file, you must
-configure one ``volume_type`` per service. Each ``volume_type`` must
-have the metadata ``service_label`` with the same name configured in
-the ``<volume_type>`` section of that service. If this is not set,
-the Block Storage service will schedule the volume creation to the pool
-with largest available free space or other criteria configured in volume
-filters.
+After creating the services in the ``cinder.conf`` configuration file, you
+need to configure one cinder ``volume_type`` per service. Each ``volume_type``
+must have the metadata service_label with the same name configured in the
+``hnas_svcX_volume_type option`` of that service. See the
+:ref:`configuration_example` section for more details. If the ``volume_type``
+is not set, the cinder service pool with largest available free space or
+other criteria configured in scheduler filters.
 
 .. code-block:: console
 
@@ -286,208 +257,353 @@ filters.
    $ cinder type-create platinum-tier
    $ cinder type-key platinum set service_label=platinum
 
-Multiple back-end configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Multi-backend configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you use multiple back ends and intend to enable the creation of a
-volume in a specific back end, you must configure volume types to set
-the ``volume_backend_name`` option to the appropriate back end. Then,
-create ``volume_type`` configurations with the same ``volume_backend_name``.
+You can deploy multiple OpenStack HNAS Driver instances (back ends) that each
+controls a separate HNAS or a single HNAS. If you use multiple cinder
+back ends, remember that each cinder back end can host up to 4 services. Each
+back-end section must have the appropriate configurations to communicate with
+your HNAS back end, such as the IP address of the HNAS EVS that is hosting
+your data, HNAS SSH access credentials, the configuration of each of the
+services in that back end, and so on. You can find examples of such
+configurations in the :ref:`configuration_example` section.
 
-.. code-block:: console
+If you want the volumes from a volume_type to be casted into a specific
+back end, you must configure an extra_spec in the ``volume_type`` with the
+value of the ``volume_backend_name`` option from that back end.
 
-   $ cinder type-create 'iscsi'
-   $ cinder type-key 'iscsi' set volume_backend_name = 'HNAS-ISCSI'
-   $ cinder type-create 'nfs'
-   $ cinder type-key 'nfs' set volume_backend_name = 'HNAS-NFS'
-
-You can deploy multiple OpenStack HNAS driver instances that each control
-a separate HNAS array. Each service (``svc_0``, ``svc_1``, ``svc_2``,
-``svc_3``) on the instance need to have a ``volume_type`` and
-``service_label`` metadata associated with it.
-If no metadata is associated with a pool, the Block Storage filtering
-algorithm selects the pool with the largest available free space.
+For multiple NFS back ends configuration, each back end should have a
+separated ``nfs_shares_config`` and also a separated ``nfs_shares file``
+defined (For example, ``nfs_shares1``, ``nfs_shares2``) with the desired
+shares listed in separated lines.
 
 SSH configuration
 ~~~~~~~~~~~~~~~~~
 
-Instead of using :command:`SSC` commands on the Block Storage host and
-storing its credentials in the XML configuration file, the HNAS driver
-supports :command:`SSH` authentication. To configure that:
+.. note::
+  As of the Newton OpenStack release, the user can no longer run the
+  driver using a locally installed instance of the :command:`SSC` utility
+  package. Instead, all communications with the HNAS back end are handled
+  through :command:`SSH`.
 
-#. If you don't have a pair of public keys already generated,
-   create one on the Block Storage host (leave the pass-phrase empty):
+You can use your username and password to authenticate the Block Storage node
+to the HNAS back end. In order to do that, simply configure ``hnas_username``
+and ``hnas_password`` in your back end section within the ``cinder.conf``
+file.
+
+For example:
+
+.. code-block:: ini
+
+  [hnas-backend]
+  …
+  hnas_username = supervisor
+  hnas_password = supervisor
+
+Alternatively, the HNAS cinder driver also supports SSH authentication
+through public key. To configure that:
+
+#. If you do not have a pair of public keys already generated, create it in
+   the Block Storage node (leave the pass-phrase empty):
 
    .. code-block:: console
 
-      $ mkdir -p /opt/hds/ssh
-      $ ssh-keygen -f /opt/hds/ssh/hnaskey
+     $ mkdir -p /opt/hitachi/ssh
+     $ ssh-keygen -f /opt/hds/ssh/hnaskey
 
-#. Change the owner of the key to ``cinder`` (or the user under which
-   the volume service will be run):
+#. Change the owner of the key to cinder (or the user the volume service will
+   be run as):
 
    .. code-block:: console
 
-      # chown -R cinder.cinder /opt/hds/ssh
+     # chown -R cinder.cinder /opt/hitachi/ssh
 
 #. Create the directory ``ssh_keys`` in the SMU server:
 
    .. code-block:: console
 
-      $ ssh [manager|supervisor]@<smu-ip> 'mkdir -p /var/opt/mercury-main/home/[manager|supervisor]/ssh_keys/'
+     $ ssh [manager|supervisor]@<smu-ip> 'mkdir -p /var/opt/mercury-main/home/[manager|supervisor]/ssh_keys/'
 
 #. Copy the public key to the ``ssh_keys`` directory:
 
    .. code-block:: console
 
-      $ scp /opt/hds/ssh/hnaskey.pub [manager|supervisor]@<smu-ip>:/var/opt/mercury-main/home/[manager|supervisor]/ssh_keys/
+     $ scp /opt/hitachi/ssh/hnaskey.pub [manager|supervisor]@<smu-ip>:/var/opt/mercury-main/home/[manager|supervisor]/ssh_keys/
 
 #. Access the SMU server:
 
    .. code-block:: console
 
-      $ ssh [manager|supervisor]@<smu-ip>
+     $ ssh [manager|supervisor]@<smu-ip>
 
 #. Run the command to register the SSH keys:
 
    .. code-block:: console
 
-      $ ssh-register-public-key -u [manager|supervisor] -f ssh_keys/hnaskey.pub
+     $ ssh-register-public-key -u [manager|supervisor] -f ssh_keys/hnaskey.pub
 
-#. Check the communication with HNAS on the Block Storage host:
+#. Check the communication with HNAS in the Block Storage node:
+
+   For multi-farm HNAS:
 
    .. code-block:: console
 
-      $ ssh -i /opt/hds/ssh/hnaskey [manager|supervisor]@<smu-ip> 'ssc <cluster_admin_ip0> df -a'
+     $ ssh -i /opt/hitachi/ssh/hnaskey [manager|supervisor]@<smu-ip> 'ssc <cluster_admin_ip0> df -a'
 
-``<cluster_admin_ip0>`` is ``localhost`` for single node deployments.
-This should return a list of available file systems on HNAS.
+   Or, for Single-node/Multi-Cluster:
 
-Edit the XML configuration file
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   .. code-block:: console
 
-#. Set the ``username``.
+     $ ssh -i /opt/hitachi/ssh/hnaskey [manager|supervisor]@<smu-ip> 'ssc localhost df -a'
 
-#. Enable SSH by adding the line ``<ssh_enabled>True</ssh_enabled>``
-   under the ``<config>`` section.
+#. Configure your backend section in ``cinder.conf`` to use your public key:
 
-#. Set the private key path:
-   ``<ssh_private_key>/opt/hds/ssh/hnaskey</ssh_private_key>``
-   under the ``<config>`` section.
+   .. code-block:: ini
 
-#. If the HNAS is in a multi-cluster configuration set
-   ``<cluster_admin_ip0>`` to the cluster node admin IP.
-   In a single node HNAS, leave it empty.
+    [hnas-backend]
+    …
+    hnas_ssh_private_key = /opt/hitachi/ssh/hnaskey
 
-#. Restart the cinder services.
-
-.. warning::
-
-   Note that copying the public key HNAS using ssh-copy-id does not work
-   properly as the SMU periodically wipes out those keys.
-
-Manage and unmanage
-~~~~~~~~~~~~~~~~~~~
-
-Manage and unmanage are two new API extensions that add some new
-features to the driver. The manage action on an existing volume is very
-similar to a volume creation. It creates a volume entry in the Block Storage
-database, but instead of creating a new volume in the back end, it only adds
-a link to an existing volume. Volume name, description, volume_type,
-metadata, and availability_zone are supported as in a normal volume creation.
-
-The unmanage action on an existing volume removes the volume from the Block
-Storage database, but keeps the actual volume in the back-end.
-From a Block Storage perspective the volume would be deleted,
-but it would still exist for outside use.
-
-Manage
-------
-
-On the Dashboard:
-
-For NFS:
-
-#. Under the :menuselection:`System > Volumes` tab,
-   choose the option :guilabel:`Manage Volume`.
-
-#. Fill the fields :guilabel:`Identifier`, :guilabel:`Host`,
-   :guilabel:`Volume Name`, and :guilabel:`Volume Type` with volume
-   information to be managed:
-
-   * :guilabel:`Identifier`: ip:/type/volume_name Example:
-     172.24.44.34:/silver/volume-test
-   * :guilabel:`Host`: host@backend-name#pool_name Example:
-     ubuntu@hnas-nfs#test_silver
-   * :guilabel:`Volume Name`: volume_name Example: volume-test
-   * :guilabel:`Volume Type`: choose a type of volume Example: silver
-
-For iSCSI:
-
-#. Under the :menuselection:`System > Volumes` tab,
-   choose the option :guilabel:`Manage Volume`.
-
-#. Fill the fields :guilabel:`Identifier`, :guilabel:`Host`,
-   :guilabel:`Volume Name`, and :guilabel:`Volume Type` with volume
-   information to be managed:
-
-   * :guilabel:`Identifier`: filesystem-name/volume-name Example:
-     filesystem-test/volume-test
-   * :guilabel:`Host`: host@backend-name#pool_name Example:
-     ubuntu@hnas-iscsi#test_silver
-   * :guilabel:`Volume Name`: volume_name Example: volume-test
-   * :guilabel:`Volume Type`: choose a type of volume Example: silver
-
-By CLI:
-
-.. code-block:: console
-
-   $ cinder --os-volume-api-version 2 manage [--source-name <source-name>][--id-type <id-type>]
-     [--name <name>][--description <description>][--volume-type <volume-type>]
-     [--availability-zone <availability-zone>][--metadata [<key=value> [<key=value> ...]]][--bootable]
-     <host> [<key=value> [<key=value> ...]]
-
-Example:
-
-For NFS:
-
-.. code-block:: console
-
-   $ cinder --os-volume-api-version 2 manage --name <volume-test> --volume-type <silver>
-     --source-name <172.24.44.34:/silver/volume-test> <ubuntu@hnas-nfs#test_silver>
-
-For iSCSI:
-
-.. code-block:: console
-
-   $ cinder --os-volume-api-version 2 manage --name <volume-test> --volume-type <silver>
-     --source-name <filesystem-test/volume-test> <ubuntu@hnas-iscsi#test_silver>
-
-Unmanage
---------
-
-On the Dashboard:
-
-#. Under the :menuselection:`System > Volumes` tab, choose a volume.
-
-#. On the volume options, choose :guilabel:`Unmanage Volume`.
-
-#. Check the data and confirm.
-
-By CLI:
-
-.. code-block:: console
-
-   $ cinder --os-volume-api-version 2 unmanage <volume>
-
-Example:
-
-.. code-block:: console
-
-   $ cinder --os-volume-api-version 2 unmanage <voltest>
-
-Additional notes
+Managing volumes
 ~~~~~~~~~~~~~~~~
+
+If there are some existing volumes on HNAS that you want to import to cinder,
+it is possible to use the manage volume feature to do this. The manage action
+on an existing volume is very similar to a volume creation. It creates a
+volume entry on cinder database, but instead of creating a new volume in the
+back end, it only adds a link to an existing volume.
+
+.. note::
+  It is an admin only feature and you have to be logged as an user
+  with admin rights to be able to use this.
+
+For NFS:
+
+#. Under the :menuselection:`System > Volumes` tab,
+   choose the option :guilabel:`Manage Volume`.
+
+#. Fill the fields :guilabel:`Identifier`, :guilabel:`Host`,
+   :guilabel:`Volume Name`, and :guilabel:`Volume Type` with volume
+   information to be managed:
+
+   * :guilabel:`Identifier`: ip:/type/volume_name (*For example:*
+     172.24.44.34:/silver/volume-test)
+   * :guilabel:`Host`: `host@backend-name#pool_name` (*For example:*
+     `ubuntu@hnas-nfs#test_silver`)
+   * :guilabel:`Volume Name`: volume_name (*For example:* volume-test)
+   * :guilabel:`Volume Type`: choose a type of volume (*For example:* silver)
+
+For iSCSI:
+
+#. Under the :menuselection:`System > Volumes` tab,
+   choose the option :guilabel:`Manage Volume`.
+
+#. Fill the fields :guilabel:`Identifier`, :guilabel:`Host`,
+   :guilabel:`Volume Name`, and :guilabel:`Volume Type` with volume
+   information to be managed:
+
+   * :guilabel:`Identifier`: filesystem-name/volume-name (*For example:*
+     filesystem-test/volume-test)
+   * :guilabel:`Host`: `host@backend-name#pool_name` (*For example:*
+     `ubuntu@hnas-iscsi#test_silver`)
+   * :guilabel:`Volume Name`: volume_name (*For example:* volume-test)
+   * :guilabel:`Volume Type`: choose a type of volume (*For example:* silver)
+
+By CLI:
+
+.. code-block:: console
+
+  $ cinder manage [--id-type <id-type>][--name <name>][--description <description>]
+  [--volume-type <volume-type>][--availability-zone <availability-zone>]
+  [--metadata [<key=value> [<key=value> ...]]][--bootable] <host> <identifier>
+
+Example:
+
+For NFS:
+
+.. code-block:: console
+
+  $ cinder manage --name volume-test --volume-type silver
+  ubuntu@hnas-nfs#test_silver 172.24.44.34:/silver/volume-test
+
+For iSCSI:
+
+.. code-block:: console
+
+  $ cinder manage --name volume-test --volume-type silver
+  ubuntu@hnas-iscsi#test_silver filesystem-test/volume-test
+
+Managing snapshots
+~~~~~~~~~~~~~~~~~~
+
+The manage snapshots feature works very similarly to the manage volumes
+feature, currently supported on HNAS cinder drivers. So, if you have a volume
+already managed by cinder which has snapshots that are not managed by cinder,
+it is possible to use manage snapshots to import these snapshots and link them
+with their original volume.
+
+.. note::
+  For HNAS NFS cinder driver, the snapshots of volumes
+  are clones of volumes that where created using :command:`file-clone-create`,
+  not the HNAS :command:`snapshot-\*` feature. Check the HNAS users
+  documentation to have details about those 2 features.
+
+Currently, the manage snapshots function does not support importing snapshots
+(generally created by storage's :command:`file-clone` operation)
+``without parent volumes`` or when the parent volume is ``in-use``. In this
+case, the ``manage volumes`` should be used to import the snapshot as a normal
+cinder volume.
+
+Also, it is an admin only feature and you have to be logged as a user with
+admin rights to be able to use this.
+
+.. note::
+  Although there is a verification to prevent importing snapshots using
+  non-related volumes as parents, it is possible to manage a snapshot using
+  any related cloned volume. So, when managing a snapshot, it is extremely
+  important to make sure that you are using the correct parent volume.
+
+
+For NFS:
+
+.. code-block:: console
+
+  $ cinder snapshot-manage <volume> <identifier>
+
+* :guilabel:`Identifier`: evs_ip:/export_name/snapshot_name
+  (*For example:* 172.24.44.34:/export1/snapshot-test)
+
+* :guilabel:`Volume`:  Parent volume ID (*For example:*
+  061028c0-60cf-499f-99e2-2cd6afea081f)
+
+Example:
+
+.. code-block:: console
+
+  $ cinder snapshot-manage 061028c0-60cf-499f-99e2-2cd6afea081f 172.24.44.34:/export1/snapshot-test
+
+.. note::
+  This feature is currently available only for HNAS NFS Driver.
+
+.. _configuration_example:
+
+Configuration example
+~~~~~~~~~~~~~~~~~~~~~
+
+Below are configuration examples for both NFS and iSCSI backends:
+
+#. HNAS NFS Driver
+
+   #. For HNAS NFS driver, create this section in your ``cinder.conf`` file:
+
+      .. code-block:: ini
+
+        [hnas-nfs]
+        volume_driver = cinder.volume.drivers.hitachi.hnas_nfs.HNASNFSDriver
+        nfs_shares_config = /home/cinder/nfs_shares
+        volume_backend_name = hnas_nfs_backend
+        hnas_username = supervisor
+        hnas_password = supervisor
+        hnas_mgmt_ip0 = 172.24.44.15
+
+        hnas_svc0_volume_type = nfs_gold
+        hnas_svc0_hdp = 172.24.49.21:/gold_export
+
+        hnas_svc1_volume_type = nfs_platinum
+        hnas_svc1_hdp = 172.24.49.21:/silver_platinum
+
+        hnas_svc2_volume_type = nfs_silver
+        hnas_svc2_hdp = 172.24.49.22:/silver_export
+
+        hnas_svc3_volume_type = nfs_bronze
+        hnas_svc3_hdp = 172.24.49.23:/bronze_export
+
+   #. Add it to the ``enabled_backends`` list, under the ``DEFAULT`` section
+      of your ``cinder.conf`` file:
+
+      .. code-block:: ini
+
+        [DEFAULT]
+        enabled_backends = hnas-nfs
+
+   #. Add the configured exports to the ``nfs_shares`` file:
+
+      .. code-block:: ini
+
+        172.24.49.21:/gold_export
+        172.24.49.21:/silver_platinum
+        172.24.49.22:/silver_export
+        172.24.49.23:/bronze_export
+
+   #. Register a volume type with cinder and associate it with
+      this backend:
+
+      .. code-block:: console
+
+        $cinder type-create hnas_nfs_gold
+        $cinder type-key hnas_nfs_gold set volume_backend_name=hnas_nfs_backend service_label=nfs_gold
+        $cinder type-create hnas_nfs_platinum
+        $cinder type-key hnas_nfs_platinum set  volume_backend_name=hnas_nfs_backend service_label=nfs_platinum
+        $cinder type-create hnas_nfs_silver
+        $cinder type-key hnas_nfs_silver set volume_backend_name=hnas_nfs_backend service_label=nfs_silver
+        $cinder type-create hnas_nfs_bronze
+        $cinder type-key hnas_nfs_bronze set volume_backend_name=hnas_nfs_backend service_label=nfs_bronze
+
+#. HNAS iSCSI Driver
+
+   #. For HNAS iSCSI driver, create this section in your ``cinder.conf`` file:
+
+      .. code-block:: ini
+
+        [hnas-iscsi]
+        volume_driver = cinder.volume.drivers.hitachi.hnas_iscsi.HNASISCSIDriver
+        volume_backend_name = hnas_iscsi_backend
+        hnas_username = supervisor
+        hnas_password = supervisor
+        hnas_mgmt_ip0 = 172.24.44.15
+        hnas_chap_enabled = True
+
+        hnas_svc0_volume_type = iscsi_gold
+        hnas_svc0_hdp = FS-gold
+        hnas_svc0_iscsi_ip = 172.24.49.21
+
+        hnas_svc1_volume_type = iscsi_platinum
+        hnas_svc1_hdp = FS-platinum
+        hnas_svc1_iscsi_ip = 172.24.49.21
+
+        hnas_svc2_volume_type = iscsi_silver
+        hnas_svc2_hdp = FS-silver
+        hnas_svc2_iscsi_ip = 172.24.49.22
+
+        hnas_svc3_volume_type = iscsi_bronze
+        hnas_svc3_hdp = FS-bronze
+        hnas_svc3_iscsi_ip = 172.24.49.23
+
+   #. Add it to the ``enabled_backends`` list, under the ``DEFAULT`` section
+      of your ``cinder.conf`` file:
+
+      .. code-block:: ini
+
+        [DEFAULT]
+        enabled_backends = hnas-nfs, hnas-iscsi
+
+   #. Register a volume type with cinder and associate it with
+      this backend:
+
+      .. code-block:: console
+
+        $cinder type-create hnas_iscsi_gold
+        $cinder type-key hnas_iscsi_gold set volume_backend_name=hnas_iscsi_backend service_label=iscsi_gold
+        $cinder type-create hnas_iscsi_platinum
+        $cinder type-key hnas_iscsi_platinum set volume_backend_name=hnas_iscsi_backend service_label=iscsi_platinum
+        $cinder type-create hnas_iscsi_silver
+        $cinder type-key hnas_iscsi_silver set volume_backend_name=hnas_iscsi_backend service_label=iscsi_silver
+        $cinder type-create hnas_iscsi_bronze
+        $cinder type-key hnas_iscsi_bronze set volume_backend_name=hnas_iscsi_backend service_label=iscsi_bronze
+
+Additional notes and limitations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * The ``get_volume_stats()`` function always provides the available
   capacity based on the combined sum of all the HDPs that are used in
@@ -501,13 +617,28 @@ Additional notes
 
   .. code-block:: console
 
-     # setsebool -P virt_use_nfs on
+    # setsebool -P virt_use_nfs on
 
-* It is not possible to manage a volume if there is a slash ('/') or
-  a colon (':') in the volume name.
+* It is not possible to manage a volume if there is a slash (``/``) or
+  a colon (``:``) in the volume name.
 
-.. rubric:: Footnotes
+* File system ``auto-expansion``: Although supported, we do not recommend using
+  file systems with auto-expansion setting enabled because the scheduler uses
+  the file system capacity reported by the driver to determine if new volumes
+  can be created. For instance, in a setup with a file system that can expand
+  to 200GB but is at 100GB capacity, with 10GB free, the scheduler will not
+  allow a 15GB volume to be created. In this case, manual expansion would
+  have to be triggered by an administrator. We recommend always creating the
+  file system at the ``maximum capacity`` or periodically expanding the file
+  system manually.
 
-.. [#] The configuration file location may differ.
+* iSCSI driver limitations: The iSCSI driver has a ``limit of 1024`` volumes
+  attached to instances.
 
-.. [#] There is no relative precedence or weight among these four labels.
+* The ``hnas_svcX_volume_type`` option must be unique for a given back end.
+
+* SSC simultaneous connections limit: In very busy environments, if 2 or
+  more volume hosts are configured to use the same storage, some requests
+  (create, delete and so on) can have some attempts failed and re-tried (
+  ``5 attempts`` by default) due to an HNAS connection limitation (
+  ``max of 5`` simultaneous connections).
