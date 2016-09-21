@@ -413,8 +413,9 @@ Guide <http://docs.openstack.org/user-guide/cli.html>`__.
 Control where instances run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The `OpenStack Configuration
-Reference <http://docs.openstack.org/mitaka/config-reference/>`__
+The `Scheduling section
+<http://docs.openstack.org/mitaka/config-reference/compute/scheduler.html>`__
+of OpenStack Configuration Reference
 provides detailed information on controlling where your instances run,
 including ensuring a set of instances run on different compute nodes for
 service resiliency or on the same node for high performance
