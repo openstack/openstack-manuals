@@ -50,6 +50,7 @@ Volume drivers
    drivers/quobyte-driver.rst
    drivers/scality-sofs-driver.rst
    drivers/solidfire-volume-driver.rst
+   drivers/synology-dsm-driver.rst
    drivers/tintri-volume-driver.rst
    drivers/violin-v7000-driver.rst
    drivers/vzstorage-driver.rst
