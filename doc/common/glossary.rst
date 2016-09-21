@@ -3688,8 +3688,7 @@ T
 
    tenant ID
 
-      Unique ID assigned to each project within the Identity service.
-      The project IDs map to the project IDs.
+      An alternative term for :term:`project ID`.
 
    token
 
