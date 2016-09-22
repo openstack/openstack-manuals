@@ -177,9 +177,9 @@ virtualization system. It is still possible for the resulting instance
 to keep ephemeral storage, depending on the flavor selected. In this
 case, the root file system can be on the persistent volume, and its
 state is maintained, even if the instance is shut down. For more
-information about this type of configuration, see the `OpenStack
-Configuration Reference
-<http://docs.openstack.org/mitaka/config-reference/>`__.
+information about this type of configuration, see `Introduction to the
+Block Storage service <http://docs.openstack.org/mitaka/config-reference/block-storage/block-storage-overview.html>`_
+in the OpenStack Configuration Reference.
 
 .. note::
 
