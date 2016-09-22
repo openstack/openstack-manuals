@@ -28,12 +28,12 @@ OpenStack with sufficient Linux experience:
      - Provides a web-based self-service portal
        to interact with underlying OpenStack services,
        such as launching an instance, assigning IP
-       addresses and configuring access controls.
+       addresses, and configuring access controls.
    * - `Compute <http://www.openstack.org/software/releases/liberty/components/nova>`_
      - `Nova <http://docs.openstack.org/developer/nova/>`_
      - Manages the lifecycle of compute instances in an
        OpenStack environment. Responsibilities include
-       spawning, scheduling and decommissioning of virtual
+       spawning, scheduling, and decommissioning of virtual
        machines on demand.
    * - `Networking <http://www.openstack.org/software/releases/liberty/components/neutron>`_
      - `Neutron <http://docs.openstack.org/developer/neutron/>`_
@@ -48,7 +48,7 @@ OpenStack with sufficient Linux experience:
      -
    * - `Object Storage <http://www.openstack.org/software/releases/liberty/components/swift>`_
      - `Swift <http://docs.openstack.org/developer/swift/>`_
-     - Stores and retrieves arbitrary unstructured
+     - Stores and retrieves arbitrary, unstructured
        data objects via a :term:`RESTful`, HTTP based API.
        It is highly fault tolerant with its data replication and
        scale-out architecture. Its implementation is not like a
@@ -142,7 +142,7 @@ agents, and the dashboard. It also includes supporting services such as
 an SQL database, :term:`message queue`, and :term:`NTP <Network Time Protocol
 (NTP)>`.
 
-Optionally, the controller node runs portions of Block Storage, Object
+Optionally, the controller node runs portions of the Block Storage, Object
 Storage, Orchestration, and Telemetry services.
 
 The controller node requires a minimum of two network interfaces.

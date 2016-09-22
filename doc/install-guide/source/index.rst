@@ -32,9 +32,8 @@ Abstract
 
 The OpenStack system consists of several key services that are separately
 installed. These services work together depending on your cloud
-needs. These services include Compute service, Identity service,
-Networking service, Image service, Block Storage service, Object Storage
-service, Telemetry service, Orchestration service, and Database service. You
+needs and include the Compute, Identity, Networking, Image, Block Storage,
+Object Storage, Telemetry, Orchestration, and Database services. You
 can install any of these projects separately and configure them stand-alone
 or as connected entities.
 
@@ -76,7 +75,7 @@ or as connected entities.
 Explanations of configuration options and sample configuration files
 are included.
 
-This guide documents OpenStack Newton release.
+This guide documents the OpenStack Newton release.
 
 .. warning::
 
