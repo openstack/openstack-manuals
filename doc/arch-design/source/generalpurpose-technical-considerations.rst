@@ -350,7 +350,7 @@ OpenStack core services recommended in a general purpose cloud are:
 
 * :term:`Image service` (:term:`glance`)
 
-* :term:`Identity service` (:term:`keystone`)
+* :term:`Identity service (keystone)`
 
 * :term:`Dashboard (horizon)`
 
