@@ -120,12 +120,40 @@ Usage
 
       $ openstack server create demo-instance1 --flavor m1.tiny \
         --image cirros --nic net-id=b5b729d8-31cc-4d2c-8284-72b3291fec02
-      +-------------------+--------------------------------------+
-      | Field             | Value                                |
-      +-------------------+--------------------------------------+
-      | id                | 05682b91-81a1-464c-8f40-8b3da7ee92c5 |
-      | name              | demo-instance1                       |
-      +-------------------+--------------------------------------+
+      +--------------------------------------+-----------------------------------------------+
+      | Field                                | Value                                         |
+      +--------------------------------------+-----------------------------------------------+
+      | OS-DCF:diskConfig                    | MANUAL                                        |
+      | OS-EXT-AZ:availability_zone          |                                               |
+      | OS-EXT-SRV-ATTR:host                 | None                                          |
+      | OS-EXT-SRV-ATTR:hypervisor_hostname  | None                                          |
+      | OS-EXT-SRV-ATTR:instance_name        | instance-00000009                             |
+      | OS-EXT-STS:power_state               | 0                                             |
+      | OS-EXT-STS:task_state                | scheduling                                    |
+      | OS-EXT-STS:vm_state                  | building                                      |
+      | OS-SRV-USG:launched_at               | None                                          |
+      | OS-SRV-USG:terminated_at             | None                                          |
+      | accessIPv4                           |                                               |
+      | accessIPv6                           |                                               |
+      | addresses                            |                                               |
+      | adminPass                            | Fn85skabdxBL                                  |
+      | config_drive                         |                                               |
+      | created                              | 2016-09-19T15:07:42Z                          |
+      | flavor                               | m1.tiny (1)                                   |
+      | hostId                               |                                               |
+      | id                                   | 04222b73-1a6e-4c2a-9af4-ef3d17d521ff          |
+      | image                                | cirros (4aaec87d-c655-4856-8618-b2dada3a2b11) |
+      | key_name                             | None                                          |
+      | name                                 | demo-instance1                                |
+      | os-extended-volumes:volumes_attached | []                                            |
+      | progress                             | 0                                             |
+      | project_id                           | d44c19e056674381b86430575184b167              |
+      | properties                           |                                               |
+      | security_groups                      | [{u'name': u'default'}]                       |
+      | status                               | BUILD                                         |
+      | updated                              | 2016-09-19T15:07:42Z                          |
+      | user_id                              | 331afbeb322d4c559a181e19051ae362              |
+      +--------------------------------------+-----------------------------------------------+
 
 #. Check the instance status. The ``Networks`` field contains an IP address
    from the subnet having the ``compute:nova`` service type.
@@ -133,8 +161,8 @@ Usage
    .. code-block:: console
 
       $ openstack server list
-      +----------------+--------+-------------------------+
-      | Name           | Status | Networks                |
-      +----------------+--------+-------------------------+
-      | demo-instance1 | ACTIVE | demo-net1=10.0.0.3      |
-      +----------------+--------+-------------------------+
+      +--------------------------------------+-----------------+---------+--------------------+
+      | ID                                   | Name            | Status  | Networks           |
+      +--------------------------------------+-----------------+---------+--------------------+
+      | 20181f46-5cd2-4af8-9af0-f4cf5c983008 | demo-instance1  | ACTIVE  | demo-net1=10.0.0.3 |
+      +--------------------------------------+-----------------+---------+--------------------+
