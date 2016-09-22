@@ -56,6 +56,6 @@ for hardware acceleration of nested VMs.
 
 .. note::
 
-   When installing highly-available OpenStack on VMs,
+   When installing highly available OpenStack on VMs,
    be sure that your hypervisor permits promiscuous mode
    and disables MAC address filtering on the external network.

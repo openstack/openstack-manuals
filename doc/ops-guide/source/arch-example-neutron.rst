@@ -9,7 +9,7 @@ environment.
 Overview
 ~~~~~~~~
 
-A highly-available environment can be put into place if you require an
+A highly available environment can be put into place if you require an
 environment that can scale horizontally, or want your cloud to continue
 to be operational in case of node failure. This example architecture has
 been written based on the current default feature set of OpenStack

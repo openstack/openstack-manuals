@@ -12,7 +12,7 @@ for overcommitting of these. In a similar manner, rather than exposing the
 individual types of network devices available on hosts, generic
 software-powered network ports are provided. These features are designed to
 allow high resource utilization and allows the service to provide a generic
-cost-effective and highly-scalable cloud upon which to build applications.
+cost-effective and highly scalable cloud upon which to build applications.
 
 This abstraction is beneficial for most workloads. However, there are some
 workloads where determinism and per-instance performance are important, if

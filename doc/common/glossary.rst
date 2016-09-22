@@ -1168,7 +1168,7 @@ D
 
    distributed virtual router (DVR)
 
-      Mechanism for highly-available multi-host routing when using
+      Mechanism for highly available multi-host routing when using
       OpenStack Networking (neutron).
 
    Django
@@ -2331,7 +2331,7 @@ M
       OpenStack project that aims to produce an OpenStack
       messaging service that affords a variety of distributed
       application patterns in an efficient, scalable and
-      highly-available manner, and to create and maintain associated
+      highly available manner, and to create and maintain associated
       Python libraries and documentation. The code name for the
       project is zaqar.
 

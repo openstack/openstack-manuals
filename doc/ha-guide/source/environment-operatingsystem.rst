@@ -2,7 +2,7 @@
 Install operating system on each node
 =====================================
 
-The first step in setting up your highly-available OpenStack cluster
+The first step in setting up your highly available OpenStack cluster
 is to install the operating system on each node.
 Follow the instructions in the OpenStack Installation Guides:
 
