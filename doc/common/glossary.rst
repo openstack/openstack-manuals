@@ -2885,8 +2885,7 @@ P
 
    project ID
 
-      User-defined alphanumeric string in Compute; the name of a
-      project.
+      Unique ID assigned to each project by the Identity service.
 
    project VPN
 
