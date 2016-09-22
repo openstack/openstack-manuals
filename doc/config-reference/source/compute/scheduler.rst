@@ -55,7 +55,8 @@ of OpenStack Administrator Guide.
 The scheduler chooses a new host when an instance is migrated.
 
 When evacuating instances from a host, the scheduler service honors
-the target host defined by the administrator on the evacuate command.
+the target host defined by the administrator on the
+:command:`nova evacuate` command.
 If a target is not defined by the administrator, the scheduler
 determines the target host. For information about instance evacuation,
 see `Evacuate instances <http://docs.openstack.org/admin-guide/
