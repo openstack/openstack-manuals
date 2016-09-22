@@ -34,3 +34,49 @@ Verify operation of the Compute service.
       This output should indicate three service components enabled on
       the controller node and one service component enabled on the
       compute node.
+
+#. List API endpoints in the Identity service to verify connectivity
+   with the Identity service:
+
+   .. note::
+
+      Below endpoints list may differ depending on the installation of OpenStack components.
+
+   .. code-block:: console
+
+      $ openstack catalog list
+      +---------------+---------------+---------------------------------------------------------------------------------+
+      | Name          | Type          | Endpoints                                                                       |
+      +---------------+---------------+---------------------------------------------------------------------------------+
+      | nova          | compute       | RegionOne                                                                       |
+      |               |               |   publicURL: http://controller:8774/v2/ae7a98326b9c455588edd2656d723b9d         |
+      |               |               |   internalURL: http://controller:8774/v2/ae7a98326b9c455588edd2656d723b9d       |
+      |               |               |   adminURL: http://controller:8774/v2/ae7a98326b9c455588edd2656d723b9d          |
+      |               |               |                                                                                 |
+      | glance        | image         | RegionOne                                                                       |
+      |               |               |   publicURL: http://controller:9292                                             |
+      |               |               |   internalURL: http://controller:9292                                           |
+      |               |               |   adminURL: http://controller:9292                                              |
+      |               |               |                                                                                 |
+      | keystone      | identity      | RegionOne                                                                       |
+      |               |               |   publicURL: http://controller:5000/v2.0                                        |
+      |               |               |   internalURL: http://controller:5000/v2.0                                      |
+      |               |               |   adminURL: http://controller:35357/v2.0                                        |
+      |               |               |                                                                                 |
+      +---------------+---------------+---------------------------------------------------------------------------------+
+
+   .. note::
+
+      Ignore any warnings in this output.
+
+#. List images in the Image service to verify connectivity with the Image
+   service:
+
+   .. code-block:: console
+
+      $ openstack image list
+      +--------------------------------------+-------------+-------------+
+      | ID                                   | Name        | Status      |
+      +--------------------------------------+-------------+-------------+
+      | 9a76d9f9-9620-4f2e-8c69-6c5691fae163 | cirros      | active      |
+      +--------------------------------------+-------------+-------------+
