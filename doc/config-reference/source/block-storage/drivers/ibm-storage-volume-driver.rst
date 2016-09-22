@@ -12,9 +12,9 @@ to configure it.
 
 .. code-block:: ini
 
-   volume_driver = cinder.volume.drivers.xiv_ds8k.XIVDS8KDriver
+   volume_driver = cinder.volume.drivers.ibm.ibm_storage.IBMStorageDriver
 
-.. include:: ../../tables/cinder-xiv.rst
+.. include:: ../../tables/cinder-ibm_storage.rst
 
 .. note::
 
