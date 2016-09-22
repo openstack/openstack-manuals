@@ -61,13 +61,13 @@ The following manufacturers are known to work:
 - Mellanox
 - QLogic
 
-For information on **Mellanox SR-IOV Ethernet cards** see:
+For information on **Mellanox SR-IOV Ethernet ConnectX-3/ConnectX-3 Pro cards**, see
 `Mellanox: How To Configure SR-IOV VFs
-<https://community.mellanox.com/docs/DOC-1484>`_
+<https://community.mellanox.com/docs/DOC-1484>`_.
 
-For information on **QLogic SR-IOV Ethernet cards** see:
+For information on **QLogic SR-IOV Ethernet cards**, see
 `User's Guide OpenStack Deployment with SR-IOV Configuration
-<http://www.qlogic.com/solutions/Documents/UsersGuide_OpenStack_SR-IOV.pdf>`_
+<http://www.qlogic.com/solutions/Documents/UsersGuide_OpenStack_SR-IOV.pdf>`_.
 
 Using SR-IOV interfaces
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -99,8 +99,9 @@ network and has access to the private networks of all machines.
 
 .. note::
 
-   The steps detail how to create VFs using **Intel SR-IOV Ethernet cards** on
-   an Intel system. Steps may differ for different hardware configurations.
+   The steps detail how to create VFs using Mellanox ConnectX-4 and newer/Intel
+   SR-IOV Ethernet cards on an Intel system. Steps may differ for different
+   hardware configurations.
 
 #. Ensure SR-IOV and VT-d are enabled in BIOS.
 
