@@ -2350,7 +2350,7 @@ M
 
    mistral
 
-      OpenStack project that provides the Workflow service.
+      Code name for :term:`Workflow service <Workflow service (mistral)>`.
 
    Mitaka
 
@@ -3998,14 +3998,13 @@ W
       response to messages. For example, the cinder-volume worker manages volume
       creation and deletion on storage arrays.
 
-   Workflow service
+   Workflow service (mistral)
 
-      OpenStack project that provides a simple YAML-based language
-      to write workflows, tasks and transition rules, and a
-      service that allows to upload them, modify, run them at
-      scale and in a highly available manner, manage and monitor
-      workflow execution state and state of individual tasks. The
-      code name of the project is mistral.
+      The OpenStack service that provides a simple YAML-based language to
+      write workflows (tasks and transition rules) and a service that
+      allows to upload them, modify, run them at scale and in a highly
+      available manner, manage and monitor workflow execution state and state
+      of individual tasks.
 
 X
 ~
