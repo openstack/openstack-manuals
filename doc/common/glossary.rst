@@ -2360,7 +2360,7 @@ M
 
    monasca
 
-      OpenStack project that provides a Monitoring service.
+      Codename for OpenStack :term:`Monitoring <Monitoring (monasca)>`.
 
    multi-host
 
@@ -2393,15 +2393,14 @@ M
       A Ceph component that communicates with external clients, checks
       data state and consistency, and performs quorum functions.
 
-   Monitoring
+   Monitoring (monasca)
 
-      The OpenStack project that provides a multi-tenant, highly
-      scalable, performant, fault-tolerant Monitoring-as-a-Service
-      solution for metrics, complex event processing, and logging.
-      It builds an extensible platform for advanced monitoring
-      services that can be used by both operators and projects to
-      gain operational insight and visibility, ensuring
-      availability and stability. The project name is monasca.
+      The OpenStack service that provides a multi-tenant, highly scalable,
+      performant, fault-tolerant monitoring-as-a-service solution for metrics,
+      complex event processing and logging. To build an extensible platform for
+      advanced monitoring services that can be used by both operators and
+      tenants to gain operational insight and visibility, ensuring availability
+      and stability.
 
    multi-factor authentication
 
