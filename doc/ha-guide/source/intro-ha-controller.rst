@@ -42,21 +42,37 @@ Networking for high availability.
 Common deployment architectures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are primarily two HA architectures in use today.
+There are primarily two recommended architectures for making OpenStack
+highly available.
 
-One uses a cluster manager such as Pacemaker or Veritas to co-ordinate
-the actions of the various services across a set of machines. Since
-we are focused on FOSS, we will refer to this as the Pacemaker
-architecture.
+Both use a cluster manager such as Pacemaker or Veritas to
+orchestrate the actions of the various services across a set of
+machines. Since we are focused on FOSS, we will refer to these as
+Pacemaker architectures.
 
-The other is optimized for Active/Active services that do not require
-any inter-machine coordination. In this setup, services are started by
-your init system (systemd in most modern distributions) and a tool is
-used to move IP addresses between the hosts. The most common package
-for doing this is keepalived.
+The architectures differ in the sets of services managed by the
+cluster.
+
+Traditionally, Pacemaker has been positioned as an all-encompassing
+solution. However, as OpenStack services have matured, they are
+increasingly able to run in an active/active configuration and
+gracefully tolerate the disappearance of the APIs on which they
+depend.
+
+With this in mind, some vendors are restricting Pacemaker's use to
+services that must operate in an active/passive mode (such as
+cinder-volume), those with multiple states (for example, Galera) and
+those with complex bootstrapping procedures (such as RabbitMQ).
+
+The majority of services, needing no real orchestration, are handled
+by Systemd on each node. This approach avoids the need to coordinate
+service upgrades or location changes with the cluster and has the
+added advantage of more easily scaling beyond Corosync's 16 node
+limit. However, it will generally require the addition of an
+enterprise monitoring solution such as Nagios or Sensu for those
+wanting centralized failure reporting.
 
 .. toctree::
    :maxdepth: 1
 
    intro-ha-arch-pacemaker.rst
-   intro-ha-arch-keepalived.rst
