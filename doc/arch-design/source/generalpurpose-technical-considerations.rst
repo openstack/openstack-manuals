@@ -348,7 +348,7 @@ OpenStack core services recommended in a general purpose cloud are:
 
 * :term:`Networking service (neutron)`
 
-* :term:`Image service` (:term:`glance`)
+* :term:`Image service (glance)`
 
 * :term:`Identity service (keystone)`
 

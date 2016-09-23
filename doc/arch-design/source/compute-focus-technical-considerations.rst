@@ -178,7 +178,7 @@ includes the typical OpenStack components:
 
 * :term:`Compute service (nova)`
 
-* :term:`Image service` (glance)
+* :term:`Image service (glance)`
 
 * :term:`Identity service (keystone)`
 

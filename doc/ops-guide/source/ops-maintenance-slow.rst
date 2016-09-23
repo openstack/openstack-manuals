@@ -27,9 +27,9 @@ in :ref:`sql_backend`.
 OpenStack Image service
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-OpenStack :term:`Image service` can be slowed down by things related to the
-Identity service, but the Image service itself can be slowed down if
-connectivity to the back-end storage in use is slow or otherwise
+OpenStack :term:`Image service <Image service (glance)>` can be slowed down
+by things related to the Identity service, but the Image service itself can be
+slowed down if connectivity to the back-end storage in use is slow or otherwise
 problematic. For example, your back-end NFS server might have gone down.
 
 OpenStack Block Storage service
