@@ -141,7 +141,7 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # zypper addrepo -f obs://Cloud:OpenStack:Newton/SLE_12_SP1 Newton
+        # zypper addrepo -f obs://Cloud:OpenStack:Newton/SLE_12_SP2 Newton
 
      .. note::
 
