@@ -20,16 +20,11 @@ To create a project through the OpenStack dashboard:
 #. Click the :guilabel:`Create Project` button.
 
 You are prompted for a project name and an optional, but recommended,
-description. Select the checkbox at the bottom of the form to enable
-this project. By default, it is enabled, as shown in
-:ref:`figure_create_project`.
+description. Select the check box at the bottom of the form to enable
+this project. By default, it is enabled, as shown below:
 
-.. _figure_create_project:
-
-.. figure:: figures/osog_0901.png
-   :alt: Dashboard's Create Project form
-
-   Figure Dashboard's Create Project form
+.. figure:: figures/create_project.png
+   :alt: Create Project form
 
 It is also possible to add project members and adjust the project
 quotas. We'll discuss those actions later, but in practice, it can be
