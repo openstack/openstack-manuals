@@ -245,7 +245,7 @@ could indicate that:
   instance)
 
 * *or*, that the identified instance is not visible to the
-  user/tenant owning the alarm
+  user/project owning the alarm
 
 * *or*, simply that an alarm evaluation cycle hasn't kicked off since
   the alarm was created (by default, alarms are evaluated once per
@@ -259,7 +259,7 @@ could indicate that:
    * admin users see *all* alarms, regardless of the owner
 
    * non-admin users see only the alarms associated with their project
-     (as per the normal tenant segregation in OpenStack)
+     (as per the normal project segregation in OpenStack)
 
 Alarm update
 ------------

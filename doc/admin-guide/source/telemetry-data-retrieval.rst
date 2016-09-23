@@ -24,7 +24,7 @@ of meters, alarm definitions and so forth.
 The Telemetry API URL can be retrieved from the service catalog provided
 by OpenStack Identity, which is populated during the installation
 process. The API access needs a valid token and proper permission to
-retrieve data, as described in :ref:`telemetry-users-roles-tenants`.
+retrieve data, as described in :ref:`telemetry-users-roles-projects`.
 
 Further information about the available API endpoints can be found in
 the `Telemetry API Reference
@@ -230,7 +230,7 @@ be used:
 
 The :command:`ceilometer` command was run with ``admin`` rights, which means
 that all the data is accessible in the database. For more information
-about access right see :ref:`telemetry-users-roles-tenants`. As it can be seen
+about access right see :ref:`telemetry-users-roles-projects`. As it can be seen
 in the above example, there are two VM instances existing in the system, as
 there are VM instance related meters on the top of the result list. The
 existence of these meters does not indicate that these instances are running at

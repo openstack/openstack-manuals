@@ -127,17 +127,17 @@ Identity user management examples:
      Compute service's ``policy.json`` file to require this role for
      Compute operations.
 
-The Identity service assigns a tenant and a role to a user. You might
+The Identity service assigns a project and a role to a user. You might
 assign the ``compute-user`` role to the ``alice`` user in the ``acme``
-tenant:
+project:
 
 .. code-block:: console
 
    $ openstack role add --project acme --user alice compute-user
 
-A user can have different roles in different tenants. For example, Alice
-might also have the ``admin`` role in the ``Cyberdyne`` tenant. A user
-can also have multiple roles in the same tenant.
+A user can have different roles in different projects. For example, Alice
+might also have the ``admin`` role in the ``Cyberdyne`` project. A user
+can also have multiple roles in the same project.
 
 The ``/etc/[SERVICE_CODENAME]/policy.json`` file controls the
 tasks that users can perform for a given service. For example, the
@@ -149,7 +149,7 @@ the Identity service.
 
 The default ``policy.json`` files in the Compute, Identity, and
 Image services recognize only the ``admin`` role. Any user with
-any role in a tenant can access all operations that do not require the
+any role in a project can access all operations that do not require the
 ``admin`` role.
 
 To restrict users from performing operations in, for example, the
@@ -164,11 +164,11 @@ file does not restrict which users can create volumes:
 
    "volume:create": "",
 
-If the user has any role in a tenant, he can create volumes in that
-tenant.
+If the user has any role in a project, he can create volumes in that
+project.
 
 To restrict the creation of volumes to users who have the
-``compute-user`` role in a particular tenant, you add ``"role:compute-user"``:
+``compute-user`` role in a particular project, you add ``"role:compute-user"``:
 
 .. code-block:: json
 
@@ -300,7 +300,7 @@ services. It consists of:
 
 The Identity service also maintains a user that corresponds to each
 service, such as, a user named ``nova`` for the Compute service, and a
-special service tenant called ``service``.
+special service project called ``service``.
 
 For information about how to create services and endpoints, see the
 `OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/
@@ -330,7 +330,7 @@ Identity API V3 provides the following group-related operations:
 
 * List groups for a user
 
-* Assign a role on a tenant to a group
+* Assign a role on a project to a group
 
 * Assign a role on a domain to a group
 
@@ -345,8 +345,8 @@ Identity API V3 provides the following group-related operations:
 
 Here are a couple of examples:
 
-* Group A is granted Role A on Tenant A. If User A is a member of Group
-  A, when User A gets a token scoped to Tenant A, the token also
+* Group A is granted Role A on Project A. If User A is a member of Group
+  A, when User A gets a token scoped to Project A, the token also
   includes Role A.
 
 * Group B is granted Role B on Domain B. If User B is a member of

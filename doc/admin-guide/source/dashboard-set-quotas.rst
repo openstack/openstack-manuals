@@ -9,15 +9,15 @@ View and manage quotas
 
 To prevent system capacities from being exhausted without notification,
 you can set up quotas. Quotas are operational limits. For example, the
-number of gigabytes allowed for each tenant can be controlled so that
-cloud resources are optimized. Quotas can be enforced at both the tenant
-(or project) and the tenant-user level.
+number of gigabytes allowed for each project can be controlled so that
+cloud resources are optimized. Quotas can be enforced at both the project
+and the project-user level.
 
 Typically, you change quotas when a project needs more than ten
 volumes or 1 |nbsp| TB on a compute node.
 
 Using the Dashboard, you can view default Compute and Block Storage
-quotas for new tenants, as well as update quotas for existing tenants.
+quotas for new projects, as well as update quotas for existing projects.
 
 .. note::
 
@@ -26,7 +26,7 @@ quotas for new tenants, as well as update quotas for existing tenants.
    the OpenStack Networking service (see `OpenStack Administrator Guide
    <http://docs.openstack.org/admin-guide/cli-set-quotas.html>`_).
    Additionally, you can update Compute service quotas for
-   tenant users.
+   project users.
 
 The following table describes the Compute and Block Storage service quotas:
 

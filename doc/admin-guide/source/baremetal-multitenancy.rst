@@ -4,15 +4,15 @@
 Use multitenancy with Bare Metal service
 ========================================
 
-Multitenancy allows creating a dedicated tenant network that extends the
+Multitenancy allows creating a dedicated project network that extends the
 current Bare Metal (ironic) service capabilities of providing ``flat``
 networks. Multitenancy works in conjunction with Networking (neutron)
-service to allow provisioning of a bare metal server onto the tenant network.
-Therefore, multiple tenants can get isolated instances after deployment.
+service to allow provisioning of a bare metal server onto the project network.
+Therefore, multiple projects can get isolated instances after deployment.
 
 Bare Metal service provides the ``local_link_connection`` information to the
 Networking service ML2 driver. The ML2 driver uses that information to plug the
-specified port to the tenant network.
+specified port to the project network.
 
 .. list-table:: ``local_link_connection`` fields
    :header-rows: 1

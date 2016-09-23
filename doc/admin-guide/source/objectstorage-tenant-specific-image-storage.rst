@@ -1,18 +1,18 @@
-=============================================================
-Configure tenant-specific image locations with Object Storage
-=============================================================
+==============================================================
+Configure project-specific image locations with Object Storage
+==============================================================
 
 For some deployers, it is not ideal to store all images in one place to
-enable all tenants and users to access them. You can configure the Image
-service to store image data in tenant-specific image locations. Then,
-only the following tenants can use the Image service to access the
+enable all projects and users to access them. You can configure the Image
+service to store image data in project-specific image locations. Then,
+only the following projects can use the Image service to access the
 created image:
 
-- The tenant who owns the image
-- Tenants that are defined in ``swift_store_admin_tenants`` and that
+- The project who owns the image
+- Projects that are defined in ``swift_store_admin_tenants`` and that
   have admin-level accounts
 
-**To configure tenant-specific image locations**
+**To configure project-specific image locations**
 
 #. Configure swift as your ``default_store`` in the
    ``glance-api.conf`` file.

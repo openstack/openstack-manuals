@@ -22,7 +22,7 @@ Configure the Internal Tenant
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Image-Volume cache requires that the Internal Tenant be configured for
-the Block Storage services. This tenant will own the cached image-volumes so
+the Block Storage services. This project will own the cached image-volumes so
 they can be managed like normal users including tools like volume quotas. This
 protects normal users from having to see the cached image-volumes, but does
 not make them globally hidden.
@@ -46,7 +46,7 @@ An example ``cinder.conf`` configuration file:
 
    The actual user and project that are configured for the Internal Tenant do
    not require any special privileges. They can be the Block Storage service
-   tenant or can be any normal project and user.
+   project or can be any normal project and user.
 
 Configure the Image-Volume cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

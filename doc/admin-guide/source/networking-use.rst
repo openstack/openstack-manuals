@@ -16,14 +16,14 @@ Log files are in the ``/var/log/neutron`` directory.
 
 Configuration files are in the ``/etc/neutron`` directory.
 
-Administrators and tenants can use OpenStack Networking to build
+Administrators and projects can use OpenStack Networking to build
 rich network topologies. Administrators can create network
-connectivity on behalf of tenants.
+connectivity on behalf of projects.
 
 Core Networking API features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-After you install and configure Networking, tenants and administrators
+After you install and configure Networking, projects and administrators
 can perform create-read-update-delete (CRUD) API networking operations
 by using the Networking API directly or neutron command-line interface
 (CLI). The neutron CLI is a wrapper around the Networking API. Every
@@ -57,12 +57,12 @@ basic network operations:
 |                         |     ``net1 10.0.0.0/24``                        |
 +-------------------------+-------------------------------------------------+
 |Lists ports for a        |                                                 |
-|specified tenant.        |                                                 |
+|specified project.       |                                                 |
 |                         |                                                 |
 |                         |     ``$ neutron port-list``                     |
 +-------------------------+-------------------------------------------------+
 |Lists ports for a        |                                                 |
-|specified tenant         |                                                 |
+|specified project        |                                                 |
 |and displays the ``id``, |                                                 |
 |``fixed_ips``,           |                                                 |
 |and ``device_owner``     |                                                 |
@@ -91,7 +91,7 @@ Administrative operations
 -------------------------
 
 The administrator can run any :command:`neutron` command on behalf of
-tenants by specifying an Identity ``tenant_id`` in the command, as
+projects by specifying an Identity ``tenant_id`` in the command, as
 follows:
 
 .. code-block:: console
@@ -106,7 +106,7 @@ For example:
 
 .. note::
 
-   To view all tenant IDs in Identity, run the following command as an
+   To view all project IDs in Identity, run the following command as an
    Identity service admin user:
 
    .. code-block:: console
@@ -123,7 +123,7 @@ advanced network operations:
 | Operation                     | Command                                    |
 +===============================+============================================+
 |Creates a network that         |                                            |
-|all tenants can use.           |                                            |
+|all projects can use.          |                                            |
 |                               |                                            |
 |                               |     ``$ neutron net-create``               |
 |                               |     ``--shared public-net``                |
@@ -258,7 +258,7 @@ complete advanced VM creation operations:
 +-------------------------------------+--------------------------------------+
 |Boots a VM that connects to all      |                                      |
 |networks that are accessible to the  |                                      |
-|tenant who submits the request       |                                      |
+|projectt who submits the request     |                                      |
 |(without the ``--nic`` option).      |                                      |
 |                                     |                                      |
 |                                     |``$ nova boot --image IMAGE --flavor``|

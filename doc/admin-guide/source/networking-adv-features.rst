@@ -11,8 +11,8 @@ to be of interest to the OpenStack community.
 Provider networks
 ~~~~~~~~~~~~~~~~~
 
-Networks can be categorized as either tenant networks or provider
-networks. Tenant networks are created by normal users and details about
+Networks can be categorized as either project networks or provider
+networks. Project networks are created by normal users and details about
 how they are physically realized are hidden from those users. Provider
 networks are created with administrative credentials, specifying the
 details of how the network is physically realized, usually to match some
@@ -20,7 +20,7 @@ existing network in the data center.
 
 Provider networks enable administrators to create networks that map
 directly to the physical networks in the data center.
-This is commonly used to give tenants direct access to a public network
+This is commonly used to give projects direct access to a public network
 that can be used to reach the Internet. It might also be used to
 integrate with VLANs in the network that already have a defined meaning
 (for example, enable a VM from the marketing department to be placed
@@ -62,14 +62,14 @@ configuration of plug-ins supporting the provider extension:
 |                      |extension and the plug-in configurations identify    |
 |                      |physical networks using simple string names.         |
 +----------------------+-----------------------------------------------------+
-| **tenant network**   |A virtual network that a tenant or an administrator  |
+| **project network**  |A virtual network that a project or an administrator |
 |                      |creates. The physical details of the network are not |
-|                      |exposed to the tenant.                               |
+|                      |exposed to the project.                              |
 +----------------------+-----------------------------------------------------+
 | **provider network** | A virtual network administratively created to map to|
 |                      | a specific network in the data center, typically to |
 |                      | enable direct access to non-OpenStack resources on  |
-|                      | that network. Tenants can be given access to        |
+|                      | that network. Project can be given access to        |
 |                      | provider networks.                                  |
 +----------------------+-----------------------------------------------------+
 | **VLAN network**     | A virtual network implemented as packets on a       |
@@ -138,7 +138,7 @@ these attributes:
        ``vxlan``, corresponding to flat networks, VLAN networks, local
        networks, GRE networks, and VXLAN networks as defined above.
        All types of provider networks can be created by administrators,
-       while tenant networks can be implemented as ``vlan``, ``gre``,
+       while project networks can be implemented as ``vlan``, ``gre``,
        ``vxlan``, or ``local`` network types depending on plug-in
        configuration.
    * - provider: physical_network
@@ -187,7 +187,7 @@ The L3 router provides basic NAT capabilities on gateway ports that
 uplink the router to external networks. This router SNATs all traffic by
 default and supports floating IPs, which creates a static one-to-one
 mapping from a public IP on the external network to a private IP on one
-of the other subnets attached to the router. This allows a tenant to
+of the other subnets attached to the router. This allows a project to
 selectively expose VMs on private networks to other hosts on the
 external network (and often to all hosts on the Internet). You can
 allocate and map floating IPs from one port to another, as needed.
@@ -327,7 +327,7 @@ Security groups
 ~~~~~~~~~~~~~~~
 
 Security groups and security group rules allow administrators and
-tenants to specify the type of traffic and direction
+projects to specify the type of traffic and direction
 (ingress/egress) that is allowed to pass through a port. A security
 group is a container for security group rules.
 
@@ -525,7 +525,7 @@ VMware NSX QoS extension
 
 The VMware NSX QoS extension rate-limits network ports to guarantee a
 specific amount of bandwidth for each port. This extension, by default,
-is only accessible by a tenant with an admin role but is configurable
+is only accessible by a project with an admin role but is configurable
 through the ``policy.json`` file. To use this extension, create a queue
 and specify the min/max bandwidth rates (kbps) and optionally set the
 QoS Marking and DSCP value (if your network fabric uses these values to
@@ -736,7 +736,7 @@ This section explains the Big Switch neutron plug-in-specific extension.
 Big Switch router rules
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Big Switch allows router rules to be added to each tenant router. These
+Big Switch allows router rules to be added to each project router. These
 rules can be used to enforce routing policies such as denying traffic
 between subnets or traffic to external networks. By enforcing these at
 the router level, network segmentation policies can be enforced across
@@ -745,7 +745,7 @@ many VMs that have differing security groups.
 Router rule attributes
 ''''''''''''''''''''''
 
-Each tenant router has a set of router rules associated with it. Each
+Each project router has a set of router rules associated with it. Each
 router rule has the attributes in this table. Router rules and their
 attributes can be set using the :command:`neutron router-update` command,
 through the horizon interface or the Networking API.
@@ -832,7 +832,7 @@ traffic that goes through a virtual router.
 The L3 metering extension is decoupled from the technology that
 implements the measurement. Two abstractions have been added: One is the
 metering label that can contain metering rules. Because a metering label
-is associated with a tenant, all virtual routers in this tenant are
+is associated with a project, all virtual routers in this project are
 associated with this label.
 
 Basic L3 metering operations

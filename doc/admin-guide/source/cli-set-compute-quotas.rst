@@ -4,8 +4,8 @@ Manage Compute service quotas
 
 As an administrative user, you can use the :command:`nova quota-*`
 commands, which are provided by the ``python-novaclient``
-package, to update the Compute service quotas for a specific tenant or
-tenant user, as well as update the quota defaults for a new tenant.
+package, to update the Compute service quotas for a specific project or
+project user, as well as update the quota defaults for a new project.
 
 **Compute quota descriptions**
 
@@ -18,7 +18,7 @@ tenant user, as well as update the quota defaults for a new tenant.
    * - cores
      - Number of instance cores (VCPUs) allowed per project.
    * - fixed-ips
-     - Number of fixed IP addresses allowed per tenant. This number
+     - Number of fixed IP addresses allowed per project. This number
        must be equal to or greater than the number of allowed
        instances.
    * - floating-ips
@@ -46,12 +46,12 @@ tenant user, as well as update the quota defaults for a new tenant.
    * - server-group-members
      - Number of servers per server group.
 
-View and update Compute quotas for a tenant (project)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+View and update Compute quotas for a project (project)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To view and update default quota values
 ---------------------------------------
-#. List all default quotas for all tenants:
+#. List all default quotas for all projects:
 
    .. code-block:: console
 
@@ -81,7 +81,7 @@ To view and update default quota values
       | server_group_members        | 10    |
       +-----------------------------+-------+
 
-#. Update a default value for a new tenant.
+#. Update a default value for a new project.
 
    .. code-block:: console
 
@@ -93,16 +93,16 @@ To view and update default quota values
 
       $ nova quota-class-update --instances 15 default
 
-To view quota values for an existing tenant (project)
------------------------------------------------------
+To view quota values for an existing project
+--------------------------------------------
 
-#. Place the tenant ID in a usable variable.
+#. Place the project ID in a usable variable.
 
    .. code-block:: console
 
       $ tenant=$(openstack project show -f value -c id TENANT_NAME)
 
-#. List the currently set quota values for a tenant.
+#. List the currently set quota values for a project.
 
    .. code-block:: console
 
@@ -132,10 +132,10 @@ To view quota values for an existing tenant (project)
       | server_group_members        | 10    |
       +-----------------------------+-------+
 
-To update quota values for an existing tenant (project)
--------------------------------------------------------
+To update quota values for an existing project
+----------------------------------------------
 
-#. Obtain the tenant ID.
+#. Obtain the project ID.
 
    .. code-block:: console
 
@@ -181,11 +181,11 @@ To update quota values for an existing tenant (project)
 
          $ nova help quota-update
 
-View and update Compute quotas for a tenant user
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+View and update Compute quotas for a project user
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To view quota values for a tenant user
---------------------------------------
+To view quota values for a project user
+---------------------------------------
 
 #. Place the user ID in a usable variable.
 
@@ -193,13 +193,13 @@ To view quota values for a tenant user
 
       $ tenantUser=$(openstack user show -f value -c id USER_NAME)
 
-#. Place the user's tenant ID in a usable variable, as follows:
+#. Place the user's project ID in a usable variable, as follows:
 
    .. code-block:: console
 
       $ tenant=$(openstack project show -f value -c id TENANT_NAME)
 
-#. List the currently set quota values for a tenant user.
+#. List the currently set quota values for a project user.
 
    .. code-block:: console
 
@@ -229,8 +229,8 @@ To view quota values for a tenant user
       | server_group_members        | 10    |
       +-----------------------------+-------+
 
-To update quota values for a tenant user
-----------------------------------------
+To update quota values for a project user
+-----------------------------------------
 
 #. Place the user ID in a usable variable.
 
@@ -238,7 +238,7 @@ To update quota values for a tenant user
 
       $ tenantUser=$(openstack user show -f value -c id USER_NAME)
 
-#. Place the user's tenant ID in a usable variable, as follows:
+#. Place the user's project ID in a usable variable, as follows:
 
    .. code-block:: console
 
@@ -284,8 +284,8 @@ To update quota values for a tenant user
 
          $ nova help quota-update
 
-To display the current quota usage for a tenant user
-----------------------------------------------------
+To display the current quota usage for a project user
+-----------------------------------------------------
 
 Use :command:`nova absolute-limits` to get a list of the
 current quota values and the current quota usage:

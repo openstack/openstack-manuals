@@ -104,4 +104,4 @@ Solution
 
 Some drivers in the Shared File Systems service can create service entities,
 like servers and networks. If it is necessary, you can log in to
-tenant ``service`` and take manual control over it.
+project ``service`` and take manual control over it.

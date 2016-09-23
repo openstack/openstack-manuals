@@ -154,7 +154,7 @@ Configure L3 agent
 ~~~~~~~~~~~~~~~~~~
 
 The OpenStack Networking service has a widely used API extension to
-allow administrators and tenants to create routers to interconnect L2
+allow administrators and projects to create routers to interconnect L2
 networks, and floating IPs to make ports on private networks publicly
 accessible.
 

@@ -94,28 +94,28 @@ Flat DHCP Network Manager
 
 VLAN Network Manager
     This is the default mode for OpenStack Compute. In this mode,
-    Compute creates a VLAN and bridge for each tenant. For
+    Compute creates a VLAN and bridge for each project. For
     multiple-machine installations, the VLAN Network Mode requires a
-    switch that supports VLAN tagging (IEEE 802.1Q). The tenant gets a
+    switch that supports VLAN tagging (IEEE 802.1Q). The project gets a
     range of private IPs that are only accessible from inside the VLAN.
-    In order for a user to access the instances in their tenant, a
+    In order for a user to access the instances in their project, a
     special VPN instance (code named ``cloudpipe``) needs to be created.
     Compute generates a certificate and key for the user to access the
     VPN and starts the VPN automatically. It provides a private network
-    segment for each tenant's instances that can be accessed through a
+    segment for each project's instances that can be accessed through a
     dedicated VPN connection from the internet. In this mode, each
-    tenant gets its own VLAN, Linux networking bridge, and subnet.
+    project gets its own VLAN, Linux networking bridge, and subnet.
 
     The subnets are specified by the network administrator, and are
-    assigned dynamically to a tenant when required. A DHCP server is
+    assigned dynamically to a project when required. A DHCP server is
     started for each VLAN to pass out IP addresses to VM instances from
-    the subnet assigned to the tenant. All instances belonging to one
-    tenant are bridged into the same VLAN for that tenant. OpenStack
+    the subnet assigned to the project. All instances belonging to one
+    project are bridged into the same VLAN for that project. OpenStack
     Compute creates the Linux networking bridges and VLANs when
     required.
 
 These network managers can co-exist in a cloud system. However, because
-you cannot select the type of network for a given tenant, you cannot
+you cannot select the type of network for a given project, you cannot
 configure multiple network types in a single Compute installation.
 
 All network managers configure the network using network drivers. For
@@ -155,7 +155,7 @@ All machines must have a public and internal network interface
 interface, and ``flat_interface`` and ``vlan_interface`` for the
 internal interface with flat or VLAN managers). This guide refers to the
 public network as the external network and the private network as the
-internal or tenant network.
+internal or project network.
 
 For flat and flat DHCP modes, use the :command:`nova network-create` command
 to create a network:
@@ -789,7 +789,7 @@ Using multinic
 --------------
 
 In order to use multinic, create two networks, and attach them to the
-tenant (named ``project`` on the command line):
+project (named ``project`` on the command line):
 
 .. code-block:: console
 

@@ -119,7 +119,7 @@ Create a flavor
       $ openstack flavor create --is-public true m1.extra_tiny auto 256 0 1 --rxtx-factor .1
 
 #. If an individual user or group of users needs a custom
-   flavor that you do not want other tenants to have access to,
+   flavor that you do not want other projects to have access to,
    you can change the flavor's access to make it a private flavor.
    See
    `Private Flavors in the OpenStack Operations Guide <http://docs.openstack.org/ops-guide/ops-user-facing-operations.html#private-flavors>`_.
@@ -132,7 +132,7 @@ Create a flavor
 
 #. After you create a flavor, assign it to a
    project by specifying the flavor name or ID and
-   the tenant ID:
+   the project ID:
 
    .. code-block:: console
 

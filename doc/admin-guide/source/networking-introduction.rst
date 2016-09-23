@@ -53,9 +53,9 @@ To configure rich network topologies, you can create and configure
 networks and subnets and instruct other OpenStack services like Compute
 to attach virtual devices to ports on these networks.
 
-In particular, Networking supports each tenant having multiple private
-networks and enables tenants to choose their own IP addressing scheme,
-even if those IP addresses overlap with those that other tenants use.
+In particular, Networking supports each project having multiple private
+networks and enables projects to choose their own IP addressing scheme,
+even if those IP addresses overlap with those that other projects use.
 
 The Networking service:
 
@@ -317,7 +317,7 @@ an IP address between two instances to enable fast data plane failover.
 Virtual-Private-Network-as-a-Service (VPNaaS)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The VPNaaS extension enables OpenStack tenants to extend private networks
+The VPNaaS extension enables OpenStack projects to extend private networks
 across the internet.
 
 VPNaas is a :term:`service`. It is a parent object that associates a VPN
@@ -338,7 +338,7 @@ The current implementation of the VPNaaS extension provides:
 
 - Site-to-site VPN that connects two private networks.
 
-- Multiple VPN connections per tenant.
+- Multiple VPN connections per project.
 
 - IKEv1 policy support with 3des, aes-128, aes-256, or aes-192 encryption.
 

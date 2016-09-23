@@ -4,7 +4,7 @@ Manage projects, users, and roles
 
 As an administrator, you manage projects, users, and
 roles. Projects are organizational units in the cloud to which
-you can assign users. Projects are also known as *tenants* or
+you can assign users. Projects are also known as *projects* or
 *accounts*. Users can be members of one or more projects. Roles
 define which actions users can perform. You assign roles to
 user-project pairs.
@@ -146,8 +146,8 @@ Create a user
 ^^^^^^^^^^^^^
 
 To create a user, you must specify a name. Optionally, you can
-specify a tenant ID, password, and email address. It is recommended
-that you include the tenant ID and password because the user cannot
+specify a project ID, password, and email address. It is recommended
+that you include the project ID and password because the user cannot
 log in to the dashboard without this information.
 
 Create the ``new-user`` user:

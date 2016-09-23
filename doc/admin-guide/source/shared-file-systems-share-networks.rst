@@ -12,7 +12,7 @@ creating a new share network.
 How to create share network
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To list networks in a tenant, run:
+To list networks in a project, run:
 
 .. code-block:: console
 

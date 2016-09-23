@@ -373,12 +373,12 @@ status share should have status ``available``:
    +----------------------+----------------------------------------------------------------------+
 
 ``is_public`` defines the level of visibility for the share: whether other
-tenants can or cannot see the share. By default, the share is private.
+projects can or cannot see the share. By default, the share is private.
 
 Update share
 ------------
 
-Update the name, or description, or level of visibility for all tenants for
+Update the name, or description, or level of visibility for all projects for
 the share if you need:
 
 .. code-block:: console
@@ -602,7 +602,7 @@ state using soft-deletion you'll get an error:
 A share cannot be deleted in a transitional status, that it why an error from
 ``python-manilaclient`` appeared.
 
-Print the list of all shares for all tenants:
+Print the list of all shares for all projects:
 
 .. code-block:: console
 

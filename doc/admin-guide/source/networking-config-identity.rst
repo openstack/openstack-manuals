@@ -83,7 +83,7 @@ Configure Identity service for Networking
 
    You must provide admin user credentials that Compute and some internal
    Networking components can use to access the Networking API. Create a
-   special ``service`` tenant and a ``neutron`` user within this tenant,
+   special ``service`` project and a ``neutron`` user within this project,
    and assign an ``admin`` role to this role.
 
    a. Create the ``admin`` role:
@@ -100,14 +100,14 @@ Configure Identity service for Networking
            --password "$NEUTRON_PASSWORD" --email demo@example.com \
            --project service)
 
-   c. Create the ``service`` tenant:
+   c. Create the ``service`` project:
 
       .. code-block:: console
 
          $ SERVICE_TENANT=$(get_id openstack project create service \
            --description "Services project")
 
-   d. Establish the relationship among the tenant, user, and role:
+   d. Establish the relationship among the project, user, and role:
 
       .. code-block:: console
 
@@ -133,7 +133,7 @@ most network-related decisions to Networking.
    Networking can cause problems, as can stale iptables rules pushed
    down by previously running ``nova-network``.
 
-Compute proxies tenant-facing API calls to manage security groups and
+Compute proxies project-facing API calls to manage security groups and
 floating IPs to Networking APIs. However, operator-facing tools such
 as ``nova-manage``, are not proxied and should not be used.
 
@@ -174,8 +174,8 @@ happen, you must configure the following items in the ``nova.conf`` file
        for this deployment.
    * - ``[neutron] auth_strategy``
      - Keep the default ``keystone`` value for all production deployments.
-   * - ``[neutron] admin_tenant_name``
-     - Update to the name of the service tenant created in the above section on
+   * - ``[neutron] admin_project_name``
+     - Update to the name of the service project created in the above section on
        Identity configuration.
    * - ``[neutron] admin_username``
      - Update to the name of the user created in the above section on Identity
@@ -248,7 +248,7 @@ To enable proxying the requests, you must update the following fields in
 
    As a precaution, even when using ``metadata_proxy_shared_secret``,
    we recommend that you do not expose metadata using the same
-   nova-api instances that are used for tenants. Instead, you should
+   nova-api instances that are used for projects. Instead, you should
    run a dedicated set of nova-api instances for metadata that are
    available only on your management network. Whether a given nova-api
    instance exposes metadata APIs is determined by the value of

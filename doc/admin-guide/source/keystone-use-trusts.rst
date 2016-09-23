@@ -24,7 +24,7 @@ The delegation parameters are:
   The user IDs for the trustor and trustee.
 
 **Privileges**
-  The delegated privileges are a combination of a tenant ID and a
+  The delegated privileges are a combination of a project ID and a
   number of roles that must be a subset of the roles assigned to the
   trustor.
 
@@ -50,7 +50,7 @@ The delegation parameters are:
   This parameter further restricts the delegation to the specified
   endpoints only. If you omit the endpoints, the delegation is
   useless. A special value of ``all_endpoints`` allows the trust to be
-  used by all endpoints associated with the delegated tenant.
+  used by all endpoints associated with the delegated project.
 
 **Duration**
   (Optional) Comprised of the start time and end time for the trust.

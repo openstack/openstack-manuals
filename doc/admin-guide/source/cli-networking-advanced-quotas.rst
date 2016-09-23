@@ -3,7 +3,7 @@ Manage Networking service quotas
 ================================
 
 A quota limits the number of available resources. A default
-quota might be enforced for all tenants. When you try to create
+quota might be enforced for all projects. When you try to create
 more resources than the quota allows, an error occurs:
 
 .. code-block:: ini
@@ -11,15 +11,15 @@ more resources than the quota allows, an error occurs:
    $ neutron net-create test_net
     Quota exceeded for resources: ['network']
 
-Per-tenant quota configuration is also supported by the quota
+Per-project quota configuration is also supported by the quota
 extension API. See :ref:`cfg_quotas_per_tenant` for details.
 
 Basic quota configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the Networking default quota mechanism, all tenants have
+In the Networking default quota mechanism, all projects have
 the same quota values, such as the number of resources that a
-tenant can create.
+project can create.
 
 The quota value is defined in the OpenStack Networking
 ``/etc/neutron/neutron.conf`` configuration file. This example shows the
@@ -69,33 +69,33 @@ each security group. Add these lines to the
 
 .. _cfg_quotas_per_tenant:
 
-Configure per-tenant quotas
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-OpenStack Networking also supports per-tenant quota limit by
+Configure per-project quotas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+OpenStack Networking also supports per-project quota limit by
 quota extension API.
 
-Use these commands to manage per-tenant quotas:
+Use these commands to manage per-project quotas:
 
 neutron quota-delete
-    Delete defined quotas for a specified tenant
+    Delete defined quotas for a specified project
 
 neutron quota-list
-    Lists defined quotas for all tenants
+    Lists defined quotas for all projects
 
 neutron quota-show
-    Shows quotas for a specified tenant
+    Shows quotas for a specified project
 
 neutron quota-default-show
     Show default quotas for a specified tenant
 
 neutron quota-update
-    Updates quotas for a specified tenant
+    Updates quotas for a specified project
 
 Only users with the ``admin`` role can change a quota value. By default,
-the default set of quotas are enforced for all tenants, so no
+the default set of quotas are enforced for all projects, so no
 :command:`quota-create` command exists.
 
-#. Configure Networking to show per-tenant quotas
+#. Configure Networking to show per-project quotas
 
    Set the ``quota_driver`` option in the ``/etc/neutron/neutron.conf`` file.
 
@@ -114,7 +114,7 @@ the default set of quotas are enforced for all tenants, so no
       $ neutron ext-list -c alias -c name
 
    The command shows the ``quotas`` extension, which provides
-   per-tenant quota management support.
+   per-project quota management support.
 
    .. code-block:: console
 
@@ -152,17 +152,18 @@ the default set of quotas are enforced for all tenants, so no
 
    .. note::
 
-      Only some plug-ins support per-tenant quotas.
+      Only some plug-ins support per-project quotas.
       Specifically, Open vSwitch, Linux Bridge, and VMware NSX
       support them, but new versions of other plug-ins might
       bring additional functionality. See the documentation for
       each plug-in.
 
-#. List tenants who have per-tenant quota support.
+#. List projects who have per-project quota support.
 
-   The :command:`neutron quota-list` command lists tenants for which the
-   per-tenant quota is enabled. The command does not list tenants with default
-   quota support. You must be an administrative user to run this command:
+   The :command:`neutron quota-list` command lists projects for which the
+   per-project quota is enabled. The command does not list projects with
+   default quota support. You must be an administrative user to run this
+   command:
 
    .. code-block:: console
 
@@ -174,13 +175,13 @@ the default set of quotas are enforced for all tenants, so no
       |         25 |      10 |   30 |     10 |     10 | bff5c9455ee24231b5bc713c1b96d422 |
       +------------+---------+------+--------+--------+----------------------------------+
 
-#. Show per-tenant quota values.
+#. Show per-project quota values.
 
    The :command:`neutron quota-show` command reports the current
-   set of quota limits for the specified tenant.
+   set of quota limits for the specified project.
    Non-administrative users can run this command without the
-   :option:`--tenant_id` parameter. If per-tenant quota limits are
-   not enabled for the tenant, the command shows the default
+   :option:`--tenant_id` parameter. If per-project quota limits are
+   not enabled for the project, the command shows the default
    set of quotas.
 
    .. code-block:: console
@@ -212,10 +213,10 @@ the default set of quotas are enforced for all tenants, so no
       | subnet     | 5     |
       +------------+-------+
 
-#. Update quota values for a specified tenant.
+#. Update quota values for a specified project.
 
    Use the :command:`neutron quota-update` command to
-   update a quota for a specified tenant.
+   update a quota for a specified project.
 
    .. code-block:: console
 
@@ -251,7 +252,7 @@ the default set of quotas are enforced for all tenants, so no
    after the ``--`` directive.
 
    This example updates the limit of the number of floating
-   IPs for the specified tenant.
+   IPs for the specified project.
 
    .. code-block:: console
 
@@ -284,9 +285,9 @@ the default set of quotas are enforced for all tenants, so no
       | subnet     | 3     |
       +------------+-------+
 
-#. Delete per-tenant quota values.
+#. Delete per-project quota values.
 
-   To clear per-tenant quota limits, use the
+   To clear per-project quota limits, use the
    :command:`neutron quota-delete` command.
 
    .. code-block:: console
@@ -295,7 +296,7 @@ the default set of quotas are enforced for all tenants, so no
        Deleted quota: 6f88036c45344d9999a1f971e4882723
 
    After you run this command, you can see that quota
-   values for the tenant are reset to the default values.
+   values for the project are reset to the default values.
 
    .. code-block:: console
 

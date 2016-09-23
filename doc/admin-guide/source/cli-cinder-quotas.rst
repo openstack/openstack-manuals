@@ -29,7 +29,7 @@ Administrative users can view Block Storage service quotas.
 
       $ project_id=$(openstack project show -f value -c id PROJECT_NAME)
 
-#. List the default quotas for a project (tenant):
+#. List the default quotas for a project:
 
    .. code-block:: console
 
@@ -48,7 +48,7 @@ Administrative users can view Block Storage service quotas.
       |  volumes  |   10  |
       +-----------+-------+
 
-#. View Block Storage service quotas for a project (tenant):
+#. View Block Storage service quotas for a project:
 
    .. code-block:: console
 
@@ -99,7 +99,7 @@ service quotas.
    <http://docs.openstack.org/mitaka/config-reference/block-storage.html>`_
    in OpenStack Configuration Reference.
 
-#. To update Block Storage service quotas for an existing project (tenant):
+#. To update Block Storage service quotas for an existing project
 
    .. code-block:: console
 
