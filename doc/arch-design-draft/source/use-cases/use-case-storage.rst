@@ -1,6 +1,11 @@
-==============================
-Storage-focused cloud examples
-==============================
+.. _storage-cloud:
+
+=============
+Storage cloud
+=============
+
+Design model
+~~~~~~~~~~~~
 
 Storage-focused architecture depends on specific use cases. This section
 discusses three example use cases:
@@ -11,15 +16,22 @@ discusses three example use cases:
 
 *  High performance database
 
+Component block diagram
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Stakeholder
+~~~~~~~~~~~
+
+User stories
+~~~~~~~~~~~~
+
 The example below shows a REST interface without a high performance
-requirement.
+requirement. The following diagram depicts the example architecture:
 
-Swift is a highly scalable object store that is part of the OpenStack
-project. This diagram explains the example architecture:
+.. figure:: ../figures/Storage_Object.png
 
-.. figure:: figures/Storage_Object.png
-
-The example REST interface, presented as a traditional Object store
+The example REST interface, presented as a traditional Object Store
 running on traditional spindles, does not require a high performance
 caching tier.
 
@@ -48,11 +60,11 @@ Proxy:
 
 .. note::
 
-   It may be necessary to implement a 3rd-party caching layer for some
+   It may be necessary to implement a third party caching layer for some
    applications to achieve suitable performance.
 
-Compute analytics with Data processing service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Compute analytics with data processing service
+----------------------------------------------
 
 Analytics of large data sets are dependent on the performance of the
 storage system. Clouds using storage systems such as Hadoop Distributed
@@ -68,7 +80,7 @@ OpenStack has integration with Hadoop to manage the Hadoop cluster
 within the cloud. The following diagram shows an OpenStack store with a
 high performance requirement:
 
-.. figure:: figures/Storage_Hadoop3.png
+.. figure:: ../figures/Storage_Hadoop3.png
 
 The hardware requirements and configuration are similar to those of the
 High Performance Database example below. In this case, the architecture
@@ -96,9 +108,9 @@ database example below, a portion of the SSD pool can act as a block
 device to the Database server. In the high performance analytics
 example, the inline SSD cache layer accelerates the REST interface.
 
-.. figure:: figures/Storage_Database_+_Object5.png
+.. figure:: ../figures/Storage_Database_+_Object5.png
 
-In this example, Ceph presents a Swift-compatible REST interface, as
+In this example, Ceph presents a swift-compatible REST interface, as
 well as a block level storage from a distributed storage cluster. It is
 highly flexible and has features that enable reduced cost of operations
 such as self healing and auto balancing. Using erasure coded pools are a
