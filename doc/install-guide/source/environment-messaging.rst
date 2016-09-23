@@ -12,6 +12,8 @@ service because most distributions support it. If you prefer to
 implement a different message queue service, consult the documentation
 associated with it.
 
+The message queue runs on the controller node.
+
 Install and configure components
 --------------------------------
 
