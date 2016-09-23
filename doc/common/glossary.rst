@@ -168,6 +168,11 @@ A
       A project that ports the shell script-based project named
       DevStack to Python.
 
+   aodh
+
+      Part of the OpenStack :term:`Telemetry service <Telemetry
+      service (telemetry)>`; provides alarming functionality.
+
    Apache
 
       The Apache Software Foundation supports the Apache community of
@@ -602,9 +607,9 @@ C
 
    ceilometer
 
-      The project name for the Telemetry service, which is an
-      integrated project that provides metering and measuring facilities for
-      OpenStack.
+      Part of the OpenStack :term:`Telemetry service <Telemetry
+      service (telemetry)>`; gathers and stores metrics from other
+      OpenStack services.
 
    cell
 
@@ -1600,6 +1605,12 @@ G
 
       A file system designed to aggregate NAS hosts, compatible with
       OpenStack.
+
+   gnocchi
+
+      Part of the OpenStack :term:`Telemetry service <Telemetry
+      service (telemetry)>`; provides an indexer and time-series
+      database.
 
    golden image
 
@@ -2753,6 +2764,11 @@ P
 
 .. glossary::
 
+   panko
+
+      Part of the OpenStack :term:`Telemetry service <Telemetry
+      service (telemetry)>`; provides event storage.
+
    parent cell
 
       If a requested resource, such as CPU time, disk storage, or
@@ -3649,11 +3665,12 @@ T
 
 .. glossary::
 
-   Telemetry service
+   Telemetry service (telemetry)
 
-      An integrated project that provides metering and measuring
-      facilities for OpenStack. The project name of Telemetry is
-      ceilometer.
+      The OpenStack project which collects measurements of the utilization
+      of the physical and virtual resources comprising deployed clouds,
+      persists this data for subsequent retrieval and analysis, and triggers
+      actions when defined criteria are met.
 
    TempAuth
 
