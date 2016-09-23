@@ -47,5 +47,6 @@ architecture components:
    openvswitch_agent.ini.rst
    dhcp_agent.ini.rst
    l3_agent.ini.rst
+   macvtap_agent.ini.rst
    metadata_agent.ini.rst
    metering_agent.ini.rst
