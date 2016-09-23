@@ -49,6 +49,7 @@ tab on an OpenStack dashboard.
 
    telemetry-system-architecture.rst
    telemetry-data-collection.rst
+   telemetry-data-pipelines.rst
    telemetry-data-retrieval.rst
    telemetry-alarms.rst
    telemetry-measurements.rst
