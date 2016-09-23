@@ -9,7 +9,7 @@ A time series storage and resources index service command-line client
 The gnocchi client is the command-line interface (CLI) for
 the A time series storage and resources index service API and its extensions.
 
-This chapter documents :command:`gnocchi` version ``2.5.0``.
+This chapter documents :command:`gnocchi` version ``2.6.0``.
 
 For help on a specific :command:`gnocchi` command, enter:
 
@@ -380,7 +380,7 @@ gnocchi benchmark measures show
                                           [--resource-id RESOURCE_ID]
                                           [--aggregation AGGREGATION]
                                           [--start START] [--stop STOP]
-                                          [--granularity GRANULARITY]
+                                          [--granularity GRANULARITY] [--refresh]
                                           [--workers WORKERS] --count COUNT
                                           metric
 
@@ -410,6 +410,9 @@ Do benchmark testing of measurements show
 
 ``--granularity GRANULARITY``
   granularity to retrieve (in seconds)
+
+``--refresh``
+  force aggregation of all known measures
 
 ``--workers WORKERS, -w WORKERS``
   Number of workers to use
@@ -589,6 +592,7 @@ gnocchi measures show
                                 [--resource-id RESOURCE_ID]
                                 [--aggregation AGGREGATION] [--start START]
                                 [--stop STOP] [--granularity GRANULARITY]
+                                [--refresh]
                                 metric
 
 Get measurements of a metric
@@ -617,6 +621,9 @@ Get measurements of a metric
 
 ``--granularity GRANULARITY``
   granularity to retrieve (in seconds)
+
+``--refresh``
+  force aggregation of all known measures
 
 .. _gnocchi_metric_create:
 
@@ -689,6 +696,8 @@ gnocchi metric list
    usage: gnocchi metric list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
+                              [--limit <LIMIT>] [--marker <MARKER>]
+                              [--sort <SORT>]
 
 List metrics
 
@@ -696,6 +705,17 @@ List metrics
 
 ``-h, --help``
   show this help message and exit
+
+``--limit <LIMIT>``
+  Number of metrics to return (Default is server
+  default)
+
+``--marker <MARKER>``
+  Last item of the previous listing. Return the next
+  results after this value
+
+``--sort <SORT>``
+  Sort of metric attribute (example: user_id:desc-nullslast
 
 .. _gnocchi_metric_show:
 
