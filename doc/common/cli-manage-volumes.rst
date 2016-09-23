@@ -30,10 +30,16 @@ following example:
 
 .. code-block:: console
 
-   $ cinder migrate volumeID destinationHost --force-host-copy True|False
+   $ cinder migrate --force-host-copy <True|False>
+                    --lock-volume <True|False>
+                    <volume> <host>
 
 In this example, :option:`--force-host-copy True` forces the generic
 host-based migration mechanism and bypasses any driver optimizations.
+:option:`--lock-volume <True|False>` applies to the available volume.
+To determine whether the termination of volume migration caused by other
+commands. ``True``  locks the volume state and does not allow the
+migration to be aborted.
 
 .. note::
 
@@ -50,76 +56,73 @@ This example creates a ``my-new-volume`` volume based on an image.
 
    .. code-block:: console
 
-      $ glance image-list
+      $ openstack image list
       +--------------------------------------+---------------------------------+
       | ID                                   | Name                            |
       +--------------------------------------+---------------------------------+
-      | c2833699-594f-4651-a1e3-b7b6bb31dc8c | cirros-0.3.4-x86_64-uec         |
-      | 28d3d4fb-a2b0-46e9-aef8-07a931c8986b | cirros-0.3.4-x86_64-uec-kernel  |
-      | 832962d2-cabd-4dd2-b2e4-00944fe8b84e | cirros-0.3.4-x86_64-uec-ramdisk |
+      | 8bf4dc2a-bf78-4dd1-aefa-f3347cf638c8 | cirros-0.3.4-x86_64-uec         |
+      | 9ff9bb2e-3a1d-4d98-acb5-b1d3225aca6c | cirros-0.3.4-x86_64-uec-kernel  |
+      | 4b227119-68a1-4b28-8505-f94c6ea4c6dc | cirros-0.3.4-x86_64-uec-ramdisk |
       +--------------------------------------+---------------------------------+
+
 
 #. List the availability zones, and note the ID of the availability zone in
    which you want to create your volume:
 
    .. code-block:: console
 
-      $ cinder availability-zone-list
+      $ openstack availability zone list
       +------+-----------+
       | Name |   Status  |
       +------+-----------+
       | nova | available |
       +------+-----------+
 
-#. Create a volume with 8 gibibytes (GiB) of space, and specify the
+#. Create a volume with 8 gibibytes (GiB) of space, and specify the
    availability zone and image:
 
    .. code-block:: console
 
-      $ cinder create 8 --display-name my-new-volume \
-        --image-id c2833699-594f-4651-a1e3-b7b6bb31dc8c \
-        --availability-zone nova
-      +--------------------------------+--------------------------------------+
-      | Property                       | Value                                |
-      +--------------------------------+--------------------------------------+
-      | attachments                    | []                                   |
-      | availability_zone              | nova                                 |
-      | bootable                       | false                                |
-      | consistencygroup_id            | None                                 |
-      | created_at                     | 2016-09-29T08:12:58.000000           |
-      | description                    | None                                 |
-      | encrypted                      | False                                |
-      | id                             | 31e440f4-fd3d-43c9-8345-fd3eb4dca33d |
-      | metadata                       | {}                                   |
-      | migration_status               | None                                 |
-      | multiattach                    | False                                |
-      | name                           | my-new-volume                        |
-      | os-vol-host-attr:host          | None                                 |
-      | os-vol-mig-status-attr:migstat | None                                 |
-      | os-vol-mig-status-attr:name_id | None                                 |
-      | os-vol-tenant-attr:tenant_id   | 29c09e68e6f741afa952a837e29c700b     |
-      | replication_status             | disabled                             |
-      | size                           | 8                                    |
-      | snapshot_id                    | None                                 |
-      | source_volid                   | None                                 |
-      | status                         | creating                             |
-      | updated_at                     | None                                 |
-      | user_id                        | 6ab5800949644c3e8fb86aaeab8275c8     |
-      | volume_type                    | lvmdriver-1                          |
-      +--------------------------------+--------------------------------------+
+      $ openstack volume create --image 8bf4dc2a-bf78-4dd1-aefa-f3347cf638c8 \
+        --size 8 --availability-zone nova my-new-volume
+
+      +------------------------------+--------------------------------------+
+      | Property                     | Value                                |
+      +------------------------------+--------------------------------------+
+      | attachments                  | []                                   |
+      | availability_zone            | nova                                 |
+      | bootable                     | false                                |
+      | consistencygroup_id          | None                                 |
+      | created_at                   | 2016-09-23T07:52:42.000000           |
+      | description                  | None                                 |
+      | encrypted                    | False                                |
+      | id                           | bab4b0e0-ce3d-4d57-bf57-3c51319f5202 |
+      | metadata                     | {}                                   |
+      | multiattach                  | False                                |
+      | name                         | my-new-volume                        |
+      | os-vol-tenant-attr:tenant_id | 3f670abbe9b34ca5b81db6e7b540b8d8     |
+      | replication_status           | disabled                             |
+      | size                         | 8                                    |
+      | snapshot_id                  | None                                 |
+      | source_volid                 | None                                 |
+      | status                       | creating                             |
+      | updated_at                   | None                                 |
+      | user_id                      | fe19e3a9f63f4a14bd4697789247bbc5     |
+      | volume_type                  | lvmdriver-1                          |
+      +------------------------------+--------------------------------------+
 
 #. To verify that your volume was created successfully, list the available
    volumes:
 
    .. code-block:: console
 
-      $ cinder list
-      +-----------------+-----------+-----------------+------+-------------+----------+-------------+
-      |    ID           |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
-      +-----------------+-----------+-----------------+------+-------------+----------+-------------+
-      | 573e024d-523... | available |  my-new-volume  |  8   |     None    |   true   |             |
-      | bd7cf584-45d... | available | my-bootable-vol |  8   |     None    |   true   |             |
-      +-----------------+-----------+-----------------+------+-------------+----------+-------------+
+      $ openstack volume list
+      +--------------------------------------+---------------+-----------+------+-------------+
+      | ID                                   | DisplayName   |  Status   | Size | Attached to |
+      +--------------------------------------+---------------+-----------+------+-------------+
+      | bab4b0e0-ce3d-4d57-bf57-3c51319f5202 | my-new-volume | available | 8    |             |
+      +--------------------------------------+---------------+-----------+------+-------------+
+
 
    If your volume was created successfully, its status is ``available``. If
    its status is ``error``, you might have exceeded your quota.
@@ -145,7 +148,17 @@ User can specify `volume type` when creating a volume.
 
 .. code-block:: console
 
-      $ cinder create --name <volume name> --volume-type <volume type> <size>
+      $ openstack volume create -h -f {json,shell,table,value,yaml}
+                               -c COLUMN --max-width <integer>
+                               --noindent --prefix PREFIX --size <size>
+                               --type <volume-type> --image <image>
+                               --snapshot <snapshot> --source <volume>
+                               --description <description> --user <user>
+                               --project <project>
+                               --availability-zone <availability-zone>
+                               --property <key=value>
+                               <name>
+
 
 .. _cinder_img_volume_type:
 
@@ -155,76 +168,75 @@ cinder_img_volume_type
 If glance image has ``cinder_img_volume_type`` property, Cinder uses this
 parameter to specify ``volume type`` when creating a volume.
 
-Choose glance image which has "cinder_img_volume_type" property and create
+Choose glance image which has ``cinder_img_volume_type`` property and create
 a volume from the image.
 
 .. code-block:: console
 
-      $ glance image-list
-      +--------------------------------------+---------------------------------+
-      | ID                                   | Name                            |
-      +--------------------------------------+---------------------------------+
-      | a8701119-ca8d-4957-846c-9f4d27f251fa | cirros-0.3.4-x86_64-uec         |
-      | 6cf01154-0408-416a-b69c-b28b48c5d28a | cirros-0.3.4-x86_64-uec-kernel  |
-      | de457c7c-2038-435d-abed-5dfa6430e66e | cirros-0.3.4-x86_64-uec-ramdisk |
-      +--------------------------------------+---------------------------------+
+      $ openstack image list
+      +----------------------------------+---------------------------------+--------+
+      | ID                               | Name                            | Status |
+      +----------------------------------+---------------------------------+--------+
+      | 376bd633-c9c9-4c5d-a588-342f4f66 | cirros-0.3.4-x86_64-uec         | active |
+      | d086                             |                                 |        |
+      | 2c20fce7-2e68-45ee-ba8d-         | cirros-0.3.4-x86_64-uec-ramdisk | active |
+      | beba27a91ab5                     |                                 |        |
+      | a5752de4-9faf-4c47-acbc-         | cirros-0.3.4-x86_64-uec-kernel  | active |
+      | 78a5efa7cc6e                     |                                 |        |
+      +----------------------------------+---------------------------------+--------+
 
-      $ glance image-show a8701119-ca8d-4957-846c-9f4d27f251fa
-      +------------------------+--------------------------------------+
-      | Property               | Value                                |
-      +------------------------+--------------------------------------+
-      | checksum               | eb9139e4942121f22bbc2afc0400b2a4     |
-      | cinder_img_volume_type | lvmdriver-1                          |
-      | container_format       | ami                                  |
-      | created_at             | 2016-02-07T19:39:13Z                 |
-      | disk_format            | ami                                  |
-      | id                     | a8701119-ca8d-4957-846c-9f4d27f251fa |
-      | kernel_id              | 6cf01154-0408-416a-b69c-b28b48c5d28a |
-      | min_disk               | 0                                    |
-      | min_ram                | 0                                    |
-      | name                   | cirros-0.3.4-x86_64-uec              |
-      | owner                  | 4c0dbc92040c41b1bdb3827653682952     |
-      | protected              | False                                |
-      | ramdisk_id             | de457c7c-2038-435d-abed-5dfa6430e66e |
-      | size                   | 25165824                             |
-      | status                 | active                               |
-      | tags                   | []                                   |
-      | updated_at             | 2016-02-22T23:01:54Z                 |
-      | virtual_size           | None                                 |
-      | visibility             | public                               |
-      +------------------------+--------------------------------------+
 
-      $ cinder create --name test --image-id a8701119-ca8d-4957-846c-9f4d27f251fa 1
-      +---------------------------------------+--------------------------------------+
-      |                Property               |                Value                 |
-      +---------------------------------------+--------------------------------------+
-      |              attachments              |                  []                  |
-      |           availability_zone           |                 nova                 |
-      |                bootable               |                false                 |
-      |          consistencygroup_id          |                 None                 |
-      |               created_at              |      2016-02-22T23:17:51.000000      |
-      |              description              |                 None                 |
-      |               encrypted               |                False                 |
-      |                   id                  | 123ad92f-8f4c-4639-ab10-3742a1d9b47c |
-      |                metadata               |                  {}                  |
-      |            migration_status           |                 None                 |
-      |              multiattach              |                False                 |
-      |                  name                 |                 test                 |
-      |         os-vol-host-attr:host         |                 None                 |
-      |     os-vol-mig-status-attr:migstat    |                 None                 |
-      |     os-vol-mig-status-attr:name_id    |                 None                 |
-      |      os-vol-tenant-attr:tenant_id     |   4c0dbc92040c41b1bdb3827653682952   |
-      |   os-volume-replication:driver_data   |                 None                 |
-      | os-volume-replication:extended_status |                 None                 |
-      |           replication_status          |               disabled               |
-      |                  size                 |                  1                   |
-      |              snapshot_id              |                 None                 |
-      |              source_volid             |                 None                 |
-      |                 status                |               creating               |
-      |               updated_at              |                 None                 |
-      |                user_id                |   9a125f3d111e47e6a25f573853b32fd9   |
-      |              volume_type              |             lvmdriver-1              |
-      +---------------------------------------+--------------------------------------+
+      $ openstack image show 376bd633-c9c9-4c5d-a588-342f4f66d086
+      +------------------+-----------------------------------------------------------+
+      | Field            | Value                                                     |
+      +------------------+-----------------------------------------------------------+
+      | checksum         | eb9139e4942121f22bbc2afc0400b2a4                          |
+      | container_format | ami                                                       |
+      | created_at       | 2016-10-13T03:28:55Z                                      |
+      | disk_format      | ami                                                       |
+      | file             | /v2/images/376bd633-c9c9-4c5d-a588-342f4f66d086/file      |
+      | id               | 376bd633-c9c9-4c5d-a588-342f4f66d086                      |
+      | min_disk         | 0                                                         |
+      | min_ram          | 0                                                         |
+      | name             | cirros-0.3.4-x86_64-uec                                   |
+      | owner            | 88ba456e3a884c318394737765e0ef4d                          |
+      | properties       | kernel_id='a5752de4-9faf-4c47-acbc-78a5efa7cc6e',         |
+      |                  | ramdisk_id='2c20fce7-2e68-45ee-ba8d-beba27a91ab5'         |
+      | protected        | False                                                     |
+      | schema           | /v2/schemas/image                                         |
+      | size             | 25165824                                                  |
+      | status           | active                                                    |
+      | tags             |                                                           |
+      | updated_at       | 2016-10-13T03:28:55Z                                      |
+      | virtual_size     | None                                                      |
+      | visibility       | public                                                    |
+      +------------------+-----------------------------------------------------------+
+
+      $ openstack volume create --image 376bd633-c9c9-4c5d-a588-342f4f66d086 \
+        --size 1 --availability-zone nova test
+      +---------------------+--------------------------------------+
+      | Field               | Value                                |
+      +---------------------+--------------------------------------+
+      | attachments         | []                                   |
+      | availability_zone   | nova                                 |
+      | bootable            | false                                |
+      | consistencygroup_id | None                                 |
+      | created_at          | 2016-10-13T06:29:53.688599           |
+      | description         | None                                 |
+      | encrypted           | False                                |
+      | id                  | e6e6a72d-cda7-442c-830f-f306ea6a03d5 |
+      | multiattach         | False                                |
+      | name                | test                                 |
+      | properties          |                                      |
+      | replication_status  | disabled                             |
+      | size                | 1                                    |
+      | snapshot_id         | None                                 |
+      | source_volid        | None                                 |
+      | status              | creating                             |
+      | type                | lvmdriver-1                          |
+      | updated_at          | None                                 |
+      | user_id             | 33fdc37314914796883706b33e587d51     |
+      +---------------------+--------------------------------------+
 
 .. _default_volume_type:
 
@@ -268,7 +280,7 @@ Attach a volume to an instance
 
    .. code-block:: console
 
-      $ cinder show 573e024d-5235-49ce-8332-be1576d323f8
+      $ openstack volume show 573e024d-5235-49ce-8332-be1576d323f8
 
    The output shows that the volume is attached to the server with ID
    ``84c6e57d-a6b1-44b6-81eb-fcb36afd31b5``, is in the nova availability
@@ -276,32 +288,39 @@ Attach a volume to an instance
 
    .. code-block:: console
 
-      +------------------------------+------------------------------------------+
-      |           Property           |                Value                     |
-      +------------------------------+------------------------------------------+
-      |         attachments          |         [{u'device': u'/dev/vdb',        |
-      |                              |        u'server_id': u'84c6e57d-a        |
-      |                              |           u'id': u'573e024d-...          |
-      |                              |        u'volume_id': u'573e024d...       |
-      |      availability_zone       |                  nova                    |
-      |           bootable           |                  true                    |
-      |          created_at          |       2013-07-25T17:02:12.000000         |
-      |     display_description      |                  None                    |
-      |         display_name         |             my-new-volume                |
-      |              id              |   573e024d-5235-49ce-8332-be1576d323f8   |
-      |           metadata           |                   {}                     |
-      |    os-vol-host-attr:host     |                devstack                  |
-      | os-vol-tenant-attr:tenant_id |     66265572db174a7aa66eba661f58eb9e     |
-      |             size             |                   8                      |
-      |         snapshot_id          |                  None                    |
-      |         source_volid         |                  None                    |
-      |            status            |                 in-use                   |
-      |    volume_image_metadata     |       {u'kernel_id': u'df430cc2...,      |
-      |                              |        u'image_id': u'397e713c...,       |
-      |                              |        u'ramdisk_id': u'3cf852bd...,     |
-      |                              |u'image_name': u'cirros-0.3.2-x86_64-uec'}|
-      |         volume_type          |                  None                    |
-      +------------------------------+------------------------------------------+
+      +------------------------------+-----------------------------------------------+
+      | Field                        | Value                                         |
+      +------------------------------+-----------------------------------------------+
+      | attachments                  | [{u'device': u'/dev/vdb',                     |
+      |                              |        u'server_id': u'84c6e57d-a             |
+      |                              |           u'id': u'573e024d-...               |
+      |                              |        u'volume_id': u'573e024d...            |                                         |
+      | availability_zone            | nova                                          |
+      | bootable                     | true                                          |
+      | consistencygroup_id          | None                                          |
+      | created_at                   | 2016-10-13T06:08:07.000000                    |
+      | description                  | None                                          |
+      | encrypted                    | False                                         |
+      | id                           | 573e024d-5235-49ce-8332-be1576d323f8          |
+      | multiattach                  | False                                         |
+      | name                         | my-new-volume                                 |
+      | os-vol-tenant-attr:tenant_id | 7ef070d3fee24bdfae054c17ad742e28              |
+      | properties                   |                                               |
+      | replication_status           | disabled                                      |
+      | size                         | 8                                             |
+      | snapshot_id                  | None                                          |
+      | source_volid                 | None                                          |
+      | status                       | in-use                                        |
+      | type                         | lvmdriver-1                                   |
+      | updated_at                   | 2016-10-13T06:08:11.000000                    |
+      | user_id                      | 33fdc37314914796883706b33e587d51              |
+      | volume_image_metadata        |{u'kernel_id': u'df430cc2...,                  |
+      |                              |        u'image_id': u'397e713c...,            |
+      |                              |        u'ramdisk_id': u'3cf852bd...,          |
+      |                              |u'image_name': u'cirros-0.3.2-x86_64-uec'}     |
+      +------------------------------+-----------------------------------------------+
+
+
 
 .. _Resize_a_volume:
 
@@ -322,13 +341,13 @@ Resize a volume
 
    .. code-block:: console
 
-      $ cinder list
-      +----------------+-----------+-----------------+------+-------------+----------+-------------+
-      |       ID       |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
-      +----------------+-----------+-----------------+------+-------------+----------+-------------+
-      | 573e024d-52... | available |  my-new-volume  |  8   |     None    |   true   |             |
-      | bd7cf584-45... | available | my-bootable-vol |  8   |     None    |   true   |             |
-      +----------------+-----------+-----------------+------+-------------+----------+-------------+
+      $ openstack volume list
+      +----------------+-----------------+-----------+------+-------------+
+      |       ID       |   Display Name  |  Status   | Size | Attached to |
+      +----------------+-----------------+-----------+------+-------------+
+      | 573e024d-52... |  my-new-volume  | available |  8   |             |
+      | bd7cf584-45... | my-bootable-vol | available |  8   |             |
+      +----------------+-----------------+-----------+------+-------------+
 
    Note that the volume is now available.
 
@@ -359,7 +378,7 @@ Delete a volume
 
    .. code-block:: console
 
-      $ cinder delete my-new-volume
+      $ openstack volume delete my-new-volume
 
    The :command:`cinder delete` command does not return any output.
 
@@ -368,25 +387,25 @@ Delete a volume
 
    .. code-block:: console
 
-      $ cinder list
-      +-----------------+-----------+-----------------+------+-------------+----------+-------------+
-      |        ID       |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
-      +-----------------+-----------+-----------------+------+-------------+----------+-------------+
-      | 573e024d-523... |  deleting |  my-new-volume  |  8   |     None    |   true   |             |
-      | bd7cf584-45d... | available | my-bootable-vol |  8   |     None    |   true   |             |
-      +-----------------+-----------+-----------------+------+-------------+----------+-------------+
+      $ openstack volume list
+      +----------------+-----------------+-----------+------+-------------+
+      |       ID       |   Display Name  |  Status   | Size | Attached to |
+      +----------------+-----------------+-----------+------+-------------+
+      | 573e024d-52... |  my-new-volume  |  deleting |  8   |             |
+      | bd7cf584-45... | my-bootable-vol | available |  8   |             |
+      +----------------+-----------------+-----------+------+-------------+
 
    When the volume is fully deleted, it disappears from the list of
    volumes:
 
    .. code-block:: console
 
-      $ cinder list
-      +-----------------+-----------+-----------------+------+-------------+----------+-------------+
-      |       ID        |   Status  |   Display Name  | Size | Volume Type | Bootable | Attached to |
-      +-----------------+-----------+-----------------+------+-------------+----------+-------------+
-      | bd7cf584-45d... | available | my-bootable-vol |  8   |     None    |   true   |             |
-      +-----------------+-----------+-----------------+------+-------------+----------+-------------+
+      $ openstack volume list
+      +----------------+-----------------+-----------+------+-------------+
+      |       ID       |   Display Name  |  Status   | Size | Attached to |
+      +----------------+-----------------+-----------+------+-------------+
+      | bd7cf584-45... | my-bootable-vol | available |  8   |             |
+      +----------------+-----------------+-----------+------+-------------+
 
 Transfer a volume
 ~~~~~~~~~~~~~~~~~
@@ -418,20 +437,24 @@ Create a volume transfer request
 
    .. code-block:: console
 
-      $ cinder list
-      +-----------------+-----------+--------------+------+-------------+----------+-------------+
-      |        ID       |   Status  | Display Name | Size | Volume Type | Bootable | Attached to |
-      +-----------------+-----------+--------------+------+-------------+----------+-------------+
-      | 72bfce9f-cac... |   error   |     None     |  1   |     None    |  false   |             |
-      | a1cdace0-08e... | available |     None     |  1   |     None    |  false   |             |
-      +-----------------+-----------+--------------+------+-------------+----------+-------------+
+      $ openstack volume list
+      +-----------------+-----------------+-----------+------+-------------+
+      |       ID        |   Display Name  |  Status   | Size | Attached to |
+      +-----------------+-----------------+-----------+------+-------------+
+      | 72bfce9f-cac... |       None      |   error   |  1   |             |
+      | a1cdace0-08e... |       None      | available |  1   |             |
+      +-----------------+-----------------+-----------+------+-------------+
+
 
 #. As the volume donor, request a volume transfer authorization code for a
    specific volume:
 
    .. code-block:: console
 
-      $ cinder transfer-create volumeID
+      $ cinder transfer-create <volume>
+
+    <volume>
+       Name or ID of volume to transfer.
 
    The volume must be in an ``available`` state or the request will be
    denied. If the transfer request is valid in the database (that is, it
@@ -475,7 +498,7 @@ Create a volume transfer request
 
    .. code-block:: console
 
-      $ cinder transfer-list
+      $ openstack volume transfer request list
       +--------------------------------------+--------------------------------------+------+
       |               ID                     |             VolumeID                 | Name |
       +--------------------------------------+--------------------------------------+------+
@@ -487,7 +510,7 @@ Create a volume transfer request
 
    .. code-block:: console
 
-      $ cinder transfer-list
+      $ openstack volume transfer request list
       +----+-----------+------+
       | ID | Volume ID | Name |
       +----+-----------+------+
@@ -530,19 +553,20 @@ Delete a volume transfer
 
    .. code-block:: console
 
-      $ cinder list
-      +-------------+-----------------+--------------+------+-------------+----------+-------------+
-      |     ID      |      Status     | Display Name | Size | Volume Type | Bootable | Attached to |
-      +-------------+-----------------+--------------+------+-------------+----------+-------------+
-      | 72bfce9f... |      error      |     None     |  1   |     None    |  false   |             |
-      | a1cdace0... |awaiting-transfer|     None     |  1   |     None    |  false   |             |
-      +-------------+-----------------+--------------+------+-------------+----------+-------------+
+      $ openstack volume list
+      +-----------------+-----------------+-----------------+------+-------------+
+      |       ID        |   Display Name  |      Status     | Size | Attached to |
+      +-----------------+-----------------+-----------------+------+-------------+
+      | 72bfce9f-cac... |       None      |      error      |  1   |             |
+      | a1cdace0-08e... |       None      |awaiting-transfer|  1   |             |
+      +-----------------+-----------------+-----------------+------+-------------+
+
 
 #. Find the matching transfer ID:
 
    .. code-block:: console
 
-      $ cinder transfer-list
+      $ openstack volume transfer request list
       +--------------------------------------+--------------------------------------+------+
       |               ID                     |             VolumeID                 | Name |
       +--------------------------------------+--------------------------------------+------+
@@ -553,7 +577,10 @@ Delete a volume transfer
 
    .. code-block:: console
 
-      $ cinder transfer-delete transferID
+      $ cinder transfer-delete transfer
+
+   <transfer>
+      Name or ID of transfer to delete.
 
    For example:
 
@@ -566,7 +593,7 @@ Delete a volume transfer
 
    .. code-block:: console
 
-      $ cinder transfer-list
+      $ openstack volume transfer request list
       +----+-----------+------+
       | ID | Volume ID | Name |
       +----+-----------+------+
@@ -574,7 +601,7 @@ Delete a volume transfer
 
    .. code-block:: console
 
-      $ cinder list
+      $ openstack volume transfer request list
       +-----------------+-----------+--------------+------+-------------+----------+-------------+
       |       ID        |   Status  | Display Name | Size | Volume Type | Bootable | Attached to |
       +-----------------+-----------+--------------+------+-------------+----------+-------------+
@@ -595,14 +622,16 @@ Manage a snapshot with the :command:`cinder snapshot-manage` command:
 
 .. code-block:: console
 
-   $ cinder snapshot-manage VOLUME_ID IDENTIFIER --id-type ID-TYPE \
-     --name NAME --description DESCRIPTION --metadata METADATA
+   $ cinder snapshot-manage  --id-type ID-TYPE \
+     --name NAME --description DESCRIPTION --metadata METADATA \
+     VOLUME_ID IDENTIFIER
 
 The arguments to be passed are:
 
 ``VOLUME_ID``
  The ID of a volume that is the parent of the snapshot, and managed by the
  Block Storage service.
+ Cinder volume already exists in volume back end.
 
 ``IDENTIFIER``
  Name, ID, or other identifier for an existing snapshot.
