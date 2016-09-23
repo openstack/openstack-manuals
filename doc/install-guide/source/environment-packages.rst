@@ -124,49 +124,36 @@ these procedures on all nodes.
 
         # zypper addrepo -f obs://Cloud:OpenStack:Newton/openSUSE_Leap_42.1 Newton
 
-   .. note::
+     .. note::
 
-      For pre-release testing, use the master repository:
+        The openSUSE distribution uses the concept of patterns to
+        represent collections of packages. If you selected 'Minimal
+        Server Selection (Text Mode)' during the initial installation,
+        you may be presented with a dependency conflict when you
+        attempt to install the OpenStack packages. To avoid this,
+        remove the minimal\_base-conflicts package:
 
-      .. code-block:: console
+        .. code-block:: console
 
-         # zypper addrepo -f obs://Cloud:OpenStack:Master/openSUSE_Leap_42.1 Master
+           # zypper rm patterns-openSUSE-minimal_base-conflicts
 
-      The openSUSE distribution uses the concept of patterns to represent
-      collections of packages. If you selected 'Minimal Server Selection (Text
-      Mode)' during the initial installation, you may be presented with a
-      dependency conflict when you attempt to install the OpenStack packages.
-      To avoid this, remove the minimal\_base-conflicts package:
+     **On SLES:**
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # zypper rm patterns-openSUSE-minimal_base-conflicts
+        # zypper addrepo -f obs://Cloud:OpenStack:Newton/SLE_12_SP1 Newton
 
-      **On SLES:**
+     .. note::
 
-      .. code-block:: console
+        The packages are signed by GPG key ``D85F9316``. You should
+        verify the fingerprint of the imported GPG key before using it.
 
-         # zypper addrepo -f obs://Cloud:OpenStack:Newton/SLE_12_SP1 Newton
+        .. code-block:: console
 
-      .. note::
-
-         The packages are signed by GPG key ``D85F9316``. You should
-         verify the fingerprint of the imported GPG key before using it.
-
-         .. code-block:: console
-
-            Key Name:         Cloud:OpenStack OBS Project <Cloud:OpenStack@build.opensuse.org>
-            Key Fingerprint:  35B34E18 ABC1076D 66D5A86B 893A90DA D85F9316
-            Key Created:      2015-12-16T16:48:37 CET
-            Key Expires:      2018-02-23T16:48:37 CET
-
-   .. note::
-
-      For pre-release testing, use the master repository:
-
-      .. code-block:: console
-
-         # zypper addrepo -f obs://Cloud:OpenStack:Master/SLE_12_SP1 Master
+           Key Name:         Cloud:OpenStack OBS Project <Cloud:OpenStack@build.opensuse.org>
+           Key Fingerprint:  35B34E18 ABC1076D 66D5A86B 893A90DA D85F9316
+           Key Created:      2015-12-16T16:48:37 CET
+           Key Expires:      2018-02-23T16:48:37 CET
 
 .. only:: debian
 
