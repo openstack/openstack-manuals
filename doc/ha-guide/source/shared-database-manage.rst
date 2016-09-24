@@ -176,8 +176,10 @@ strategies:
   ``SELECT ... FOR UPDATE`` type queries (used, for example, by nova
   and neutron). This issue is discussed more in the following:
 
-  - http://lists.openstack.org/pipermail/openstack-dev/2014-May/035264.html
-  - http://www.joinfu.com/
+  - `IMPORTANT: MySQL Galera does *not* support SELECT ... FOR UPDATE
+    <http://lists.openstack.org/pipermail/openstack-dev/2014-May/035264.html>`_
+  - `Understanding reservations, concurrency, and locking in Nova
+    <http://www.joinfu.com/2015/01/understanding-reservations-concurrency-locking-in-nova/>`_
 
 Of these options, the second one is highly recommended. Although Galera
 supports active/active configurations, we recommend active/passive
