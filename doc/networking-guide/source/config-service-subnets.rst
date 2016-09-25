@@ -66,11 +66,10 @@ Usage
       | provider:network_type     | vxlan                                |
       | provider:physical_network | None                                 |
       | provider:segmentation_id  | 110                                  |
-      | router:external           | False                                |
+      | router:external           | Internal                             |
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | a8b3054cc1214f18b1186b291525650f     |
       | tags                      | []                                   |
       +---------------------------+--------------------------------------+
 
