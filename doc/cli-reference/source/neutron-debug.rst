@@ -23,15 +23,25 @@ neutron-debug usage
 .. code-block:: console
 
    usage: neutron-debug [--version] [-v] [-q] [-h] [-r NUM]
-                        [--os-password <auth-password>]
-                        [--os-tenant-name <auth-tenant-name>]
-                        [--os-tenant-id <auth-tenant-id>] [--os-auth-url <auth-url>]
-                        [--os-region-name <region-name>] [--service-type <service-type>]
-                        [--service-name <service-name>]
-                        [--volume-service-name <volume-service-name>]
+                        [--os-service-type <os-service-type>]
+                        [--os-endpoint-type <os-endpoint-type>]
+                        [--service-type <service-type>]
                         [--endpoint-type <endpoint-type>]
-                        [--os-volume-api-version <volume-api-ver>]
-                        [--os-cacert <ca-certificate>] [--retries <retries>]
+                        [--os-auth-strategy <auth-strategy>] [--os-cloud <cloud>]
+                        [--os-auth-url <auth-url>]
+                        [--os-tenant-name <auth-tenant-name> | --os-project-name <auth-project-name>]
+                        [--os-tenant-id <auth-tenant-id> | --os-project-id <auth-project-id>]
+                        [--os-username <auth-username>]
+                        [--os-user-id <auth-user-id>]
+                        [--os-user-domain-id <auth-user-domain-id>]
+                        [--os-user-domain-name <auth-user-domain-name>]
+                        [--os-project-domain-id <auth-project-domain-id>]
+                        [--os-project-domain-name <auth-project-domain-name>]
+                        [--os-cert <certificate>] [--os-cacert <ca-certificate>]
+                        [--os-key <key>] [--os-password <auth-password>]
+                        [--os-region-name <auth-region-name>]
+                        [--os-token <token>] [--http-timeout <seconds>]
+                        [--os-url <url>] [--insecure] [--config-file CONFIG_FILE]
                         <subcommand> ...
 
 Subcommands
@@ -62,59 +72,122 @@ neutron-debug optional arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``--version``
-  Show version number and exit.
+  Show program's version number and exit
 
 ``-v, --verbose, --debug``
-  Increase verbosity of output and show tracebacks on errors. Can be repeated.
+  Increase verbosity of output and show tracebacks on
+  errors. You can repeat this option.
 
 ``-q, --quiet``
-  Suppress output except warnings and errors
+  Suppress output except warnings and errors.
 
 ``-h, --help``
   Show this help message and exit
 
-``--os-auth-strategy <auth-strategy>``
-  Authentication strategy (Env: ``OS_AUTH_STRATEGY``, default ``keystone``).
-  For now, any other value will disable the authentication
+``-r NUM, --retries NUM``
+  How many times the request to the Neutron server
+  should be retried if it fails.
 
-``--os-auth-url <auth-url>``
-  Authentication URL (Env: ``OS_AUTH_URL``)
+``--os-service-type <os-service-type>``
+  Defaults to env[OS_NETWORK_SERVICE_TYPE] or network.
 
-``--os-tenant-name <auth-tenant-name>``
-  Authentication tenant name (Env: ``OS_TENANT_NAME``)
+``--os-endpoint-type <os-endpoint-type>``
+  Defaults to ``env[OS_ENDPOINT_TYPE]`` or public.
 
-``--os-tenant-id <auth-tenant-id>``
-  Authentication tenant name (Env: ``OS_TENANT_ID``)
-
-``--os-username <auth-username>``
-  Authentication username (Env: ``OS_USERNAME``)
-
-``--os-password <auth-password>``
-  Authentication password (Env: ``OS_PASSWORD``)
-
-``--os-region-name <auth-region-name>``
-  Authentication region name (Env: ``OS_REGION_NAME``)
-
-``--os-token <token>``
-  Defaults to ``env[OS_TOKEN]``
+``--service-type <service-type>``
+  DEPRECATED! Use --os-service-type.
 
 ``--endpoint-type <endpoint-type>``
-  Defaults to ``env[OS_ENDPOINT_TYPE]`` or public URL.
+  DEPRECATED! Use --os-endpoint-type.
 
-``--os-url <url>``
-  Defaults to ``env[OS_URL]``
+``--os-auth-strategy <auth-strategy>``
+  DEPRECATED! Only keystone is supported.
+
+``os-cloud <cloud>``
+  Defaults to env[OS_CLOUD].
+
+``--os-auth-url <auth-url>``
+  Authentication URL, defaults to env[OS_AUTH_URL].
+
+``--os-tenant-name <auth-tenant-name>``
+  Authentication tenant name, defaults to
+  env[OS_TENANT_NAME].
+
+``--os-project-name <auth-project-name>``
+  Another way to specify tenant name. This option is
+  mutually exclusive with --os-tenant-name. Defaults to
+  env[OS_PROJECT_NAME].
+
+``--os-tenant-id <auth-tenant-id>``
+  Authentication tenant ID, defaults to
+  env[OS_TENANT_ID].
+
+``--os-project-id <auth-project-id>``
+  Another way to specify tenant ID. This option is
+  mutually exclusive with --os-tenant-id. Defaults to
+  env[OS_PROJECT_ID].
+
+``--os-username <auth-username>``
+  Authentication username, defaults to env[OS_USERNAME].
+
+``--os-user-id <auth-user-id>``
+  Authentication user ID (Env: OS_USER_ID)
+
+``--os-user-domain-id <auth-user-domain-id>``
+  OpenStack user domain ID. Defaults to
+  env[OS_USER_DOMAIN_ID].
+
+``--os-user-domain-name <auth-user-domain-name>``
+  OpenStack user domain name. Defaults to
+  env[OS_USER_DOMAIN_NAME].
+
+``--os-project-domain-id <auth-project-domain-id>``
+  Defaults to env[OS_PROJECT_DOMAIN_ID].
+
+``--os-project-domain-name <auth-project-domain-name>``
+  Defaults to env[OS_PROJECT_DOMAIN_NAME].
+
+``--os-cert <certificate>``
+  Path of certificate file to use in SSL connection.
+  This file can optionally be prepended with the private
+  key. Defaults to env[OS_CERT].
 
 ``--os-cacert <ca-certificate>``
-  Specify a CA bundle file to use in verifying a TLS (HTTPS) server
-  certificate. Defaults to ``env[OS_CACERT]``
+  Specify a CA bundle file to use in verifying a TLS
+  (https) server certificate. Defaults to
+  env[OS_CACERT].
+
+``--os-key <key>``
+  Path of client key to use in SSL connection. This
+  option is not necessary if your key is prepended to
+  your certificate file. Defaults to env[OS_KEY].
+
+``--os-password <auth-password>``
+  Authentication password, defaults to env[OS_PASSWORD].
+
+``--os-region-name <auth-region-name>``
+  Authentication region name, defaults to
+  env[OS_REGION_NAME].
+
+``--os-token <token>``
+  Authentication token, defaults to env[OS_TOKEN].
+
+``--http-timeout <seconds>``
+  Timeout in seconds to wait for an HTTP response.
+  Defaults to env[OS_NETWORK_TIMEOUT] or None if not
+  specified.
+
+``--os-url <url>``
+  Defaults to env[OS_URL]
 
 ``--insecure``
-  Explicitly allow neutron-debug to perform "insecure" SSL (HTTPS) requests.
-  The server's certificate will not be verified against any certificate
-  authorities. This option should be used with caution.
+  Explicitly allow neutronclient to perform "insecure"
+  SSL (https) requests. The server's certificate will
+  not be verified against any certificate authorities.
+  This option should be used with caution.
 
 ``--config-file CONFIG_FILE``
-  Config file for interface driver (You may also use ``l3_agent.ini``)
+  Config file for interface driver (You may also use l3_agent.ini)
 
 neutron-debug probe-create command
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
