@@ -2,20 +2,20 @@
 Example: Ubuntu image
 =====================
 
-This example installs a Ubuntu 14.04 (Trusty Tahr) image.
+This example installs an Ubuntu 14.04 (Trusty Tahr) image.
 To create an image for a different version of Ubuntu,
 follow these steps with the noted differences.
 
-Download an Ubuntu install ISO
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Download an Ubuntu installation ISO
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because the goal is to make the smallest possible base image,
 this example uses the network installation ISO.
-The Ubuntu 64-bit 14.04 network installer ISO is at
+The Ubuntu 64-bit 14.04 network installation ISO is at
 http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/mini.iso.
 
-Start the install process
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Start the installation process
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Start the installation process by using either :command:`virt-manager`
 or :command:`virt-install` as described in the previous section.
@@ -39,11 +39,11 @@ the commands should look something like this:
      --graphics vnc,listen=0.0.0.0 --noautoconsole \
      --os-type=linux --os-variant=ubuntutrusty
 
-Step through the install
-~~~~~~~~~~~~~~~~~~~~~~~~
+Step through the installation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At the initial Installer boot menu, choose the :guilabel:`Install` option.
-Step through the install prompts, the defaults should be fine.
+Step through the installation prompts, the defaults should be fine.
 
 .. figure:: figures/ubuntu-install.png
    :width: 100%
