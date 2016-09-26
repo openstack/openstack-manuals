@@ -428,7 +428,7 @@ options to the ``nova.conf`` file:
    compute_driver = vmwareapi.VMwareVCDriver
 
    [vmware]
-   host_ip = <vCenter host IP>
+   host_ip = <vCenter hostname or IP address>
    host_username = <vCenter username>
    host_password = <vCenter password>
    cluster_name = <vCenter cluster name>
@@ -457,7 +457,7 @@ options to the ``nova.conf`` file:
 
    * The minimum supported vCenter version is 5.1.0.
      Starting in the OpenStack Liberty release this will be logged as a
-     warning. In the OpenStack Newton release this will be enforced.
+     warning. In the OpenStack Ocata release this will be enforced.
 
 A ``nova-compute`` service can control one or more clusters containing
 multiple ESXi hosts, making ``nova-compute`` a critical service from a
@@ -981,4 +981,3 @@ Configuration reference
 
 To customize the VMware driver, use the configuration option settings
 documented in :ref:`nova-vmware`.
-
