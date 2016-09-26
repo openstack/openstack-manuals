@@ -53,7 +53,6 @@ Install and configure components
 
          # rabbitmqctl add_user openstack RABBIT_PASS
          Creating user "openstack" ...
-         ...done.
 
       Replace ``RABBIT_PASS`` with a suitable password.
 
@@ -64,7 +63,6 @@ Install and configure components
 
          # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
          Setting permissions for user "openstack" in vhost "/" ...
-         ...done.
 
 .. only:: ubuntu or debian
 
