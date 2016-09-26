@@ -55,7 +55,7 @@ Set up project specific installation guides:
 
    .. code-block:: none
 
-      openstackdocstheme>=1.0.3  # Apache-2.0
+      openstackdocstheme>=1.5.0  # Apache-2.0
 
 #. Commit the changes to your project repository for review.
 
