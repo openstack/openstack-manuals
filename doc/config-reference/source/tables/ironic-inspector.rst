@@ -18,9 +18,23 @@
      - Description
    * - **[inspector]**
      -
+   * - ``auth_section`` = ``None``
+     - (Unknown) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Unknown) Authentication type to load
+   * - ``cafile`` = ``None``
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``certfile`` = ``None``
+     - (String) PEM encoded client certificate cert file
    * - ``enabled`` = ``False``
      - (Boolean) whether to enable inspection using ironic-inspector
+   * - ``insecure`` = ``False``
+     - (Boolean) Verify HTTPS connections.
+   * - ``keyfile`` = ``None``
+     - (String) PEM encoded client certificate key file
    * - ``service_url`` = ``None``
-     - (String) ironic-inspector HTTP endpoint. If this is not set, the ironic-inspector client default (http://127.0.0.1:5050) will be used.
+     - (String) ironic-inspector HTTP endpoint. If this is not set, the service catalog will be used.
    * - ``status_check_period`` = ``60``
      - (Integer) period (in seconds) to check status of nodes on inspection
+   * - ``timeout`` = ``None``
+     - (Integer) Timeout value for http requests

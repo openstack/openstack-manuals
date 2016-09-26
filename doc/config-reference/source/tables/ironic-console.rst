@@ -23,8 +23,8 @@
    * - ``subprocess_timeout`` = ``10``
      - (Integer) Time (in seconds) to wait for the console subprocess to start.
    * - ``terminal`` = ``shellinaboxd``
-     - (String) Path to serial console terminal program
+     - (String) Path to serial console terminal program. Used only by Shell In A Box console.
    * - ``terminal_cert_dir`` = ``None``
-     - (String) Directory containing the terminal SSL cert(PEM) for serial console access
+     - (String) Directory containing the terminal SSL cert (PEM) for serial console access. Used only by Shell In A Box console.
    * - ``terminal_pid_dir`` = ``None``
      - (String) Directory for holding terminal pid files. If not specified, the temporary directory will be used.

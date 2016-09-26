@@ -20,8 +20,16 @@
      -
    * - ``allowed_direct_url_schemes`` =
      - (List) A list of URL schemes that can be downloaded directly via the direct_url. Currently supported schemes: [file].
+   * - ``auth_section`` = ``None``
+     - (Unknown) Config Section from which to load plugin specific options
    * - ``auth_strategy`` = ``keystone``
      - (String) Authentication strategy to use when connecting to glance.
+   * - ``auth_type`` = ``None``
+     - (Unknown) Authentication type to load
+   * - ``cafile`` = ``None``
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``certfile`` = ``None``
+     - (String) PEM encoded client certificate cert file
    * - ``glance_api_insecure`` = ``False``
      - (Boolean) Allow to perform insecure SSL (https) requests to glance.
    * - ``glance_api_servers`` = ``None``
@@ -36,6 +44,10 @@
      - (Port number) Default glance port.
    * - ``glance_protocol`` = ``http``
      - (String) Default protocol to use when connecting to glance. Set to https for SSL.
+   * - ``insecure`` = ``False``
+     - (Boolean) Verify HTTPS connections.
+   * - ``keyfile`` = ``None``
+     - (String) PEM encoded client certificate key file
    * - ``swift_account`` = ``None``
      - (String) The account that Glance uses to communicate with Swift. The format is "AUTH_uuid". "uuid" is the UUID for the account configured in the glance-api.conf. Required for temporary URLs when Glance backend is Swift. For example: "AUTH_a422b2-91f3-2f46-74b7-d7c9e8958f5d30". Swift temporary URL format: "endpoint_url/api_version/[account/]container/object_id"
    * - ``swift_api_version`` = ``v1``
@@ -56,3 +68,5 @@
      - (String) The secret token given to Swift to allow temporary URL downloads. Required for temporary URLs.
    * - ``temp_url_endpoint_type`` = ``swift``
      - (String) Type of endpoint to use for temporary URLs. If the Glance backend is Swift, use "swift"; if it is CEPH with RADOS gateway, use "radosgw".
+   * - ``timeout`` = ``None``
+     - (Integer) Timeout value for http requests

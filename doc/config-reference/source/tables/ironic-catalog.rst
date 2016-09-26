@@ -8,15 +8,15 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _ironic-swift:
+.. _ironic-catalog:
 
-.. list-table:: Description of swift configuration options
+.. list-table:: Description of catalog configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[swift]**
+   * - **[service_catalog]**
      -
    * - ``auth_section`` = ``None``
      - (Unknown) Config Section from which to load plugin specific options
@@ -30,7 +30,5 @@
      - (Boolean) Verify HTTPS connections.
    * - ``keyfile`` = ``None``
      - (String) PEM encoded client certificate key file
-   * - ``swift_max_retries`` = ``2``
-     - (Integer) Maximum number of times to retry a Swift request, before failing.
    * - ``timeout`` = ``None``
      - (Integer) Timeout value for http requests

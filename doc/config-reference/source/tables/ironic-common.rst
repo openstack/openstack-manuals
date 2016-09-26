@@ -22,12 +22,16 @@
      - (String) Directory where ironic binaries are installed.
    * - ``debug_tracebacks_in_api`` = ``False``
      - (Boolean) Return server tracebacks in the API response for any error responses. WARNING: this is insecure and should not be used in a production environment.
+   * - ``default_network_interface`` = ``None``
+     - (String) Default network interface to be used for nodes that do not have network_interface field set. A complete list of network interfaces present on your system may be found by enumerating the "ironic.hardware.interfaces.network" entrypoint.
    * - ``enabled_drivers`` = ``pxe_ipmitool``
      - (List) Specify the list of drivers to load during service initialization. Missing drivers, or drivers which fail to initialize, will prevent the conductor service from starting. The option default is a recommended set of production-oriented drivers. A complete list of drivers present on your system may be found by enumerating the "ironic.drivers" entrypoint. An example may be found in the developer documentation online.
+   * - ``enabled_network_interfaces`` = ``flat, noop``
+     - (List) Specify the list of network interfaces to load during service initialization. Missing network interfaces, or network interfaces which fail to initialize, will prevent the conductor service from starting. The option default is a recommended set of production-oriented network interfaces. A complete list of network interfaces present on your system may be found by enumerating the "ironic.hardware.interfaces.network" entrypoint. This value must be the same on all ironic-conductor and ironic-api services, because it is used by ironic-api service to validate a new or updated node's network_interface value.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
-   * - ``fatal_deprecations`` = ``False``
-     - (Boolean) Enables or disables fatal status of deprecations.
+   * - ``fatal_exception_format_errors`` = ``False``
+     - (Boolean) Used if there is a formatting error when generating an exception message (a programming error). If True, raise an exception; if False, use the unformatted message.
    * - ``force_raw_images`` = ``True``
      - (Boolean) If True, convert backing images to "raw" disk image format.
    * - ``grub_config_template`` = ``$pybasedir/common/grub_conf.template``
@@ -44,14 +48,12 @@
      - (String) Path to isolinux binary file.
    * - ``isolinux_config_template`` = ``$pybasedir/common/isolinux_config.template``
      - (String) Template file for isolinux configuration file.
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
-   * - ``my_ip`` = ``10.0.0.1``
+   * - ``my_ip`` = ``127.0.0.1``
      - (String) IP address of this host. If unset, will determine the IP programmatically. If unable to do so, will use "127.0.0.1".
+   * - ``notification_level`` = ``None``
+     - (String) Specifies the minimum level for which to send notifications. If not set, no notifications will be sent. The default is for this option to be unset.
    * - ``parallel_image_downloads`` = ``False``
      - (Boolean) Run image downloads and raw format conversions in parallel.
-   * - ``periodic_interval`` = ``60``
-     - (Integer) DEPRECATED: Default interval (in seconds) for running driver periodic tasks.
    * - ``pybasedir`` = ``/usr/lib/python/site-packages/ironic/ironic``
      - (String) Directory where the ironic python module is installed.
    * - ``rootwrap_config`` = ``/etc/ironic/rootwrap.conf``

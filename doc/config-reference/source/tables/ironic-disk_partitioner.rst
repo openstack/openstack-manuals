@@ -24,6 +24,8 @@
      - (Integer) The maximum number of times to check that the device is not accessed by another process. If the device is still busy after that, the disk partitioning will be treated as having failed.
    * - **[disk_utils]**
      -
+   * - ``bios_boot_partition_size`` = ``1``
+     - (Integer) Size of BIOS Boot partition in MiB when configuring GPT partitioned systems for local boot in BIOS.
    * - ``dd_block_size`` = ``1M``
      - (String) Block size to use when writing to the nodes disk.
    * - ``efi_system_partition_size`` = ``200``
