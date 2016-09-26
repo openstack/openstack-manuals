@@ -43,24 +43,17 @@ Install and configure components
    3. Create and edit the ``/etc/mysql/conf.d/openstack.cnf`` file
       and complete the following actions:
 
-      - In the ``[mysqld]`` section, set the
-        ``bind-address`` key to the management IP
-        address of the controller node to enable access by other
-        nodes via the management network:
+      - Create a ``[mysqld]`` section, and set the ``bind-address``
+        key to the management IP address of the controller node to
+        enable access by other nodes via the management network. Set
+        additional keys to enable useful options and the UTF-8
+        character set:
 
         .. code-block:: ini
 
            [mysqld]
-           ...
            bind-address = 10.0.0.11
 
-      - In the ``[mysqld]`` section, set the following keys to enable
-        useful options and the UTF-8 character set:
-
-        .. code-block:: ini
-
-           [mysqld]
-           ...
            default-storage-engine = innodb
            innodb_file_per_table
            max_connections = 4096
@@ -72,24 +65,17 @@ Install and configure components
    2. Create and edit the ``/etc/my.cnf.d/openstack.cnf`` file
       and complete the following actions:
 
-      - In the ``[mysqld]`` section, set the
-        ``bind-address`` key to the management IP
-        address of the controller node to enable access by other
-        nodes via the management network:
+      - Create a ``[mysqld]`` section, and set the ``bind-address``
+        key to the management IP address of the controller node to
+        enable access by other nodes via the management network. Set
+        additional keys to enable useful options and the UTF-8
+        character set:
 
         .. code-block:: ini
 
            [mysqld]
-           ...
            bind-address = 10.0.0.11
 
-      - In the ``[mysqld]`` section, set the following keys to enable
-        useful options and the UTF-8 character set:
-
-        .. code-block:: ini
-
-           [mysqld]
-           ...
            default-storage-engine = innodb
            innodb_file_per_table
            max_connections = 4096
