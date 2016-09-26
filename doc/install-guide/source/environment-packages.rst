@@ -101,20 +101,6 @@ these procedures on all nodes.
 
         # yum install https://rdoproject.org/repos/rdo-release.rpm
 
-   .. note::
-
-      For pre-release testing on CentOS or RHEL, install the
-      ``yum-plugin-priorities`` package so that the Delorean repository takes
-      precedence over the main RDO repositories, and use the Delorean
-      repositories:
-
-      .. code-block:: console
-
-         # yum install yum-plugin-priorities
-         # cd /etc/yum.repos.d/
-         # curl -O http://trunk.rdoproject.org/centos7/delorean-deps.repo
-         # curl -O http://trunk.rdoproject.org/centos7/current-passed-ci/delorean.repo
-
 .. only:: obs
 
    Enable the OpenStack repository
