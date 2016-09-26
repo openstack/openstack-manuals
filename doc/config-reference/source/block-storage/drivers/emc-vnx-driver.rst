@@ -1,20 +1,21 @@
 ==============
 EMC VNX driver
 ==============
-EMC VNX driver consists of EMCCLIISCSIDriver and EMCCLIFCDriver, and supports
-both iSCSI and FC protocol. ``EMCCLIISCSIDriver`` (VNX iSCSI driver) and
-``EMCCLIFCDriver`` (VNX FC driver) are separately based on the ``ISCSIDriver``
-and ``FCDriver`` defined in the Block Storage service.
+EMC VNX driver interacts with configured VNX array. It supports
+both iSCSI and FC protocol.
 
-The VNX iSCSI driver and VNX FC driver perform the volume operations by
+The VNX cinder driver performs the volume operations by
 executing Navisphere CLI (NaviSecCLI) which is a command-line interface used
-for management, diagnostics, and reporting functions for VNX.
+for management, diagnostics, and reporting functions for VNX. It also
+supports both iSCSI and FC protocol.
+
 
 System requirements
 ~~~~~~~~~~~~~~~~~~~
 
 -  VNX Operational Environment for Block version 5.32 or higher.
 -  VNX Snapshot and Thin Provisioning license should be activated for VNX.
+-  Python library ``storops`` to interact with VNX.
 -  Navisphere CLI v7.32 or higher is installed along with the driver.
 
 Supported operations
@@ -40,8 +41,8 @@ Supported operations
 Preparation
 ~~~~~~~~~~~
 This section contains instructions to prepare the Block Storage nodes to
-use the EMC VNX driver. You install the Navisphere CLI, ensure you have
-correct zoning configurations.
+use the EMC VNX driver. You should install the Navisphere CLI and ensure you
+have correct zoning configurations.
 
 Install Navisphere CLI
 ----------------------
@@ -51,19 +52,25 @@ an OpenStack deployment. You need to download different versions for
 different platforms:
 
 -  For Ubuntu x64, DEB is available at `EMC OpenStack
-   Github <https://github.com/emc-openstack/naviseccli>`__.
+   Github <https://github.com/emc-openstack/naviseccli>`_.
 
 -  For all other variants of Linux, Navisphere CLI is available at
    `Downloads for VNX2
-   Series <https://support.emc.com/downloads/36656_VNX2-Series>`__ or
+   Series <https://support.emc.com/downloads/36656_VNX2-Series>`_ or
    `Downloads for VNX1
-   Series <https://support.emc.com/downloads/12781_VNX1-Series>`__.
+   Series <https://support.emc.com/downloads/12781_VNX1-Series>`_.
 
-- After installation, set the security level of Navisphere CLI to ``low``:
+Install Python library storops
+------------------------------
+
+``storops`` is a Python library that interacts with VNX array through
+Navisphere CLI.
+Use the following command to install the ``storops`` library:
 
 .. code-block:: console
 
-   $ /opt/Navisphere/bin/naviseccli security -certificate -setLevel low
+   $ pip install storops
+
 
 Check array software
 --------------------
@@ -120,9 +127,7 @@ Minimum configuration
 
 Here is a sample of minimum back-end configuration. See the following sections
 for the detail of each option.
-Replace ``cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver`` to
-``cinder.volume.drivers.emc.emc_cli_iscsi.EMCCLIISCSIDriver`` if the
-iSCSI driver is used.
+Set ``storage_protocol = iscsi`` if iSCSI protocol is used.
 
 .. code-block:: ini
 
@@ -134,16 +139,15 @@ iSCSI driver is used.
    san_login = sysadmin
    san_password = sysadmin
    naviseccli_path = /opt/Navisphere/bin/naviseccli
-   volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
+   volume_driver = cinder.volume.drivers.emc.vnx.driver.EMCVNXDriver
    initiator_auto_registration = True
+   storage_protocol = fc
 
 Multiple back-end configuration
 -------------------------------
 Here is a sample of a minimum back-end configuration. See following sections
 for the detail of each option.
-Replace ``cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver`` with
-``cinder.volume.drivers.emc.emc_cli_iscsi.EMCCLIISCSIDriver`` if the
-iSCSI driver is used.
+Set ``storage_protocol = iscsi`` if iSCSI protocol is used.
 
 .. code-block:: ini
 
@@ -155,8 +159,9 @@ iSCSI driver is used.
    san_ip = 10.10.72.41
    storage_vnx_security_file_dir = /etc/secfile/array1
    naviseccli_path = /opt/Navisphere/bin/naviseccli
-   volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
+   volume_driver = cinder.volume.drivers.emc.vnx.driver.EMCVNXDriver
    initiator_auto_registration = True
+   storage_protocol = fc
 
    [backendB]
    storage_vnx_pool_names = Pool_02_SAS
@@ -164,23 +169,26 @@ iSCSI driver is used.
    san_login = username
    san_password = password
    naviseccli_path = /opt/Navisphere/bin/naviseccli
-   volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
+   volume_driver = cinder.volume.drivers.emc.vnx.driver.EMCVNXDriver
    initiator_auto_registration = True
+   storage_protocol = fc
 
-For more details on multiple-storage back ends, see `Configure multiple-storage
-back ends <http://docs.openstack.org/admin-guide/blockstorage-multi-backend.html>`__
+The value of the option ``storage_protocol`` can be either ``fc`` or ``iscsi``,
+which is case insensitive.
+
+For more details on multiple back ends, see `Configure multiple-storage
+back ends <http://docs.openstack.org/admin-guide/blockstorage-multi-backend.html>`_
 
 Required configurations
 -----------------------
 
 **IP of the VNX Storage Processors**
 
-Specify the SP A and SP B IP to connect:
+Specify SP A or SP B IP to connect:
 
 .. code-block:: ini
 
-   san_ip = <IP of VNX Storage Processor A>
-   san_secondary_ip = <IP of VNX Storage Processor B>
+   san_ip = <IP of VNX Storage Processor>
 
 **VNX login credentials**
 
@@ -219,19 +227,21 @@ Specify the absolute path to your naviseccli:
 
    naviseccli_path = /opt/Navisphere/bin/naviseccli
 
-**Driver name**
+**Driver's storage protocol**
 
 -  For the FC Driver, add the following option:
 
    .. code-block:: ini
 
-      volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
+      volume_driver = cinder.volume.drivers.emc.vnx.driver.EMCVNXDriver
+      storage_protocol = fc
 
 -  For iSCSI Driver, add the following option:
 
    .. code-block:: ini
 
-      volume_driver = cinder.volume.drivers.emc.emc_cli_iscsi.EMCCLIISCSIDriver
+      volume_driver = cinder.volume.drivers.emc.vnx.driver.EMCVNXDriver
+      storage_protocol = iscsi
 
 Optional configurations
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -344,10 +354,10 @@ deleted.
 FC SAN auto zoning
 ------------------
 
-The EMC VNX FC driver supports FC SAN auto zoning when ``ZoneManager`` is
-configured. Set ``zoning_mode`` to ``fabric`` in the ``[DEFAULT]`` section to
-enable this feature. For ZoneManager configuration, refer to Block
-Storage official guide.
+The EMC VNX driver supports FC SAN auto zoning when ``ZoneManager`` is
+configured and ``zoning_mode`` is set to ``fabric`` in ``cinder.conf``.
+For ZoneManager configuration, refer to `Configuration Reference Guide
+<http://docs.openstack.org/mitaka/config-reference/block-storage/fc-zoning.html>`_.
 
 Volume number threshold
 -----------------------
@@ -504,7 +514,7 @@ Provisioning type
 .. note::
 
    ``provisioning:type`` replaces the old spec key ``storagetype:provisioning``.
-   The latter one is obsolete in the *Mitaka* release.
+   The latter one is obsolete since the *Mitaka* release.
 
 Storage tiering support
 -----------------------
@@ -595,20 +605,6 @@ Obsolete extra specs
 
 Advanced features
 ~~~~~~~~~~~~~~~~~
-
-Read-only volumes
------------------
-
-OpenStack supports read-only volumes. The following command can be used
-to set a volume as read-only.
-
-.. code-block:: console
-
-   $ cinder readonly-mode-update <volume> True
-
-After a volume is marked as read-only, the driver will forward the
-information when a hypervisor is attaching the volume and the hypervisor
-will make sure the volume is read-only.
 
 Snap copy
 ---------
@@ -732,7 +728,7 @@ below:
 
 Currently, only synchronized mode **MirrorView** is supported, and one volume
 can only have 1 secondary storage system. Therefore, you can have only one
-``replication-device`` presented in driver configuration section.
+``replication_device`` presented in driver configuration section.
 
 To create a replication enabled volume, you need to create a volume type:
 
@@ -752,8 +748,17 @@ And then create volume with above volume type:
 - Create volume
 - Create cloned volume
 - Create volume from snapshot
-- Fail-over volume (via ``cinder failover-host <secondary VNX serial number>``)
-- Fail-back volume (via ``cinder failover-host default``)
+- Fail-over volume:
+
+  .. code-block:: console
+
+     $ cinder failover-host --backend_id <secondary VNX serial number> <hostname>
+
+- Fail-back volume:
+
+  .. code-block:: console
+
+     $ cinder failover-host --backend_id default <hostname>
 
 **Requirements**
 
@@ -839,7 +844,7 @@ to ``yes`` because it may fail operations such as VM live migration.
 
    When multipath is used in OpenStack, multipath faulty devices may
    come out in Nova-Compute nodes due to different issues (`Bug
-   1336683 <https://bugs.launchpad.net/nova/+bug/1336683>`__ is a
+   1336683 <https://bugs.launchpad.net/nova/+bug/1336683>`_ is a
    typical example).
 
 A solution to completely avoid faulty devices has not been found yet.
@@ -847,7 +852,7 @@ A solution to completely avoid faulty devices has not been found yet.
 used. Cloud administrators can deploy the script in all Nova-Compute nodes and
 use a CRON job to run the script on each Nova-Compute node periodically so that
 faulty devices will not stay too long. Refer to: `VNX faulty device
-cleanup <https://github.com/emc-openstack/vnx-faulty-device-cleanup>`__ for
+cleanup <https://github.com/emc-openstack/vnx-faulty-device-cleanup>`_ for
 detailed usage and the script.
 
 Restrictions and limitations
