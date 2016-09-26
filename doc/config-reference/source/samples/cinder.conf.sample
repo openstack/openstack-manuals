@@ -992,6 +992,10 @@
 # the number of CPUs available. (integer value)
 #osapi_volume_workers = <None>
 
+# Wraps the socket in a SSL context if True is set. A certificate file and key
+# file must be specified. (boolean value)
+#osapi_volume_use_ssl = false
+
 # The full class name of the compute API class to use (string value)
 #compute_api_class = cinder.compute.nova.API
 
@@ -1252,11 +1256,10 @@
 # Storage Pool ID. (string value)
 #sio_storage_pool_id = <None>
 
-# max_over_subscription_ratio setting for the ScaleIO driver. If set, this
-# takes precedence over the general max_over_subscription_ratio option. If
-# None, the general option is used.Maximum value allowed for ScaleIO is 10.0.
-# (floating point value)
-#sio_max_over_subscription_ratio = <None>
+# max_over_subscription_ratio setting for the ScaleIO driver. This replaces the
+# general max_over_subscription_ratio which has no effect in this
+# driver.Maximum value allowed for ScaleIO is 10.0. (floating point value)
+#sio_max_over_subscription_ratio = 10.0
 
 # Driver to use for database access (string value)
 #db_driver = cinder.db
@@ -2236,29 +2239,29 @@
 #metro_storage_pools = <None>
 
 # Volume on Synology storage to be used for creating lun. (string value)
-#pool_name =
+#synology_pool_name =
 
 # Management port for Synology storage. (port value)
 # Minimum value: 0
 # Maximum value: 65535
-#admin_port = 5000
+#synology_admin_port = 5000
 
 # Administrator of Synology storage. (string value)
-#username = admin
+#synology_username = admin
 
 # Password of administrator for logging in Synology storage. (string value)
-#password =
+#synology_password =
 
 # Do certificate validation or not if $driver_use_ssl is True (boolean value)
-#ssl_verify = true
+#synology_ssl_verify = true
 
 # One time password of administrator for logging in Synology storage if OTP is
 # enabled. (string value)
-#one_time_pass = <None>
+#synology_one_time_pass = <None>
 
 # Device id for skip one time password check for logging in Synology storage if
 # OTP is enabled. (string value)
-#device_id = <None>
+#synology_device_id = <None>
 
 # Storage Center System Serial Number (integer value)
 #dell_sc_ssn = 64702
