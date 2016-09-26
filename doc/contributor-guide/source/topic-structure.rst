@@ -40,17 +40,12 @@ Structure the information around the following topics:
   * (optional) Examples
 
 **Task**
-  A task topic provides a sequence of steps detailing how to achieve a
-  certain task. A section (or chapter) is the high-level task topic.
-
-  Typically, a section includes multiple sub-sections: task, concept, and
-  reference topics. Start the title of a high-level task topic with a verb
-  in gerund and the title of a subtask topic with a verb in imperative.
-
-  Task topics are the most important topics in any technical documentation.
-  Typically, the reader browses through the table of contents searching for
-  information on how to configure the network, storage, or any other
-  component of a system.
+  A task topic provides a sequence of steps (a procedure) detailing how to
+  achieve a particular outcome, such as configuring a network. If you have
+  conceptual information related to the task, put it into an overview before
+  the procedure. Make the steps in the procedure concise. Start each step in
+  a procedure with a verb. If the step includes a command example, end the
+  introductory sentence with a colon (:).
 
   Examples of concept topic titles:
 
@@ -60,7 +55,7 @@ Structure the information around the following topics:
   A task topic includes:
 
   * Title
-  * Short description (intro)
+  * Short description (overview)
   * Procedure (a sequence of steps)
   * Result
   * Related links (See also)
