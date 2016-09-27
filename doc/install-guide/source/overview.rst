@@ -12,83 +12,9 @@ through a variety of complementary services. Each service offers an
 :term:`Application Programming Interface (API)` that facilitates this
 integration.
 
-This guide covers step-by-step deployment of the following major OpenStack
-services using a functional example architecture suitable for new users of
-OpenStack with sufficient Linux experience:
-
-.. list-table:: **OpenStack services**
-   :widths: 20 15 70
-   :header-rows: 1
-
-   * - Service
-     - Project name
-     - Description
-   * - `Dashboard <http://www.openstack.org/software/releases/liberty/components/horizon>`_
-     - `Horizon <http://docs.openstack.org/developer/horizon/>`_
-     - Provides a web-based self-service portal
-       to interact with underlying OpenStack services,
-       such as launching an instance, assigning IP
-       addresses, and configuring access controls.
-   * - `Compute <http://www.openstack.org/software/releases/liberty/components/nova>`_
-     - `Nova <http://docs.openstack.org/developer/nova/>`_
-     - Manages the lifecycle of compute instances in an
-       OpenStack environment. Responsibilities include
-       spawning, scheduling, and decommissioning of virtual
-       machines on demand.
-   * - `Networking <http://www.openstack.org/software/releases/liberty/components/neutron>`_
-     - `Neutron <http://docs.openstack.org/developer/neutron/>`_
-     - Enables Network-Connectivity-as-a-Service for
-       other OpenStack services, such as OpenStack Compute.
-       Provides an API for users to define networks and the
-       attachments into them. Has a pluggable architecture
-       that supports many popular networking vendors and
-       technologies.
-   * - **Storage**
-     -
-     -
-   * - `Object Storage <http://www.openstack.org/software/releases/liberty/components/swift>`_
-     - `Swift <http://docs.openstack.org/developer/swift/>`_
-     - Stores and retrieves arbitrary, unstructured
-       data objects via a :term:`RESTful`, HTTP based API.
-       It is highly fault tolerant with its data replication and
-       scale-out architecture. Its implementation is not like a
-       file server with mountable directories. In this case,
-       it writes objects and files to multiple drives, ensuring the
-       data is replicated across a server cluster.
-   * - `Block Storage <http://www.openstack.org/software/releases/liberty/components/cinder>`_
-     - `Cinder <http://docs.openstack.org/developer/cinder/>`_
-     - Provides persistent block storage to running instances. Its pluggable
-       driver architecture facilitates the creation and management of
-       block storage devices.
-   * - **Shared services**
-     -
-     -
-   * - `Identity service <http://www.openstack.org/software/releases/liberty/components/keystone>`_
-     - `Keystone <http://docs.openstack.org/developer/keystone/>`_
-     - Provides an authentication and authorization service
-       for other OpenStack services. Provides a catalog of endpoints
-       for all OpenStack services.
-   * - `Image service <http://www.openstack.org/software/releases/liberty/components/glance>`_
-     - `Glance <http://docs.openstack.org/developer/glance/>`_
-     - Stores and retrieves virtual machine disk images.
-       OpenStack Compute makes use of this during instance
-       provisioning.
-   * - `Telemetry <http://www.openstack.org/software/releases/liberty/components/ceilometer>`_
-     - `Ceilometer <http://docs.openstack.org/developer/ceilometer/>`_
-     - Monitors and meters the OpenStack cloud for billing, benchmarking,
-       scalability, and statistical purposes.
-   * - **Higher-level services**
-     -
-     -
-   * - `Orchestration <http://www.openstack.org/software/releases/liberty/components/heat>`_
-     - `Heat <http://docs.openstack.org/developer/heat/>`_
-     - Orchestrates multiple composite cloud applications by using
-       either the native :term:`HOT <Heat Orchestration Template (HOT)>` template
-       format or the AWS CloudFormation template format, through both an
-       OpenStack-native REST API and a CloudFormation-compatible
-       Query API.
-
-|
+This guide covers step-by-step deployment of the major OpenStack
+services using a functional example architecture suitable for
+new users of OpenStack with sufficient Linux experience.
 
 After becoming familiar with basic installation, configuration, operation,
 and troubleshooting of these OpenStack services, you should consider the
