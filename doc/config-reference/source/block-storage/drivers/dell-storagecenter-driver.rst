@@ -6,10 +6,10 @@ The Dell Storage Center volume driver interacts with configured Storage
 Center arrays.
 
 The Dell Storage Center driver manages Storage Center arrays through
-Enterprise Manager. Enterprise Manager connection settings and Storage
+the Dell Storage Manager (DSM). DSM connection settings and Storage
 Center options are defined in the ``cinder.conf`` file.
 
-Prerequisite: Dell Enterprise Manager 2015 R1 or later must be used.
+Prerequisite: Dell Storage Manager 2015 R1 or later must be used.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
@@ -28,14 +28,15 @@ volume operations:
 -  Create, delete, and list consistency group snapshots.
 -  Manage an existing volume.
 -  Failover-host for replicated back ends.
--  Create a live volume in replication.
+-  Create a replication using Live Volume.
 
 Extra spec options
 ~~~~~~~~~~~~~~~~~~
 
 Volume type extra specs can be used to enable a variety of Dell Storage
 Center options. Selecting Storage Profiles, Replay Profiles, enabling
-replication and enabling replication of the Active Replay.
+replication, replication options including Live Volume and Active Replay
+replication.
 
 Storage Profiles control how Storage Center manages volume data. For a
 given volume, the selected Storage Profile dictates which disk tier
@@ -114,6 +115,14 @@ To create a volume type that enables synchronous replication :
     $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
     $ cinder type-key "ReplicationType" set replication_type='<in> sync'
 
+To create a volume type that enables replication using Live Volume:
+
+.. code-block:: console
+
+    $ cinder type-create "ReplicationType"
+    $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
+    $ cinder type-key "ReplicationType" set replication:livevolume='<is> True'
+
 iSCSI configuration
 ~~~~~~~~~~~~~~~~~~~
 
@@ -129,27 +138,23 @@ Use the following instructions to update the configuration file for iSCSI:
     volume_backend_name = delliscsi
     # The iSCSI driver to load
     volume_driver = cinder.volume.drivers.dell.dell_storagecenter_iscsi.DellStorageCenterISCSIDriver
-    # IP address of Enterprise Manager
+    # IP address of DSM
     san_ip = 172.23.8.101
-    # Enterprise Manager user name
+    # DSM user name
     san_login = Admin
-    # Enterprise Manager password
+    # DSM password
     san_password = secret
-    # The Storage Center iSCSI IP address
-    iscsi_ip_address = 192.168.0.20
     # The Storage Center serial number to use
     dell_sc_ssn = 64702
 
     # ==Optional settings==
 
-    # The Enterprise Manager API port
+    # The DSM API port
     dell_sc_api_port = 3033
     # Server folder to place new server definitions
     dell_sc_server_folder = devstacksrv
     # Volume folder to place created volumes
     dell_sc_volume_folder = devstackvol/Cinder
-    # The iSCSI IP port
-    iscsi_port = 3260
 
 Fibre Channel configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -167,23 +172,50 @@ channel:
     volume_backend_name = dellfc
     # The FC driver to load
     volume_driver = cinder.volume.drivers.dell.dell_storagecenter_fc.DellStorageCenterFCDriver
-    # IP address of Enterprise Manager
+    # IP address of the DSM
     san_ip = 172.23.8.101
-    # Enterprise Manager user name
+    # DSM user name
     san_login = Admin
-    # Enterprise Manager password
+    # DSM password
     san_password = secret
     # The Storage Center serial number to use
     dell_sc_ssn = 64702
 
     # ==Optional settings==
 
-    # The Enterprise Manager API port
+    # The DSM API port
     dell_sc_api_port = 3033
     # Server folder to place new server definitions
     dell_sc_server_folder = devstacksrv
     # Volume folder to place created volumes
     dell_sc_volume_folder = devstackvol/Cinder
+
+Dual DSM
+~~~~~~~~
+
+It is possible to specify a secondary DSM to use in case the primary DSM fails.
+
+Configuration is done through the cinder.conf. Both DSMs have to be
+configured to manage the same set of Storage Centers for this backend. That
+means the dell_sc_ssn and any Storage Centers used for replication or Live
+Volume.
+
+Add network and credential information to the backend to enable Dual DSM.
+
+.. code-block:: ini
+
+    [dell]
+    # The IP address and port of the secondary DSM.
+    secondary_san_ip = 192.168.0.102
+    secondary_sc_api_port = 3033
+    # Specify credentials for the secondary DSM.
+    secondary_san_login = Admin
+    secondary_san_password = secret
+
+The driver will use the primary until a failure. At that point it will attempt
+to use the secondary. It will continue to use the secondary until the volume
+service is restarted or the secondary fails at which point it will attempt to
+use the primary.
 
 Replication configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -204,6 +236,67 @@ slow things down, however.
 
 A volume is only replicated if the volume is of a volume-type that has
 the extra spec ``replication_enabled`` set to ``<is> True``.
+
+Replication notes
+~~~~~~~~~~~~~~~~~
+
+This driver supports both standard replication and Live Volume (if supported
+and licensed). The main difference is that a VM attached to a Live Volume is
+mapped to both Storage Centers. In the case of a failure of the primary Live
+Volume still requires a failover-host to move control of the volume to the
+second controller.
+
+Existing mappings should work and not require the instance to be remapped but
+it might need to be rebooted.
+
+Live Volume is more resource intensive than replication. One should be sure
+to plan accordingly.
+
+Failback
+~~~~~~~~
+
+The failover-host command is designed for the case where the primary system is
+not coming back. If it has been executed and the primary has been restored it
+is possible to attempt a failback.
+
+Simply specify default as the backend_id.
+
+.. code-block:: console
+
+    $ cinder failover-host cinder@delliscsi --backend_id default
+
+Non trivial heavy lifting is done by this command. It attempts to recover best
+it can but if things have diverged to far it can only do so much. It is also a
+one time only command so do not reboot or restart the service in the middle of
+it.
+
+Failover and failback are significant operations under OpenStack Cinder. Be
+sure to consult with support before attempting.
+
+Server type configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This option allows one to set a default Server OS type to use when creating
+a server definition on the Dell Storage Center.
+
+When attaching a volume to a node the Dell Storage Center driver creates a
+server definition on the storage array. This defition includes a Server OS
+type. The type used by the Dell Storage Center cinder driver is
+"Red Hat Linux 6.x". This is a modern operating system definition that supports
+all the features of an OpenStack node.
+
+Add the following to the back-end specification to specify the Server OS to use
+when creating a server definition. The server type used must come from the drop
+down list in the DSM.
+
+.. code-block:: ini
+
+    [dell]
+    default_server_os = 'Red Hat Linux 7.x'
+
+Note that this server definition is created once. Changing this setting after
+the fact will not change an existing definition. The selected Server OS does
+not have to match the actual OS used on the node.
 
 Driver options
 ~~~~~~~~~~~~~~
