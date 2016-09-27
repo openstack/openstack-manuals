@@ -28,11 +28,11 @@ services.
       ``[pipeline:public_api]``, ``[pipeline:admin_api]``,
       and ``[pipeline:api_v3]`` sections.
 
-2. Unset the temporary ``OS_TOKEN`` and ``OS_URL`` environment variables:
+2. Unset the temporary ``OS_URL`` environment variable:
 
    .. code-block:: console
 
-      $ unset OS_TOKEN OS_URL
+      $ unset OS_URL
 
 3. As the ``admin`` user, request an authentication token:
 
