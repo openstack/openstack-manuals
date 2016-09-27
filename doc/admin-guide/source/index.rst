@@ -8,7 +8,7 @@ Abstract
 OpenStack offers open source software for OpenStack administrators to
 manage and troubleshoot an OpenStack cloud.
 
-This guide documents OpenStack Mitaka, and OpenStack Liberty releases.
+This guide documents OpenStack Newton, Mitaka, and Liberty releases.
 
 Contents
 ~~~~~~~~

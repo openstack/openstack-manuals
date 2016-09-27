@@ -10,7 +10,7 @@ OpenStack for high availability.
 It supplements the OpenStack Installation Guides
 and assumes that you are familiar with the material in those guides.
 
-This guide documents OpenStack Mitaka, and OpenStack Liberty releases.
+This guide documents OpenStack Newton, Mitaka, and Liberty releases.
 
 .. warning:: This guide is a work-in-progress and changing rapidly
    while we continue to test and enhance the guidance. Please note
