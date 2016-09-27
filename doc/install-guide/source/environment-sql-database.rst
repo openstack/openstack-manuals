@@ -38,9 +38,7 @@ Install and configure components
 
 .. only:: debian
 
-   2. Choose a suitable password for the database ``root`` account.
-
-   3. Create and edit the ``/etc/mysql/conf.d/openstack.cnf`` file
+   2. Create and edit the ``/etc/mysql/conf.d/openstack.cnf`` file
       and complete the following actions:
 
       - Create a ``[mysqld]`` section, and set the ``bind-address``
