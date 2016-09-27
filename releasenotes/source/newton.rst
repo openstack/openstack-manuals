@@ -5,8 +5,13 @@ Next release: Newton
 User visible changes
 ====================
 
-None yet.
+* Command-Line Interface Reference abandons the "openstack" command
+  reference in favor of the reference in the OpenStackClient repository.
 
+* Configuration Reference consolidates the common configurations
+  such as database connections and RPC messaging.
+
+* Configuration Reference supports the Application Catalog service.
 
 Internal changes
 ================
