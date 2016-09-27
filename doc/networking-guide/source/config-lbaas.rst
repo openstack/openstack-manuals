@@ -4,38 +4,41 @@
 Load Balancer as a Service (LBaaS)
 ==================================
 
-The Networking service offers two load balancer implementations through the
-``neutron-lbaas`` service plug-in:
+The Networking service offers a load balancer feature called "LBaaS v2"
+through the ``neutron-lbaas`` service plug-in.
 
-* LBaaS v1: introduced in Juno (deprecated in Liberty)
-* LBaaS v2: introduced in Kilo
+LBaaS v2 adds the concept of listeners to the LBaaS v1 load balancers.
+LBaaS v2 allows you to configure multiple listener ports on a single load
+balancer IP address.
 
-Both implementations use agents. The agents handle the HAProxy configuration
-and manage the HAProxy daemon. LBaaS v2 adds the concept of listeners to the
-LBaaS v1 load balancers. LBaaS v2 allows you to configure multiple listener
-ports on a single load balancer IP address.
-
+There are two reference implementations of LBaaS v2.
+The one is an agent based implementation with HAProxy.
+The agents handle the HAProxy configuration and manage the HAProxy daemon.
 Another LBaaS v2 implementation, `Octavia
 <http://docs.openstack.org/developer/octavia/>`_, has a separate API and
 separate worker processes that build load balancers within virtual machines on
 hypervisors that are managed by the Compute service. You do not need an agent
 for Octavia.
 
-Currently, no migration path exists between v1 and v2 load balancers. If you
-choose to switch from v1 to v2, you must recreate all load balancers, pools,
-and health monitors.
+.. note::
 
-LBaaS v1
-~~~~~~~~
+   LBaaS v1 was removed in the Newton release. These links provide more
+   details about how LBaaS v1 works and how to configure it:
 
-LBaaS v1 is deprecated in the Liberty release. These links provide more
-details about how LBaaS v1 works and how to configure it:
+   * `Load-Balancer-as-a-Service (LBaaS) overview <http://docs.openstack.org/admin-guide/networking-introduction.html#load-balancer-as-a-service-lbaas-overview>`__
+   * `Basic Load-Balancer-as-a-Service operations <http://docs.openstack.org/admin-guide/networking-adv-features.html#basic-load-balancer-as-a-service-operations>`__
 
-* `Load-Balancer-as-a-Service (LBaaS) overview <http://docs.openstack.org/admin-guide/networking-introduction.html#load-balancer-as-a-service-lbaas-overview>`__
-* `Basic Load-Balancer-as-a-Service operations <http://docs.openstack.org/admin-guide/networking-adv-features.html#basic-load-balancer-as-a-service-operations>`__
+.. warning::
 
-LBaaS v2
-~~~~~~~~
+   Currently, no migration path exists between v1 and v2 load balancers. If you
+   choose to switch from v1 to v2, you must recreate all load balancers, pools,
+   and health monitors.
+
+.. TODO(amotoki): Data mirgation from v1 to v2 is provided in Newton release,
+   but its usage is not documented enough. It should be added here.
+
+LBaaS v2 Concepts
+~~~~~~~~~~~~~~~~~
 
 LBaaS v2 has several new concepts to understand:
 
@@ -65,6 +68,9 @@ Health monitor
 LBaaS v2 has multiple implementations via different service plug-ins. The two
 most common implementations use either an agent or the Octavia services. Both
 implementations use the `LBaaS v2 API <http://developer.openstack.org/api-ref/networking/v2/#lbaas-2-0-stable>`_.
+
+Configurations
+~~~~~~~~~~~~~~
 
 Configuring LBaaS v2 with an agent
 ----------------------------------
