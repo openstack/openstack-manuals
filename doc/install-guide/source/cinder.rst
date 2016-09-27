@@ -24,5 +24,5 @@ nodes. Depending upon the drivers used, the volume service can run
 on controller nodes, compute nodes, or standalone storage nodes.
 
 For more information, see the
-`Configuration Reference <http://docs.openstack.org/mitaka/config-reference/block-storage/volume-drivers.html>`__.
+`Configuration Reference <http://docs.openstack.org/newton/config-reference/block-storage/volume-drivers.html>`__.
 
