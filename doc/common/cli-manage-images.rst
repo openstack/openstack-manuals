@@ -129,11 +129,11 @@ Reference <http://docs.openstack.org/cli-reference/index.html>`__.
 
 ``--disk-format DISK_FORMAT``
   The disk format of the image. Acceptable formats are ami, ari, aki,
-  vhd, vmdk, raw, qcow2, vdi, and iso.
+  vhd, vhdx, vmdk, raw, qcow2, vdi, and iso.
 
 ``--container-format CONTAINER_FORMAT``
   The container format of the image. Acceptable formats are ami, ari,
-  aki, bare, docker, and ovf.
+  aki, bare, docker, ova, and ovf.
 
 ``--owner TENANT_ID --size SIZE``
   The tenant who should own the image. The size of image data, in
@@ -206,7 +206,7 @@ model:
    :command:`glance image-create`.
    Also, we recommend that you set the ``hypervisor_type="vmware"`` property.
    For more information, see `Images with VMware vSphere
-   <http://docs.openstack.org/mitaka/config-reference/compute/hypervisor-vmware.html#images-with-vmware-vsphere>`_
+   <http://docs.openstack.org/newton/config-reference/compute/hypervisor-vmware.html#images-with-vmware-vsphere>`_
    in the OpenStack Configuration Reference.
 
 .. code-block:: console
