@@ -32,10 +32,6 @@ and their associated references in the guide:
      - Root password for the database
    * - ``ADMIN_PASS``
      - Password of user ``admin``
-   * - ``CEILOMETER_DBPASS``
-     - Database password for the Telemetry service
-   * - ``CEILOMETER_PASS``
-     - Password of Telemetry service user ``ceilometer``
    * - ``CINDER_DBPASS``
      - Database password for the Block Storage service
    * - ``CINDER_PASS``
@@ -48,12 +44,6 @@ and their associated references in the guide:
      - Database password for Image service
    * - ``GLANCE_PASS``
      - Password of Image service user ``glance``
-   * - ``HEAT_DBPASS``
-     - Database password for the Orchestration service
-   * - ``HEAT_DOMAIN_PASS``
-     - Password of Orchestration domain
-   * - ``HEAT_PASS``
-     - Password of Orchestration service user ``heat``
    * - ``KEYSTONE_DBPASS``
      - Database password of Identity service
    * - ``NEUTRON_DBPASS``
