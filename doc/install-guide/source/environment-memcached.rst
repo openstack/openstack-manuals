@@ -11,7 +11,7 @@ Install and configure components
 
 #. Install the packages:
 
-   .. only:: ubuntu
+   .. only:: ubuntu or debian
 
       .. code-block:: console
 
@@ -29,7 +29,7 @@ Install and configure components
 
          # zypper install memcached python-python-memcached
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    2. Edit the ``/etc/memcached.conf`` file and configure the
       service to use the management IP address of the controller node
