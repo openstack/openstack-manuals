@@ -27,7 +27,7 @@ these procedures on all nodes.
 
    .. code-block:: console
 
-      # apt-get install software-properties-common
+      # apt install software-properties-common
       # add-apt-repository cloud-archive:newton
 
    .. end
@@ -193,7 +193,7 @@ these procedures on all nodes.
 
          .. code-block:: console
 
-            # apt-get -t jessie-backports install ``PACKAGE``
+            # apt -t jessie-backports install ``PACKAGE``
 
          .. end
 
@@ -208,7 +208,7 @@ Finalize the installation
 
       .. code-block:: console
 
-         # apt-get update && apt-get dist-upgrade
+         # apt update && apt dist-upgrade
 
       .. end
 
@@ -245,7 +245,7 @@ Finalize the installation
 
       .. code-block:: console
 
-         # apt-get install python-openstackclient
+         # apt install python-openstackclient
 
       .. end
 

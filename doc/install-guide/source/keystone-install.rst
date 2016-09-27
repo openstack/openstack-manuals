@@ -78,7 +78,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install keystone
+         # apt install keystone
 
       .. end
 

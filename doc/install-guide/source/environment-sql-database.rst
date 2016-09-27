@@ -16,7 +16,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install mariadb-server python-pymysql
+         # apt install mariadb-server python-pymysql
 
       .. end
 
@@ -26,7 +26,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install mysql-server python-pymysql
+         # apt install mysql-server python-pymysql
 
       .. end
 

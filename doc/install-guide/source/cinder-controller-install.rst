@@ -282,7 +282,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install cinder-api cinder-scheduler
+         # apt install cinder-api cinder-scheduler
 
       .. end
 

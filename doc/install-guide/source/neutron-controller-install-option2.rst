@@ -10,7 +10,7 @@ Install the components
 
    .. code-block:: console
 
-      # apt-get install neutron-server neutron-plugin-ml2 \
+      # apt install neutron-server neutron-plugin-ml2 \
         neutron-linuxbridge-agent neutron-l3-agent neutron-dhcp-agent \
         neutron-metadata-agent
 
@@ -46,7 +46,7 @@ Install the components
 
    #. .. code-block:: console
 
-         # apt-get install neutron-server neutron-linuxbridge-agent \
+         # apt install neutron-server neutron-linuxbridge-agent \
            neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
 
       .. end

@@ -14,7 +14,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install chrony
+         # apt install chrony
 
       .. end
 

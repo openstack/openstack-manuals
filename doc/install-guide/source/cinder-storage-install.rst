@@ -74,7 +74,7 @@ storage node, you must prepare the storage device.
 
         .. code-block:: console
 
-           # apt-get install lvm2
+           # apt install lvm2
 
         .. end
 
@@ -194,7 +194,7 @@ Install and configure components
 
       .. code-block:: console
 
-        # apt-get install cinder-volume
+        # apt install cinder-volume
 
       .. end
 
