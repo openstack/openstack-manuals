@@ -142,6 +142,12 @@ Some notes on the networking:
   (In case of VLAN networking, the physical channels have to be able
   to forward the tagged traffic.)
 
+* If you are using Networking service, enable Linux bridge in ``Dom0`` which
+  is used for Compute service. ``nova-compute`` will create Linux bridges
+  for security group and ``neutron-openvswitch-agent`` in Compute node will
+  apply security group rules on these Linux bridges. To implement this,
+  you need to remove ``/etc/modprobe.d/blacklist-bridge*`` in ``Dom0``.
+
 Further reading
 ~~~~~~~~~~~~~~~
 
