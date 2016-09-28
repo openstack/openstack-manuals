@@ -224,7 +224,7 @@ of specific dashboards, panels, API calls, and so on.
      - The absolute path to the directory where message files are collected.
    * - ``OPENSTACK_API_VERSIONS`` = ``{"data-processing": 1.1,
        "identity": 2.0, "volume": 2, "compute": 2}``
-     -  Use this setting to force the the dashboard to use a specific API
+     -  Use this setting to force the dashboard to use a specific API
         version for a given service API.
    * - ``OPENSTACK_ENABLE_PASSWORD_RETRIEVE`` = ``False``
      - Enables or disables the instance action 'Retrieve password'

@@ -299,7 +299,7 @@ Preparing for the future: IPv6 support
 --------------------------------------
 
 One of the most important networking topics today is the exhaustion of
-IPv4 addresses. As of late 2015, ICANN announced that the the final
+IPv4 addresses. As of late 2015, ICANN announced that the final
 IPv4 address blocks have been fully assigned. Because of this, IPv6
 protocol has become the future of network focused applications. IPv6
 increases the address space significantly, fixes long standing issues
