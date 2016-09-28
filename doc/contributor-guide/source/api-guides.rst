@@ -207,32 +207,32 @@ repository.
 
 #. Run the script.
 
-.. code-block:: console
+   .. code-block:: console
 
-   $ python scripts/apirefscrape.py
-   URL:  api-ref-telemetry-v2.html
-   ----------
-   19
-   19
-   GET /v2/alarms
-   POST /v2/alarms
-   GET /v2/alarms/{alarm_id}
-   PUT /v2/alarms/{alarm_id}
-   DELETE /v2/alarms/{alarm_id}
-   PUT /v2/alarms/{alarm_id}/state
-   GET /v2/alarms/{alarm_id}/state
-   GET /v2/alarms/{alarm_id}/history
-   GET /v2/meters
-   POST /v2/meters/{meter_name}
-   GET /v2/meters/{meter_name}
-   GET /v2/meters/{meter_name}/statistics
-   GET /v2/samples
-   GET /v2/samples/{sample_id}
-   GET /v2/resources
-   GET /v2/resources/{resource_id}
-   GET /v2/capabilities
-   GET /v2/events
-   GET /v2/events/{message_id}
+      $ python scripts/apirefscrape.py
+      URL:  api-ref-telemetry-v2.html
+      ----------
+      19
+      19
+      GET /v2/alarms
+      POST /v2/alarms
+      GET /v2/alarms/{alarm_id}
+      PUT /v2/alarms/{alarm_id}
+      DELETE /v2/alarms/{alarm_id}
+      PUT /v2/alarms/{alarm_id}/state
+      GET /v2/alarms/{alarm_id}/state
+      GET /v2/alarms/{alarm_id}/history
+      GET /v2/meters
+      POST /v2/meters/{meter_name}
+      GET /v2/meters/{meter_name}
+      GET /v2/meters/{meter_name}/statistics
+      GET /v2/samples
+      GET /v2/samples/{sample_id}
+      GET /v2/resources
+      GET /v2/resources/{resource_id}
+      GET /v2/capabilities
+      GET /v2/events
+      GET /v2/events/{message_id}
 
 You see output of each service, a count of all operations, and a listing of
 each operation.
