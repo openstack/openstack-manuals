@@ -319,13 +319,13 @@ example above) is sometimes referred to as the *default gateway*. A
 DHCP_ server typically transmits the IP address of the default gateway
 to the DHCP client along with the client's IP address and a netmask.
 
-Line 2 of the output specifies that IPs in the 10.0.2.0/24 subnet are on the
-local network associated with the network interface eth0.
+Line 2 of the output specifies that IPs in the ``10.0.2.0/24`` subnet are on
+the local network associated with the network interface eth0.
 
-Line 3 of the output specifies that IPs in the 192.168.27.0/24 subnet
+Line 3 of the output specifies that IPs in the ``192.168.27.0/24`` subnet
 are on the local network associated with the network interface eth1.
 
-Line 4 of the output specifies that IPs in the 192.168.122.0/24 subnet are
+Line 4 of the output specifies that IPs in the ``192.168.122.0/24`` subnet are
 on the local network associated with the network interface virbr0.
 
 The output of the :command:`route -n` and :command:`netstat -rn` commands are
@@ -343,16 +343,16 @@ routes would be formatted using these commands:
    192.168.122.0   0.0.0.0         255.255.255.0   U         0 0          0 virbr0
 
 The :command:`ip route get` command outputs the route for a destination
-IP address. From the below example, destination IP address 10.0.2.14 is on the
-local network of eth0 and would be sent directly:
+IP address. From the below example, destination IP address ``10.0.2.14`` is on
+the local network of eth0 and would be sent directly:
 
 .. code-block:: console
 
    $ ip route get 10.0.2.14
    10.0.2.14 dev eth0  src 10.0.2.15
 
-The destination IP address 93.184.216.34 is not on any of the connected local
-networks and would be forwarded to the default gateway at 10.0.2.2:
+The destination IP address ``93.184.216.34`` is not on any of the connected
+local  networks and would be forwarded to the default gateway at ``10.0.2.2``:
 
 .. code-block:: console
 
