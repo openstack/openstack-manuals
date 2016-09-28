@@ -28,7 +28,17 @@ in one programming language within one file. By default, the code-block
 formatted this way is shown in a Python highlighting mode.
 
 To define another highlighting language, use the ``code-block`` directive
-as described in the :ref:`non-standard-block` section.
+as described in the :ref:`non-standard-block` section. Make sure to close these
+tags with ``end``. Additionally, add the ``path`` tag to provide the parser
+with the path of the configuration files. This should allow the parser to parse
+the markup syntax to Bash.
+
+.. note::
+
+  The ``end`` tag allows the parser to identify the scope of code blocks.
+  The ``path`` tag allows the parser to identify the path of the config
+  file. For more information, refer to the :doc:`rst2bash` section.
+  These changes are mandatory only for the installation guides.
 
 **Input**
 
@@ -71,6 +81,7 @@ files, ``console`` for console inputs and outputs, and so on.
 
 .. code-block:: none
 
+   .. path /path/to/config/file
    .. code-block:: ini
 
       # Configuration for nova-rootwrap
@@ -78,6 +89,8 @@ files, ``console`` for console inputs and outputs, and so on.
 
       [DEFAULT]
       # List of directories to load filter definitions from (separated by ',').
+
+   .. end
 
 **Output**
 
@@ -122,9 +135,12 @@ content from a remote URL (``http`` or ``https``).
 
 .. code-block:: none
 
+   .. path /path/to/config/file
    .. remote-code-block:: ini
 
       http://git.openstack.org/cgit/openstack/nova/tree/etc/nova/api-paste.ini?h=stable/newton
+
+   .. end
 
 **Output**
 
@@ -139,3 +155,4 @@ content from a remote URL (``http`` or ``https``).
 
    [pipeline:meta]
    pipeline = cors ec2faultwrap logrequest metaapp
+
