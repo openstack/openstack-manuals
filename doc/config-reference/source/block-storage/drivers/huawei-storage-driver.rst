@@ -234,7 +234,7 @@ To configure the volume driver, follow the steps below:
       By default, the value for ``hypermetro_devices`` is ``None``.
 
 
-   In Mitaka, the ``volume-driver`` value for every product is as below:
+   The ``volume-driver`` value for every product is as below:
 
    .. code-block:: ini
 
@@ -274,12 +274,8 @@ To configure iSCSI Multipathing, follow the steps below:
 
 #. Enable the multipathing switch of the Compute service module.
 
-   If the version of OpenStack is Havana or IceHouse, add
-   ``libvirt_iscsi_use_multipath = True`` in ``[default]`` of
+   Add ``iscsi_use_multipath = True`` in ``[libvirt]`` of
    ``/etc/nova/nova.conf``.
-
-   If the version of OpenStack is Juno, Kilo, Liberty or Mitaka, add
-   ``iscsi_use_multipath = True`` in ``[libvirt]`` of ``/etc/nova/nova.conf``.
 
 #. Run the :command:`service nova-compute restart` command to restart the
    ``nova-compute`` service.
