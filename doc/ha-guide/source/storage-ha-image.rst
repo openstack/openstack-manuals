@@ -12,9 +12,10 @@ in active / passive mode, you must:
 - :ref:`glance-services`
 
 This section assumes that you are familiar with the
-`documentation
-<http://docs.openstack.org/liberty/install-guide-ubuntu/glance.html>`_
-for installing the OpenStack Image API service.
+documentation for installing the OpenStack Image API service.
+See the *Image service* section in the
+`Installation Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`_
+depending on your distribution.
 
 .. _glance-api-pacemaker:
 
