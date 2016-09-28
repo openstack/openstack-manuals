@@ -7,7 +7,7 @@ Software Development Lifecycle Automation service command-line client
 The solum client is the command-line interface (CLI) for
 the Software Development Lifecycle Automation service API and its extensions.
 
-This chapter documents :command:`solum` version ``2.0.1``.
+This chapter documents :command:`solum` version ``2.1.0``.
 
 .. _solum_command_usage:
 
@@ -95,6 +95,7 @@ solum usage
 
 ``solum oldapp create``
   Register a new application with Solum.
+
   .. code-block:: console
 
      solum oldapp create [--plan-file <PLANFILE>] [--git-url <GIT_URL>]
@@ -106,12 +107,3 @@ solum usage
                          [--setup-trigger]
                          [--private-repo]
                          [--trigger-workflow <WORKFLOW>]
-
-``solum assembly list``
-  Print an index of all available assemblies.
-
-``solum assembly create <NAME|UUID> <PLAN_URI> [--description <DESCRIPTION>]``
-  Create an assembly from a registered plan.
-
-``solum assembly delete <NAME|UUID>``
-  Destroy an assembly.
