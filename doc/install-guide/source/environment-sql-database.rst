@@ -36,11 +36,33 @@ Install and configure components
 
          # zypper install mariadb-client mariadb python-PyMySQL
 
-.. only:: ubuntu or debian
+.. only:: debian
 
    2. Choose a suitable password for the database ``root`` account.
 
    3. Create and edit the ``/etc/mysql/conf.d/openstack.cnf`` file
+      and complete the following actions:
+
+      - Create a ``[mysqld]`` section, and set the ``bind-address``
+        key to the management IP address of the controller node to
+        enable access by other nodes via the management network. Set
+        additional keys to enable useful options and the UTF-8
+        character set:
+
+        .. code-block:: ini
+
+           [mysqld]
+           bind-address = 10.0.0.11
+
+           default-storage-engine = innodb
+           innodb_file_per_table
+           max_connections = 4096
+           collation-server = utf8_general_ci
+           character-set-server = utf8
+
+.. only:: ubuntu
+
+   2. Create and edit the ``/etc/mysql/mariadb.conf.d/99-openstack.cnf`` file
       and complete the following actions:
 
       - Create a ``[mysqld]`` section, and set the ``bind-address``
@@ -112,16 +134,7 @@ Finalize installation
             # systemctl enable mysql.service
             # systemctl start mysql.service
 
-.. only:: ubuntu
-
-   2. Secure the database service by running the ``mysql_secure_installation``
-      script.
-
-      .. code-block:: console
-
-         # mysql_secure_installation
-
-.. only:: rdo or obs
+.. only:: rdo or obs or ubuntu
 
    2. Secure the database service by running the ``mysql_secure_installation``
       script. In particular, choose a suitable password for the database
