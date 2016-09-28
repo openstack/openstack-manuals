@@ -104,7 +104,7 @@ To enable type drivers in the ML2 plug-in. Edit the
   Update Link. See bug https://bugs.launchpad.net/openstack-manuals/+bug/1567792
 
 For more details, see the
-`Networking configuration options <http://docs.openstack.org/mitaka/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-configuration-options>`__
+`Networking configuration options <http://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-plug-in-configuration-options>`__
 of Configuration Reference.
 
 The following type drivers are available
