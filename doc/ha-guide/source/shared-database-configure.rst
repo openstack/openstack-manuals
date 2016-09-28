@@ -33,11 +33,11 @@ Galera Cluster requires that you open four ports to network traffic:
 This can be achieved through the use of either the ``iptables``
 command such as:
 
-   .. code-block:: console
+.. code-block:: console
 
-      # iptables --append INPUT --in-interface eth0 \
-         --protocol tcp --match tcp --dport ${PORT} \
-         --source ${NODE-IP-ADDRESS} --jump ACCEPT
+   # iptables --append INPUT --in-interface eth0 \
+     --protocol tcp --match tcp --dport ${PORT} \
+     --source ${NODE-IP-ADDRESS} --jump ACCEPT
 
 Make sure to save the changes once you are done, this will vary
 depending on your distribution:
@@ -49,10 +49,10 @@ Alternatively you may be able to make modifications using the
 ``firewall-cmd`` utility for FirewallD that is available on many Linux
 distributions:
 
-   .. code-block:: console
+.. code-block:: console
 
-      # firewall-cmd --add-service=mysql --permanent
-      # firewall-cmd --add-port=3306/tcp --permanent
+   # firewall-cmd --add-service=mysql --permanent
+   # firewall-cmd --add-port=3306/tcp --permanent
 
 SELinux
 --------
@@ -67,17 +67,17 @@ To configure SELinux to permit Galera Cluster to operate, you may need
 to use the ``semanage`` utility to open the ports it uses, for
 example:
 
-   .. code-block:: console
+.. code-block:: console
 
-      # semanage port -a -t mysqld_port_t -p tcp 3306
+   # semanage port -a -t mysqld_port_t -p tcp 3306
 
 Older versions of some distributions, which do not have an up-to-date
 policy for securing Galera, may also require SELinux to be more
 relaxed about database access and actions:
 
-   .. code-block:: console
+.. code-block:: console
 
-      # semanage permissive -a mysqld_t
+   # semanage permissive -a mysqld_t
 
 .. note:: Bear in mind, leaving SELinux in permissive mode is not a good
         security practice. Over the longer term, you need to develop a

@@ -81,11 +81,9 @@ The follow figure depicts the solution designed to have both a
 centralized set of core data centers for OpenStack services and paired edge
 data centers.
 
-
-   **Multi-site architecture example**
+**Multi-site architecture example**
 
 .. figure:: ../figures/Multi-Site_Customer_Edge.png
-
 
 Geo-redundant load balancing example
 ------------------------------------
@@ -166,12 +164,9 @@ An external load balancing service was used and not the LBaaS in
 OpenStack because the solution in OpenStack is not redundant and does
 not have any awareness of geo location.
 
-.. _ms-geo-redundant:
-
-   **Multi-site geo-redundant architecture**
+**Multi-site geo-redundant architecture**
 
 .. figure:: ../figures/Multi-site_Geo_Redundant_LB.png
-
 
 Location-local service example
 ------------------------------
@@ -192,15 +187,13 @@ number of network hops for end users. Despite these differences, the
 storage replication configuration has significant overlap with that of a
 geo-redundant load balancing use case.
 
-In :ref:`ms-shared-keystone`, the application utilizing this multi-site
+In the below architecture, the application utilizing this multi-site
 OpenStack install that is location-aware would launch web server or content
 serving instances on the compute cluster in each site. Requests from clients
 are first sent to a global services load balancer that determines the location
 of the client, then routes the request to the closest OpenStack site where the
 application completes the request.
 
-.. _ms-shared-keystone:
+**Multi-site shared keystone architecture**
 
 .. figure:: ../figures/Multi-Site_shared_keystone1.png
-
-   **Multi-site shared keystone architecture**
