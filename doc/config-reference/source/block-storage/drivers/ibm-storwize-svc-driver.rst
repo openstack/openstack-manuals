@@ -28,12 +28,6 @@ IP addresses directly to the driver.
    If using iSCSI, ensure that the compute nodes have iSCSI network
    access to the Storwize family or SVC system.
 
-.. note::
-
-   OpenStack Nova's Grizzly version supports iSCSI multipath. Once this
-   is configured on the Nova host (outside the scope of this
-   documentation), multipath is enabled.
-
 If using Fibre Channel (FC), each Storwize family or SVC node should
 have at least one WWPN port configured. The driver uses all available
 WWPNs to attach the volume to the instance. The driver obtains the
@@ -54,7 +48,7 @@ associate randomly-generated CHAP secrets with all hosts on the Storwize
 family system. The compute nodes use these secrets when creating
 iSCSI connections.
 
-.. note::
+.. warning::
 
    CHAP secrets are added to existing hosts as well as newly-created
    ones. If the CHAP option is enabled, hosts will not be able to
