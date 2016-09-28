@@ -160,6 +160,28 @@ of specific dashboards, panels, API calls, and so on.
        exists.
    * - ``AVAILABLE_REGIONS`` = ``None``
      - A list of tuples which defines multiple regions.
+   * - ``AVAILABLE_THEMES`` = ``[ ('default', 'Default',
+       'themes/default'), ('material', 'Material',
+       'themes/material') ]``
+     - Configure this setting to tell horizon which theme to use. Horizon
+       contains two pre-configured themes. These themes are ``'default'`` and
+       ``'material'``. Horizon uses three tuples in a list to define multiple
+       themes. The tuple format is
+       ``('{{ theme_name }}', '{{ theme_label }}', '{{ theme_path }}')``.
+       Configure ``theme_name`` to define the directory
+       that customized themes are collected into. The ``theme-label``
+       is a user-facing label shown in the theme picker. Horizon uses
+       ``theme path`` as the static root of the theme. If you
+       want to include content other than static files in a theme
+       directory, but do not wish the content served up at
+       ``/{{ THEME_COLLECTION_DIR }}/{{ theme_name }}``, create a subdirectory
+       named ``static``. If your theme folder contains a subdirectory named
+       ``static``, then horizon uses ``static/custom/static`` as the root
+       for content served at ``/static/custom``. The static root of the theme
+       folder must always contain a ``_variables.scss`` file and
+       ``a _styles.scss`` file. These two files must contain or import
+       all the styles, bootstrap, and horizon-specific variables used in
+       the GUI.
    * - ``CONSOLE_TYPE`` = ``AUTO``
      - The type of in-browser console used to access the virtual machines.
        Valid values are ``AUTO``, ``VNC``, ``SPICE``, ``RDP``, ``SERIAL``,
@@ -177,14 +199,12 @@ of specific dashboards, panels, API calls, and so on.
        ``id``, ``name``, ``ram``, ``disk`` and ``vcpus``. You can also
        insert any custom callback function and also provide a flag for
        reverse sort.
-   * - ``CUSTOM_THEME_PATH`` = ``themes/default``
-     - The directory to be used as a custom theme.
-   * - ``DEFAULT_THEME_PATH`` = ``themes/default``
-     - The additional theme to be collected during static collection
-       and served up via ``/static/themes/default``. This is useful if
-       ``CUSTOM_THEME_PATH`` inherits from another theme like ``default``.
-       If ``DEFAULT_THEME_PATH`` is the same as ``CUSTOM_THEME_PATH``, then
-       collection is skipped and ``/static/themes`` will not exist.
+   * - ``DEFAULT_THEME`` = ``default``
+     - This setting configures which theme horizon uses if a theme
+       has not yet been selected in the theme picker. This also sets
+       the cookie value. This value represents the `theme_name` key used
+       when there are multiple themes available. Configure this setting
+       inside ``AVAILABLE_THEMES`` to make use of this theme.
    * - ``DROPDOWN_MAX_ITEMS`` = ``30``
      -  The maximum number of items displayed in a dropdown.
    * - ``ENFORCE_PASSWORD_CHECK`` = ``False``
@@ -350,6 +370,13 @@ of specific dashboards, panels, API calls, and so on.
        web server.
    * - ``STATIC_ROOT`` = ``/static/``
      - URL pointing to files in ``STATIC_ROOT``. the value must end in ``"/"``.
+   * - ``THEME_COLLECTION_DIR`` = ``themes``
+     - Horizon collects the available themes into a static directory
+       based on this variable setting. For example, the default theme
+       is accessible from ``/{{ STATIC_URL }}/themes/default``.
+   * - ``THEME_COOKIE_NAME`` = ``themes``
+     -  This setting determines which cookie key horizon sets to store the
+        current theme. Cookie keys expire after one year elapses.
    * - ``DISALLOW_IFRAME_EMBED`` = ``True``
      - This setting can be used to defend against Clickjacking and prevent
        the Dashboard from being embedded within an iframe.
