@@ -5,8 +5,6 @@ Dashboard
 .. toctree::
    :maxdepth: 1
 
-   dashboard/configure.rst
-   common/dashboard-customizing.rst
    dashboard/config-options.rst
    dashboard/samples/index.rst
    dashboard/logs.rst
