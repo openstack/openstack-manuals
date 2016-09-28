@@ -64,14 +64,16 @@ create a database, service credentials, and API endpoints.
 
         User Password:
         Repeat User Password:
-        +-----------+----------------------------------+
-        | Field     | Value                            |
-        +-----------+----------------------------------+
-        | domain_id | e0353a670a9e496da891347c589539e9 |
-        | enabled   | True                             |
-        | id        | e38230eeff474607805b596c91fa15d9 |
-        | name      | glance                           |
-        +-----------+----------------------------------+
+        +---------------------+----------------------------------+
+        | Field               | Value                            |
+        +---------------------+----------------------------------+
+        | domain_id           | default                          |
+        | enabled             | True                             |
+        | id                  | 3f4e777c4062483ab8d9edd7dff829df |
+        | name                | glance                           |
+        | password_expires_at | None                             |
+        +---------------------+----------------------------------+
+
 
      .. end
 
