@@ -291,6 +291,15 @@ Install and configure components
         ...
         lock_path = /var/lib/cinder/tmp
 
+.. only:: obs
+
+   3. Create the ``/etc/tgt/conf.d/cinder.conf`` file
+      with the following data:
+
+      .. code-block:: ini
+
+         include /var/lib/cinder/volumes/*
+
 Finalize installation
 ---------------------
 
