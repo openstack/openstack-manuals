@@ -29,4 +29,5 @@ systems to object-storage systems like OpenStack Object Storage.
    node, it is not typically suitable for a multi-node glance deployment.
 
    For information on requirements for other back ends, see
-   `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/image-service.html>`__.
+   `Configuration Reference
+   <http://docs.openstack.org/newton/config-reference/image.html>`__.
