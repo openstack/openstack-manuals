@@ -31,7 +31,7 @@ New users should default to coding against the OpenStack SDK.
 shade
 -----
 
-`shade <http://pypi.python.org/pypi/shade>`_ is a an abstraction library
+`shade <http://pypi.python.org/pypi/shade>`_ is an abstraction library
 focused on hiding implementation differences between OpenStack clouds. While
 the OpenStack SDK presents a clean object interface to the underlying REST
 APIs, shade hides them if doing so is advantageous. If you plan on
