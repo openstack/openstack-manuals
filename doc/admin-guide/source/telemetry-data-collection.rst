@@ -586,11 +586,11 @@ for the meter.
 
 If you take a look at the ``meter.yaml`` file, it contains the sample
 definitions for all the meters that Telemetry is collecting from
-notifications. The value of each field is specified by using json path in
+notifications. The value of each field is specified by using JSON path in
 order to find the right value from the notification message. In order to be
 able to specify the right field you need to be aware of the format of the
 consumed notification. The values that need to be searched in the notification
-message are set with a json path starting with ``$.`` For instance, if you need
+message are set with a JSON path starting with ``$.`` For instance, if you need
 the ``size`` information from the payload you can define it like
 ``$.payload.size``.
 
@@ -611,10 +611,10 @@ respectively. You can use wild cards as shown in the following example:
        user_id: $.payload.initiator.id
        project_id: $.payload.initiator.project_id
 
-In the above example, the ``name`` field is a json path with matching
+In the above example, the ``name`` field is a JSON path with matching
 a list of meter names defined in the notification message.
 
-You can even use complex operations on json paths. In the following example,
+You can even use complex operations on JSON paths. In the following example,
 ``volume`` and ``resource_id`` fields perform an arithmetic
 and string concatenation:
 
