@@ -211,7 +211,7 @@ basic L3 operations:
    * - Creates external networks.
      - .. code-block:: console
 
-          # neutron net-create public --router:external True
+          $ neutron net-create public --router:external True
           $ neutron subnet-create public 172.16.1.0/24
    * - Lists external networks.
      - .. code-block:: console
