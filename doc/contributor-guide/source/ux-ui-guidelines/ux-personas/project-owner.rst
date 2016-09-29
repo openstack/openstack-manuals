@@ -39,7 +39,7 @@ The organizational models
 The tasks that the persona performs within a certain organizational model are
 important for the usability of your OpenStack development. Within a small
 company, Wei might be required to assume some of the responsibilities of the
-the Domain Operator or maybe even the Cloud Operator. In this case, the
+Domain Operator or maybe even the Cloud Operator. In this case, the
 persona does not need to submit requests to manage the cloud's resources but
 can rather make the changes needed.
 
