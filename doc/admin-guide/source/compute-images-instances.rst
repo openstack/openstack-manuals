@@ -31,7 +31,7 @@ flavors that you can edit or add to.
 
    -  For more information about image configuration options, see the
       `Image services
-      <http://docs.openstack.org/mitaka/config-reference/image-service.html>`__
+      <http://docs.openstack.org/newton/config-reference/image.html>`__
       section of the OpenStack Configuration Reference.
 
    -  For more information about flavors, see :ref:`compute-flavors`.
@@ -268,7 +268,7 @@ can also be used to set policies for Image service actions.
 
    To view a sample configuration file, see
    `glance-api.conf
-   <http://docs.openstack.org/mitaka/config-reference/image-service/sample-configuration-files.html#glance-api-conf>`__.
+   <http://docs.openstack.org/newton/config-reference/image/glance-api.conf.html>`__.
 
 #. Optionally, in the ``glance-api.conf`` file, specify whether roles or
    policies are used in the property protections configuration file
@@ -281,7 +281,7 @@ can also be used to set policies for Image service actions.
 
    To view a sample configuration file, see
    `glance-api.conf
-   <http://docs.openstack.org/mitaka/config-reference/image-service/sample-configuration-files.html#glance-api-conf>`__.
+   <http://docs.openstack.org/newton/config-reference/image/glance-api.conf.html>`__.
 
 Image download: how it works
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -317,7 +317,7 @@ Compute nodes also implement caching of images, meaning that if an image
 has been used before it won't necessarily be downloaded every time.
 Information on the configuration options for caching on compute nodes
 can be found in the `Configuration
-Reference <http://docs.openstack.org/mitaka/config-reference/>`__.
+Reference <http://docs.openstack.org/newton/config-reference/>`__.
 
 Instance building blocks
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -414,7 +414,7 @@ Control where instances run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The `Scheduling section
-<http://docs.openstack.org/mitaka/config-reference/compute/scheduler.html>`__
+<http://docs.openstack.org/newton/config-reference/compute/scheduler.html>`__
 of OpenStack Configuration Reference
 provides detailed information on controlling where your instances run,
 including ensuring a set of instances run on different compute nodes for
