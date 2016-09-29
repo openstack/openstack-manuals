@@ -356,8 +356,7 @@ FC SAN auto zoning
 
 The EMC VNX driver supports FC SAN auto zoning when ``ZoneManager`` is
 configured and ``zoning_mode`` is set to ``fabric`` in ``cinder.conf``.
-For ZoneManager configuration, refer to `Configuration Reference Guide
-<http://docs.openstack.org/mitaka/config-reference/block-storage/fc-zoning.html>`_.
+For ZoneManager configuration, refer to :doc:`../fc-zoning`.
 
 Volume number threshold
 -----------------------
