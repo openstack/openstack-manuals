@@ -60,7 +60,7 @@ Fedora
 ~~~~~~
 
 The Fedora project maintains a list of official cloud images at
-https://getfedora.org/cloud/download/.
+`Fedora download page <https://getfedora.org/cloud/download/>`_.
 
 .. note::
 
