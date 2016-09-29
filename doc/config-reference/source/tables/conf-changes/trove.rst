@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Mitaka for Database service
+New, updated, and deprecated options in Newton for Database service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
@@ -12,176 +12,62 @@ New, updated, and deprecated options in Mitaka for Database service
 
    * - Option = default value
      - (Type) Help string
-   * - ``[DEFAULT] guest_log_container_name = database_logs``
-     - (StrOpt) Name of container that stores guest log components.
-   * - ``[DEFAULT] guest_log_expiry = 2592000``
-     - (IntOpt) Expiry (in seconds) of objects in guest log container.
-   * - ``[DEFAULT] guest_log_limit = 1000000``
-     - (IntOpt) Maximum size of a chunk saved in guest log container.
-   * - ``[DEFAULT] max_backups_per_tenant = 50``
-     - (IntOpt) Default maximum number of backups created by a tenant.
-   * - ``[DEFAULT] max_instances_per_tenant = 5``
-     - (IntOpt) Default maximum number of instances per tenant.
-   * - ``[DEFAULT] max_volumes_per_tenant = 20``
-     - (IntOpt) Default maximum volume capacity (in GB) spanning across all Trove volumes per tenant.
-   * - ``[DEFAULT] module_aes_cbc_key = module_aes_cbc_key``
-     - (StrOpt) OpenSSL aes_cbc key for module encryption.
-   * - ``[DEFAULT] module_types = ping``
-     - (ListOpt) A list of module types supported. A module type corresponds to the name of a ModuleDriver.
-   * - ``[DEFAULT] modules_page_size = 20``
-     - (IntOpt) Page size for listing modules.
-   * - ``[DEFAULT] nova_client_version = 2.12``
-     - (StrOpt) The version of of the compute service client.
-   * - ``[DEFAULT] quota_notification_interval = 3600``
-     - (IntOpt) Seconds to wait between pushing events.
-   * - ``[DEFAULT] state_change_poll_time = 3``
-     - (IntOpt) Interval between state change poll requests (seconds).
-   * - ``[cassandra] api_strategy = trove.common.strategies.cluster.experimental.cassandra.api.CassandraAPIStrategy``
-     - (StrOpt) Class that implements datastore-specific API logic.
-   * - ``[cassandra] cluster_support = True``
-     - (BoolOpt) Enable clusters to be created and managed.
-   * - ``[cassandra] guest_log_exposed_logs =``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[cassandra] guestagent_strategy = trove.common.strategies.cluster.experimental.cassandra.guestagent.CassandraGuestAgentStrategy``
-     - (StrOpt) Class that implements datastore-specific Guest Agent API logic.
-   * - ``[cassandra] ignore_dbs = system, system_auth, system_traces``
-     - (ListOpt) Databases to exclude when listing databases.
-   * - ``[cassandra] ignore_users = os_admin``
-     - (ListOpt) Users to exclude when listing users.
-   * - ``[cassandra] taskmanager_strategy = trove.common.strategies.cluster.experimental.cassandra.taskmanager.CassandraTaskManagerStrategy``
-     - (StrOpt) Class that implements datastore-specific task manager logic.
-   * - ``[cors] allow_credentials = True``
-     - (BoolOpt) Indicate that the actual request can include user credentials
-   * - ``[cors] allow_headers = Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which header field names may be used during the actual request.
-   * - ``[cors] allow_methods = GET, POST, PUT, DELETE, OPTIONS``
-     - (ListOpt) Indicate which methods can be used during the actual request.
-   * - ``[cors] allowed_origin = None``
-     - (ListOpt) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
-   * - ``[cors] expose_headers = Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
-   * - ``[cors] max_age = 3600``
-     - (IntOpt) Maximum cache age of CORS preflight requests.
-   * - ``[cors.subdomain] allow_credentials = True``
-     - (BoolOpt) Indicate that the actual request can include user credentials
-   * - ``[cors.subdomain] allow_headers = Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which header field names may be used during the actual request.
-   * - ``[cors.subdomain] allow_methods = GET, POST, PUT, DELETE, OPTIONS``
-     - (ListOpt) Indicate which methods can be used during the actual request.
-   * - ``[cors.subdomain] allowed_origin = None``
-     - (ListOpt) Indicate whether this resource may be shared with the domain received in the requests "origin" header.
-   * - ``[cors.subdomain] expose_headers = Content-Type, Cache-Control, Content-Language, Expires, Last-Modified, Pragma``
-     - (ListOpt) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
-   * - ``[cors.subdomain] max_age = 3600``
-     - (IntOpt) Maximum cache age of CORS preflight requests.
-   * - ``[couchbase] guest_log_exposed_logs =``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[couchdb] guest_log_exposed_logs =``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[couchdb] ignore_dbs = _users, _replicator``
-     - (ListOpt) Databases to exclude when listing databases.
-   * - ``[couchdb] ignore_users = os_admin, root``
-     - (ListOpt) Users to exclude when listing users.
-   * - ``[database] backend = sqlalchemy``
-     - (StrOpt) The back end to use for the database.
-   * - ``[database] connection_debug = 0``
-     - (IntOpt) Verbosity of SQL debugging information: 0=None, 100=Everything.
-   * - ``[database] connection_trace = False``
-     - (BoolOpt) Add Python stack traces to SQL as comment strings.
-   * - ``[database] db_inc_retry_interval = True``
-     - (BoolOpt) If True, increases the interval between retries of a database operation up to db_max_retry_interval.
-   * - ``[database] db_max_retries = 20``
-     - (IntOpt) Maximum retries in case of connection error or deadlock error before error is raised. Set to -1 to specify an infinite retry count.
-   * - ``[database] db_max_retry_interval = 10``
-     - (IntOpt) If db_inc_retry_interval is set, the maximum seconds between retries of a database operation.
-   * - ``[database] db_retry_interval = 1``
-     - (IntOpt) Seconds between retries of a database transaction.
-   * - ``[database] max_overflow = None``
-     - (IntOpt) If set, use this value for max_overflow with SQLAlchemy.
-   * - ``[database] max_pool_size = None``
-     - (IntOpt) Maximum number of SQL connections to keep open in a pool.
-   * - ``[database] max_retries = 10``
-     - (IntOpt) Maximum number of database connection retries during startup. Set to -1 to specify an infinite retry count.
-   * - ``[database] min_pool_size = 1``
-     - (IntOpt) Minimum number of SQL connections to keep open in a pool.
-   * - ``[database] mysql_sql_mode = TRADITIONAL``
-     - (StrOpt) The SQL mode to be used for MySQL sessions. This option, including the default, overrides any server-set SQL mode. To use whatever SQL mode is set by the server configuration, set this to no value. Example: mysql_sql_mode=
-   * - ``[database] pool_timeout = None``
-     - (IntOpt) If set, use this value for pool_timeout with SQLAlchemy.
-   * - ``[database] retry_interval = 10``
-     - (IntOpt) Interval between retries of opening a SQL connection.
-   * - ``[database] slave_connection = None``
-     - (StrOpt) The SQLAlchemy connection string to use to connect to the slave database.
-   * - ``[database] sqlite_db = oslo.sqlite``
-     - (StrOpt) The file name to use with SQLite.
-   * - ``[database] sqlite_synchronous = True``
-     - (BoolOpt) If True, SQLite uses synchronous mode.
-   * - ``[database] use_db_reconnect = False``
-     - (BoolOpt) Enable the experimental use of database reconnect on connection lost.
-   * - ``[db2] guest_log_exposed_logs =``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[mariadb] api_strategy = trove.common.strategies.cluster.experimental.galera_common.api.GaleraCommonAPIStrategy``
-     - (StrOpt) Class that implements datastore-specific API logic.
-   * - ``[mariadb] cluster_support = True``
-     - (BoolOpt) Enable clusters to be created and managed.
-   * - ``[mariadb] guest_log_exposed_logs = general,slow_query``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[mariadb] guest_log_long_query_time = 1000``
-     - (IntOpt) The time in milliseconds that a statement must take in in order to be logged in the slow_query log.
-   * - ``[mariadb] guestagent_strategy = trove.common.strategies.cluster.experimental.galera_common.guestagent.GaleraCommonGuestAgentStrategy``
-     - (StrOpt) Class that implements datastore-specific Guest Agent API logic.
-   * - ``[mariadb] ignore_dbs = mysql, information_schema, performance_schema``
-     - (ListOpt) Databases to exclude when listing databases.
-   * - ``[mariadb] ignore_users = os_admin, root``
-     - (ListOpt) Users to exclude when listing users.
-   * - ``[mariadb] min_cluster_member_count = 3``
-     - (IntOpt) Minimum number of members in MariaDB cluster.
-   * - ``[mariadb] taskmanager_strategy = trove.common.strategies.cluster.experimental.galera_common.taskmanager.GaleraCommonTaskManagerStrategy``
-     - (StrOpt) Class that implements datastore-specific task manager logic.
-   * - ``[mongodb] cluster_secure = True``
-     - (BoolOpt) Create secure clusters. If False then the Role-Based Access Control will be disabled.
-   * - ``[mongodb] guest_log_exposed_logs =``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[mysql] guest_log_exposed_logs = general,slow_query``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[mysql] guest_log_long_query_time = 1000``
-     - (IntOpt) The time in milliseconds that a statement must take in in order to be logged in the slow_query log.
-   * - ``[mysql] ignore_dbs = mysql, information_schema, performance_schema``
-     - (ListOpt) Databases to exclude when listing databases.
-   * - ``[mysql] ignore_users = os_admin, root``
-     - (ListOpt) Users to exclude when listing users.
-   * - ``[oslo_middleware] max_request_body_size = 114688``
-     - (IntOpt) The maximum body size for each request, in bytes.
-   * - ``[oslo_middleware] secure_proxy_ssl_header = X-Forwarded-Proto``
-     - (StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
-   * - ``[percona] guest_log_exposed_logs = general,slow_query``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[percona] guest_log_long_query_time = 1000``
-     - (IntOpt) The time in milliseconds that a statement must take in in order to be logged in the slow_query log.
-   * - ``[percona] ignore_dbs = mysql, information_schema, performance_schema``
-     - (ListOpt) Databases to exclude when listing databases.
-   * - ``[percona] ignore_users = os_admin, root``
-     - (ListOpt) Users to exclude when listing users.
-   * - ``[postgresql] guest_log_exposed_logs = general``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[postgresql] guest_log_long_query_time = 0``
-     - (IntOpt) The time in milliseconds that a statement must take in in order to be logged in the 'general' log. A value of '0' logs all statements, while '-1' turns off statement logging.
-   * - ``[postgresql] postgresql_port = 5432``
-     - (PortOpt) The TCP port the server listens on.
-   * - ``[profiler] hmac_keys = SECRET_KEY``
-     - (StrOpt) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project. Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
-   * - ``[pxc] guest_log_exposed_logs = general,slow_query``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[pxc] guest_log_long_query_time = 1000``
-     - (IntOpt) The time in milliseconds that a statement must take in in order to be logged in the slow_query log.
-   * - ``[pxc] ignore_dbs = mysql, information_schema, performance_schema``
-     - (ListOpt) Databases to exclude when listing databases.
-   * - ``[redis] guest_log_exposed_logs =``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[vertica] guest_log_exposed_logs =``
-     - (StrOpt) List of Guest Logs to expose for publishing.
-   * - ``[vertica] min_ksafety = 0``
-     - (IntOpt) Minimum k-safety setting permitted for vertica clusters
+   * - ``[cassandra] default_password_length = 36``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[cassandra] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[cassandra] system_log_level = INFO``
+     - (StrOpt) Cassandra log verbosity.
+   * - ``[couchbase] default_password_length = 24``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[couchbase] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[couchdb] default_password_length = 36``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[couchdb] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[db2] default_password_length = 36``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[db2] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[mariadb] default_password_length = ${mysql.default_password_length}``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[mariadb] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[mongodb] default_password_length = 36``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[mongodb] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[mysql] default_password_length = 36``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[mysql] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[percona] default_password_length = ${mysql.default_password_length}``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[percona] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[postgresql] default_password_length = 36``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[postgresql] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[postgresql] replication_namespace = trove.guestagent.strategies.replication.experimental.postgresql_impl``
+     - (StrOpt) Namespace to load replication strategies from.
+   * - ``[postgresql] replication_strategy = PostgresqlReplicationStreaming``
+     - (StrOpt) Default strategy for replication.
+   * - ``[postgresql] wal_archive_location = /mnt/wal_archive``
+     - (StrOpt) Filesystem path storing WAL archive files when WAL-shipping based backups or replication is enabled.
+   * - ``[pxc] default_password_length = ${mysql.default_password_length}``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[pxc] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[redis] default_password_length = 36``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[redis] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
+   * - ``[vertica] default_password_length = 36``
+     - (IntOpt) Character length of generated passwords.
+   * - ``[vertica] icmp = False``
+     - (BoolOpt) Whether to permit ICMP.
 
 .. list-table:: New default values
    :header-rows: 1
@@ -190,84 +76,81 @@ New, updated, and deprecated options in Mitaka for Database service
    * - Option
      - Previous default value
      - New default value
-   * - ``[DEFAULT] pydev_debug_port``
-     - ``None``
-     - ``5678``
-   * - ``[DEFAULT] storage_namespace``
-     - ``trove.guestagent.strategies.storage.swift``
-     - ``trove.common.strategies.storage.swift``
-   * - ``[cassandra] backup_namespace``
-     - ``None``
-     - ``trove.guestagent.strategies.backup.experimental.cassandra_impl``
-   * - ``[cassandra] backup_strategy``
-     - ``None``
-     - ``NodetoolSnapshot``
-   * - ``[cassandra] restore_namespace``
-     - ``None``
-     - ``trove.guestagent.strategies.restore.experimental.cassandra_impl``
-   * - ``[cassandra] root_controller``
-     - ``trove.extensions.common.service.DefaultRootController``
-     - ``trove.extensions.cassandra.service.CassandraRootController``
-   * - ``[cassandra] tcp_ports``
-     - ``7000, 7001, 9042, 9160``
-     - ``7000, 7001, 7199, 9042, 9160``
-   * - ``[couchbase] root_on_create``
-     - ``True``
-     - ``False``
-   * - ``[couchdb] backup_namespace``
-     - ``None``
-     - ``trove.guestagent.strategies.backup.experimental.couchdb_impl``
-   * - ``[couchdb] backup_strategy``
-     - ``None``
-     - ``CouchDBBackup``
-   * - ``[couchdb] restore_namespace``
-     - ``None``
-     - ``trove.guestagent.strategies.restore.experimental.couchdb_impl``
-   * - ``[db2] backup_namespace``
-     - ``None``
-     - ``trove.guestagent.strategies.backup.experimental.db2_impl``
+   * - ``[DEFAULT] agent_call_high_timeout``
+     - ``60``
+     - ``600``
+   * - ``[DEFAULT] agent_call_low_timeout``
+     - ``5``
+     - ``15``
+   * - ``[DEFAULT] dns_auth_url``
+     -
+     - ``http://0.0.0.0``
+   * - ``[DEFAULT] dns_endpoint_url``
+     - ``0.0.0.0``
+     - ``http://0.0.0.0``
+   * - ``[DEFAULT] dns_hostname``
+     -
+     - ``localhost``
+   * - ``[DEFAULT] dns_management_base_url``
+     -
+     - ``http://0.0.0.0``
+   * - ``[DEFAULT] max_accepted_volume_size``
+     - ``5``
+     - ``10``
+   * - ``[DEFAULT] max_instances_per_tenant``
+     - ``5``
+     - ``10``
+   * - ``[DEFAULT] max_volumes_per_tenant``
+     - ``20``
+     - ``40``
+   * - ``[DEFAULT] module_types``
+     - ``ping``
+     - ``ping, new_relic_license``
+   * - ``[DEFAULT] resize_time_out``
+     - ``600``
+     - ``900``
+   * - ``[DEFAULT] state_change_wait_time``
+     - ``180``
+     - ``600``
+   * - ``[DEFAULT] usage_timeout``
+     - ``900``
+     - ``1800``
+   * - ``[cassandra] guest_log_exposed_logs``
+     -
+     - ``system``
    * - ``[db2] backup_strategy``
-     - ``None``
      - ``DB2Backup``
-   * - ``[db2] restore_namespace``
-     - ``None``
-     - ``trove.guestagent.strategies.restore.experimental.db2_impl``
-   * - ``[mariadb] replication_namespace``
-     - ``trove.guestagent.strategies.replication.mysql_binlog``
-     - ``trove.guestagent.strategies.replication.experimental.mariadb_gtid``
-   * - ``[mariadb] replication_strategy``
-     - ``MysqlBinlogReplication``
-     - ``MariaDBGTIDReplication``
-   * - ``[mariadb] tcp_ports``
-     - ``3306``
-     - ``3306, 4444, 4567, 4568``
+     - ``DB2OfflineBackup``
+   * - ``[mariadb] backup_incremental_strategy``
+     - ``{'InnoBackupEx': 'InnoBackupExIncremental'}``
+     - ``{'MariaDBInnoBackupEx': 'MariaDBInnoBackupExIncremental'}``
+   * - ``[mariadb] backup_namespace``
+     - ``trove.guestagent.strategies.backup.mysql_impl``
+     - ``trove.guestagent.strategies.backup.experimental.mariadb_impl``
+   * - ``[mariadb] backup_strategy``
+     - ``InnoBackupEx``
+     - ``MariaDBInnoBackupEx``
+   * - ``[mariadb] restore_namespace``
+     - ``trove.guestagent.strategies.restore.mysql_impl``
+     - ``trove.guestagent.strategies.restore.experimental.mariadb_impl``
    * - ``[mongodb] root_controller``
      - ``trove.extensions.common.service.DefaultRootController``
      - ``trove.extensions.mongodb.service.MongoDBRootController``
    * - ``[mongodb] tcp_ports``
      - ``2500, 27017``
      - ``2500, 27017, 27019``
-   * - ``[mysql] root_controller``
+   * - ``[postgresql] backup_incremental_strategy``
+     - ``{}``
+     - ``{'PgBaseBackup': 'PgBaseBackupIncremental'}``
+   * - ``[postgresql] backup_strategy``
+     - ``PgDump``
+     - ``PgBaseBackup``
+   * - ``[postgresql] ignore_dbs``
+     - ``postgres``
+     - ``os_admin, postgres``
+   * - ``[postgresql] root_controller``
      - ``trove.extensions.common.service.DefaultRootController``
-     - ``trove.extensions.mysql.service.MySQLRootController``
-   * - ``[profiler] trace_sqlalchemy``
-     - ``True``
-     - ``False``
-   * - ``[pxc] api_strategy``
-     - ``trove.common.strategies.cluster.experimental.pxc.api.PXCAPIStrategy``
-     - ``trove.common.strategies.cluster.experimental.galera_common.api.GaleraCommonAPIStrategy``
-   * - ``[pxc] guestagent_strategy``
-     - ``trove.common.strategies.cluster.experimental.pxc.guestagent.PXCGuestAgentStrategy``
-     - ``trove.common.strategies.cluster.experimental.galera_common.guestagent.GaleraCommonGuestAgentStrategy``
-   * - ``[pxc] root_controller``
-     - ``trove.extensions.common.service.DefaultRootController``
-     - ``trove.extensions.pxc.service.PxcRootController``
-   * - ``[pxc] taskmanager_strategy``
-     - ``trove.common.strategies.cluster.experimental.pxc.taskmanager.PXCTaskManagerStrategy``
-     - ``trove.common.strategies.cluster.experimental.galera_common.taskmanager.GaleraCommonTaskManagerStrategy``
-   * - ``[redis] device_path``
-     - ``None``
-     - ``/dev/vdb``
+     - ``trove.extensions.postgresql.service.PostgreSQLRootController``
 
 .. list-table:: Deprecated options
    :header-rows: 1
@@ -275,28 +158,30 @@ New, updated, and deprecated options in Mitaka for Database service
 
    * - Deprecated option
      - New Option
-   * - ``[DEFAULT] ignore_dbs``
-     - ``[couchdb] ignore_dbs``
-   * - ``[DEFAULT] ignore_dbs``
-     - ``[mysql] ignore_dbs``
-   * - ``[DEFAULT] ignore_dbs``
-     - ``[mariadb] ignore_dbs``
-   * - ``[DEFAULT] ignore_dbs``
-     - ``[percona] ignore_dbs``
-   * - ``[DEFAULT] ignore_users``
-     - ``[percona] ignore_users``
-   * - ``[DEFAULT] ignore_users``
-     - ``[couchdb] ignore_users``
-   * - ``[DEFAULT] ignore_users``
-     - ``[mariadb] ignore_users``
-   * - ``[DEFAULT] ignore_users``
-     - ``[mysql] ignore_users``
-   * - ``[DEFAULT] max_backups_per_user``
-     - ``[DEFAULT] max_backups_per_tenant``
-   * - ``[DEFAULT] max_instances_per_user``
-     - ``[DEFAULT] max_instances_per_tenant``
-   * - ``[DEFAULT] max_volumes_per_user``
-     - ``[DEFAULT] max_volumes_per_tenant``
+   * - ``[DEFAULT] default_password_length``
+     - ``[couchbase] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[redis] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[cassandra] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[mysql] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[mariadb] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[postgresql] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[vertica] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[pxc] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[percona] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[mongodb] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[db2] default_password_length``
+   * - ``[DEFAULT] default_password_length``
+     - ``[couchdb] default_password_length``
    * - ``[DEFAULT] use_syslog``
      - ``None``
 

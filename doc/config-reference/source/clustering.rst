@@ -2,6 +2,11 @@
 Clustering service
 ==================
 
+.. toctree::
+   :maxdepth: 1
+
+   tables/conf-changes/senlin.rst
+
 The Clustering service implements clustering services and libraries for
 managing groups of homogeneous objects exposed by other OpenStack services.
 The configuration file for this service is ``/etc/senlin/senlin.conf``.

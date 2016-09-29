@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Mitaka for Bare Metal service
+New, updated, and deprecated options in Newton for Bare Metal service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
@@ -12,71 +12,184 @@ New, updated, and deprecated options in Mitaka for Bare Metal service
 
    * - Option = default value
      - (Type) Help string
-   * - ``[DEFAULT] debug_tracebacks_in_api = False``
-     - (BoolOpt) Return server tracebacks in the API response for any error responses. WARNING: this is insecure and should not be used in a production environment.
-   * - ``[DEFAULT] hash_ring_reset_interval = 180``
-     - (IntOpt) Interval (in seconds) between hash ring resets.
-   * - ``[agent] stream_raw_images = True``
-     - (BoolOpt) Whether the agent ramdisk should stream raw images directly onto the disk or not. By streaming raw images directly onto the disk the agent ramdisk will not spend time copying the image to a tmpfs partition (therefore consuming less memory) prior to writing it to the disk. Unless the disk where the image will be copied to is really slow, this option should be set to True. Defaults to True.
-   * - ``[amt] awake_interval = 60``
-     - (IntOpt) Time interval (in seconds) for successive awake call to AMT interface, this depends on the IdleTimeout setting on AMT interface. AMT Interface will go to sleep after 60 seconds of inactivity by default. IdleTimeout=0 means AMT will not go to sleep at all. Setting awake_interval=0 will disable awake call.
-   * - ``[api] api_workers = None``
-     - (IntOpt) Number of workers for OpenStack Ironic API service. The default is equal to the number of CPUs available if that can be determined, else a default worker count of 1 is returned.
-   * - ``[api] enable_ssl_api = False``
-     - (BoolOpt) Enable the integrated stand-alone API to service requests via HTTPS instead of HTTP. If there is a front-end service performing HTTPS offloading from the service, this option should be False; note, you will want to change public API endpoint to represent SSL termination URL with 'public_endpoint' option.
-   * - ``[conductor] automated_clean = True``
-     - (BoolOpt) Enables or disables automated cleaning. Automated cleaning is a configurable set of steps, such as erasing disk drives, that are performed on the node to ensure it is in a baseline state and ready to be deployed to. This is done after instance deletion as well as during the transition from a "manageable" to "available" state. When enabled, the particular steps performed to clean a node depend on which driver that node is managed by; see the individual driver's documentation for details. NOTE: The introduction of the cleaning operation causes instance deletion to take significantly longer. In an environment where all tenants are trusted (eg, because there is only one tenant), this option could be safely disabled.
-   * - ``[disk_utils] dd_block_size = 1M``
-     - (StrOpt) Block size to use when writing to the nodes disk.
-   * - ``[disk_utils] efi_system_partition_size = 200``
-     - (IntOpt) Size of EFI system partition in MiB when configuring UEFI systems for local boot.
-   * - ``[disk_utils] iscsi_verify_attempts = 3``
-     - (IntOpt) Maximum attempts to verify an iSCSI connection is active, sleeping 1 second between attempts.
-   * - ``[glance] glance_cafile = None``
-     - (StrOpt) Optional path to a CA certificate bundle to be used to validate the SSL certificate served by glance. It is used when glance_api_insecure is set to False.
-   * - ``[glance] swift_temp_url_cache_enabled = False``
-     - (BoolOpt) Whether to cache generated Swift temporary URLs. Setting it to true is only useful when an image caching proxy is used. Defaults to False.
-   * - ``[glance] swift_temp_url_expected_download_start_delay = 0``
-     - (IntOpt) This is the delay (in seconds) from the time of the deploy request (when the Swift temporary URL is generated) to when the IPA ramdisk starts up and URL is used for the image download. This value is used to check if the Swift temporary URL duration is large enough to let the image download begin. Also if temporary URL caching is enabled this will determine if a cached entry will still be valid when the download starts. swift_temp_url_duration value must be greater than or equal to this option's value. Defaults to 0.
-   * - ``[glance] temp_url_endpoint_type = swift``
-     - (StrOpt) Type of endpoint to use for temporary URLs. If the Glance backend is Swift, use "swift"; if it is CEPH with RADOS gateway, use "radosgw".
-   * - ``[iboot] reboot_delay = 5``
-     - (IntOpt) Time (in seconds) to sleep between when rebooting (powering off and on again).
-   * - ``[irmc] snmp_community = public``
-     - (StrOpt) SNMP community. Required for versions "v1" and "v2c"
-   * - ``[irmc] snmp_port = 161``
-     - (PortOpt) SNMP port
-   * - ``[irmc] snmp_security = None``
-     - (StrOpt) SNMP security name. Required for version "v3"
-   * - ``[irmc] snmp_version = v2c``
-     - (StrOpt) SNMP protocol version
-   * - ``[ironic_lib] fatal_exception_format_errors = False``
-     - (BoolOpt) Make exception message format errors fatal.
-   * - ``[ironic_lib] root_helper = sudo ironic-rootwrap /etc/ironic/rootwrap.conf``
-     - (StrOpt) Command that is prefixed to commands that are run as root. If not specified, no commands are run as root.
-   * - ``[oneview] allow_insecure_connections = False``
-     - (BoolOpt) Option to allow insecure connection with OneView
-   * - ``[oneview] manager_url = None``
-     - (StrOpt) URL where OneView is available
-   * - ``[oneview] max_polling_attempts = 12``
-     - (IntOpt) Max connection retries to check changes on OneView
-   * - ``[oneview] password = None``
-     - (StrOpt) OneView password to be used
-   * - ``[oneview] tls_cacert_file = None``
-     - (StrOpt) Path to CA certificate
-   * - ``[oneview] username = None``
-     - (StrOpt) OneView username to be used
-   * - ``[pxe] ip_version = 4``
-     - (StrOpt) The IP version that will be used for PXE booting. Defaults to 4. EXPERIMENTAL
-   * - ``[pxe] ipxe_timeout = 0``
-     - (IntOpt) Timeout value (in seconds) for downloading an image via iPXE. Defaults to 0 (no timeout)
-   * - ``[snmp] reboot_delay = 0``
-     - (IntOpt) Time (in seconds) to sleep between when rebooting (powering off and on again)
-   * - ``[ssh] get_vm_name_attempts = 3``
-     - (IntOpt) Number of attempts to try to get VM name used by the host that corresponds to a node's MAC address.
-   * - ``[ssh] get_vm_name_retry_interval = 3``
-     - (IntOpt) Number of seconds to wait between attempts to get VM name used by the host that corresponds to a node's MAC address.
+   * - ``[DEFAULT] default_network_interface = None``
+     - (StrOpt) Default network interface to be used for nodes that do not have network_interface field set. A complete list of network interfaces present on your system may be found by enumerating the "ironic.hardware.interfaces.network" entrypoint.
+   * - ``[DEFAULT] enabled_network_interfaces = flat, noop``
+     - (ListOpt) Specify the list of network interfaces to load during service initialization. Missing network interfaces, or network interfaces which fail to initialize, will prevent the conductor service from starting. The option default is a recommended set of production-oriented network interfaces. A complete list of network interfaces present on your system may be found by enumerating the "ironic.hardware.interfaces.network" entrypoint. This value must be the same on all ironic-conductor and ironic-api services, because it is used by ironic-api service to validate a new or updated node's network_interface value.
+   * - ``[DEFAULT] notification_level = None``
+     - (StrOpt) Specifies the minimum level for which to send notifications. If not set, no notifications will be sent. The default is for this option to be unset.
+   * - ``[agent] deploy_logs_collect = on_failure``
+     - (StrOpt) Whether Ironic should collect the deployment logs on deployment failure (on_failure), always or never.
+   * - ``[agent] deploy_logs_local_path = /var/log/ironic/deploy``
+     - (StrOpt) The path to the directory where the logs should be stored, used when the deploy_logs_storage_backend is configured to "local".
+   * - ``[agent] deploy_logs_storage_backend = local``
+     - (StrOpt) The name of the storage backend where the logs will be stored.
+   * - ``[agent] deploy_logs_swift_container = ironic_deploy_logs_container``
+     - (StrOpt) The name of the Swift container to store the logs, used when the deploy_logs_storage_backend is configured to "swift".
+   * - ``[agent] deploy_logs_swift_days_to_expire = 30``
+     - (IntOpt) Number of days before a log object is marked as expired in Swift. If None, the logs will be kept forever or until manually deleted. Used when the deploy_logs_storage_backend is configured to "swift".
+   * - ``[api] ramdisk_heartbeat_timeout = 300``
+     - (IntOpt) Maximum interval (in seconds) for agent heartbeats.
+   * - ``[api] restrict_lookup = True``
+     - (BoolOpt) Whether to restrict the lookup API to only nodes in certain states.
+   * - ``[audit] audit_map_file = /etc/ironic/ironic_api_audit_map.conf``
+     - (StrOpt) Path to audit map file for ironic-api service. Used only when API audit is enabled.
+   * - ``[audit] enabled = False``
+     - (BoolOpt) Enable auditing of API requests (for ironic-api service).
+   * - ``[audit] ignore_req_list = None``
+     - (StrOpt) Comma separated list of Ironic REST API HTTP methods to be ignored during audit. For example: auditing will not be done on any GET or POST requests if this is set to "GET,POST". It is used only when API audit is enabled.
+   * - ``[audit] namespace = openstack``
+     - (StrOpt) namespace prefix for generated id
+   * - ``[audit_middleware_notifications] driver = None``
+     - (StrOpt) The Driver to handle sending notifications. Possible values are messaging, messagingv2, routing, log, test, noop. If not specified, then value from oslo_messaging_notifications conf section is used.
+   * - ``[audit_middleware_notifications] topics = None``
+     - (ListOpt) List of AMQP topics used for OpenStack notifications. If not specified, then value from oslo_messaging_notifications conf section is used.
+   * - ``[audit_middleware_notifications] transport_url = None``
+     - (StrOpt) A URL representing messaging driver to use for notification. If not specified, we fall back to the same configuration used for RPC.
+   * - ``[deploy] continue_if_disk_secure_erase_fails = False``
+     - (BoolOpt) Defines what to do if an ATA secure erase operation fails during cleaning in the Ironic Python Agent. If False, the cleaning operation will fail and the node will be put in ``clean failed`` state. If True, shred will be invoked and cleaning will continue.
+   * - ``[deploy] erase_devices_metadata_priority = None``
+     - (IntOpt) Priority to run in-band clean step that erases metadata from devices, via the Ironic Python Agent ramdisk. If unset, will use the priority set in the ramdisk (defaults to 99 for the GenericHardwareManager). If set to 0, will not run during cleaning.
+   * - ``[deploy] power_off_after_deploy_failure = True``
+     - (BoolOpt) Whether to power off a node after deploy failure. Defaults to True.
+   * - ``[deploy] shred_final_overwrite_with_zeros = True``
+     - (BoolOpt) Whether to write zeros to a node's block devices after writing random data. This will write zeros to the device even when deploy.shred_random_overwrite_iterations is 0. This option is only used if a device could not be ATA Secure Erased. Defaults to True.
+   * - ``[deploy] shred_random_overwrite_iterations = 1``
+     - (IntOpt) During shred, overwrite all block devices N times with random data. This is only used if a device could not be ATA Secure Erased. Defaults to 1.
+   * - ``[drac] query_raid_config_job_status_interval = 120``
+     - (IntOpt) Interval (in seconds) between periodic RAID job status checks to determine whether the asynchronous RAID configuration was successfully finished or not.
+   * - ``[glance] auth_section = None``
+     - (Opt) Config Section from which to load plugin specific options
+   * - ``[glance] auth_type = None``
+     - (Opt) Authentication type to load
+   * - ``[glance] cafile = None``
+     - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``[glance] certfile = None``
+     - (StrOpt) PEM encoded client certificate cert file
+   * - ``[glance] insecure = False``
+     - (BoolOpt) Verify HTTPS connections.
+   * - ``[glance] keyfile = None``
+     - (StrOpt) PEM encoded client certificate key file
+   * - ``[glance] timeout = None``
+     - (IntOpt) Timeout value for http requests
+   * - ``[ilo] ca_file = None``
+     - (StrOpt) CA certificate file to validate iLO.
+   * - ``[ilo] default_boot_mode = auto``
+     - (StrOpt) Default boot mode to be used in provisioning when "boot_mode" capability is not provided in the "properties/capabilities" of the node. The default is "auto" for backward compatibility. When "auto" is specified, default boot mode will be selected based on boot mode settings on the system.
+   * - ``[inspector] auth_section = None``
+     - (Opt) Config Section from which to load plugin specific options
+   * - ``[inspector] auth_type = None``
+     - (Opt) Authentication type to load
+   * - ``[inspector] cafile = None``
+     - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``[inspector] certfile = None``
+     - (StrOpt) PEM encoded client certificate cert file
+   * - ``[inspector] insecure = False``
+     - (BoolOpt) Verify HTTPS connections.
+   * - ``[inspector] keyfile = None``
+     - (StrOpt) PEM encoded client certificate key file
+   * - ``[inspector] timeout = None``
+     - (IntOpt) Timeout value for http requests
+   * - ``[iscsi] portal_port = 3260``
+     - (PortOpt) The port number on which the iSCSI portal listens for incoming connections.
+   * - ``[metrics] agent_backend = noop``
+     - (StrOpt) Backend for the agent ramdisk to use for metrics. Default possible backends are "noop" and "statsd".
+   * - ``[metrics] agent_global_prefix = None``
+     - (StrOpt) Prefix all metric names sent by the agent ramdisk with this value. The format of metric names is [global_prefix.][uuid.][host_name.]prefix.metric_name.
+   * - ``[metrics] agent_prepend_host = False``
+     - (BoolOpt) Prepend the hostname to all metric names sent by the agent ramdisk. The format of metric names is [global_prefix.][uuid.][host_name.]prefix.metric_name.
+   * - ``[metrics] agent_prepend_host_reverse = True``
+     - (BoolOpt) Split the prepended host value by "." and reverse it for metrics sent by the agent ramdisk (to better match the reverse hierarchical form of domain names).
+   * - ``[metrics] agent_prepend_uuid = False``
+     - (BoolOpt) Prepend the node's Ironic uuid to all metric names sent by the agent ramdisk. The format of metric names is [global_prefix.][uuid.][host_name.]prefix.metric_name.
+   * - ``[metrics] backend = noop``
+     - (StrOpt) Backend to use for the metrics system.
+   * - ``[metrics] global_prefix = None``
+     - (StrOpt) Prefix all metric names with this value. By default, there is no global prefix. The format of metric names is [global_prefix.][host_name.]prefix.metric_name.
+   * - ``[metrics] prepend_host = False``
+     - (BoolOpt) Prepend the hostname to all metric names. The format of metric names is [global_prefix.][host_name.]prefix.metric_name.
+   * - ``[metrics] prepend_host_reverse = True``
+     - (BoolOpt) Split the prepended host value by "." and reverse it (to better match the reverse hierarchical form of domain names).
+   * - ``[metrics_statsd] agent_statsd_host = localhost``
+     - (StrOpt) Host for the agent ramdisk to use with the statsd backend. This must be accessible from networks the agent is booted on.
+   * - ``[metrics_statsd] agent_statsd_port = 8125``
+     - (PortOpt) Port for the agent ramdisk to use with the statsd backend.
+   * - ``[metrics_statsd] statsd_host = localhost``
+     - (StrOpt) Host for use with the statsd backend.
+   * - ``[metrics_statsd] statsd_port = 8125``
+     - (PortOpt) Port to use with the statsd backend.
+   * - ``[neutron] auth_section = None``
+     - (Opt) Config Section from which to load plugin specific options
+   * - ``[neutron] auth_type = None``
+     - (Opt) Authentication type to load
+   * - ``[neutron] cafile = None``
+     - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``[neutron] certfile = None``
+     - (StrOpt) PEM encoded client certificate cert file
+   * - ``[neutron] insecure = False``
+     - (BoolOpt) Verify HTTPS connections.
+   * - ``[neutron] keyfile = None``
+     - (StrOpt) PEM encoded client certificate key file
+   * - ``[neutron] port_setup_delay = 0``
+     - (IntOpt) Delay value to wait for Neutron agents to setup sufficient DHCP configuration for port.
+   * - ``[neutron] provisioning_network_uuid = None``
+     - (StrOpt) Neutron network UUID for the ramdisk to be booted into for provisioning nodes. Required for "neutron" network interface.
+   * - ``[neutron] timeout = None``
+     - (IntOpt) Timeout value for http requests
+   * - ``[oneview] enable_periodic_tasks = True``
+     - (BoolOpt) Whether to enable the periodic tasks for OneView driver be aware when OneView hardware resources are taken and released by Ironic or OneView users and proactively manage nodes in clean fail state according to Dynamic Allocation model of hardware resources allocation in OneView.
+   * - ``[oneview] periodic_check_interval = 300``
+     - (IntOpt) Period (in seconds) for periodic tasks to be executed when enable_periodic_tasks=True.
+   * - ``[pxe] ipxe_use_swift = False``
+     - (BoolOpt) Download deploy images directly from swift using temporary URLs. If set to false (default), images are downloaded to the ironic-conductor node and served over its local HTTP server. Applicable only when 'ipxe_enabled' option is set to true.
+   * - ``[service_catalog] auth_section = None``
+     - (Opt) Config Section from which to load plugin specific options
+   * - ``[service_catalog] auth_type = None``
+     - (Opt) Authentication type to load
+   * - ``[service_catalog] cafile = None``
+     - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``[service_catalog] certfile = None``
+     - (StrOpt) PEM encoded client certificate cert file
+   * - ``[service_catalog] insecure = False``
+     - (BoolOpt) Verify HTTPS connections.
+   * - ``[service_catalog] keyfile = None``
+     - (StrOpt) PEM encoded client certificate key file
+   * - ``[service_catalog] timeout = None``
+     - (IntOpt) Timeout value for http requests
+   * - ``[swift] auth_section = None``
+     - (Opt) Config Section from which to load plugin specific options
+   * - ``[swift] auth_type = None``
+     - (Opt) Authentication type to load
+   * - ``[swift] cafile = None``
+     - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``[swift] certfile = None``
+     - (StrOpt) PEM encoded client certificate cert file
+   * - ``[swift] insecure = False``
+     - (BoolOpt) Verify HTTPS connections.
+   * - ``[swift] keyfile = None``
+     - (StrOpt) PEM encoded client certificate key file
+   * - ``[swift] timeout = None``
+     - (IntOpt) Timeout value for http requests
 
+.. list-table:: New default values
+   :header-rows: 1
+   :class: config-ref-table
+
+   * - Option
+     - Previous default value
+     - New default value
+   * - ``[DEFAULT] my_ip``
+     - ``10.0.0.1``
+     - ``127.0.0.1``
+   * - ``[neutron] url``
+     - ``http://$my_ip:9696``
+     - ``None``
+   * - ``[pxe] uefi_pxe_bootfile_name``
+     - ``elilo.efi``
+     - ``bootx64.efi``
+   * - ``[pxe] uefi_pxe_config_template``
+     - ``$pybasedir/drivers/modules/elilo_efi_pxe_config.template``
+     - ``$pybasedir/drivers/modules/pxe_grub_config.template``
 
 .. list-table:: Deprecated options
    :header-rows: 1
@@ -86,8 +199,48 @@ New, updated, and deprecated options in Mitaka for Bare Metal service
      - New Option
    * - ``[DEFAULT] use_syslog``
      - ``None``
-   * - ``[agent] agent_pxe_append_params``
-     - ``None``
-   * - ``[agent] agent_pxe_config_template``
-     - ``None``
+   * - ``[agent] heartbeat_timeout``
+     - ``[api] ramdisk_heartbeat_timeout``
+   * - ``[deploy] erase_devices_iterations``
+     - ``[deploy] shred_random_overwrite_iterations``
+   * - ``[keystone_authtoken] cafile``
+     - ``[glance] cafile``
+   * - ``[keystone_authtoken] cafile``
+     - ``[neutron] cafile``
+   * - ``[keystone_authtoken] cafile``
+     - ``[service_catalog] cafile``
+   * - ``[keystone_authtoken] cafile``
+     - ``[swift] cafile``
+   * - ``[keystone_authtoken] cafile``
+     - ``[inspector] cafile``
+   * - ``[keystone_authtoken] certfile``
+     - ``[service_catalog] certfile``
+   * - ``[keystone_authtoken] certfile``
+     - ``[neutron] certfile``
+   * - ``[keystone_authtoken] certfile``
+     - ``[glance] certfile``
+   * - ``[keystone_authtoken] certfile``
+     - ``[inspector] certfile``
+   * - ``[keystone_authtoken] certfile``
+     - ``[swift] certfile``
+   * - ``[keystone_authtoken] insecure``
+     - ``[glance] insecure``
+   * - ``[keystone_authtoken] insecure``
+     - ``[inspector] insecure``
+   * - ``[keystone_authtoken] insecure``
+     - ``[swift] insecure``
+   * - ``[keystone_authtoken] insecure``
+     - ``[service_catalog] insecure``
+   * - ``[keystone_authtoken] insecure``
+     - ``[neutron] insecure``
+   * - ``[keystone_authtoken] keyfile``
+     - ``[inspector] keyfile``
+   * - ``[keystone_authtoken] keyfile``
+     - ``[swift] keyfile``
+   * - ``[keystone_authtoken] keyfile``
+     - ``[neutron] keyfile``
+   * - ``[keystone_authtoken] keyfile``
+     - ``[glance] keyfile``
+   * - ``[keystone_authtoken] keyfile``
+     - ``[service_catalog] keyfile``
 

@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Mitaka for Image service
+New, updated, and deprecated options in Newton for Image service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
@@ -12,8 +12,10 @@ New, updated, and deprecated options in Mitaka for Image service
 
    * - Option = default value
      - (Type) Help string
-   * - ``[profiler] hmac_keys = SECRET_KEY``
-     - (StrOpt) Secret key to use to sign Glance API and Glance Registry services tracing messages.
+   * - ``[DEFAULT] secure_proxy_ssl_header = None``
+     - (StrOpt) The HTTP header used to determine the scheme for the original request, even if it was removed by an SSL terminating proxy. Typical value is "HTTP_X_FORWARDED_PROTO".
+   * - ``[profiler] connection_string = messaging://``
+     - (StrOpt) Connection string for a notifier backend. Default value is messaging:// which sets the notifier to oslo_messaging. Examples of possible values: * messaging://: use oslo_messaging driver for sending notifications.
 
 .. list-table:: New default values
    :header-rows: 1
@@ -22,15 +24,42 @@ New, updated, and deprecated options in Mitaka for Image service
    * - Option
      - Previous default value
      - New default value
-   * - ``[DEFAULT] allowed_rpc_exception_modules``
-     - ``glance.common.exception, exceptions``
-     - ``glance.common.exception, builtins, exceptions``
-   * - ``[DEFAULT] workers``
-     - ``4``
+   * - ``[DEFAULT] ca_file``
      - ``None``
-   * - ``[image_format] container_formats``
-     - ``ami, ari, aki, bare, ovf, ova``
-     - ``ami, ari, aki, bare, ovf, ova, docker``
+     - ``/etc/ssl/cafile``
+   * - ``[DEFAULT] cert_file``
+     - ``None``
+     - ``/etc/ssl/certs``
+   * - ``[DEFAULT] key_file``
+     - ``None``
+     - ``/etc/ssl/key/key-file.pem``
+   * - ``[DEFAULT] pydev_worker_debug_host``
+     - ``None``
+     - ``localhost``
+   * - ``[DEFAULT] registry_client_ca_file``
+     - ``None``
+     - ``/etc/ssl/cafile/file.ca``
+   * - ``[DEFAULT] registry_client_cert_file``
+     - ``None``
+     - ``/etc/ssl/certs/file.crt``
+   * - ``[DEFAULT] registry_client_key_file``
+     - ``None``
+     - ``/etc/ssl/key/key-file.pem``
+   * - ``[image_format] disk_formats``
+     - ``ami, ari, aki, vhd, vmdk, raw, qcow2, vdi, iso``
+     - ``ami, ari, aki, vhd, vhdx, vmdk, raw, qcow2, vdi, iso``
+   * - ``[paste_deploy] config_file``
+     - ``None``
+     - ``glance-api-paste.ini``
+   * - ``[paste_deploy] flavor``
+     - ``None``
+     - ``keystone``
+   * - ``[task] work_dir``
+     - ``None``
+     - ``/work_dir``
+   * - ``[taskflow_executor] conversion_format``
+     - ``None``
+     - ``raw``
 
 .. list-table:: Deprecated options
    :header-rows: 1

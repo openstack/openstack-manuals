@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Mitaka for OpenStack Object Storage
+New, updated, and deprecated options in Newton for OpenStack Object Storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
