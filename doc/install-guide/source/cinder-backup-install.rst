@@ -28,6 +28,10 @@ Install and configure components
 
          # zypper install openstack-cinder-backup
 
+      .. end
+
+.. endonly
+
 .. only:: rdo
 
    #. Install the packages:
@@ -35,6 +39,10 @@ Install and configure components
       .. code-block:: console
 
          # yum install openstack-cinder
+
+      .. end
+
+.. endonly
 
 .. only:: ubuntu or debian
 
@@ -44,17 +52,24 @@ Install and configure components
 
         # apt-get install cinder-backup
 
+      .. end
+
+.. endonly
+
 2. Edit the ``/etc/cinder/cinder.conf`` file
    and complete the following actions:
 
    * In the ``[DEFAULT]`` section, configure backup options:
 
+     .. path /etc/cinder/cinder.conf
      .. code-block:: ini
 
         [DEFAULT]
         ...
         backup_driver = cinder.backup.drivers.swift
         backup_swift_url = SWIFT_URL
+
+     .. end
 
      Replace ``SWIFT_URL`` with the URL of the Object Storage service, typically
      ``http://10.0.0.51:8080/v1/AUTH_`` if using the installation guide
@@ -73,6 +88,10 @@ Finalize installation
       # systemctl enable openstack-cinder-backup.service
       # systemctl start openstack-cinder-backup.service
 
+   .. end
+
+.. endonly
+
 .. only:: ubuntu or debian
 
    Restart the Block Storage backup service:
@@ -80,3 +99,7 @@ Finalize installation
    .. code-block:: console
 
       # service cinder-backup restart
+
+   .. end
+
+.. endonly

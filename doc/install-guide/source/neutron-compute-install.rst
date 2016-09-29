@@ -4,18 +4,23 @@ Install and configure compute node
 The compute node handles connectivity and :term:`security groups <security
 group>` for instances.
 
-.. only:: ubuntu or rdo or obs
+.. only:: ubuntu or debian
 
 Install the components
 ----------------------
-
-.. only:: ubuntu or debian
 
    .. code-block:: console
 
       # apt-get install neutron-linuxbridge-agent
 
+   .. end
+
+.. endonly
+
 .. only:: rdo
+
+   Install the components
+   ----------------------
 
    .. todo:
 
@@ -25,11 +30,22 @@ Install the components
 
       # yum install openstack-neutron-linuxbridge ebtables ipset
 
+   .. end
+
+.. endonly
+
 .. only:: obs
+
+   Install the components
+   ----------------------
 
    .. code-block:: console
 
       # zypper install --no-recommends openstack-neutron-linuxbridge-agent
+
+   .. end
+
+.. endonly
 
 Configure the common component
 ------------------------------
@@ -48,6 +64,7 @@ authentication mechanism, message queue, and plug-in.
   * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections, configure
     RabbitMQ message queue access:
 
+    .. path /etc/neutron/neutron.conf
     .. code-block:: ini
 
        [DEFAULT]
@@ -60,12 +77,15 @@ authentication mechanism, message queue, and plug-in.
        rabbit_userid = openstack
        rabbit_password = RABBIT_PASS
 
+    .. end
+
     Replace ``RABBIT_PASS`` with the password you chose for the ``openstack``
     account in RabbitMQ.
 
   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections, configure
     Identity service access:
 
+    .. path /etc/neutron/neutron.conf
     .. code-block:: ini
 
        [DEFAULT]
@@ -84,6 +104,8 @@ authentication mechanism, message queue, and plug-in.
        username = neutron
        password = NEUTRON_PASS
 
+    .. end
+
     Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
     user in the Identity service.
 
@@ -96,11 +118,17 @@ authentication mechanism, message queue, and plug-in.
 
      * In the ``[oslo_concurrency]`` section, configure the lock path:
 
+       .. path /etc/neutron/neutron.conf
        .. code-block:: ini
 
           [oslo_concurrency]
           ...
           lock_path = /var/lib/neutron/tmp
+
+       .. end
+
+  .. endonly
+
 
 Configure networking options
 ----------------------------
@@ -124,6 +152,7 @@ Configure Compute to use Networking
 
   * In the ``[neutron]`` section, configure access parameters:
 
+    .. path /etc/nova/nova.conf
     .. code-block:: ini
 
        [neutron]
@@ -137,6 +166,8 @@ Configure Compute to use Networking
        project_name = service
        username = neutron
        password = NEUTRON_PASS
+
+    .. end
 
     Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
     user in the Identity service.
@@ -152,6 +183,8 @@ Finalize installation
 
          # systemctl restart openstack-nova-compute.service
 
+      .. end
+
    #. Start the Linux bridge agent and configure it to start when the
       system boots:
 
@@ -160,6 +193,10 @@ Finalize installation
          # systemctl enable neutron-linuxbridge-agent.service
          # systemctl start neutron-linuxbridge-agent.service
 
+      .. end
+
+.. endonly
+
 .. only:: obs
 
    #. The Networking service initialization scripts expect the variable
@@ -167,15 +204,20 @@ Finalize installation
       reference the ML2 plug-in configuration file. Ensure that the
       ``/etc/sysconfig/neutron`` file contains the following:
 
+      .. path /etc/sysconfig/neutron
       .. code-block:: ini
 
          NEUTRON_PLUGIN_CONF="/etc/neutron/plugins/ml2/ml2_conf.ini"
+
+      .. end
 
    #. Restart the Compute service:
 
       .. code-block:: console
 
          # systemctl restart openstack-nova-compute.service
+
+      .. end
 
    #. Start the Linux Bridge agent and configure it to start when the
       system boots:
@@ -185,6 +227,10 @@ Finalize installation
          # systemctl enable openstack-neutron-linuxbridge-agent.service
          # systemctl start openstack-neutron-linuxbridge-agent.service
 
+      .. end
+
+.. endonly
+
 .. only:: ubuntu or debian
 
    #. Restart the Compute service:
@@ -193,8 +239,14 @@ Finalize installation
 
          # service nova-compute restart
 
+      .. end
+
    #. Restart the Linux bridge agent:
 
       .. code-block:: console
 
          # service neutron-linuxbridge-agent restart
+
+      .. end
+
+.. endonly

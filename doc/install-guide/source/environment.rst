@@ -24,6 +24,8 @@ utility.
    when the service uses SysV Init scripts instead of native systemd files. This
    warning can be ignored.
 
+.. endonly
+
 For best performance, we recommend that your environment meets or exceeds
 the hardware requirements in :ref:`figure-hwreqs`.
 

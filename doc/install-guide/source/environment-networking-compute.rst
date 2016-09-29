@@ -27,6 +27,7 @@ Configure network interfaces
 
       * Edit the ``/etc/network/interfaces`` file to contain the following:
 
+        .. path /etc/network/interfaces
         .. code-block:: ini
 
            # The provider network interface
@@ -35,6 +36,10 @@ Configure network interfaces
            up ip link set dev $IFACE up
            down ip link set dev $IFACE down
 
+        .. end
+
+   .. endonly
+
    .. only:: rdo
 
       * Edit the ``/etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME`` file
@@ -42,6 +47,7 @@ Configure network interfaces
 
         Do not change the ``HWADDR`` and ``UUID`` keys.
 
+        .. path /etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME
         .. code-block:: ini
 
            DEVICE=INTERFACE_NAME
@@ -49,15 +55,24 @@ Configure network interfaces
            ONBOOT="yes"
            BOOTPROTO="none"
 
+        .. end
+
+   .. endonly
+
    .. only:: obs
 
       * Edit the ``/etc/sysconfig/network/ifcfg-INTERFACE_NAME`` file to
         contain the following:
 
+        .. path /etc/sysconfig/network/ifcfg-INTERFACE_NAME
         .. code-block:: ini
 
            STARTMODE='auto'
            BOOTPROTO='static'
+
+        .. end
+
+   .. endonly
 
 #. Reboot the system to activate the changes.
 

@@ -25,17 +25,29 @@ Install and configure components
 
          # apt-get install rabbitmq-server
 
+      .. end
+
+   .. endonly
+
    .. only:: rdo
 
       .. code-block:: console
 
          # yum install rabbitmq-server
 
+      .. end
+
+   .. endonly
+
    .. only:: obs
 
       .. code-block:: console
 
          # zypper install rabbitmq-server
+
+      .. end
+
+   .. endonly
 
 .. only:: rdo or obs
 
@@ -47,12 +59,17 @@ Install and configure components
          # systemctl enable rabbitmq-server.service
          # systemctl start rabbitmq-server.service
 
+      .. end
+
    3. Add the ``openstack`` user:
 
       .. code-block:: console
 
          # rabbitmqctl add_user openstack RABBIT_PASS
+
          Creating user "openstack" ...
+
+      .. end
 
       Replace ``RABBIT_PASS`` with a suitable password.
 
@@ -62,7 +79,12 @@ Install and configure components
       .. code-block:: console
 
          # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+
          Setting permissions for user "openstack" in vhost "/" ...
+
+      .. end
+
+.. endonly
 
 .. only:: ubuntu or debian
 
@@ -71,8 +93,11 @@ Install and configure components
       .. code-block:: console
 
          # rabbitmqctl add_user openstack RABBIT_PASS
+
          Creating user "openstack" ...
          ...done.
+
+      .. end
 
       Replace ``RABBIT_PASS`` with a suitable password.
 
@@ -82,5 +107,10 @@ Install and configure components
       .. code-block:: console
 
          # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+
          Setting permissions for user "openstack" in vhost "/" ...
          ...done.
+
+      .. end
+
+.. endonly

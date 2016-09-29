@@ -30,6 +30,8 @@ scripts to load appropriate credentials for client operations.
       export OS_IDENTITY_API_VERSION=3
       export OS_IMAGE_API_VERSION=2
 
+   .. end
+
    Replace ``ADMIN_PASS`` with the password you chose
    for the ``admin`` user in the Identity service.
 
@@ -45,6 +47,8 @@ scripts to load appropriate credentials for client operations.
       export OS_AUTH_URL=http://controller:5000/v3
       export OS_IDENTITY_API_VERSION=3
       export OS_IMAGE_API_VERSION=2
+
+   .. end
 
    Replace ``DEMO_PASS`` with the password you chose
    for the ``demo`` user in the Identity service.
@@ -64,11 +68,14 @@ For example:
 
       $ . admin-openrc
 
+   .. end
+
 #. Request an authentication token:
 
    .. code-block:: console
 
       $ openstack token issue
+
       +------------+-----------------------------------------------------------------+
       | Field      | Value                                                           |
       +------------+-----------------------------------------------------------------+
@@ -79,3 +86,5 @@ For example:
       | project_id | 343d245e850143a096806dfaefa9afdc                                |
       | user_id    | ac3377633149401296f6c0d92d79dc16                                |
       +------------+-----------------------------------------------------------------+
+
+   .. end

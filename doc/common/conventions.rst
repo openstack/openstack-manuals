@@ -35,12 +35,16 @@ Command prompts
 
    $ command
 
+.. end
+
 Any user, including the ``root`` user, can run commands that are
 prefixed with the ``$`` prompt.
 
 .. code-block:: console
 
    # command
+
+.. end
 
 The ``root`` user must run commands that are prefixed with the ``#``
 prompt. You can also prefix these commands with the :command:`sudo`

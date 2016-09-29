@@ -8,11 +8,15 @@
    OpenStack Installation Tutorial for Red Hat Enterprise Linux and CentOS
    =======================================================================
 
+.. endonly
+
 .. only:: obs
 
    ======================================================================
    OpenStack Installation Tutorial for openSUSE and SUSE Linux Enterprise
    ======================================================================
+
+.. endonly
 
 .. only:: ubuntu
 
@@ -20,12 +24,15 @@
    OpenStack Installation Tutorial for Ubuntu
    ==========================================
 
+.. endonly
+
 .. only:: debian
 
    ==========================================
    OpenStack Installation Tutorial for Debian
    ==========================================
 
+.. endonly
 
 Abstract
 ~~~~~~~~
@@ -43,16 +50,22 @@ or as connected entities.
    available on Red Hat Enterprise Linux 7 and its derivatives through
    the RDO repository.
 
+.. endonly
+
 .. only:: ubuntu
 
    This guide will walk through an installation by using packages
    available through Canonical's Ubuntu Cloud archive repository.
+
+.. endonly
 
 .. only:: obs
 
    This guide will show you how to install OpenStack by using packages
    on openSUSE Leap 42.1 and SUSE Linux Enterprise Server 12 - for
    both SP1 and SP2 - through the Open Build Service Cloud repository.
+
+.. endonly
 
 .. only:: debian
 
@@ -69,8 +82,12 @@ or as connected entities.
 
          # dpkg-reconfigure debconf
 
+      .. end
+
       If you prefer to use debconf, refer to the debconf
       install-guide for Debian.
+
+.. endonly
 
 Explanations of configuration options and sample configuration files
 are included.

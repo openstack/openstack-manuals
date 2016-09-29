@@ -20,20 +20,26 @@ create a database, service credentials, and API endpoints.
 
         $ mysql -u root -p
 
+     .. end
+
    * Create the ``glance`` database:
 
      .. code-block:: console
 
-        CREATE DATABASE glance;
+        mysql> CREATE DATABASE glance;
+
+     .. end
 
    * Grant proper access to the ``glance`` database:
 
      .. code-block:: console
 
-        GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
+        mysql> GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
           IDENTIFIED BY 'GLANCE_DBPASS';
-        GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
+        mysql> GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
           IDENTIFIED BY 'GLANCE_DBPASS';
+
+     .. end
 
      Replace ``GLANCE_DBPASS`` with a suitable password.
 
@@ -46,6 +52,8 @@ create a database, service credentials, and API endpoints.
 
       $ . admin-openrc
 
+   .. end
+
 #. To create the service credentials, complete these steps:
 
    * Create the ``glance`` user:
@@ -53,6 +61,7 @@ create a database, service credentials, and API endpoints.
      .. code-block:: console
 
         $ openstack user create --domain default --password-prompt glance
+
         User Password:
         Repeat User Password:
         +-----------+----------------------------------+
@@ -64,12 +73,16 @@ create a database, service credentials, and API endpoints.
         | name      | glance                           |
         +-----------+----------------------------------+
 
+     .. end
+
    * Add the ``admin`` role to the ``glance`` user and
      ``service`` project:
 
      .. code-block:: console
 
         $ openstack role add --project service --user glance admin
+
+     .. end
 
      .. note::
 
@@ -81,6 +94,7 @@ create a database, service credentials, and API endpoints.
 
         $ openstack service create --name glance \
           --description "OpenStack Image" image
+
         +-------------+----------------------------------+
         | Field       | Value                            |
         +-------------+----------------------------------+
@@ -91,12 +105,15 @@ create a database, service credentials, and API endpoints.
         | type        | image                            |
         +-------------+----------------------------------+
 
+     .. end
+
 #. Create the Image service API endpoints:
 
    .. code-block:: console
 
       $ openstack endpoint create --region RegionOne \
         image public http://controller:9292
+
       +--------------+----------------------------------+
       | Field        | Value                            |
       +--------------+----------------------------------+
@@ -113,6 +130,7 @@ create a database, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         image internal http://controller:9292
+
       +--------------+----------------------------------+
       | Field        | Value                            |
       +--------------+----------------------------------+
@@ -129,6 +147,7 @@ create a database, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         image admin http://controller:9292
+
       +--------------+----------------------------------+
       | Field        | Value                            |
       +--------------+----------------------------------+
@@ -143,6 +162,8 @@ create a database, service credentials, and API endpoints.
       | url          | http://controller:9292           |
       +--------------+----------------------------------+
 
+   .. end
+
 Install and configure components
 --------------------------------
 
@@ -156,6 +177,10 @@ Install and configure components
 
          # zypper install openstack-glance
 
+      .. end
+
+.. endonly
+
 .. only:: rdo
 
    #. Install the packages:
@@ -163,6 +188,10 @@ Install and configure components
       .. code-block:: console
 
          # yum install openstack-glance
+
+      .. end
+
+.. endonly
 
 .. only:: ubuntu or debian
 
@@ -172,16 +201,23 @@ Install and configure components
 
          # apt-get install glance
 
+      .. end
+
+.. endonly
+
 2. Edit the ``/etc/glance/glance-api.conf`` file and complete the
    following actions:
 
    * In the ``[database]`` section, configure database access:
 
+     .. path /etc/glance/glance.conf
      .. code-block:: ini
 
         [database]
         ...
         connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
+
+     .. end
 
      Replace ``GLANCE_DBPASS`` with the password you chose for the
      Image service database.
@@ -189,6 +225,7 @@ Install and configure components
    * In the ``[keystone_authtoken]`` and ``[paste_deploy]`` sections,
      configure Identity service access:
 
+     .. path /etc/glance/glance.conf
      .. code-block:: ini
 
         [keystone_authtoken]
@@ -206,6 +243,8 @@ Install and configure components
         [paste_deploy]
         ...
         flavor = keystone
+
+     .. end
 
      Replace ``GLANCE_PASS`` with the password you chose for the
      ``glance`` user in the Identity service.
@@ -218,6 +257,7 @@ Install and configure components
    * In the ``[glance_store]`` section, configure the local file
      system store and location of image files:
 
+     .. path /etc/glance/glance.conf
      .. code-block:: ini
 
         [glance_store]
@@ -226,16 +266,21 @@ Install and configure components
         default_store = file
         filesystem_store_datadir = /var/lib/glance/images/
 
+     .. end
+
 3. Edit the ``/etc/glance/glance-registry.conf`` file and complete
    the following actions:
 
    * In the ``[database]`` section, configure database access:
 
+     .. path /etc/glance/glance-registry.conf
      .. code-block:: ini
 
         [database]
         ...
         connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
+
+     .. end
 
      Replace ``GLANCE_DBPASS`` with the password you chose for the
      Image service database.
@@ -243,6 +288,7 @@ Install and configure components
    * In the ``[keystone_authtoken]`` and ``[paste_deploy]`` sections,
      configure Identity service access:
 
+     .. path /etc/glance/glance-registry.conf
      .. code-block:: ini
 
         [keystone_authtoken]
@@ -260,6 +306,8 @@ Install and configure components
         [paste_deploy]
         ...
         flavor = keystone
+
+     .. end
 
      Replace ``GLANCE_PASS`` with the password you chose for the
      ``glance`` user in the Identity service.
@@ -277,9 +325,13 @@ Install and configure components
 
          # su -s /bin/sh -c "glance-manage db_sync" glance
 
+      .. end
+
       .. note::
 
          Ignore any deprecation messages in this output.
+
+.. endonly
 
 Finalize installation
 ---------------------
@@ -296,6 +348,10 @@ Finalize installation
         # systemctl start openstack-glance-api.service \
           openstack-glance-registry.service
 
+     .. end
+
+.. endonly
+
 .. only:: ubuntu or debian
 
    #. Restart the Image services:
@@ -304,3 +360,7 @@ Finalize installation
 
          # service glance-registry restart
          # service glance-api restart
+
+      .. end
+
+.. endonly

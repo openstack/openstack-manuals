@@ -23,20 +23,26 @@ must create a database, service credentials, and API endpoints.
 
         $ mysql -u root -p
 
+     .. end
+
    * Create the ``cinder`` database:
 
      .. code-block:: console
 
-        CREATE DATABASE cinder;
+        mysql> CREATE DATABASE cinder;
+
+     .. end
 
    * Grant proper access to the ``cinder`` database:
 
      .. code-block:: console
 
-        GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
+        mysql> GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
           IDENTIFIED BY 'CINDER_DBPASS';
-        GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
+        mysql> GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
           IDENTIFIED BY 'CINDER_DBPASS';
+
+     .. end
 
      Replace ``CINDER_DBPASS`` with a suitable password.
 
@@ -49,6 +55,8 @@ must create a database, service credentials, and API endpoints.
 
       $ . admin-openrc
 
+   .. end
+
 #. To create the service credentials, complete these steps:
 
    * Create a ``cinder`` user:
@@ -56,6 +64,7 @@ must create a database, service credentials, and API endpoints.
      .. code-block:: console
 
         $ openstack user create --domain default --password-prompt cinder
+
         User Password:
         Repeat User Password:
         +-----------+----------------------------------+
@@ -67,11 +76,15 @@ must create a database, service credentials, and API endpoints.
         | name      | cinder                           |
         +-----------+----------------------------------+
 
+     .. end
+
    * Add the ``admin`` role to the ``cinder`` user:
 
      .. code-block:: console
 
         $ openstack role add --project service --user cinder admin
+
+     .. end
 
      .. note::
 
@@ -83,6 +96,7 @@ must create a database, service credentials, and API endpoints.
 
         $ openstack service create --name cinder \
           --description "OpenStack Block Storage" volume
+
         +-------------+----------------------------------+
         | Field       | Value                            |
         +-------------+----------------------------------+
@@ -93,10 +107,13 @@ must create a database, service credentials, and API endpoints.
         | type        | volume                           |
         +-------------+----------------------------------+
 
+     .. end
+
      .. code-block:: console
 
         $ openstack service create --name cinderv2 \
           --description "OpenStack Block Storage" volumev2
+
         +-------------+----------------------------------+
         | Field       | Value                            |
         +-------------+----------------------------------+
@@ -106,6 +123,8 @@ must create a database, service credentials, and API endpoints.
         | name        | cinderv2                         |
         | type        | volumev2                         |
         +-------------+----------------------------------+
+
+     .. end
 
    .. note::
 
@@ -117,6 +136,7 @@ must create a database, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         volume public http://controller:8776/v1/%\(tenant_id\)s
+
         +--------------+-----------------------------------------+
         | Field        | Value                                   |
         +--------------+-----------------------------------------+
@@ -133,6 +153,7 @@ must create a database, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         volume internal http://controller:8776/v1/%\(tenant_id\)s
+
         +--------------+-----------------------------------------+
         | Field        | Value                                   |
         +--------------+-----------------------------------------+
@@ -149,6 +170,7 @@ must create a database, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         volume admin http://controller:8776/v1/%\(tenant_id\)s
+
         +--------------+-----------------------------------------+
         | Field        | Value                                   |
         +--------------+-----------------------------------------+
@@ -163,10 +185,13 @@ must create a database, service credentials, and API endpoints.
         | url          | http://controller:8776/v1/%(tenant_id)s |
         +--------------+-----------------------------------------+
 
+   .. end
+
    .. code-block:: console
 
       $ openstack endpoint create --region RegionOne \
         volumev2 public http://controller:8776/v2/%\(tenant_id\)s
+
       +--------------+-----------------------------------------+
       | Field        | Value                                   |
       +--------------+-----------------------------------------+
@@ -183,6 +208,7 @@ must create a database, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         volumev2 internal http://controller:8776/v2/%\(tenant_id\)s
+
       +--------------+-----------------------------------------+
       | Field        | Value                                   |
       +--------------+-----------------------------------------+
@@ -199,6 +225,7 @@ must create a database, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         volumev2 admin http://controller:8776/v2/%\(tenant_id\)s
+
       +--------------+-----------------------------------------+
       | Field        | Value                                   |
       +--------------+-----------------------------------------+
@@ -212,6 +239,8 @@ must create a database, service credentials, and API endpoints.
       | service_type | volumev2                                |
       | url          | http://controller:8776/v2/%(tenant_id)s |
       +--------------+-----------------------------------------+
+
+   .. end
 
    .. note::
 
@@ -229,6 +258,10 @@ Install and configure components
 
          # zypper install openstack-cinder-api openstack-cinder-scheduler
 
+      .. end
+
+.. endonly
+
 .. only:: rdo
 
    #. Install the packages:
@@ -236,6 +269,10 @@ Install and configure components
       .. code-block:: console
 
          # yum install openstack-cinder
+
+      .. end
+
+.. endonly
 
 .. only:: ubuntu or debian
 
@@ -245,16 +282,23 @@ Install and configure components
 
          # apt-get install cinder-api cinder-scheduler
 
+      .. end
+
+.. endonly
+
 2. Edit the ``/etc/cinder/cinder.conf`` file and complete the
    following actions:
 
    * In the ``[database]`` section, configure database access:
 
+     .. path /etc/cinder/cinder.conf
      .. code-block:: ini
 
         [database]
         ...
         connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
+
+     .. end
 
      Replace ``CINDER_DBPASS`` with the password you chose for the
      Block Storage database.
@@ -262,6 +306,7 @@ Install and configure components
    * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
      configure ``RabbitMQ`` message queue access:
 
+     .. path /etc/cinder/cinder.conf
      .. code-block:: ini
 
         [DEFAULT]
@@ -274,12 +319,15 @@ Install and configure components
         rabbit_userid = openstack
         rabbit_password = RABBIT_PASS
 
+     .. end
+
      Replace ``RABBIT_PASS`` with the password you chose for the
      ``openstack`` account in ``RabbitMQ``.
 
    * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
      configure Identity service access:
 
+     .. path /etc/cinder/cinder.conf
      .. code-block:: ini
 
         [DEFAULT]
@@ -298,6 +346,8 @@ Install and configure components
         username = cinder
         password = CINDER_PASS
 
+     .. end
+
      Replace ``CINDER_PASS`` with the password you chose for
      the ``cinder`` user in the Identity service.
 
@@ -309,21 +359,29 @@ Install and configure components
    * In the ``[DEFAULT]`` section, configure the ``my_ip`` option to
      use the management interface IP address of the controller node:
 
+     .. path /etc/cinder/cinder.conf
      .. code-block:: ini
 
         [DEFAULT]
         ...
         my_ip = 10.0.0.11
 
+     .. end
+
 .. only:: obs or rdo or ubuntu
 
    * In the ``[oslo_concurrency]`` section, configure the lock path:
 
+     .. path /etc/cinder/cinder.conf
      .. code-block:: ini
 
         [oslo_concurrency]
         ...
         lock_path = /var/lib/cinder/tmp
+
+     .. end
+
+.. endonly
 
 .. only:: rdo or ubuntu or debian
 
@@ -333,9 +391,13 @@ Install and configure components
 
          # su -s /bin/sh -c "cinder-manage db sync" cinder
 
+      .. end
+
       .. note::
 
          Ignore any deprecation messages in this output.
+
+.. endonly
 
 Configure Compute to use Block Storage
 --------------------------------------
@@ -343,10 +405,13 @@ Configure Compute to use Block Storage
 * Edit the ``/etc/nova/nova.conf`` file and add the following
   to it:
 
+  .. path /etc/nova/nova.conf
   .. code-block:: ini
 
      [cinder]
      os_region_name = RegionOne
+
+  .. end
 
 Finalize installation
 ---------------------
@@ -359,6 +424,8 @@ Finalize installation
 
          # systemctl restart openstack-nova-api.service
 
+      .. end
+
    #. Start the Block Storage services and configure them to start when
       the system boots:
 
@@ -366,6 +433,10 @@ Finalize installation
 
          # systemctl enable openstack-cinder-api.service openstack-cinder-scheduler.service
          # systemctl start openstack-cinder-api.service openstack-cinder-scheduler.service
+
+      .. end
+
+.. endonly
 
 .. only:: ubuntu or debian
 
@@ -375,9 +446,15 @@ Finalize installation
 
          # service nova-api restart
 
+      .. end
+
    #. Restart the Block Storage services:
 
       .. code-block:: console
 
          # service cinder-scheduler restart
          # service cinder-api restart
+
+      .. end
+
+.. endonly

@@ -12,6 +12,8 @@ Host networking
    For more information on how to configure networking on your
    distribution, see the `documentation <https://help.ubuntu.com/lts/serverguide/network-configuration.html>`__ .
 
+.. endonly
+
 .. only:: debian
 
    After installing the operating system on each node for the architecture
@@ -20,6 +22,8 @@ Host networking
    manually edit the appropriate configuration files for your distribution.
    For more information on how to configure networking on your
    distribution, see the `documentation <https://wiki.debian.org/NetworkConfiguration>`__ .
+
+.. endonly
 
 .. only:: rdo
 
@@ -30,6 +34,8 @@ Host networking
    For more information on how to configure networking on your
    distribution, see the `documentation <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Using_the_Command_Line_Interface.html>`__ .
 
+.. endonly
+
 .. only:: obs
 
    After installing the operating system on each node for the architecture
@@ -38,6 +44,8 @@ Host networking
    manually edit the appropriate configuration files for your distribution.
    For more information on how to configure networking on your
    distribution, see the `SLES 12 <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__ or `openSUSE <http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking>`__ documentation.
+
+.. endonly
 
 All nodes require Internet access for administrative purposes such as package
 installation, security updates, :term:`DNS <Domain Name System (DNS)>`, and
@@ -109,12 +117,16 @@ the controller node.
       information about securing your environment, refer to the
       `OpenStack Security Guide <http://docs.openstack.org/sec/>`__.
 
+   .. endonly
+
    .. only:: ubuntu or debian
 
       Your distribution does not enable a restrictive :term:`firewall`
       by default. For more information about securing your environment,
       refer to the
       `OpenStack Security Guide <http://docs.openstack.org/sec/>`__.
+
+   .. endonly
 
 .. toctree::
    :maxdepth: 1

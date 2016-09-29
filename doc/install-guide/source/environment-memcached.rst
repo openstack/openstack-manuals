@@ -17,17 +17,29 @@ Install and configure components
 
          # apt-get install memcached python-memcache
 
+      .. end
+
+   .. endonly
+
    .. only:: rdo
 
       .. code-block:: console
 
          # yum install memcached python-memcached
 
+      .. end
+
+   .. endonly
+
    .. only:: obs
 
       .. code-block:: console
 
          # zypper install memcached python-python-memcached
+
+      .. end
+
+   .. endonly
 
 .. only:: ubuntu or debian
 
@@ -39,9 +51,13 @@ Install and configure components
 
          -l 10.0.0.11
 
+      .. end
+
       .. note::
 
          Change the existing line with ``-l 127.0.0.1``.
+
+.. endonly
 
 Finalize installation
 ---------------------
@@ -54,6 +70,10 @@ Finalize installation
 
         # service memcached restart
 
+     .. end
+
+.. endonly
+
 .. only:: rdo or obs
 
    * Start the Memcached service and configure it to start when the system
@@ -63,3 +83,7 @@ Finalize installation
 
         # systemctl enable memcached.service
         # systemctl start memcached.service
+
+     .. end
+
+.. endonly

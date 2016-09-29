@@ -12,12 +12,15 @@ Verify operation
 
       $ . admin-openrc
 
+   .. end
+
 #. List loaded extensions to verify successful launch of the
    ``neutron-server`` process:
 
    .. code-block:: console
 
       $ neutron ext-list
+
       +---------------------------+-----------------------------------------------+
       | alias                     | name                                          |
       +---------------------------+-----------------------------------------------+
@@ -54,6 +57,8 @@ Verify operation
       | allowed-address-pairs     | Allowed Address Pairs                         |
       | dvr                       | Distributed Virtual Router                    |
       +---------------------------+-----------------------------------------------+
+
+   .. end
 
    .. note::
 

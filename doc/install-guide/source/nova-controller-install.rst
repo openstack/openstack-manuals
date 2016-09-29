@@ -19,25 +19,31 @@ create databases, service credentials, and API endpoints.
 
         $ mysql -u root -p
 
+     .. end
+
    * Create the ``nova_api`` and ``nova`` databases:
 
      .. code-block:: console
 
-        CREATE DATABASE nova_api;
-        CREATE DATABASE nova;
+        mysql> CREATE DATABASE nova_api;
+        mysql> CREATE DATABASE nova;
+
+     .. end
 
    * Grant proper access to the databases:
 
      .. code-block:: console
 
-        GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' \
+        mysql> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' \
           IDENTIFIED BY 'NOVA_DBPASS';
-        GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
+        mysql> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
           IDENTIFIED BY 'NOVA_DBPASS';
-        GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
+        mysql> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
           IDENTIFIED BY 'NOVA_DBPASS';
-        GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
+        mysql> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
           IDENTIFIED BY 'NOVA_DBPASS';
+
+     .. end
 
      Replace ``NOVA_DBPASS`` with a suitable password.
 
@@ -50,6 +56,8 @@ create databases, service credentials, and API endpoints.
 
       $ . admin-openrc
 
+   .. end
+
 #. To create the service credentials, complete these steps:
 
    * Create the ``nova`` user:
@@ -58,6 +66,7 @@ create databases, service credentials, and API endpoints.
 
         $ openstack user create --domain default \
           --password-prompt nova
+
         User Password:
         Repeat User Password:
         +-----------+----------------------------------+
@@ -69,11 +78,15 @@ create databases, service credentials, and API endpoints.
         | name      | nova                             |
         +-----------+----------------------------------+
 
+     .. end
+
    * Add the ``admin`` role to the ``nova`` user:
 
      .. code-block:: console
 
         $ openstack role add --project service --user nova admin
+
+     .. end
 
      .. note::
 
@@ -85,6 +98,7 @@ create databases, service credentials, and API endpoints.
 
         $ openstack service create --name nova \
           --description "OpenStack Compute" compute
+
         +-------------+----------------------------------+
         | Field       | Value                            |
         +-------------+----------------------------------+
@@ -95,12 +109,15 @@ create databases, service credentials, and API endpoints.
         | type        | compute                          |
         +-------------+----------------------------------+
 
+     .. end
+
 #. Create the Compute service API endpoints:
 
    .. code-block:: console
 
       $ openstack endpoint create --region RegionOne \
         compute public http://controller:8774/v2.1/%\(tenant_id\)s
+
       +--------------+-------------------------------------------+
       | Field        | Value                                     |
       +--------------+-------------------------------------------+
@@ -117,6 +134,7 @@ create databases, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         compute internal http://controller:8774/v2.1/%\(tenant_id\)s
+
       +--------------+-------------------------------------------+
       | Field        | Value                                     |
       +--------------+-------------------------------------------+
@@ -133,6 +151,7 @@ create databases, service credentials, and API endpoints.
 
       $ openstack endpoint create --region RegionOne \
         compute admin http://controller:8774/v2.1/%\(tenant_id\)s
+
       +--------------+-------------------------------------------+
       | Field        | Value                                     |
       +--------------+-------------------------------------------+
@@ -146,6 +165,8 @@ create databases, service credentials, and API endpoints.
       | service_type | compute                                   |
       | url          | http://controller:8774/v2.1/%(tenant_id)s |
       +--------------+-------------------------------------------+
+
+   .. end
 
 Install and configure components
 --------------------------------
@@ -162,6 +183,10 @@ Install and configure components
            openstack-nova-conductor openstack-nova-consoleauth \
            openstack-nova-novncproxy iptables
 
+      .. end
+
+.. endonly
+
 .. only:: rdo
 
    #. Install the packages:
@@ -172,6 +197,10 @@ Install and configure components
            openstack-nova-console openstack-nova-novncproxy \
            openstack-nova-scheduler
 
+      .. end
+
+.. endonly
+
 .. only:: ubuntu
 
    #. Install the packages:
@@ -181,6 +210,10 @@ Install and configure components
          # apt-get install nova-api nova-conductor nova-consoleauth \
            nova-novncproxy nova-scheduler
 
+      .. end
+
+.. endonly
+
 .. only:: debian
 
    #. Install the packages:
@@ -189,6 +222,8 @@ Install and configure components
 
          # apt-get install nova-api nova-conductor nova-consoleauth \
            nova-consoleproxy nova-scheduler
+
+      .. end
 
       .. note::
 
@@ -204,21 +239,27 @@ Install and configure components
          You can also manually edit the ``/etc/default/nova-consoleproxy``
          file, and stop and start the console daemons.
 
+.. endonly
+
 2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
 
    * In the ``[DEFAULT]`` section, enable only the compute and metadata
      APIs:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [DEFAULT]
         ...
         enabled_apis = osapi_compute,metadata
 
+     .. end
+
    * In the ``[api_database]`` and ``[database]`` sections, configure
      database access:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [api_database]
@@ -229,12 +270,15 @@ Install and configure components
         ...
         connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
 
+     .. end
+
      Replace ``NOVA_DBPASS`` with the password you chose for
      the Compute databases.
 
    * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
      configure ``RabbitMQ`` message queue access:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [DEFAULT]
@@ -247,12 +291,15 @@ Install and configure components
         rabbit_userid = openstack
         rabbit_password = RABBIT_PASS
 
+     .. end
+
      Replace ``RABBIT_PASS`` with the password you chose for the
      ``openstack`` account in ``RabbitMQ``.
 
    * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
      configure Identity service access:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [DEFAULT]
@@ -271,6 +318,8 @@ Install and configure components
         username = nova
         password = NOVA_PASS
 
+     .. end
+
      Replace ``NOVA_PASS`` with the password you chose for the
      ``nova`` user in the Identity service.
 
@@ -282,11 +331,14 @@ Install and configure components
    * In the ``[DEFAULT]`` section, configure the ``my_ip`` option to
      use the management interface IP address of the controller node:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [DEFAULT]
         ...
         my_ip = 10.0.0.11
+
+     .. end
 
    .. only:: debian
 
@@ -296,20 +348,28 @@ Install and configure components
         value will normally still be prompted, and you can check that it
         is correct in the nova.conf after ``nova-common`` is installed:
 
+        .. path /etc/nova/nova.conf
         .. code-block:: ini
 
            [DEFAULT]
            ...
            my_ip = 10.0.0.11
 
+        .. end
+
+   .. endonly
+
 * In the ``[DEFAULT]`` section, enable support for the Networking service:
 
+  .. path /etc/nova/nova.conf
   .. code-block:: ini
 
      [DEFAULT]
      ...
      use_neutron = True
      firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+  .. end
 
   .. note::
 
@@ -321,6 +381,7 @@ Install and configure components
 * In the ``[vnc]`` section, configure the VNC proxy to use the management
   interface IP address of the controller node:
 
+  .. path /etc/nova/nova.conf
   .. code-block:: ini
 
      [vnc]
@@ -328,44 +389,64 @@ Install and configure components
      vncserver_listen = $my_ip
      vncserver_proxyclient_address = $my_ip
 
+  .. end
+
 * In the ``[glance]`` section, configure the location of the
   Image service API:
 
+  .. path /etc/nova/nova.conf
   .. code-block:: ini
 
      [glance]
      ...
      api_servers = http://controller:9292
 
+  .. end
+
 .. only:: obs
 
    * In the ``[oslo_concurrency]`` section, configure the lock path:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [oslo_concurrency]
         ...
         lock_path = /var/run/nova
 
+     .. end
+
+.. endonly
+
 .. only:: rdo
 
    * In the ``[oslo_concurrency]`` section, configure the lock path:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [oslo_concurrency]
         ...
         lock_path = /var/lib/nova/tmp
+
+     .. end
+
+.. endonly
 
 .. only:: ubuntu
 
    * In the ``[oslo_concurrency]`` section, configure the lock path:
 
+     .. path /etc/nova/nova.conf
      .. code-block:: ini
 
         [oslo_concurrency]
         ...
         lock_path = /var/lib/nova/tmp
+
+     .. end
+
+.. endonly
 
 .. only:: ubuntu
 
@@ -376,6 +457,8 @@ Install and configure components
    * Due to a packaging bug, remove the ``logdir`` option from the
      ``[DEFAULT]`` section.
 
+.. endonly
+
 .. only:: rdo or ubuntu or debian
 
    3. Populate the Compute databases:
@@ -385,9 +468,13 @@ Install and configure components
          # su -s /bin/sh -c "nova-manage api_db sync" nova
          # su -s /bin/sh -c "nova-manage db sync" nova
 
+      .. end
+
       .. note::
 
          Ignore any deprecation messages in this output.
+
+.. endonly
 
 Finalize installation
 ---------------------
@@ -406,6 +493,10 @@ Finalize installation
           openstack-nova-consoleauth.service openstack-nova-scheduler.service \
           openstack-nova-conductor.service openstack-nova-novncproxy.service
 
+     .. end
+
+.. endonly
+
 .. only:: rdo
 
    * Start the Compute services and configure them to start
@@ -420,6 +511,10 @@ Finalize installation
           openstack-nova-consoleauth.service openstack-nova-scheduler.service \
           openstack-nova-conductor.service openstack-nova-novncproxy.service
 
+     .. end
+
+.. endonly
+
 .. only:: ubuntu or debian
 
    * Restart the Compute services:
@@ -431,3 +526,7 @@ Finalize installation
         # service nova-scheduler restart
         # service nova-conductor restart
         # service nova-novncproxy restart
+
+     .. end
+
+.. endonly

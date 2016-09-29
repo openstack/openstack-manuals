@@ -37,12 +37,15 @@ Create the provider network
 
       $ . admin-openrc
 
+   .. end
+
 #. Create the network:
 
    .. code-block:: console
 
       $ neutron net-create --shared --provider:physical_network provider \
         --provider:network_type flat provider
+
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -62,6 +65,8 @@ Create the provider network
       | tenant_id                 | d84313397390425c8ed50b2f6e18d092     |
       +---------------------------+--------------------------------------+
 
+   .. end
+
    The ``--shared`` option allows all projects to use the virtual network.
 
    The ``--provider:physical_network provider`` and
@@ -76,12 +81,16 @@ Create the provider network
       [ml2_type_flat]
       flat_networks = provider
 
+   .. end
+
    ``linuxbridge_agent.ini``:
 
    .. code-block:: ini
 
       [linux_bridge]
       physical_interface_mappings = provider:eth1
+
+   .. end
 
 #. Create a subnet on the network:
 
@@ -91,6 +100,8 @@ Create the provider network
         --allocation-pool start=START_IP_ADDRESS,end=END_IP_ADDRESS \
         --dns-nameserver DNS_RESOLVER --gateway PROVIDER_NETWORK_GATEWAY \
         provider PROVIDER_NETWORK_CIDR
+
+   .. end
 
    Replace ``PROVIDER_NETWORK_CIDR`` with the subnet on the provider
    physical network in CIDR notation.
@@ -119,6 +130,7 @@ Create the provider network
         --allocation-pool start=203.0.113.101,end=203.0.113.250 \
         --dns-nameserver 8.8.4.4 --gateway 203.0.113.1 \
         provider 203.0.113.0/24
+
       Created a new subnet:
       +-------------------+----------------------------------------------------+
       | Field             | Value                                              |
@@ -138,6 +150,8 @@ Create the provider network
       | subnetpool_id     |                                                    |
       | tenant_id         | d84313397390425c8ed50b2f6e18d092                   |
       +-------------------+----------------------------------------------------+
+
+   .. end
 
 Return to :ref:`Launch an instance - Create virtual networks
 <launch-instance-networks>`.

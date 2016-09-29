@@ -23,20 +23,26 @@ database and an administration token.
 
         $ mysql -u root -p
 
+     .. end
+
    * Create the ``keystone`` database:
 
      .. code-block:: console
 
-        CREATE DATABASE keystone;
+        mysql> CREATE DATABASE keystone;
+
+     .. end
 
    * Grant proper access to the ``keystone`` database:
 
      .. code-block:: console
 
-        GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
+        mysql> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
           IDENTIFIED BY 'KEYSTONE_DBPASS';
-        GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
+        mysql> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
           IDENTIFIED BY 'KEYSTONE_DBPASS';
+
+     .. end
 
      Replace ``KEYSTONE_DBPASS`` with a suitable password.
 
@@ -56,6 +62,8 @@ Install and configure components
       keystone service still listens on these ports. Therefore, this guide
       manually disables the keystone service.
 
+.. endonly
+
 .. only:: ubuntu or debian
 
    .. note::
@@ -72,48 +80,69 @@ Install and configure components
 
          # apt-get install keystone
 
-.. only:: obs or rdo
+      .. end
 
-   #. Run the following command to install the packages:
+.. endonly
 
-      .. only:: rdo
+
+.. only:: rdo
+
+    #. Run the following command to install the packages:
 
          .. code-block:: console
 
             # yum install openstack-keystone httpd mod_wsgi
 
-      .. only:: obs
+         .. end
+
+.. endonly
+
+.. only:: obs
+
+    #. Run the following command to install the packages:
 
          .. code-block:: console
 
             # zypper install openstack-keystone apache2-mod_wsgi
+
+         .. end
+
+.. endonly
 
 2. Edit the ``/etc/keystone/keystone.conf`` file and complete the following
    actions:
 
    * In the ``[database]`` section, configure database access:
 
+     .. path /etc/keystone/keystone.conf
      .. code-block:: ini
 
         [database]
         ...
         connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
 
+     .. end
+
      Replace ``KEYSTONE_DBPASS`` with the password you chose for the database.
 
    * In the ``[token]`` section, configure the Fernet token provider:
 
+     .. path /etc/keystone/keystone.conf
      .. code-block:: ini
 
         [token]
         ...
         provider = fernet
 
+     .. end
+
 3. Populate the Identity service database:
 
    .. code-block:: console
 
       # su -s /bin/sh -c "keystone-manage db_sync" keystone
+
+   .. end
 
    .. note::
 
@@ -126,6 +155,8 @@ Install and configure components
       # keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
       # keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
+   .. end
+
 5. Bootstrap the Identity service:
 
    .. code-block:: console
@@ -136,25 +167,32 @@ Install and configure components
         --bootstrap-public-url http://controller:5000/v3/ \
         --bootstrap-region-id RegionOne
 
+   .. end
+
    Replace ``ADMIN_PASSWORD`` with a suitable password for an administrative user.
 
-.. only:: obs or rdo or ubuntu
+.. only:: rdo
 
    Configure the Apache HTTP server
    --------------------------------
 
-   .. only:: rdo
+   #. Edit the ``/etc/httpd/conf/httpd.conf`` file and configure the
+      ``ServerName`` option to reference the controller node:
 
       #. Edit the ``/etc/httpd/conf/httpd.conf`` file and configure the
          ``ServerName`` option to reference the controller node:
 
+         .. path /etc/httpd/conf/httpd
          .. code-block:: apache
 
             ServerName controller
 
+         .. end
+
       #. Create the ``/etc/httpd/conf.d/wsgi-keystone.conf`` file with
          the following content:
 
+         .. path /etc/httpd/conf.d/wsgi-keystone.conf
          .. code-block:: apache
 
             Listen 5000
@@ -189,19 +227,27 @@ Install and configure components
                     Require all granted
                 </Directory>
             </VirtualHost>
+
+        .. end
+
+.. endonly
 
    .. only:: ubuntu
 
       #. Edit the ``/etc/apache2/apache2.conf`` file and configure the
          ``ServerName`` option to reference the controller node:
 
+         .. path /etc/apache2/apache2.conf
          .. code-block:: apache
 
             ServerName controller
 
+         .. end
+
       #. Create the ``/etc/apache2/sites-available/wsgi-keystone.conf`` file
          with the following content:
 
+         .. path /etc/apache2/sites-available/wsgi-keystone.conf
          .. code-block:: apache
 
             Listen 5000
@@ -236,6 +282,8 @@ Install and configure components
                     Require all granted
                 </Directory>
             </VirtualHost>
+
+         .. end
 
       #. Enable the Identity service virtual hosts:
 
@@ -243,18 +291,26 @@ Install and configure components
 
             # ln -s /etc/apache2/sites-available/wsgi-keystone.conf /etc/apache2/sites-enabled
 
+         .. end
+
+   .. endonly
+
    .. only:: obs
 
       #. Edit the ``/etc/sysconfig/apache2`` file and configure the
          ``APACHE_SERVERNAME`` option to reference the controller node:
 
+         .. path /etc/sysconfig/apache2
          .. code-block:: apache
 
             APACHE_SERVERNAME="controller"
 
+         .. end
+
       #. Create the ``/etc/apache2/conf.d/wsgi-keystone.conf`` file
          with the following content:
 
+         .. path /etc/apache2/conf.d/wsgi-keystone.conf
          .. code-block:: apache
 
             Listen 5000
@@ -290,42 +346,55 @@ Install and configure components
                 </Directory>
             </VirtualHost>
 
+         .. end
+
       6. Recursively change the ownership of the ``/etc/keystone`` directory:
 
          .. code-block:: console
 
             # chown -R keystone:keystone /etc/keystone
 
+         .. end
+
+   .. endonly
+
 .. only:: ubuntu or rdo or obs
 
    Finalize the installation
    -------------------------
 
+.. endonly
+
    .. only:: ubuntu
 
-      #. Restart the Apache HTTP server:
+      .. code-block:: console
 
-         .. code-block:: console
+         # service apache2 restart
 
-            # service apache2 restart
+      .. end
+
+   #. By default, the Ubuntu packages create an SQLite database.
 
       #. By default, the Ubuntu packages create an SQLite database.
 
-         Because this configuration uses an SQL database server, you can remove
-         the SQLite database file:
+      .. code-block:: console
 
-         .. code-block:: console
+         # rm -f /var/lib/keystone/keystone.db
 
-            # rm -f /var/lib/keystone/keystone.db
+      .. end
+
+   .. endonly
 
    .. only:: rdo
 
-      * Start the Apache HTTP service and configure it to start when the system boots:
+     .. code-block:: console
 
-        .. code-block:: console
+        # systemctl enable httpd.service
+        # systemctl start httpd.service
 
-           # systemctl enable httpd.service
-           # systemctl start httpd.service
+     .. end
+
+   .. endonly
 
    .. only:: obs
 
@@ -335,6 +404,10 @@ Install and configure components
 
             # systemctl enable apache2.service
             # systemctl start apache2.service
+
+         .. end
+
+   .. endonly
 
 6. Configure the administrative account
 
@@ -348,8 +421,12 @@ Install and configure components
       $ export OS_AUTH_URL=http://controller:35357/v3
       $ export OS_IDENTITY_API_VERSION=3
 
+   .. end
+
    .. only:: obs or rdo or ubuntu
 
       Replace ``ADMIN_PASSWORD`` with the password used in the
       ``keystone-manage bootstrap`` command from the section called
       :ref:`keystone-install`.
+
+   .. endonly

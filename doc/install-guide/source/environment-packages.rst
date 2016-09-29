@@ -30,6 +30,8 @@ these procedures on all nodes.
       # apt-get install software-properties-common
       # add-apt-repository cloud-archive:newton
 
+   .. end
+
    .. note::
 
       For pre-release testing, use the staging repository:
@@ -37,6 +39,10 @@ these procedures on all nodes.
       .. code-block:: console
 
          # add-apt-repository cloud-archive:newton-proposed
+
+      .. end
+
+.. endonly
 
 .. only:: rdo
 
@@ -60,11 +66,15 @@ these procedures on all nodes.
 
          # subscription-manager register --username="USERNAME" --password="PASSWORD"
 
+      .. end
+
    #. Find entitlement pools containing the channels for your RHEL system:
 
       .. code-block:: console
 
          # subscription-manager list --available
+
+      .. end
 
    #. Use the pool identifiers found in the previous step to attach your RHEL
       entitlements:
@@ -73,12 +83,18 @@ these procedures on all nodes.
 
          # subscription-manager attach --pool="POOLID"
 
+      .. end
+
    #. Enable required repositories:
 
       .. code-block:: console
 
          # subscription-manager repos --enable=rhel-7-server-optional-rpms \
            --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms
+
+      .. end
+
+.. endonly
 
 .. only:: rdo
 
@@ -94,12 +110,16 @@ these procedures on all nodes.
 
         # yum install centos-release-openstack-newton
 
+     .. end
+
    * On RHEL, download and install the RDO repository RPM to enable the
      OpenStack repository.
 
      .. code-block:: console
 
         # yum install https://rdoproject.org/repos/rdo-release.rpm
+
+     .. end
 
 .. only:: obs
 
@@ -115,6 +135,8 @@ these procedures on all nodes.
 
         # zypper addrepo -f obs://Cloud:OpenStack:Newton/openSUSE_Leap_42.1 Newton
 
+     .. end
+
      .. note::
 
         The openSUSE distribution uses the concept of patterns to
@@ -128,11 +150,15 @@ these procedures on all nodes.
 
            # zypper rm patterns-openSUSE-minimal_base-conflicts
 
+        .. end
+
      **On SLES:**
 
      .. code-block:: console
 
         # zypper addrepo -f obs://Cloud:OpenStack:Newton/SLE_12_SP2 Newton
+
+     .. end
 
      .. note::
 
@@ -145,6 +171,10 @@ these procedures on all nodes.
            Key Fingerprint:  35B34E18 ABC1076D 66D5A86B 893A90DA D85F9316
            Key Created:      2015-12-16T16:48:37 CET
            Key Expires:      2018-02-23T16:48:37 CET
+
+        .. end
+
+.. endonly
 
 .. only:: debian
 
@@ -165,6 +195,8 @@ these procedures on all nodes.
          # echo "deb http://http.debian.net/debian jessie-backports main" \
            >>/etc/apt/sources.list
 
+      .. end
+
       .. note::
 
          Later you can use the following command to install a package:
@@ -172,6 +204,10 @@ these procedures on all nodes.
          .. code-block:: console
 
             # apt-get -t jessie-backports install ``PACKAGE``
+
+         .. end
+
+.. endonly
 
 Finalize the installation
 -------------------------
@@ -184,17 +220,29 @@ Finalize the installation
 
          # apt-get update && apt-get dist-upgrade
 
+      .. end
+
+   .. endonly
+
    .. only:: rdo
 
       .. code-block:: console
 
          # yum upgrade
 
+      .. end
+
+   .. endonly
+
    .. only:: obs
 
       .. code-block:: console
 
          # zypper refresh && zypper dist-upgrade
+
+      .. end
+
+   .. endonly
 
    .. note::
 
@@ -209,17 +257,29 @@ Finalize the installation
 
          # apt-get install python-openstackclient
 
+      .. end
+
+   .. endonly
+
    .. only:: rdo
 
       .. code-block:: console
 
          # yum install python-openstackclient
 
+      .. end
+
+   .. endonly
+
    .. only:: obs
 
       .. code-block:: console
 
          # zypper install python-openstackclient
+
+      .. end
+
+   .. endonly
 
 .. only:: rdo
 
@@ -230,3 +290,7 @@ Finalize the installation
       .. code-block:: console
 
          # yum install openstack-selinux
+
+      .. end
+
+.. endonly

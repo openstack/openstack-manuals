@@ -14,6 +14,7 @@ service. The authentication service uses a combination of :term:`domains
 
       $ openstack project create --domain default \
         --description "Service Project" service
+
       +-------------+----------------------------------+
       | Field       | Value                            |
       +-------------+----------------------------------+
@@ -26,6 +27,8 @@ service. The authentication service uses a combination of :term:`domains
       | parent_id   | e0353a670a9e496da891347c589539e9 |
       +-------------+----------------------------------+
 
+   .. end
+
 #. Regular (non-admin) tasks should use an unprivileged project and user.
    As an example, this guide creates the ``demo`` project and user.
 
@@ -35,6 +38,7 @@ service. The authentication service uses a combination of :term:`domains
 
         $ openstack project create --domain default \
           --description "Demo Project" demo
+
         +-------------+----------------------------------+
         | Field       | Value                            |
         +-------------+----------------------------------+
@@ -47,6 +51,8 @@ service. The authentication service uses a combination of :term:`domains
         | parent_id   | e0353a670a9e496da891347c589539e9 |
         +-------------+----------------------------------+
 
+     .. end
+
      .. note::
 
          Do not repeat this step when creating additional users for this
@@ -58,6 +64,7 @@ service. The authentication service uses a combination of :term:`domains
 
         $ openstack user create --domain default \
           --password-prompt demo
+
         User Password:
         Repeat User Password:
         +-----------+----------------------------------+
@@ -69,11 +76,14 @@ service. The authentication service uses a combination of :term:`domains
         | name      | demo                             |
         +-----------+----------------------------------+
 
+     .. end
+
    * Create the ``user`` role:
 
      .. code-block:: console
 
         $ openstack role create user
+
         +-----------+----------------------------------+
         | Field     | Value                            |
         +-----------+----------------------------------+
@@ -82,11 +92,15 @@ service. The authentication service uses a combination of :term:`domains
         | name      | user                             |
         +-----------+----------------------------------+
 
+     .. end
+
    * Add the ``user`` role to the ``demo`` project and user:
 
      .. code-block:: console
 
         $ openstack role add --project demo --user demo user
+
+     .. end
 
      .. note::
 
