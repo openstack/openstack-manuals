@@ -14,4 +14,4 @@ run the following command:
 .. code-block:: console
 
    $ openstack --version
-   2.2.0
+   openstack 3.2.0
