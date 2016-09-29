@@ -65,7 +65,7 @@ The basic steps are:
 #. Update the ``test-requirements.txt`` file for the project with a line for
    the ``os-api-ref`` Sphinx extension::
 
-       os-api-ref>=0.1.0 # Apache-2.0
+       os-api-ref>=1.0.0 # Apache-2.0
 
 #. Create RST files for each operation.
 
