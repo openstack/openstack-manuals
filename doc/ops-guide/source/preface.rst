@@ -139,15 +139,15 @@ OpenStack Installation Guides
     automation, for multiple distributions based on a packaging system:
 
     -  `Installation Guide for openSUSE and SUSE Linux Enterprise
-       <http://docs.openstack.org/mitaka/install-guide-obs/>`_
+       <http://docs.openstack.org/newton/install-guide-obs/>`_
 
     -  `Installation Guide for Red Hat Enterprise Linux and CentOS
-       <http://docs.openstack.org/mitaka/install-guide-rdo/>`_
+       <http://docs.openstack.org/newton/install-guide-rdo/>`_
 
     -  `Installation Guide for Ubuntu
-       <http://docs.openstack.org/mitaka/install-guide-ubuntu/>`_
+       <http://docs.openstack.org/newton/install-guide-ubuntu/>`_
 
-`OpenStack Configuration Reference <http://docs.openstack.org/mitaka/config-reference/>`_
+`OpenStack Configuration Reference <http://docs.openstack.org/newton/config-reference/>`_
     Contains a reference listing of all configuration options for core
     and integrated OpenStack services by release version
 
@@ -173,7 +173,7 @@ OpenStack Installation Guides
     OpenStack cloud with the OpenStack dashboard and OpenStack client
     commands
 
-`OpenStack Networking Guide <http://docs.openstack.org/mitaka/networking-guide/>`_
+`OpenStack Networking Guide <http://docs.openstack.org/newton/networking-guide/>`_
     This guide targets OpenStack administrators seeking to deploy and
     manage OpenStack Networking (neutron).
 

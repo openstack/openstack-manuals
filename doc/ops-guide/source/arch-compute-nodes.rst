@@ -77,7 +77,7 @@ The best information available to support your choice is found on the
 `Hypervisor Support Matrix
 <http://docs.openstack.org/developer/nova/support-matrix.html>`_
 and in the `configuration reference
-<http://docs.openstack.org/mitaka/config-reference/compute/hypervisors.html>`_.
+<http://docs.openstack.org/newton/config-reference/compute/hypervisors.html>`_.
 
 .. note::
 

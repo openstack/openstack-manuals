@@ -36,7 +36,7 @@ Upgrade planning
 -  Consider adopting structure and options from the service
    configuration files and merging them with existing configuration
    files. The `OpenStack Configuration
-   Reference <http://docs.openstack.org/mitaka/config-reference/>`_
+   Reference <http://docs.openstack.org/newton/config-reference/>`_
    contains new, updated, and deprecated options for most services.
 
 -  Like all major system upgrades, your upgrade could fail for one or
