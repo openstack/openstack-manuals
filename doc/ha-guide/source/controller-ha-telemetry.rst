@@ -40,8 +40,7 @@ the Telemetry services.
 For information about the required configuration options that have
 to be set in the :file:`ceilometer.conf` configuration file for both
 the central and compute agents, see the `coordination section
-<http://docs.openstack.org/liberty/config-reference/content/
-ch_configuring-openstack-telemetry.html>`__
+<http://docs.openstack.org/newton/config-reference/telemetry.html>`__
 in the OpenStack Configuration Reference.
 
 .. note:: Without the ``backend_url`` option being set only one
@@ -58,9 +57,9 @@ reassigned within the remained instances in the next polling cycle.
 For backward compatibility and supporting existing deployments, the central
 agent configuration also supports using different configuration files for
 groups of service instances of this type that are running in parallel.
-For enabling this configuration, set a value for the partitioning_group_prefix
-option in the `central section <http://docs.openstack.org/liberty/
-config-reference/content/ch_configuring-openstack-telemetry.html>`__
+For enabling this configuration, set a value for the
+``partitioning_group_prefix`` option in the
+`polling section <http://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
 in the OpenStack Configuration Reference.
 
 .. warning:: For each sub-group of the central agent pool with the same
@@ -74,6 +73,5 @@ in the OpenStack Configuration Reference.
 
 To enable the compute agent to run multiple instances simultaneously with
 workload partitioning, the workload_partitioning option has to be set to
-``True`` under the `compute section <http://docs.openstack.org/liberty/
-config-reference/content/ch_configuring-openstack-telemetry.html>`__
+``True`` under the `compute section <http://docs.openstack.org/newton/config-reference/telemetry.html>`__
 in the :file:`ceilometer.conf` configuration file.
