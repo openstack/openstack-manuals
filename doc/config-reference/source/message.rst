@@ -15,6 +15,7 @@ Message service
    message/zaqar-pooling.rst
    message/logs.rst
    message/zaqar-cache.rst
+   tables/conf-changes/zaqar.rst
 
 The Message service is multi-tenant, fast, reliable, and scalable. It allows
 developers to share data between distributed application components performing

@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Mitaka for Orchestration
+New, updated, and deprecated options in Newton for Orchestration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
@@ -12,24 +12,38 @@ New, updated, and deprecated options in Mitaka for Orchestration
 
    * - Option = default value
      - (Type) Help string
-   * - ``[DEFAULT] client_retry_limit = 2``
-     - (IntOpt) Number of times to retry when a client encounters an expected intermittent error. Set to 0 to disable retries.
-   * - ``[DEFAULT] max_interface_check_attempts = 10``
-     - (IntOpt) Number of times to check whether an interface has been attached or detached.
-   * - ``[DEFAULT] observe_on_update = False``
-     - (BoolOpt) On update, enables heat to collect existing resource properties from reality and converge to updated template.
-   * - ``[profiler] enabled = False``
-     - (BoolOpt) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature). Possible values: * True: Enables the feature * False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.
-   * - ``[profiler] hmac_keys = SECRET_KEY``
-     - (StrOpt) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project. Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
-   * - ``[resource_finder_cache] caching = True``
-     - (BoolOpt) Toggle to enable/disable caching when Orchestration Engine looks for other OpenStack service resources using name or id. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
-   * - ``[resource_finder_cache] expiration_time = 3600``
-     - (IntOpt) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of OpenStack service finder functions.
-   * - ``[service_extension_cache] caching = True``
-     - (BoolOpt) Toggle to enable/disable caching when Orchestration Engine retrieves extensions from other OpenStack services. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
-   * - ``[service_extension_cache] expiration_time = 3600``
-     - (IntOpt) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of service extensions.
+   * - ``[DEFAULT] max_server_name_length = 53``
+     - (IntOpt) Maximum length of a server name to be used in nova.
+   * - ``[DEFAULT] template_dir = /etc/heat/templates``
+     - (StrOpt) The directory to search for template files.
+   * - ``[clients_aodh] ca_file = None``
+     - (StrOpt) Optional CA cert file to use in SSL connections.
+   * - ``[clients_aodh] cert_file = None``
+     - (StrOpt) Optional PEM-formatted certificate chain file.
+   * - ``[clients_aodh] endpoint_type = None``
+     - (StrOpt) Type of endpoint in Identity service catalog to use for communication with the OpenStack service.
+   * - ``[clients_aodh] insecure = None``
+     - (BoolOpt) If set, then the server's certificate will not be verified.
+   * - ``[clients_aodh] key_file = None``
+     - (StrOpt) Optional PEM-formatted file that contains the private key.
+   * - ``[clients_monasca] ca_file = None``
+     - (StrOpt) Optional CA cert file to use in SSL connections.
+   * - ``[clients_monasca] cert_file = None``
+     - (StrOpt) Optional PEM-formatted certificate chain file.
+   * - ``[clients_monasca] endpoint_type = None``
+     - (StrOpt) Type of endpoint in Identity service catalog to use for communication with the OpenStack service.
+   * - ``[clients_monasca] insecure = None``
+     - (BoolOpt) If set, then the server's certificate will not be verified.
+   * - ``[clients_monasca] key_file = None``
+     - (StrOpt) Optional PEM-formatted file that contains the private key.
+   * - ``[trustee] auth_type = None``
+     - (Opt) Authentication type to load
+   * - ``[volumes] backups_enabled = True``
+     - (BoolOpt) Indicate if cinder-backup service is enabled. This is a temporary workaround until cinder-backup service becomes discoverable, see LP#1334856.
+   * - ``[yaql] limit_iterators = 200``
+     - (IntOpt) The maximum number of elements in collection expression can take for its evaluation.
+   * - ``[yaql] memory_quota = 10000``
+     - (IntOpt) The maximum size of memory in bytes that expression can take for its evaluation.
 
 .. list-table:: New default values
    :header-rows: 1
@@ -38,18 +52,12 @@ New, updated, and deprecated options in Mitaka for Orchestration
    * - Option
      - Previous default value
      - New default value
-   * - ``[DEFAULT] heat_metadata_server_url``
-     -
-     - ``None``
-   * - ``[heat_api] workers``
-     - ``4``
-     - ``0``
-   * - ``[heat_api_cfn] workers``
-     - ``0``
-     - ``1``
-   * - ``[heat_api_cloudwatch] workers``
-     - ``0``
-     - ``1``
+   * - ``[DEFAULT] convergence_engine``
+     - ``False``
+     - ``True``
+   * - ``[DEFAULT] keystone_backend``
+     - ``heat.common.heat_keystoneclient.KeystoneClientV3``
+     - ``heat.engine.clients.os.keystone.heat_keystoneclient.KsClientWrapper``
 
 .. list-table:: Deprecated options
    :header-rows: 1
@@ -59,6 +67,4 @@ New, updated, and deprecated options in Mitaka for Orchestration
      - New Option
    * - ``[DEFAULT] use_syslog``
      - ``None``
-   * - ``[profiler] profiler_enabled``
-     - ``[profiler] enabled``
 

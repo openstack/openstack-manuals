@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Mitaka for Alarming
+New, updated, and deprecated options in Newton for Alarming
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
@@ -12,25 +12,37 @@ New, updated, and deprecated options in Mitaka for Alarming
 
    * - Option = default value
      - (Type) Help string
-   * - ``[DEFAULT] ipc_protocol = queue``
-     - (StrOpt) The protocol used to communicate between evaluator and notifier services.
-   * - ``[DEFAULT] notifier_topic = alarming``
-     - (StrOpt) The topic that aodh uses for alarm notifier messages.
-   * - ``[service_credentials] interface = public``
-     - (StrOpt) Type of endpoint in Identity service catalog to use for communication with OpenStack services.
-   * - ``[service_credentials] region_name = None``
-     - (StrOpt) Region name to use for OpenStack service endpoints.
+   * - ``[DEFAULT] additional_ingestion_lag = 0``
+     - (IntOpt) The number of seconds to extend the evaluation windows to compensate the reporting/ingestion lag.
+   * - ``[DEFAULT] rest_notifier_ca_bundle_certificate_path = None``
+     - (StrOpt) SSL CA_BUNDLE certificate for REST notifier
+   * - ``[api] alarm_max_actions = -1``
+     - (IntOpt) Maximum count of actions for each state of an alarm, non-positive number means no limit.
+   * - ``[api] enable_combination_alarms = False``
+     - (BoolOpt) Enable deprecated combination alarms.
+   * - ``[api] project_alarm_quota = None``
+     - (IntOpt) Maximum number of alarms defined for a project.
+   * - ``[api] user_alarm_quota = None``
+     - (IntOpt) Maximum number of alarms defined for a user.
+   * - ``[evaluator] workers = 1``
+     - (IntOpt) Number of workers for evaluator service. default value is 1.
+   * - ``[listener] batch_size = 1``
+     - (IntOpt) Number of notification messages to wait before dispatching them.
+   * - ``[listener] batch_timeout = None``
+     - (IntOpt) Number of seconds to wait before dispatching samples when batch_size is not reached (None means indefinitely).
+   * - ``[listener] event_alarm_topic = alarm.all``
+     - (StrOpt) The topic that aodh uses for event alarm evaluation.
+   * - ``[listener] workers = 1``
+     - (IntOpt) Number of workers for listener service. default value is 1.
+   * - ``[notifier] batch_size = 1``
+     - (IntOpt) Number of notification messages to wait before dispatching them.
+   * - ``[notifier] batch_timeout = None``
+     - (IntOpt) Number of seconds to wait before dispatching samples when batch_size is not reached (None means indefinitely).
+   * - ``[notifier] workers = 1``
+     - (IntOpt) Number of workers for notifier service. default value is 1.
+   * - ``[service_types] zaqar = messaging``
+     - (StrOpt) Message queue service type.
 
-.. list-table:: New default values
-   :header-rows: 1
-   :class: config-ref-table
-
-   * - Option
-     - Previous default value
-     - New default value
-   * - ``[DEFAULT] gnocchi_url``
-     - ``http://localhost:8041``
-     - ``None``
 
 .. list-table:: Deprecated options
    :header-rows: 1
