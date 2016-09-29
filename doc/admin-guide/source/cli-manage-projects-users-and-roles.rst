@@ -109,8 +109,9 @@ description, and enabled status of a project.
       +-------------+----------------------------------+
       | description | my new project                   |
       | enabled     | True                             |
-      | id          | 1a4a0618b306462c9830f876b0bd6af2 |
-      | name        | project-new                      |
+      | id          | 0b0b995694234521bf93c792ed44247f |
+      | name        | new-project                      |
+      | properties  |                                  |
       +-------------+----------------------------------+
 
 Delete a project
@@ -155,15 +156,16 @@ Create the ``new-user`` user:
 .. code-block:: console
 
    $ openstack user create --project new-project --password PASSWORD new-user
-   +----------+----------------------------------+
-   | Field    | Value                            |
-   +----------+----------------------------------+
-   | email    |                                  |
-   | enabled  | True                             |
-   | id       | 6e5140962b424cb9814fb172889d3be2 |
-   | name     | new-user                         |
-   | tenantId | new-project                      |
-   +----------+----------------------------------+
+   +------------+----------------------------------+
+   | Field      | Value                            |
+   +------------+----------------------------------+
+   | email      | None                             |
+   | enabled    | True                             |
+   | id         | 6322872d9c7e445dbbb49c1f9ca28adc |
+   | name       | new-user                         |
+   | project_id | 0b0b995694234521bf93c792ed44247f |
+   | username   | new-user                         |
+   +------------+----------------------------------+
 
 Update a user
 ^^^^^^^^^^^^^
@@ -234,12 +236,13 @@ Create the ``new-role`` role:
 .. code-block:: console
 
    $ openstack role create new-role
-   +--------+----------------------------------+
-   | Field  | Value                            |
-   +--------+----------------------------------+
-   | id     | bef1f95537914b1295da6aa038ef4de6 |
-   | name   | new-role                         |
-   +--------+----------------------------------+
+   +-----------+----------------------------------+
+   | Field     | Value                            |
+   +-----------+----------------------------------+
+   | domain_id | None                             |
+   | id        | a34425c884c74c8881496dc2c2e84ffc |
+   | name      | new-role                         |
+   +-----------+----------------------------------+
 
 Assign a role
 ^^^^^^^^^^^^^
@@ -253,16 +256,18 @@ IDs.
    .. code-block:: console
 
       $ openstack user list
-      +----------------------------------+----------+---------+----------------------+
-      | id                               | name     | enabled | email                |
-      +----------------------------------+----------+---------+----------------------+
-      | 352b37f5c89144d4ad0534139266d51f | admin    | True    | admin@example.com    |
-      | 981422ec906d4842b2fc2a8658a5b534 | alt_demo | True    | alt_demo@example.com |
-      | 036e22a764ae497992f5fb8e9fd79896 | cinder   | True    | cinder@example.com   |
-      | 86c0de739bcb4802b8dc786921355813 | demo     | True    | demo@example.com     |
-      | 32ec34aae8ea432e8af560a1cec0e881 | glance   | True    | glance@example.com   |
-      | 7047fcb7908e420cb36e13bbd72c972c | nova     | True    | nova@example.com     |
-      +----------------------------------+----------+---------+----------------------+
+      +----------------------------------+----------+
+      | ID                               | Name     |
+      +----------------------------------+----------+
+      | 6ab5800949644c3e8fb86aaeab8275c8 | admin    |
+      | dfc484b9094f4390b9c51aba49a6df34 | demo     |
+      | 55389ff02f5e40cf85a053cc1cacb20c | alt_demo |
+      | bc52bcfd882f4d388485451c4a29f8e0 | nova     |
+      | 255388ffa6e54ec991f584cb03085e77 | glance   |
+      | 48b6e6dec364428da89ba67b654fac03 | cinder   |
+      | c094dd5a8e1d4010832c249d39541316 | neutron  |
+      | 6322872d9c7e445dbbb49c1f9ca28adc | new-user |
+      +----------------------------------+----------+
 
 #. List role IDs and note the role ID you want to assign:
 
@@ -285,18 +290,16 @@ IDs.
    .. code-block:: console
 
       $ openstack project list
-      +----------------------------------+--------------------+---------+
-      | id                               | name               | enabled |
-      +----------------------------------+--------------------+---------+
-      | f7ac731cc11f40efbc03a9f9e1d1d21f | admin              |   True  |
-      | c150ab41f0d9443f8874e32e725a4cc8 | alt_demo           |   True  |
-      | a9debfe41a6d4d09a677da737b907d5e | demo               |   True  |
-      | 9208739195a34c628c58c95d157917d7 | invisible_to_admin |   True  |
-      | caa9b4ce7d5c4225aa25d6ff8b35c31f | new-user           |   True  |
-      | 1a4a0618b306462c9830f876b0bd6af2 | project-new        |   True  |
-      | 3943a53dc92a49b2827fae94363851e1 | service            |   True  |
-      | 80cab5e1f02045abad92a2864cfd76cb | test_project       |   True  |
-      +----------------------------------+--------------------+---------+
+      +----------------------------------+--------------------+
+      | ID                               | Name               |
+      +----------------------------------+--------------------+
+      | 0b0b995694234521bf93c792ed44247f | new-project        |
+      | 29c09e68e6f741afa952a837e29c700b | admin              |
+      | 3a7ab11d3be74d3c9df3ede538840966 | invisible_to_admin |
+      | 71a2c23bab884c609774c2db6fcee3d0 | service            |
+      | 87e48a8394e34d13afc2646bc85a0d8c | alt_demo           |
+      | fef7ae86615f4bf5a37c1196d09bcb95 | demo               |
+      +----------------------------------+--------------------+
 
 #. Assign a role to a user-project pair:
 
@@ -316,11 +319,14 @@ IDs.
    .. code-block:: console
 
       $ openstack role list --user USER_NAME --project TENANT_ID
-      +--------------+----------+---------------------------+--------------+
-      | id           | name     | user_id                   | tenant_id    |
-      +--------------+----------+---------------------------+--------------+
-      | bef1f9553... | new-role | 86c0de739bcb4802b21355... | 80cab5e1f... |
-      +--------------+----------+---------------------------+--------------+
+      Listing assignments using role list is deprecated as of the Newton release. Use role assignment list --user <user-name> --project <project-name> --names instead.
+      +----------------------------------+-------------+---------+------+
+      | ID                               | Name        | Project | User |
+      +----------------------------------+-------------+---------+------+
+      | a34425c884c74c8881496dc2c2e84ffc | new-role    | demo    | demo |
+      | 04a7e3192c0745a2b1e3d2baf5a3ee0f | Member      | demo    | demo |
+      | 62bcf3e27eef4f648eb72d1f9920f6e5 | anotherrole | demo    | demo |
+      +----------------------------------+-------------+---------+------+
 
 View role details
 ^^^^^^^^^^^^^^^^^
@@ -330,12 +336,13 @@ View details for a specified role:
 .. code-block:: console
 
    $ openstack role show ROLE_NAME
-   +----------+----------------------------------+
-   | Field    | Value                            |
-   +----------+----------------------------------+
-   | id       | bef1f95537914b1295da6aa038ef4de6 |
-   | name     | new-role                         |
-   +----------+----------------------------------+
+   +-----------+----------------------------------+
+   | Field     | Value                            |
+   +-----------+----------------------------------+
+   | domain_id | None                             |
+   | id        | a34425c884c74c8881496dc2c2e84ffc |
+   | name      | new-role                         |
+   +-----------+----------------------------------+
 
 Remove a role
 ^^^^^^^^^^^^^
