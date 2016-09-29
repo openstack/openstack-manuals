@@ -40,7 +40,6 @@ OpenStack Compute service, run
 .. include:: ../tables/nova-rdp.rst
 .. include:: ../tables/nova-redis.rst
 .. include:: ../tables/nova-s3.rst
-.. include:: ../tables/nova-scheduler.rst
 .. include:: ../tables/nova-serial_console.rst
 .. include:: ../tables/nova-spice.rst
 .. include:: ../tables/nova-testing.rst

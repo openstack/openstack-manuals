@@ -1,5 +1,5 @@
 ==========
-Scheduling
+Schedulers
 ==========
 
 Compute uses the ``nova-scheduler`` service to determine how to
@@ -80,9 +80,9 @@ accepted by the filter, or it is rejected. Hosts that are accepted by
 the filter are then processed by a different algorithm to decide which
 hosts to use for that request, described in the :ref:`weights` section.
 
-.. figure:: ../figures/filteringWorkflow1.png
+**Filtering**
 
-   **Filtering**
+.. figure:: ../figures/filteringWorkflow1.png
 
 The ``scheduler_available_filters`` configuration option in ``nova.conf``
 provides the Compute service with the list of the filters that are used
@@ -335,24 +335,6 @@ To disallow vCPU overcommitment set:
    Changes to this configuration key are only taken into account internally
    in the scheduler.
 
-NUMATopologyFilter
-------------------
-
-Filters hosts based on the NUMA topology that was specified for the
-instance through the use of flavor ``extra_specs`` in combination
-with the image properties, as described in detail in the
-`related nova-spec document <http://specs.openstack.org/openstack/
-nova-specs/specs/juno/implemented/virt-driver-numa-placement.html>`_.
-Filter will try to match the exact NUMA cells of the instance to
-those of the host. It will consider the standard over-subscription
-limits each cell, and provide limits to the compute host accordingly.
-
-.. note::
-
-   If instance has no topology defined, it will be considered for any host.
-   If instance has a topology defined, it will be considered only for NUMA
-   capable hosts.
-
 DifferentHostFilter
 -------------------
 
@@ -451,6 +433,28 @@ option to greater than ``1.0``:
    If the value is set to ``>1``, we recommend keeping track of the free
    disk space, as the value approaching ``0`` may result in the incorrect
    functioning of instances using it at the moment.
+
+ExactCoreFilter
+---------------
+
+Only schedules instances on hosts if host has the exact number of CPU cores.
+
+ExactDiskFilter
+---------------
+
+Only schedules instances on hosts if host has the exact amount of disk
+available.
+
+ExactRamFilter
+--------------
+
+Only schedules instances on hosts if host has the exact number of RAM
+available.
+
+ExactCoreFilter
+---------------
+
+Only schedules instances on hosts if host has the exact number of CPU cores.
 
 .. _GroupAffinityFilter:
 
@@ -633,6 +637,24 @@ MetricsFilter
 Filters hosts based on meters ``weight_setting``.
 Only hosts with the available meters are passed so that
 the metrics weigher will not fail due to these hosts.
+
+NUMATopologyFilter
+------------------
+
+Filters hosts based on the NUMA topology that was specified for the
+instance through the use of flavor ``extra_specs`` in combination
+with the image properties, as described in detail in the
+`related nova-spec document <http://specs.openstack.org/openstack/
+nova-specs/specs/juno/implemented/virt-driver-numa-placement.html>`_.
+Filter will try to match the exact NUMA cells of the instance to
+those of the host. It will consider the standard over-subscription
+limits each cell, and provide limits to the compute host accordingly.
+
+.. note::
+
+   If instance has no topology defined, it will be considered for any host.
+   If instance has a topology defined, it will be considered only for NUMA
+   capable hosts.
 
 .. _NumInstancesFilter:
 
@@ -842,9 +864,9 @@ is computed for each requested instance.
 All weights are normalized before being summed up;
 the host with the largest weight is given the highest priority.
 
-.. figure:: ../figures/nova-weighting-hosts.png
+**Weighting hosts**
 
-   **Weighting hosts**
+.. figure:: ../figures/nova-weighting-hosts.png
 
 If cells are used, cells are weighted by the scheduler in the same
 manner as hosts.
@@ -1194,8 +1216,9 @@ When using the XenAPI-based hypervisor, the Compute service uses
 host aggregates to manage XenServer Resource pools, which are
 used in supporting live migration.
 
-Configuration reference
-~~~~~~~~~~~~~~~~~~~~~~~
+Configuration options
+~~~~~~~~~~~~~~~~~~~~~
 
-To customize the Compute scheduler, use the configuration option
-settings documented in :ref:`nova-scheduler`.
+The Compute scheduler configuration options are documented in the tables below.
+
+.. include:: ../tables/nova-scheduler.rst
