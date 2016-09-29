@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _ironic-metrics_stats:
+.. _ironic-metrics_statsd:
 
-.. list-table:: Description of metrics_stats configuration options
+.. list-table:: Description of metrics statsd configuration options
    :header-rows: 1
    :class: config-ref-table
 

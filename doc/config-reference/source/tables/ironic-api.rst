@@ -34,34 +34,6 @@
      - (Integer) Maximum interval (in seconds) for agent heartbeats.
    * - ``restrict_lookup`` = ``True``
      - (Boolean) Whether to restrict the lookup API to only nodes in certain states.
-   * - **[cors]**
-     -
-   * - ``allow_credentials`` = ``True``
-     - (Boolean) Indicate that the actual request can include user credentials
-   * - ``allow_headers`` =
-     - (List) Indicate which header field names may be used during the actual request.
-   * - ``allow_methods`` = ``OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PATCH``
-     - (List) Indicate which methods can be used during the actual request.
-   * - ``allowed_origin`` = ``None``
-     - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing slash. Example: https://horizon.example.com
-   * - ``expose_headers`` =
-     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
-   * - ``max_age`` = ``3600``
-     - (Integer) Maximum cache age of CORS preflight requests.
-   * - **[cors.subdomain]**
-     -
-   * - ``allow_credentials`` = ``True``
-     - (Boolean) Indicate that the actual request can include user credentials
-   * - ``allow_headers`` =
-     - (List) Indicate which header field names may be used during the actual request.
-   * - ``allow_methods`` = ``OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PATCH``
-     - (List) Indicate which methods can be used during the actual request.
-   * - ``allowed_origin`` = ``None``
-     - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing slash. Example: https://horizon.example.com
-   * - ``expose_headers`` =
-     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
-   * - ``max_age`` = ``3600``
-     - (Integer) Maximum cache age of CORS preflight requests.
    * - **[oslo_middleware]**
      -
    * - ``enable_proxy_headers_parsing`` = ``False``

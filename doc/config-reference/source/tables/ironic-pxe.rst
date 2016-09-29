@@ -36,6 +36,8 @@
      - (Boolean) Enable iPXE boot.
    * - ``ipxe_timeout`` = ``0``
      - (Integer) Timeout value (in seconds) for downloading an image via iPXE. Defaults to 0 (no timeout)
+   * - ``ipxe_use_swift`` = ``False``
+     - (Boolean) Download deploy images directly from swift using temporary URLs. If set to false (default), images are downloaded to the ironic-conductor node and served over its local HTTP server. Applicable only when 'ipxe_enabled' option is set to true.
    * - ``pxe_append_params`` = ``nofb nomodeset vga=normal``
      - (String) Additional append parameters for baremetal PXE boot.
    * - ``pxe_bootfile_name`` = ``pxelinux.0``

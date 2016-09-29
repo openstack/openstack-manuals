@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _ironic-catalog:
+.. _ironic-service_catalog:
 
-.. list-table:: Description of catalog configuration options
+.. list-table:: Description of service catalog configuration options
    :header-rows: 1
    :class: config-ref-table
 
