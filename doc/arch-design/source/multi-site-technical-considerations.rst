@@ -22,8 +22,8 @@ links available between them, it may be wise to configure a separate
 storage replication network between the two sites to support a single
 Swift endpoint and a shared Object Storage capability between them. An
 example of this technique, as well as a configuration walk-through, is
-available at
-http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network.
+available at `Dedicated replication network
+<http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network>`_.
 Another option in this scenario is to build a dedicated set of project
 private networks across the secondary link, using overlay networks with
 a third party mapping the site overlays to each other.
