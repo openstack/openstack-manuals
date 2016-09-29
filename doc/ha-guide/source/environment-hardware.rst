@@ -2,18 +2,24 @@
 Hardware considerations for high availability
 =============================================
 
-[TODO: Provide a minimal architecture example for HA,
-expanded on that given in
-http://docs.openstack.org/mitaka/install-guide-ubuntu/environment.html
-for easy comparison]
+.. TODO: Provide a minimal architecture example for HA, expanded on that
+         given in the *Environment* section of
+         http://docs.openstack.org/project-install-guide/newton (depending
+         on the distribution) for easy comparison.
 
 Hardware setup
 ~~~~~~~~~~~~~~
 
 The standard hardware requirements:
 
-- `Provider networks <http://docs.openstack.org/mitaka/install-guide-ubuntu/overview.html#networking-option-1-provider-networks>`_
-- `Self-service networks <http://docs.openstack.org/mitaka/install-guide-ubuntu/overview.html#networking-option-2-self-service-networks>`_
+- Provider networks. See the *Overview -> Networking Option 1: Provider
+  networks* section of the
+  `Install Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`_
+  depending on your distribution.
+- Self-service networks. See the *Overview -> Networking Option 2:
+  Self-service networks* section of the
+  `Install Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`_
+  depending on your distribution.
 
 However, OpenStack does not require a significant amount of resources
 and the following minimum requirements should support
