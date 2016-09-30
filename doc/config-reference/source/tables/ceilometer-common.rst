@@ -34,8 +34,6 @@
      - (String) Path to the rootwrap configuration file touse for running commands as root
    * - ``shuffle_time_before_polling_task`` = ``0``
      - (Integer) To reduce large requests at same time to Nova or other components from different compute agents, shuffle start time of polling task.
-   * - ``sql_expire_samples_only`` = ``False``
-     - (Boolean) Indicates if expirer expires only samples. If set true, expired samples will be deleted, but residual resource and meter definition data will remain.
    * - **[compute]**
      -
    * - ``resource_update_interval`` = ``0``
@@ -64,6 +62,8 @@
      - (String) The connection string used to connect to the metering database. (if unset, connection is used)
    * - ``metering_time_to_live`` = ``-1``
      - (Integer) Number of seconds that samples are kept in the database for (<= 0 means forever).
+   * - ``sql_expire_samples_only`` = ``False``
+     - (Boolean) Indicates if expirer expires only samples. If set true, expired samples will be deleted, but residual resource and meter definition data will remain.
    * - **[meter]**
      -
    * - ``meter_definitions_cfg_file`` = ``meters.yaml``
@@ -72,3 +72,15 @@
      -
    * - ``partitioning_group_prefix`` = ``None``
      - (String) Work-load partitioning group prefix. Use only if you want to run multiple polling agents with different config files. For each sub-group of the agent pool with the same partitioning_group_prefix a disjoint subset of pollsters should be loaded.
+   * - **[publisher]**
+     -
+   * - ``telemetry_secret`` = ``change this for valid signing``
+     - (String) Secret value for signing messages. Set value empty if signing is not required to avoid computational overhead.
+   * - **[publisher_notifier]**
+     -
+   * - ``event_topic`` = ``event``
+     - (String) The topic that ceilometer uses for event notifications.
+   * - ``metering_topic`` = ``metering``
+     - (String) The topic that ceilometer uses for metering notifications.
+   * - ``telemetry_driver`` = ``messagingv2``
+     - (String) The driver that ceilometer uses for metering notifications.

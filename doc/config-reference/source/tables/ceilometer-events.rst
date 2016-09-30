@@ -28,8 +28,6 @@
      -
    * - ``ack_on_event_error`` = ``True``
      - (Boolean) Acknowledge message when event persistence fails.
-   * - ``store_events`` = ``False``
-     - (Boolean) Save event details.
    * - ``workers`` = ``1``
      - (Integer) Number of workers for notification service, default value is 1.
    * - ``workload_partitioning`` = ``False``

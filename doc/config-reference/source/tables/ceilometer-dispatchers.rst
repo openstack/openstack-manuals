@@ -18,7 +18,7 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``event_dispatchers`` = ``['database']``
+   * - ``event_dispatchers`` = ``[]``
      - (Multi-valued) Dispatchers to process event data.
    * - ``meter_dispatchers`` = ``['database']``
      - (Multi-valued) Dispatchers to process metering data.

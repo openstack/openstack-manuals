@@ -18,11 +18,13 @@
      - Description
    * - **[notification]**
      -
-   * - ``batch_size`` = ``1``
-     - (Integer) Number of notification messages to wait before publishing them
-   * - ``batch_timeout`` = ``None``
+   * - ``batch_size`` = ``100``
+     - (Integer) Number of notification messages to wait before publishing them. Batching is advised when transformations areapplied in pipeline.
+   * - ``batch_timeout`` = ``5``
      - (Integer) Number of seconds to wait before publishing sampleswhen batch_size is not reached (None means indefinitely)
    * - ``disable_non_metric_meters`` = ``True``
      - (Boolean) WARNING: Ceilometer historically offered the ability to store events as meters. This usage is NOT advised as it can flood the metering database and cause performance degradation.
+   * - ``messaging_urls`` = ``[]``
+     - (Multi-valued) Messaging URLs to listen for notifications. Example: rabbit://user:pass@host1:port1[,user:pass@hostN:portN]/virtual_host (DEFAULT/transport_url is used if empty). This is useful when you have dedicate messaging nodes for each service, for example, all nova notifications go to rabbit-nova:5672, while all cinder notifications go to rabbit-cinder:5672.
    * - ``pipeline_processing_queues`` = ``10``
-     - (Integer) Number of queues to parallelize workload across. This value should be larger than the number of active notification agents for optimal results.
+     - (Integer) Number of queues to parallelize workload across. This value should be larger than the number of active notification agents for optimal results. WARNING: Once set, lowering this value may result in lost data.

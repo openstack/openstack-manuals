@@ -10,7 +10,7 @@
 
 .. _ceilometer-zaqar:
 
-.. list-table:: Description of Zaqar configuration options
+.. list-table:: Description of Message service configuration options
    :header-rows: 1
    :class: config-ref-table
 

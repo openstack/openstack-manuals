@@ -46,18 +46,12 @@
      - (Integer) Default maximum number of items returned by API request.
    * - ``gnocchi_is_enabled`` = ``None``
      - (Boolean) Set True to disable resource/meter/sample URLs. Default autodetection by querying keystone.
-   * - ``host`` = ``0.0.0.0``
-     - (String) The listen IP for the ceilometer API server.
    * - ``panko_is_enabled`` = ``None``
      - (Boolean) Set True to redirect events URLs to Panko. Default autodetection by querying keystone.
    * - ``panko_url`` = ``None``
      - (String) The endpoint of Panko to redirect events URLs to Panko API. Default autodetection by querying keystone.
    * - ``pecan_debug`` = ``False``
      - (Boolean) Toggle Pecan Debug Middleware.
-   * - ``port`` = ``8777``
-     - (Port number) The port for the ceilometer API server.
-   * - ``workers`` = ``1``
-     - (Integer) Number of workers for api, default value is 1.
    * - **[oslo_middleware]**
      -
    * - ``enable_proxy_headers_parsing`` = ``False``

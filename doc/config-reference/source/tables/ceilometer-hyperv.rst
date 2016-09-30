@@ -10,7 +10,7 @@
 
 .. _ceilometer-hyperv:
 
-.. list-table:: Description of HyperV configuration options
+.. list-table:: Description of Hyper-V configuration options
    :header-rows: 1
    :class: config-ref-table
 
