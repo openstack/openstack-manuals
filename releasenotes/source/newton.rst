@@ -40,3 +40,15 @@ Internal changes
   ha-guide has been moved into the openstack-manuals repository. The
   repositories operations-guide and ha-guide have been retired.
 
+Training guides
+~~~~~~~~~~~~~~~
+
+* Improved and restructured `Upstream Training <http://docs.openstack.org/upstream-training/>`_
+* Added new chapters in the draft `Training guides <http://docs.openstack.org/draft/training-guides/>`_
+
+Translations
+~~~~~~~~~~~~
+
+* Italian
+
+  * Published the Upstream Training.
