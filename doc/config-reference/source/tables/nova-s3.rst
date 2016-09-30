@@ -19,16 +19,16 @@
    * - **[DEFAULT]**
      -
    * - ``image_decryption_dir`` = ``/tmp``
-     - (String) Parent directory for tempdir used for image decryption
+     - (String) DEPRECATED: Parent directory for tempdir used for image decryption EC2 API related options are not supported.
    * - ``s3_access_key`` = ``notchecked``
-     - (String) Access key to use for S3 server for images
+     - (String) DEPRECATED: Access key to use S3 server for images EC2 API related options are not supported.
    * - ``s3_affix_tenant`` = ``False``
-     - (Boolean) Whether to affix the tenant id to the access key when downloading from S3
+     - (Boolean) DEPRECATED: Whether to affix the tenant id to the access key when downloading from S3 EC2 API related options are not supported.
    * - ``s3_host`` = ``$my_ip``
-     - (String) Hostname or IP for OpenStack to use when accessing the S3 api
+     - (String) DEPRECATED: Hostname or IP for OpenStack to use when accessing the S3 API EC2 API related options are not supported.
    * - ``s3_port`` = ``3333``
-     - (Integer) Port used when accessing the S3 api
+     - (Port number) DEPRECATED: Port used when accessing the S3 API. It should be in the range of 1 - 65535 EC2 API related options are not supported.
    * - ``s3_secret_key`` = ``notchecked``
-     - (String) Secret key to use for S3 server for images
+     - (String) DEPRECATED: Secret key to use for S3 server for images EC2 API related options are not supported.
    * - ``s3_use_ssl`` = ``False``
-     - (Boolean) Whether to use SSL when talking to S3
+     - (Boolean) DEPRECATED: Whether to use SSL when talking to S3 EC2 API related options are not supported.

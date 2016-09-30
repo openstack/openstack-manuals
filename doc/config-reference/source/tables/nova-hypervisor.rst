@@ -19,16 +19,70 @@
    * - **[DEFAULT]**
      -
    * - ``default_ephemeral_format`` = ``None``
-     - (String) The default format an ephemeral_volume will be formatted with on creation. Possible values: * ``ext2`` * ``ext3`` * ``ext4`` * ``xfs`` * ``ntfs`` (only for Windows guests) Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
+     - (String) The default format an ephemeral_volume will be formatted with on creation.
+
+       Possible values:
+
+       * ``ext2``
+
+       * ``ext3``
+
+       * ``ext4``
+
+       * ``xfs``
+
+       * ``ntfs`` (only for Windows guests)
    * - ``force_raw_images`` = ``True``
-     - (Boolean) Force conversion of backing images to raw format. Possible values: * True: Backing image files will be converted to raw image format * False: Backing image files will not be converted Services which consume this: * nova-compute Interdependencies to other options: * ``compute_driver``: Only the libvirt driver uses this option.
+     - (Boolean) Force conversion of backing images to raw format.
+
+       Possible values:
+
+       * True: Backing image files will be converted to raw image format
+
+       * False: Backing image files will not be converted
+
+       Interdependencies to other options:
+
+       * ``compute_driver``: Only the libvirt driver uses this option.
+   * - ``pointer_model`` = ``usbtablet``
+     - (String) Generic property to specify the pointer type.
+
+       Input devices allow interaction with a graphical framebuffer. For example to provide a graphic tablet for absolute cursor movement.
+
+       If set, the 'hw_pointer_model' image property takes precedence over this configuration option.
+
+       Possible values:
+
+       * None: Uses default behavior provided by drivers (mouse on PS2 for libvirt x86)
+
+       * ps2mouse: Uses relative movement. Mouse connected by PS2
+
+       * usbtablet: Uses absolute movement. Tablet connect by USB
+
+       Interdependencies to other options:
+
+       * usbtablet must be configured with VNC enabled or SPICE enabled and SPICE agent disabled. When used with libvirt the instance mode should be configured as HVM.
    * - ``preallocate_images`` = ``none``
-     - (String) The image preallocation mode to use. Image preallocation allows storage for instance images to be allocated up front when the instance is initially provisioned. This ensures immediate feedback is given if enough space isn't available. In addition, it should significantly improve performance on writes to new blocks and may even improve I/O performance to prewritten blocks due to reduced fragmentation. Possible values: * "none" => no storage provisioning is done up front * "space" => storage is fully allocated at instance start Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
+     - (String) The image preallocation mode to use. Image preallocation allows storage for instance images to be allocated up front when the instance is initially provisioned. This ensures immediate feedback is given if enough space isn't available. In addition, it should significantly improve performance on writes to new blocks and may even improve I/O performance to prewritten blocks due to reduced fragmentation.
+
+       Possible values:
+
+       * "none" => no storage provisioning is done up front
+
+       * "space" => storage is fully allocated at instance start
    * - ``timeout_nbd`` = ``10``
      - (Integer) Amount of time, in seconds, to wait for NBD device start up.
    * - ``use_cow_images`` = ``True``
-     - (Boolean) Enable use of copy-on-write (cow) images. QEMU/KVM allow the use of qcow2 as backing files. By disabling this, backing files will not be used. Possible values: * True: Enable use of cow images * False: Disable use of cow images Services which consume this: * ``nova-compute`` Interdependencies to other options: * None
+     - (Boolean) Enable use of copy-on-write (cow) images.
+
+       QEMU/KVM allow the use of qcow2 as backing files. By disabling this, backing files will not be used.
    * - ``vcpu_pin_set`` = ``None``
-     - (String) Defines which physical CPUs (pCPUs) can be used by instance virtual CPUs (vCPUs). Possible values: * A comma-separated list of physical CPU numbers that virtual CPUs can be allocated to by default. Each element should be either a single CPU number, a range of CPU numbers, or a caret followed by a CPU number to be excluded from a previous range. For example: vcpu_pin_set = "4-12,^8,15" Services which consume this: * ``nova-scheduler`` * ``nova-compute`` Interdependencies to other options: * None
+     - (String) Defines which physical CPUs (pCPUs) can be used by instance virtual CPUs (vCPUs).
+
+       Possible values:
+
+       * A comma-separated list of physical CPU numbers that virtual CPUs can be allocated to by default. Each element should be either a single CPU number, a range of CPU numbers, or a caret followed by a CPU number to be excluded from a previous range. For example:
+
+        vcpu_pin_set = "4-12,^8,15"
    * - ``virt_mkfs`` = ``[]``
      - (Multi-valued) Name of the mkfs commands for ephemeral device. The format is <os_type>=<mkfs command>

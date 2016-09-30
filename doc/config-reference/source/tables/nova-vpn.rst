@@ -18,21 +18,33 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``boot_script_template`` = ``$pybasedir/nova/cloudpipe/bootscript.template``
-     - (String) Template for cloudpipe instance boot script
    * - ``dmz_cidr`` =
-     - (List) A list of dmz ranges that should be accepted
-   * - ``dmz_mask`` = ``255.255.255.0``
-     - (String) Netmask to push into openvpn config
-   * - ``dmz_net`` = ``10.0.0.0``
-     - (String) Network to push into openvpn config
-   * - ``vpn_flavor`` = ``m1.tiny``
-     - (String) Flavor for vpn instances
-   * - ``vpn_image_id`` = ``0``
-     - (String) Image ID used when starting up a cloudpipe vpn server
+     - (List) This option is a list of zero or more IP address ranges in your network's DMZ that should be accepted.
+
+       Possible values:
+
+        A list of strings, each of which should be a valid CIDR.
    * - ``vpn_ip`` = ``$my_ip``
-     - (String) Public IP for the cloudpipe VPN servers
-   * - ``vpn_key_suffix`` = ``-vpn``
-     - (String) Suffix to add to project name for vpn key and secgroups
+     - (String) This is the public IP address for the cloudpipe VPN servers. It defaults to the IP address of the host.
+
+       Please note that this option is only used when using nova-network instead of Neutron in your deployment. It also will be ignored if the configuration option for `network_manager` is not set to the default of 'nova.network.manager.VlanManager'.
+
+       Possible values:
+
+        Any valid IP address. The default is $my_ip, the IP address of the VM.
+
+       Related options:
+
+        ``network_manager``, ``use_neutron``, ``vpn_start``
    * - ``vpn_start`` = ``1000``
-     - (Integer) First Vpn port for private networks
+     - (Port number) This is the port number to use as the first VPN port for private networks.
+
+       Please note that this option is only used when using nova-network instead of Neutron in your deployment. It also will be ignored if the configuration option for `network_manager` is not set to the default of 'nova.network.manager.VlanManager', or if you specify a value the 'vpn_start' parameter when creating a network.
+
+       Possible values:
+
+        Any integer representing a valid port number. The default is 1000.
+
+       Related options:
+
+        ``use_neutron``, ``vpn_ip``, ``network_manager``

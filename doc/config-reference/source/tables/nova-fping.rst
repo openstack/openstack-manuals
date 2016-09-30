@@ -19,4 +19,4 @@
    * - **[DEFAULT]**
      -
    * - ``fping_path`` = ``/usr/sbin/fping``
-     - (String) Full path to fping.
+     - (String) The full path to the fping binary.

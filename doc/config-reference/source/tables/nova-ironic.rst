@@ -18,25 +18,39 @@
      - Description
    * - **[ironic]**
      -
-   * - ``admin_auth_token`` = ``None``
-     - (String) DEPRECATED: Ironic keystone auth token.DEPRECATED: use admin_username, admin_password, and admin_tenant_name instead
    * - ``admin_password`` = ``None``
-     - (String) Ironic keystone admin password.
+     - (String) DEPRECATED: Ironic keystone admin password. Use ``password`` instead.
    * - ``admin_tenant_name`` = ``None``
-     - (String) Ironic keystone tenant name.
+     - (String) DEPRECATED: Ironic keystone tenant name. Use ``project_name`` instead.
    * - ``admin_url`` = ``None``
-     - (String) Keystone public API endpoint.
+     - (String) DEPRECATED: Keystone public API endpoint. Use ``auth_url`` instead.
    * - ``admin_username`` = ``None``
-     - (String) Ironic keystone admin name
-   * - ``api_endpoint`` = ``None``
-     - (String) URL for Ironic API endpoint.
+     - (String) DEPRECATED: Ironic keystone admin name. Use ``username`` instead.
+   * - ``api_endpoint`` = ``http://ironic.example.org:6385/``
+     - (String) URL override for the Ironic API endpoint.
    * - ``api_max_retries`` = ``60``
-     - (Integer) How many retries when a request does conflict. If <= 0, only try once, no retries.
+     - (Integer) The number of times to retry when a request conflicts. If set to 0, only try once, no retries.
+
+       Related options:
+
+       * api_retry_interval
    * - ``api_retry_interval`` = ``2``
-     - (Integer) How often to retry in seconds when a request does conflict
-   * - ``api_version`` = ``1``
-     - (Integer) DEPRECATED: Version of Ironic API service endpoint. DEPRECATED: Setting the API version is not possible anymore.
+     - (Integer) The number of seconds to wait before retrying the request.
+
+       Related options:
+
+       * api_max_retries
+   * - ``auth_section`` = ``None``
+     - (Unknown) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Unknown) Authentication type to load
    * - ``cafile`` = ``None``
      - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
-   * - ``client_log_level`` = ``None``
-     - (String) DEPRECATED: Log level override for ironicclient. Set this in order to override the global "default_log_levels", "verbose", and "debug" settings. DEPRECATED: use standard logging configuration.
+   * - ``certfile`` = ``None``
+     - (String) PEM encoded client certificate cert file
+   * - ``insecure`` = ``False``
+     - (Boolean) Verify HTTPS connections.
+   * - ``keyfile`` = ``None``
+     - (String) PEM encoded client certificate key file
+   * - ``timeout`` = ``None``
+     - (Integer) Timeout value for http requests

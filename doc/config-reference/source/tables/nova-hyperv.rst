@@ -19,24 +19,128 @@
    * - **[hyperv]**
      -
    * - ``dynamic_memory_ratio`` = ``1.0``
-     - (Floating point) Dynamic memory ratio Enables dynamic memory allocation (ballooning) when set to a value greater than 1. The value expresses the ratio between the total RAM assigned to an instance and its startup RAM amount. For example a ratio of 2.0 for an instance with 1024MB of RAM implies 512MB of RAM allocated at startup. Possible values: * 1.0: Disables dynamic memory allocation (Default). * Float values greater than 1.0: Enables allocation of total implied RAM divided by this value for startup. Services which consume this: * nova-compute Related options: * None
+     - (Floating point) Dynamic memory ratio
+
+       Enables dynamic memory allocation (ballooning) when set to a value greater than 1. The value expresses the ratio between the total RAM assigned to an instance and its startup RAM amount. For example a ratio of 2.0 for an instance with 1024MB of RAM implies 512MB of RAM allocated at startup.
+
+       Possible values:
+
+       * 1.0: Disables dynamic memory allocation (Default).
+
+       * Float values greater than 1.0: Enables allocation of total implied RAM divided by this value for startup.
    * - ``enable_instance_metrics_collection`` = ``False``
-     - (Boolean) Enable instance metrics collection Enables metrics collections for an instance by using Hyper-V's metric APIs. Collected data can by retrieved by other apps and services, e.g.: Ceilometer. Possible values: * True: Enables metrics collection. * False: Disables metric collection (Default). Services which consume this: * nova-compute Related options: * None
+     - (Boolean) Enable instance metrics collection
+
+       Enables metrics collections for an instance by using Hyper-V's metric APIs. Collected data can by retrieved by other apps and services, e.g.: Ceilometer.
+   * - ``enable_remotefx`` = ``False``
+     - (Boolean) Enable RemoteFX feature
+
+       This requires at least one DirectX 11 capable graphics adapter for Windows / Hyper-V Server 2012 R2 or newer and RDS-Virtualization feature has to be enabled.
+
+       Instances with RemoteFX can be requested with the following flavor extra specs:
+
+       **os:resolution**. Guest VM screen resolution size. Acceptable values::
+
+        1024x768, 1280x1024, 1600x1200, 1920x1200, 2560x1600, 3840x2160
+
+       ``3840x2160`` is only available on Windows / Hyper-V Server 2016.
+
+       **os:monitors**. Guest VM number of monitors. Acceptable values::
+
+        [1, 4] - Windows / Hyper-V Server 2012 R2 [1, 8] - Windows / Hyper-V Server 2016
+
+       **os:vram**. Guest VM VRAM amount. Only available on Windows / Hyper-V Server 2016. Acceptable values::
+
+        64, 128, 256, 512, 1024
    * - ``instances_path_share`` =
-     - (String) Instances path share The name of a Windows share mapped to the "instances_path" dir and used by the resize feature to copy files to the target host. If left blank, an administrative share (hidden network share) will be used, looking for the same "instances_path" used locally. Possible values: * "": An administrative share will be used (Default). * Name of a Windows share. Services which consume this: * nova-compute Related options: * "instances_path": The directory which will be used if this option here is left blank.
+     - (String) Instances path share
+
+       The name of a Windows share mapped to the "instances_path" dir and used by the resize feature to copy files to the target host. If left blank, an administrative share (hidden network share) will be used, looking for the same "instances_path" used locally.
+
+       Possible values:
+
+       * "": An administrative share will be used (Default).
+
+       * Name of a Windows share.
+
+       Related options:
+
+       * "instances_path": The directory which will be used if this option here is left blank.
    * - ``limit_cpu_features`` = ``False``
-     - (Boolean) Limit CPU features This flag is needed to support live migration to hosts with different CPU features and checked during instance creation in order to limit the CPU features used by the instance. Possible values: * True: Limit processor-specific features. * False: Do not limit processor-specific features (Default). Services which consume this: * nova-compute Related options: * None
+     - (Boolean) Limit CPU features
+
+       This flag is needed to support live migration to hosts with different CPU features and checked during instance creation in order to limit the CPU features used by the instance.
    * - ``mounted_disk_query_retry_count`` = ``10``
-     - (Integer) The number of times to retry checking for a disk mounted via iSCSI.
+     - (Integer) Mounted disk query retry count
+
+       The number of times to retry checking for a disk mounted via iSCSI. During long stress runs the WMI query that is looking for the iSCSI device number can incorrectly return no data. If the query is retried the appropriate data can then be obtained. The query runs until the device can be found or the retry count is reached.
+
+       Possible values:
+
+       * Positive integer values. Values greater than 1 is recommended (Default: 10).
+
+       Related options:
+
+       * Time interval between disk mount retries is declared with "mounted_disk_query_retry_interval" option.
    * - ``mounted_disk_query_retry_interval`` = ``5``
-     - (Integer) Interval between checks for a mounted iSCSI disk, in seconds.
+     - (Integer) Mounted disk query retry interval
+
+       Interval between checks for a mounted iSCSI disk, in seconds.
+
+       Possible values:
+
+       * Time in seconds (Default: 5).
+
+       Related options:
+
+       * This option is meaningful when the mounted_disk_query_retry_count is greater than 1.
+
+       * The retry loop runs with mounted_disk_query_retry_count and mounted_disk_query_retry_interval configuration options.
    * - ``power_state_check_timeframe`` = ``60``
-     - (Integer) The timeframe to be checked for instance power state changes.
+     - (Integer) Power state check timeframe
+
+       The timeframe to be checked for instance power state changes. This option is used to fetch the state of the instance from Hyper-V through the WMI interface, within the specified timeframe.
+
+       Possible values:
+
+       * Timeframe in seconds (Default: 60).
    * - ``power_state_event_polling_interval`` = ``2``
-     - (Integer) Instance power state change event polling frequency.
+     - (Integer) Power state event polling interval
+
+       Instance power state change event polling frequency. Sets the listener interval for power state events to the given value. This option enhances the internal lifecycle notifications of instances that reboot themselves. It is unlikely that an operator has to change this value.
+
+       Possible values:
+
+       * Time in seconds (Default: 2).
    * - ``qemu_img_cmd`` = ``qemu-img.exe``
-     - (String) Path of qemu-img command which is used to convert between different image types
+     - (String) qemu-img command
+
+       qemu-img is required for some of the image related operations like converting between different image types. You can get it from here: (http://qemu.weilnetz.de/) or you can install the Cloudbase OpenStack Hyper-V Compute Driver (https://cloudbase.it/openstack-hyperv-driver/) which automatically sets the proper path for this config option. You can either give the full path of qemu-img.exe or set its path in the PATH environment variable and leave this option to the default value.
+
+       Possible values:
+
+       * Name of the qemu-img executable, in case it is in the same directory as the nova-compute service or its path is in the PATH environment variable (Default).
+
+       * Path of qemu-img command (DRIVELETTER:\PATH\TO\QEMU-IMG\COMMAND).
+
+       Related options:
+
+       * If the config_drive_cdrom option is False, qemu-img will be used to convert the ISO to a VHD, otherwise the configuration drive will remain an ISO. To use configuration drive with Hyper-V, you must set the mkisofs_cmd value to the full path to an mkisofs.exe installation.
    * - ``vswitch_name`` = ``None``
-     - (String) External virtual switch Name, if not provided, the first external virtual switch is used
+     - (String) External virtual switch name
+
+       The Hyper-V Virtual Switch is a software-based layer-2 Ethernet network switch that is available with the installation of the Hyper-V server role. The switch includes programmatically managed and extensible capabilities to connect virtual machines to both virtual networks and the physical network. In addition, Hyper-V Virtual Switch provides policy enforcement for security, isolation, and service levels. The vSwitch represented by this config option must be an external one (not internal or private).
+
+       Possible values:
+
+       * If not provided, the first of a list of available vswitches is used. This list is queried using WQL.
+
+       * Virtual switch name.
    * - ``wait_soft_reboot_seconds`` = ``60``
-     - (Integer) Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.
+     - (Integer) Wait soft reboot seconds
+
+       Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.
+
+       Possible values:
+
+       * Time in seconds (Default: 60).

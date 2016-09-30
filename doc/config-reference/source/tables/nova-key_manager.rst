@@ -8,7 +8,7 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _nova-keymgr:
+.. _nova-key_manager:
 
 .. list-table:: Description of key manager configuration options
    :header-rows: 1
@@ -16,9 +16,13 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[keymgr]**
+   * - **[key_manager]**
      -
-   * - ``api_class`` = ``nova.keymgr.conf_key_mgr.ConfKeyManager``
+   * - ``api_class`` = ``castellan.key_manager.barbican_key_manager.BarbicanKeyManager``
      - (String) The full class name of the key manager API class
    * - ``fixed_key`` = ``None``
-     - (String) Fixed key returned by key manager, specified in hex
+     - (String) Fixed key returned by key manager, specified in hex.
+
+       Possible values:
+
+       * Empty string or a key in hex value

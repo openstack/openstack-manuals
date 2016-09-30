@@ -18,5 +18,5 @@ written by the ``nova-scheduler`` service, although all services must
 be able to update entries in the database.
 
 In either case, use the configuration option settings documented in
-the table :ref:`nova-database` to configure the connection string
+:doc:`../common-configurations/database` to configure the connection string
 for the nova database.

@@ -19,17 +19,33 @@
    * - **[vmware]**
      -
    * - ``api_retry_count`` = ``10``
-     - (Integer) The number of times we retry on failures, e.g., socket error, etc.
+     - (Integer) Number of times VMware vCenter server API must be retried on connection failures, e.g. socket error, etc.
    * - ``ca_file`` = ``None``
-     - (String) Specify a CA bundle file to use in verifying the vCenter server certificate.
+     - (String) Specifies the CA bundle file to be used in verifying the vCenter server certificate.
    * - ``cache_prefix`` = ``None``
-     - (String) The prefix for where cached images are stored. This is NOT the full path - just a folder prefix. This should only be used when a datastore cache should be shared between compute nodes. Note: this should only be used when the compute nodes have a shared file system.
+     - (String) This option adds a prefix to the folder where cached images are stored
+
+       This is not the full path - just a folder prefix. This should only be used when a datastore cache is shared between compute nodes.
+
+       Note: This should only be used when the compute nodes are running on same host or they have a shared file system.
+
+       Possible values:
+
+       * Any string representing the cache prefix to the folder
    * - ``cluster_name`` = ``None``
      - (String) Name of a VMware Cluster ComputeResource.
    * - ``console_delay_seconds`` = ``None``
      - (Integer) Set this value if affected by an increased network latency causing repeated characters when typing in a remote console.
    * - ``datastore_regex`` = ``None``
-     - (String) Regex to match the name of a datastore.
+     - (String) Regular expression pattern to match the name of datastore.
+
+       The datastore_regex setting specifies the datastores to use with Compute. For example, datastore_regex="nas.*" selects all the data stores that have a name starting with "nas".
+
+       NOTE: If no regex is given, it just picks the datastore with the most freespace.
+
+       Possible values:
+
+       * Any matching regular expression to a datastore must be given
    * - ``host_ip`` = ``None``
      - (String) Hostname or IP address for connection to VMware vCenter host.
    * - ``host_password`` = ``None``
@@ -39,24 +55,82 @@
    * - ``host_username`` = ``None``
      - (String) Username for connection to VMware vCenter host.
    * - ``insecure`` = ``False``
-     - (Boolean) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "ca_file" is set.
+     - (Boolean) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification.
+
+       Related options:
+
+       * ca_file: This option is ignored if "ca_file" is set.
    * - ``integration_bridge`` = ``None``
-     - (String) This option should be configured only when using the NSX-MH Neutron plugin. This is the name of the integration bridge on the ESXi. This should not be set for any other Neutron plugin. Hence the default value is not set.
+     - (String) This option should be configured only when using the NSX-MH Neutron plugin. This is the name of the integration bridge on the ESXi server or host. This should not be set for any other Neutron plugin. Hence the default value is not set.
+
+       Possible values:
+
+       * Any valid string representing the name of the integration bridge
    * - ``maximum_objects`` = ``100``
-     - (Integer) The maximum number of ObjectContent data objects that should be returned in a single result. A positive value will cause the operation to suspend the retrieval when the count of objects reaches the specified maximum. The server may still limit the count to something less than the configured value. Any remaining objects may be retrieved with additional requests.
+     - (Integer) This option specifies the limit on the maximum number of objects to return in a single result.
+
+       A positive value will cause the operation to suspend the retrieval when the count of objects reaches the specified limit. The server may still limit the count to something less than the configured value. Any remaining objects may be retrieved with additional requests.
    * - ``pbm_default_policy`` = ``None``
-     - (String) The PBM default policy. If pbm_wsdl_location is set and there is no defined storage policy for the specific request then this policy will be used.
+     - (String) This option specifies the default policy to be used.
+
+       If pbm_enabled is set and there is no defined storage policy for the specific request, then this policy will be used.
+
+       Possible values:
+
+       * Any valid storage policy such as VSAN default storage policy
+
+       Related options:
+
+       * pbm_enabled
    * - ``pbm_enabled`` = ``False``
-     - (Boolean) The PBM status.
+     - (Boolean) This option enables or disables storage policy based placement of instances.
+
+       Related options:
+
+       * pbm_default_policy
    * - ``pbm_wsdl_location`` = ``None``
-     - (String) PBM service WSDL file location URL. e.g. file:///opt/SDK/spbm/wsdl/pbmService.wsdl Not setting this will disable storage policy based placement of instances.
+     - (String) This option specifies the PBM service WSDL file location URL.
+
+       Setting this will disable storage policy based placement of instances.
+
+       Possible values:
+
+       * Any valid file path e.g file:///opt/SDK/spbm/wsdl/pbmService.wsdl
    * - ``serial_port_proxy_uri`` = ``None``
-     - (String) Identifies a proxy service that provides network access to the serial_port_service_uri. This option is ignored if serial_port_service_uri is not specified.
+     - (String) Identifies a proxy service that provides network access to the serial_port_service_uri.
+
+       Possible values:
+
+       * Any valid URI
+
+       Related options: This option is ignored if serial_port_service_uri is not specified.
+
+       * serial_port_service_uri
    * - ``serial_port_service_uri`` = ``None``
-     - (String) Identifies the remote system that serial port traffic will be sent to. If this is not set, no serial ports will be added to the created VMs.
+     - (String) Identifies the remote system where the serial port traffic will be sent.
+
+       This option adds a virtual serial port which sends console output to a configurable service URI. At the service URI address there will be virtual serial port concentrator that will collect console logs. If this is not set, no serial ports will be added to the created VMs.
+
+       Possible values:
+
+       * Any valid URI
    * - ``task_poll_interval`` = ``0.5``
-     - (Floating point) The interval used for polling of remote tasks.
+     - (Floating point) Time interval in seconds to poll remote tasks invoked on VMware VC server.
    * - ``use_linked_clone`` = ``True``
-     - (Boolean) Whether to use linked clone
+     - (Boolean) This option enables/disables the use of linked clone.
+
+       The ESX hypervisor requires a copy of the VMDK file in order to boot up a virtual machine. The compute driver must download the VMDK via HTTP from the OpenStack Image service to a datastore that is visible to the hypervisor and cache it. Subsequent virtual machines that need the VMDK use the cached version and don't have to copy the file again from the OpenStack Image service.
+
+       If set to false, even with a cached VMDK, there is still a copy operation from the cache location to the hypervisor file directory in the shared datastore. If set to true, the above copy operation is avoided as it creates copy of the virtual machine that shares virtual disks with its parent VM.
    * - ``wsdl_location`` = ``None``
-     - (String) Optional VIM Service WSDL Location e.g http://<server>/vimService.wsdl. Optional over-ride to default location for bug work-arounds
+     - (String) This option specifies VIM Service WSDL Location
+
+       If vSphere API versions 5.1 and later is being used, this section can be ignored. If version is less than 5.1, WSDL files must be hosted locally and their location must be specified in the above section.
+
+       Optional over-ride to default location for bug work-arounds.
+
+       Possible values:
+
+       * http://<server>/vimService.wsdl
+
+       * file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl

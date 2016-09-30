@@ -18,11 +18,23 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``fake_call`` = ``False``
-     - (Boolean) If True, skip using the queue and make local calls
    * - ``fake_network`` = ``False``
-     - (Boolean) If passed, use fake network devices and addresses
+     - (Boolean) This option is used mainly in testing to avoid calls to the underlying network utilities.
    * - ``monkey_patch`` = ``False``
-     - (Boolean) Whether to apply monkey patching
+     - (Boolean) Determine if monkey patching should be applied.
+
+       Related options:
+
+        * ``monkey_patch_modules``: This must have values set for this option to have any effect
    * - ``monkey_patch_modules`` = ``nova.compute.api:nova.notifications.notify_decorator``
-     - (List) List of modules/decorators to monkey patch
+     - (List) List of modules/decorators to monkey patch.
+
+       This option allows you to patch a decorator for all functions in specified modules.
+
+       Possible values:
+
+        * nova.compute.api:nova.notifications.notify_decorator * nova.api.ec2.cloud:nova.notifications.notify_decorator * [...]
+
+       Related options:
+
+        * ``monkey_patch``: This must be set to ``True`` for this option to have any effect

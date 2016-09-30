@@ -18,69 +18,121 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``api_rate_limit`` = ``False``
-     - (Boolean) Whether to use per-user rate limiting for the api. This option is only used by v2 api. Rate limiting is removed from v2.1 api.
    * - ``enable_new_services`` = ``True``
-     - (Boolean) Services to be added to the available pool on create
+     - (Boolean) Enable new services on this host automatically.
+
+       When a new service (for example "nova-compute") starts up, it gets registered in the database as an enabled service. Sometimes it can be useful to register new services in disabled state and then enabled them at a later point in time. This option can set this behavior for all services per host.
+
+       Possible values:
+
+       * ``True``: Each new service is enabled as soon as it registers itself.
+
+       * ``False``: Services must be enabled via a REST API call or with the CLI with ``nova service-enable <hostname> <binary>``, otherwise they are not ready to use.
    * - ``enabled_apis`` = ``osapi_compute, metadata``
      - (List) A list of APIs to enable by default
    * - ``enabled_ssl_apis`` =
      - (List) A list of APIs with enabled SSL
    * - ``instance_name_template`` = ``instance-%08x``
-     - (String) Template string to be used to generate instance names
+     - (String) Template string to be used to generate instance names.
+
+       This template controls the creation of the database name of an instance. This is *not* the display name you enter when creating an instance (via Horizon or CLI). For a new deployment it is advisable to change the default value (which uses the database autoincrement) to another value which makes use of the attributes of an instance, like ``instance-%(uuid)s``. If you already have instances in your deployment when you change this, your deployment will break.
+
+       Possible values:
+
+       * A string which either uses the instance database ID (like the default)
+
+       * A string with a list of named database columns, for example ``%(id)d`` or ``%(uuid)s`` or ``%(hostname)s``.
+
+       Related options:
+
+       * not to be confused with: ``multi_instance_display_name_template``
    * - ``multi_instance_display_name_template`` = ``%(name)s-%(count)d``
-     - (String) When creating multiple instances with a single request using the os-multiple-create API extension, this template will be used to build the display name for each instance. The benefit is that the instances end up with different hostnames. To restore legacy behavior of every instance having the same name, set this option to "%(name)s". Valid keys for the template are: name, uuid, count.
+     - (String) When creating multiple instances with a single request using the os-multiple-create API extension, this template will be used to build the display name for each instance. The benefit is that the instances end up with different hostnames. Example display names when creating two VM's: name-1, name-2.
+
+       Possible values:
+
+       * Valid keys for the template are: name, uuid, count.
    * - ``non_inheritable_image_properties`` = ``cache_in_nova, bittorrent``
-     - (List) These are image properties which a snapshot should not inherit from an instance
+     - (List) Image properties that should not be inherited from the instance when taking a snapshot.
+
+       This option gives an opportunity to select which image-properties should not be inherited by newly created snapshots.
+
+       Possible values:
+
+       * A list whose item is an image property. Usually only the image properties that are only needed by base images can be included here, since the snapshots that are created from the base images doesn't need them.
+
+       * Default list: ['cache_in_nova', 'bittorrent']
    * - ``null_kernel`` = ``nokernel``
-     - (String) Kernel image that indicates not to use a kernel, but to use a raw disk image instead
-   * - ``osapi_compute_ext_list`` =
-     - (List) DEPRECATED: Specify list of extensions to load when using osapi_compute_extension option with nova.api.openstack.compute.legacy_v2.contrib.select_extensions This option will be removed in the near future. After that point you have to run all of the API.
-   * - ``osapi_compute_extension`` = ``['nova.api.openstack.compute.legacy_v2.contrib.standard_extensions']``
-     - (Multi-valued) DEPRECATED: osapi compute extension to load. This option will be removed in the near future. After that point you have to run all of the API.
+     - (String) This option is used to decide when an image should have no external ramdisk or kernel. By default this is set to 'nokernel', so when an image is booted with the property 'kernel_id' with the value 'nokernel', Nova assumes the image doesn't require an external kernel and ramdisk.
    * - ``osapi_compute_link_prefix`` = ``None``
-     - (String) Base URL that will be presented to users in links to the OpenStack Compute API
+     - (String) This string is prepended to the normal URL that is returned in links to the OpenStack Compute API. If it is empty (the default), the URLs are returned unchanged.
+
+       Possible values:
+
+       * Any string, including an empty string (the default).
    * - ``osapi_compute_listen`` = ``0.0.0.0``
      - (String) The IP address on which the OpenStack API will listen.
    * - ``osapi_compute_listen_port`` = ``8774``
-     - (Integer) The port on which the OpenStack API will listen.
+     - (Port number) The port on which the OpenStack API will listen.
    * - ``osapi_compute_workers`` = ``None``
      - (Integer) Number of workers for OpenStack API service. The default will be the number of CPUs available.
    * - ``osapi_hide_server_address_states`` = ``building``
-     - (List) List of instance states that should hide network info
+     - (List) This option is a list of all instance states for which network address information should not be returned from the API.
+
+       Possible values:
+
+        A list of strings, where each string is a valid VM state, as defined in nova/compute/vm_states.py. As of the Newton release, they are:
+
+       * "active"
+
+       * "building"
+
+       * "paused"
+
+       * "suspended"
+
+       * "stopped"
+
+       * "rescued"
+
+       * "resized"
+
+       * "soft-delete"
+
+       * "deleted"
+
+       * "error"
+
+       * "shelved"
+
+       * "shelved_offloaded"
    * - ``servicegroup_driver`` = ``db``
-     - (String) The driver for servicegroup service.
+     - (String) This option specifies the driver to be used for the servicegroup service.
+
+       ServiceGroup API in nova enables checking status of a compute node. When a compute worker running the nova-compute daemon starts, it calls the join API to join the compute group. Services like nova scheduler can query the ServiceGroup API to check if a node is alive. Internally, the ServiceGroup client driver automatically updates the compute worker status. There are multiple backend implementations for this service: Database ServiceGroup driver and Memcache ServiceGroup driver.
+
+       Possible Values:
+
+        * db : Database ServiceGroup driver * mc : Memcache ServiceGroup driver
+
+       Related Options:
+
+        * service_down_time (maximum time since last check-in for up service)
    * - ``snapshot_name_template`` = ``snapshot-%s``
-     - (String) Template string to be used to generate snapshot names
+     - (String) DEPRECATED: Template string to be used to generate snapshot names This is not used anymore and will be removed in the O release.
    * - ``use_forwarded_for`` = ``False``
-     - (Boolean) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.
+     - (Boolean) When True, the 'X-Forwarded-For' header is treated as the canonical remote address. When False (the default), the 'remote_address' header is used.
+
+       You should only enable this if you have an HTML sanitizing proxy.
    * - **[oslo_middleware]**
      -
+   * - ``enable_proxy_headers_parsing`` = ``False``
+     - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
+   * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
    * - **[oslo_versionedobjects]**
      -
    * - ``fatal_exception_format_errors`` = ``False``
      - (Boolean) Make exception message format errors fatal
-   * - **[service_auth]**
-     -
-   * - ``admin_password`` = ``password``
-     - (String) The service admin password
-   * - ``admin_project_domain`` = ``admin``
-     - (String) The admin project domain name
-   * - ``admin_tenant_name`` = ``admin``
-     - (String) The service admin tenant name
-   * - ``admin_user`` = ``admin``
-     - (String) The service admin user name
-   * - ``admin_user_domain`` = ``admin``
-     - (String) The admin user domain name
-   * - ``auth_url`` = ``http://127.0.0.1:5000/v2.0``
-     - (String) Authentication endpoint
-   * - ``auth_version`` = ``2``
-     - (String) The auth version used to authenticate
-   * - ``endpoint_type`` = ``public``
-     - (String) The endpoint_type to be used
-   * - ``region`` = ``RegionOne``
-     - (String) The deployment region
-   * - ``service_name`` = ``lbaas``
-     - (String) The name of the service

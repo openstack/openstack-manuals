@@ -20,12 +20,28 @@
      -
    * - ``block_device_allocate_retries`` = ``60``
      - (Integer) Number of times to retry block device allocation on failures. Starting with Liberty, Cinder can use image volume cache. This may help with block device allocation performance. Look at the cinder image_volume_cache_enabled configuration option.
+
+       Possible values:
+
+       * 60 (default)
+
+       * If value is 0, then one attempt is made.
+
+       * Any negative value is treated as 0.
+
+       * For any value > 0, total attempts are (value + 1)
    * - ``block_device_allocate_retries_interval`` = ``3``
      - (Integer) Waiting time interval (seconds) between block device allocation retries on failures
    * - ``my_block_storage_ip`` = ``$my_ip``
-     - (String) Block storage IP address of this host
-   * - ``volume_api_class`` = ``nova.volume.cinder.API``
-     - (String) DEPRECATED: The full class name of the volume API class to use
+     - (String) The IP address which is used to connect to the block storage network.
+
+       Possible values:
+
+       * String with valid IP address. Default is IP address of this host.
+
+       Related options:
+
+       * my_ip - if my_block_storage_ip is not set, then my_ip value is used.
    * - ``volume_usage_poll_interval`` = ``0``
      - (Integer) Interval in seconds for gathering volume usages
    * - **[cinder]**
@@ -33,21 +49,47 @@
    * - ``cafile`` = ``None``
      - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``catalog_info`` = ``volumev2:cinderv2:publicURL``
-     - (String) Info to match when looking for cinder in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type>
+     - (String) Info to match when looking for cinder in the service catalog.
+
+       Possible values:
+
+       * Format is separated values of the form: <service_type>:<service_name>:<endpoint_type>
+
+       Related options:
+
+       * endpoint_template - Setting this option will override catalog_info
    * - ``certfile`` = ``None``
      - (String) PEM encoded client certificate cert file
    * - ``cross_az_attach`` = ``True``
-     - (Boolean) Allow attach between instance and volume in different availability zones. If False, volumes attached to an instance must be in the same availability zone in Cinder as the instance availability zone in Nova. This also means care should be taken when booting an instance from a volume where source is not "volume" because Nova will attempt to create a volume using the same availability zone as what is assigned to the instance. If that AZ is not in Cinder (or allow_availability_zone_fallback=False in cinder.conf), the volume create request will fail and the instance will fail the build request.
+     - (Boolean) Allow attach between instance and volume in different availability zones.
+
+       If False, volumes attached to an instance must be in the same availability zone in Cinder as the instance availability zone in Nova. This also means care should be taken when booting an instance from a volume where source is not "volume" because Nova will attempt to create a volume using the same availability zone as what is assigned to the instance. If that AZ is not in Cinder (or allow_availability_zone_fallback=False in cinder.conf), the volume create request will fail and the instance will fail the build request. By default there is no availability zone restriction on volume attach.
    * - ``endpoint_template`` = ``None``
-     - (String) Override service catalog lookup with template for cinder endpoint e.g. http://localhost:8776/v1/%(project_id)s
+     - (String) If this option is set then it will override service catalog lookup with this template for cinder endpoint
+
+       Possible values:
+
+       * URL for cinder endpoint API e.g. http://localhost:8776/v1/%(project_id)s
+
+       Related options:
+
+       * catalog_info - If endpoint_template is not set, catalog_info will be used.
    * - ``http_retries`` = ``3``
-     - (Integer) Number of cinderclient retries on failed http calls
+     - (Integer) Number of times cinderclient should retry on any failed http call. 0 means connection is attempted only once. Setting it to any positive integer means that on failure connection is retried that many times e.g. setting it to 3 means total attempts to connect will be 4.
+
+       Possible values:
+
+       * Any integer value. 0 means connection is attempted only once
    * - ``insecure`` = ``False``
      - (Boolean) Verify HTTPS connections.
    * - ``keyfile`` = ``None``
      - (String) PEM encoded client certificate key file
    * - ``os_region_name`` = ``None``
-     - (String) Region name of this node
+     - (String) Region name of this node. This is used when picking the URL in the service catalog.
+
+       Possible values:
+
+       * Any string representing region name
    * - ``timeout`` = ``None``
      - (Integer) Timeout value for http requests
    * - **[hyperv]**
@@ -55,9 +97,31 @@
    * - ``force_volumeutils_v1`` = ``False``
      - (Boolean) DEPRECATED: Force V1 volume utility class
    * - ``volume_attach_retry_count`` = ``10``
-     - (Integer) The number of times to retry to attach a volume
+     - (Integer) Volume attach retry count
+
+       The number of times to retry to attach a volume. This option is used to avoid incorrectly returned no data when the system is under load. Volume attachment is retried until success or the given retry count is reached. To prepare the Hyper-V node to be able to attach to volumes provided by cinder you must first make sure the Windows iSCSI initiator service is running and started automatically.
+
+       Possible values:
+
+       * Positive integer values (Default: 10).
+
+       Related options:
+
+       * Time interval between attachment attempts is declared with volume_attach_retry_interval option.
    * - ``volume_attach_retry_interval`` = ``5``
-     - (Integer) Interval between volume attachment attempts, in seconds
+     - (Integer) Volume attach retry interval
+
+       Interval between volume attachment attempts, in seconds.
+
+       Possible values:
+
+       * Time in seconds (Default: 5).
+
+       Related options:
+
+       * This options is meaningful when volume_attach_retry_count is greater than 1.
+
+       * The retry loop runs with volume_attach_retry_count and volume_attach_retry_interval configuration options.
    * - **[libvirt]**
      -
    * - ``glusterfs_mount_point_base`` = ``$state_path/mnt``
@@ -89,4 +153,4 @@
    * - **[xenserver]**
      -
    * - ``block_device_creation_timeout`` = ``10``
-     - (Integer) Time to wait for a block device to be created
+     - (Integer) Time in secs to wait for a block device to be created

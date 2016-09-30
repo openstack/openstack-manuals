@@ -15,9 +15,8 @@ In practice
 ~~~~~~~~~~~
 
 A common use case is to enable debug logging after a failure. Use the mutable
-config option called 'debug' (see :ref:`nova-logging`) to do this (providing
-``log_config_append`` has not been set). An admin user may perform the
-following steps:
+config option called 'debug' to do this (providing ``log_config_append``
+has not been set). An admin user may perform the following steps:
 
 #. Log onto the compute node.
 #. Edit the config file (EG ``nova.conf``) and change 'debug' to ``True``.

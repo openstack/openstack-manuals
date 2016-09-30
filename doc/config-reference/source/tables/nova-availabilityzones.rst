@@ -19,8 +19,26 @@
    * - **[DEFAULT]**
      -
    * - ``default_availability_zone`` = ``nova``
-     - (String) Default compute node availability_zone
+     - (String) Default compute node availability_zone.
+
+       This option determines the availability zone to be used when it is not specified in the VM creation request. If this option is not set, the default availability zone 'nova' is used.
+
+       Possible values:
+
+        * Any string representing an availability zone name * 'nova' is the default value
    * - ``default_schedule_zone`` = ``None``
-     - (String) Availability zone to use when user doesn't specify one
+     - (String) Availability zone to use when user doesn't specify one.
+
+       This option is used by the scheduler to determine which availability zone to place a new VM instance into if the user did not specify one at the time of VM boot request.
+
+       Possible values:
+
+       * Any string representing an availability zone name
+
+       * Default value is None.
    * - ``internal_service_availability_zone`` = ``internal``
-     - (String) The availability_zone to show internal services under
+     - (String) This option specifies the name of the availability zone for the internal services. Services like nova-scheduler, nova-network, nova-conductor are internal services. These services will appear in their own internal availability_zone.
+
+       Possible values:
+
+        * Any string representing an availability zone name * 'internal' is the default value

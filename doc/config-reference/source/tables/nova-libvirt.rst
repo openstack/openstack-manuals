@@ -24,22 +24,78 @@
      - (Integer) Unused unresized base images younger than this will not be removed
    * - **[libvirt]**
      -
-   * - ``block_migration_flag`` = ``VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED, VIR_MIGRATE_NON_SHARED_INC``
-     - (String) DEPRECATED: Migration flags to be set for block migration The correct block migration flags can be inferred from the new live_migration_tunnelled config option. block_migration_flag will be removed to avoid potential misconfiguration.
    * - ``checksum_base_images`` = ``False``
-     - (Boolean) Write a checksum for files in _base to disk
+     - (Boolean) DEPRECATED: Write a checksum for files in _base to disk The image cache no longer periodically calculates checksums of stored images. Data integrity can be checked at the block or filesystem level.
    * - ``checksum_interval_seconds`` = ``3600``
-     - (Integer) How frequently to checksum base images
+     - (Integer) DEPRECATED: How frequently to checksum base images The image cache no longer periodically calculates checksums of stored images. Data integrity can be checked at the block or filesystem level.
    * - ``connection_uri`` =
-     - (String) Override the default libvirt URI (which is dependent on virt_type)
+     - (String) Overrides the default libvirt URI of the chosen virtualization type.
+
+       If set, Nova will use this URI to connect to libvirt.
+
+       Possible values:
+
+       * An URI like ``qemu:///system`` or ``xen+ssh://oirase/`` for example. This is only necessary if the URI differs to the commonly known URIs for the chosen virtualization type.
+
+       Related options:
+
+       * ``virt_type``: Influences what is used as default value here.
    * - ``cpu_mode`` = ``None``
-     - (String) Set to "host-model" to clone the host CPU feature flags; to "host-passthrough" to use the host CPU model exactly; to "custom" to use a named CPU model; to "none" to not set any CPU model. If virt_type="kvm|qemu", it will default to "host-model", otherwise it will default to "none"
+     - (String) Is used to set the CPU mode an instance should have.
+
+       If virt_type="kvm|qemu", it will default to "host-model", otherwise it will default to "none".
+
+       Possible values:
+
+       * ``host-model``: Clones the host CPU feature flags.
+
+       * ``host-passthrough``: Use the host CPU model exactly;
+
+       * ``custom``: Use a named CPU model;
+
+       * ``none``: Not set any CPU model.
+
+       Related options:
+
+       * ``cpu_model``: If ``custom`` is used for ``cpu_mode``, set this config option too, otherwise this would result in an error and the instance won't be launched.
    * - ``cpu_model`` = ``None``
-     - (String) Set to a named libvirt CPU model (see names listed in /usr/share/libvirt/cpu_map.xml). Only has effect if cpu_mode="custom" and virt_type="kvm|qemu"
+     - (String) Set the name of the libvirt CPU model the instance should use.
+
+       Possible values:
+
+       * The names listed in /usr/share/libvirt/cpu_map.xml
+
+       Related options:
+
+       * ``cpu_mode``: Don't set this when ``cpu_mode`` is NOT set to ``custom``. This would result in an error and the instance won't be launched.
+
+       * ``virt_type``: Only the virtualization types ``kvm`` and ``qemu`` use this.
    * - ``disk_cachemodes`` =
      - (List) Specific cachemodes to use for different disk types e.g: file=directsync,block=none
    * - ``disk_prefix`` = ``None``
-     - (String) Override the default disk prefix for the devices attached to a server, which is dependent on virt_type. (valid options are: sd, xvd, uvd, vd)
+     - (String) Override the default disk prefix for the devices attached to an instance.
+
+       If set, this is used to identify a free disk device name for a bus.
+
+       Possible values:
+
+       * Any prefix which will result in a valid disk device name like 'sda' or 'hda' for example. This is only necessary if the device names differ to the commonly known device name prefixes for a virtualization type such as: sd, xvd, uvd, vd.
+
+       Related options:
+
+       * ``virt_type``: Influences which device type is used, which determines the default disk prefix.
+   * - ``enabled_perf_events`` =
+     - (List) This is a performance event list which could be used as monitor. These events will be passed to libvirt domain xml while creating a new instances. Then event statistics data can be collected from libvirt. The minimum libvirt version is 2.0.0. For more information about `Performance monitoring events`, refer https://libvirt.org/formatdomain.html#elementsPerf .
+
+       * Possible values: A string list. For example: ``enabled_perf_events = cmt, mbml, mbmt``
+
+        The supported events list can be found in https://libvirt.org/html/libvirt-libvirt-domain.html , which you may need to search key words ``VIR_PERF_PARAM_*``
+
+       * Services that use this:
+
+        ``nova-compute``
+
+       * Related options: None
    * - ``gid_maps`` =
      - (List) List of guid targets and ranges.Syntax is guest-gid:host-gid:countMaximum of 5 allowed.
    * - ``hw_disk_discard`` = ``None``
@@ -47,7 +103,7 @@
    * - ``hw_machine_type`` = ``None``
      - (List) For qemu or KVM guests, set this option to specify a default machine type per host architecture. You can find a list of supported machine types in your environment by checking the output of the "virsh capabilities"command. The format of the value for this config option is host-arch=machine-type. For example: x86_64=machinetype1,armv7l=machinetype2
    * - ``image_info_filename_pattern`` = ``$instances_path/$image_cache_subdirectory_name/%(image)s.info``
-     - (String) Allows image information files to be stored in non-standard locations
+     - (String) DEPRECATED: Allows image information files to be stored in non-standard locations Image info files are no longer used by the image cache
    * - ``images_rbd_ceph_conf`` =
      - (String) Path to the ceph configuration file to use
    * - ``images_rbd_pool`` = ``rbd``
@@ -57,31 +113,101 @@
    * - ``images_volume_group`` = ``None``
      - (String) LVM Volume Group that is used for VM images, when you specify images_type=lvm.
    * - ``inject_key`` = ``False``
-     - (Boolean) Inject the ssh public key at boot time
+     - (Boolean) Allow the injection of an SSH key at boot time.
+
+       There is no agent needed within the image to do this. If *libguestfs* is available on the host, it will be used. Otherwise *nbd* is used. The file system of the image will be mounted and the SSH key, which is provided in the REST API call will be injected as SSH key for the root user and appended to the ``authorized_keys`` of that user. The SELinux context will be set if necessary. Be aware that the injection is *not* possible when the instance gets launched from a volume.
+
+       This config option will enable directly modifying the instance disk and does not affect what cloud-init may do using data from config_drive option or the metadata service.
+
+       Related options:
+
+       * ``inject_partition``: That option will decide about the discovery and usage of the file system. It also can disable the injection at all.
    * - ``inject_partition`` = ``-2``
-     - (Integer) The partition to inject to : -2 => disable, -1 => inspect (libguestfs only), 0 => not partitioned, >0 => partition number
+     - (Integer) Determines the way how the file system is chosen to inject data into it.
+
+       *libguestfs* will be used a first solution to inject data. If that's not available on the host, the image will be locally mounted on the host as a fallback solution. If libguestfs is not able to determine the root partition (because there are more or less than one root partition) or cannot mount the file system it will result in an error and the instance won't be boot.
+
+       Possible values:
+
+       * -2 => disable the injection of data.
+
+       * -1 => find the root partition with the file system to mount with libguestfs
+
+       * 0 => The image is not partitioned
+
+       * >0 => The number of the partition to use for the injection
+
+       Related options:
+
+       * ``inject_key``: If this option allows the injection of a SSH key it depends on value greater or equal to -1 for ``inject_partition``.
+
+       * ``inject_password``: If this option allows the injection of an admin password it depends on value greater or equal to -1 for ``inject_partition``.
+
+       * ``guestfs`` You can enable the debug log level of libguestfs with this config option. A more verbose output will help in debugging issues.
+
+       * ``virt_type``: If you use ``lxc`` as virt_type it will be treated as a single partition image
    * - ``inject_password`` = ``False``
-     - (Boolean) Inject the admin password at boot time, without an agent.
+     - (Boolean) Allow the injection of an admin password for instance only at ``create`` and ``rebuild`` process.
+
+       There is no agent needed within the image to do this. If *libguestfs* is available on the host, it will be used. Otherwise *nbd* is used. The file system of the image will be mounted and the admin password, which is provided in the REST API call will be injected as password for the root user. If no root user is available, the instance won't be launched and an error is thrown. Be aware that the injection is *not* possible when the instance gets launched from a volume.
+
+       Possible values:
+
+       * True: Allows the injection.
+
+       * False (default): Disallows the injection. Any via the REST API provided admin password will be silently ignored.
+
+       Related options:
+
+       * ``inject_partition``: That option will decide about the discovery and usage of the file system. It also can disable the injection at all.
    * - ``iscsi_iface`` = ``None``
      - (String) The iSCSI transport iface to use to connect to target in case offload support is desired. Default format is of the form <transport_name>.<hwaddress> where <transport_name> is one of (be2iscsi, bnx2i, cxgb3i, cxgb4i, qla4xxx, ocs) and <hwaddress> is the MAC address of the interface and can be generated via the iscsiadm -m iface command. Do not confuse the iscsi_iface parameter to be provided here with the actual transport name.
-   * - ``iscsi_use_multipath`` = ``False``
-     - (Boolean) Use multipath connection of the iSCSI or FC volume
    * - ``iser_use_multipath`` = ``False``
      - (Boolean) Use multipath connection of the iSER volume
    * - ``mem_stats_period_seconds`` = ``10``
      - (Integer) A number of seconds to memory usage statistics period. Zero or negative value mean to disable memory usage statistics.
    * - ``realtime_scheduler_priority`` = ``1``
      - (Integer) In a realtime host context vCPUs for guest will run in that scheduling priority. Priority depends on the host kernel (usually 1-99)
-   * - ``remove_unused_kernels`` = ``True``
-     - (Boolean) DEPRECATED: Should unused kernel images be removed? This is only safe to enable if all compute nodes have been updated to support this option (running Grizzly or newer level compute). This will be the default behavior in the 13.0.0 release.
    * - ``remove_unused_resized_minimum_age_seconds`` = ``3600``
      - (Integer) Unused resized base images younger than this will not be removed
    * - ``rescue_image_id`` = ``None``
-     - (String) Rescue ami image. This will not be used if an image id is provided by the user.
+     - (String) The ID of the image to boot from to rescue data from a corrupted instance.
+
+       If the rescue REST API operation doesn't provide an ID of an image to use, the image which is referenced by this ID is used. If this option is not set, the image from the instance is used.
+
+       Possible values:
+
+       * An ID of an image or nothing. If it points to an *Amazon Machine Image* (AMI), consider to set the config options ``rescue_kernel_id`` and ``rescue_ramdisk_id`` too. If nothing is set, the image of the instance is used.
+
+       Related options:
+
+       * ``rescue_kernel_id``: If the chosen rescue image allows the separate definition of its kernel disk, the value of this option is used, if specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
+
+       * ``rescue_ramdisk_id``: If the chosen rescue image allows the separate definition of its RAM disk, the value of this option is used if, specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
    * - ``rescue_kernel_id`` = ``None``
-     - (String) Rescue aki image
+     - (String) The ID of the kernel (AKI) image to use with the rescue image.
+
+       If the chosen rescue image allows the separate definition of its kernel disk, the value of this option is used, if specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
+
+       Possible values:
+
+       * An ID of an kernel image or nothing. If nothing is specified, the kernel disk from the instance is used if it was launched with one.
+
+       Related options:
+
+       * ``rescue_image_id``: If that option points to an image in *Amazon*'s AMI/AKI/ARI image format, it's useful to use ``rescue_kernel_id`` too.
    * - ``rescue_ramdisk_id`` = ``None``
-     - (String) Rescue ari image
+     - (String) The ID of the RAM disk (ARI) image to use with the rescue image.
+
+       If the chosen rescue image allows the separate definition of its RAM disk, the value of this option is used, if specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
+
+       Possible values:
+
+       * An ID of a RAM disk image or nothing. If nothing is specified, the RAM disk from the instance is used if it was launched with one.
+
+       Related options:
+
+       * ``rescue_image_id``: If that option points to an image in *Amazon*'s AMI/AKI/ARI image format, it's useful to use ``rescue_ramdisk_id`` too.
    * - ``rng_dev_path`` = ``None``
      - (String) A path to a device that will be used as source of entropy on the host. Permitted options are: /dev/random or /dev/hwrng
    * - ``snapshot_compression`` = ``False``
@@ -97,14 +223,126 @@
    * - ``uid_maps`` =
      - (List) List of uid targets and ranges.Syntax is guest-uid:host-uid:countMaximum of 5 allowed.
    * - ``use_usb_tablet`` = ``True``
-     - (Boolean) Sync virtual and real mouse cursors in Windows VMs
+     - (Boolean) DEPRECATED: Enable a mouse cursor within a graphical VNC or SPICE sessions.
+
+       This will only be taken into account if the VM is fully virtualized and VNC and/or SPICE is enabled. If the node doesn't support a graphical framebuffer, then it is valid to set this to False.
+
+       Related options:
+
+       * ``[vnc]enabled``: If VNC is enabled, ``use_usb_tablet`` will have an effect.
+
+       * ``[spice]enabled`` + ``[spice].agent_enabled``: If SPICE is enabled and the spice agent is disabled, the config value of ``use_usb_tablet`` will have an effect. This option is being replaced by the 'pointer_model' option.
    * - ``use_virtio_for_bridges`` = ``True``
      - (Boolean) Use virtio for bridge interfaces with KVM/QEMU
    * - ``virt_type`` = ``kvm``
-     - (String) Libvirt domain type
+     - (String) Describes the virtualization type (or so called domain type) libvirt should use.
+
+       The choice of this type must match the underlying virtualization strategy you have chosen for this host.
+
+       Possible values:
+
+       * See the predefined set of case-sensitive values.
+
+       Related options:
+
+       * ``connection_uri``: depends on this
+
+       * ``disk_prefix``: depends on this
+
+       * ``cpu_mode``: depends on this
+
+       * ``cpu_model``: depends on this
    * - ``volume_clear`` = ``zero``
      - (String) Method used to wipe old volumes.
    * - ``volume_clear_size`` = ``0``
      - (Integer) Size in MiB to wipe at start of old volumes. 0 => all
+   * - ``volume_use_multipath`` = ``False``
+     - (Boolean) Use multipath connection of the iSCSI or FC volume
+   * - ``vzstorage_cache_path`` = ``None``
+     - (String) Path to the SSD cache file.
+
+       You can attach an SSD drive to a client and configure the drive to store a local cache of frequently accessed data. By having a local cache on a client's SSD drive, you can increase the overall cluster performance by up to 10 and more times. WARNING! There is a lot of SSD models which are not server grade and may loose arbitrary set of data changes on power loss. Such SSDs should not be used in Vstorage and are dangerous as may lead to data corruptions and inconsistencies. Please consult with the manual on which SSD models are known to be safe or verify it using vstorage-hwflush-check(1) utility.
+
+       This option defines the path which should include "%(cluster_name)s" template to separate caches from multiple shares.
+
+       * Services that use this:
+
+        ``nova-compute``
+
+       * Related options:
+
+        vzstorage_mount_opts may include more detailed cache options.
+   * - ``vzstorage_log_path`` = ``/var/log/pstorage/%(cluster_name)s/nova.log.gz``
+     - (String) Path to vzstorage client log.
+
+       This option defines the log of cluster operations, it should include "%(cluster_name)s" template to separate logs from multiple shares.
+
+       * Services that use this:
+
+        ``nova-compute``
+
+       * Related options:
+
+        vzstorage_mount_opts may include more detailed logging options.
+   * - ``vzstorage_mount_group`` = ``qemu``
+     - (String) Mount owner group name.
+
+       This option defines the owner group of Vzstorage cluster mountpoint.
+
+       * Services that use this:
+
+        ``nova-compute``
+
+       * Related options:
+
+        vzstorage_mount_* group of parameters
+   * - ``vzstorage_mount_opts`` =
+     - (List) Extra mount options for pstorage-mount
+
+       For full description of them, see https://static.openvz.org/vz-man/man1/pstorage-mount.1.gz.html Format is a python string representation of arguments list, like: "['-v', '-R', '500']" Shouldn't include -c, -l, -C, -u, -g and -m as those have explicit vzstorage_* options.
+
+       * Services that use this:
+
+        ``nova-compute``
+
+       * Related options:
+
+        All other vzstorage_* options
+   * - ``vzstorage_mount_perms`` = ``0770``
+     - (String) Mount access mode.
+
+       This option defines the access bits of Vzstorage cluster mountpoint, in the format similar to one of chmod(1) utility, like this: 0770. It consists of one to four digits ranging from 0 to 7, with missing lead digits assumed to be 0's.
+
+       * Services that use this:
+
+        ``nova-compute``
+
+       * Related options:
+
+        vzstorage_mount_* group of parameters
+   * - ``vzstorage_mount_point_base`` = ``$state_path/mnt``
+     - (String) Directory where the Virtuozzo Storage clusters are mounted on the compute node.
+
+       This option defines non-standard mountpoint for Vzstorage cluster.
+
+       * Services that use this:
+
+        ``nova-compute``
+
+       * Related options:
+
+        vzstorage_mount_* group of parameters
+   * - ``vzstorage_mount_user`` = ``stack``
+     - (String) Mount owner user name.
+
+       This option defines the owner user of Vzstorage cluster mountpoint.
+
+       * Services that use this:
+
+        ``nova-compute``
+
+       * Related options:
+
+        vzstorage_mount_* group of parameters
    * - ``wait_soft_reboot_seconds`` = ``120``
      - (Integer) Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.
