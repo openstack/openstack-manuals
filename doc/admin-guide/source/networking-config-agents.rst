@@ -451,7 +451,7 @@ correctly using these
       enable_metrics_collection = true
 
       [SECURITYGROUP]
-      firewall_driver = neutron.plugins.hyperv.agent.security_groups_driver.
+      firewall_driver = hyperv.neutron.security_groups_driver.
       HyperVSecurityGroupsDriver
       enable_security_group = true
 
