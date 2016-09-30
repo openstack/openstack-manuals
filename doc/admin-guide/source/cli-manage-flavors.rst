@@ -76,7 +76,7 @@ The default flavors are:
 ============  =========  ===============  ===============
 
 You can create and manage flavors with the
-:command:`nova flavor-*` commands provided by the ``python-novaclient``
+:command:`openstack flavor` commands provided by the ``python-openstackclient``
 package.
 
 Create a flavor
