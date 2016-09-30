@@ -44,11 +44,6 @@ The following operations are supported:
 
 -  Allow share access.
 
-   Note the following limitations:
-
-   -  Only IP access type is supported for NFS.
-   -  Only user access type is supported for CIFS.
-
 -  Deny share access.
 
 -  Create a snapshot.
@@ -126,8 +121,10 @@ for the Unity driver.
     emc_nas_login = <user with administrator privilege>
     emc_nas_password = <password>
     emc_nas_server_container = [SPA|SPB]
-    emc_nas_pool_names = <Comma separated pool names>
-    emc_interface_ports = <Comma separated ports list>
+    emc_nas_server_pool = <pool name>
+    emc_nas_pool_names = <comma separated pool names>
+    emc_interface_ports = <comma separated ports list>
+    driver_handles_share_servers = True
 
 - ``emc_share_backend``
     The plugin name. Set it to `unity` for the Unity driver.
@@ -136,7 +133,10 @@ for the Unity driver.
     The management IP for Unity.
 
 - ``emc_nas_server_container``
-    The SP to be used as share server.
+    The SP to be used as NAS server container.
+
+- ``emc_nas_server_pool``
+    The name of the pool to persist the meta-data of NAS server.
 
 - ``emc_nas_pool_names``
     Comma separated list specifying the name of the pools to be used
@@ -154,6 +154,10 @@ for the Unity driver.
 
     Examples: spa_eth1, spa_*, *
 
+- ``driver_handles_share_servers``
+    Unity driver requires this option to be as ``True``.
+
+
 Restart of :term:`manila-share` service is needed for the configuration
 changes to take effect.
 
@@ -165,14 +169,8 @@ The Unity driver has following restrictions.
 
 - EMC Unity does not support the same IP in different VLANs.
 
-- Only IP access type is supported for NFS.
-
-- Only user access type is supported for CIFS.
-
 - Only Active Directory security service is supported and it is
   required to create CIFS shares.
-
-- Only one security service can be configured for each share network.
 
 
 Driver options
