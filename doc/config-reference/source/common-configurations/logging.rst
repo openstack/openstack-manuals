@@ -1,6 +1,6 @@
-=================
-Configure logging
-=================
+======================
+Logging configurations
+======================
 
 You can configure where the service logs events, the level of logging,
 and log formats.

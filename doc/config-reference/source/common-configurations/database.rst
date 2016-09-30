@@ -1,8 +1,8 @@
-======================
-Database configuration
-======================
+=======================
+Database configurations
+=======================
 
-You can configure OpenStack Compute to use any SQLAlchemy-compatible database.
+You can configure OpenStack services to use any SQLAlchemy-compatible database.
 
 To ensure that the database schema is current, run the following command:
 
