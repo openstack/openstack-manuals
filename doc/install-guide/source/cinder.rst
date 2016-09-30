@@ -9,7 +9,6 @@ Block Storage service
    common/get-started-block-storage.rst
    cinder-controller-install.rst
    cinder-storage-install.rst
-   cinder-backup-install.rst
    cinder-verify.rst
    cinder-next-steps.rst
 
@@ -24,5 +23,4 @@ nodes. Depending upon the drivers used, the volume service can run
 on controller nodes, compute nodes, or standalone storage nodes.
 
 For more information, see the
-`Configuration Reference <http://docs.openstack.org/newton/config-reference/block-storage/volume-drivers.html>`__.
-
+`Configuration Reference <http://docs.openstack.org/newton/config-reference/block-storage/volume-drivers.html>`_.

@@ -24,16 +24,12 @@ Verify operation of the Block Storage service.
 
       $ cinder service-list
 
-      +------------------+------------+------+---------+-------+----------------------------+-----------------+
-      |      Binary      |    Host    | Zone |  Status | State |         Updated_at         | Disabled Reason |
-      +------------------+------------+------+---------+-------+----------------------------+-----------------+
-      | cinder-scheduler | controller | nova | enabled |   up  | 2014-10-18T01:30:54.000000 |       None      |
-      | cinder-volume    | block1@lvm | nova | enabled |   up  | 2014-10-18T01:30:57.000000 |       None      |
-      | cinder-backup    | block1     | nova | enabled |   up  | 2014-10-18T01:30:59.000000 |       None      |
-      +------------------+------------+------+---------+-------+----------------------------+-----------------+
+      +------------------+-------------+------+---------+-------+----------------------------+-----------------+
+      | Binary           | Host        | Zone | Status  | State | Updated_at                 | Disabled Reason |
+      +------------------+-------------+------+---------+-------+----------------------------+-----------------+
+      | cinder-scheduler | hst-os1ctl1 | nova | enabled | up    | 2016-09-30T02:27:41.000000 | -               |
+      | cinder-volume    | block@lvm   | nova | enabled | up    | 2016-09-30T02:27:46.000000 | -               |
+      +------------------+-------------+------+---------+-------+----------------------------+-----------------+
+
 
    .. end
-
-   .. note::
-
-      The ``cinder-backup`` service only appears if you :ref:`cinder-backup-install`.
