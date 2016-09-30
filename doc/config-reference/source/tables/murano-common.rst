@@ -30,8 +30,6 @@
      - (String) Set a file server.
    * - ``home_region`` = ``None``
      - (String) Default region name used to get services endpoints.
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
    * - ``metadata_dir`` = ``./meta``
      - (String) Metadata dir
    * - ``publish_errors`` = ``False``
@@ -44,6 +42,8 @@
      -
    * - ``api_limit_max`` = ``100``
      - (Integer) Maximum number of packages to be returned in a single pagination request
+   * - ``api_workers`` = ``None``
+     - (Integer) Number of API workers
    * - ``cacert`` = ``None``
      - (String) (SSL) Tells Murano to use the specified client certificate file when communicating with Murano API used by Murano engine.
    * - ``cert_file`` = ``None``

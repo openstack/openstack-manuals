@@ -28,6 +28,8 @@
      - (Boolean) Enable model policy enforcer using Congress
    * - ``enable_packages_cache`` = ``True``
      - (Boolean) Enables murano-engine to persist on disk packages downloaded during deployments. The packages would be re-used for consequent deployments.
+   * - ``engine_workers`` = ``None``
+     - (Integer) Number of engine workers
    * - ``load_packages_from`` =
      - (List) List of directories to load local packages from. If not provided, packages will be loaded only API
    * - ``packages_cache`` = ``None``
@@ -36,5 +38,3 @@
      - (String) The service to store murano packages: murano (stands for legacy behavior using murano-api) or glance (stands for glance-glare artifact service)
    * - ``use_trusts`` = ``True``
      - (Boolean) Create resources using trust token rather than user's token
-   * - ``workers`` = ``None``
-     - (Integer) Number of workers

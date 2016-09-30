@@ -24,6 +24,8 @@
      - (String) Host for service broker
    * - ``bind_port`` = ``8083``
      - (String) Port for service broker
+   * - ``packages_service`` = ``murano``
+     - (String) Package service which should be used by service broker
    * - ``project_domain_name`` = ``default``
      - (String) Domain name of the project
    * - ``tenant`` = ``admin``

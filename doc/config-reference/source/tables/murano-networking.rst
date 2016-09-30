@@ -22,6 +22,8 @@
      - (Boolean) This option will create a router when one with "router_name" does not exist
    * - ``default_dns`` =
      - (List) List of default DNS nameservers to be assigned to created Networks
+   * - ``driver`` = ``None``
+     - (String) Network driver to use. Options are neutron or nova.If not provided, the driver will be detected.
    * - ``env_ip_template`` = ``10.0.0.0``
      - (String) Template IP address for generating environment subnet cidrs
    * - ``external_network`` = ``ext-net``

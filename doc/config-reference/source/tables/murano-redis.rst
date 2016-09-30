@@ -18,7 +18,7 @@
      - Description
    * - **[matchmaker_redis]**
      -
-   * - ``check_timeout`` = ``60000``
+   * - ``check_timeout`` = ``20000``
      - (Integer) Time in ms to wait before the transaction is killed.
    * - ``host`` = ``127.0.0.1``
      - (String) DEPRECATED: Host to locate redis. Replaced by [DEFAULT]/transport_url
@@ -32,5 +32,5 @@
      - (List) DEPRECATED: List of Redis Sentinel hosts (fault tolerance mode) e.g. [host:port, host1:port ... ] Replaced by [DEFAULT]/transport_url
    * - ``socket_timeout`` = ``10000``
      - (Integer) Timeout in ms on blocking socket operations
-   * - ``wait_timeout`` = ``5000``
+   * - ``wait_timeout`` = ``2000``
      - (Integer) Time in ms to wait between connection attempts.
