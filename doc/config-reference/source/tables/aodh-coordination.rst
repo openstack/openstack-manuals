@@ -10,7 +10,7 @@
 
 .. _aodh-coordination:
 
-.. list-table:: Description of Coordination configuration options
+.. list-table:: Description of coordination configuration options
    :header-rows: 1
    :class: config-ref-table
 
