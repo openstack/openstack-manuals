@@ -1,8 +1,8 @@
-=======================================
-Configure the Oslo RPC messaging system
-=======================================
+============================
+RPC messaging configurations
+============================
 
-OpenStack projects use :term:`Advanced Message Queuing Protocol (AMQP)`,
+OpenStack services use :term:`Advanced Message Queuing Protocol (AMQP)`,
 an open standard for messaging middleware.
 This messaging middleware enables the OpenStack services that run on
 multiple servers to talk to each other. OpenStack Oslo RPC supports
