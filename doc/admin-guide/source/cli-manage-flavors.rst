@@ -147,8 +147,7 @@ Create a flavor
    ``Disk tuning``, ``Bandwidth I/O``, ``Watchdog behavior``, and
    ``Random-number generator``.
    For information about supporting metadata keys, see
-   `Flavors
-   <http://docs.openstack.org/admin-guide/compute-flavors.html>`__.
+   :ref:`compute-flavors`.
 
    For a list of optional parameters, run this command:
 
