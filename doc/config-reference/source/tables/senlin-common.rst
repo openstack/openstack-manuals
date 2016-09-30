@@ -18,6 +18,8 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``batch_interval`` = ``3``
+     - (Integer) Seconds to pause between scheduling two consecutive batches of node actions.
    * - ``cloud_backend`` = ``openstack``
      - (String) Default cloud backend to use.
    * - ``default_action_timeout`` = ``3600``
@@ -38,35 +40,39 @@
      - (Integer) Number of seconds between lock retries.
    * - ``lock_retry_times`` = ``3``
      - (Integer) Number of times trying to grab a lock.
-   * - ``max_actions_per_batch`` = ``10``
-     - (Integer) Maximum number of actions per batch when operating a cluster.
+   * - ``max_actions_per_batch`` = ``0``
+     - (Integer) Maximum number of node actions that each engine worker can schedule consecutively per batch. 0 means no limit.
    * - ``max_clusters_per_project`` = ``100``
      - (Integer) Maximum number of clusters any one project may have active at one time.
-   * - ``max_events_per_cluster`` = ``3000``
-     - (Integer) Maximum events per cluster. Older events will be deleted when this is reached. Set to 0 for unlimited events per cluster.
-   * - ``max_json_body_size`` = ``1048576``
-     - (Integer) Maximum raw byte size of JSON request body. Should be larger than max_template_size.
    * - ``max_nodes_per_cluster`` = ``1000``
      - (Integer) Maximum nodes allowed per top-level cluster.
    * - ``max_response_size`` = ``524288``
      - (Integer) Maximum raw byte size of data from web response.
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
    * - ``name_unique`` = ``False``
      - (Boolean) Flag to indicate whether to enforce unique names for Senlin objects belonging to the same project.
    * - ``num_engine_workers`` = ``1``
      - (Integer) Number of senlin-engine processes to fork and run.
+   * - ``periodic_fuzzy_delay`` = ``10``
+     - (Integer) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
    * - ``periodic_interval`` = ``60``
      - (Integer) Seconds between running periodic tasks.
-   * - ``periodic_interval_max`` = ``60``
+   * - ``periodic_interval_max`` = ``120``
      - (Integer) Seconds between periodic tasks to be called
    * - ``publish_errors`` = ``False``
      - (Boolean) Enables or disables publication of error events.
    * - ``use_router_proxy`` = ``True``
      - (Boolean) Use ROUTER remote proxy.
+   * - **[health_manager]**
+     -
+   * - ``nova_control_exchange`` = ``nova``
+     - (String) Exchange name for nova notifications
+   * - **[oslo_versionedobjects]**
+     -
+   * - ``fatal_exception_format_errors`` = ``False``
+     - (Boolean) Make exception message format errors fatal
    * - **[webhook]**
      -
-   * - ``host`` = ``localhost``
+   * - ``host`` = ``None``
      - (String) Address for invoking webhooks. It is useful for cases where proxies are used for triggering webhooks. Default to the hostname of the API node.
    * - ``port`` = ``8778``
      - (Port number) The port on which a webhook will be invoked. Useful when service is running behind a proxy.
