@@ -4,7 +4,6 @@ Additional options
 
 These options can also be set in the ``manila.conf`` file.
 
-.. include:: ../tables/manila-auth.rst
 .. include:: ../tables/manila-ca.rst
 .. include:: ../tables/manila-common.rst
 .. include:: ../tables/manila-compute.rst
