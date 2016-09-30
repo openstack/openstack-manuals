@@ -10,7 +10,7 @@
 
 .. _ceilometer-rgw:
 
-.. list-table:: Description of Rados gateway configuration options
+.. list-table:: Description of RADOS gateway configuration options
    :header-rows: 1
    :class: config-ref-table
 
