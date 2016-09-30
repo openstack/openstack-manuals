@@ -10,7 +10,7 @@
 
 .. _glance-http:
 
-.. list-table:: Description of http configuration options
+.. list-table:: Description of HTTP configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -19,28 +19,8 @@
    * - **[glance_store]**
      -
    * - ``http_proxy_information`` = ``{}``
-     - (Dict) The http/https proxy information to be used to connect to the remote server.
-
-       This configuration option specifies the http/https proxy information that should be used to connect to the remote server. The proxy information should be a key value pair of the scheme and proxy, for example, http:10.0.0.1:3128. You can also specify proxies for multiple schemes by separating the key value pairs with a comma, for example, http:10.0.0.1:3128, https:10.0.0.1:1080.
-
-       Possible values: * A comma separated list of scheme:proxy pairs as described above
-
-       Related options: * None
+     - (Dict) The http/https proxy information to be used to connect to the remote server.$sentinal$This configuration option specifies the http/https proxy information that should be used to connect to the remote server. The proxy information should be a key value pair of the scheme and proxy, for example, http:10.0.0.1:3128. You can also specify proxies for multiple schemes by separating the key value pairs with a comma, for example, http:10.0.0.1:3128, https:10.0.0.1:1080.$sentinal$Possible values: * A comma separated list of scheme:proxy pairs as described above$sentinal$Related options: * None
    * - ``https_ca_certificates_file`` = ``None``
-     - (String) Path to the CA bundle file.
-
-       This configuration option enables the operator to use a custom Certificate Authority file to verify the remote server certificate. If this option is set, the ``https_insecure`` option will be ignored and the CA file specified will be used to authenticate the server certificate and establish a secure connection to the server.
-
-       Possible values: * A valid path to a CA file
-
-       Related options: * https_insecure
+     - (String) Path to the CA bundle file.$sentinal$This configuration option enables the operator to use a custom Certificate Authority file to verify the remote server certificate. If this option is set, the ``https_insecure`` option will be ignored and the CA file specified will be used to authenticate the server certificate and establish a secure connection to the server.$sentinal$Possible values: * A valid path to a CA file$sentinal$Related options: * https_insecure
    * - ``https_insecure`` = ``True``
-     - (Boolean) Set verification of the remote server certificate.
-
-       This configuration option takes in a boolean value to determine whether or not to verify the remote server certificate. If set to True, the remote server certificate is not verified. If the option is set to False, then the default CA truststore is used for verification.
-
-       This option is ignored if ``https_ca_certificates_file`` is set. The remote server certificate will then be verified using the file specified using the ``https_ca_certificates_file`` option.
-
-       Possible values: * True * False
-
-       Related options: * https_ca_certificates_file
+     - (Boolean) Set verification of the remote server certificate.$sentinal$This configuration option takes in a boolean value to determine whether or not to verify the remote server certificate. If set to True, the remote server certificate is not verified. If the option is set to False, then the default CA truststore is used for verification.$sentinal$This option is ignored if ``https_ca_certificates_file`` is set. The remote server certificate will then be verified using the file specified using the ``https_ca_certificates_file`` option.$sentinal$Possible values: * True * False$sentinal$Related options: * https_ca_certificates_file

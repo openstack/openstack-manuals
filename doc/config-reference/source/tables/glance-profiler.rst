@@ -18,9 +18,11 @@
      - Description
    * - **[profiler]**
      -
+   * - ``connection_string`` = ``messaging://``
+     - (String) Connection string for a notifier backend. Default value is messaging:// which sets the notifier to oslo_messaging.$sentinal$Examples of possible values:$sentinal$* messaging://: use oslo_messaging driver for sending notifications.
    * - ``enabled`` = ``False``
-     - (Boolean) If False fully disable profiling feature.
+     - (Boolean) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature).$sentinal$Possible values:$sentinal$* True: Enables the feature$sentinal$* False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.
    * - ``hmac_keys`` = ``SECRET_KEY``
-     - (String) Secret key to use to sign Glance API and Glance Registry services tracing messages.
+     - (String) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project.$sentinal$Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
    * - ``trace_sqlalchemy`` = ``False``
-     - (Boolean) If False doesn't trace SQL requests.
+     - (Boolean) Enables SQL requests profiling in services. Default value is False (SQL requests won't be traced).$sentinal$Possible values:$sentinal$* True: Enables SQL requests profiling. Each SQL query will be part of the trace and can the be analyzed by how much time was spent for that.$sentinal$* False: Disables SQL requests profiling. The spent time is only shown on a higher level of operations. Single SQL queries cannot be analyzed this way.

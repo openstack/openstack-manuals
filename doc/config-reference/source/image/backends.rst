@@ -58,7 +58,7 @@ options to ``vsphere``, as shown in this code sample:
 
    [glance_store]
    # List of stores enabled. Valid stores are: cinder, file, http, rbd,
-   # sheepdog, swift, s3, vsphere (list value)
+   # sheepdog, swift, vsphere (list value)
    stores = file,http,vsphere
    # Which back end scheme should Glance use by default is not specified
    # in a request to add a new image to Glance? Known schemes are determined
