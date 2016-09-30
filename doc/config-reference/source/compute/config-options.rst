@@ -11,6 +11,7 @@ OpenStack Compute service, run
 .. include:: ../tables/nova-availabilityzones.rst
 .. include:: ../tables/nova-barbican.rst
 .. include:: ../tables/nova-cells.rst
+.. include:: ../tables/nova-cloudpipe.rst
 .. include:: ../tables/nova-common.rst
 .. include:: ../tables/nova-compute.rst
 .. include:: ../tables/nova-conductor.rst
@@ -24,14 +25,14 @@ OpenStack Compute service, run
 .. include:: ../tables/nova-hypervisor.rst
 .. include:: ../tables/nova-ironic.rst
 .. include:: ../tables/nova-ipv6.rst
-.. include:: ../tables/nova-keymgr.rst
+.. include:: ../tables/nova-key_manager.rst
 .. include:: ../tables/nova-ldap.rst
 .. include:: ../tables/nova-libvirt.rst
 .. include:: ../tables/nova-livemigration.rst
-.. include:: ../tables/nova-logging.rst
 .. include:: ../tables/nova-metadata.rst
 .. include:: ../tables/nova-network.rst
 .. include:: ../tables/nova-neutron.rst
+.. include:: ../tables/nova-osbrick.rst
 .. include:: ../tables/nova-pci.rst
 .. include:: ../tables/nova-periodic.rst
 .. include:: ../tables/nova-policy.rst
@@ -45,7 +46,6 @@ OpenStack Compute service, run
 .. include:: ../tables/nova-testing.rst
 .. include:: ../tables/nova-trustedcomputing.rst
 .. include:: ../tables/nova-upgrade_levels.rst
-.. include:: ../tables/nova-varmour.rst
 .. include:: ../tables/nova-vmware.rst
 .. include:: ../tables/nova-vnc.rst
 .. include:: ../tables/nova-volumes.rst

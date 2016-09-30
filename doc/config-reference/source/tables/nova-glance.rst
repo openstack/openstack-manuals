@@ -19,7 +19,11 @@
    * - **[DEFAULT]**
      -
    * - ``osapi_glance_link_prefix`` = ``None``
-     - (String) Base URL that will be presented to users in links to glance resources
+     - (String) This string is prepended to the normal URL that is returned in links to Glance resources. If it is empty (the default), the URLs are returned unchanged.
+
+       Possible values:
+
+       * Any string, including an empty string (the default).
    * - **[glance]**
      -
    * - ``allowed_direct_url_schemes`` =
@@ -28,17 +32,28 @@
      - (Boolean) Allow to perform insecure SSL (https) requests to glance
    * - ``api_servers`` = ``None``
      - (List) A list of the glance api servers endpoints available to nova. These should be fully qualified urls of the form "scheme://hostname:port[/path]" (i.e. "http://10.0.1.0:9292" or "https://my.glance.server/image")
-   * - ``host`` = ``$my_ip``
-     - (String) DEPRECATED: Glance server hostname or IP address. Use the "api_servers" option instead.
+   * - ``debug`` = ``False``
+     - (Boolean) Enable or disable debug logging with glanceclient.
    * - ``num_retries`` = ``0``
      - (Integer) Number of retries when uploading / downloading an image to / from glance.
-   * - ``port`` = ``9292``
-     - (Integer) DEPRECATED: Glance server port. Use the "api_servers" option instead.
-   * - ``protocol`` = ``http``
-     - (String) DEPRECATED: Protocol to use when connecting to glance. Set to https for SSL. Use the "api_servers" option instead.
+   * - ``use_glance_v1`` = ``False``
+     - (Boolean) DEPRECATED: This flag allows reverting to glance v1 if for some reason glance v2 doesn't work in your environment. This will only exist in Newton, and a fully working Glance v2 will be a hard requirement in Ocata.
+
+       * Possible values:
+
+        True or False
+
+       * Services that use this:
+
+        ``nova-api`` ``nova-compute`` ``nova-conductor``
+
+       * Related options:
+
+        None Glance v1 support will be removed in Ocata
    * - ``verify_glance_signatures`` = ``False``
      - (Boolean) Require Nova to perform signature verification on each image downloaded from Glance.
    * - **[image_file_url]**
      -
    * - ``filesystems`` =
-     - (List) List of file systems that are configured in this file in the image_file_url:<list entry name> sections
+     - (List) DEPRECATED: List of file systems that are configured in this file in the image_file_url:<list entry name> sections The feature to download images from glance via filesystem is not used and will be removed in the future.
+

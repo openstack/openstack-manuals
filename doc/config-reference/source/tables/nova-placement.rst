@@ -8,15 +8,37 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _nova-api_database:
+.. _nova-placement:
 
-.. list-table:: Description of API database configuration options
+.. list-table:: Description of placement configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[api_database]**
+   * - **[placement]**
+     -
+   * - ``auth_section`` = ``None``
+     - (Unknown) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Unknown) Authentication type to load
+   * - ``cafile`` = ``None``
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``certfile`` = ``None``
+     - (String) PEM encoded client certificate cert file
+   * - ``insecure`` = ``False``
+     - (Boolean) Verify HTTPS connections.
+   * - ``keyfile`` = ``None``
+     - (String) PEM encoded client certificate key file
+   * - ``os_region_name`` = ``None``
+     - (String) Region name of this node. This is used when picking the URL in the service catalog.
+
+       Possible values:
+
+       * Any string representing region name
+   * - ``timeout`` = ``None``
+     - (Integer) Timeout value for http requests
+   * - **[placement_database]**
      -
    * - ``connection`` = ``None``
      - (String) No help text available for this option.

@@ -18,25 +18,29 @@
      - Description
    * - **[barbican]**
      -
+   * - ``auth_endpoint`` = ``http://localhost:5000/v3``
+     - (String) Use this endpoint to connect to Keystone
+   * - ``barbican_api_version`` = ``None``
+     - (String) Version of the Barbican API, for example: "v1"
+   * - ``barbican_endpoint`` = ``None``
+     - (String) Use this endpoint to connect to Barbican, for example: "http://localhost:9311/"
    * - ``cafile`` = ``None``
      - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``catalog_info`` = ``key-manager:barbican:public``
-     - (String) Info to match when looking for barbican in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type>
+     - (String) DEPRECATED: Info to match when looking for barbican in the service catalog. Format is: separated values of the form: <service_type>:<service_name>:<endpoint_type> This option have been moved to the Castellan library
    * - ``certfile`` = ``None``
      - (String) PEM encoded client certificate cert file
    * - ``endpoint_template`` = ``None``
-     - (String) Override service catalog lookup with template for barbican endpoint e.g. http://localhost:9311/v1/%(project_id)s
+     - (String) DEPRECATED: Override service catalog lookup with template for barbican endpoint e.g. http://localhost:9311/v1/%(project_id)s This option have been moved to the Castellan library
    * - ``insecure`` = ``False``
      - (Boolean) Verify HTTPS connections.
    * - ``keyfile`` = ``None``
      - (String) PEM encoded client certificate key file
+   * - ``number_of_retries`` = ``60``
+     - (Integer) Number of times to retry poll for key creation completion
    * - ``os_region_name`` = ``None``
-     - (String) Region name of this node
+     - (String) DEPRECATED: Region name of this node This option have been moved to the Castellan library
+   * - ``retry_delay`` = ``1``
+     - (Integer) Number of seconds to wait before retrying poll for key creation completion
    * - ``timeout`` = ``None``
      - (Integer) Timeout value for http requests
-   * - **[certificates]**
-     -
-   * - ``barbican_auth`` = ``barbican_acl_auth``
-     - (String) Name of the Barbican authentication method to use
-   * - ``cert_manager_type`` = ``barbican``
-     - (String) Certificate Manager plugin. Defaults to barbican.

@@ -19,40 +19,156 @@
    * - **[cells]**
      -
    * - ``call_timeout`` = ``60``
-     - (Integer) Call timeout Cell messaging module waits for response(s) to be put into the eventlet queue. This option defines the seconds waited for response from a call to a cell. Possible values: * Time in seconds. Services which consume this: * nova-cells Related options: * None
+     - (Integer) Call timeout
+
+       Cell messaging module waits for response(s) to be put into the eventlet queue. This option defines the seconds waited for response from a call to a cell.
+
+       Possible values:
+
+       * Time in seconds.
    * - ``capabilities`` = ``hypervisor=xenserver;kvm, os=linux;windows``
-     - (List) Cell capabilities List of arbitrary key=value pairs defining capabilities of the current cell to be sent to the parent cells. These capabilities are intended to be used in cells scheduler filters/weighers. Possible values: * key=value pairs list for example; ``hypervisor=xenserver;kvm,os=linux;windows`` Services which consume this: * nova-cells Related options: * None
+     - (List) Cell capabilities
+
+       List of arbitrary key=value pairs defining capabilities of the current cell to be sent to the parent cells. These capabilities are intended to be used in cells scheduler filters/weighers.
+
+       Possible values:
+
+       * key=value pairs list for example; ``hypervisor=xenserver;kvm,os=linux;windows``
    * - ``cell_type`` = ``compute``
-     - (String) Type of cell When cells feature is enabled the hosts in the OpenStack Compute cloud are partitioned into groups. Cells are configured as a tree. The top-level cell's cell_type must be set to ``api``. All other cells are defined as a ``compute cell`` by default. Possible values: * api: Cell type of top-level cell. * compute: Cell type of all child cells. (Default) Services which consume this: * nova-cells Related options: * compute_api_class: This option must be set to cells api driver for the top-level cell (nova.compute.cells_api.ComputeCellsAPI) * quota_driver: Disable quota checking for the child cells. (nova.quota.NoopQuotaDriver)
+     - (String) Type of cell
+
+       When cells feature is enabled the hosts in the OpenStack Compute cloud are partitioned into groups. Cells are configured as a tree. The top-level cell's cell_type must be set to ``api``. All other cells are defined as a ``compute cell`` by default.
+
+       Related options:
+
+       * compute_api_class: This option must be set to cells api driver for the top-level cell (nova.compute.cells_api.ComputeCellsAPI)
+
+       * quota_driver: Disable quota checking for the child cells. (nova.quota.NoopQuotaDriver)
    * - ``cells_config`` = ``None``
-     - (String) Optional cells configuration Configuration file from which to read cells configuration. If given, overrides reading cells from the database. Cells store all inter-cell communication data, including user names and passwords, in the database. Because the cells data is not updated very frequently, use this option to specify a JSON file to store cells data. With this configuration, the database is no longer consulted when reloading the cells data. The file must have columns present in the Cell model (excluding common database fields and the id column). You must specify the queue connection information through a transport_url field, instead of username, password, and so on. The transport_url has the following form: rabbit://USERNAME:PASSWORD@HOSTNAME:PORT/VIRTUAL_HOST Possible values: The scheme can be either qpid or rabbit, the following sample shows this optional configuration: { "parent": { "name": "parent", "api_url": "http://api.example.com:8774", "transport_url": "rabbit://rabbit.example.com", "weight_offset": 0.0, "weight_scale": 1.0, "is_parent": true }, "cell1": { "name": "cell1", "api_url": "http://api.example.com:8774", "transport_url": "rabbit://rabbit1.example.com", "weight_offset": 0.0, "weight_scale": 1.0, "is_parent": false }, "cell2": { "name": "cell2", "api_url": "http://api.example.com:8774", "transport_url": "rabbit://rabbit2.example.com", "weight_offset": 0.0, "weight_scale": 1.0, "is_parent": false } } Services which consume this: * nova-cells Related options: * None
+     - (String) Optional cells configuration
+
+       Configuration file from which to read cells configuration. If given, overrides reading cells from the database.
+
+       Cells store all inter-cell communication data, including user names and passwords, in the database. Because the cells data is not updated very frequently, use this option to specify a JSON file to store cells data. With this configuration, the database is no longer consulted when reloading the cells data. The file must have columns present in the Cell model (excluding common database fields and the id column). You must specify the queue connection information through a transport_url field, instead of username, password, and so on.
+
+       The transport_url has the following form: rabbit://USERNAME:PASSWORD@HOSTNAME:PORT/VIRTUAL_HOST
+
+       Possible values:
+
+       The scheme can be either qpid or rabbit, the following sample shows this optional configuration:
+
+        { "parent": { "name": "parent", "api_url": "http://api.example.com:8774", "transport_url": "rabbit://rabbit.example.com", "weight_offset": 0.0, "weight_scale": 1.0, "is_parent": true }, "cell1": { "name": "cell1", "api_url": "http://api.example.com:8774", "transport_url": "rabbit://rabbit1.example.com", "weight_offset": 0.0, "weight_scale": 1.0, "is_parent": false }, "cell2": { "name": "cell2", "api_url": "http://api.example.com:8774", "transport_url": "rabbit://rabbit2.example.com", "weight_offset": 0.0, "weight_scale": 1.0, "is_parent": false } }
    * - ``db_check_interval`` = ``60``
-     - (Integer) DB check interval Cell state manager updates cell status for all cells from the DB only after this particular interval time is passed. Otherwise cached status are used. If this value is 0 or negative all cell status are updated from the DB whenever a state is needed. Possible values: * Interval time, in seconds. Services which consume this: * nova-cells Related options: * None
+     - (Integer) DB check interval
+
+       Cell state manager updates cell status for all cells from the DB only after this particular interval time is passed. Otherwise cached status are used. If this value is 0 or negative all cell status are updated from the DB whenever a state is needed.
+
+       Possible values:
+
+       * Interval time, in seconds.
    * - ``driver`` = ``nova.cells.rpc_driver.CellsRPCDriver``
-     - (String) Cells communication driver Driver for cell<->cell communication via RPC. This is used to setup the RPC consumers as well as to send a message to another cell. 'nova.cells.rpc_driver.CellsRPCDriver' starts up 2 separate servers for handling inter-cell communication via RPC. Possible values: * 'nova.cells.rpc_driver.CellsRPCDriver' is the default driver * Otherwise it should be the full Python path to the class to be used Services which consume this: * nova-cells Related options: * None
+     - (String) DEPRECATED: Cells communication driver
+
+       Driver for cell<->cell communication via RPC. This is used to setup the RPC consumers as well as to send a message to another cell. 'nova.cells.rpc_driver.CellsRPCDriver' starts up 2 separate servers for handling inter-cell communication via RPC. The only available driver is the RPC driver.
    * - ``enable`` = ``False``
-     - (Boolean) Enable cell functionality When this functionality is enabled, it lets you to scale an OpenStack Compute cloud in a more distributed fashion without having to use complicated technologies like database and message queue clustering. Cells are configured as a tree. The top-level cell should have a host that runs a nova-api service, but no nova-compute services. Each child cell should run all of the typical nova-* services in a regular Compute cloud except for nova-api. You can think of cells as a normal Compute deployment in that each cell has its own database server and message queue broker. Possible values: * True: Enables the feature * False: Disables the feature Services which consume this: * nova-api * nova-cells * nova-compute Related options: * name: A unique cell name must be given when this functionality is enabled. * cell_type: Cell type should be defined for all cells.
+     - (Boolean) Enable cell functionality
+
+       When this functionality is enabled, it lets you to scale an OpenStack Compute cloud in a more distributed fashion without having to use complicated technologies like database and message queue clustering. Cells are configured as a tree. The top-level cell should have a host that runs a nova-api service, but no nova-compute services. Each child cell should run all of the typical nova-* services in a regular Compute cloud except for nova-api. You can think of cells as a normal Compute deployment in that each cell has its own database server and message queue broker.
+
+       Related options:
+
+       * name: A unique cell name must be given when this functionality is enabled.
+
+       * cell_type: Cell type should be defined for all cells.
    * - ``instance_update_num_instances`` = ``1``
-     - (Integer) Instance update num instances On every run of the periodic task, nova cells manager will attempt to sync instance_updated_at_threshold number of instances. When the manager gets the list of instances, it shuffles them so that multiple nova-cells services do not attempt to sync the same instances in lockstep. Possible values: * Positive integer number Services which consume this: * nova-cells Related options: * This value is used with the ``instance_updated_at_threshold`` value in a periodic task run.
+     - (Integer) Instance update num instances
+
+       On every run of the periodic task, nova cells manager will attempt to sync instance_updated_at_threshold number of instances. When the manager gets the list of instances, it shuffles them so that multiple nova-cells services do not attempt to sync the same instances in lockstep.
+
+       Possible values:
+
+       * Positive integer number
+
+       Related options:
+
+       * This value is used with the ``instance_updated_at_threshold`` value in a periodic task run.
    * - ``instance_update_sync_database_limit`` = ``100``
-     - (Integer) Instance update sync database limit Number of instances to pull from the database at one time for a sync. If there are more instances to update the results will be paged through. Possible values: * Number of instances. Services which consume this: * nova-cells Related options: * None
+     - (Integer) Instance update sync database limit
+
+       Number of instances to pull from the database at one time for a sync. If there are more instances to update the results will be paged through.
+
+       Possible values:
+
+       * Number of instances.
    * - ``instance_updated_at_threshold`` = ``3600``
-     - (Integer) Instance updated at threshold Number of seconds after an instance was updated or deleted to continue to update cells. This option lets cells manager to only attempt to sync instances that have been updated recently. i.e., a threshold of 3600 means to only update instances that have modified in the last hour. Possible values: * Threshold in seconds Services which consume this: * nova-cells Related options: * This value is used with the ``instance_update_num_instances`` value in a periodic task run.
-   * - ``manager`` = ``nova.cells.manager.CellsManager``
-     - (String) DEPRECATED: Manager for cells The nova-cells manager class. This class defines RPC methods that the local cell may call. This class is NOT used for messages coming from other cells. That communication is driver-specific. Communication to other cells happens via the nova.cells.messaging module. The MessageRunner from that module will handle routing the message to the correct cell via the communication driver. Most methods below create 'targeted' (where we want to route a message to a specific cell) or 'broadcast' (where we want a message to go to multiple cells) messages. Scheduling requests get passed to the scheduler class. Possible values: * 'nova.cells.manager.CellsManager' is the only possible value for this option as of the Mitaka release Services which consume this: * nova-cells Related options: * None
+     - (Integer) Instance updated at threshold
+
+       Number of seconds after an instance was updated or deleted to continue to update cells. This option lets cells manager to only attempt to sync instances that have been updated recently. i.e., a threshold of 3600 means to only update instances that have modified in the last hour.
+
+       Possible values:
+
+       * Threshold in seconds
+
+       Related options:
+
+       * This value is used with the ``instance_update_num_instances`` value in a periodic task run.
    * - ``max_hop_count`` = ``10``
-     - (Integer) Maximum hop count When processing a targeted message, if the local cell is not the target, a route is defined between neighbouring cells. And the message is processed across the whole routing path. This option defines the maximum hop counts until reaching the target. Possible values: * Positive integer value Services which consume this: * nova-cells Related options: * None
+     - (Integer) Maximum hop count
+
+       When processing a targeted message, if the local cell is not the target, a route is defined between neighbouring cells. And the message is processed across the whole routing path. This option defines the maximum hop counts until reaching the target.
+
+       Possible values:
+
+       * Positive integer value
    * - ``mute_child_interval`` = ``300``
-     - (Integer) Mute child interval Number of seconds after which a lack of capability and capacity update the child cell is to be treated as a mute cell. Then the child cell will be weighed as recommend highly that it be skipped. Possible values: * Time in seconds. Services which consume this: * nova-cells Related options: * None
+     - (Integer) Mute child interval
+
+       Number of seconds after which a lack of capability and capacity update the child cell is to be treated as a mute cell. Then the child cell will be weighed as recommend highly that it be skipped.
+
+       Possible values:
+
+       * Time in seconds.
    * - ``mute_weight_multiplier`` = ``-10000.0``
-     - (Floating point) Mute weight multiplier Multiplier used to weigh mute children. Mute children cells are recommended to be skipped so their weight is multiplied by this negative value. Possible values: * Negative numeric number Services which consume this: * nova-cells Related options: * None
+     - (Floating point) Mute weight multiplier
+
+       Multiplier used to weigh mute children. Mute children cells are recommended to be skipped so their weight is multiplied by this negative value.
+
+       Possible values:
+
+       * Negative numeric number
    * - ``name`` = ``nova``
-     - (String) Name of the current cell This value must be unique for each cell. Name of a cell is used as its id, leaving this option unset or setting the same name for two or more cells may cause unexpected behaviour. Possible values: * Unique name string Services which consume this: * nova-cells Related options: * enabled: This option is meaningful only when cells service is enabled
+     - (String) Name of the current cell
+
+       This value must be unique for each cell. Name of a cell is used as its id, leaving this option unset or setting the same name for two or more cells may cause unexpected behaviour.
+
+       Related options:
+
+       * enabled: This option is meaningful only when cells service is enabled
    * - ``offset_weight_multiplier`` = ``1.0``
-     - (Floating point) Offset weight multiplier Multiplier used to weigh offset weigher. Cells with higher weight_offsets in the DB will be preferred. The weight_offset is a property of a cell stored in the database. It can be used by a deployer to have scheduling decisions favor or disfavor cells based on the setting. Possible values: * Numeric multiplier Services which consume this: * nova-cells Related options: * None
+     - (Floating point) Offset weight multiplier
+
+       Multiplier used to weigh offset weigher. Cells with higher weight_offsets in the DB will be preferred. The weight_offset is a property of a cell stored in the database. It can be used by a deployer to have scheduling decisions favor or disfavor cells based on the setting.
+
+       Possible values:
+
+       * Numeric multiplier
    * - ``reserve_percent`` = ``10.0``
-     - (Floating point) Reserve percentage Percentage of cell capacity to hold in reserve, so the minimum amount of free resource is considered to be; min_free = total * (reserve_percent / 100.0) This option affects both memory and disk utilization. The primary purpose of this reserve is to ensure some space is available for users who want to resize their instance to be larger. Note that currently once the capacity expands into this reserve space this option is ignored. Possible values: * Float percentage value Services which consume this: * nova-cells Related options: * None
+     - (Floating point) Reserve percentage
+
+       Percentage of cell capacity to hold in reserve, so the minimum amount of free resource is considered to be; min_free = total * (reserve_percent / 100.0) This option affects both memory and disk utilization. The primary purpose of this reserve is to ensure some space is available for users who want to resize their instance to be larger. Note that currently once the capacity expands into this reserve space this option is ignored.
    * - ``rpc_driver_queue_base`` = ``cells.intercell``
-     - (String) RPC driver queue base When sending a message to another cell by JSON-ifying the message and making an RPC cast to 'process_message', a base queue is used. This option defines the base queue name to be used when communicating between cells. Various topics by message type will be appended to this. Possible values: * The base queue name to be used when communicating between cells. Services which consume this: * nova-cells Related options: * None
+     - (String) RPC driver queue base
+
+       When sending a message to another cell by JSON-ifying the message and making an RPC cast to 'process_message', a base queue is used. This option defines the base queue name to be used when communicating between cells. Various topics by message type will be appended to this.
+
+       Possible values:
+
+       * The base queue name to be used when communicating between cells.
    * - ``topic`` = ``cells``
-     - (String) Topic This is the message queue topic that cells nodes listen on. It is used when the cells service is started up to configure the queue, and whenever an RPC call to the scheduler is made. Possible values: * cells: This is the recommended and the default value. Services which consume this: * nova-cells Related options: * None
+     - (String) Topic
+
+       This is the message queue topic that cells nodes listen on. It is used when the cells service is started up to configure the queue, and whenever an RPC call to the scheduler is made.
+
+       Possible values:
+
+       * cells: This is the recommended and the default value.

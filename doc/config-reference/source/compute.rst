@@ -31,11 +31,8 @@ A list of config options based on different topics can be found below:
 
    compute/nova-conf.rst
    compute/api.rst
-   compute/logging.rst
-   compute/authentication-authorization.rst
    compute/resize.rst
    compute/database-connections.rst
-   compute/rpc.rst
    compute/fibre-channel.rst
    compute/iscsi-offload.rst
    compute/hypervisors.rst

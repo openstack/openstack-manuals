@@ -19,15 +19,15 @@
    * - **[spice]**
      -
    * - ``agent_enabled`` = ``True``
-     - (Boolean) Enable spice guest agent support
+     - (Boolean) Enable the spice guest agent support.
    * - ``enabled`` = ``False``
-     - (Boolean) Enable spice related features
+     - (Boolean) Enable spice related features.
    * - ``html5proxy_base_url`` = ``http://127.0.0.1:6082/spice_auto.html``
      - (String) Location of spice HTML5 console proxy, in the form "http://127.0.0.1:6082/spice_auto.html"
    * - ``html5proxy_host`` = ``0.0.0.0``
      - (String) Host on which to listen for incoming requests
    * - ``html5proxy_port`` = ``6082``
-     - (Integer) Port on which to listen for incoming requests
+     - (Port number) Port on which to listen for incoming requests
    * - ``keymap`` = ``en-us``
      - (String) Keymap for spice
    * - ``server_listen`` = ``127.0.0.1``

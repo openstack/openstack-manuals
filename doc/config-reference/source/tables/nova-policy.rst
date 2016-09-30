@@ -19,22 +19,54 @@
    * - **[DEFAULT]**
      -
    * - ``allow_instance_snapshots`` = ``True``
-     - (Boolean) Permit instance snapshot operations.
+     - (Boolean) Operators can turn off the ability for a user to take snapshots of their instances by setting this option to False. When disabled, any attempt to take a snapshot will result in a HTTP 400 response ("Bad Request").
    * - ``allow_resize_to_same_host`` = ``False``
-     - (Boolean) Allow destination machine to match source for resize. Useful when testing in single-host environments.
+     - (Boolean) Allow destination machine to match source for resize. Useful when testing in single-host environments. By default it is not allowed to resize to the same host. Setting this option to true will add the same host to the destination options.
    * - ``max_age`` = ``0``
-     - (Integer) Number of seconds between subsequent usage refreshes. This defaults to 0(off) to avoid additional load but it is useful to turn on to help keep quota usage up to date and reduce the impact of out of sync usage issues. Note that quotas are not updated on a periodic task, they will update on a new reservation if max_age has passed since the last reservation
+     - (Integer) The number of seconds between subsequent usage refreshes. This defaults to 0 (off) to avoid additional load but it is useful to turn on to help keep quota usage up-to-date and reduce the impact of out of sync usage issues. Note that quotas are not updated on a periodic task, they will update on a new reservation if max_age has passed since the last reservation.
+
+       Possible values:
+
+        * 0 (default) or any positive integer representing number of seconds.
    * - ``max_local_block_devices`` = ``3``
-     - (Integer) Maximum number of devices that will result in a local image being created on the hypervisor node. A negative number means unlimited. Setting max_local_block_devices to 0 means that any request that attempts to create a local disk will fail. This option is meant to limit the number of local discs (so root local disc that is the result of --image being used, and any other ephemeral and swap disks). 0 does not mean that images will be automatically converted to volumes and boot instances from volumes - it just means that all requests that attempt to create a local disk will fail.
+     - (Integer) Maximum number of devices that will result in a local image being created on the hypervisor node.
+
+       A negative number means unlimited. Setting max_local_block_devices to 0 means that any request that attempts to create a local disk will fail. This option is meant to limit the number of local discs (so root local disc that is the result of --image being used, and any other ephemeral and swap disks). 0 does not mean that images will be automatically converted to volumes and boot instances from volumes - it just means that all requests that attempt to create a local disk will fail.
+
+       Possible values:
+
+       * 0: Creating a local disk is not allowed.
+
+       * Negative number: Allows unlimited number of local discs.
+
+       * Positive number: Allows only these many number of local discs. (Default value is 3).
    * - ``osapi_compute_unique_server_name_scope`` =
-     - (String) When set, compute API will consider duplicate hostnames invalid within the specified scope, regardless of case. Should be empty, "project" or "global".
+     - (String) Sets the scope of the check for unique instance names.
+
+       The default doesn't check for unique names. If a scope for the name check is set, a launch of a new instance or an update of an existing instance with a duplicate name will result in an ''InstanceExists'' error. The uniqueness is case-insensitive. Setting this option can increase the usability for end users as they don't have to distinguish among instances with the same name by their IDs.
+
+       Possible values:
+
+       * '': An empty value means that no uniqueness check is done and duplicate names are possible.
+
+       * "project": The instance name check is done only for instances within the same project.
+
+       * "global": The instance name check is done for all instances regardless of the project.
    * - ``osapi_max_limit`` = ``1000``
-     - (Integer) The maximum number of items returned in a single response from a collection resource
+     - (Integer) As a query can potentially return many thousands of items, you can limit the maximum number of items in a single response by setting this option.
    * - ``password_length`` = ``12``
-     - (Integer) Length of generated instance admin passwords
+     - (Integer) Length of generated instance admin passwords.
    * - ``reservation_expire`` = ``86400``
-     - (Integer) Number of seconds until a reservation expires
+     - (Integer) The number of seconds until a reservation expires. It represents the time period for invalidating quota reservations.
+
+       Possible values:
+
+        * 86400 (default) or any positive integer representing number of seconds.
    * - ``resize_fs_using_block_device`` = ``False``
-     - (Boolean) Attempt to resize the filesystem by accessing the image over a block device. This is done by the host and may not be necessary if the image contains a recent version of cloud-init. Possible mechanisms require the nbd driver (for qcow and raw), or loop (for raw).
+     - (Boolean) If enabled, attempt to resize the filesystem by accessing the image over a block device. This is done by the host and may not be necessary if the image contains a recent version of cloud-init. Possible mechanisms require the nbd driver (for qcow and raw), or loop (for raw).
    * - ``until_refresh`` = ``0``
-     - (Integer) Count of reservations until usage is refreshed. This defaults to 0(off) to avoid additional load but it is useful to turn on to help keep quota usage up to date and reduce the impact of out of sync usage issues.
+     - (Integer) The count of reservations until usage is refreshed. This defaults to 0 (off) to avoid additional load but it is useful to turn on to help keep quota usage up-to-date and reduce the impact of out of sync usage issues.
+
+       Possible values:
+
+        * 0 (default) or any positive integer.

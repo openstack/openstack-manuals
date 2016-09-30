@@ -18,25 +18,9 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``ca_file`` = ``cacert.pem``
-     - (String) Filename of root CA
-   * - ``ca_path`` = ``$state_path/CA``
-     - (String) Where we keep our root CA
    * - ``cert`` = ``self.pem``
-     - (String) SSL certificate file
+     - (String) Path to SSL certificate file.
    * - ``cert_manager`` = ``nova.cert.manager.CertManager``
      - (String) DEPRECATED: Full class name for the Manager for cert
    * - ``cert_topic`` = ``cert``
-     - (String) Determines the RPC topic that the cert nodes listen on. The default is 'cert', and for most deployments there is no need to ever change it. Possible values: Any string. * Services which consume this: ``nova-cert`` * Related options: None
-   * - ``crl_file`` = ``crl.pem``
-     - (String) Filename of root Certificate Revocation List
-   * - ``key_file`` = ``private/cakey.pem``
-     - (String) Filename of private key
-   * - ``keys_path`` = ``$state_path/keys``
-     - (String) Where we keep our keys
-   * - ``project_cert_subject`` = ``/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=project-ca-%.16s-%s``
-     - (String) Subject for certificate for projects, %s for project, timestamp
-   * - ``use_project_ca`` = ``False``
-     - (Boolean) Should we use a CA for each project?
-   * - ``user_cert_subject`` = ``/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=%.16s-%.16s-%s``
-     - (String) Subject for certificate for users, %s for project, user, timestamp
+     - (String) DEPRECATED: Determines the RPC topic that the cert nodes listen on. For most deployments there is no need to ever change it. Since the nova-cert service is marked for deprecation, the feature to change RPC topic that cert nodes listen may be removed as early as the 15.0.0

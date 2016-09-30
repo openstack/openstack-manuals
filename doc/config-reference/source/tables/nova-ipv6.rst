@@ -19,10 +19,42 @@
    * - **[DEFAULT]**
      -
    * - ``fixed_range_v6`` = ``fd00::/48``
-     - (String) Fixed IPv6 address block
+     - (String) This option determines the fixed IPv6 address block when creating a network.
+
+       Please note that this option is only used when using nova-network instead of Neutron in your deployment.
+
+       Possible values:
+
+        Any valid IPv6 CIDR. The default value is "fd00::/48".
+
+       Related options:
+
+        ``use_neutron``
    * - ``gateway_v6`` = ``None``
-     - (String) Default IPv6 gateway
+     - (String) This is the default IPv6 gateway. It is used only in the testing suite.
+
+       Please note that this option is only used when using nova-network instead of Neutron in your deployment.
+
+       Possible values:
+
+        Any valid IP address.
+
+       Related options:
+
+        ``use_neutron``, ``gateway``
    * - ``ipv6_backend`` = ``rfc2462``
-     - (String) Backend to use for IPv6 generation
+     - (String) Abstracts out IPv6 address generation to pluggable backends.
+
+       nova-network can be put into dual-stack mode, so that it uses both IPv4 and IPv6 addresses. In dual-stack mode, by default, instances acquire IPv6 global unicast addresses with the help of stateless address auto-configuration mechanism.
+
+       Related options:
+
+       * use_neutron: this option only works with nova-network.
+
+       * use_ipv6: this option only works if ipv6 is enabled for nova-network.
    * - ``use_ipv6`` = ``False``
-     - (Boolean) Use IPv6
+     - (Boolean) Assign IPv6 and IPv4 addresses when creating instances.
+
+       Related options:
+
+       * use_neutron: this only works with nova-network.

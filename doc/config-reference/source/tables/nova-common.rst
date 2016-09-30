@@ -19,48 +19,162 @@
    * - **[DEFAULT]**
      -
    * - ``bindir`` = ``/usr/local/bin``
-     - (String) Directory where nova binaries are installed
+     - (String) The directory where the Nova binaries are installed.
+
+       This option is only relevant if the networking capabilities from Nova are used (see services below). Nova's networking capabilities are targeted to be fully replaced by Neutron in the future. It is very unlikely that you need to change this option from its default value.
+
+       Possible values:
+
+       * The full path to a directory.
    * - ``compute_topic`` = ``compute``
-     - (String) The topic compute nodes listen on
+     - (String) This is the message queue topic that the compute service 'listens' on. It is used when the compute service is started up to configure the queue, and whenever an RPC call to the compute service is made.
+
+       * Possible values:
+
+        Any string, but there is almost never any reason to ever change this value from its default of 'compute'.
+
+       * Services that use this:
+
+        ``nova-compute``
+
+       * Related options:
+
+        None
    * - ``console_topic`` = ``console``
-     - (String) The topic console proxy nodes listen on
+     - (String) Represents the message queue topic name used by nova-console service when communicating via the AMQP server. The Nova API uses a message queue to communicate with nova-console to retrieve a console URL for that host.
+
+       Possible values
+
+        * 'console' (default) or any string representing topic exchange name.
    * - ``consoleauth_topic`` = ``consoleauth``
-     - (String) The topic console auth proxy nodes listen on
+     - (String) This option allows you to change the message topic used by nova-consoleauth service when communicating via the AMQP server. Nova Console Authentication server authenticates nova consoles. Users can then access their instances through VNC clients. The Nova API service uses a message queue to communicate with nova-consoleauth to get a VNC console.
+
+       Possible Values:
+
+        * 'consoleauth' (default) or Any string representing topic exchange name.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
    * - ``fatal_exception_format_errors`` = ``False``
-     - (Boolean) Make exception message format errors fatal
+     - (Boolean) DEPRECATED: When set to true, this option enables validation of exception message format.
+
+       This option is used to detect errors in NovaException class when it formats error messages. If True, raise an exception; if False, use the unformatted message. This is only used for internal testing.
    * - ``host`` = ``localhost``
-     - (String) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address
-   * - ``memcached_servers`` = ``None``
-     - (Unknown) DEPRECATED: Memcached servers or None for in process cache. "memcached_servers" opt is deprecated in Mitaka. In Newton release oslo.cache config options should be used as this option will be removed. Please add a [cache] group in your nova.conf file and add "enable" and "memcache_servers" option in this section.
+     - (String) Hostname, FQDN or IP address of this host. Must be valid within AMQP key.
+
+       Possible values:
+
+       * String with hostname, FQDN or IP address. Default is hostname of this host.
    * - ``my_ip`` = ``10.0.0.1``
-     - (String) IP address of this host
+     - (String) The IP address which the host is using to connect to the management network.
+
+       Possible values:
+
+       * String with valid IP address. Default is IPv4 address of this host.
+
+       Related options:
+
+       * metadata_host
+
+       * my_block_storage_ip
+
+       * routing_source_ip
+
+       * vpn_ip
    * - ``notify_api_faults`` = ``False``
-     - (Boolean) If set, send api.fault notifications on caught exceptions in the API service.
+     - (Boolean) If enabled, send api.fault notifications on caught exceptions in the API service.
    * - ``notify_on_state_change`` = ``None``
-     - (String) If set, send compute.instance.update notifications on instance state changes. Valid values are None for no notifications, "vm_state" for notifications on VM state changes, or "vm_and_task_state" for notifications on VM and task state changes.
+     - (String) If set, send compute.instance.update notifications on instance state changes.
+
+       Please refer to https://wiki.openstack.org/wiki/SystemUsageData for additional information on notifications.
+
+       Possible values:
+
+       * None - no notifications
+
+       * "vm_state" - notifications on VM state changes
+
+       * "vm_and_task_state" - notifications on VM and task state changes
    * - ``pybasedir`` = ``/usr/lib/python/site-packages/nova``
-     - (String) Directory where the nova python module is installed
+     - (String) The directory where the Nova python modules are installed.
+
+       This directory is used to store template files for networking and remote console access. It is also the default path for other config options which need to persist Nova internal data. It is very unlikely that you need to change this option from its default value.
+
+       Possible values:
+
+       * The full path to a directory.
+
+       Related options:
+
+       * ``state_path``
    * - ``report_interval`` = ``10``
      - (Integer) Seconds between nodes reporting state to datastore
    * - ``rootwrap_config`` = ``/etc/nova/rootwrap.conf``
-     - (String) Path to the rootwrap configuration file to use for running commands as root
+     - (String) Path to the rootwrap configuration file.
+
+       Goal of the root wrapper is to allow a service-specific unprivileged user to run a number of actions as the root user in the safest manner possible. The configuration file used here must match the one defined in the sudoers entry.
    * - ``service_down_time`` = ``60``
      - (Integer) Maximum time since last check-in for up service
    * - ``state_path`` = ``$pybasedir``
-     - (String) Top-level directory for maintaining nova's state
+     - (String) The top-level directory for maintaining Nova's state.
+
+       This directory is used to store Nova's internal state. It is used by a variety of other config options which derive from this. In some scenarios (for example migrations) it makes sense to use a storage location which is shared between multiple compute hosts (for example via NFS). Unless the option ``instances_path`` gets overwritten, this directory can grow very large.
+
+       Possible values:
+
+       * The full path to a directory. Defaults to value provided in ``pybasedir``.
    * - ``tempdir`` = ``None``
-     - (String) Explicitly specify the temporary working directory
+     - (String) Explicitly specify the temporary working directory.
    * - ``use_rootwrap_daemon`` = ``False``
-     - (Boolean) Start and use a daemon that can run the commands that need to be run with root privileges. This option is usually enabled on nodes that run nova compute processes
+     - (Boolean) Start and use a daemon that can run the commands that need to be run with root privileges. This option is usually enabled on nodes that run nova compute processes.
    * - **[workarounds]**
      -
-   * - ``destroy_after_evacuate`` = ``True``
-     - (Boolean) DEPRECATED: Whether to destroy instances on startup when we suspect they have previously been evacuated. This can result in data loss if undesired. See https://launchpad.net/bugs/1419785
    * - ``disable_libvirt_livesnapshot`` = ``True``
-     - (Boolean) When using libvirt 1.2.2 live snapshots fail intermittently under load. This config option provides a mechanism to enable live snapshot while this is resolved. See https://bugs.launchpad.net/nova/+bug/1334398
+     - (Boolean) Disable live snapshots when using the libvirt driver.
+
+       Live snapshots allow the snapshot of the disk to happen without an interruption to the guest, using coordination with a guest agent to quiesce the filesystem.
+
+       When using libvirt 1.2.2 live snapshots fail intermittently under load (likely related to concurrent libvirt/qemu operations). This config option provides a mechanism to disable live snapshot, in favor of cold snapshot, while this is resolved. Cold snapshot causes an instance outage while the guest is going through the snapshotting process.
+
+       For more information, refer to the bug report:
+
+        https://bugs.launchpad.net/nova/+bug/1334398
+
+       Possible values:
+
+       * True: Live snapshot is disabled when using libvirt
+
+       * False: Live snapshots are always used when snapshotting (as long as there is a new enough libvirt and the backend storage supports it)
    * - ``disable_rootwrap`` = ``False``
-     - (Boolean) This option allows a fallback to sudo for performance reasons. For example see https://bugs.launchpad.net/nova/+bug/1415106
+     - (Boolean) Use sudo instead of rootwrap.
+
+       Allow fallback to sudo for performance reasons.
+
+       For more information, refer to the bug report:
+
+        https://bugs.launchpad.net/nova/+bug/1415106
+
+       Possible values:
+
+       * True: Use sudo instead of rootwrap
+
+       * False: Use rootwrap as usual
+
+       Interdependencies to other options:
+
+       * Any options that affect 'rootwrap' will be ignored.
    * - ``handle_virt_lifecycle_events`` = ``True``
-     - (Boolean) Whether or not to handle events raised from the compute driver's 'emit_event' method. These are lifecycle events raised from compute drivers that implement the method. An example of a lifecycle event is an instance starting or stopping. If the instance is going through task state changes due to an API operation, like resize, the events are ignored. However, this is an advanced feature which allows the hypervisor to signal to the compute service that an unexpected state change has occurred in an instance and the instance can be shutdown automatically - which can inherently race in reboot operations or when the compute service or host is rebooted, either planned or due to an unexpected outage. Care should be taken when using this and sync_power_state_interval is negative since then if any instances are out of sync between the hypervisor and the Nova database they will have to be synchronized manually. See https://bugs.launchpad.net/bugs/1444630
+     - (Boolean) Enable handling of events emitted from compute drivers.
+
+       Many compute drivers emit lifecycle events, which are events that occur when, for example, an instance is starting or stopping. If the instance is going through task state changes due to an API operation, like resize, the events are ignored.
+
+       This is an advanced feature which allows the hypervisor to signal to the compute service that an unexpected state change has occurred in an instance and that the instance can be shutdown automatically. Unfortunately, this can race in some conditions, for example in reboot operations or when the compute service or when host is rebooted (planned or due to an outage). If such races are common, then it is advisable to disable this feature.
+
+       Care should be taken when this feature is disabled and 'sync_power_state_interval' is set to a negative value. In this case, any instances that get out of sync between the hypervisor and the Nova database will have to be synchronized manually.
+
+       For more information, refer to the bug report:
+
+        https://bugs.launchpad.net/bugs/1444630
+
+       Interdependencies to other options:
+
+       * If ``sync_power_state_interval`` is negative and this feature is disabled, then instances that get out of sync between the hypervisor and the Nova database will have to be synchronized manually.
