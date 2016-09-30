@@ -67,9 +67,9 @@ using the Data Movers on the array.
 Pre-configurations on VNX
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Enable Unicode on Data Mover.
+#. Enable unicode on Data Mover.
 
-   The VNX driver requires that the Unicode is enabled on Data Mover.
+   The VNX driver requires that the unicode is enabled on Data Mover.
 
    .. warning::
 
@@ -82,7 +82,8 @@ Pre-configurations on VNX
 
    .. code-block:: none
 
-      server_cifs <mover_name> | head where: mover_name = <name of the Data Mover>
+      server_cifs <mover_name> | head
+      # mover_name = <name of the Data Mover>
 
    Check the value of I18N mode field. UNICODE mode is shown as
    ``I18N mode = UNICODE``.
@@ -91,7 +92,8 @@ Pre-configurations on VNX
 
    .. code-block:: none
 
-      uc_config -on -mover <mover_name> where: mover_name = <name of the Data Mover>
+      uc_config -on -mover <mover_name>
+      # mover_name = <name of the Data Mover>
 
    Refer to the document Using International Character Sets on VNX for
    File on `EMC support site <http://support.emc.com>`_ for more
@@ -106,7 +108,9 @@ Pre-configurations on VNX
 
    .. code-block:: none
 
-      server_setup <mover_name> -Protocol cifs -option start [=<n>] where: <mover_name> = <name of the Data Mover> [=<n>] = <number of threads for CIFS users>
+      server_setup <mover_name> -Protocol cifs -option start [=<n>]
+      # mover_name = <name of the Data Mover>
+      # n = <number of threads for CIFS users>
 
    .. note::
 
@@ -118,7 +122,8 @@ Pre-configurations on VNX
 
    .. code-block:: none
 
-      server_cifs <mover_name> | head where: <mover_name> = <name of the Data Mover>
+      server_cifs <mover_name> | head
+      # mover_name = <name of the Data Mover>
 
    The command output will show the number of CIFS threads started.
 
@@ -143,13 +148,16 @@ Pre-configurations on VNX
 
    .. code-block:: none
 
-      server_date <mover_name> where: mover_name = <name of the Data Mover>
+      server_date <mover_name>
+      # mover_name = <name of the Data Mover>
 
    Set the NTP server for Data Mover:
 
    .. code-block:: none
 
-      server_date <mover_name> timesvc start ntp <host> [<host> ...] where: mover_name = <name of the Data Mover> host = <IP address of the time server host>
+      server_date <mover_name> timesvc start ntp <host> [<host> ...]
+      # mover_name = <name of the Data Mover>
+      # host = <IP address of the time server host>
 
    .. note::
 
@@ -167,14 +175,16 @@ Pre-configurations on VNX
 
    .. code-block:: none
 
-      server_usermapper <movername> where: <movername> = <name of the Data Mover>
+      server_usermapper <movername>
+      # movername = <name of the Data Mover>
 
    If usermapper is not started, the following command can be used
    to start the usermapper:
 
    .. code-block:: none
 
-      server_usermapper <movername> -enable where: <movername> = <name of the Data Mover>
+      server_usermapper <movername> -enable
+      # movername = <name of the Data Mover>
 
    For a multiple protocol environment, refer to Configuring VNX User
    Mapping on `EMC support site <http://support.emc.com>`_ for
@@ -182,13 +192,16 @@ Pre-configurations on VNX
 
 #. Network Connection.
 
-   In the current release, the share created by the VNX driver uses
-   the first network device (physical port on NIC) of Data Mover to
-   access the network.
+   Find the network devices (physical port on NIC) of Data Mover that
+   has access to the share network.
 
    Go to :guilabel:`Unisphere` to check the device list:
    :menuselection:`Settings > Network > Settings for File (Unified system
    only) > Device`.
+
+
+Back-end configurations
+~~~~~~~~~~~~~~~~~~~~~~~
 
 The following parameters need to be configured in the
 ``/etc/manila/manila.conf`` file for the VNX driver:
@@ -200,28 +213,46 @@ The following parameters need to be configured in the
    emc_nas_password = <password>
    emc_nas_login = <user>
    emc_nas_server_container = <Data Mover name>
-   emc_nas_pool_name = <pool name>
+   emc_nas_pool_names = <Comma separated pool names>
    share_driver = manila.share.drivers.emc.driver.EMCShareDriver
+   emc_interface_ports = <Comma separated ports list>
 
-emc_share_backend
+- `emc_share_backend`
     The plug-in name. Set it to ``vnx`` for the VNX driver.
 
-emc_nas_server
+- `emc_nas_server`
     The control station IP address of the VNX system to be managed.
 
-emc_nas_password and emc_nas_login
-    They are the fields that are used to provide credentials to the
+- `emc_nas_password` and `emc_nas_login`
+    The fields that are used to provide credentials to the
     VNX system. Only local users of VNX File is supported.
 
-emc_nas_server_container
-    It is the name of the Data Mover to serve the share service.
+- `emc_nas_server_container`
+    Name of the Data Mover to serve the share service.
 
-emc_nas_pool_name
-    It is the pool name user wants to create volume from. The pools
-    can be created using Unisphere for VNX.
+- `emc_nas_pool_names`
+    Comma separated list specifying the name of the pools to be used
+    by this back end. Do not set this option if all storage pools
+    on the system can be used.
+    Wild card character is supported.
+
+    Examples: pool_1, pool_*, *
+
+- `emc_interface_ports`
+    Comma separated list specifying the ports (devices) of Data Mover
+    that can be used for share server interface. Do not set this
+    option if all ports on the Data Mover can be used.
+    Wild card character is supported.
+
+    Examples: spa_eth1, spa_*, *
+
 
 Restart of the ``manila-share`` service is needed for the configuration
 changes to take effect.
+
+
+Restrictions
+~~~~~~~~~~~~
 
 The VNX driver has the following restrictions:
 
