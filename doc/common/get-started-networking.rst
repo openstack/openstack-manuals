@@ -14,7 +14,7 @@ neutron-server
   Networking plug-in for action.
 
 OpenStack Networking plug-ins and agents
-  Plugs and unplugs ports, creates networks or subnets, and provides
+  Plug and unplug ports, create networks or subnets, and provide
   IP addressing. These plug-ins and agents differ depending on the
   vendor and technologies used in the particular cloud. OpenStack
   Networking ships with plug-ins and agents for Cisco virtual and

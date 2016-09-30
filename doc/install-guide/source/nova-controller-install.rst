@@ -69,14 +69,15 @@ create databases, service credentials, and API endpoints.
 
         User Password:
         Repeat User Password:
-        +-----------+----------------------------------+
-        | Field     | Value                            |
-        +-----------+----------------------------------+
-        | domain_id | e0353a670a9e496da891347c589539e9 |
-        | enabled   | True                             |
-        | id        | 8c46e4760902464b889293a74a0c90a8 |
-        | name      | nova                             |
-        +-----------+----------------------------------+
+        +---------------------+----------------------------------+
+        | Field               | Value                            |
+        +---------------------+----------------------------------+
+        | domain_id           | default                          |
+        | enabled             | True                             |
+        | id                  | 8a7dbf5279404537b1c7b86c033620fe |
+        | name                | nova                             |
+        | password_expires_at | None                             |
+        +---------------------+----------------------------------+
 
      .. end
 

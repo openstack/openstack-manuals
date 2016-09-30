@@ -59,14 +59,15 @@ must create a database, service credentials, and API endpoints.
 
         User Password:
         Repeat User Password:
-        +-----------+----------------------------------+
-        | Field     | Value                            |
-        +-----------+----------------------------------+
-        | domain_id | e0353a670a9e496da891347c589539e9 |
-        | enabled   | True                             |
-        | id        | b20a6692f77b4258926881bf831eb683 |
-        | name      | neutron                          |
-        +-----------+----------------------------------+
+        +---------------------+----------------------------------+
+        | Field               | Value                            |
+        +---------------------+----------------------------------+
+        | domain_id           | default                          |
+        | enabled             | True                             |
+        | id                  | 319f34694728440eb8ffcb27b6dd8b8a |
+        | name                | neutron                          |
+        | password_expires_at | None                             |
+        +---------------------+----------------------------------+
 
      .. end
 

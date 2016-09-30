@@ -67,14 +67,16 @@ must create a database, service credentials, and API endpoints.
 
         User Password:
         Repeat User Password:
-        +-----------+----------------------------------+
-        | Field     | Value                            |
-        +-----------+----------------------------------+
-        | domain_id | e0353a670a9e496da891347c589539e9 |
-        | enabled   | True                             |
-        | id        | bb279f8ffc444637af38811a5e1f0562 |
-        | name      | cinder                           |
-        +-----------+----------------------------------+
+        +---------------------+----------------------------------+
+        | Field               | Value                            |
+        +---------------------+----------------------------------+
+        | domain_id           | default                          |
+        | enabled             | True                             |
+        | id                  | 0dbcdd0968dd4c948eacf9eb60d82b46 |
+        | name                | cinder                           |
+        | password_expires_at | None                             |
+        +---------------------+----------------------------------+
+
 
      .. end
 

@@ -19,12 +19,12 @@ service. The authentication service uses a combination of :term:`domains
       | Field       | Value                            |
       +-------------+----------------------------------+
       | description | Service Project                  |
-      | domain_id   | e0353a670a9e496da891347c589539e9 |
+      | domain_id   | default                          |
       | enabled     | True                             |
-      | id          | 894cdfa366d34e9d835d3de01e752262 |
+      | id          | 24ac7f19cd944f4cba1d77469b2a73ed |
       | is_domain   | False                            |
       | name        | service                          |
-      | parent_id   | e0353a670a9e496da891347c589539e9 |
+      | parent_id   | default                          |
       +-------------+----------------------------------+
 
    .. end
@@ -43,12 +43,12 @@ service. The authentication service uses a combination of :term:`domains
         | Field       | Value                            |
         +-------------+----------------------------------+
         | description | Demo Project                     |
-        | domain_id   | e0353a670a9e496da891347c589539e9 |
+        | domain_id   | default                          |
         | enabled     | True                             |
-        | id          | ed0b60bf607743088218b0a533d5943f |
+        | id          | 231ad6e7ebba47d6a1e57e1cc07ae446 |
         | is_domain   | False                            |
         | name        | demo                             |
-        | parent_id   | e0353a670a9e496da891347c589539e9 |
+        | parent_id   | default                          |
         +-------------+----------------------------------+
 
      .. end
@@ -67,14 +67,15 @@ service. The authentication service uses a combination of :term:`domains
 
         User Password:
         Repeat User Password:
-        +-----------+----------------------------------+
-        | Field     | Value                            |
-        +-----------+----------------------------------+
-        | domain_id | e0353a670a9e496da891347c589539e9 |
-        | enabled   | True                             |
-        | id        | 58126687cbcc4888bfa9ab73a2256f27 |
-        | name      | demo                             |
-        +-----------+----------------------------------+
+        +---------------------+----------------------------------+
+        | Field               | Value                            |
+        +---------------------+----------------------------------+
+        | domain_id           | default                          |
+        | enabled             | True                             |
+        | id                  | aeda23aa78f44e859900e22c24817832 |
+        | name                | demo                             |
+        | password_expires_at | None                             |
+        +---------------------+----------------------------------+
 
      .. end
 
