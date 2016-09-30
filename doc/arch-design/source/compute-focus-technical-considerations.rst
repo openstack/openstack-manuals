@@ -66,8 +66,8 @@ storage performance (spindles/core), memory availability (RAM/core),
 network bandwidth (Gbps/core), and overall CPU performance (CPU/core).
 
 The cloud resource calculator is a useful tool in examining the impacts
-of different hardware and instance load outs. See:
-https://github.com/noslzzp/cloud-resource-calculator/blob/master/cloud-resource-calculator.ods
+of different hardware and instance load outs. See `cloud-resource-calculator
+<https://github.com/noslzzp/cloud-resource-calculator/blob/master/cloud-resource-calculator.ods>`_.
 
 Expansion planning
 ~~~~~~~~~~~~~~~~~~
