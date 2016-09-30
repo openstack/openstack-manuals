@@ -41,8 +41,6 @@ function copy_to_branch {
         for f in $(find publish-docs/$BRANCH -name "*.html"); do
             sed -i -e "s|/draft/|/$BRANCH/|g" $f
         done
-        # Debian Install Guide for Newton is not ready
-        rm -rf publish-docs/$BRANCH/install-guide-debian
     fi
 }
 

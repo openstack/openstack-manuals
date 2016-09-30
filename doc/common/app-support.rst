@@ -31,15 +31,21 @@ bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`__.
 The following books explain how to install an OpenStack cloud and its
 associated components:
 
-*  `Installation Guide for openSUSE Leap 42.1 and SUSE Linux Enterprise
+*  `Installation Tutorial for openSUSE Leap 42.1 and SUSE Linux Enterprise
    Server 12 SP1
-   <http://docs.openstack.org/mitaka/install-guide-obs/>`__
+   <http://docs.openstack.org/newton/install-guide-obs/>`__
 
-*  `Installation Guide for Red Hat Enterprise Linux 7 and CentOS 7
-   <http://docs.openstack.org/mitaka/install-guide-rdo/>`__
+*  `Installation Tutorial for Red Hat Enterprise Linux 7 and CentOS 7
+   <http://docs.openstack.org/newton/install-guide-rdo/>`__
 
-*  `Installation Guide for Ubuntu 14.04 (LTS)
-   <http://docs.openstack.org/mitaka/install-guide-ubuntu/>`__
+*  `Installation Tutorial for Ubuntu 16.04 (LTS)
+   <http://docs.openstack.org/newton/install-guide-ubuntu/>`__
+
+*  `Installation Tutorial For Debian With Debconf
+   <http://docs.openstack.org/newton/install-guide-debconf/>`__
+
+*  `Installation Tutorial For Debian
+   <http://docs.openstack.org/newton/install-guide-debian/>`__
 
 The following books explain how to configure and run an OpenStack cloud:
 
@@ -47,11 +53,11 @@ The following books explain how to configure and run an OpenStack cloud:
 
 *  `Administrator Guide <http://docs.openstack.org/admin-guide/>`__
 
-*  `Configuration Reference <http://docs.openstack.org/mitaka/config-reference/>`__
+*  `Configuration Reference <http://docs.openstack.org/newton/config-reference/>`__
 
 *  `Operations Guide <http://docs.openstack.org/ops/>`__
 
-*  `Networking Guide <http://docs.openstack.org/mitaka/networking-guide>`__
+*  `Networking Guide <http://docs.openstack.org/newton/networking-guide>`__
 
 *  `High Availability Guide <http://docs.openstack.org/ha-guide/>`__
 
@@ -62,8 +68,6 @@ The following books explain how to configure and run an OpenStack cloud:
 The following books explain how to use the OpenStack dashboard and
 command-line clients:
 
-*  `API Guide <http://developer.openstack.org/api-guide/quick-start/>`__
-
 *  `End User Guide <http://docs.openstack.org/user-guide/>`__
 
 *  `Command-Line Interface Reference
@@ -72,8 +76,7 @@ command-line clients:
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
 
-*  `API Complete Reference
-   (HTML) <http://developer.openstack.org/api-guide/quick-start/>`__
+*  `API Guide <http://developer.openstack.org/api-guide/quick-start/>`__
 
 The following guide provides how to contribute to OpenStack documentation:
 
