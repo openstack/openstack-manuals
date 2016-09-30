@@ -31,74 +31,18 @@
    * - ``auth_url`` = ``None``
      - (String) DEPRECATED: The URL to the keystone service. If "use_user_token" is not in effect and using keystone auth, then URL of keystone can be specified. This option was considered harmful and has been deprecated in M release. It will be removed in O release. For more information read OSSN-0060. Related functionality with uploading big images has been implemented with Keystone trusts support.
    * - ``registry_client_ca_file`` = ``/etc/ssl/cafile/file.ca``
-     - (String) Absolute path to the Certificate Authority file.
-
-       Provide a string value representing a valid absolute path to the certificate authority file to use for establishing a secure connection to the registry server.
-
-       NOTE: This option must be set if ``registry_client_protocol`` is set to ``https``. Alternatively, the GLANCE_CLIENT_CA_FILE environment variable may be set to a filepath of the CA file. This option is ignored if the ``registry_client_insecure`` option is set to ``True``.
-
-       Possible values: * String value representing a valid absolute path to the CA file.
-
-       Related options: * registry_client_protocol * registry_client_insecure
+     - (String) Absolute path to the Certificate Authority file.$sentinal$Provide a string value representing a valid absolute path to the certificate authority file to use for establishing a secure connection to the registry server.$sentinal$NOTE: This option must be set if ``registry_client_protocol`` is set to ``https``. Alternatively, the GLANCE_CLIENT_CA_FILE environment variable may be set to a filepath of the CA file. This option is ignored if the ``registry_client_insecure`` option is set to ``True``.$sentinal$Possible values: * String value representing a valid absolute path to the CA file.$sentinal$Related options: * registry_client_protocol * registry_client_insecure
    * - ``registry_client_cert_file`` = ``/etc/ssl/certs/file.crt``
-     - (String) Absolute path to the certificate file.
-
-       Provide a string value representing a valid absolute path to the certificate file to use for establishing a secure connection to the registry server.
-
-       NOTE: This option must be set if ``registry_client_protocol`` is set to ``https``. Alternatively, the GLANCE_CLIENT_CERT_FILE environment variable may be set to a filepath of the certificate file.
-
-       Possible values: * String value representing a valid absolute path to the certificate file.
-
-       Related options: * registry_client_protocol
+     - (String) Absolute path to the certificate file.$sentinal$Provide a string value representing a valid absolute path to the certificate file to use for establishing a secure connection to the registry server.$sentinal$NOTE: This option must be set if ``registry_client_protocol`` is set to ``https``. Alternatively, the GLANCE_CLIENT_CERT_FILE environment variable may be set to a filepath of the certificate file.$sentinal$Possible values: * String value representing a valid absolute path to the certificate file.$sentinal$Related options: * registry_client_protocol
    * - ``registry_client_insecure`` = ``False``
-     - (Boolean) Set verification of the registry server certificate.
-
-       Provide a boolean value to determine whether or not to validate SSL connections to the registry server. By default, this option is set to ``False`` and the SSL connections are validated.
-
-       If set to ``True``, the connection to the registry server is not validated via a certifying authority and the ``registry_client_ca_file`` option is ignored. This is the registry's equivalent of specifying --insecure on the command line using glanceclient for the API.
-
-       Possible values: * True * False
-
-       Related options: * registry_client_protocol * registry_client_ca_file
+     - (Boolean) Set verification of the registry server certificate.$sentinal$Provide a boolean value to determine whether or not to validate SSL connections to the registry server. By default, this option is set to ``False`` and the SSL connections are validated.$sentinal$If set to ``True``, the connection to the registry server is not validated via a certifying authority and the ``registry_client_ca_file`` option is ignored. This is the registry's equivalent of specifying --insecure on the command line using glanceclient for the API.$sentinal$Possible values: * True * False$sentinal$Related options: * registry_client_protocol * registry_client_ca_file
    * - ``registry_client_key_file`` = ``/etc/ssl/key/key-file.pem``
-     - (String) Absolute path to the private key file.
-
-       Provide a string value representing a valid absolute path to the private key file to use for establishing a secure connection to the registry server.
-
-       NOTE: This option must be set if ``registry_client_protocol`` is set to ``https``. Alternatively, the GLANCE_CLIENT_KEY_FILE environment variable may be set to a filepath of the key file.
-
-       Possible values: * String value representing a valid absolute path to the key file.
-
-       Related options: * registry_client_protocol
+     - (String) Absolute path to the private key file.$sentinal$Provide a string value representing a valid absolute path to the private key file to use for establishing a secure connection to the registry server.$sentinal$NOTE: This option must be set if ``registry_client_protocol`` is set to ``https``. Alternatively, the GLANCE_CLIENT_KEY_FILE environment variable may be set to a filepath of the key file.$sentinal$Possible values: * String value representing a valid absolute path to the key file.$sentinal$Related options: * registry_client_protocol
    * - ``registry_client_protocol`` = ``http``
-     - (String) Protocol to use for communication with the registry server.
-
-       Provide a string value representing the protocol to use for communication with the registry server. By default, this option is set to ``http`` and the connection is not secure.
-
-       This option can be set to ``https`` to establish a secure connection to the registry server. In this case, provide a key to use for the SSL connection using the ``registry_client_key_file`` option. Also include the CA file and cert file using the options ``registry_client_ca_file`` and ``registry_client_cert_file`` respectively.
-
-       Possible values: * http * https
-
-       Related options: * registry_client_key_file * registry_client_cert_file * registry_client_ca_file
+     - (String) Protocol to use for communication with the registry server.$sentinal$Provide a string value representing the protocol to use for communication with the registry server. By default, this option is set to ``http`` and the connection is not secure.$sentinal$This option can be set to ``https`` to establish a secure connection to the registry server. In this case, provide a key to use for the SSL connection using the ``registry_client_key_file`` option. Also include the CA file and cert file using the options ``registry_client_ca_file`` and ``registry_client_cert_file`` respectively.$sentinal$Possible values: * http * https$sentinal$Related options: * registry_client_key_file * registry_client_cert_file * registry_client_ca_file
    * - ``registry_client_timeout`` = ``600``
-     - (Integer) Timeout value for registry requests.
-
-       Provide an integer value representing the period of time in seconds that the API server will wait for a registry request to complete. The default value is 600 seconds.
-
-       A value of 0 implies that a request will never timeout.
-
-       Possible values: * Zero * Positive integer
-
-       Related options: * None
+     - (Integer) Timeout value for registry requests.$sentinal$Provide an integer value representing the period of time in seconds that the API server will wait for a registry request to complete. The default value is 600 seconds.$sentinal$A value of 0 implies that a request will never timeout.$sentinal$Possible values: * Zero * Positive integer$sentinal$Related options: * None
    * - ``registry_host`` = ``0.0.0.0``
-     - (String) Address the registry server is hosted on.
-
-       Possible values: * A valid IP or hostname
-
-       Related options: * None
+     - (String) Address the registry server is hosted on.$sentinal$Possible values: * A valid IP or hostname$sentinal$Related options: * None
    * - ``registry_port`` = ``9191``
-     - (Port number) Port the registry server is listening on.
-
-       Possible values: * A valid port number
-
-       Related options: * None
+     - (Port number) Port the registry server is listening on.$sentinal$Possible values: * A valid port number$sentinal$Related options: * None

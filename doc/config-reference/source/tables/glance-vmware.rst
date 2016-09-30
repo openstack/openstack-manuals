@@ -19,80 +19,20 @@
    * - **[glance_store]**
      -
    * - ``vmware_api_retry_count`` = ``10``
-     - (Integer) The number of VMware API retries.
-
-       This configuration option specifies the number of times the VMware ESX/VC server API must be retried upon connection related issues or server API call overload. It is not possible to specify 'retry forever'.
-
-       Possible Values: * Any positive integer value
-
-       Related options: * None
+     - (Integer) The number of VMware API retries.$sentinal$This configuration option specifies the number of times the VMware ESX/VC server API must be retried upon connection related issues or server API call overload. It is not possible to specify 'retry forever'.$sentinal$Possible Values: * Any positive integer value$sentinal$Related options: * None
    * - ``vmware_ca_file`` = ``/etc/ssl/certs/ca-certificates.crt``
-     - (String) Absolute path to the CA bundle file.
-
-       This configuration option enables the operator to use a custom Cerificate Authority File to verify the ESX/vCenter certificate.
-
-       If this option is set, the "vmware_insecure" option will be ignored and the CA file specified will be used to authenticate the ESX/vCenter server certificate and establish a secure connection to the server.
-
-       Possible Values: * Any string that is a valid absolute path to a CA file
-
-       Related options: * vmware_insecure
+     - (String) Absolute path to the CA bundle file.$sentinal$This configuration option enables the operator to use a custom Cerificate Authority File to verify the ESX/vCenter certificate.$sentinal$If this option is set, the "vmware_insecure" option will be ignored and the CA file specified will be used to authenticate the ESX/vCenter server certificate and establish a secure connection to the server.$sentinal$Possible Values: * Any string that is a valid absolute path to a CA file$sentinal$Related options: * vmware_insecure
    * - ``vmware_datastores`` = ``None``
-     - (Multi-valued) The datastores where the image can be stored.
-
-       This configuration option specifies the datastores where the image can be stored in the VMWare store backend. This option may be specified multiple times for specifying multiple datastores. The datastore name should be specified after its datacenter path, separated by ":". An optional weight may be given after the datastore name, separated again by ":" to specify the priority. Thus, the required format becomes <datacenter_path>:<datastore_name>:<optional_weight>.
-
-       When adding an image, the datastore with highest weight will be selected, unless there is not enough free space available in cases where the image size is already known. If no weight is given, it is assumed to be zero and the directory will be considered for selection last. If multiple datastores have the same weight, then the one with the most free space available is selected.
-
-       Possible Values: * Any string of the format: <datacenter_path>:<datastore_name>:<optional_weight>
-
-       Related options: * None
+     - (Multi-valued) The datastores where the image can be stored.$sentinal$This configuration option specifies the datastores where the image can be stored in the VMWare store backend. This option may be specified multiple times for specifying multiple datastores. The datastore name should be specified after its datacenter path, separated by ":". An optional weight may be given after the datastore name, separated again by ":" to specify the priority. Thus, the required format becomes <datacenter_path>:<datastore_name>:<optional_weight>.$sentinal$When adding an image, the datastore with highest weight will be selected, unless there is not enough free space available in cases where the image size is already known. If no weight is given, it is assumed to be zero and the directory will be considered for selection last. If multiple datastores have the same weight, then the one with the most free space available is selected.$sentinal$Possible Values: * Any string of the format: <datacenter_path>:<datastore_name>:<optional_weight>$sentinal$Related options: * None
    * - ``vmware_insecure`` = ``False``
-     - (Boolean) Set verification of the ESX/vCenter server certificate.
-
-       This configuration option takes a boolean value to determine whether or not to verify the ESX/vCenter server certificate. If this option is set to True, the ESX/vCenter server certificate is not verified. If this option is set to False, then the default CA truststore is used for verification.
-
-       This option is ignored if the "vmware_ca_file" option is set. In that case, the ESX/vCenter server certificate will then be verified using the file specified using the "vmware_ca_file" option .
-
-       Possible Values: * True * False
-
-       Related options: * vmware_ca_file
+     - (Boolean) Set verification of the ESX/vCenter server certificate.$sentinal$This configuration option takes a boolean value to determine whether or not to verify the ESX/vCenter server certificate. If this option is set to True, the ESX/vCenter server certificate is not verified. If this option is set to False, then the default CA truststore is used for verification.$sentinal$This option is ignored if the "vmware_ca_file" option is set. In that case, the ESX/vCenter server certificate will then be verified using the file specified using the "vmware_ca_file" option .$sentinal$Possible Values: * True * False$sentinal$Related options: * vmware_ca_file
    * - ``vmware_server_host`` = ``127.0.0.1``
-     - (String) Address of the ESX/ESXi or vCenter Server target system.
-
-       This configuration option sets the address of the ESX/ESXi or vCenter Server target system. This option is required when using the VMware storage backend. The address can contain an IP address (127.0.0.1) or a DNS name (www.my-domain.com).
-
-       Possible Values: * A valid IPv4 or IPv6 address * A valid DNS name
-
-       Related options: * vmware_server_username * vmware_server_password
+     - (String) Address of the ESX/ESXi or vCenter Server target system.$sentinal$This configuration option sets the address of the ESX/ESXi or vCenter Server target system. This option is required when using the VMware storage backend. The address can contain an IP address (127.0.0.1) or a DNS name (www.my-domain.com).$sentinal$Possible Values: * A valid IPv4 or IPv6 address * A valid DNS name$sentinal$Related options: * vmware_server_username * vmware_server_password
    * - ``vmware_server_password`` = ``vmware``
-     - (String) Server password.
-
-       This configuration option takes the password for authenticating with the VMware ESX/ESXi or vCenter Server. This option is required when using the VMware storage backend.
-
-       Possible Values: * Any string that is a password corresponding to the username specified using the "vmware_server_username" option
-
-       Related options: * vmware_server_host * vmware_server_username
+     - (String) Server password.$sentinal$This configuration option takes the password for authenticating with the VMware ESX/ESXi or vCenter Server. This option is required when using the VMware storage backend.$sentinal$Possible Values: * Any string that is a password corresponding to the username specified using the "vmware_server_username" option$sentinal$Related options: * vmware_server_host * vmware_server_username
    * - ``vmware_server_username`` = ``root``
-     - (String) Server username.
-
-       This configuration option takes the username for authenticating with the VMware ESX/ESXi or vCenter Server. This option is required when using the VMware storage backend.
-
-       Possible Values: * Any string that is the username for a user with appropriate privileges
-
-       Related options: * vmware_server_host * vmware_server_password
+     - (String) Server username.$sentinal$This configuration option takes the username for authenticating with the VMware ESX/ESXi or vCenter Server. This option is required when using the VMware storage backend.$sentinal$Possible Values: * Any string that is the username for a user with appropriate privileges$sentinal$Related options: * vmware_server_host * vmware_server_password
    * - ``vmware_store_image_dir`` = ``/openstack_glance``
-     - (String) The directory where the glance images will be stored in the datastore.
-
-       This configuration option specifies the path to the directory where the glance images will be stored in the VMware datastore. If this option is not set, the default directory where the glance images are stored is openstack_glance.
-
-       Possible Values: * Any string that is a valid path to a directory
-
-       Related options: * None
+     - (String) The directory where the glance images will be stored in the datastore.$sentinal$This configuration option specifies the path to the directory where the glance images will be stored in the VMware datastore. If this option is not set, the default directory where the glance images are stored is openstack_glance.$sentinal$Possible Values: * Any string that is a valid path to a directory$sentinal$Related options: * None
    * - ``vmware_task_poll_interval`` = ``5``
-     - (Integer) Interval in seconds used for polling remote tasks invoked on VMware ESX/VC server.
-
-       This configuration option takes in the sleep time in seconds for polling an on-going async task as part of the VMWare ESX/VC server API call.
-
-       Possible Values: * Any positive integer value
-
-       Related options: * None
+     - (Integer) Interval in seconds used for polling remote tasks invoked on VMware ESX/VC server.$sentinal$This configuration option takes in the sleep time in seconds for polling an on-going async task as part of the VMWare ESX/VC server API call.$sentinal$Possible Values: * Any positive integer value$sentinal$Related options: * None
