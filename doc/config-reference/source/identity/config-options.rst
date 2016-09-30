@@ -1,13 +1,12 @@
-===================================
-Identity service configuration file
-===================================
+=====================================================
+Additional configuration options for Identity service
+=====================================================
 
 The Identity service is configured in the ``/etc/keystone/keystone.conf`` file.
 
 The following tables provide a comprehensive list of the Identity
 service options.
 
-.. include:: ../tables/keystone-api.rst
 .. include:: ../tables/keystone-assignment.rst
 .. include:: ../tables/keystone-auth.rst
 .. include:: ../tables/keystone-ca.rst
@@ -33,12 +32,7 @@ service options.
 .. include:: ../tables/keystone-token.rst
 .. include:: ../tables/keystone-tokenless.rst
 .. include:: ../tables/keystone-trust.rst
-.. include:: ../tables/keystone-rpc.rst
-.. include:: ../tables/keystone-amqp.rst
-.. include:: ../tables/keystone-rabbitmq.rst
-.. include:: ../tables/keystone-zeromq.rst
 .. include:: ../tables/keystone-redis.rst
-
 
 Domain-specific Identity drivers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,6 +41,6 @@ The Identity service supports domain-specific Identity drivers
 installed on an SQL or LDAP back end, and supports domain-specific
 Identity configuration options, which are stored in domain-specific
 configuration files. See the
-`Admin guide Identity Management Chapter <http://docs.openstack.org/admin-guide/keystone-domain-specific-config.html>`_
+`Admin guide Identity Management Chapter
+<http://docs.openstack.org/admin-guide/keystone-domain-specific-config.html>`_
 for more information.
-
