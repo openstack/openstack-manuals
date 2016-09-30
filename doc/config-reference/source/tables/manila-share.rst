@@ -62,6 +62,8 @@
      - (String) Template string to be used to generate share names.
    * - ``share_snapshot_name_template`` = ``share-snapshot-%s``
      - (String) Template string to be used to generate share snapshot names.
+   * - ``share_topic`` = ``manila-share``
+     - (String) The topic share nodes listen on.
    * - ``share_usage_audit_period`` = ``month``
      - (String) Time period to generate share usages for. Time period must be hour, day, month or year.
    * - ``suppress_post_hooks_errors`` = ``False``
