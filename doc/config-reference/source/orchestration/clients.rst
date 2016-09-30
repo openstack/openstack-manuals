@@ -5,7 +5,6 @@ Configure clients
 The following options allow configuration of the clients that
 Orchestration uses to talk to other services.
 
-
 .. include:: ../tables/heat-clients.rst
 .. include:: ../tables/heat-clients_backends.rst
 .. include:: ../tables/heat-clients_aodh.rst
