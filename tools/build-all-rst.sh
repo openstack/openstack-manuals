@@ -21,10 +21,15 @@ fi
 #    GLOSSARY=""
 #done
 #
+
+# This marker is needed for infra publishing
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID"
+
 # Versioned RST guides
 for guide in networking-guide; do
     tools/build-rst.sh doc/$guide --glossary --build build \
         --target "liberty/$guide" $LINKCHECK
+    echo $MARKER_TEXT > publish-docs/liberty/$guide/.root-marker
 done
 
 tools/build-install-guides-rst.sh $LINKCHECK

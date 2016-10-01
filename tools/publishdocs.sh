@@ -73,10 +73,15 @@ tools/build-all-rst.sh
 #    rm publish-docs/www-index.html
 #fi
 
+# This marker is needed for infra publishing
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID"
+
+
 # We only publish changed manuals.
 # For liberty, only publish config-reference as DocBook XML.
 if [ "$PUBLISH" = "publish" ] ; then
     openstack-doc-test --check-build --publish --only-book config-reference
+    echo $MARKER_TEXT > publish-docs/liberty/config-reference/.root-marker
     # Do not publish Debian Guide for now
     rm -rf publish-docs/liberty/install-guide-debian
     # For publishing to both /draft and /BRANCH.

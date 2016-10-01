@@ -22,6 +22,9 @@ fi
 cp -f ${INDEX} ${INDEX}.save
 trap "mv -f ${INDEX}.save ${INDEX}" EXIT
 
+# This marker is needed for infra publishing
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID"
+
 for tag in $TAGS; do
     GLOSSARY=""
     if [[ ! -e doc/common-rst/glossary.rst ]] ; then
@@ -67,6 +70,7 @@ for tag in $TAGS; do
     tools/build-rst.sh doc/install-guide  \
         $GLOSSARY --tag ${tag} --target "liberty/install-guide-${tag}" \
         $LINKCHECK
+    echo $MARKER_TEXT > publish-docs/liberty/install-guide-${tag}/.root-marker
 
     # Restore the index file
     cp -f ${INDEX}.save ${INDEX}
