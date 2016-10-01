@@ -18,18 +18,10 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``agent_mode`` = ``legacy``
-     - (String) The working mode for the agent. Allowed modes are: 'legacy' - this preserves the existing behavior where the L3 agent is deployed on a centralized networking node to provide L3 services like DNAT, and SNAT. Use this mode if you do not want to adopt DVR. 'dvr' - this mode enables DVR functionality and must be used for an L3 agent that runs on a compute host. 'dvr_snat' - this enables centralized SNAT support in conjunction with DVR. This mode must be used for an L3 agent running on a centralized node (or in single-host deployments, e.g. devstack)
-   * - ``enable_metadata_proxy`` = ``True``
-     - (Boolean) Allow running metadata proxy.
    * - ``enable_snat_by_default`` = ``True``
      - (Boolean) Define the default value of enable_snat if not provided in external_gateway_info.
-   * - ``external_ingress_mark`` = ``0x2``
-     - (String) Iptables mangle mark used to mark ingress from external network. This mark will be masked with 0xffff so that only the lower 16 bits will be used.
-   * - ``external_network_bridge`` = ``br-ex``
-     - (String) DEPRECATED: Name of bridge used for external network traffic. This should be set to an empty value for the Linux Bridge. When this parameter is set, each L3 agent can be associated with no more than one external network. This option is deprecated and will be removed in the M release.
-   * - ``gateway_external_network_id`` =
-     - (String) When external_network_bridge is set, each L3 agent can be associated with no more than one external network. This value should be set to the UUID of that external network. To allow L3 agent support multiple external networks, both the external_network_bridge and gateway_external_network_id must be left empty.
+   * - ``external_network_bridge`` =
+     - (String) DEPRECATED: Name of bridge used for external network traffic. When this parameter is set, the L3 agent will plug an interface directly into an external bridge which will not allow any wiring by the L2 agent. Using this will result in incorrect port statuses. This option is deprecated and will be removed in Ocata.
    * - ``ha_confs_path`` = ``$state_path/ha_confs``
      - (String) Location to store keepalived/conntrackd config files
    * - ``ha_vrrp_advert_int`` = ``2``
@@ -38,14 +30,10 @@
      - (String) VRRP authentication password
    * - ``ha_vrrp_auth_type`` = ``PASS``
      - (String) VRRP authentication type
-   * - ``handle_internal_only_routers`` = ``True``
-     - (Boolean) Indicates that this L3 agent should also handle routers that do not have an external network gateway configured. This option should be True only for a single agent in a Neutron deployment, and may be False for all agents if all routers must have an external network gateway.
    * - ``host`` = ``example.domain``
      - (String) Hostname to be used by the Neutron server, agents and services running on this machine. All the agents and services running on this machine must use the same host value.
    * - ``interface_driver`` = ``None``
      - (String) The driver used to manage the virtual interface.
-   * - ``ipv6_gateway`` =
-     - (String) With IPv6, the network used for the external gateway does not need to have an associated subnet, since the automatically assigned link-local address (LLA) can be used. However, an IPv6 gateway address is needed for use as the next-hop for the default route. If no IPv6 gateway address is configured here, (and only then) the neutron router will be configured to get its default route from router advertisements (RAs) from the upstream router; in which case the upstream router must also be configured to send these RAs. The ipv6_gateway, when configured, should be the LLA of the interface on the upstream router. If a next-hop using a global unique address (GUA) is desired, it needs to be done via a subnet allocated to the network and not through this parameter.
    * - ``ipv6_pd_enabled`` = ``False``
      - (Boolean) Enables IPv6 Prefix Delegation for automatic subnet CIDR allocation. Set to True to enable IPv6 Prefix Delegation for subnet allocation in a PD-capable environment. Users making subnet creation requests for IPv6 subnets without providing a CIDR or subnetpool ID will be given a CIDR via the Prefix Delegation mechanism. Note that enabling PD will override the behavior of the default IPv6 subnetpool.
    * - ``l3_ha`` = ``False``
@@ -59,9 +47,7 @@
    * - ``max_l3_agents_per_router`` = ``3``
      - (Integer) Maximum number of L3 agents which a HA router will be scheduled on. If it is set to 0 then the router will be scheduled on every agent.
    * - ``min_l3_agents_per_router`` = ``2``
-     - (Integer) Minimum number of L3 agents which a HA router will be scheduled on. If it is set to 0 then the router will be scheduled on every agent.
-   * - ``send_arp_for_ha`` = ``3``
-     - (Integer) Send this many gratuitous ARPs for HA setup, if less than or equal to 0, the feature is disabled
+     - (Integer) DEPRECATED: Minimum number of L3 agents that have to be available in order to allow a new HA router to be scheduled. This option is deprecated in the Newton release and will be removed for the Ocata release where the scheduling of new HA routers will always be allowed.
    * - **[AGENT]**
      -
    * - ``comment_iptables_rules`` = ``True``

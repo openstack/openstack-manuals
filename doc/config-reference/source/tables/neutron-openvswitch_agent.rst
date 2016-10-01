@@ -41,7 +41,7 @@
    * - ``ovsdb_monitor_respawn_interval`` = ``30``
      - (Integer) The number of seconds to wait before respawning the ovsdb monitor after losing communication with it.
    * - ``prevent_arp_spoofing`` = ``True``
-     - (Boolean) DEPRECATED: Enable suppression of ARP responses that don't match an IP address that belongs to the port from which they originate. Note: This prevents the VMs attached to this agent from spoofing, it doesn't protect them from other devices which have the capability to spoof (e.g. bare metal or VMs attached to agents without this flag set to True). Spoofing rules will not be added to any ports that have port security disabled. For LinuxBridge, this requires ebtables. For OVS, it requires a version that supports matching ARP headers. This option will be removed in Newton so the only way to disable protection will be via the port security extension.
+     - (Boolean) DEPRECATED: Enable suppression of ARP responses that don't match an IP address that belongs to the port from which they originate. Note: This prevents the VMs attached to this agent from spoofing, it doesn't protect them from other devices which have the capability to spoof (e.g. bare metal or VMs attached to agents without this flag set to True). Spoofing rules will not be added to any ports that have port security disabled. For LinuxBridge, this requires ebtables. For OVS, it requires a version that supports matching ARP headers. This option will be removed in Ocata so the only way to disable protection will be via the port security extension.
    * - ``quitting_rpc_timeout`` = ``10``
      - (Integer) Set new timeout in seconds for new rpc calls after agent receives SIGTERM. If value is set to 0, rpc timeout won't be changed
    * - ``tunnel_csum`` = ``False``
@@ -55,7 +55,7 @@
    * - **[OVS]**
      -
    * - ``bridge_mappings`` =
-     - (List) Comma-separated list of <physical_network>:<bridge> tuples mapping physical network names to the agent's node-specific Open vSwitch bridge names to be used for flat and VLAN networks. The length of bridge names should be no more than 11. Each bridge must exist, and should have a physical network interface configured as a port. All physical networks configured on the server should have mappings to appropriate bridges on each agent. Note: If you remove a bridge from this mapping, make sure to disconnect it from the integration bridge as it won't be managed by the agent anymore. Deprecated for ofagent.
+     - (List) Comma-separated list of <physical_network>:<bridge> tuples mapping physical network names to the agent's node-specific Open vSwitch bridge names to be used for flat and VLAN networks. The length of bridge names should be no more than 11. Each bridge must exist, and should have a physical network interface configured as a port. All physical networks configured on the server should have mappings to appropriate bridges on each agent. Note: If you remove a bridge from this mapping, make sure to disconnect it from the integration bridge as it won't be managed by the agent anymore.
    * - ``datapath_type`` = ``system``
      - (String) OVS datapath to use. 'system' is the default value and corresponds to the kernel datapath. To enable the userspace datapath set this value to 'netdev'.
    * - ``int_peer_patch_port`` = ``patch-tun``
@@ -63,10 +63,10 @@
    * - ``integration_bridge`` = ``br-int``
      - (String) Integration bridge to use. Do not change this parameter unless you have a good reason to. This is the name of the OVS integration bridge. There is one per hypervisor. The integration bridge acts as a virtual 'patch bay'. All VM VIFs are attached to this bridge and then 'patched' according to their network connectivity.
    * - ``local_ip`` = ``None``
-     - (Unknown) Local IP address of tunnel endpoint.
+     - (Unknown) IP address of local overlay (tunnel) network endpoint. Use either an IPv4 or IPv6 address that resides on one of the host network interfaces. The IP version of this value must match the value of the 'overlay_ip_version' option in the ML2 plug-in configuration file on the neutron server node(s).
    * - ``of_connect_timeout`` = ``30``
      - (Integer) Timeout in seconds to wait for the local switch connecting the controller. Used only for 'native' driver.
-   * - ``of_interface`` = ``ovs-ofctl``
+   * - ``of_interface`` = ``native``
      - (String) OpenFlow interface to use.
    * - ``of_listen_address`` = ``127.0.0.1``
      - (Unknown) Address to listen on for OpenFlow connections. Used only for 'native' driver.
@@ -76,7 +76,7 @@
      - (Integer) Timeout in seconds to wait for a single OpenFlow request. Used only for 'native' driver.
    * - ``ovsdb_connection`` = ``tcp:127.0.0.1:6640``
      - (String) The connection string for the native OVSDB backend. Requires the native ovsdb_interface to be enabled.
-   * - ``ovsdb_interface`` = ``vsctl``
+   * - ``ovsdb_interface`` = ``native``
      - (String) The interface for interacting with the OVSDB
    * - ``tun_peer_patch_port`` = ``patch-int``
      - (String) Peer patch port in tunnel bridge for integration bridge.

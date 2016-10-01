@@ -19,14 +19,14 @@
    * - **[DEFAULT]**
      -
    * - ``advertise_mtu`` = ``True``
-     - (Boolean) If True, advertise network MTU values if core plugin calculates them. MTU is advertised to running instances via DHCP and RA MTU options.
+     - (Boolean) DEPRECATED: If True, advertise network MTU values if core plugin calculates them. MTU is advertised to running instances via DHCP and RA MTU options.
    * - ``dhcp_driver`` = ``neutron.agent.linux.dhcp.Dnsmasq``
      - (String) The driver used to manage the DHCP server.
    * - ``dnsmasq_base_log_dir`` = ``None``
      - (String) Base log dir for dnsmasq logging. The log contains DHCP and DNS log information and is useful for debugging issues with either DHCP or DNS. If this section is null, disable dnsmasq log.
    * - ``dnsmasq_config_file`` =
      - (String) Override the default dnsmasq settings with this file.
-   * - ``dnsmasq_dns_servers`` = ``None``
+   * - ``dnsmasq_dns_servers`` =
      - (List) Comma-separated list of the DNS servers which will be used as forwarders.
    * - ``dnsmasq_lease_max`` = ``16777216``
      - (Integer) Limit number of leases to prevent a denial-of-service.

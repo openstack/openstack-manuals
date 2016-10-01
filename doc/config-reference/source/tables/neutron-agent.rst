@@ -20,10 +20,6 @@
      -
    * - ``external_pids`` = ``$state_path/external/pids``
      - (String) Location to store child pid files
-   * - ``network_device_mtu`` = ``None``
-     - (Integer) DEPRECATED: MTU setting for device. This option will be removed in Newton. Please use the system-wide segment_mtu setting which the agents will take into account when wiring VIFs.
-   * - ``prefix_delegation_driver`` = ``dibbler``
-     - (String) Driver used for ipv6 prefix delegation. This needs to be an entry point defined in the neutron.agent.linux.pd_drivers namespace. See setup.cfg for entry points included with the neutron source.
    * - **[AGENT]**
      -
    * - ``agent_type`` = ``Open vSwitch agent``

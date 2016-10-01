@@ -19,7 +19,7 @@
    * - **[AGENT]**
      -
    * - ``prevent_arp_spoofing`` = ``True``
-     - (Boolean) DEPRECATED: Enable suppression of ARP responses that don't match an IP address that belongs to the port from which they originate. Note: This prevents the VMs attached to this agent from spoofing, it doesn't protect them from other devices which have the capability to spoof (e.g. bare metal or VMs attached to agents without this flag set to True). Spoofing rules will not be added to any ports that have port security disabled. For LinuxBridge, this requires ebtables. For OVS, it requires a version that supports matching ARP headers. This option will be removed in Newton so the only way to disable protection will be via the port security extension.
+     - (Boolean) DEPRECATED: Enable suppression of ARP responses that don't match an IP address that belongs to the port from which they originate. Note: This prevents the VMs attached to this agent from spoofing, it doesn't protect them from other devices which have the capability to spoof (e.g. bare metal or VMs attached to agents without this flag set to True). Spoofing rules will not be added to any ports that have port security disabled. For LinuxBridge, this requires ebtables. For OVS, it requires a version that supports matching ARP headers. This option will be removed in Ocata so the only way to disable protection will be via the port security extension.
    * - ``quitting_rpc_timeout`` = ``10``
      - (Integer) Set new timeout in seconds for new rpc calls after agent receives SIGTERM. If value is set to 0, rpc timeout won't be changed
    * - **[LINUX_BRIDGE]**
@@ -37,7 +37,7 @@
    * - ``l2_population`` = ``False``
      - (Boolean) Extension to use alongside ml2 plugin's l2population mechanism driver. It enables the plugin to populate VXLAN forwarding table.
    * - ``local_ip`` = ``None``
-     - (Unknown) Local IP address of the VXLAN endpoints.
+     - (Unknown) IP address of local overlay (tunnel) network endpoint. Use either an IPv4 or IPv6 address that resides on one of the host network interfaces. The IP version of this value must match the value of the 'overlay_ip_version' option in the ML2 plug-in configuration file on the neutron server node(s).
    * - ``tos`` = ``None``
      - (Integer) TOS for vxlan interface protocol packets.
    * - ``ttl`` = ``None``

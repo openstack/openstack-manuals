@@ -18,7 +18,7 @@
      - Description
    * - **[ml2_type_geneve]**
      -
-   * - ``max_header_size`` = ``50``
+   * - ``max_header_size`` = ``30``
      - (Integer) Geneve encapsulation header size is dynamic, this value is used to calculate the maximum MTU for the driver. This is the sum of the sizes of the outer ETH + IP + UDP + GENEVE header sizes. The default size for this field is 50, which is the size of the Geneve header without any additional option headers.
    * - ``vni_ranges`` =
      - (List) Comma-separated list of <vni_min>:<vni_max> tuples enumerating ranges of Geneve VNI IDs that are available for tenant network allocation
