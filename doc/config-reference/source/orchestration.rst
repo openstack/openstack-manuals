@@ -3,6 +3,7 @@ Orchestration service
 =====================
 
 .. toctree::
+   :maxdepth: 1
 
    orchestration/api.rst
    orchestration/clients.rst

@@ -3,6 +3,7 @@ Networking service
 ==================
 
 .. toctree::
+   :maxdepth: 1
 
    networking/networking_options_reference.rst
    networking/fwaas.rst
