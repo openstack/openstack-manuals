@@ -25,7 +25,7 @@ Contents
    clustering.rst
    compute.rst
    dashboard.rst
-   data-processing-service.rst
+   data-processing.rst
    database.rst
    identity.rst
    image.rst
