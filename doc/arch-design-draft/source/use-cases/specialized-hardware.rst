@@ -39,5 +39,5 @@ implementing and using it, is available at
 `https://wiki.openstack.org/wiki/Pci_passthrough <https://wiki.openstack.org/
 wiki/Pci_passthrough#How_to_check_PCI_status_with_PCI_api_patches>`_.
 
-.. figure:: figures/Specialized_Hardware2.png
+.. figure:: ../figures/Specialized_Hardware2.png
    :width: 100%

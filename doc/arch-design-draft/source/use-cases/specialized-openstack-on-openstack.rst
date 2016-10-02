@@ -66,5 +66,5 @@ complex solution for such a use case.
 Diagram
 ~~~~~~~
 
-.. figure:: figures/Specialized_OOO.png
+.. figure:: ../figures/Specialized_OOO.png
    :width: 100%
