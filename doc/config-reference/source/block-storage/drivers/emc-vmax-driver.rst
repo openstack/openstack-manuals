@@ -42,7 +42,7 @@ array.
 Required VMAX software suites for OpenStack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are five Software Suites available for the VMAX3:
+There are five Software Suites available for the VMAX All Flash and Hybrid:
 
 - Base Suite
 - Advanced Suite
@@ -52,7 +52,7 @@ There are five Software Suites available for the VMAX3:
 
 Openstack requires the Advanced Suite and the Local Replication Suite
 or the Total Productivity Pack (it includes the Advanced Suite and the
-Local Replication Suite) for the VMAX3.
+Local Replication Suite) for the VMAX All Flash and Hybrid.
 
 There are four bundled Software Suites for the VMAX2:
 
@@ -138,7 +138,7 @@ VMAX2:
 -  FAST automated storage tiering policy
 -  Striped volume creation
 
-VMAX3:
+VMAX All Flash and Hybrid:
 
 -  Service Level support
 -  SnapVX support
@@ -146,7 +146,7 @@ VMAX3:
 
 .. note::
 
-   VMAX3 All Flash array with Solutions Enabler 8.3 have compression enabled
+   VMAX All Flash array with Solutions Enabler 8.3 have compression enabled
    by default when associated with Diamond Service Level. This means volumes
    added to any newly created storage groups will be compressed.
 
@@ -316,7 +316,7 @@ Setup VMAX drivers
          <FastPolicy>GOLD1</FastPolicy>
        </EMC>
 
-   VMAX3
+   VMAX All Flash and Hybrid
      .. code-block:: xml
 
        <?xml version="1.0" encoding="UTF-8" ?>
@@ -374,15 +374,15 @@ Setup VMAX drivers
     storage pool.
 
 ``SLO``
-    VMAX3 only. The Service Level Objective (SLO) that manages the underlying
-    storage to provide expected performance. Omitting the ``SLO`` tag means
-    that non FAST storage groups will be created instead (storage groups not
-    associated with any service level).
+    VMAX All Flash and Hybrid only. The Service Level Objective (SLO) that
+    manages the underlying storage to provide expected performance. Omitting
+    the ``SLO`` tag means that non FAST storage groups will be created instead
+    (storage groups not associated with any service level).
 
 ``Workload``
-    VMAX3 only. When a workload type is added, the latency range is reduced
-    due to the added information. Omitting the ``Workload`` tag means the
-    latency range will be the widest for its SLO type.
+    VMAX All Flash and Hybrid only. When a workload type is added, the latency
+    range is reduced due to the added information. Omitting the ``Workload``
+    tag means the latency range will be the widest for its SLO type.
 
 FC Zoning with VMAX
 ~~~~~~~~~~~~~~~~~~~
@@ -424,7 +424,7 @@ VMAX2 (where FAST policy is used)
 
    OS-[shortHostName]-[fastPolicy]-[protocol]-MV
 
-VMAX3
+VMAX All Flash and Hybrid
 
 .. code-block:: ini
 
@@ -479,7 +479,7 @@ VMAX2 (where FAST policy is used)
 
    OS-[shortHostName]-[fastPolicy]-[protocol]-SG
 
-VMAX3
+VMAX All Flash and Hybrid
 
 .. code-block:: ini
 
@@ -626,13 +626,13 @@ in terms of bandwidth usage for clients. This enables them to provide a
 tiered level of service based on cost. The cinder QoS offers similar
 functionality based on volume type setting limits on host storage bandwidth
 per service offering. Each volume type is tied to specific QoS attributes
-that are unique to each storage vendor. The VMAX3 plugin offers limits via
+that are unique to each storage vendor. The VMAX plugin offers limits via
 the following attributes:
 
 - By I/O limit per second (IOPS)
 - By limiting throughput per second (MB/S)
 - Dynamic distribution
-- The VMAX3 offers modification of QoS at the Storage Group level
+- The VMAX offers modification of QoS at the Storage Group level
 
 USE CASE 1 - Default values
 ---------------------------
@@ -989,7 +989,7 @@ Restart ``nova-compute`` and ``cinder-volume`` services after the change.
 Verify you have multiple initiators available on the compute node for I/O
 -------------------------------------------------------------------------
 
-#. Create a 3GB VMAX3 volume.
+#. Create a 3GB VMAX volume.
 #. Create an instance from image out of native LVM storage or from VMAX
    storage, for example, from a bootable volume
 #. Attach the 3GB volume to the new instance:
@@ -1150,11 +1150,11 @@ Operations
 Workload Planner (WLP)
 ~~~~~~~~~~~~~~~~~~~~~~
 
-VMAX3 allows you to manage application storage by using Service Level
+VMAX Hybrid allows you to manage application storage by using Service Level
 Objectives (SLO) using policy based automation rather than the tiering in the
-VMAX2. The VMAX3 Hybrid comes with up to 6 SLO policies defined. Each has a
+VMAX2. The VMAX Hybrid comes with up to 6 SLO policies defined. Each has a
 set of workload characteristics that determine the drive types and mixes
-which will be used for the SLO. All storage in the VMAX3 Array is virtually
+which will be used for the SLO. All storage in the VMAX Array is virtually
 provisioned, and all of the pools are created in containers called Storage
 Resource Pools (SRP). Typically there is only one SRP, however there can be
 more. Therefore, it is the same pool we will provision to but we can provide
