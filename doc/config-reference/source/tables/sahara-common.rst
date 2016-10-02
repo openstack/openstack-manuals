@@ -36,6 +36,8 @@
      - (String) Default ntp server for time sync
    * - ``disable_event_log`` = ``False``
      - (Boolean) Disables event log feature.
+   * - ``edp_internal_db_enabled`` = ``True``
+     - (Boolean) Use Sahara internal db to store job binaries.
    * - ``enable_data_locality`` = ``False``
      - (Boolean) Enables data locality for hadoop cluster. Also enables data locality for Swift used by hadoop. If enabled, 'compute_topology' and 'swift_topology' configuration parameters should point to OpenStack and Swift topology correspondingly.
    * - ``enable_hypervisor_awareness`` = ``True``
@@ -50,18 +52,18 @@
      - (Boolean) Enable wait condition feature to reduce polling during cluster creation
    * - ``heat_stack_tags`` = ``data-processing-cluster``
      - (List) List of tags to be used during operating with stack.
-   * - ``infrastructure_engine`` = ``heat``
-     - (String) DEPRECATED: An engine which will be used to provision infrastructure for Hadoop cluster.
+   * - ``image`` = ``None``
+     - (String) The path to an image to modify. This image will be modified in-place: be sure to target a copy if you wish to maintain a clean master image.
    * - ``job_binary_max_KB`` = ``5120``
      - (Integer) Maximum length of job binary data in kilobytes that may be stored or retrieved in a single operation.
    * - ``job_canceling_timeout`` = ``300``
      - (Integer) Timeout for canceling job execution (in seconds). Sahara will try to cancel job execution during this time.
    * - ``job_workflow_postfix`` =
      - (String) Postfix for storing jobs in hdfs. Will be added to '/user/<hdfs user>/' path.
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
    * - ``min_transient_cluster_active_time`` = ``30``
      - (Integer) Minimal "lifetime" in seconds for a transient cluster. Cluster is guaranteed to be "alive" within this time period.
+   * - ``nameservers`` =
+     - (List) IP addresses of Designate nameservers. This is required if 'use_designate' is True
    * - ``node_domain`` = ``novalocal``
      - (String) The suffix of the node's FQDN. In nova-network that is the dhcp_domain config parameter.
    * - ``os_region_name`` = ``None``
@@ -76,18 +78,24 @@
      - (Integer) Max interval size between periodic tasks execution in seconds.
    * - ``periodic_workers_number`` = ``1``
      - (Integer) Number of threads to run periodic tasks.
-   * - ``plugins`` = ``vanilla, spark, cdh, ambari``
+   * - ``plugins`` = ``vanilla, spark, cdh, ambari, storm, mapr``
      - (List) List of plugins to be loaded. Sahara preserves the order of the list when returning it.
    * - ``proxy_command`` =
      - (String) Proxy command used to connect to instances. If set, this command should open a netcat socket, that Sahara will use for SSH and HTTP connections. Use {host} and {port} to describe the destination. Other available keywords: {tenant_id}, {network_id}, {router_id}.
    * - ``remote`` = ``ssh``
      - (String) A method for Sahara to execute commands on VMs.
+   * - ``root_fs`` = ``None``
+     - (String) The filesystem to mount as the root volume on the image. Novalue is required if only one filesystem is detected.
    * - ``rootwrap_command`` = ``sudo sahara-rootwrap /etc/sahara/rootwrap.conf``
      - (String) Rootwrap command to leverage. Use in conjunction with use_rootwrap=True
    * - ``swift_topology_file`` = ``etc/sahara/swift.topology``
      - (String) File with Swift topology.It should contain mapping between Swift nodes and racks.
+   * - ``test_only`` = ``False``
+     - (Boolean) If this flag is set, no changes will be made to the image; instead, the script will fail if discrepancies are found between the image and the intended state.
    * - ``use_barbican_key_manager`` = ``False``
      - (Boolean) Enable the usage of the OpenStack Key Management service provided by barbican.
+   * - ``use_designate`` = ``False``
+     - (Boolean) Use Designate for internal and external hostnames resolution
    * - ``use_floating_ips`` = ``True``
      - (Boolean) If set to True, Sahara will use floating IPs to communicate with instances. To make sure that all instances have floating IPs assigned in Nova Network set "auto_assign_floating_ip=True" in nova.conf. If Neutron is used for networking, make sure that all Node Groups have "floating_ip_pool" parameter defined.
    * - ``use_identity_api_v3`` = ``True``
@@ -97,19 +105,15 @@
    * - ``use_neutron`` = ``False``
      - (Boolean) Use Neutron Networking (False indicates the use of Nova networking).
    * - ``use_rootwrap`` = ``False``
-     - (Boolean) Use rootwrap facility to allow non-root users to run the sahara-all server instance and access private network IPs (only valid to use in conjunction with use_namespaces=True)
+     - (Boolean) Use rootwrap facility to allow non-root users to run the sahara services and access private network IPs (only valid to use in conjunction with use_namespaces=True)
+   * - ``use_router_proxy`` = ``True``
+     - (Boolean) Use ROUTER remote proxy.
    * - **[castellan]**
      -
    * - ``barbican_api_endpoint`` = ``None``
      - (String) The endpoint to use for connecting to the barbican api controller. By default, castellan will use the URL from the service catalog.
    * - ``barbican_api_version`` = ``v1``
      - (String) Version of the barbican API, for example: "v1"
-   * - **[certificates]**
-     -
-   * - ``barbican_auth`` = ``barbican_acl_auth``
-     - (String) Name of the Barbican authentication method to use
-   * - ``cert_manager_type`` = ``barbican``
-     - (String) Certificate Manager plugin. Defaults to barbican.
    * - **[cluster_verifications]**
      -
    * - ``verification_enable`` = ``True``

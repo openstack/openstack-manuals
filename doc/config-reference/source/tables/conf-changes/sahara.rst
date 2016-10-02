@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Mitaka for Data Processing service
+New, updated, and deprecated options in Newton for Data Processing service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
@@ -12,30 +12,24 @@ New, updated, and deprecated options in Mitaka for Data Processing service
 
    * - Option = default value
      - (Type) Help string
-   * - ``[DEFAULT] coordinator_heartbeat_interval = 1``
-     - (IntOpt) Interval size between heartbeat execution in seconds. Heartbeats are executed to make sure that connection to the coordination server is active.
-   * - ``[DEFAULT] hash_ring_replicas_count = 40``
-     - (IntOpt) Number of points that belongs to each member on a hash ring. The larger number leads to a better distribution.
-   * - ``[DEFAULT] periodic_coordinator_backend_url = None``
-     - (StrOpt) The backend URL to use for distributed periodic tasks coordination.
-   * - ``[DEFAULT] periodic_workers_number = 1``
-     - (IntOpt) Number of threads to run periodic tasks.
-   * - ``[DEFAULT] use_barbican_key_manager = False``
-     - (BoolOpt) Enable the usage of the OpenStack Key Management service provided by barbican.
-   * - ``[castellan] barbican_api_endpoint = None``
-     - (StrOpt) The endpoint to use for connecting to the barbican api controller. By default, castellan will use the URL from the service catalog.
-   * - ``[castellan] barbican_api_version = v1``
-     - (StrOpt) Version of the barbican API, for example: "v1"
-   * - ``[cluster_verifications] verification_enable = True``
-     - (BoolOpt) Option to enable verifications for all clusters
-   * - ``[cluster_verifications] verification_periodic_interval = 600``
-     - (IntOpt) Interval between two consecutive periodic tasks forverifications, in seconds.
-   * - ``[oslo_messaging_notifications] enable = False``
-     - (BoolOpt) Enables sending notifications to Ceilometer
-   * - ``[oslo_messaging_notifications] level = INFO``
-     - (StrOpt) Notification level for outgoing notifications
-   * - ``[oslo_messaging_notifications] publisher_id = None``
-     - (StrOpt) Notification publisher_id for outgoing notifications
+   * - ``[DEFAULT] edp_internal_db_enabled = True``
+     - (BoolOpt) Use Sahara internal db to store job binaries.
+   * - ``[DEFAULT] image = None``
+     - (StrOpt) The path to an image to modify. This image will be modified in-place: be sure to target a copy if you wish to maintain a clean master image.
+   * - ``[DEFAULT] nameservers =``
+     - (ListOpt) IP addresses of Designate nameservers. This is required if 'use_designate' is True
+   * - ``[DEFAULT] root_fs = None``
+     - (StrOpt) The filesystem to mount as the root volume on the image. Novalue is required if only one filesystem is detected.
+   * - ``[DEFAULT] test_only = False``
+     - (BoolOpt) If this flag is set, no changes will be made to the image; instead, the script will fail if discrepancies are found between the image and the intended state.
+   * - ``[DEFAULT] use_designate = False``
+     - (BoolOpt) Use Designate for internal and external hostnames resolution
+   * - ``[glance] api_insecure = False``
+     - (BoolOpt) Allow to perform insecure SSL requests to glance.
+   * - ``[glance] ca_file = None``
+     - (StrOpt) Location of ca certificates file to use for glance client requests.
+   * - ``[glance] endpoint_type = internalURL``
+     - (StrOpt) Endpoint type for glance client requests
 
 .. list-table:: New default values
    :header-rows: 1
@@ -44,12 +38,9 @@ New, updated, and deprecated options in Mitaka for Data Processing service
    * - Option
      - Previous default value
      - New default value
-   * - ``[DEFAULT] api_workers``
-     - ``0``
-     - ``1``
    * - ``[DEFAULT] plugins``
-     - ``vanilla, hdp, spark, cdh``
      - ``vanilla, spark, cdh, ambari``
+     - ``vanilla, spark, cdh, ambari, storm, mapr``
 
 .. list-table:: Deprecated options
    :header-rows: 1
@@ -57,12 +48,6 @@ New, updated, and deprecated options in Mitaka for Data Processing service
 
    * - Deprecated option
      - New Option
-   * - ``[DEFAULT] enable_notifications``
-     - ``[oslo_messaging_notifications] enable``
-   * - ``[DEFAULT] notification_level``
-     - ``[oslo_messaging_notifications] level``
-   * - ``[DEFAULT] notification_publisher_id``
-     - ``[oslo_messaging_notifications] publisher_id``
    * - ``[DEFAULT] use_syslog``
      - ``None``
 

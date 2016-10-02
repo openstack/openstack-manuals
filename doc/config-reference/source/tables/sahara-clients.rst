@@ -26,6 +26,14 @@
      - (String) Location of ca certificates file to use for cinder client requests.
    * - ``endpoint_type`` = ``internalURL``
      - (String) Endpoint type for cinder client requests
+   * - **[glance]**
+     -
+   * - ``api_insecure`` = ``False``
+     - (Boolean) Allow to perform insecure SSL requests to glance.
+   * - ``ca_file`` = ``None``
+     - (String) Location of ca certificates file to use for glance client requests.
+   * - ``endpoint_type`` = ``internalURL``
+     - (String) Endpoint type for glance client requests
    * - **[heat]**
      -
    * - ``api_insecure`` = ``False``
