@@ -4,10 +4,10 @@ Identity service
 
 .. toctree::
 
-   identity/options.rst
+   identity/api.rst
    identity/token-provider.rst
    identity/federated-identity.rst
-   identity/sample-configuration-files.rst
+   identity/config-options.rst
    identity/samples/index.rst
    identity/caching.rst
    tables/conf-changes/keystone.rst

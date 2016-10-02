@@ -22,9 +22,3 @@
      - (Integer) Size of executor thread pool.
    * - ``insecure_debug`` = ``False``
      - (Boolean) If set to true, then the server will return information in HTTP responses that may allow an unauthenticated or authenticated user to get more information than normal, such as additional details about why authentication failed. This may be useful for debugging but is insecure.
-   * - **[oslo_concurrency]**
-     -
-   * - ``disable_process_locking`` = ``False``
-     - (Boolean) Enables or disables inter-process locks.
-   * - ``lock_path`` = ``None``
-     - (String) Directory to use for lock files. For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.
