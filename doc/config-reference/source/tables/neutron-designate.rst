@@ -10,7 +10,7 @@
 
 .. _neutron-designate:
 
-.. list-table:: Description of designate configuration options
+.. list-table:: Description of DNS service configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -30,6 +30,10 @@
      - (String) Username for connecting to designate in admin context
    * - ``allow_reverse_dns_lookup`` = ``True``
      - (Boolean) Allow the creation of PTR records
+   * - ``ca_cert`` = ``None``
+     - (String) CA certificate file to use to verify connecting clients
+   * - ``insecure`` = ``False``
+     - (Boolean) Skip cert validation for SSL based admin_auth_url
    * - ``ipv4_ptr_zone_prefix_size`` = ``24``
      - (Integer) Number of bits in an ipv4 PTR zone that will be considered network prefix. It has to align to byte boundary. Minimum value is 8. Maximum value is 24. As a consequence, range of values is 8, 16 and 24
    * - ``ipv6_ptr_zone_prefix_size`` = ``120``

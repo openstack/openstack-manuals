@@ -20,10 +20,10 @@
      -
    * - ``allow_bulk`` = ``True``
      - (Boolean) Allow the usage of the bulk API
-   * - ``allow_pagination`` = ``False``
-     - (Boolean) Allow the usage of the pagination
-   * - ``allow_sorting`` = ``False``
-     - (Boolean) Allow the usage of the sorting
+   * - ``allow_pagination`` = ``True``
+     - (Boolean) DEPRECATED: Allow the usage of the pagination. This option has been deprecated and will now be enabled unconditionally.
+   * - ``allow_sorting`` = ``True``
+     - (Boolean) DEPRECATED: Allow the usage of the sorting. This option has been deprecated and will now be enabled unconditionally.
    * - ``api_extensions_path`` =
      - (String) The path for API extensions. Note that this can be a colon-separated list of paths. For example: api_extensions_path = extensions:/path/to/more/exts:/even/more/exts. The __path__ of neutron.extensions is appended to this, so if your extensions are in there you don't need to specify them here.
    * - ``api_paste_config`` = ``api-paste.ini``
@@ -52,10 +52,12 @@
      - (String) A python format string that is used as the template to generate log lines. The following values can beformatted into it: client_ip, date_time, request_line, status_code, body_length, wall_seconds.
    * - **[oslo_middleware]**
      -
+   * - ``enable_proxy_headers_parsing`` = ``False``
+     - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
+     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
    * - **[oslo_versionedobjects]**
      -
    * - ``fatal_exception_format_errors`` = ``False``

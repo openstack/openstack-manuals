@@ -18,5 +18,5 @@
      - Description
    * - **[ml2_sriov]**
      -
-   * - ``supported_pci_vendor_devs`` = ``15b3:1004, 8086:10ca``
-     - (List) Comma-separated list of supported PCI vendor devices, as defined by vendor_id:product_id according to the PCI ID Repository. Default enables support for Intel and Mellanox SR-IOV capable NICs.
+   * - ``supported_pci_vendor_devs`` = ``None``
+     - (List) DEPRECATED: Comma-separated list of supported PCI vendor devices, as defined by vendor_id:product_id according to the PCI ID Repository. Default None accept all PCI vendor devicesDEPRECATED: This option is deprecated in the Newton release and will be removed in the Ocata release. Starting from Ocata the mechanism driver will accept all PCI vendor devices.

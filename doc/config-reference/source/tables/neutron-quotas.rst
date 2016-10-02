@@ -25,7 +25,7 @@
    * - ``default_quota`` = ``-1``
      - (Integer) Default number of resource allowed per tenant. A negative value means unlimited.
    * - ``quota_driver`` = ``neutron.db.quota.driver.DbQuotaDriver``
-     - (String) Default driver to use for quota checks
+     - (String) Default driver to use for quota checks.
    * - ``quota_firewall`` = ``10``
      - (Integer) Number of firewalls allowed per tenant. A negative value means unlimited.
    * - ``quota_firewall_policy`` = ``10``
@@ -34,12 +34,8 @@
      - (Integer) Number of firewall rules allowed per tenant. A negative value means unlimited.
    * - ``quota_floatingip`` = ``50``
      - (Integer) Number of floating IPs allowed per tenant. A negative value means unlimited.
-   * - ``quota_health_monitor`` = ``-1``
-     - (Integer) Number of health monitors allowed per tenant. A negative value means unlimited.
    * - ``quota_healthmonitor`` = ``-1``
      - (Integer) Number of health monitors allowed per tenant. A negative value means unlimited.
-   * - ``quota_items`` = ``network, subnet, port``
-     - (List) DEPRECATED: Resource name(s) that are supported in quota features. This option is now deprecated for removal.
    * - ``quota_listener`` = ``-1``
      - (Integer) Number of Loadbalancer Listeners allowed per tenant. A negative value means unlimited.
    * - ``quota_loadbalancer`` = ``10``
@@ -62,7 +58,5 @@
      - (Integer) Number of security rules allowed per tenant. A negative value means unlimited.
    * - ``quota_subnet`` = ``10``
      - (Integer) Number of subnets allowed per tenant, A negative value means unlimited.
-   * - ``quota_vip`` = ``10``
-     - (Integer) Number of vips allowed per tenant. A negative value means unlimited.
    * - ``track_quota_usage`` = ``True``
-     - (Boolean) Keep in track in the database of current resourcequota usage. Plugins which do not leverage the neutron database should set this flag to False
+     - (Boolean) Keep in track in the database of current resource quota usage. Plugins which do not leverage the neutron database should set this flag to False.

@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _neutron-sriov_agent.rst:
+.. _neutron-sriov_agent:
 
-.. list-table:: Description of SR-IOV configuration options
+.. list-table:: Description of SR-IOV agent configuration options
    :header-rows: 1
    :class: config-ref-table
 

@@ -19,13 +19,13 @@
    * - **[DEFAULT]**
      -
    * - ``debug`` = ``False``
-     - (Boolean) If set to true, the logging level will be set to DEBUG instead of the default INFO level.
+     - (Boolean) If set to true, the logging level will be set to DEBUG instead of the default INFO level. **Mutable** This option can be changed without restarting.
    * - ``device_driver`` = ``['neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver']``
      - (Multi-valued) Drivers used to manage loadbalancing devices
    * - ``interface_driver`` = ``None``
      - (String) The driver used to manage the virtual interface.
    * - ``periodic_interval`` = ``40``
-     - (Integer) Seconds between running periodic tasks
+     - (Integer) Seconds between running periodic tasks.
    * - **[haproxy]**
      -
    * - ``loadbalancer_state_path`` = ``$state_path/lbaas``

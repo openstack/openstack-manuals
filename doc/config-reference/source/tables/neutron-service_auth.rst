@@ -34,6 +34,8 @@
      - (String) The auth version used to authenticate
    * - ``endpoint_type`` = ``public``
      - (String) The endpoint_type to be used
+   * - ``insecure`` = ``False``
+     - (Boolean) Disable server certificate verification
    * - ``region`` = ``RegionOne``
      - (String) The deployment region
    * - ``service_name`` = ``lbaas``

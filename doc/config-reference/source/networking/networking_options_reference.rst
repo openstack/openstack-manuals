@@ -74,58 +74,6 @@ Modular Layer 2 (ml2) SR-IOV Mechanism configuration options
 
 .. include:: ../tables/neutron-ml2_sriov.rst
 
-Configure the Oslo RPC messaging system
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-OpenStack projects use an open standard for messaging middleware known
-as AMQP. This messaging middleware enables the OpenStack services that
-run on multiple servers to talk to each other. OpenStack Oslo RPC
-supports two implementations of AMQP: RabbitMQ and ZeroMQ.
-
-Configure RabbitMQ
-------------------
-
-OpenStack Oslo RPC uses RabbitMQ by default. Use these options to
-configure the RabbitMQ message system. The ``rpc_backend`` option is
-optional as long as RabbitMQ is the default messaging system. However,
-if it is included the configuration, you must set it to
-``neutron.openstack.common.rpc.impl_kombu``:
-
-.. code-block:: ini
-
-   rpc_backend = neutron.openstack.common.rpc.impl_kombu
-
-Use these options to configure the
-RabbitMQ messaging system. You can
-configure messaging communication for different installation
-scenarios, tune retries for RabbitMQ, and define the size of the
-RPC thread pool. To monitor notifications through RabbitMQ, you
-must set the ``notification_driver`` option to
-``neutron.openstack.common.notifier.rpc_notifier`` in the
-``neutron.conf`` file.
-
-.. include:: ../tables/neutron-rabbitmq.rst
-
-Configure ZeroMQ
-----------------
-
-Use these options to configure the ZeroMQ messaging system for
-OpenStack Oslo RPC. ZeroMQ is not the default messaging system,
-so you must enable it by setting the ``rpc_backend`` option in
-the ``neutron.conf`` file.
-
-.. include:: ../tables/neutron-zeromq.rst
-
-Configure messaging
--------------------
-
-Use these common options to configure the RabbitMQ and ZeroMq
-messaging drivers in the ``neutron.conf`` file.
-
-.. include:: ../tables/neutron-rpc.rst
-.. include:: ../tables/neutron-redis.rst
-.. include:: ../tables/neutron-amqp.rst
-
 Agent
 ~~~~~
 
@@ -316,5 +264,6 @@ change security group settings.
 Misc
 ~~~~
 
-.. include:: ../tables/neutron-bgp.rst
+.. include:: ../tables/neutron-cache.rst
+.. include:: ../tables/neutron-fdb_agent.rst
 .. include:: ../tables/neutron-qos.rst

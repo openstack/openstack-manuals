@@ -32,8 +32,6 @@
      - (String) The type of authentication to use
    * - ``base_mac`` = ``fa:16:3e:00:00:00``
      - (String) The base MAC address Neutron will use for VIFs. The first 3 octets will remain unchanged. If the 4th octet is not 00, it will also be used. The others will be randomly generated.
-   * - ``bgp_drscheduler_driver`` = ``neutron.services.bgp.scheduler.bgp_dragent_scheduler.ChanceScheduler``
-     - (String) Driver used for scheduling BGP speakers to BGP DrAgent
    * - ``bind_host`` = ``0.0.0.0``
      - (String) The host IP to bind to
    * - ``bind_port`` = ``9696``
@@ -42,10 +40,6 @@
      - (String) The core plugin Neutron will use
    * - ``default_availability_zones`` =
      - (List) Default value of availability zone hints. The availability zone aware schedulers use this when the resources availability_zone_hints is empty. Multiple availability zones can be specified by a comma separated string. This value can be empty. In this case, even if availability_zone_hints for a resource is empty, availability zone is considered for high availability while scheduling the resource.
-   * - ``default_ipv4_subnet_pool`` = ``None``
-     - (String) DEPRECATED: Default IPv4 subnet pool to be used for automatic subnet CIDR allocation. Specifies by UUID the pool to be used in case where creation of a subnet is being called without a subnet pool ID. If not set then no pool will be used unless passed explicitly to the subnet create. If no pool is used, then a CIDR must be passed to create a subnet and that subnet will not be allocated from any pool; it will be considered part of the tenant's private address space. This option is deprecated for removal in the N release.
-   * - ``default_ipv6_subnet_pool`` = ``None``
-     - (String) DEPRECATED: Default IPv6 subnet pool to be used for automatic subnet CIDR allocation. Specifies by UUID the pool to be used in case where creation of a subnet is being called without a subnet pool ID. See the description for default_ipv4_subnet_pool for more information. This option is deprecated for removal in the N release.
    * - ``dhcp_agent_notification`` = ``True``
      - (Boolean) Allow sending resource operation notification to DHCP agent
    * - ``dhcp_agents_per_network`` = ``1``
@@ -74,28 +68,26 @@
      - (Integer) MTU of the underlying physical network. Neutron uses this value to calculate MTU for all virtual network components. For flat and VLAN networks, neutron uses this value without modification. For overlay networks such as VXLAN, neutron automatically subtracts the overlay protocol overhead from this value. Defaults to 1500, the standard value for Ethernet.
    * - ``ip_lib_force_root`` = ``False``
      - (Boolean) Force ip_lib calls to use the root helper
-   * - ``ipam_driver`` = ``None``
-     - (String) Neutron IPAM (IP address management) driver to use. If ipam_driver is not set (default behavior), no IPAM driver is used. In order to use the reference implementation of Neutron IPAM driver, use 'internal'.
+   * - ``ipam_driver`` = ``internal``
+     - (String) Neutron IPAM (IP address management) driver to use. By default, the reference implementation of the Neutron IPAM driver is used.
    * - ``mac_generation_retries`` = ``16``
-     - (Integer) How many times Neutron will retry MAC generation
+     - (Integer) DEPRECATED: How many times Neutron will retry MAC generation. This option is now obsolete and so is deprecated to be removed in the Ocata release.
    * - ``max_allowed_address_pair`` = ``10``
      - (Integer) Maximum number of allowed address pairs
    * - ``max_dns_nameservers`` = ``5``
      - (Integer) Maximum number of DNS nameservers per subnet
    * - ``max_fixed_ips_per_port`` = ``5``
-     - (Integer) DEPRECATED: Maximum number of fixed ips per port. This option is deprecated and will be removed in the N release.
+     - (Integer) DEPRECATED: Maximum number of fixed ips per port. This option is deprecated and will be removed in the Ocata release.
    * - ``max_rtr_adv_interval`` = ``100``
      - (Integer) MaxRtrAdvInterval setting for radvd.conf
    * - ``max_subnet_host_routes`` = ``20``
      - (Integer) Maximum number of host routes per subnet
-   * - ``memcached_servers`` = ``None``
-     - (List) Memcached servers or None for in process cache.
    * - ``min_rtr_adv_interval`` = ``30``
      - (Integer) MinRtrAdvInterval setting for radvd.conf
    * - ``periodic_fuzzy_delay`` = ``5``
      - (Integer) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
    * - ``periodic_interval`` = ``40``
-     - (Integer) Seconds between running periodic tasks
+     - (Integer) Seconds between running periodic tasks.
    * - ``report_interval`` = ``300``
      - (Integer) Interval between two metering reports
    * - ``state_path`` = ``/var/lib/neutron``
@@ -103,13 +95,15 @@
    * - ``vlan_transparent`` = ``False``
      - (Boolean) If True, then allow plugins that support it to create VLAN transparent networks.
    * - ``web_framework`` = ``legacy``
-     - (String) This will choose the web framework in which to run the Neutron API server. 'pecan' is a new experiemental rewrite of the API server.
+     - (String) This will choose the web framework in which to run the Neutron API server. 'pecan' is a new experimental rewrite of the API server.
    * - **[AGENT]**
      -
    * - ``check_child_processes_action`` = ``respawn``
      - (String) Action to be executed when a child process dies
    * - ``check_child_processes_interval`` = ``60``
      - (Integer) Interval between checks of child process liveness (seconds), use 0 to disable
+   * - ``debug_iptables_rules`` = ``False``
+     - (Boolean) Duplicate every iptables difference calculation to ensure the format being generated matches the format of iptables-save. This option should not be turned on for production systems because it imposes a performance penalty.
    * - ``log_agent_heartbeats`` = ``False``
      - (Boolean) Log agent heartbeats
    * - ``polling_interval`` = ``2``
@@ -118,6 +112,34 @@
      - (String) Root helper application. Use 'sudo neutron-rootwrap /etc/neutron/rootwrap.conf' to use the real root filter facility. Change to 'sudo' to skip the filtering and just run the command directly.
    * - ``root_helper_daemon`` = ``None``
      - (String) Root helper daemon application to use when possible.
+   * - **[profiler]**
+     -
+   * - ``connection_string`` = ``messaging://``
+     - (String) Connection string for a notifier backend. Default value is messaging:// which sets the notifier to oslo_messaging.
+
+       Examples of possible values:
+
+       * messaging://: use oslo_messaging driver for sending notifications.
+   * - ``enabled`` = ``False``
+     - (Boolean) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature).
+
+       Possible values:
+
+       * True: Enables the feature
+
+       * False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.
+   * - ``hmac_keys`` = ``SECRET_KEY``
+     - (String) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project.
+
+       Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
+   * - ``trace_sqlalchemy`` = ``False``
+     - (Boolean) Enables SQL requests profiling in services. Default value is False (SQL requests won't be traced).
+
+       Possible values:
+
+       * True: Enables SQL requests profiling. Each SQL query will be part of the trace and can the be analyzed by how much time was spent for that.
+
+       * False: Disables SQL requests profiling. The spent time is only shown on a higher level of operations. Single SQL queries cannot be analyzed this way.
    * - **[qos]**
      -
    * - ``notification_drivers`` = ``message_queue``

@@ -18,30 +18,12 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``loadbalancer_pool_scheduler_driver`` = ``neutron_lbaas.services.loadbalancer.agent_scheduler.ChanceScheduler``
-     - (String) Driver to use for scheduling pool to a default loadbalancer agent
    * - ``loadbalancer_scheduler_driver`` = ``neutron_lbaas.agent_scheduler.ChanceScheduler``
      - (String) Driver to use for scheduling to a default loadbalancer agent
    * - **[haproxy]**
      -
-   * - ``jinja_config_template`` = ``/usr/lib/python/site-packages/neutron-lbaas/neutron_lbaas/services/loadbalancer/drivers/haproxy/templates/haproxy.loadbalancer.j2``
+   * - ``jinja_config_template`` = ``/usr/lib/python/site-packages/neutron-lbaas/neutron_lbaas/drivers/haproxy/templates/haproxy.loadbalancer.j2``
      - (String) Jinja template file for haproxy configuration
-   * - **[netscaler_driver]**
-     -
-   * - ``is_synchronous`` = ``True``
-     - (String) Setting for option to enable synchronous operationsNetScaler Control Center Server.
-   * - ``netscaler_ncc_cleanup_mode`` = ``None``
-     - (String) Setting to enable/disable cleanup mode for NetScaler Control Center Server
-   * - ``netscaler_ncc_password`` = ``None``
-     - (String) Password to login to the NetScaler Control Center Server.
-   * - ``netscaler_ncc_uri`` = ``None``
-     - (String) The URL to reach the NetScaler Control Center Server.
-   * - ``netscaler_ncc_username`` = ``None``
-     - (String) Username to login to the NetScaler Control Center Server.
-   * - ``netscaler_status_collection`` = ``True,300``
-     - (String) Setting for member status collection fromNetScaler Control Center Server.
-   * - ``periodic_task_interval`` = ``2``
-     - (String) Setting for periodic task collection interval fromNetScaler Control Center Server..
    * - **[octavia]**
      -
    * - ``allocates_vip`` = ``False``
@@ -52,48 +34,6 @@
      - (Integer) Interval in seconds to poll octavia when an entity is created, updated, or deleted.
    * - ``request_poll_timeout`` = ``100``
      - (Integer) Time to stop polling octavia when a status of an entity does not change.
-   * - **[radware]**
-     -
-   * - ``actions_to_skip`` = ``setup_l2_l3``
-     - (List) List of actions that are not pushed to the completion queue.
-   * - ``ha_secondary_address`` = ``None``
-     - (String) IP address of secondary vDirect server.
-   * - ``l2_l3_ctor_params`` = ``{'ha_network_name': 'HA-Network', 'service': '_REPLACE_', 'ha_ip_pool_name': 'default', 'twoleg_enabled': '_REPLACE_', 'allocate_ha_ips': True, 'allocate_ha_vrrp': True}``
-     - (Dict) Parameter for l2_l3 workflow constructor.
-   * - ``l2_l3_setup_params`` = ``{'data_ip_address': '192.168.200.99', 'data_port': 1, 'gateway': '192.168.200.1', 'ha_port': 2, 'data_ip_mask': '255.255.255.0'}``
-     - (Dict) Parameter for l2_l3 workflow setup.
-   * - ``l2_l3_workflow_name`` = ``openstack_l2_l3``
-     - (String) Name of l2_l3 workflow. Default: openstack_l2_l3.
-   * - ``l4_action_name`` = ``BaseCreate``
-     - (String) Name of the l4 workflow action. Default: BaseCreate.
-   * - ``l4_workflow_name`` = ``openstack_l4``
-     - (String) Name of l4 workflow. Default: openstack_l4.
-   * - ``service_adc_type`` = ``VA``
-     - (String) Service ADC type. Default: VA.
-   * - ``service_adc_version`` =
-     - (String) Service ADC version.
-   * - ``service_cache`` = ``20``
-     - (Integer) Size of service cache. Default: 20.
-   * - ``service_compression_throughput`` = ``100``
-     - (Integer) Service compression throughput. Default: 100.
-   * - ``service_ha_pair`` = ``False``
-     - (Boolean) Enables or disables the Service HA pair. Default: False.
-   * - ``service_isl_vlan`` = ``-1``
-     - (Integer) A required VLAN for the interswitch link to use.
-   * - ``service_resource_pool_ids`` =
-     - (List) Resource pool IDs.
-   * - ``service_session_mirroring_enabled`` = ``False``
-     - (Boolean) Enable or disable Alteon interswitch link for stateful session failover. Default: False.
-   * - ``service_ssl_throughput`` = ``100``
-     - (Integer) Service SSL throughput. Default: 100.
-   * - ``service_throughput`` = ``1000``
-     - (Integer) Service throughput. Default: 1000.
-   * - ``vdirect_address`` = ``None``
-     - (String) IP address of vDirect server.
-   * - ``vdirect_password`` = ``radware``
-     - (String) vDirect user password.
-   * - ``vdirect_user`` = ``vDirect``
-     - (String) vDirect user name.
    * - **[radwarev2]**
      -
    * - ``child_workflow_template_names`` = ``manage_l3``
