@@ -3,7 +3,7 @@ Block Storage service
 =====================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    block-storage/block-storage-overview.rst
    block-storage/volume-drivers.rst

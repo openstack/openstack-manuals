@@ -3,6 +3,7 @@ Identity service
 ================
 
 .. toctree::
+   :maxdepth: 1
 
    identity/api.rst
    identity/token-provider.rst

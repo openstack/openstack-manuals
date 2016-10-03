@@ -3,6 +3,7 @@ Database service
 ================
 
 .. toctree::
+   :maxdepth: 1
 
    database/database.rst
    database/rpc.rst

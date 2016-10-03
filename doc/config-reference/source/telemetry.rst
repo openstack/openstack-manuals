@@ -3,6 +3,7 @@ Telemetry service
 =================
 
 .. toctree::
+   :maxdepth: 1
 
    telemetry/telemetry-config-options.rst
    telemetry/alarming-config-options.rst

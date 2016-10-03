@@ -3,7 +3,7 @@ Object Storage service
 ======================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    object-storage/about.rst
    object-storage/general-service-conf.rst
