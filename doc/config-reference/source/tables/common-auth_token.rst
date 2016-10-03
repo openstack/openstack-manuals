@@ -39,11 +39,11 @@
    * - ``auth_type`` = ``None``
      - (Unknown) Authentication type to load
    * - ``auth_uri`` = ``None``
-     - (String) Complete public Identity API endpoint.
+     - (String) Complete "public" Identity API endpoint. This endpoint should not be an "admin" endpoint, as it should be accessible by all end users. Unauthenticated clients are redirected to this endpoint to authenticate. Although this endpoint should ideally be unversioned, client support in the wild varies. If you're using a versioned v2 endpoint here, then this should *not* be the same endpoint the service user utilizes for validating tokens, because normal end users may not be able to reach that endpoint.
    * - ``auth_version`` = ``None``
      - (String) API version of the admin Identity API endpoint.
    * - ``cache`` = ``None``
-     - (String) Env key for the swift cache.
+     - (String) Request environment key where the Swift cache object is stored. When auth_token middleware is deployed with a Swift cache, use this option to have the middleware share a caching backend with swift. Otherwise, use the ``memcached_servers`` option instead.
    * - ``cafile`` = ``None``
      - (String) A PEM encoded Certificate Authority to use when verifying HTTPs connections. Defaults to system CAs.
    * - ``certfile`` = ``None``
@@ -89,7 +89,7 @@
    * - ``region_name`` = ``None``
      - (String) The region in which the identity server can be found.
    * - ``revocation_cache_time`` = ``10``
-     - (Integer) Determines the frequency at which the list of revoked tokens is retrieved from the Identity service (in seconds). A high number of revocation events combined with a low cache duration may significantly reduce performance.
+     - (Integer) Determines the frequency at which the list of revoked tokens is retrieved from the Identity service (in seconds). A high number of revocation events combined with a low cache duration may significantly reduce performance. Only valid for PKI tokens.
    * - ``signing_dir`` = ``None``
      - (String) Directory used to cache files related to PKI tokens.
    * - ``token_cache_time`` = ``300``
