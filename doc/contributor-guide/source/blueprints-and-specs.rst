@@ -66,8 +66,8 @@ remove them entirely.
 Installation Guides
 -------------------
 
-The OpenStack Installation Guide describes a manual install process for
-multiple distributions based on the following packaging systems:
+The OpenStack Installation Tutorials and Guides describe a manual install
+process for multiple distributions based on the following packaging systems:
 
 .. list-table::
    :header-rows: 1
@@ -76,27 +76,35 @@ multiple distributions based on the following packaging systems:
      - Source location
      - Target location
 
-   * - Installation Guide for openSUSE and SUSE Linux Enterprise Server
+   * - Installation Tutorial for openSUSE and SUSE Linux Enterprise Server
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/mitaka/install-guide-obs/
+     - http://docs.openstack.org/newton/install-guide-obs/
 
-   * - Installation Guide for Red Hat Enterprise Linux and CentOS
+   * - Installation Tutorial for Red Hat Enterprise Linux and CentOS
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/mitaka/install-guide-rdo/
+     - http://docs.openstack.org/newton/install-guide-rdo/
 
-   * - Installation Guide for Ubuntu 14.04 (LTS)
+   * - Installation Tutorial for Ubuntu 16.04 (LTS)
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/mitaka/install-guide-ubuntu/
+     - http://docs.openstack.org/newton/install-guide-ubuntu/
+
+   * - Installation Tutorial For Debian With Debconf
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
+     - http://docs.openstack.org/newton/install-guide-debconf/
+
+   * - Installation Tutorial For Debian
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
+     - http://docs.openstack.org/newton/install-guide-debian/
 
 Guides for deployers and administrators
 ---------------------------------------
 
 * `OpenStack Configuration Reference
-  <http://docs.openstack.org/mitaka/config-reference/>`_:
+  <http://docs.openstack.org/newton/config-reference/>`_:
   Contains a reference listing of all configuration options for OpenStack
   services by release version.
 * `OpenStack Networking Guide
-  <http://docs.openstack.org/mitaka/networking-guide/>`_:
+  <http://docs.openstack.org/newton/networking-guide/>`_:
   This guide targets OpenStack administrators seeking to deploy and manage
   OpenStack Networking (neutron).
 
@@ -109,11 +117,11 @@ Guides for deployers and administrators
 
    * - Configuration Reference
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/config-reference
-     - http://docs.openstack.org/mitaka/config-reference/
+     - http://docs.openstack.org/newton/config-reference/
 
    * - OpenStack Networking Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide
-     - http://docs.openstack.org/mitaka/networking-guide/
+     - http://docs.openstack.org/newton/networking-guide/
 
 Continuously released documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
