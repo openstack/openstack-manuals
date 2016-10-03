@@ -264,6 +264,5 @@ change security group settings.
 Misc
 ~~~~
 
-.. include:: ../tables/neutron-cache.rst
 .. include:: ../tables/neutron-fdb_agent.rst
 .. include:: ../tables/neutron-qos.rst

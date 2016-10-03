@@ -25,7 +25,6 @@ Use the following options in the ``/etc/octavia/octavia.conf`` file
 to configure the octavia service.
 
 .. include:: ../tables/octavia-auth_token.rst
-.. include:: ../tables/octavia-cache.rst
 .. include:: ../tables/octavia-common.rst
 .. include:: ../tables/octavia-rabbitmq.rst
 .. include:: ../tables/octavia-redis.rst

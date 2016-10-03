@@ -36,6 +36,8 @@
      - (String) The host IP to bind to
    * - ``bind_port`` = ``9696``
      - (Port number) The port to bind to
+   * - ``cache_url`` =
+     - (String) DEPRECATED: URL to connect to the cache back end. This option is deprecated in the Newton release and will be removed. Please add a [cache] group for oslo.cache in your neutron.conf and add "enable" and "backend" options in this section.
    * - ``core_plugin`` = ``None``
      - (String) The core plugin Neutron will use
    * - ``default_availability_zones`` =
