@@ -161,7 +161,7 @@ Install and configure components
 
    .. code-block:: console
 
-      # keystone-manage bootstrap --bootstrap-password ADMIN_PASSWORD \
+      # keystone-manage bootstrap --bootstrap-password ADMIN_PASS \
         --bootstrap-admin-url http://controller:35357/v3/ \
         --bootstrap-internal-url http://controller:35357/v3/ \
         --bootstrap-public-url http://controller:5000/v3/ \
@@ -169,7 +169,7 @@ Install and configure components
 
    .. end
 
-   Replace ``ADMIN_PASSWORD`` with a suitable password for an administrative user.
+   Replace ``ADMIN_PASS`` with a suitable password for an administrative user.
 
 .. only:: rdo
 
@@ -374,7 +374,7 @@ Install and configure components
    .. code-block:: console
 
       $ export OS_USERNAME=admin
-      $ export OS_PASSWORD=ADMIN_PASSWORD
+      $ export OS_PASSWORD=ADMIN_PASS
       $ export OS_PROJECT_NAME=admin
       $ export OS_USER_DOMAIN_NAME=Default
       $ export OS_PROJECT_DOMAIN_NAME=Default
@@ -385,7 +385,7 @@ Install and configure components
 
    .. only:: obs or rdo or ubuntu
 
-      Replace ``ADMIN_PASSWORD`` with the password used in the
+      Replace ``ADMIN_PASS`` with the password used in the
       ``keystone-manage bootstrap`` command from the section called
       :ref:`keystone-install`.
 
