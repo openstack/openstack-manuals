@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Mitaka for Networking
+New, updated, and deprecated options in Newton for Networking
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
@@ -12,72 +12,48 @@ New, updated, and deprecated options in Mitaka for Networking
 
    * - Option = default value
      - (Type) Help string
-   * - ``[DEFAULT] bgp_drscheduler_driver = neutron.services.bgp.scheduler.bgp_dragent_scheduler.ChanceScheduler``
-     - (StrOpt) Driver used for scheduling BGP speakers to BGP DrAgent
-   * - ``[DEFAULT] default_availability_zones =``
-     - (ListOpt) Default value of availability zone hints. The availability zone aware schedulers use this when the resources availability_zone_hints is empty. Multiple availability zones can be specified by a comma separated string. This value can be empty. In this case, even if availability_zone_hints for a resource is empty, availability zone is considered for high availability while scheduling the resource.
-   * - ``[DEFAULT] dnsmasq_local_resolv = False``
-     - (BoolOpt) Enables the dnsmasq service to provide name resolution for instances via DNS resolvers on the host running the DHCP agent. Effectively removes the '--no-resolv' option from the dnsmasq process arguments. Adding custom DNS resolvers to the 'dnsmasq_dns_servers' option disables this feature.
-   * - ``[DEFAULT] external_dns_driver = None``
-     - (StrOpt) Driver for external DNS integration.
-   * - ``[DEFAULT] global_physnet_mtu = 1500``
-     - (IntOpt) MTU of the underlying physical network. Neutron uses this value to calculate MTU for all virtual network components. For flat and VLAN networks, neutron uses this value without modification. For overlay networks such as VXLAN, neutron automatically subtracts the overlay protocol overhead from this value. Defaults to 1500, the standard value for Ethernet.
-   * - ``[DEFAULT] ipv6_pd_enabled = False``
-     - (BoolOpt) Enables IPv6 Prefix Delegation for automatic subnet CIDR allocation. Set to True to enable IPv6 Prefix Delegation for subnet allocation in a PD-capable environment. Users making subnet creation requests for IPv6 subnets without providing a CIDR or subnetpool ID will be given a CIDR via the Prefix Delegation mechanism. Note that enabling PD will override the behavior of the default IPv6 subnetpool.
-   * - ``[DEFAULT] max_rtr_adv_interval = 100``
-     - (IntOpt) MaxRtrAdvInterval setting for radvd.conf
-   * - ``[DEFAULT] min_rtr_adv_interval = 30``
-     - (IntOpt) MinRtrAdvInterval setting for radvd.conf
-   * - ``[DEFAULT] rpc_state_report_workers = 1``
-     - (IntOpt) Number of RPC worker processes dedicated to state reports queue
-   * - ``[DEFAULT] web_framework = legacy``
-     - (StrOpt) This will choose the web framework in which to run the Neutron API server. 'pecan' is a new experiemental rewrite of the API server.
-   * - ``[DEFAULT] wsgi_default_pool_size = 100``
-     - (IntOpt) Size of the pool of greenthreads used by wsgi
-   * - ``[DEFAULT] wsgi_log_format = %(client_ip)s "%(request_line)s" status: %(status_code)s  len: %(body_length)s time: %(wall_seconds).7f``
-     - (StrOpt) A python format string that is used as the template to generate log lines. The following values can beformatted into it: client_ip, date_time, request_line, status_code, body_length, wall_seconds.
-   * - ``[AGENT] availability_zone = nova``
-     - (StrOpt) Availability zone of this node
-   * - ``[BGP] bgp_router_id = None``
-     - (StrOpt) 32-bit BGP identifier, typically an IPv4 address owned by the system running the BGP DrAgent.
-   * - ``[BGP] bgp_speaker_driver = None``
-     - (StrOpt) BGP speaker driver class to be instantiated.
-   * - ``[OVS] ovsdb_connection = tcp:127.0.0.1:6640``
-     - (StrOpt) The connection string for the native OVSDB backend. Requires the native ovsdb_interface to be enabled.
-   * - ``[OVS] vhostuser_socket_dir = /var/run/openvswitch``
-     - (StrOpt) OVS vhost-user socket directory.
-   * - ``[QOS] kernel_hz = 250``
-     - (IntOpt) Value of host kernel tick rate (hz) for calculating minimum burst value in bandwidth limit rules for a port with QoS. See kernel configuration file for HZ value and tc-tbf manual for more information.
-   * - ``[QOS] tbf_latency = 50``
-     - (IntOpt) Value of latency (ms) for calculating size of queue for a port with QoS. See tc-tbf manual for more information.
-   * - ``[VXLAN] arp_responder = False``
-     - (BoolOpt) Enable local ARP responder which provides local responses instead of performing ARP broadcast into the overlay. Enabling local ARP responder is not fullycompatible with the allowed-address-pairs extension.
-   * - ``[designate] admin_auth_url = None``
-     - (StrOpt) Authorization URL for connecting to designate in admin context
-   * - ``[designate] admin_password = None``
-     - (StrOpt) Password for connecting to designate in admin context
-   * - ``[designate] admin_tenant_id = None``
-     - (StrOpt) Tenant id for connecting to designate in admin context
-   * - ``[designate] admin_tenant_name = None``
-     - (StrOpt) Tenant name for connecting to designate in admin context
-   * - ``[designate] admin_username = None``
-     - (StrOpt) Username for connecting to designate in admin context
-   * - ``[designate] allow_reverse_dns_lookup = True``
-     - (BoolOpt) Allow the creation of PTR records
-   * - ``[designate] ipv4_ptr_zone_prefix_size = 24``
-     - (IntOpt) Number of bits in an ipv4 PTR zone that will be considered network prefix. It has to align to byte boundary. Minimum value is 8. Maximum value is 24. As a consequence, range of values is 8, 16 and 24
-   * - ``[designate] ipv6_ptr_zone_prefix_size = 120``
-     - (IntOpt) Number of bits in an ipv6 PTR zone that will be considered network prefix. It has to align to nyble boundary. Minimum value is 4. Maximum value is 124. As a consequence, range of values is 4, 8, 12, 16,..., 124
-   * - ``[designate] ptr_zone_email =``
-     - (StrOpt) The email address to be used when creating PTR zones. If not specified, the email address will be admin@<dns_domain>
-   * - ``[designate] url = None``
-     - (StrOpt) URL for connecting to designate
-   * - ``[macvtap] physical_interface_mappings =``
-     - (ListOpt) Comma-separated list of <physical_network>:<physical_interface> tuples mapping physical network names to the agent's node-specific physical network interfaces to be used for flat and VLAN networks. All physical networks listed in network_vlan_ranges on the server should have mappings to appropriate interfaces on each agent.
-   * - ``[nova] auth_type = None``
-     - (Opt) Authentication type to load
-   * - ``[nova] endpoint_type = public``
-     - (StrOpt) Type of the nova endpoint to use. This endpoint will be looked up in the keystone catalog and should be one of public, internal or admin.
+   * - ``[DEFAULT] cache_url =``
+     - (StrOpt) URL to connect to the cache back end. This option is deprecated in the Newton release and will be removed. Please add a [cache] group for oslo.cache in your neutron.conf and add "enable" and "backend" options in this section.
+   * - ``[AGENT] debug_iptables_rules = False``
+     - (BoolOpt) Duplicate every iptables difference calculation to ensure the format being generated matches the format of iptables-save. This option should not be turned on for production systems because it imposes a performance penalty.
+   * - ``[FDB] shared_physical_device_mappings =``
+     - (ListOpt) Comma-separated list of <physical_network>:<network_device> tuples mapping physical network names to the agent's node-specific shared physical network device between SR-IOV and OVS or SR-IOV and linux bridge
+   * - ``[cache] backend = dogpile.cache.null``
+     - (StrOpt) Dogpile.cache backend module. It is recommended that Memcache or Redis (dogpile.cache.redis) be used in production deployments. For eventlet-based or highly threaded servers, Memcache with pooling (oslo_cache.memcache_pool) is recommended. For low thread servers, dogpile.cache.memcached is recommended. Test environments with a single instance of the server can use the dogpile.cache.memory backend.
+   * - ``[cache] backend_argument = []``
+     - (MultiStrOpt) Arguments supplied to the backend module. Specify this option once per argument to be passed to the dogpile.cache backend. Example format: "<argname>:<value>".
+   * - ``[cache] config_prefix = cache.oslo``
+     - (StrOpt) Prefix for building the configuration dictionary for the cache region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name.
+   * - ``[cache] debug_cache_backend = False``
+     - (BoolOpt) Extra debugging from the cache backend (cache keys, get/set/delete/etc calls). This is only really useful if you need to see the specific cache-backend get/set/delete calls with the keys/values. Typically this should be left set to false.
+   * - ``[cache] enabled = False``
+     - (BoolOpt) Global toggle for caching.
+   * - ``[cache] expiration_time = 600``
+     - (IntOpt) Default TTL, in seconds, for any cached item in the dogpile.cache region. This applies to any cached method that doesn't have an explicit cache expiration time defined for it.
+   * - ``[cache] memcache_dead_retry = 300``
+     - (IntOpt) Number of seconds memcached server is considered dead before it is tried again. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
+   * - ``[cache] memcache_pool_connection_get_timeout = 10``
+     - (IntOpt) Number of seconds that an operation will wait to get a memcache client connection.
+   * - ``[cache] memcache_pool_maxsize = 10``
+     - (IntOpt) Max total number of open connections to every memcached server. (oslo_cache.memcache_pool backend only).
+   * - ``[cache] memcache_pool_unused_timeout = 60``
+     - (IntOpt) Number of seconds a connection to memcached is held unused in the pool before it is closed. (oslo_cache.memcache_pool backend only).
+   * - ``[cache] memcache_servers = localhost:11211``
+     - (ListOpt) Memcache servers in the format of "host:port". (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
+   * - ``[cache] memcache_socket_timeout = 3``
+     - (IntOpt) Timeout in seconds for every call to a server. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
+   * - ``[cache] proxies =``
+     - (ListOpt) Proxy classes to import that will affect the way the dogpile.cache backend functions. See the dogpile.cache documentation on changing-backend-behavior.
+   * - ``[ml2] overlay_ip_version = 4``
+     - (IntOpt) IP version of all overlay (tunnel) network endpoints. Use a value of 4 for IPv4 or 6 for IPv6.
+   * - ``[profiler] connection_string = messaging://``
+     - (StrOpt) Connection string for a notifier backend. Default value is messaging:// which sets the notifier to oslo_messaging. Examples of possible values: * messaging://: use oslo_messaging driver for sending notifications.
+   * - ``[profiler] enabled = False``
+     - (BoolOpt) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature). Possible values: * True: Enables the feature * False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.
+   * - ``[profiler] hmac_keys = SECRET_KEY``
+     - (StrOpt) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project. Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
+   * - ``[profiler] trace_sqlalchemy = False``
+     - (BoolOpt) Enables SQL requests profiling in services. Default value is False (SQL requests won't be traced). Possible values: * True: Enables SQL requests profiling. Each SQL query will be part of the trace and can the be analyzed by how much time was spent for that. * False: Disables SQL requests profiling. The spent time is only shown on a higher level of operations. Single SQL queries cannot be analyzed this way.
 
 .. list-table:: New default values
    :header-rows: 1
@@ -86,21 +62,36 @@ New, updated, and deprecated options in Mitaka for Networking
    * - Option
      - Previous default value
      - New default value
-   * - ``[DEFAULT] advertise_mtu``
+   * - ``[DEFAULT] allow_pagination``
      - ``False``
      - ``True``
-   * - ``[DEFAULT] host``
-     - ``localhost``
-     - ``example.domain``
-   * - ``[AGENT] veth_mtu``
+   * - ``[DEFAULT] allow_sorting``
+     - ``False``
+     - ``True``
+   * - ``[DEFAULT] dnsmasq_dns_servers``
      - ``None``
-     - ``9000``
-   * - ``[ml2] path_mtu``
-     - ``0``
-     - ``1500``
-   * - ``[ml2_type_flat] flat_networks``
      -
-     - ``*``
+   * - ``[DEFAULT] external_network_bridge``
+     - ``br-ex``
+     -
+   * - ``[DEFAULT] ipam_driver``
+     - ``None``
+     - ``internal``
+   * - ``[OVS] of_interface``
+     - ``ovs-ofctl``
+     - ``native``
+   * - ``[OVS] ovsdb_interface``
+     - ``vsctl``
+     - ``native``
+   * - ``[ml2] path_mtu``
+     - ``1500``
+     - ``0``
+   * - ``[ml2_sriov] supported_pci_vendor_devs``
+     - ``15b3:1004, 8086:10ca``
+     - ``None``
+   * - ``[ml2_type_geneve] max_header_size``
+     - ``50``
+     - ``30``
 
 .. list-table:: Deprecated options
    :header-rows: 1
@@ -108,8 +99,10 @@ New, updated, and deprecated options in Mitaka for Networking
 
    * - Deprecated option
      - New Option
+   * - ``[DEFAULT] min_l3_agents_per_router``
+     - ``None``
    * - ``[DEFAULT] use_syslog``
      - ``None``
-   * - ``[ml2] segment_mtu``
-     - ``[DEFAULT] global_physnet_mtu``
+   * - ``[ml2_sriov] supported_pci_vendor_devs``
+     - ``None``
 
