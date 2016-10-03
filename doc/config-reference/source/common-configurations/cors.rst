@@ -10,4 +10,6 @@ For more information, see `Cross-project features
 <http://docs.openstack.org/admin-guide/cross-project.html>`__
 in OpenStack Administrator Guide.
 
-.. include:: ../tables/common-cors.rst
+For a complete list of all available cache configuration options,
+see `CORS configuration options
+<http://docs.openstack.org/developer/oslo.middleware/cors.html#configuration-options>`_.
