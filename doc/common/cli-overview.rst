@@ -1,10 +1,11 @@
-========
-Overview
-========
+============================
+Command-line client overview
+============================
 
-Each OpenStack project provides a command-line client, which enables
-you to access the project API through easy-to-use commands. For
-example, the Compute service provides a ``nova`` command-line client.
+OpenStackClient project provides a unified command-line client, which
+enables you to access the project API through easy-to-use commands.
+Also, most OpenStack project provides a command-line client for each service.
+For example, the Compute service provides a ``nova`` command-line client.
 
 You can run the commands from the command line, or include the
 commands within scripts to automate tasks. If you provide OpenStack
@@ -25,7 +26,20 @@ your own resources within the limits set by administrators. You can
 modify the examples provided in this section to create other types and
 sizes of server instances.
 
-The following table lists the command-line client for each OpenStack
+Unified command-line client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use the unified ``openstack`` command (**python-openstackclient**)
+for the most of OpenStack services.
+For more information, see `OpenStackClient document
+<http://docs.openstack.org/developer/python-openstackclient/>`_.
+
+
+Individual command-line clients
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Unless the unified OpenStack Client (**python-openstackclient**) is used,
+the following table lists the command-line client for each OpenStack
 service with its package name and description.
 
 .. list-table:: OpenStack services and clients
@@ -36,10 +50,6 @@ service with its package name and description.
      - Client
      - Package
      - Description
-   * - **Command-line client**
-     - **openstack**
-     - **python-openstackclient**
-     - **Common client for the OpenStack project.**
    * - Application Catalog service
      - murano
      - python-muranoclient
@@ -80,10 +90,6 @@ service with its package name and description.
      - designate
      - python-designateclient
      - Creates and manages self service authoritative DNS.
-   * - Identity service
-     - keystone
-     - python-keystoneclient
-     - Creates and manages users, tenants, roles, endpoints, and credentials.
    * - Image service
      - glance
      - python-glanceclient

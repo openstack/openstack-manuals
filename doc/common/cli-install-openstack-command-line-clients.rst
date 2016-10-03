@@ -156,7 +156,6 @@ list below.
 *  ``glance`` - Image service API
 *  ``gnocchi`` - Telemetry API v3
 *  ``heat`` - Orchestration API
-*  ``keystone`` - Identity service API and extensions
 *  ``magnum`` - Container Infrastructure Management service API
 *  ``manila`` - Shared file systems API
 *  ``mistral`` - Workflow service API
@@ -168,10 +167,6 @@ list below.
 *  ``senlin`` - Clustering service API
 *  ``swift`` - Object Storage API
 *  ``trove`` - Database service API
-
-While you can install the ``keystone`` client for interacting with version 2.0
-of the service's API, you should use the ``openstack`` client for all Identity
-interactions. Identity API v2 is deprecated in the Mitaka release.
 
 Installing with pip
 -------------------
