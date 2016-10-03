@@ -5,6 +5,12 @@ Load-Balancer-as-a-Service configuration options
 Use the following options in the ``neutron_lbaas.conf`` file for the
 LBaaS agent.
 
+.. note::
+
+   The common configurations for shared services and libraries,
+   such as database connections and RPC messaging,
+   are described at :doc:`../common-configurations`.
+
 .. include:: ../tables/neutron-lbaas.rst
 
 Use the following options in the ``lbaas_agent.ini`` file for the
@@ -26,7 +32,4 @@ to configure the octavia service.
 
 .. include:: ../tables/octavia-auth_token.rst
 .. include:: ../tables/octavia-common.rst
-.. include:: ../tables/octavia-rabbitmq.rst
 .. include:: ../tables/octavia-redis.rst
-.. include:: ../tables/octavia-rpc.rst
-.. include:: ../tables/octavia-zeromq.rst

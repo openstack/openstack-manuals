@@ -32,7 +32,7 @@
      - (String) The API paste config file to use
    * - ``auth_strategy`` = ``keystone``
      - (String) The type of authentication to use
-   * - ``bind_host`` = ``0.0.0.0``
+   * - ``bind_host`` = ``127.0.0.1``
      - (Unknown) The host IP to bind to
    * - ``bind_port`` = ``9876``
      - (Port number) The port to bind to
@@ -100,6 +100,8 @@
      - (String) Nova instance flavor id for the Amphora
    * - ``amp_image_id`` =
      - (String) DEPRECATED: Glance image id for the Amphora image to boot Superseded by amp_image_tag option.
+   * - ``amp_image_owner_id`` =
+     - (String) Restrict glance image selection to a specific owner ID. This is a recommended security setting.
    * - ``amp_image_tag`` =
      - (String) Glance image tag for the Amphora image to boot. Use this option to be able to update the image without reconfiguring Octavia. Ignored if amp_image_id is defined.
    * - ``amp_network`` =
@@ -174,7 +176,7 @@
      - (Boolean) If False, use sysvinit.
    * - **[health_manager]**
      -
-   * - ``bind_ip`` = ``0.0.0.0``
+   * - ``bind_ip`` = ``127.0.0.1``
      - (Unknown) IP address the controller will listen on for heart beats
    * - ``bind_port`` = ``5555``
      - (Port number) Port number the controller will listen onfor heart beats
