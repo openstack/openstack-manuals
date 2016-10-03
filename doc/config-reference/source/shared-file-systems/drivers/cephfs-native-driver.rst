@@ -31,11 +31,14 @@ The following operations are supported with CephFS back end:
 
 - Allow share access.
 
-  Note the following limitations for CephFS shares:
+  - ``read-only`` access level is supported.
+
+  - ``read-write`` access level is supported.
+
+
+  Note the following limitation for CephFS shares:
 
   - Only ``cephx`` access type is supported.
-
-  - For the Mitaka release, only read-write access level is supported.
 
 - Deny share access.
 
@@ -211,43 +214,23 @@ Allow Ceph auth ID ``alice`` access to the share using ``cephx`` access type.
 
     manila access-allow cephshare1 cephx alice
 
+Note the access status and the secret access key of ``alice``.
+
+.. code-block:: console
+
+    manila access-list cephshare1
+
 
 Mounting shares using FUSE client
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using the secret key of the authorized ID ``alice`` create a keyring file,
-``alice.keyring`` like:
+Using the secret key of the authorized ID ``alice``, create a keyring file
+``alice.keyring``.
 
 .. code-block:: ini
 
     [client.alice]
             key = AQA8+ANW/4ZWNRAAOtWJMFPEihBA1unFImJczA==
-
-.. note::
-
-    In the Mitaka release, the secret key is not exposed by any Shared File
-    Systems service API.
-    The Ceph storage admin needs to pass the secret key to the guest out of
-    band of manila. You can refer to the link,
-    `<http://docs.ceph.com/docs/jewel/rados/operations/user-management/#get-a-user>`_,
-    to see how the storage admin could obtain the secret key of an ID.
-
-    Alternatively, the cloud admin can create Ceph auth IDs for each of the
-    tenants. The users can then request manila to authorize the pre-created
-    Ceph auth IDs, whose secret keys are already shared with them out of band
-    of manila, to access the shares.
-
-    The following is a command that the cloud admin could run from the server
-    running the :term:`manila-share` service to create a Ceph auth ID
-    and get its keyring file:
-
-    .. code-block:: console
-
-        ceph --name=client.manila --keyring=/etc/ceph/manila.keyring auth \
-        get-or-create client.alice -o alice.keyring
-
-    For more details, please see the Ceph documentation at,
-    `<http://docs.ceph.com/docs/jewel/rados/operations/user-management/#add-a-user>`_.
 
 Using the monitor IP addresses from the share's export location, create a
 configuration file, ``ceph.conf``:
@@ -278,12 +261,6 @@ Consider the driver as a building block for supporting multi-tenant workloads
 in the future. However, it can be used in private cloud deployments.
 
 - The guests have direct access to Ceph's public network.
-
-- The ``secret-key`` of a Ceph auth ID required to mount a share is not exposed
-  to a user by a Shared File Systems service API. To work around this, the
-  storage admin needs to pass the key out of band of the Shared File Systems
-  service, or the user needs to use the Ceph ID and key already created and
-  shared with her by the cloud admin.
 
 - The snapshot support of the driver is disabled by default.
   ``cephfs_enable_snapshots`` configuration option needs to be set to ``True``
