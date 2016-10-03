@@ -1,6 +1,6 @@
-=================
-Specialized cases
-=================
+=====================
+Specialized use cases
+=====================
 
 .. toctree::
    :maxdepth: 2
@@ -15,13 +15,9 @@ Specialized cases
    specialized-add-region.rst
    specialized-scaling-multiple-cells.rst
 
-Although OpenStack architecture designs have been described
-in seven major scenarios outlined in other sections
-(compute focused, network focused, storage focused, general
-purpose, multi-site, hybrid cloud, and massively scalable),
-there are a few use cases that do not fit into these categories.
-This section discusses these specialized cases and provide some
-additional details and design considerations for each use case:
+
+This section provides details and design considerations for
+specialized cases:
 
 * :doc:`Specialized networking <specialized-networking>`:
   describes running networking-oriented software that may involve reading

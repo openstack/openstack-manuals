@@ -14,3 +14,4 @@ Use cases
    use-cases/use-case-storage
    use-cases/use-case-multisite
    use-cases/use-case-nfv
+   use-cases/use-cases-specialized

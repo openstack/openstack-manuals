@@ -44,4 +44,4 @@ would not suffice for a large scale, enterprise solution.
 Diagram
 ~~~~~~~
 
-.. figure:: figures/Specialized_VDI1.png
+.. figure:: ../figures/Specialized_VDI1.png

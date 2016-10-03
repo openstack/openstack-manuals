@@ -16,7 +16,7 @@ on ESXi. The remaining 250 or so have more flexible requirements.
 The financial company decides to manage the
 overall system with a common OpenStack platform.
 
-.. figure:: figures/Compute_NSX.png
+.. figure:: ../figures/Compute_NSX.png
    :width: 100%
 
 Architecture planning teams decided to run a host aggregate
