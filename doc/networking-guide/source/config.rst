@@ -32,4 +32,4 @@ Configuration
 .. note::
 
    For general configuration, see the `Configuration Reference
-   <http://docs.openstack.org/mitaka/config-reference/>`_.
+   <http://docs.openstack.org/newton/config-reference/>`_.
