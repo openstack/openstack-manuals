@@ -19,16 +19,6 @@ the services directly, rather than requiring an intermediate proxy server. It
 can, however, also be misused by malicious actors; please review the
 security advisory below for more information.
 
-.. note::
-
-   Both the Object Storage and dashboard projects provide CORS support that is
-   not covered by this document. For those, please refer to their respective
-   implementations:
-
-   * `CORS in Object Storage <http://docs.openstack.org/mitaka/config-reference/object-storage/cors.html>`_
-   * `CORS in dashboard <http://docs.openstack.org/security-guide/dashboard/cross-origin-resource-sharing-cors.html>`_
-
-
 Enabling CORS with configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -70,6 +60,11 @@ human-readable string:
    # permits HTTP GET requests.
    allowed_origin = *
    allow_methods = GET
+
+For more information about CORS configuration,
+see `cross-origin resource sharing
+<http://docs.openstack.org/newton/config-reference/common-configurations/cors.html>`_
+in OpenStack Configuration Reference.
 
 Enabling CORS with PasteDeploy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
