@@ -70,6 +70,27 @@ Training guides
 Translations
 ~~~~~~~~~~~~
 
+Besides updating the existing translated manuals,
+I18n team added the following new ones:
+
+* Indonesian
+
+  * Published API Guide.
+  * Published installation guides for Mitaka.
+  * Published Networking Guide.
+
 * Italian
 
   * Published the Upstream Training.
+
+* Japanese
+
+  * Published installation guides for Mitaka.
+
+* Korean
+
+  * Published installation guides for Mitaka and Liberty.
+
+* Simplified Chinese
+
+  * Published API Guide.
