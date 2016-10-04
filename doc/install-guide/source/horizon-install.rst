@@ -19,11 +19,7 @@ in environments with stand-alone services such as Object Storage.
 Install and configure components
 --------------------------------
 
-.. only:: obs or rdo or ubuntu
-
-   .. include:: shared/note_configuration_vary_by_distribution.rst
-
-.. endonly
+.. include:: shared/note_configuration_vary_by_distribution.rst
 
 .. only:: obs
 
@@ -363,7 +359,7 @@ Install and configure components
 
 .. endonly
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    2. Edit the
       ``/etc/openstack-dashboard/local_settings.py``
