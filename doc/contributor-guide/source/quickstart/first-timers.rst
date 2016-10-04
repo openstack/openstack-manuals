@@ -302,7 +302,7 @@ as explained in the Infrastructure Manual.
 Python
 ------
 
-If you see this this error:
+If you see this error:
 
 .. code-block:: console
 
