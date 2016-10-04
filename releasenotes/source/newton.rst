@@ -13,6 +13,15 @@ User visible changes
 
 * Configuration Reference supports the Application Catalog service.
 
+Internal changes
+~~~~~~~~~~~~~~~~
+
+* The Operations Guide is now using RST as source format.
+
+* The content of the separate repositories operations-guide and
+  ha-guide has been moved into the openstack-manuals repository. The
+  repositories operations-guide and ha-guide have been retired.
+
 API guides
 ~~~~~~~~~~
 
@@ -31,14 +40,26 @@ API guides
 * Completed `API Documentation <http://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html>`__
   guidelines with the API Working Group.
 
-Internal changes
+Operations guide
 ~~~~~~~~~~~~~~~~
 
-* The Operations Guide is now using RST as source format.
+* Completed RST conversion.
 
-* The content of the separate repositories operations-guide and
-  ha-guide has been moved into the openstack-manuals repository. The
-  repositories operations-guide and ha-guide have been retired.
+* Added enterprise operations documentation including RabbitMQ troubleshooting
+  information, instructions to retrieve lost IP addresses, and procedures to
+  manage floating IP addresses between instances.
+
+* Removed instructions to install DevStack and information on contributing
+  to OpenStack, which is documented on the DevStack project website and
+  Infrastructure Manual respectively.
+
+* Updated OpenStack command-line client commands to OpenStackClient commands.
+
+Architecture design guide
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* A revised Architecture Design Guide is currently under development, no changes to
+  the current guide.
 
 Training guides
 ~~~~~~~~~~~~~~~
