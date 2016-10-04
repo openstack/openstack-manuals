@@ -321,7 +321,7 @@ resources. It typically runs on each Network Node and on each Compute Node.
   you pass this configuration file as argument.
 
   For a detailed list of configuration options, see the related section in the
-  `Configuration Reference <http://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#macvtap-agent-configuration-options>`__.
+  `Configuration Reference <http://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-macvtap-mechanism-configuration-options>`__.
 
 L3 agent
 ^^^^^^^^
