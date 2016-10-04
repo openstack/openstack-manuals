@@ -67,6 +67,13 @@ Training guides
 * Improved and restructured `Upstream Training <http://docs.openstack.org/upstream-training/>`_
 * Added new chapters in the draft `Training guides <http://docs.openstack.org/draft/training-guides/>`_
 
+Contributor guide
+~~~~~~~~~~~~~~~~~
+
+* Collected the user experience content in a single section.
+* Added the UX personas content.
+* Updated the UI/GUI text guidelines.
+
 Translations
 ~~~~~~~~~~~~
 
