@@ -5,7 +5,12 @@ Next release: Newton
 User visible changes
 ~~~~~~~~~~~~~~~~~~~~
 
-* Command-Line Interface Reference abandons the "openstack" command
+* The Installation Guide has been renamed to Installation Tutorial, and
+  now includes Container Infrastructure Management service (magnum),
+  Messaging service (zaqar), Key Manager service (barbican), and Bare Metal
+  service (ironic).
+
+* Command-Line Interface Reference abandons the `openstack` command
   reference in favor of the reference in the OpenStackClient repository.
 
 * Configuration Reference consolidates the common configurations
@@ -16,11 +21,15 @@ User visible changes
 Internal changes
 ~~~~~~~~~~~~~~~~
 
-* The Operations Guide is now using RST as source format.
+* The Installation Tutorial can now publish documentation from project
+  specific repositories.
+
+* The Operations Guide is now using RST as source format. This completes the
+  transition to RST, and the old DocBook tools have been retired.
 
 * The content of the separate repositories operations-guide and
   ha-guide has been moved into the openstack-manuals repository. The
-  repositories operations-guide and ha-guide have been retired.
+  operations-guide and ha-guide repositories have been retired.
 
 API guides
 ~~~~~~~~~~
@@ -40,6 +49,40 @@ API guides
 * Completed `API Documentation <http://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html>`__
   guidelines with the API Working Group.
 
+Architecture design guide
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* A revised Architecture Design Guide is currently under development, no
+  changes to the current guide.
+
+Contributor guide
+~~~~~~~~~~~~~~~~~
+
+* Collected the user experience content in a single section.
+
+* Added personas content to the user experience section.
+
+* Updated the user interface text guidelines.
+
+* Updated graphics advice.
+
+* Added information about creating project-specific Installation Tutorials.
+
+Installation Guide
+~~~~~~~~~~~~~~~~~~
+
+* Renamed to Installation Tutorial.
+
+* The Installation Tutorial can now publish documentation from project
+  specific repositories.
+
+* Published project specific guides for Container Infrastructure Management
+  service (magnum), Messaging service (zaqar), Key Manager service (barbican),
+  and Bare Metal service (ironic).
+
+* Created `cookiecutter <http://git.openstack.org/cgit/openstack/installguide-cookiecutter/>`_
+  tool to ensure project specific guides have a consistent structure.
+
 Operations guide
 ~~~~~~~~~~~~~~~~
 
@@ -55,48 +98,35 @@ Operations guide
 
 * Updated OpenStack command-line client commands to OpenStackClient commands.
 
-Architecture design guide
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-* A revised Architecture Design Guide is currently under development, no changes to
-  the current guide.
-
 Training guides
 ~~~~~~~~~~~~~~~
 
 * Improved and restructured `Upstream Training <http://docs.openstack.org/upstream-training/>`_
 * Added new chapters in the draft `Training guides <http://docs.openstack.org/draft/training-guides/>`_
 
-Contributor guide
-~~~~~~~~~~~~~~~~~
-
-* Collected the user experience content in a single section.
-* Added the UX personas content.
-* Updated the UI/GUI text guidelines.
-
 Translations
 ~~~~~~~~~~~~
 
-Besides updating the existing translated manuals,
-I18n team added the following new ones:
+Besides updating the existing translated manuals, the internationalization
+team added the following new manuals:
 
 * Indonesian
 
   * Published API Guide.
-  * Published installation guides for Mitaka.
+  * Published Installation Tutorials for Mitaka.
   * Published Networking Guide.
 
 * Italian
 
-  * Published the Upstream Training.
+  * Published Upstream Training.
 
 * Japanese
 
-  * Published installation guides for Mitaka.
+  * Published Installation Tutorials for Mitaka.
 
 * Korean
 
-  * Published installation guides for Mitaka and Liberty.
+  * Published Installation Tutorials for Mitaka and Liberty.
 
 * Simplified Chinese
 
