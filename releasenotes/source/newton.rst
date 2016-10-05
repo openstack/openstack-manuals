@@ -68,7 +68,20 @@ Contributor guide
 
 * Added information about creating project-specific Installation Tutorials.
 
-Installation Guide
+High availability guide
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Removed Keepalived architecture as it is no longer advocated.
+
+* Replaced basic node and service installation instructions with links.
+
+* Added section regarding automated instance recovery.
+
+* Provide details for contacting the OpenStack HA community.
+
+* Assorted updates and cleanups.
+
+Installation guide
 ~~~~~~~~~~~~~~~~~~
 
 * Renamed to Installation Tutorial.
