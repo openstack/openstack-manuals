@@ -1,6 +1,6 @@
-====================
-Next release: Newton
-====================
+==============
+Newton release
+==============
 
 User visible changes
 ~~~~~~~~~~~~~~~~~~~~
