@@ -13,6 +13,11 @@ User visible changes
 
 * Configuration Reference supports the Application Catalog service.
 
+* Glossary reorganized to support ease of access for users.
+
+* URL and file names changed to use only hyphens for consistency
+  and search engine optimization.
+
 Internal changes
 ~~~~~~~~~~~~~~~~
 
