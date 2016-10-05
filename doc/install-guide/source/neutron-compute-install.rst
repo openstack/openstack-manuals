@@ -6,8 +6,8 @@ group>` for instances.
 
 .. only:: ubuntu or debian
 
-Install the components
-----------------------
+   Install the components
+   ----------------------
 
    .. code-block:: console
 
