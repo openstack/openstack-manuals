@@ -66,3 +66,39 @@ deep knowledge of OpenStack but with little time for long, complex research.
 Therefore, your solutions for Rey must be quick to implement but do not
 need to shy away from complex OpenStack components, as long as they provide
 all the information needed within the solution itself.
+
+Pain points
+~~~~~~~~~~~
+
+Rey faces several challenges that can impede and slow progress on managing
+and updating the OpenStack cloud. The following pain point examples
+highlight the cases where progress can be impeded. This enables you to
+anticipate and compensate when preparing a project:
+
+Rey has trouble finding information to help triage issues that can
+prevent the cloud from running:
+
+ "New users do not have the flexibility to spend weeks delving into
+ source code to figure out how to do common tasks, especially in the
+ areas of orchestration. Were it not for `ask.openstack.org <https://ask.openstack.org/en/questions/>`_
+ and the hard work of many bloggers in the community, I would have a
+ significantly more difficult time trying to understand practical
+ uses of OpenStack functionality."
+
+Consistency between projects slows down progress:
+
+ "All projects should strive to use the same standards—in code,
+ libraries used, file formats, and documentation. [We need] consistency
+ between different OpenStack projects and releases."
+
+ "It really boils down to having OpenStack act more like a single
+ initiative, versus a collection of projects."
+
+Building a community that listens and takes on feedback is also a goal:
+
+ "There’s still a bit of a gap between developers and operators.
+ Although that is narrowing, understanding operators’ pains in
+ certain areas is key in developing a better product as a whole."
+
+The scale of quotas presents significant obstacles for operators. Consider
+that Rey may need to manage over one thousand projects in a deployment.
