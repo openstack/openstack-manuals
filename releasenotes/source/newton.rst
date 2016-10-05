@@ -104,6 +104,19 @@ Training guides
 * Improved and restructured `Upstream Training <http://docs.openstack.org/upstream-training/>`_
 * Added new chapters in the draft `Training guides <http://docs.openstack.org/draft/training-guides/>`_
 
+User guides
+~~~~~~~~~~~
+
+* Added Redis replication information and Rootwrap Daemon configuration information
+  to the Administrator Guide.
+
+* Reorganized the Administrator Guide Telemetry chapter to improve
+  information architecture.
+
+* Migrated content on configuring and customizing the Dashboard, previously
+  maintained in the Configuration Reference, to the Dashboard chapter
+  of the Administrator Guide.
+
 Translations
 ~~~~~~~~~~~~
 
