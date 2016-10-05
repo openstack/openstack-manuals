@@ -122,6 +122,56 @@ Training guides
 * Improved and restructured `Upstream Training <http://docs.openstack.org/upstream-training/>`_
 * Added new chapters in the draft `Training guides <http://docs.openstack.org/draft/training-guides/>`_
 
+Training labs
+~~~~~~~~~~~~~
+
+* Training labs landing page is published under `docs.openstack.org <http://docs.openstack.org/training_labs/>`_:
+
+  * Users can download zip/tar files for Windows, Linux and Mac OS X platforms
+    for supported releases.
+
+* PXE feature for training-labs:
+
+  * PXE booting functionality is available as a pluggable driver in parallel with
+    KVM/VirtualBox.
+  * PXE boot could also be used as a mechanism for provisioning KVM/VirtualBox
+    based workloads.
+
+* Stability improvements:
+
+  * Various stability improvements have been added in this release.
+  * Windows platform support has been updated and improved.
+  * Training cluster should additionally have higher deployment rate.
+  * Improvements in networking related challenges.
+
+* Performance improvements:
+
+  * Cluster setup speed is improving after addition of multiple features.
+  * KVM/Libvirt backends now use shared storage. Hard disks for the cluster are
+    diffs on top of the base disk. This uses lesser storage space.
+  * Block storage (cinder) has a dedicated disk as opposed to file mounted as loop
+    device. This should improve performance and provide persistence for cinder-volumes
+    over reboots.
+  * Performance improvements by fixing race conditions occurring due
+    to virtualization overhead.
+  * Improvements to the library scripts.
+
+* Test coverage:
+
+  * Added more tests to ``repeat_test`` scripts.
+  * User interface test cases to check the availability of horizon have
+    been implemented.
+
+* Updates for supporting new operating systems. For example, Ubuntu 16.04.
+* Adds support for x86/i386 architecture.
+* Updates to the CLI along with many improvements to address new features.
+* Newton support:
+
+  * Newton support should be available shortly after the OpenStack release.
+  * This delay is intentional, to let the distribution packages stabilize.
+  * To maintain certain quality, we wait till all of our test cases and
+    reliability checks are meeting certain criteria.
+
 User guides
 ~~~~~~~~~~~
 
