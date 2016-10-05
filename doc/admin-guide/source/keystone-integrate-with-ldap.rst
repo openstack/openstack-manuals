@@ -8,7 +8,6 @@ Integrate Identity with LDAP
    :maxdepth: 2
 
    keystone-integrate-identity-backend-ldap.rst
-   keystone-integrate-assignment-backend-ldap.rst
    keystone-secure-identity-to-ldap-backend.rst
 
 The OpenStack Identity service supports integration with existing LDAP
@@ -45,17 +44,7 @@ The Identity configuration is split into two separate back ends; identity
 projects, roles, role assignments). To configure Identity, set options
 in the ``/etc/keystone/keystone.conf`` file. See
 :ref:`integrate-identity-backend-ldap` for Identity back end configuration
-examples and :ref:`integrate-assignment-backend-ldap` for assignment back
-end configuration examples. Modify these examples as needed.
-
-.. note::
-
-   Multiple back ends are supported. You can integrate the OpenStack
-   Identity service with a single LDAP server (configure both identity
-   and assignments to LDAP, or set identity and assignments back end
-   with SQL or LDAP), or multiple back ends using domain-specific
-   configuration files.
-
+examples. Modify these examples as needed.
 
 **To define the destination LDAP server**
 
@@ -68,16 +57,6 @@ end configuration examples. Modify these examples as needed.
       user = dc=Manager,dc=example,dc=org
       password = samplepassword
       suffix = dc=example,dc=org
-      use_dumb_member = False
-      allow_subtree_delete = False
-
-#. Configure ``dumb_member`` to true if your environment requires
-   the ``use_dumb_member`` variable.
-
-   .. code-block:: ini
-
-      [ldap]
-      dumb_member = cn=dumb,dc=nonexistent
 
 **Additional LDAP integration settings**
 
