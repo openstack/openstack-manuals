@@ -47,22 +47,33 @@ Create the provider network
         --provider:network_type flat provider
 
       Created a new network:
+
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
       | admin_state_up            | True                                 |
-      | id                        | 0e62efcd-8cee-46c7-b163-d8df05c3c5ad |
+      | availability_zone_hints   |                                      |
+      | availability_zones        |                                      |
+      | created_at                | 2016-09-30T02:33:36Z                 |
+      | description               |                                      |
+      | id                        | 89e06055-e50d-4c60-bb02-2db800c5af30 |
+      | ipv4_address_scope        |                                      |
+      | ipv6_address_scope        |                                      |
       | mtu                       | 1500                                 |
       | name                      | provider                             |
       | port_security_enabled     | True                                 |
+      | project_id                | 7e188c33604d4b02ae0a99b5da68cae0     |
       | provider:network_type     | flat                                 |
       | provider:physical_network | provider                             |
       | provider:segmentation_id  |                                      |
+      | revision_number           | 2                                    |
       | router:external           | False                                |
       | shared                    | True                                 |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | d84313397390425c8ed50b2f6e18d092     |
+      | tags                      |                                      |
+      | tenant_id                 | 7e188c33604d4b02ae0a99b5da68cae0     |
+      | updated_at                | 2016-09-30T02:33:36Z                 |
       +---------------------------+--------------------------------------+
 
    .. end
@@ -137,6 +148,8 @@ Create the provider network
       +-------------------+----------------------------------------------------+
       | allocation_pools  | {"start": "203.0.113.101", "end": "203.0.113.250"} |
       | cidr              | 203.0.113.0/24                                     |
+      | created_at        | 2016-09-30T02:51:06Z                               |
+      | description       |                                                    |
       | dns_nameservers   | 8.8.4.4                                            |
       | enable_dhcp       | True                                               |
       | gateway_ip        | 203.0.113.1                                        |
@@ -147,8 +160,12 @@ Create the provider network
       | ipv6_ra_mode      |                                                    |
       | name              | provider                                           |
       | network_id        | 0e62efcd-8cee-46c7-b163-d8df05c3c5ad               |
+      | project_id        | 7e188c33604d4b02ae0a99b5da68cae0                   |
+      | revision_number   | 2                                                  |
+      | service_types     |                                                    |
       | subnetpool_id     |                                                    |
       | tenant_id         | d84313397390425c8ed50b2f6e18d092                   |
+      | updated_at        | 2016-09-30T02:51:06Z                               |
       +-------------------+----------------------------------------------------+
 
    .. end
