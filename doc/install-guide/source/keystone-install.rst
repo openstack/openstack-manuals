@@ -87,25 +87,25 @@ Install and configure components
 
 .. only:: rdo
 
-    #. Run the following command to install the packages:
+   #. Run the following command to install the packages:
 
-         .. code-block:: console
+      .. code-block:: console
 
-            # yum install openstack-keystone httpd mod_wsgi
+         # yum install openstack-keystone httpd mod_wsgi
 
-         .. end
+      .. end
 
 .. endonly
 
 .. only:: obs
 
-    #. Run the following command to install the packages:
+   #. Run the following command to install the packages:
 
-         .. code-block:: console
+      .. code-block:: console
 
-            # zypper install openstack-keystone apache2-mod_wsgi
+         # zypper install openstack-keystone apache2-mod_wsgi
 
-         .. end
+      .. end
 
 .. endonly
 
@@ -171,205 +171,163 @@ Install and configure components
 
    Replace ``ADMIN_PASS`` with a suitable password for an administrative user.
 
-.. only:: rdo
+Configure the Apache HTTP server
+--------------------------------
 
-   Configure the Apache HTTP server
-   --------------------------------
+.. only:: rdo
 
    #. Edit the ``/etc/httpd/conf/httpd.conf`` file and configure the
       ``ServerName`` option to reference the controller node:
 
-      #. Edit the ``/etc/httpd/conf/httpd.conf`` file and configure the
-         ``ServerName`` option to reference the controller node:
+      .. path /etc/httpd/conf/httpd
+      .. code-block:: apache
 
-         .. path /etc/httpd/conf/httpd
-         .. code-block:: apache
+         ServerName controller
 
-            ServerName controller
+      .. end
 
-         .. end
+   #. Create a link to the ``/usr/share/keystone/wsgi-keystone.conf`` file:
 
-      #. Create the ``/etc/httpd/conf.d/wsgi-keystone.conf`` file with
-         the following content:
+      .. code-block:: console
 
-         .. path /etc/httpd/conf.d/wsgi-keystone.conf
-         .. code-block:: apache
+         # ln -s /usr/share/keystone/wsgi-keystone.conf /etc/httpd/conf.d/
 
-            Listen 5000
-            Listen 35357
-
-            <VirtualHost *:5000>
-                WSGIDaemonProcess keystone-public processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
-                WSGIProcessGroup keystone-public
-                WSGIScriptAlias / /usr/bin/keystone-wsgi-public
-                WSGIApplicationGroup %{GLOBAL}
-                WSGIPassAuthorization On
-                ErrorLogFormat "%{cu}t %M"
-                ErrorLog /var/log/httpd/keystone-error.log
-                CustomLog /var/log/httpd/keystone-access.log combined
-
-                <Directory /usr/bin>
-                    Require all granted
-                </Directory>
-            </VirtualHost>
-
-            <VirtualHost *:35357>
-                WSGIDaemonProcess keystone-admin processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
-                WSGIProcessGroup keystone-admin
-                WSGIScriptAlias / /usr/bin/keystone-wsgi-admin
-                WSGIApplicationGroup %{GLOBAL}
-                WSGIPassAuthorization On
-                ErrorLogFormat "%{cu}t %M"
-                ErrorLog /var/log/httpd/keystone-error.log
-                CustomLog /var/log/httpd/keystone-access.log combined
-
-                <Directory /usr/bin>
-                    Require all granted
-                </Directory>
-            </VirtualHost>
-
-        .. end
+      .. end
 
 .. endonly
 
-   .. only:: ubuntu
+.. only:: ubuntu
 
-      #. Edit the ``/etc/apache2/apache2.conf`` file and configure the
-         ``ServerName`` option to reference the controller node:
+   #. Edit the ``/etc/apache2/apache2.conf`` file and configure the
+      ``ServerName`` option to reference the controller node:
 
-         .. path /etc/apache2/apache2.conf
-         .. code-block:: apache
+      .. path /etc/apache2/apache2.conf
+      .. code-block:: apache
 
-            ServerName controller
+         ServerName controller
 
-         .. end
+      .. end
 
 
-      #. Enable the Identity service virtual hosts:
+   #. Enable the Identity service virtual hosts:
 
-         .. code-block:: console
+      .. code-block:: console
 
-            # ln -s /etc/apache2/sites-available/wsgi-keystone.conf /etc/apache2/sites-enabled
+         # ln -s /etc/apache2/sites-available/wsgi-keystone.conf /etc/apache2/sites-enabled
 
-         .. end
-
-   .. endonly
-
-   .. only:: obs
-
-      #. Edit the ``/etc/sysconfig/apache2`` file and configure the
-         ``APACHE_SERVERNAME`` option to reference the controller node:
-
-         .. path /etc/sysconfig/apache2
-         .. code-block:: apache
-
-            APACHE_SERVERNAME="controller"
-
-         .. end
-
-      #. Create the ``/etc/apache2/conf.d/wsgi-keystone.conf`` file
-         with the following content:
-
-         .. path /etc/apache2/conf.d/wsgi-keystone.conf
-         .. code-block:: apache
-
-            Listen 5000
-            Listen 35357
-
-            <VirtualHost *:5000>
-                WSGIDaemonProcess keystone-public processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
-                WSGIProcessGroup keystone-public
-                WSGIScriptAlias / /usr/bin/keystone-wsgi-public
-                WSGIApplicationGroup %{GLOBAL}
-                WSGIPassAuthorization On
-                ErrorLogFormat "%{cu}t %M"
-                ErrorLog /var/log/apache2/keystone.log
-                CustomLog /var/log/apache2/keystone_access.log combined
-
-                <Directory /usr/bin>
-                    Require all granted
-                </Directory>
-            </VirtualHost>
-
-            <VirtualHost *:35357>
-                WSGIDaemonProcess keystone-admin processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
-                WSGIProcessGroup keystone-admin
-                WSGIScriptAlias / /usr/bin/keystone-wsgi-admin
-                WSGIApplicationGroup %{GLOBAL}
-                WSGIPassAuthorization On
-                ErrorLogFormat "%{cu}t %M"
-                ErrorLog /var/log/apache2/keystone.log
-                CustomLog /var/log/apache2/keystone_access.log combined
-
-                <Directory /usr/bin>
-                    Require all granted
-                </Directory>
-            </VirtualHost>
-
-         .. end
-
-      6. Recursively change the ownership of the ``/etc/keystone`` directory:
-
-         .. code-block:: console
-
-            # chown -R keystone:keystone /etc/keystone
-
-         .. end
-
-   .. endonly
-
-.. only:: ubuntu or rdo or obs
-
-   Finalize the installation
-   -------------------------
+      .. end
 
 .. endonly
 
-   .. only:: ubuntu
+.. only:: obs
+
+   #. Edit the ``/etc/sysconfig/apache2`` file and configure the
+      ``APACHE_SERVERNAME`` option to reference the controller node:
+
+      .. path /etc/sysconfig/apache2
+      .. code-block:: apache
+
+         APACHE_SERVERNAME="controller"
+
+      .. end
+
+   #. Create the ``/etc/apache2/conf.d/wsgi-keystone.conf`` file
+      with the following content:
+
+      .. path /etc/apache2/conf.d/wsgi-keystone.conf
+      .. code-block:: apache
+
+         Listen 5000
+         Listen 35357
+
+         <VirtualHost *:5000>
+             WSGIDaemonProcess keystone-public processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
+             WSGIProcessGroup keystone-public
+             WSGIScriptAlias / /usr/bin/keystone-wsgi-public
+             WSGIApplicationGroup %{GLOBAL}
+             WSGIPassAuthorization On
+             ErrorLogFormat "%{cu}t %M"
+             ErrorLog /var/log/apache2/keystone.log
+             CustomLog /var/log/apache2/keystone_access.log combined
+
+             <Directory /usr/bin>
+                 Require all granted
+             </Directory>
+         </VirtualHost>
+
+         <VirtualHost *:35357>
+             WSGIDaemonProcess keystone-admin processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
+             WSGIProcessGroup keystone-admin
+             WSGIScriptAlias / /usr/bin/keystone-wsgi-admin
+             WSGIApplicationGroup %{GLOBAL}
+             WSGIPassAuthorization On
+             ErrorLogFormat "%{cu}t %M"
+             ErrorLog /var/log/apache2/keystone.log
+             CustomLog /var/log/apache2/keystone_access.log combined
+
+             <Directory /usr/bin>
+                 Require all granted
+             </Directory>
+         </VirtualHost>
+
+      .. end
+
+   #. Recursively change the ownership of the ``/etc/keystone`` directory:
+
+      .. code-block:: console
+
+         # chown -R keystone:keystone /etc/keystone
+
+      .. end
+
+.. endonly
+
+
+Finalize the installation
+-------------------------
+
+.. only:: ubuntu
+
+   #. Restart the Apache service and remove the default SQLite database:
 
       .. code-block:: console
 
          # service apache2 restart
-
-      .. end
-
-   #. By default, the Ubuntu packages create an SQLite database.
-
-      #. By default, the Ubuntu packages create an SQLite database.
-
-      .. code-block:: console
-
          # rm -f /var/lib/keystone/keystone.db
 
       .. end
 
-   .. endonly
+.. endonly
 
-   .. only:: rdo
+.. only:: rdo
 
-     .. code-block:: console
+   #. Start the Apache HTTP service and configure it to start when the system
+      boots:
 
-        # systemctl enable httpd.service
-        # systemctl start httpd.service
+      .. code-block:: console
 
-     .. end
+         # systemctl enable httpd.service
+         # systemctl start httpd.service
 
-   .. endonly
+      .. end
 
-   .. only:: obs
+.. endonly
 
-      #. Start the Apache HTTP service and configure it to start when the system boots:
+.. only:: obs
 
-         .. code-block:: console
+   #. Start the Apache HTTP service and configure it to start when the system
+      boots:
 
-            # systemctl enable apache2.service
-            # systemctl start apache2.service
+      .. code-block:: console
 
-         .. end
+         # systemctl enable apache2.service
+         # systemctl start apache2.service
 
-   .. endonly
+      .. end
 
-6. Configure the administrative account
+.. endonly
+
+2. Configure the administrative account
 
    .. code-block:: console
 
@@ -383,10 +341,6 @@ Install and configure components
 
    .. end
 
-   .. only:: obs or rdo or ubuntu
-
-      Replace ``ADMIN_PASS`` with the password used in the
-      ``keystone-manage bootstrap`` command from the section called
-      :ref:`keystone-install`.
-
-   .. endonly
+   Replace ``ADMIN_PASS`` with the password used in the
+   ``keystone-manage bootstrap`` command from the section called
+   :ref:`keystone-install`.
