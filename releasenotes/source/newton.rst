@@ -101,6 +101,30 @@ Installation guide
 * Created `cookiecutter <http://git.openstack.org/cgit/openstack/installguide-cookiecutter/>`_
   tool to ensure project specific guides have a consistent structure.
 
+Security Guide
+~~~~~~~~~~~~~~
+
+* Added OSSNs 0063, 0066, 0068, 0069, 0073.
+
+* New section on rate-limiting and API endpoint traffic.
+
+* Replaced Keystone CLI examples with OpenStack CLI examples.
+
+* Readability changes for links, images, and document format.
+
+* Updates to compliance section around audit phases and links.
+
+* Migrated examples from deprecated Identity service (keystone)
+  direct driver loading examples to stevedore.
+
+* Updated command examples for accuracy and parity with latest versions.
+
+* Added build tools so that the Security Guide can be built both separately
+  and with the OSSN and TA sections.
+
+* Updated glossary terms for Nginx, SPICE, Data Loss Prevention (DLP),
+  Trusted Platform Module (TPM), Secure Boot, and other acronyms.
+
 Operations guide
 ~~~~~~~~~~~~~~~~
 
