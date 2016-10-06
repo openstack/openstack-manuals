@@ -28,5 +28,6 @@ is the real purpose of the Shared File Systems service in production.
 
    shared-file-systems-crud-share.rst
    shared-file-systems-manage-and-unmanage-share.rst
+   shared-file-systems-manage-and-unmanage-snapshot.rst
    shared-file-systems-share-resize.rst
    shared-file-systems-quotas.rst
