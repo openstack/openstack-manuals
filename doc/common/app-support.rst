@@ -31,7 +31,7 @@ bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`__.
 The following books explain how to install an OpenStack cloud and its
 associated components:
 
-*  `Installation Tutorial for openSUSE Leap 42.1 and SUSE Linux Enterprise
+*  `Installation Tutorial for openSUSE Leap 42.2 and SUSE Linux Enterprise
    Server 12 SP2
    <http://docs.openstack.org/newton/install-guide-obs/>`__
 
