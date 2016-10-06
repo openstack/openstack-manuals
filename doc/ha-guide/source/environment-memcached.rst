@@ -34,6 +34,7 @@ Example configuration with three hosts:
 
 By default, ``controller1`` handles the caching service.
 If the host goes down, ``controller2`` or ``controller3`` does the job.
-For more information about memcached installation,
-see the `OpenStack Administrator Guide
-<http://docs.openstack.org/admin-guide/>`_.
+For more information about memcached installation, see the
+*Environment -> Memcached* section in the
+`Installation Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`_
+depending on your distribution.
