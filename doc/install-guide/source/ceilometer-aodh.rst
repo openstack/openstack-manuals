@@ -287,6 +287,14 @@ Install and configure components
 
          Ignore any deprecation messages in this output.
 
+.. only:: rdo
+
+   3. Populate the Alarming database:
+
+      .. code-block:: console
+
+         # su -s /bin/sh -c "aodh-dbsync" aodh
+
 Finalize installation
 ~~~~~~~~~~~~~~~~~~~~~
 
