@@ -133,16 +133,26 @@ secure shell (SSH).
 
        $ openstack security group rule create --proto icmp default
 
-       +-----------------------+--------------------------------------+
-       | Field                 | Value                                |
-       +-----------------------+--------------------------------------+
-       | id                    | a1876c06-7f30-4a67-a324-b6b5d1309546 |
-       | ip_protocol           | icmp                                 |
-       | ip_range              | 0.0.0.0/0                            |
-       | parent_group_id       | b0d53786-5ebb-4729-9e4a-4b675016a958 |
-       | port_range            |                                      |
-       | remote_security_group |                                      |
-       +-----------------------+--------------------------------------+
+       +-------------------+--------------------------------------+
+       | Field             | Value                                |
+       +-------------------+--------------------------------------+
+       | created_at        | 2016-10-05T09:52:31Z                 |
+       | description       |                                      |
+       | direction         | ingress                              |
+       | ethertype         | IPv4                                 |
+       | headers           |                                      |
+       | id                | 6ee8d630-9803-4d3d-9aea-8c795abbedc2 |
+       | port_range_max    | None                                 |
+       | port_range_min    | None                                 |
+       | project_id        | 77ae8d7104024123af342ffb0a6f1d88     |
+       | project_id        | 77ae8d7104024123af342ffb0a6f1d88     |
+       | protocol          | icmp                                 |
+       | remote_group_id   | None                                 |
+       | remote_ip_prefix  | 0.0.0.0/0                            |
+       | revision_number   | 1                                    |
+       | security_group_id | 4ceee3d4-d2fe-46c1-895c-382033e87b0d |
+       | updated_at        | 2016-10-05T09:52:31Z                 |
+       +-------------------+--------------------------------------+
 
     .. end
 
@@ -152,16 +162,26 @@ secure shell (SSH).
 
        $ openstack security group rule create --proto tcp --dst-port 22 default
 
-       +-----------------------+--------------------------------------+
-       | Field                 | Value                                |
-       +-----------------------+--------------------------------------+
-       | id                    | 3d95e59c-e98d-45f1-af04-c750af914f14 |
-       | ip_protocol           | tcp                                  |
-       | ip_range              | 0.0.0.0/0                            |
-       | parent_group_id       | b0d53786-5ebb-4729-9e4a-4b675016a958 |
-       | port_range            | 22:22                                |
-       | remote_security_group |                                      |
-       +-----------------------+--------------------------------------+
+       +-------------------+--------------------------------------+
+       | Field             | Value                                |
+       +-------------------+--------------------------------------+
+       | created_at        | 2016-10-05T09:54:50Z                 |
+       | description       |                                      |
+       | direction         | ingress                              |
+       | ethertype         | IPv4                                 |
+       | headers           |                                      |
+       | id                | 3cd0a406-43df-4741-ab29-b5e7dcb7469d |
+       | port_range_max    | 22                                   |
+       | port_range_min    | 22                                   |
+       | project_id        | 77ae8d7104024123af342ffb0a6f1d88     |
+       | project_id        | 77ae8d7104024123af342ffb0a6f1d88     |
+       | protocol          | tcp                                  |
+       | remote_group_id   | None                                 |
+       | remote_ip_prefix  | 0.0.0.0/0                            |
+       | revision_number   | 1                                    |
+       | security_group_id | 4ceee3d4-d2fe-46c1-895c-382033e87b0d |
+       | updated_at        | 2016-10-05T09:54:50Z                 |
+       +-------------------+--------------------------------------+
 
     .. end
 
