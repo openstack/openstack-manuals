@@ -27,6 +27,8 @@ tunnel protocols but the GRE tunnels provide only weak authentication.
 Virtual extensible local area network (VXLAN)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The purpose of VXLAN is to provide scalable network isolation. VXLAN underlay
-can spread over two or more layer-3 network domains. It allows an overlay
-layer-2 network to spread across multiple underlay layer-3 network domains.
+The purpose of VXLAN is to provide scalable network isolation. VXLAN is a
+Layer 2 overlay scheme on a Layer 3 network. It allows an overlay layer-2
+network to spread across multiple underlay layer-3 network domains. Each
+overlay is termed a VXLAN segment. Only VMs within the same VXLAN segment
+can communicate.
