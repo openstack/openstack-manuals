@@ -206,7 +206,7 @@ model:
    :command:`glance image-create`.
    Also, we recommend that you set the ``hypervisor_type="vmware"`` property.
    For more information, see `Images with VMware vSphere
-   <http://docs.openstack.org/mitaka/config-reference/compute/hypervisor-vmware.html#images-with-vmware-vsphere>`_
+   <http://docs.openstack.org/newton/config-reference/compute/hypervisor-vmware.html#images-with-vmware-vsphere>`_
    in the OpenStack Configuration Reference.
 
 .. code-block:: console
