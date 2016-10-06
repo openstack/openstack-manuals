@@ -2,11 +2,11 @@
 Networking services for high availability
 =========================================
 
-Configure networking on each node.
-The
-`Networking <http://docs.openstack.org/mitaka/install-guide-ubuntu/environment-networking.html>`_
-section of the *Install Guide* includes basic information
-about configuring networking.
+Configure networking on each node. See basic information
+about configuring networking in the *Networking service*
+section of the
+`Install Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`_
+depending on your distribution.
 
 Notes from planning outline:
 
