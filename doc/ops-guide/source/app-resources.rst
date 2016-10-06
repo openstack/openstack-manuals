@@ -5,14 +5,14 @@ Resources
 OpenStack
 ~~~~~~~~~
 
--  `Installation Guide for openSUSE 13.2 and SUSE Linux Enterprise
-   Server 12 <http://docs.openstack.org/liberty/install-guide-obs/>`_
+-  `Installation Guide for openSUSE Leap 42.1 and SUSE Linux Enterprise
+   Server 12 SP1 <http://docs.openstack.org/newton/install-guide-obs/>`_
 
--  `Installation Guide for Red Hat Enterprise Linux 7, CentOS 7, and
-   Fedora 22 <http://docs.openstack.org/liberty/install-guide-rdo/>`_
+-  `Installation Guide for Red Hat Enterprise Linux 7 CentOS 7
+   <http://docs.openstack.org/newton/install-guide-rdo/>`_
 
--  `Installation Guide for Ubuntu 14.04 (LTS)
-   Server <http://docs.openstack.org/liberty/install-guide-ubuntu/>`_
+-  `Installation Guide for Ubuntu 16.04 (LTS)
+   Server <http://docs.openstack.org/newton/install-guide-ubuntu/>`_
 
 -  `OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/>`_
 
