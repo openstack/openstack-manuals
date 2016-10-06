@@ -101,6 +101,41 @@ Installation guide
 * Created `cookiecutter <http://git.openstack.org/cgit/openstack/installguide-cookiecutter/>`_
   tool to ensure project specific guides have a consistent structure.
 
+Networking guide
+~~~~~~~~~~~~~~~~
+
+* Completely restructured the guide.
+
+* Reorganized and rewrote the deployment examples using "building blocks" to
+  improve usability and understanding. After choosing either the Linux bridge
+  or Open vSwitch mechanism driver, the audience can deploy increasingly
+  complex architectures that build on prior simpler examples. Also reduced
+  duplication of content.
+
+* Added service subnets.
+
+* Added service function chaining.
+
+* Added RBAC.
+
+* Added subnet pools.
+
+* Added address scopes.
+
+* Added BGP dynamic routing.
+
+* Added DPDK for Open vSwitch.
+
+* Improved security groups.
+
+* Improved address scopes.
+
+* Improved SR-IOV.
+
+* Improved DNS resolution.
+
+* Improved high-availability for DHCP.
+
 Operations guide
 ~~~~~~~~~~~~~~~~
 
