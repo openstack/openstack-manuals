@@ -36,7 +36,7 @@ List and view current security groups
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 From the command-line you can get a list of security groups for the
-project, using the :command:`nova` command:
+project, using the :command:`openstack` and :command:`nova` commands:
 
 #. Ensure your system variables are set for the user and project for
    which you are checking security group rules. For example:
@@ -50,13 +50,13 @@ project, using the :command:`nova` command:
 
    .. code-block:: console
 
-      $ nova secgroup-list
-      +---------+-------------+
-      | Name    | Description |
-      +---------+-------------+
-      | default | default     |
-      | open    | all ports   |
-      +---------+-------------+
+      $ openstack security group list
+      +--------------------------------------+---------+-------------+
+      | Id                                   | Name    | Description |
+      +--------------------------------------+---------+-------------+
+      | 73580272-d8fa-4927-bd55-c85e43bc4877 | default | default     |
+      | 6777138a-deb7-4f10-8236-6400e7aff5b0 | open    | all ports   |
+      +--------------------------------------+---------+-------------+
 
 #. View the details of a group, as follows:
 
