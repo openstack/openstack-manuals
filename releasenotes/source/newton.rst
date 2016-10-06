@@ -101,6 +101,21 @@ Installation guide
 * Created `cookiecutter <http://git.openstack.org/cgit/openstack/installguide-cookiecutter/>`_
   tool to ensure project specific guides have a consistent structure.
 
+Operations guide
+~~~~~~~~~~~~~~~~
+
+* Completed RST conversion.
+
+* Added enterprise operations documentation including RabbitMQ troubleshooting
+  information, instructions to retrieve lost IP addresses, and procedures to
+  manage floating IP addresses between instances.
+
+* Removed instructions to install DevStack and information on contributing
+  to OpenStack, which is documented on the DevStack project website and
+  Infrastructure Manual respectively.
+
+* Updated OpenStack command-line client commands to OpenStackClient commands.
+
 Security Guide
 ~~~~~~~~~~~~~~
 
@@ -125,21 +140,6 @@ Security Guide
 * Updated glossary terms for Nginx, SPICE, Data Loss Prevention (DLP),
   Trusted Platform Module (TPM), Secure Boot, and other acronyms.
 
-Operations guide
-~~~~~~~~~~~~~~~~
-
-* Completed RST conversion.
-
-* Added enterprise operations documentation including RabbitMQ troubleshooting
-  information, instructions to retrieve lost IP addresses, and procedures to
-  manage floating IP addresses between instances.
-
-* Removed instructions to install DevStack and information on contributing
-  to OpenStack, which is documented on the DevStack project website and
-  Infrastructure Manual respectively.
-
-* Updated OpenStack command-line client commands to OpenStackClient commands.
-
 Training guides
 ~~~~~~~~~~~~~~~
 
@@ -156,8 +156,8 @@ Training labs
 
 * PXE feature for training-labs:
 
-  * PXE booting functionality is available as a pluggable driver in parallel with
-    KVM/VirtualBox.
+  * PXE booting functionality is available as a pluggable driver in parallel
+    with KVM/VirtualBox.
   * PXE boot could also be used as a mechanism for provisioning KVM/VirtualBox
     based workloads.
 
@@ -171,11 +171,11 @@ Training labs
 * Performance improvements:
 
   * Cluster setup speed is improving after addition of multiple features.
-  * KVM/Libvirt backends now use shared storage. Hard disks for the cluster are
-    diffs on top of the base disk. This uses lesser storage space.
-  * Block storage (cinder) has a dedicated disk as opposed to file mounted as loop
-    device. This should improve performance and provide persistence for cinder-volumes
-    over reboots.
+  * KVM/Libvirt backends now use shared storage. Hard disks for the cluster
+    are diffs on top of the base disk. This uses less storage space.
+  * Block storage (cinder) has a dedicated disk as opposed to being file
+    mounted as a loop device. This should improve performance and provide
+    persistence for cinder-volumes across reboots.
   * Performance improvements by fixing race conditions occurring due
     to virtualization overhead.
   * Improvements to the library scripts.
@@ -192,15 +192,14 @@ Training labs
 * Newton support:
 
   * Newton support should be available shortly after the OpenStack release.
-  * This delay is intentional, to let the distribution packages stabilize.
-  * To maintain certain quality, we wait till all of our test cases and
-    reliability checks are meeting certain criteria.
+  * This delay is intentional, to let the distribution packages stabilize,
+    and to ensure all test cases and reliability checks meet certain criteria.
 
 User guides
 ~~~~~~~~~~~
 
-* Added Redis replication information and Rootwrap Daemon configuration information
-  to the Administrator Guide.
+* Added Redis replication information and Rootwrap Daemon configuration
+  information to the Administrator Guide.
 
 * Reorganized the Administrator Guide Telemetry chapter to improve
   information architecture.
