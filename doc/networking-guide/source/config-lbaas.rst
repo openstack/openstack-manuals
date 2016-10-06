@@ -79,7 +79,7 @@ Configuring LBaaS v2 with an agent
 
 #.  Add the LBaaS v2 service provider to the ``service_provider`` configuration
     directive within the ``[service_providers]`` section in
-    ``/etc/neutron/neutron.conf``:
+    ``/etc/neutron/neutron_lbaas.conf``:
 
     .. code-block:: console
 
