@@ -55,7 +55,8 @@ or as connected entities.
 .. only:: ubuntu
 
    This guide will walk through an installation by using packages
-   available through Canonical's Ubuntu Cloud archive repository.
+   available through Canonical's Ubuntu Cloud archive repository for
+   Ubuntu 16.04 (LTS).
 
 .. endonly
 
