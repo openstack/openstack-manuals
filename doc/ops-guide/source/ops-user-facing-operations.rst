@@ -870,11 +870,11 @@ volumes and the instances they are connected to, if any:
 .. code-block:: console
 
    $ cinder list
-   +------------+---------+--------------------+------+-------------+-------------+
-   |     ID     | Status  |    Display Name    | Size | Volume Type | Attached to |
-   +------------+---------+--------------------+------+-------------+-------------+
-   | 0821...19f |  active |                    |  10  |     None    |             |
-   +------------+---------+--------------------+------+-------------+-------------+
+   +------------+-----------+-------------+------+-------------+----------+-------------+
+   |     ID     |  Status   |     Name    | Size | Volume Type | Bootable | Attached to |
+   +------------+-----------+-------------+------+-------------+----------+-------------+
+   | 0821...19f | available |      -      |  10  |      -      |  false   |             |
+   +------------+-----------+-------------+------+-------------+----------+-------------+
 
 OpenStack Block Storage also allows creating snapshots of volumes.
 Remember that this is a block-level snapshot that is crash consistent,
@@ -891,20 +891,28 @@ or run this from the command line:
 .. code-block:: console
 
    $ cinder help snapshot-create
-   usage: cinder snapshot-create [--force <True|False>]
-   [--display-name <display-name>]
-   [--display-description <display-description>]
-   <volume-id>
-   Add a new snapshot.
-   Positional arguments:  <volume-id>         ID of the volume to snapshot
-   Optional arguments:  --force <True|False>  Optional flag to indicate whether to
-                                              snapshot a volume even if its
-                                              attached to an instance.
-                                              (Default=False)
-   --display-name <display-name>              Optional snapshot name.
-                                              (Default=None)
-   --display-description <display-description>
-   Optional snapshot description. (Default=None)
+   usage: cinder snapshot-create [--force [<True|False>]] [--name <name>]
+                                 [--description <description>]
+                                 [--metadata [<key=value> [<key=value> ...]]]
+                                 <volume>
+
+   Creates a snapshot.
+
+   Positional arguments:
+     <volume-id>           Name or ID of volume to snapshot.
+
+   Optional arguments:
+     --force [<True|False>]
+                           Allows or disallows snapshot of a volume when the
+                           volume is attached to an instance. If set to True,
+                           ignores the current status of the volume when
+                           attempting to snapshot it rather than forcing it to be
+                           available. Default=False.
+     --name <name>         Snapshot name. Default=None.
+     --description <description>
+                           Snapshot description. Default=None.
+     --metadata [<key=value> [<key=value> ...]]
+                           Snapshot metadata key and value pairs. Default=None.
 
 .. note::
 
