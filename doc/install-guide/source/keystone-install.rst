@@ -196,7 +196,7 @@ Configure the Apache HTTP server
 
 .. endonly
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    #. Edit the ``/etc/apache2/apache2.conf`` file and configure the
       ``ServerName`` option to reference the controller node:
@@ -208,12 +208,31 @@ Configure the Apache HTTP server
 
       .. end
 
+.. endonly
+
+.. only:: ubuntu
 
    #. Enable the Identity service virtual hosts:
 
       .. code-block:: console
 
          # ln -s /etc/apache2/sites-available/wsgi-keystone.conf /etc/apache2/sites-enabled
+
+      .. end
+
+.. endonly
+
+.. only:: debian
+
+   .. note::
+
+      The Debian package will perform the below operations for you:
+
+      .. code-block:: console
+
+         # a2enmod wsgi
+         # a2ensite wsgi-keystone.conf
+         # invoke-rc.d apache2 restart
 
       .. end
 
