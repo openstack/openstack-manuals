@@ -44,7 +44,7 @@ Release-specific documentation
 
 The Installation Guides, Configuration Reference, and Networking Guide
 are released at release time, with draft material published to
-https://docs.openstack.org/draft/draft-index.html.
+http://docs.openstack.org/draft/draft-index.html.
 The rest of the guides are continuously released.
 
 To patch for the release-specific documentation, you should generally patch to
