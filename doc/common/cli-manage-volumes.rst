@@ -50,16 +50,14 @@ This example creates a ``my-new-volume`` volume based on an image.
 
    .. code-block:: console
 
-      $ nova image-list
-      +-----------------------+---------------------------------+--------+--------------------------+
-      | ID                    | Name                            | Status | Server                   |
-      +-----------------------+---------------------------------+--------+--------------------------+
-      | 397e713c-b95b-4186... | cirros-0.3.2-x86_64-uec         | ACTIVE |                          |
-      | df430cc2-3406-4061... | cirros-0.3.2-x86_64-uec-kernel  | ACTIVE |                          |
-      | 3cf852bd-2332-48f4... | cirros-0.3.2-x86_64-uec-ramdisk | ACTIVE |                          |
-      | 7e5142af-1253-4634... | myCirrosImage                   | ACTIVE | 84c6e57d-a6b1-44b6-81... |
-      | 89bcd424-9d15-4723... | mysnapshot                      | ACTIVE | f51ebd07-c33d-4951-87... |
-      +-----------------------+---------------------------------+--------+--------------------------+
+      $ glance image-list
+      +--------------------------------------+---------------------------------+
+      | ID                                   | Name                            |
+      +--------------------------------------+---------------------------------+
+      | c2833699-594f-4651-a1e3-b7b6bb31dc8c | cirros-0.3.4-x86_64-uec         |
+      | 28d3d4fb-a2b0-46e9-aef8-07a931c8986b | cirros-0.3.4-x86_64-uec-kernel  |
+      | 832962d2-cabd-4dd2-b2e4-00944fe8b84e | cirros-0.3.4-x86_64-uec-ramdisk |
+      +--------------------------------------+---------------------------------+
 
 #. List the availability zones, and note the ID of the availability zone in
    which you want to create your volume:
@@ -79,26 +77,36 @@ This example creates a ``my-new-volume`` volume based on an image.
    .. code-block:: console
 
       $ cinder create 8 --display-name my-new-volume \
-        --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 \
+        --image-id c2833699-594f-4651-a1e3-b7b6bb31dc8c \
         --availability-zone nova
-      +---------------------+--------------------------------------+
-      |       Property      |                Value                 |
-      +---------------------+--------------------------------------+
-      |     attachments     |                  []                  |
-      |  availability_zone  |                 nova                 |
-      |       bootable      |                false                 |
-      |      created_at     |      2013-07-25T17:02:12.472269      |
-      | display_description |                 None                 |
-      |     display_name    |            my-new-volume             |
-      |          id         | 573e024d-5235-49ce-8332-be1576d323f8 |
-      |       image_id      | 397e713c-b95b-4186-ad46-6126863ea0a9 |
-      |       metadata      |                  {}                  |
-      |         size        |                  8                   |
-      |     snapshot_id     |                 None                 |
-      |     source_volid    |                 None                 |
-      |        status       |               creating               |
-      |     volume_type     |                 None                 |
-      +---------------------+--------------------------------------+
+      +--------------------------------+--------------------------------------+
+      | Property                       | Value                                |
+      +--------------------------------+--------------------------------------+
+      | attachments                    | []                                   |
+      | availability_zone              | nova                                 |
+      | bootable                       | false                                |
+      | consistencygroup_id            | None                                 |
+      | created_at                     | 2016-09-29T08:12:58.000000           |
+      | description                    | None                                 |
+      | encrypted                      | False                                |
+      | id                             | 31e440f4-fd3d-43c9-8345-fd3eb4dca33d |
+      | metadata                       | {}                                   |
+      | migration_status               | None                                 |
+      | multiattach                    | False                                |
+      | name                           | my-new-volume                        |
+      | os-vol-host-attr:host          | None                                 |
+      | os-vol-mig-status-attr:migstat | None                                 |
+      | os-vol-mig-status-attr:name_id | None                                 |
+      | os-vol-tenant-attr:tenant_id   | 29c09e68e6f741afa952a837e29c700b     |
+      | replication_status             | disabled                             |
+      | size                           | 8                                    |
+      | snapshot_id                    | None                                 |
+      | source_volid                   | None                                 |
+      | status                         | creating                             |
+      | updated_at                     | None                                 |
+      | user_id                        | 6ab5800949644c3e8fb86aaeab8275c8     |
+      | volume_type                    | lvmdriver-1                          |
+      +--------------------------------+--------------------------------------+
 
 #. To verify that your volume was created successfully, list the available
    volumes:
