@@ -140,8 +140,8 @@ the ``pci_alias`` from the flavor.
    # openstack server create --flavor m1.large --image cirros-0.3.4-x86_64-uec --wait test-pci
 
 .. Links
-.. _`Create Virtual Functions`: http://docs.openstack.org/mitaka/networking-guide/adv-config-sriov.html#create-virtual-functions-compute
-.. _`Configure nova-scheduler`: http://docs.openstack.org/mitaka/networking-guide/adv-config-sriov.html#configure-nova-scheduler-controller
-.. _`nova.conf configuration options`: http://docs.openstack.org/mitaka/config-reference/compute/config-options.html
+.. _`Create Virtual Functions`: http://docs.openstack.org/newton/networking-guide/config-sriov.html#create-virtual-functions-compute
+.. _`Configure nova-scheduler`: http://docs.openstack.org/newton/networking-guide/config-sriov.html#configure-nova-scheduler-controller
+.. _`nova.conf configuration options`: http://docs.openstack.org/newton/config-reference/compute/config-options.html
 .. _`flavor`: http://docs.openstack.org/admin-guide/compute-flavors.html
-.. _`Networking Guide`: http://docs.openstack.org/mitaka/networking-guide/adv-config-sriov.html
+.. _`Networking Guide`: http://docs.openstack.org/newton/networking-guide/config-sriov.html

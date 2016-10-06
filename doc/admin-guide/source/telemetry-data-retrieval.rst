@@ -189,7 +189,7 @@ the requested operations.
 To be able to use the :command:`ceilometer` command, the
 python-ceilometerclient package needs to be installed and configured
 properly. For details about the installation process, see the `Telemetry
-chapter <http://docs.openstack.org/mitaka/install-guide-ubuntu/ceilometer.html>`__
+chapter <http://docs.openstack.org/project-install-guide/telemetry/newton/>`__
 in the OpenStack Installation Guide.
 
 .. note::

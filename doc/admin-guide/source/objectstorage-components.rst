@@ -49,7 +49,7 @@ take over.
 
 For more information concerning proxy server configuration, see
 `Configuration Reference
-<http://docs.openstack.org/mitaka/config-reference/object-storage/configure.html#proxy-server-configuration>`_.
+<http://docs.openstack.org/newton/config-reference/object-storage/proxy-server.html>`_.
 
 Rings
 -----

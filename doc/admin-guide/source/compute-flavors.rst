@@ -522,6 +522,6 @@ PCI passthrough
 
     - ALIAS: (string) The alias which correspond to a particular PCI device
       class as configured in the nova configuration file (see `nova.conf
-      configuration options <http://docs.openstack.org/mitaka/config-reference/compute/config-options.html>`_).
+      configuration options <http://docs.openstack.org/newton/config-reference/compute/config-options.html>`_).
     - COUNT: (integer) The amount of PCI devices of type ALIAS to be assigned
       to a guest.
