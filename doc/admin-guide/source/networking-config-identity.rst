@@ -116,7 +116,7 @@ Configure Identity service for Networking
 
 For information about how to create service entries and users, see the
 OpenStack Installation Guide for your distribution
-(`docs.openstack.org <http://docs.openstack.org/index.html#install-guides>`__).
+(`docs.openstack.org <http://docs.openstack.org/project-install-guide/newton/>`__).
 
 Compute
 ~~~~~~~
