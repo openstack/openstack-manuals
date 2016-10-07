@@ -48,7 +48,7 @@ enabled or disabled:
 
    $ openstack project list
    +----------------------------------+--------------------+
-   | id                               | name               |
+   | ID                               | Name               |
    +----------------------------------+--------------------+
    | f7ac731cc11f40efbc03a9f9e1d1d21f | admin              |
    | c150ab41f0d9443f8874e32e725a4cc8 | alt_demo           |
@@ -135,7 +135,7 @@ List all users:
 
    $ openstack user list
    +----------------------------------+----------+
-   | id                               | name     |
+   | ID                               | Name     |
    +----------------------------------+----------+
    | 352b37f5c89144d4ad0534139266d51f | admin    |
    | 86c0de739bcb4802b8dc786921355813 | demo     |
@@ -216,7 +216,7 @@ List the available roles:
 
    $ openstack role list
    +----------------------------------+---------------+
-   | id                               | name          |
+   | ID                               | Name          |
    +----------------------------------+---------------+
    | 71ccc37d41c8491c975ae72676db687f | Member        |
    | 149f50a1fe684bfa88dae76a48d26ef7 | ResellerAdmin |
@@ -275,7 +275,7 @@ IDs.
 
       $ openstack role list
       +----------------------------------+---------------+
-      | id                               | name          |
+      | ID                               | Name          |
       +----------------------------------+---------------+
       | 71ccc37d41c8491c975ae72676db687f | Member        |
       | 149f50a1fe684bfa88dae76a48d26ef7 | ResellerAdmin |
