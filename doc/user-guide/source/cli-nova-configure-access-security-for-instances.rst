@@ -94,7 +94,7 @@ Import a key pair
 
    .. code-block:: console
 
-      $ nova keypair-add --pub_key ~/.ssh/id_rsa.pub KEY_NAME
+      $ nova keypair-add --pub-key ~/.ssh/id_rsa.pub KEY_NAME
 
    This command registers the public key at the Nova database and names the
    key pair the name that you specify for ``KEY_NAME``.
