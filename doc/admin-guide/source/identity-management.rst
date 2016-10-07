@@ -16,7 +16,6 @@ command-line client.
 
    identity-concepts.rst
    keystone-certificates-for-pki.rst
-   keystone-configure-with-SSL.rst
    keystone-domain-specific-config.rst
    keystone-external-authentication.rst
    keystone-integrate-with-ldap.rst
@@ -25,7 +24,6 @@ command-line client.
    keystone-fernet-token-faq.rst
    keystone-use-trusts.rst
    keystone-caching-layer.rst
-   identity-start.rst
    identity-keystone-usage-and-features.rst
    identity-auth-token-middleware.rst
    identity-service-api-protection.rst
