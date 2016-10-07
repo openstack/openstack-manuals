@@ -253,8 +253,8 @@ You can extend this reference architecture as follows:
 -  Add additional cloud controllers (see :doc:`ops-maintenance`).
 
 -  Add an OpenStack Storage service (see the Object Storage chapter in
-   the `OpenStack Installation Guide
-   <http://docs.openstack.org/#install-guides>`_ for your distribution).
+   the `Installation Tutorials and Guides
+   <http://docs.openstack.org/project-install-guide/newton/>`_ for your distribution).
 
 -  Add additional OpenStack Block Storage hosts (see
    :doc:`ops-maintenance`).

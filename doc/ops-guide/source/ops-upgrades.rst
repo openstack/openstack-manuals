@@ -95,8 +95,8 @@ Watch the network
 
 To set up the test environment, you can use one of several methods:
 
--  Do a full manual install by using the `OpenStack Installation
-   Guide <http://docs.openstack.org/index.html#install-guides>`_ for
+-  Do a full manual install by using the `Installation Tutorials and Guides
+   <http://docs.openstack.org/project-install-guide/newton/>`_ for
    your platform. Review the final configuration files and installed
    packages.
 
@@ -175,9 +175,9 @@ General upgrade process
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 This section describes the process to upgrade a basic OpenStack
-deployment based on the basic two-node architecture in the `OpenStack
-Installation
-Guide <http://docs.openstack.org/index.html#install-guides>`_. All
+deployment based on the basic two-node architecture in the `Installation
+Tutorials and Guides
+<http://docs.openstack.org/project-install-guide/newton/>`_. All
 nodes must run a supported distribution of Linux with a recent kernel
 and the current release packages.
 
@@ -234,8 +234,8 @@ Perform a backup
    .. note::
 
       Consider updating your SQL server configuration as described in the
-      `OpenStack Installation
-      Guide <http://docs.openstack.org/index.html#install-guides>`_.
+      `Installation Tutorials and Guides
+      <http://docs.openstack.org/project-install-guide/newton/>`_.
 
 Manage repositories
 -------------------

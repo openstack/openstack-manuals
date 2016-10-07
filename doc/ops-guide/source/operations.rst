@@ -3,8 +3,8 @@ Operations
 ==========
 
 Congratulations! By now, you should have a solid design for your cloud.
-We now recommend that you turn to the `OpenStack Installation Guides
-<http://docs.openstack.org/index.html#install-guides>`_, which contains a
+We now recommend that you turn to the `Installation Tutorials and Guides
+<http://docs.openstack.org/project-install-guide/newton/>`_, which contains a
 step-by-step guide on how to manually install the OpenStack packages and
 dependencies on your cloud.
 
