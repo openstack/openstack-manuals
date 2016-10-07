@@ -98,7 +98,7 @@ Create a flavor
 
    .. code-block:: console
 
-      $ openstack flavor create FLAVOR_NAME FLAVOR_ID RAM_IN_MB ROOT_DISK_IN_GB NUMBER_OF_VCPUS
+      $ openstack flavor create FLAVOR_NAME --id FLAVOR_ID --ram RAM_IN_MB --disk ROOT_DISK_IN_GB --vcpus NUMBER_OF_VCPUS
 
    .. note::
 
@@ -116,7 +116,7 @@ Create a flavor
 
    .. code-block:: console
 
-      $ openstack flavor create --is-public true m1.extra_tiny auto 256 0 1 --rxtx-factor .1
+      $ openstack flavor create --public m1.extra_tiny --id auto --ram 256 --disk 0 --vcpus 1 --rxtx-factor 1
 
 #. If an individual user or group of users needs a custom
    flavor that you do not want other projects to have access to,
