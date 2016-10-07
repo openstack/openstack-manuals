@@ -22,8 +22,8 @@ administrators to use users and groups in LDAP.
    .. code-block:: ini
 
       [identity]
-      #driver = keystone.identity.backends.sql.Identity
-      driver = keystone.identity.backends.ldap.Identity
+      #driver = sql
+      driver = ldap
 
 #. Create the organizational units (OU) in the LDAP directory, and define
    the corresponding location in the ``keystone.conf`` file:
@@ -78,8 +78,8 @@ administrators to use users and groups in LDAP.
       .. code-block:: ini
 
          [identity]
-         #driver = keystone.identity.backends.sql.Identity
-         driver = keystone.identity.backends.ldap.Identity
+         #driver = sql
+         driver = ldap
 
    #. Enable domain-specific drivers:
 
@@ -124,8 +124,6 @@ administrators to use users and groups in LDAP.
       user = dc=Manager,dc=example,dc=org
       password = samplepassword
       suffix = dc=example,dc=org
-      use_dumb_member = False
-      allow_subtree_delete = False
 
 #. Create the organizational units (OU) in the LDAP directories, and define
    their corresponding locations in the
@@ -211,14 +209,12 @@ Identity attribute mapping
       user_enabled_invert    = false
       user_enabled_default   = 51
       user_default_project_id_attribute =
-      user_attribute_ignore = default_project_id,projects
       user_additional_attribute_mapping =
 
       group_id_attribute     = cn
       group_name_attribute   = ou
       group_member_attribute = member
       group_desc_attribute   = description
-      group_attribute_ignore =
       group_additional_attribute_mapping =
 
 Enabled emulation
