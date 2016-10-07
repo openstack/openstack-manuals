@@ -67,6 +67,7 @@ There are also several :command:`*-manage` command-line tools. These are
 installed with the project's services on the cloud controller and do not
 need to be installed separately:
 
+* :command:`nova-manage`
 * :command:`glance-manage`
 * :command:`keystone-manage`
 * :command:`cinder-manage`
