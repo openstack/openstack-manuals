@@ -4,8 +4,8 @@ Backport a change
 ~~~~~~~~~~~~~~~~~
 
 When committing to the master branch, add the ``backport`` line to your
-commit message for potential backport patches (Installation Guide,
-Configuration Reference, Networking Guide, and common directory).
+commit message for potential backport patches (Installation Tutorials and
+Guides, Configuration Reference, Networking Guide, and common directory).
 For example:
 
 * To backport to a single branch:
