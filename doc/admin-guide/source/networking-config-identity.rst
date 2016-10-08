@@ -114,9 +114,9 @@ Configure Identity service for Networking
          $ openstack role add $ADMIN_ROLE --user $NEUTRON_USER \
            --project $SERVICE_TENANT
 
-For information about how to create service entries and users, see the
-OpenStack Installation Guide for your distribution
-(`docs.openstack.org <http://docs.openstack.org/project-install-guide/newton/>`__).
+For information about how to create service entries and users, see the `Newton Installation
+Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton/>`_
+for your distribution.
 
 Compute
 ~~~~~~~

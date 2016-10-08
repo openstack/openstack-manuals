@@ -89,7 +89,7 @@ types by each OpenStack service that Telemetry transforms into samples.
        image.send
      - The required configuration for Image service can be  * - service found in
        `Configure the Image service for Telemetry <http://docs.openstack.org/project-install-guide/telemetry/newton>`__
-       section in the OpenStack Installation Guide
+       section in the Installation Tutorials and Guides.
    * - OpenStack Networking
      - floatingip.create.end
 
@@ -172,7 +172,7 @@ types by each OpenStack service that Telemetry transforms into samples.
        \*
      - The required configuration for Block Storage service can be found in the
        `Add the Block Storage service agent for Telemetry section <http://docs.openstack.org/project-install-guide/telemetry/newton/configure_services/cinder/install-cinder-ubuntu.html>`__
-       in the OpenStack Installation Guide.
+       in the Installation Tutorials and Guides.
 
 .. note::
 
@@ -188,7 +188,7 @@ rapidly. For more information on configuring notifications for the
 compute service, see
 `Telemetry services <http://docs.openstack.org/project-install-guide/
 telemetry/newton/configure_services/nova/install-nova-ubuntu.html>`__ in the
-OpenStack Installation Guide.
+Installation Tutorials and Guides.
 
 .. note::
 
@@ -211,7 +211,7 @@ node, installation instructions can be found in the `Install the Compute
 agent for Telemetry
 <http://docs.openstack.org/project-install-guide/
 telemetry/newton/configure_services/nova/install-nova-ubuntu.html>`__
-section in the OpenStack Installation Guide.
+section in the Installation Tutorials and Guides.
 
 Just like the central agent, this component also does not need a direct
 database connection. The samples are sent via AMQP to the notification agent.
@@ -244,7 +244,7 @@ The instructions on how to install this middleware can be found in
 `Configure the Object Storage service for Telemetry
 <http://docs.openstack.org/project-install-guide/
 telemetry/newton/configure_services/swift/install-swift-ubuntu.html>`__
-section in the OpenStack Installation Guide.
+section in the Installation Tutorials and Guides.
 
 Telemetry middleware
 --------------------
@@ -342,7 +342,7 @@ The following services can be polled with this agent:
 
 To install and configure this service use the `Add the Telemetry service
 <http://docs.openstack.org/project-install-guide/telemetry/newton/install-base-ubuntu.html>`__
-section in the OpenStack Installation Guide.
+section in the Installation Tutorials and Guides.
 
 The central agent does not need direct database connection. The samples
 collected by this agent are sent via AMQP to the notification agent to be
