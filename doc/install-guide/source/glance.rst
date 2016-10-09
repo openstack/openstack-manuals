@@ -24,7 +24,7 @@ systems to object-storage systems like OpenStack Object Storage.
    default, this directory is ``/var/lib/glance/images/``.
 
    Before you proceed, ensure that the controller node has at least
-   several gigabytes of space available in this directory.  Keep in
+   several gigabytes of space available in this directory. Keep in
    mind that since the ``file`` back end is often local to a controller
    node, it is not typically suitable for a multi-node glance deployment.
 
