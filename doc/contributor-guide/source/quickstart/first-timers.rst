@@ -9,18 +9,6 @@ is to walk through the Installation Tutorial and complete it by hand.
 Keep notes as you go, and offer suggestions for improvement by filing
 documentation bugs at Launchpad.
 
-Other good first-time documentation tasks are bug triaging and bug fixing:
-
-#. Go to the bug lists at https://bugs.launchpad.net/openstack-manuals/+bugs.
-
-#. When you can confirm a bug, give it a status based on
-   the :ref:`documentation bug triaging guidelines <doc_bugs_triaging>`.
-   You may skip this step and proceed with bug fixing.
-
-#. If you are up for it, assign the bug to yourself after it has been
-   confirmed by one other person. Fix it by committing the required changes
-   to OpenStack documentation.
-
 The following diagram shows the basic setup workflow:
 
 .. image:: ../figures/workflow-diagram.png
@@ -137,6 +125,15 @@ of the Infrastructure manual.
 See :ref:`troubleshoot_setup` if you have difficulty with a repository
 setup.
 
+Finding a bug
+~~~~~~~~~~~~~
+
+After setting up your environment for contribution, it is time to find
+something to work on:
+
+#. Go to the bug lists at https://bugs.launchpad.net/openstack-manuals/+bugs.
+
+#. Assign a confirmed bug to yourself.
 
 Committing a change
 ~~~~~~~~~~~~~~~~~~~
