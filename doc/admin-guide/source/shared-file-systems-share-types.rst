@@ -88,7 +88,7 @@ The new share type can also be public.
    +-----+--------+-----------+-----------+-----------------------------------+-----------------------+
    | ID  | Name   | Visibility| is_default| required_extra_specs              | optional_extra_specs  |
    +-----+--------+-----------+-----------+-----------------------------------+-----------------------+
-   | c0..| netapp1| public    | No        | driver_handles_share_servers:False| snapshot_support:True |
+   | c0..| netapp1| public    | -         | driver_handles_share_servers:False| snapshot_support:True |
    +-----+--------+-----------+-----------+-----------------------------------+-----------------------+
 
 You can set or unset extra specifications for a share type
@@ -134,11 +134,16 @@ Create a private type:
 .. code-block:: console
 
    $ manila type-create my_type1 True --is_public False
-   +-----+---------+-----------+-----------+----------------------------------+----------------------+
-   | ID  | Name    | Visibility| is_default| required_extra_specs             | optional_extra_specs |
-   +-----+---------+-----------+-----------+----------------------------------+----------------------+
-   | a4..| my_type1| private   | -         | driver_handles_share_servers:True| snapshot_support:True|
-   +-----+---------+-----------+-----------+----------------------------------+----------------------+
+   +----------------------+--------------------------------------+
+   | Property             | Value                                |
+   +----------------------+--------------------------------------+
+   | required_extra_specs | driver_handles_share_servers : True  |
+   | Name                 | my_type1                             |
+   | Visibility           | private                              |
+   | is_default           | -                                    |
+   | ID                   | 06793be5-9a79-4516-89fe-61188cad4d6c |
+   | optional_extra_specs | snapshot_support : True              |
+   +----------------------+--------------------------------------+
 
 .. note::
 
