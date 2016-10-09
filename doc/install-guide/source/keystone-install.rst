@@ -210,18 +210,6 @@ Configure the Apache HTTP server
 
 .. endonly
 
-.. only:: ubuntu
-
-   #. Enable the Identity service virtual hosts:
-
-      .. code-block:: console
-
-         # ln -s /etc/apache2/sites-available/wsgi-keystone.conf /etc/apache2/sites-enabled
-
-      .. end
-
-.. endonly
-
 .. only:: debian
 
    .. note::
