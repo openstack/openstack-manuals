@@ -8,5 +8,5 @@ Files in this section can be found in ``/etc/nova``.
    :maxdepth: 2
 
    api-paste.ini.rst
-   policy.json.rst
+   policy.yaml.rst
    rootwrap.conf.rst
