@@ -133,7 +133,8 @@ something to work on:
 
 #. Go to the bug lists at https://bugs.launchpad.net/openstack-manuals/+bugs.
 
-#. Assign a confirmed bug to yourself.
+#. Find a bug that has been confirmed by another contributor and assign it
+   to yourself.
 
 Committing a change
 ~~~~~~~~~~~~~~~~~~~
