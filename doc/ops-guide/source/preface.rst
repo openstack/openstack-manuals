@@ -134,17 +134,17 @@ There are other books on the `OpenStack documentation
 website <http://docs.openstack.org>`_ that can help you get the job
 done.
 
-OpenStack Installation Guides
+Installation Tutorials and Guides
     Describes a manual installation process, as in, by hand, without
     automation, for multiple distributions based on a packaging system:
 
-    -  `Installation Guide for openSUSE and SUSE Linux Enterprise
+    -  `OpenStack Installation Tutorial for openSUSE and SUSE Linux Enterprise
        <http://docs.openstack.org/newton/install-guide-obs/>`_
 
-    -  `Installation Guide for Red Hat Enterprise Linux and CentOS
+    -  `OpenStack Installation Tutorial for Red Hat Enterprise Linux and CentOS
        <http://docs.openstack.org/newton/install-guide-rdo/>`_
 
-    -  `Installation Guide for Ubuntu
+    -  `OpenStack Installation Tutorial for Ubuntu
        <http://docs.openstack.org/newton/install-guide-ubuntu/>`_
 
 `OpenStack Configuration Reference <http://docs.openstack.org/newton/config-reference/>`_

@@ -5,13 +5,13 @@ Resources
 OpenStack
 ~~~~~~~~~
 
--  `Installation Guide for openSUSE Leap 42.1 and SUSE Linux Enterprise
+-  `OpenStack Installation Tutorial for openSUSE and SUSE Linux Enterprise
    Server 12 SP1 <http://docs.openstack.org/newton/install-guide-obs/>`_
 
--  `Installation Guide for Red Hat Enterprise Linux 7 CentOS 7
+-  `OpenStack Installation Tutorial for Red Hat Enterprise Linux and CentOS
    <http://docs.openstack.org/newton/install-guide-rdo/>`_
 
--  `Installation Guide for Ubuntu 16.04 (LTS)
+-  `OpenStack Installation Tutorial for Ubuntu
    Server <http://docs.openstack.org/newton/install-guide-ubuntu/>`_
 
 -  `OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/>`_
