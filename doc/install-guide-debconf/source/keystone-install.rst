@@ -68,46 +68,61 @@ Install and configure the components
 
    .. code-block:: console
 
-      # openstack --os-token ${AUTH_TOKEN} \
-        --os-url=http://127.0.0.1:35357/v3/ \
-        --os-domain-name default \
-        --os-identity-api-version=3 \
-        project create --or-show \
-        admin --domain default \
-        --description "Default Debian admin project"
+      # export OS_BOOTSTRAP_USERNAME=${ADMIN_USER_NAME}
 
-      # openstack --os-token ${AUTH_TOKEN} \
-        --os-url=http://127.0.0.1:35357/v3/ \
-        --os-domain-name default \
-        --os-identity-api-version=3 \
-        project create --or-show \
-        service --domain default \
-        --description "Default Debian admin project"
+      # export OS_BOOTSTRAP_PROJECT_NAME=${ADMIN_TENANT_NAME}
 
-      # openstack --os-token ${AUTH_TOKEN} \
-        --os-url=http://127.0.0.1:35357/v3/ \
-        --os-domain-name default \
-        --os-identity-api-version=3 \
-        user create --or-show \
-        --password ADMIN_PASS \
-        --project admin \
-        --email root@localhost \
-        --enable \
-        admin \
-        --domain default \
-        --description "Default Debian admin user"
+      # export OS_BOOTSTRAP_PASSWORD=${ADMIN_USER_PW}
 
-      # openstack --os-token ${AUTH_TOKEN} \
-        --os-url=http://127.0.0.1:35357/v3/ \
-        --os-domain-name default \
-        --os-identity-api-version=3 \
-        role create --or-show admin
+      # keystone-manage bootstrap
 
-      # openstack  --os-token ${AUTH_TOKEN} \
-        --os-url=http://127.0.0.1:35357/v3/ \
-        --os-domain-name default \
-        --os-identity-api-version=3 \
-        role add --project admin --user admin admin
+      # export OS_PROJECT_DOMAIN_ID=default
+
+      # export OS_USER_DOMAIN_ID=default
+
+      # export OS_USERNAME=admin
+
+      # export OS_PASSWORD=${ADMIN_USER_PW}
+
+      # export OS_TENANT_NAME=${ADMIN_TENANT_NAME}
+
+      # export OS_PROJECT_NAME=${ADMIN_TENANT_NAME}
+
+      # export OS_AUTH_URL=http://127.0.0.1:35357/v3/
+
+      # export OS_IDENTITY_API_VERSION=3
+
+      # export OS_AUTH_VERSION=3
+
+      # export OS_PROJECT_DOMAIN_ID=default
+
+      # export OS_USER_DOMAIN_ID=default
+
+      # export OS_NO_CACHE=1
+
+      # openstack project set \
+        --description "Default Debian admin project" \
+        $ADMIN_TENANT_NAME
+
+      # openstack project create --or-show service \
+        --description "Default Debian service project"
+
+      # openstack user set \
+        --description "Default Debian admin user" \
+        --email ${ADMIN_USER_EMAIL} \
+        --enable $ADMIN_USER_NAME
+
+   The Keystone package will then create roles for ``admin``,
+   ``KeystoneAdmin``, ``KeystoneServiceAdmin``, ``heat_stack_owner``,
+   ``Member`` and ``ResellerAdmin``, and will add them to the ``admin``
+   project. For each of these, it is equivalent to:
+
+   .. code-block:: console
+
+      # openstack role create --or-show FOO
+
+      # openstack role add --project admin \
+        --user admin FOO
 
    .. image:: figures/debconf-screenshots/keystone_2_register_admin_tenant_yes_no.png
       :scale: 50
@@ -124,37 +139,34 @@ Install and configure the components
    .. image:: figures/debconf-screenshots/keystone_6_admin_user_pass_confirm.png
       :scale: 50
 
+#. Register the keystone endpoint
+
    In Debian, the Keystone package offers automatic registration of
    Keystone in the service catalogue. This is equivalent of running the
    below commands:
 
    .. code-block:: console
 
-      # openstack --os-token ${AUTH_TOKEN} \
+      # OS_TOKEN=`openstack token issue -c id -f value` \
+        openstack service create \
         --os-url=http://127.0.0.1:35357/v3/ \
-        --os-domain-name default \
-        --os-identity-api-version=3 \
-        service create \
         --name keystone \
         --description "OpenStack Identity" \
         identity
 
-      # openstack --os-token ${AUTH_TOKEN} \
+      # OS_TOKEN=`openstack token issue -c id -f value`
+        openstack endpoint create \
         --os-url=http://127.0.0.1:35357/v3/ \
-        --os-domain-name default \
-        --os-identity-api-version=3 \
         keystone public http://controller:5000/v2.0
 
-      # openstack --os-token ${AUTH_TOKEN} \
+      # OS_TOKEN=`openstack token issue -c id -f value`
+        openstack endpoint create \
         --os-url=http://127.0.0.1:35357/v3/ \
-        --os-domain-name default \
-        --os-identity-api-version=3 \
         keystone internal http://controller:5000/v2.0
 
-      # openstack --os-token ${AUTH_TOKEN} \
+      # OS_TOKEN=`openstack token issue -c id -f value`
+        openstack endpoint create \
         --os-url=http://127.0.0.1:35357/v3/ \
-        --os-domain-name default \
-        --os-identity-api-version=3 \
         keystone admin http://controller:35357/v2.0
 
    .. image:: figures/debconf-screenshots/keystone_7_register_endpoint.png
