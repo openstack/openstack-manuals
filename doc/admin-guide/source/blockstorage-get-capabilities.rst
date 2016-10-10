@@ -56,6 +56,7 @@ as listed below.
    |    driver_version   |                    2.0.0                     |
    |      namespace      | OS::Storage::Capabilities::block1@ABC-driver |
    |      pool_name      |                     None                     |
+   | replication_targets |                      []                      |
    |   storage_protocol  |                    iSCSI                     |
    |     vendor_name     |                  Vendor ABC                  |
    |      visibility     |                     pool                     |
