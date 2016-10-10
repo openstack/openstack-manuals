@@ -38,7 +38,7 @@ total of five nodes. Each building block could also require additional
 infrastructure or changes to existing infrastructure such as networks.
 
 For basic configuration of prerequisites, see the
-`Installation Guide <http://docs.openstack.org>`_ for your OpenStack release.
+`Newton Install Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`__.
 
 Nodes
 -----
