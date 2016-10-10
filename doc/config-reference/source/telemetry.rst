@@ -16,8 +16,8 @@ The Telemetry service collects measurements within OpenStack. Its
 various agents and services are configured in the
 ``/etc/ceilometer/ceilometer.conf`` file.
 
-To install Telemetry, see the OpenStack Installation Guide for your
-distribution (`docs.openstack.org <http://docs.openstack.org>`__).
+To install Telemetry, see the `Newton Installation Tutorials and Guides
+<http://docs.openstack.org/project-install-guide/newton/>`_ for your distribution.
 
 .. note::
 

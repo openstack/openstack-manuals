@@ -16,8 +16,8 @@ The Orchestration service is designed to manage the lifecycle of infrastructure
 and applications within OpenStack clouds. Its various agents and services are
 configured in the ``/etc/heat/heat.conf`` file.
 
-To install Orchestration, see the OpenStack Installation Guide for your
-distribution (`docs.openstack.org <http://docs.openstack.org>`__).
+To install Orchestration, see the `Newton Installation Tutorials and Guides
+<http://docs.openstack.org/project-install-guide/newton/>`_ for your distribution.
 
 .. note::
 
