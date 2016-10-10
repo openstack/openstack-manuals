@@ -32,8 +32,7 @@ Configure Big Switch (Floodlight REST Proxy) plug-in
 
    For database configuration, see `Install Networking
    Services <http://docs.openstack.org/newton/install-guide-ubuntu/neutron-controller-install.html>`__
-   in the Installation Guide in the `OpenStack Documentation
-   index <http://docs.openstack.org>`__. (The link defaults to the Ubuntu
+   in the Installation Tutorials and Guides. (The link defaults to the Ubuntu
    version.)
 
 #. Restart the ``neutron-server`` to apply the settings:
@@ -79,7 +78,7 @@ Configure Brocade plug-in
 
    For database configuration, see `Install Networking
    Services <http://docs.openstack.org/newton/install-guide-ubuntu/neutron-controller-install.html>`__
-   in any of the Installation Guides in the `OpenStack Documentation
+   in any of the Installation Tutorials and Guides in the `OpenStack Documentation
    index <http://docs.openstack.org>`__. (The link defaults to the Ubuntu
    version.)
 
@@ -175,7 +174,7 @@ formerly known as Nicira NVP.
 
       For database configuration, see `Install Networking
       Services <http://docs.openstack.org/newton/install-guide-ubuntu/neutron-controller-install.html>`__
-      in the Installation Guide.
+      in the Installation Tutorials and Guides.
 
 #. Restart ``neutron-server`` to apply settings:
 
@@ -238,7 +237,7 @@ Configure PLUMgrid plug-in
 
    For database configuration, see `Install Networking
    Services <http://docs.openstack.org/newton/install-guide-ubuntu/neutron-controller-install.html>`__
-   in the Installation Guide.
+   in the Installation Tutorials and Guides.
 
 #. Restart the ``neutron-server`` service to apply the settings:
 

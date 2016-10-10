@@ -21,7 +21,7 @@ below.
    order to be able to collect all the samples you need. For further
    information about configuration requirements see the `Telemetry chapter
    <http://docs.openstack.org/project-install-guide/telemetry/newton/>`__
-   in the OpenStack Installation Guide. Also check the `Telemetry manual
+   in the Installation Tutorials and Guides. Also check the `Telemetry manual
    installation <http://docs.openstack.org/developer/ceilometer/install/manual.html>`__
    description.
 
