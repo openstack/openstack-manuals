@@ -19,8 +19,9 @@ Configuration
    config-ipam
    config-ipv6
    config-lbaas
+   config-macvtap
    config-mtu
-   config-ovs-dpdk.rst
+   config-ovs-dpdk
    config-ovsfwdriver
    config-qos
    config-rbac

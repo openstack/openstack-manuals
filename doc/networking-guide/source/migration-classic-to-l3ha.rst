@@ -1,8 +1,8 @@
-.. _migration-classic-to-l3ha:
+.. _migration-to-vrrp:
 
-======================
-Classic to VRRP (L3HA)
-======================
+==============================
+Add VRRP to an existing router
+==============================
 
 This section describes the process of migrating from a classic router to an L3
 HA router, which is available starting from the Mitaka release.
@@ -15,8 +15,8 @@ of bandwidth constraints that limit performance. However, it supports random
 distribution of routers on different network nodes to reduce the chances of
 bandwidth constraints and to improve scaling.
 
-This section summarizes parts of :ref:`scenario-l3ha-ovs` and
-:ref:`scenario-l3ha-lb`. For details regarding needed infrastructure and
+This section references parts of :ref:`deploy-lb-ha-vrrp` and
+:ref:`deploy-ovs-ha-vrrp`. For details regarding needed infrastructure and
 configuration to allow actual L3 HA deployment, read the relevant guide
 before continuing with the migration process.
 
