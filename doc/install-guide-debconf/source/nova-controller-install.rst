@@ -25,7 +25,8 @@ Install and configure components
    .. note::
 
       ``nova-api-metadata`` is included in the ``nova-api`` package,
-      and can be selected through debconf.
+      and can be selected through debconf, or editing ``enabled_apis``
+      in the ``[DEFAULT]`` section of nova.conf.
 
    .. note::
 
@@ -82,9 +83,18 @@ Install and configure components
      .. code-block:: ini
 
         [vnc]
+        enabled = true
         ...
         vncserver_listen = $my_ip
         vncserver_proxyclient_address = $my_ip
+
+   * In the ``[spice]`` section, disable spice.
+
+      .. code-block:: ini
+
+         [spice]
+         enabled = false
+
 
    * In the ``[glance]`` section, configure the location of the
      Image service API:
