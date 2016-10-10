@@ -42,8 +42,8 @@ For more information, see :ref:`doc_bugs`.
 Release-specific documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Installation Guides, Configuration Reference, and Networking Guide
-are released at release time, with draft material published to
+The Installation Tutorials and Guides, Configuration Reference, and Networking
+Guide are released at release time, with draft material published to
 http://docs.openstack.org/draft/draft-index.html.
 The rest of the guides are continuously released.
 
@@ -63,8 +63,8 @@ currently developing a similar method of marking older books written in RST.
 The core team tracks usage of older versions, and as usage falls, can
 remove them entirely.
 
-Installation Guides
--------------------
+Installation Tutorials and Guides
+---------------------------------
 
 The OpenStack Installation Tutorials and Guides describe a manual install
 process for multiple distributions based on the following packaging systems:
