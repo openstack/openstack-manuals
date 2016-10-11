@@ -434,12 +434,12 @@ B
       object to determine if the subject is authorized for the specific access mode.
       The clearance or classification scheme is expressed in terms of a lattice.
 
-   Benchmark service
+   Benchmark service (rally)
 
       OpenStack project that provides a framework for
       performance analysis and benchmarking of individual
       OpenStack components as well as full production OpenStack
-      cloud deployments. The code name of the project is rally.
+      cloud deployments.
 
    Bexar
 
@@ -3047,7 +3047,7 @@ R
 
    rally
 
-      OpenStack project that provides the Benchmark service.
+      Codename for the :term:`Benchmark service<Benchmark service (rally)>`.
 
    RAM filter
 
