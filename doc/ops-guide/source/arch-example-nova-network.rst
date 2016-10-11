@@ -92,10 +92,11 @@ those deviations next.
        little or no service interruption, you would enable live migration,
        but it is considered optional.
 
-    -  :term:`Object storage <Object Storage service>`: You may choose to
-       store machine images on a file system rather than in object storage
-       if you do not have the extra hardware for the required replication
-       and redundancy that OpenStack Object Storage offers.
+    -  :term:`Object storage <Object Storage service (swift)>`: You may
+       choose to store machine images on a file system rather than in
+       object storage if you do not have the extra hardware for the
+       required replication and redundancy that OpenStack Object Storage
+       offers.
 
 Rationale
 ~~~~~~~~~
