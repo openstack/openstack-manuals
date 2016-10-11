@@ -894,10 +894,10 @@ C
       its associated metadata, such as machine state, OS disk size, and so
       on.
 
-   Container Infrastructure Management service
+   Container Infrastructure Management service (magnum)
 
-      To provide a set of services for provisioning, scaling, and managing
-      container orchestration engines.
+      The project which provides a set of services for provisioning, scaling,
+      and managing container orchestration engines.
 
    container server
 
@@ -2255,8 +2255,8 @@ M
 
    magnum
 
-      Code name for the OpenStack project that provides the
-      Containers Service.
+      Code name for the :term:`Containers Infrastructure Management
+      service<Container Infrastructure Management service (magnum)>`.
 
    management API
 
