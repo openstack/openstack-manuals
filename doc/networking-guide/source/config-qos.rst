@@ -94,7 +94,7 @@ On network nodes:
 
 On compute nodes:
 
-#. In ``/etc/neutron/plugins/ml2/ml2_conf.ini``, add ``qos`` to the
+#. In ``/etc/neutron/plugins/ml2/openvswitch_agent.ini``, add ``qos`` to the
    ``extensions`` setting in the ``[agent]`` section. For example:
 
    .. code-block:: ini
