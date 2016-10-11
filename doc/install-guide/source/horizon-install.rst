@@ -465,6 +465,7 @@ Install and configure components
                ...
                'enable_router': False,
                'enable_quotas': False,
+               'enable_ipv6': False,
                'enable_distributed_router': False,
                'enable_ha_router': False,
                'enable_lb': False,
