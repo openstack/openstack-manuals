@@ -83,8 +83,8 @@ Controller node
    * Disable service plug-ins because provider networks do not require
      any. However, this breaks portions of the dashboard that manage
      the Networking service. See the
-     `Installation Guide <http://docs.openstack.org>`__ for more
-     information.
+     `Newton Install Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`__
+     for more information.
 
      .. code-block:: ini
 
