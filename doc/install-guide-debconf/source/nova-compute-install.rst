@@ -57,22 +57,6 @@ Install and configure components
      typically 10.0.0.31 for the first node in the
      :ref:`example architecture <overview-example-architectures>`.
 
-   * In the ``[DEFAULT]`` section, enable support for the Networking service:
-
-     .. code-block:: ini
-
-        [DEFAULT]
-        ...
-        use_neutron = True
-        firewall_driver = nova.virt.firewall.NoopFirewallDriver
-
-     .. note::
-
-        By default, Compute uses an internal firewall service. Since
-        Networking includes a firewall service, you must disable the Compute
-        firewall service by using the
-        ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
-
    * In the ``[vnc]`` section, enable and configure remote console access:
 
      .. code-block:: ini
