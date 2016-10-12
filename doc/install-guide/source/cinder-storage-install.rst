@@ -308,15 +308,15 @@ Install and configure components
 
    .. only:: rdo
 
-      * In the ``[DEFAULT]`` section, configure the LVM back end with the
+      * In the ``[lvm]`` section, configure the LVM back end with the
         LVM driver, ``cinder-volumes`` volume group, iSCSI protocol,
-        and appropriate iSCSI service:
+        and appropriate iSCSI service. If the ``[lvm]`` section does not exist,
+        create it:
 
         .. path /etc/cinder/cinder.conf
         .. code-block:: ini
 
-           [DEFAULT]
-           ...
+           [lvm]
            volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
            volume_group = cinder-volumes
            iscsi_protocol = iscsi
