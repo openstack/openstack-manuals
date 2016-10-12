@@ -35,7 +35,7 @@ command line client.
 
 .. code-block:: console
 
-   # openstack project create demo
+   # openstack project create demo --domain default
 
 This command creates a project named ``demo``. Optionally, you can add a
 description string by appending :option:`--description PROJECT_DESCRIPTION`,

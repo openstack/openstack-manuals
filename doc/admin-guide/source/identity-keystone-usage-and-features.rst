@@ -15,7 +15,7 @@ commands can be invoked as follows:
    export OS_SERVICE_ENDPOINT=http://127.0.0.1:5000/v2.0/
    export OS_SERVICE_TOKEN=secrete_token
    openstack user list
-   openstack project create demo
+   openstack project create demo --domain default
 
    # Using token auth flags
    openstack --os-token secrete --os-endpoint http://127.0.0.1:5000/v2.0/ user list
@@ -26,7 +26,7 @@ commands can be invoked as follows:
    export OS_PASSWORD=secrete
    export OS_PROJECT_NAME=admin
    openstack user list
-   openstack project create demo
+   openstack project create demo --domain default
 
    # Using user + password + project-name flags
    openstack --os-username admin --os-password secrete --os-project-name admin user list

@@ -105,7 +105,7 @@ Configure Identity service for Networking
       .. code-block:: console
 
          $ SERVICE_TENANT=$(get_id openstack project create service \
-           --description "Services project")
+           --description "Services project" --domain default)
 
    d. Establish the relationship among the project, user, and role:
 

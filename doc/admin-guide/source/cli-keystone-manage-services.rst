@@ -114,14 +114,17 @@ Create service users
 
    .. code-block:: console
 
-      $ openstack project create service
+      $ openstack project create service --domain default
       +-------------+----------------------------------+
       | Field       | Value                            |
       +-------------+----------------------------------+
       | description | None                             |
+      | domain_id   | e601210181f54843b51b3edff41d4980 |
       | enabled     | True                             |
       | id          | 3e9f3f5399624b2db548d7f871bd5322 |
+      | is_domain   | False                            |
       | name        | service                          |
+      | parent_id   | e601210181f54843b51b3edff41d4980 |
       +-------------+----------------------------------+
 
 #. Create service users for the relevant services for your
