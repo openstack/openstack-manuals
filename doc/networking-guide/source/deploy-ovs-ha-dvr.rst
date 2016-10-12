@@ -145,21 +145,22 @@ Verify service operation
 
    .. code-block:: console
 
-      +--------------------------------------+--------------------+-------------+----------------+-------+----------------+---------------------------+
-      | id                                   | agent_type         | host        | availability_zone | alive | admin_state_up | binary                    |
-      +--------------------------------------+--------------------+----------+-------------------+-------+----------------+---------------------------+
-      | 05d980f2-a4fc-4815-91e7-a7f7e118c0db | L3 agent           | compute1 | nova              | :-)   | True           | neutron-l3-agent          |
-      | 1236bbcb-e0ba-48a9-80fc-81202ca4fa51 | Metadata agent     | compute2 |                   | :-)   | True           | neutron-metadata-agent    |
-      | 2a2e9a90-51b8-4163-a7d6-3e199ba2374b | L3 agent           | compute2 | nova              | :-)   | True           | neutron-l3-agent          |
-      | 457d6898-b373-4bb3-b41f-59345dcfb5c5 | Open vSwitch agent | compute2 |                   | :-)   | True           | neutron-openvswitch-agent |
-      | 513caa68-0391-4e53-a530-082e2c23e819 | Linux bridge agent | compute1 |                   | :-)   | True           | neutron-linuxbridge-agent |
-      | 71f15e84-bc47-4c2a-b9fb-317840b2d753 | DHCP agent         | compute2 | nova              | :-)   | True           | neutron-dhcp-agent        |
-      | 8805b962-de95-4e40-bdc2-7a0add7521e8 | L3 agent           | network1 | nova              | :-)   | True           | neutron-l3-agent          |
-      | a33cac5a-0266-48f6-9cac-4cef4f8b0358 | Open vSwitch agent | network1 |                   | :-)   | True           | neutron-openvswitch-agent |
-      | a6c69690-e7f7-4e56-9831-1282753e5007 | Metadata agent     | compute1 |                   | :-)   | True           | neutron-metadata-agent    |
-      | af11f22f-a9f4-404f-9fd8-cd7ad55c0f68 | DHCP agent         | compute1 | nova              | :-)   | True           | neutron-dhcp-agent        |
-      | bcfc977b-ec0e-4ba9-be62-9489b4b0e6f1 | Open vSwitch agent | compute1 |                   | :-)   | True           | neutron-openvswitch-agent |
-      +--------------------------------------+--------------------+----------+-------------------+-------+----------------+---------------------------+
+      $ openstack network agent list
+      +--------------------------------------+--------------------+----------+-------------------+-------+-------+---------------------------+
+      | ID                                   | Agent Type         | Host     | Availability Zone | Alive | State | Binary                    |
+      +--------------------------------------+--------------------+----------+-------------------+-------+-------+---------------------------+
+      | 05d980f2-a4fc-4815-91e7-a7f7e118c0db | L3 agent           | compute1 | nova              | True  | UP    | neutron-l3-agent          |
+      | 1236bbcb-e0ba-48a9-80fc-81202ca4fa51 | Metadata agent     | compute2 |                   | True  | UP    | neutron-metadata-agent    |
+      | 2a2e9a90-51b8-4163-a7d6-3e199ba2374b | L3 agent           | compute2 | nova              | True  | UP    | neutron-l3-agent          |
+      | 457d6898-b373-4bb3-b41f-59345dcfb5c5 | Open vSwitch agent | compute2 |                   | True  | UP    | neutron-openvswitch-agent |
+      | 513caa68-0391-4e53-a530-082e2c23e819 | Linux bridge agent | compute1 |                   | True  | UP    | neutron-linuxbridge-agent |
+      | 71f15e84-bc47-4c2a-b9fb-317840b2d753 | DHCP agent         | compute2 | nova              | True  | UP    | neutron-dhcp-agent        |
+      | 8805b962-de95-4e40-bdc2-7a0add7521e8 | L3 agent           | network1 | nova              | True  | UP    | neutron-l3-agent          |
+      | a33cac5a-0266-48f6-9cac-4cef4f8b0358 | Open vSwitch agent | network1 |                   | True  | UP    | neutron-openvswitch-agent |
+      | a6c69690-e7f7-4e56-9831-1282753e5007 | Metadata agent     | compute1 |                   | True  | UP    | neutron-metadata-agent    |
+      | af11f22f-a9f4-404f-9fd8-cd7ad55c0f68 | DHCP agent         | compute1 | nova              | True  | UP    | neutron-dhcp-agent        |
+      | bcfc977b-ec0e-4ba9-be62-9489b4b0e6f1 | Open vSwitch agent | compute1 |                   | True  | UP    | neutron-openvswitch-agent |
+      +--------------------------------------+--------------------+----------+-------------------+-------+-------+---------------------------+
 
 Create initial networks
 -----------------------
@@ -175,115 +176,81 @@ supports adding distributed routing to existing routers.
 
    .. code-block:: console
 
-      $ neutron net-create selfservice2
-      Created a new network:
-      +-------------------------+--------------------------------------+
-      | Field                   | Value                                |
-      +-------------------------+--------------------------------------+
-      | admin_state_up          | True                                 |
-      | availability_zone_hints |                                      |
-      | availability_zones      |                                      |
-      | description             |                                      |
-      | id                      | 7ebc353c-6c8f-461f-8ada-01b9f14beb18 |
-      | ipv4_address_scope      |                                      |
-      | ipv6_address_scope      |                                      |
-      | mtu                     | 1450                                 |
-      | name                    | selfservice2                         |
-      | port_security_enabled   | True                                 |
-      | router:external         | False                                |
-      | shared                  | False                                |
-      | status                  | ACTIVE                               |
-      | subnets                 |                                      |
-      | tags                    |                                      |
-      | tenant_id               | f986edf55ae945e2bef3cb4bfd589928     |
-      +-------------------------+--------------------------------------+
+      $ openstack network create selfservice2
+      +-------------------------+--------------+
+      | Field                   | Value        |
+      +-------------------------+--------------+
+      | admin_state_up          | UP           |
+      | mtu                     | 1450         |
+      | name                    | selfservice2 |
+      | port_security_enabled   | True         |
+      | router:external         | Internal     |
+      | shared                  | False        |
+      | status                  | ACTIVE       |
+      +-------------------------+--------------+
 
 #. Create a IPv4 subnet on the self-service network.
 
    .. code-block:: console
 
-      $ neutron subnet-create --name selfservice2-v4 --ip-version 4 \
-        --dns-nameserver 8.8.4.4 selfservice2 192.168.2.0/24
-      Created a new subnet:
-      +-------------------+--------------------------------------------------+
-      | Field             | Value                                            |
-      +-------------------+--------------------------------------------------+
-      | allocation_pools  | {"start": "192.168.2.2", "end": "192.168.2.254"} |
-      | cidr              | 192.168.2.0/24                                   |
-      | description       |                                                  |
-      | dns_nameservers   | 8.8.4.4                                          |
-      | enable_dhcp       | True                                             |
-      | gateway_ip        | 192.168.2.1                                      |
-      | host_routes       |                                                  |
-      | id                | 12a41804-18bf-4cec-bde8-174cbdbf1573             |
-      | ip_version        | 4                                                |
-      | ipv6_address_mode |                                                  |
-      | ipv6_ra_mode      |                                                  |
-      | name              | selfservice2-v4                                  |
-      | network_id        | 7ebc353c-6c8f-461f-8ada-01b9f14beb18             |
-      | subnetpool_id     |                                                  |
-      | tenant_id         | f986edf55ae945e2bef3cb4bfd589928                 |
-      +-------------------+--------------------------------------------------+
+      $ openstack subnet create --subnet-range 192.168.2.0/24 \
+        --network selfservice2 --dns-nameserver 8.8.4.4 selfservice2-v4
+      +-------------------+---------------------------+
+      | Field             | Value                     |
+      +-------------------+---------------------------+
+      | allocation_pools  | 192.168.2.2-192.168.2.254 |
+      | cidr              | 192.168.2.0/24            |
+      | dns_nameservers   | 8.8.4.4                   |
+      | enable_dhcp       | True                      |
+      | gateway_ip        | 192.168.2.1               |
+      | ip_version        | 4                         |
+      | name              | selfservice2-v4           |
+      +-------------------+---------------------------+
 
 #. Create a IPv6 subnet on the self-service network.
 
    .. code-block:: console
 
-      $ neutron subnet-create --name selfservice2-v6 --ip-version 6 \
-        --ipv6-address-mode slaac --ipv6-ra-mode slaac \
-        --dns-nameserver 2001:4860:4860::8844 selfservice2 \
-        fd00:192:168:2::/64
-      Created a new subnet:
-      +-------------------+-----------------------------------------------------------------------------+
-      | Field             | Value                                                                       |
-      +-------------------+-----------------------------------------------------------------------------+
-      | allocation_pools  | {"start": "fd00:192:168:2::2", "end": "fd00:192:168:2:ffff:ffff:ffff:ffff"} |
-      | cidr              | fd00:192:168:2::/64                                                         |
-      | description       |                                                                             |
-      | dns_nameservers   | 2001:4860:4860::8844                                                        |
-      | enable_dhcp       | True                                                                        |
-      | gateway_ip        | fd00:192:168:2::1                                                           |
-      | host_routes       |                                                                             |
-      | id                | b0f122fe-0bf9-4f31-975d-a47e58aa88e3                                        |
-      | ip_version        | 6                                                                           |
-      | ipv6_address_mode | slaac                                                                       |
-      | ipv6_ra_mode      | slaac                                                                       |
-      | name              | selfservice2-v6                                                             |
-      | network_id        | 7ebc353c-6c8f-461f-8ada-01b9f14beb18                                        |
-      | subnetpool_id     |                                                                             |
-      | tenant_id         | f986edf55ae945e2bef3cb4bfd589928                                            |
-      +-------------------+-----------------------------------------------------------------------------+
+      $ openstack subnet create --subnet-range fd00:192:168:2::/64 --ip-version 6 \
+        --ipv6-ra-mode slaac --ipv6-address-mode slaac --network selfservice2 \
+        --dns-nameserver 2001:4860:4860::8844 selfservice2-v6
+      +-------------------+------------------------------------------------------+
+      | Field             | Value                                                |
+      +-------------------+------------------------------------------------------+
+      | allocation_pools  | fd00:192:168:2::2-fd00:192:168:2:ffff:ffff:ffff:ffff |
+      | cidr              | fd00:192:168:2::/64                                  |
+      | dns_nameservers   | 2001:4860:4860::8844                                 |
+      | enable_dhcp       | True                                                 |
+      | gateway_ip        | fd00:192:168:2::1                                    |
+      | ip_version        | 6                                                    |
+      | ipv6_address_mode | slaac                                                |
+      | ipv6_ra_mode      | slaac                                                |
+      | name              | selfservice2-v6                                      |
+      +-------------------+------------------------------------------------------+
 
 #. Create a router.
 
    .. code-block:: console
 
-      $ neutron router-create router2
-      Created a new router:
-      +-------------------------+--------------------------------------+
-      | Field                   | Value                                |
-      +-------------------------+--------------------------------------+
-      | admin_state_up          | True                                 |
-      | availability_zone_hints |                                      |
-      | availability_zones      |                                      |
-      | description             |                                      |
-      | external_gateway_info   |                                      |
-      | id                      | b6206312-878e-497c-8ef7-eb384f8add96 |
-      | name                    | router2                              |
-      | routes                  |                                      |
-      | status                  | ACTIVE                               |
-      | tenant_id               | f986edf55ae945e2bef3cb4bfd589928     |
-      +-------------------------+--------------------------------------+
+      $ openstack router create router2
+      +-----------------------+---------+
+      | Field                 | Value   |
+      +-----------------------+---------+
+      | admin_state_up        | UP      |
+      | name                  | router2 |
+      | status                | ACTIVE  |
+      +-----------------------+---------+
 
 #. Add the IPv4 and IPv6 subnets as interfaces on the router.
 
    .. code-block:: console
 
-      $ neutron router-interface-add router2 selfservice2-v4
-      Added interface da3504ad-ba70-4b11-8562-2e6938690878 to router router2.
+      $ openstack router add subnet router2 selfservice2-v4
+      $ openstack router add subnet router2 selfservice2-v6
 
-      $ neutron router-interface-add router2 selfservice2-v6
-      Added interface 442e36eb-fce3-4cb5-b179-4be6ace595f0 to router router2.
+   .. note::
+
+      These commands provide no output.
 
 #. Add the provider network as a gateway on the router.
 
@@ -300,12 +267,16 @@ Verify network operation
 
    .. code-block:: console
 
-      $ neutron router-show router2
-        +-------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-        | Field                   | Value                                                                                                                                                                                                                                                                             |
-        +-------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-        | distributed             | True                                                                                                                                                                                                                                                                              |
-        +-------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+      $ openstack router show router2
+      +-------------------------+---------+
+      | Field                   | Value   |
+      +-------------------------+---------+
+      | admin_state_up          | UP      |
+      | distributed             | True    |
+      | ha                      | False   |
+      | name                    | router2 |
+      | status                  | ACTIVE  |
+      +-------------------------+---------+
 
 #. On each compute node, verify creation of a ``qrouter`` namespace with
    the same ID.

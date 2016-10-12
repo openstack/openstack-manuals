@@ -6,103 +6,85 @@ simplicity, the following procedure creates one flat provider network.
 
    .. code-block:: console
 
-      $ neutron net-create --shared --provider:physical_network provider \
-        --provider:network_type flat provider1
-      Created a new network:
-      +---------------------------+--------------------------------------+
-      | Field                     | Value                                |
-      +---------------------------+--------------------------------------+
-      | admin_state_up            | True                                 |
-      | availability_zone_hints   |                                      |
-      | availability_zones        |                                      |
-      | description               |                                      |
-      | id                        | 2b5ad13f-3859-4847-8db7-c695ab7dfce6 |
-      | ipv4_address_scope        |                                      |
-      | ipv6_address_scope        |                                      |
-      | mtu                       | 1500                                 |
-      | name                      | provider1                            |
-      | port_security_enabled     | True                                 |
-      | provider:network_type     | flat                                 |
-      | provider:physical_network | provider                             |
-      | provider:segmentation_id  |                                      |
-      | router:external           | False                                |
-      | shared                    | True                                 |
-      | status                    | ACTIVE                               |
-      | subnets                   |                                      |
-      | tags                      |                                      |
-      | tenant_id                 | de59fed9547a4628b781df0862c837cf     |
-      +---------------------------+--------------------------------------+
+      $ openstack network create --share --provider-physical-network provider \
+        --provider-network-type flat provider1
+      +---------------------------+-----------+-
+      | Field                     | Value     |
+      +---------------------------+-----------+
+      | admin_state_up            | UP        |
+      | mtu                       | 1500      |
+      | name                      | provider1 |
+      | port_security_enabled     | True      |
+      | provider:network_type     | flat      |
+      | provider:physical_network | provider  | 
+      | provider:segmentation_id  | None      |
+      | router:external           | Internal  |
+      | shared                    | True      |
+      | status                    | ACTIVE    |
+      +---------------------------+-----------+
 
    .. note::
 
-      The ``shared`` option allows any project to use this network.
+      The ``share`` option allows any project to use this network. To limit
+      access to provider networks, see :ref:`config-rbac`.
 
    .. note::
 
       To create a VLAN network instead of a flat network, change
-      ``--provider:network_type flat`` to ``--provider:network_type vlan``
-      and add ``--provider:segmentation_id`` with a value referencing
+      ``--provider:network_type flat`` to ``--provider-network-type vlan``
+      and add ``--provider-segment`` with a value referencing
       the VLAN ID.
 
 #. Create a IPv4 subnet on the provider network.
 
    .. code-block:: console
 
-      $ neutron subnet-create --name provider1-v4 --ip-version 4 \
-        --allocation-pool start=203.0.113.11,end=203.0.113.250 \
-        --gateway 203.0.113.1 --dns-nameserver 8.8.4.4 provider1 \
-        203.0.113.0/24
-      Created a new subnet:
-      +-------------------+---------------------------------------------------+
-      | Field             | Value                                             |
-      +-------------------+---------------------------------------------------+
-      | allocation_pools  | {"start": "203.0.113.11", "end": "203.0.113.250"} |
-      | cidr              | 203.0.113.0/24                                    |
-      | description       |                                                   |
-      | dns_nameservers   | 8.8.4.4                                           |
-      | enable_dhcp       | True                                              |
-      | gateway_ip        | 203.0.113.1                                       |
-      | host_routes       |                                                   |
-      | id                | 7ce3fd60-1d45-4432-a9a5-4f7645629bd9              |
-      | ip_version        | 4                                                 |
-      | ipv6_address_mode |                                                   |
-      | ipv6_ra_mode      |                                                   |
-      | name              | provider1-v4                                      |
-     | network_id        | 2b5ad13f-3859-4847-8db7-c695ab7dfce6              |
-      | subnetpool_id     |                                                   |
-      | tenant_id         | de59fed9547a4628b781df0862c837cf                  |
-      +-------------------+---------------------------------------------------+
+      $ openstack subnet create --subnet-range 203.0.113.0/24 --gateway 203.0.113.1 \
+        --network provider1 --allocation-pool start=203.0.113.11,end=203.0.113.250 \
+        --dns-nameserver 8.8.4.4 provider1-v4
+      +-------------------+----------------------------+
+      | Field             | Value                      |
+      +-------------------+----------------------------+
+      | allocation_pools  | 203.0.113.11-203.0.113.250 |
+      | cidr              | 203.0.113.0/24             |
+      | dns_nameservers   | 8.8.4.4                    |
+      | enable_dhcp       | True                       |
+      | gateway_ip        | 203.0.113.1                |
+      | ip_version        | 4                          |
+      | name              | provider1-v4               |
+      +-------------------+----------------------------+
+
+   .. note::
+
+      Enabling DHCP causes the Networking service to provide DHCP which can
+      interfere with existing DHCP services on the physical network
+      infrastructure.
 
 #. Create a IPv6 subnet on the provider network.
 
    .. code-block:: console
 
-      $ neutron subnet-create --name provider1-v6 --ip-version 6 \
-        --gateway fd00:203:0:113::1 --dns-nameserver 2001:4860:4860::8844 \
-        provider1 fd00:203:0:113::/64
-      Created a new subnet:
-      +-------------------+-----------------------------------------------------------------------------+
-      | Field             | Value                                                                       |
-      +-------------------+-----------------------------------------------------------------------------+
-      | allocation_pools  | {"start": "fd00:203:0:113::2", "end": "fd00:203:0:113:ffff:ffff:ffff:ffff"} |
-      | cidr              | fd00:203:0:113::/64                                                         |
-      | description       |                                                                             |
-      | dns_nameservers   | 2001:4860:4860::8844                                                        |
-      | enable_dhcp       | True                                                                        |
-      | gateway_ip        | fd00:203:0:113::1                                                           |
-      | host_routes       |                                                                             |
-      | id                | 773ea59c-e8c1-4254-baf3-27d5b2d42eb5                                        |
-      | ip_version        | 6                                                                           |
-      | ipv6_address_mode |                                                                             |
-      | ipv6_ra_mode      |                                                                             |
-      | name              | provider1-v6                                                                |
-      | network_id        | 2b5ad13f-3859-4847-8db7-c695ab7dfce6                                        |
-      | subnetpool_id     |                                                                             |
-      | tenant_id         | de59fed9547a4628b781df0862c837cf                                            |
-      +-------------------+-----------------------------------------------------------------------------+
+      $ openstack subnet create --subnet-range fd00:203:0:113::/64 --gateway fd00:203:0:113::1 \
+        --ip-version 6 --ipv6-ra-mode slaac --ipv6-address-mode slaac --network provider1 \
+        --dns-nameserver 2001:4860:4860::8844 provider1-v6
+      +-------------------+------------------------------------------------------+
+      | Field             | Value                                                |
+      +-------------------+------------------------------------------------------+
+      | allocation_pools  | fd00:203:0:113::2-fd00:203:0:113:ffff:ffff:ffff:ffff |
+      | cidr              | fd00:203:0:113::/64                                  |
+      | dns_nameservers   | 2001:4860:4860::8844                                 |
+      | enable_dhcp       | True                                                 |
+      | gateway_ip        | fd00:203:0:113::1                                    |
+      | ip_version        | 6                                                    |
+      | ipv6_address_mode | slaac                                                |
+      | ipv6_ra_mode      | slaac                                                |
+      | name              | provider1-v6                                         |
+      +-------------------+------------------------------------------------------+
 
    .. note::
 
-      By default, IPv6 provider networks rely on physical network
-      infrastructure for stateless address autoconfiguration (SLAAC)
-      and router advertisement.
+      The Networking service uses the layer-3 agent to provide router
+      advertisement. Provider networks rely on physical network infrastructure
+      for layer-3 services rather than the layer-3 agent. Thus, the physical
+      network infrastructure must provide router advertisement on provider
+      networks for proper operation of IPv6.
