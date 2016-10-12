@@ -2,6 +2,8 @@
 OpenStack services
 ==================
 
+This section describes OpenStack services in detail.
+
 .. toctree::
    :maxdepth: 2
 
@@ -19,5 +21,3 @@ OpenStack services
    get-started-orchestration.rst
    get-started-database-service.rst
    get-started-data-processing.rst
-
-This section describes OpenStack services in detail.
