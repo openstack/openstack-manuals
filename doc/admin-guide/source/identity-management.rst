@@ -15,15 +15,15 @@ command-line client.
    :maxdepth: 1
 
    identity-concepts.rst
-   keystone-certificates-for-pki.rst
-   keystone-domain-specific-config.rst
-   keystone-external-authentication.rst
-   keystone-integrate-with-ldap.rst
-   keystone-tokens.rst
-   keystone-token-binding.rst
-   keystone-fernet-token-faq.rst
-   keystone-use-trusts.rst
-   keystone-caching-layer.rst
+   identity-certificates-for-pki.rst
+   identity-domain-specific-config.rst
+   identity-external-authentication.rst
+   identity-integrate-with-ldap.rst
+   identity-tokens.rst
+   identity-token-binding.rst
+   identity-fernet-token-faq.rst
+   identity-use-trusts.rst
+   identity-caching-layer.rst
    identity-keystone-usage-and-features.rst
    identity-auth-token-middleware.rst
    identity-service-api-protection.rst
