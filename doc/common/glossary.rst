@@ -2273,8 +2273,8 @@ M
 
    manila
 
-      OpenStack project that provides shared file systems as
-      service to applications.
+      Codename for OpenStack :term:`Shared File Systems service<Shared
+      File Systems service (manila)>`.
 
    manila-share
 
@@ -3401,16 +3401,18 @@ S
 
    share
 
-      A remote, mountable file system in the context of the Shared File
-      Systems. You can mount a share to, and access a share from, several
-      hosts by several users at a time.
+      A remote, mountable file system in the context of the :term:`Shared
+      File Systems service<Shared File Systems service (manila)>`. You can
+      mount a share to, and access a share from, several hosts by several
+      users at a time.
 
    share network
 
-      An entity in the context of the Shared File Systems that
-      encapsulates interaction with the Networking service. If the driver
-      you selected runs in the mode requiring such kind of interaction, you
-      need to specify the share network to create a share.
+      An entity in the context of the :term:`Shared File Systems
+      service<Shared File Systems service (manila)>` that encapsulates
+      interaction with the Networking service. If the driver you selected
+      runs in the mode requiring such kind of interaction, you need to
+      specify the share network to create a share.
 
    Shared File Systems API
 
@@ -3419,17 +3421,16 @@ S
       File Systems service. There is python-manilaclient to interact with
       the API.
 
-   Shared File Systems service
+   Shared File Systems service (manila)
 
-      An OpenStack service that provides a set of services for
+      The service that provides a set of services for
       management of shared file systems in a multi-tenant cloud
-      environment. The service is similar to how OpenStack provides
-      block-based storage management through the OpenStack Block Storage
-      service project. With the Shared File Systems service, you can create
-      a remote file system and mount the file system on your instances. You
-      can also read and write data from your instances to and from your
-      file system. The project name of the Shared File Systems service is
-      manila.
+      environment, similar to how OpenStack provides block-based storage
+      management through the OpenStack :term:`Block Storage service<Block
+      Storage service (cinder)>` project.
+      With the Shared File Systems service, you can create a remote file
+      system and mount the file system on your instances. You can also
+      read and write data from your instances to and from your file system.
 
    shared IP address
 
