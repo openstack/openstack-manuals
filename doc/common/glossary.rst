@@ -1013,11 +1013,11 @@ D
       and prevent it from leaking outside a network boundary
       through the detection and denying of the data transportation.
 
-   Data Processing service
+   Data Processing service (sahara)
 
       OpenStack project that provides a scalable
       data-processing stack and associated management
-      interfaces. The code name for the project is sahara.
+      interfaces.
 
    data store
 
@@ -3265,8 +3265,8 @@ S
 
    sahara
 
-      OpenStack project that provides a scalable data-processing stack
-      and associated management interfaces.
+      Codename for the :term:`Data Processing service<Data Processing
+      service (sahara)>`.
 
    SAML assertion
 
