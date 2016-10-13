@@ -1,5 +1,6 @@
+====================================================================
 Secure the OpenStack Identity service connection to an LDAP back end
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+====================================================================
 
 The Identity service supports the use of TLS to encrypt LDAP traffic.
 Before configuring this, you must first verify where your certificate
