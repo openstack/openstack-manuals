@@ -26,8 +26,8 @@ The Cinder driver supports both VMAX-2 and VMAX-3 series.
 For VMAX-2 series, SMI-S version V4.6.2.29 (Solutions Enabler 7.6.2.67)
 or Solutions Enabler 8.1.2 is required.
 
-For VMAX-3 series, Solutions Enabler 8.3 is required. This is SSL only.
-Refer to section below ``SSL support``.
+For VMAX-3 series, Solutions Enabler 8.3.0.1 or later is required. This
+is SSL only. Refer to section below ``SSL support``.
 
 When installing Solutions Enabler, make sure you explicitly add the SMI-S
 component.
@@ -146,9 +146,10 @@ VMAX All Flash and Hybrid:
 
 .. note::
 
-   VMAX All Flash array with Solutions Enabler 8.3 have compression enabled
-   by default when associated with Diamond Service Level. This means volumes
-   added to any newly created storage groups will be compressed.
+   VMAX All Flash array with Solutions Enabler 8.3.0.1 or later have
+   compression enabled by default when associated with Diamond Service Level.
+   This means volumes added to any newly created storage groups will be
+   compressed.
 
 Setup VMAX drivers
 ~~~~~~~~~~~~~~~~~~
@@ -331,11 +332,17 @@ Setup VMAX drivers
          </PortGroups>
          <Array>111111111111</Array>
          <Pool>SRP_1</Pool>
-         <SLO>Gold</SLO>
+         <SLO>Diamond</SLO>
          <Workload>OLTP</Workload>
        </EMC>
 
    Where:
+
+.. note::
+
+   VMAX Hybrid supports Optimized, Diamond, Platinum, Gold, Silver, Bronze, and
+   NONE service levels. VMAX All Flash supports Diamond and NONE. Both
+   support DSS_REP, DSS, OLTP_REP, OLTP, and NONE workloads.
 
 ``EcomServerIp``
     IP address of the ECOM server which is packaged with SMI-S.
@@ -509,37 +516,54 @@ SSL support
 ~~~~~~~~~~~
 
 .. note::
-   The ECOM component in Solutions Enabler enforces SSL in 8.3.
+   The ECOM component in Solutions Enabler enforces SSL in 8.3.0.1 or later.
    By default, this port is 5989.
 
-#. Get the CA certificate of the ECOM server:
+#. Get the CA certificate of the ECOM server. This pulls the CA cert file and
+   saves it as .pem file. The ECOM server IP address or hostname is ``my_ecom_host``.
+   The sample name of the .pem file is ``ca_cert.pem``:
 
    .. code-block:: console
 
-      # openssl s_client -showcerts -connect <ecom_hostname>.lss.emc.com:5989 </dev/null
+      # openssl s_client -showcerts -connect my_ecom_host:5989 </dev/null 2>/dev/null|openssl x509 -outform PEM >ca_cert.pem
 
 #. Copy the pem file to the system certificate directory:
 
    .. code-block:: console
 
-      # cp <ecom_hostname>.lss.emc.com.pem /usr/share/ca-certificates/<ecom_hostname>.lss.emc.com.crt
+      # cp ca_cert.pem /usr/share/ca-certificates/ca_cert.crt
 
-#. Update CA certificate database with the following commands
-   (accept defaults):
+#. Update CA certificate database with the following commands:
 
    .. code-block:: console
 
-      # dpkg-reconfigure ca-certificates
-      # dpkg-reconfigure ca-certificates
+      # sudo dpkg-reconfigure ca-certificates
+
+   .. note::
+      Check that the new ``ca_cert.crt`` will activiate by selecting
+      :guilabel:`ask` on the dialog. If it is not enabled for activation, use the
+      down and up keys to select, and the space key to enable or disable.
+
+   .. code-block:: console
+
+      # sudo update-ca-certificates
 
 #. Update :file:`/etc/cinder/cinder.conf` to reflect SSL functionality by
-   adding the following to the back end block:
+   adding the following to the back end block. ``my_location`` is the location
+   of the .pem file generated in step one:
 
    .. code-block:: ini
 
       driver_ssl_cert_verify = False
       driver_use_ssl = True
-      driver_ssl_cert_path = /opt/stack/<ecom_hostname>.lss.emc.com.pem (Optional if Step 3 and 4 are skipped)
+
+   If you skip steps two and three, you must add the location of you .pem file.
+
+   .. code-block:: ini
+
+      driver_ssl_cert_verify = False
+      driver_use_ssl = True
+      driver_ssl_cert_path = /my_location/ca_cert.pem
 
 #. Update EcomServerIp to ECOM host name and EcomServerPort to secure port
    (5989 by default) in :file:`/etc/cinder/cinder_emc_config_<conf_group>.xml`.
@@ -978,7 +1002,7 @@ On Compute (nova) node, add the following flag in the ``[libvirt]`` section of
    iscsi_use_multipath = True
 
 On cinder controller node, set the multipath flag to true in
-:file:`/etc/cinder.conf`:
+:file:`/etc/cinder/cinder.conf`:
 
 .. code-block:: ini
 
