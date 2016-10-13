@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Mitaka for Compute
+New, updated, and deprecated options in Newton for Compute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
@@ -12,134 +12,170 @@ New, updated, and deprecated options in Mitaka for Compute
 
    * - Option = default value
      - (Type) Help string
-   * - ``[DEFAULT] disk_weight_multiplier = 1.0``
-     - (FloatOpt) Multiplier used for weighing free disk space. Negative numbers mean to stack vs spread.
-   * - ``[DEFAULT] notification_format = both``
-     - (StrOpt) Specifies which notification format shall be used by nova.
-   * - ``[DEFAULT] soft_affinity_weight_multiplier = 1.0``
-     - (FloatOpt) Multiplier used for weighing hosts for group soft-affinity. Only a positive value is meaningful. Negative means that the behavior will change to the opposite, which is soft-anti-affinity.
-   * - ``[DEFAULT] soft_anti_affinity_weight_multiplier = 1.0``
-     - (FloatOpt) Multiplier used for weighing hosts for group soft-anti-affinity. Only a positive value is meaningful. Negative means that the behavior will change to the opposite, which is soft-affinity.
-   * - ``[DEFAULT] use_neutron = False``
-     - (BoolOpt) Whether to use Neutron or Nova Network as the back end for networking. Defaults to False (indicating Nova network). Set to True to use neutron.
-   * - ``[cache] backend = dogpile.cache.null``
-     - (StrOpt) Dogpile.cache backend module. It is recommended that Memcache with pooling (oslo_cache.memcache_pool) or Redis (dogpile.cache.redis) be used in production deployments. Small workloads (single process) like devstack can use the dogpile.cache.memory backend.
-   * - ``[cache] backend_argument = []``
-     - (MultiStrOpt) Arguments supplied to the backend module. Specify this option once per argument to be passed to the dogpile.cache backend. Example format: "<argname>:<value>".
-   * - ``[cache] config_prefix = cache.oslo``
-     - (StrOpt) Prefix for building the configuration dictionary for the cache region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name.
-   * - ``[cache] debug_cache_backend = False``
-     - (BoolOpt) Extra debugging from the cache backend (cache keys, get/set/delete/etc calls). This is only really useful if you need to see the specific cache-backend get/set/delete calls with the keys/values. Typically this should be left set to false.
-   * - ``[cache] enabled = False``
-     - (BoolOpt) Global toggle for caching.
-   * - ``[cache] expiration_time = 600``
-     - (IntOpt) Default TTL, in seconds, for any cached item in the dogpile.cache region. This applies to any cached method that doesn't have an explicit cache expiration time defined for it.
-   * - ``[cache] memcache_dead_retry = 300``
-     - (IntOpt) Number of seconds memcached server is considered dead before it is tried again. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
-   * - ``[cache] memcache_pool_connection_get_timeout = 10``
-     - (IntOpt) Number of seconds that an operation will wait to get a memcache client connection.
-   * - ``[cache] memcache_pool_maxsize = 10``
-     - (IntOpt) Max total number of open connections to every memcached server. (oslo_cache.memcache_pool backend only).
-   * - ``[cache] memcache_pool_unused_timeout = 60``
-     - (IntOpt) Number of seconds a connection to memcached is held unused in the pool before it is closed. (oslo_cache.memcache_pool backend only).
-   * - ``[cache] memcache_servers = localhost:11211``
-     - (ListOpt) Memcache servers in the format of "host:port". (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
-   * - ``[cache] memcache_socket_timeout = 3``
-     - (IntOpt) Timeout in seconds for every call to a server. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
-   * - ``[cache] proxies =``
-     - (ListOpt) Proxy classes to import that will affect the way the dogpile.cache backend functions. See the dogpile.cache documentation on changing-backend-behavior.
-   * - ``[cells] instance_update_sync_database_limit = 100``
-     - (IntOpt) Instance update sync database limit Number of instances to pull from the database at one time for a sync. If there are more instances to update the results will be paged through.
-
-       Possible values:
-
-       * Number of instances.
-
-       Services which consume this:
-
-       * nova-cells
-
-       Related options:
-
-       * None
-   * - ``[glance] verify_glance_signatures = False``
-     - (BoolOpt) Require Nova to perform signature verification on each image downloaded from Glance.
-   * - ``[libvirt] live_migration_inbound_addr = None``
-     - (StrOpt) Live migration target ip or hostname (if this option is set to None, which is the default, the hostname of the migration target compute node will be used)
-   * - ``[libvirt] live_migration_tunnelled = None``
-     - (BoolOpt) Whether to use tunnelled migration, where migration data is transported over the libvirtd connection. If True, we use the VIR_MIGRATE_TUNNELLED migration flag, avoiding the need to configure the network to allow direct hypervisor to hypervisor communication. If False, use the native transport. If not set, Nova will choose a sensible default based on, for example the availability of native encryption support in the hypervisor.
-   * - ``[libvirt] realtime_scheduler_priority = 1``
-     - (IntOpt) In a realtime host context vCPUs for guest will run in that scheduling priority. Priority depends on the host kernel (usually 1-99)
-   * - ``[neutron] auth_type = None``
-     - (Opt) Authentication type to load
-   * - ``[osapi_v21] project_id_regex = None``
-     - (StrOpt) DEPRECATED: The validation regex for project_ids used in urls. This defaults to [0-9a-f\-]+ if not set, which matches normal uuids created by keystone.
-   * - ``[oslo_policy] policy_default_rule = default``
-     - (StrOpt) Default rule. Enforced when a requested rule is not found.
-   * - ``[oslo_policy] policy_dirs = ['policy.d']``
-     - (MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
-   * - ``[oslo_policy] policy_file = policy.json``
-     - (StrOpt) The JSON file that defines policies.
-   * - ``[vnc] novncproxy_host = 0.0.0.0``
-     - (StrOpt) IP address that the noVNC console proxy should bind to. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client. This option sets the private address to which the noVNC console proxy service should bind to.
-
-       Possible values:
-
-       * An IP address
-
-       Services which consume this:
-
-       * ``nova-compute``
-
-       Related options:
-
-       * novncproxy_port
-       * novncproxy_base_url
-   * - ``[vnc] novncproxy_port = 6080``
-     - (IntOpt) Port that the noVNC console proxy should bind to. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client. This option sets the private port to which the noVNC console proxy service should bind to.
-
-       Possible values:
-
-       * A port number
-
-       Services which consume this:
-
-       * ``nova-compute``
-
-       Related options:
-
-       * novncproxy_host
-       * novncproxy_base_url
-   * - ``[vnc] xvpvncproxy_host = 0.0.0.0``
-     - (StrOpt) IP address that the XVP VNC console proxy should bind to. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based. This option sets the private address to which the XVP VNC console proxy service should bind to.
-
-       Possible values:
-
-       * An IP address
-
-       Services which consume this:
-
-       * ``nova-compute``
-
-       Related options:
-
-       * xvpvncproxy_port
-       * xvpvncproxy_base_url
-   * - ``[vnc] xvpvncproxy_port = 6081``
-     - (IntOpt) Port that the XVP VNC console proxy should bind to. The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based. This option sets the private port to which the XVP VNC console proxy service should bind to.
-
-       Possible values:
-
-       * A port number
-
-       Services which consume this:
-
-       * ``nova-compute``
-
-       Related options:
-
-       * xvpvncproxy_host
-       * xvpvncproxy_base_url
+   * - ``[DEFAULT] pointer_model = usbtablet``
+     - (String) Generic property to specify the pointer type.
+   * - ``[DEFAULT] sync_power_state_pool_size = 1000``
+     - (Integer) Number of greenthreads available for use to sync power states.
+   * - ``[DEFAULT] vendordata_dynamic_connect_timeout = 5``
+     - (Integer) Maximum wait time for an external REST service to connect.
+   * - ``[DEFAULT] vendordata_dynamic_read_timeout = 5``
+     - (Integer) Maximum wait time for an external REST service to return data once connected.
+   * - ``[DEFAULT] vendordata_dynamic_ssl_certfile =``
+     - (String) Path to an optional certificate file or CA bundle to verify dynamic vendordata REST services ssl certificates against.
+   * - ``[DEFAULT] vendordata_dynamic_targets =``
+     - (List) A list of targets for the dynamic vendordata provider. These targets are of the form <name>@<url>.
+   * - ``[DEFAULT] vendordata_providers =``
+     - (List) A list of vendordata providers.
+   * - ``[barbican] auth_endpoint = http://localhost:5000/v3``
+     - (String) Use this endpoint to connect to Keystone
+   * - ``[barbican] barbican_api_version = None``
+     - (String) Version of the Barbican API, for example: "v1"
+   * - ``[barbican] barbican_endpoint = None``
+     - (String) Use this endpoint to connect to Barbican, for example: "http://localhost:9311/"
+   * - ``[barbican] number_of_retries = 60``
+     - (Integer) Number of times to retry poll for key creation completion
+   * - ``[barbican] retry_delay = 1``
+     - (Integer) Number of seconds to wait before retrying poll for key creation completion
+   * - ``[cloudpipe] boot_script_template = $pybasedir/nova/cloudpipe/bootscript.template``
+     - (String) Template for cloudpipe instance boot script.
+   * - ``[cloudpipe] dmz_mask = 255.255.255.0``
+     - (Unknown) Netmask to push into OpenVPN config.
+   * - ``[cloudpipe] dmz_net = 10.0.0.0``
+     - (Unknown) Network to push into OpenVPN config.
+   * - ``[cloudpipe] vpn_flavor = m1.tiny``
+     - (String) Flavor for VPN instances.
+   * - ``[cloudpipe] vpn_image_id = 0``
+     - (String) Image ID used when starting up a cloudpipe VPN client.
+   * - ``[cloudpipe] vpn_key_suffix = -vpn``
+     - (String) Suffix to add to project name for VPN key and secgroups
+   * - ``[crypto] ca_file = cacert.pem``
+     - (String) Filename of root CA (Certificate Authority). This is a container format and includes root certificates.
+   * - ``[crypto] ca_path = $state_path/CA``
+     - (String) Directory path where root CA is located.
+   * - ``[crypto] crl_file = crl.pem``
+     - (String) Filename of root Certificate Revocation List (CRL). This is a list of certificates that have been revoked, and therefore, entities presenting those (revoked) certificates should no longer be trusted.
+   * - ``[crypto] key_file = private/cakey.pem``
+     - (String) Filename of a private key.
+   * - ``[crypto] keys_path = $state_path/keys``
+     - (String) Directory path where keys are located.
+   * - ``[crypto] project_cert_subject = /C=US/ST=California/O=OpenStack/OU=NovaDev/CN=project-ca-%.16s-%s``
+     - (String) Subject for certificate for projects, %s for project, timestamp
+   * - ``[crypto] use_project_ca = False``
+     - (Boolean) Option to enable/disable use of CA for each project.
+   * - ``[crypto] user_cert_subject = /C=US/ST=California/O=OpenStack/OU=NovaDev/CN=%.16s-%.16s-%s``
+     - (String) Subject for certificate for users, %s for project, user, timestamp
+   * - ``[glance] debug = False``
+     - (Boolean) Enable or disable debug logging with glanceclient.
+   * - ``[glance] use_glance_v1 = False``
+     - (Boolean) DEPRECATED: This flag allows reverting to glance v1 if for some reason glance v2 doesn’t work in your environment. This will only exist in Newton, and a fully working Glance v2 will be a hard requirement in Ocata.
+   * - ``[hyperv] enable_remotefx = False``
+     - (Boolean) Enable RemoteFX feature
+   * - ``[ironic] auth_section = None``
+     - (Unknown) Config Section from which to load plugin specific options
+   * - ``[ironic] auth_type = None``
+     - (Unknown) Authentication type to load
+   * - ``[ironic] certfile = None``
+     - (String) PEM encoded client certificate cert file
+   * - ``[ironic] insecure = False``
+     - (Boolean) Verify HTTPS connections.
+   * - ``[ironic]keyfile = None``
+     - (String) PEM encoded client certificate key file
+   * - ``[ironic] timeout = None``
+     - (Integer) Timeout value for http requests
+   * - ``[key_manager] api_class = castellan.key_manager.barbican_key_manager.BarbicanKeyManager``
+     - (String) The full class name of the key manager API class
+   * - ``[key_manager] fixed_key = None``
+     - (String) Fixed key returned by key manager, specified in hex.
+   * - ``[libvirt] enabled_perf_events =``
+     - (String) Override the default disk prefix for the devices attached to an instance.
+   * - ``[libvirt] vzstorage_cache_path = None``
+     - (String) Path to the SSD cache file.
+   * - ``[libvirt] vzstorage_log_path = /var/log/pstorage/%(cluster_name)s/nova.log.gz``
+     - (String) Path to vzstorage client log.
+   * - ``[libvirt] vzstorage_mount_group = qemu``
+     - (String) Mount owner group name.
+   * - ``[libvirt] vzstorage_mount_opts =``
+     - (List) Extra mount options for pstorage-mount
+   * - ``[libvirt] vzstorage_mount_perms = 0770``
+     - (String) Mount access mode.
+   * - ``[libvirt] vzstorage_mount_point_base = $state_path/mnt``
+     - (String) Directory where the Virtuozzo Storage clusters are mounted on the compute node.
+   * - ``[libvirt] vzstorage_mount_user = stack``
+     - (String) Mount owner user name.
+   * - ``[os_vif_linux_bridge] flat_interface = None``
+     - (String) FlatDhcp will bridge into this interface if set
+   * - ``[os_vif_linux_bridge] forward_bridge_interface = ['all']``
+     - (Multi-valued) An interface that bridges can forward to. If this is set to all then all traffic will be forwarded. Can be specified multiple times.
+   * - ``[os_vif_linux_bridge] iptables_bottom_regex =``
+     - (String) Regular expression to match the iptables rule that should always be on the bottom.
+   * - ``[os_vif_linux_bridge] iptables_drop_action = DROP``
+     - (String) The table that iptables to jump to when a packet is to be dropped.
+   * - ``[os_vif_linux_bridge] iptables_top_regex =``
+     - (String) Regular expression to match the iptables rule that should always be on the top.
+   * - ``[os_vif_linux_bridge] network_device_mtu = 1500``
+     - (Integer) MTU setting for network interface.
+   * - ``[os_vif_linux_bridge] use_ipv6 = False``
+     -  (Boolean) Use IPv6
+   * - ``[os_vif_linux_bridge] vlan_interface = None``
+     - (String) VLANs will bridge into this interface if set
+   * - ``[os_vif_ovs] network_device_mtu = 1500``
+     - (Integer) MTU setting for network interface.
+   * - ``[os_vif_ovs] ovs_vsctl_timeout = 120``
+     - (Integer) Amount of time, in seconds, that ovs_vsctl should wait for a response from the database. 0 is to wait forever.
+   * - ``[remote_debug] host = None``
+     - (String) Debug host (IP or name) to connect to. This command line parameter is used when you want to connect to a nova service via a debugger running on a different host.
+   * - ``[remote_debug] port = None``
+     - (Port number) Debug port to connect to. This command line parameter allows you to specify the port you want to use to connect to a nova service via a debugger running on different host.
+   * - ``[vif_plug_linux_bridge_privileged] capabilities = []``
+     - (Unknown) List of Linux capabilities retained by the privsep daemon.
+   * - ``[vif_plug_linux_bridge_privileged] group = None``
+     - (String) Group that the privsep daemon should run as.
+   * - ``[vif_plug_linux_bridge_privileged] helper_command = None``
+     - (String) Command to invoke to start the privsep daemon if not using the "fork" method.
+   * - ``[vif_plug_linux_bridge_privileged] user = None``
+     - (String) User that the privsep daemon should run as.
+   * - ``[vif_plug_ovs_privileged] capabilities = []``
+     - (Unknown) List of Linux capabilities retained by the privsep daemon.
+   * - ``[vif_plug_ovs_privileged] group = None``
+     - (String) Group that the privsep daemon should run as.
+   * - ``[vif_plug_ovs_privileged] helper_command = None``
+     - (String) Command to invoke to start the privsep daemon if not using the "fork" method.
+   * - ``[vif_plug_ovs_privileged] user = None``
+     - (String) User that the privsep daemon should run as.
+   * - ``[wsgi] api_paste_config = api-paste.ini``
+     - (String) This option represents a file name for the paste.deploy config for nova-api.
+   * - ``[wsgi] client_socket_timeout = 900``
+     - (Integer) This option specifies the timeout for client connections’ socket operations. If an incoming connection is idle for this number of seconds it will be closed. It indicates timeout on individual read/writes on the socket connection. To wait forever set to 0.
+   * - ``[wsgi] default_pool_size = 1000``
+     - (Integer) This option specifies the size of the pool of greenthreads used by wsgi. It is possible to limit the number of concurrent connections using this option.
+   * - ``[wsgi] keep_alive = True``
+     - (Boolean) This option allows using the same TCP connection to send and receive multiple HTTP requests/responses, as opposed to opening a new one for every single request/response pair. HTTP keep-alive indicates HTTP connection reuse.
+   * - ``[wsgi] max_header_line = 16384``
+     - (Integer) This option specifies the maximum line size of message headers to be accepted. max_header_line may need to be increased when using large tokens (typically those generated by the Keystone v3 API with big service catalogs).
+   * - ``[wsgi] secure_proxy_ssl_header = None``
+     - (String) This option specifies the HTTP header used to determine the protocol scheme for the original request, even if it was removed by a SSL terminating proxy.
+   * - ``[wsgi] ssl_ca_file = None``
+     - (String) This option allows setting path to the CA certificate file that should be used to verify connecting clients.
+   * - ``[wsgi] ssl_cert_file = None``
+     - (String) This option allows setting path to the SSL certificate of API server.
+   * - ``[wsgi] ssl_key_file = None``
+     - (String) This option specifies the path to the file where SSL private key of API server is stored when SSL is in effect.
+   * - ``[wsgi] tcp_keepidle = 600``
+     - (Integer) This option sets the value of TCP_KEEPIDLE in seconds for each server socket. It specifies the duration of time to keep connection active. TCP generates a KEEPALIVE transmission for an application that requests to keep connection active. Not supported on OS X.
+   * - ``[wsgi] wsgi_log_format = %(client_ip)s "%(request_line)s" status: %(status_code)s len: %(body_length)s time: %(wall_seconds).7f``
+     - (String) It represents a python format string that is used as the template to generate log lines. The following values can be formatted into it: client_ip, date_time, request_line, status_code, body_length, wall_seconds.
+   * - ``[xenserver] independent_compute = False``
+     - (Boolean) Used to prevent attempts to attach VBDs locally, so Nova can be run in a VM on a different host.
+   * - ``[xvp] console_xvp_conf = /etc/xvp.conf``
+     - (String) Generated XVP conf file
+   * - ``[xvp] console_xvp_conf_template = $pybasedir/nova/console/xvp.conf.template``
+     - (String) XVP conf template
+   * - ``[xvp] console_xvp_log = /var/log/xvp.log``
+     - (String) XVP log file
+   * - ``[xvp] console_xvp_multiplex_port = 5900``
+     - (Port number) Port for XVP to multiplex VNC connections on
+   * - ``[xvp] console_xvp_pid = /var/run/xvp.pid``
+     - (String) XVP master process pid file
 
 .. list-table:: New default values
    :header-rows: 1
@@ -148,33 +184,12 @@ New, updated, and deprecated options in Mitaka for Compute
    * - Option
      - Previous default value
      - New default value
-   * - ``[DEFAULT] compute_resources``
-     - ``vcpu``
-     -
-   * - ``[DEFAULT] disk_allocation_ratio``
-     - ``1.0``
-     - ``0.0``
-   * - ``[DEFAULT] enabled_apis``
-     - ``ec2, osapi_compute, metadata``
-     - ``osapi_compute, metadata``
-   * - ``[DEFAULT] force_config_drive``
+   * - ``[ironic] api_endpoint``
      - ``None``
-     - ``False``
-   * - ``[DEFAULT] monkey_patch_modules``
-     - ``nova.api.ec2.cloud:nova.notifications.notify_decorator, nova.compute.api:nova.notifications.notify_decorator``
-     - ``nova.compute.api:nova.notifications.notify_decorator``
-   * - ``[DEFAULT] scheduler_driver``
-     - ``nova.scheduler.filter_scheduler.FilterScheduler``
-     - ``filter_scheduler``
-   * - ``[DEFAULT] scheduler_host_manager``
-     - ``nova.scheduler.host_manager.HostManager``
-     - ``host_manager``
-   * - ``[libvirt] live_migration_uri``
-     - ``qemu+tcp://%s/system``
+     - ``http://ironic.example.org:6385/``
+   * - ``[neutron] region_name``
      - ``None``
-   * - ``[vmware] integration_bridge``
-     - ``br-int``
-     - ``None``
+     - ``RegionOne``
 
 .. list-table:: Deprecated options
    :header-rows: 1
@@ -184,11 +199,11 @@ New, updated, and deprecated options in Mitaka for Compute
      - New Option
    * - ``[DEFAULT] cert_manager``
      - ``None``
+   * - ``[DEFAULT] cert_topic``
+     - ``None``
    * - ``[DEFAULT] compute_available_monitors``
      - ``None``
    * - ``[DEFAULT] compute_manager``
-     - ``None``
-   * - ``[DEFAULT] compute_resources``
      - ``None``
    * - ``[DEFAULT] compute_stats_class``
      - ``None``
@@ -196,53 +211,83 @@ New, updated, and deprecated options in Mitaka for Compute
      - ``None``
    * - ``[DEFAULT] consoleauth_manager``
      - ``None``
-   * - ``[DEFAULT] db_driver``
+   * - ``[DEFAULT] default_flavor``
      - ``None``
-   * - ``[DEFAULT] memcached_servers``
+   * - ``[DEFAULT] driver``
+     - ``None``
+   * - ``[DEFAULT] enable_network_quota``
+     - ``None``
+   * - ``[DEFAULT] fatal_exception_format_errors``
+     - ``None``
+   * - ``[DEFAULT] image_decryption_dir``
+     - ``None``
+   * - ``[DEFAULT] manager``
      - ``None``
    * - ``[DEFAULT] metadata_manager``
      - ``None``
-   * - ``[DEFAULT] network_api_class``
+   * - ``[DEFAULT] quota_driver``
      - ``None``
-   * - ``[DEFAULT] network_device_mtu``
+   * - ``[DEFAULT] quota_networks``
      - ``None``
-   * - ``[DEFAULT] osapi_compute_ext_list``
+   * - ``[DEFAULT] s3_access_key``
+     - ``None``
+   * - ``[DEFAULT] s3_affix_tenant``
+     - ``None``
+   * - ``[DEFAULT] s3_host``
+     - ``None``
+   * - ``[DEFAULT] s3_port``
+     - ``None``
+   * - ``[DEFAULT] s3_secret_key``
+     - ``None``
+   * - ``[DEFAULT] s3_use_ssl``
      - ``None``
    * - ``[DEFAULT] scheduler_manager``
      - ``None``
-   * - ``[DEFAULT] security_group_api``
+   * - ``[DEFAULT] secure_proxy_ssl_header``
      - ``None``
    * - ``[DEFAULT] share_dhcp_address``
      - ``None``
-   * - ``[DEFAULT] use_syslog``
+   * - ``[DEFAULT] snapshot_name_template``
+     - ``None``
+   * - ``[DEFAULT] use_local``
      - ``None``
    * - ``[DEFAULT] vendordata_driver``
      - ``None``
-   * - ``[DEFAULT] volume_api_class``
+   * - ``[barbican] catalog_info``
      - ``None``
-   * - ``[cells] manager``
+   * - ``[barbican] endpoint_template``
      - ``None``
-   * - ``[conductor] manager``
+   * - ``[barbican] os_region_name``
      - ``None``
-   * - ``[conductor] use_local``
+   * - ``[glance] admin_password``
      - ``None``
-   * - ``[glance] host``
+   * - ``[glance] filesystems``
      - ``None``
-   * - ``[glance] port``
-     - ``None``
-   * - ``[glance] protocol``
+   * - ``[glance] use_glance_v1``
      - ``None``
    * - ``[hyperv] force_volumeutils_v1``
      - ``None``
-   * - ``[ironic] admin_auth_token``
+   * - ``[ironic] admin_tenant_name``
      - ``None``
-   * - ``[ironic] api_version``
+   * - ``[ironic] admin_url``
      - ``None``
-   * - ``[ironic] client_log_level``
+   * - ``[ironic] admin_username``
      - ``None``
-   * - ``[libvirt] remove_unused_kernels``
+   * - ``[libvirt] checksum_base_images``
      - ``None``
-   * - ``[osapi_v21] enabled``
+   * - ``[libvirt] checksum_interval_seconds``
+     - ``None``
+   * - ``[libvirt] image_info_filename_pattern``
+     - ``None``
+   * - ``[libvirt] use_usb_tablet``
+     - ``None``
+   * - ``[matchmaker_redis] host``
+     - ``None``
+   * - ``[matchmaker_redis] password``
+     - ``None``
+   * - ``[matchmaker_redis] port``
+     - ``None``
+   * - ``[matchmaker_redis] sentinel_hosts``
      - ``None``
    * - ``[osapi_v21] extensions_blacklist``
      - ``None``
@@ -250,8 +295,3 @@ New, updated, and deprecated options in Mitaka for Compute
      - ``None``
    * - ``[osapi_v21] project_id_regex``
      - ``None``
-   * - ``[serial_console] listen``
-     - ``None``
-   * - ``[workarounds] destroy_after_evacuate``
-     - ``None``
-
