@@ -4,12 +4,6 @@
 Integrate Identity with LDAP
 ============================
 
-.. toctree::
-   :maxdepth: 2
-
-   identity-integrate-identity-backend-ldap.rst
-   identity-secure-identity-to-ldap-backend.rst
-
 The OpenStack Identity service supports integration with existing LDAP
 directories for authentication and authorization services. LDAP back
 ends require initialization before configuring the OpenStack Identity
@@ -139,3 +133,9 @@ service.
 
    During the service restart, authentication and authorization are
    unavailable.
+
+.. toctree::
+   :maxdepth: 2
+
+   identity-integrate-identity-backend-ldap.rst
+   identity-secure-identity-to-ldap-backend.rst
