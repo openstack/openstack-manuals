@@ -7,7 +7,7 @@ neutron-sanity-check command-line client
 The :command:`neutron-sanity-check` client is a tool that checks various
 sanity about the Networking service.
 
-This chapter documents :command:`neutron-sanity-check` version ``8.1.0``.
+This chapter documents :command:`neutron-sanity-check` version ``9.0.0``.
 
 neutron-sanity-check usage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -16,31 +16,33 @@ neutron-sanity-check usage
 
    usage: neutron-sanity-check [-h] [--arp_header_match] [--arp_responder]
                                [--config-dir DIR] [--config-file PATH] [--debug]
-                               [--dibbler_version] [--dnsmasq_version]
-                               [--ebtables_installed] [--icmpv6_header_match]
-                               [--ip6tables_installed] [--iproute2_vxlan]
-                               [--ipset_installed] [--keepalived_ipv6_support]
+                               [--dhcp_release6] [--dibbler_version]
+                               [--dnsmasq_version] [--ebtables_installed]
+                               [--icmpv6_header_match] [--ip6tables_installed]
+                               [--iproute2_vxlan] [--ipset_installed]
+                               [--keepalived_ipv6_support]
                                [--log-config-append PATH]
                                [--log-date-format DATE_FORMAT]
                                [--log-dir LOG_DIR] [--log-file PATH]
                                [--noarp_header_match] [--noarp_responder]
-                               [--nodebug] [--nodibbler_version]
-                               [--nodnsmasq_version] [--noebtables_installed]
-                               [--noicmpv6_header_match]
+                               [--nodebug] [--nodhcp_release6]
+                               [--nodibbler_version] [--nodnsmasq_version]
+                               [--noebtables_installed] [--noicmpv6_header_match]
                                [--noip6tables_installed] [--noiproute2_vxlan]
                                [--noipset_installed]
                                [--nokeepalived_ipv6_support] [--nonova_notify]
                                [--noovs_conntrack] [--noovs_geneve]
                                [--noovs_patch] [--noovs_vxlan] [--noovsdb_native]
                                [--noread_netns] [--nouse-syslog] [--nova_notify]
-                               [--noverbose] [--novf_management]
-                               [--nowatch-log-file] [--ovs_conntrack]
-                               [--ovs_geneve] [--ovs_patch] [--ovs_vxlan]
-                               [--ovsdb_native] [--read_netns]
+                               [--noverbose] [--novf_extended_management]
+                               [--novf_management] [--nowatch-log-file]
+                               [--ovs_conntrack] [--ovs_geneve] [--ovs_patch]
+                               [--ovs_vxlan] [--ovsdb_native] [--read_netns]
                                [--state_path STATE_PATH]
                                [--syslog-log-facility SYSLOG_LOG_FACILITY]
                                [--use-syslog] [--verbose] [--version]
-                               [--vf_management] [--watch-log-file]
+                               [--vf_extended_management] [--vf_management]
+                               [--watch-log-file]
 
 neutron-sanity-check optional arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,6 +70,9 @@ neutron-sanity-check optional arguments
 ``--debug, -d``
   Print debugging output (set logging level to ``DEBUG`` instead of default
   ``INFO`` level).
+
+``--dhcp_release6``
+  Check dhcp_release6 installation
 
 ``--dibbler_version``
   Check minimal dibbler version
@@ -124,6 +129,9 @@ neutron-sanity-check optional arguments
 ``--nodebug``
   The inverse of :option:`--debug`
 
+``--nodhcp_release6``
+   The inverse of :option:`--dhcp_release6`
+
 ``--nodibbler_version``
   The inverse of :option:`--dibbler_version`
 
@@ -178,6 +186,9 @@ neutron-sanity-check optional arguments
 ``--noverbose``
   The inverse of :option:`--verbose`
 
+``--novf_extended_management``
+   The inverse of :option:`--vf_extended_management`
+
 ``--novf_management``
   The inverse of :option:`--vf_management`
 
@@ -218,6 +229,9 @@ neutron-sanity-check optional arguments
 
 ``--version``
   show program's version number and exit
+
+``--vf_extended_management``
+  Check for VF extended management support
 
 ``--vf_management``
   Check for VF management support
