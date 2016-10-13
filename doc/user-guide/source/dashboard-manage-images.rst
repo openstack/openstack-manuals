@@ -45,9 +45,9 @@ Follow this procedure to upload an image to a project:
 #. Enter the following values:
 
    +-------------------------------+---------------------------------+
-   | :guilabel:`Name`              | Enter a name for the image.     |
+   | :guilabel:`Image Name`        | Enter a name for the image.     |
    +-------------------------------+---------------------------------+
-   | :guilabel:`Description`       | Enter a brief description of    |
+   | :guilabel:`Image Description` | Enter a brief description of    |
    |                               | the image.                      |
    +-------------------------------+---------------------------------+
    | :guilabel:`Image Source`      | Choose the image source from    |
@@ -79,15 +79,21 @@ Follow this procedure to upload an image to a project:
    | :guilabel:`Copy Data`         | Specify this option to copy     |
    |                               | image data to the Image service.|
    +-------------------------------+---------------------------------+
-   | :guilabel:`Public`            | Select this check box to make   |
-   |                               | the image public to all users   |
-   |                               | with access to the current      |
-   |                               | project.                        |
+   | :guilabel:`Visibility`        | The access permission for the   |
+   |                               | image.                          |
+   |                               | ``Public`` or ``Private``.      |
    +-------------------------------+---------------------------------+
    | :guilabel:`Protected`         | Select this check box to ensure |
    |                               | that only users with            |
    |                               | permissions can delete the      |
-   |                               | image.                          |
+   |                               | image. ``Yes`` or ``No``.       |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Image Metadata`    | Specify this option to add      |
+   |                               | resource metadata. The glance   |
+   |                               | Metadata Catalog provides a list|
+   |                               | of metadata image definitions.  |
+   |                               | (Note: Not all cloud providers  |
+   |                               | enable this feature.)           |
    +-------------------------------+---------------------------------+
 
 #. Click :guilabel:`Create Image`.
