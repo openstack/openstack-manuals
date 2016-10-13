@@ -20,6 +20,8 @@
      -
    * - ``admin_mode`` = ``False``
      - (Boolean) Activate privileged endpoints.
+   * - ``enable_deprecated_api_versions`` =
+     - (List) List of deprecated API versions to enable.
    * - ``unreliable`` = ``False``
      - (Boolean) Disable all reliability constraints.
    * - **[notification]**
