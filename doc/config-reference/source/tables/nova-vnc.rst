@@ -63,7 +63,7 @@
 
        * A keyboard layout which is supported by the underlying hypervisor on this node. This is usually an 'IETF language tag' (for example 'en-us'). If you use QEMU as hypervisor, you should find the list of supported keyboard layouts at ``/usr/share/qemu/keymaps``.
    * - ``novncproxy_base_url`` = ``http://127.0.0.1:6080/vnc_auto.html``
-     - (Unknown) Public address of noVNC VNC console proxy.
+     - (URI) Public address of noVNC VNC console proxy.
 
        The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client.
 
@@ -107,7 +107,7 @@
 
        This option sets the private address to which proxy clients, such as ``nova-xvpvncproxy``, should connect to.
    * - ``xvpvncproxy_base_url`` = ``http://127.0.0.1:6081/console``
-     - (Unknown) Public URL address of XVP VNC console proxy.
+     - (URI) Public URL address of XVP VNC console proxy.
 
        The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based.
 

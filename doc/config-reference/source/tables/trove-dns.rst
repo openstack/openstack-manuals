@@ -21,7 +21,7 @@
    * - ``dns_account_id`` =
      - (String) Tenant ID for DNSaaS.
    * - ``dns_auth_url`` = ``http://0.0.0.0``
-     - (Unknown) Authentication URL for DNSaaS.
+     - (URI) Authentication URL for DNSaaS.
    * - ``dns_domain_id`` =
      - (String) Domain ID used for adding DNS entries.
    * - ``dns_domain_name`` =
@@ -29,13 +29,13 @@
    * - ``dns_driver`` = ``trove.dns.driver.DnsDriver``
      - (String) Driver for DNSaaS.
    * - ``dns_endpoint_url`` = ``http://0.0.0.0``
-     - (Unknown) Endpoint URL for DNSaaS.
+     - (URI) Endpoint URL for DNSaaS.
    * - ``dns_hostname`` = ``localhost``
      - (Unknown) Hostname used for adding DNS entries.
    * - ``dns_instance_entry_factory`` = ``trove.dns.driver.DnsInstanceEntryFactory``
      - (String) Factory for adding DNS entries.
    * - ``dns_management_base_url`` = ``http://0.0.0.0``
-     - (Unknown) Management URL for DNSaaS.
+     - (URL) Management URL for DNSaaS.
    * - ``dns_passkey`` =
      - (String) Passkey for DNSaaS.
    * - ``dns_region`` =

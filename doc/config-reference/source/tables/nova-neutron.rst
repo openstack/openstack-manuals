@@ -65,7 +65,7 @@
    * - ``timeout`` = ``None``
      - (Integer) Timeout value for http requests
    * - ``url`` = ``http://127.0.0.1:9696``
-     - (Unknown) This option specifies the URL for connecting to Neutron.
+     - (URI) This option specifies the URL for connecting to Neutron.
 
        Possible values:
 
