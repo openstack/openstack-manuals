@@ -33,7 +33,7 @@
    * - ``auth_strategy`` = ``keystone``
      - (String) The type of authentication to use
    * - ``bind_host`` = ``127.0.0.1``
-     - (Unknown) The host IP to bind to
+     - (IP) The host IP to bind to
    * - ``bind_port`` = ``9876``
      - (Port number) The port to bind to
    * - ``control_exchange`` = ``octavia``
@@ -147,7 +147,7 @@
    * - ``base_path`` = ``/var/lib/octavia``
      - (String) Base directory for amphora files.
    * - ``bind_host`` = ``0.0.0.0``
-     - (Unknown) The host IP to bind to
+     - (IP) The host IP to bind to
    * - ``bind_port`` = ``9443``
      - (Port number) The port to bind to
    * - ``client_cert`` = ``/etc/octavia/certs/client.pem``
@@ -177,7 +177,7 @@
    * - **[health_manager]**
      -
    * - ``bind_ip`` = ``127.0.0.1``
-     - (Unknown) IP address the controller will listen on for heart beats
+     - (IP) IP address the controller will listen on for heart beats
    * - ``bind_port`` = ``5555``
      - (Port number) Port number the controller will listen onfor heart beats
    * - ``controller_ip_port_list`` =

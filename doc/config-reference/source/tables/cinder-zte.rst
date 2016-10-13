@@ -25,11 +25,11 @@
    * - ``zteChunkSize`` = ``4``
      - (Integer) Virtual block size of pool. Unit : KB. Valid value : 4, 8, 16, 32, 64, 128, 256, 512.
    * - ``zteControllerIP0`` = ``None``
-     - (Unknown) Main controller IP.
+     - (IP) Main controller IP.
    * - ``zteControllerIP1`` = ``None``
-     - (Unknown) Slave controller IP.
+     - (IP) Slave controller IP.
    * - ``zteLocalIP`` = ``None``
-     - (Unknown) Local IP.
+     - (IP) Local IP.
    * - ``ztePoolVoAllocatedPolicy`` = ``0``
      - (Integer) Pool volume allocated policy. 0, Auto; 1, High Performance Tier First; 2, Performance Tier First; 3, Capacity Tier First.
    * - ``ztePoolVolAlarmStopAllocatedFlag`` = ``0``
