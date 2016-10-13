@@ -1,44 +1,88 @@
 {% set scriptdir = '../common/js/' %}
 {% set cssdir = '../common/css/' %}
 {% extends "templates/base.tmpl" %}
-{% block pagetitle %}Chinese (Simplified){% endblock %}
-{% block title %} 文档{% endblock %}
+{% block pagetitle %}Chinese(Simplified){% endblock %}
+{% block title %}{% endblock %}
+{% block header %}
+{% endblock header %}
 {% block content %}
-   <!-- Begin Page Content -->
-    <div class="top-docs-wrapper">
+<!-- Begin Page Content -->
+<div class="top-docs-wrapper">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8">
-                <h1>OpenStack中文文档</h1>
+                <h1>OpenStack 中文文档</h1>
                 <p>
-此处的文档均是英文版的简体中文翻译版。如需要访问英文文档站点，请点击
-     <a href="http://docs.openstack.org/">
-      英文文档
-     </a>
+                    <strong>欢迎使用OpenStack文档</strong> OpenStack是一个云管理操作系统，用来控制数据中心中的计算、存储、网络资源池。管理员通过一个Web界面为用户提供所需的资源。
                 </p>
-</div>
+                <hr>
+                <h3>深入了解OpenStack</h3>
+                <a href="#docs-main-body" class="overview-btn docs-btn">查看文档<i class="fa fa-arrow-circle-o-down"></i></a>
+                <a href="http://www.openstack.org/software/start/" class="overview-btn docs-btn">获取OpenStack <i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="http://www.openstack.org/marketplace/training" class="overview-btn docs-btn"> 培训 <i class="fa fa-arrow-circle-o-right"></i></a>
+                <form class="docs-main-search-form">
+                    <script type="text/javascript">
+        (function() {
+        var cx = '000108871792296872333:noj9nikm74i';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' :
+'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+                    </script>
+                    <gcse:search gname="standard" as_sitesearch="docs.openstack.org">
+                    </gcse:search>
+                </form>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 superuser-wrapper">
+                <div id="superuser-img"></div>
+            </div>
+        </div>
+    </div>
+    <div class="mid-docs-wrapper" id="docs-main-body">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-9 col-md-9 col-sm-9">
+                    <h2>中文</h2>
+                    <p>最新的中文文档。包括安装手册，API文档</p>
                 </div>
+                {% include 'templates/dropdown_releases_and_languages.tmpl' %}
             </div>
-            <div class="row docs-toc">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="docs-link-sections">
-                        <h3><i class="fa fa-cloud"></i> 用户指南 </h3>
-                        <a href="http://developer.openstack.org/zh_CN/api-guide/quick-start"> API快速指南 </a>
-                    </div>
-            </div>
-          </div>
-          </div>
-            <div class="row docs-contribute-wrapper">
-                <div class="col-lg-12">
-                    <p>文档翻译</p>
-文档翻译由OpenStack简体中文翻译团队提供. 如想加入请点击这里<a href="https://wiki.openstack.org/wiki/I18n/team/zh_cn">团队简介</a>.
+        </div>
+    </div>
+    <div class="container">
+        <div class="row docs-toc">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="docs-link-sections">
+                    <h3 id="install-guides"><i class="fa fa-cogs"></i> 安装手册</h3>
+                    <h4>Mitaka 版本</h4>
+                    <a href="/mitaka/zh_CN/install-guide-obs/">openSUSE Leap 42.1、SUSE Linux Enterprise Server 12 SP1</a>
+                    <a href="/mitaka/zh_CN/install-guide-rdo/">Red Hat Enterprise Linux 7、CentOS 7</a>
+                    <a href="/mitaka/zh_CN/install-guide-ubuntu/">Ubuntu 14.04 (LTS) </a>
+                    <h4>Liberty 版本</h4>
+                    <a href="/liberty/zh_CN/install-guide-obs/">openSUSE 13.2、SUSE Linux Enterprise Server 12</a>
+                    <a href="/liberty/zh_CN/install-guide-rdo/">Red Hat Enterprise Linux 7、CentOS 7</a>
+                    <a href="/liberty/zh_CN/install-guide-ubuntu/">Ubuntu 14.04 (LTS)</a>
+                </div>
+                <div class="docs-link-sections">
+                    <h3 id="user-guides"><i class="fa fa-cloud"></i>用户手册</h3>
+                    <a href="http://developer.openstack.org/zh_CN/api-guide/quick-start/">API快速手册</a>
+                    <p>OpenStack API 使用方法介绍</p>
                 </div>
             </div>
         </div>
+        <div class="row docs-contribute-wrapper">
+            <div class="col-lg-12">
+                <p>文档翻译</p>
+                文档翻译由OpenStack简体中文翻译团队提供. 如想加入请点击这里
+                <a href="https://wiki.openstack.org/wiki/I18n/team/zh_cn">团队简介</a>
+            </div>
+        </div>
+    </div>
 </div>
-    <!-- End Page Content -->
-
+<!-- End Page Content -->
 {% endblock content %}
