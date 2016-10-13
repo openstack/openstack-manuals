@@ -27,7 +27,7 @@
    * - ``nova_compute_service_type`` = ``compute``
      - (String) Service type to use when searching catalog.
    * - ``nova_compute_url`` = ``None``
-     - (Unknown) URL without the tenant segment.
+     - (URI) URL without the tenant segment.
    * - ``root_grant`` = ``ALL``
      - (List) Permissions to grant to the 'root' user.
    * - ``root_grant_option`` = ``True``

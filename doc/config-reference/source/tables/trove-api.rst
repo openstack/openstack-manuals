@@ -57,7 +57,7 @@
    * - ``trove_api_workers`` = ``None``
      - (Integer) Number of workers for the API service. The default will be the number of CPUs available.
    * - ``trove_auth_url`` = ``http://0.0.0.0:5000/v2.0``
-     - (Unknown) Trove authentication URL.
+     - (URI) Trove authentication URL.
    * - ``trove_conductor_workers`` = ``None``
      - (Integer) Number of workers for the Conductor service. The default will be the number of CPUs available.
    * - ``trove_security_group_name_prefix`` = ``SecGroup``

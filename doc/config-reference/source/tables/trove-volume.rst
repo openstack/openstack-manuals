@@ -25,7 +25,7 @@
    * - ``cinder_service_type`` = ``volumev2``
      - (String) Service type to use when searching catalog.
    * - ``cinder_url`` = ``None``
-     - (Unknown) URL without the tenant segment.
+     - (URI) URL without the tenant segment.
    * - ``cinder_volume_type`` = ``None``
      - (String) Volume type to use when provisioning a Cinder volume.
    * - ``device_path`` = ``/dev/vdb``
