@@ -63,13 +63,13 @@
    * - ``integration_bridge`` = ``br-int``
      - (String) Integration bridge to use. Do not change this parameter unless you have a good reason to. This is the name of the OVS integration bridge. There is one per hypervisor. The integration bridge acts as a virtual 'patch bay'. All VM VIFs are attached to this bridge and then 'patched' according to their network connectivity.
    * - ``local_ip`` = ``None``
-     - (Unknown) IP address of local overlay (tunnel) network endpoint. Use either an IPv4 or IPv6 address that resides on one of the host network interfaces. The IP version of this value must match the value of the 'overlay_ip_version' option in the ML2 plug-in configuration file on the neutron server node(s).
+     - (IP) IP address of local overlay (tunnel) network endpoint. Use either an IPv4 or IPv6 address that resides on one of the host network interfaces. The IP version of this value must match the value of the 'overlay_ip_version' option in the ML2 plug-in configuration file on the neutron server node(s).
    * - ``of_connect_timeout`` = ``30``
      - (Integer) Timeout in seconds to wait for the local switch connecting the controller. Used only for 'native' driver.
    * - ``of_interface`` = ``native``
      - (String) OpenFlow interface to use.
    * - ``of_listen_address`` = ``127.0.0.1``
-     - (Unknown) Address to listen on for OpenFlow connections. Used only for 'native' driver.
+     - (IP) Address to listen on for OpenFlow connections. Used only for 'native' driver.
    * - ``of_listen_port`` = ``6633``
      - (Port number) Port to listen on for OpenFlow connections. Used only for 'native' driver.
    * - ``of_request_timeout`` = ``10``

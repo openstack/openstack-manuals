@@ -37,7 +37,7 @@
    * - ``l2_population`` = ``False``
      - (Boolean) Extension to use alongside ml2 plugin's l2population mechanism driver. It enables the plugin to populate VXLAN forwarding table.
    * - ``local_ip`` = ``None``
-     - (Unknown) IP address of local overlay (tunnel) network endpoint. Use either an IPv4 or IPv6 address that resides on one of the host network interfaces. The IP version of this value must match the value of the 'overlay_ip_version' option in the ML2 plug-in configuration file on the neutron server node(s).
+     - (IP) IP address of local overlay (tunnel) network endpoint. Use either an IPv4 or IPv6 address that resides on one of the host network interfaces. The IP version of this value must match the value of the 'overlay_ip_version' option in the ML2 plug-in configuration file on the neutron server node(s).
    * - ``tos`` = ``None``
      - (Integer) TOS for vxlan interface protocol packets.
    * - ``ttl`` = ``None``

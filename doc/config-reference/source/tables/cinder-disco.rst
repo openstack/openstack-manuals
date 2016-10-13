@@ -23,7 +23,7 @@
    * - ``clone_volume_timeout`` = ``680``
      - (Integer) Create clone volume timeout.
    * - ``disco_client`` = ``127.0.0.1``
-     - (Unknown) The IP of DMS client socket server
+     - (IP) The IP of DMS client socket server
    * - ``disco_client_port`` = ``9898``
      - (Port number) The port to connect DMS client socket server
    * - ``disco_wsdl_path`` = ``/etc/cinder/DISCOService.wsdl``

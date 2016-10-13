@@ -35,7 +35,7 @@
 
        * cnt_vpn_clients
    * - ``dmz_mask`` = ``255.255.255.0``
-     - (Unknown) Netmask to push into OpenVPN config.
+     - (IP) Netmask to push into OpenVPN config.
 
        Possible values:
 
@@ -47,7 +47,7 @@
 
        * boot_script_template
    * - ``dmz_net`` = ``10.0.0.0``
-     - (Unknown) Network to push into OpenVPN config.
+     - (IP) Network to push into OpenVPN config.
 
        Note: Above mentioned OpenVPN config can be found at /etc/openvpn/server.conf.
 

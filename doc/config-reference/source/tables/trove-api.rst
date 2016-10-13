@@ -23,7 +23,7 @@
    * - ``api_paste_config`` = ``api-paste.ini``
      - (String) File name for the paste.deploy config for trove-api.
    * - ``bind_host`` = ``0.0.0.0``
-     - (Unknown) IP address the API server will listen on.
+     - (IP) IP address the API server will listen on.
    * - ``bind_port`` = ``8779``
      - (Port number) Port the API server will listen on.
    * - ``black_list_regex`` = ``None``
