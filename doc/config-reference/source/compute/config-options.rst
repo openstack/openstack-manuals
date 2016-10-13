@@ -17,6 +17,7 @@ OpenStack Compute service, run
 .. include:: ../tables/nova-conductor.rst
 .. include:: ../tables/nova-configdrive.rst
 .. include:: ../tables/nova-console.rst
+.. include:: ../tables/nova-crypto.rst
 .. include:: ../tables/nova-debug.rst
 .. include:: ../tables/nova-ephemeral_storage_encryption.rst
 .. include:: ../tables/nova-fping.rst
