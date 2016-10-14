@@ -31,6 +31,7 @@ Contents
    docs-review.rst
    docs-builds.rst
    doc-tools.rst
+   release.rst
 
 Glossary
 ~~~~~~~~
