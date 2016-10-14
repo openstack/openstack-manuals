@@ -1676,6 +1676,12 @@ H
       An object state in Object Storage where a new replica of the
       object is automatically created due to a drive failure.
 
+   HAProxy
+
+      Provides a high availability load balancer and proxy server for
+      TCP and HTTP-based applications that spreads requests across
+      multiple servers.
+
    hard reboot
 
       A type of reboot where a physical or virtual power button is
@@ -2664,6 +2670,10 @@ O
       The code name for the fifteenth release of OpenStack. The
       design summit will take place in Barcelona, Spain. Ocata is
       a beach north of Barcelona.
+
+   Octavia
+
+      An operator-grade open source scalable load balancer.
 
    Oldie
 
