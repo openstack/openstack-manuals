@@ -43,7 +43,7 @@ of the following:
 * Between 120 and 140 installations of Nginx and Tomcat, each with 2
   vCPUs and 4 GB of RAM
 
-* A three-node MariaDB and Galera cluster, each with 4 vCPUs and 8 GB
+* A three node MariaDB and Galera cluster, each with 4 vCPUs and 8 GB
   RAM
 
 The company runs hardware load balancers and multiple web applications
@@ -56,9 +56,10 @@ The solution would consist of the following OpenStack components:
 * A firewall, switches and load balancers on the public facing network
   connections.
 
-* OpenStack Controller service running Image, Identity, Networking,
-  combined with support services such as MariaDB and RabbitMQ,
-  configured for high availability on at least three controller nodes.
+* OpenStack Controller service running Image service, Identity service,
+  Networking service, combined with support services such as MariaDB and
+  RabbitMQ, configured for high availability on at least three controller
+  nodes.
 
 * OpenStack Compute nodes running the KVM hypervisor.
 
@@ -154,7 +155,7 @@ The CERN solution uses :term:`cells <cell>` for segregation of compute
 resources and for transparently scaling between different data centers.
 This decision meant trading off support for security groups and live
 migration. In addition, they must manually replicate some details, like
-flavors, across cells. In spite of these drawbacks cells provide the
+flavors, across cells. In spite of these drawbacks, cells provide the
 required scale while exposing a single public API endpoint to users.
 
 CERN created a compute cell for each of the two original data centers
@@ -382,4 +383,3 @@ storage system, such as Ceph, as Block Storage.
 This would have given another layer of protection.
 Another option would have been to store the database on an OpenStack
 Block Storage volume and backing it up like any other Block Storage.
-

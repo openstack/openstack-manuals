@@ -27,21 +27,20 @@ geographically dispersed. The workload is very sensitive to latency and
 needs a rapid response to end-users. After reviewing the user, technical
 and operational considerations, it is determined beneficial to build a
 number of regions local to the customer's edge. Rather than build a few
-large, centralized data centers, the intent of the architecture is to
-provide a pair of small data centers in locations that are closer to the
-customer. In this use case, spreading applications out allows for
-different horizontal scaling than a traditional compute workload scale.
-The intent is to scale by creating more copies of the application in
-closer proximity to the users that need it most, in order to ensure
-faster response time to user requests. This provider deploys two
-datacenters at each of the four chosen regions. The implications of this
-design are based around the method of placing copies of resources in
-each of the remote regions. Swift objects, Glance images, and block
-storage need to be manually replicated into each region. This may be
-beneficial for some systems, such as the case of content service, where
-only some of the content needs to exist in some but not all regions. A
-centralized Keystone is recommended to ensure authentication and that
-access to the API endpoints is easily manageable.
+large, centralized data centers, the intent is to provide a pair of small
+data centers in locations closer to the customer. In this use case,
+spreading out applications allows for different horizontal scaling than
+a traditional compute workload scale. The intent is to scale by creating
+more copies of the application in closer proximity to the users that need
+it most, in order to ensure faster response time to user requests. This
+provider deploys two data centers at each of the four chosen regions. The
+implications of this design are based on the method of placing copies
+of resources in each of the remote regions. Swift objects, glance images,
+and Block Storage need to be manually replicated into each region. This may
+be beneficial for some systems, for example, a content service where
+only some of the content needs to exist in some regions. A centralized
+Identity service is recommended to manage authentication and access to
+the API endpoints.
 
 It is recommended that you install an automated DNS system such as
 Designate. Application administrators need a way to manage the mapping
@@ -52,7 +51,7 @@ region's zone.
 
 Telemetry for each region is also deployed, as each region may grow
 differently or be used at a different rate. Ceilometer collects each
-region's meters from each of the controllers and report them back to a
+region's meters from each of the controllers and reports them back to a
 central location. This is useful both to the end user and the
 administrator of the OpenStack environment. The end user will find this
 method useful, as it makes possible to determine if certain locations
@@ -73,11 +72,11 @@ being able to run a central storage repository as a primary cache for
 distributing content to each of the regions.
 
 The second redundancy type is the edge data center itself. A second data
-center in each of the edge regional locations house a second region near
+center in each of the edge regional locations stores a second region near
 the first region. This ensures that the application does not suffer
 degraded performance in terms of latency and availability.
 
-The follow figure depicts the solution designed to have both a
+The following figure depicts the solution designed to have both a
 centralized set of core data centers for OpenStack services and paired edge
 data centers.
 
@@ -89,27 +88,27 @@ Geo-redundant load balancing example
 ------------------------------------
 
 A large-scale web application has been designed with cloud principles in
-mind. The application is designed provide service to application store,
-on a 24/7 basis. The company has typical two tier architecture with a
-web front-end servicing the customer requests, and a NoSQL database back
+mind. The application is designed to provide service to the application
+store on a 24/7 basis. The company has a two-tier architecture with
+a web front-end servicing the customer requests, and a NoSQL database back
 end storing the information.
 
-Recently there has been several outages in number of major public
+Recently there has been several outages in a number of major public
 cloud providers due to applications running out of a single geographical
-location. The design therefore should mitigate the chance of a single
+location. The design, therefore, should mitigate the chance of a single
 site causing an outage for their business.
 
 The solution would consist of the following OpenStack components:
 
-* A firewall, switches and load balancers on the public facing network
+* A firewall, switches, and load balancers on the public facing network
   connections.
 
-* OpenStack Controller services running, Networking, dashboard, Block
-  Storage and Compute running locally in each of the three regions.
-  Identity service, Orchestration service, Telemetry service, Image
+* OpenStack controller services running Networking service, dashboard, Block
+  Storage service, and Compute service running locally in each of the three
+  regions. Identity service, Orchestration service, Telemetry service, Image
   service and Object Storage service can be installed centrally, with
   nodes in each of the region providing a redundant OpenStack
-  Controller plane throughout the globe.
+  controller plane throughout the globe.
 
 * OpenStack Compute nodes running the KVM hypervisor.
 
@@ -126,12 +125,12 @@ The solution would consist of the following OpenStack components:
 An autoscaling heat template can be used to deploy the application in
 the three regions. This template includes:
 
-* Web Servers, running Apache.
+* Web servers running Apache.
 
 * Appropriate ``user_data`` to populate the central DNS servers upon
   instance launch.
 
-* Appropriate Telemetry alarms that maintain state of the application
+* Appropriate Telemetry alarms that maintain the application state
   and allow for handling of region or instance failure.
 
 Another autoscaling Heat template can be used to deploy a distributed
@@ -145,11 +144,10 @@ met. But three regions are selected here to avoid abnormal load on a
 single region in the event of a failure.
 
 Orchestration is used because of the built-in functionality of
-autoscaling and auto healing in the event of increased load. Additional
+autoscaling and auto healing in the event of increased load. External
 configuration management tools, such as Puppet or Chef could also have
 been used in this scenario, but were not chosen since Orchestration had
-the appropriate built-in hooks into the OpenStack cloud, whereas the
-other tools were external and not native to OpenStack. In addition,
+the appropriate built-in hooks into the OpenStack cloud. In addition,
 external tools were not needed since this deployment scenario was
 straight forward.
 
@@ -168,11 +166,11 @@ not have any awareness of geo location.
 
 .. figure:: ../figures/Multi-site_Geo_Redundant_LB.png
 
-Location-local service example
+Local location service example
 ------------------------------
 
 A common use for multi-site OpenStack deployment is creating a Content
-Delivery Network. An application that uses a location-local architecture
+Delivery Network. An application that uses a local location architecture
 requires low network latency and proximity to the user to provide an
 optimal user experience and reduce the cost of bandwidth and transit.
 The content resides on sites closer to the customer, instead of a
