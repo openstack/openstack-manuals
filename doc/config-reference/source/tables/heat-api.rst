@@ -91,7 +91,7 @@
    * - ``backlog`` = ``4096``
      - (Integer) Number of backlog requests to configure the socket with.
    * - ``bind_host`` = ``0.0.0.0``
-     - (Unknown) Address to bind the server. Useful when selecting a particular network interface.
+     - (IP) Address to bind the server. Useful when selecting a particular network interface.
    * - ``bind_port`` = ``8004``
      - (Port number) The port on which the server will listen.
    * - ``cert_file`` = ``None``
