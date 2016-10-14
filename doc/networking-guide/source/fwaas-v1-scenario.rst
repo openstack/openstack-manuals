@@ -1,4 +1,4 @@
-Firewall-as-a-Service (FWaaS) v2 scenario
+Firewall-as-a-Service (FWaaS) v1 scenario
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Enable FWaaS v1
