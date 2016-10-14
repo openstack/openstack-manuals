@@ -13,7 +13,7 @@ To use the ZTE drivers, the following prerequisites:
 
 -  ZTE KS3200 or KU5200 array with:
 
-   -  iSCSI  interfaces
+   -  iSCSI or FC interfaces
 
    -  30B2 firmware or later
 
@@ -79,7 +79,7 @@ Configuring the array
    single volume type definition can be used to allocate volumes from both
    pools.
 
-   **Example: iSCSI example back-end entries**
+   **Example: iSCSI back-end entries**
 
    .. code-block:: ini
 
@@ -101,6 +101,25 @@ Configuring the array
       san_password = !manage
       zte_iscsi_ips = 10.2.3.4,10.2.3.5
 
+   **Example: Fibre Channel back end entries**
+
+   .. code-block:: ini
+
+      [pool-a]
+      zte_backend_name = A
+      volume_backend_name = zte-array
+      volume_driver = cinder.volume.drivers.zte.zte_fc.ZTEFCDriver
+      san_ip = 10.1.2.3
+      san_login = manage
+      san_password = !manage
+
+      [pool-b]
+      zte_backend_name = B
+      volume_backend_name = zte-array
+      volume_driver = cinder.volume.drivers.zte.zte_fc.ZTEFCDriver
+      san_ip = 10.1.2.3
+      san_login = manage
+      san_password = !manage
 
 #. If HTTPS is not enabled in the array, include
    ``zte_api_protocol = http`` in each of the back-end definitions.
