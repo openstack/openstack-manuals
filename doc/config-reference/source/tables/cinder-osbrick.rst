@@ -10,7 +10,7 @@
 
 .. _cinder-osbrick:
 
-.. list-table:: Description of osbrick configuration options
+.. list-table:: Description of os-brick configuration options
    :header-rows: 1
    :class: config-ref-table
 

@@ -54,6 +54,8 @@
      - (String) IP address on which OpenStack Volume API listens
    * - ``osapi_volume_listen_port`` = ``8776``
      - (Port number) Port on which OpenStack Volume API listens
+   * - ``osapi_volume_use_ssl`` = ``False``
+     - (Boolean) Wraps the socket in a SSL context if True is set. A certificate file and key file must be specified.
    * - ``osapi_volume_workers`` = ``None``
      - (Integer) Number of workers for OpenStack Volume API service. The default is equal to the number of CPUs available.
    * - ``per_volume_size_limit`` = ``-1``
@@ -78,6 +80,8 @@
      - (Integer) The number of characters in the salt.
    * - **[oslo_middleware]**
      -
+   * - ``enable_proxy_headers_parsing`` = ``False``
+     - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
