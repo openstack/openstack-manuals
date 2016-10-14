@@ -10,7 +10,7 @@
 
 .. _trove-db_couchdb:
 
-.. list-table:: Description of db_couchdb configuration options
+.. list-table:: Description of CouchDB database configuration options
    :header-rows: 1
    :class: config-ref-table
 

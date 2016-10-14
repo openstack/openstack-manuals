@@ -31,11 +31,11 @@
    * - ``dns_endpoint_url`` = ``http://0.0.0.0``
      - (URI) Endpoint URL for DNSaaS.
    * - ``dns_hostname`` = ``localhost``
-     - (Unknown) Hostname used for adding DNS entries.
+     - (Hostname) Hostname used for adding DNS entries.
    * - ``dns_instance_entry_factory`` = ``trove.dns.driver.DnsInstanceEntryFactory``
      - (String) Factory for adding DNS entries.
    * - ``dns_management_base_url`` = ``http://0.0.0.0``
-     - (URL) Management URL for DNSaaS.
+     - (URI) Management URL for DNSaaS.
    * - ``dns_passkey`` =
      - (String) Passkey for DNSaaS.
    * - ``dns_region`` =

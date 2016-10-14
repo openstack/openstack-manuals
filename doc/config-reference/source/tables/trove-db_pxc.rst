@@ -35,7 +35,7 @@
    * - ``guest_log_exposed_logs`` = ``general,slow_query``
      - (String) List of Guest Logs to expose for publishing.
    * - ``guest_log_long_query_time`` = ``1000``
-     - (Integer) The time in milliseconds that a statement must take in in order to be logged in the slow_query log.
+     - (Integer) DEPRECATED: The time in milliseconds that a statement must take in in order to be logged in the slow_query log. Will be replaced by a configuration group option: long_query_time
    * - ``guestagent_strategy`` = ``trove.common.strategies.cluster.experimental.galera_common.guestagent.GaleraCommonGuestAgentStrategy``
      - (String) Class that implements datastore-specific Guest Agent API logic.
    * - ``icmp`` = ``False``

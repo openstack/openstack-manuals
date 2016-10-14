@@ -31,10 +31,10 @@
    * - ``guest_log_exposed_logs`` = ``general``
      - (String) List of Guest Logs to expose for publishing.
    * - ``guest_log_long_query_time`` = ``0``
-     - (Integer) The time in milliseconds that a statement must take in in order to be logged in the 'general' log. A value of '0' logs all statements, while '-1' turns off statement logging.
+     - (Integer) DEPRECATED: The time in milliseconds that a statement must take in in order to be logged in the 'general' log. A value of '0' logs all statements, while '-1' turns off statement logging. Will be replaced by configuration group option: log_min_duration_statement
    * - ``icmp`` = ``False``
      - (Boolean) Whether to permit ICMP.
-   * - ``ignore_dbs`` = ``postgres``
+   * - ``ignore_dbs`` = ``os_admin, postgres``
      - (List) No help text available for this option.
    * - ``ignore_users`` = ``os_admin, postgres, root``
      - (List) No help text available for this option.
@@ -42,6 +42,10 @@
      - (String) Filesystem path for mounting volumes if volume support is enabled.
    * - ``postgresql_port`` = ``5432``
      - (Port number) The TCP port the server listens on.
+   * - ``replication_namespace`` = ``trove.guestagent.strategies.replication.experimental.postgresql_impl``
+     - (String) Namespace to load replication strategies from.
+   * - ``replication_strategy`` = ``PostgresqlReplicationStreaming``
+     - (String) Default strategy for replication.
    * - ``restore_namespace`` = ``trove.guestagent.strategies.restore.experimental.postgresql_impl``
      - (String) Namespace to load restore strategies from.
    * - ``root_controller`` = ``trove.extensions.postgresql.service.PostgreSQLRootController``
