@@ -33,7 +33,7 @@
    * - ``format_options`` = ``-m 5``
      - (String) Options to use when formatting a volume.
    * - ``host`` = ``0.0.0.0``
-     - (Unknown) Host to listen for RPC messages.
+     - (IP) Host to listen for RPC messages.
    * - ``module_aes_cbc_key`` = ``module_aes_cbc_key``
      - (String) OpenSSL aes_cbc key for module encryption.
    * - ``module_types`` = ``ping, new_relic_license``
@@ -42,12 +42,18 @@
      - (Integer) Page size for listing modules.
    * - ``network_label_regex`` = ``^private$``
      - (String) Regular expression to match Trove network labels.
+   * - ``notification_service_id`` = ``{'mongodb': 'c8c907af-7375-456f-b929-b637ff9209ee', 'percona': 'fd1723f5-68d2-409c-994f-a4a197892a17', 'mysql': '2f3ff068-2bfb-4f70-9a9d-a6bb65bc084b', 'pxc': '75a628c3-f81b-4ffb-b10a-4087c26bc854', 'db2': 'e040cd37-263d-4869-aaa6-c62aa97523b5', 'cassandra': '459a230d-4e97-4344-9067-2a54a310b0ed', 'mariadb': '7a4f82cc-10d2-4bc6-aadc-d9aacc2a3cb5', 'postgresql': 'ac277e0d-4f21-40aa-b347-1ea31e571720', 'couchbase': 'fa62fe68-74d9-4779-a24e-36f19602c415', 'couchdb': 'f0a9ab7b-66f7-4352-93d7-071521d44c7c', 'redis': 'b216ffc5-1947-456c-a4cf-70f94c05f7d0', 'vertica': 'a8d805ae-a3b2-c4fd-gb23-b62cee5201ae'}``
+     - (Dict) Unique ID to tag notification events.
+   * - ``num_tries`` = ``3``
+     - (Integer) Number of times to check if a volume exists.
    * - ``pybasedir`` = ``/usr/lib/python/site-packages/trove/trove``
      - (String) Directory where the Trove python module is installed.
    * - ``pydev_path`` = ``None``
      - (String) Set path to pydevd library, used if pydevd is not found in python sys.path.
    * - ``quota_notification_interval`` = ``3600``
      - (Integer) Seconds to wait between pushing events.
+   * - ``report_interval`` = ``30``
+     - (Integer) The interval (in seconds) which periodic tasks are run.
    * - ``sql_query_logging`` = ``False``
      - (Boolean) Allow insecure logging while executing queries through SQLAlchemy.
    * - ``taskmanager_queue`` = ``taskmanager``

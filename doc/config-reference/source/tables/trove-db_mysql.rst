@@ -31,7 +31,7 @@
    * - ``guest_log_exposed_logs`` = ``general,slow_query``
      - (String) List of Guest Logs to expose for publishing.
    * - ``guest_log_long_query_time`` = ``1000``
-     - (Integer) The time in milliseconds that a statement must take in in order to be logged in the slow_query log.
+     - (Integer) DEPRECATED: The time in milliseconds that a statement must take in in order to be logged in the slow_query log. Will be replaced by a configuration group option: long_query_time
    * - ``icmp`` = ``False``
      - (Boolean) Whether to permit ICMP.
    * - ``ignore_dbs`` = ``mysql, information_schema, performance_schema``

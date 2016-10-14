@@ -22,7 +22,7 @@
      - (Dict) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.
    * - ``backup_namespace`` = ``trove.guestagent.strategies.backup.experimental.db2_impl``
      - (String) Namespace to load backup strategies from.
-   * - ``backup_strategy`` = ``DB2Backup``
+   * - ``backup_strategy`` = ``DB2OfflineBackup``
      - (String) Default strategy to perform backups.
    * - ``default_password_length`` = ``36``
      - (Integer) Character length of generated passwords.

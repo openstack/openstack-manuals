@@ -6,7 +6,6 @@ Database service
    :maxdepth: 1
 
    database/database.rst
-   database/rpc.rst
    database/logs.rst
    tables/conf-changes/trove.rst
 
@@ -34,5 +33,4 @@ configuration options.
 .. include:: tables/trove-swift.rst
 .. include:: tables/trove-taskmanager.rst
 .. include:: tables/trove-upgrades.rst
-.. include:: tables/trove-varmour.rst
 .. include:: tables/trove-volume.rst
