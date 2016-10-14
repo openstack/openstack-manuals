@@ -337,7 +337,8 @@ The Neutron Metering agent resides beside neutron-l3-agent.
 Configure Load-Balancer-as-a-Service (LBaaS v2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For the back end, use either Octavia or Haproxy. This example uses Octavia.
+For the back end, use either :term:`Octavia` or :term:`HAProxy`.
+This example uses Octavia.
 
 **To configure LBaaS V2**
 
