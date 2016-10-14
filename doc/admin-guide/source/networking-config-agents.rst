@@ -487,8 +487,8 @@ complete basic operations on agents:
 | parameter                              |                                    |
 | set to ``False`` or ``True``.          |                                    |
 |                                        |                                    |
-|                                        | ``$ neutron agent-update --admin`` |
-|                                        | ``-state-up False AGENT_ID``       |
+|                                        | ``$ neutron agent-update ``        |
+|                                        | ``--admin-state-up False AGENT_ID``|
 +----------------------------------------+------------------------------------+
 | Delete a given agent. Consider         |                                    |
 | disabling the agent before deletion.   |                                    |
