@@ -136,6 +136,14 @@ components.
 
 ``/var/lib/cinder`` should also be backed up.
 
+Networking
+----------
+
+``/etc/neutron`` and ``/var/log/neutron`` follow the same rules as other
+components.
+
+``/var/lib/neutron`` should also be backed up.
+
 Object Storage
 --------------
 
