@@ -12,7 +12,7 @@ Block Storage service
    block-storage/fc-zoning.rst
    block-storage/nested-quota.rst
    block-storage/volume-encryption.rst
-   block-storage/volume-misc.rst
+   block-storage/config-options.rst
    block-storage/samples/index.rst
    tables/conf-changes/cinder.rst
 

@@ -102,8 +102,6 @@
      - (Integer) Range, in seconds, to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
    * - ``periodic_interval`` = ``60``
      - (Integer) Interval, in seconds, between running periodic tasks
-   * - ``proxy`` = ``storage.proxy.IBMStorageProxy``
-     - (String) Proxy driver that connects to the IBM Storage Array
    * - ``replication_api_class`` = ``cinder.replication.api.API``
      - (String) The full class name of the volume replication API class
    * - ``replication_device`` = ``None``

@@ -5,7 +5,6 @@ Additional options
 These options can also be set in the ``cinder.conf`` file.
 
 .. include:: ../tables/cinder-api.rst
-.. include:: ../tables/cinder-amqp.rst
 .. include:: ../tables/cinder-auth.rst
 .. include:: ../tables/cinder-backups.rst
 .. include:: ../tables/cinder-block-device.rst
@@ -24,18 +23,14 @@ These options can also be set in the ``cinder.conf`` file.
 .. include:: ../tables/cinder-hyperv.rst
 .. include:: ../tables/cinder-images.rst
 .. include:: ../tables/cinder-infortrend.rst
-.. include:: ../tables/cinder-keymgr.rst
 .. include:: ../tables/cinder-nas.rst
 .. include:: ../tables/cinder-profiler.rst
 .. include:: ../tables/cinder-pure.rst
 .. include:: ../tables/cinder-quota.rst
-.. include:: ../tables/cinder-rabbitmq.rst
 .. include:: ../tables/cinder-redis.rst
-.. include:: ../tables/cinder-rpc.rst
 .. include:: ../tables/cinder-san.rst
 .. include:: ../tables/cinder-scheduler.rst
 .. include:: ../tables/cinder-scst.rst
 .. include:: ../tables/cinder-storage.rst
 .. include:: ../tables/cinder-tegile.rst
-.. include:: ../tables/cinder-zeromq.rst
 .. include:: ../tables/cinder-zones.rst

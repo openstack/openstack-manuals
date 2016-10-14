@@ -10,7 +10,7 @@
 
 .. _cinder-nexenta_edge:
 
-.. list-table:: Description of nexenta_edge configuration options
+.. list-table:: Description of NexentaEdge driver configuration options
    :header-rows: 1
    :class: config-ref-table
 

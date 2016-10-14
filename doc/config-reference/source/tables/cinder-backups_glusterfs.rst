@@ -10,7 +10,7 @@
 
 .. _cinder-backups_glusterfs:
 
-.. list-table:: Description of backups_glusterfs configuration options
+.. list-table:: Description of GlusterFS backup driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
