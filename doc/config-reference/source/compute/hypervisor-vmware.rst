@@ -10,7 +10,7 @@ access to advanced features such as vMotion, High Availability, and
 Dynamic Resource Scheduling (DRS).
 
 This section describes how to configure VMware-based virtual machine
-images for launch. The VMware driver supports vCenter version 5.1.0 and later.
+images for launch. The VMware driver supports vCenter version 5.5.0 and later.
 
 The VMware vCenter driver enables the ``nova-compute`` service to communicate
 with a VMware vCenter server that manages one or more ESX host clusters.
@@ -418,9 +418,8 @@ vMotion, High Availability, and Dynamic Resource Scheduling (DRS).
 VMwareVCDriver configuration options
 ------------------------------------
 
-When you use the VMwareVCDriver (vCenter versions 5.1 and later) with
-OpenStack Compute, add the following VMware-specific configuration
-options to the ``nova.conf`` file:
+Add the following VMware-specific configuration options to the ``nova.conf``
+file:
 
 .. code-block:: ini
 
@@ -455,9 +454,10 @@ options to the ``nova.conf`` file:
    * The vCenter driver generates instance name by instance ID.
      Instance name template is ignored.
 
-   * The minimum supported vCenter version is 5.1.0.
-     Starting in the OpenStack Liberty release this will be logged as a
-     warning. In the OpenStack Ocata release this will be enforced.
+   * The minimum supported vCenter version is 5.5.0.
+     Starting in the OpenStack Ocata release any version lower than 5.5.0 will
+     be logged as a warning. In the OpenStack Pike release this will be
+     enforced.
 
 A ``nova-compute`` service can control one or more clusters containing
 multiple ESXi hosts, making ``nova-compute`` a critical service from a
