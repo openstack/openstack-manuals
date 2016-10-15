@@ -8,6 +8,7 @@ Block Storage service
    block-storage/block-storage-overview.rst
    block-storage/volume-drivers.rst
    block-storage/backup-drivers.rst
+   block-storage/schedulers.rst
    block-storage/logs.rst
    block-storage/fc-zoning.rst
    block-storage/nested-quota.rst

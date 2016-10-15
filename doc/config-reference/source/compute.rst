@@ -36,7 +36,7 @@ A list of config options based on different topics can be found below:
    compute/fibre-channel.rst
    compute/iscsi-offload.rst
    compute/hypervisors.rst
-   compute/scheduler.rst
+   compute/schedulers.rst
    compute/cells.rst
    compute/conductor.rst
    compute/logs.rst

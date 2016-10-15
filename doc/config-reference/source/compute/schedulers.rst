@@ -1,6 +1,6 @@
-==========
-Schedulers
-==========
+==================
+Compute schedulers
+==================
 
 Compute uses the ``nova-scheduler`` service to determine how to
 dispatch compute requests. For example, the ``nova-scheduler``
