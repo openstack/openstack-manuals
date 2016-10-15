@@ -7,7 +7,7 @@ Software Development Lifecycle Automation service command-line client
 The solum client is the command-line interface (CLI) for
 the Software Development Lifecycle Automation service API and its extensions.
 
-This chapter documents :command:`solum` version ``2.1.0``.
+This chapter documents :command:`solum` version ``2.1.1``.
 
 .. _solum_command_usage:
 
