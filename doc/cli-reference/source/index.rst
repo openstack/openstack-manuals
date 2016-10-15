@@ -5,7 +5,11 @@ OpenStack Command-Line Interface Reference
 Abstract
 ~~~~~~~~
 
-This guide documents the OpenStack command-line clients.
+This guide provides information about OpenStack command-line client commands.
+For more information about installing and using command-line clients,
+see the `OpenStack command-line clients
+<http://docs.openstack.org/user-guide/cli.html>`_
+in the OpenStack End User Guide.
 
 Contents
 ~~~~~~~~
@@ -15,8 +19,6 @@ Contents
 .. toctree::
    :maxdepth: 1
 
-   common/conventions
-   overview
    openstack
 
    murano
@@ -43,22 +45,6 @@ Contents
    ceilometer
    gnocchi
    mistral
-
-Appendix
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/app-support
-
-Glossary
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/glossary
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
