@@ -36,7 +36,7 @@ and it's confirmed to be a bug in the documentation, add a note in the
 
 It is also important to ask Cross Project Liaisons (CPLs) to check the
 chapters or project-specific guides that relate to their projects. It is
-possible that changes might that have happened within projects during the
+possible that changes might have happened within projects during the
 release that have not been reflected in the documentation.
 
 As release day draws near, and testing progresses, the PTL will make a
