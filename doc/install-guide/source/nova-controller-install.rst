@@ -339,24 +339,7 @@ Install and configure components
 
      .. end
 
-   .. only:: debian
-
-      * The ``.config`` and ``.postinst`` maintainer scripts of the
-        ``nova-common`` package detect automatically the IP address which
-        goes in the ``my_ip`` directive of the ``[DEFAULT]`` section. This
-        value will normally still be prompted, and you can check that it
-        is correct in the nova.conf after ``nova-common`` is installed:
-
-        .. path /etc/nova/nova.conf
-        .. code-block:: ini
-
-           [DEFAULT]
-           ...
-           my_ip = 10.0.0.11
-
-        .. end
-
-   .. endonly
+.. only:: obs or rdo or ubuntu
 
    * In the ``[DEFAULT]`` section, enable support for the Networking service:
 
@@ -377,86 +360,103 @@ Install and configure components
         Compute firewall driver by using the
         ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
 
-   * In the ``[vnc]`` section, configure the VNC proxy to use the management
-     interface IP address of the controller node:
+.. endonly
+
+* In the ``[vnc]`` section, configure the VNC proxy to use the management
+  interface IP address of the controller node:
+
+  .. path /etc/nova/nova.conf
+  .. code-block:: ini
+
+     [vnc]
+     enabled = true
+     ...
+     vncserver_listen = $my_ip
+     vncserver_proxyclient_address = $my_ip
+
+  .. end
+
+.. only:: debian
+
+   * In the ``[spice]`` section, disable spice:
 
      .. path /etc/nova/nova.conf
      .. code-block:: ini
 
-        [vnc]
-        ...
-        vncserver_listen = $my_ip
-        vncserver_proxyclient_address = $my_ip
+        [spice]
+        enabled = false
 
      .. end
 
-   * In the ``[glance]`` section, configure the location of the
-     Image service API:
+.. endonly
+
+* In the ``[glance]`` section, configure the location of the
+  Image service API:
+
+  .. path /etc/nova/nova.conf
+  .. code-block:: ini
+
+     [glance]
+     ...
+     api_servers = http://controller:9292
+
+  .. end
+
+.. only:: obs
+
+   * In the ``[oslo_concurrency]`` section, configure the lock path:
+
+   .. path /etc/nova/nova.conf
+   .. code-block:: ini
+
+      [oslo_concurrency]
+      ...
+      lock_path = /var/run/nova
+
+   .. end
+
+.. endonly
+
+.. only:: rdo
+
+   * In the ``[oslo_concurrency]`` section, configure the lock path:
 
      .. path /etc/nova/nova.conf
      .. code-block:: ini
 
-        [glance]
+        [oslo_concurrency]
         ...
-        api_servers = http://controller:9292
+        lock_path = /var/lib/nova/tmp
 
      .. end
 
-   .. only:: obs
+.. endonly
 
-      * In the ``[oslo_concurrency]`` section, configure the lock path:
+.. only:: ubuntu
 
-      .. path /etc/nova/nova.conf
-      .. code-block:: ini
+   * In the ``[oslo_concurrency]`` section, configure the lock path:
 
-         [oslo_concurrency]
-         ...
-         lock_path = /var/run/nova
+     .. path /etc/nova/nova.conf
+     .. code-block:: ini
 
-      .. end
+        [oslo_concurrency]
+        ...
+        lock_path = /var/lib/nova/tmp
 
-   .. endonly
+     .. end
 
-   .. only:: rdo
+.. endonly
 
-      * In the ``[oslo_concurrency]`` section, configure the lock path:
+.. only:: ubuntu
 
-        .. path /etc/nova/nova.conf
-        .. code-block:: ini
+   .. todo:
 
-           [oslo_concurrency]
-           ...
-           lock_path = /var/lib/nova/tmp
+      https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1506667
 
-        .. end
+   * Due to a packaging bug, remove the ``logdir`` option from the
+     ``[DEFAULT]`` section.
 
-   .. endonly
-
-   .. only:: ubuntu
-
-      * In the ``[oslo_concurrency]`` section, configure the lock path:
-
-        .. path /etc/nova/nova.conf
-        .. code-block:: ini
-
-           [oslo_concurrency]
-           ...
-           lock_path = /var/lib/nova/tmp
-
-        .. end
-
-   .. endonly
-
-   .. only:: ubuntu
-
-      .. todo:
-
-         https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1506667
-
-      * Due to a packaging bug, remove the ``log-dir`` option from the
-        ``[DEFAULT]`` section.
-
-   .. endonly
+.. endonly
 
 .. only:: rdo or ubuntu or debian
 
@@ -509,6 +509,79 @@ Finalize installation
         # systemctl start openstack-nova-api.service \
           openstack-nova-consoleauth.service openstack-nova-scheduler.service \
           openstack-nova-conductor.service openstack-nova-novncproxy.service
+
+     .. end
+
+.. endonly
+
+.. only:: debian
+
+   * Shutdown ``nova-spicehtml5proxy``:
+
+     .. code-block:: console
+
+        # service nova-spicehtml5proxy stop
+
+     .. end
+
+   * Select novnc startup in ``/etc/default/nova-consoleproxy``:
+
+     .. path /etc/default/nova-consoleproxy
+     .. code-block:: ini
+
+        NOVA_CONSOLE_PROXY_TYPE=novnc
+
+     .. end
+
+   * Add a systemd service file for nova-novncproxy in
+     ``/lib/systemd/system/nova-novncproxy.service``:
+
+     .. path /lib/systemd/system/nova-novncproxy.service:
+     .. code-block:: ini
+
+        [Unit]
+        Description=OpenStack Compute NoVNC proxy
+        After=postgresql.service mysql.service keystone.service rabbitmq-server.service ntp.service
+
+        Documentation=man:nova-novncproxy(1)
+
+        [Service]
+        User=nova
+        Group=nova
+        Type=simple
+        WorkingDirectory=/var/lib/nova
+        PermissionsStartOnly=true
+        ExecStartPre=/bin/mkdir -p /var/lock/nova /var/log/nova /var/lib/nova
+        ExecStartPre=/bin/chown nova:nova /var/lock/nova /var/lib/nova
+        ExecStartPre=/bin/chown nova:adm /var/log/nova
+        ExecStart=/etc/init.d/nova-novncproxy systemd-start
+        Restart=on-failure
+        LimitNOFILE=65535
+        TimeoutStopSec=65
+
+        [Install]
+        WantedBy=multi-user.target
+
+     .. end
+
+   * Start the noVNC proxy:
+
+     .. code-block:: console
+
+        # systemctl daemon-reload
+        # systemctl enable nova-novncproxy
+        # service start nova-novncproxy
+
+     .. end
+
+   * Restart the other Compute services:
+
+     .. code-block:: console
+
+        # service nova-api restart
+        # service nova-consoleauth restart
+        # service nova-scheduler restart
+        # service nova-conductor restart
 
      .. end
 
