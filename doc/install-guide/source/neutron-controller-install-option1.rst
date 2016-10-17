@@ -21,7 +21,7 @@ Install the components
    .. code-block:: console
 
       # apt-get install neutron-server neutron-linuxbridge-agent \
-        neutron-dhcp-agent neutron-metadata-agent python-neutronclient
+        neutron-dhcp-agent neutron-metadata-agent neutron-l3-agent
 
    .. end
 
