@@ -32,16 +32,6 @@ these procedures on all nodes.
 
    .. end
 
-   .. note::
-
-      For pre-release testing, use the staging repository:
-
-      .. code-block:: console
-
-         # add-apt-repository cloud-archive:newton-proposed
-
-      .. end
-
 .. endonly
 
 .. only:: rdo
