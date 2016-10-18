@@ -794,6 +794,9 @@ Once this is done, the user has to take the following steps and restart
      reverse lookup (PTR) zones.
    * ``ipv6_ptr_zone_prefix_size``: the size in bits of the prefix for the IPv6
      reverse lookup (PTR) zones.
+   * ``insecure``: Disable SSL certificate validation. By default, certificates
+     are validated.
+   * ``ca_cert``: Path to a valid Certificate Authority (CA) certificate.
 
    The following is an example:
 
@@ -808,6 +811,7 @@ Once this is done, the user has to take the following steps and restart
       allow_reverse_dns_lookup = True
       ipv4_ptr_zone_prefix_size = 24
       ipv6_ptr_zone_prefix_size = 116
+      ca_cert = /etc/ssl/certs/my_ca_cert
 
 Configuration of the externally accessible network for use case 1
 -----------------------------------------------------------------
