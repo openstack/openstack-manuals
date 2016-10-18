@@ -247,6 +247,11 @@ be over-ridden using volume types, which are described below.
      - Optional
      - False
      - Enable or disable fast format  [8]_
+   * - ``max_over_subscription_ratio``
+     - Optional
+     - 20.0
+     - The ratio of oversubscription when thin provisioned
+       volumes are involved  [9]_
 
 .. [1]
    The authentication requires either a password (``san_password``) or
@@ -301,6 +306,12 @@ be over-ridden using volume types, which are described below.
    value of ``True`` means that fast format is disabled. Details about
    this option can be found in the ``–nofmtdisk`` flag of the Storwize
    family and SVC command-line interface :command:`mkvdisk` command.
+
+.. [9]
+   This option allows that the sum of all volume's provisioned capacity to
+   be larger than the pool’s total capacity. The default value is 20.0,
+   which means that the provisioned capacity can be 20 times of the total
+   physical capacity.
 
 .. include:: ../../tables/cinder-storwize.rst
 
