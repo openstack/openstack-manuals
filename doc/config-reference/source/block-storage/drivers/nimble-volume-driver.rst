@@ -6,7 +6,11 @@ Nimble Storage fully integrates with the OpenStack platform through
 the Nimble Cinder driver, allowing a host to configure and manage Nimble
 Storage array features through Block Storage interfaces.
 
-Support for the Liberty release is available from Nimble OS 2.3.8 or later.
+Support for iSCSI storage protocol is available wih NimbleISCSIDriver
+Volume Driver class and Fibre Channel with NimbleFCDriver.
+
+Support for the Liberty release and above is available from Nimble OS
+2.3.8 or later.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
@@ -32,11 +36,6 @@ Supported operations
 
 * Force backup of an in-use volume.
 
-.. note::
-
-   The Nimble Storage implementation uses iSCSI only.
-   Fibre Channel is not supported.
-
 Nimble Storage driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -51,7 +50,8 @@ within the ``[default]`` section as follows.
    san_ip = NIMBLE_MGMT_IP
    san_login = NIMBLE_USER
    san_password = NIMBLE_PASSWORD
-   volume_driver = cinder.volume.drivers.nimble.NimbleISCSIDriver
+   use_multipath_for_image_xfer = True
+   volume_driver = NIMBLE_VOLUME_DRIVER
 
 In case of multiple back-end configuration, for example, configuration
 which supports multiple Nimble Storage arrays or a single Nimble Storage
@@ -66,7 +66,8 @@ array with arrays from other vendors, use the following parameters.
    san_ip = NIMBLE_MGMT_IP
    san_login = NIMBLE_USER
    san_password = NIMBLE_PASSWORD
-   volume_driver = cinder.volume.drivers.nimble.NimbleISCSIDriver
+   use_multipath_for_image_xfer = True
+   volume_driver = NIMBLE_VOLUME_DRIVER
    volume_backend_name = NIMBLE_BACKEND_NAME
 
 In case of multiple back-end configuration, Nimble Storage volume type
@@ -92,6 +93,10 @@ NIMBLE_USER
 
 NIMBLE_PASSWORD
   Password of the admin account for nimble array.
+
+NIMBLE_VOLUME_DRIVER
+  Use either cinder.volume.drivers.nimble.NimbleISCSIDriver for iSCSI or
+  cinder.volume.drivers.nimble.NimbleFCDriver for Fibre Channel.
 
 NIMBLE_BACKEND_NAME
   A volume back-end name which is specified in the ``cinder.conf`` file.
