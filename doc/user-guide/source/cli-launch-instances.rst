@@ -92,26 +92,26 @@ Before you begin, source the OpenStack RC file.
 
    .. code-block:: console
 
-      $ nova image-list
+      $ openstack image list
 
    Note the ID of the image from which you want to boot your instance::
 
-    +--------------------------------------+---------------------------------+--------+--------+
-    | ID                                   | Name                            | Status | Server |
-    +--------------------------------------+---------------------------------+--------+--------+
-    | 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.2-x86_64-uec         | ACTIVE |        |
-    | df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.2-x86_64-uec-kernel  | ACTIVE |        |
-    | 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.2-x86_64-uec-ramdisk | ACTIVE |        |
-    +--------------------------------------+---------------------------------+--------+--------+
+    +--------------------------------------+---------------------------------+--------+
+    | ID                                   | Name                            | Status |
+    +--------------------------------------+---------------------------------+--------+
+    | 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.2-x86_64-uec         | active |
+    | df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.2-x86_64-uec-kernel  | active |
+    | 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.2-x86_64-uec-ramdisk | active |
+    +--------------------------------------+---------------------------------+--------+
 
    You can also filter the image list by using :command:`grep` to find a specific
    image, as follows:
 
    .. code-block:: console
 
-      $ nova image-list | grep 'kernel'
+      $ openstack image list | grep 'kernel'
 
-      | df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.2-x86_64-uec-kernel  | ACTIVE |        |
+      | df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.2-x86_64-uec-kernel  | active |
 
 #. List the available security groups.
 
