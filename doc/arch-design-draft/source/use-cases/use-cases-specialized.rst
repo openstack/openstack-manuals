@@ -12,27 +12,24 @@ Specialized use cases
    specialized-openstack-on-openstack.rst
    specialized-hardware.rst
    specialized-single-site.rst
-   specialized-add-region.rst
-   specialized-scaling-multiple-cells.rst
 
 
-This section provides details and design considerations for
-specialized cases:
+This section describes the architecture and design considerations for the
+following specialized use cases:
 
 * :doc:`Specialized networking <specialized-networking>`:
-  describes running networking-oriented software that may involve reading
+  Running networking-oriented software that may involve reading
   packets directly from the wire or participating in routing protocols.
 * :doc:`Software-defined networking (SDN)
   <specialized-software-defined-networking>`:
-  describes both running an SDN controller from within OpenStack
+  Running an SDN controller from within OpenStack
   as well as participating in a software-defined network.
 * :doc:`Desktop-as-a-Service <specialized-desktop-as-a-service>`:
-  describes running a virtualized desktop environment in a cloud
-  (:term:`Desktop-as-a-Service`).
-  This applies to private and public clouds.
+  Running a virtualized desktop environment in a private or public cloud.
 * :doc:`OpenStack on OpenStack <specialized-openstack-on-openstack>`:
-  describes building a multi-tiered cloud by running OpenStack
+  Building a multi-tiered cloud by running OpenStack
   on top of an OpenStack installation.
 * :doc:`Specialized hardware <specialized-hardware>`:
-  describes the use of specialized hardware devices from within
-  the OpenStack environment.
+  Using specialized hardware devices from within the OpenStack environment.
+* :doc:`specialized-single-site`: Single site architecture with OpenStack
+  Networking.

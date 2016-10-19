@@ -19,8 +19,8 @@ User stories
 Network-focused cloud examples
 ------------------------------
 
-An organization designs a large scale cloud-baesed web application. The
-application scales horizontally in a bursting fashion and generates a
+An organization designs a large scale cloud-based web application. The
+application scales horizontally in a bursting behavior and generates a
 high instance count. The application requires an SSL connection to secure
 data and must not lose connection state to individual servers.
 
@@ -38,7 +38,7 @@ Because sessions persist until closed, the routing and switching
 architecture provides high availability. Switches mesh to each
 hypervisor and each other, and also provide an MLAG implementation to
 ensure that layer-2 connectivity does not fail. Routers use VRRP and
-fully mesh with switches to ensure layer-3 connectivity. Since GRE is
+fully mesh with switches to ensure layer-3 connectivity. Since GRE
 provides an overlay network, Networking is present and uses the Open
 vSwitch agent in GRE tunnel mode. This ensures all devices can reach all
 other devices and that you can create tenant networks for private
@@ -51,8 +51,8 @@ to this, it can fit into a large number of other OpenStack designs. A
 few key components, however, need to be in place to handle the nature of
 most web-scale workloads. You require the following components:
 
-*  OpenStack Controller services (Image, Identity, Networking and
-   supporting services such as MariaDB and RabbitMQ)
+*  OpenStack Controller services (Image service, Identity service, Networking
+   service, and supporting services such as MariaDB and RabbitMQ)
 
 *  OpenStack Compute running KVM hypervisor
 
@@ -62,9 +62,9 @@ most web-scale workloads. You require the following components:
 
 *  Telemetry service
 
-Beyond the normal Identity, Compute, Image service, and Object Storage
-components, we recommend the Orchestration service component to handle
-the proper scaling of workloads to adjust to demand. Due to the
+Beyond the normal Identity service, Compute service, Image service, and
+Object Storage components, we recommend the Orchestration service component
+to handle the proper scaling of workloads to adjust to demand. Due to the
 requirement for auto-scaling, the design includes the Telemetry service.
 Web services tend to be bursty in load, have very defined peak and
 valley usage patterns and, as a result, benefit from automatic scaling
@@ -166,7 +166,7 @@ east-west traffic
  Likely to be fully symmetric. Because replication originates from
  any node and might target multiple other nodes algorithmically, it
  is less likely for this traffic to have a larger volume in any
- specific direction. However this traffic might interfere with
+ specific direction. However, this traffic might interfere with
  north-south traffic.
 
 .. figure:: ../figures/Network_Cloud_Storage2.png
@@ -174,7 +174,7 @@ east-west traffic
 This application prioritizes the north-south traffic over east-west
 traffic: the north-south traffic involves customer-facing data.
 
-The network design in this case is less dependent on availability and
+The network design, in this case, is less dependent on availability and
 more dependent on being able to handle high bandwidth. As a direct
 result, it is beneficial to forgo redundant links in favor of bonding
 those connections. This increases available bandwidth. It is also

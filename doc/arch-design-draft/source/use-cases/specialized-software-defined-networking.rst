@@ -27,9 +27,9 @@ If an SDN implementation requires layer-2 access because it
 directly manipulates switches, we do not recommend running an
 overlay network or a layer-3 agent.
 If the controller resides within an OpenStack installation,
-it may be necessary to build an ML2 plug-in and schedule the
-controller instances to connect to tenant VLANs that they can
-talk directly to the switch hardware.
+build an ML2 plugin, and schedule the controller instances
+to connect to tenant VLANs so they can talk directly to the switch
+hardware.
 Alternatively, depending on the external device support,
 use a tunnel that terminates at the switch hardware itself.
 
