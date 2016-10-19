@@ -64,20 +64,20 @@ Create a snapshot of the instance
       $ nova image-create --poll myInstance myInstanceSnapshot
       Instance snapshotting... 50% complete
 
-#. Use the :command:`nova image-list` command to check the status
-   until the status is ``ACTIVE``:
+#. Use the :command:`openstack image list` command to check the status
+   until the status is ``active``:
 
    .. code-block:: console
 
-      $ nova image-list
-      +--------------------------------------+---------------------------------+--------+--------+
-      | ID                                   | Name                            | Status | Server |
-      +--------------------------------------+---------------------------------+--------+--------+
-      | 657ebb01-6fae-47dc-986a-e49c4dd8c433 | cirros-0.3.2-x86_64-uec         | ACTIVE |        |
-      | 72074c6d-bf52-4a56-a61c-02a17bf3819b | cirros-0.3.2-x86_64-uec-kernel  | ACTIVE |        |
-      | 3c5e5f06-637b-413e-90f6-ca7ed015ec9e | cirros-0.3.2-x86_64-uec-ramdisk | ACTIVE |        |
-      | f30b204e-1ce6-40e7-b8d9-b353d4d84e7d | myInstanceSnapshot              | ACTIVE |        |
-      +--------------------------------------+---------------------------------+--------+--------+
+      $ openstack image list
+      +--------------------------------------+---------------------------------+--------+
+      | ID                                   | Name                            | Status |
+      +--------------------------------------+---------------------------------+--------+
+      | 657ebb01-6fae-47dc-986a-e49c4dd8c433 | cirros-0.3.2-x86_64-uec         | active |
+      | 72074c6d-bf52-4a56-a61c-02a17bf3819b | cirros-0.3.2-x86_64-uec-kernel  | active |
+      | 3c5e5f06-637b-413e-90f6-ca7ed015ec9e | cirros-0.3.2-x86_64-uec-ramdisk | active |
+      | f30b204e-1ce6-40e7-b8d9-b353d4d84e7d | myInstanceSnapshot              | active |
+      +--------------------------------------+---------------------------------+--------+
 
 .. _Download_the_snapshot_as_an_image:
 
@@ -88,12 +88,12 @@ Download the snapshot as an image
 
    .. code-block:: console
 
-      $ nova image-list
-      +-------------------+-------------------+--------+--------------------------------------+
-      | ID               | Name              | Status | Server                                |
-      +-------------------+-------------------+--------+--------------------------------------+
-      | f30b204e-1ce6... | myInstanceSnapshot| ACTIVE | c41f3074-c82a-4837-8673-fa7e9fea7e11  |
-      +------------------+-------------------+--------+---------------------------------------+
+      $ openstack image list
+      +-------------------+-------------------+--------+
+      | ID                | Name              | Status |
+      +-------------------+-------------------+--------+
+      | f30b204e-1ce6...  | myInstanceSnapshot| active |
+      +-------------------+-------------------+--------+
 
 #. Download the snapshot by using the image ID that was returned in the
    previous step:

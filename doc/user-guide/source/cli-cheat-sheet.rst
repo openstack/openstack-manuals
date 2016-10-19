@@ -92,7 +92,7 @@ List images
 
 .. code-block:: console
 
-   $ nova image-list
+   $ openstack image list
 
 List flavors
 

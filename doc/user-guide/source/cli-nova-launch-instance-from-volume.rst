@@ -144,15 +144,15 @@ the volume to boot an instance.
 
    .. code-block:: console
 
-      $ nova image-list
-      +-----------------+---------------------------------+--------+--------+
-      | ID              | Name                            | Status | Server |
-      +-----------------+---------------------------------+--------+--------+
-      | 484e05af-a14... | Fedora-x86_64-20-20131211.1-sda | ACTIVE |        |
-      | 98901246-af9... | cirros-0.3.1-x86_64-uec         | ACTIVE |        |
-      | b6e95589-7eb... | cirros-0.3.1-x86_64-uec-kernel  | ACTIVE |        |
-      | c90893ea-e73... | cirros-0.3.1-x86_64-uec-ramdisk | ACTIVE |        |
-      +-----------------+---------------------------------+--------+--------+
+      $ openstack image list
+      +-----------------+---------------------------------+--------+
+      | ID              | Name                            | Status |
+      +-----------------+---------------------------------+--------+
+      | 484e05af-a14... | Fedora-x86_64-20-20131211.1-sda | active |
+      | 98901246-af9... | cirros-0.3.1-x86_64-uec         | active |
+      | b6e95589-7eb... | cirros-0.3.1-x86_64-uec-kernel  | active |
+      | c90893ea-e73... | cirros-0.3.1-x86_64-uec-ramdisk | active |
+      +-----------------+---------------------------------+--------+
 
    Note the ID of the image that you want to use to create a volume.
 
