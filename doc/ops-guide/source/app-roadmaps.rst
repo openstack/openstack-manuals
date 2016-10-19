@@ -227,9 +227,9 @@ notes.
 
 Aside from the direct-to-blueprint pathway, there is another very
 well-regarded mechanism to influence the development roadmap: the user
-survey. Found at http://openstack.org/user-survey, it allows you to
-provide details of your deployments and needs, anonymously by default.
-Each cycle, the user committee analyzes the results and produces a
+survey. Found at `OpenStack User Survey <http://openstack.org/user-survey>`_,
+it allows you to provide details of your deployments and needs, anonymously by
+default. Each cycle, the user committee analyzes the results and produces a
 report, including providing specific information to the technical
 committee and project team leads.
 
