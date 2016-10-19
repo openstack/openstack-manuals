@@ -18,8 +18,6 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``pool_type`` = ``default``
-     - (String) Pool type, like sata-2copy.
    * - ``synology_admin_port`` = ``5000``
      - (Port number) Management port for Synology storage.
    * - ``synology_device_id`` = ``None``

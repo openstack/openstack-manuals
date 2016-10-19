@@ -26,3 +26,5 @@
      - (String) Fusionstorage agent ip addr range.
    * - ``pool_id_filter`` =
      - (List) Pool id permit to use.
+   * - ``pool_type`` = ``default``
+     - (String) Pool type, like sata-2copy.
