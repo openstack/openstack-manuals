@@ -178,8 +178,7 @@ a new IP address and with no IP, it shut itself off from the network.
 
 A quick Google search turned up this: `DHCP lease errors in VLAN
 mode <https://lists.launchpad.net/openstack/msg11696.html>`_
-(https://lists.launchpad.net/openstack/msg11696.html) which further
-supported our DHCP theory.
+which further supported our DHCP theory.
 
 An initial idea was to just increase the lease time. If the instance
 only renewed once every week, the chances of this problem happening
@@ -214,19 +213,16 @@ its lease and all of the sudden I found a bunch of OpenStack and dnsmasq
 discussions that were identical to the problem we were seeing!
 
 `Problem with Heavy Network IO and
-Dnsmasq <http://www.gossamer-threads.com/lists/openstack/operators/18197>`_
-(http://www.gossamer-threads.com/lists/openstack/operators/18197)
+Dnsmasq <http://www.gossamer-threads.com/lists/openstack/operators/18197>`_.
 
 `instances losing IP address while running, due to No
-DHCPOFFER <http://www.gossamer-threads.com/lists/openstack/dev/14696>`_
-(http://www.gossamer-threads.com/lists/openstack/dev/14696)
+DHCPOFFER <http://www.gossamer-threads.com/lists/openstack/dev/14696>`_.
 
 Seriously, Google.
 
 This bug report was the key to everything: `KVM images lose connectivity
 with bridged
-network <https://bugs.launchpad.net/ubuntu/+source/qemu-kvm/+bug/997978>`_
-(https://bugs.launchpad.net/ubuntu/+source/qemu-kvm/+bug/997978)
+network <https://bugs.launchpad.net/ubuntu/+source/qemu-kvm/+bug/997978>`_.
 
 It was funny to read the report. It was full of people who had some
 strange network problem but didn't quite explain it in the same way.
@@ -249,8 +245,7 @@ Disappearing Images
 At the end of 2012, Cybera (a nonprofit with a mandate to oversee the
 development of cyberinfrastructure in Alberta, Canada) deployed an
 updated OpenStack cloud for their `DAIR
-project <http://www.canarie.ca/cloud/>`_
-(http://www.canarie.ca/cloud/). A few days into
+project <http://www.canarie.ca/cloud/>`_. A few days into
 production, a compute node locks up. Upon rebooting the node, I checked
 to see what instances were hosted on that node so I could boot them on
 behalf of the customer. Luckily, only one instance.
@@ -312,9 +307,8 @@ were any ``_base`` files not in use. If there were, OpenStack Compute
 would delete them. This idea sounds innocent enough and has some good
 qualities to it. But how did this feature end up turned on? It was
 disabled by default in Essex. As it should be. It was `decided to be
-turned on in Folsom <https://bugs.launchpad.net/nova/+bug/1029674>`_
-(https://bugs.launchpad.net/nova/+bug/1029674). I cannot emphasize
-enough that:
+turned on in Folsom <https://bugs.launchpad.net/nova/+bug/1029674>`_.
+I cannot emphasize enough that:
 
 *Actions which delete things should not be enabled by default.*
 
@@ -460,8 +454,8 @@ to abandon the horribly broken VM. After that, we started monitoring the
 size of console logs.
 
 To this day, `the issue <https://bugs.launchpad.net/nova/+bug/832507>`__
-(https://bugs.launchpad.net/nova/+bug/832507) doesn't have a permanent
-resolution, but we look forward to the discussion at the next summit.
+doesn't have a permanent resolution, but we look forward to the discussion
+at the next summit.
 
 Havana Haunted by the Dead
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
