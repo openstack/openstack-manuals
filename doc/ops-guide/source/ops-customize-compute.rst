@@ -271,7 +271,7 @@ When you join the screen session that ``stack.sh`` starts with
 
       .. code-block:: console
 
-         $ IMAGE_ID=`nova image-list | egrep cirros | egrep -v "kernel|ramdisk" | awk '{print $2}'`
+         $ IMAGE_ID=`openstack image list | egrep cirros | egrep -v "kernel|ramdisk" | awk '{print $2}'`
 
    #. Boot a test server:
 
