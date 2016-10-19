@@ -502,17 +502,18 @@ command-line equivalents.
 **Setting with nova command**
 
 From the command line, you can get a list of security groups for the
-project you're acting in using the :command:`nova secgroup-list` command:
+project you're acting in using the :command:`openstack security group list`
+command:
 
 .. code-block:: console
 
-   $ nova secgroup-list
-   +---------+-------------+
-   | Name    | Description |
-   +---------+-------------+
-   | default | default     |
-   | open    | all ports   |
-   +---------+-------------+
+   $ openstack security group list
+   +--------------------------------------+---------+------------------------+----------------------------------+
+   | ID                                   | Name    | Description            | Project                          |
+   +--------------------------------------+---------+------------------------+----------------------------------+
+   | d4246298-e5d6-440b-a29e-0a721c2259c7 | open    | all ports              | 1eaaf6ede7a24e78859591444abf314a |
+   | ec02e79e-83e1-48a5-86ad-14ab9a8c375f | default | Default security group | 1eaaf6ede7a24e78859591444abf314a |
+   +--------------------------------------+---------+------------------------+----------------------------------+
 
 To view the details of the "open" security group:
 
