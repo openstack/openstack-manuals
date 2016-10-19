@@ -360,105 +360,105 @@ Install and configure components
 
    .. endonly
 
-* In the ``[DEFAULT]`` section, enable support for the Networking service:
-
-  .. path /etc/nova/nova.conf
-  .. code-block:: ini
-
-     [DEFAULT]
-     ...
-     use_neutron = True
-     firewall_driver = nova.virt.firewall.NoopFirewallDriver
-
-  .. end
-
-  .. note::
-
-     By default, Compute uses an internal firewall driver. Since the
-     Networking service includes a firewall driver, you must disable the
-     Compute firewall driver by using the
-     ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
-
-* In the ``[vnc]`` section, configure the VNC proxy to use the management
-  interface IP address of the controller node:
-
-  .. path /etc/nova/nova.conf
-  .. code-block:: ini
-
-     [vnc]
-     ...
-     vncserver_listen = $my_ip
-     vncserver_proxyclient_address = $my_ip
-
-  .. end
-
-* In the ``[glance]`` section, configure the location of the
-  Image service API:
-
-  .. path /etc/nova/nova.conf
-  .. code-block:: ini
-
-     [glance]
-     ...
-     api_servers = http://controller:9292
-
-  .. end
-
-.. only:: obs
-
-   * In the ``[oslo_concurrency]`` section, configure the lock path:
+   * In the ``[DEFAULT]`` section, enable support for the Networking service:
 
      .. path /etc/nova/nova.conf
      .. code-block:: ini
 
-        [oslo_concurrency]
+        [DEFAULT]
         ...
-        lock_path = /var/run/nova
+        use_neutron = True
+        firewall_driver = nova.virt.firewall.NoopFirewallDriver
 
      .. end
 
-.. endonly
+     .. note::
 
-.. only:: rdo
+        By default, Compute uses an internal firewall driver. Since the
+        Networking service includes a firewall driver, you must disable the
+        Compute firewall driver by using the
+        ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
 
-   * In the ``[oslo_concurrency]`` section, configure the lock path:
+   * In the ``[vnc]`` section, configure the VNC proxy to use the management
+     interface IP address of the controller node:
 
      .. path /etc/nova/nova.conf
      .. code-block:: ini
 
-        [oslo_concurrency]
+        [vnc]
         ...
-        lock_path = /var/lib/nova/tmp
+        vncserver_listen = $my_ip
+        vncserver_proxyclient_address = $my_ip
 
      .. end
 
-.. endonly
-
-.. only:: ubuntu
-
-   * In the ``[oslo_concurrency]`` section, configure the lock path:
+   * In the ``[glance]`` section, configure the location of the
+     Image service API:
 
      .. path /etc/nova/nova.conf
      .. code-block:: ini
 
-        [oslo_concurrency]
+        [glance]
         ...
-        lock_path = /var/lib/nova/tmp
+        api_servers = http://controller:9292
 
      .. end
 
-.. endonly
+   .. only:: obs
 
-.. only:: ubuntu
+      * In the ``[oslo_concurrency]`` section, configure the lock path:
 
-   .. todo:
+      .. path /etc/nova/nova.conf
+      .. code-block:: ini
 
-      https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1506667
+         [oslo_concurrency]
+         ...
+         lock_path = /var/run/nova
 
-   * Due to a packaging bug, remove the ``logdir`` option from the
-     ``[DEFAULT]`` section.
+      .. end
 
-.. endonly
+   .. endonly
+
+   .. only:: rdo
+
+      * In the ``[oslo_concurrency]`` section, configure the lock path:
+
+        .. path /etc/nova/nova.conf
+        .. code-block:: ini
+
+           [oslo_concurrency]
+           ...
+           lock_path = /var/lib/nova/tmp
+
+        .. end
+
+   .. endonly
+
+   .. only:: ubuntu
+
+      * In the ``[oslo_concurrency]`` section, configure the lock path:
+
+        .. path /etc/nova/nova.conf
+        .. code-block:: ini
+
+           [oslo_concurrency]
+           ...
+           lock_path = /var/lib/nova/tmp
+
+        .. end
+
+   .. endonly
+
+   .. only:: ubuntu
+
+      .. todo:
+
+         https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1506667
+
+      * Due to a packaging bug, remove the ``logdir`` option from the
+        ``[DEFAULT]`` section.
+
+   .. endonly
 
 .. only:: rdo or ubuntu or debian
 
