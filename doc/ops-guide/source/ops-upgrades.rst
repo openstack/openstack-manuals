@@ -327,7 +327,7 @@ upgrade process.
    for the OpenStack release in your environment.
 
 #. After migration, users see different results from
-   :command:`nova image-list` and :command:`glance image-list`. To ensure
+   :command:`openstack image list` and :command:`glance image-list`. To ensure
    users see the same images in the list
    commands, edit the ``/etc/glance/policy.json`` and
    ``/etc/nova/policy.json`` files to contain
