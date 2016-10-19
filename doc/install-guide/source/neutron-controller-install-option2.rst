@@ -73,6 +73,11 @@ Configure the server component
     Replace ``NEUTRON_DBPASS`` with the password you chose for the
     database.
 
+    .. note::
+
+       Comment out or remove any other ``connection`` options in the
+       ``[database]`` section.
+
   * In the ``[DEFAULT]`` section, enable the Modular Layer 2 (ML2)
     plug-in, router service, and overlapping IP addresses:
 
