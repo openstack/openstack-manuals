@@ -250,7 +250,7 @@ At the end of 2012, Cybera (a nonprofit with a mandate to oversee the
 development of cyberinfrastructure in Alberta, Canada) deployed an
 updated OpenStack cloud for their `DAIR
 project <http://www.canarie.ca/cloud/>`_
-(http://www.canarie.ca/en/dair-program/about). A few days into
+(http://www.canarie.ca/cloud/). A few days into
 production, a compute node locks up. Upon rebooting the node, I checked
 to see what instances were hosted on that node so I could boot them on
 behalf of the customer. Luckily, only one instance.
