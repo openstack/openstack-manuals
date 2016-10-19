@@ -217,4 +217,7 @@ This procedure lets you create a Fedora 20 image.
 
 The underlying image file that you created with the
 :command:`qemu-img create` command is ready to be uploaded to the
-Image service.
+Image service by using the :command:`openstack image create`
+command. For more information, see the
+`Create or update an image
+<http://docs.openstack.org/user-guide/common/cli-manage-images.html#create-or-update-an-image-glance>`__.
