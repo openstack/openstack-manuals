@@ -16,7 +16,7 @@ Enable FWaaS v2
 
       [fwaas]
       driver = neutron_fwaas.services.firewall.drivers.linux.iptables_
-      fwaas.IptablesFwaasDriver
+      fwaas_v2.IptablesFwaasDriver
       enabled = True
 
    .. note::
