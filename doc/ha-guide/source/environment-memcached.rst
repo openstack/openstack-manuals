@@ -20,7 +20,7 @@ Failure of an instance only impacts a percentage of the objects
 and the client automatically removes it from the list of instances.
 
 To install and configure memcached, read the
-`official documentation <https://code.google.com/p/memcached/wiki/NewStart>`_.
+`official documentation <https://github.com/memcached/memcached/wiki#getting-started>`_.
 
 Memory caching is managed by `oslo.cache
 <http://specs.openstack.org/openstack/oslo-specs/specs/kilo/oslo-cache-using-dogpile.html>`_
