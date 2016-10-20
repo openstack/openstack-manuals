@@ -455,7 +455,7 @@ Install and configure components
 
          https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1506667
 
-      * Due to a packaging bug, remove the ``logdir`` option from the
+      * Due to a packaging bug, remove the ``log-dir`` option from the
         ``[DEFAULT]`` section.
 
    .. endonly
