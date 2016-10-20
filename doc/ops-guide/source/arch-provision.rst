@@ -174,8 +174,8 @@ by the OpenStack community in this space. Puppet, a configuration
 management tool, even provides official modules for OpenStack projects
 in an OpenStack infrastructure system known as `Puppet
 OpenStack <https://wiki.openstack.org/wiki/Puppet>`_. Chef
-configuration management is provided within
-https://git.openstack.org/cgit/openstack/openstack-chef-repo. Additional
+configuration management is provided within `openstack/openstack-chef-repo
+<https://git.openstack.org/cgit/openstack/openstack-chef-repo>`_. Additional
 configuration management systems include Juju, Ansible, and Salt. Also,
 PackStack is a command-line utility for Red Hat Enterprise Linux and
 derivatives that uses Puppet modules to support rapid deployment of
