@@ -6,7 +6,7 @@ Nimble Storage fully integrates with the OpenStack platform through
 the Nimble Cinder driver, allowing a host to configure and manage Nimble
 Storage array features through Block Storage interfaces.
 
-Support for iSCSI storage protocol is available wih NimbleISCSIDriver
+Support for iSCSI storage protocol is available with NimbleISCSIDriver
 Volume Driver class and Fibre Channel with NimbleFCDriver.
 
 Support for the Liberty release and above is available from Nimble OS

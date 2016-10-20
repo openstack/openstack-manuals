@@ -5,7 +5,7 @@ Open vSwitch with DPDK datapath
 ===============================
 
 This page serves as a guide for how to use the OVS with DPDK datapath
-functionality available in the Networking sevice as of the Mitaka release.
+functionality available in the Networking service as of the Mitaka release.
 
 The basics
 ~~~~~~~~~~
