@@ -146,7 +146,7 @@ Create an instance snapshot
 .. code-block:: console
 
    $ nova image-create volumeTwoImage snapshotOfVolumeImage
-   $ nova image-show snapshotOfVolumeImage
+   $ openstack image show snapshotOfVolumeImage
 
 Pause, suspend, stop, rescue, resize, rebuild, reboot an instance
 -----------------------------------------------------------------

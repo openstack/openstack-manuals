@@ -163,23 +163,29 @@ the volume to boot an instance.
 
    .. code-block:: console
 
-      $ nova image-show 98901246-af9...
-      +---------------------------------+--------------------------------------+
-      | Property                        | Value                                |
-      +---------------------------------+--------------------------------------+
-      | OS-EXT-IMG-SIZE:size            | 25165824                             |
-      | created                         | 2016-03-11T16:39:25Z                 |
-      | id                              | 98901246-af9...                      |
-      | metadata cinder_img_volume_type | storage_backend1                     |
-      | metadata kernel_id              | 759e3e20-83b...                      |
-      | metadata ramdisk_id             | 5a8b526f-d5c...                      |
-      | minDisk                         | 0                                    |
-      | minRam                          | 0                                    |
-      | name                            | cirros-0.3.4-x86_64-uec              |
-      | progress                        | 100                                  |
-      | status                          | ACTIVE                               |
-      | updated                         | 2016-03-17T22:55:03Z                 |
-      +---------------------------------+--------------------------------------+
+      $ openstack image show 98901246-af9...
+      +------------------+------------------------------------------------------+
+      | Field            | Value                                                |
+      +------------------+------------------------------------------------------+
+      | checksum         | ee1eca47dc88f4879d8a229cc70a07c6                     |
+      | container_format | bare                                                 |
+      | created_at       | 2016-10-08T14:59:05Z                                 |
+      | disk_format      | qcow2                                                |
+      | file             | /v2/images/9fef3b2d-c35d-4b61-bea8-09cc6dc41829/file |
+      | id               | 98901246-af9d-4b61-bea8-09cc6dc41829                 |
+      | min_disk         | 0                                                    |
+      | min_ram          | 0                                                    |
+      | name             | cirros-0.3.4-x86_64-uec                              |
+      | owner            | 8d8ef3cdf2b54c25831cbb409ad9ae86                     |
+      | protected        | False                                                |
+      | schema           | /v2/schemas/image                                    |
+      | size             | 13287936                                             |
+      | status           | active                                               |
+      | tags             |                                                      |
+      | updated_at       | 2016-10-19T09:12:52Z                                 |
+      | virtual_size     | None                                                 |
+      | visibility       | public                                               |
+      +------------------+------------------------------------------------------+
 
 #. List the available flavors.
 
