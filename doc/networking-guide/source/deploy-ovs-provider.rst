@@ -192,6 +192,15 @@ Compute nodes
       [DEFAULT]
       interface_driver = openvswitch
       enable_isolated_metadata = True
+      force_metadata = True
+
+   .. note::
+
+      The ``force_metadata`` option forces the DHCP agent to provide
+      a host route to the metadata service on ``169.254.169.254``
+      regardless of whether the subnet contains an interface on a
+      router, thus maintaining similar and predictable metadata behavior
+      among subnets.
 
 #. In the ``metadata_agent.ini`` file, configure the metadata agent:
 
