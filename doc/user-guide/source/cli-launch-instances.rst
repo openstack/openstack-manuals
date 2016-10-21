@@ -117,7 +117,7 @@ Before you begin, source the OpenStack RC file.
 
    .. code-block:: console
 
-      $ nova secgroup-list --all-tenants
+      $ openstack security group list
 
    .. note::
 
@@ -129,12 +129,12 @@ Before you begin, source the OpenStack RC file.
    Note the ID of the security group that you want to use for your
    instance::
 
-    +----+---------+-------------+----------------------------------+
-    | Id | Name    | Description | Tenant_ID                        |
-    +----+---------+-------------+----------------------------------+
-    | 2  | default | default     | 66265572db174a7aa66eba661f58eb9e |
-    | 1  | default | default     | b70d90d65e464582b6b2161cf3603ced |
-    +----+---------+-------------+----------------------------------+
+    +--------------------------------------+---------+------------------------+----------------------------------+
+    | ID                                   | Name    | Description            | Project                          |
+    +--------------------------------------+---------+------------------------+----------------------------------+
+    | b0d78827-0981-45ef-8561-93aee39bbd9f | default | Default security group | 5669caad86a04256994cdf755df4d3c1 |
+    | ec02e79e-83e1-48a5-86ad-14ab9a8c375f | default | Default security group | 1eaaf6ede7a24e78859591444abf314a |
+    +--------------------------------------+---------+------------------------+----------------------------------+
 
    If you have not created any security groups, you can assign the instance
    to only the default security group.

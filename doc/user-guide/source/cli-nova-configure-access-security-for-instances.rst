@@ -114,7 +114,7 @@ Create and manage security groups
 
    .. code-block:: console
 
-      $ nova secgroup-list
+      $ openstack security group list
 
 #. To create a security group with a specified name and description, enter
    the following command:
