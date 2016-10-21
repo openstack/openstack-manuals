@@ -474,12 +474,12 @@ complete basic operations on agents:
 +========================================+====================================+
 | List all available agents.             |                                    |
 |                                        |                                    |
-|                                        |   ``$ neutron agent-list``         |
+|                                        | ``$ neutron agent-list``           |
 +----------------------------------------+------------------------------------+
 | Show information of a given            |                                    |
 | agent.                                 |                                    |
 |                                        |                                    |
-|                                        |  ``$ neutron agent-show AGENT_ID`` |
+|                                        | ``$ neutron agent-show AGENT_ID``  |
 +----------------------------------------+------------------------------------+
 | Update the admin status and description|                                    |
 | for a specified agent. The command can |                                    |
@@ -488,13 +488,13 @@ complete basic operations on agents:
 | parameter                              |                                    |
 | set to ``False`` or ``True``.          |                                    |
 |                                        |                                    |
-|                                        | ``$ neutron agent-update ``        |
+|                                        | ``$ neutron agent-update``         |
 |                                        | ``--admin-state-up False AGENT_ID``|
 +----------------------------------------+------------------------------------+
 | Delete a given agent. Consider         |                                    |
 | disabling the agent before deletion.   |                                    |
 |                                        |                                    |
-|                                        |``$ neutron agent-delete AGENT_ID`` |
+|                                        | ``$ neutron agent-delete AGENT_ID``|
 +----------------------------------------+------------------------------------+
 
 **Basic operations on Networking agents**
