@@ -26,16 +26,11 @@
    .. code-block:: console
 
       $ openstack server list
-      +--------------------------------------+--------------------+--------+--------------------------------------------+
-      | ID                                   | Name               | Status | Networks                                   |
-      +--------------------------------------+--------------------+--------+--------------------------------------------+
-      | 018e0ae2-b43c-4271-a78d-62653dd03285 | provider-instance1 | ACTIVE | provider1=203.0.113.13, fd00:203:0:113::13 |
-      +--------------------------------------+--------------------+--------+--------------------------------------------+
-
-   .. note::
-
-      The IPv4 and IPv6 addresses appear similar only for illustration
-      purposes.
+      +--------------------------------------+--------------------+--------+------------------------------------------------------------+------------+
+      | ID                                   | Name               | Status | Networks                                                   | Image Name |
+      +--------------------------------------+--------------------+--------+------------------------------------------------------------+------------+
+      | 018e0ae2-b43c-4271-a78d-62653dd03285 | provider-instance1 | ACTIVE | provider1=203.0.113.13, fd00:203:0:113:f816:3eff:fe58:be4e | cirros     |
+      +--------------------------------------+--------------------+--------+------------------------------------------------------------+------------+
 
 #. On the controller node or any host with access to the provider network,
    ``ping`` the IPv4 and IPv6 addresses of the instance.
@@ -53,14 +48,14 @@
       4 packets transmitted, 4 received, 0% packet loss, time 3002ms
       rtt min/avg/max/mdev = 0.929/1.539/3.183/0.951 ms
 
-      $ ping6 -c 4 fd00:203:0:113::13
-      PING fd00:203:0:113::13(fd00:203:0:113::13) 56 data bytes
-      64 bytes from fd00:203:0:113::13: icmp_seq=1 ttl=64 time=1.25 ms
-      64 bytes from fd00:203:0:113::13: icmp_seq=2 ttl=64 time=0.683 ms
-      64 bytes from fd00:203:0:113::13: icmp_seq=3 ttl=64 time=0.762 ms
-      64 bytes from fd00:203:0:113::13: icmp_seq=4 ttl=64 time=0.486 ms
+      $ ping6 -c 4 fd00:203:0:113:f816:3eff:fe58:be4e
+      PING fd00:203:0:113:f816:3eff:fe58:be4e(fd00:203:0:113:f816:3eff:fe58:be4e) 56 data bytes
+      64 bytes from fd00:203:0:113:f816:3eff:fe58:be4e icmp_seq=1 ttl=64 time=1.25 ms
+      64 bytes from fd00:203:0:113:f816:3eff:fe58:be4e icmp_seq=2 ttl=64 time=0.683 ms
+      64 bytes from fd00:203:0:113:f816:3eff:fe58:be4e icmp_seq=3 ttl=64 time=0.762 ms
+      64 bytes from fd00:203:0:113:f816:3eff:fe58:be4e icmp_seq=4 ttl=64 time=0.486 ms
 
-      --- fd00:203:0:113::13 ping statistics ---
+      --- fd00:203:0:113:f816:3eff:fe58:be4e ping statistics ---
       4 packets transmitted, 4 received, 0% packet loss, time 2999ms
       rtt min/avg/max/mdev = 0.486/0.796/1.253/0.282 ms
 

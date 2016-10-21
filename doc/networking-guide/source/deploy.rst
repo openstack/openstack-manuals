@@ -40,6 +40,11 @@ infrastructure or changes to existing infrastructure such as networks.
 For basic configuration of prerequisites, see the
 `Newton Install Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`__.
 
+.. note::
+
+   Example commands using the ``openstack`` client assume version 3.2.0 or
+   higher.
+
 Nodes
 -----
 

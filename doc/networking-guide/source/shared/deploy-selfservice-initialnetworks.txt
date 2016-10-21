@@ -14,123 +14,92 @@ NAT for IPv4 network traffic and directly routes IPv6 network traffic.
 
    .. code-block:: console
 
-      $ neutron net-update --router:external provider1
-      Updated network: provider1
+      $ openstack network set --external provider1
+
+   .. note::
+
+      This command provides no output.
 
 #. Source a regular (non-administrative) project credentials.
 #. Create a self-service network.
 
    .. code-block:: console
 
-      $ neutron net-create selfservice1
-      Created a new network:
-      +-------------------------+--------------------------------------+
-      | Field                   | Value                                |
-      +-------------------------+--------------------------------------+
-      | admin_state_up          | True                                 |
-      | availability_zone_hints |                                      |
-      | availability_zones      |                                      |
-      | description             |                                      |
-      | id                      | 8fbc13ca-cfe0-4b8a-993b-e33f37ba66d1 |
-      | ipv4_address_scope      |                                      |
-      | ipv6_address_scope      |                                      |
-      | mtu                     | 1450                                 |
-      | name                    | selfservice1                         |
-      | port_security_enabled   | True                                 |
-      | router:external         | False                                |
-      | shared                  | False                                |
-      | status                  | ACTIVE                               |
-      | subnets                 |                                      |
-      | tags                    |                                      |
-      | tenant_id               | f986edf55ae945e2bef3cb4bfd589928     |
-      +-------------------------+--------------------------------------+
+      $ openstack network create selfservice1
+      +-------------------------+--------------+
+      | Field                   | Value        |
+      +-------------------------+--------------+
+      | admin_state_up          | UP           |
+      | mtu                     | 1450         |
+      | name                    | selfservice1 |
+      | port_security_enabled   | True         |
+      | router:external         | Internal     |
+      | shared                  | False        |
+      | status                  | ACTIVE       |
+      +-------------------------+--------------+
 
 #. Create a IPv4 subnet on the self-service network.
 
    .. code-block:: console
 
-      $ neutron subnet-create --name selfservice1-v4 --ip-version 4 \
-        --dns-nameserver 8.8.4.4 selfservice1 192.168.1.0/24
-      Created a new subnet:
-      +-------------------+--------------------------------------------------+
-      | Field             | Value                                            |
-      +-------------------+--------------------------------------------------+
-      | allocation_pools  | {"start": "192.168.1.2", "end": "192.168.1.254"} |
-      | cidr              | 192.168.1.0/24                                   |
-      | description       |                                                  |
-      | dns_nameservers   | 8.8.4.4                                          |
-      | enable_dhcp       | True                                             |
-      | gateway_ip        | 192.168.1.1                                      |
-      | host_routes       |                                                  |
-      | id                | db1e5c17-2968-4533-8722-512c29fd1b88             |
-      | ip_version        | 4                                                |
-      | ipv6_address_mode |                                                  |
-      | ipv6_ra_mode      |                                                  |
-      | name              | selfservice1-v4                                  |
-      | network_id        | 8fbc13ca-cfe0-4b8a-993b-e33f37ba66d1             |
-      | subnetpool_id     |                                                  |
-      | tenant_id         | f986edf55ae945e2bef3cb4bfd589928                 |
-      +-------------------+--------------------------------------------------+
+      $ openstack subnet create --subnet-range 192.168.1.0/24 \
+        --network selfservice1 --dns-nameserver 8.8.4.4 selfservice1-v4
+      +-------------------+---------------------------+
+      | Field             | Value                     |
+      +-------------------+---------------------------+
+      | allocation_pools  | 192.168.1.2-192.168.1.254 |
+      | cidr              | 192.168.1.0/24            |
+      | dns_nameservers   | 8.8.4.4                   |
+      | enable_dhcp       | True                      |
+      | gateway_ip        | 192.168.1.1               |
+      | ip_version        | 4                         |
+      | name              | selfservice1-v4           |
+      +-------------------+---------------------------+
 
 #. Create a IPv6 subnet on the self-service network.
 
    .. code-block:: console
 
-      $ neutron subnet-create --name selfservice1-v6 --ip-version 6 \
-        --ipv6-address-mode slaac --ipv6-ra-mode slaac \
-        --dns-nameserver 2001:4860:4860::8844 selfservice1 \
-        fd00:192:168:1::/64
-      Created a new subnet:
-      +-------------------+-----------------------------------------------------------------------------+
-      | Field             | Value                                                                       |
-      +-------------------+-----------------------------------------------------------------------------+
-      | allocation_pools  | {"start": "fd00:192:168:1::2", "end": "fd00:192:168:1:ffff:ffff:ffff:ffff"} |
-      | cidr              | fd00:192:168:1::/64                                                         |
-      | description       |                                                                             |
-      | dns_nameservers   | 2001:4860:4860::8844                                                        |
-      | enable_dhcp       | True                                                                        |
-      | gateway_ip        | fd00:192:168:1::1                                                           |
-      | host_routes       |                                                                             |
-      | id                | 6299cc4e-6581-4626-9720-03c808c662b3                                        |
-      | ip_version        | 6                                                                           |
-      | ipv6_address_mode | slaac                                                                       |
-      | ipv6_ra_mode      | slaac                                                                       |
-      | name              | selfservice1-v6                                                             |
-      | network_id        | 8fbc13ca-cfe0-4b8a-993b-e33f37ba66d1                                        |
-      | subnetpool_id     |                                                                             |
-      | tenant_id         | f986edf55ae945e2bef3cb4bfd589928                                            |
-      +-------------------+-----------------------------------------------------------------------------+
+      $ openstack subnet create --subnet-range fd00:192:168:1::/64 --ip-version 6 \
+        --ipv6-ra-mode slaac --ipv6-address-mode slaac --network selfservice1 \
+        --dns-nameserver 2001:4860:4860::8844 selfservice1-v6
+      +-------------------+------------------------------------------------------+
+      | Field             | Value                                                |
+      +-------------------+------------------------------------------------------+
+      | allocation_pools  | fd00:192:168:1::2-fd00:192:168:1:ffff:ffff:ffff:ffff |
+      | cidr              | fd00:192:168:1::/64                                  |
+      | dns_nameservers   | 2001:4860:4860::8844                                 |
+      | enable_dhcp       | True                                                 |
+      | gateway_ip        | fd00:192:168:1::1                                    |
+      | ip_version        | 6                                                    |
+      | ipv6_address_mode | slaac                                                |
+      | ipv6_ra_mode      | slaac                                                |
+      | name              | selfservice1-v6                                      |
+      +-------------------+------------------------------------------------------+
 
 #. Create a router.
 
    .. code-block:: console
 
-      $ neutron router-create router1
-      Created a new router:
-      +-------------------------+--------------------------------------+
-      | Field                   | Value                                |
-      +-------------------------+--------------------------------------+
-      | admin_state_up          | True                                 |
-      | availability_zone_hints |                                      |
-      | availability_zones      |                                      |
-      | description             |                                      |
-      | external_gateway_info   |                                      |
-      | id                      | 17db2a15-e024-46d0-9250-4cd4d336a2cc |
-      | name                    | router1                              |
-      | routes                  |                                      |
-      | status                  | ACTIVE                               |
-      | tenant_id               | f986edf55ae945e2bef3cb4bfd589928     |
-      +-------------------------+--------------------------------------+
+      $ openstack router create router1
+      +-----------------------+---------+
+      | Field                 | Value   |
+      +-----------------------+---------+
+      | admin_state_up        | UP      |
+      | name                  | router1 |
+      | status                | ACTIVE  |
+      +-----------------------+---------+
 
 #. Add the IPv4 and IPv6 subnets as interfaces on the router.
 
    .. code-block:: console
 
-      $ neutron router-interface-add router1 selfservice1-v4
-      Added interface 77ebe721-a7d3-457c-9534-bce4657da9da to router router1.
+      $ openstack router add subnet router1 selfservice1-v4
+      $ openstack router add subnet router1 selfservice1-v6
 
-      $ neutron router-interface-add router1 selfservice1-v6
-      Added interface 695e0993-394d-4c40-a338-d4ba4061491a to router router1.
+   .. note::
+
+      These commands provide no output.
 
 #. Add the provider network as the gateway on the router.
 
