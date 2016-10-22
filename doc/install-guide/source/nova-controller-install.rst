@@ -245,17 +245,21 @@ Install and configure components
 2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
 
-   * In the ``[DEFAULT]`` section, enable only the compute and metadata
-     APIs:
+   .. only:: rdo or obs
 
-     .. path /etc/nova/nova.conf
-     .. code-block:: ini
+      * In the ``[DEFAULT]`` section, enable only the compute and metadata
+        APIs:
 
-        [DEFAULT]
-        ...
-        enabled_apis = osapi_compute,metadata
+        .. path /etc/nova/nova.conf
+        .. code-block:: ini
 
-     .. end
+           [DEFAULT]
+           ...
+           enabled_apis = osapi_compute,metadata
+
+        .. end
+
+   .. endonly
 
    * In the ``[api_database]`` and ``[database]`` sections, configure
      database access:
