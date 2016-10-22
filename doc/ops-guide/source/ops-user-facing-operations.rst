@@ -499,7 +499,7 @@ main :guilabel:`Access & Security` page for creating new groups.
 We discuss the terms used in these fields when we explain the
 command-line equivalents.
 
-**Setting with nova command**
+**Setting with openstack command**
 
 From the command line, you can get a list of security groups for the
 project you're acting in using the :command:`openstack security group list`
@@ -519,14 +519,13 @@ To view the details of the "open" security group:
 
 .. code-block:: console
 
-   $ nova secgroup-list-rules open
-   +-------------+-----------+---------+-----------+--------------+
-   | IP Protocol | From Port | To Port | IP Range  | Source Group |
-   +-------------+-----------+---------+-----------+--------------+
-   | icmp        | -1        | 255     | 0.0.0.0/0 |              |
-   | tcp         | 1         | 65535   | 0.0.0.0/0 |              |
-   | udp         | 1         | 65535   | 0.0.0.0/0 |              |
-   +-------------+-----------+---------+-----------+--------------+
+   $ openstack security group rule list open
+   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
+   | ID                                   | IP Protocol | IP Range  | Port Range      | Remote Security Group |
+   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
+   | 353d0611-3f67-4848-8222-a92adbdb5d3a | udp         | 0.0.0.0/0 | 1:65535         | None                  |
+   | 63536865-e5b6-4df1-bac5-ca6d97d8f54d | tcp         | 0.0.0.0/0 | 1:65535         | None                  |
+   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
 
 These rules are all "allow" type rules, as the default is deny. The
 first column is the IP protocol (one of icmp, tcp, or udp), and the
@@ -588,13 +587,13 @@ additive:
 
 .. code-block:: console
 
-   $ nova secgroup-list-rules global_http
-   +-------------+-----------+---------+-----------+--------------+
-   | IP Protocol | From Port | To Port | IP Range  | Source Group |
-   +-------------+-----------+---------+-----------+--------------+
-   | tcp         | 80        | 80      | 0.0.0.0/0 |              |
-   | tcp         | 443       | 443     | 0.0.0.0/0 |              |
-   +-------------+-----------+---------+-----------+--------------+
+   $ openstack security group rule list global_http
+   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
+   | ID                                   | IP Protocol | IP Range  | Port Range      | Remote Security Group |
+   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
+   | 353d0611-3f67-4848-8222-a92adbdb5d3a | tcp         | 0.0.0.0/0 | 80:80           | None                  |
+   | 63536865-e5b6-4df1-bac5-ca6d97d8f54d | tcp         | 0.0.0.0/0 | 443:443         | None                  |
+   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
 
 The inverse operation is called :command:`nova secgroup-delete-rule`, using the
 same format. Whole security groups can be removed with

@@ -143,7 +143,7 @@ Before you begin, source the OpenStack RC file.
 
    .. code-block:: console
 
-      $ nova secgroup-list-rules default
+      $ openstack security group rule list default
 
 #. List the available key pairs, and note the key pair name that you use for
    SSH access.

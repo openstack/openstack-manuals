@@ -859,13 +859,13 @@ Solution
 
    .. code-block:: console
 
-      $ nova secgroup-list-rules default
-      +-------------+-----------+---------+-----------+--------------+
-      | IP Protocol | From Port | To Port |  IP Range | Source Group |
-      +-------------+-----------+---------+-----------+--------------+
-      | icmp        | -1        | -1      | 0.0.0.0/0 |              |
-      | tcp         | 22        | 22      | 0.0.0.0/0 |              |
-      +-------------+-----------+---------+-----------+--------------+
+      $ openstack security group rule list default
+      +--------------------------------------+-------------+-----------+-----------------+-----------------------+
+      | ID                                   | IP Protocol | IP Range  | Port Range      | Remote Security Group |
+      +--------------------------------------+-------------+-----------+-----------------+-----------------------+
+      | 63536865-e5b6-4df1-bac5-ca6d97d8f54d | tcp         | 0.0.0.0/0 | 22:22           | None                  |
+      | e9d3200f-647a-4293-a9fc-e65ceee189ae | icmp        | 0.0.0.0/0 | type=1:code=-1  | None                  |
+      +--------------------------------------+-------------+-----------+-----------------+-----------------------+
 
 -  Check the NAT rules have been added to iptables on the node that is
    running ``nova-network``:
