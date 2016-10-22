@@ -234,7 +234,7 @@ Building an LBaaS v2 load balancer
        $ neutron lbaas-loadbalancer-create --name test-lb private-subnet
 
 #.  You can view the load balancer status and IP address with the
-    ``lbaas-loadbalancer-show`` command:
+    :command:`neutron lbaas-loadbalancer-show` command:
 
     .. code-block:: console
 
@@ -288,7 +288,8 @@ Building an LBaaS v2 load balancer
          lbaas
 
     Apply the security group to the load balancer's network port using
-    ``vip_port_id`` from the :command:`lbaas-loadbalancer-show` command:
+    ``vip_port_id`` from the :command:`neutron lbaas-loadbalancer-show`
+    command:
 
     .. code-block:: console
 
@@ -441,10 +442,11 @@ floating IP address assigned if they must be accessible to external clients. To
 complete this step, you must have a router between the private and public
 networks and an available floating IP address.
 
-You can use the ``lbaas-loadbalancer-show`` command from the beginning of this
-section to locate the ``vip_port_id``. The ``vip_port_id`` is the ID of the
-network port that is assigned to the load balancer. You can associate a free
-floating IP address to the load balancer using ``floatingip-associate``:
+You can use the :command:`neutron lbaas-loadbalancer-show` command from the
+beginning of this section to locate the ``vip_port_id``. The ``vip_port_id``
+is the ID of the network port that is assigned to the load balancer. You can
+associate a free floating IP address to the load balancer using
+:command:`neutron floatingip-associate`:
 
 .. code-block:: console
 
@@ -456,7 +458,7 @@ Setting quotas for LBaaS v2
 Quotas are available for limiting the number of load balancers and load
 balancer pools. By default, both quotas are set to 10.
 
-You can adjust quotas using the :command:`quota-update` command:
+You can adjust quotas using the :command:`neutron quota-update` command:
 
 .. code-block:: console
 
@@ -470,7 +472,7 @@ Retrieving load balancer statistics
 
 The LBaaS v2 agent collects four types of statistics for each load balancer
 every six seconds. Users can query these statistics with the
-:command:`lbaas-loadbalancer-stats` command:
+:command:`neutron lbaas-loadbalancer-stats` command:
 
 .. code-block:: console
 
