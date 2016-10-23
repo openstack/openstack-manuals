@@ -525,3 +525,19 @@ PCI passthrough
       configuration options <http://docs.openstack.org/newton/config-reference/compute/config-options.html>`_).
     - COUNT: (integer) The amount of PCI devices of type ALIAS to be assigned
       to a guest.
+
+Secure Boot
+    When your Compute services use the Hyper-V hypervisor, you can enable
+    secure boot for Windows and Linux instances.
+
+    .. code:: console
+
+       $ openstack flavor set FLAVOR-NAME \
+            --property os:secure_boot=SECURE_BOOT_OPTION
+
+    Valid ``SECURE_BOOT_OPTION`` values are:
+
+    -  ``required``: Enable Secure Boot for instances running with this
+       flavor.
+    -  ``disabled`` or ``optional``: (default) Disable Secure Boot for
+       instances running with this flavor.

@@ -161,6 +161,12 @@ For example:
      - Secure Boot is a security standard. When the instance starts,
        Secure Boot first examines software such as firmware and OS by their
        signature and only allows them to run if the signatures are valid.
+
+       For Hyper-V: Images must be prepared as Generation 2 VMs. Instance must
+       also contain ``hw_machine_type=hyperv-gen2`` image property. Linux
+       guests will also require bootloader's digital signature provided as
+       ``os_secure_boot_signature`` and
+       ``hypervisor_version_requires'>=10.0'`` image properties.
      - * ``required`` - Enable the Secure Boot feature.
        * ``disabled`` or ``optional`` - (default) Disable the Secure Boot
          feature.
