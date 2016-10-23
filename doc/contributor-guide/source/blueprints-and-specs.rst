@@ -219,7 +219,7 @@ Guides for end users
 API documentation
 -----------------
 
-* `Complete API Reference <http://developer.openstack.org/api-ref.html>`_:
+* `Complete API Reference <http://developer.openstack.org/api-guide/quick-start/index.html>`_:
   Complete reference listing of OpenStack REST APIs
   with example requests and responses.
 * `API specifications <http://specs.openstack.org/>`_:
