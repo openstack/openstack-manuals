@@ -39,7 +39,7 @@ can be associated with more than one project. Each project and user
 pairing can have a role associated with it.
 
 List projects
-^^^^^^^^^^^^^
+-------------
 
 List all projects with their ID, name, and whether they are
 enabled or disabled:
@@ -59,7 +59,7 @@ enabled or disabled:
    +----------------------------------+--------------------+
 
 Create a project
-^^^^^^^^^^^^^^^^
+----------------
 
 Create a project named ``new-project``:
 
@@ -80,7 +80,7 @@ Create a project named ``new-project``:
    +-------------+----------------------------------+
 
 Update a project
-^^^^^^^^^^^^^^^^
+----------------
 
 Specify the project ID to update a project. You can update the name,
 description, and enabled status of a project.
@@ -119,7 +119,7 @@ description, and enabled status of a project.
       +-------------+----------------------------------+
 
 Delete a project
-^^^^^^^^^^^^^^^^
+----------------
 
 Specify the project ID to delete a project:
 
@@ -131,7 +131,7 @@ Users
 ~~~~~
 
 List users
-^^^^^^^^^^
+----------
 
 List all users:
 
@@ -148,7 +148,7 @@ List all users:
    +----------------------------------+----------+
 
 Create a user
-^^^^^^^^^^^^^
+-------------
 
 To create a user, you must specify a name. Optionally, you can
 specify a project ID, password, and email address. It is recommended
@@ -172,7 +172,7 @@ Create the ``new-user`` user:
    +------------+----------------------------------+
 
 Update a user
-^^^^^^^^^^^^^
+-------------
 
 You can update the name, email address, and enabled status for a user.
 
@@ -200,7 +200,7 @@ You can update the name, email address, and enabled status for a user.
       User has been updated.
 
 Delete a user
-^^^^^^^^^^^^^
+-------------
 
 Delete a specified user account:
 
@@ -212,7 +212,7 @@ Roles and role assignments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 List available roles
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 List the available roles:
 
@@ -230,7 +230,7 @@ List the available roles:
    +----------------------------------+---------------+
 
 Create a role
-^^^^^^^^^^^^^
+-------------
 
 Users can be members of multiple projects. To assign users to multiple
 projects, define a role and assign that role to a user-project pair.
@@ -249,7 +249,7 @@ Create the ``new-role`` role:
    +-----------+----------------------------------+
 
 Assign a role
-^^^^^^^^^^^^^
+-------------
 
 To assign a user to a project, you must assign the role to a
 user-project pair. To do this, you need the user, role, and project
@@ -333,7 +333,7 @@ IDs.
       +----------------------------------+-------------+---------+------+
 
 View role details
-^^^^^^^^^^^^^^^^^
+-----------------
 
 View details for a specified role:
 
@@ -349,7 +349,7 @@ View details for a specified role:
    +-----------+----------------------------------+
 
 Remove a role
-^^^^^^^^^^^^^
+-------------
 
 Remove a role from a user-project pair:
 
