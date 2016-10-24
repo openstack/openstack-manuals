@@ -96,9 +96,9 @@ metering and event data relating to OpenStack services. Data collected
 by the Telemetry service could be used for billing. Depending on
 deployment configuration, collected data may be accessible to users
 based on the deployment configuration. The Telemetry service provides a
-REST API documented at
-http://developer.openstack.org/api-ref-telemetry-v2.html. You can read
-more about the module in the `OpenStack Administrator
+REST API documented at `ceilometer V2 Web API
+<http://docs.openstack.org/developer/ceilometer/webapi/v2.html>`_. You can
+read more about the module in the `OpenStack Administrator
 Guide <http://docs.openstack.org/admin-guide/telemetry.html>`_ or
 in the `developer
 documentation <http://docs.openstack.org/developer/ceilometer>`_.
