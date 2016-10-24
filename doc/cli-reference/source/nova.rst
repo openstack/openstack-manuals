@@ -1188,7 +1188,7 @@ Boot a new server.
 **Optional arguments:**
 
 ``--flavor <flavor>``
-  Name or ID of flavor (see 'nova flavor-list').
+  Name or ID of flavor (see 'openstack flavor list').
 
 ``--image <image>``
   Name or ID of image (see 'glance image-list').
@@ -1682,15 +1682,19 @@ Set or unset extra_spec for a flavor.
 ``<key=value>``
   Extra_specs to set/unset (only key is necessary on unset).
 
-.. _nova_flavor-list:
+.. _openstack_flavor_list:
 
-nova flavor-list
-----------------
+openstack flavor list
+---------------------
 
 .. code-block:: console
 
-   usage: nova flavor-list [--extra-specs] [--all] [--marker <marker>]
-                           [--limit <limit>]
+   usage: openstack flavor list [-h]
+                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}]
+                                [--public | --private | --all] [--long]
+                                [--marker <marker>] [--limit <limit>]
 
 Print a list of available 'flavors' (sizes of servers).
 

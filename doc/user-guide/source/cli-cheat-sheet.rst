@@ -98,7 +98,7 @@ List flavors
 
 .. code-block:: console
 
-   $ nova flavor-list
+   $ openstack flavor list
 
 Boot an instance using flavor and image names (if names are unique)
 

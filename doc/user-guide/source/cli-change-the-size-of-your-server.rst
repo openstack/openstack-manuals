@@ -47,16 +47,16 @@ Change the size of a server by changing its flavor.
 
    .. code-block:: console
 
-      $ nova flavor-list
-      +-----+-----------+-----------+------+-----------+------+-------+-------------+----------+
-      | ID  | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public|
-      +-----+-----------+-----------+------+-----------+------+-------+-------------+----------+
-      | 1   | m1.tiny   | 512       | 1    | 0         |      | 1     | 1.0         | True     |
-      | 2   | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True     |
-      | 3   | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True     |
-      | 4   | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True     |
-      | 5   | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True     |
-      +-----+-----------+-----------+------+-----------+------+-------+-------------+----------+
+      $ openstack flavor list
+      +-----+-----------+-------+------+-----------+-------+-----------+
+      | ID  | Name      |   RAM | Disk | Ephemeral | VCPUs | Is_Public |
+      +-----+-----------+-------+------+-----------+-------+-----------+
+      | 1   | m1.tiny   |   512 |    1 |         0 |     1 | True      |
+      | 2   | m1.small  |  2048 |   20 |         0 |     1 | True      |
+      | 3   | m1.medium |  4096 |   40 |         0 |     2 | True      |
+      | 4   | m1.large  |  8192 |   80 |         0 |     4 | True      |
+      | 5   | m1.xlarge | 16384 |  160 |         0 |     8 | True      |
+      +-----+-----------+-------+------+-----------+-------+-----------+
 
 #. To resize the server, use the :command:`nova resize` command and add
    the server ID or name and the new flavor. Include the :option:`--poll`
