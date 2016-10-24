@@ -44,6 +44,7 @@ name, network, security group, key, and instance name.
    .. code-block:: console
 
       $ openstack image list
+
       +--------------------------------------+--------+--------+
       | ID                                   | Name   | Status |
       +--------------------------------------+--------+--------+
@@ -59,6 +60,7 @@ name, network, security group, key, and instance name.
    .. code-block:: console
 
       $ openstack network list
+
       +--------------------------------------+--------------+--------------------------------------+
       | ID                                   | Name         | Subnets                              |
       +--------------------------------------+--------------+--------------------------------------+
@@ -81,6 +83,7 @@ name, network, security group, key, and instance name.
    .. code-block:: console
 
       $ openstack security group list
+
       +--------------------------------------+---------+------------------------+----------------------------------+
       | ID                                   | Name    | Description            | Project                          |
       +--------------------------------------+---------+------------------------+----------------------------------+
@@ -150,11 +153,11 @@ Launch the instance
 
       $ openstack server list
 
-      +--------------------------------------+-------------------+--------+---------------------------------+------------+
-      | ID                                   | Name              | Status | Networks                        | Image Name |
-      +--------------------------------------+-------------------+--------+---------------------------------+------------+
-      | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf | provider-instance | ACTIVE | provider=203.0.113.103          | cirros     |
-      +--------------------------------------+-------------------+--------+---------------------------------+------------+
+      +--------------------------------------+-------------------+--------+------------------------+------------+
+      | ID                                   | Name              | Status | Networks               | Image Name |
+      +--------------------------------------+-------------------+--------+------------------------+------------+
+      | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf | provider-instance | ACTIVE | provider=203.0.113.103 | cirros     |
+      +--------------------------------------+-------------------+--------+------------------------+------------+
 
    .. end
 
@@ -260,7 +263,6 @@ Access the instance remotely
       RSA key fingerprint is ed:05:e9:e7:52:a0:ff:83:68:94:c7:d1:f2:f8:e2:e9.
       Are you sure you want to continue connecting (yes/no)? yes
       Warning: Permanently added '203.0.113.102' (RSA) to the list of known hosts.
-      $
 
    .. end
 
