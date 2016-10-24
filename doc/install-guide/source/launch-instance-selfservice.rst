@@ -27,20 +27,13 @@ name, network, security group, key, and instance name.
 
       $ openstack flavor list
 
-      +----+-----------+-------+------+-----------+-------+-----------+
-      | ID | Name      |   RAM | Disk | Ephemeral | VCPUs | Is Public |
-      +----+-----------+-------+------+-----------+-------+-----------+
-      | 1  | m1.tiny   |   512 |    1 |         0 |     1 | True      |
-      | 2  | m1.small  |  2048 |   20 |         0 |     1 | True      |
-      | 3  | m1.medium |  4096 |   40 |         0 |     2 | True      |
-      | 4  | m1.large  |  8192 |   80 |         0 |     4 | True      |
-      | 5  | m1.xlarge | 16384 |  160 |         0 |     8 | True      |
-      +----+-----------+-------+------+-----------+-------+-----------+
+      +----+---------+-----+------+-----------+-------+-----------+
+      | ID | Name    | RAM | Disk | Ephemeral | VCPUs | Is Public |
+      +----+---------+-----+------+-----------+-------+-----------+
+      | 0  | m1.nano |  64 |    1 |         0 |     1 | True      |
+      +----+---------+-----+------+-----------+-------+-----------+
 
    .. end
-
-   This instance uses the ``m1.tiny`` flavor. If you created the optional
-   ``m1.nano`` flavor, use it instead of the ``m1.tiny`` flavor.
 
    .. note::
 
@@ -102,7 +95,7 @@ name, network, security group, key, and instance name.
 
    .. code-block:: console
 
-      $ openstack server create --flavor m1.tiny --image cirros \
+      $ openstack server create --flavor m1.nano --image cirros \
         --nic net-id=SELFSERVICE_NET_ID --security-group default \
         --key-name mykey selfservice-instance
 
@@ -122,7 +115,7 @@ name, network, security group, key, and instance name.
       | adminPass                            | 7KTBYHSjEz7E                          |
       | config_drive                         |                                       |
       | created                              | 2016-02-26T14:52:37Z                  |
-      | flavor                               | m1.tiny (1)                           |
+      | flavor                               | m1.nano                               |
       | hostId                               |                                       |
       | id                                   | 113c5892-e58e-4093-88c7-e33f502eaaa4  |
       | image                                | cirros (390eb5f7-8d49-41ec-95b7-68c0d |
