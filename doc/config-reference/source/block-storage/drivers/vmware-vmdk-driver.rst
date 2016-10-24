@@ -224,6 +224,12 @@ The VMware vCenter VMDK driver supports these operations:
 
 -  Create a volume from a snapshot.
 
+   .. note::
+
+      The vmdk UUID in vCenter will not be set to the volume UUID if the
+      vCenter version is 6.0 or above and the extra spec key ``vmware:clone_type``
+      in the destination volume type is set to ``linked``.
+
 -  Copy an image to a volume.
 
    .. note::
@@ -243,7 +249,10 @@ The VMware vCenter VMDK driver supports these operations:
 
    .. note::
 
-      Supported only if the source volume is not attached to an instance.
+      -  Supported only if the source volume is not attached to an instance.
+      -  The vmdk UUID in vCenter will not be set to the volume UUID if the
+         vCenter version is 6.0 or above and the extra spec key ``vmware:clone_type``
+         in the destination volume type is set to ``linked``.
 
 -  Backup a volume.
 
