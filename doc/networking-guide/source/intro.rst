@@ -33,7 +33,7 @@ components:
   NIC on the VM into a particular network.
 
 * OpenStack :term:`Dashboard (horizon)` is used by administrators
-  and tenant users to create and manage network services through a web-based
+  and project users to create and manage network services through a web-based
   graphical interface.
 
 .. note::

@@ -9,7 +9,7 @@ for controlling the allocation of addresses to subnets, address scopes show
 where addresses can be routed between networks, preventing the use of
 overlapping addresses in any two subnets. Because all addresses allocated in
 the address scope do not overlap, neutron routers do not NAT between your
-tenants' network and your external network. As long as the addresses within
+projects' network and your external network. As long as the addresses within
 an address scope match, the Networking service performs simple routing
 between networks.
 
@@ -286,7 +286,7 @@ route straight to an external network without NAT.
       |                         | 917f9360-a840-45c1-83a1-2a093bd7b376 |
       +-------------------------+--------------------------------------+
 
-#. Connect a router to each of the tenant subnets that have been created, for
+#. Connect a router to each of the project subnets that have been created, for
    example, using a router called ``router1``:
 
    .. code-block:: console

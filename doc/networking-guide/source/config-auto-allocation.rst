@@ -107,7 +107,7 @@ users can get their auto-allocated network topology as follows:
    +-----------+--------------------------------------+
 
 Operators (and users with admin role) can get the auto-allocated
-topology for a tenant by specifying the tenant ID:
+topology for a project by specifying the project ID:
 
 .. code-block:: console
 

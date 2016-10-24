@@ -50,12 +50,12 @@ and subnets and instruct other OpenStack services like Compute to attach
 virtual devices to ports on these networks.
 OpenStack Compute is a prominent consumer of OpenStack Networking to provide
 connectivity for its instances.
-In particular, OpenStack Networking supports each tenant having multiple
-private networks and enables tenants to choose their own IP addressing scheme,
-even if those IP addresses overlap with those that other tenants use. There are
-two types of network, tenant and provider networks. It is possible to share any
-of these types of networks among tenants as part of the network creation
-process.
+In particular, OpenStack Networking supports each project having multiple
+private networks and enables projects to choose their own IP addressing scheme,
+even if those IP addresses overlap with those that other projects use. There
+are two types of network, project and provider networks. It is possible to
+share any of these types of networks among projects as part of the network
+creation process.
 
 .. _intro-os-networking-provider:
 
@@ -124,16 +124,17 @@ self-service networks and instances using them. Consider implementing one or
 more high-availability features to increase redundancy and performance
 of self-service networks.
 
-Users create tenant networks for connectivity within projects. By default, they
-are fully isolated and are not shared with other projects. OpenStack Networking
-supports the following types of network isolation and overlay technologies.
+Users create project networks for connectivity within projects. By default,
+they are fully isolated and are not shared with other projects. OpenStack
+Networking supports the following types of network isolation and overlay
+technologies.
 
 Flat
   All instances reside on the same network, which can also be shared
   with the hosts. No VLAN tagging or other network segregation takes place.
 
 VLAN
-    Networking allows users to create multiple provider or tenant networks
+    Networking allows users to create multiple provider or project networks
     using VLAN IDs (802.1Q tagged) that correspond to VLANs present in the
     physical network. This allows instances to communicate with each other
     across the environment. They can also communicate with dedicated servers,
@@ -144,8 +145,8 @@ GRE and VXLAN
     VXLAN and GRE are encapsulation protocols that create overlay networks
     to activate and control communication between compute instances. A
     Networking router is required to allow traffic to flow outside of the
-    GRE or VXLAN tenant network. A router is also required to connect
-    directly-connected tenant networks with external networks, including the
+    GRE or VXLAN project network. A router is also required to connect
+    directly-connected project networks with external networks, including the
     Internet. The router provides the ability to connect to instances directly
     from an external network using floating IP addresses.
 
@@ -157,7 +158,7 @@ Subnets
 
 A block of IP addresses and associated configuration state. This
 is also known as the native IPAM (IP Address Management) provided by the
-networking service for both tenant and provider networks.
+networking service for both project and provider networks.
 Subnets are used to allocate IP addresses when new ports are created on a
 network.
 
@@ -165,7 +166,7 @@ Subnet pools
 ------------
 
 End users normally can create subnets with any valid IP addresses without other
-restrictions. However, in some cases, it is nice for the admin or the tenant
+restrictions. However, in some cases, it is nice for the admin or the project
 to pre-define a pool of addresses from which to create subnets with automatic
 allocation.
 
