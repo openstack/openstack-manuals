@@ -5,9 +5,8 @@ Manage volumes
 ==============
 
 A volume is a detachable block storage device, similar to a USB hard
-drive. You can attach a volume to only one instance. To create and
-manage volumes, you use a combination of ``nova`` and ``cinder`` client
-commands.
+drive. You can attach a volume to only one instance. Use  the ``openstack``
+client commands to create and manage volumes.
 
 Migrate a volume
 ~~~~~~~~~~~~~~~~
@@ -263,18 +262,8 @@ Attach a volume to an instance
 
    .. code-block:: console
 
-      $ nova volume-attach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 \
-        573e024d-5235-49ce-8332-be1576d323f8 /dev/vdb
-      +----------+--------------------------------------+
-      | Property | Value                                |
-      +----------+--------------------------------------+
-      | device   | /dev/vdb                             |
-      | serverId | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 |
-      | id       | 573e024d-5235-49ce-8332-be1576d323f8 |
-      | volumeId | 573e024d-5235-49ce-8332-be1576d323f8 |
-      +----------+--------------------------------------+
-
-   Note the ID of your volume.
+      $ openstack server add volume 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 \
+        573e024d-5235-49ce-8332-be1576d323f8 --device /dev/vdb
 
 #. Show information for your volume:
 
@@ -294,7 +283,7 @@ Attach a volume to an instance
       | attachments                  | [{u'device': u'/dev/vdb',                     |
       |                              |        u'server_id': u'84c6e57d-a             |
       |                              |           u'id': u'573e024d-...               |
-      |                              |        u'volume_id': u'573e024d...            |                                         |
+      |                              |        u'volume_id': u'573e024d...            |
       | availability_zone            | nova                                          |
       | bootable                     | true                                          |
       | consistencygroup_id          | None                                          |
@@ -333,9 +322,9 @@ Resize a volume
 
    .. code-block:: console
 
-      $ nova volume-detach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5   573e024d-5235-49ce-8332-be1576d323f8
+      $ openstack server remove volume 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 573e024d-5235-49ce-8332-be1576d323f8
 
-   The :command:`nova volume-detach` command does not return any output.
+   This command does not provide any output.
 
 #. List volumes:
 
@@ -356,9 +345,9 @@ Resize a volume
 
    .. code-block:: console
 
-      $ cinder extend 573e024d-5235-49ce-8332-be1576d323f8 10
+      $ openstack volume set 573e024d-5235-49ce-8332-be1576d323f8 --size 10
 
-   The :command:`cinder extend` command does not return any output.
+   This command does not provide any output.
 
    .. note::
 
@@ -380,7 +369,7 @@ Delete a volume
 
       $ openstack volume delete my-new-volume
 
-   The :command:`cinder delete` command does not return any output.
+   This command does not provide any output.
 
 #. List the volumes again, and note that the status of your volume is
    ``deleting``:
@@ -451,7 +440,7 @@ Create a volume transfer request
 
    .. code-block:: console
 
-      $ cinder transfer-create <volume>
+      $ openstack volume transfer request create <volume>
 
     <volume>
        Name or ID of volume to transfer.
@@ -463,7 +452,7 @@ Create a volume transfer request
 
    .. code-block:: console
 
-      $ cinder transfer-create a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f
+      $ openstack volume transfer request create a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f
 
    The output shows the volume transfer ID in the ``id`` row and the
    authorization key.
@@ -471,25 +460,26 @@ Create a volume transfer request
    .. code-block:: console
 
       +------------+--------------------------------------+
-      |  Property  |                Value                 |
+      | Field      | Value                                |
       +------------+--------------------------------------+
-      |  auth_key  |           b2c8e585cbc68a80           |
-      | created_at |      2013-10-14T15:20:10.121458      |
-      |     id     | 6e4e9aa4-bed5-4f94-8f76-df43232f44dc |
-      |    name    |                 None                 |
+      | auth_key   | 0a59e53630f051e2                     |
+      | created_at | 2016-11-03T11:49:40.346181           |
+      | id         | 34e29364-142b-4c7b-8d98-88f765bf176f |
+      | name       | None                                 |
       | volume_id  | a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f |
       +------------+--------------------------------------+
 
    .. note::
 
       Optionally, you can specify a name for the transfer by using the
-      ``--display-name displayName`` parameter.
+      ``--name transferName`` parameter.
 
    .. note::
 
       While the ``auth_key`` property is visible in the output of
-      ``cinder transfer-create VOLUME_ID``, it will not be available in
-      subsequent ``cinder transfer-show TRANSFER_ID`` commands.
+      ``openstack volume transfer request create VOLUME_ID``, it will not be
+      available in subsequent ``openstack volume transfer request show TRANSFER_ID``
+      command.
 
 #. Send the volume transfer ID and authorization key to the new owner (for
    example, by email).
@@ -500,7 +490,7 @@ Create a volume transfer request
 
       $ openstack volume transfer request list
       +--------------------------------------+--------------------------------------+------+
-      |               ID                     |             VolumeID                 | Name |
+      |               ID                     |             Volume                   | Name |
       +--------------------------------------+--------------------------------------+------+
       | 6e4e9aa4-bed5-4f94-8f76-df43232f44dc | a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f | None |
       +--------------------------------------+--------------------------------------+------+
@@ -526,13 +516,13 @@ Accept a volume transfer request
 
    .. code-block:: console
 
-      $ cinder transfer-accept transferID authKey
+      $ openstack volume transfer request accept transferID authKey
 
    For example:
 
    .. code-block:: console
 
-      $ cinder transfer-accept 6e4e9aa4-bed5-4f94-8f76-df43232f44dc   b2c8e585cbc68a80
+      $ openstack volume transfer request accept 6e4e9aa4-bed5-4f94-8f76-df43232f44dc b2c8e585cbc68a80
       +-----------+--------------------------------------+
       |  Property |                Value                 |
       +-----------+--------------------------------------+
@@ -577,7 +567,7 @@ Delete a volume transfer
 
    .. code-block:: console
 
-      $ cinder transfer-delete transfer
+      $ openstack volume transfer request delete <transfer>
 
    <transfer>
       Name or ID of transfer to delete.
@@ -586,7 +576,7 @@ Delete a volume transfer
 
    .. code-block:: console
 
-      $ cinder transfer-delete a6da6888-7cdf-4291-9c08-8c1f22426b8a
+      $ openstack volume transfer request delete a6da6888-7cdf-4291-9c08-8c1f22426b8a
 
 #. Verify that transfer list is now empty and that the volume is again
    available for transfer:
@@ -601,7 +591,7 @@ Delete a volume transfer
 
    .. code-block:: console
 
-      $ openstack volume transfer request list
+      $ openstack volume list
       +-----------------+-----------+--------------+------+-------------+----------+-------------+
       |       ID        |   Status  | Display Name | Size | Volume Type | Bootable | Attached to |
       +-----------------+-----------+--------------+------+-------------+----------+-------------+
@@ -622,39 +612,37 @@ Manage a snapshot with the :command:`cinder snapshot-manage` command:
 
 .. code-block:: console
 
-   $ cinder snapshot-manage  --id-type ID-TYPE \
-     --name NAME --description DESCRIPTION --metadata METADATA \
-     VOLUME_ID IDENTIFIER
+   $ openstack snapshot set \
+     [--name <name>] \
+     [--description <description>] \
+     [--property <key=value> [...] ] \
+     [--state <state>] \
+     <snapshot>
 
 The arguments to be passed are:
 
-``VOLUME_ID``
- The ID of a volume that is the parent of the snapshot, and managed by the
- Block Storage service.
- Cinder volume already exists in volume back end.
+:option:`--name <name>`
+ New snapshot name
 
-``IDENTIFIER``
- Name, ID, or other identifier for an existing snapshot.
+:option:`--description <description>`
+ New snapshot description
 
-:option:`--id-type`
- Type of back-end device the identifier provided. Is typically ``source-name``
- or ``source-id``. Defaults to ``source-name``.
+:option:`--property <key=value>`
+ Property to add or modify for this snapshot (repeat option to set
+ multiple properties)
 
-:option:`--name`
- Name of the snapshot. Defaults to ``None``.
+:option:`--state <state>`
+ New snapshot state. (“available”, “error”, “creating”, “deleting”,
+ or “error_deleting”)
+ (admin only) (This option simply changes the state of the snapshot in the
+ database with no regard to actual status, exercise caution when using)
 
-:option:`--description`
- Description of the snapshot. Defaults to ``None``.
-
-:option:`--metadata`
- Metadata key-value pairs. Defaults to ``None``.
-
-The following example manages the ``my-snapshot-id`` snapshot with the
-``my-volume-id`` parent volume:
+``<snapshot>``
+ Snapshot to modify (name or ID)
 
 .. code-block:: console
 
-   $ cinder snapshot-manage my-volume-id my-snapshot-id
+   $ openstack snapshot set my-snapshot-id
 
 Unmanage a snapshot
 -------------------
@@ -663,7 +651,7 @@ Unmanage a snapshot with the :command:`cinder snapshot-unmanage` command:
 
 .. code-block:: console
 
-   $ cinder snapshot-umanage SNAPSHOT
+   $ openstack snapshot unset SNAPSHOT
 
 The arguments to be passed are:
 
@@ -674,4 +662,4 @@ The following example unmanages the ``my-snapshot-id`` image:
 
 .. code-block:: console
 
-   $ cinder snapshot-unmanage my-snapshot-id
+   $ openstack snapshot unset my-snapshot-id
