@@ -308,7 +308,7 @@ in the following tables.
 
    .. code-block:: console
 
-      $ glance image set \
+      $ openstack image set \
         --property id=http://fedoraproject.org/fedora/23 \
         ID-of-my-fedora-image
 
