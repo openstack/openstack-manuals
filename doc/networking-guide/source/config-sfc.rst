@@ -295,8 +295,8 @@ HTTP (TCP) traffic flows from 192.168.1.11:1000 to 192.168.2.11:80.
 Update a port chain or port pair group
 --------------------------------------
 
-* Use the ``port-chain-update`` command to dynamically add or remove port pair
-  groups or flow classifiers on a port chain.
+* Use the :command:`neutron port-chain-update` command to dynamically add or
+  remove port pair groups or flow classifiers on a port chain.
 
   * For example, add port pair group ``PPG3`` to port chain ``PC1``:
 
@@ -317,9 +317,9 @@ Update a port chain or port pair group
     SFC steers traffic matching the additional flow classifier to the
     port pair groups in the port chain.
 
-* Use the ``port-pair-group-update`` command to perform dynamic scale-out
-  or scale-in operations by adding or removing port pairs on a port pair
-  group.
+* Use the :command:`neutron port-pair-group-update` command to perform dynamic
+  scale-out or scale-in operations by adding or removing port pairs on a port
+  pair group.
 
   .. code-block:: console
 
