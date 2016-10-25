@@ -417,17 +417,17 @@ Network Inspection
 ~~~~~~~~~~~~~~~~~~
 
 To see which fixed IP networks are configured in your cloud, you can use
-the :command:`nova` command-line client to get the IP ranges:
+the :command:`openstack` command-line client to get the IP ranges:
 
 .. code-block:: console
 
-   $ nova network-list
-   +--------------------------------------+--------+--------------+
-   | ID                                   | Label  | Cidr         |
-   +--------------------------------------+--------+--------------+
-   | 3df67919-9600-4ea8-952e-2a7be6f70774 | test01 |  10.1.0.0/24 |
-   | 8283efb2-e53d-46e1-a6bd-bb2bdef9cb9a | test02 |  10.1.1.0/24 |
-   +--------------------------------------+--------+--------------+
+   $ openstack subnet list
+   +--------------------------------------+----------------+--------------------------------------+-----------------+
+   | ID                                   | Name           | Network                              | Subnet          |
+   +--------------------------------------+----------------+--------------------------------------+-----------------+
+   | 346806ee-a53e-44fd-968a-ddb2bcd2ba96 | public_subnet  | 0bf90de6-fc0f-4dba-b80d-96670dfb331a | 172.24.4.224/28 |
+   | f939a1e4-3dc3-4540-a9f6-053e6f04918f | private_subnet | 1f7f429e-c38e-47ba-8acf-c44e3f5e8d71 | 10.0.0.0/24     |
+   +--------------------------------------+----------------+--------------------------------------+-----------------+
 
 The OpenStack command-line client can provide some additional details:
 
