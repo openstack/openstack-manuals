@@ -39,15 +39,9 @@ following capabilities in the OpenStack Block Storage API
 
 The QoS keys above must be created and associated with a volume type.
 For information about how to set the key-value pairs and associate
-them with a volume type, run the following commands:
-
-.. code-block:: console
-
-   $ cinder help qos-create
-
-   $ cinder help qos-key
-
-   $ cinder help qos-associate
+them with a volume type, see the `volume qos
+<http://docs.openstack.org/developer/python-openstackclient/command-objects/volume-qos.html>`_
+section in the OpenStackClient command list.
 
 .. note::
 
@@ -66,7 +60,7 @@ Coho Data Block Storage driver configuration
 
    .. code-block:: console
 
-      $ cinder type-create coho-1
+      $ openstack volume type create coho-1
 
 #. Edit the OpenStack Block Storage service configuration file.
    The following sample, ``/etc/cinder/cinder.conf``, configuration lists the
