@@ -22,11 +22,14 @@ quickly and easily:
   <https://wiki.openstack.org/wiki/CrossProjectLiaisons#Documentation>`_.
   They can help you with finding the appropriate book to add your patch, and
   the relevant people to review your patch once you have written it.
-* If you are not confident in your written English skills, feel free to
-  add a note that you are happy to have editorial assistance on the patch.
+* If you are not confident in your written English skills, you can create a
+  patch and add a note that you are happy to have editorial assistance.
   This will encourage writers to check out your patch and correct any
   spelling or grammar mistakes, rather than just adding comments for you
   to fix yourself.
+* If you do not know which book to edit, or you are uncertain about creating
+  a patch, you can create a bug with source content or notes, and ask for
+  assistance from the docs team on finding the right location for the content.
 * If you know which book you want to modify, get in contact with the
   appropriate speciality team, listed at :doc:`../team-structure`. They
   can help you determine where the content should live, and also give you
