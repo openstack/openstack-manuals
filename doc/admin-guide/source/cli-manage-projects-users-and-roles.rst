@@ -65,7 +65,7 @@ Create a project named ``new-project``:
 
 .. code-block:: console
 
-   $ openstack project create --description 'my new project' new-project
+   $ openstack project create --description 'my new project' new-project \
      --domain default
    +-------------+----------------------------------+
    | Field       | Value                            |
