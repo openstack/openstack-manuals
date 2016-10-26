@@ -2651,15 +2651,15 @@ O
       An Object Storage component that is responsible for managing
       objects.
 
-   Object Storage service
+   Object Storage service (swift)
 
       The OpenStack core project that provides eventually consistent
-      and redundant storage and retrieval of fixed digital content. The
-      project name of OpenStack Object Storage is swift.
+      and redundant storage and retrieval of fixed digital content.
 
    Object Storage API
 
-      API used to access OpenStack Object Storage.
+      API used to access OpenStack :term:`Object Storage<Object Storage
+      service (swift)>`.
 
    Object Storage Device (OSD)
 
@@ -2667,8 +2667,9 @@ O
 
    object versioning
 
-      Allows a user to set a flag on an Object Storage container so
-      that all objects within the container are versioned.
+      Allows a user to set a flag on an :term:`Object Storage<Object Storage
+      service (swift)>` container so that all objects within the container are
+      versioned.
 
    Ocata
 
@@ -2682,8 +2683,8 @@ O
 
    Oldie
 
-      Term for an Object Storage process that runs for a long time.
-      Can indicate a hung process.
+      Term for an :term:`Object Storage<Object Storage service (swift)>`
+      process that runs for a long time.  Can indicate a hung process.
 
    Open Cloud Computing Interface (OCCI)
 
@@ -3633,8 +3634,8 @@ S
 
    swift
 
-      An OpenStack core project that provides object storage
-      services.
+      Codename for OpenStack :term:`Object Storage service<Object
+      Storage service (swift)>`.
 
    swift All in One (SAIO)
 

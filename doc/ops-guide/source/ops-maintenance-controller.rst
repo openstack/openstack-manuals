@@ -54,8 +54,8 @@ confident that those services are in working condition:
    # nova list
    # openstack project list
 
-For the storage proxy, ensure that the :term:`Object Storage service` has
-resumed:
+For the storage proxy, ensure that the :term:`Object Storage service <Object
+Storage service (swift)>` has resumed:
 
 .. code-block:: console
 
