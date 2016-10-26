@@ -10,41 +10,30 @@ System requirements
 
 To use the Dot Hill drivers, the following are required:
 
--  Dot Hill AssuredSAN array with:
+- Dot Hill AssuredSAN array with:
 
-   -  iSCSI or FC host interfaces
+  - iSCSI or FC host interfaces
+  - G22x firmware or later
+  - Appropriate licenses for the snapshot and copy volume features
 
-   -  G22x firmware or later
+- Network connectivity between the OpenStack host and the array
+  management interfaces
 
-   -  Appropriate licenses for the snapshot and copy volume features
-
--  Network connectivity between the OpenStack host and the array
-   management interfaces
-
--  HTTPS or HTTP must be enabled on the array
+- HTTPS or HTTP must be enabled on the array
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~~
 
--  Create, delete, attach, and detach volumes.
-
--  Create, list, and delete volume snapshots.
-
--  Create a volume from a snapshot.
-
--  Copy an image to a volume.
-
--  Copy a volume to an image.
-
--  Clone a volume.
-
--  Extend a volume.
-
--  Migrate a volume with back-end assistance.
-
--  Retype a volume.
-
--  Manage and unmanage a volume.
+- Create, delete, attach, and detach volumes.
+- Create, list, and delete volume snapshots.
+- Create a volume from a snapshot.
+- Copy an image to a volume.
+- Copy a volume to an image.
+- Clone a volume.
+- Extend a volume.
+- Migrate a volume with back-end assistance.
+- Retype a volume.
+- Manage and unmanage a volume.
 
 Configuring the array
 ~~~~~~~~~~~~~~~~~~~~~
@@ -66,19 +55,19 @@ Configuring the array
    entry consists of a unique section name, surrounded by square brackets,
    followed by options specified in ``key=value`` format.
 
-   -  The ``dothill_backend_name`` value specifies the name of the storage
-      pool or vdisk on the array.
+   - The ``dothill_backend_name`` value specifies the name of the storage
+     pool or vdisk on the array.
 
-   -  The ``volume_backend_name`` option value can be a unique value, if
-      you wish to be able to assign volumes to a specific storage pool on
-      the array, or a name that is shared among multiple storage pools to
-      let the volume scheduler choose where new volumes are allocated.
+   - The ``volume_backend_name`` option value can be a unique value, if
+     you wish to be able to assign volumes to a specific storage pool on
+     the array, or a name that is shared among multiple storage pools to
+     let the volume scheduler choose where new volumes are allocated.
 
-   -  The rest of the options will be repeated for each storage pool in a
-      given array: the appropriate Cinder driver name; IP address or
-      hostname of the array management interface; the username and password
-      of an array user account with ``manage`` privileges; and the iSCSI IP
-      addresses for the array if using the iSCSI transport protocol.
+   - The rest of the options will be repeated for each storage pool in a
+     given array: the appropriate Cinder driver name; IP address or
+     hostname of the array management interface; the username and password
+     of an array user account with ``manage`` privileges; and the iSCSI IP
+     addresses for the array if using the iSCSI transport protocol.
 
    In the examples below, two back ends are defined, one for pool A and one
    for pool B, and a common ``volume_backend_name`` is used so that a
@@ -90,23 +79,23 @@ Configuring the array
 
    .. code-block:: ini
 
-       [pool-a]
-       dothill_backend_name = A
-       volume_backend_name = dothill-array
-       volume_driver = cinder.volume.drivers.dothill.dothill_iscsi.DotHillISCSIDriver
-       san_ip = 10.1.2.3
-       san_login = manage
-       san_password = !manage
-       dothill_iscsi_ips = 10.2.3.4,10.2.3.5
+      [pool-a]
+      dothill_backend_name = A
+      volume_backend_name = dothill-array
+      volume_driver = cinder.volume.drivers.dothill.dothill_iscsi.DotHillISCSIDriver
+      san_ip = 10.1.2.3
+      san_login = manage
+      san_password = !manage
+      dothill_iscsi_ips = 10.2.3.4,10.2.3.5
 
-       [pool-b]
-       dothill_backend_name = B
-       volume_backend_name = dothill-array
-       volume_driver = cinder.volume.drivers.dothill.dothill_iscsi.DotHillISCSIDriver
-       san_ip = 10.1.2.3
-       san_login = manage
-       san_password = !manage
-       dothill_iscsi_ips = 10.2.3.4,10.2.3.5
+      [pool-b]
+      dothill_backend_name = B
+      volume_backend_name = dothill-array
+      volume_driver = cinder.volume.drivers.dothill.dothill_iscsi.DotHillISCSIDriver
+      san_ip = 10.1.2.3
+      san_login = manage
+      san_password = !manage
+      dothill_iscsi_ips = 10.2.3.4,10.2.3.5
 
    **Fibre Channel example back-end entries**
 
@@ -149,11 +138,11 @@ Configuring the array
 
    .. code-block:: ini
 
-       [DEFAULT]
-         ...
-       enabled_backends = pool-a,pool-b
-       default_volume_type = dothill
-         ...
+      [DEFAULT]
+      ...
+      enabled_backends = pool-a,pool-b
+      default_volume_type = dothill
+      ...
 
 #. Create a new volume type for each distinct ``volume_backend_name`` value
    that you added to cinder.conf. The example below assumes that the same
@@ -165,11 +154,10 @@ Configuring the array
 
    .. code-block:: console
 
-       $ cinder type-create dothill
+      $ openstack volume type create dothill
+      $ openstack volume type set --property volume_backend_name=dothill-array dothill
 
-       $ cinder type-key dothill set volume_backend_name=dothill-array
-
-#. After modifying ``cinder.conf``, restart the cinder-volume service.
+#. After modifying ``cinder.conf``, restart the ``cinder-volume`` service.
 
 Driver-specific options
 ~~~~~~~~~~~~~~~~~~~~~~~
