@@ -73,7 +73,7 @@ Controller node
      .. code-block:: ini
 
         [DEFAULT]
-        router_distributed = true
+        router_distributed = True
 
 #. Restart the following services:
 
@@ -87,7 +87,7 @@ Network node
    .. code-block:: ini
 
       [DEFAULT]
-      enable_distributed_routing = true
+      enable_distributed_routing = True
 
 #. In the ``l3_agent.ini`` file, configure the layer-3 agent to provide
    SNAT services.
@@ -117,7 +117,7 @@ Compute nodes
    .. code-block:: ini
 
       [DEFAULT]
-      enable_distributed_routing = true
+      enable_distributed_routing = True
 
 #. Restart the following services:
 
@@ -335,7 +335,7 @@ Verify network operation
 
    .. code-block:: console
 
-      $ openstack ip floating create provider1
+      $ openstack floating ip create provider1
       +-------------+--------------------------------------+
       | Field       | Value                                |
       +-------------+--------------------------------------+
@@ -350,7 +350,7 @@ Verify network operation
 
    .. code-block:: console
 
-      $ openstack ip floating add 203.0.113.17 selfservice-instance2
+      $ openstack server add floating ip selfservice-instance2 203.0.113.17
 
    .. note::
 

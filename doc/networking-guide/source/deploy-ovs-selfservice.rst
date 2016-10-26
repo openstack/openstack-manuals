@@ -125,7 +125,7 @@ Network node
 
       [agent]
       tunnel_types = vxlan
-      l2_population = true
+      l2_population = True
 
       [securitygroup]
       firewall_driver = iptables_hybrid
@@ -164,7 +164,7 @@ Compute nodes
 
       [agent]
       tunnel_types = vxlan
-      l2_population = true
+      l2_population = True
 
    Replace ``OVERLAY_INTERFACE_IP_ADDRESS`` with the IP address of the
    interface that handles VXLAN overlays for self-service networks.
