@@ -82,7 +82,8 @@ Canonical maintains an official set of `Ubuntu-based images
 Images are arranged by Ubuntu release, and by image release date,
 with ``current`` being the most recent.
 For example, the page that contains the most recently built image for
-Ubuntu 16.04 Xenial Xerus is https://cloud-images.ubuntu.com/xenial/current/.
+Ubuntu 16.04 Xenial Xerus is `Ubuntu 16.04 LTS (Xenial Xerus) Daily Build
+<https://cloud-images.ubuntu.com/xenial/current/>`_.
 Scroll to the bottom of the page for links to the images that can be
 downloaded directly.
 
