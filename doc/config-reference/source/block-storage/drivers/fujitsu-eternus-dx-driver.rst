@@ -9,8 +9,8 @@ The driver performs volume operations by communicating with
 ETERNUS DX. It uses a CIM client in Python called PyWBEM
 to perform CIM operations over HTTP.
 
-You can specify RAID Group and Thin Provisioning Pool (TPP) in ETERNUS DX
-as a storage pool.
+You can specify RAID Group and Thin Provisioning Pool (TPP)
+in ETERNUS DX as a storage pool.
 
 System requirements
 ~~~~~~~~~~~~~~~~~~~
@@ -52,25 +52,6 @@ Package installation
 
 Install the ``python-pywbem`` package for your distribution.
 
-*  On Ubuntu:
-
-   .. code-block:: console
-
-      # apt-get install python-pywbem
-
-*  On openSUSE:
-
-   .. code-block:: console
-
-      # zypper install python-pywbem
-
-*  On Red Hat Enterprise Linux, CentOS, and Fedora:
-
-   .. code-block:: console
-
-      # yum install pywbem
-
-
 ETERNUS DX setup
 ----------------
 
@@ -82,14 +63,20 @@ Perform the following steps using ETERNUS Web GUI or ETERNUS CLI.
      ETERNUS CLI User's Guide for ETERNUS DX S3 series.
 
 #. Create an account for communication with cinder controller.
+
 #. Enable the SMI-S of ETERNUS DX.
+
 #. Register an Advanced Copy Feature license and configure copy table size.
+
 #. Create a storage pool for volumes.
+
 #. (Optional) If you want to create snapshots
    on a different storage pool for volumes,
    create a storage pool for snapshots.
+
 #. Create Snap Data Pool Volume (SDPV) to enable Snap Data Pool (SDP) for
-   "``create a snapshot``".
+   ``create a snapshot``.
+
 #. Configure storage ports used for OpenStack.
 
    - Set those storage ports to CA mode.
@@ -101,16 +88,14 @@ Perform the following steps using ETERNUS Web GUI or ETERNUS CLI.
 
         CLI> set fc-parameters -host-affinity enable -port <CM#><CA#><Port#>
         CLI> set iscsi-parameters -host-affinity enable -port <CM#><CA#><Port#>
+
 #. Ensure LAN connection between cinder controller and MNT port of ETERNUS DX
    and SAN connection between Compute nodes and CA ports of ETERNUS DX.
 
-
 Configuration
 ~~~~~~~~~~~~~
-#. Edit ``cinder.conf``.
 
-   Add the following entries to ``/etc/cinder/cinder.conf``:
-
+#. Add the following entries to ``/etc/cinder/cinder.conf``:
 
    FC entries:
 
@@ -127,8 +112,8 @@ Configuration
       cinder_eternus_config_file = /etc/cinder/eternus_dx.xml
 
    If there is no description about ``cinder_eternus_config_file``,
-
-   then the parameter is set to default value ``/etc/cinder/cinder_fujitsu_eternus_dx.xml``.
+   then the parameter is set to default value
+   ``/etc/cinder/cinder_fujitsu_eternus_dx.xml``.
 
 #. Create a driver configuration file.
 
@@ -225,14 +210,15 @@ Configuration example
       volume_backend_name = ISCSI
 
 #. Create the driver configuration files ``fc.xml`` and ``iscsi.xml``.
+
 #. Create a volume type and set extra specs to the type:
 
    .. code-block:: console
 
-      $ cinder type-create DX_FC
-      $ cinder type-key DX_FC set volume_backend_name=FC
-      $ cinder type-create DX_ISCSI
-      $ cinder type-key DX_ISCSI set volume_backend_name=ISCSI
+      $ openstack volume type create DX_FC
+      $ openstack volume type set --property volume_backend_name=FC DX_FX
+      $ openstack volume type create DX_ISCSI
+      $ openstack volume type set --property volume_backend_name=ISCSI DX_ISCSI
 
    By issuing these commands,
    the volume type ``DX_FC`` is associated with the ``FC``,
