@@ -54,21 +54,13 @@ Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
 * Create, delete, attach, and detach volumes.
-
 * Create, list, and delete volume snapshots.
-
 * Create a volume from a snapshot.
-
 * Copy an image to a volume.
-
 * Copy a volume to an image.
-
 * Clone a volume.
-
 * Extend a volume.
-
 * Retype a volume.
-
 * Manage and unmanage a volume.
 
 QoS support for the SolidFire drivers includes the ability to set the
@@ -86,12 +78,6 @@ following capabilities in the OpenStack Block Storage API
 
 The QoS keys above no longer require to be scoped but must be created and
 associated to a volume type. For information about how to set the key-value
-pairs and associate them with a volume type, run the following commands:
-
-.. code-block:: console
-
-   $ cinder help qos-create
-
-   $ cinder help qos-key
-
-   $ cinder help qos-associate
+pairs and associate them with a volume type, see the `volume qos
+<http://docs.openstack.org/developer/python-openstackclient/command-objects/volume-qos.html>`_
+section in the OpenStackClient command list.
