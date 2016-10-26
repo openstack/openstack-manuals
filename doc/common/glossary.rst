@@ -791,6 +791,13 @@ C
       Microsoft. Like the SMB protocol, CIFS runs at a higher level and uses
       the TCP/IP protocol.
 
+   Common Libraries (oslo)
+
+      The project that produces a set of python libraries containing code
+      shared by OpenStack projects. The APIs provided by these libraries
+      should be high quality, stable, consistent, documented and generally
+      applicable.
+
    community project
 
       A project that is not officially endorsed by the OpenStack
@@ -2763,8 +2770,8 @@ O
 
    Oslo
 
-      OpenStack project that produces a set of Python libraries
-      containing code shared by OpenStack projects.
+      Codename for the :term:`Common Libraries project<Common Libraries
+      (oslo)>`.
 
 P
 ~
