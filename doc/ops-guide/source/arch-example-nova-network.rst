@@ -149,7 +149,7 @@ the distributed file system.
 
 Acknowledging that many small-scale deployments see running Object
 Storage just for the storage of virtual machine images as too costly, we
-opted for the file back end in the OpenStack :term:`Image service` (Glance).
+opted for the file back end in the OpenStack :term:`Image service (Glance)`.
 If your cloud will include Object Storage, you can easily add it as a back
 end.
 
