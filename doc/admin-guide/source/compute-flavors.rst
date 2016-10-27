@@ -401,7 +401,7 @@ CPU pinning policy
        setup to match the topology of the CPUs to which it is pinned. This
        option implies an overcommit ratio of 1.0. For example, if a two vCPU
        guest is pinned to a single host core with two threads, then the guest
-       will get a topology of one socket, one core, threads threads.
+       will get a topology of one socket, one core, two threads.
 
     Valid CPU-THREAD-POLICY values are:
 
@@ -452,7 +452,7 @@ NUMA topology
        vCPUs to map to instance NUMA node N. If not specified, vCPUs are evenly
        divided among available NUMA nodes.
     -  FLAVOR-MEMORY: (integer) The number of MB of instance memory to map to
-       instance instance NUMA node N. If not specified, memory is evenly divided
+       instance NUMA node N. If not specified, memory is evenly divided
        among available NUMA nodes.
 
     .. note::
