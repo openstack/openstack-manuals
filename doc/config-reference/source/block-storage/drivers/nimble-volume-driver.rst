@@ -16,24 +16,15 @@ Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
 * Create, delete, clone, attach, and detach volumes
-
 * Create and delete volume snapshots
-
 * Create a volume from a snapshot
-
 * Copy an image to a volume
-
 * Copy a volume to an image
-
 * Extend a volume
-
 * Get volume statistics
-
 * Manage and unmanage a volume
-
 * Enable encryption and default performance policy for a volume-type
   extra-specs
-
 * Force backup of an in-use volume.
 
 Nimble Storage driver configuration
@@ -79,8 +70,8 @@ is created and associated with a back-end name as follows.
 
 .. code-block:: console
 
-   $ cinder type-create NIMBLE_VOLUME_TYPE
-   $ cinder type-key NIMBLE_VOLUME_TYPE set volume_backend_name=NIMBLE_BACKEND_NAME
+   $ openstack volume type create NIMBLE_VOLUME_TYPE
+   $ openstack volume type set --property volume_backend_name=NIMBLE_BACKEND_NAME NIMBLE_VOLUME_TYPE
 
 This section explains the variables used above:
 
@@ -130,7 +121,7 @@ These extra-specs can be enabled by using the following command:
 
 .. code-block:: console
 
-   $ cinder type-key VOLUME_TYPE set KEY=VALUE
+   $ openstack volume type set --property KEY=VALUE VOLUME_TYPE
 
 ``VOLUME_TYPE`` is the Nimble volume type and ``KEY`` and ``VALUE`` are
 the options mentioned above.
