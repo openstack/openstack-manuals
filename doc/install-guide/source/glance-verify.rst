@@ -74,9 +74,9 @@ For information about how to manage images, see the
    .. end
 
    For information about the :command:`openstack image create` parameters,
-   see `Image service command-line client
-   <http://docs.openstack.org/cli-reference/openstack.html#openstack-image-create>`__
-   in the ``OpenStack Command-Line Interface Reference``.
+   see `Create or update an image (glance)
+   <http://docs.openstack.org/user-guide/common/cli-manage-images.html#create-or-update-an-image-glance>`__
+   in the ``OpenStack User Guide``.
 
    For information about disk and container formats for images, see
    `Disk and container formats for images
