@@ -57,10 +57,10 @@ the ``High Priority`` and ``Low Priority`` Storage Profiles:
 
 .. code-block:: console
 
-    $ cinder type-create "GoldVolumeType"
-    $ cinder type-key "GoldVolumeType" set storagetype:storageprofile=highpriority
-    $ cinder type-create "BronzeVolumeType"
-    $ cinder type-key "BronzeVolumeType" set storagetype:storageprofile=lowpriority
+    $ openstack volume type create "GoldVolumeType"
+    $ openstack volume type set --property storagetype:storageprofile=highpriority "GoldVolumeType"
+    $ openstack volume type create "BronzeVolumeType"
+    $ openstack volume type set --property storagetype:storageprofile=lowpriority "BronzeVolumeType"
 
 Replay Profiles control how often the Storage Center takes a replay of a
 given volume and how long those replays are kept. The default profile is
@@ -77,10 +77,10 @@ Replay Profile and another specifying both ``hourly`` and the default
 
 .. code-block:: console
 
-    $ cinder type-create "HourlyType"
-    $ cinder type-key "HourlyType" set storagetype:replayprofile=hourly
-    $ cinder type-create "HourlyAndDailyType"
-    $ cinder type-key "HourlyAndDailyType" set storagetype:replayprofiles=hourly,daily
+    $ openstack volume type create "HourlyType"
+    $ openstack volume type set --property storagetype:replayprofile=hourly "HourlyType"
+    $ openstack volume type create "HourlyAndDailyType"
+    $ openstack volume type set --property storagetype:replayprofiles=hourly,daily "HourlyAndDailyType"
 
 Note the comma separated string for the ``HourlyAndDailyType``.
 
@@ -91,8 +91,8 @@ To create a volume type that specifies only replication enabled back ends:
 
 .. code-block:: console
 
-    $ cinder type-create "ReplicationType"
-    $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
+    $ openstack volume type create "ReplicationType"
+    $ openstack volume type set --property replication_enabled='<is> True' "ReplicationType"
 
 Extra specs can be used to configure replication. In addition to the Replay
 Profiles above, ``replication:activereplay`` can be set to enable replication
@@ -103,25 +103,25 @@ To create a volume type that enables replication of the active replay:
 
 .. code-block:: console
 
-    $ cinder type-create "ReplicationType"
-    $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
-    $ cinder type-key "ReplicationType" set replication:activereplay='<is> True'
+    $ openstack volume type create "ReplicationType"
+    $ openstack volume type key --property replication_enabled='<is> True' "ReplicationType"
+    $ openstack volume type key --property replication:activereplay='<is> True' "ReplicationType"
 
 To create a volume type that enables synchronous replication :
 
 .. code-block:: console
 
-    $ cinder type-create "ReplicationType"
-    $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
-    $ cinder type-key "ReplicationType" set replication_type='<in> sync'
+    $ openstack volume type create "ReplicationType"
+    $ openstack volume type key --property replication_enabled='<is> True' "ReplicationType"
+    $ openstack volume type key --property replication_type='<is> sync' "ReplicationType"
 
 To create a volume type that enables replication using Live Volume:
 
 .. code-block:: console
 
-    $ cinder type-create "ReplicationType"
-    $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
-    $ cinder type-key "ReplicationType" set replication:livevolume='<is> True'
+    $ openstack volume type create "ReplicationType"
+    $ openstack volume type key --property replication_enabled='<is> True' "ReplicationType"
+    $ openstack volume type key --property replication:livevolume='<is> True' "ReplicationType"
 
 iSCSI configuration
 ~~~~~~~~~~~~~~~~~~~
