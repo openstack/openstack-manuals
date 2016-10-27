@@ -206,7 +206,7 @@ CoprHD drivers - Multiple back-ends
 
     [coprhddriver-fc]
     volume_driver = cinder.volume.drivers.coprhd.fc.EMCCoprHDFCDriver
-    volume_backend_name = EMCCoprHHDFCDriver
+    volume_backend_name = EMCCoprHDFCDriver
     coprhd_hostname = <CoprHD Host Name>
     coprhd_port = 4443
     coprhd_username = <username>
