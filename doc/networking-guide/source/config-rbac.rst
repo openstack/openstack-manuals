@@ -424,15 +424,3 @@ IDs.
 If an operator wants to prevent normal users from doing this, the
 ``"create_rbac_policy":`` entry in ``policy.json`` can be adjusted
 from ``""`` to ``"rule:admin_only"``.
-
-
-Limitations
-~~~~~~~~~~~
-
-A non-admin user that shares a network with another project using this
-feature will not be able to see or delete the ports created under the
-other project. This is because the neutron database operations
-automatically limit database queries to objects owned by the requesting
-user's project unless that user is an admin or a service user.
-This issue is being tracked by the following bug:
-https://bugs.launchpad.net/neutron/+bug/1498790
