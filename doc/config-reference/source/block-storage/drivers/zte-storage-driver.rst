@@ -1,10 +1,9 @@
-======================================
-ZTE cinder drivers
-======================================
+==================
+ZTE volume drivers
+==================
 
-The ZTE Cinder drivers allow
-ZTE KS3200 or KU5200 arrays to be used for Block Storage in OpenStack
-deployments.
+The ZTE volume drivers allow ZTE KS3200 or KU5200 arrays
+to be used for Block Storage in OpenStack deployments.
 
 System requirements
 ~~~~~~~~~~~~~~~~~~~
@@ -14,7 +13,6 @@ To use the ZTE drivers, the following prerequisites:
 -  ZTE KS3200 or KU5200 array with:
 
    -  iSCSI or FC interfaces
-
    -  30B2 firmware or later
 
 -  Network connectivity between the OpenStack host and the array
@@ -26,23 +24,14 @@ Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
 -  Create, delete, attach, and detach volumes.
-
 -  Create, list, and delete volume snapshots.
-
 -  Create a volume from a snapshot.
-
 -  Copy an image to a volume.
-
 -  Copy a volume to an image.
-
 -  Clone a volume.
-
 -  Extend a volume.
-
 -  Migrate a volume with back-end assistance.
-
 -  Retype a volume.
-
 -  Manage and unmanage a volume.
 
 Configuring the array
@@ -155,8 +144,8 @@ Configuring the array
 
    .. code-block:: console
 
-      $ cinder type-create zte
-      $ cinder type-key zte set volume_backend_name=zte-array
+      $ openstack volume type create zte
+      $ openstack volume type set --property volume_backend_name=zte-array zte
 
 #. After modifying the ``cinder.conf`` file,
    restart the ``cinder-volume`` service.
