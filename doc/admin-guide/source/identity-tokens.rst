@@ -102,3 +102,7 @@ The same concepts from PKI tokens apply to PKIZ tokens. The only difference
 between the two is PKIZ tokens are compressed to help mitigate the size issues
 of PKI. For more information on the certificate setup for PKI and PKIZ tokens,
 see the :doc:`identity-certificates-for-pki`.
+
+.. note::
+
+   PKI and PKIZ tokens are deprecated and not supported in Ocata.
