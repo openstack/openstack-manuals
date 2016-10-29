@@ -14,8 +14,6 @@ It includes these manuals:
  * Command-Line Interface Reference
  * Configuration Reference
  * End User Guide
- * Heat Orchestration Template reference
- * HOT Guide
  * Installation Guides
  * Virtual Machine Image Guide
 
