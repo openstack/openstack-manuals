@@ -876,7 +876,7 @@ Solution
       -A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
       -A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170
 
--  Check that the public address (`68.99.26.170 <68.99.26.170>`__ in
+-  Check that the public address (``68.99.26.170`` in
    this example), has been added to your public interface. You should
    see the address in the listing when you use the :command:`ip addr` command:
 
