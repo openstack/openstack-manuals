@@ -37,6 +37,7 @@ use simpler formatting.
    rst-conv/tables.rst
    rst-conv/figures.rst
    rst-conv/profiling.rst
+   rst-conv/rst2bash.rst
    rst-conv/comment.rst
    rst-conv/decorations.rst
 
