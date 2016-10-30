@@ -69,7 +69,7 @@ Compute and the Block Storage nodes
 
    .. code-block:: console
 
-      # apt-get install --yes sg3-utils multipath-tools
+      # apt-get install sg3-utils multipath-tools
 
 #. In the ``[libvirt]`` section of the ``nova.conf`` configuration file,
    specify ``iscsi_use_multipath=True``. This option is valid for both iSCSI
