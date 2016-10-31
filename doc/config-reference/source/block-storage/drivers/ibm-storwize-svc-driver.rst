@@ -6,6 +6,28 @@ The volume management driver for Storwize family and SAN Volume
 Controller (SVC) provides OpenStack Compute instances with access to IBM
 Storwize family or SVC storage systems.
 
+Supported operations
+~~~~~~~~~~~~~~~~~~~~
+
+Storwize/SVC driver supports the following Block Storage service volume
+operations:
+
+-  Create, list, delete, attach (map), and detach (unmap) volumes
+-  Create, list, and delete volume snapshots
+-  Copy an image to a volume
+-  Copy a volume to an image
+-  Clone a volume
+-  Extend a volume
+-  Retype a volume
+-  Create a volume from a snapshot
+-  Create, list, and delete consistency group
+-  Create, list, and delete consistency group snapshot
+-  Modify consistency group (add/remove volumes)
+-  Create consistency group from source (source can be a CG or CG snapshot)
+-  Manage an existing volume
+-  Failover-host for replicated back ends
+-  Failback-host for replicated back ends
+
 Configure the Storwize family and SVC system
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -156,13 +178,49 @@ iSCSI:
 
 .. code-block:: ini
 
+   [svc1234]
    volume_driver = cinder.volume.drivers.ibm.storwize_svc.storwize_svc_iscsi.StorwizeSVCISCSIDriver
+   san_ip = 1.2.3.4
+   san_login = superuser
+   san_password = passw0rd
+   storwize_svc_volpool_name = cinder_pool1
+   volume_backend_name = svc1234
 
 FC:
 
 .. code-block:: ini
 
+   [svc1234]
    volume_driver = cinder.volume.drivers.ibm.storwize_svc.storwize_svc_fc.StorwizeSVCFCDriver
+   san_ip = 1.2.3.4
+   san_login = superuser
+   san_password = passw0rd
+   storwize_svc_volpool_name = cinder_pool1
+   volume_backend_name = svc1234
+
+Replication configuration
+-------------------------
+
+Add the following to the back-end specification to specify another storage
+to replicate to:
+
+.. code-block:: ini
+
+   replication_device = backend_id:rep_svc,
+                        san_ip:1.2.3.5,
+                        san_login:superuser,
+                        san_password:passw0rd,
+                        pool_name:cinder_pool1
+
+The ``backend_id`` is a unique name of the remote storage, the ``san_ip``,
+``san_login``, and ``san_password`` is authentication information for the
+remote storage. The ``pool_name`` is the pool name for the replication
+target volume.
+
+.. note::
+
+   Only one ``replication_device`` can be configured for one back end
+   storage since only one replication target is supported now.
 
 .. _config_flags:
 
@@ -416,6 +474,14 @@ We can then create a 50GB volume using this type:
 
    $ cinder create --display-name "compressed volume" --volume-type compressed 50
 
+In the following example, create a volume type that enables
+synchronous replication (metro mirror):
+
+.. code-block:: console
+
+   $ cinder type-create "ReplicationType"
+   $ cinder type-key "ReplicationType" set replication_type='<in> metro' replication_enabled='<is> True' volume_backend_name=svc234
+
 Volume types can be used, for example, to provide users with different
 
 -  performance levels (such as, allocating entirely on an HDD tier,
@@ -425,7 +491,8 @@ Volume types can be used, for example, to provide users with different
 -  resiliency levels (such as, allocating volumes in pools with
    different RAID levels)
 
--  features (such as, enabling/disabling Real-time Compression)
+-  features (such as, enabling/disabling Real-time Compression,
+   replication volume creation)
 
 QOS
 ---
@@ -520,3 +587,46 @@ modify volume types, you can also change these extra specs properties:
 
    To change the ``iogrp`` property, IBM Storwize/SVC firmware version
    6.4.0 or later is required.
+
+Replication operation
+---------------------
+
+A volume is only replicated if the volume is created with a volume-type
+that has the extra spec ``replication_enabled`` set to ``<is> True``. Two
+types of replication are supported now, async (global mirror) and
+sync (metro mirror). It can be specified by a volume-type that has the
+extra spec ``replication_type`` set to ``<in> global`` or
+``replication_type`` set to ``<in> metro``. If no ``replication_type`` is
+specified, global mirror will be created for replication.
+
+.. note::
+
+   It is better to establish the partnership relationship between
+   the replication source storage and the replication target
+   storage manually on the storage back end before replication
+   volume creation.
+
+The ``failover-host`` command is designed for the case where the primary
+storage is down.
+
+.. code-block:: console
+
+   $ cinder failover-host cinder@svciscsi --backend_id target_svc_id
+
+If a failover command has been executed and the primary storage has
+been restored, it is possible to do a failback by simply specifying
+default as the ``backend_id``:
+
+.. code-block:: console
+
+   $ cinder failover-host cinder@svciscsi --backend_id default
+
+.. note::
+
+   Before you perform a failback operation, synchronize the data
+   from the replication target volume to the primary one on the
+   storage back end manually, and do the failback only after the
+   synchronization is done since the synchronization may take a long time.
+   If the synchronization is not done manually, Storwize Block Storage
+   service driver will perform the synchronization and do the failback
+   after the synchronization is finished.
