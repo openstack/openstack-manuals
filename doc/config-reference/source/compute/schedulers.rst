@@ -451,11 +451,6 @@ ExactRamFilter
 Only schedules instances on hosts if host has the exact number of RAM
 available.
 
-ExactCoreFilter
----------------
-
-Only schedules instances on hosts if host has the exact number of CPU cores.
-
 .. _GroupAffinityFilter:
 
 GroupAffinityFilter
