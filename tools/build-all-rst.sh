@@ -25,6 +25,7 @@ done
 
 tools/build-install-guides-rst.sh $LINKCHECK
 
-# This marker is needed for infra publishing
-MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID"
+# This marker is needed for infra publishing.
+# Note for stable branches, this needs to be the top of each manual.
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
 echo $MARKER_TEXT > publish-docs/.root-marker
