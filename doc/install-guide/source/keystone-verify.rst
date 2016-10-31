@@ -32,11 +32,12 @@ services.
 
 .. endonly
 
-2. Unset the temporary ``OS_URL`` environment variable:
+2. Unset the temporary ``OS_AUTH_URL`` and ``OS_PASSWORD``
+   environment variable:
 
    .. code-block:: console
 
-      $ unset OS_URL
+      $ unset OS_AUTH_URL OS_PASSWORD
 
    .. end
 
