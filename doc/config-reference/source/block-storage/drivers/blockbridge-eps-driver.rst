@@ -83,19 +83,13 @@ deployment.
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
--  Create, delete, clone, attach, and detach volumes
-
--  Create and delete volume snapshots
-
--  Create a volume from a snapshot
-
--  Copy an image to a volume
-
--  Copy a volume to an image
-
--  Extend a volume
-
--  Get volume statistics
+- Create, delete, clone, attach, and detach volumes
+- Create and delete volume snapshots
+- Create a volume from a snapshot
+- Copy an image to a volume
+- Copy a volume to an image
+- Extend a volume
+- Get volume statistics
 
 Supported protocols
 ~~~~~~~~~~~~~~~~~~~
@@ -122,28 +116,28 @@ follows:
 
 .. code-block:: console
 
-    $ bb -H bb-mn authorization create --notes "OpenStack" --restrict none
-    Authenticating to https://bb-mn/api
+   $ bb -H bb-mn authorization create --notes "OpenStack" --restrict none
+   Authenticating to https://bb-mn/api
 
-    Enter user or access token: system
-    Password for system:
-    Authenticated; token expires in 3599 seconds.
+   Enter user or access token: system
+   Password for system:
+   Authenticated; token expires in 3599 seconds.
 
-    == Authorization: ATH4762894C40626410
-    notes                 OpenStack
-    serial                ATH4762894C40626410
-    account               system (ACT0762594C40626440)
-    user                  system (USR1B62094C40626440)
-    enabled               yes
-    created at            2015-10-24 22:08:48 +0000
-    access type           online
-    token suffix          xaKUy3gw
-    restrict              none
+   == Authorization: ATH4762894C40626410
+   notes                 OpenStack
+   serial                ATH4762894C40626410
+   account               system (ACT0762594C40626440)
+   user                  system (USR1B62094C40626440)
+   enabled               yes
+   created at            2015-10-24 22:08:48 +0000
+   access type           online
+   token suffix          xaKUy3gw
+   restrict              none
 
-    == Access Token
-    access token          1/elvMWilMvcLAajl...3ms3U1u2KzfaMw6W8xaKUy3gw
+   == Access Token
+   access token          1/elvMWilMvcLAajl...3ms3U1u2KzfaMw6W8xaKUy3gw
 
-    *** Remember to record your access token!
+   *** Remember to record your access token!
 
 Create volume type
 ------------------
@@ -155,8 +149,8 @@ is associated with the ``volume_backend_name`` 'blockbridge\_prod':
 
 .. code-block:: console
 
-    $ cinder type-create Production
-    $ cinder type-key Production volume_backend_name=blockbridge_prod
+   $ openstack volume type create Production
+   $ openstack volume type set --property volume_backend_name=blockbridge_prod Production
 
 Specify volume driver
 ---------------------
@@ -167,8 +161,8 @@ Your ``volume_backend_name`` must match the value specified in the
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.blockbridge.BlockbridgeISCSIDriver
-    volume_backend_name = blockbridge_prod
+   volume_driver = cinder.volume.drivers.blockbridge.BlockbridgeISCSIDriver
+   volume_backend_name = blockbridge_prod
 
 Specify API endpoint and authentication
 ---------------------------------------
@@ -179,8 +173,8 @@ uses an authentication token. You must create your own as described in
 
 .. code-block:: ini
 
-    blockbridge_api_host = [ip or dns of management cluster]
-    blockbridge_auth_token = 1/elvMWilMvcLAajl...3ms3U1u2KzfaMw6W8xaKUy3gw
+   blockbridge_api_host = [ip or dns of management cluster]
+   blockbridge_auth_token = 1/elvMWilMvcLAajl...3ms3U1u2KzfaMw6W8xaKUy3gw
 
 Specify resource query
 ----------------------
@@ -193,7 +187,7 @@ query, define a custom pool configuration.
 
 .. code-block:: ini
 
-    blockbridge_pools = Production: +production +qos iops.reserve=5000
+   blockbridge_pools = Production: +production +qos iops.reserve=5000
 
 Pools support storage systems that offer multiple classes of service.
 You may wish to configure multiple pools to implement more sophisticated
@@ -212,24 +206,23 @@ Configuration example
 ``cinder.conf`` example file
 
 .. code-block:: ini
-    :linenos:
 
-    [Default]
-    enabled_backends = bb_devel bb_prod
+   [Default]
+   enabled_backends = bb_devel bb_prod
 
-    [bb_prod]
-    volume_driver = cinder.volume.drivers.blockbridge.BlockbridgeISCSIDriver
-    volume_backend_name = blockbridge_prod
-    blockbridge_api_host = [ip or dns of management cluster]
-    blockbridge_auth_token = 1/elvMWilMvcLAajl...3ms3U1u2KzfaMw6W8xaKUy3gw
-    blockbridge_pools = Production: +production +qos iops.reserve=5000
+   [bb_prod]
+   volume_driver = cinder.volume.drivers.blockbridge.BlockbridgeISCSIDriver
+   volume_backend_name = blockbridge_prod
+   blockbridge_api_host = [ip or dns of management cluster]
+   blockbridge_auth_token = 1/elvMWilMvcLAajl...3ms3U1u2KzfaMw6W8xaKUy3gw
+   blockbridge_pools = Production: +production +qos iops.reserve=5000
 
-    [bb_devel]
-    volume_driver = cinder.volume.drivers.blockbridge.BlockbridgeISCSIDriver
-    volume_backend_name = blockbridge_devel
-    blockbridge_api_host = [ip or dns of management cluster]
-    blockbridge_auth_token = 1/elvMWilMvcLAajl...3ms3U1u2KzfaMw6W8xaKUy3gw
-    blockbridge_pools = Development: +development
+   [bb_devel]
+   volume_driver = cinder.volume.drivers.blockbridge.BlockbridgeISCSIDriver
+   volume_backend_name = blockbridge_devel
+   blockbridge_api_host = [ip or dns of management cluster]
+   blockbridge_auth_token = 1/elvMWilMvcLAajl...3ms3U1u2KzfaMw6W8xaKUy3gw
+   blockbridge_pools = Development: +development
 
 Multiple volume types
 ~~~~~~~~~~~~~~~~~~~~~
