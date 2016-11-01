@@ -68,9 +68,22 @@ existing layer-2 networks in the data center, typically using VLAN (802.1q)
 tagging to identify and separate them.
 
 Provider networks generally offer simplicity, performance, and reliability
-at the cost of flexibility. Only administrators can manage provider networks
-because they require configuration of physical network infrastructure. Also,
-provider networks only handle layer-2 connectivity for instances, thus
+at the cost of flexibility. By default only administrators can create or
+update provider networks because they require configuration of physical
+network infrastructure. It is possible to change the user who is allowed to
+create or update provider networks with the following parameters of
+``policy.json``:
+
+* ``create_network:provider:physical_network``
+* ``update_network:provider:physical_network``
+
+.. warning::
+
+   The creation and modification of provider networks enables use of
+   physical network resources, such as VLAN-s. Enable these changes
+   only for trusted tenants.
+
+Also, provider networks only handle layer-2 connectivity for instances, thus
 lacking support for features such as routers and floating IP addresses.
 
 In many cases, operators who are already familiar with virtual networking
