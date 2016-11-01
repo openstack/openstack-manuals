@@ -378,21 +378,14 @@ passed to the IBM Storwize/SVC driver with the ``drivers`` scope.
 The following ``extra specs`` keys are supported by the IBM Storwize/SVC
 driver:
 
--  rsize
-
--  warning
-
--  autoexpand
-
--  grainsize
-
--  compression
-
--  easytier
-
--  multipath
-
--  iogrp
+- rsize
+- warning
+- autoexpand
+- grainsize
+- compression
+- easytier
+- multipath
+- iogrp
 
 These keys have the same semantics as their counterparts in the
 configuration file. They are set similarly; for example, ``rsize=2`` or
@@ -407,14 +400,14 @@ attaching the volume, and to enable compression:
 
 .. code-block:: console
 
-   $ cinder type-create compressed
-   $ cinder type-key compressed set capabilities:storage_protocol='<in> iSCSI' capabilities:compression_support='<is> True' drivers:compression=True
+   $ openstack volume type create compressed
+   $ openstack volume type set --property capabilities:storage_protocol='<in> iSCSI' capabilities:compression_support='<is> True' drivers:compression=True
 
 We can then create a 50GB volume using this type:
 
 .. code-block:: console
 
-   $ cinder create --display-name "compressed volume" --volume-type compressed 50
+   $ openstack volume create "compressed volume" --type compressed --size 50
 
 Volume types can be used, for example, to provide users with different
 
