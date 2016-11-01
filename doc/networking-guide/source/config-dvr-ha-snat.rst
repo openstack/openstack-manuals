@@ -66,7 +66,8 @@ Controller node configuration
    (DVR HA).
 
    The same can explicitly be accomplished by a user with administrative
-   credentials setting the flags in the :command:`router-create` command:
+   credentials setting the flags in the :command:`neutron router-create`
+   command:
 
 
    .. code-block:: console

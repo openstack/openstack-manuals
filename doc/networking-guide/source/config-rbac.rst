@@ -55,7 +55,7 @@ Create a network to share:
    | tenant_id                 | de56db175c1d48b0bbe72f09a24a3b66     |
    +---------------------------+--------------------------------------+
 
-Create the policy entry using the :command:`rbac-create` command (in
+Create the policy entry using the :command:`neutron rbac-create` command (in
 this example, the ID of the project we want to share with is
 ``e28769db97d9449da658bc6931fcb683``):
 
@@ -83,12 +83,12 @@ that the target object is a network. The final parameter is the ID of
 the network we are granting access to.
 
 Project ``e28769db97d9449da658bc6931fcb683`` will now be able to see
-the network when running :command:`net-list` and :command:`net-show`
+the network when running :command:`neutron net-list` and :command:`neutron net-show`
 and will also be able to create ports on that network. No other users
 (other than admins and the owner) will be able to see the network.
 
 To remove access for that project, delete the policy that allows
-it using the :command:`rbac-delete` command:
+it using the :command:`neutron rbac-delete` command:
 
 .. code-block:: console
 
@@ -129,8 +129,8 @@ Create a QoS policy to share:
    | tenant_id   | 5b32b072f8354942ab13b6decb1294b3     |
    +-------------+--------------------------------------+
 
-Create the RBAC policy entry using the :command:`rbac-create` command (in
-this example, the ID of the project we want to share with is
+Create the RBAC policy entry using the :command:`neutron rbac-create` command
+(in this example, the ID of the project we want to share with is
 ``a6bf6cfbcd1f4e32a57d2138b6bd41d1``):
 
 .. code-block:: console
@@ -157,12 +157,13 @@ that the target object is a QoS policy. The final parameter is the ID of
 the QoS policy we are granting access to.
 
 Project ``a6bf6cfbcd1f4e32a57d2138b6bd41d1`` will now be able to see
-the QoS policy when running :command:`qos-policy-list` and :command:`qos-policy-show`
-and will also be able to bind it to its ports or networks. No other users
-(other than admins and the owner) will be able to see the QoS policy.
+the QoS policy when running :command:`neutron qos-policy-list` and
+:command:`neutron qos-policy-show` and will also be able to bind it to
+its ports or networks. No other users (other than admins and the owner)
+will be able to see the QoS policy.
 
 To remove access for that project, delete the RBAC policy that allows
-it using the :command:`rbac-delete` command:
+it using the :command:`neutron rbac-delete` command:
 
 .. code-block:: console
 
@@ -216,7 +217,7 @@ This is accomplished using the ``shared`` flag on the supported object:
 This is the equivalent of creating a policy on the network that permits
 every project to perform the action ``access_as_shared`` on that network.
 Neutron treats them as the same thing, so the policy entry for that
-network should be visible using the :command:`rbac-list` command:
+network should be visible using the :command:`neutron rbac-list` command:
 
 .. code-block:: console
 
@@ -230,7 +231,7 @@ network should be visible using the :command:`rbac-list` command:
    +--------------------------------------+-------------+--------------------------------------+
 
 
-Use the :command:`rbac-show` command to see the details:
+Use the :command:`neutron rbac-show` command to see the details:
 
 .. code-block:: console
 
@@ -256,10 +257,11 @@ RBAC policies for a network. Setting the flag to ``True`` on a network
 creates a wildcard RBAC entry. Setting it to ``False`` removes the
 wildcard entry.
 
-When you run :command:`net-list` or :command:`net-show`, the
+When you run :command:`neutron net-list` or :command:`neutron net-show`, the
 ``shared`` flag is calculated by the server based on the calling
 project and the RBAC entries for each network. For QoS objects
-use :command:`qos-policy-list` or :command:`qos-policy-show` respectively.
+use :command:`neutron qos-policy-list` or :command:`neutron qos-policy-show`
+respectively.
 If there is a wildcard entry, the ``shared`` flag is always set to ``True``.
 If there are only entries that share with specific projects, only
 the projects the object is shared to will see the flag as ``True``
@@ -305,7 +307,7 @@ rather than all projects, use the ``access_as_external`` action.
       | updated_at                | 2016-04-30T06:51:46                  |
       +---------------------------+--------------------------------------+
 
-#. Create a policy entry using the :command:`rbac-create` command (in
+#. Create a policy entry using the :command:`neutron rbac-create` command (in
    this example, the ID of the project we want to share with is
    ``e28769db97d9449da658bc6931fcb683``):
 
@@ -333,12 +335,13 @@ that the target object is a network. The final parameter is the ID of
 the network we are granting external access to.
 
 Now project ``e28769db97d9449da658bc6931fcb683`` is able to see
-the network when running :command:`net-list` and :command:`net-show`
-and can attach router gateway ports to that network. No other users
-(other than admins and the owner) are able to see the network.
+the network when running :command:`neutron net-list`
+and :command:`neutron net-show` and can attach router gateway
+ports to that network. No other users (other than admins
+and the owner) are able to see the network.
 
 To remove access for that project, delete the policy that allows
-it using the :command:`rbac-delete` command:
+it using the :command:`neutron rbac-delete` command:
 
 .. code-block:: console
 
