@@ -10,39 +10,29 @@ System requirements
 
 To use the HP MSA drivers, the following are required:
 
-* HP MSA 2040 or 1040 array with:
+- HP MSA 2040 or 1040 array with:
 
-  * iSCSI or FC host interfaces
+  - iSCSI or FC host interfaces
+  - G22x firmware or later
 
-  * G22x firmware or later
-
-* Network connectivity between the OpenStack host and the array management
+- Network connectivity between the OpenStack host and the array management
   interfaces
 
-* HTTPS or HTTP must be enabled on the array
+- HTTPS or HTTP must be enabled on the array
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
-* Create, delete, attach, and detach volumes.
-
-* Create, list, and delete volume snapshots.
-
-* Create a volume from a snapshot.
-
-* Copy an image to a volume.
-
-* Copy a volume to an image.
-
-* Clone a volume.
-
-* Extend a volume.
-
-* Migrate a volume with back-end assistance.
-
-* Retype a volume.
-
-* Manage and unmanage a volume.
+- Create, delete, attach, and detach volumes.
+- Create, list, and delete volume snapshots.
+- Create a volume from a snapshot.
+- Copy an image to a volume.
+- Copy a volume to an image.
+- Clone a volume.
+- Extend a volume.
+- Migrate a volume with back-end assistance.
+- Retype a volume.
+- Manage and unmanage a volume.
 
 Configuring the array
 ~~~~~~~~~~~~~~~~~~~~~
@@ -160,8 +150,8 @@ Configuring the array
 
    .. code-block:: console
 
-      $ cinder type-create hpmsa
-      $ cinder type-key hpmsa set volume_backend_name=hpmsa-array
+      $ openstack volume type create hpmsa
+      $ openstack volume type set --property volume_backend_name=hpmsa-array hpmsa
 
 #. After modifying the ``cinder.conf`` file, restart the ``cinder-volume``
    service.
