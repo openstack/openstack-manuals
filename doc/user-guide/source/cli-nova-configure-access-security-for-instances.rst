@@ -146,7 +146,7 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
    .. code-block:: console
 
-      $ nova secgroup-list-rules SECURITY_GROUP_NAME
+      $ openstack security group rule list SECURITY_GROUP_NAME
 
 #. To allow SSH access to the instances, choose one of the following
    options:
