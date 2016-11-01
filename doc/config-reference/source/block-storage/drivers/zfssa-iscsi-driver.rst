@@ -20,21 +20,13 @@ Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
 - Create, delete, attach, detach, manage, and unmanage volumes.
-
 - Create and delete snapshots.
-
 - Create volume from snapshot.
-
 - Extend a volume.
-
 - Attach and detach volumes.
-
 - Get volume stats.
-
 - Clone volumes.
-
 - Migrate a volume.
-
 - Local cache of a bootable volume.
 
 Configuration
@@ -218,8 +210,10 @@ The following extra specs scoped keys are supported by the driver:
 
 -  ``zfssa:logbias``
 
-Volume types can be created using the :command:`cinder type-create` command.
-Extra spec keys can be added using :command:`cinder type-key` command.
+Volume types can be created using the :command:`openstack volume type create`
+command.
+Extra spec keys can be added using :command:`openstack volume type set`
+command.
 
 Driver options
 ~~~~~~~~~~~~~~
