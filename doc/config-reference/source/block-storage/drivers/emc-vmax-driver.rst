@@ -279,15 +279,15 @@ Setup VMAX drivers
    ``/etc/cinder/cinder_emc_config_[confGroup].xml``.
 
    Once the ``cinder.conf`` and EMC-specific configuration files have been
-   created, :command:`cinder` commands need to be issued in order to create and
+   created, :command:`openstack` commands need to be issued in order to create and
    associate OpenStack volume types with the declared ``volume_backend_names``:
 
    .. code-block:: console
 
-      $ cinder type-create VMAX_ISCSI
-      $ cinder type-key VMAX_ISCSI set volume_backend_name=ISCSI_backend
-      $ cinder type-create VMAX_FC
-      $ cinder type-key VMAX_FC set volume_backend_name=FC_backend
+      $ openstack volume type create VMAX_ISCSI
+      $ openstack volume type set --property volume_backend_name=ISCSI_backend VMAX_ISCSI
+      $ openstack volume type create VMAX_FC
+      $ openstack volume type set --property volume_backend_name=FC_backend VMAX_FC
 
    By issuing these commands, the Block Storage volume type ``VMAX_ISCSI`` is
    associated with the ``ISCSI_backend``, and the type ``VMAX_FC`` is
@@ -508,9 +508,9 @@ striped volume. The example below means that each volume created under the
 
 .. code-block:: console
 
-   $ cinder type-create GoldStriped
-   $ cinder type-key GoldStriped set volume_backend_name=GOLD_BACKEND
-   $ cinder type-key GoldStriped set storagetype:stripecount=4
+   $ openstack volume type create GoldStriped
+   $ openstack volume type set --property volume_backend_name=GOLD_BACKEND GoldStriped
+   $ openstack volume type set --property storagetype:stripecount=4 GoldStriped
 
 SSL support
 ~~~~~~~~~~~
