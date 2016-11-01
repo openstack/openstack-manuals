@@ -177,7 +177,8 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper install openstack-glance
+         # zypper install openstack-glance \
+           openstack-glance-api openstack-glance-registry
 
       .. end
 
