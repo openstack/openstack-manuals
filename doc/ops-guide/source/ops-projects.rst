@@ -61,7 +61,7 @@ Assign a lost IPv4 address back to a project
 
 #. Update the new port with the IPv4 address:
 
-   .. code-block: console
+   .. code-block:: console
 
       # neutron subnet-list
       # neutron port-update PORT_NAME --request-format=json --fixed-ips \
