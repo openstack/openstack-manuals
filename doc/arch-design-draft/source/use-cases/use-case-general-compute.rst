@@ -32,9 +32,9 @@ General cloud example
 ---------------------
 
 An online classified advertising company wants to run web applications
-consisting of Tomcat, Nginx and MariaDB in a private cloud. To meet the
+consisting of Tomcat, Nginx, and MariaDB in a private cloud. To meet the
 policy requirements, the cloud infrastructure will run in their
-own data center. The company has predictable load requirements, but
+own data center. The company has predictable load requirements but
 requires scaling to cope with nightly increases in demand. Their current
 environment does not have the flexibility to align with their goal of
 running an open source API environment. The current environment consists
@@ -44,10 +44,10 @@ of the following:
   vCPUs and 4 GB of RAM
 
 * A three node MariaDB and Galera cluster, each with 4 vCPUs and 8 GB
-  RAM
+  of RAM
 
 The company runs hardware load balancers and multiple web applications
-serving their websites, and orchestrates environments using combinations
+serving their websites and orchestrates environments using combinations
 of scripts and Puppet. The website generates large amounts of log data
 daily that requires archiving.
 
@@ -71,7 +71,7 @@ The solution would consist of the following OpenStack components:
 .. figure:: ../figures/General_Architecture3.png
 
 Running up to 140 web instances and the small number of MariaDB
-instances requires 292 vCPUs available, as well as 584 GB RAM. On a
+instances requires 292 vCPUs available, as well as 584 GB of RAM. On a
 typical 1U server using dual-socket hex-core Intel CPUs with
 Hyperthreading, and assuming 2:1 CPU overcommit ratio, this would
 require 8 OpenStack Compute nodes.
@@ -121,8 +121,8 @@ The Conseil Européen pour la Recherche Nucléaire (CERN), also known as
 the European Organization for Nuclear Research, provides particle
 accelerators and other infrastructure for high-energy physics research.
 
-As of 2011 CERN operated these two compute centers in Europe with plans
-to add a third.
+As of 2011, CERN operated these two compute centers in Europe with plans
+to add a third one.
 
 +-----------------------+------------------------+
 | Data center           | Approximate capacity   |
@@ -144,7 +144,7 @@ to add a third.
 |                       | -  6 PB HDD            |
 +-----------------------+------------------------+
 
-To support a growing number of compute-heavy users of experiments
+To support the growing number of compute-heavy users of experiments
 related to the Large Hadron Collider (LHC), CERN ultimately elected to
 deploy an OpenStack cloud using Scientific Linux and RDO. This effort
 aimed to simplify the management of the center's compute resources with
@@ -164,7 +164,7 @@ contains three availability zones to further segregate compute resources
 and at least three RabbitMQ message brokers configured for clustering
 with mirrored queues for high availability.
 
-The API cell, which resides behind a HAProxy load balancer, is in the
+The API cell, which resides behind an HAProxy load balancer, is in the
 data center in Switzerland and directs API calls to compute cells using
 a customized variation of the cell scheduler. The customizations allow
 certain workloads to route to a specific data center or all data
@@ -223,9 +223,9 @@ configuration and customization.
 Monitoring
 ^^^^^^^^^^
 
-CERN does not require direct billing, but uses the Telemetry service to
+CERN does not require direct billing but uses the Telemetry service to
 perform metering for the purposes of adjusting project quotas. CERN uses
-a sharded, replicated, MongoDB back-end. To spread API load, CERN
+a sharded, replicated MongoDB back end. To spread API load, CERN
 deploys instances of the nova-api service within the child cells for
 Telemetry to query against. This also requires the configuration of
 supporting services such as keystone, glance-api, and glance-registry in
@@ -265,7 +265,7 @@ This solution is depicted in the figure below:
 
 This example shows two clouds with a Cloud Management
 Platform (CMP) connecting them. This guide does not
-discuss a specific CMP, but describes how the Orchestration and
+discuss a specific CMP but describes how the Orchestration and
 Telemetry services handle, manage, and control workloads.
 
 The private OpenStack cloud has at least one controller and at least
@@ -319,7 +319,7 @@ Hybrid cloud example: high availability and disaster recovery
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Company C requires their local data center to be able to
-recover from failure.  Some of the workloads currently in
+recover from failure. Some of the workloads currently in
 use are running on their private OpenStack cloud.
 Protecting the data involves Block Storage, Object Storage,
 and a database. The architecture supports the failure of
@@ -353,7 +353,7 @@ configures a single array spanning both clouds with OpenStack Identity.
 Using Federated Identity, the array talks to both clouds, communicating
 with OpenStack Object Storage through the Swift proxy.
 
-For Block Storage, the replication is a little more difficult,
+For Block Storage, the replication is a little more difficult
 and involves tools outside of OpenStack itself.
 The OpenStack Block Storage volume is not set as the drive itself
 but as a logical object that points to a physical back end.
@@ -368,7 +368,7 @@ More information can be found here:
 https://blueprints.launchpad.net/cinder/+spec/cinder-backup-volume-metadata-support.
 
 The synchronous backups create an identical volume in both
-clouds and chooses the appropriate flavor so that each cloud
+clouds and choose the appropriate flavor so that each cloud
 has an identical back end. This is done by creating volumes
 through the CMP. After this is configured, a solution
 involving DRDB synchronizes the physical drives.
