@@ -88,7 +88,7 @@ Controller node
 
    * Configure network mappings.
 
-     .. code-block: ini
+     .. code-block:: ini
 
         [ml2_type_flat]
         flat_networks = provider,macvtap
