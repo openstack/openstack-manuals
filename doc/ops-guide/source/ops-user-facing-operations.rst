@@ -597,7 +597,7 @@ additive:
 
 The inverse operation is called :command:`nova secgroup-delete-rule`, using the
 same format. Whole security groups can be removed with
-:command:`nova secgroup-delete`.
+:command:`openstack security group delete`.
 
 To create security group rules for a cluster of instances, you want to
 use SourceGroups.

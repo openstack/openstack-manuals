@@ -168,13 +168,13 @@ Delete a security group
 
    .. code-block:: console
 
-      $ nova secgroup-delete GroupName
+      $ openstack security group delete GROUPNAME
 
    For example:
 
    .. code-block:: console
 
-      $ nova secgroup-delete global_http
+      $ openstack security group delete global_http
 
 Create security group rules for a cluster of instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
