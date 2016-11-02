@@ -21,7 +21,7 @@ Rey performs the following tasks very frequently:
   including backup, disaster recovery, and platform services.
 
 * Usage tracking: Tracks the use that App Developers, Project Owners, and
-  Domain operators make of the cloud and optimizes the services accordingly.
+  Domain Operators make of the cloud and optimizes the services accordingly.
 
 * Update: Performs updates and verification of the OpenStack cloud.
 
@@ -75,30 +75,30 @@ and updating the OpenStack cloud. The following pain point examples
 highlight the cases where progress can be impeded. This enables you to
 anticipate and compensate when preparing a project:
 
-Rey has trouble finding information to help triage issues that can
-prevent the cloud from running:
+* Rey has trouble finding information to help triage issues that can
+  prevent the cloud from running:
 
- "New users do not have the flexibility to spend weeks delving into
- source code to figure out how to do common tasks, especially in the
- areas of orchestration. Were it not for `ask.openstack.org <https://ask.openstack.org/en/questions/>`_
- and the hard work of many bloggers in the community, I would have a
- significantly more difficult time trying to understand practical
- uses of OpenStack functionality."
+  "New users do not have the flexibility to spend weeks delving into
+  source code to figure out how to do common tasks, especially in the
+  areas of orchestration. Were it not for `ask.openstack.org <https://ask.openstack.org/en/questions/>`_
+  and the hard work of many bloggers in the community, I would have a
+  significantly more difficult time trying to understand practical
+  uses of OpenStack functionality."
 
-Consistency between projects slows down progress:
+* Inconsistency between projects slows down progress:
 
- "All projects should strive to use the same standards—in code,
- libraries used, file formats, and documentation. [We need] consistency
- between different OpenStack projects and releases."
+  "All projects should strive to use the same standards—in code,
+  libraries used, file formats, and documentation. [We need] consistency
+  between different OpenStack projects and releases."
 
- "It really boils down to having OpenStack act more like a single
- initiative, versus a collection of projects."
+  "It really boils down to having OpenStack act more like a single
+  initiative, versus a collection of projects."
 
-Building a community that listens and takes on feedback is also a goal:
+* Building a community that listens and takes on feedback is also a goal:
 
- "There’s still a bit of a gap between developers and operators.
- Although that is narrowing, understanding operators’ pains in
- certain areas is key in developing a better product as a whole."
+  "There’s still a bit of a gap between developers and operators.
+  Although that is narrowing, understanding operators’ pains in
+  certain areas is key in developing a better product as a whole."
 
 The scale of quotas presents significant obstacles for operators. Consider
 that Rey may need to manage over one thousand projects in a deployment.
