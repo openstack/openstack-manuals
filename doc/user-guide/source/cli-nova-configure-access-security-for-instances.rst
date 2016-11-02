@@ -127,7 +127,7 @@ Create and manage security groups
 
    .. code-block:: console
 
-      $ nova secgroup-delete SECURITY_GROUP_NAME
+      $ openstack security group delete SECURITY_GROUP_NAME
 
 .. note::
 
