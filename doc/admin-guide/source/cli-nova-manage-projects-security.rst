@@ -98,18 +98,30 @@ easier to understand than "bobs\_group" or "secgrp1".
 
    .. code-block:: console
 
-      $ nova secgroup-create GroupName Description
+      $ openstack security group create GroupName --description Description
 
    For example:
 
    .. code-block:: console
 
-      $ nova secgroup-create global_http "Allows Web traffic anywhere on the Internet."
-      +--------------------------------------+-------------+----------------------------------------------+
-      | Id                                   | Name        | Description                                  |
-      +--------------------------------------+-------------+----------------------------------------------+
-      | 1578a08c-5139-4f3e-9012-86bd9dd9f23b | global_http | Allows Web traffic anywhere on the Internet. |
-      +--------------------------------------+-------------+----------------------------------------------+
+      $ openstack security group create global_http --description "Allows Web traffic anywhere on the Internet."
+      +-----------------+--------------------------------------------------------------------------------------------------------------------------+
+      | Field           | Value                                                                                                                    |
+      +-----------------+--------------------------------------------------------------------------------------------------------------------------+
+      | created_at      | 2016-11-03T13:50:53Z                                                                                                     |
+      | description     | Allows Web traffic anywhere on the Internet.                                                                             |
+      | headers         |                                                                                                                          |
+      | id              | c0b92b20-4575-432a-b4a9-eaf2ad53f696                                                                                     |
+      | name            | global_http                                                                                                              |
+      | project_id      | 5669caad86a04256994cdf755df4d3c1                                                                                         |
+      | project_id      | 5669caad86a04256994cdf755df4d3c1                                                                                         |
+      | revision_number | 1                                                                                                                        |
+      | rules           | created_at='2016-11-03T13:50:53Z', direction='egress', ethertype='IPv4', id='4d8cec94-e0ee-4c20-9f56-8fb67c21e4df',      |
+      |                 | project_id='5669caad86a04256994cdf755df4d3c1', revision_number='1', updated_at='2016-11-03T13:50:53Z'                    |
+      |                 | created_at='2016-11-03T13:50:53Z', direction='egress', ethertype='IPv6', id='31be2ad1-be14-4aef-9492-ecebede2cf12',      |
+      |                 | project_id='5669caad86a04256994cdf755df4d3c1', revision_number='1', updated_at='2016-11-03T13:50:53Z'                    |
+      | updated_at      | 2016-11-03T13:50:53Z                                                                                                     |
+      +-----------------+--------------------------------------------------------------------------------------------------------------------------+
 
 #. Add a new group rule, as follows:
 

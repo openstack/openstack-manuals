@@ -121,7 +121,7 @@ Create and manage security groups
 
    .. code-block:: console
 
-      $ nova secgroup-create SECURITY_GROUP_NAME GROUP_DESCRIPTION
+      $ openstack security group create SECURITY_GROUP_NAME --description GROUP_DESCRIPTION
 
 #. To delete a specified group, enter the following command:
 
