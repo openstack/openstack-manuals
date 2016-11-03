@@ -105,9 +105,9 @@ using the appropriate ``vmdk_type``:
 
 .. code-block:: console
 
-   $ cinder type-create thick_volume
-   $ cinder type-key thick_volume set vmware:vmdk_type=thick
-   $ cinder create --volume-type thick_volume --display-name volume1 1
+   $ openstack volume type create THICK_VOLUME
+   $ openstack volume type set --property vmware:vmdk_type=thick THICK_VOLUME
+   $ openstack volume create --size 1 --type THICK_VOLUME VOLUME1
 
 Clone type
 ~~~~~~~~~~
@@ -138,12 +138,10 @@ created from an image:
 
 .. code-block:: console
 
-   $ cinder type-create fast_clone
-   $ cinder type-key fast_clone set vmware:clone_type=linked
-   $ cinder create --image-id 9cb87f4f-a046-47f5-9b7c-d9487b3c7cd4 \
-     --volume-type fast_clone --display-name source-vol 1
-   $ cinder create --source-volid 25743b9d-3605-462b-b9eb-71459fe2bb35 \
-     --display-name dest-vol 1
+   $ openstack volume type create FAST_CLONE
+   $ openstack volume type set --property vmware:clone_type=linked FAST_CLONE
+   $ openstack volume create --size 1 --type FAST_CLONE --image MYIMAGE SOURCE_VOL
+   $ openstack volume create --size 1 --source SOURCE_VOL DEST_VOL
 
 Use vCenter storage policies to specify back-end data stores
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
