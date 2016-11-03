@@ -230,7 +230,14 @@ Adaptive Flash Cache license installed.
 * ``hpe3par:flash_cache`` - The flash-cache policy, which can be turned on and
   off by setting the value to ``true`` or ``false``.
 
-LDAP authentication is supported if the 3PAR is configured to do so.
+LDAP and AD authentication is now supported in the HPE 3PAR driver.
+
+The 3PAR back end must be properly configured for LDAP and AD authentication
+prior to configuring the volume driver. For details on setting up LDAP with
+3PAR, see the 3PAR user guide.
+
+Once configured, ``hpe3par_username`` and ``hpe3par_password`` parameters in
+``cinder.conf`` can be used with LDAP and AD credentials.
 
 Enable the HPE 3PAR Fibre Channel and iSCSI drivers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
