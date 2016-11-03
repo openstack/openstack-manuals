@@ -252,10 +252,10 @@ other criteria configured in scheduler filters.
 
 .. code-block:: console
 
-   $ cinder type-create default
-   $ cinder type-key default set service_label=default
-   $ cinder type-create platinum-tier
-   $ cinder type-key platinum set service_label=platinum
+   $ openstack volume type create default
+   $ openstack volume type set --property service_label=default default
+   $ openstack volume type create platinum-tier
+   $ openstack volume type set --property service_label=platinum platinum
 
 Multi-backend configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -541,14 +541,18 @@ Below are configuration examples for both NFS and iSCSI backends:
 
       .. code-block:: console
 
-        $cinder type-create hnas_nfs_gold
-        $cinder type-key hnas_nfs_gold set volume_backend_name=hnas_nfs_backend service_label=nfs_gold
-        $cinder type-create hnas_nfs_platinum
-        $cinder type-key hnas_nfs_platinum set  volume_backend_name=hnas_nfs_backend service_label=nfs_platinum
-        $cinder type-create hnas_nfs_silver
-        $cinder type-key hnas_nfs_silver set volume_backend_name=hnas_nfs_backend service_label=nfs_silver
-        $cinder type-create hnas_nfs_bronze
-        $cinder type-key hnas_nfs_bronze set volume_backend_name=hnas_nfs_backend service_label=nfs_bronze
+         $ openstack volume type create hnas_nfs_gold
+         $ openstack volume type set --property volume_backend_name=hnas_nfs_backend \
+           service_label=nfs_gold hnas_nfs_gold
+         $ openstack volume type create hnas_nfs_platinum
+         $ openstack volume type set --property volume_backend_name=hnas_nfs_backend \
+           service_label=nfs_platinum hnas_nfs_platinum
+         $ openstack volume type create hnas_nfs_silver
+         $ openstack volume type set --property volume_backend_name=hnas_nfs_backend \
+           service_label=nfs_silver hnas_nfs_silver
+         $ openstack volume type create hnas_nfs_bronze
+         $ openstack volume type set --property volume_backend_name=hnas_nfs_backend \
+           service_label=nfs_bronze hnas_nfs_bronze
 
 #. HNAS iSCSI Driver
 
@@ -593,14 +597,18 @@ Below are configuration examples for both NFS and iSCSI backends:
 
       .. code-block:: console
 
-        $cinder type-create hnas_iscsi_gold
-        $cinder type-key hnas_iscsi_gold set volume_backend_name=hnas_iscsi_backend service_label=iscsi_gold
-        $cinder type-create hnas_iscsi_platinum
-        $cinder type-key hnas_iscsi_platinum set volume_backend_name=hnas_iscsi_backend service_label=iscsi_platinum
-        $cinder type-create hnas_iscsi_silver
-        $cinder type-key hnas_iscsi_silver set volume_backend_name=hnas_iscsi_backend service_label=iscsi_silver
-        $cinder type-create hnas_iscsi_bronze
-        $cinder type-key hnas_iscsi_bronze set volume_backend_name=hnas_iscsi_backend service_label=iscsi_bronze
+         $ openstack volume type create hnas_iscsi_gold
+         $ openstack volume type set --property volume_backend_name=hnas_iscsi_backend \
+           service_label=iscsi_gold hnas_iscsi_gold
+         $ openstack volume type create hnas_iscsi_platinum
+         $ openstack volume type set --property volume_backend_name=hnas_iscsi_backend \
+           service_label=iscsi_platinum hnas_iscsi_platinum
+         $ openstack volume type create hnas_iscsi_silver
+         $ openstack volume type set --property volume_backend_name=hnas_iscsi_backend \
+           service_label=iscsi_silver hnas_iscsi_silver
+         $ openstack volume type create hnas_iscsi_bronze
+         $ openstack volume type set --property volume_backend_name=hnas_iscsi_backend \
+           service_label=iscsi_bronze hnas_iscsi_bronze
 
 Additional notes and limitations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
