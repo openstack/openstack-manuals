@@ -93,7 +93,7 @@ Install and configure components
 
    .. endonly
 
-   * In the ``[DEFAULT]`` sections, configure ``RabbitMQ``
+   * In the ``[DEFAULT]`` section, configure ``RabbitMQ``
      message queue access:
 
      .. path /etc/nova/nova.conf

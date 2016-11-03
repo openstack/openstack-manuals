@@ -280,7 +280,7 @@ Install and configure components
      Replace ``NOVA_DBPASS`` with the password you chose for
      the Compute databases.
 
-   * In the ``[DEFAULT]`` sections, configure ``RabbitMQ``
+   * In the ``[DEFAULT]`` section, configure ``RabbitMQ``
      message queue access:
 
      .. path /etc/nova/nova.conf

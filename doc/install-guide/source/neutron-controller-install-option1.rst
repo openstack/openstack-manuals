@@ -88,21 +88,15 @@ and plug-in.
 
     .. end
 
-  * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-    configure RabbitMQ message queue access:
+  * In the ``[DEFAULT]`` section, configure ``RabbitMQ``
+    message queue access:
 
     .. path /etc/neutron/neutron.conf
     .. code-block:: ini
 
        [DEFAULT]
        ...
-       rpc_backend = rabbit
-
-       [oslo_messaging_rabbit]
-       ...
-       rabbit_host = controller
-       rabbit_userid = openstack
-       rabbit_password = RABBIT_PASS
+       transport_url = rabbit://openstack:RABBIT_PASS@controller
 
     .. end
 
