@@ -512,16 +512,13 @@ To see a list of running instances, run:
 
 .. code-block:: console
 
-   $ nova list --all-tenants
-   +-----+------------------+-----------+--------+------------+-------------+-------------------------------------------+
-   | ID  | Name             | Tenant ID | Status | Task State | Power State | Networks                                  |
-   +-----+------------------+-----------+--------+------------+-------------+-------------------------------------------+
-   | ... | Windows          | dde8aa... | ACTIVE | -          | Running     | novanetwork_1=10.1.1.3                    |
-   | ... | cloud controller | dde8ae... | ACTIVE | -          | Running     | novanetwork_0=10.0.1.3; jtopjian=10.1.2.3 |
-   | ... | compute node 1   | dde8ae... | ACTIVE | -          | Running     | novanetwork_0=10.0.1.4; jtopjian=10.1.2.4 |
-   | ... | devbox           | dde8ae... | ACTIVE | -          | Running     | novanetwork_0=10.0.1.5                    |
-   | ... | devstack         | 6c96c1... | ACTIVE | -          | Running     | novanetwork_0=10.1.0.3, 10.1.0.4          |
-   +-----+------------------+-----------+--------+------------+-------------+-------------------------------------------+
+   $ openstack server list --all-projects
+   +--------------------------------------+------+--------+---------------------+------------+
+   | ID                                   | Name | Status | Networks            | Image Name |
+   +--------------------------------------+------+--------+---------------------+------------+
+   | 495b4f5e-0b12-4c5a-b4e0-4326dee17a5a | vm1  | ACTIVE | public=172.24.4.232 | cirros     |
+   | e83686f9-16e8-45e6-911d-48f75cb8c0fb | vm2  | ACTIVE | private=10.0.0.7    | cirros     |
+   +--------------------------------------+------+--------+---------------------+------------+
 
 Unfortunately, this command does not tell you various details about the
 running instances, such as what compute node the instance is running on,
@@ -530,55 +527,45 @@ command to view details about individual instances:
 
 .. code-block:: console
 
-   $ nova show <uuid>
+   $ openstack server show <uuid>
 
 For example:
 
 .. code-block:: console
 
-   # nova show 81db556b-8aa5-427d-a95c-2a9a6972f630
+   # openstack server show 81db556b-8aa5-427d-a95c-2a9a6972f630
    +--------------------------------------+----------------------------------------------------------+
-   | Property                             | Value                                                    |
+   | Field                                | Value                                                    |
    +--------------------------------------+----------------------------------------------------------+
    | OS-DCF:diskConfig                    | AUTO                                                     |
    | OS-EXT-AZ:availability_zone          | nova                                                     |
    | OS-EXT-SRV-ATTR:host                 | c02.example.com                                          |
-   | OS-EXT-SRV-ATTR:hostname             | c02.example.com                                          |
    | OS-EXT-SRV-ATTR:hypervisor_hostname  | c02.example.com                                          |
-   | OS-EXT-SRV-ATTR:instance_name        | devstack                                                 |
-   | OS-EXT-SRV-ATTR:kernel_id            |                                                          |
-   | OS-EXT-SRV-ATTR:launch_index         | 0                                                        |
-   | OS-EXT-SRV-ATTR:ramdisk_id           |                                                          |
-   | OS-EXT-SRV-ATTR:reservation_id       | r-p4uo2um2                                               |
-   | OS-EXT-SRV-ATTR:root_device_name     | /dev/vda                                                 |
-   | OS-EXT-SRV-ATTR:user_data            | -                                                        |
-   | OS-EXT-STS:power_state               | 1                                                        |
-   | OS-EXT-STS:task_state                | -                                                        |
+   | OS-EXT-SRV-ATTR:instance_name        | instance-00000001                                        |
+   | OS-EXT-STS:power_state               | Running                                                  |
+   | OS-EXT-STS:task_state                | None                                                     |
    | OS-EXT-STS:vm_state                  | active                                                   |
-   | OS-SRV-USG:launched_at               | 2016-08-08T02:05:49.000000                               |
-   | OS-SRV-USG:terminated_at             | -                                                        |
+   | OS-SRV-USG:launched_at               | 2016-10-19T15:18:09.000000                               |
+   | OS-SRV-USG:terminated_at             | None                                                     |
    | accessIPv4                           |                                                          |
    | accessIPv6                           |                                                          |
+   | addresses                            | private=10.0.0.7                                         |
    | config_drive                         |                                                          |
-   | created                              | 2016-08-08T02:05:40Z                                     |
-   | description                          | tesy                                                     |
-   | flavor                               | m1.small                                                 |
-   | hostId                               | 79a36bcbfd140e24267dd98442453de78d38dc14be1b745897c18897 |
-   | host_status                          | UP                                                       |
-   | id                                   | 81db556b-8aa5-427d-a95c-2a9a6972f630                     |
-   | image                                | myCirrosImage (d07831df-edc3-4817-9881-89141f9134c3)     |
-   | key_name                             | -                                                        |
-   | locked                               | False                                                    |
-   | metadata                             | {}                                                       |
-   | name                                 | tesy                                                     |
+   | created                              | 2016-10-19T15:17:46Z                                     |
+   | flavor                               | m1.tiny (1)                                              |
+   | hostId                               | 2b57e2b7a839508337fb55695b8f6e65aa881460a20449a76352040b |
+   | id                                   | e83686f9-16e8-45e6-911d-48f75cb8c0fb                     |
+   | image                                | cirros (9fef3b2d-c35d-4b61-bea8-09cc6dc41829)            |
+   | key_name                             | None                                                     |
+   | name                                 | test                                                     |
    | os-extended-volumes:volumes_attached | []                                                       |
    | progress                             | 0                                                        |
-   | security_groups                      | default                                                  |
-   | sss network                          | 10.0.2.4                                                 |
+   | project_id                           | 1eaaf6ede7a24e78859591444abf314a                         |
+   | properties                           |                                                          |
+   | security_groups                      | [{u'name': u'default'}]                                  |
    | status                               | ACTIVE                                                   |
-   | tenant_id                            | d88310717a8e4ebcae84ed075f82c51e                         |
-   | updated                              | 2016-08-17T09:36:10Z                                     |
-   | user_id                              | d8e5e5727f3a4ce1886ac8ecec058e83                         |
+   | updated                              | 2016-10-19T15:18:58Z                                     |
+   | user_id                              | 7aaa9b5573ce441b98dae857a82ecc68                         |
    +--------------------------------------+----------------------------------------------------------+
 
 This output shows that an instance named ``devstack`` was created from
