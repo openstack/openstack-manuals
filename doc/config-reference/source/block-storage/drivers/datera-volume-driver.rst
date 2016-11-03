@@ -102,14 +102,13 @@ following capabilities in QoS Specs
 .. code-block:: bash
 
    # Create qos spec
-   $ cinder qos-create DateraBronze total_iops_max=1000 \
-     total_bandwidth_max=2000
+   $ openstack volume qos create --property total_iops_max=1000 total_bandwidth_max=2000 DateraBronze
 
    # Associate qos-spec with volume type
-   $ cinder qos-associate <qos-spec-id> <volume-type-id>
+   $ openstack volume qos associate DateraBronze VOLUME_TYPE
 
    # Add additional qos values or update existing ones
-   $ cinder qos-key <qos-spec-id> set read_bandwidth_max=500
+   $ openstack volume qos set --property read_bandwidth_max=500 DateraBronze
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~

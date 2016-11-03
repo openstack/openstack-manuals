@@ -683,31 +683,19 @@ Prerequisites - VMAX
 
    .. code-block:: console
 
-       cinder qos-create <name> <key=value> [<key=value> ...]
-
-   .. code-block:: console
-
-       $ cinder qos-create silver maxIOPS=4000 maxMBPS=4000 DistributionType=Always
+      $ openstack volume qos create --property maxIOPS=4000 maxMBPS=4000 DistributionType=Always SILVER
 
 #. Associate QoS specs with specified volume type:
 
    .. code-block:: console
 
-       cinder qos-associate <qos_specs id> <volume_type_id>
-
-   .. code-block:: console
-
-       $ cinder qos-associate 07767ad8-6170-4c71-abce-99e68702f051 224b1517-4a23-44b5-9035-8d9e2c18fb70
+      $ openstack volume qos associate SILVER VOLUME_TYPE
 
 #. Create volume with the volume type indicated above:
 
    .. code-block:: console
 
-       cinder create [--name <name>]  [--volume-type <volume-type>] size
-
-   .. code-block:: console
-
-       $ cinder create --name test_volume --volume-type 224b1517-4a23-44b5-9035-8d9e2c18fb70 1
+      $ openstack volume create --size 1 --type VOLUME_TYPE TEST_VOLUME
 
 **Outcome - VMAX (storage group)**
 
@@ -745,31 +733,19 @@ Prerequisites - VMAX
 
    .. code-block:: console
 
-       cinder qos-create <name> <key=value> [<key=value> ...]
-
-   .. code-block:: console
-
-       $ cinder qos-create silver maxIOPS=4000 maxMBPS=4000 DistributionType=Always
+      $ openstack volume qos create --property maxIOPS=4000 maxMBPS=4000 DistributionType=Always SILVER
 
 #. Associate QoS specifications with specified volume type:
 
    .. code-block:: console
 
-       cinder qos-associate <qos_specs id> <volume_type_id>
-
-   .. code-block:: console
-
-       $ cinder qos-associate 07767ad8-6170-4c71-abce-99e68702f051 224b1517-4a23-44b5-9035-8d9e2c18fb70
+      $ openstack volume qos associate SILVER VOLUME_TYPE
 
 #. Create volume with the volume type indicated above:
 
    .. code-block:: console
 
-       cinder create [--name <name>]  [--volume-type <volume-type>] size
-
-   .. code-block:: console
-
-       $ cinder create --name test_volume --volume-type 224b1517-4a23-44b5-9035-8d9e2c18fb70 1
+      $ openstack volume create --size 1 --type VOLUME_TYPE TEST_VOLUME
 
 **Outcome - VMAX (storage group)**
 
@@ -804,32 +780,19 @@ Prerequisites - VMAX
 
    .. code-block:: console
 
-       cinder qos-create <name> <key=value> [<key=value> ...]
-
-   .. code-block:: console
-
-       $ cinder qos-create silver DistributionType=Always
-
+      $ openstack volume qos create --property DistributionType=Always SILVER
 
 #. Associate QoS specifications with specified volume type:
 
    .. code-block:: console
 
-       cinder qos-associate <qos_specs id> <volume_type_id>
-
-   .. code-block:: console
-
-       $ cinder qos-associate 07767ad8-6170-4c71-abce-99e68702f051 224b1517-4a23-44b5-9035-8d9e2c18fb70
+      $ openstack volume qos associate SILVER VOLUME_TYPE
 
 #. Create volume with the volume type indicated above:
 
    .. code-block:: console
 
-       cinder create [--name <name>]  [--volume-type <volume-type>] size
-
-   .. code-block:: console
-
-       $ cinder create --name test_volume --volume-type 224b1517-4a23-44b5-9035-8d9e2c18fb70 1
+      $ openstack volume create --size 1 --type VOLUME_TYPE TEST_VOLUME
 
 **Outcome - VMAX (storage group)**
 
@@ -862,32 +825,20 @@ Prerequisites - VMAX
 
    .. code-block:: console
 
-       cinder qos-create <name> <key=value> [<key=value> ...]
-
-   .. code-block:: console
-
-       $ cinder qos-create silver DistributionType=OnFailure
+      $ openstack volume qos create --property DistributionType=OnFailure SILVER
 
 #. Associate QoS specifications with specified volume type:
 
    .. code-block:: console
 
-       cinder qos-associate <qos_specs id> <volume_type_id>
-
-   .. code-block:: console
-
-       $ cinder qos-associate 07767ad8-6170-4c71-abce-99e68702f051 224b1517-4a23-44b5-9035-8d9e2c18fb70
+      $ openstack volume qos associate SILVER VOLUME_TYPE
 
 
 #. Create volume with the volume type indicated above:
 
    .. code-block:: console
 
-       cinder create [--name <name>]  [--volume-type <volume-type>] size
-
-   .. code-block:: console
-
-       $ cinder create --name test_volume --volume-type 224b1517-4a23-44b5-9035-8d9e2c18fb70 1
+      $ openstack volume create --size 1 --type VOLUME_TYPE TEST_VOLUME
 
 **Outcome - VMAX (storage group)**
 
