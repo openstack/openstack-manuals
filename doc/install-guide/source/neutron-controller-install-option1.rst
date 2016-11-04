@@ -40,7 +40,8 @@ Install the components
 
       # zypper install --no-recommends openstack-neutron \
         openstack-neutron-server openstack-neutron-linuxbridge-agent \
-        openstack-neutron-dhcp-agent openstack-neutron-metadata-agent
+        openstack-neutron-dhcp-agent openstack-neutron-metadata-agent \
+        bridge-utils
 
    .. end
 

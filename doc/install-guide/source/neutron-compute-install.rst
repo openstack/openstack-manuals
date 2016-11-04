@@ -41,7 +41,8 @@ group>` for instances.
 
    .. code-block:: console
 
-      # zypper install --no-recommends openstack-neutron-linuxbridge-agent
+      # zypper install --no-recommends \
+        openstack-neutron-linuxbridge-agent bridge-utils
 
    .. end
 
