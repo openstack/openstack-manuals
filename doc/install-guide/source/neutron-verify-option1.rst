@@ -11,16 +11,16 @@ List agents to verify successful launch of the neutron agents:
 
 .. code-block:: console
 
-   $ neutron agent-list
+   $ openstack network agent list
 
-   +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
-   | id                                   | agent_type         | host       | alive | admin_state_up | binary                    |
-   +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
-   | 08905043-5010-4b87-bba5-aedb1956e27a | Linux bridge agent | compute1   | :-)   | True           | neutron-linuxbridge-agent |
-   | 27eee952-a748-467b-bf71-941e89846a92 | Linux bridge agent | controller | :-)   | True           | neutron-linuxbridge-agent |
-   | dd3644c9-1a3a-435a-9282-eb306b4b0391 | DHCP agent         | controller | :-)   | True           | neutron-dhcp-agent        |
-   | f49a4b81-afd6-4b3d-b923-66c8f0517099 | Metadata agent     | controller | :-)   | True           | neutron-metadata-agent    |
-   +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
+   +--------------------------------------+--------------------+------------+-------------------+-------+-------+---------------------------+
+   | ID                                   | Agent Type         | Host       | Availability Zone | Alive | State | Binary                    |
+   +--------------------------------------+--------------------+------------+-------------------+-------+-------+---------------------------+
+   | 0400c2f6-4d3b-44bc-89fa-99093432f3bf | Metadata agent     | controller | None              | True  | UP    | neutron-metadata-agent    |
+   | 83cf853d-a2f2-450a-99d7-e9c6fc08f4c3 | DHCP agent         | controller | nova              | True  | UP    | neutron-dhcp-agent        |
+   | ec302e51-6101-43cf-9f19-88a78613cbee | Linux bridge agent | compute    | None              | True  | UP    | neutron-linuxbridge-agent |
+   | fcb9bc6e-22b1-43bc-9054-272dd517d025 | Linux bridge agent | controller | None              | True  | UP    | neutron-linuxbridge-agent |
+   +--------------------------------------+--------------------+------------+-------------------+-------+-------+---------------------------+
 
 .. end
 
