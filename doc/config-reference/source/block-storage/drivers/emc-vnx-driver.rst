@@ -1,6 +1,7 @@
 ==============
 EMC VNX driver
 ==============
+
 EMC VNX driver interacts with configured VNX array. It supports
 both iSCSI and FC protocol.
 
@@ -13,33 +14,34 @@ supports both iSCSI and FC protocol.
 System requirements
 ~~~~~~~~~~~~~~~~~~~
 
--  VNX Operational Environment for Block version 5.32 or higher.
--  VNX Snapshot and Thin Provisioning license should be activated for VNX.
--  Python library ``storops`` to interact with VNX.
--  Navisphere CLI v7.32 or higher is installed along with the driver.
+- VNX Operational Environment for Block version 5.32 or higher.
+- VNX Snapshot and Thin Provisioning license should be activated for VNX.
+- Python library ``storops`` to interact with VNX.
+- Navisphere CLI v7.32 or higher is installed along with the driver.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
--  Create, delete, attach, and detach volumes.
--  Create, list, and delete volume snapshots.
--  Create a volume from a snapshot.
--  Copy an image to a volume.
--  Clone a volume.
--  Extend a volume.
--  Migrate a volume.
--  Retype a volume.
--  Get volume statistics.
--  Create and delete consistency groups.
--  Create, list, and delete consistency group snapshots.
--  Modify consistency groups.
--  Efficient non-disruptive volume backup.
--  Create a cloned consistency group.
--  Create a consistency group from consistency group snapshots.
--  Replication v2.1 support.
+- Create, delete, attach, and detach volumes.
+- Create, list, and delete volume snapshots.
+- Create a volume from a snapshot.
+- Copy an image to a volume.
+- Clone a volume.
+- Extend a volume.
+- Migrate a volume.
+- Retype a volume.
+- Get volume statistics.
+- Create and delete consistency groups.
+- Create, list, and delete consistency group snapshots.
+- Modify consistency groups.
+- Efficient non-disruptive volume backup.
+- Create a cloned consistency group.
+- Create a consistency group from consistency group snapshots.
+- Replication v2.1 support.
 
 Preparation
 ~~~~~~~~~~~
+
 This section contains instructions to prepare the Block Storage nodes to
 use the EMC VNX driver. You should install the Navisphere CLI and ensure you
 have correct zoning configurations.
@@ -438,13 +440,13 @@ Use the following command to create a volume type:
 
 .. code-block:: console
 
-   $ cinder type-create "demoVolumeType"
+   $ openstack volume type create demoVolumeType
 
 Use the following command to update the extra spec of a volume type:
 
 .. code-block:: console
 
-   $ cinder type-key "demoVolumeType" set provisioning:type=thin thick_provisioning_support='<is> True'
+   $ openstack volume type set --property provisioning:type=thin thick_provisioning_support='<is> True' demoVolumeType
 
 The following sections describe the VNX extra keys.
 
@@ -463,8 +465,8 @@ Provisioning type
 
       .. code-block:: console
 
-         $ cinder type-create "ThickVolumeType"
-         $ cinder type-key "ThickVolumeType" set provisioning:type=thick thick_provisioning_support='<is> True'
+         $ openstack volume type create ThickVolumeType
+         $ openstack volume type set --property provisioning:type=thick thick_provisioning_support='<is> True' ThickVolumeType
 
    -  ``thin``
 
@@ -474,8 +476,8 @@ Provisioning type
 
       .. code-block:: console
 
-         $ cinder type-create "ThinVolumeType"
-         $ cinder type-key "ThinVolumeType" set provisioning:type=thin thin_provisioning_support='<is> True'
+         $ openstack volume type create ThinVolumeType
+         $ openstack volume type set --property provisioning:type=thin thin_provisioning_support='<is> True' ThinVolumeType
 
    -  ``deduplicated``
 
@@ -489,8 +491,8 @@ Provisioning type
 
       .. code-block:: console
 
-         $ cinder type-create "DeduplicatedVolumeType"
-         $ cinder type-key "DeduplicatedVolumeType" set provisioning:type=deduplicated deduplication_support='<is> True'
+         $ openstack volume type create DeduplicatedVolumeType
+         $ openstack volume type set --property provisioning:type=deduplicated deduplicated_support='<is> True' DeduplicatedVolumeType
 
    -  ``compressed``
 
@@ -505,8 +507,8 @@ Provisioning type
 
       .. code-block:: console
 
-         $ cinder type-create "CompressedVolumeType"
-         $ cinder type-key "CompressedVolumeType" set provisioning:type=compressed compression_support='<is> True'
+         $ openstack volume type create CompressedVolumeType
+         $ openstack volume type set --property provisioning:type=compressed compression_support='<is> True' CompressedVolumeType
 
 -  Default: ``thick``
 
@@ -518,21 +520,16 @@ Provisioning type
 Storage tiering support
 -----------------------
 
--  Key: ``storagetype:tiering``
+- Key: ``storagetype:tiering``
+- Possible values:
 
--  Possible values:
+  - ``StartHighThenAuto``
+  - ``Auto``
+  - ``HighestAvailable``
+  - ``LowestAvailable``
+  - ``NoMovement``
 
-   -  ``StartHighThenAuto``
-
-   -  ``Auto``
-
-   -  ``HighestAvailable``
-
-   -  ``LowestAvailable``
-
-   -  ``NoMovement``
-
--  Default: ``StartHighThenAuto``
+- Default: ``StartHighThenAuto``
 
 VNX supports fully automated storage tiering which requires the FAST license
 activated on the VNX. The OpenStack administrator can use the extra spec key
@@ -545,8 +542,8 @@ Run the following commands to create a volume type with tiering policy:
 
 .. code-block:: console
 
-   $ cinder type-create "ThinVolumeOnAutoTier"
-   $ cinder type-key "ThinVolumeOnAutoTier" set provisioning:type=thin storagetype:tiering=Auto fast_support='<is> True'
+   $ openstack volume type create ThinVolumeOnAutoTier
+   $ openstack volume type set --property provisioning:type=thin storagetype:tiering=Auto fast_support='<is> True' ThinVolumeOnAutoTier
 
 .. note::
 
@@ -588,8 +585,8 @@ Run the following commands to create the volume type:
 
 .. code-block:: console
 
-   $ cinder type-create "HighPerf"
-   $ cinder type-key "HighPerf" set pool_name=Pool_02_SASFLASH volume_backend_name=vnx_41
+   $ openstack volume type create HighPerf
+   $ openstack volume type set --property pool_name=Pool_02_SASFLASH volume_backend_name=vnx_41 HighPerf
 
 Obsolete extra specs
 --------------------
