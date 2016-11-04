@@ -179,12 +179,7 @@ pairs and associate them with a volume type, run the following commands:
 
 .. code-block:: console
 
-   $ cinder help qos-create
-
-   $ cinder help qos-key
-
-   $ cinder help qos-associate
-
+   $ openstack help volume qos
 
 The following keys require that the HPE 3PAR StoreServ storage array has a
 Priority Optimization license installed.

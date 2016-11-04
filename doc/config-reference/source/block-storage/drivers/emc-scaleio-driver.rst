@@ -96,11 +96,7 @@ them with a volume type, run the following commands:
 
 .. code-block:: console
 
-   $ cinder help qos-create
-
-   $ cinder help qos-key
-
-   $ cinder help qos-associate
+   $ openstack help volume qos
 
 ``maxIOPS``
  The QoS I/O rate limit. If not set, the I/O rate will be unlimited.
