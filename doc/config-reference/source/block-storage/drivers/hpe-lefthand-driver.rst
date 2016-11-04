@@ -96,7 +96,7 @@ command:
 
 .. code-block:: console
 
-   $ cinder help type-key
+   $ openstack help volume type
 
 * The following keys require the HPE LeftHand/StoreVirtual storage
   array be configured for:

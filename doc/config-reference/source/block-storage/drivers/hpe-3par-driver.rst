@@ -117,7 +117,7 @@ pairs and associate them with a volume type, run the following command:
 
 .. code-block:: console
 
-   $ cinder help type-key
+   $ openstack help volume type
 
 .. note::
 

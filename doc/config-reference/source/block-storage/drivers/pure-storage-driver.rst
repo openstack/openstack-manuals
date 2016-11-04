@@ -225,8 +225,8 @@ To create a volume type that specifies replication to remote back ends:
 
 .. code-block:: console
 
-    $ cinder type-create "ReplicationType"
-    $ cinder type-key "ReplicationType" set replication_enabled='<is> True'
+   $ openstack volume type create ReplicationType
+   $ openstack volume type set --property replication_enabled='<is> True' ReplicationType
 
 The following table contains the optional configuration parameters available
 for replication configuration with the Pure Storage array.
