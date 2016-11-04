@@ -7,7 +7,7 @@ compatible with OpenStack and ``bsd-cloudinit``.
 The ``bsd-cloudinit`` program is independently maintained
 and in active development. The best source of information
 on the current state of the project is at
-http://pellaeon.github.io/bsd-cloudinit/.
+`bsd-cloudinit <http://pellaeon.github.io/bsd-cloudinit/>`_.
 
 KVM with virtio drivers is used as the virtualization platform
 because that is the most widely used among OpenStack operators.
