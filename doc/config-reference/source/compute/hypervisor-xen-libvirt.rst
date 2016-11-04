@@ -15,12 +15,14 @@ Installing Xen with libvirt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At this stage we recommend using the baseline that we use for the
-`Xen Project OpenStack CI Loop <http://wiki.xenproject.org/wiki/
-OpenStack_CI_Loop_for_Xen-Libvirt>`_, which contains the most recent
+`Xen Project OpenStack CI Loop
+<http://wiki.xenproject.org/wiki/OpenStack_CI_Loop_for_Xen-Libvirt>`_,
+which contains the most recent
 stability fixes to both Xen and libvirt.
 
-`Xen 4.5.1 <http://www.xenproject.org/downloads/xen-archives/xen-45-series/
-xen-451.html>`_ (or newer) and `libvirt 1.2.15 <http://libvirt.org/sources/>`_
+`Xen 4.5.1
+<http://www.xenproject.org/downloads/xen-archives/xen-45-series/xen-451.html>`_
+(or newer) and `libvirt 1.2.15 <http://libvirt.org/sources/>`_
 (or newer) contain the minimum required OpenStack improvements for Xen.
 Although libvirt 1.2.15 works with Xen, libvirt 1.3.2 or newer is recommended.
 The necessary Xen changes have also been backported to the Xen 4.4.3 stable
@@ -31,8 +33,9 @@ packages.
 
 The latest releases of Xen and libvirt packages that fulfil the above
 minimum requirements for the various openSUSE distributions can always be
-found and installed from the `Open Build Service <https://build.opensuse.org/
-project/show/Virtualization>`_ Virtualization project.
+found and installed from the `Open Build Service
+<https://build.opensuse.org/project/show/Virtualization>`_
+Virtualization project.
 To install these latest packages, add the Virtualization repository to your
 software management stack and get the newest packages from there.
 More information about the latest Xen and libvirt packages are available
@@ -40,13 +43,13 @@ More information about the latest Xen and libvirt packages are available
 `here <https://build.opensuse.org/package/show/Virtualization/libvirt>`__.
 
 Alternatively, it is possible to use the Ubuntu LTS 14.04 Xen Package
-**4.4.1-0ubuntu0.14.04.4** (Xen 4.4.1) and apply the patches outlined
-`here <http://wiki.xenproject.org/wiki/OpenStack_CI_Loop_for_Xen-Libvirt
-#Baseline>`__.
+**4.4.1-0ubuntu0.14.04.4** (Xen 4.4.1) and apply the patches outlined `here
+<http://wiki.xenproject.org/wiki/OpenStack_CI_Loop_for_Xen-Libvirt#Baseline>`__.
 You can also use the Ubuntu LTS 14.04 libvirt package **1.2.2
 libvirt_1.2.2-0ubuntu13.1.7** as baseline and update it to libvirt version
-1.2.15, or 1.2.14 with the patches outlined `here <http://wiki.xenproject.org/
-wiki/OpenStack_CI_Loop_for_Xen-Libvirt#Baseline>`__ applied.
+1.2.15, or 1.2.14 with the patches outlined `here
+<http://wiki.xenproject.org/wiki/OpenStack_CI_Loop_for_Xen-Libvirt#Baseline>`__
+applied.
 Note that this will require rebuilding these packages partly from source.
 
 For further information and latest developments, you may want to consult
@@ -118,34 +121,24 @@ Use the following as a guideline for configuring Xen for use in OpenStack:
    In OpenStack, customer VMs may run in either PV or HVM mode.
    The mode is a property of the operating system image used by the VM, and
    is changed by adjusting the image metadata stored in the Image service.
-   The image metadata can be changed using the :command:`nova` or
-   :command:`glance` commands.
+   The image metadata can be changed using the :command:`openstack` commands.
 
    To choose one of the HVM modes (HVM, HVM with PV Drivers or PVHVM),
-   use :command:`nova` or :command:`glance` to set the ``vm_mode``
-   property to ``hvm``.
+   use :command:`openstack` to set the ``vm_mode`` property to ``hvm``.
 
    To choose one of the HVM modes (HVM, HVM with PV Drivers or PVHVM),
    use one of the following two commands:
 
    .. code-block:: console
 
-      $ nova image-meta img-uuid set vm_mode=hvm
-
-   .. code-block:: console
-
-      $ glance image-update img-uuid --property vm_mode=hvm
+      $ openstack image set --property vm_mode=hvm IMAGE
 
    To chose PV mode, which is supported by NetBSD, FreeBSD and Linux,
    use one of the following two commands
 
    .. code-block:: console
 
-      $ nova image-meta img-uuid set vm_mode=xen
-
-   .. code-block:: console
-
-      $ glance image-update img-uuid --property vm_mode=xen
+      $ openstack image set --property vm_mode=xen IMAGE
 
    .. note::
 
@@ -165,19 +158,15 @@ Use the following as a guideline for configuring Xen for use in OpenStack:
    launching instances of the image. Image metadata such as ``vm_mode``,
    ``hypervisor_type``, architecture, and others can be set when importing
    the image to the Image service. The metadata can also be changed using
-   the :command:`nova` or :command:`glance` commands:
+   the :command:`openstack` commands:
 
    .. code-block:: console
 
-      $ nova image-meta img-uuid set hypervisor_type=xen vm_mode=hvm
-
-   .. code-block:: console
-
-      $ glance image-update img-uuid --property hypervisor_type=xen --property vm_mode=hvm
+      $ openstack image set --property hypervisor_type=xen vm_mode=hvm IMAGE
 
    For more more information on image metadata, refer to the
-   `OpenStack Virtual Image Guide <http://docs.openstack.org/image-guide/
-   image-metadata.html>`__.
+   `OpenStack Virtual Image Guide
+   <http://docs.openstack.org/image-guide/image-metadata.html>`__.
 
 #. **Libguestfs file injection**: OpenStack compute nodes can use `libguestfs
    <http://libguestfs.org/>`_ to inject files into an instance's image prior
@@ -204,8 +193,9 @@ across other issues, you should first consult the following log files:
 * ``/var/log/xen/qemu-dm-${instancename}.log``,
 * ``/var/log/xen/xen-hotplug.log``,
 * ``/var/log/xen/console/guest-${instancename}``
-  (to enable see `Enabling Guest Console Logs <http://wiki.xen.org/wiki/
-  Reporting_Bugs_against_Xen#Guest_console_logs>`_) and
+  (to enable see `Enabling Guest Console Logs
+  <http://wiki.xen.org/wiki/Reporting_Bugs_against_Xen#Guest_console_logs>`_)
+  and
 * Host Console Logs (read `Enabling and Retrieving Host Console Logs
   <http://wiki.xen.org/wiki/Reporting_Bugs_against_Xen#Host_console_logs>`_).
 
