@@ -243,7 +243,7 @@ Access the instance remotely
 
    .. code-block:: console
 
-      $ openstack server add floating ip 203.0.113.104 selfservice-instance
+      $ openstack server add floating ip selfservice-instance 203.0.113.104
 
    .. end
 
