@@ -54,6 +54,17 @@ Configuration
       zfssa:configuration roles OpenStackRole auth (uncommitted)> set scope=stmf
       zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_configure=true
       zfssa:configuration roles OpenStackRole auth (uncommitted)> commit
+      zfssa:configuration roles OpenStackRole> authorizations create
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set scope=nas
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_clone=true
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_createProject=true
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_createShare=true
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_changeSpaceProps=true
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_changeGeneralProps=true
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_destroy=true
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_rollback=true
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_takeSnap=true
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> commit
 
    You can create a user with a specific role as follows:
 
