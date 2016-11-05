@@ -78,9 +78,9 @@ as listed below.
 Disable a service
 ~~~~~~~~~~~~~~~~~
 
-When an administrator wants to disable a serivce, identify the Binary
+When an administrator wants to disable a service, identify the Binary
 and the Host of the service. Use the :command:`cinder service-disable`
-command combined with the Binary and Host to disbale the service:
+command combined with the Binary and Host to disable the service:
 
 #. Determine the binary and host of the service you want to remove
    initially.
