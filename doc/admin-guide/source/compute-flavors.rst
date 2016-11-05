@@ -459,7 +459,7 @@ NUMA topology
 
        ``hw:numa_cpus.N`` and ``hw:numa_mem.N`` are only valid if
        ``hw:numa_nodes`` is set. Additionally, they are only required if the
-       instance's NUMA nodes have an asymetrical allocation of CPUs and RAM
+       instance's NUMA nodes have an asymmetrical allocation of CPUs and RAM
        (important for some NFV workloads).
 
     .. note::
