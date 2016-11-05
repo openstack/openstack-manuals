@@ -5,9 +5,9 @@ Identity API protection with role-based access control (RBAC)
 Like most OpenStack projects, Identity supports the protection of its
 APIs by defining policy rules based on an RBAC approach. Identity stores
 a reference to a policy JSON file in the main Identity configuration
-file, ``keystone.conf``. Typically this file is named ``policy.json``,
-and contains the rules for which roles have access to certain actions
-in defined services.
+file, ``/etc/keystone/keystone.conf``. Typically this file is named
+``policy.json``, and contains the rules for which roles have access to
+certain actions in defined services.
 
 Each Identity API v3 call has a line in the policy file that dictates
 which level of governance of access applies.

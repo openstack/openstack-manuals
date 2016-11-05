@@ -25,7 +25,8 @@ examples. Modify these examples as needed.
 
 **To define the destination LDAP server**
 
-#. Define the destination LDAP server in the ``keystone.conf`` file:
+#. Define the destination LDAP server in the
+   ``/etc/keystone/keystone.conf`` file:
 
    .. code-block:: ini
 

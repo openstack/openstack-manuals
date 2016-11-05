@@ -10,7 +10,7 @@ additional security mechanism ensures that if a token is stolen, for
 example, it is not usable without external authentication.
 
 You configure the authentication types for a token binding in the
-``keystone.conf`` file:
+``/etc/keystone/keystone.conf`` file:
 
 .. code-block:: ini
 

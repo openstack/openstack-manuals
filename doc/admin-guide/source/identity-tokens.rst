@@ -67,8 +67,8 @@ Token providers
 ---------------
 
 The token type issued by keystone is configurable through the
-``etc/keystone.conf`` file. Currently, there are four supported token types and
-they include ``UUID``, ``fernet``, ``PKI``, and ``PKIZ``.
+``/etc/keystone/keystone.conf`` file. Currently, there are four supported
+token types and they include ``UUID``, ``fernet``, ``PKI``, and ``PKIZ``.
 
 UUID tokens
 ~~~~~~~~~~~

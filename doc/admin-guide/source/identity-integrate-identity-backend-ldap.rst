@@ -11,13 +11,14 @@ administrators to use users and groups in LDAP.
 .. important::
 
    For OpenStack Identity service to access LDAP servers, you must
-   define the destination LDAP server in the ``keystone.conf`` file.
-   For more information, see :ref:`identity_ldap_server_setup`.
+   define the destination LDAP server in the
+   ``/etc/keystone/keystone.conf`` file. For more information,
+   see :ref:`identity_ldap_server_setup`.
 
 **To integrate one Identity back end with LDAP**
 
-#. Enable the LDAP Identity driver in the ``keystone.conf`` file. This
-   allows LDAP as an identity back end:
+#. Enable the LDAP Identity driver in the ``/etc/keystone/keystone.conf``
+   file. This allows LDAP as an identity back end:
 
    .. code-block:: ini
 
@@ -26,7 +27,8 @@ administrators to use users and groups in LDAP.
       driver = ldap
 
 #. Create the organizational units (OU) in the LDAP directory, and define
-   the corresponding location in the ``keystone.conf`` file:
+   the corresponding location in the ``/etc/keystone/keystone.conf``
+   file:
 
    .. code-block:: ini
 
@@ -48,7 +50,8 @@ administrators to use users and groups in LDAP.
          user_objectclass = person
 
 #. A read-only implementation is recommended for LDAP integration. These
-   permissions are applied to object types in the ``keystone.conf``:
+   permissions are applied to object types in the
+   ``/etc/keystone/keystone.conf`` file:
 
    .. code-block:: ini
 
@@ -195,7 +198,7 @@ Identity attribute mapping
    update.
 
    For example, you can mask Active Directory account status attributes
-   in the ``keystone.conf`` file:
+   in the ``/etc/keystone/keystone.conf`` file:
 
    .. code-block:: ini
 
