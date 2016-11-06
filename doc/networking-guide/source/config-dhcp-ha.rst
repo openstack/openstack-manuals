@@ -220,7 +220,8 @@ Managing agents in neutron deployment
 
 #. Show agent details.
 
-   The :command:`agent-show` command shows details for a specified agent:
+   The :command:`neutron agent-show` command shows details for a specified
+   agent:
 
    .. code-block:: console
 
