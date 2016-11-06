@@ -546,12 +546,24 @@ where. From the command line, do:
 
 .. code-block:: console
 
-   $ nova secgroup-create global_http "allow web traffic from the Internet"
-   +-------------+-------------------------------------+
-   | Name        | Description                         |
-   +-------------+-------------------------------------+
-   | global_http | allow web traffic from the Internet |
-   +-------------+-------------------------------------+
+   $ openstack security group create global_http --description "allow web traffic from the Internet"
+   +-----------------+--------------------------------------------------------------------------------------------------------------------------+
+   | Field           | Value                                                                                                                    |
+   +-----------------+--------------------------------------------------------------------------------------------------------------------------+
+   | created_at      | 2016-11-03T13:50:53Z                                                                                                     |
+   | description     | allow web traffic from the Internet.                                                                                     |
+   | headers         |                                                                                                                          |
+   | id              | c0b92b20-4575-432a-b4a9-eaf2ad53f696                                                                                     |
+   | name            | global_http                                                                                                              |
+   | project_id      | 5669caad86a04256994cdf755df4d3c1                                                                                         |
+   | project_id      | 5669caad86a04256994cdf755df4d3c1                                                                                         |
+   | revision_number | 1                                                                                                                        |
+   | rules           | created_at='2016-11-03T13:50:53Z', direction='egress', ethertype='IPv4', id='4d8cec94-e0ee-4c20-9f56-8fb67c21e4df',      |
+   |                 | project_id='5669caad86a04256994cdf755df4d3c1', revision_number='1', updated_at='2016-11-03T13:50:53Z'                    |
+   |                 | created_at='2016-11-03T13:50:53Z', direction='egress', ethertype='IPv6', id='31be2ad1-be14-4aef-9492-ecebede2cf12',      |
+   |                 | project_id='5669caad86a04256994cdf755df4d3c1', revision_number='1', updated_at='2016-11-03T13:50:53Z'                    |
+   | updated_at      | 2016-11-03T13:50:53Z                                                                                                     |
+   +-----------------+--------------------------------------------------------------------------------------------------------------------------+
 
 This creates the empty security group. To make it do what we want, we
 need to add some rules:
