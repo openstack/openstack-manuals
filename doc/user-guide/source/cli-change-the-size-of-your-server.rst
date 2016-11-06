@@ -9,37 +9,40 @@ Change the size of a server by changing its flavor.
 
    .. code-block:: console
 
-      $ nova show myCirrosServer
-      +-------------------------------------+-------------------------------------+
-      | Property                            | Value                               |
-      +-------------------------------------+-------------------------------------+
-      | status                              | ACTIVE                              |
-      | updated                             | 2013-07-18T15:08:20Z                |
-      | OS-EXT-STS:task_state               | None                                |
-      | OS-EXT-SRV-ATTR:host                | devstack                            |
-      | key_name                            | None                                |
-      | image                               | cirros-0.3.2-x86_64-uec (397e71...  |
-      | private network                     | 10.0.0.3                            |
-      | hostId                              | 6e1e69b71ac9b1e6871f91e2dfc9a9b9... |
-      | OS-EXT-STS:vm_state                 | active                              |
-      | OS-EXT-SRV-ATTR:instance_name       | instance-00000005                   |
-      | OS-EXT-SRV-ATTR:hypervisor_hostname | devstack                            |
-      | flavor                              | m1.small (2)                        |
-      | id                                  | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5|
-      | security_groups                     | [{u'name': u'default'}]             |
-      | user_id                             | 376744b5910b4b4da7d8e6cb483b06a8    |
-      | name                                | myCirrosServer                      |
-      | created                             | 2013-07-18T15:07:59Z                |
-      | tenant_id                           | 66265572db174a7aa66eba661f58eb9e    |
-      | OS-DCF:diskConfig                   | MANUAL                              |
-      | metadata                            | {u'description': u'Small test ima...|
-      | accessIPv4                          |                                     |
-      | accessIPv6                          |                                     |
-      | progress                            | 0                                   |
-      | OS-EXT-STS:power_state              | 1                                   |
-      | OS-EXT-AZ:availability_zone         | nova                                |
-      | config_drive                        |                                     |
-      +-------------------------------------+-------------------------------------+
+      $ openstack server show myCirrosServer
+      +--------------------------------------+----------------------------------------------------------+
+      | Field                                | Value                                                    |
+      +--------------------------------------+----------------------------------------------------------+
+      | OS-DCF:diskConfig                    | AUTO                                                     |
+      | OS-EXT-AZ:availability_zone          | nova                                                     |
+      | OS-EXT-SRV-ATTR:host                 | node-7.domain.tld                                        |
+      | OS-EXT-SRV-ATTR:hypervisor_hostname  | node-7.domain.tld                                        |
+      | OS-EXT-SRV-ATTR:instance_name        | instance-000000f3                                        |
+      | OS-EXT-STS:power_state               | 1                                                        |
+      | OS-EXT-STS:task_state                | None                                                     |
+      | OS-EXT-STS:vm_state                  | active                                                   |
+      | OS-SRV-USG:launched_at               | 2016-10-26T01:13:15.000000                               |
+      | OS-SRV-USG:terminated_at             | None                                                     |
+      | accessIPv4                           |                                                          |
+      | accessIPv6                           |                                                          |
+      | addresses                            | admin_internal_net=192.168.111.139                       |
+      | config_drive                         | True                                                     |
+      | created                              | 2016-10-26T01:12:38Z                                     |
+      | flavor                               | m1.small (2)                                             |
+      | hostId                               | d815539ce1a8fad3d597c3438c13f1229d3a2ed66d1a75447845a2f3 |
+      | id                                   | 67bc9a9a-5928-47c4-852c-3631fef2a7e8                     |
+      | image                                | cirros-test (dc5ec4b8-5851-4be8-98aa-df7a9b8f538f)       |
+      | key_name                             | None                                                     |
+      | name                                 | myCirrosServer                                           |
+      | os-extended-volumes:volumes_attached | []                                                       |
+      | progress                             | 0                                                        |
+      | project_id                           | c08367f25666480f9860c6a0122dfcc4                         |
+      | properties                           |                                                          |
+      | security_groups                      | [{u'name': u'default'}]                                  |
+      | status                               | ACTIVE                                                   |
+      | updated                              | 2016-10-26T01:13:00Z                                     |
+      | user_id                              | 0209430e30924bf9b5d8869990234e44                         |
+      +--------------------------------------+----------------------------------------------------------+
 
    The size (flavor) of the server is ``m1.small (2)``.
 
@@ -92,11 +95,11 @@ Change the size of a server by changing its flavor.
 
    .. code-block:: console
 
-      $ nova list
+      $ openstack server list
       +----------------------+----------------+--------+-----------------------------------------+
       | ID                   | Name           | Status | Networks                                |
       +----------------------+----------------+--------+-----------------------------------------+
-      | 84c6e57d-a6b1-44b... | myCirrosServer | RESIZE | private=172.16.101.6, public=10.4.113.6 |
+      | 67bc9a9a-5928-47c... | myCirrosServer | RESIZE | admin_internal_net=192.168.111.139      |
       +----------------------+----------------+--------+-----------------------------------------+
 
    When the resize completes, the status becomes VERIFY\_RESIZE.
@@ -105,7 +108,7 @@ Change the size of a server by changing its flavor.
 
    .. code-block:: console
 
-      $ nova resize-confirm 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5
+      $ openstack server resize --confirm 67bc9a9a-5928-47c4-852c-3631fef2a7e8
 
    The server status becomes ACTIVE.
 
@@ -114,6 +117,6 @@ Change the size of a server by changing its flavor.
 
    .. code-block:: console
 
-      $ nova resize-revert 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5
+      $ openstack server resize --revert 67bc9a9a-5928-47c4-852c-3631fef2a7e8
 
    The server status becomes ACTIVE.
