@@ -10,9 +10,9 @@ used to sign it must be available as a :term:`Certificate Authority (CA)`
 certificate. These files can be generated either using the
 :command:`keystone-manage` utility, or externally generated. The files need to
 be in the locations specified by the top level Identity service
-configuration file ``keystone.conf`` as specified in the above section.
-Additionally, the private key should only be readable by the system user
-that will run the Identity service.
+configuration file ``/etc/keystone/keystone.conf`` as specified in the
+above section. Additionally, the private key should only be readable by
+the system user that will run the Identity service.
 
 
 .. warning::
@@ -65,8 +65,8 @@ certificates, or you are providing your own certificates, these values
 do not need to be set.
 
 If ``provider=keystone.token.providers.uuid.Provider`` in the
-``[token]`` section of the keystone configuration, a typical token looks
-like ``53f7f6ef0cc344b5be706bcc8b1479e1``. If
+``[token]`` section of the keystone configuration file, a typical token
+looks like ``53f7f6ef0cc344b5be706bcc8b1479e1``. If
 ``provider=keystone.token.providers.pki.Provider``, a typical token is a
 much longer string, such as::
 
