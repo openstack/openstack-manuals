@@ -258,7 +258,7 @@ complete advanced VM creation operations:
 +-------------------------------------+--------------------------------------+
 |Boots a VM that connects to all      |                                      |
 |networks that are accessible to the  |                                      |
-|projectt who submits the request     |                                      |
+|project who submits the request      |                                      |
 |(without the ``--nic`` option).      |                                      |
 |                                     |                                      |
 |                                     |``$ nova boot --image IMAGE --flavor``|
