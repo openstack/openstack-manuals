@@ -156,7 +156,7 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
       .. code-block:: console
 
-         $ nova secgroup-add-rule SECURITY_GROUP_NAME tcp 22 22 0.0.0.0/0
+         $ openstack security group rule create SECURITY_GROUP_NAME --protocol tcp --dst-port 22:22 --src-ip 0.0.0.0/0
 
    -  Allow access only from IP addresses from other security groups
       (source groups) to access the specified port:
@@ -173,7 +173,7 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
       .. code-block:: console
 
-         $ nova secgroup-add-rule SECURITY_GROUP_NAME icmp -1 -1 0.0.0.0/0
+         $ openstack security group rule create SECURITY_GROUP_NAME --protocol icmp --dst-port -1:-1 --src-ip 0.0.0.0/0
 
       This allows access to all codes and all types of ICMP traffic.
 
@@ -193,7 +193,7 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
       .. code-block:: console
 
-         $ nova secgroup-add-rule SECURITY_GROUP_NAME udp 53 53 0.0.0.0/0
+         $ openstack security group rule create SECURITY_GROUP_NAME --protocol udp --dst-port 53:53 --src-ip 0.0.0.0/0
 
    -  Allow only IP addresses from other security groups (source groups) to
       access the specified port.

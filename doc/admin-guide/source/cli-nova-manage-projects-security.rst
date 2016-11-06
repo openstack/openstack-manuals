@@ -127,7 +127,7 @@ easier to understand than "bobs\_group" or "secgrp1".
 
    .. code-block:: console
 
-      $ nova secgroup-add-rule secGroupName ip-protocol from-port to-port CIDR
+      $ openstack security group rule create SEC_GROUP_NAME --protocol PROTOCOL --dst-port FROM_PORT:TO_PORT --src-ip CIDR
 
    The arguments are positional, and the ``from-port`` and ``to-port``
    arguments specify the local port range connections are allowed to
@@ -136,24 +136,54 @@ easier to understand than "bobs\_group" or "secgrp1".
 
    .. code-block:: console
 
-      $ nova secgroup-add-rule global_http tcp 80 80 0.0.0.0/0
-      +-------------+-----------+---------+-----------+--------------+
-      | IP Protocol | From Port | To Port | IP Range  | Source Group |
-      +-------------+-----------+---------+-----------+--------------+
-      | tcp         | 80        | 80      | 0.0.0.0/0 |              |
-      +-------------+-----------+---------+-----------+--------------+
+      $ openstack security group rule create global_http --protocol tcp --dst-port 80:80 --src-ip 0.0.0.0/0
+      +-------------------+--------------------------------------+
+      | Field             | Value                                |
+      +-------------------+--------------------------------------+
+      | created_at        | 2016-11-06T14:02:00Z                 |
+      | description       |                                      |
+      | direction         | ingress                              |
+      | ethertype         | IPv4                                 |
+      | headers           |                                      |
+      | id                | 2ba06233-d5c8-43eb-93a9-8eaa94bc9eb5 |
+      | port_range_max    | 80                                   |
+      | port_range_min    | 80                                   |
+      | project_id        | 5669caad86a04256994cdf755df4d3c1     |
+      | project_id        | 5669caad86a04256994cdf755df4d3c1     |
+      | protocol          | tcp                                  |
+      | remote_group_id   | None                                 |
+      | remote_ip_prefix  | 0.0.0.0/0                            |
+      | revision_number   | 1                                    |
+      | security_group_id | c0b92b20-4575-432a-b4a9-eaf2ad53f696 |
+      | updated_at        | 2016-11-06T14:02:00Z                 |
+      +-------------------+--------------------------------------+
 
    You can create complex rule sets by creating additional rules. For
    example, if you want to pass both HTTP and HTTPS traffic, run:
 
    .. code-block:: console
 
-      $ nova secgroup-add-rule global_http tcp 443 443 0.0.0.0/0
-      +-------------+-----------+---------+-----------+--------------+
-      | IP Protocol | From Port | To Port | IP Range  | Source Group |
-      +-------------+-----------+---------+-----------+--------------+
-      | tcp         | 443       | 443     | 0.0.0.0/0 |              |
-      +-------------+-----------+---------+-----------+--------------+
+      $ openstack security group rule create global_http --protocol tcp --dst-port 443:443 --src-ip 0.0.0.0/0
+      +-------------------+--------------------------------------+
+      | Field             | Value                                |
+      +-------------------+--------------------------------------+
+      | created_at        | 2016-11-06T14:09:20Z                 |
+      | description       |                                      |
+      | direction         | ingress                              |
+      | ethertype         | IPv4                                 |
+      | headers           |                                      |
+      | id                | 821c3ef6-9b21-426b-be5b-c8a94c2a839c |
+      | port_range_max    | 443                                  |
+      | port_range_min    | 443                                  |
+      | project_id        | 5669caad86a04256994cdf755df4d3c1     |
+      | project_id        | 5669caad86a04256994cdf755df4d3c1     |
+      | protocol          | tcp                                  |
+      | remote_group_id   | None                                 |
+      | remote_ip_prefix  | 0.0.0.0/0                            |
+      | revision_number   | 1                                    |
+      | security_group_id | c0b92b20-4575-432a-b4a9-eaf2ad53f696 |
+      | updated_at        | 2016-11-06T14:09:20Z                 |
+      +-------------------+--------------------------------------+
 
    Despite only outputting the newly added rule, this operation is
    additive (both rules are created and enforced).

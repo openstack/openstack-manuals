@@ -544,12 +544,13 @@ commands.
    the ``.bashrc`` file are for an unprivileged user, you must run
    these commands as that user instead.
 
-Enable ping and SSH with :command:`nova secgroup-add-rule` commands:
+Enable ping and SSH with :command:`openstack security group rule create`
+commands:
 
 .. code-block:: console
 
-   $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
-   $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
+   $ openstack security group rule create default --protocol icmp --dst-port -1:-1 --src-ip 0.0.0.0/0
+   $ openstack security group rule create default --protocol tcp --dst-port 22:22 --src-ip 0.0.0.0/0
 
 Enable ping and SSH with ``euca2ools``:
 
