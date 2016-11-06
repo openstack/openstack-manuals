@@ -73,7 +73,8 @@ system labeled ``newfs`` and direct IO enabled:
 
 .. code-block:: console
 
-   $ cinder create --metadata fstype=ext4 fslabel=newfs dio=yes --display-name volume_1 50
+   $ openstack volume create --property fstype=ext4 fslabel=newfs dio=yes \
+     --size 50 VOLUME
 
 Operational notes for GPFS driver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
