@@ -364,20 +364,20 @@ Install and configure components
 
      .. end
 
-.. only:: obs or rdo or ubuntu
+   .. only:: obs or rdo or ubuntu
 
-   * In the ``[oslo_concurrency]`` section, configure the lock path:
+      * In the ``[oslo_concurrency]`` section, configure the lock path:
 
-     .. path /etc/cinder/cinder.conf
-     .. code-block:: ini
+        .. path /etc/cinder/cinder.conf
+        .. code-block:: ini
 
-        [oslo_concurrency]
-        ...
-        lock_path = /var/lib/cinder/tmp
+           [oslo_concurrency]
+           ...
+           lock_path = /var/lib/cinder/tmp
 
-     .. end
+        .. end
 
-.. endonly
+   .. endonly
 
 .. only:: rdo or ubuntu or debian
 
