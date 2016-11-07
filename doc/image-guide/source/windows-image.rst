@@ -41,9 +41,10 @@ using the :command:`virt-install` command and the KVM hypervisor.
    The disk is not detected by default by the Windows installer.
    When requested to choose an installation target, click
    :guilabel:`Load driver` and browse the file system to select
-   the ``E:\WIN8\AMD64`` folder. The Windows installer displays
-   a list of drivers to install. Select the :guilabel:`VirtIO SCSI` and
-   :guilabel:`network drivers` and continue the installation.
+   the ``E:\virtio-win-0.1XX\viostor\w7\amd64`` folder. The Windows
+   installer displays a list of drivers to install. Select the
+   :guilabel:`VirtIO SCSI` and :guilabel:`network drivers` and
+   continue the installation.
 
    Once the installation is completed, the VM restarts.
    Define a password for the administrator when prompted.
@@ -55,7 +56,7 @@ using the :command:`virt-install` command and the KVM hypervisor.
 
    .. code-block:: console
 
-      C:\pnputil -i -a E:\WIN8\AMD64\*.INF
+      C:\pnputil -i -a E:\virtio-win-0.1XX\viostor\w7\amd64\*.INF
 
 #. To allow the :term:`Cloudbase-Init` to run scripts during an instance
    boot, set the PowerShell execution policy to be unrestricted:
