@@ -26,7 +26,7 @@ with their respective leads:
   Lana Brindley
 * `Networking Guide
   <https://wiki.openstack.org/wiki/Documentation/NetworkingGuide>`_:
-  Edgar Magana
+  John Davidge
 * `Operations and Architecture Design guides
   <https://wiki.openstack.org/wiki/Documentation/OpsGuide>`_:
   Shilla Saebi
