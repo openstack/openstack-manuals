@@ -114,7 +114,7 @@ storage node, you must prepare the storage device.
    tool detects these volumes and attempts to cache them which can cause
    a variety of problems with both the underlying operating system
    and project volumes. You must reconfigure LVM to scan only the devices
-   that contain the ``cinder-volume`` volume group. Edit the
+   that contain the ``cinder-volumes`` volume group. Edit the
    ``/etc/lvm/lvm.conf`` file and complete the following actions:
 
    * In the ``devices`` section, add a filter that accepts the
