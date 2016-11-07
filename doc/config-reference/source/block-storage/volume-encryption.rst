@@ -23,7 +23,7 @@ Steps to update ``cinder-api`` servers:
 
      .. code-block:: ini
 
-        api_class = cinder.key_manager.barbican.BarbicanKeyManager
+        api_class = castellan.key_manager.barbican_key_manager.BarbicanKeyManager
 
      .. note::
 
@@ -34,15 +34,15 @@ Steps to update ``cinder-api`` servers:
 
 Update ``nova-compute`` servers:
 
-#. Install the ``cryptsetup`` utility and the ``python-barbicanclient``
-   Python package.
+#. Ensure the ``cryptsetup`` utility is installed, and install
+   the ``python-barbicanclient`` Python package.
 
 #. Set up the Key Manager service by editing ``/etc/nova/nova.conf``:
 
    .. code-block:: ini
 
       [key_manager]
-      api_class = nova.key_manager.barbican.BarbicanKeyManager
+      api_class = castellan.key_manager.barbican_key_manager.BarbicanKeyManager
 
 #. Restart ``nova-compute``.
 
@@ -109,7 +109,9 @@ type, ``unencrypted``, is used.
 
    .. code-block:: console
 
+
       $ openstack volume create --size 1 'unencrypted volume'
+
 
 #. Create an encrypted 1 GB test volume:
 
