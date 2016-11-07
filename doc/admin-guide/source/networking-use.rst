@@ -40,36 +40,34 @@ command-line interface (CLI), read the networking section `Create and manage
 networks <http://docs.openstack.org/user-guide/cli-create-and-manage-networks.html>`__
 in the OpenStack End User Guide.
 
-This table shows example neutron commands that enable you to complete
-basic network operations:
+This table shows example :command:`openstack` commands that enable you to
+complete basic network operations:
 
 +-------------------------+-------------------------------------------------+
 | Operation               | Command                                         |
 +=========================+=================================================+
 |Creates a network.       |                                                 |
 |                         |                                                 |
-|                         |     ``$ neutron net-create net1``               |
+|                         |     ``$ openstack network create net1``         |
 +-------------------------+-------------------------------------------------+
 |Creates a subnet that is |                                                 |
 |associated with net1.    |                                                 |
 |                         |                                                 |
-|                         |     ``$ neutron subnet-create``                 |
+|                         |     ``$ openstack subnet create``               |
 |                         |     ``net1 10.0.0.0/24``                        |
 +-------------------------+-------------------------------------------------+
 |Lists ports for a        |                                                 |
 |specified project.       |                                                 |
 |                         |                                                 |
-|                         |     ``$ neutron port-list``                     |
+|                         |     ``$ openstack port list``                   |
 +-------------------------+-------------------------------------------------+
 |Lists ports for a        |                                                 |
 |specified project        |                                                 |
-|and displays the ``id``, |                                                 |
-|``fixed_ips``,           |                                                 |
-|and ``device_owner``     |                                                 |
-|columns.                 |                                                 |
+|and displays the ``ID``, |                                                 |
+|``Fixed IP Addresses``   |                                                 |
 |                         |                                                 |
-|                         |     ``$ neutron port-list -c id``               |
-|                         |     ``-c fixed_ips -c device_owner``            |
+|                         |     ``$ openstack port list -c ID``             |
+|                         |     ``-c "Fixed IP Addresses``                  |
 +-------------------------+-------------------------------------------------+
 |Shows information for a  |                                                 |
 |specified port.          |                                                 |
@@ -90,19 +88,19 @@ basic network operations:
 Administrative operations
 -------------------------
 
-The administrator can run any :command:`neutron` command on behalf of
-projects by specifying an Identity ``tenant_id`` in the command, as
+The administrator can run any :command:`openstack` command on behalf of
+projects by specifying an Identity ``project`` in the command, as
 follows:
 
 .. code-block:: console
 
-   $ neutron net-create --tenant-id TENANT_ID NETWORK_NAME
+   $ openstack network create --project PROJECT_ID NETWORK_NAME
 
 For example:
 
 .. code-block:: console
 
-   $ neutron net-create --tenant-id 5e4bbe24b67a4410bc4d9fae29ec394e net1
+   $ openstack network create --project 5e4bbe24b67a4410bc4d9fae29ec394e net1
 
 .. note::
 
@@ -125,47 +123,46 @@ advanced network operations:
 |Creates a network that         |                                            |
 |all projects can use.          |                                            |
 |                               |                                            |
-|                               |     ``$ neutron net-create``               |
-|                               |     ``--shared public-net``                |
+|                               |     ``$ openstack network create``         |
+|                               |     ``--share public-net``                 |
 +-------------------------------+--------------------------------------------+
 |Creates a subnet with a        |                                            |
 |specified gateway IP address.  |                                            |
 |                               |                                            |
-|                               |   ``$ neutron subnet-create``              |
-|                               |   ``--gateway 10.0.0.254 net1 10.0.0.0/24``|
+|                               |   ``$ openstack subnet create subnet1``    |
+|                               |   ``--gateway 10.0.0.254 --network net1``  |
 +-------------------------------+--------------------------------------------+
 |Creates a subnet that has      |                                            |
 |no gateway IP address.         |                                            |
 |                               |                                            |
-|                               |     ``$ neutron subnet-create``            |
-|                               |     ``--no-gateway net1 10.0.0.0/24``      |
+|                               |     ``$ openstack subnet create subnet1``  |
+|                               |     ``--no-gateway --network net1``        |
 +-------------------------------+--------------------------------------------+
 |Creates a subnet with DHCP     |                                            |
 |disabled.                      |                                            |
 |                               |                                            |
-|                               |   ``$ neutron subnet-create``              |
-|                               |   ``net1 10.0.0.0/24 --enable-dhcp=False`` |
+|                               |   ``$ openstack subnet create subnet1``    |
+|                               |   ``--network net1 --no-dhcp``             |
 +-------------------------------+--------------------------------------------+
 |Specifies a set of host routes |                                            |
 |                               |                                            |
-|                               |     ``$ neutron subnet-create``            |
-|                               |     ``test-net1 40.0.0.0/24 --host-routes``|
-|                               |     ``type=dict list=true``                |
+|                               |     ``$ openstack subnet create subnet1``  |
+|                               |     ``--network net1 --host-route``        |
 |                               |     ``destination=40.0.1.0/24,``           |
-|                               |     ``nexthop=40.0.0.2``                   |
+|                               |     ``gateway=40.0.0.2``                   |
 +-------------------------------+--------------------------------------------+
 |Creates a subnet with a        |                                            |
 |specified set of dns name      |                                            |
 |servers.                       |                                            |
 |                               |                                            |
-|                               |     ``$ neutron subnet-create test-net1``  |
-|                               |     ``40.0.0.0/24 --dns-nameservers``      |
-|                               |     ``list=true 8.8.4.4 8.8.8.8``          |
+|                               |     ``$ openstack subnet create subnet1``  |
+|                               |     ``--network net1 --dns-nameserver``    |
+|                               |     ``8.8.4.4``                            |
 +-------------------------------+--------------------------------------------+
 |Displays all ports and         |                                            |
 |IPs allocated on a network.    |                                            |
 |                               |                                            |
-|                               | ``$ neutron port-list --network_id NET_ID``|
+|                               | ``$ openstack port list --network NET_ID`` |
 +-------------------------------+--------------------------------------------+
 
 **Advanced Networking operations**
@@ -184,7 +181,7 @@ complete basic VM networking operations:
 +==================================+=========================================+
 |Checks available networks.        |                                         |
 |                                  |                                         |
-|                                  |    ``$ neutron net-list``               |
+|                                  |    ``$ openstack network list``         |
 +----------------------------------+-----------------------------------------+
 |Boots a VM with a single NIC on   |                                         |
 |a selected Networking network.    |                                         |
@@ -197,20 +194,20 @@ complete basic VM networking operations:
 |Compute instance UUID. See :ref:  |                                         |
 |`Create and delete VMs`           |                                         |
 |                                  |                                         |
-|                                  |``$ neutron port-list --device_id VM_ID``|
+|                                  |``$ openstack port list --server VM_ID`` |
 +----------------------------------+-----------------------------------------+
 |Searches for ports, but shows     |                                         |
 |only the ``mac_address`` of       |                                         |
 |the port.                         |                                         |
 |                                  |                                         |
-|                                  |    ``$ neutron port-list --field``      |
-|                                  |    ``mac_address --device_id VM_ID``    |
+|                                  |    ``$ openstack port list -c``         |
+|                                  |    ``"MAC Address" --server VM_ID``     |
 +----------------------------------+-----------------------------------------+
 |Temporarily disables a port from  |                                         |
 |sending traffic.                  |                                         |
 |                                  |                                         |
-|                                  |  ``$ neutron port-update PORT_ID``      |
-|                                  |  ``--admin_state_up False``             |
+|                                  |  ``$ openstack port set PORT_ID``       |
+|                                  |  ``--disable``                          |
 +----------------------------------+-----------------------------------------+
 
 **Basic Compute and Networking operations**
@@ -297,18 +294,18 @@ You must configure security group rules depending on the type of plug-in
 you are using. If you are using a plug-in that:
 
 -  Implements Networking security groups, you can configure security
-   group rules directly by using the :command:`neutron security-group-rule-create`
+   group rules directly by using the :command:`openstack security group rule create`
    command. This example enables ``ping`` and ``ssh`` access to your VMs.
 
    .. code-block:: console
 
-      $ neutron security-group-rule-create --protocol icmp \
-          --direction ingress default
+      $ openstack security group rule create --protocol icmp \
+          --ingress
 
    .. code-block:: console
 
-      $ neutron security-group-rule-create --protocol tcp --port-range-min 22 \
-          --port-range-max 22 --direction ingress default
+      $ openstack security group rule create --protocol tcp \
+          --egress --description "Sample Security Group"
 
 -  Does not implement Networking security groups, you can configure
    security group rules by using the :command:`nova secgroup-add-rule` or
