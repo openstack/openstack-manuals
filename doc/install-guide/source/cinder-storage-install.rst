@@ -72,13 +72,13 @@ storage node, you must prepare the storage device.
 
    .. only:: ubuntu
 
-        .. code-block:: console
+      .. code-block:: console
 
-           # apt install lvm2
+         # apt install lvm2
 
-        .. end
+      .. end
 
-    .. endonly
+   .. endonly
 
    .. note::
 
