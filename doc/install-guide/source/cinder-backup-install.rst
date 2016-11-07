@@ -52,7 +52,7 @@ Install and configure components
 
       .. code-block:: console
 
-        # apt-get install cinder-backup
+        # apt install cinder-backup
 
       .. end
 

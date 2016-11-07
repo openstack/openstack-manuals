@@ -51,7 +51,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install openstack-dashboard
+         # apt install openstack-dashboard
 
       .. end
 
@@ -63,7 +63,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install openstack-dashboard-apache
+         # apt install openstack-dashboard-apache
 
       .. end
 

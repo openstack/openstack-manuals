@@ -208,7 +208,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install nova-api nova-conductor nova-consoleauth \
+         # apt install nova-api nova-conductor nova-consoleauth \
            nova-novncproxy nova-scheduler
 
       .. end
@@ -221,7 +221,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install nova-api nova-conductor nova-consoleauth \
+         # apt install nova-api nova-conductor nova-consoleauth \
            nova-consoleproxy nova-scheduler
 
       .. end

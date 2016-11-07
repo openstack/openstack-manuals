@@ -202,7 +202,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install glance
+         # apt install glance
 
       .. end
 

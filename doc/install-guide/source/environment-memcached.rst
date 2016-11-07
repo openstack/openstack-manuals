@@ -15,7 +15,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install memcached python-memcache
+         # apt install memcached python-memcache
 
       .. end
 

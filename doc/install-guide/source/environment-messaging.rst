@@ -23,7 +23,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install rabbitmq-server
+         # apt install rabbitmq-server
 
       .. end
 

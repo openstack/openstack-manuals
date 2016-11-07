@@ -11,7 +11,7 @@ group>` for instances.
 
    .. code-block:: console
 
-      # apt-get install neutron-linuxbridge-agent
+      # apt install neutron-linuxbridge-agent
 
    .. end
 

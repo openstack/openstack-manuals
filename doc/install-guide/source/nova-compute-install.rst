@@ -56,7 +56,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # apt-get install nova-compute
+         # apt install nova-compute
 
       .. end
 
@@ -356,7 +356,7 @@ Finalize installation
 
         .. code-block:: console
 
-           # apt-get install nova-compute-qemu
+           # apt install nova-compute-qemu
 
         .. end
 
