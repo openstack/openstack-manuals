@@ -68,12 +68,7 @@ the volume.
 
    .. code-block:: console
 
-      $ cinder type-create LUKS
-      +--------------------------------------+-------+
-      |                  ID                  |  Name |
-      +--------------------------------------+-------+
-      | e64b35a4-a849-4c53-9cc7-2345d3c8fbde | LUKS  |
-      +--------------------------------------+-------+
+      $ openstack volume type create LUKS
 
 #. Mark the volume type as encrypted and provide the necessary details. Use
    ``--control_location`` to specify where encryption is performed:
@@ -114,60 +109,13 @@ type, ``unencrypted``, is used.
 
    .. code-block:: console
 
-
-      $ cinder create --display-name 'unencrypted volume' 1
-      +--------------------------------+--------------------------------------+
-      |            Property            |                Value                 |
-      +--------------------------------+--------------------------------------+
-      |          attachments           |                  []                  |
-      |       availability_zone        |                 nova                 |
-      |            bootable            |                false                 |
-      |           created_at           |      2014-08-10T01:24:03.000000      |
-      |          description           |                 None                 |
-      |           encrypted            |                False                 |
-      |               id               | 081700fd-2357-44ff-860d-2cd78ad9c568 |
-      |            metadata            |                  {}                  |
-      |              name              |          unencrypted volume          |
-      |     os-vol-host-attr:host      |              controller              |
-      | os-vol-mig-status-attr:migstat |                 None                 |
-      | os-vol-mig-status-attr:name_id |                 None                 |
-      |  os-vol-tenant-attr:tenant_id  |   08fdea76c760475f82087a45dbe94918   |
-      |              size              |                  1                   |
-      |          snapshot_id           |                 None                 |
-      |          source_volid          |                 None                 |
-      |             status             |               creating               |
-      |            user_id             |   7cbc6b58b372439e8f70e2a9103f1332   |
-      |          volume_type           |                 None                 |
-      +--------------------------------+--------------------------------------+
+      $ openstack volume create --size 1 'unencrypted volume'
 
 #. Create an encrypted 1 GB test volume:
 
    .. code-block:: console
 
-      $ cinder create --display-name 'encrypted volume' --volume-type LUKS 1
-      +--------------------------------+--------------------------------------+
-      |            Property            |                Value                 |
-      +--------------------------------+--------------------------------------+
-      |          attachments           |                  []                  |
-      |       availability_zone        |                 nova                 |
-      |            bootable            |                false                 |
-      |           created_at           |      2014-08-10T01:24:24.000000      |
-      |          description           |                 None                 |
-      |           encrypted            |                 True                 |
-      |               id               | 86060306-6f43-4c92-9ab8-ddcd83acd973 |
-      |            metadata            |                  {}                  |
-      |              name              |           encrypted volume           |
-      |     os-vol-host-attr:host      |              controller              |
-      | os-vol-mig-status-attr:migstat |                 None                 |
-      | os-vol-mig-status-attr:name_id |                 None                 |
-      |  os-vol-tenant-attr:tenant_id  |   08fdea76c760475f82087a45dbe94918   |
-      |              size              |                  1                   |
-      |          snapshot_id           |                 None                 |
-      |          source_volid          |                 None                 |
-      |             status             |               creating               |
-      |            user_id             |   7cbc6b58b372439e8f70e2a9103f1332   |
-      |          volume_type           |                 LUKS                 |
-      +--------------------------------+--------------------------------------+
+      $ openstack volume create --size 1 --type LUKS 'encrypted volume'
 
 Notice the encrypted parameter; it will show ``True`` or ``False``.
 The option ``volume_type`` is also shown for easy review.
@@ -193,25 +141,18 @@ sections.
 
    .. code-block:: console
 
-      $ nova boot --flavor m1.tiny --image cirros-0.3.1-x86_64-disk vm-test
+      $ openstack server create --image cirros-0.3.1-x86_64-disk --flavor m1.tiny TESTVM
 
 #. Create two volumes, one encrypted and one not encrypted then attach them
    to your VM:
 
    .. code-block:: console
 
-
-      $ cinder create --display-name 'unencrypted volume' 1
-      $ cinder create --display-name 'encrypted volume' --volume-type LUKS 1
-      $ cinder list
-      +--------------------------------------+-----------+--------------------+------+-------------+----------+-------------+
-      |                  ID                  |   Status  |        Name        | Size | Volume Type | Bootable | Attached to |
-      +--------------------------------------+-----------+--------------------+------+-------------+----------+-------------+
-      | 64b48a79-5686-4542-9b52-d649b51c10a2 | available | unencrypted volume |  1   |     None    |  false   |             |
-      | db50b71c-bf97-47cb-a5cf-b4b43a0edab6 | available |  encrypted volume  |  1   |     LUKS    |  false   |             |
-      +--------------------------------------+-----------+--------------------+------+-------------+----------+-------------+
-      $ nova volume-attach vm-test 64b48a79-5686-4542-9b52-d649b51c10a2 /dev/vdb
-      $ nova volume-attach vm-test db50b71c-bf97-47cb-a5cf-b4b43a0edab6 /dev/vdc
+      $ openstack volume create --size 1 'unencrypted volume'
+      $ openstack volume create --size 1 --type LUKS 'encrypted volume'
+      $ openstack volume list
+      $ openstack server add volume --device /dev/vdb TESTVM 'unencrypted volume'
+      $ openstack server add volume --device /dev/vdc TESTVM 'encrypted volume'
 
 #. On the VM, send some text to the newly attached volumes and synchronize
    them:
