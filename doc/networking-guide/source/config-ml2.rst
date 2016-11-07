@@ -19,7 +19,7 @@ distinguishes between the two kinds of drivers that can be configured:
   Each available network type is managed by an ML2 type driver. Type drivers
   maintain any needed type-specific network state. They validate the type
   specific information for provider networks and are responsible for the
-  allocation of a free segment in tenant networks.
+  allocation of a free segment in project networks.
 
 * Mechanism drivers
 
@@ -162,7 +162,7 @@ More information about provider networks see
 Project network types
 ^^^^^^^^^^^^^^^^^^^^^
 
-Project (tenant) networks provide connectivity to instances for a particular
+Project networks provide connectivity to instances for a particular
 project. Regular (non-privileged) users can manage project networks
 within the allocation that an administrator or operator defines for
 them. More information about project and provider networks see
@@ -177,26 +177,26 @@ server:
 * VLAN
 
   The administrator needs to configure the range of VLAN IDs that can be
-  used for project (tenant) network allocation.
+  used for project network allocation.
   For more details, see the related section in the
   `Configuration Reference <http://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-vlan-type-configuration-options>`__.
 
 * GRE
 
   The administrator needs to configure the range of tunnel IDs that can be
-  used for project (tenant) network allocation.
+  used for project network allocation.
   For more details, see the related section in the
   `Configuration Reference <http://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-gre-type-configuration-options>`__.
 
 * VXLAN
 
   The administrator needs to configure the range of VXLAN IDs that can be
-  used for project (tenant) network allocation.
+  used for project network allocation.
   For more details, see the related section in the
   `Configuration Reference <http://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-vxlan-type-configuration-options>`__.
 
 .. note::
-   Flat networks for project (tenant) allocation are not supported. They only
+   Flat networks for project allocation are not supported. They only
    can exist as a provider network.
 
 Mechanism drivers

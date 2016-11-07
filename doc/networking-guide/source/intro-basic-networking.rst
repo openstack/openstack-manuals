@@ -82,7 +82,7 @@ VLAN is a networking technology that enables a single switch to act as
 if it was multiple independent switches. Specifically, two hosts that
 are connected to the same switch but on different VLANs do not see
 each other's traffic. OpenStack is able to take advantage of VLANs to
-isolate the traffic of different tenants, even if the tenants happen
+isolate the traffic of different projects, even if the projects happen
 to have instances running on the same compute host. Each VLAN has an
 associated numerical ID, between 1 and 4095. We say "VLAN 15" to refer
 to the VLAN with a numerical ID of 15.
@@ -121,7 +121,7 @@ the VLAN IDs is called a *trunk port*. IEEE 802.1Q is the network standard
 that describes how VLAN tags are encoded in Ethernet frames when trunking is
 being used.
 
-Note that if you are using VLANs on your physical switches to implement tenant
+Note that if you are using VLANs on your physical switches to implement project
 isolation in your OpenStack cloud, you must ensure that all of your
 switchports are configured as trunk ports.
 
@@ -129,7 +129,7 @@ It is important that you select a VLAN range not being used by your current
 network infrastructure. For example, if you estimate that your cloud must
 support a maximum of 100 projects, pick a VLAN range outside of that value,
 such as VLAN 200–299. OpenStack, and all physical network infrastructure that
-handles tenant networks, must then support this VLAN range.
+handles project networks, must then support this VLAN range.
 
 Trunking is used to connect between different switches. Each trunk uses a tag
 to identify which VLAN is in use. This ensures that switches on the same VLAN

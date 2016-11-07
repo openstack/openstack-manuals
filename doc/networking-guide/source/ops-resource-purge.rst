@@ -5,7 +5,7 @@ Resource purge
 ==============
 
 The Networking service provides a purge mechanism to delete the
-following network resources for a project (tenant):
+following network resources for a project:
 
 * Networks
 * Subnets
@@ -33,7 +33,7 @@ Usage
 
       $ neutron purge PROJECT_ID
 
-   Replace ``PROJECT_ID`` with the project (tenant) ID.
+   Replace ``PROJECT_ID`` with the project ID.
 
 The command provides output that includes a completion percentage and
 the quantity of successful or unsuccessful network resource deletions.

@@ -107,10 +107,10 @@ On compute nodes:
    QoS currently works with ml2 only (SR-IOV, Open vSwitch, and linuxbridge
    are drivers that are enabled for QoS in Mitaka release).
 
-Trusted tenants policy.json configuration
------------------------------------------
+Trusted projects policy.json configuration
+------------------------------------------
 
-If tenants are trusted to administrate their own QoS policies in
+If projects are trusted to administrate their own QoS policies in
 your cloud, neutron's file ``policy.json`` can be modified to allow this.
 
 Modify ``/etc/neutron/policy.json`` policy entries as follows:
@@ -147,10 +147,10 @@ User workflow
 
 QoS policies are only created by admins with the default ``policy.json``.
 Therefore, you should have the cloud operator set them up on
-behalf of the cloud tenants.
+behalf of the cloud projects.
 
-If tenants are trusted to create their own policies, check the trusted tenants
-``policy.json`` configuration section.
+If projects are trusted to create their own policies, check the trusted
+projects ``policy.json`` configuration section.
 
 First, create a QoS policy and its bandwidth limit rule:
 
@@ -285,11 +285,11 @@ network, or initially create the network attached to the policy.
 Administrator enforcement
 -------------------------
 
-Administrators are able to enforce policies on tenant ports or networks.
-As long as the policy is not shared, the tenant is not be able to detach
+Administrators are able to enforce policies on project ports or networks.
+As long as the policy is not shared, the project is not be able to detach
 any policy attached to a network or port.
 
-If the policy is shared, the tenant is able to attach or detach such
+If the policy is shared, the project is able to attach or detach such
 policy from its own ports and networks.
 
 

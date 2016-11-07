@@ -23,7 +23,7 @@ Not in scope
 
 Things not in the scope of this document include:
 
-* Single stack IPv6 tenant networking
+* Single stack IPv6 project networking
 * OpenStack control communication between servers and services over an IPv6
   network.
 * Connection to the OpenStack APIs via an IPv6 transport network
@@ -174,8 +174,8 @@ ipv6_ra_mode and ipv6_address_mode combinations
      -
      - *Invalid combination.*
 
-Tenant network considerations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Project network considerations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Dataplane
 ---------
@@ -198,7 +198,7 @@ There are four methods for a subnet to get its ``cidr`` in OpenStack:
 #. Referencing a subnet pool during subnet creation
 
 In the future, different techniques could be used to allocate subnets
-to tenants:
+to projects:
 
 #. Using a PD client to request a prefix for a subnet from a PD server
 #. Use of an external IPAM module to allocate the subnet
@@ -231,7 +231,7 @@ relay and DHCPv6 address and optional information for their networks
 or this can be delegated to external routers and services based on the
 drivers that are in use. There are two neutron subnet attributes -
 ``ipv6_ra_mode`` and ``ipv6_address_mode`` – that determine how IPv6
-addressing and network information is provided to tenant instances:
+addressing and network information is provided to project instances:
 
 * ``ipv6_ra_mode``: Determines who sends RA.
 * ``ipv6_address_mode``: Determines how instances obtain IPv6 address,
@@ -326,16 +326,16 @@ separate IPv4 internal router interface for the IPv4 subnet. On the other
 hand, external router ports are allowed to have a dual-stack configuration
 with both an IPv4 and an IPv6 address assigned to them.
 
-Neutron tenant networks that are assigned Global Unicast Address (GUA) prefixes
-and addresses don’t require NAT on the neutron router external gateway port to
-access the outside world. As a consequence of the lack of NAT the external
-router port doesn’t require a GUA to send and receive to the external networks.
-This implies a GUA IPv6 subnet prefix is not necessarily needed for the neutron
-external network. By default, a IPv6 LLA associated with the external gateway
-port can be used for routing purposes. To handle this scenario, the
-implementation of router-gateway-set API in neutron has been modified so
-that an IPv6 subnet is not required for the external network that is
-associated with the neutron router. The LLA address of the upstream router
+Neutron project networks that are assigned Global Unicast Address (GUA)
+prefixes and addresses don’t require NAT on the neutron router external gateway
+port to access the outside world. As a consequence of the lack of NAT the
+external router port doesn’t require a GUA to send and receive to the external
+networks. This implies a GUA IPv6 subnet prefix is not necessarily needed for
+the neutron external network. By default, a IPv6 LLA associated with the
+external gateway port can be used for routing purposes. To handle this
+scenario, the implementation of router-gateway-set API in neutron has been
+modified so that an IPv6 subnet is not required for the external network that
+is associated with the neutron router. The LLA address of the upstream router
 can be learned in two ways.
 
 #. In the absence of an upstream RA support, ``ipv6_gateway`` flag can be set
@@ -353,7 +353,7 @@ gateway for the subnet.
 
 .. note::
 
-   That it should be possible for tenants to communicate with each other
+   That it should be possible for projects to communicate with each other
    on an isolated network (a network without a router port) using LLA
    with little to no participation on the part of OpenStack. The authors
    of this section have not proven that to be true for all scenarios.
@@ -409,8 +409,8 @@ NAT & Floating IPs
 At the current time OpenStack Networking does not provide any facility
 to support any flavor of NAT with IPv6. Unlike IPv4 there is no
 current embedded support for floating IPs with IPv6. It is assumed
-that the IPv6 addressing amongst the tenants are using GUAs with no
-overlap across the tenants.
+that the IPv6 addressing amongst the projects are using GUAs with no
+overlap across the projects.
 
 Security considerations
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -437,7 +437,7 @@ OpenStack control & management network considerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As of the Kilo release, considerable effort has gone in to ensuring
-the tenant network can handle dual stack IPv6 and IPv4 transport
+the project network can handle dual stack IPv6 and IPv4 transport
 across the variety of configurations describe above. OpenStack control
 network can be run in a dual stack configuration and OpenStack API
 endpoints can be accessed via an IPv6 network. At this time, Open vSwitch
@@ -452,7 +452,7 @@ delegation. This section describes the configuration and workflow steps
 necessary to use IPv6 prefix delegation to provide automatic allocation of
 subnet CIDRs. This allows you as the OpenStack administrator to rely on an
 external (to the OpenStack Networking service) DHCPv6 server to manage your
-tenant network prefixes.
+project network prefixes.
 
 .. note::
 
