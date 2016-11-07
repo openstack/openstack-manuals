@@ -25,6 +25,26 @@ Enable FWaaS v2
       ``/etc/neutron/fwaas_driver.ini`` file instead of
       ``/etc/neutron/neutron.conf``.
 
+#. Configure the FWaaS plugin for the L3 agent.
+
+   In the ``AGENT`` section of ``l3_agent.ini``, make sure the FWaaS extension
+   is loaded:
+
+   .. code-block:: ini
+
+      [AGENT]
+      extensions = fwaas
+
+   Edit the FWaaS section in the ``/etc/neutron/neutron.conf`` file to indicate
+   the agent version and driver:
+
+   .. code-block:: ini
+
+      [fwaas]
+      agent_version = v2
+      driver = iptables
+      enabled = True
+
 #. Create the required tables in the database:
 
    .. code-block:: console
