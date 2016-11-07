@@ -212,8 +212,9 @@ Set following extras-specs in the volume types:
 
   .. code-block:: console
 
-     $ cinder type-create kaminario_iscsi_dedup_noreplication
-     $ cinder type-key kaminario_iscsi_dedup_noreplication set volume_backend_name=kaminario_iscsi_1
+     $ openstack volume type create kaminario_iscsi_dedup_noreplication
+     $ openstack volume type set --property volume_backend_name=kaminario_iscsi_1 \
+       kaminario_iscsi_dedup_noreplication
 
 - kaminario:thin_prov_type :  Set this spec in the volume type for creating
   nodedup Kaminario cinder volumes. If this spec is not set, dedup Kaminario
@@ -225,18 +226,18 @@ Set following extras-specs in the volume types:
 
   .. code-block:: console
 
-     $ cinder type-create kaminario_iscsi_dedup_replication
-     $ cinder type-key kaminario_iscsi_dedup_replication set \
-       volume_backend_name=kaminario_iscsi_1 kaminario:replication=enabled
+     $ openstack volume type create kaminario_iscsi_dedup_replication
+     $ openstack volume type set --property volume_backend_name=kaminario_iscsi_1 \
+       kaminario:replication=enabled kaminario_iscsi_dedup_replication
 
-     $ cinder type-create kaminario_iscsi_nodedup_replication
-     $ cinder type-key kaminario_iscsi_nodedup_replication set \
-       volume_backend_name=kaminario_iscsi_1 kaminario:replication=enabled \
-       kaminario:thin_prov_type=nodedup
+     $ openstack volume type create kaminario_iscsi_nodedup_replication
+     $ openstack volume type set --property volume_backend_name=kaminario_iscsi_1 \
+       kaminario:replication=enabled kaminario:thin_prov_type=nodedup \
+       kaminario_iscsi_nodedup_replication
 
-     $ cinder type-create kaminario_iscsi_nodedup_noreplication
-     $ cinder type-key kaminario_iscsi_nodedup_noreplication set \
-       volume_backend_name=kaminario_iscsi_1 kaminario:thin_prov_type=nodedup
+     $ openstack volume type create kaminario_iscsi_nodedup_noreplication
+     $ openstack volume type set --property volume_backend_name=kaminario_iscsi_1 \
+       kaminario:thin_prov_type=nodedup kaminario_iscsi_nodedup_noreplication
 
 Supported retype cases
 ~~~~~~~~~~~~~~~~~~~~~~
