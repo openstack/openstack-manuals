@@ -9,7 +9,7 @@ Telemetry service command-line client
 The ceilometer client is the command-line interface (CLI) for
 the Telemetry service API and its extensions.
 
-This chapter documents :command:`ceilometer` version ``2.6.1``.
+This chapter documents :command:`ceilometer` version ``2.7.0``.
 
 For help on a specific :command:`ceilometer` command, enter:
 
