@@ -211,22 +211,22 @@ basic L3 operations:
    * - Creates external networks.
      - .. code-block:: console
 
-          $ neutron net-create public --router:external True
-          $ neutron subnet-create public 172.16.1.0/24
+          $ openstack network create public --external
+          $ openstack subnet create --network public --subnet-range 172.16.1.0/24
    * - Lists external networks.
      - .. code-block:: console
 
-          $ neutron net-list --router:external True
+          $ openstack network list --external
    * - Creates an internal-only router that connects to multiple L2 networks privately.
      - .. code-block:: console
 
-          $ neutron net-create net1
-          $ neutron subnet-create net1 10.0.0.0/24
-          $ neutron net-create net2
-          $ neutron subnet-create net2 10.0.1.0/24
-          $ neutron router-create router1
-          $ neutron router-interface-add router1 SUBNET1_UUID
-          $ neutron router-interface-add router1 SUBNET2_UUID
+          $ openstack network create net1
+          $ openstack subnet create --network net1 --subnet-range 10.0.0.0/24
+          $ openstack network create net2
+          $ openstack subnet create --network net2 --subnet-range 10.0.1.0/24
+          $ openstack router create router1
+          $ openstack router add subnet router1 SUBNET1_UUID
+          $ openstack router add subnet router1 SUBNET2_UUID
 
        An internal router port can have only one IPv4 subnet and multiple IPv6 subnets
        that belong to the same network ID. When you call ``router-interface-add`` with an IPv6
@@ -237,7 +237,7 @@ basic L3 operations:
        act as a NAT gateway for external connectivity.
      - .. code-block:: console
 
-          $ neutron router-gateway-set router1 EXT_NET_ID
+          $ openstack router set --external-gateway EXT_NET_ID router1
 
        The router obtains an interface with the gateway_ip address of the
        subnet and this interface is attached to a port on the L2 Networking
@@ -250,21 +250,21 @@ basic L3 operations:
    * - Lists routers.
      - .. code-block:: console
 
-          $ neutron router-list
+          $ openstack router list
    * - Shows information for a specified router.
      - .. code-block:: console
 
-          $ neutron router-show ROUTER_ID
+          $ openstack router show ROUTER_ID
    * - Shows all internal interfaces for a router.
      - .. code-block:: console
 
-          $ neutron router-port-list ROUTER_ID
-          $ neutron router-port-list ROUTER_NAME
+          $ openstack port list --router  ROUTER_ID
+          $ openstack port list --router  ROUTER_NAME
    * - Identifies the PORT_ID that represents the VM NIC to which the floating
        IP should map.
      - .. code-block:: console
 
-          $ neutron port-list -c id -c fixed_ips --device_id INSTANCE_ID
+          $ openstack port list -c ID -c "Fixed IP Addresses" --server INSTANCE_ID
 
        This port must be on a Networking subnet that is attached to
        a router uplinked to the external network used to create the floating
@@ -276,13 +276,13 @@ basic L3 operations:
    * - Creates a floating IP address and associates it with a port.
      - .. code-block:: console
 
-          $ neutron floatingip-create EXT_NET_ID
-          $ neutron floatingip-associate FLOATING_IP_ID INTERNAL_VM_PORT_ID
+          $ openstack floating ip create EXT_NET_ID
+          $ openstack floating ip add port FLOATING_IP_ID --port-id INTERNAL_VM_PORT_ID
 
    * - Creates a floating IP on a specific subnet in the external network.
      - .. code-block:: console
 
-         $ neutron floatingip-create EXT_NET_ID SUBNET_ID
+         $ openstack floating ip create EXT_NET_ID --subnet SUBNET_ID
 
        If there are multiple subnets in the external network, you can choose a specific
        subnet based on quality and costs.
@@ -290,23 +290,23 @@ basic L3 operations:
    * - Creates a floating IP address and associates it with a port, in a single step.
      - .. code-block:: console
 
-          $ neutron floatingip-create --port_id INTERNAL_VM_PORT_ID EXT_NET_ID
+          $ openstack floating ip create --port INTERNAL_VM_PORT_ID EXT_NET_ID
    * - Lists floating IPs
      - .. code-block:: console
 
-          $ neutron floatingip-list
+          $ openstack floating ip list
    * - Finds floating IP for a specified VM port.
      - .. code-block:: console
 
-          $ neutron floatingip-list --port_id INTERNAL_VM_PORT_ID
+          $ openstack floating ip list --port INTERNAL_VM_PORT_ID
    * - Disassociates a floating IP address.
      - .. code-block:: console
 
-          $ neutron floatingip-disassociate FLOATING_IP_ID
+          $ openstack floating ip remove port FLOATING_IP_ID
    * - Deletes the floating IP address.
      - .. code-block:: console
 
-          $ neutron floatingip-delete FLOATING_IP_ID
+          $ openstack floating ip delete FLOATING_IP_ID
    * - Clears the gateway.
      - .. code-block:: console
 
@@ -314,14 +314,14 @@ basic L3 operations:
    * - Removes the interfaces from the router.
      - .. code-block:: console
 
-          $ neutron router-interface-delete router1 SUBNET_ID
+          $ openstack router remove subnet router1 SUBNET_ID
 
        If this subnet ID is the last subnet on the port, this operation deletes the port itself.
 
    * - Deletes the router.
      - .. code-block:: console
 
-          $ neutron router-delete router1
+          $ openstack router delete router1
 
 Security groups
 ~~~~~~~~~~~~~~~
@@ -379,81 +379,38 @@ basic security group operations:
    * - Creates a security group for our web servers.
      - .. code-block:: console
 
-          $ neutron security-group-create webservers \
+          $ openstack security group create webservers \
            --description "security group for webservers"
    * - Lists security groups.
      - .. code-block:: console
 
-          $ neutron security-group-list
+          $ openstack security group list
    * - Creates a security group rule to allow port 80 ingress.
      - .. code-block:: console
 
-          $ neutron security-group-rule-create --direction ingress \
-            --protocol tcp --port_range_min 80 --port_range_max 80 \
-             SECURITY_GROUP_UUID
+          $ openstack security group rule create --ingress \
+            --protocol tcp SECURITY_GROUP_UUID
    * - Lists security group rules.
      - .. code-block:: console
 
-          $ neutron security-group-rule-list
+          $ openstack security group rule list
    * - Deletes a security group rule.
      - .. code-block:: console
 
-          $ neutron security-group-rule-delete SECURITY_GROUP_RULE_UUID
+          $ openstack security group rule delete SECURITY_GROUP_RULE_UUID
    * - Deletes a security group.
      - .. code-block:: console
 
-          $ neutron security-group-delete SECURITY_GROUP_UUID
+          $ openstack security group delete SECURITY_GROUP_UUID
    * - Creates a port and associates two security groups.
      - .. code-block:: console
 
-          $ neutron port-create --security-group SECURITY_GROUP_ID1 \
-            --security-group SECURITY_GROUP_ID2 NETWORK_ID
+          $ openstack port create port1 --security-group SECURITY_GROUP_ID1 \
+            --security-group SECURITY_GROUP_ID2 --network NETWORK_ID
    * - Removes security groups from a port.
      - .. code-block:: console
 
-          $ neutron port-update --no-security-groups PORT_ID
-
-Disabling port security
------------------------
-
-Security groups and anti-spoofing rules can be problematic for some
-applications. MAC anti-spoofing prevents applications from sending or receiving
-packets with source or destination addresses that do not match the configured
-address of a port. For example, multicast packets use a multicast group address
-as the destination address rather than the address of the virtual machine.
-While all security groups can be removed from a port, disabling MAC
-anti-spoofing requires the port security extension.
-
-.. note::
-
-   - By default port security is enabled on every port.
-
-   - All security groups must be removed from a port before disabling port
-     security.
-
-This table shows example neutron commands to selectively disable or enable
-port security for a single port:
-
-.. list-table:: **Port security operations**
-   :widths: 30 50
-   :header-rows: 1
-
-   * - Operation
-     - Command
-   * - Disable port security on a port.
-     - .. code-block:: console
-
-          $ neutron port-update --port-security-enabled=False PORT_ID
-   * - Enable port security on a port.
-     - .. code-block:: console
-
-          $ neutron port-update --port-security-enabled=True PORT_ID
-
-Port security can also be disabled when a port is created using
-``port_security_enabled`` attribute.
-
-The ``port_security_enabled`` attribute can also be used at the network level
-to disable port security by default for all ports in a specific network.
+          $ openstack port set --no-security-group PORT_ID
 
 Basic Load-Balancer-as-a-Service operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -852,46 +809,50 @@ complete basic L3 metering operations:
    * - Creates a metering label.
      - .. code-block:: console
 
-          $ neutron meter-label-create LABEL1 --description "DESCRIPTION_LABEL1"
+          $ openstack network meter label create LABEL1 \
+            --description "DESCRIPTION_LABEL1"
    * - Lists metering labels.
      - .. code-block:: console
 
-          $ neutron meter-label-list
+          $ openstack network meter label list
    * - Shows information for a specified label.
      - .. code-block:: console
 
-          $ neutron meter-label-show LABEL_UUID
-          $ neutron meter-label-show LABEL1
+          $ openstack network meter label show LABEL_UUID
+          $ openstack network meter label show LABEL1
    * - Deletes a metering label.
      - .. code-block:: console
 
-          $ neutron meter-label-delete LABEL_UUID
-          $ neutron meter-label-delete LABEL1
+          $ openstack network meter label delete LABEL_UUID
+          $ openstack network meter label delete LABEL1
    * - Creates a metering rule.
      - .. code-block:: console
 
-          $ neutron meter-label-rule-create LABEL_UUID CIDR --direction DIRECTION \
-            --excluded
+          $ openstack network meter label rule create LABEL_UUID \
+            --remote-ip-prefix CIDR \
+            --direction DIRECTION --exclude
 
        For example:
 
        .. code-block:: console
 
-          $ neutron meter-label-rule-create label1 10.0.0.0/24 --direction ingress
-          $ neutron meter-label-rule-create label1 20.0.0.0/24 --excluded
+          $ openstack network meter label rule create label1 \
+            --remote-ip-prefix 10.0.0.0/24 --direction ingress
+          $ openstack network meter label rule create label1 \
+            --remote-ip-prefix 20.0.0.0/24 --exclude
 
    * - Lists metering all label rules.
      - .. code-block:: console
 
-          $ neutron meter-label-rule-list
+          $ openstack network meter label rule list
    * - Shows information for a specified label rule.
      - .. code-block:: console
 
-          $ neutron meter-label-rule-show RULE_UUID
+          $ openstack network meter label rule show RULE_UUID
    * - Deletes a metering label rule.
      - .. code-block:: console
 
-          $ neutron meter-label-rule-delete RULE_UUID
+          $ openstack network meter label rule delete RULE_UUID
    * - Lists the value of created metering label rules.
      - .. code-block:: console
 
