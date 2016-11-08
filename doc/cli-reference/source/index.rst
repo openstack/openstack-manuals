@@ -28,7 +28,6 @@ Contents
    senlin
    compute
    magnum
-   sahara
    database
    designate
    image
