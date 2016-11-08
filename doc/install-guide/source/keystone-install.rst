@@ -144,10 +144,6 @@ Install and configure components
 
    .. end
 
-   .. note::
-
-     Ignore any deprecation messages in this output.
-
 4. Initialize Fernet key repositories:
 
    .. code-block:: console
