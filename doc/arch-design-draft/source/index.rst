@@ -3,9 +3,14 @@
                  for architectural design
    :keywords: Architecture, OpenStack
 
-===================================
-OpenStack Architecture Design Guide
-===================================
+===========================================
+OpenStack Architecture Design Guide - Draft
+===========================================
+
+.. note::
+
+   Architecture Design Guide is under development at the moment.
+   Contributions are welcome.
 
 Abstract
 ~~~~~~~~
