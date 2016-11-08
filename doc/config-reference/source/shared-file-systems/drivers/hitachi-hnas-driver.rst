@@ -127,49 +127,49 @@ Pre-configuration on OpenStack deployment
 
 #. Create the data HNAS network in OpenStack:
 
-   * List the available tenants:
+   * List the available projects:
 
      .. code-block:: console
 
         $ openstack project list
 
-   * Create a network to the given tenant (demo), providing the tenant ID,
+   * Create a network to the given project (DEMO), providing the project name,
      a name for the network, the name of the physical network over which the
      virtual network is implemented, and the type of the physical mechanism by
      which the virtual network is implemented:
 
      .. code-block:: console
 
-        $ neutron net-create --tenant-id <DEMO_ID> hnas_network \
-        --provider:physical_network=physnet2 --provider:network_type=flat
+        $ openstack network create --project DEMO --provider-network-type flat \
+          --provider-physical-network physnet2 hnas_network
 
    * Optional - List available networks:
 
      .. code-block:: console
 
-        $ neutron net-list
+        $ openstack network list
 
-   * Create a subnet to the same tenant (demo), the gateway IP of this subnet,
-     a name for the subnet, the network ID created before, and the CIDR of
+   * Create a subnet to the same porject (DEMO), the gateway IP of this subnet,
+     a name for the subnet, the network name created before, and the CIDR of
      subnet:
 
      .. code-block:: console
 
-        $ neutron subnet-create --tenant-id <DEMO_ID> --gateway <GATEWAY> \
-        --name hnas_subnet <NETWORK_ID> <SUBNET_CIDR>
+        $ openstack subnet create --project DEMO --gateway GATEWAY \
+          --subnet-range SUBNET_CIDR --network NETWORK HNAS_SUBNET
 
    * OPTIONAL - List available subnets:
 
      .. code-block:: console
 
-        $ neutron subnet-list
+        $ openstack subnet list
 
-   * Add the subnet interface to a router, providing the router ID and subnet
-     ID created before:
+   * Add the subnet interface to a router, providing the router name and
+     subnet name created before:
 
      .. code-block:: console
 
-        $ neutron router-interface-add <ROUTER_ID> <SUBNET_ID>
+        $ openstack router add subnet SUBNET ROUTER
 
 Pre-configuration on HNAS
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,7 +183,7 @@ Pre-configuration on HNAS
 
 #. Prepare the HNAS EVS network.
 
-   * Create a route in HNAS to the tenant network:
+   * Create a route in HNAS to the project network:
 
      .. code-block:: console
 
@@ -313,5 +313,5 @@ Additional notes
   System only the real used space in HNAS. Also, a snapshot does not initially
   take any space in HNAS, it only stores the difference between the share and
   the snapshot, so it grows when share data is changed.
-* Administrators should manage the tenant’s quota
+* Administrators should manage the project's quota
   (:command:`manila quota-update`) to control the back-end usage.
