@@ -454,7 +454,7 @@ To find out whether any floating IPs are available in your cloud, run:
 
 .. code-block:: console
 
-   # openstack ip floating list
+   # openstack floating ip list
    +--------------------------------------+---------------------+------------------+--------------------------------------+
    | ID                                   | Floating IP Address | Fixed IP Address | Port                                 |
    +--------------------------------------+---------------------+------------------+--------------------------------------+
