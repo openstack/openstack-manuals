@@ -77,6 +77,12 @@ scratch, if you cannot download the file from the dashboard.
       export OS_REGION_NAME=regionName
       export OS_CACERT=/path/to/cacertFile
 
+   .. warning::
+
+      Saving ``OS_PASSWORD`` in plain text may bring a security risk.
+      You should protect the file or not save ``OS_PASSWORD`` into
+      the file in the production environment.
+
 #. On any shell from which you want to run OpenStack commands, source the
    ``PROJECT-openrc.sh`` file for the respective project. In this
    example, you source the ``admin-openrc.sh`` file for the admin
