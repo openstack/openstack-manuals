@@ -44,27 +44,25 @@ Getting default quotas
 
 #. Get the quota for root projects.
 
-   Use the cinder :command:`quota-show` command and specify:
+   Use the :command:`openstack quota show` command and specify:
 
-   - The ``TENANT_ID`` of the relevant project. In this case, the id of
+   - The ``PROJECT`` of the relevant project. In this case, the name of
      project A.
 
      .. code-block:: console
 
-        $ cinder quota-show TENANT_ID
-        +-----------------------+-------+
-        |        Property       | Value |
-        +-----------------------+-------+
-        |    backup_gigabytes   |  1000 |
-        |        backups        |   10  |
-        |       gigabytes       |  1000 |
-        | gigabytes_lvmdriver-1 |   -1  |
-        |  per_volume_gigabytes |   -1  |
-        |       snapshots       |   10  |
-        | snapshots_lvmdriver-1 |   -1  |
-        |        volumes        |   10  |
-        |  volumes_lvmdriver-1  |   -1  |
-        +-----------------------+-------+
+        $ openstack quota show PROJECT
+        +----------------------+-------+
+        | Field                | Value |
+        +----------------------+-------+
+        | ...                  | ...   |
+        | backup_gigabytes     | 1000  |
+        | backups              | 10    |
+        | gigabytes            | 1000  |
+        | per_volume_gigabytes | -1    |
+        | snapshots            | 10    |
+        | volumes              | 10    |
+        +----------------------+-------+
 
      .. note::
 
@@ -73,27 +71,26 @@ Getting default quotas
 
 #. Get the quota for subprojects.
 
-   In this case, use the same :command:`quota-show` command and specify:
+   In this case, use the same :command:`openstack quota show` command and
+   specify:
 
-   - The ``TENANT_ID`` of the relevant project. In this case the id of
+   - The ``PROJECT`` of the relevant project. In this case the name of
      project B, which is a child of A.
 
      .. code-block:: console
 
-        $ cinder quota-show TENANT_ID
-        +-----------------------+-------+
-        |        Property       | Value |
-        +-----------------------+-------+
-        |    backup_gigabytes   |   0   |
-        |        backups        |   0   |
-        |       gigabytes       |   0   |
-        | gigabytes_lvmdriver-1 |   0   |
-        |  per_volume_gigabytes |   0   |
-        |       snapshots       |   0   |
-        | snapshots_lvmdriver-1 |   0   |
-        |        volumes        |   0   |
-        |  volumes_lvmdriver-1  |   0   |
-        +-----------------------+-------+
+        $ openstack quota show PROJECT
+        +----------------------+-------+
+        | Field                | Value |
+        +----------------------+-------+
+        | ...                  | ...   |
+        | backup_gigabytes     | 0     |
+        | backups              | 0     |
+        | gigabytes            | 0     |
+        | per_volume_gigabytes | 0     |
+        | snapshots            | 0     |
+        | volumes              | 0     |
+        +----------------------+-------+
 
      .. note::
 
@@ -115,30 +112,28 @@ project.
 
 #. Update the quota of B.
 
-   Use the :command:`quota-update` command and specify:
+   Use the :command:`openstack quota set` command and specify:
 
-   - The ``TENANT_ID`` of the relevant project.
-     In this case the id of project B.
+   - The ``PROJECT`` of the relevant project.
+     In this case the name of project B.
 
    - The ``--volumes`` option, followed by the number to which you wish to
      increase the volumes quota.
 
      .. code-block:: console
 
-        $ cinder quota-update TENANT_ID --volumes 10
-        +-----------------------+-------+
-        |        Property       | Value |
-        +-----------------------+-------+
-        |    backup_gigabytes   |   0   |
-        |        backups        |   0   |
-        |       gigabytes       |   0   |
-        | gigabytes_lvmdriver-1 |   0   |
-        |  per_volume_gigabytes |   0   |
-        |       snapshots       |   0   |
-        | snapshots_lvmdriver-1 |   0   |
-        |        volumes        |   10  |
-        |  volumes_lvmdriver-1  |   0   |
-        +-----------------------+-------+
+        $ openstack quota set --volumes 10 PROJECT
+        +----------------------+-------+
+        |        Property      | Value |
+        +----------------------+-------+
+        | ...                  | ...   |
+        | backup_gigabytes     | 0     |
+        | backups              | 0     |
+        | gigabytes            | 0     |
+        | per_volume_gigabytes | 0     |
+        | snapshots            | 0     |
+        | volumes              | 10    |
+        +----------------------+-------+
 
      .. note::
 
@@ -146,7 +141,7 @@ project.
 
 #. Try to create a volume in project A.
 
-   Use the :command:`create` command and specify:
+   Use the :command:`openstack volume create` command and specify:
 
    - The ``SIZE`` of the volume that will be created;
 
@@ -154,7 +149,7 @@ project.
 
      .. code-block:: console
 
-        $ cinder create --size SIZE NAME
+        $ openstack volume create --size SIZE NAME
         VolumeLimitExceeded: Maximum number of volumes allowed (10) exceeded for quota 'volumes'. (HTTP 413) (Request-ID: req-f6f7cc89-998e-4a82-803d-c73c8ee2016c)
 
      .. note::
