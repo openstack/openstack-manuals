@@ -133,13 +133,6 @@ Controller node
         The ``provider`` value in the ``network_vlan_ranges`` option lacks VLAN
         ID ranges to support use of arbitrary VLAN IDs.
 
-   * Configure the security group driver:
-
-     .. code-block:: ini
-
-        [securitygroup]
-        firewall_driver = iptables
-
 #. Populate the database.
 
    .. code-block:: console

@@ -120,9 +120,6 @@ Network nodes
       tunnel_types = vxlan
       l2_population = True
 
-      [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
-
    Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
    that handles VXLAN project networks.
 
