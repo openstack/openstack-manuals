@@ -140,8 +140,8 @@ configure services specific to it. Afterwards, return here and proceed to
 
 .. _neutron-compute-compute:
 
-Configure Compute to use Networking
------------------------------------
+Configure the Compute service to use the Networking service
+-----------------------------------------------------------
 
 * Edit the ``/etc/nova/nova.conf`` file and complete the following actions:
 

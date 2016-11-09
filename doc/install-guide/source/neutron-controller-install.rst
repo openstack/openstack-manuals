@@ -226,8 +226,8 @@ such as credentials to instances.
 
     Replace ``METADATA_SECRET`` with a suitable secret for the metadata proxy.
 
-Configure Compute to use Networking
------------------------------------
+Configure the Compute service to use the Networking service
+-----------------------------------------------------------
 
 * Edit the ``/etc/nova/nova.conf`` file and perform the following actions:
 
