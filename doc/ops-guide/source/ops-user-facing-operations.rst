@@ -1973,7 +1973,7 @@ of the dashboard. The command line can also be used:
 
 .. code-block:: console
 
-   $ nova floating-ip-create
+   $ openstack floating ip create NETWORK
 
 Once allocated, a floating IP can be assigned to running instances from
 the dashboard either by selecting :guilabel:`Associate` from the
@@ -1989,11 +1989,11 @@ command line, use the following commands:
 
 .. code-block:: console
 
-   $ openstack ip floating add <ip-address> <server>
+   $ openstack server add floating ip SERVER IP_ADDRESS
 
 .. code-block:: console
 
-   $ nova remove-floating-ip <server> <address>
+   $ openstack server remove floating ip SERVER IP_ADDRESS
 
 Attaching Block Storage
 ~~~~~~~~~~~~~~~~~~~~~~~
