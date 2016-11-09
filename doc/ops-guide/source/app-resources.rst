@@ -6,7 +6,7 @@ OpenStack
 ~~~~~~~~~
 
 -  `OpenStack Installation Tutorial for openSUSE and SUSE Linux Enterprise
-   Server 12 SP1 <http://docs.openstack.org/newton/install-guide-obs/>`_
+   Server <http://docs.openstack.org/newton/install-guide-obs/>`_
 
 -  `OpenStack Installation Tutorial for Red Hat Enterprise Linux and CentOS
    <http://docs.openstack.org/newton/install-guide-rdo/>`_

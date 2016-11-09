@@ -46,7 +46,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper addrepo -f obs://network:time/SLE_12_SP1 network_time
+         # zypper addrepo -f obs://network:time/SLE_12_SP2 network_time
          # zypper refresh
          # zypper install chrony
 

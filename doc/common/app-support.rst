@@ -32,7 +32,7 @@ The following books explain how to install an OpenStack cloud and its
 associated components:
 
 *  `Installation Tutorial for openSUSE Leap 42.1 and SUSE Linux Enterprise
-   Server 12 SP1
+   Server 12 SP2
    <http://docs.openstack.org/newton/install-guide-obs/>`__
 
 *  `Installation Tutorial for Red Hat Enterprise Linux 7 and CentOS 7
