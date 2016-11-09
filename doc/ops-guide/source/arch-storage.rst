@@ -122,11 +122,10 @@ driver.
 Most block storage drivers allow the instance to have direct access to
 the underlying storage hardware's block device. This helps increase the
 overall read/write IO. However, support for utilizing files as volumes
-is also well established, with full support for NFS, GlusterFS and
-others.
+is also well established, with full support for NFS and other protocols.
 
 These drivers work a little differently than a traditional "block"
-storage driver. On an NFS or GlusterFS file system, a single file is
+storage driver. On an NFS file system, a single file is
 created and then mapped as a "virtual" volume into the instance. This
 mapping/translation is similar to how OpenStack utilizes QEMU's
 file-based virtual machines stored in ``/var/lib/nova/instances``.
@@ -320,8 +319,7 @@ of open-source packages, as shown in :ref:`table_persistent_file_storage`.
    * - Gluster
      - .. image:: figures/Check_mark_23x20_02.png
           :width: 30%
-     - .. image:: figures/Check_mark_23x20_02.png
-          :width: 30%
+     -
      - .. image:: figures/Check_mark_23x20_02.png
           :width: 30%
    * - NFS
