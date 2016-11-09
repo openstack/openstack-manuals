@@ -354,14 +354,8 @@ self-service virtual networks.
        [DEFAULT]
        ...
        interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
-       external_network_bridge =
 
     .. end
-
-    .. note::
-
-       The ``external_network_bridge`` option intentionally lacks a value
-       to enable multiple external networks on a single agent.
 
 Configure the DHCP agent
 ------------------------
