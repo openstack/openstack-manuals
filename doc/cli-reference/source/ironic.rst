@@ -9,7 +9,7 @@ Bare Metal service command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.7.0``.
+This chapter documents :command:`ironic` version ``1.8.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -581,8 +581,8 @@ Call a vendor-passthru extension for a driver.
 
 ``--http-method <http-method>``
   The HTTP method to use in the request. Valid HTTP
-  methods are: 'POST', 'PUT', 'GET', 'DELETE', and
-  'PATCH'. Defaults to 'POST'.
+  methods are: POST, PUT, GET, DELETE, PATCH. Defaults
+  to 'POST'.
 
 .. _ironic_node-create:
 
@@ -837,7 +837,7 @@ Set the boot device for a node.
   Name or UUID of the node.
 
 ``<boot-device>``
-  'pxe', 'disk', 'cdrom', 'bios', or 'safe'.
+  One of pxe, disk, cdrom, bios, safe.
 
 **Optional arguments:**
 
@@ -928,9 +928,8 @@ Initiate a provisioning state change for a node.
   Name or UUID of the node.
 
 ``<provision-state>``
-  Supported states: 'deleted', 'provide', 'clean',
-  'manage', 'active', 'rebuild', 'inspect', 'abort',
-  'adopt'.
+  Supported states: deleted, provide, clean, manage,
+  active, rebuild, inspect, abort, adopt.
 
 **Optional arguments:**
 
@@ -1047,7 +1046,9 @@ Update information about a registered node.
 
 ``<path=value>``
   Attribute to add, replace, or remove. Can be specified
-  multiple times. For 'remove', only <path> is necessary.
+  multiple times. For 'remove', only <path> is necessary. For
+  nested attributes, separate the components with slashes, eg
+  'driver_info/deploy_kernel=uuid'.
 
 .. _ironic_node-validate:
 
@@ -1094,8 +1095,8 @@ Call a vendor-passthru extension for a node.
 
 ``--http-method <http-method>``
   The HTTP method to use in the request. Valid HTTP
-  methods are: 'POST', 'PUT', 'GET', 'DELETE', and
-  'PATCH'. Defaults to 'POST'.
+  methods are: POST, PUT, GET, DELETE, PATCH. Defaults
+  to 'POST'.
 
 .. _ironic_port-create:
 
