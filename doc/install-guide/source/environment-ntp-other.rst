@@ -81,7 +81,9 @@ Install and configure components
 
       .. end
 
-   3. Restart the NTP service:
+   3. Comment out the ``pool 2.debian.pool.ntp.org offline iburst`` line.
+
+   4. Restart the NTP service:
 
       .. code-block:: console
 

@@ -70,39 +70,8 @@ Install and configure components
 
 .. only:: ubuntu or debian
 
-   2. Edit the ``/etc/chrony/chrony.conf`` file and add, change, or remove the
-      following keys as necessary for your environment:
-
-      .. code-block:: ini
-
-         server NTP_SERVER iburst
-
-      .. end
-
-      Replace ``NTP_SERVER`` with the hostname or IP address of a suitable more
-      accurate (lower stratum) NTP server. The configuration supports multiple
-      ``server`` keys.
-
-      .. note::
-
-         By default, the controller node synchronizes the time via a pool of
-         public servers. However, you can optionally configure alternative
-         servers such as those provided by your organization.
-
-   3. Restart the NTP service:
-
-      .. code-block:: console
-
-         # service chrony restart
-
-      .. end
-
-.. endonly
-
-.. only:: rdo or obs
-
-   2. Edit the ``/etc/chrony.conf`` file and add, change, or remove the
-      following keys as necessary for your environment:
+   2. Edit the ``/etc/chrony/chrony.conf`` file and add, change, or remove
+      these keys as necessary for your environment:
 
       .. code-block:: ini
 
@@ -121,7 +90,47 @@ Install and configure components
          servers such as those provided by your organization.
 
    3. To enable other nodes to connect to the chrony daemon on the controller node,
-      add the following key to the ``/etc/chrony.conf`` file:
+      add this key to the ``/etc/chrony/chrony.conf`` file:
+
+      .. code-block:: ini
+
+         allow 10.0.0.0/24
+
+      .. end
+
+   4. Restart the NTP service:
+
+      .. code-block:: console
+
+         # service chrony restart
+
+      .. end
+
+.. endonly
+
+.. only:: rdo or obs
+
+   2. Edit the ``/etc/chrony.conf`` file and add, change, or remove these
+      keys as necessary for your environment:
+
+      .. code-block:: ini
+
+         server NTP_SERVER iburst
+
+      .. end
+
+      Replace ``NTP_SERVER`` with the hostname or IP address of a suitable more
+      accurate (lower stratum) NTP server. The configuration supports multiple
+      ``server`` keys.
+
+      .. note::
+
+         By default, the controller node synchronizes the time via a pool of
+         public servers. However, you can optionally configure alternative
+         servers such as those provided by your organization.
+
+   3. To enable other nodes to connect to the chrony daemon on the controller node,
+      add this key to the ``/etc/chrony.conf`` file:
 
       .. code-block:: ini
 
