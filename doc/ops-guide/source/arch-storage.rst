@@ -353,12 +353,9 @@ solution that you can use.
 
    In addition to the open source technologies, there are a number of
    proprietary solutions that are officially supported by OpenStack Block
-   Storage. They are offered by the following vendors:
-
-   * IBM (Storwize family/SVC, XIV)
-   * NetApp
-   * Nexenta
-   * SolidFire
+   Storage. The full list of options can be found in the
+   `Available Drivers <http://docs.openstack.org/developer/cinder/drivers.html>`_
+   list.
 
    You can find a matrix of the functionality provided by all of the
    supported Block Storage drivers on the `OpenStack
