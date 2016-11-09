@@ -60,7 +60,7 @@ index file to browse the main site URL and its sub-directories.
 
 .. code-block:: console
 
-   $ swift post -r '.r:*' container
+   $ swift post -r '.r:*,.rlistings' container
 
 
 Set site index file
