@@ -67,7 +67,9 @@ The root of the generated HTML documentation is::
 
 RST guides
 ----------
-Then, you can see some guides written in the RST format, so we can't use mvn command.
+
+Then, you can see some guides written in the RST format, so we can't
+use mvn command.
 You can use tox to prepare virtual environment and build all RST based guides::
 
     tox -e docs
