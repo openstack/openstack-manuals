@@ -1057,7 +1057,7 @@ absolute limits per tenant. Whereas users can see only the amount of
 their consumed resources. Administrator can specify rate limits or
 quotas for the following resources:
 
-*  Max amount of space awailable for all shares
+*  Max amount of space available for all shares
 *  Max number of shares
 *  Max number of shared networks
 *  Max number of share snapshots
