@@ -519,9 +519,6 @@ The following meters are recorded for the Bare metal service:
 | hardware.ipmi.fan| Gauge | RPM  | fan      | Notification| Fan rounds per   |
 |                  |       |      | sensor   |             | minute (RPM)     |
 +------------------+-------+------+----------+-------------+------------------+
-| hardware.ipmi.fan| Gauge | RPM  | fan      | Notification| Fan rounds per   |
-|                  |       |      | sensor   |             | minute (RPM)     |
-+------------------+-------+------+----------+-------------+------------------+
 | hardware.ipmi\   | Gauge | C    | temper\  | Notification| Temperate reading|
 | .temperature     |       |      | ature    |             | from sensor      |
 |                  |       |      | sensor   |             |                  |
