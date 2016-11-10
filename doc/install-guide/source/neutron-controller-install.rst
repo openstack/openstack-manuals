@@ -326,6 +326,19 @@ Finalize installation
 
 .. only:: obs
 
+   .. note::
+
+      SLES enables apparmor by default and restricts dnsmasq. You need to
+      either completely disable apparmor or disable only the dnsmasq
+      profile:
+
+      .. code-block:: console
+
+         # ln -s /etc/apparmor.d/usr.sbin.dnsmasq /etc/apparmor.d/disable/
+         # systemctl restart apparmor
+
+      .. end
+
    #. Restart the Compute API service:
 
       .. code-block:: console
