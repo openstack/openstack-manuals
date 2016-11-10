@@ -36,7 +36,8 @@ virtual environment and build all RST based guides::
     tox -e docs
 
 You can also build a specific guide.
-For example, to build *OpenStack End User Guide*, use the following command::
+For example, to build *OpenStack End User Guide*, use the following
+command::
 
     tox -e build -- user-guide
 
