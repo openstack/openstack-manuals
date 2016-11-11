@@ -23,7 +23,7 @@
 
        Possible values
 
-        * 'nova.console.xvp.XVPConsoleProxy' (default) or a string representing fully classified class name of console driver.
+       * 'nova.console.xvp.XVPConsoleProxy' (default) or a string representing fully classified class name of console driver.
    * - **[libvirt]**
      -
    * - ``xen_hvmloader_path`` = ``/usr/lib/xen/boot/hvmloader``
@@ -35,7 +35,11 @@
 
        Specifies the path in which the XenAPI guest agent should be located. If the agent is present, network configuration is not injected into the image.
 
-       Related options: For this option to have an effect: * ``flat_injected`` should be set to ``True`` * ``compute_driver`` should be set to ``xenapi.XenAPIDriver``
+       Related options: For this option to have an effect:
+
+       * ``flat_injected`` should be set to ``True``
+
+       * ``compute_driver`` should be set to ``xenapi.XenAPIDriver``
    * - ``agent_resetnetwork_timeout`` = ``60``
      - (Integer) Number of seconds to wait for agent's reply to resetnetwork request.
 
@@ -49,7 +53,11 @@
 
        This config option determines how long the xapi 'agent' plugin shall wait to read the response off of xenstore for a given request/command. If the agent on the instance fails to write the result in this time period, the operation is considered to have timed out.
 
-       Related options: * ``agent_version_timeout`` * ``agent_resetnetwork_timeout``
+       Related options:
+
+       * ``agent_version_timeout``
+
+       * ``agent_resetnetwork_timeout``
    * - ``agent_version_timeout`` = ``300``
      - (Integer) Number of seconds to wait for agent't reply to version request.
 
@@ -103,7 +111,9 @@
 
        This configuration option suggests whether the use of agent should be enabled or not regardless of what image properties are present. Image properties have an effect only when this is set to ``True``. Read description of config option ``use_agent_default`` for more information.
 
-       Related options: * ``use_agent_default``
+       Related options:
+
+       * ``use_agent_default``
    * - ``image_compression_level`` = ``None``
      - (Integer) Compression level for images.
 
@@ -187,7 +197,7 @@
 
        Possible options:
 
-        * Any string that represents a bridge name(default is xapi1).
+       * Any string that represents a bridge name(default is xapi1).
    * - ``remap_vbd_dev`` = ``False``
      - (Boolean) Used to enable the remapping of VBD dev. (Works around an issue in Ubuntu Maverick)
    * - ``remap_vbd_dev_prefix`` = ``sd``
@@ -235,11 +245,11 @@
 
        Possible values:
 
-       * `all`: will download all images.
+       * ``all``: will download all images.
 
-       * `some`: will only download images that have the image_property `bittorrent=true`.
+       * ``some``: will only download images that have the image_property ``bittorrent=true``.
 
-       * `none`: will turnoff downloading images via Bit Torrent.
+       * ``none``: will turnoff downloading images via Bit Torrent.
    * - ``torrent_listen_port_end`` = ``6891``
      - (Port number) End of port range to listen on
    * - ``torrent_listen_port_start`` = ``6881``
@@ -259,7 +269,9 @@
 
        Note that if this configuration is set to ``True`` when the agent is not present, the boot times will increase significantly.
 
-       Related options: * ``disable_agent``
+       Related options:
+
+       * ``disable_agent``
    * - ``use_join_force`` = ``True``
      - (Boolean) When adding new host to a pool, this will append a --force flag to the command, forcing hosts to join a pool, even if they have different CPUs.
 

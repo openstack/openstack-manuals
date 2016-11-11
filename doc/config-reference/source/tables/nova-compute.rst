@@ -51,7 +51,7 @@
 
        Possible values
 
-        * A string representing fully qualified class name.
+       * A string representing fully qualified class name.
    * - ``console_host`` = ``socket.gethostname()``
      - (String) Console proxy host to be used to connect to instances on this host. It is the publicly visible name for the console host.
 
@@ -89,7 +89,11 @@
    * - ``instance_usage_audit_period`` = ``month``
      - (String) Time period to generate instance usages for. It is possible to define optional offset to given period by appending @ character followed by a number defining offset.
 
-       Possible values: * period, example: ``hour``, ``day``, ``month` or ``year`` * period with offset, example: ``month@15`` will result in monthly audits starting on 15th day of month.
+       Possible values:
+
+       * period, example: ``hour``, ``day``, ``month` or ``year``
+
+       * period with offset, example: ``month@15`` will result in monthly audits starting on 15th day of month.
    * - ``instances_path`` = ``$state_path/instances``
      - (String) Specifies where instances are stored on the hypervisor's disk. It can point to locally attached storage or a directory on NFS.
 

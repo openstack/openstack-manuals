@@ -113,11 +113,13 @@
 
        Possible Values:
 
-        * db : Database ServiceGroup driver * mc : Memcache ServiceGroup driver
+       * db : Database ServiceGroup driver
+
+       * mc : Memcache ServiceGroup driver
 
        Related Options:
 
-        * service_down_time (maximum time since last check-in for up service)
+       * service_down_time (maximum time since last check-in for up service)
    * - ``snapshot_name_template`` = ``snapshot-%s``
      - (String) DEPRECATED: Template string to be used to generate snapshot names This is not used anymore and will be removed in the O release.
    * - ``use_forwarded_for`` = ``False``

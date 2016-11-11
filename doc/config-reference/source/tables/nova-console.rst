@@ -23,13 +23,13 @@
 
        Possible values
 
-        * An empty list (default) or list of allowed origin hostnames.
+       * An empty list (default) or list of allowed origin hostnames.
    * - ``console_public_hostname`` = ``localhost``
      - (String) Publicly visible name for this console host.
 
        Possible values
 
-        * Current hostname (default) or any string representing hostname.
+       * Current hostname (default) or any string representing hostname.
    * - ``console_token_ttl`` = ``600``
      - (Integer) This option indicates the lifetime of a console auth token. A console auth token is used in authorizing console access for a user. Once the auth token time to live count has elapsed, the token is considered expired. Expired tokens are then deleted.
    * - ``consoleauth_manager`` = ``nova.consoleauth.manager.ConsoleAuthManager``

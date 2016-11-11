@@ -25,7 +25,7 @@
 
        Possible values:
 
-        * aes-xts-plain64 (Default), see /proc/crypto for available options.
+       * aes-xts-plain64 (Default), see /proc/crypto for available options.
    * - ``enabled`` = ``False``
      - (Boolean) Enables/disables LVM ephemeral storage encryption.
    * - ``key_size`` = ``512``

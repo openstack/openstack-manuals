@@ -39,7 +39,13 @@
    * - ``live_migration_bandwidth`` = ``0``
      - (Integer) Maximum bandwidth(in MiB/s) to be used during migration. If set to 0, will choose a suitable default. Some hypervisors do not support this feature and will return an error if bandwidth is not 0. Please refer to the libvirt documentation for further details
    * - ``live_migration_completion_timeout`` = ``800``
-     - (Integer) Time to wait, in seconds, for migration to successfully complete transferring data before aborting the operation. Value is per GiB of guest RAM + disk to be transferred, with lower bound of a minimum of 2 GiB. Should usually be larger than downtime delay * downtime steps. Set to 0 to disable timeouts.  - **Mutable** This option can be changed without restarting.
+     - (Integer) Time to wait, in seconds, for migration to successfully complete transferring data before aborting the operation. Value is per GiB of guest RAM + disk to be transferred, with lower bound of a minimum of 2 GiB. Should usually be larger than downtime delay
+
+       * downtime steps. Set to 0 to disable timeouts.
+
+       **Mutable**
+
+       This option can be changed without restarting.
    * - ``live_migration_downtime`` = ``500``
      - (Integer) Maximum permitted downtime, in milliseconds, for live migration switchover. Will be rounded up to a minimum of 100ms. Use a large value if guest liveness is unimportant.
    * - ``live_migration_downtime_delay`` = ``75``
@@ -53,7 +59,7 @@
 
        Related options:
 
-        * live_migration_permit_post_copy
+       * live_migration_permit_post_copy
    * - ``live_migration_permit_post_copy`` = ``False``
      - (Boolean) This option allows nova to switch an on-going live migration to post-copy mode, i.e., switch the active VM to the one on the destination node before the migration is complete, therefore ensuring an upper bound on the memory that needs to be transferred. Post-copy requires libvirt>=1.3.3 and QEMU>=2.5.0.
 
@@ -65,9 +71,13 @@
 
        Related options:
 
-        * live_migration_permit_auto_converge
+       * live_migration_permit_auto_converge
    * - ``live_migration_progress_timeout`` = ``150``
-     - (Integer) Time to wait, in seconds, for migration to make forward progress in transferring data before aborting the operation. Set to 0 to disable timeouts.  - **Mutable** This option can be changed without restarting.
+     - (Integer) Time to wait, in seconds, for migration to make forward progress in transferring data before aborting the operation. Set to 0 to disable timeouts.
+
+       **Mutable**
+
+       This option can be changed without restarting.
    * - ``live_migration_tunnelled`` = ``False``
      - (Boolean) Whether to use tunnelled migration, where migration data is transported over the libvirtd connection. If True, we use the VIR_MIGRATE_TUNNELLED migration flag, avoiding the need to configure the network to allow direct hypervisor to hypervisor communication. If False, use the native transport. If not set, Nova will choose a sensible default based on, for example the availability of native encryption support in the hypervisor.
    * - ``live_migration_uri`` = ``None``

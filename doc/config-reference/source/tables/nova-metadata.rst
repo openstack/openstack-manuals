@@ -25,11 +25,11 @@
 
        Possible values:
 
-        * Any valid IP address. The default is the address of the Nova API server.
+       * Any valid IP address. The default is the address of the Nova API server.
 
        Related options:
 
-        * metadata_port
+       * metadata_port
    * - ``metadata_listen`` = ``0.0.0.0``
      - (String) The IP address on which the metadata API will listen.
    * - ``metadata_listen_port`` = ``8775``
@@ -41,7 +41,7 @@
 
        Related options:
 
-        * metadata_host
+       * metadata_host
    * - ``metadata_workers`` = ``None``
      - (Integer) Number of workers for metadata service. The default will be the number of CPUs available.
    * - ``vendordata_driver`` = ``nova.api.metadata.vendordata_json.JsonFileVendorData``

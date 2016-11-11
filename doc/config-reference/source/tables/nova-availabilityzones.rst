@@ -25,7 +25,9 @@
 
        Possible values:
 
-        * Any string representing an availability zone name * 'nova' is the default value
+       * Any string representing an availability zone name
+
+       * 'nova' is the default value
    * - ``default_schedule_zone`` = ``None``
      - (String) Availability zone to use when user doesn't specify one.
 
@@ -41,4 +43,6 @@
 
        Possible values:
 
-        * Any string representing an availability zone name * 'internal' is the default value
+       * Any string representing an availability zone name
+
+       * 'internal' is the default value

@@ -23,7 +23,13 @@
 
        This configures guestfs to debug messages and push them to Openstack logging system. When set to True, it traces libguestfs API calls and enable verbose debug messages. In order to use the above feature, "libguestfs" package must be installed.
 
-       Related options: Since libguestfs access and modifies VM's managed by libvirt, below options should be set to give access to those VM's. * libvirt.inject_key * libvirt.inject_partition * libvirt.inject_password
+       Related options: Since libguestfs access and modifies VM's managed by libvirt, below options should be set to give access to those VM's.
+
+       * libvirt.inject_key
+
+       * libvirt.inject_partition
+
+       * libvirt.inject_password
    * - **[remote_debug]**
      -
    * - ``host`` = ``None``
@@ -33,7 +39,7 @@
 
        Possible Values:
 
-        * IP address of a remote host as a command line parameter to a nova service. For Example:
+       * IP address of a remote host as a command line parameter to a nova service. For Example:
 
         /usr/local/bin/nova-compute --config-file /etc/nova/nova.conf --remote_debug-host <IP address where the debugger is running>
    * - ``port`` = ``None``
@@ -43,6 +49,6 @@
 
        Possible Values:
 
-        * Port number you want to use as a command line parameter to a nova service. For Example:
+       * Port number you want to use as a command line parameter to a nova service. For Example:
 
         /usr/local/bin/nova-compute --config-file /etc/nova/nova.conf --remote_debug-host <IP address where the debugger is running> --remote_debug-port <port> it's listening on>.

@@ -79,7 +79,7 @@
 
        Possible values:
 
-        * Any string representing a floating IP pool name
+       * Any string representing a floating IP pool name
    * - ``defer_iptables_apply`` = ``False``
      - (Boolean) Whether to batch up the application of IPTables rules during a host restart and apply all at the end of the init phase.
    * - ``dhcp_domain`` = ``novalocal``
@@ -141,21 +141,27 @@
 
        Possible values:
 
-        * Any positive integer
+       * Any positive integer
 
        Related options:
 
-        * ebtables_retry_interval
+       * ebtables_retry_interval
    * - ``ebtables_retry_interval`` = ``1.0``
-     - (Floating point) This option determines the time, in seconds, that the system will sleep in between ebtables retries. Note that each successive retry waits a multiple of this value, so for example, if this is set to the default of 1.0 seconds, and ebtables_exec_attempts is 4, after the first failure, the system will sleep for 1 * 1.0 seconds, after the second failure it will sleep 2 * 1.0 seconds, and after the third failure it will sleep 3 * 1.0 seconds.
+     - (Floating point) This option determines the time, in seconds, that the system will sleep in between ebtables retries. Note that each successive retry waits a multiple of this value, so for example, if this is set to the default of 1.0 seconds, and ebtables_exec_attempts is 4, after the first failure, the system will sleep for 1
+
+       * 1.0 seconds, after the second failure it will sleep 2
+
+       * 1.0 seconds, and after the third failure it will sleep 3
+
+       * 1.0 seconds.
 
        Possible values:
 
-        * Any non-negative float or integer. Setting this to zero will result in no waiting between attempts.
+       * Any non-negative float or integer. Setting this to zero will result in no waiting between attempts.
 
        Related options:
 
-        * ebtables_exec_attempts
+       * ebtables_exec_attempts
    * - ``firewall_driver`` = ``None``
      - (String) Firewall driver to use with ``nova-network`` service.
 
@@ -227,7 +233,7 @@
 
        Possible values:
 
-        * Full Python path to the class to be used
+       * Full Python path to the class to be used
    * - ``force_dhcp_release`` = ``True``
      - (Boolean) When this option is True, a call is made to release the DHCP for the instance when that instance is terminated.
 
@@ -275,33 +281,33 @@
 
        Possible values:
 
-        * Full Python path to the class to be used
+       * Full Python path to the class to be used
    * - ``iptables_bottom_regex`` =
      - (String) This expression, if defined, will select any matching iptables rules and place them at the bottom when applying metadata changes to the rules.
 
        Possible values:
 
-        * Any string representing a valid regular expression, or an empty string
+       * Any string representing a valid regular expression, or an empty string
 
        Related options:
 
-        * iptables_top_regex
+       * iptables_top_regex
    * - ``iptables_drop_action`` = ``DROP``
      - (String) By default, packets that do not pass the firewall are DROPped. In many cases, though, an operator may find it more useful to change this from DROP to REJECT, so that the user issuing those packets may have a better idea as to what's going on, or LOGDROP in order to record the blocked traffic before DROPping.
 
        Possible values:
 
-        * A string representing an iptables chain. The default is DROP.
+       * A string representing an iptables chain. The default is DROP.
    * - ``iptables_top_regex`` =
      - (String) This expression, if defined, will select any matching iptables rules and place them at the top when applying metadata changes to the rules.
 
        Possible values:
 
-        * Any string representing a valid regular expression, or an empty string
+       * Any string representing a valid regular expression, or an empty string
 
        Related options:
 
-        * iptables_bottom_regex
+       * iptables_bottom_regex
    * - ``l3_lib`` = ``nova.network.l3.LinuxNetL3``
      - (String) This option allows you to specify the L3 management library to be used.
 
@@ -373,7 +379,7 @@
 
        Possible values:
 
-        * Any positive integer if a limited timeout is desired, or zero if the calls should wait forever for a response.
+       * Any positive integer if a limited timeout is desired, or zero if the calls should wait forever for a response.
    * - ``public_interface`` = ``eth0``
      - (String) This is the name of the network interface for public IP addresses. The default is 'eth0'.
 

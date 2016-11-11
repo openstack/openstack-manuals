@@ -27,7 +27,7 @@
 
        Possible values:
 
-        * 0 (default) or any positive integer representing number of seconds.
+       * 0 (default) or any positive integer representing number of seconds.
    * - ``max_local_block_devices`` = ``3``
      - (Integer) Maximum number of devices that will result in a local image being created on the hypervisor node.
 
@@ -61,7 +61,7 @@
 
        Possible values:
 
-        * 86400 (default) or any positive integer representing number of seconds.
+       * 86400 (default) or any positive integer representing number of seconds.
    * - ``resize_fs_using_block_device`` = ``False``
      - (Boolean) If enabled, attempt to resize the filesystem by accessing the image over a block device. This is done by the host and may not be necessary if the image contains a recent version of cloud-init. Possible mechanisms require the nbd driver (for qcow and raw), or loop (for raw).
    * - ``until_refresh`` = ``0``
@@ -69,4 +69,4 @@
 
        Possible values:
 
-        * 0 (default) or any positive integer.
+       * 0 (default) or any positive integer.
