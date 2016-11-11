@@ -19,12 +19,66 @@
    * - **[glance_store]**
      -
    * - ``rados_connect_timeout`` = ``0``
-     - (Integer) Timeout value for connecting to Ceph cluster.$sentinal$This configuration option takes in the timeout value in seconds used when connecting to the Ceph cluster i.e. it sets the time to wait for glance-api before closing the connection. This prevents glance-api hangups during the connection to RBD. If the value for this option is set to less than or equal to 0, no timeout is set and the default librados value is used.$sentinal$Possible Values: * Any integer value$sentinal$Related options: * None
+     - (Integer) Timeout value for connecting to Ceph cluster.
+
+       This configuration option takes in the timeout value in seconds used when connecting to the Ceph cluster i.e. it sets the time to wait for glance-api before closing the connection. This prevents glance-api hangups during the connection to RBD. If the value for this option is set to less than or equal to 0, no timeout is set and the default librados value is used.
+
+       Possible Values:
+
+       * Any integer value
+
+       Related options:
+
+       * None
    * - ``rbd_store_ceph_conf`` = ``/etc/ceph/ceph.conf``
-     - (String) Ceph configuration file path.$sentinal$This configuration option takes in the path to the Ceph configuration file to be used. If the value for this option is not set by the user or is set to None, librados will locate the default configuration file which is located at /etc/ceph/ceph.conf. If using Cephx authentication, this file should include a reference to the right keyring in a client.<USER> section$sentinal$Possible Values: * A valid path to a configuration file$sentinal$Related options: * rbd_store_user
+     - (String) Ceph configuration file path.
+
+       This configuration option takes in the path to the Ceph configuration file to be used. If the value for this option is not set by the user or is set to None, librados will locate the default configuration file which is located at /etc/ceph/ceph.conf. If using Cephx authentication, this file should include a reference to the right keyring in a client.<USER> section
+
+       Possible Values:
+
+       * A valid path to a configuration file
+
+       Related options:
+
+       * rbd_store_user
    * - ``rbd_store_chunk_size`` = ``8``
-     - (Integer) Size, in megabytes, to chunk RADOS images into.$sentinal$Provide an integer value representing the size in megabytes to chunk Glance images into. The default chunk size is 8 megabytes. For optimal performance, the value should be a power of two.$sentinal$When Ceph's RBD object storage system is used as the storage backend for storing Glance images, the images are chunked into objects of the size set using this option. These chunked objects are then stored across the distributed block data store to use for Glance.$sentinal$Possible Values: * Any positive integer value$sentinal$Related options: * None
+     - (Integer) Size, in megabytes, to chunk RADOS images into.
+
+       Provide an integer value representing the size in megabytes to chunk Glance images into. The default chunk size is 8 megabytes. For optimal performance, the value should be a power of two.
+
+       When Ceph's RBD object storage system is used as the storage backend for storing Glance images, the images are chunked into objects of the size set using this option. These chunked objects are then stored across the distributed block data store to use for Glance.
+
+       Possible Values:
+
+       * Any positive integer value
+
+       Related options:
+
+       * None
    * - ``rbd_store_pool`` = ``images``
-     - (String) RADOS pool in which images are stored.$sentinal$When RBD is used as the storage backend for storing Glance images, the images are stored by means of logical grouping of the objects (chunks of images) into a ``pool``. Each pool is defined with the number of placement groups it can contain. The default pool that is used is 'images'.$sentinal$More information on the RBD storage backend can be found here: http://ceph.com/planet/how-data-is-stored-in-ceph-cluster/$sentinal$Possible Values: * A valid pool name$sentinal$Related options: * None
+     - (String) RADOS pool in which images are stored.
+
+       When RBD is used as the storage backend for storing Glance images, the images are stored by means of logical grouping of the objects (chunks of images) into a ``pool``. Each pool is defined with the number of placement groups it can contain. The default pool that is used is 'images'.
+
+       More information on the RBD storage backend can be found here: http://ceph.com/planet/how-data-is-stored-in-ceph-cluster/
+
+       Possible Values:
+
+       * A valid pool name
+
+       Related options:
+
+       * None
    * - ``rbd_store_user`` = ``None``
-     - (String) RADOS user to authenticate as.$sentinal$This configuration option takes in the RADOS user to authenticate as. This is only needed when RADOS authentication is enabled and is applicable only if the user is using Cephx authentication. If the value for this option is not set by the user or is set to None, a default value will be chosen, which will be based on the client. section in rbd_store_ceph_conf.$sentinal$Possible Values: * A valid RADOS user$sentinal$Related options: * rbd_store_ceph_conf
+     - (String) RADOS user to authenticate as.
+
+       This configuration option takes in the RADOS user to authenticate as. This is only needed when RADOS authentication is enabled and is applicable only if the user is using Cephx authentication. If the value for this option is not set by the user or is set to None, a default value will be chosen, which will be based on the client. section in rbd_store_ceph_conf.
+
+       Possible Values:
+
+       * A valid RADOS user
+
+       Related options:
+
+       * rbd_store_ceph_conf

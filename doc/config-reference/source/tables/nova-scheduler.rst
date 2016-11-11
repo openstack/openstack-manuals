@@ -53,7 +53,9 @@
 
        Possible values:
 
-        * Any valid positive integer or float value * Default value is 0.0
+       * Any valid positive integer or float value
+
+       * Default value is 0.0
 
        NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 16.0'.
    * - ``disk_allocation_ratio`` = ``0.0``
@@ -63,7 +65,9 @@
 
        Possible values:
 
-        * Any valid positive integer or float value * Default value is 0.0
+       * Any valid positive integer or float value
+
+       * Default value is 0.0
 
        NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 1.0'.
    * - ``disk_weight_multiplier`` = ``1.0``
@@ -121,7 +125,9 @@
 
        Possible values:
 
-        * Any valid positive integer or float value * Default value is 0.0
+       * Any valid positive integer or float value
+
+       * Default value is 0.0
 
        NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 1.5.
    * - ``ram_weight_multiplier`` = ``1.0``
@@ -139,13 +145,13 @@
 
        Possible values:
 
-        * Any positive integer representing amount of disk in MB to reserve for the host.
+       * Any positive integer representing amount of disk in MB to reserve for the host.
    * - ``reserved_host_memory_mb`` = ``512``
      - (Integer) Amount of memory in MB to reserve for the host so that it is always available to host processes. The host resources usage is reported back to the scheduler continuously from nova-compute running on the compute node. To prevent the host memory from being considered as available, this option is used to reserve memory for the host.
 
        Possible values:
 
-        * Any positive integer representing amount of memory in MB to reserve for the host.
+       * Any positive integer representing amount of memory in MB to reserve for the host.
    * - ``reserved_huge_pages`` = ``None``
      - (Unknown) Reserves a number of huge/large memory pages per NUMA host cells
 
@@ -189,11 +195,11 @@
 
        Other options are:
 
-        * 'caching_scheduler' which aggressively caches the system state for better individual scheduler performance at the risk of more retries when running multiple schedulers.
+       * 'caching_scheduler' which aggressively caches the system state for better individual scheduler performance at the risk of more retries when running multiple schedulers.
 
-        * 'chance_scheduler' which simply picks a host at random.
+       * 'chance_scheduler' which simply picks a host at random.
 
-        * 'fake_scheduler' which is used for testing.
+       * 'fake_scheduler' which is used for testing.
 
        * Related options:
 
@@ -353,19 +359,19 @@
    * - ``weight_multiplier`` = ``1.0``
      - (Floating point) When using metrics to weight the suitability of a host, you can use this option to change how the calculated weight influences the weight assigned to a host as follows:
 
-        * Greater than 1.0: increases the effect of the metric on overall weight.
+       * Greater than 1.0: increases the effect of the metric on overall weight.
 
-        * Equal to 1.0: No change to the calculated weight.
+       * Equal to 1.0: No change to the calculated weight.
 
-        * Less than 1.0, greater than 0: reduces the effect of the metric on overall weight.
+       * Less than 1.0, greater than 0: reduces the effect of the metric on overall weight.
 
-        * 0: The metric value is ignored, and the value of the 'weight_of_unavailable' option is returned instead.
+       * 0: The metric value is ignored, and the value of the 'weight_of_unavailable' option is returned instead.
 
-        * Greater than -1.0, less than 0: the effect is reduced and reversed.
+       * Greater than -1.0, less than 0: the effect is reduced and reversed.
 
-        * -1.0: the effect is reversed
+       * -1.0: the effect is reversed
 
-        * Less than -1.0: the effect is increased proportionally and reversed.
+       * Less than -1.0: the effect is increased proportionally and reversed.
 
        Valid values are numeric, either integer or float.
 
@@ -377,11 +383,11 @@
    * - ``weight_of_unavailable`` = ``-10000.0``
      - (Floating point) When any of the following conditions are met, this value will be used in place of any actual metric value:
 
-        * One of the metrics named in 'weight_setting' is not available for a host, and the value of 'required' is False.
+       * One of the metrics named in 'weight_setting' is not available for a host, and the value of 'required' is False.
 
-        * The ratio specified for a metric in 'weight_setting' is 0.
+       * The ratio specified for a metric in 'weight_setting' is 0.
 
-        * The 'weight_multiplier' option is set to 0.
+       * The 'weight_multiplier' option is set to 0.
 
        This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
 
@@ -395,14 +401,14 @@
 
        As an example, let's consider the case where this option is set to:
 
-        ``name1=1.0, name2=-1.3``
+       ``name1=1.0, name2=-1.3``
 
        The final weight will be:
 
-        ``(name1.value * 1.0) + (name2.value * -1.3)``
+       ``(name1.value * 1.0) + (name2.value * -1.3)``
 
        This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
 
        * Related options:
 
-        weight_of_unavailable
+       weight_of_unavailable

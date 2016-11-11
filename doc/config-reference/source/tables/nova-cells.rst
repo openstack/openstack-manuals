@@ -155,7 +155,9 @@
    * - ``reserve_percent`` = ``10.0``
      - (Floating point) Reserve percentage
 
-       Percentage of cell capacity to hold in reserve, so the minimum amount of free resource is considered to be; min_free = total * (reserve_percent / 100.0) This option affects both memory and disk utilization. The primary purpose of this reserve is to ensure some space is available for users who want to resize their instance to be larger. Note that currently once the capacity expands into this reserve space this option is ignored.
+       Percentage of cell capacity to hold in reserve, so the minimum amount of free resource is considered to be; min_free = total
+
+       * (reserve_percent / 100.0) This option affects both memory and disk utilization. The primary purpose of this reserve is to ensure some space is available for users who want to resize their instance to be larger. Note that currently once the capacity expands into this reserve space this option is ignored.
    * - ``rpc_driver_queue_base`` = ``cells.intercell``
      - (String) RPC driver queue base
 
