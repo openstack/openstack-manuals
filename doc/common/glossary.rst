@@ -2428,10 +2428,6 @@ M
       a password and a private key. Currently not supported in
       Identity.
 
-   MultiNic
-
-      Facility in Compute that enables a virtual machine instance to
-      have more than one VIF connected to it.
 
 N
 ~
