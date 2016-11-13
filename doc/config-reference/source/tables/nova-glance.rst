@@ -56,4 +56,3 @@
      -
    * - ``filesystems`` =
      - (List) DEPRECATED: List of file systems that are configured in this file in the image_file_url:<list entry name> sections The feature to download images from glance via filesystem is not used and will be removed in the future.
-

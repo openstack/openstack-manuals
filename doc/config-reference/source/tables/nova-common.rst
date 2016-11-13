@@ -45,13 +45,13 @@
 
        Possible values
 
-        * 'console' (default) or any string representing topic exchange name.
+       * 'console' (default) or any string representing topic exchange name.
    * - ``consoleauth_topic`` = ``consoleauth``
      - (String) This option allows you to change the message topic used by nova-consoleauth service when communicating via the AMQP server. Nova Console Authentication server authenticates nova consoles. Users can then access their instances through VNC clients. The Nova API service uses a message queue to communicate with nova-consoleauth to get a VNC console.
 
        Possible Values:
 
-        * 'consoleauth' (default) or Any string representing topic exchange name.
+       * 'consoleauth' (default) or Any string representing topic exchange name.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
    * - ``fatal_exception_format_errors`` = ``False``

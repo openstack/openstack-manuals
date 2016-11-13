@@ -31,7 +31,13 @@
 
         defines an alias for the Intel QuickAssist card. (multi valued). Valid key values are :
 
-        * "name": Name of the PCI alias. * "product_id": Product ID of the device in hexadecimal. * "vendor_id": Vendor ID of the device in hexadecimal. * "device_type": Type of PCI device. Valid values are: "type-PCI", "type-PF" and "type-VF".
+       * "name": Name of the PCI alias.
+
+       * "product_id": Product ID of the device in hexadecimal.
+
+       * "vendor_id": Vendor ID of the device in hexadecimal.
+
+       * "device_type": Type of PCI device. Valid values are: "type-PCI", "type-PF" and "type-VF".
    * - ``pci_passthrough_whitelist`` = ``[]``
      - (Multi-valued) White list of PCI devices available to VMs.
 
@@ -45,7 +51,15 @@
 
         Valid key values are :
 
-        * "vendor_id": Vendor ID of the device in hexadecimal. * "product_id": Product ID of the device in hexadecimal. * "address": PCI address of the device. * "devname": Device name of the device (for e.g. interface name). Not all PCI devices have a name. * "<tag>": Additional <tag> and <tag_value> used for matching PCI devices. Supported <tag>: "physical_network".
+       * "vendor_id": Vendor ID of the device in hexadecimal.
+
+       * "product_id": Product ID of the device in hexadecimal.
+
+       * "address": PCI address of the device.
+
+       * "devname": Device name of the device (for e.g. interface name). Not all PCI devices have a name.
+
+       * "<tag>": Additional <tag> and <tag_value> used for matching PCI devices. Supported <tag>: "physical_network".
 
         Valid examples are:
 

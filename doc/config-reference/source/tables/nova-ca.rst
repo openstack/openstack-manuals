@@ -23,4 +23,4 @@
    * - ``cert_manager`` = ``nova.cert.manager.CertManager``
      - (String) DEPRECATED: Full class name for the Manager for cert
    * - ``cert_topic`` = ``cert``
-     - (String) DEPRECATED: Determines the RPC topic that the cert nodes listen on. For most deployments there is no need to ever change it. Since the nova-cert service is marked for deprecation, the feature to change RPC topic that cert nodes listen may be removed as early as the 15.0.0
+     - (String) DEPRECATED: Determines the RPC topic that the cert nodes listen on. For most deployments there is no need to ever change it. Since the nova-cert service is marked for deprecation, the feature to change RPC topic that cert nodes listen may be removed as early as the 15.0.0 Ocata release.

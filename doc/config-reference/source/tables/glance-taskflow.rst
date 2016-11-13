@@ -19,8 +19,48 @@
    * - **[taskflow_executor]**
      -
    * - ``conversion_format`` = ``raw``
-     - (String) Set the desired image conversion format.$sentinal$Provide a valid image format to which you want images to be converted before they are stored for consumption by Glance. Appropriate image format conversions are desirable for specific storage backends in order to facilitate efficient handling of bandwidth and usage of the storage infrastructure.$sentinal$By default, ``conversion_format`` is not set and must be set explicitly in the configuration file.$sentinal$The allowed values for this option are ``raw``, ``qcow2`` and ``vmdk``. The ``raw`` format is the unstructured disk format and should be chosen when RBD or Ceph storage backends are used for image storage. ``qcow2`` is supported by the QEMU emulator that expands dynamically and supports Copy on Write. The ``vmdk`` is another common disk format supported by many common virtual machine monitors like VMWare Workstation.$sentinal$Possible values: * qcow2 * raw * vmdk$sentinal$Related options: * disk_formats
+     - (String) Set the desired image conversion format.
+
+       Provide a valid image format to which you want images to be converted before they are stored for consumption by Glance. Appropriate image format conversions are desirable for specific storage backends in order to facilitate efficient handling of bandwidth and usage of the storage infrastructure.
+
+       By default, ``conversion_format`` is not set and must be set explicitly in the configuration file.
+
+       The allowed values for this option are ``raw``, ``qcow2`` and ``vmdk``. The ``raw`` format is the unstructured disk format and should be chosen when RBD or Ceph storage backends are used for image storage. ``qcow2`` is supported by the QEMU emulator that expands dynamically and supports Copy on Write. The ``vmdk`` is another common disk format supported by many common virtual machine monitors like VMWare Workstation.
+
+       Possible values:
+
+       * qcow2
+
+       * raw
+
+       * vmdk
+
+       Related options:
+
+       * disk_formats
    * - ``engine_mode`` = ``parallel``
-     - (String) Set the taskflow engine mode.$sentinal$Provide a string type value to set the mode in which the taskflow engine would schedule tasks to the workers on the hosts. Based on this mode, the engine executes tasks either in single or multiple threads. The possible values for this configuration option are: ``serial`` and ``parallel``. When set to ``serial``, the engine runs all the tasks in a single thread which results in serial execution of tasks. Setting this to ``parallel`` makes the engine run tasks in multiple threads. This results in parallel execution of tasks.$sentinal$Possible values: * serial * parallel$sentinal$Related options: * max_workers
+     - (String) Set the taskflow engine mode.
+
+       Provide a string type value to set the mode in which the taskflow engine would schedule tasks to the workers on the hosts. Based on this mode, the engine executes tasks either in single or multiple threads. The possible values for this configuration option are: ``serial`` and ``parallel``. When set to ``serial``, the engine runs all the tasks in a single thread which results in serial execution of tasks. Setting this to ``parallel`` makes the engine run tasks in multiple threads. This results in parallel execution of tasks.
+
+       Possible values:
+
+       * serial
+
+       * parallel
+
+       Related options:
+
+       * max_workers
    * - ``max_workers`` = ``10``
-     - (Integer) Set the number of engine executable tasks.$sentinal$Provide an integer value to limit the number of workers that can be instantiated on the hosts. In other words, this number defines the number of parallel tasks that can be executed at the same time by the taskflow engine. This value can be greater than one when the engine mode is set to parallel.$sentinal$Possible values: * Integer value greater than or equal to 1$sentinal$Related options: * engine_mode
+     - (Integer) Set the number of engine executable tasks.
+
+       Provide an integer value to limit the number of workers that can be instantiated on the hosts. In other words, this number defines the number of parallel tasks that can be executed at the same time by the taskflow engine. This value can be greater than one when the engine mode is set to parallel.
+
+       Possible values:
+
+       * Integer value greater than or equal to 1
+
+       Related options:
+
+       * engine_mode

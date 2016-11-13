@@ -25,103 +25,131 @@
 
        Related options:
 
-       * quota_networks: CRUD operations on tenant networks are only available when using nova-network and nova-network is itself deprecated.
+       * quota_networks CRUD operations on tenant networks are only available when using nova-network and nova-network is itself deprecated.
    * - ``quota_cores`` = ``20``
      - (Integer) The number of instance cores or VCPUs allowed per project.
 
        Possible values:
 
-        * 20 (default) or any positive integer. * -1 : treated as unlimited.
+       * 20 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_driver`` = ``nova.quota.DbQuotaDriver``
      - (String) DEPRECATED: Provides abstraction for quota checks. Users can configure a specific driver to use for quota checks.
 
        Possible values:
 
-        * nova.quota.DbQuotaDriver (default) or any string representing fully qualified class name.
+       * nova.quota.DbQuotaDriver (default) or any string representing fully qualified class name.
    * - ``quota_fixed_ips`` = ``-1``
      - (Integer) The number of fixed IPs allowed per project (this should be at least the number of instances allowed). Unlike floating IPs, fixed IPs are allocated dynamically by the network component when instances boot up.
 
        Possible values:
 
-        * -1 (default) : treated as unlimited. * Any positive integer.
+       * -1 (default) : treated as unlimited.
+
+       * Any positive integer.
    * - ``quota_floating_ips`` = ``10``
      - (Integer) The number of floating IPs allowed per project. Floating IPs are not allocated to instances by default. Users need to select them from the pool configured by the OpenStack administrator to attach to their instances.
 
        Possible values:
 
-        * 10 (default) or any positive integer. * -1 : treated as unlimited.
+       * 10 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_injected_file_content_bytes`` = ``10240``
      - (Integer) The number of bytes allowed per injected file.
 
        Possible values:
 
-        * 10240 (default) or any positive integer representing number of bytes. * -1 : treated as unlimited.
+       * 10240 (default) or any positive integer representing number of bytes.
+
+       * -1 : treated as unlimited.
    * - ``quota_injected_file_path_length`` = ``255``
      - (Integer) The maximum allowed injected file path length.
 
        Possible values:
 
-        * 255 (default) or any positive integer. * -1 : treated as unlimited.
+       * 255 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_injected_files`` = ``5``
      - (Integer) The number of injected files allowed. It allow users to customize the personality of an instance by injecting data into it upon boot. Only text file injection is permitted. Binary or zip files won't work. During file injection, any existing files that match specified files are renamed to include .bak extension appended with a timestamp.
 
        Possible values:
 
-        * 5 (default) or any positive integer. * -1 : treated as unlimited.
+       * 5 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_instances`` = ``10``
      - (Integer) The number of instances allowed per project.
 
        Possible Values
 
-        * 10 (default) or any positive integer. * -1 : treated as unlimited.
+       * 10 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_key_pairs`` = ``100``
      - (Integer) The maximum number of key pairs allowed per user. Users can create at least one key pair for each project and use the key pair for multiple instances that belong to that project.
 
        Possible values:
 
-        * 100 (default) or any positive integer. * -1 : treated as unlimited.
+       * 100 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_metadata_items`` = ``128``
      - (Integer) The number of metadata items allowed per instance. User can associate metadata while instance creation in the form of key-value pairs.
 
        Possible values:
 
-        * 128 (default) or any positive integer. * -1 : treated as unlimited.
+       * 128 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_networks`` = ``3``
      - (Integer) DEPRECATED: This option controls the number of private networks that can be created per project (or per tenant).
 
        Related options:
 
-       * enable_network_quota: CRUD operations on tenant networks are only available when using nova-network and nova-network is itself deprecated.
+       * enable_network_quota CRUD operations on tenant networks are only available when using nova-network and nova-network is itself deprecated.
    * - ``quota_ram`` = ``51200``
      - (Integer) The number of megabytes of instance RAM allowed per project.
 
        Possible values:
 
-        * 51200 (default) or any positive integer. * -1 : treated as unlimited.
+       * 51200 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_security_group_rules`` = ``20``
      - (Integer) The number of security rules per security group. The associated rules in each security group control the traffic to instances in the group.
 
        Possible values:
 
-        * 20 (default) or any positive integer. * -1 : treated as unlimited.
+       * 20 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_security_groups`` = ``10``
      - (Integer) The number of security groups per project.
 
        Possible values:
 
-        * 10 (default) or any positive integer. * -1 : treated as unlimited.
+       * 10 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_server_group_members`` = ``10``
      - (Integer) Add quota values to constrain the number of servers per server group.
 
        Possible values:
 
-        * 10 (default) or any positive integer. * -1 : treated as unlimited.
+       * 10 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - ``quota_server_groups`` = ``10``
      - (Integer) Add quota values to constrain the number of server groups per project. Server group used to control the affinity and anti-affinity scheduling policy for a group of servers or instances. Reducing the quota will not affect any existing group, but new servers will not be allowed into groups that have become over quota.
 
        Possible values:
 
-        * 10 (default) or any positive integer. * -1 : treated as unlimited.
+       * 10 (default) or any positive integer.
+
+       * -1 : treated as unlimited.
    * - **[cells]**
      -
    * - ``bandwidth_update_interval`` = ``600``

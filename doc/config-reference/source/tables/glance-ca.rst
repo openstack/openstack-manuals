@@ -19,8 +19,42 @@
    * - **[DEFAULT]**
      -
    * - ``ca_file`` = ``/etc/ssl/cafile``
-     - (String) Absolute path to the CA file.$sentinal$Provide a string value representing a valid absolute path to the Certificate Authority file to use for client authentication.$sentinal$A CA file typically contains necessary trusted certificates to use for the client authentication. This is essential to ensure that a secure connection is established to the server via the internet.$sentinal$Possible values: * Valid absolute path to the CA file$sentinal$Related options: * None
+     - (String) Absolute path to the CA file.
+
+       Provide a string value representing a valid absolute path to the Certificate Authority file to use for client authentication.
+
+       A CA file typically contains necessary trusted certificates to use for the client authentication. This is essential to ensure that a secure connection is established to the server via the internet.
+
+       Possible values:
+
+       * Valid absolute path to the CA file
+
+       Related options:
+
+       * None
    * - ``cert_file`` = ``/etc/ssl/certs``
-     - (String) Absolute path to the certificate file.$sentinal$Provide a string value representing a valid absolute path to the certificate file which is required to start the API service securely.$sentinal$A certificate file typically is a public key container and includes the server's public key, server name, server information and the signature which was a result of the verification process using the CA certificate. This is required for a secure connection establishment.$sentinal$Possible values: * Valid absolute path to the certificate file$sentinal$Related options: * None
+     - (String) Absolute path to the certificate file.
+
+       Provide a string value representing a valid absolute path to the certificate file which is required to start the API service securely.
+
+       A certificate file typically is a public key container and includes the server's public key, server name, server information and the signature which was a result of the verification process using the CA certificate. This is required for a secure connection establishment.
+
+       Possible values:
+
+       * Valid absolute path to the certificate file
+
+       Related options:
+
+       * None
    * - ``key_file`` = ``/etc/ssl/key/key-file.pem``
-     - (String) Absolute path to a private key file.$sentinal$Provide a string value representing a valid absolute path to a private key file which is required to establish the client-server connection.$sentinal$Possible values: * Absolute path to the private key file$sentinal$Related options: * None
+     - (String) Absolute path to a private key file.
+
+       Provide a string value representing a valid absolute path to a private key file which is required to establish the client-server connection.
+
+       Possible values:
+
+       * Absolute path to the private key file
+
+       Related options:
+
+       * None
