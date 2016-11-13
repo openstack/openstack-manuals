@@ -21,6 +21,7 @@ if [ -z "$DIRECTORY" ] ; then
     echo "--target TARGET: Copy files to publish-docs/$TARGET"
     echo "--build BUILD: Name of build directory"
     echo "--linkcheck: Check validity of links instead of building"
+    echo "--pdf: PDF file generation"
     exit 1
 fi
 
@@ -29,6 +30,7 @@ TAG=""
 TAG_OPT=""
 BUILD=""
 LINKCHECK=""
+PDF=""
 
 while [[ $# > 0 ]] ; do
     option="$1"
@@ -49,6 +51,9 @@ while [[ $# > 0 ]] ; do
             TARGET="$2"
             shift
             ;;
+        --pdf)
+            PDF=1
+            ;;
     esac
     shift
 done
@@ -57,11 +62,14 @@ done
 if [ -z "$BUILD" ] ; then
     if [ -z "$TAG" ] ; then
         BUILD_DIR="$DIRECTORY/build/html"
+        BUILD_DIR_PDF="$DIRECTORY/build/pdf"
     else
         BUILD_DIR="$DIRECTORY/build-${TAG}/html"
+        BUILD_DIR_PDF="$DIRECTORY/build-${TAG}/pdf"
     fi
 else
     BUILD_DIR="$DIRECTORY/$BUILD/html"
+    BUILD_DIR_PDF="$DIRECTORY/$BUILD/pdf"
 fi
 
 DOCTREES="${BUILD_DIR}.doctrees"
@@ -85,7 +93,17 @@ else
         $TAG_OPT $DIRECTORY/source $BUILD_DIR
     set +x
 
-    # Copy RST
+    # PDF generation
+    if [ "$PDF" = "1" ] ; then
+        set -x
+        sphinx-build -E -W -d $DOCTREES -b latex \
+            $TAG_OPT $DIRECTORY/source $BUILD_DIR_PDF
+        make -C $BUILD_DIR_PDF
+        cp $BUILD_DIR_PDF/*.pdf $BUILD_DIR/
+        set +x
+    fi
+
+    # Copy RST (and PDF)
     if [ "$TARGET" != "" ] ; then
         mkdir -p publish-docs/$TARGET
         rsync -a $BUILD_DIR/ publish-docs/$TARGET/
