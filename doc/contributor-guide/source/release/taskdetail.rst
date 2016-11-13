@@ -113,9 +113,37 @@ Cut the branch
 
 Cut the branch for versioned guides. This usually happens about a month
 after release day, but the timing is informed mainly by the volume of
-changes going in to the guides.
+changes going in to the guides. Cutting the branch is done by the
+OpenStack Infrastructure team.
 
-Update sphinxmark
-~~~~~~~~~~~~~~~~~
-Update the sphinxmark configuration files for versioned guides with the
-latest release name.
+Once the branch ``stable/RELEASENAME`` is created, a few things need
+to be set up before any other changes merge:
+
+* Update the ``stable/RELEASENAME`` branch (`example stable branch change
+  <https://review.openstack.org/#/c/396875/>`__):
+
+  * Disable all non-translated and non-versioned guides for
+    translation.
+  * Only build backported guides (install-guide, config-reference,
+    networking-guide).
+  * Publish backported guides and their translations to
+    ``/RELEASENAME/``.
+  * Do not publish web pages.
+  * Update ``.gitreview`` for the branch.
+
+* Update the ``master`` branch (`example master branch change
+  <https://review.openstack.org/#/c/396874/>`__):
+
+  * Do not copy content anymore to ``/RELEASENAME``.
+  * Update the sphinxmark configuration files for versioned guides
+    with the latest release name.
+
+
+Also, for translations the following needs to be done:
+
+* The translation server needs be set up for this. A version
+  ``stable-RELEASENAME`` needs to be set up as copy from ``master``.
+* The OpenStack CI set up needs to be adjusted for the branch. Change
+  in ``openstack-infra/project-config`` the gerritbot notifications and
+  the import of translations (`example infra change
+  <https://review.openstack.org/396876>`__).
