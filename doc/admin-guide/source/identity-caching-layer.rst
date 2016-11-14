@@ -4,9 +4,8 @@ Caching layer
 ~~~~~~~~~~~~~
 
 OpenStack Identity supports a caching layer that is above the
-configurable subsystems (for example, token, assignment). OpenStack
-Identity uses the
-`dogpile.cache <http://dogpilecache.readthedocs.org/en/latest/>`__
+configurable subsystems (for example, token). OpenStack Identity uses the
+`oslo.cache <http://docs.openstack.org/developer/oslo.cache/>`__
 library which allows flexible cache back ends. The majority of the
 caching configuration options are set in the ``[cache]`` section of the
 ``/etc/keystone/keystone.conf`` file. However, each section that has
@@ -20,7 +19,22 @@ So to enable only the token back end caching, set the values as follows:
    [cache]
    enabled=true
 
-   [assignment]
+   [catalog]
+   caching=false
+
+   [domain_config]
+   caching=false
+
+   [federation]
+   caching=false
+
+   [resource]
+   caching=false
+
+   [revoke]
+   caching=false
+
+   [role]
    caching=false
 
    [token]
@@ -28,10 +42,9 @@ So to enable only the token back end caching, set the values as follows:
 
 .. note::
 
-   Since the Juno release, the default setting is enabled for subsystem
-   caching, but the global toggle is disabled. As a result, no caching
-   in available unless the global toggle for ``[cache]`` is enabled by
-   setting the value to ``true``.
+   Since the Newton release, the default setting is enabled for subsystem
+   caching and the global toggle. As a result, all subsystems that support
+   caching are doing this by default.
 
 Caching for tokens and tokens validation
 ----------------------------------------
@@ -67,56 +80,33 @@ token hash at the provider and token driver level. Some methods have
 access to the full ID (PKI Tokens), and some methods do not. Cache
 invalidation is inconsistent without token ID normalization.
 
-Caching around assignment CRUD
-------------------------------
+Caching for non-token resources
+-------------------------------
 
-The assignment system has a separate ``cache_time`` configuration
+Various other keystone components have a separate ``cache_time`` configuration
 option, that can be set to a value above or below the global
 ``expiration_time`` default, allowing for different caching behavior
-from the other systems in Identity service. This option is set in the
-``[assignment]`` section of the configuration file.
-
-Currently ``assignment`` has caching for ``project``, ``domain``, and
-``role`` specific requests (primarily around the CRUD actions). Caching
-is currently not implemented on grants. The ``list`` methods are not
-subject to caching.
-
-Here is a list of actions that are affected by the assignment: assign
-domain API, assign project API, and assign role API.
-
+from the other systems in Identity service. This option can be set in various
+sections (for example, ``[role]`` and ``[resource]``) of the configuration
+file.
 The create, update, and delete actions for domains, projects and roles
 will perform proper invalidations of the cached methods listed above.
-
-.. note::
-
-   If a read-only ``assignment`` back end is in use, the cache will not
-   immediately reflect changes on the back end. Any given change may
-   take up to the ``cache_time`` (if set in the ``[assignment]``
-   section of the configuration file) or the global ``expiration_time``
-   (set in the ``[cache]`` section of the configuration file) before it
-   is reflected. If this type of delay (when using a read-only
-   ``assignment`` back end) is an issue, it is recommended that caching
-   be disabled on ``assignment``. To disable caching specifically on
-   ``assignment``, in the ``[assignment]`` section of the configuration
-   set ``caching`` to ``False``.
 
 For more information about the different back ends (and configuration
 options), see:
 
-- `dogpile.cache.backends.memory <http://dogpilecache.readthedocs.org/en/latest/api.html#memory-backend>`__
+- `dogpile.cache.memory <http://dogpilecache.readthedocs.io/en/latest/api.html#memory-backend>`__
 
-- `dogpile.cache.backends.memcached <http://dogpilecache.readthedocs.org/en/latest/api.html#memcached-backends>`__
+- `dogpile.cache.memcached <http://dogpilecache.readthedocs.io/en/latest/api.html#memcached-backends>`__
 
   .. note::
 
      The memory back end is not suitable for use in a production
      environment.
 
-- `dogpile.cache.backends.redis <http://dogpilecache.readthedocs.org/en/latest/api.html#redis-backends>`__
+- `dogpile.cache.redis <http://dogpilecache.readthedocs.io/en/latest/api.html#redis-backends>`__
 
-- `dogpile.cache.backends.file <http://dogpilecache.readthedocs.org/en/latest/api.html#file-backends>`__
-
-- ``keystone.common.cache.backends.mongo``
+- `dogpile.cache.dbm <http://dogpilecache.readthedocs.io/en/latest/api.html#file-backends>`__
 
 Configure the Memcached back end example
 ----------------------------------------
