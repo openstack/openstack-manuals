@@ -22,7 +22,7 @@ command-line clients, and provides installation instructions as needed.
    * - Prerequisite
      - Description
    * - Python 2.7 or later
-     - Currently, the clients do not support Python 3.
+     - Supports Python 2.7, 3.4, and 3.5.
    * - setuptools package
      - Installed by default on Mac OS X.
 
