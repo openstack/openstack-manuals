@@ -84,16 +84,16 @@ A
       The Compute service provides accounting information through the
       event notification and system usage data facilities.
 
+   Active Directory
+
+      Authentication and identity service by Microsoft, based on LDAP.
+      Supported in OpenStack.
+
    active/active configuration
 
       In a high-availability setup with an active/active
       configuration, several systems share the load together and if one
       fails, the load is distributed to the remaining systems.
-
-   Active Directory
-
-      Authentication and identity service by Microsoft, based on LDAP.
-      Supported in OpenStack.
 
    active/passive configuration
 
@@ -107,6 +107,11 @@ A
       to a project and can be used by or assigned to the VM instances in a
       project.
 
+   Address Resolution Protocol (ARP)
+
+      The protocol by which layer-3 IP addresses are resolved into
+      layer-2 link local addresses.
+
    admin API
 
       A subset of API calls that are accessible to authorized
@@ -114,15 +119,15 @@ A
       public Internet. They can exist as a separate service (keystone) or
       can be a subset of another API (nova).
 
-   administrator
-
-      The person responsible for installing, configuring,
-      and managing an OpenStack cloud.
-
    admin server
 
       In the context of the Identity service, the worker process that
       provides access to the admin API.
+
+   administrator
+
+      The person responsible for installing, configuring,
+      and managing an OpenStack cloud.
 
    Advanced Message Queuing Protocol (AMQP)
 
@@ -250,11 +255,6 @@ A
       Companies that rent specialized applications that help
       businesses and organizations provide additional services
       with lower cost.
-
-   Address Resolution Protocol (ARP)
-
-      The protocol by which layer-3 IP addresses are resolved into
-      layer-2 link local addresses.
 
    arptables
 
@@ -478,17 +478,17 @@ B
       user-initiated switchover. Does not require shared storage. Supported
       by Compute.
 
-   Block Storage service (cinder)
-
-      The OpenStack service that implement services and libraries to provide
-      on-demand, self-service access to Block Storage resources via abstraction
-      and automation on top of other block storage devices.
-
    Block Storage API
 
       An API on a separate endpoint for attaching,
       detaching, and creating block storage for compute
       VMs.
+
+   Block Storage service (cinder)
+
+      The OpenStack service that implement services and libraries to provide
+      on-demand, self-service access to Block Storage resources via abstraction
+      and automation on top of other block storage devices.
 
    BMC (Baseboard Management Controller)
 
@@ -775,10 +775,6 @@ C
       services. The project name of Clustering service is
       senlin.
 
-   congress
-
-      OpenStack project that provides the Governance service.
-
    command filter
 
       Lists allowed commands within the Compute rootwrap
@@ -813,12 +809,6 @@ C
       compression for things such as Object Storage objects or Image service
       VM images.
 
-   Compute service (nova)
-      The OpenStack core project that implements services and associated
-      libraries to provide massively-scalable, on-demand, self-service
-      access to compute resources, including bare metal, virtual machines,
-      and containers.
-
    Compute API (Nova API)
 
       The nova-api daemon provides access to nova services. Can communicate with
@@ -839,9 +829,12 @@ C
       instances that provide a wide
       range of services, such as web applications and analytics.
 
-   Compute service
+   Compute service (nova)
 
-      Name for the Compute component that manages VMs.
+      The OpenStack core project that implements services and associated
+      libraries to provide massively-scalable, on-demand, self-service
+      access to compute resources, including bare metal, virtual machines,
+      and containers.
 
    compute worker
 
@@ -860,6 +853,10 @@ C
       requests from the compute process. Using conductor improves security
       because compute nodes do not need direct access to the
       database.
+
+   congress
+
+      OpenStack project that provides the Governance service.
 
    consistency window
 
@@ -998,22 +995,6 @@ D
       SSH. Object Storage does not support object encryption at the
       application level but may support storage that uses disk encryption.
 
-   database ID
-
-      A unique ID given to each replica of an Object Storage
-      database.
-
-   database replicator
-
-      An Object Storage component that copies changes in the account,
-      container, and object databases to other nodes.
-
-   Database service (trove)
-
-      An integrated project that provides scalable and reliable
-      Cloud Database-as-a-Service functionality for both
-      relational and non-relational database engines.
-
    Data loss prevention (DLP) software
 
       Software programs used to protect sensitive information
@@ -1029,6 +1010,22 @@ D
    data store
 
       A database engine supported by the Database service.
+
+   database ID
+
+      A unique ID given to each replica of an Object Storage
+      database.
+
+   database replicator
+
+      An Object Storage component that copies changes in the account,
+      container, and object databases to other nodes.
+
+   Database service (trove)
+
+      An integrated project that provides scalable and reliable
+      Cloud Database-as-a-Service functionality for both
+      relational and non-relational database engines.
 
    deallocate
 
@@ -1314,6 +1311,12 @@ E
 
       The Amazon commercial block storage product.
 
+   encapsulation
+
+      The practice of placing one packet type within another for
+      the purposes of abstracting or securing data. Examples
+      include GRE, MPLS, or IPsec.
+
    encryption
 
       OpenStack supports encryption technologies such as HTTPS, SSH,
@@ -1326,12 +1329,6 @@ E
    endpoint registry
 
       Alternative term for an Identity service catalog.
-
-   encapsulation
-
-      The practice of placing one packet type within another for
-      the purposes of abstracting or securing data. Examples
-      include GRE, MPLS, or IPsec.
 
    endpoint template
 
@@ -1699,14 +1696,6 @@ H
       design summit took place in Portland, Oregon, US and Havana is
       an unincorporated community in Oregon.
 
-   heat
-      Codename for the :term:`Orchestration service
-      <Orchestration service (heat)>`.
-
-   Heat Orchestration Template (HOT)
-
-      Heat input in the format native to OpenStack.
-
    health monitor
 
       Determines whether back-end members of a VIP pool can
@@ -1715,6 +1704,14 @@ H
       associated with it, all monitors check each member of the
       pool. All monitors must declare a member to be healthy for
       it to stay active.
+
+   heat
+      Codename for the :term:`Orchestration service
+      <Orchestration service (heat)>`.
+
+   Heat Orchestration Template (HOT)
+
+      Heat input in the format native to OpenStack.
 
    high availability (HA)
 
@@ -2012,10 +2009,12 @@ I
       over IP networks.
       Supported by Compute, Object Storage, and Image service.
 
-   ironic
+   ip6tables
 
-      Codename for the :term:`Bare Metal service <Bare Metal service
-      (ironic)>`.
+      Tool used to set up, maintain, and inspect the tables of IPv6
+      packet filter rules in the Linux kernel. In OpenStack Compute,
+      ip6tables is used along with arptables, ebtables, and iptables to
+      create firewalls for both nodes and VMs.
 
    IP address
 
@@ -2028,13 +2027,6 @@ I
       The process of automating IP address allocation, deallocation,
       and management. Currently provided by Compute, melange, and
       Networking.
-
-   ip6tables
-
-      Tool used to set up, maintain, and inspect the tables of IPv6
-      packet filter rules in the Linux kernel. In OpenStack Compute,
-      ip6tables is used along with arptables, ebtables, and iptables to
-      create firewalls for both nodes and VMs.
 
    ipset
 
@@ -2052,6 +2044,11 @@ I
       currently used for different protocols: iptables applies to IPv4,
       ip6tables to IPv6, arptables to ARP, and ebtables to Ethernet frames.
       Requires root privilege to manipulate.
+
+   ironic
+
+      Codename for the :term:`Bare Metal service <Bare Metal service
+      (ironic)>`.
 
    iSCSI Qualified Name (IQN)
 
@@ -2172,16 +2169,16 @@ L
       control, flow control and detecting and possibly correcting
       errors that may occur in the physical layer.
 
+   Layer-2 (L2) agent
+
+      OpenStack Networking agent that provides layer-2
+      connectivity for virtual networks.
+
    Layer-3 network
 
       Term used in the OSI network architecture for the network
       layer. The network layer is responsible for packet
       forwarding including routing from one node to another.
-
-   Layer-2 (L2) agent
-
-      OpenStack Networking agent that provides layer-2
-      connectivity for virtual networks.
 
    Layer-3 (L3) agent
 
@@ -2232,15 +2229,15 @@ L
       systems or services, based on the criteria defined as part of its
       configuration.
 
-   load balancing
-
-      The process of spreading client requests between two or more
-      nodes to improve performance and availability.
-
    Load-Balancer-as-a-Service (LBaaS)
 
       Enables Networking to distribute incoming requests evenly
       between designated instances.
+
+   load balancing
+
+      The process of spreading client requests between two or more
+      nodes to improve performance and availability.
 
    Logical Volume Manager (LVM)
 
@@ -2377,31 +2374,14 @@ M
       The design summit took place in Tokyo, Japan. Mitaka
       is a city in Tokyo.
 
-   monasca
-
-      Codename for OpenStack :term:`Monitoring <Monitoring (monasca)>`.
-
-   multi-host
-
-      High-availability mode for legacy (nova) networking.
-      Each compute node handles NAT and DHCP and acts as a gateway
-      for all of the VMs on it. A networking failure on one compute
-      node doesn't affect VMs on other compute nodes.
-
-   multinic
-
-      Facility in Compute that allows each virtual machine instance to
-      have more than one VIF connected to it.
-
-   murano
-
-      Codename for the :term:`Application Catalog service <Application Catalog
-      service (murano)>`.
-
    Modular Layer 2 (ML2) neutron plug-in
 
       Can concurrently use multiple layer-2 networking technologies,
       such as 802.1Q and VXLAN, in Networking.
+
+   monasca
+
+      Codename for OpenStack :term:`Monitoring <Monitoring (monasca)>`.
 
    Monitor (LBaaS)
 
@@ -2428,6 +2408,22 @@ M
       a password and a private key. Currently not supported in
       Identity.
 
+   multi-host
+
+      High-availability mode for legacy (nova) networking.
+      Each compute node handles NAT and DHCP and acts as a gateway
+      for all of the VMs on it. A networking failure on one compute
+      node doesn't affect VMs on other compute nodes.
+
+   multinic
+
+      Facility in Compute that allows each virtual machine instance to
+      have more than one VIF connected to it.
+
+   murano
+
+      Codename for the :term:`Application Catalog service <Application Catalog
+      service (murano)>`.
 
 N
 ~
@@ -2505,14 +2501,6 @@ N
       Method of keeping a clock for a host or node correct via
       communication with a trusted, accurate time source.
 
-   Newton
-
-      The code name for the fourteenth release of OpenStack. The
-      design summit took place in Austin, Texas, US. The
-      release is named after "Newton House" which is located at
-      1013 E. Ninth St., Austin, TX. which is listed on the
-      National Register of Historic Places.
-
    network UUID
 
       Unique ID for a Networking network segment.
@@ -2523,16 +2511,16 @@ N
       services such as giving an IP address to a booting nova
       instance.
 
+   Networking API (Neutron API)
+
+      API used to access OpenStack Networking. Provides an extensible
+      architecture to enable custom plug-in creation.
+
    Networking service (neutron)
 
       The OpenStack project which implements services and associated
       libraries to provide on-demand, scalable, and technology-agnostic
       network abstraction.
-
-   Networking API (Neutron API)
-
-      API used to access OpenStack Networking. Provides an extensible
-      architecture to enable custom plug-in creation.
 
    neutron
 
@@ -2554,6 +2542,14 @@ N
       Interface within Networking that enables organizations to create
       custom plug-ins for advanced features, such as QoS, ACLs, or
       IDS.
+
+   Newton
+
+      The code name for the fourteenth release of OpenStack. The
+      design summit took place in Austin, Texas, US. The
+      release is named after "Newton House" which is located at
+      1013 E. Ninth St., Austin, TX. which is listed on the
+      National Register of Historic Places.
 
    Nexenta volume driver
 
@@ -2647,11 +2643,6 @@ O
       An Object Storage component that is responsible for managing
       objects.
 
-   Object Storage service (swift)
-
-      The OpenStack core project that provides eventually consistent
-      and redundant storage and retrieval of fixed digital content.
-
    Object Storage API
 
       API used to access OpenStack :term:`Object Storage<Object Storage
@@ -2660,6 +2651,11 @@ O
    Object Storage Device (OSD)
 
       The Ceph storage daemon.
+
+   Object Storage service (swift)
+
+      The OpenStack core project that provides eventually consistent
+      and redundant storage and retrieval of fixed digital content.
 
    object versioning
 
@@ -3212,18 +3208,18 @@ R
       partitions to devices, and pushes the configuration to other storage
       nodes.
 
+   role
+
+      A personality that a user assumes to perform a specific set of
+      operations. A role includes a set of rights and privileges. A user
+      assuming that role inherits those rights and privileges.
+
    Role Based Access Control (RBAC)
 
       Provides a predefined list of actions that the user can perform,
       such as start or stop VMs, reset passwords, and so on. Supported in
       both Identity and Compute and can be configured using the
       horizon dashboard.
-
-   role
-
-      A personality that a user assumes to perform a specific set of
-      operations. A role includes a set of rights and privileges. A user
-      assuming that role inherits those rights and privileges.
 
    role ID
 
@@ -3374,6 +3370,16 @@ S
       Unique ID assigned to each service that is available in the
       Identity service catalog.
 
+   Service Level Agreement (SLA)
+
+      Contractual obligations that ensure the availability of a
+      service.
+
+   service project
+
+      Special project that contains all services that are listed in the
+      catalog.
+
    service provider
 
       A system that provides services to other system entities. In
@@ -3384,11 +3390,6 @@ S
 
       An Identity service feature that enables services, such as
       Compute, to automatically register with the catalog.
-
-   service project
-
-      Special project that contains all services that are listed in the
-      catalog.
 
    service token
 
@@ -3479,6 +3480,11 @@ S
       Specification for managing identity in the cloud, currently
       unsupported by OpenStack.
 
+   Simple Protocol for Independent Computing Environments (SPICE)
+
+      SPICE provides remote desktop access to guest virtual machines. It
+      is an alternative to VNC. SPICE is supported by OpenStack.
+
    Single-root I/O Virtualization (SR-IOV)
 
       A specification that, when implemented by a physical PCIe
@@ -3487,11 +3493,6 @@ S
       physical device, offering improved performance over an equivalent
       virtual device. Currently supported in OpenStack Havana and later
       releases.
-
-   Service Level Agreement (SLA)
-
-      Contractual obligations that ensure the availability of a
-      service.
 
    SmokeStack
 
@@ -3525,11 +3526,6 @@ S
 
       OpenStack project that provides a Software Development
       Lifecycle Automation service.
-
-   Simple Protocol for Independent Computing Environments (SPICE)
-
-      SPICE provides remote desktop access to guest virtual machines. It
-      is an alternative to VNC. SPICE is supported by OpenStack.
 
    spread-first scheduler
 
@@ -3571,12 +3567,6 @@ S
       The method that a service uses for persistent storage, such as
       iSCSI, NFS, or local disk.
 
-   storage node
-
-      An Object Storage node that provides container services, account
-      services, and object services; controls the account databases,
-      container databases, and object storage.
-
    storage manager
 
       A XenAPI component that provides a pluggable interface to
@@ -3586,6 +3576,12 @@ S
 
       A persistent storage method supported by XenAPI, such as iSCSI
       or NFS.
+
+   storage node
+
+      An Object Storage node that provides container services, account
+      services, and object services; controls the account databases,
+      container databases, and object storage.
 
    storage services
 
@@ -3862,13 +3858,6 @@ V
 
       An L2 network segment within Networking.
 
-   virtual networking
-
-      A generic term for virtualization of network functions
-      such as switching, routing, load balancing, and security using
-      a combination of VMs and overlays on physical network
-      infrastructure.
-
    Virtual Network Computing (VNC)
 
       Open source GUI and CLI tools used for remote console access to
@@ -3879,6 +3868,13 @@ V
       An interface that is plugged into a port in a Networking
       network. Typically a virtual network interface belonging to a
       VM.
+
+   virtual networking
+
+      A generic term for virtualization of network functions
+      such as switching, routing, load balancing, and security using
+      a combination of VMs and overlays on physical network
+      infrastructure.
 
    virtual port
 
@@ -4001,12 +3997,6 @@ W
 
 .. glossary::
 
-   weighting
-
-      A Compute process that determines the suitability of the VM
-      instances for a job for a particular host. For example, not enough RAM
-      on the host, too many CPUs on the host, and so on.
-
    weight
 
       Used by Object Storage devices to determine which storage
@@ -4016,6 +4006,12 @@ W
 
       The sum of each cost used when deciding where to start a new VM
       instance in Compute.
+
+   weighting
+
+      A Compute process that determines the suitability of the VM
+      instances for a job for a particular host. For example, not enough RAM
+      on the host, too many CPUs on the host, and so on.
 
    worker
 
