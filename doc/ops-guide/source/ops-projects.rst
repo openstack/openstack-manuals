@@ -51,20 +51,20 @@ Assign a lost IPv4 address back to a project
 
    .. code-block:: console
 
-      # nova list --all-tenants | grep 'IP-ADDRESS'
+      # openstack server list --all-project | grep 'IP-ADDRESS'
 
 #. Inform the user to create a port:
 
    .. code-block:: console
 
-      $ neutron port-create NETWORK_ID --name PORT_NAME
+      $ openstack port create --network NETWORK_ID PORT_NAME
 
 #. Update the new port with the IPv4 address:
 
    .. code-block:: console
 
-      # neutron subnet-list
+      # openstack subnet list
       # neutron port-update PORT_NAME --request-format=json --fixed-ips \
       type=dict list=true subnet_id=NETWORK_ID_IPv4_SUBNET_ID \
       ip_address=IP_ADDRESS  subnet_id=NETWORK_ID_IPv6_SUBNET_ID
-      # neutron port-show PORT-NAME
+      # openstack port show PORT-NAME
