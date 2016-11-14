@@ -28,7 +28,7 @@ Adrian performs the following tasks very frequently:
   processes, and the end users when recommending and installing cloud
   instances.
 
-* Cloud planing: Defines and plans the cloud while considering hardware,
+* Cloud planning: Defines and plans the cloud while considering hardware,
   platform choices, services, and scale.
 
 Key information
@@ -49,7 +49,7 @@ important for the usability of your OpenStack development. Within a small
 organization, such as Rifkom or Nikishi University, Adrian might be required
 to assume some roles and responsibilities of a Cloud Operator or, more
 rarely, a Domain Operator. Within a larger organization, like CNBB
-Securities, Adrian's tasks are performed by the team planing and implementing
+Securities, Adrian's tasks are performed by the team planning and implementing
 the cloud instances.
 
 Your development
