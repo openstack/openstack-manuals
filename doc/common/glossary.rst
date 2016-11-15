@@ -2009,13 +2009,6 @@ I
       over IP networks.
       Supported by Compute, Object Storage, and Image service.
 
-   ip6tables
-
-      Tool used to set up, maintain, and inspect the tables of IPv6
-      packet filter rules in the Linux kernel. In OpenStack Compute,
-      ip6tables is used along with arptables, ebtables, and iptables to
-      create firewalls for both nodes and VMs.
-
    IP address
 
       Number that is unique to every computer system on the Internet.
@@ -2027,6 +2020,13 @@ I
       The process of automating IP address allocation, deallocation,
       and management. Currently provided by Compute, melange, and
       Networking.
+
+   ip6tables
+
+      Tool used to set up, maintain, and inspect the tables of IPv6
+      packet filter rules in the Linux kernel. In OpenStack Compute,
+      ip6tables is used along with arptables, ebtables, and iptables to
+      create firewalls for both nodes and VMs.
 
    ipset
 
@@ -2162,6 +2162,11 @@ L
 
       The collaboration site for OpenStack.
 
+   Layer-2 (L2) agent
+
+      OpenStack Networking agent that provides layer-2
+      connectivity for virtual networks.
+
    Layer-2 network
 
       Term used in the OSI network architecture for the data link
@@ -2169,21 +2174,16 @@ L
       control, flow control and detecting and possibly correcting
       errors that may occur in the physical layer.
 
-   Layer-2 (L2) agent
+   Layer-3 (L3) agent
 
-      OpenStack Networking agent that provides layer-2
-      connectivity for virtual networks.
+      OpenStack Networking agent that provides layer-3
+      (routing) services for virtual networks.
 
    Layer-3 network
 
       Term used in the OSI network architecture for the network
       layer. The network layer is responsible for packet
       forwarding including routing from one node to another.
-
-   Layer-3 (L3) agent
-
-      OpenStack Networking agent that provides layer-3
-      (routing) services for virtual networks.
 
    Liberty
 
@@ -2229,15 +2229,15 @@ L
       systems or services, based on the criteria defined as part of its
       configuration.
 
-   Load-Balancer-as-a-Service (LBaaS)
-
-      Enables Networking to distribute incoming requests evenly
-      between designated instances.
-
    load balancing
 
       The process of spreading client requests between two or more
       nodes to improve performance and availability.
+
+   Load-Balancer-as-a-Service (LBaaS)
+
+      Enables Networking to distribute incoming requests evenly
+      between designated instances.
 
    Logical Volume Manager (LVM)
 
@@ -2350,14 +2350,14 @@ M
       scalable and highly available manner, and to create and maintain
       associated Python libraries and documentation.
 
+   Meta-Data Server (MDS)
+
+      Stores CephFS metadata.
+
    Metadata agent
 
       OpenStack Networking agent that provides metadata
       services for instances.
-
-   Meta-Data Server (MDS)
-
-      Stores CephFS metadata.
 
    migration
 
