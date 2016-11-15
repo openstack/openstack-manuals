@@ -9,7 +9,7 @@ Object Storage service command-line client
 The swift client is the command-line interface (CLI) for
 the Object Storage service API and its extensions.
 
-This chapter documents :command:`swift` version ``3.1.0``.
+This chapter documents :command:`swift` version ``3.2.0``.
 
 For help on a specific :command:`swift` command, enter:
 
