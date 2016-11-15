@@ -9,7 +9,7 @@ trap "rm -rf $TMPDIR" EXIT
 pushd $TMPDIR
 GLOSSARY=$OLDPWD/doc/common/glossary.rst
 
-grep '^   [a-zA-Z]' $GLOSSARY > glossary_entries
+grep '^   [a-zA-Z0-9]' $GLOSSARY > glossary_entries
 
 LC_ALL=C sort --ignore-case glossary_entries -o glossary_entries.sorted
 
