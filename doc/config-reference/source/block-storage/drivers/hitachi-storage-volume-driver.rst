@@ -146,7 +146,7 @@ Set up Hitachi storage volume driver
 
       volume_driver = cinder.volume.drivers.hitachi.hbsd_iscsi.HBSDISCSIDriver
 
-   Also, set ``volume_backend_name`` created by :command:`cinder type-key`
+   Also, set ``volume_backend_name`` created by :command:`openstack volume type set`
    command:
 
    .. code-block:: ini

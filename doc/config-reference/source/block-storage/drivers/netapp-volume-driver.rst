@@ -247,8 +247,8 @@ When users request volumes of a particular volume type, the volumes
 are created on storage back ends that meet the list of requirements.
 An example of this is the back ends that have the available space or
 extra specs. Use the specs in the following table to configure volumes.
-Define Block Storage volume types by using the :command:`cinder type-key`
-command.
+Define Block Storage volume types by using the :command:`openstack volume
+type set` command.
 
 .. include:: ../../tables/manual/cinder-netapp_cdot_extraspecs.rst
 
@@ -447,8 +447,8 @@ When users request volumes of a particular volume type, the volumes are
 created on storage back ends that meet the list of requirements.
 An example of this is the back ends that have the available space or
 extra specs. Use the specs in the following table to configure volumes.
-Define Block Storage volume types by using the :command:`cinder type-key`
-command.
+Define Block Storage volume types by using the :command:`openstack volume
+type set` command.
 
 .. list-table:: Description of extra specs options for NetApp Unified Driver with E-Series
    :header-rows: 1
