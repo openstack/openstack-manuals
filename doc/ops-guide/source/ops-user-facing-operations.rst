@@ -501,178 +501,52 @@ command-line equivalents.
 
 **Setting with openstack command**
 
-From the command line, you can get a list of security groups for the
-project you're acting in using the :command:`openstack security group list`
-command:
-
-.. code-block:: console
-
-   $ openstack security group list
-   +--------------------------------------+---------+------------------------+----------------------------------+
-   | ID                                   | Name    | Description            | Project                          |
-   +--------------------------------------+---------+------------------------+----------------------------------+
-   | d4246298-e5d6-440b-a29e-0a721c2259c7 | open    | all ports              | 1eaaf6ede7a24e78859591444abf314a |
-   | ec02e79e-83e1-48a5-86ad-14ab9a8c375f | default | Default security group | 1eaaf6ede7a24e78859591444abf314a |
-   +--------------------------------------+---------+------------------------+----------------------------------+
-
-To view the details of the "open" security group:
-
-.. code-block:: console
-
-   $ openstack security group rule list open
-   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
-   | ID                                   | IP Protocol | IP Range  | Port Range      | Remote Security Group |
-   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
-   | 353d0611-3f67-4848-8222-a92adbdb5d3a | udp         | 0.0.0.0/0 | 1:65535         | None                  |
-   | 63536865-e5b6-4df1-bac5-ca6d97d8f54d | tcp         | 0.0.0.0/0 | 1:65535         | None                  |
-   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
-
-These rules are all "allow" type rules, as the default is deny. The
-first column is the IP protocol (one of icmp, tcp, or udp), and the
-second and third columns specify the affected port range. The fourth
-column specifies the IP range in CIDR format. This example shows the
-full port range for all protocols allowed from all IPs.
-
-When adding a new security group, you should pick a descriptive but
-brief name. This name shows up in brief descriptions of the instances
-that use it where the longer description field often does not. Seeing
-that an instance is using security group ``http`` is much easier to
-understand than ``bobs_group`` or ``secgrp1``.
-
-As an example, let's create a security group that allows web traffic
-anywhere on the Internet. We'll call this group ``global_http``, which
-is clear and reasonably concise, encapsulating what is allowed and from
-where. From the command line, do:
-
-.. code-block:: console
-
-   $ openstack security group create global_http --description "allow web traffic from the Internet"
-   +-----------------+--------------------------------------------------------------------------------------------------------------------------+
-   | Field           | Value                                                                                                                    |
-   +-----------------+--------------------------------------------------------------------------------------------------------------------------+
-   | created_at      | 2016-11-03T13:50:53Z                                                                                                     |
-   | description     | allow web traffic from the Internet.                                                                                     |
-   | headers         |                                                                                                                          |
-   | id              | c0b92b20-4575-432a-b4a9-eaf2ad53f696                                                                                     |
-   | name            | global_http                                                                                                              |
-   | project_id      | 5669caad86a04256994cdf755df4d3c1                                                                                         |
-   | project_id      | 5669caad86a04256994cdf755df4d3c1                                                                                         |
-   | revision_number | 1                                                                                                                        |
-   | rules           | created_at='2016-11-03T13:50:53Z', direction='egress', ethertype='IPv4', id='4d8cec94-e0ee-4c20-9f56-8fb67c21e4df',      |
-   |                 | project_id='5669caad86a04256994cdf755df4d3c1', revision_number='1', updated_at='2016-11-03T13:50:53Z'                    |
-   |                 | created_at='2016-11-03T13:50:53Z', direction='egress', ethertype='IPv6', id='31be2ad1-be14-4aef-9492-ecebede2cf12',      |
-   |                 | project_id='5669caad86a04256994cdf755df4d3c1', revision_number='1', updated_at='2016-11-03T13:50:53Z'                    |
-   | updated_at      | 2016-11-03T13:50:53Z                                                                                                     |
-   +-----------------+--------------------------------------------------------------------------------------------------------------------------+
-
-This creates the empty security group. To make it do what we want, we
-need to add some rules:
-
-.. code-block:: console
-
-   $ nova secgroup-add-rule <secgroup> <ip-proto> <from-port> <to-port> <cidr>
-   $ nova secgroup-add-rule global_http tcp 80 80 0.0.0.0/0
-   +-------------+-----------+---------+-----------+--------------+
-   | IP Protocol | From Port | To Port | IP Range  | Source Group |
-   +-------------+-----------+---------+-----------+--------------+
-   | tcp         | 80        | 80      | 0.0.0.0/0 |              |
-   +-------------+-----------+---------+-----------+--------------+
-
-Note that the arguments are positional, and the ``from-port`` and
-``to-port`` arguments specify the allowed local port range connections.
-These arguments are not indicating source and destination ports of the
-connection. More complex rule sets can be built up through multiple
-invocations of :command:`nova secgroup-add-rule`. For example, if you want to
-pass both http and https traffic, do this:
-
-.. code-block:: console
-
-   $ nova secgroup-add-rule global_http tcp 443 443 0.0.0.0/0
-   +-------------+-----------+---------+-----------+--------------+
-   | IP Protocol | From Port | To Port | IP Range  | Source Group |
-   +-------------+-----------+---------+-----------+--------------+
-   | tcp         | 443       | 443     | 0.0.0.0/0 |              |
-   +-------------+-----------+---------+-----------+--------------+
-
-Despite only outputting the newly added rule, this operation is
-additive:
-
-.. code-block:: console
-
-   $ openstack security group rule list global_http
-   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
-   | ID                                   | IP Protocol | IP Range  | Port Range      | Remote Security Group |
-   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
-   | 353d0611-3f67-4848-8222-a92adbdb5d3a | tcp         | 0.0.0.0/0 | 80:80           | None                  |
-   | 63536865-e5b6-4df1-bac5-ca6d97d8f54d | tcp         | 0.0.0.0/0 | 443:443         | None                  |
-   +--------------------------------------+-------------+-----------+-----------------+-----------------------+
-
-The inverse operation is called :command:`nova secgroup-delete-rule`, using the
-same format. Whole security groups can be removed with
-:command:`openstack security group delete`.
-
-To create security group rules for a cluster of instances, you want to
-use SourceGroups.
-
-SourceGroups are a special dynamic way of defining the CIDR of allowed
-sources. The user specifies a SourceGroup (security group name) and then
-all the users' other instances using the specified SourceGroup are
-selected dynamically. This dynamic selection alleviates the need for
-individual rules to allow each new member of the cluster.
-
-The code is structured like this:
-
-.. code-block:: console
-
-   $ nova secgroup-add-group-rule <secgroup> <source-group> <ip-proto> <from-port> <to-port>
-
-An example usage is shown here:
-
-.. code-block:: console
-
-   $ nova secgroup-add-group-rule cluster global-http tcp 22 22
-
-The "cluster" rule allows SSH access from any other instance that uses
-the ``global-http`` group.
-
-**Setting with neutron command**
-
 If your environment is using Neutron, you can configure security groups
-settings using the :command:`neutron` command. Get a list of security groups
+settings using the :command:`openstack` command. Get a list of security groups
 for the project you are acting in, by using following command:
 
 .. code-block:: console
 
-   $ neutron security-group-list
-   +--------------------------------------+---------+-------------+
-   | id                                   | name    | description |
-   +--------------------------------------+---------+-------------+
-   | 6777138a-deb7-4f10-8236-6400e7aff5b0 | default | default     |
-   | 750acb39-d69b-4ea0-a62d-b56101166b01 | open    | all ports   |
-   +--------------------------------------+---------+-------------+
+   $ openstack security group list
+   +------------------------+---------+------------------------+-------------------------+
+   | ID                     | Name    | Description            | Project                 |
+   +------------------------+---------+------------------------+-------------------------+
+   | 3bef30ed-442d-4cf1     | default | Default security group | 35e3820f7490493ca9e3a5e |
+   | -b84d-2ba50a395599     |         |                        | 685393298               |
+   | aaf1d0b7-98a0-41a3-ae1 | default | Default security group | 32e9707393c34364923edf8 |
+   | 6-a58b94503289         |         |                        | f5029cbfe               |
+   +------------------------+---------+------------------------+-------------------------+
 
-To view the details of the "open" security group:
+
+To view the details of a security group:
 
 .. code-block:: console
 
-   $ neutron security-group-show open
-   +----------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | Field                | Value                                                                                                                                                                                                                                                                                                                                  |
-   +----------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | description          | all ports                                                                                                                                                                                                                                                                                                                              |
-   | id                   | 750acb39-d69b-4ea0-a62d-b56101166b01                                                                                                                                                                                                                                                                                                   |
-   | name                 | open                                                                                                                                                                                                                                                                                                                                   |
-   | security_group_rules | {"remote_group_id": null, "direction": "egress", "remote_ip_prefix": null, "protocol": null, "tenant_id": "607ec981611a4839b7b06f6dfa81317d", "port_range_max": null, "security_group_id": "750acb39-d69b-4e0-a62d-b56101166b01", "port_range_min": null, "ethertype": "IPv4", "id": "361a1b62-95dd-46e1-8639-c3b2000aab60"}           |
-   |                      | {"remote_group_id": null, "direction": "ingress", "remote_ip_prefix": "0.0.0.0/0", "protocol": "udp", "tenant_id": "341f49145ec7445192dc3c2abc33500d", "port_range_max": 65535, "security_group_id": "750acb9-d69b-4ea0-a62d-b56101166b01", "port_range_min": 1, "ethertype": "IPv4", "id": "496ba8b7-d96e-4655-920f-068a3d4ddc36"}    |
-   |                      | {"remote_group_id": null, "direction": "ingress", "remote_ip_prefix": "0.0.0.0/0", "protocol": "icmp", "tenant_id": "341f49145ec7445192dc3c2abc33500d", "port_range_max": null, "security_group_id": "750acb9-d69b-4ea0-a62d-b56101166b01", "port_range_min": null, "ethertype": "IPv4", "id": "50642a56-3c4e-4b31-9293-0a636759a156"} |
-   |                      | {"remote_group_id": null, "direction": "egress", "remote_ip_prefix": null, "protocol": null, "tenant_id": "607ec981611a4839b7b06f6dfa81317d", "port_range_max": null, "security_group_id": "750acb39-d69b-4e0-a62d-b56101166b01", "port_range_min": null, "ethertype": "IPv6", "id": "f46f35eb-8581-4ca1-bbc9-cf8d0614d067"}           |
-   |                      | {"remote_group_id": null, "direction": "ingress", "remote_ip_prefix": "0.0.0.0/0", "protocol": "tcp", "tenant_id": "341f49145ec7445192dc3c2abc33500d", "port_range_max": 65535, "security_group_id": "750acb9-d69b-4ea0-a62d-b56101166b01", "port_range_min": 1, "ethertype": "IPv4", "id": "fb6f2d5e-8290-4ed8-a23b-c6870813c921"}    |
-   | tenant_id            | 607ec981611a4839b7b06f6dfa81317d                                                                                                                                                                                                                                                                                                       |
-   +----------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   $ openstack security group show 3bef30ed-442d-4cf1-b84d-2ba50a395599
+   +-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Field           | Value                                                                                                                                                                                  |
+   +-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | created_at      | 2016-11-08T21:55:19Z                                                                                                                                                                   |
+   | description     | Default security group                                                                                                                                                                 |
+   | id              | 3bef30ed-442d-4cf1-b84d-2ba50a395599                                                                                                                                                   |
+   | name            | default                                                                                                                                                                                |
+   | project_id      | 35e3820f7490493ca9e3a5e685393298                                                                                                                                                       |
+   | project_id      | 35e3820f7490493ca9e3a5e685393298                                                                                                                                                       |
+   | revision_number | 1                                                                                                                                                                                      |
+   | rules           | created_at='2016-11-08T21:55:19Z', direction='egress', ethertype='IPv6', id='1dca4cac-d4f2-46f5-b757-d53c01a87bdf', project_id='35e3820f7490493ca9e3a5e685393298',                     |
+   |                 | revision_number='1', updated_at='2016-11-08T21:55:19Z'                                                                                                                                 |
+   |                 | created_at='2016-11-08T21:55:19Z', direction='egress', ethertype='IPv4', id='2d83d6f2-424e-4b7c-b9c4-1ede89c00aab', project_id='35e3820f7490493ca9e3a5e685393298',                     |
+   |                 | revision_number='1', updated_at='2016-11-08T21:55:19Z'                                                                                                                                 |
+   |                 | created_at='2016-11-08T21:55:19Z', direction='ingress', ethertype='IPv4', id='62b7d1eb-b98d-4707-a29f-6df379afdbaa', project_id='35e3820f7490493ca9e3a5e685393298', remote_group_id    |
+   |                 | ='3bef30ed-442d-4cf1-b84d-2ba50a395599', revision_number='1', updated_at='2016-11-08T21:55:19Z'                                                                                        |
+   |                 | created_at='2016-11-08T21:55:19Z', direction='ingress', ethertype='IPv6', id='f0d4b8d6-32d4-4f93-813d-3ede9d698fbb', project_id='35e3820f7490493ca9e3a5e685393298', remote_group_id    |
+   |                 | ='3bef30ed-442d-4cf1-b84d-2ba50a395599', revision_number='1', updated_at='2016-11-08T21:55:19Z'                                                                                        |
+   | updated_at      | 2016-11-08T21:55:19Z                                                                                                                                                                   |
+   +-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 These rules are all "allow" type rules, as the default is deny. This
 example shows the full port range for all protocols allowed from all
-IPs. This section describes the most common security-group-rule
+IPs. This section describes the most common security group rule
 parameters:
 
 direction
@@ -717,81 +591,71 @@ From the command line, do:
 
 .. code-block:: console
 
-   $ neutron security-group-create global_http --description "allow web traffic from the Internet"
+   $ openstack security group create global_http --description "allow web traffic from the Internet"
    Created a new security_group:
-   +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | Field                | Value                                                                                                                                                                                                                                                                                                                         |
-   +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | description          | allow web traffic from the Internet                                                                                                                                                                                                                                                                                           |
-   | id                   | c6d78d56-7c56-4c82-abcb-05aa9839d1e7                                                                                                                                                                                                                                                                                          |
-   | name                 | global_http                                                                                                                                                                                                                                                                                                                   |
-   | security_group_rules | {"remote_group_id": null, "direction": "egress", "remote_ip_prefix": null, "protocol": null, "tenant_id": "341f49145ec7445192dc3c2abc33500d", "port_range_max": null, "security_group_id": "c6d78d56-7c56-4c82-abcb-05aa9839d1e7", "port_range_min": null, "ethertype": "IPv4", "id": "b2e56b3a-890b-48d3-9380-8a9f6f8b1b36"} |
-   |                      | {"remote_group_id": null, "direction": "egress", "remote_ip_prefix": null, "protocol": null, "tenant_id": "341f49145ec7445192dc3c2abc33500d", "port_range_max": null, "security_group_id": "c6d78d56-7c56-4c82-abcb-05aa9839d1e7", "port_range_min": null, "ethertype": "IPv6", "id": "153d84ba-651d-45fd-9015-58807749efc5"} |
-   | tenant_id            | 341f49145ec7445192dc3c2abc33500d                                                                                                                                                                                                                                                                                              |
-   +----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Field           | Value                                                                                                                                                                                  |
+   +-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | created_at      | 2016-11-10T16:09:18Z                                                                                                                                                                   |
+   | description     | allow web traffic from the Internet                                                                                                                                                    |
+   | headers         |                                                                                                                                                                                        |
+   | id              | 70675447-1b92-4102-a7ea-6a3ca99d2290                                                                                                                                                   |
+   | name            | global_http                                                                                                                                                                            |
+   | project_id      | 32e9707393c34364923edf8f5029cbfe                                                                                                                                                       |
+   | project_id      | 32e9707393c34364923edf8f5029cbfe                                                                                                                                                       |
+   | revision_number | 1                                                                                                                                                                                      |
+   | rules           | created_at='2016-11-10T16:09:18Z', direction='egress', ethertype='IPv4', id='e440b13a-e74f-4700-a36f-9ecc0de76612', project_id='32e9707393c34364923edf8f5029cbfe',                     |
+   |                 | revision_number='1', updated_at='2016-11-10T16:09:18Z'                                                                                                                                 |
+   |                 | created_at='2016-11-10T16:09:18Z', direction='egress', ethertype='IPv6', id='0debf8cb-9f1d-45e5-98db-ee169c0715fe', project_id='32e9707393c34364923edf8f5029cbfe',                     |
+   |                 | revision_number='1', updated_at='2016-11-10T16:09:18Z'                                                                                                                                 |
+   | updated_at      | 2016-11-10T16:09:18Z                                                                                                                                                                   |
+   +-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Immediately after create, the security group has only an allow egress
 rule. To make it do what we want, we need to add some rules:
 
 .. code-block:: console
 
-   $ neutron help security-group-rule-create
-   neutron security-group-rule-create [-h]
-                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
-                                        [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
-                                        [--request-format {json,xml}]
-                                        [--tenant-id TENANT_ID]
-                                        [--direction {ingress,egress}]
-                                        [--ethertype ETHERTYPE]
-                                        [--protocol PROTOCOL]
-                                        [--port-range-min PORT_RANGE_MIN]
-                                        [--port-range-max PORT_RANGE_MAX]
-                                        [--remote-ip-prefix REMOTE_IP_PREFIX]
-                                        [--remote-group-id REMOTE_GROUP]
-                                        SECURITY_GROUP
-   $ neutron security-group-rule-create --direction ingress --ethertype IPv4 \
-     --protocol tcp --port-range-min 80 --port-range-max 80 \
-     --remote-ip-prefix 0.0.0.0/0 global_http
-   Created a new security_group_rule:
+   $ openstack security group rule create --help
+   usage: openstack security group rule create [-h]
+                                               [-f {json,shell,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width <integer>]
+                                               [--noindent] [--prefix PREFIX]
+                                               [--src-ip <ip-address> | --src-group <group>]
+                                               [--dst-port <port-range>]
+                                               [--icmp-type <icmp-type>]
+                                               [--icmp-code <icmp-code>]
+                                               [--protocol <protocol>]
+                                               [--ingress | --egress]
+                                               [--ethertype <ethertype>]
+                                               [--project <project>]
+                                               [--project-domain <project-domain>]
+                                               <group>
+
+   $ openstack security group rule create --ingress --ethertype IPv4 \
+     --protocol tcp --src-ip 0.0.0.0/0 global_http
+
+   Created a new security group rule:
    +-------------------+--------------------------------------+
    | Field             | Value                                |
    +-------------------+--------------------------------------+
+   | created_at        | 2016-11-10T16:12:27Z                 |
+   | description       |                                      |
    | direction         | ingress                              |
    | ethertype         | IPv4                                 |
-   | id                | 88ec4762-239e-492b-8583-e480e9734622 |
-   | port_range_max    | 80                                   |
-   | port_range_min    | 80                                   |
+   | headers           |                                      |
+   | id                | 694d30b1-1c4d-4bb8-acbe-7f1b3de2b20f |
+   | port_range_max    | None                                 |
+   | port_range_min    | None                                 |
+   | project_id        | 32e9707393c34364923edf8f5029cbfe     |
+   | project_id        | 32e9707393c34364923edf8f5029cbfe     |
    | protocol          | tcp                                  |
-   | remote_group_id   |                                      |
+   | remote_group_id   | None                                 |
    | remote_ip_prefix  | 0.0.0.0/0                            |
-   | security_group_id | c6d78d56-7c56-4c82-abcb-05aa9839d1e7 |
-   | tenant_id         | 341f49145ec7445192dc3c2abc33500d     |
-   +-------------------+--------------------------------------+
-
-More complex rule sets can be built up through multiple invocations of
-:command:`neutron security-group-rule-create`. For example, if you want to pass
-both http and https traffic, do this:
-
-.. code-block:: console
-
-   $ neutron security-group-rule-create --direction ingress --ethertype ipv4 \
-     --protocol tcp --port-range-min 443 --port-range-max 443 \
-     --remote-ip-prefix 0.0.0.0/0 global_http
-   Created a new security_group_rule:
-   +-------------------+--------------------------------------+
-   | Field             | Value                                |
-   +-------------------+--------------------------------------+
-   | direction         | ingress                              |
-   | ethertype         | IPv4                                 |
-   | id                | c50315e5-29f3-408e-ae15-50fdc03fb9af |
-   | port_range_max    | 443                                  |
-   | port_range_min    | 443                                  |
-   | protocol          | tcp                                  |
-   | remote_group_id   |                                      |
-   | remote_ip_prefix  | 0.0.0.0/0                            |
-   | security_group_id | c6d78d56-7c56-4c82-abcb-05aa9839d1e7 |
-   | tenant_id         | 341f49145ec7445192dc3c2abc33500d     |
+   | revision_number   | 1                                    |
+   | security_group_id | 70675447-1b92-4102-a7ea-6a3ca99d2290 |
+   | updated_at        | 2016-11-10T16:12:27Z                 |
    +-------------------+--------------------------------------+
 
 Despite only outputting the newly added rule, this operation is
@@ -799,23 +663,30 @@ additive:
 
 .. code-block:: console
 
-   $ neutron security-group-show global_http
-   +----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | Field                | Value                                                                                                                                                                                                                                                                                                                                |
-   +----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-   | description          | allow web traffic from the Internet                                                                                                                                                                                                                                                                                                  |
-   | id                   | c6d78d56-7c56-4c82-abcb-05aa9839d1e7                                                                                                                                                                                                                                                                                                 |
-   | name                 | global_http                                                                                                                                                                                                                                                                                                                          |
-   | security_group_rules | {"remote_group_id": null, "direction": "egress", "remote_ip_prefix": null, "protocol": null, "tenant_id": "341f49145ec7445192dc3c2abc33500d", "port_range_max": null, "security_group_id": "c6d78d56-7c56-4c82-abcb-05aa9839d1e7", "port_range_min": null, "ethertype": "IPv6", "id": "153d84ba-651d-45fd-9015-58807749efc5"}        |
-   |                      | {"remote_group_id": null, "direction": "ingress", "remote_ip_prefix": "0.0.0.0/0", "protocol": "tcp", "tenant_id": "341f49145ec7445192dc3c2abc33500d", "port_range_max": 80, "security_group_id": "c6d78d56-7c56-4c82-abcb-05aa9839d1e7", "port_range_min": 80, "ethertype": "IPv4", "id": "88ec4762-239e-492b-8583-e480e9734622"}   |
-   |                      | {"remote_group_id": null, "direction": "egress", "remote_ip_prefix": null, "protocol": null, "tenant_id": "341f49145ec7445192dc3c2abc33500d", "port_range_max": null, "security_group_id": "c6d78d56-7c56-4c82-abcb-05aa9839d1e7", "port_range_min": null, "ethertype": "IPv4", "id": "b2e56b3a-890b-48d3-9380-8a9f6f8b1b36"}        |
-   |                      | {"remote_group_id": null, "direction": "ingress", "remote_ip_prefix": "0.0.0.0/0", "protocol": "tcp", "tenant_id": "341f49145ec7445192dc3c2abc33500d", "port_range_max": 443, "security_group_id": "c6d78d56-7c56-4c82-abcb-05aa9839d1e7", "port_range_min": 443, "ethertype": "IPv4", "id": "c50315e5-29f3-408e-ae15-50fdc03fb9af"} |
-   | tenant_id            | 341f49145ec7445192dc3c2abc33500d                                                                                                                                                                                                                                                                                                     |
-   +----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   $ openstack security group show global_http
+   +-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Field           | Value                                                                                                                                                                                  |
+   +-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | created_at      | 2016-11-10T16:09:18Z                                                                                                                                                                   |
+   | description     | allow web traffic from the Internet                                                                                                                                                    |
+   | id              | 70675447-1b92-4102-a7ea-6a3ca99d2290                                                                                                                                                   |
+   | name            | global_http                                                                                                                                                                            |
+   | project_id      | 32e9707393c34364923edf8f5029cbfe                                                                                                                                                       |
+   | project_id      | 32e9707393c34364923edf8f5029cbfe                                                                                                                                                       |
+   | revision_number | 2                                                                                                                                                                                      |
+   | rules           | created_at='2016-11-10T16:09:18Z', direction='egress', ethertype='IPv6', id='0debf8cb-9f1d-45e5-98db-ee169c0715fe', project_id='32e9707393c34364923edf8f5029cbfe',                     |
+   |                 | revision_number='1', updated_at='2016-11-10T16:09:18Z'                                                                                                                                 |
+   |                 | created_at='2016-11-10T16:12:27Z', direction='ingress', ethertype='IPv4', id='694d30b1-1c4d-4bb8-acbe-7f1b3de2b20f', project_id='32e9707393c34364923edf8f5029cbfe', protocol='tcp',    |
+   |                 | remote_ip_prefix='0.0.0.0/0', revision_number='1', updated_at='2016-11-10T16:12:27Z'                                                                                                   |
+   |                 | created_at='2016-11-10T16:09:18Z', direction='egress', ethertype='IPv4', id='e440b13a-e74f-4700-a36f-9ecc0de76612', project_id='32e9707393c34364923edf8f5029cbfe',                     |
+   |                 | revision_number='1', updated_at='2016-11-10T16:09:18Z'                                                                                                                                 |
+   | updated_at      | 2016-11-10T16:12:27Z                                                                                                                                                                   |
+   +-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-The inverse operation is called :command:`neutron security-group-rule-delete`,
+The inverse operation is called
+:command:`openstack security group rule delete`,
 specifying security-group-rule ID. Whole security groups can be removed
-with :command:`neutron security-group-delete`.
+with :command:`openstack security group delete`.
 
 To create security group rules for a cluster of instances, use
 RemoteGroups.
@@ -827,15 +698,15 @@ dynamically. This dynamic selection alleviates the need for individual
 rules to allow each new member of the cluster.
 
 The code is similar to the above example of
-:command:`neutron security-group-rule-create`. To use RemoteGroup, specify
-:option:`--remote-group-id` instead of :option:`--remote-ip-prefix`.
+:command:`openstack security group rule create`. To use RemoteGroup, specify
+:option:`--src-group` instead of :option:`--src-ip`.
 For example:
 
 .. code-block:: console
 
-   $ neutron security-group-rule-create --direction ingress \
-     --ethertype IPv4 --protocol tcp --port-range-min 22 --port-range-max 22 \
-     --remote-group-id global_http cluster
+   $ openstack security group rule create --ingress \
+     --ethertype IPv4 --protocol tcp \
+     --src-group global_http cluster
 
 The "cluster" rule allows SSH access from any other instance that uses
 the ``global-http`` group.
@@ -1648,9 +1519,9 @@ was created by the share driver for internal usage.
 
 .. code-block:: console
 
-   $ neutron net-list
+   $ openstack network list
    +--------------+------------------------+------------------------------------+
-   | id           | name                   | subnets                            |
+   | ID           | Name                   | Subnets                            |
    +--------------+------------------------+------------------------------------+
    | 3b5a629a-e...| manila_service_network | 4f366100-50... 10.254.0.0/28       |
    | bee7411d-d...| public                 | 884a6564-01... 2001:db8::/64       |
@@ -1664,7 +1535,7 @@ You also can see detailed information about the share network including
 
 .. code-block:: console
 
-   $ neutron net-show manila_service_network
+   $ openstack network show manila_service_network
    +---------------------------+--------------------------------------+
    | Field                     | Value                                |
    +---------------------------+--------------------------------------+
