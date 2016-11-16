@@ -157,7 +157,7 @@ Specify volume driver
 
 Configure the Blockbridge volume driver in ``/etc/cinder/cinder.conf``.
 Your ``volume_backend_name`` must match the value specified in the
-:command:`cinder type-key` command in the previous step.
+:command:`openstack volume type set` command in the previous step.
 
 .. code-block:: ini
 
