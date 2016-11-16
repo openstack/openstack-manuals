@@ -540,7 +540,7 @@ SSL support
       # sudo dpkg-reconfigure ca-certificates
 
    .. note::
-      Check that the new ``ca_cert.crt`` will activiate by selecting
+      Check that the new ``ca_cert.crt`` will activate by selecting
       :guilabel:`ask` on the dialog. If it is not enabled for activation, use the
       down and up keys to select, and the space key to enable or disable.
 
