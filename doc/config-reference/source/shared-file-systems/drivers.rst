@@ -18,6 +18,7 @@ Share drivers
    drivers/emc-vnx-driver.rst
    drivers/emc-unity-driver.rst
    drivers/hitachi-hnas-driver.rst
+   drivers/hitachi-hsp-driver.rst
    drivers/hpe-3par-share-driver.rst
    drivers/huawei-nas-driver.rst
    drivers/ibm-gpfs-driver.rst
