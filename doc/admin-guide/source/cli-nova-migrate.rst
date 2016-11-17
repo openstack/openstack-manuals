@@ -15,7 +15,7 @@ For more information, see :ref:`clinovamigratecfgssh`.
 
    .. code-block:: console
 
-      $ nova list
+      $ openstack server list
 
 #. After selecting a VM from the list, run this command where :guilabel:`VM_ID`
    is set to the ID in the list returned in the previous step:

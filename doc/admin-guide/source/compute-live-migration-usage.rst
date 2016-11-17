@@ -25,7 +25,7 @@ Before starting a migration, review the Configure migrations section.
 
    ..  code-block:: console
 
-       $ nova list
+       $ openstack server list
 
    ..  list-table::
        :header-rows: 1
@@ -228,6 +228,6 @@ Before starting a migration, review the Configure migrations section.
       This issue can be solved when we upgrade to RPC API version 4.0.
 
 #. Check that the instance has been migrated successfully, using
-   :command:`nova list`. If the instance is still running on ``HostB``,
-   check the log files at ``src/dest`` for ``nova-compute`` and
+   :command:`openstack server list`. If the instance is still running on
+   ``HostB``, check the log files at ``src/dest`` for ``nova-compute`` and
    ``nova-scheduler`` to determine why.
