@@ -1,6 +1,6 @@
-================================
-Data Processing API configuraton
-================================
+=================================
+Data Processing API configuration
+=================================
 
 The following options allow configuration of the APIs that
 Data Processing service supports.
