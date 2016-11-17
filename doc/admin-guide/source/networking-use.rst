@@ -308,14 +308,15 @@ you are using. If you are using a plug-in that:
           --egress --description "Sample Security Group"
 
 -  Does not implement Networking security groups, you can configure
-   security group rules by using the :command:`nova secgroup-add-rule` or
-   :command:`euca-authorize` command. These :command:`nova` commands enable
+   security group rules by using the
+   :command:`openstack security group rule create`
+   or :command:`euca-authorize` command. These :command:`nova` commands enable
    ``ping`` and ``ssh`` access to your VMs.
 
    .. code-block:: console
 
-      $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
-      $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
+      $ openstack security group rule create default --protocol icmp --dst-port -1:-1 --src-ip 0.0.0.0/0
+      $ openstack security group rule create default --protocol tcp --dst-port 22:22 --src-ip 0.0.0.0/0
 
 .. note::
 
