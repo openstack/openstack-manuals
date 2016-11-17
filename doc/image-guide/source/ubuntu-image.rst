@@ -11,8 +11,8 @@ Download an Ubuntu installation ISO
 
 Because the goal is to make the smallest possible base image,
 this example uses the network installation ISO.
-The Ubuntu 64-bit 14.04 network installation ISO is at
-http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/mini.iso.
+The Ubuntu 64-bit 14.04 network installation ISO is at the `Ubuntu download
+page <http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/mini.iso>`_.
 
 Start the installation process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
