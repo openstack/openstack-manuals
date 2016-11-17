@@ -277,8 +277,9 @@ between 100,000 and 200,000 hours. This number is dependent on the
 ambient temperature of the switch in the data center. When properly
 cooled and maintained, this translates to between 11 and 22 years before
 failure. Even in the worst case of poor ventilation and high ambient
-temperatures in the data center, the MTBF is still 2-3 years. See
-http://www.garrettcom.com/techsupport/papers/ethernet_switch_reliability.pdf
+temperatures in the data center, the MTBF is still 2-3 years.  See
+`Ethernet switch reliablity: Temperature vs. moving parts
+<http://media.beldensolutions.com/garrettcom/techsupport/papers/ethernet_switch_reliability.pdf>`_
 for further information.
 
 In most cases, it is much more economical to use a single switch with a
