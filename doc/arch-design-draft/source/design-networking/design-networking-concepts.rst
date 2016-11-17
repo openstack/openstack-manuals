@@ -281,7 +281,8 @@ in the worst case of poor ventilation and high ambient temperatures in the data
 center, the MTBF is still 2-3 years.
 
 Reference
-https://www.garrettcom.com/techsupport/papers/ethernet_switch_reliability.pdf
+`Ethernet switch reliablity: Temperature vs. moving parts
+<http://media.beldensolutions.com/garrettcom/techsupport/papers/ethernet_switch_reliability.pdf>`_
 for further information.
 
 Legacy networking (nova-network)
