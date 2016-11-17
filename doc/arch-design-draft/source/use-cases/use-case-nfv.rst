@@ -4,17 +4,16 @@
 Network virtual function cloud
 ==============================
 
-Stakeholder
-~~~~~~~~~~~
 
 Design model
+~~~~~~~~~~~~
+
+Requirements
 ~~~~~~~~~~~~
 
 Component block diagram
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-User stories
-~~~~~~~~~~~~
 
 Network-focused cloud examples
 ------------------------------

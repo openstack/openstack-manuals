@@ -16,15 +16,9 @@ discusses three example use cases:
 
 *  High performance database
 
-Component block diagram
-~~~~~~~~~~~~~~~~~~~~~~~
 
-
-Stakeholder
-~~~~~~~~~~~
-
-User stories
-~~~~~~~~~~~~
+An object store with a RESTful interface
+----------------------------------------
 
 The example below shows a REST interface without a high performance
 requirement. The following diagram depicts the example architecture:
@@ -62,6 +56,8 @@ Proxy:
 
    It may be necessary to implement a third party caching layer for some
    applications to achieve suitable performance.
+
+
 
 Compute analytics with data processing service
 ----------------------------------------------
@@ -153,3 +149,10 @@ REST proxy:
 Using an SSD cache layer, you can present block devices directly to
 hypervisors or instances. The REST interface can also use the SSD cache
 systems as an inline cache.
+
+
+Requirements
+~~~~~~~~~~~~
+
+Component block diagram
+~~~~~~~~~~~~~~~~~~~~~~~

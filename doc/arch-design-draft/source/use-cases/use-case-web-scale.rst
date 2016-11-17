@@ -4,13 +4,10 @@
 Web scale cloud
 ===============
 
-Stakeholder
-~~~~~~~~~~~
-
-User stories
+Design model
 ~~~~~~~~~~~~
 
-Design model
+Requirements
 ~~~~~~~~~~~~
 
 Component block diagram
