@@ -1,0 +1,335 @@
+#!/bin/bash
+
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+
+BUILD_FAIL=0
+INSTALL_TAGS="obs rdo ubuntu debian debconf"
+FIRSTAPP_TAGS="libcloud dotnet fog openstacksdk pkgcloud shade"
+
+# This marker is needed for Infra publishing and needs to go into the
+# root directory of each translated manual as file ".root-marker".
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID"
+
+function build_rst {
+    language=$1
+    book=$2
+
+    # First build all the single po files
+    # Note that we need to run inside a venv since the venv we are run in
+    # uses SitePackages=True and we have to install Sphinx in the venv
+    # together with openstackdocstheme. With SitePackages, the global Sphinx
+    # is used and that will not work with a local openstackdocstheme installed.
+    TAG=""
+    # We need to extract all strings, so add all supported tags
+    if [ ${book} = "firstapp" ] ; then
+        TAG="-t libcloud -t fog -t dotnet -t openstacksdk -t pkgcloud -t shade"
+    fi
+    if [ ${book} = "install-guide" ] ; then
+        TAG="-t obs -t rdo -t ubuntu -t debian"
+    fi
+
+    COMMON="common"
+    LOCALE_DIR="${DOC_DIR}${book}/source/locale/"
+    COMMON_DIR="${DOC_DIR}${COMMON}/source/locale/"
+
+    tox -evenv -- sphinx-build -q -E -W -b gettext $TAG \
+                ${DOC_DIR}${book}/source/ ${LOCALE_DIR}
+
+
+    # Merge the common po file
+    if [[ -e ${COMMON_DIR}${language}/LC_MESSAGES/${COMMON}.po ]] ; then
+        msgcat --use-first -o ${LOCALE_DIR}${language}/${book}.po \
+            ${LOCALE_DIR}${language}/LC_MESSAGES/${book}.po \
+            ${COMMON_DIR}${language}/LC_MESSAGES/${COMMON}.po
+        mv -f ${LOCALE_DIR}${language}/${book}.po \
+            ${LOCALE_DIR}${language}/LC_MESSAGES/${book}.po
+    fi
+    # Now run msgmerge on all files
+    for f in ${LOCALE_DIR}*.pot ; do
+        # Skip the master file
+        if [ $f = "${LOCALE_DIR}${book}.pot" ] ; then
+            continue
+        fi
+        bf=$(basename $f)
+        # Remove .pot
+        bfname=${bf%.pot}
+        msgmerge --silent \
+            -o ${LOCALE_DIR}${language}/LC_MESSAGES/${bfname}.po \
+            ${LOCALE_DIR}${language}/LC_MESSAGES/${book}.po \
+            ${LOCALE_DIR}${bf}
+        msgfmt ${LOCALE_DIR}${language}/LC_MESSAGES/${bfname}.po \
+            -o ${LOCALE_DIR}${language}/LC_MESSAGES/${bfname}.mo
+    done
+
+    # Set the bug project to I18n project
+    grep 'bug_project' ${DOC_DIR}${book}/source/conf.py > /dev/null
+    if [ "$?" -eq 0 ] ; then
+        # Replace the existing "bug_project" html context
+        sed -i -e \
+            's/"bug_project" *: *[^ ,}]*/"bug_project": "openstack-i18n"/' \
+            ${DOC_DIR}${book}/source/conf.py
+    else
+        # Add the "bug_project" html context
+        sed -i -e \
+            's/html_context *= *{/html_context = { \
+            "bug_project": "openstack-i18n", /' \
+            ${DOC_DIR}${book}/source/conf.py
+    fi
+
+    # Build all books
+    if [ ${book} = "firstapp" ] ; then
+        # Firstapp has several variations, build all of them
+        for tag in $FIRSTAPP_TAGS ; do
+            BUILD_DIR="${DOC_DIR}${book}/build-${tag}/html"
+            DOCTREES="${BUILD_DIR}.doctrees"
+            tox -evenv -- sphinx-build -q -E \
+                -t $tag -D language=${language} \
+                -d ${DOCTREES} \
+                ${DOC_DIR}${book}/source/ \
+                ${BUILD_DIR}
+            PUBLISH_DIR=publish-docs/${language}/${book}-${tag}
+            mkdir -p ${PUBLISH_DIR}
+            rsync -a ${DOC_DIR}${book}/build-${tag}/html/ ${PUBLISH_DIR}
+            echo $MARKER_TEXT > ${PUBLISH_DIR}/.root-marker
+        done
+    elif [ ${book} = "install-guide" ] ; then
+        # Install Guide has several variations, build all of them
+        INDEX=${DOC_DIR}${book}/source/index.rst
+
+        # For translation work, we should have only one index file,
+        # because our tools generate translation resources from
+        # only one index file.
+        # Therefore, this tool uses one combined index file
+        # while processing title and toctree for each distribution.
+
+        # Save and restore the index file
+        cp -f ${INDEX} ${INDEX}.save
+        trap "mv -f ${INDEX}.save ${INDEX}" EXIT
+
+        for tag in $INSTALL_TAGS; do
+            if [[ "$tag" == "debconf" ]]; then
+                # Build the guide with debconf
+                # To use debian only contents, use "debian" tag.
+                BUILD_DIR="${DOC_DIR}${book}-${tag}/build-${tag}/html"
+                DOCTREES="${BUILD_DIR}.doctrees"
+                tox -evenv -- sphinx-build -q -E -t debian \
+                    -D language=${language} \
+                    -d ${DOCTREES} \
+                    ${DOC_DIR}${book}-${tag}/source/ \
+                    ${BUILD_DIR}
+                PUBLISH_DIR=publish-docs/${language}/${book}-${tag}
+                mkdir -p ${PUBLISH_DIR}
+                rsync -a ${DOC_DIR}${book}-${tag}/build-${tag}/html/ \
+                    ${PUBLISH_DIR}
+                echo $MARKER_TEXT > ${PUBLISH_DIR}/.root-marker
+            else
+                ##
+                # Because Sphinx uses the first heading as title regardless of
+                # only directive, replace title directive with the proper title
+                # for each distribution to set the title explicitly.
+                title=$(grep -m 1 -A 5 "^.. only:: ${tag}" ${INDEX} | \
+                    sed -n 4p | sed -e 's/^ *//g')
+                sed -i -e "s/\.\. title::.*/.. title:: ${title}/" ${INDEX}
+
+                ##
+                # Sphinx builds the navigation before processing directives,
+                # so the conditional toctree does not work.
+                # We need to prepare toctree depending on distribution
+                # only with one toctree before exectuing sphinx-build.
+
+                # Build the guide
+                BUILD_DIR="${DOC_DIR}${book}/build-${tag}/html"
+                DOCTREES="${BUILD_DIR}.doctrees"
+                tox -evenv -- sphinx-build -q -E -t $tag \
+                    -D language=${language} \
+                    -d ${DOCTREES} \
+                    ${DOC_DIR}${book}/source/ \
+                    ${BUILD_DIR}
+                PUBLISH_DIR=publish-docs/${language}/${book}-${tag}
+                mkdir -p ${PUBLISH_DIR}
+                rsync -a ${DOC_DIR}${book}/build-${tag}/html/ \
+                    ${PUBLISH_DIR}
+                echo $MARKER_TEXT > ${PUBLISH_DIR}/.root-marker
+            fi
+        done
+    else
+        BUILD_DIR="${DOC_DIR}${book}/build/html"
+        DOCTREES="${BUILD_DIR}.doctrees"
+        tox -evenv -- sphinx-build \
+            -q -E -D language=${language} \
+            -d ${DOCTREES} \
+            ${DOC_DIR}${book}/source/ \
+            ${BUILD_DIR}
+        PUBLISH_DIR=publish-docs/${language}/${book}/
+        mkdir -p ${PUBLISH_DIR}
+        rsync -a ${DOC_DIR}${book}/build/html/ ${PUBLISH_DIR}
+        echo $MARKER_TEXT > ${PUBLISH_DIR}/.root-marker
+    fi
+    # Remove newly created files
+    git clean -f -q ${LOCALE_DIR}${language}/LC_MESSAGES/*.po
+    git clean -f -x -q ${LOCALE_DIR}${language}/LC_MESSAGES/*.mo
+    git clean -f -q ${LOCALE_DIR}*.pot
+    # Revert changes to po file
+    git reset -q ${LOCALE_DIR}${language}/LC_MESSAGES/${book}.po
+    git checkout -- ${LOCALE_DIR}${language}/LC_MESSAGES/${book}.po
+    # Revert changes to conf.py
+    git reset -q ${DOC_DIR}${book}/source/conf.py
+    git checkout -- ${DOC_DIR}${book}/source/conf.py
+}
+
+
+function test_language {
+    language=$1
+
+    echo
+    echo "Building for language $language"
+    echo
+
+    args=("-v")
+    if [[ $PURPOSE -eq "publish" ]]; then
+        args+=("--publish")
+    fi
+    args+=("--check-build" "-l $language")
+    for book in ${BOOKS["$language"]}; do
+        if [ ${SPECIAL_BOOKS[$book]+_} ] ; then
+            if [ ${SPECIAL_BOOKS[$book]} = "RST" ] ; then
+                echo "Building translated RST book $book for $language"
+                build_rst $language $book
+                if [[ $? -eq 0 ]] ; then
+                    echo "... succeeded"
+                else
+                    echo "... failed"
+                    BUILD_FAIL=1
+                fi
+                continue
+            fi
+        fi
+    done
+}
+
+
+function handle_draft_language {
+    language=$1
+
+    echo
+    echo "Moving drafts for language $language"
+    echo
+
+    mkdir -p publish-docs/draft/$language
+    for book in ${DRAFTS["$language"]}; do
+        case "${book}" in
+            config-reference)
+                mv publish-docs/$language/draft/$book \
+                    publish-docs/draft/$language/$book
+                rmdir --ignore-fail-on-non-empty publish-docs/$language/draft
+                ;;
+            firstapp)
+                for tag in $FIRSTAPP_TAGS; do
+                    mv publish-docs/$language/$book-${tag} \
+                        publish-docs/draft/$language/$book-${tag}
+                done
+                rmdir --ignore-fail-on-non-empty publish-docs/$language/
+                ;;
+            install-guide)
+                for tag in $INSTALL_TAGS ; do
+                    mv publish-docs/$language/$book-${tag} \
+                        publish-docs/draft/$language/$book-${tag}
+                done
+                rmdir --ignore-fail-on-non-empty publish-docs/$language/
+                ;;
+            *)
+                mv publish-docs/$language/$book \
+                    publish-docs/draft/$language/$book
+                ;;
+        esac
+    done
+
+
+}
+
+
+function usage {
+    echo "usage: $0 CONF_FILE PURPOSE LANGUAGE1 LANGUAGE2 ..."
+    echo
+    echo "CONF_FILE is the path to the configuration file."
+    echo
+    echo "PURPOSE is either 'test' or 'publish'."
+    echo
+    echo "LANGUAGE is either 'all' or 'LANG'."
+    echo "LANG is a language code like 'fr' or 'ja'."
+}
+
+# Declare in case it's not in the file
+declare -A SPECIAL_BOOKS
+declare -A DRAFTS
+CONF_FILE=$1
+shift
+
+if [[ -z $CONF_FILE ]]; then
+    usage
+    exit 1
+fi
+
+if [[ ! -e $CONF_FILE ]]; then
+    echo "Error: the configuration file '$CONF_FILE' does not exist"
+    exit 1
+fi
+
+source $CONF_FILE
+
+if [[ -z $(declare -p BOOKS 2> /dev/null | grep 'declare -A BOOKS') || \
+    -z $(declare -p DIRECTORIES 2> /dev/null | \
+    grep 'declare -A DIRECTORIES') || \
+    -z $DOC_DIR ]]; then
+    echo "Error: the configuration file '$CONF_FILE' is invalid"
+    exit 1
+fi
+
+case "$1" in
+    test|publish)
+        PURPOSE=$1
+        shift
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
+esac
+
+for language in "$@" ; do
+    case "$language" in
+        all)
+            for language in "${!BOOKS[@]}"; do
+                test_language $language
+            done
+            # Move draft language guides
+            for language in "${!DRAFTS[@]}"; do
+                handle_draft_language $language
+            done
+            ;;
+        *)
+            if [[ -n ${BOOKS[$language]} ]]; then
+                test_language $language
+                if [ ${DRAFTS["${language}"]+_} ] ; then
+                    handle_draft_language $language
+                fi
+            else
+                BUILD_FAIL=1
+                echo "Error: language $language not handled"
+            fi
+            ;;
+    esac
+done
+
+
+exit $BUILD_FAIL
