@@ -23,5 +23,6 @@ instance for these kind of workloads.
 .. toctree::
    :maxdepth: 2
 
-   compute-pci-passthrough.rst
-   compute-cpu-topologies.rst
+   compute-pci-passthrough
+   compute-cpu-topologies
+   compute-huge-pages

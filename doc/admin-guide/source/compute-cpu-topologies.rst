@@ -56,11 +56,11 @@ also should be local. Finally, PCI devices are directly associated with
 specific NUMA nodes for the purposes of DMA. Instances that use PCI or SR-IOV
 devices should be placed on the NUMA node associated with these devices.
 
-By default, an instance floats across all NUMA nodes on a host. NUMA
-awareness can be enabled implicitly through the use of hugepages or pinned
-CPUs or explicitly through the use of flavor extra specs or image metadata.
-In all cases, the ``NUMATopologyFilter`` filter must be enabled. Details on
-this filter are provided in `Scheduling`_ configuration guide.
+By default, an instance floats across all NUMA nodes on a host. NUMA awareness
+can be enabled implicitly through the use of huge pages or pinned CPUs or
+explicitly through the use of flavor extra specs or image metadata.  In all
+cases, the ``NUMATopologyFilter`` filter must be enabled. Details on this
+filter are provided in `Scheduling`_ configuration guide.
 
 .. caution::
 
