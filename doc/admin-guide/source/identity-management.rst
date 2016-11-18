@@ -24,6 +24,7 @@ command-line client.
    identity-fernet-token-faq.rst
    identity-use-trusts.rst
    identity-caching-layer.rst
+   identity-security-compliance.rst
    identity-keystone-usage-and-features.rst
    identity-auth-token-middleware.rst
    identity-service-api-protection.rst
