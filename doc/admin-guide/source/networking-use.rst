@@ -23,19 +23,25 @@ connectivity on behalf of projects.
 Core Networking API features
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-After you install and configure Networking, projects and administrators
-can perform create-read-update-delete (CRUD) API networking operations
-by using the Networking API directly or neutron command-line interface
-(CLI). The neutron CLI is a wrapper around the Networking API. Every
-Networking API call has a corresponding neutron command.
+After installing and configuring Networking (neutron), projects and
+administrators can perform create-read-update-delete (CRUD) API networking
+operations. This is performed using the Networking API directly with either
+the :command:`neutron` command-line interface (CLI) or the :command:`openstack`
+CLI. The :command:`neutron` CLI is a wrapper around the Networking API. Every
+Networking API call has a corresponding :command:`neutron` command.
 
-The CLI includes a number of options. For details, see the `Create and manage
-networks <http://docs.openstack.org/user-guide/cli-create-and-manage-networks.html>`__.
+The :command:`openstack` CLI is a common interface for all OpenStack
+projects, however, not every API operation has been implemented. For the
+list of available commands, see `Command List
+<http://docs.openstack.org/developer/python-openstackclient/command-list.html>`__.
+
+The :command:`neutron` CLI includes a number of options. For details, see
+`Create and manage networks <http://docs.openstack.org/user-guide/cli-create-and-manage-networks.html>`__.
 
 Basic Networking operations
 ---------------------------
 
-To learn about advanced capabilities available through the neutron
+To learn about advanced capabilities available through the :command:`neutron`
 command-line interface (CLI), read the networking section `Create and manage
 networks <http://docs.openstack.org/user-guide/cli-create-and-manage-networks.html>`__
 in the OpenStack End User Guide.
@@ -71,7 +77,7 @@ complete basic network operations:
 +-------------------------+-------------------------------------------------+
 |Shows information for a  |                                                 |
 |specified port.          |                                                 |
-|                         |     ``$ neutron port-show PORT_ID``             |
+|                         |     ``$ openstack port show PORT_ID``           |
 +-------------------------+-------------------------------------------------+
 
 **Basic Networking operations**
@@ -114,7 +120,7 @@ For example:
 Advanced Networking operations
 ------------------------------
 
-This table shows example Networking commands that enable you to complete
+This table shows example CLI commands that enable you to complete
 advanced network operations:
 
 +-------------------------------+--------------------------------------------+
@@ -173,7 +179,7 @@ Use Compute with Networking
 Basic Compute and Networking operations
 ---------------------------------------
 
-This table shows example neutron and nova commands that enable you to
+This table shows example :command:`openstack` commands that enable you to
 complete basic VM networking operations:
 
 +----------------------------------+-----------------------------------------+
@@ -186,8 +192,9 @@ complete basic VM networking operations:
 |Boots a VM with a single NIC on   |                                         |
 |a selected Networking network.    |                                         |
 |                                  |                                         |
-|                                  |  ``$ nova boot --image IMAGE --flavor`` |
-|                                  |  ``FLAVOR --nic net-id=NET_ID VM_NAME`` |
+|                                  |  ``$ openstack server create --image``  |
+|                                  |  ``IMAGE --flavor FLAVOR --nic``        |
+|                                  |  ``net-id=NET_ID VM_NAME``              |
 +----------------------------------+-----------------------------------------+
 |Searches for ports with a         |                                         |
 |``device_id`` that matches the    |                                         |
@@ -221,8 +228,8 @@ complete basic VM networking operations:
    -  When you boot a Compute VM, a port on the network that
       corresponds to the VM NIC is automatically created and associated
       with the default security group. You can configure `security
-      group rules <#enabling_ping_and_ssh>`__ to enable users to access
-      the VM.
+      group rules <#enable-ping-and-ssh-on-vms-security-groups>`__ to enable
+      users to access the VM.
 
 .. _Create and delete VMs:
     -  When you delete a Compute VM, the underlying Networking port is
@@ -231,7 +238,7 @@ complete basic VM networking operations:
 Advanced VM creation operations
 -------------------------------
 
-This table shows example nova and neutron commands that enable you to
+This table shows example :command:`openstack` commands that enable you to
 complete advanced VM creation operations:
 
 +-------------------------------------+--------------------------------------+
@@ -239,27 +246,28 @@ complete advanced VM creation operations:
 +=====================================+======================================+
 |Boots a VM with multiple             |                                      |
 |NICs.                                |                                      |
-|                                     |                                      |
-|                                     |``$ nova boot --image IMAGE --flavor``|
-|                                     |``FLAVOR --nic net-id=NET1-ID --nic`` |
-|                                     |``net-id=NET2-ID VM_NAME``            |
+|                                     | ``$ openstack server create --image``|
+|                                     | ``IMAGE --flavor FLAVOR --nic``      |
+|                                     | ``net-id=NET_ID VM_NAME``            |
+|                                     | ``net-id=NET2-ID VM_NAME``           |
 +-------------------------------------+--------------------------------------+
 |Boots a VM with a specific IP        |                                      |
 |address. Note that you cannot        |                                      |
-|use the ``--num-instances``          |                                      |
-|parameter in this case.              |                                      |
+|use the ``--max`` or ``--min``       |                                      |
+|parameters in this case.             |                                      |
 |                                     |                                      |
-|                                     |``$ nova boot --image IMAGE --flavor``|
-|                                     |``FLAVOR --nic net-id=NET-ID,``       |
-|                                     |``v4-fixed-ip=IP-ADDR VM_NAME``       |
+|                                     | ``$ openstack server create --image``|
+|                                     | ``IMAGE --flavor FLAVOR --nic``      |
+|                                     | ``net-id=NET_ID VM_NAME``            |
+|                                     | ``v4-fixed-ip=IP-ADDR VM_NAME``      |
 +-------------------------------------+--------------------------------------+
 |Boots a VM that connects to all      |                                      |
 |networks that are accessible to the  |                                      |
 |project who submits the request      |                                      |
 |(without the ``--nic`` option).      |                                      |
 |                                     |                                      |
-|                                     |``$ nova boot --image IMAGE --flavor``|
-|                                     |``FLAVOR VM_NAME``                    |
+|                                     | ``$ openstack server create --image``|
+|                                     | ``IMAGE --flavor FLAVOR``            |
 +-------------------------------------+--------------------------------------+
 
 **Advanced VM creation operations**
@@ -308,10 +316,9 @@ you are using. If you are using a plug-in that:
           --egress --description "Sample Security Group"
 
 -  Does not implement Networking security groups, you can configure
-   security group rules by using the
-   :command:`openstack security group rule create`
-   or :command:`euca-authorize` command. These :command:`nova` commands enable
-   ``ping`` and ``ssh`` access to your VMs.
+   security group rules by using the :command:`openstack security group rule
+   create` or :command:`euca-authorize` command. These :command:`openstack`
+   commands enable ``ping`` and ``ssh`` access to your VMs.
 
    .. code-block:: console
 
