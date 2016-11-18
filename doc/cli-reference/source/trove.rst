@@ -9,7 +9,7 @@ Database service command-line client
 The trove client is the command-line interface (CLI) for
 the Database service API and its extensions.
 
-This chapter documents :command:`trove` version ``2.5.0``.
+This chapter documents :command:`trove` version ``2.6.0``.
 
 For help on a specific :command:`trove` command, enter:
 
