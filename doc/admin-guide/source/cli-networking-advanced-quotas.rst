@@ -111,7 +111,7 @@ the default set of quotas are enforced for all projects, so no
 
    .. code-block:: console
 
-      $ neutron ext-list -c alias -c name
+      $ openstack extension list --network
 
    The command shows the ``quotas`` extension, which provides
    per-project quota management support.
@@ -122,41 +122,15 @@ the default set of quotas are enforced for all projects, so no
 
    .. code-block:: console
 
-      +---------------------------+-----------------------------------------------+
-      | alias                     | name                                          |
-      +---------------------------+-----------------------------------------------+
-      | default-subnetpools       | Default Subnetpools                           |
-      | network-ip-availability   | Network IP Availability                       |
-      | network_availability_zone | Network Availability Zone                     |
-      | auto-allocated-topology   | Auto Allocated Topology Services              |
-      | ext-gw-mode               | Neutron L3 Configurable external gateway mode |
-      | binding                   | Port Binding                                  |
-      | metering                  | Neutron Metering                              |
-      | agent                     | agent                                         |
-      | subnet_allocation         | Subnet Allocation                             |
-      | l3_agent_scheduler        | L3 Agent Scheduler                            |
-      | tag                       | Tag support                                   |
-      | external-net              | Neutron external network                      |
-      | net-mtu                   | Network MTU                                   |
-      | availability_zone         | Availability Zone                             |
-      | quotas                    | Quota management support                      |
-      | l3-ha                     | HA Router extension                           |
-      | provider                  | Provider Network                              |
-      | multi-provider            | Multi Provider Network                        |
-      | address-scope             | Address scope                                 |
-      | extraroute                | Neutron Extra Route                           |
-      | timestamp_core            | Time Stamp Fields addition for core resources |
-      | extra_dhcp_opt            | Neutron Extra DHCP opts                       |
-      | dns-integration           | DNS Integration                               |
-      | security-group            | security-group                                |
-      | dhcp_agent_scheduler      | DHCP Agent Scheduler                          |
-      | router_availability_zone  | Router Availability Zone                      |
-      | rbac-policies             | RBAC Policies                                 |
-      | standard-attr-description | standard-attr-description                     |
-      | router                    | Neutron L3 Router                             |
-      | allowed-address-pairs     | Allowed Address Pairs                         |
-      | dvr                       | Distributed Virtual Router                    |
-      +---------------------------+-----------------------------------------------+
+      +------------------------+------------------------+--------------------------+
+      | Name                   | Alias                  | Description              |
+      +------------------------+------------------------+--------------------------+
+      | ...                    | ...                    | ...                      |
+      | Quota management       | quotas                 | Expose functions for     |
+      | support                |                        | quotas management per    |
+      |                        |                        | tenant                   |
+      | ...                    | ...                    | ...                      |
+      +------------------------+------------------------+--------------------------+
 
 #. Show information for the quotas extension.
 
