@@ -622,7 +622,7 @@ rule. To make it do what we want, we need to add some rules:
                                                [-c COLUMN]
                                                [--max-width <integer>]
                                                [--noindent] [--prefix PREFIX]
-                                               [--src-ip <ip-address> | --src-group <group>]
+                                               [--remote-ip <ip-address> | --remote-group <group>]
                                                [--dst-port <port-range>]
                                                [--icmp-type <icmp-type>]
                                                [--icmp-code <icmp-code>]
@@ -634,7 +634,7 @@ rule. To make it do what we want, we need to add some rules:
                                                <group>
 
    $ openstack security group rule create --ingress --ethertype IPv4 \
-     --protocol tcp --src-ip 0.0.0.0/0 global_http
+     --protocol tcp --remote-ip 0.0.0.0/0 global_http
 
    Created a new security group rule:
    +-------------------+--------------------------------------+
@@ -699,14 +699,14 @@ rules to allow each new member of the cluster.
 
 The code is similar to the above example of
 :command:`openstack security group rule create`. To use RemoteGroup, specify
-:option:`--src-group` instead of :option:`--src-ip`.
+:option:`--remote-group` instead of :option:`--remote-ip`.
 For example:
 
 .. code-block:: console
 
    $ openstack security group rule create --ingress \
      --ethertype IPv4 --protocol tcp \
-     --src-group global_http cluster
+     --remote-group global_http cluster
 
 The "cluster" rule allows SSH access from any other instance that uses
 the ``global-http`` group.

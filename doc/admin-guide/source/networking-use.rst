@@ -315,8 +315,8 @@ you are using. If you are using a plug-in that:
 
    .. code-block:: console
 
-      $ openstack security group rule create default --protocol icmp --dst-port -1:-1 --src-ip 0.0.0.0/0
-      $ openstack security group rule create default --protocol tcp --dst-port 22:22 --src-ip 0.0.0.0/0
+      $ openstack security group rule create default --protocol icmp --dst-port -1:-1 --remote-ip 0.0.0.0/0
+      $ openstack security group rule create default --protocol tcp --dst-port 22:22 --remote-ip 0.0.0.0/0
 
 .. note::
 

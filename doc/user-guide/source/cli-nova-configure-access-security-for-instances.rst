@@ -138,7 +138,7 @@ Create and manage security groups
 Create and manage security group rules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Modify security group rules with the :command:`nova secgroup-*-rule`
+Modify security group rules with the :command:`openstack security group rule`
 commands. Before you begin, source the OpenStack RC file. For details,
 see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
@@ -156,15 +156,16 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
       .. code-block:: console
 
-         $ openstack security group rule create SECURITY_GROUP_NAME --protocol tcp --dst-port 22:22 --src-ip 0.0.0.0/0
+         $ openstack security group rule create SECURITY_GROUP_NAME \
+               --protocol tcp --dst-port 22:22 --remote-ip 0.0.0.0/0
 
    -  Allow access only from IP addresses from other security groups
       (source groups) to access the specified port:
 
       .. code-block:: console
 
-         $ nova secgroup-add-group-rule --ip_proto tcp --from_port 22 \
-               --to_port 22 SECURITY_GROUP_NAME SOURCE_GROUP_NAME
+         $ openstack security group rule create SECURITY_GROUP_NAME \
+               --protocol tcp --dst-port 22:22 --remote-group SOURCE_GROUP_NAME
 
 #. To allow pinging of the instances, choose one of the following options:
 
@@ -173,7 +174,8 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
       .. code-block:: console
 
-         $ openstack security group rule create SECURITY_GROUP_NAME --protocol icmp --dst-port -1:-1 --src-ip 0.0.0.0/0
+         $ openstack security group rule create SECURITY_GROUP_NAME \
+             --protocol icmp --dst-port -1:-1 --remote-ip 0.0.0.0/0
 
       This allows access to all codes and all types of ICMP traffic.
 
@@ -182,8 +184,8 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
       .. code-block:: console
 
-         $ nova secgroup-add-group-rule --ip_proto icmp --from_port -1 \
-              --to_port -1 SECURITY_GROUP_NAME SOURCE_GROUP_NAME
+         $ openstack security group rule create SECURITY_GROUP_NAME \
+             --protocol icmp --dst-port -1:-1 --remote-group SOURCE_GROUP_NAME
 
 #. To allow access through a UDP port, such as allowing access to a DNS
    server that runs on a VM, choose one of the following options:
@@ -193,25 +195,22 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
       .. code-block:: console
 
-         $ openstack security group rule create SECURITY_GROUP_NAME --protocol udp --dst-port 53:53 --src-ip 0.0.0.0/0
+         $ openstack security group rule create SECURITY_GROUP_NAME \
+               --protocol udp --dst-port 53:53 --remote-ip 0.0.0.0/0
 
    -  Allow only IP addresses from other security groups (source groups) to
       access the specified port.
 
       .. code-block:: console
 
-         $ nova secgroup-add-group-rule --ip_proto udp --from_port 53 \
-               --to_port 53 SECURITY_GROUP_NAME SOURCE_GROUP_NAME
+         $ openstack security group rule create SECURITY_GROUP_NAME \
+               --protocol udp --dst-port 53:53 --remote-group SOURCE_GROUP_NAME
 
 Delete a security group rule
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To delete a security group rule, specify the same arguments that you
-used to create the rule.
-
-For example, to delete the security group rule that permits SSH access
-from all IP addresses, run the following command.
+To delete a security group rule, specify the ID of the rule.
 
 .. code-block:: console
 
-   $ nova secgroup-delete-rule SECURITY_GROUP_NAME tcp 22 22 0.0.0.0/0
+   $ openstack security group rule delete RULE_ID

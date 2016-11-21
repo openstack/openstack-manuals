@@ -259,8 +259,10 @@ instances in the default security group
 
 .. code-block:: console
 
-   $ nova secgroup-add-group-rule default default icmp -1 -1
-   $ nova secgroup-add-group-rule default default tcp 22 22
+   $ openstack security group rule create default \
+       --remote-group default --protocol icmp
+   $ openstack security group rule create default \
+       --remote-group default --dst-port 22
 
 Networking (neutron)
 ~~~~~~~~~~~~~~~~~~~~
