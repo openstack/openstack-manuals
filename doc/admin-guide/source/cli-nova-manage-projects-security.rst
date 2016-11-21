@@ -127,7 +127,7 @@ easier to understand than "bobs\_group" or "secgrp1".
 
    .. code-block:: console
 
-      $ openstack security group rule create SEC_GROUP_NAME --protocol PROTOCOL --dst-port FROM_PORT:TO_PORT --src-ip CIDR
+      $ openstack security group rule create SEC_GROUP_NAME --protocol PROTOCOL --dst-port FROM_PORT:TO_PORT --remote-ip CIDR
 
    The arguments are positional, and the ``from-port`` and ``to-port``
    arguments specify the local port range connections are allowed to
@@ -136,7 +136,7 @@ easier to understand than "bobs\_group" or "secgrp1".
 
    .. code-block:: console
 
-      $ openstack security group rule create global_http --protocol tcp --dst-port 80:80 --src-ip 0.0.0.0/0
+      $ openstack security group rule create global_http --protocol tcp --dst-port 80:80 --remote-ip 0.0.0.0/0
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
@@ -163,7 +163,7 @@ easier to understand than "bobs\_group" or "secgrp1".
 
    .. code-block:: console
 
-      $ openstack security group rule create global_http --protocol tcp --dst-port 443:443 --src-ip 0.0.0.0/0
+      $ openstack security group rule create global_http --protocol tcp --dst-port 443:443 --remote-ip 0.0.0.0/0
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
@@ -234,13 +234,15 @@ allow each new member of the cluster.
 
    .. code-block:: console
 
-      $ nova secgroup-add-group-rule secGroupName source-group ip-protocol from-port to-port
+      $ openstack security group rule create secGroupName --remote-group source-group \
+          --protocol ip-protocol --dst-port from-port:to-port
 
    For example:
 
    .. code-block:: console
 
-      $ nova secgroup-add-group-rule cluster global_http tcp 22 22
+      $ openstack security group rule create cluster --remote-group global_http \
+          --protocol tcp --dst-port 22:22
 
    The ``cluster`` rule allows SSH access from any other instance that
    uses the ``global_http`` group.
