@@ -22,8 +22,8 @@ Manual recovery
 To manually recover a failed compute node:
 
 #. Identify the VMs on the affected hosts by using a combination of
-   the :command:`nova list` and :command:`nova show` commands or the
-   :command:`euca-describe-instances` command.
+   the :command:`openstack server list` and :command:`openstack server show`
+   commands or the :command:`euca-describe-instances` command.
 
    For example, this command displays information about the i-000015b9
    instance that runs on the np-rcc54 node:
@@ -83,10 +83,11 @@ To manually recover a failed compute node:
 
    .. code-block:: console
 
-      $ nova reboot 3f57699a-e773-4650-a443-b4b37eed5a06
+      $ openstack server reboot 3f57699a-e773-4650-a443-b4b37eed5a06
 
-Typically, the database update and :command:`nova reboot` command recover a VM
-from a failed host. However, if problems persist, try one of these actions:
+Typically, the database update and :command:`openstack server reboot` command
+recover a VM from a failed host. However, if problems persist, try one of
+these actions:
 
 * Use :command:`virsh` to recreate the network filter configuration.
 * Restart Compute services.
@@ -205,9 +206,9 @@ After power resumes and all hardware components restart:
 #. Check the current relationship between the volume and its instance, so
    that you can recreate the attachment.
 
-   Use the :command:`nova volume-list` command to get this information. Note
-   that the :command:`nova` client can get volume information from OpenStack Block
-   Storage.
+   Use the :command:`openstack volume list` command to get this information.
+   Note that the :command:`openstack` client can get volume information
+   from OpenStack Block Storage.
 
 #. Update the database to clean the stalled state. Do this for every
    volume by using these queries:
@@ -220,9 +221,10 @@ After power resumes and all hardware components restart:
       mysql> update volumes set attach_status="detached";
       mysql> update volumes set instance_id=0;
 
-   Use :command:`nova volume-list` command to list all volumes.
+   Use :command:`openstack volume list` command to list all volumes.
 
-#. Restart the instances by using the :command:`nova reboot INSTANCE` command.
+#. Restart the instances by using the
+   :command:`openstack server reboot INSTANCE` command.
 
    .. important::
 
@@ -239,9 +241,9 @@ After power resumes and all hardware components restart:
       cloud-init, see
       `help.ubuntu.com/community/CloudInit/ <https://help.ubuntu.com/community/CloudInit/>`__.
 
-#. If required, run the :command:`nova volume-attach` command to reattach the
-   volumes to their respective instances. This example uses a file of listed
-   volumes to reattach them:
+#. If required, run the :command:`openstack server add volume` command to
+   reattach the volumes to their respective instances. This example uses
+   a file of listed volumes to reattach them:
 
    .. code-block:: bash
 
@@ -252,7 +254,7 @@ After power resumes and all hardware components restart:
           instance=`echo $line | $CUT -f 2 -d " "`
           mount_point=`echo $line | $CUT -f 3 -d " "`
               echo "ATTACHING VOLUME FOR INSTANCE - $instance"
-          nova volume-attach $instance $volume $mount_point
+          openstack server add volume $instance $volume $mount_point
           sleep 2
       done < $volumes_tmp_file
 
@@ -318,8 +320,8 @@ for only one instance.
 
 To reproduce the power loss, connect to the compute node that runs that
 instance and close the iSCSI session. Do not detach the volume by using the
-:command:`nova volume-detach` command. You must manually close the iSCSI
-session. This example closes an iSCSI session with the number ``15``:
+:command:`openstack server remove volume` command. You must manually close the
+iSCSI session. This example closes an iSCSI session with the number ``15``:
 
 .. code-block:: console
 
