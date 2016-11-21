@@ -89,10 +89,6 @@ OpenStack Compute consists of the following areas and their components:
 ``nova-cert`` daemon
   x509 certificates.
 
-``nova`` client
-  Enables users to submit commands as a tenant administrator or end
-  user.
-
 The queue
   A central hub for passing messages between daemons. Usually
   implemented with `RabbitMQ <http://www.rabbitmq.com/>`__, also can be
