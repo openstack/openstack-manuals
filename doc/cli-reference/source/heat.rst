@@ -17,7 +17,7 @@ Orchestration service command-line client
 The heat client is the command-line interface (CLI) for
 the Orchestration service API and its extensions.
 
-This chapter documents :command:`heat` version ``1.5.0``.
+This chapter documents :command:`heat` version ``1.6.0``.
 
 For help on a specific :command:`heat` command, enter:
 
@@ -1254,20 +1254,24 @@ List the user's stacks.
   parameters separated by a semicolon.
 
 ``-t <TAG1,TAG2...>, --tags <TAG1,TAG2...>``
-  Show stacks containing these tags, combine multiple
-  tags using the boolean AND expression
+  Show stacks containing these tags. If multiple tags
+  are passed, they will be combined using the AND
+  boolean expression.
 
 ``--tags-any <TAG1,TAG2...>``
-  Show stacks containing these tags, combine multiple
-  tags using the boolean OR expression
+  Show stacks containing these tags, If multiple tags
+  are passed, they will be combined using the OR boolean
+  expression.
 
 ``--not-tags <TAG1,TAG2...>``
-  Show stacks not containing these tags, combine
-  multiple tags using the boolean AND expression
+  Show stacks not containing these tags, If multiple
+  tags are passed, they will be combined using the AND
+  boolean expression.
 
 ``--not-tags-any <TAG1,TAG2...>``
-  Show stacks not containing these tags, combine
-  multiple tags using the boolean OR expression
+  Show stacks not containing these tags, If multiple
+  tags are passed, they will be combined using the OR
+  boolean expression.
 
 ``-l <LIMIT>, --limit <LIMIT>``
   Limit the number of stacks returned.
