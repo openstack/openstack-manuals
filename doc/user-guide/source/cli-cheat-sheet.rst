@@ -289,8 +289,8 @@ Create a new volume
 
 .. code-block:: console
 
-   $ cinder create SIZE_IN_GB --display-name NAME
-   $ cinder create 1 --display-name MyFirstVolume
+   $ openstack volume create --size SIZE_IN_GB NAME
+   $ openstack volume create --size 1 MyFirstVolume
 
 Boot an instance and attach to volume
 
@@ -298,14 +298,14 @@ Boot an instance and attach to volume
 
    $ nova boot --image cirros-qcow2 --flavor m1.tiny MyVolumeInstance
 
-List volumes, notice status of volume
+List all volumes, noticing the volume status
 
 .. code-block:: console
 
-   $ cinder list
+   $ openstack volume list
 
-Attach volume to instance after instance is active, and volume is
-available
+Attach a volume to an instance after the instance is active, and the
+volume is available
 
 .. code-block:: console
 
