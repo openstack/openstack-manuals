@@ -393,11 +393,10 @@ B
       Storage, locally mounted file system, RADOS block devices, VMware
       datastore, and HTTP.
 
-   backup restore and disaster recovery as a service
+   Backup, Restore, and Disaster Recovery service (freezer)
 
-      The OpenStack project that provides integrated tooling for
-      backing up, restoring, and recovering file systems,
-      instances, or database backups. The project name is freezer.
+      The project that provides integrated tooling for backing up, restoring,
+      and recovering file systems, instances, or database backups.
 
    bandwidth
 
@@ -1555,8 +1554,8 @@ F
 
    freezer
 
-      OpenStack project that provides backup restore and disaster
-      recovery as a service.
+      Code name for the :term:`Backup, Restore, and Disaster Recovery service
+      <Backup, Restore, and Disaster Recovery service (freezer)>`.
 
    front end
 
