@@ -767,13 +767,11 @@ C
       A pre-made VM image that serves as a cloudpipe server.
       Essentially, OpenVPN running on Linux.
 
-   Clustering service
+   Clustering service (senlin)
 
-      The OpenStack project that implements
-      clustering services and libraries for the management of
-      groups of homogeneous objects exposed by other OpenStack
-      services. The project name of Clustering service is
-      senlin.
+      The project that implements clustering services and libraries
+      for the management of groups of homogeneous objects exposed
+      by other OpenStack services.
 
    command filter
 
@@ -3337,7 +3335,8 @@ S
 
    senlin
 
-      OpenStack project that provides a Clustering service.
+      Code name for the :term:`Clustering service
+      <Clustering service (senlin)>`.
 
    server
 
