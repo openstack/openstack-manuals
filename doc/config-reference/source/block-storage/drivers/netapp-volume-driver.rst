@@ -17,6 +17,19 @@ accessing and storing data using the storage protocol on the storage
 family system. The NetApp unified driver is an extensible interface
 that can support new storage families and protocols.
 
+.. important::
+
+   The NetApp unified driver in cinder currently provides integration for
+   two major generations of the ONTAP operating system: the current
+   clustered ONTAP and the legacy 7-mode. NetApp’s full support for
+   7-mode ended in August of 2015 and the current limited support period
+   will end in February of 2017.
+
+   The 7-mode components of the cinder NetApp unified driver have now been
+   marked deprecated and will be removed in the Queens release. This will
+   apply to all three protocols currently supported in this driver: iSCSI,
+   FC and NFS.
+
 .. note::
 
    With the Juno release of OpenStack, Block Storage has
@@ -325,6 +338,11 @@ from Block Storage to the Data ONTAP operating in 7-Mode instance and
 as such does not require any additional management software to achieve the
 desired functionality. It uses NetApp ONTAPI to interact with the Data ONTAP
 operating in 7-Mode storage system.
+
+
+.. important::
+    Support for 7-mode configuration has been deprecated in the Ocata release
+    and will be removed in the Queens release of OpenStack.
 
 **Configuration options**
 
