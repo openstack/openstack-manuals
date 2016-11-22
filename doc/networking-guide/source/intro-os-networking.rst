@@ -105,6 +105,22 @@ sizable physical network infrastructure. Applications that run inside the
 OpenStack deployment might require direct layer-2 access, typically using
 VLANs, to applications outside of the deployment.
 
+Routed provider networks
+------------------------
+
+Routed provider networks offer layer-3 connectivity to instances. These
+networks map to existing layer-3 networks in the data center. More
+specifically, the network maps to multiple layer-2 segments, each of which is
+essentially a provider network. Each has a router gateway attached to it which
+routes traffic between them and externally. The Networking service does not
+provide the routing.
+
+Routed provider networks offer performance at scale that is difficult to
+achieve with a plain provider network at the expense of guaranteed layer-2
+connectivity.
+
+See :ref:`config-routed-provider-networks` for more information.
+
 .. _intro-os-networking-selfservice:
 
 Self-service networks

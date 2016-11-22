@@ -25,6 +25,7 @@ Configuration
    config-ovsfwdriver
    config-qos
    config-rbac
+   config-routed-networks
    config-sfc
    config-sriov
    config-subnet-pools
