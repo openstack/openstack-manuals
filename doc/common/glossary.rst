@@ -856,7 +856,8 @@ C
 
    congress
 
-      OpenStack project that provides the Governance service.
+      Code name for the :term:`Governance service
+      <Governance service (congress)>`.
 
    consistency window
 
@@ -1618,12 +1619,11 @@ G
       image is created and then used by all nodes without
       modification.
 
-   Governance service
+   Governance service (congress)
 
-      OpenStack project to provide Governance-as-a-Service across
+      The project that provides Governance-as-a-Service across
       any collection of cloud services in order to monitor,
-      enforce, and audit policy over dynamic infrastructure. The
-      code name for the project is congress.
+      enforce, and audit policy over dynamic infrastructure.
 
    Graphic Interchange Format (GIF)
 
