@@ -2,9 +2,9 @@
 Virtuozzo
 =========
 
-Virtuozzo, or its community edition OpenVZ, provides both types of
-virtualization: Kernel Virtual Machines and OS Containers. The type
-of instance to span is chosen depending on the ``hw_vm_type``
+Virtuozzo 7.0.0 (or newer), or its community edition OpenVZ, provides
+both types of virtualization: Kernel Virtual Machines and OS Containers.
+The type of instance to span is chosen depending on the ``hw_vm_type``
 property of an image.
 
 .. note::
