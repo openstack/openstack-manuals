@@ -59,6 +59,7 @@ The following hypervisors are supported:
   use to run Windows, Linux, and FreeBSD virtual machines.
   Runs ``nova-compute`` natively on the Windows virtualization platform.
 
-* `Virtuozzo <https://virtuozzo.com/products/#product-virtuozzo/>`_ -
-  OS Containers and Kernel-based Virtual Machines supported via libvirt
-  virt_type=parallels. The supported formats include ploop and qcow2 images.
+* `Virtuozzo <https://virtuozzo.com/products/#product-virtuozzo/>`_
+  7.0.0 and newer - OS Containers and Kernel-based Virtual Machines
+  supported via libvirt virt_type=parallels. The supported formats
+  include ploop and qcow2 images.
