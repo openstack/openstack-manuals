@@ -157,9 +157,9 @@ Here, the ID associated with the instance is
 on the cloud controller in the ``/var/log/nova-*.log`` files, it appears
 in ``nova-api.log`` and ``nova-scheduler.log``. If you search for this
 on the compute nodes in ``/var/log/nova-*.log``, it appears in
-``nova-network.log`` and ``nova-compute.log``. If no ERROR or CRITICAL
-messages appear, the most recent log entry that reports this may provide
-a hint about what has gone wrong.
+``nova-compute.log``. If no ERROR or CRITICAL messages appear, the most
+recent log entry that reports this may provide a hint about what has gone
+wrong.
 
 Adding Custom Logging Statements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
