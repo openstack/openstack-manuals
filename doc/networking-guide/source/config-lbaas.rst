@@ -297,6 +297,20 @@ Building an LBaaS v2 load balancer
          --security-group lbaas \
          9f8f8a75-a731-4a34-b622-864907e1d556
 
+Adding an HTTP listener
+-----------------------
+
+#.  With the load balancer online, you can add a listener for plaintext
+    HTTP traffic on port 80:
+
+    .. code-block:: console
+
+       $ neutron lbaas-listener-create \
+         --name test-lb-http \
+         --loadbalancer test-lb \
+         --protocol HTTP \
+         --protocol-port 80
+
     This load balancer is active and ready to serve traffic on ``192.168.1.22``.
 
 #.  Verify that the load balancer is responding to pings before moving further:
@@ -314,19 +328,6 @@ Building an LBaaS v2 load balancer
        4 packets transmitted, 4 received, 0% packet loss, time 2997ms
        rtt min/avg/max/mdev = 0.396/0.402/0.410/0.020 ms
 
-Adding an HTTP listener
------------------------
-
-#.  With the load balancer online, you can add a listener for plaintext
-    HTTP traffic on port 80:
-
-    .. code-block:: console
-
-       $ neutron lbaas-listener-create \
-         --name test-lb-http \
-         --loadbalancer test-lb \
-         --protocol HTTP \
-         --protocol-port 80
 
 #.  You can begin building a pool and adding members to the pool to serve HTTP
     content on port 80. For this example, the web servers are ``192.168.1.16``
