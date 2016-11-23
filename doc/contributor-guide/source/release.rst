@@ -13,3 +13,4 @@ PTL and release managers.
 
    release/taskoverview.rst
    release/taskdetail.rst
+   release/release-tools.rst
