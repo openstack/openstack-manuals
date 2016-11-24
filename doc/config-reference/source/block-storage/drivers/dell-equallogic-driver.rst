@@ -52,9 +52,9 @@ Dell EqualLogic Group:
    # Optional settings
 
    san_thin_provision = true|false
-   eqlx_use_chap = true|false
-   eqlx_chap_login = EQLX_UNAME
-   eqlx_chap_password = EQLX_PW
+   use_chap_auth = true|false
+   chap_username = EQLX_UNAME
+   chap_password = EQLX_PW
    eqlx_cli_max_retries = 5
    san_ssh_port = 22
    ssh_conn_timeout = 30
@@ -88,7 +88,7 @@ EQLX_POOL
 
 EQLX_UNAME
     The CHAP login account for each volume in a pool, if
-    ``eqlx_use_chap`` is set to ``true``. Default account name is
+    ``use_chap_auth`` is set to ``true``. Default account name is
     ``chapadmin``.
 
 EQLX_PW
