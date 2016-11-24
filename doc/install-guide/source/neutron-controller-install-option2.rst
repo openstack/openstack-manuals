@@ -353,7 +353,7 @@ self-service virtual networks.
 
        [DEFAULT]
        ...
-       interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
+       interface_driver = linuxbridge
 
     .. end
 
@@ -374,7 +374,7 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
 
        [DEFAULT]
        ...
-       interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
+       interface_driver = linuxbridge
        dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
        enable_isolated_metadata = True
 

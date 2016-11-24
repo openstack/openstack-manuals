@@ -28,14 +28,12 @@ service. The driver adds metering to the routing interface.
 | **Open vSwitch**                         |                                 |
 +------------------------------------------+---------------------------------+
 | interface\_driver                        |                                 |
-| ($NEUTRON\_CONF\_DIR/metering\_agent.ini)| neutron.agent.linux.interface.  |
-|                                          | OVSInterfaceDriver              |
+| ($NEUTRON\_CONF\_DIR/metering\_agent.ini)| openvswitch                     |
 +------------------------------------------+---------------------------------+
 | **Linux Bridge**                         |                                 |
 +------------------------------------------+---------------------------------+
 | interface\_driver                        |                                 |
-| ($NEUTRON\_CONF\_DIR/metering\_agent.ini)| neutron.agent.linux.interface.  |
-|                                          | BridgeInterfaceDriver           |
+| ($NEUTRON\_CONF\_DIR/metering\_agent.ini)| linuxbridge                     |
 +------------------------------------------+---------------------------------+
 
 L3 metering driver

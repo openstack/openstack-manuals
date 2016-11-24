@@ -135,7 +135,7 @@ These DHCP agent options are required in the
 
    [DEFAULT]
    enable_isolated_metadata = True
-   interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+   interface_driver = openvswitch
 
 DHCP agent setup: NSX plug-in
 -----------------------------
@@ -148,7 +148,19 @@ These DHCP agent options are required in the
    [DEFAULT]
    enable_metadata_network = True
    enable_isolated_metadata = True
-   interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+   interface_driver = openvswitch
+
+DHCP agent setup: Linux-bridge plug-in
+--------------------------------------
+
+These DHCP agent options are required in the
+``/etc/neutron/dhcp_agent.ini`` file for the Linux-bridge plug-in:
+
+.. code-block:: bash
+
+   [DEFAULT]
+   enabled_isolated_metadata = True
+   interface_driver = linuxbridge
 
 Configure L3 agent
 ~~~~~~~~~~~~~~~~~~
@@ -304,14 +316,13 @@ The Neutron Metering agent resides beside neutron-l3-agent.
 
       .. code-block:: ini
 
-         interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+         interface_driver = openvswitch
 
    -  A plug-in that uses LinuxBridge:
 
       .. code-block:: ini
 
-         interface_driver = neutron.agent.linux.interface.
-         BridgeInterfaceDriver
+         interface_driver = linuxbridge
 
 #. To use the reference implementation, you must set:
 
