@@ -147,3 +147,22 @@ Also, for translations the following needs to be done:
   in ``openstack-infra/project-config`` the gerritbot notifications and
   the import of translations (`example infra change
   <https://review.openstack.org/396876>`__).
+
+End-of-life
+~~~~~~~~~~~
+
+Once a release is at end-of-life, you must stop producing new publications.
+To indicate the end of life, add the below sentence at the index:
+
+.. code-block:: rst
+
+   .. warning::
+
+      This guide documents the OpenStack Liberty release and is frozen
+      as OpenStack Liberty has reached its official end-of-life.
+      This guide will not get any updates from the OpenStack project anymore.
+      See the `OpenStack Documentation page
+      <http://docs.openstack.org/>`_ for current documentation.
+
+However, we will keep the documentation on the <http://docs.openstack.org/>`_
+page for a while so that the users use can refer the guides if necessary.
