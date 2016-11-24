@@ -25,7 +25,7 @@ Key features are:
 * Designed as an OpenStack component.
 
 * Managed through REST API with UI available as part of OpenStack
-  dashboard.
+  Dashboard.
 
 * Support for different Hadoop distributions:
 

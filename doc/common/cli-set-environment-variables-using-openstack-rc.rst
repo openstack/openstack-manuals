@@ -5,7 +5,7 @@ Set environment variables using the OpenStack RC file
 To set the required environment variables for the OpenStack command-line
 clients, you must create an environment file called an OpenStack rc
 file, or ``openrc.sh`` file. If your OpenStack installation provides
-it, you can download the file from the OpenStack dashboard as an
+it, you can download the file from the OpenStack Dashboard as an
 administrative user or any other user. This project-specific environment
 file contains the credentials that all OpenStack services use.
 

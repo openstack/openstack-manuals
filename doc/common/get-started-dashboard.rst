@@ -2,7 +2,7 @@
 Dashboard overview
 ==================
 
-The OpenStack dashboard is a modular `Django web
+The OpenStack Dashboard is a modular `Django web
 application <https://www.djangoproject.com/>`__ that provides a
 graphical interface to OpenStack services.
 

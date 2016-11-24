@@ -21,7 +21,7 @@ Mac OS X systems. On some client commands, you can specify a debug
 parameter to show the underlying API request for the command. This is
 a good way to become familiar with the OpenStack API calls.
 
-As a cloud end user, you can use the OpenStack dashboard to provision
+As a cloud end user, you can use the OpenStack Dashboard to provision
 your own resources within the limits set by administrators. You can
 modify the examples provided in this section to create other types and
 sizes of server instances.

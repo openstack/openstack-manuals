@@ -144,8 +144,7 @@ A
 
       The Compute service can send alerts through its notification
       system, which includes a facility to create custom notification
-      drivers. Alerts can be sent to and displayed on the horizon
-      dashboard.
+      drivers. Alerts can be sent to and displayed on the dashboard.
 
    allocate
 
@@ -1044,7 +1043,7 @@ D
    default panel
 
       The default panel that is displayed when a user accesses the
-      horizon dashboard.
+      dashboard.
 
    default project
 
@@ -1559,7 +1558,7 @@ F
    front end
 
       The point where a user interacts with a service; can be an API
-      endpoint, the horizon dashboard, or a command-line tool.
+      endpoint, the dashboard, or a command-line tool.
 
 G
 ~
@@ -1724,7 +1723,7 @@ H
 
    horizon plug-in
 
-      A plug-in for the OpenStack dashboard (horizon).
+      A plug-in for the OpenStack Dashboard (horizon).
 
    host
 
@@ -3215,8 +3214,7 @@ R
 
       Provides a predefined list of actions that the user can perform,
       such as start or stop VMs, reset passwords, and so on. Supported in
-      both Identity and Compute and can be configured using the
-      horizon dashboard.
+      both Identity and Compute and can be configured using the dashboard.
 
    role ID
 

@@ -8,7 +8,7 @@ OpenStack Compute is a major part of an :term:`Infrastructure-as-a-Service
 
 OpenStack Compute interacts with OpenStack Identity for authentication;
 OpenStack Image service for disk and server images; and OpenStack
-dashboard for the user and administrative interface. Image access is
+Dashboard for the user and administrative interface. Image access is
 limited by projects, and by users; quotas are limited per project (the
 number of instances, for example). OpenStack Compute can scale
 horizontally on standard hardware, and download images to launch
