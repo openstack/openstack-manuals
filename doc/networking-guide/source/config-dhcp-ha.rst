@@ -153,14 +153,14 @@ To experiment, you need VMs and a neutron network:
 
 .. code-block:: console
 
-   $ nova list
-   +--------------------------------------+-----------+--------+---------------+
-   | ID                                   | Name      | Status | Networks      |
-   +--------------------------------------+-----------+--------+---------------+
-   | c394fcd0-0baa-43ae-a793-201815c3e8ce | myserver1 | ACTIVE | net1=10.0.1.3 |
-   | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=10.0.1.4 |
-   | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 |
-   +--------------------------------------+-----------+--------+---------------+
+   $ openstack server list
+   +--------------------------------------+-----------+--------+---------------+------------+
+   | ID                                   | Name      | Status | Networks      | Image Name |
+   +--------------------------------------+-----------+--------+---------------+------------+
+   | c394fcd0-0baa-43ae-a793-201815c3e8ce | myserver1 | ACTIVE | net1=10.0.1.3 | cirros     |
+   | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=10.0.1.4 | ubuntu     |
+   | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 | centos     |
+   +--------------------------------------+-----------+--------+---------------+------------+
 
    $ neutron net-list
    +--------------------------------------+------+--------------------------------------+
@@ -374,15 +374,15 @@ in turn to see if the VM can still get the desired IP.
       $ nova boot --image tty --flavor 1 myserver4 \
         --nic net-id=9b96b14f-71b8-4918-90aa-c5d705606b1a
       ...
-      $ nova list
-      +--------------------------------------+-----------+--------+---------------+
-      | ID                                   | Name      | Status | Networks      |
-      +--------------------------------------+-----------+--------+---------------+
-      | c394fcd0-0baa-43ae-a793-201815c3e8ce | myserver1 | ACTIVE | net1=10.0.1.3 |
-      | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=10.0.1.4 |
-      | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 |
-      | f62f4731-5591-46b1-9d74-f0c901de567f | myserver4 | ACTIVE | net2=9.0.1.2  |
-      +--------------------------------------+-----------+--------+---------------+
+      $ openstack server list
+      +--------------------------------------+-----------+--------+---------------+------------+
+      | ID                                   | Name      | Status | Networks      | Image Name |
+      +--------------------------------------+-----------+--------+---------------+------------+
+      | c394fcd0-0baa-43ae-a793-201815c3e8ce | myserver1 | ACTIVE | net1=10.0.1.3 | cirros     |
+      | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=10.0.1.4 | ubuntu     |
+      | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 | centos     |
+      | f62f4731-5591-46b1-9d74-f0c901de567f | myserver4 | ACTIVE | net2=9.0.1.2  | cirros1    |
+      +--------------------------------------+-----------+--------+---------------+------------+
 
 #. Make sure both DHCP agents hosting ``net2``:
 
