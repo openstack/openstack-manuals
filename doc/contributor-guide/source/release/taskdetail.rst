@@ -152,7 +152,7 @@ End-of-life
 ~~~~~~~~~~~
 
 Once a release is at end-of-life, you must stop producing new publications.
-To indicate the end of life, add the below sentence at the index:
+To indicate the end-of-life, add the below sentence at the index:
 
 .. code-block:: rst
 
@@ -164,5 +164,6 @@ To indicate the end of life, add the below sentence at the index:
       See the `OpenStack Documentation page
       <http://docs.openstack.org/>`_ for current documentation.
 
-However, we will keep the documentation on the <http://docs.openstack.org/>`_
-page for a while so that the users use can refer the guides if necessary.
+However, we will keep the documentation on the
+`docs.openstack.org <http://docs.openstack.org/>`_
+page for a while so that the users can refer the guides if necessary.
