@@ -116,6 +116,9 @@ Resources
 Events
   The events related to the stack.
 
+Template
+  The template for the stack.
+
 Manage a stack
 ~~~~~~~~~~~~~~
 
