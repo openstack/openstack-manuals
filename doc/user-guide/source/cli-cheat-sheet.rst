@@ -104,8 +104,8 @@ Boot an instance using flavor and image names (if names are unique)
 
 .. code-block:: console
 
-   $ nova boot --image IMAGE --flavor FLAVOR INSTANCE_NAME
-   $ nova boot --image cirros-0.3.1-x86_64-uec --flavor m1.tiny \
+   $ openstack server create --image IMAGE --flavor FLAVOR INSTANCE_NAME
+   $ openstack server create --image cirros-0.3.1-x86_64-uec --flavor m1.tiny \
      MyFirstInstance
 
 Login to instance
@@ -126,14 +126,14 @@ Show details of instance
 
 .. code-block:: console
 
-   $ nova show NAME
-   $ nova show MyFirstInstance
+   $ openstack server show NAME
+   $ openstack server show MyFirstInstance
 
 View console log of instance
 
 .. code-block:: console
 
-   $ nova console-log MyFirstInstance
+   $ openstack console log show MyFirstInstance
 
 Set metadata on an instance
 
@@ -145,7 +145,7 @@ Create an instance snapshot
 
 .. code-block:: console
 
-   $ nova image-create volumeTwoImage snapshotOfVolumeImage
+   $ openstack image create volumeTwoImage snapshotOfVolumeImage
    $ openstack image show snapshotOfVolumeImage
 
 Pause, suspend, stop, rescue, resize, rebuild, reboot an instance
@@ -155,74 +155,74 @@ Pause
 
 .. code-block:: console
 
-   $ nova pause NAME
-   $ nova pause volumeTwoImage
+   $ openstack server pause NAME
+   $ openstack server pause volumeTwoImage
 
 Unpause
 
 .. code-block:: console
 
-   $ nova unpause NAME
+   $ openstack server unpause NAME
 
 Suspend
 
 .. code-block:: console
 
-   $ nova suspend NAME
+   $ openstack server suspend NAME
 
 Unsuspend
 
 .. code-block:: console
 
-   $ nova resume NAME
+   $ openstack server resume NAME
 
 Stop
 
 .. code-block:: console
 
-   $ nova stop NAME
+   $ openstack server stop NAME
 
 Start
 
 .. code-block:: console
 
-   $ nova start NAME
+   $ openstack server start NAME
 
 Rescue
 
 .. code-block:: console
 
-   $ nova rescue NAME
-   $ nova rescue NAME --rescue_image_ref RESCUE_IMAGE
+   $ openstack server rescue NAME
+   $ openstack server rescue NAME --rescue_image_ref RESCUE_IMAGE
 
 Resize
 
 .. code-block:: console
 
-   $ nova resize NAME FLAVOR
-   $ nova resize my-pem-server m1.small
-   $ nova resize-confirm my-pem-server1
+   $ openstack server resize NAME FLAVOR
+   $ openstack server resize my-pem-server m1.small
+   $ openstack server resize --confirm my-pem-server1
 
 Rebuild
 
 .. code-block:: console
 
-   $ nova rebuild NAME IMAGE
-   $ nova rebuild newtinny cirros-qcow2
+   $ openstack server rebuild NAME IMAGE
+   $ openstack server rebuild newtinny cirros-qcow2
 
 Reboot
 
 .. code-block:: console
 
-   $ nova reboot NAME
-   $ nova reboot newtinny
+   $ openstack server reboot NAME
+   $ openstack server reboot newtinny
 
 Inject user data and files into an instance
 
 .. code-block:: console
 
-   $ nova boot --user-data FILE INSTANCE
-   $ nova boot --user-data userdata.txt --image cirros-qcow2 \
+   $ openstack server create --user-data FILE INSTANCE
+   $ openstack server create --user-data userdata.txt --image cirros-qcow2 \
      --flavor m1.tiny MyUserdataInstance2
 
 To validate that the file was injected, use ssh to connect to the instance,
@@ -235,14 +235,14 @@ Create keypair
 
 .. code-block:: console
 
-   $ nova keypair-add test > test.pem
+   $ openstack keypair create test > test.pem
    $ chmod 600 test.pem
 
 Start an instance (boot)
 
 .. code-block:: console
 
-   $ nova boot --image cirros-0.3.0-x86_64 --flavor m1.small \
+   $ openstack server create --image cirros-0.3.0-x86_64 --flavor m1.small \
      --key-name test MyFirstServer
 
 Use ssh to connect to the instance
@@ -296,7 +296,7 @@ Boot an instance and attach to volume
 
 .. code-block:: console
 
-   $ nova boot --image cirros-qcow2 --flavor m1.tiny MyVolumeInstance
+   $ openstack server create --image cirros-qcow2 --flavor m1.tiny MyVolumeInstance
 
 List all volumes, noticing the volume status
 
@@ -309,17 +309,17 @@ volume is available
 
 .. code-block:: console
 
-   $ nova volume-attach INSTANCE_ID VOLUME_ID auto
-   $ nova volume-attach MyVolumeInstance 573e024d-5235-49ce-8332-be1576d323f8 auto
+   $ openstack server add volume INSTANCE_ID VOLUME_ID
+   $ openstack server add volume MyVolumeInstance 573e024d-5235-49ce-8332-be1576d323f8
 
 .. note::
 
    On the Xen Hypervisor it is possible to provide a specific device name instead of
    automatic allocation. For example:
 
-   .. code-block:: console
+.. code-block:: console
 
-      $ nova volume-attach MyVolumeInstance 573e024d-5235-49ce-8332-be1576d323f8 /dev/vdb
+   $ openstack server add volume --device /dev/vdb MyVolumeInstance 573e024d..1576d323f8
 
    This is not currently possible when using non-Xen hypervisors with OpenStack.
 
