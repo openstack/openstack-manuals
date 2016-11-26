@@ -371,10 +371,10 @@ Lorin Hochstein
 Adam Hyde
     Adam facilitated this book sprint. He also founded the book sprint
     methodology and is the most experienced book-sprint facilitator
-    around. See http://www.booksprints.net for more information. Adam
-    founded FLOSS Manuals—a community of some 3,000 individuals
-    developing Free Manuals about Free Software. He is also the founder
-    and project manager for Booktype, an open source project for
+    around. See `BookSprints <http://www.booksprints.net>`_ for more
+    information. Adam founded FLOSS Manuals—a community of some 3,000
+    individuals developing Free Manuals about Free Software. He is also the
+    founder and project manager for Booktype, an open source project for
     writing, editing, and publishing books online and in print.
 
 Jonathan Proulx
