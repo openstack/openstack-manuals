@@ -13,8 +13,8 @@ Tailing Logs
 ~~~~~~~~~~~~
 
 The first place to look is the log file related to the command you are
-trying to run. For example, if ``nova list`` is failing, try tailing a
-nova log file and running the command again:
+trying to run. For example, if ``openstack server list`` is failing, try
+tailing a nova log file and running the command again:
 
 Terminal 1:
 
@@ -26,7 +26,7 @@ Terminal 2:
 
 .. code-block:: console
 
-   # nova list
+   # openstack server list
 
 Look for any errors or traces in the log file. For more information, see
 :doc:`ops-logging-monitoring`.
@@ -45,7 +45,7 @@ Terminal 2:
 
 .. code-block:: console
 
-   # nova list
+   # openstack server list
 
 Wash, rinse, and repeat until you find the core cause of the problem.
 
