@@ -86,7 +86,7 @@ List instances, check status of instance
 
 .. code-block:: console
 
-   $ nova list
+   $ openstack server list
 
 List images
 

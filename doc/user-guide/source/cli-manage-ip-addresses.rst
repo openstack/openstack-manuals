@@ -98,13 +98,13 @@ You can assign a floating IP address to a project and to an instance.
 
    .. code-block:: console
 
-      $ nova list
-      +---------------------+------+---------+------------+-------------+------------------+
-      | ID                  | Name | Status  | Task State | Power State | Networks         |
-      +---------------------+------+---------+------------+-------------+------------------+
-      | d5c854f9-d3e5-4f... | VM1  | ACTIVE  | -          | Running     | private=10.0.0.3 |
-      | 42290b01-0968-43... | VM2  | SHUTOFF | -          | Shutdown    | private=10.0.0.4 |
-      +---------------------+------+---------+------------+-------------+------------------+
+      $ openstack server list
+      +---------------------+------+---------+------------+-------------+------------------+------------+
+      | ID                  | Name | Status  | Task State | Power State | Networks         | Image Name |
+      +---------------------+------+---------+------------+-------------+------------------+------------+
+      | d5c854f9-d3e5-4f... | VM1  | ACTIVE  | -          | Running     | private=10.0.0.3 | cirros     |
+      | 42290b01-0968-43... | VM2  | SHUTOFF | -          | Shutdown    | private=10.0.0.4 | centos     |
+      +---------------------+------+---------+------------+-------------+------------------+------------+
 
 #. Associate an IP address with an instance in the project, as follows:
 
@@ -122,13 +122,13 @@ You can assign a floating IP address to a project and to an instance.
 
    .. code-block:: console
 
-      $ nova list
-      +------------------+------+--------+------------+-------------+-------------------------------+
-      | ID               | Name | Status | Task State | Power State | Networks                      |
-      +------------------+------+--------+------------+-------------+-------------------------------+
-      | d5c854f9-d3e5... | VM1  | ACTIVE | -          | Running     | private=10.0.0.3, 172.24.4.225|
-      | 42290b01-0968... | VM2  | SHUTOFF| -          | Shutdown    | private=10.0.0.4              |
-      +------------------+------+--------+------------+-------------+-------------------------------+
+      $ openstack server list
+      +------------------+------+--------+------------+-------------+-------------------------------+------------+
+      | ID               | Name | Status | Task State | Power State | Networks                      | Image Name |
+      +------------------+------+--------+------------+-------------+-------------------------------+------------+
+      | d5c854f9-d3e5... | VM1  | ACTIVE | -          | Running     | private=10.0.0.3, 172.24.4.225| cirros     |
+      | 42290b01-0968... | VM2  | SHUTOFF| -          | Shutdown    | private=10.0.0.4              | centos     |
+      +------------------+------+--------+------------+-------------+-------------------------------+------------+
 
    After you associate the IP address and configure security group rules
    for the instance, the instance is publicly available at the floating IP
