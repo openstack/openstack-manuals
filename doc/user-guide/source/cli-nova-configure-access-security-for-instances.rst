@@ -72,7 +72,7 @@ You can generate a key pair or upload an existing public key.
 
    .. code-block:: console
 
-      $ nova keypair-add KEY_NAME > MY_KEY.pem
+      $ openstack keypair create KEY_NAME > MY_KEY.pem
 
    This command generates a key pair with the name that you specify for
    KEY\_NAME, writes the private key to the ``.pem`` file that you specify,
@@ -94,7 +94,7 @@ Import a key pair
 
    .. code-block:: console
 
-      $ nova keypair-add --pub-key ~/.ssh/id_rsa.pub KEY_NAME
+      $ openstack keypair create --pub-key ~/.ssh/id_rsa.pub KEY_NAME
 
    This command registers the public key at the Nova database and names the
    key pair the name that you specify for ``KEY_NAME``.
@@ -104,7 +104,7 @@ Import a key pair
 
    .. code-block:: console
 
-      $ nova keypair-list
+      $ openstack keypair list
 
 Create and manage security groups
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
