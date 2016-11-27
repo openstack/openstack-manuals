@@ -106,7 +106,7 @@ Follow the steps below to launch an instance from an image.
 
    .. code-block:: console
 
-      $ nova list
+      $ openstack server list
 
    The list shows the ID, name, status, and private (and if assigned,
    public) IP addresses for all instances in the project to which you
@@ -114,21 +114,21 @@ Follow the steps below to launch an instance from an image.
 
    .. code-block:: console
 
-      +-------------+----------------------+--------+------------+-------------+------------------+
-      | ID          | Name                 | Status | Task State | Power State | Networks         |
-      +-------------+----------------------+--------+------------+-------------+------------------+
-      | 84c6e57d... | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
-      | 8a99547e... | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
-      +-------------+----------------------+--------+------------+-------------+------------------+
+      +-------------+----------------------+--------+------------+-------------+------------------+------------+
+      | ID          | Name                 | Status | Task State | Power State | Networks         | Image Name |
+      +-------------+----------------------+--------+------------+-------------+------------------+------------+
+      | 84c6e57d... | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 | cirros     |
+      | 8a99547e... | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 | centos     |
+      +-------------+----------------------+--------+------------+-------------+------------------+------------+
 
    If the status for the instance is ACTIVE, the instance is online.
 
-#. To view the available options for the :command:`nova list` command, run the
-   following command:
+#. To view the available options for the :command:`openstack server list`
+   command, run the following command:
 
    .. code-block:: console
 
-      $ nova help list
+      $ openstack help server list
 
    .. note::
 
