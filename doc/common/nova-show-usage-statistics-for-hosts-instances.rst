@@ -22,9 +22,9 @@ The following examples show the host usage statistics for a host called
 
    .. code-block:: console
 
-      $ nova host-list
+      $ openstack host list
       +-----------+-------------+----------+
-      | host_name | service     | zone     |
+      | Host Name | Service     | Zone     |
       +-----------+-------------+----------+
       | devstack  | conductor   | internal |
       | devstack  | compute     | nova     |
@@ -39,9 +39,9 @@ The following examples show the host usage statistics for a host called
 
    .. code-block:: console
 
-      $ nova host-describe devstack
+      $ openstack host show devstack
       +----------+----------------------------------+-----+-----------+---------+
-      | HOST     | PROJECT                          | cpu | memory_mb | disk_gb |
+      | Host     | Project                          | CPU | MEMORY MB | DISK GB |
       +----------+----------------------------------+-----+-----------+---------+
       | devstack | (total)                          | 2   | 4003      | 157     |
       | devstack | (used_now)                       | 3   | 5120      | 40      |
@@ -50,13 +50,13 @@ The following examples show the host usage statistics for a host called
       | devstack | 66265572db174a7aa66eba661f58eb9e | 2   | 4096      | 40      |
       +----------+----------------------------------+-----+-----------+---------+
 
-   The ``cpu`` column shows the sum of the virtual CPUs for instances
+   The ``CPU`` column shows the sum of the virtual CPUs for instances
    running on the host.
 
-   The ``memory_mb`` column shows the sum of the memory (in MB)
+   The ``MEMORY MB`` column shows the sum of the memory (in MB)
    allocated to the instances that run on the host.
 
-   The ``disk_gb`` column shows the sum of the root and ephemeral disk
+   The ``DISK GB`` column shows the sum of the root and ephemeral disk
    sizes (in GB) of the instances that run on the host.
 
    The row that has the value ``used_now`` in the ``PROJECT`` column
@@ -83,13 +83,13 @@ Show instance usage statistics
 
       .. code-block:: console
 
-         $ nova list
-         +----------+----------------------+--------+------------+-------------+------------------+
-         | ID       | Name                 | Status | Task State | Power State | Networks         |
-         +----------+----------------------+--------+------------+-------------+------------------+
-         | 84c6e... | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
-         | 8a995... | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
-         +----------+----------------------+--------+------------+-------------+------------------+
+         $ openstack server list
+         +----------+----------------------+--------+------------+-------------+------------------+------------+
+         | ID       | Name                 | Status | Task State | Power State | Networks         | Image Name |
+         +----------+----------------------+--------+------------+-------------+------------------+------------+
+         | 84c6e... | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 | cirros     |
+         | 8a995... | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 | ubuntu     |
+         +----------+----------------------+--------+------------+-------------+------------------+------------+
 
    #. Get diagnostic statistics:
 
@@ -121,11 +121,11 @@ Show instance usage statistics
 
    .. code-block:: console
 
-      $ nova usage-list
+      $ openstack usage list
       Usage from 2013-06-25 to 2013-07-24:
-      +----------------------------------+-----------+--------------+-----------+---------------+
-      | Tenant ID                        | Instances | RAM MB-Hours | CPU Hours | Disk GB-Hours |
-      +----------------------------------+-----------+--------------+-----------+---------------+
-      | b70d90d65e464582b6b2161cf3603ced | 1         | 344064.44    | 672.00    | 0.00          |
-      | 66265572db174a7aa66eba661f58eb9e | 3         | 671626.76    | 327.94    | 6558.86       |
-      +----------------------------------+-----------+--------------+-----------+---------------+
+      +---------+---------+--------------+-----------+---------------+
+      | Project | Servers | RAM MB-Hours | CPU Hours | Disk GB-Hours |
+      +---------+---------+--------------+-----------+---------------+
+      | demo    | 1       | 344064.44    | 672.00    | 0.00          |
+      | stack   | 3       | 671626.76    | 327.94    | 6558.86       |
+      +---------+---------+--------------+-----------+---------------+
