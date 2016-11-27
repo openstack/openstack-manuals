@@ -92,12 +92,13 @@ using ISO image actually functional.
 
    .. code-block:: console
 
-      $ cinder list
-      +-----------------+-----------+--------------+------+-------------+----------+-------------+
-      |       ID        |   Status  |      Name    | Size | Volume Type | Bootable | Attached to |
-      +-----------------+-----------+--------------+------+-------------+----------+-------------+
-      | d620d971-b16... | available | 655ef3e4-... |  8   |     None    |  false   |             |
-      +-----------------+-----------+--------------+------+-------------+----------+-------------+
+      $ openstack volume list
+      +--------------------------+-------------------------+-----------+------+-------------+
+      | ID                       | Display Name            | Status    | Size | Attached to |
+      +--------------------------+-------------------------+-----------+------+-------------+
+      | 8edd7c97-1276-47a5-9563- |dc01d873-d0f1-40b6-bfcc- | available |   10 |             |
+      | 1025f4264e4f             | 26a8d955a1d9-blank-vol  |           |      |             |
+      +--------------------------+-------------------------+-----------+------+-------------+
 
    You get a list with all the volumes in your system. In this list,
    you can find the volume that is attached to your ISO created
@@ -107,13 +108,13 @@ using ISO image actually functional.
 
    .. code-block:: console
 
-      $ cinder upload-to-image VOLUME_UUID IMAGE_NAME
-      $ glance image-list
-      +-------------------+------------+-------------+------------------+------------+--------+
-      | ID                | Name       | Disk Format | Container Format | Size       | Status |
-      +-------------------+------------+-------------+------------------+------------+--------+
-      | 74303284-f802-... | IMAGE_NAME | iso         | bare             | 764321792  | active |
-      +-------------------+------------+-------------+------------------+------------+--------+
+      $ openstack image create --volume SOURCE_VOLUME IMAGE_NAME
+      $ openstack image list
+      +-------------------+------------+--------+
+      | ID                | Name       | Status |
+      +-------------------+------------+--------+
+      | 74303284-f802-... | IMAGE_NAME | active |
+      +-------------------+------------+--------+
 
    The ``VOLUME_UUID`` is the uuid of the volume that is attached to
    your ISO created instance, and the ``IMAGE_NAME`` is the name that

@@ -53,41 +53,42 @@ system.
 
    .. code-block:: console
 
-      $ cinder create --display-name my-volume 8
-      +--------------------------------+--------------------------------------+
-      |            Property            |                Value                 |
-      +--------------------------------+--------------------------------------+
-      |          attachments           |                  []                  |
-      |       availability_zone        |                 nova                 |
-      |            bootable            |                false                 |
-      |           created_at           |      2014-05-09T16:33:11.000000      |
-      |          description           |                 None                 |
-      |           encrypted            |                False                 |
-      |               id               | d620d971-b160-4c4e-8652-2513d74e2080 |
-      |            metadata            |                  {}                  |
-      |              name              |              my-volume               |
-      |     os-vol-host-attr:host      |                 None                 |
-      | os-vol-mig-status-attr:migstat |                 None                 |
-      | os-vol-mig-status-attr:name_id |                 None                 |
-      |  os-vol-tenant-attr:tenant_id  |   ccef9e62b1e645df98728fb2b3076f27   |
-      |              size              |                  8                   |
-      |          snapshot_id           |                 None                 |
-      |          source_volid          |                 None                 |
-      |             status             |               creating               |
-      |            user_id             |   fef060ae7bfd4024b3edb97dff59017a   |
-      |          volume_type           |                 None                 |
-      +--------------------------------+--------------------------------------+
+      $ openstack volume create --size 8 my-volume
+      +---------------------+--------------------------------------+
+      | Field               | Value                                |
+      +---------------------+--------------------------------------+
+      | attachments         | []                                   |
+      | availability_zone   | nova                                 |
+      | bootable            | false                                |
+      | consistencygroup_id | None                                 |
+      | created_at          | 2016-11-25T10:37:08.850997           |
+      | description         | None                                 |
+      | encrypted           | False                                |
+      | id                  | b8f7bbec-6274-4cd7-90e7-60916a5e75d4 |
+      | migration_status    | None                                 |
+      | multiattach         | False                                |
+      | name                | my-volume                            |
+      | properties          |                                      |
+      | replication_status  | disabled                             |
+      | size                | 8                                    |
+      | snapshot_id         | None                                 |
+      | source_volid        | None                                 |
+      | status              | creating                             |
+      | type                | None                                 |
+      | updated_at          | None                                 |
+      | user_id             | 0678735e449149b0a42076e12dd54e28     |
+      +---------------------+--------------------------------------+
 
 #. List volumes.
 
    .. code-block:: console
 
-      $ cinder list
-      +-----------------+-----------+-----------+------+-------------+----------+-------------+
-      |       ID        |   Status  |    Name   | Size | Volume Type | Bootable | Attached to |
-      +-----------------+-----------+-----------+------+-------------+----------+-------------+
-      | d620d971-b16... | available | my-volume |  8   |     None    |  false   |             |
-      +-----------------+-----------+-----------+------+-------------+----------+-------------+
+      $ openstack volume list
+      +--------------------------------------+--------------+-----------+------+-------------+
+      | ID                                   | Display Name | Status    | Size | Attached to |
+      +--------------------------------------+--------------+-----------+------+-------------+
+      | b8f7bbec-6274-4cd7-90e7-60916a5e75d4 | my-volume    | available |    8 |             |
+      +--------------------------------------+--------------+-----------+------+-------------+
 
 #. Boot an instance from an image and attach the empty volume to the
    instance.
@@ -247,11 +248,11 @@ the volume to boot an instance.
    - ``NAME``. The name for the server.
 
 #. Create a bootable volume from an image. Cinder makes a volume bootable
-   when ``--image-id`` parameter is passed.
+   when ``--image`` parameter is passed.
 
    .. code-block:: console
 
-      $ cinder create --image-id $IMAGE_ID --display_name=bootable_volume $SIZE_IN_GB
+      $ openstack volume create --image IMAGE_ID --size SIZE_IN_GB bootable_volume
 
 #. Create a VM from previously created bootable volume. The volume is not
    deleted when the instance is terminated.
@@ -301,12 +302,13 @@ the volume to boot an instance.
 
    .. code-block:: console
 
-      $ cinder list
-      +-------------+--------+-----------------+------+-------------+----------+-------------+
-      |      ID     | Status | Display Name    | Size | Volume Type | Bootable | Attached to |
-      +-------------+--------+-----------------+------+-------------+----------+-------------+
-      | 2fff50ab... | in-use | bootable_volume |  10  |     None    |   true   | 2e65c854... |
-      +-------------+--------+-----------------+------+-------------+----------+-------------+
+      $ openstack volume list
+      +---------------------+-----------------+--------+------+---------------------------------+
+      | ID                  | Display Name    | Status | Size | Attached to                     |
+      +---------------------+-----------------+--------+------+---------------------------------+
+      | c612f739-8592-44c4- | bootable_volume | in-use |  10  | Attached to myInstanceFromVolume|
+      | b7d4-0fee2fe1da0c   |                 |        |      | on /dev/vda                     |
+      +---------------------+-----------------+--------+------+---------------------------------+
 
 .. _Attach_swap_or_ephemeral_disk_to_an_instance:
 
