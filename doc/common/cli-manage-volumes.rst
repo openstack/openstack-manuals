@@ -400,10 +400,10 @@ Transfer a volume
 ~~~~~~~~~~~~~~~~~
 
 You can transfer a volume from one owner to another by using the
-:command:`cinder transfer*` commands. The volume donor, or original owner,
-creates a transfer request and sends the created transfer ID and
-authorization key to the volume recipient. The volume recipient, or new
-owner, accepts the transfer by using the ID and key.
+:command:`openstack volume transfer request create` command. The volume
+donor, or original owner, creates a transfer request and sends the created
+transfer ID and authorization key to the volume recipient. The volume
+recipient, or new owner, accepts the transfer by using the ID and key.
 
 .. note::
 
@@ -608,7 +608,7 @@ you can manage and unmanage snapshots.
 Manage a snapshot
 -----------------
 
-Manage a snapshot with the :command:`cinder snapshot-manage` command:
+Manage a snapshot with the :command:`openstack snapshot set` command:
 
 .. code-block:: console
 
