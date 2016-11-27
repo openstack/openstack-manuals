@@ -26,7 +26,7 @@ a software or hardware upgrade, perform the following steps:
 
         .. code-block:: console
 
-           # nova list --host c01.example.com --all-tenants
+           # openstack server list --host c01.example.com --all-projects
 
      #. Migrate all instances one by one:
 
@@ -112,7 +112,7 @@ by performing the following command:
 
 .. code-block:: console
 
-   # nova list --host c01.example.com --all-tenants
+   # openstack server list --host c01.example.com --all-projects
 
 After you have the list, you can use the :command:`nova` command to start each
 instance:

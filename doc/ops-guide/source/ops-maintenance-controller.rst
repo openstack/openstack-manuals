@@ -51,7 +51,7 @@ confident that those services are in working condition:
 
    # source openrc
    # glance index
-   # nova list
+   # openstack server list
    # openstack project list
 
 For the storage proxy, ensure that the :term:`Object Storage service <Object
