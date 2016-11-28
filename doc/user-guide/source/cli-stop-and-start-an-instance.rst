@@ -11,7 +11,7 @@ To pause an instance, run the following command:
 
 .. code-block:: console
 
-   $ nova pause INSTANCE_NAME
+   $ openstack server pause INSTANCE_NAME
 
 This command stores the state of the VM in RAM. A paused instance
 continues to run in a frozen state.
@@ -20,7 +20,7 @@ To unpause an instance, run the following command:
 
 .. code-block:: console
 
-   $ nova unpause INSTANCE_NAME
+   $ openstack server unpause INSTANCE_NAME
 
 Suspend and resume an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -30,13 +30,13 @@ command:
 
 .. code-block:: console
 
-   $ nova suspend INSTANCE_NAME
+   $ openstack server suspend INSTANCE_NAME
 
 To resume a suspended instance, run the following command:
 
 .. code-block:: console
 
-   $ nova resume INSTANCE_NAME
+   $ openstack server resume INSTANCE_NAME
 
 Shelve and unshelve an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -56,7 +56,7 @@ You can run the following shelving tasks:
 
 .. code-block:: console
 
-   $ nova shelve SERVERNAME
+   $ openstack server shelve SERVERNAME
 
 .. note::
 
@@ -80,7 +80,7 @@ You can run the following shelving tasks:
 
 .. code-block:: console
 
-   $ nova unshelve SERVERNAME
+   $ openstack server unshelve SERVERNAME
 
 - Remove a shelved instance - Removes the instance from the server;
   data and resource associations are deleted. If an instance is no longer
