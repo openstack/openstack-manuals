@@ -10,13 +10,13 @@ By default, when you reboot an instance, it is a soft reboot.
 
 .. code-block:: console
 
-   $ nova reboot SERVER
+   $ openstack server reboot SERVER
 
 To perform a hard reboot, pass the :option:`--hard` parameter, as follows:
 
 .. code-block:: console
 
-   $ nova reboot --hard SERVER
+   $ openstack server reboot --hard SERVER
 
 It is also possible to reboot a running instance into rescue mode. For example,
 this operation may be required, if a filesystem of an instance becomes
@@ -38,7 +38,7 @@ command:
 
 .. code-block:: console
 
-   $ nova rescue SERVER
+   $ openstack server rescue SERVER
 
 .. note::
 
@@ -65,7 +65,7 @@ command:
 
 .. code-block:: console
 
-   $ nova unrescue SERVER
+   $ openstack server unrescue SERVER
 
 If you want to rescue an instance with a specific image, rather than the
 default one, use the :option:`--rescue_image_ref` parameter:
