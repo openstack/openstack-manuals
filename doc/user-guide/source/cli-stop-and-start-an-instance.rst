@@ -60,11 +60,11 @@ You can run the following shelving tasks:
 
 .. note::
 
-   By default, the :command:`nova shelve` command gives the guest operating
-   system a chance to perform a controlled shutdown before the instance
-   is powered off. The shutdown behavior is configured by the
+   By default, the :command:`openstack server shelve` command gives the guest
+   operating system a chance to perform a controlled shutdown before the
+   instance is powered off. The shutdown behavior is configured by the
    ``shutdown_timeout`` parameter that can be set in the
-   ``nova.conf`` file. Its value stands for the overall
+   :file:`nova.conf` file. Its value stands for the overall
    period (in seconds) a guest operation system is allowed
    to complete the shutdown. The default timeout is 60 seconds.
    See `Description of Compute configuration options
