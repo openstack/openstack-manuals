@@ -2,12 +2,12 @@
 Run Networking L3 agent
 =======================
 
-The neutron L3 agent is scalable, due to the scheduler that supports
-Virtual Router Redundancy Protocol (VRRP)
-to distribute virtual routers across multiple nodes.
-To enable high availability for configured routers,
-edit the :file:`/etc/neutron/neutron.conf` file
-to set the following values:
+The Networking (neutron) service L3 agent is scalable, due to the scheduler
+that supports Virtual Router Redundancy Protocol (VRRP) to distribute virtual
+routers across multiple nodes.
+
+To enable high availability for configured routers, edit the
+:file:`/etc/neutron/neutron.conf` file to set the following values:
 
 .. list-table:: /etc/neutron/neutron.conf parameters for high availability
    :widths: 15 10 30

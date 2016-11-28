@@ -3,17 +3,17 @@ Overview of highly available controllers
 ========================================
 
 OpenStack is a set of multiple services exposed to the end users
-as HTTP(s) APIs. Additionally, for own internal usage OpenStack
-requires SQL database server and AMQP broker. The physical servers,
-where all the components are running are often called controllers.
-This modular OpenStack architecture allows to duplicate all the
+as HTTP(s) APIs. Additionally, for your own internal usage, OpenStack
+requires an SQL database server and AMQP broker. The physical servers,
+where all the components are running, are called controllers.
+This modular OpenStack architecture allows you to duplicate all the
 components and run them on different controllers.
 By making all the components redundant it is possible to make
 OpenStack highly available.
 
 In general we can divide all the OpenStack components into three categories:
 
-- OpenStack APIs, these are HTTP(s) stateless services written in python,
+- OpenStack APIs: These are HTTP(s) stateless services written in python,
   easy to duplicate and mostly easy to load balance.
 
 - SQL relational database server provides stateful type consumed by other
@@ -42,16 +42,15 @@ Networking for high availability.
 Common deployment architectures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are primarily two recommended architectures for making OpenStack
-highly available.
-
-Both use a cluster manager such as Pacemaker or Veritas to
-orchestrate the actions of the various services across a set of
-machines. Since we are focused on FOSS, we will refer to these as
-Pacemaker architectures.
+We recommend two primary architectures for making OpenStack highly available.
 
 The architectures differ in the sets of services managed by the
 cluster.
+
+Both use a cluster manager, such as Pacemaker or Veritas, to
+orchestrate the actions of the various services across a set of
+machines. Because we are focused on FOSS, we refer to these as
+Pacemaker architectures.
 
 Traditionally, Pacemaker has been positioned as an all-encompassing
 solution. However, as OpenStack services have matured, they are
@@ -61,7 +60,7 @@ depend.
 
 With this in mind, some vendors are restricting Pacemaker's use to
 services that must operate in an active/passive mode (such as
-cinder-volume), those with multiple states (for example, Galera) and
+``cinder-volume``), those with multiple states (for example, Galera), and
 those with complex bootstrapping procedures (such as RabbitMQ).
 
 The majority of services, needing no real orchestration, are handled

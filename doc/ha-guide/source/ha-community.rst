@@ -3,7 +3,7 @@ HA community
 ============
 
 Weekly IRC meetings
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 The OpenStack HA community holds `weekly IRC meetings
 <https://wiki.openstack.org/wiki/Meetings/HATeamMeeting>`_ to discuss
@@ -12,7 +12,7 @@ encouraged to attend. The `logs of all previous meetings
 <http://eavesdrop.openstack.org/meetings/ha/>`_ are available to read.
 
 Contacting the community
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can contact the HA community directly in `the #openstack-ha
 channel on Freenode IRC <https://wiki.openstack.org/wiki/IRC>`_, or by

@@ -12,26 +12,27 @@ Certain services running on the underlying operating system of your
 OpenStack database may block Galera Cluster from normal operation
 or prevent ``mysqld`` from achieving network connectivity with the cluster.
 
-
 Firewall
 ---------
 
-Galera Cluster requires that you open four ports to network traffic:
+Galera Cluster requires that you open the following ports to network traffic:
 
 - On ``3306``, Galera Cluster uses TCP for database client connections
   and State Snapshot Transfers methods that require the client,
   (that is, ``mysqldump``).
-- On ``4567`` Galera Cluster uses TCP for replication traffic. Multicast
+- On ``4567``, Galera Cluster uses TCP for replication traffic. Multicast
   replication uses both TCP and UDP on this port.
-- On ``4568`` Galera Cluster uses TCP for Incremental State Transfers.
-- On ``4444`` Galera Cluster uses TCP for all other State Snapshot Transfer
+- On ``4568``, Galera Cluster uses TCP for Incremental State Transfers.
+- On ``4444``, Galera Cluster uses TCP for all other State Snapshot Transfer
   methods.
 
-.. seealso:: For more information on firewalls, see `Firewalls and default ports
-   <http://docs.openstack.org/newton/config-reference/firewalls-default-ports.html>`_ in the Configuration Reference.
+.. seealso::
 
-This can be achieved through the use of either the ``iptables``
-command such as:
+   For more information on firewalls, see `Firewalls and default ports
+   <http://docs.openstack.org/newton/config-reference/firewalls-default-ports.html>`_
+   in the Configuration Reference.
+
+This can be achieved using the :command:`iptables` command:
 
 .. code-block:: console
 
@@ -39,15 +40,14 @@ command such as:
      --protocol tcp --match tcp --dport ${PORT} \
      --source ${NODE-IP-ADDRESS} --jump ACCEPT
 
-Make sure to save the changes once you are done, this will vary
+Make sure to save the changes once you are done. This will vary
 depending on your distribution:
 
-- `Ubuntu <http://askubuntu.com/questions/66890/how-can-i-make-a-specific-set-of-iptables-rules-permanent#66905>`_
-- `Fedora <https://fedoraproject.org/wiki/How_to_edit_iptables_rules>`_
+- For `Ubuntu <http://askubuntu.com/questions/66890/how-can-i-make-a-specific-set-of-iptables-rules-permanent#66905>`_
+- For `Fedora <https://fedoraproject.org/wiki/How_to_edit_iptables_rules>`_
 
-Alternatively you may be able to make modifications using the
-``firewall-cmd`` utility for FirewallD that is available on many Linux
-distributions:
+Alternatively, make modifications using the ``firewall-cmd`` utility for
+FirewallD that is available on many Linux distributions:
 
 .. code-block:: console
 
@@ -60,11 +60,11 @@ SELinux
 Security-Enhanced Linux is a kernel module for improving security on Linux
 operating systems. It is commonly enabled and configured by default on
 Red Hat-based distributions. In the context of Galera Cluster, systems with
-SELinux may block the database service, keep it from starting or prevent it
+SELinux may block the database service, keep it from starting, or prevent it
 from establishing network connections with the cluster.
 
 To configure SELinux to permit Galera Cluster to operate, you may need
-to use the ``semanage`` utility to open the ports it uses, for
+to use the ``semanage`` utility to open the ports it uses. For
 example:
 
 .. code-block:: console
@@ -79,14 +79,16 @@ relaxed about database access and actions:
 
    # semanage permissive -a mysqld_t
 
-.. note:: Bear in mind, leaving SELinux in permissive mode is not a good
-        security practice. Over the longer term, you need to develop a
-        security policy for Galera Cluster and then switch SELinux back
-        into enforcing mode.
+.. note::
 
-        For more information on configuring SELinux to work with
-        Galera Cluster, see the `Documentation
-        <http://galeracluster.com/documentation-webpages/selinux.html>`_
+   Bear in mind, leaving SELinux in permissive mode is not a good
+   security practice. Over the longer term, you need to develop a
+   security policy for Galera Cluster and then switch SELinux back
+   into enforcing mode.
+
+    For more information on configuring SELinux to work with
+    Galera Cluster, see the `SELinux Documentation
+    <http://galeracluster.com/documentation-webpages/selinux.html>`_
 
 AppArmor
 ---------
@@ -111,14 +113,13 @@ following steps on each cluster node:
 
       # service apparmor restart
 
-   For servers that use ``systemd``, instead run this command:
+   For servers that use ``systemd``, run the following command:
 
    .. code-block:: console
 
       # systemctl restart apparmor
 
 AppArmor now permits Galera Cluster to operate.
-
 
 Database configuration
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,21 +153,20 @@ additions.
    wsrep_sst_method=rsync
 
 
-
 Configuring mysqld
 -------------------
 
 While all of the configuration parameters available to the standard MySQL,
-MariaDB or Percona XtraDB database server are available in Galera Cluster,
+MariaDB, or Percona XtraDB database servers are available in Galera Cluster,
 there are some that you must define an outset to avoid conflict or
 unexpected behavior.
 
-- Ensure that the database server is not bound only to to the localhost,
-  ``127.0.0.1``. Also, do not bind it to ``0.0.0.0``. It makes ``mySQL``
-  bind to all IP addresses on the machine including the virtual IP address,
-  which will cause ``HAProxy`` not to start. Instead, bind it to the
-  management IP address of the controller node to enable access by other
-  nodes through the management network:
+- Ensure that the database server is not bound only to the localhost:
+  ``127.0.0.1``. Also, do not bind it to ``0.0.0.0``. Binding to the localhost
+  or ``0.0.0.0`` makes ``mySQL`` bind to all IP addresses on the machine,
+  including the virtual IP address causing ``HAProxy`` not to start. Instead,
+  bind to the management IP address of the controller node to enable access by
+  other nodes through the management network:
 
   .. code-block:: ini
 
@@ -194,7 +194,7 @@ parameters that you must define to avoid conflicts.
      default_storage_engine=InnoDB
 
 - Ensure that the InnoDB locking mode for generating auto-increment values
-  is set to ``2``, which is the interleaved locking mode.
+  is set to ``2``, which is the interleaved locking mode:
 
   .. code-block:: ini
 
@@ -211,8 +211,8 @@ parameters that you must define to avoid conflicts.
 
      innodb_flush_log_at_trx_commit=0
 
-  Bear in mind, while setting this parameter to ``1`` or ``2`` can improve
-  performance, it introduces certain dangers. Operating system failures can
+  Setting this parameter to ``1`` or ``2`` can improve
+  performance, but it introduces certain dangers. Operating system failures can
   erase the last second of transactions. While you can recover this data
   from another node, if the cluster goes down at the same time
   (in the event of a data center power outage), you lose this data permanently.
@@ -230,19 +230,19 @@ Configuring wsrep replication
 ------------------------------
 
 Galera Cluster configuration parameters all have the ``wsrep_`` prefix.
-There are five that you must define for each cluster node in your
+You must define the following parameters for each cluster node in your
 OpenStack database.
 
-- **wsrep Provider** The Galera Replication Plugin serves as the wsrep
-  Provider for Galera Cluster. It is installed on your system as the
-  ``libgalera_smm.so`` file. You must define the path to this file in
-  your ``my.cnf``.
+- **wsrep Provider**: The Galera Replication Plugin serves as the ``wsrep``
+  provider for Galera Cluster. It is installed on your system as the
+  ``libgalera_smm.so`` file. Define the path to this file in
+  your ``my.cnf``:
 
   .. code-block:: ini
 
      wsrep_provider="/usr/lib/libgalera_smm.so"
 
-- **Cluster Name** Define an arbitrary name for your cluster.
+- **Cluster Name**: Define an arbitrary name for your cluster.
 
   .. code-block:: ini
 
@@ -251,7 +251,7 @@ OpenStack database.
   You must use the same name on every cluster node. The connection fails
   when this value does not match.
 
-- **Cluster Address** List the IP addresses for each cluster node.
+- **Cluster Address**: List the IP addresses for each cluster node.
 
   .. code-block:: ini
 
@@ -260,20 +260,17 @@ OpenStack database.
   Replace the IP addresses given here with comma-separated list of each
   OpenStack database in your cluster.
 
-- **Node Name** Define the logical name of the cluster node.
+- **Node Name**: Define the logical name of the cluster node.
 
   .. code-block:: ini
 
      wsrep_node_name="Galera1"
 
-- **Node Address** Define the IP address of the cluster node.
+- **Node Address**: Define the IP address of the cluster node.
 
   .. code-block:: ini
 
      wsrep_node_address="192.168.1.1"
-
-
-
 
 Additional parameters
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -299,6 +296,6 @@ For a complete list of the available parameters, run the
    | wsrep_sync_wait              | 0     |
    +------------------------------+-------+
 
-For the documentation of these parameters, wsrep Provider option and status
-variables available in Galera Cluster, see `Reference
+For documentation about these parameters, ``wsrep`` provider option, and status
+variables available in Galera Cluster, see the Galera cluster `Reference
 <http://galeracluster.com/documentation-webpages/reference.html>`_.

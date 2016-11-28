@@ -1,20 +1,23 @@
-﻿=================================
+=================================
 OpenStack High Availability Guide
 =================================
 
 Abstract
 ~~~~~~~~
 
-This guide describes how to install and configure
-OpenStack for high availability.
-It supplements the Installation Tutorials and Guides
+This guide describes how to install and configure OpenStack for high
+availability. It supplements the Installation Tutorials and Guides
 and assumes that you are familiar with the material in those guides.
 
 This guide documents OpenStack Newton, Mitaka, and Liberty releases.
 
-.. warning:: This guide is a work-in-progress and changing rapidly
-   while we continue to test and enhance the guidance. Please note
-   where there are open "to do" items and help where you are able.
+.. warning::
+
+   This guide is a work-in-progress and changing rapidly
+   while we continue to test and enhance the guidance. There are
+   open `TODO` items throughout and available on the OpenStack manuals
+   `bug list <https://bugs.launchpad.net/openstack-manuals/>`_.
+   Please help where you are able.
 
 Contents
 ~~~~~~~~

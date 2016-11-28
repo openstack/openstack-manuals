@@ -1,8 +1,6 @@
-
 ===========================================
 Introduction to OpenStack high availability
 ===========================================
-
 
 .. toctree::
    :maxdepth: 2

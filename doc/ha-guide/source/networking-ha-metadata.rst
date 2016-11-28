@@ -2,11 +2,9 @@
 Run Networking metadata agent
 =============================
 
-No native feature is available
-to make this service highly available.
-At this time, the Active/Passive solution exists
-to run the neutron metadata agent
-in failover mode with Pacemaker.
+Currently, no native feature is available to make this service highly
+available. At this time, the active/passive solution exists to run the
+neutron metadata agent in failover mode with Pacemaker.
 
 [TODO: Update this information.
 Can this service now be made HA in active/active mode
