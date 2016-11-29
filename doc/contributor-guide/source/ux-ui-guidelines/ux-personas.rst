@@ -1,32 +1,19 @@
 .. _ux-personas:
 
-===========================
-Meet the OpenStack personas
-===========================
+==================
+OpenStack personas
+==================
 
-In order to share the knowledge about the target users, we have created these
-representations of our key audience segments based on qualitative and
-quantitative user research. The goals are to create more empathy for our
-customers and to better display the different types of customers performing
-different jobs.
-
-We have identified five personas:
-
-* Adrian - Infrastructure Architect
-* Rey - Cloud Operator
-* Taylor - Domain Operator
-* Wei - Project Owner
-* Quinn - App Developer
-
-These personas are based on model companies and user ecosystems. Each
-persona takes part in different cloud adoption stages and can assume multiple
-roles within each company.
-
-The personas
-~~~~~~~~~~~~
-
-The personas fall into different phases of the cloud adoption workflow based
-on their specific contribution.
+We created personas to help you better define the OpenStack end-users who
+benefit from your OpenStack contributions. After much qualitative
+and quantitative research, we identified five personas that embody the most
+common roles performed by OpenStack users. We also considered where these
+personas fit into the cloud adoption workflow and how their roles may change
+depending on the size and user ecosystem of their company. You can utilize
+these personas in the design and development stage to help ensure user-centric
+contributions and well defined use cases. When used consistently, personas
+can help ensure your contributions lead to a positive user experience for
+OpenStack adopters.
 
 .. toctree::
    :maxdepth: 1
@@ -36,6 +23,37 @@ on their specific contribution.
    ux-personas/domain-operator.rst
    ux-personas/project-owner.rst
    ux-personas/app-developer.rst
+   ux-personas/model-companies.rst
+
+Meet the personas
+-----------------
+
+:ref:`infrastructure-arch`
+  Adrian is responsible for the strategy and road-map for his company’s
+  cloud and identifies reasons to compel management to adopt OpenStack for
+  production environments.
+:ref:`cloud-ops`
+  Rey is involved in installing, operating, using, and updating the
+  OpenStack cloud services.
+:ref:`domain-operator`
+  Taylor manages the relationship with the cloud services provider. This
+  includes managing quotas, number of users, applicable policies, and
+  support tickets.
+:ref:`project-owner`
+  Wei manages projects by adding or removing project members’ access to
+  the cloud instance. Wei’s main concern is to have enough resources
+  available to support Wei’s projects.
+:ref:`app-developer`
+  Quinn develops and deploys cloud applications but does not necessarily
+  know much about the underlying infrastructure of the cloud.
+
+Role ecosystem
+--------------
+
+To better understand each persona role, see the following overall role
+ecosystem, which is based on levels of abstraction from hardware to
+application level. Within this ecosystem, we can see the current
+personas as well as candidates for future personas.
 
 .. The original SVG copy of this figure is available in
    in the same directory.
@@ -44,109 +62,28 @@ on their specific contribution.
     :align: center
     :width: 100%
 
-The model companies
-~~~~~~~~~~~~~~~~~~~
+The personas in the above ecosystem fall into different phases of the cloud
+adoption workflow and are seen as separate and distinct from one another.
+Although it is advantageous to separate the personas based on typical users,
+some people, whom the personas represent, can assume multiple roles
+depending on their workplace and company responsibilities. To appreciate
+the personas in a different role ecosystem, see the following
+:ref:`model-companies`:
 
-We have identified three organizational models that best exemplify the roles
-that the personas assume depending on their ecosystems.
+:ref:`Nikishi-University` - Academic/Nonprofit
+Wants to provide cloud services to their internal labs and have bare metal.
+Do not want to hire resources internally to deploy trunk.
 
-.. important::
+:ref:`CNBB-Securities` - Enterprise
+Wants to provide cloud services to internal customers for applications that
+are not customers facing. Has both bare metal and operations.
 
-   The institutions described in this document are fictitious and serve only
-   as representations of different organizational models.
+:ref:`Rifkom` - Service provider
+Wants to provide services to external customers that do not want or have
+internal resources. Has both bare metal and operations resources internally.
 
-Nikishi University - research
------------------------------
+:ref:`MOI` - Small/medium business
+Wants to deploy customer-facing applications, but do not have bare metal or
+a budget for operations resources.
 
-At Nikishi university, each cloud user can potentially assume all personas'
-roles. Although typically each individual specializes in two or more of the
-roles. The Infrastructure Architect and the Cloud Operator roles
-could be assumed by a single individual. Similarly, the Domain Operations and
-Project Owner roles could be merged. This organizational model has a low
-staffing budget and is concerned with capital expenditure causing them to
-create their own implementation.
 
-.. list-table:: **Nikishi University - Key Info**
-   :widths: 15 15 15 15
-   :header-rows: 1
-
-   *  - Adoption model
-      - Process and compliance
-      - Skill depth
-      - Number of users
-   *  - Roll your own
-      - Minimal
-      - Deep
-      - 100 to 999 users
-
-CNBB Securities - large enterprise
-----------------------------------
-
-At CNBB Securities, the company's large organization chart represents each of
-the personas. Depending on the company's culture of collaboration, the
-personas could interact as if they were part of a single entity. However,
-usually the Cloud Operator and the Infrastructure Architect interact as
-service providers with the other personas. The personas within CNBB
-Securities look for a fast implementation and are responsible for the
-operations capital expenditure. The implementation has no customization and
-the organization usually outsources its support.
-
-.. list-table:: **CNBB Securities - Key Info**
-   :widths: 15 15 15 15
-   :header-rows: 1
-
-   *  - Adoption model
-      - Process and compliance
-      - Skill depth
-      - Number of users
-   *  - Distribution with professional services
-      - High
-      - Medium
-      - Over 10000 users
-
-Rifkom - service provider
--------------------------
-
-At Rifkom, employees provide services to external customers that do not want
-or have the internal resources. Rifkom customizes solutions and
-prioritizes a flexible approach to architecture. The highly skilled staff
-represents the largest expenditure for Rifkom. Only Infrastructure Architects
-and Cloud Operators work at Rifkom since the other personas are their
-customers at MOI. Customers usually interact with Rifkom employees through a
-ticket system.
-
-.. list-table:: **Rifkom - Key Info**
-   :widths: 15 15 15 15
-   :header-rows: 1
-
-   *  - Adoption model
-      - Process and compliance
-      - Skill depth
-      - Number of users
-   *  - Roll your own
-      - Medium to High (depends on customer)
-      - Deep
-      - 1000 to 9999 users
-
-MOI - customer
---------------
-
-At MOI, speed and convenience rule. Its staff encompasses the roles of App
-Developers, Project Owners, and Domain Operations. They do not perform any
-customization of the cloud and are willing to sacrifice functionality in
-order to save some costs. They interact with their cloud service provider,
-Rifkom, through a ticket system in case of problems with their cloud
-instance.
-
-.. list-table:: **MOI - Key Info**
-   :widths: 15 15 15 15
-   :header-rows: 1
-
-   *  - Adoption model
-      - Process and compliance
-      - Skill depth
-      - Number of users
-   *  - Professional services
-      - Medium
-      - Minimal
-      - No OpenStack users

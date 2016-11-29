@@ -4,8 +4,12 @@
 Quinn - application developer
 =============================
 
-Quinn develops and deploys cloud applications but does not necessarily know
-much about the underlying infrastructure of the cloud.
+Quinn spends very little to no time researching OpenStack. Quinn does not
+care how the cloud instances used were installed, as long as they work
+exactly as expected and the needed APIs do not change unexpectedly. Quinn
+does not control what tool is used to install and maintain the cloud
+instances. However, Quinn determines the requirements for those cloud
+instances. Any changes made to the APIs greatly impact Quinn's work.
 
 Cloud applications are defined as:
 
@@ -41,28 +45,6 @@ Quinn performs the following tasks frequently:
 
 * Deployment: Deploys applications to one or multiple cloud instances.
 
-Key information
-~~~~~~~~~~~~~~~
-
-Quinn spends very little to no time researching OpenStack. Quinn does not
-care how the cloud instances used were installed, as long as they work
-exactly as expected and the needed APIs do not change unexpectedly. Quinn
-does not control what tool is used to install and maintain the cloud
-instances. However, Quinn determines the requirements for those cloud
-instances. Any changes made to the APIs greatly impact Quinn's work.
-
-The organizational models
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The tasks that the persona performs within a certain organizational model are
-important for the usability of your OpenStack development. Within a small
-organization, such as Rifkom or Nikishi University, Quinn might be required
-to assume some roles and responsibilities of a Domain Operator or a Cloud
-Operator. Within a larger organization, like CNBB Securities, Quinn will
-likely not work alone on an application. Multiple application developers
-would need to access a single cloud to develop, test, and deploy the same
-application, making user control a requirement for the cloud.
-
 Your development
 ~~~~~~~~~~~~~~~~
 
@@ -78,3 +60,18 @@ resources are missing in such a way, that Quinn can ask a Cloud or Domain
 operator to add those resources. Quinn will not add the resources.
 Therefore, ensure that notifications are clear and do not require any
 advanced knowledge of OpenStack to identify the issues.
+
+The organizational models
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The tasks that the persona performs within a certain organizational model are
+important for the usability of your OpenStack development. Within a small
+organization, such as Rifkom or Nikishi University, Quinn might be required
+to assume some roles and responsibilities of a Domain Operator or a Cloud
+Operator. Within a larger organization, like CNBB Securities, Quinn will
+likely not work alone on an application. Multiple application developers
+would need to access a single cloud to develop, test, and deploy the same
+application, making user control a requirement for the cloud. See
+:ref:`model-companies` for more information on how Quinn fits into different
+user ecosystems.
+
