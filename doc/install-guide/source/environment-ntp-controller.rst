@@ -32,39 +32,11 @@ Install and configure components
 
    .. only:: obs
 
-      On openSUSE:
-
       .. code-block:: console
 
-         # zypper addrepo -f obs://network:time/openSUSE_Leap_42.2 network_time
-         # zypper refresh
          # zypper install chrony
 
       .. end
-
-      On SLES:
-
-      .. code-block:: console
-
-         # zypper addrepo -f obs://network:time/SLE_12_SP2 network_time
-         # zypper refresh
-         # zypper install chrony
-
-      .. end
-
-      .. note::
-
-         The packages are signed by GPG key ``17280DDF``. You should
-         verify the fingerprint of the imported GPG key before using it.
-
-         .. code-block:: console
-
-            Key Name:         network OBS Project <network@build.opensuse.org>
-            Key Fingerprint:  0080689B E757A876 CB7DC269 62EB1A09 17280DDF
-            Key Created:      Tue 24 Sep 2013 04:04:12 PM UTC
-            Key Expires:      Thu 03 Dec 2015 04:04:12 PM UTC
-
-         .. end
 
    .. endonly
 
