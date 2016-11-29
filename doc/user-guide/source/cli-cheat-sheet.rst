@@ -26,48 +26,48 @@ List images you can access
 
 .. code-block:: console
 
-   $ glance image-list
+   $ openstack image list
 
 Delete specified image
 
 .. code-block:: console
 
-   $ glance image-delete IMAGE
+   $ openstack image delete IMAGE
 
 Describe a specific image
 
 .. code-block:: console
 
-   $ glance image-show IMAGE
+   $ openstack image show IMAGE
 
 Update image
 
 .. code-block:: console
 
-   $ glance image-update IMAGE
+   $ openstack image set IMAGE
 
 Upload kernel image
 
 .. code-block:: console
 
-   $ glance image-create --name "cirros-threepart-kernel" \
-     --disk-format aki --container-format aki --is-public False \
+   $ openstack image create "cirros-threepart-kernel" \
+     --disk-format aki --container-format aki --public \
      --file ~/images/cirros-0.3.1~pre4-x86_64-vmlinuz
 
 Upload RAM image
 
 .. code-block:: console
 
-   $ glance image-create --name "cirros-threepart-ramdisk" \
-     --disk-format ari --container-format ari --is-public False \
+   $ openstack image create "cirros-threepart-ramdisk" \
+     --disk-format ari --container-format ari --public \
      --file ~/images/cirros-0.3.1~pre4-x86_64-initrd
 
 Upload three-part image
 
 .. code-block:: console
 
-   $ glance image-create --name "cirros-threepart" --disk-format ami \
-     --container-format ami --is-public False \
+   $ openstack image create "cirros-threepart" --disk-format ami \
+     --container-format ami --public \
      --property kernel_id=$KID-property ramdisk_id=$RID \
      --file ~/images/cirros-0.3.1~pre4-x86_64-blank.img
 
@@ -75,8 +75,8 @@ Register raw image
 
 .. code-block:: console
 
-   $ glance image-create --name "cirros-raw" --disk-format raw \
-     --container-format bare --is-public False \
+   $ openstack image create "cirros-raw" --disk-format raw \
+     --container-format bare --public \
      --file ~/images/cirros-0.3.1~pre4-x86_64-disk.img
 
 Compute (nova)
