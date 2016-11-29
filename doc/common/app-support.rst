@@ -41,10 +41,10 @@ associated components:
 *  `Installation Tutorial for Ubuntu 16.04 (LTS)
    <http://docs.openstack.org/newton/install-guide-ubuntu/>`__
 
-*  `Installation Tutorial For Debian With Debconf
+*  `Installation Tutorial for Debian with Debconf
    <http://docs.openstack.org/newton/install-guide-debconf/>`__
 
-*  `Installation Tutorial For Debian
+*  `Installation Tutorial for Debian
    <http://docs.openstack.org/newton/install-guide-debian/>`__
 
 The following books explain how to configure and run an OpenStack cloud:
