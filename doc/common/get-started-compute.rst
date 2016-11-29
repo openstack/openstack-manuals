@@ -86,9 +86,6 @@ OpenStack Compute consists of the following areas and their components:
   Provides a proxy for accessing running instances through a VNC
   connection. Supports an OpenStack-specific Java client.
 
-``nova-cert`` daemon
-  x509 certificates.
-
 The queue
   A central hub for passing messages between daemons. Usually
   implemented with `RabbitMQ <http://www.rabbitmq.com/>`__, also can be
