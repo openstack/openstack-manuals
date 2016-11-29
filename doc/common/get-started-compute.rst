@@ -61,7 +61,7 @@ OpenStack Compute consists of the following areas and their components:
   certificates. Used to generate certificates for
   ``euca-bundle-image``. Only needed for the EC2 API.
 
-``nova-network worker`` daemon
+``nova-network`` daemon
   Similar to the ``nova-compute`` service, accepts networking tasks from
   the queue and manipulates the network. Performs tasks such as
   setting up bridging interfaces or changing IPtables rules.
