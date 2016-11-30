@@ -218,7 +218,7 @@ If your environment includes the Orchestration service, you can create
 a stack that launches an instance.
 
 For more information, see the
-`Orchestration installation guide <http://docs.openstack.org/project-install-guide/orchestration/draft/launch-instance.html>`_.
+`Orchestration installation guide <http://docs.openstack.org/project-install-guide/orchestration/newton/launch-instance.html>`_.
 
 Shared File Systems
 -------------------
@@ -228,4 +228,4 @@ a share and mount it in an instance.
 
 For more information, see the
 `Shared File Systems installation guide
-<http://docs.openstack.org/project-install-guide/shared-file-systems/draft>`_.
+<http://docs.openstack.org/project-install-guide/shared-file-systems/newton>`_.
