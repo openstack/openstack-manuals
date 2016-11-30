@@ -83,7 +83,7 @@ Enable and access the configuration drive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. To enable the configuration drive, pass the ``--config-drive true``
-   parameter to the :command:`nova boot` command.
+   parameter to the :command:`openstack server create` command.
 
    The following example enables the configuration drive and passes user
    data, two files, and two key/value metadata pairs, all of which are
@@ -91,11 +91,11 @@ Enable and access the configuration drive
 
    .. code-block:: console
 
-      $ nova boot --config-drive true --image my-image-name --key-name mykey \
-        --flavor 1 --user-data ./my-user-data.txt myinstance \
+      $ openstack server create --config-drive true --image my-image-name \
+        --flavor 1 --key-name mykey --user-data ./my-user-data.txt \
         --file /etc/network/interfaces=/home/myuser/instance-interfaces \
         --file known_hosts=/home/myuser/.ssh/known_hosts \
-        --meta role=webservers --meta essential=false
+        --property role=webservers --property essential=false MYINSTANCE
 
    You can also configure the Compute service to always create a
    configuration drive by setting the following option in the
@@ -103,7 +103,7 @@ Enable and access the configuration drive
 
    .. code-block:: console
 
-      force_config_drive=true
+      force_config_drive = true
 
    .. note::
 
@@ -168,7 +168,7 @@ In this example, the contents of the configuration drive are as follows::
    openstack/latest/user_data
 
 The files that appear on the configuration drive depend on the arguments
-that you pass to the :command:`nova boot` command.
+that you pass to the :command:`openstack server create` command.
 
 OpenStack metadata format
 -------------------------
@@ -207,9 +207,9 @@ The file contents are formatted for readability.
 
 Note the effect of the
 ``--file /etc/network/interfaces=/home/myuser/instance-interfaces``
-argument that was passed to the :command:`nova boot` command. The contents of
-this file are contained in the ``openstack/content/0000`` file on the
-configuration drive, and the path is specified as
+argument that was passed to the :command:`openstack server create` command.
+The contents of this file are contained in the ``openstack/content/0000``
+file on the configuration drive, and the path is specified as
 ``/etc/network/interfaces`` in the ``meta_data.json`` file.
 
 EC2 metadata format
@@ -262,7 +262,7 @@ User data
 The ``openstack/2012-08-10/user_data``, ``openstack/latest/user_data``,
 ``ec2/2009-04-04/user-data``, and ``ec2/latest/user-data`` file are
 present only if the ``--user-data`` flag and the contents of the user
-data file are passed to the :command:`nova boot` command.
+data file are passed to the :command:`openstack server create` command.
 
 Configuration drive format
 --------------------------
