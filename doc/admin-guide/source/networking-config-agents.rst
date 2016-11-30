@@ -40,12 +40,14 @@ agent on each node.
 #. Ensure that each data-forwarding node has an IP address on the
    management network, and an IP address on the data network that is used
    for tunneling data traffic. For full details on configuring your
-   forwarding node, see the ``NSX Administrator Guide``.
+   forwarding node, see the `NSX Administration Guide
+   <http://pubs.vmware.com/NSX-62/index.jsp#com.vmware.nsx.admin.doc/GUID-B5C70003-8194-4EC3-AB36-54C848508818.html>`__.
 
-#. Use the ``NSX Administrator Guide`` to add the node as a Hypervisor by
-   using the NSX Manager GUI. Even if your forwarding node has no VMs and
-   is only used for services agents like ``neutron-dhcp-agent`` or
-   ``neutron-lbaas-agent``, it should still be added to NSX as a Hypervisor.
+#. Use the NSX Administrator Guide to add the node as a Hypervisor
+   by using the NSX Manager GUI. Even if your forwarding node has no
+   VMs and is only used for services agents like ``neutron-dhcp-agent``
+   or ``neutron-lbaas-agent``, it should still be added to NSX as a
+   Hypervisor.
 
 #. After following the NSX Administrator Guide, use the page for this
    Hypervisor in the NSX Manager GUI to confirm that the node is properly
