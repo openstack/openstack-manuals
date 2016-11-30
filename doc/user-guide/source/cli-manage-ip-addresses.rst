@@ -24,7 +24,7 @@ After you allocate a floating IP address to a project, you can:
 - Delete a floating IP from the project which automatically deletes that IP's
   associations.
 
-Use the :command:`nova floating-ip-*` commands to manage floating IP addresses.
+Use the :command:`openstack` commands to manage floating IP addresses.
 
 List floating IP address information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -33,7 +33,7 @@ To list all pools that provide floating IP addresses, run:
 
 .. code-block:: console
 
-   $ nova floating-ip-pool-list
+   $ openstack floating ip pool list
    +--------+
    | name   |
    +--------+
@@ -51,13 +51,14 @@ run:
 
 .. code-block:: console
 
-   $ nova floating-ip-list
-   +--------------+--------------------------------------+----------+--------+
-   | Ip           | Instance Id                          | Fixed Ip | Pool   |
-   +--------------+--------------------------------------+----------+--------+
-   | 172.24.4.225 | 4a60ff6a-7a3c-49d7-9515-86ae501044c6 | 10.0.0.2 | public |
-   | 172.24.4.226 | None                                 | None     | public |
-   +--------------+--------------------------------------+----------+--------+
+   $ openstack floating ip list
+   +--------------------------------------+---------------------+------------------+------+
+   | ID                                   | Floating IP Address | Fixed IP Address | Port |
+   +--------------------------------------+---------------------+------------------+------+
+   | 760963b2-779c-4a49-a50d-f073c1ca5b9e | 172.24.4.228        | None             | None |
+   | 89532684-13e1-4af3-bd79-f434c9920cc3 | 172.24.4.235        | None             | None |
+   | ea3ebc6d-a146-47cd-aaa8-35f06e1e8c3d | 172.24.4.229        | None             | None |
+   +--------------------------------------+---------------------+------------------+------+
 
 For each floating IP address that is allocated to the current project,
 the command outputs the floating IP address, the ID for the instance
@@ -76,22 +77,25 @@ You can assign a floating IP address to a project and to an instance.
 
    .. code-block:: console
 
-      $ nova floating-ip-create
-      +--------------+-------------+----------+--------+
-      | IP           | Instance Id | Fixed IP | Pool   |
-      +--------------+-------------+----------+--------+
-      | 172.24.4.225 | None        | None     | public |
-      +--------------+-------------+----------+--------+
-
-   .. note::
-
-      If more than one IP address pool is available, you can specify from which
-      pool to allocate the IP address, using the pool's name. For example, to
-      allocate a floating IP address from the ``test`` pool, run:
-
-      .. code-block:: console
-
-         $ nova floating-ip-create test
+      $ openstack floating ip create public
+      +---------------------+--------------------------------------+
+      | Field               | Value                                |
+      +---------------------+--------------------------------------+
+      | created_at          | 2016-11-30T15:02:05Z                 |
+      | description         |                                      |
+      | fixed_ip_address    | None                                 |
+      | floating_ip_address | 172.24.4.236                         |
+      | floating_network_id | 0bf90de6-fc0f-4dba-b80d-96670dfb331a |
+      | headers             |                                      |
+      | id                  | c70ad74b-2f64-4e60-965e-f24fc12b3194 |
+      | port_id             | None                                 |
+      | project_id          | 5669caad86a04256994cdf755df4d3c1     |
+      | project_id          | 5669caad86a04256994cdf755df4d3c1     |
+      | revision_number     | 1                                    |
+      | router_id           | None                                 |
+      | status              | DOWN                                 |
+      | updated_at          | 2016-11-30T15:02:05Z                 |
+      +---------------------+--------------------------------------+
 
 #. List all project instances with which a floating IP address could be
    associated.
@@ -110,13 +114,13 @@ You can assign a floating IP address to a project and to an instance.
 
    .. code-block:: console
 
-      $ nova floating-ip-associate INSTANCE_NAME_OR_ID FLOATING_IP_ADDRESS
+      $ openstack server add floating ip INSTANCE_NAME_OR_ID FLOATING_IP_ADDRESS
 
    For example:
 
    .. code-block:: console
 
-      $ nova floating-ip-associate VM1 172.24.4.225
+      $ openstack server add floating ip VM1 172.24.4.225
 
    The instance is now associated with two IP addresses:
 
@@ -142,7 +146,7 @@ You can assign a floating IP address to a project and to an instance.
 
       .. code-block:: console
 
-         $ nova floating-ip-associate --fixed-address FIXED_IP_ADDRESS \
+         $ openstack server add floating ip --fixed-address FIXED_IP_ADDRESS \
            INSTANCE_NAME_OR_ID FLOATING_IP_ADDRESS
 
 Disassociate floating IP addresses
@@ -158,7 +162,7 @@ To remove the floating IP address from a project:
 
 .. code-block:: console
 
-   $ nova floating-ip-delete FLOATING_IP_ADDRESS
+   $ openstack server remove floating ip INSTANCE_NAME_OR_ID FLOATING_IP_ADDRESS
 
 The IP address is returned to the pool of IP addresses that is available
 for all projects. If the IP address is still associated with a running
