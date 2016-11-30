@@ -4,12 +4,12 @@ Image service property keys
 
 The following keys, together with the components to which they are specific,
 can be used with the property option for both the
-:command:`glance image-update` and :command:`glance image-create` commands.
+:command:`openstack image set` and :command:`openstack image create` commands.
 For example:
 
 .. code-block:: console
 
-   $ glance image-update IMG-UUID --property architecture=x86_64
+   $ openstack image set IMG-UUID --property architecture=x86_64
 
 .. note::
 

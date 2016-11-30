@@ -385,11 +385,11 @@ on Hyper-V can be found here:
 http://technet.microsoft.com/en-us/library/cc772480.aspx
 
 Once you have successfully created a virtual machine, you can then upload
-the image to glance using the native glance-client:
+the image to glance using the openstack-client:
 
 .. code-block:: powershell
 
-   PS C:\> glance image-create --name "VM_IMAGE_NAME" --is-public False
+   PS C:\> openstack image create --name "VM_IMAGE_NAME" --public \
              --container-format bare --disk-format vhd
 
 .. note::
