@@ -153,8 +153,8 @@ additions.
 
 
 
-Configuring ``mysqld``
------------------------
+Configuring mysqld
+-------------------
 
 While all of the configuration parameters available to the standard MySQL,
 MariaDB or Percona XtraDB database server are available in Galera Cluster,
