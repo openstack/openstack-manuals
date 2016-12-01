@@ -9,14 +9,14 @@ Follow the steps below to launch an instance from an image.
 
    .. code-block:: console
 
-      $ nova boot --flavor FLAVOR_ID --image IMAGE_ID --key-name KEY_NAME \
-        --user-data USER_DATA_FILE --security-groups SEC_GROUP_NAME --meta KEY=VALUE \
+      $ openstack server create --flavor FLAVOR_ID --image IMAGE_ID --key-name KEY_NAME \
+        --user-data USER_DATA_FILE --security-group SEC_GROUP_NAME --property KEY=VALUE \
         INSTANCE_NAME
 
    Optionally, you can provide a key name for access control and a security
    group for security. You can also include metadata key and value pairs.
    For example, you can add a description for your server by providing the
-   ``--meta description="My Server"`` parameter.
+   ``--property description="My Server"`` parameter.
 
    You can pass user data in a local file at instance launch by using the
    ``--user-data USER-DATA-FILE`` parameter.
@@ -36,8 +36,8 @@ Follow the steps below to launch an instance from an image.
 
    .. code-block:: console
 
-      $ nova boot --flavor 1 --image 397e713c-b95b-4186-ad46-6126863ea0a9 \
-        --security-groups default --key-name KeyPair01 --user-data cloudinit.file \
+      $ openstack server create --flavor 1 --image 397e713c-b95b-4186-ad46-6126863ea0a9 \
+        --security-group default --key-name KeyPair01 --user-data cloudinit.file \
         myCirrosServer
 
    Depending on the parameters that you provide, the command returns a list
@@ -45,36 +45,41 @@ Follow the steps below to launch an instance from an image.
 
    .. code-block:: console
 
-      +-------------------------------------+-------------------------------------+
-      | Property                            | Value                               |
-      +-------------------------------------+-------------------------------------+
-      | OS-EXT-STS:task_state               | scheduling                          |
-      | image                               | cirros-0.3.2-x86_64-uec             |
-      | OS-EXT-STS:vm_state                 | building                            |
-      | OS-EXT-SRV-ATTR:instance_name       | instance-00000002                   |
-      | flavor                              | m1.small                            |
-      | id                                  | b3cdc6c0-85a7-4904-ae85-71918f734048|
-      | security_groups                     | [{u'name': u'default'}]             |
-      | user_id                             | 376744b5910b4b4da7d8e6cb483b06a8    |
-      | OS-DCF:diskConfig                   | MANUAL                              |
-      | accessIPv4                          |                                     |
-      | accessIPv6                          |                                     |
-      | progress                            | 0                                   |
-      | OS-EXT-STS:power_state              | 0                                   |
-      | OS-EXT-AZ:availability_zone         | nova                                |
-      | config_drive                        |                                     |
-      | status                              | BUILD                               |
-      | updated                             | 2013-07-16T16:25:34Z                |
-      | hostId                              |                                     |
-      | OS-EXT-SRV-ATTR:host                | None                                |
-      | key_name                            | KeyPair01                           |
-      | OS-EXT-SRV-ATTR:hypervisor_hostname | None                                |
-      | name                                | myCirrosServer                      |
-      | adminPass                           | tVs5pL8HcPGw                        |
-      | tenant_id                           | 66265572db174a7aa66eba661f58eb9e    |
-      | created                             | 2013-07-16T16:25:34Z                |
-      | metadata                            | {u'KEY': u'VALUE'}                  |
-      +-------------------------------------+-------------------------------------+
+      +--------------------------------------+-----------------------------------------------+
+      | Field                                | Value                                         |
+      +--------------------------------------+-----------------------------------------------+
+      | OS-DCF:diskConfig                    | MANUAL                                        |
+      | OS-EXT-AZ:availability_zone          |                                               |
+      | OS-EXT-SRV-ATTR:host                 | None                                          |
+      | OS-EXT-SRV-ATTR:hypervisor_hostname  | None                                          |
+      | OS-EXT-SRV-ATTR:instance_name        |                                               |
+      | OS-EXT-STS:power_state               | NOSTATE                                       |
+      | OS-EXT-STS:task_state                | scheduling                                    |
+      | OS-EXT-STS:vm_state                  | building                                      |
+      | OS-SRV-USG:launched_at               | None                                          |
+      | OS-SRV-USG:terminated_at             | None                                          |
+      | accessIPv4                           |                                               |
+      | accessIPv6                           |                                               |
+      | addresses                            |                                               |
+      | adminPass                            | E4Ksozt4Efi8                                  |
+      | config_drive                         |                                               |
+      | created                              | 2016-11-30T14:48:05Z                          |
+      | flavor                               | m1.tiny                                       |
+      | hostId                               |                                               |
+      | id                                   | 89015cc9-bdf1-458a-8518-fdca2b4a5785          |
+      | image                                | cirros (9fef3b2d-c35d-4b61-bea8-09cc6dc41829) |
+      | key_name                             | KeyPair01                                     |
+      | name                                 | myCirrosServer                                |
+      | os-extended-volumes:volumes_attached | []                                            |
+      | progress                             | 0                                             |
+      | project_id                           | 5669caad86a04256994cdf755df4d3c1              |
+      | properties                           |                                               |
+      | security_groups                      | [{u'name': u'default'}]                       |
+      | status                               | BUILD                                         |
+      | updated                              | 2016-11-30T14:48:05Z                          |
+      | user_id                              | c36cec73b0e44876a4478b1e6cd749bb              |
+      | metadata                             | {u'KEY': u'VALUE'}                            |
+      +--------------------------------------+-----------------------------------------------+
 
    A status of ``BUILD`` indicates that the instance has started, but is
    not yet online.
@@ -99,7 +104,7 @@ Follow the steps below to launch an instance from an image.
 
    .. code-block:: console
 
-      $ nova boot --image ubuntu-cloudimage --flavor 1 vm-name \
+      $ openstack server create --image ubuntu-cloudimage --flavor 1 vm-name \
         --file /root/.ssh/authorized_keys=special_authorized_keysfile
 
 #. Check if the instance is online.
