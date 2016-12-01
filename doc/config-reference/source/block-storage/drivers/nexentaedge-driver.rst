@@ -85,7 +85,7 @@ Supported operations
 NBD driver
 ~~~~~~~~~~
 
-As an alternative to using iSCSI, Amazon S3, or Openstack Swift protocols,
+As an alternative to using iSCSI, Amazon S3, or OpenStack Swift protocols,
 NexentaEdge can provide access to cluster storage via a Network Block Device
 (NBD) interface.
 

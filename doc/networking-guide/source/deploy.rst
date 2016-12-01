@@ -67,7 +67,7 @@ The deployment examples refer one or more of the following nodes:
   component. High availability options may include additional components.
 
   * Three network interfaces: management, overlay, and provider.
-  * Openstack Networking layer-2 (switching) agent, layer-3 agent, and any
+  * OpenStack Networking layer-2 (switching) agent, layer-3 agent, and any
     dependencies.
 
 * Compute: Contains the hypervisor component of the OpenStack Compute service

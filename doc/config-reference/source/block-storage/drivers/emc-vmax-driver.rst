@@ -50,7 +50,7 @@ There are five Software Suites available for the VMAX All Flash and Hybrid:
 - Remote Replication Suite
 - Total Productivity Pack
 
-Openstack requires the Advanced Suite and the Local Replication Suite
+OpenStack requires the Advanced Suite and the Local Replication Suite
 or the Total Productivity Pack (it includes the Advanced Suite and the
 Local Replication Suite) for the VMAX All Flash and Hybrid.
 

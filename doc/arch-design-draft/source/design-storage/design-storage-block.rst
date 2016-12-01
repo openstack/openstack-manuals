@@ -2,7 +2,7 @@
 Block Storage
 =============
 
-Block storage also known as volume storage in Openstack provides users
+Block storage also known as volume storage in OpenStack provides users
 with access to block storage devices. Users interact with block storage
 by attaching volumes to their running VM instances.
 
