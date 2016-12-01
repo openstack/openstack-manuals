@@ -4,15 +4,16 @@
 Taylor - domain operator
 ========================
 
-Taylor manages the relationship with the cloud services provider. This
-includes managing quotas, number of users, applicable policies, and support
-tickets. Taylor does not have any major concerns about the underlying
+Taylor does not have any major concerns about the underlying
 infrastructure of the cloud and ensures that the :abbr:`SLA (Service-Level
 Agreement)` is followed.
 
-Taylor needs to know about any outages, both scheduled and unscheduled.
-Unscheduled outages cause a lot of problems for Taylor, as ideally there
-would never be an unscheduled outage.
+Taylor spends no time researching OpenStack. It is likely that Taylor does
+not even know that the cloud service provider uses OpenStack and does not
+care how the cloud instances are run, as long as they run without unexpected
+outages. Taylor expects to be provided with adequate monitoring tools. Adding
+and removing users from the provided cloud services should be as easy as
+possible, in Taylor's opinion.
 
 Key tasks
 ~~~~~~~~~
@@ -29,26 +30,6 @@ Taylor performs the following tasks very frequently:
 
 * Ensuring SLA compliance: Monitors the various policies and support tickets
   to ensure that the agreed terms are being fulfilled.
-
-Key information
-~~~~~~~~~~~~~~~
-
-Taylor spends no time researching OpenStack. It is likely that Taylor does
-not even know that the cloud service provider uses OpenStack and does not
-care how the cloud instances are run, as long as they run without unexpected
-outages. Taylor expects to be provided with adequate monitoring tools. Adding
-and removing users from the provided cloud services should be as easy as
-possible, in Taylor's opinion.
-
-The organizational models
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The tasks that the persona performs within a certain organizational model are
-important for the usability of your OpenStack development. Within a small
-organization, such as Rifkom or Nikishi University, Taylor might be required
-to assume some roles and responsibilities of a Cloud Operator or a Project
-Owner. Within a larger organization, like CNBB Securities, Taylor's tasks are
-performed by the team managing the cloud services provider.
 
 Your development
 ~~~~~~~~~~~~~~~~
@@ -68,3 +49,15 @@ require any advanced knowledge of OpenStack to identify the issues.
 If your development modifies the user management of the cloud, ensure to take
 Taylor into consideration. User management should be as simple as possible
 and it should not require deep knowledge about OpenStack.
+
+The organizational models
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The tasks that the persona performs within a certain organizational model are
+important for the usability of your OpenStack development. Within a small
+organization, such as Rifkom or Nikishi University, Taylor might be required
+to assume some roles and responsibilities of a Cloud Operator or a Project
+Owner. Within a larger organization, like CNBB Securities, Taylor's tasks are
+performed by the team managing the cloud services provider. To see more on
+how roles change within organizations, see :ref:`model-companies`.
+

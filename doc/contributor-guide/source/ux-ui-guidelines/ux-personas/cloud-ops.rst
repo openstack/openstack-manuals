@@ -1,13 +1,15 @@
 .. _cloud-ops:
 
-======================
-Rey - cloud operations
-======================
+====================
+Rey - cloud operator
+====================
 
-Rey is involved in installing, operating, using, and updating the OpenStack
-cloud services. Rey ensures that the cloud is up and running and must fix any
+Rey ensures that the cloud is up and running and must fix any
 issues as soon as possible. Collaborating with unskilled IT personnel is very
-challenging for Rey.
+challenging for Rey. Rey spends some time every day searching for information
+on the OpenStack website, and has attended the OpenStack Summit once. Rey
+uses any useful tool in operating the cloud. Rey's previous role as a
+Linux system administrator influenced their decision to use OpenStack.
 
 Key tasks
 ~~~~~~~~~
@@ -25,26 +27,6 @@ Rey performs the following tasks very frequently:
 
 * Update: Performs updates and verification of the OpenStack cloud.
 
-Key information
-~~~~~~~~~~~~~~~
-
-Rey spends some time every day searching for information on the OpenStack
-website and has attended the OpenStack Summit once. Rey uses any useful tool
-in operating the cloud. Rey's previous role as a Linux system administrator
-influenced the decision to use OpenStack.
-
-The organizational models
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The tasks that the persona performs within a certain organizational model are
-important for the usability of your OpenStack development. Within a small
-company, Rey might be required to assume some of the responsibilities of
-both the Infrastructure Architect and the Domain Operator. Within a larger
-company, multiple individuals could perform subsets of Rey's tasks. For
-example, one person could be in charge of installing and updating the cloud
-instances, while another could be in charge of monitoring operations and
-usage, and yet another person could be in charge of solving issues. In
-Rey's organization, Rey is responsible for all of these tasks.
 
 Your development
 ~~~~~~~~~~~~~~~~
@@ -102,3 +84,18 @@ anticipate and compensate when preparing a project:
 
 The scale of quotas presents significant obstacles for operators. Consider
 that Rey may need to manage over one thousand projects in a deployment.
+
+The organizational models
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The tasks that the persona performs within a certain organizational model are
+important for the usability of your OpenStack development. Within a small
+company, Rey might be required to assume some of the responsibilities of
+both the Infrastructure Architect and the Domain Operator. Within a larger
+company, multiple individuals could perform subsets of Rey's tasks. For
+example, one person could be in charge of installing and updating the cloud
+instances, while another could be in charge of monitoring operations and
+usage, and yet another person could be in charge of solving issues. In
+Rey's organization, Rey is responsible for all of these tasks. For more
+information on how Rey fits into different user ecosystems, see
+:ref:`model-companies`.
