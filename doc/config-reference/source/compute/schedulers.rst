@@ -342,13 +342,13 @@ Schedules the instance on a different host from a set of instances.
 To take advantage of this filter, the requester must pass a scheduler hint,
 using ``different_host`` as the key and a list of instance UUIDs as
 the value. This filter is the opposite of the ``SameHostFilter``.
-Using the :command:`nova` command-line client, use the ``--hint`` flag.
-For example:
+Using the :command:`openstack server create` command, use the ``--hint``
+flag. For example:
 
 .. code-block:: console
 
-   $ nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 \
-     --hint different_host=a0cf03a5-d921-4877-bb5c-86d26cf818e1 \
+   $ openstack server create --image cedef40a-ed67-4d10-800e-17455edce175 \
+     --flavor 1 --hint different_host=a0cf03a5-d921-4877-bb5c-86d26cf818e1 \
      --hint different_host=8c19174f-4220-44f0-824a-cd1eeef10287 server-1
 
 With the API, use the ``os:scheduler_hints`` key. For example:
@@ -463,12 +463,13 @@ GroupAffinityFilter
 The GroupAffinityFilter ensures that an instance is scheduled on to a host
 from a set of group hosts. To take advantage of this filter, the requester
 must pass a scheduler hint, using ``group`` as the key and an arbitrary name
-as the value. Using the :command:`nova` command-line client,
-use the ``--hint`` flag. For example:
+as the value. Using the :command:`openstack server create` command, use the
+``--hint`` flag. For example:
 
 .. code-block:: console
 
-   $ nova boot --image IMAGE_ID --flavor 1 --hint group=foo server-1
+   $ openstack server create --image IMAGE_ID --flavor 1 \
+     --hint group=foo server-1
 
 This filter should not be enabled at the same time as
 :ref:`GroupAntiAffinityFilter` or neither filter will work properly.
@@ -485,12 +486,13 @@ GroupAntiAffinityFilter
 The GroupAntiAffinityFilter ensures that each instance in a group is on
 a different host. To take advantage of this filter, the requester must
 pass a scheduler hint, using ``group`` as the key and an arbitrary name
-as the value. Using the :command:`nova` command-line client,
+as the value. Using the :command:`openstack server create` command,
 use the ``--hint`` flag. For example:
 
 .. code-block:: console
 
-   $ nova boot --image IMAGE_ID --flavor 1 --hint group=foo server-1
+   $ openstack server create --image IMAGE_ID --flavor 1 \
+     --hint group=foo server-1
 
 This filter should not be enabled at the same time as
 :ref:`GroupAffinityFilter` or neither filter will work properly.
@@ -604,11 +606,12 @@ The filter supports the following variables:
 * ``$vcpus_total``
 * ``$vcpus_used``
 
-Using the :command:`nova` command-line client, use the ``--hint`` flag:
+Using the :command:`openstack server create` command, use the
+``--hint`` flag:
 
 .. code-block:: console
 
-   $ nova boot --image 827d564a-e636-4fc4-a376-d36f7ebe1747 \
+   $ openstack server create --image 827d564a-e636-4fc4-a376-d36f7ebe1747 \
      --flavor 1 --hint query='[">=","$free_ram_mb",1024]' server1
 
 With the API, use the ``os:scheduler_hints`` key:
@@ -706,12 +709,13 @@ of instances. To take advantage of this filter, the requester must
 pass a scheduler hint, using ``same_host`` as the key and a
 list of instance UUIDs as the value.
 This filter is the opposite of the ``DifferentHostFilter``.
-Using the :command:`nova` command-line client, use the ``--hint`` flag:
+Using the :command:`openstack server create` command, use the
+``--hint`` flag:
 
 .. code-block:: console
 
-   $ nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 \
-     --hint same_host=a0cf03a5-d921-4877-bb5c-86d26cf818e1 \
+   $ openstack server create --image cedef40a-ed67-4d10-800e-17455edce175 \
+     --flavor 1 --hint same_host=a0cf03a5-d921-4877-bb5c-86d26cf818e1 \
      --hint same_host=8c19174f-4220-44f0-824a-cd1eeef10287 server-1
 
 With the API, use the ``os:scheduler_hints`` key:
@@ -742,13 +746,14 @@ on to a host from a set of group hosts. To take advantage of this filter,
 the requester must create a server group with an ``affinity`` policy,
 and pass a scheduler hint, using ``group`` as the key and the server
 group UUID as the value.
-Using the :command:`nova` command-line tool, use the ``--hint`` flag.
-For example:
+Using the :command:`openstack server create` command, use the
+``--hint`` flag. For example:
 
 .. code-block:: console
 
-   $ nova server-group-create --policy affinity group-1
-   $ nova boot --image IMAGE_ID --flavor 1 --hint group=SERVER_GROUP_UUID server-1
+   $ openstack server group create --policy affinity group-1
+   $ openstack server create --image IMAGE_ID --flavor 1 \
+     --hint group=SERVER_GROUP_UUID server-1
 
 .. _ServerGroupAntiAffinityFilter:
 
@@ -759,13 +764,14 @@ The ServerGroupAntiAffinityFilter ensures that each instance in a group is
 on a different host. To take advantage of this filter, the requester must
 create a server group with an ``anti-affinity`` policy, and pass a scheduler
 hint, using ``group`` as the key and the server group UUID as the value.
-Using the :command:`nova` command-line client, use the ``--hint`` flag.
-For example:
+Using the :command:`openstack server create` command, use the
+``--hint`` flag. For example:
 
 .. code-block:: console
 
-   $ nova server-group-create --policy anti-affinity group-1
-   $ nova boot --image IMAGE_ID --flavor 1 --hint group=SERVER_GROUP_UUID server-1
+   $ openstack server group create --policy anti-affinity group-1
+   $ openstack server create --image IMAGE_ID --flavor 1 \
+     --hint group=SERVER_GROUP_UUID server-1
 
 SimpleCIDRAffinityFilter
 ------------------------
@@ -780,13 +786,14 @@ build_near_host_ip
 cidr
   The CIDR that corresponds to the subnet (for example, ``/24``)
 
-Using the :command:`nova` command-line client, use the ``--hint`` flag.
-For example, to specify the IP subnet ``192.168.1.1/24``:
+Using the :command:`openstack server create` command, use the
+``--hint`` flag. For example, to specify the IP subnet
+``192.168.1.1/24``:
 
 .. code-block:: console
 
-   $ nova boot --image cedef40a-ed67-4d10-800e-17455edce175 --flavor 1 \
-     --hint build_near_host_ip=192.168.1.1 --hint cidr=/24 server-1
+   $ openstack server create --image cedef40a-ed67-4d10-800e-17455edce175 \
+     --flavor 1 --hint build_near_host_ip=192.168.1.1 --hint cidr=/24 server-1
 
 With the API, use the ``os:scheduler_hints`` key:
 
