@@ -54,11 +54,11 @@ notification, edit notification options in ``neutron.conf``:
 
    # Driver or drivers to handle sending notifications. (multi
    # valued)
-   #notification_driver=messagingv2
+   # notification_driver=messagingv2
 
    # AMQP topic used for OpenStack notifications. (list value)
    # Deprecated group/name - [rpc_notifier2]/topics
-     notification_topics = notifications
+   notification_topics = notifications
 
 Setting cases
 -------------
@@ -120,4 +120,4 @@ Below is a sample ``neutron.conf`` configuration file:
 
     notification_topics = notifications
 
-    control_exchange=openstack
+    control_exchange = openstack
