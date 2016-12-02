@@ -265,17 +265,17 @@ Bandwidth I/O
 
     -  Outbound traffic:
 
-       -  average: 256 Mbps (32768 kilobytes/second)
+       -  average: 262 Mbps (32768 kilobytes/second)
 
-       -  peak: 512 Mbps (65536 kilobytes/second)
+       -  peak: 524 Mbps (65536 kilobytes/second)
 
        -  burst: 65536 kilobytes
 
     -  Inbound traffic:
 
-       -  average: 256 Mbps (32768 kilobytes/second)
+       -  average: 262 Mbps (32768 kilobytes/second)
 
-       -  peak: 512 Mbps (65536 kilobytes/second)
+       -  peak: 524 Mbps (65536 kilobytes/second)
 
        -  burst: 65536 kilobytes
 
@@ -292,7 +292,9 @@ Bandwidth I/O
     .. note::
 
        All the speed limit values in above example are specified in
-       kilobytes/second. And burst values are in kilobytes.
+       kilobytes/second. And burst values are in kilobytes. Values
+       were converted using 'Data rate units on
+       Wikipedia <https://en.wikipedia.org/wiki/Data_rate_units>`_.
 
 Watchdog behavior
     For the libvirt driver, you can enable and set the behavior of a
