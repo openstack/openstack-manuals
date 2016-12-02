@@ -9,7 +9,7 @@ A time series storage and resources index service command-line client
 The gnocchi client is the command-line interface (CLI) for
 the A time series storage and resources index service API and its extensions.
 
-This chapter documents :command:`gnocchi` version ``2.6.0``.
+This chapter documents :command:`gnocchi` version ``2.7.0``.
 
 For help on a specific :command:`gnocchi` command, enter:
 
