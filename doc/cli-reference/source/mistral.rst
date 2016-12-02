@@ -9,7 +9,7 @@ Workflow service command-line client
 The mistral client is the command-line interface (CLI) for
 the Workflow service API and its extensions.
 
-This chapter documents :command:`mistral` version ``2.1.1``.
+This chapter documents :command:`mistral` version ``2.1.2``.
 
 For help on a specific :command:`mistral` command, enter:
 
