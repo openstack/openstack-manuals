@@ -371,7 +371,7 @@ Once configuration is complete, you can launch instances with SR-IOV ports.
 
    .. code-block:: console
 
-      $ nova boot --flavor m1.large --image ubuntu_14.04 --nic port-id=$port_id test-sriov
+      $ openstack server create --flavor m1.large --image ubuntu_14.04 --nic port-id=$port_id test-sriov
 
    .. note::
 

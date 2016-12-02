@@ -111,10 +111,10 @@ The following is an example of an instance creation, showing how its
 
 .. code-block:: console
 
-   $ nova boot --image cirros --flavor 42 \
+   $ openstack server create --image cirros --flavor 42 \
      --nic net-id=37aaff3a-6047-45ac-bf4f-a825e56fd2b3 my_vm
    +--------------------------------------+----------------------------------------------------------------+
-   | Property                             | Value                                                          |
+   | Field                                | Value                                                          |
    +--------------------------------------+----------------------------------------------------------------+
    | OS-DCF:diskConfig                    | MANUAL                                                         |
    | OS-EXT-AZ:availability_zone          |                                                                |
@@ -327,10 +327,10 @@ external DNS service. This is an example:
    | 5649c68f-7a88-48f5-9f87-ccb1f6ae67ca | AAAA | my-vm.example.org. | 2001:db8:10::9                                                        |
    +--------------------------------------+------+--------------------+-----------------------------------------------------------------------+
 
-   $ nova boot --image cirros --flavor 42 \
+   $ openstack server create --image cirros --flavor 42 \
      --nic port-id=04be331b-dc5e-410a-9103-9c8983aeb186 my_vm
    +--------------------------------------+----------------------------------------------------------------+
-   | Property                             | Value                                                          |
+   | Field                                | Value                                                          |
    +--------------------------------------+----------------------------------------------------------------+
    | OS-DCF:diskConfig                    | MANUAL                                                         |
    | OS-EXT-AZ:availability_zone          |                                                                |
@@ -447,10 +447,10 @@ Following is an example of these steps:
    | tenant_id               | d5660cb1e6934612a01b4fb2fb630725     |
    +-------------------------+--------------------------------------+
 
-   $ nova boot --image cirros --flavor 42 \
+   $ openstack server create --image cirros --flavor 42 \
      --nic net-id=38c5e950-b450-4c30-83d4-ee181c28aad3 my_vm
    +--------------------------------------+----------------------------------------------------------------+
-   | Property                             | Value                                                          |
+   | Field                                | Value                                                          |
    +--------------------------------------+----------------------------------------------------------------+
    | OS-DCF:diskConfig                    | MANUAL                                                         |
    | OS-EXT-AZ:availability_zone          |                                                                |
@@ -607,10 +607,10 @@ allocated for the instance:
    | tenant_id               | d5660cb1e6934612a01b4fb2fb630725     |
    +-------------------------+--------------------------------------+
 
-   $ nova boot --image cirros --flavor 42 \
+   $ openstack server create --image cirros --flavor 42 \
      --nic net-id=38c5e950-b450-4c30-83d4-ee181c28aad3 my_vm
    +--------------------------------------+----------------------------------------------------------------+
-   | Property                             | Value                                                          |
+   | Field                                | Value                                                          |
    +--------------------------------------+----------------------------------------------------------------+
    | OS-DCF:diskConfig                    | MANUAL                                                         |
    | OS-EXT-AZ:availability_zone          |                                                                |
