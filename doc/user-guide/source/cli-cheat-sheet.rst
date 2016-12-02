@@ -271,14 +271,14 @@ Create network
 
 .. code-block:: console
 
-   $ neutron net-create NAME
+   $ openstack network create NETWORK_NAME
 
 Create a subnet
 
 .. code-block:: console
 
-   $ neutron subnet-create NETWORK_NAME CIDR
-   $ neutron subnet-create my-network 10.0.0.0/29
+   $ openstack subnet create --subnet-pool SUBNET SUBNET_NAME
+   $ openstack subnet create --subnet-pool 10.0.0.0/29 NETWORK
 
 Block Storage (cinder)
 ~~~~~~~~~~~~~~~~~~~~~~
