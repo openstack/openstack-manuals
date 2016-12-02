@@ -277,7 +277,7 @@ When you join the screen session that ``stack.sh`` starts with
 
       .. code-block:: console
 
-         $ nova boot --flavor 1 --image $IMAGE_ID scheduler-test
+         $ openstack server create --flavor 1 --image $IMAGE_ID scheduler-test
 
 #. Switch back to the ``n-sch`` screen. Among the log statements, you'll
    see the line:

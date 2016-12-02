@@ -1593,7 +1593,7 @@ On the command line, do this:
 
 .. code-block:: console
 
-   $ nova boot --flavor <flavor> --image <image> <name>
+   $ openstack server create --flavor FLAVOR --image IMAGE NAME
 
 There are a number of optional items that can be specified. You should
 read the rest of this section before trying to start an instance, but
@@ -1717,51 +1717,60 @@ your command line. For example:
 
 .. code-block:: console
 
-   $ nova boot --image ubuntu-cloudimage --flavor 2 --key-name mykey myimage
+   $ openstack server create --image ubuntu-cloudimage --flavor 2 \
+     --key-name mykey myimage
 
 When booting a server, you can also add arbitrary metadata so that you
 can more easily identify it among other running instances. Use the
-:option:`--meta` option with a key-value pair, where you can make up the
-string for both the key and the value. For example, you could add a
+:option:`--property` option with a key-value pair, where you can make up
+the string for both the key and the value. For example, you could add a
 description and also the creator of the server:
 
 .. code-block:: console
 
-   $ nova boot --image=test-image --flavor=1 \
-     --meta description='Small test image' smallimage
+   $ openstack server create --image=test-image --flavor=1 \
+     --property description='Small test image' smallimage
 
 When viewing the server information, you can see the metadata included
 on the metadata line:
 
 .. code-block:: console
 
-   $ nova show smallimage
-   +------------------------+-----------------------------------------+
-   |     Property           |                   Value                 |
-   +------------------------+-----------------------------------------+
-   |   OS-DCF:diskConfig    |               MANUAL                    |
-   | OS-EXT-STS:power_state |                 1                       |
-   | OS-EXT-STS:task_state  |                None                     |
-   |  OS-EXT-STS:vm_state   |               active                    |
-   |    accessIPv4          |                                         |
-   |    accessIPv6          |                                         |
-   |      config_drive      |                                         |
-   |     created            |            2012-05-16T20:48:23Z         |
-   |      flavor            |              m1.small                   |
-   |      hostId            |             de0...487                   |
-   |        id              |             8ec...f915                  |
-   |      image             |             natty-image                 |
-   |     key_name           |                                         |
-   |     metadata           | {u'description': u'Small test image'}   |
-   |       name             |             smallimage                  |
-   |    private network     |            172.16.101.11                |
-   |     progress           |                 0                       |
-   |     public network     |             10.4.113.11                 |
-   |      status            |               ACTIVE                    |
-   |    tenant_id           |             e83...482                   |
-   |     updated            |            2012-05-16T20:48:35Z         |
-   |     user_id            |          de3...0a9                      |
-   +------------------------+-----------------------------------------+
+   $ openstack server show smallimage
+
+   +--------------------------------------+----------------------------------------------------------+
+   | Field                                | Value                                                    |
+   +--------------------------------------+----------------------------------------------------------+
+   | OS-DCF:diskConfig                    | MANUAL                                                   |
+   | OS-EXT-AZ:availability_zone          | nova                                                     |
+   | OS-EXT-SRV-ATTR:host                 | rdo-newton.novalocal                                     |
+   | OS-EXT-SRV-ATTR:hypervisor_hostname  | rdo-newton.novalocal                                     |
+   | OS-EXT-SRV-ATTR:instance_name        | instance-00000002                                        |
+   | OS-EXT-STS:power_state               | Running                                                  |
+   | OS-EXT-STS:task_state                | None                                                     |
+   | OS-EXT-STS:vm_state                  | active                                                   |
+   | OS-SRV-USG:launched_at               | 2016-12-07T11:20:08.000000                               |
+   | OS-SRV-USG:terminated_at             | None                                                     |
+   | accessIPv4                           |                                                          |
+   | accessIPv6                           |                                                          |
+   | addresses                            | public=172.24.4.227                                      |
+   | config_drive                         |                                                          |
+   | created                              | 2016-12-07T11:17:44Z                                     |
+   | flavor                               | m1.tiny (1)                                              |
+   | hostId                               | aca973d5b7981faaf8c713a0130713bbc1e64151be65c8dfb53039f7 |
+   | id                                   | 4f7c6b2c-f27e-4ccd-a606-6bfc9d7c0d91                     |
+   | image                                | cirros (01bcb649-45d7-4e3d-8a58-1fcc87816907)            |
+   | key_name                             | None                                                     |
+   | name                                 | smallimage                                               |
+   | os-extended-volumes:volumes_attached | []                                                       |
+   | progress                             | 0                                                        |
+   | project_id                           | 2daf82a578e9437cab396c888ff0ca57                         |
+   | properties                           | description='Small test image'                           |
+   | security_groups                      | [{u'name': u'default'}]                                  |
+   | status                               | ACTIVE                                                   |
+   | updated                              | 2016-12-07T11:20:08Z                                     |
+   | user_id                              | 8cbea24666ae49bbb8c1641f9b12d2d2                         |
+   +--------------------------------------+----------------------------------------------------------+
 
 Instance user data
 ------------------
@@ -1782,7 +1791,8 @@ For example
 
 .. code-block:: console
 
-   $ nova boot --image ubuntu-cloudimage --flavor 1 --user-data mydata.file mydatainstance
+   $ openstack server create --image ubuntu-cloudimage --flavor 1 \
+     --user-data mydata.file mydatainstance
 
 To understand the difference between user data and metadata, realize
 that user data is created before an instance is started. User data is
@@ -1803,8 +1813,9 @@ case, you can use the following command:
 
 .. code-block:: console
 
-   $ nova boot --image ubuntu-cloudimage --flavor 1  \
-     --file /root/.ssh/authorized_keys=special_authorized_keysfile authkeyinstance
+   $ openstack server create --image ubuntu-cloudimage --flavor 1  \
+     --file /root/.ssh/authorized_keys=special_authorized_keysfile \
+     authkeyinstance
 
 Associating Security Groups
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1920,7 +1931,7 @@ the instance is terminated:
 
 .. code-block:: console
 
-   $ nova boot --image 4042220e-4f5e-4398-9054-39fbd75a5dd7 \
+   $ openstack server create --image 4042220e-4f5e-4398-9054-39fbd75a5dd7 \
      --flavor 2 --key-name mykey --block-device-mapping vdc=13:::0 \
      boot-with-vol-test
 
@@ -1932,7 +1943,7 @@ is now attached as ``/dev/vda``:
 
 .. code-block:: console
 
-   $ nova boot --flavor 2 --key-name mykey \
+   $ openstck server create --flavor 2 --key-name mykey \
      --block-device-mapping vda=13:::0 boot-from-vol-test
 
 Read more detailed instructions for launching an instance from a
