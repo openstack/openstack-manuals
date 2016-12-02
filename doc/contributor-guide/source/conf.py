@@ -39,7 +39,6 @@ import openstackdocstheme
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-# TODO(ajaeger): enable PDF building, for example add 'rst2pdf.pdfbuilder'
 extensions = []
 
 
