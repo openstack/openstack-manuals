@@ -78,7 +78,7 @@ Controller node
      .. code-block:: ini
 
         [ml2]
-        mechanism_drivers = linuxbridge,l2population
+        mechanism_drivers = openvswitch,l2population
 
    * Configure the VXLAN network ID (VNI) range.
 
