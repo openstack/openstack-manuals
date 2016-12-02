@@ -1079,7 +1079,7 @@ D
 
    designate
 
-      Code name for the DNS service project for OpenStack.
+      Code name for the :term:`DNS service <DNS service (designate)>`.
 
    Desktop-as-a-Service
 
@@ -1184,12 +1184,11 @@ D
       A record that specifies information about a particular domain
       and belongs to the domain.
 
-   DNS service
+   DNS service (designate)
 
       OpenStack project that provides scalable, on demand, self
       service access to authoritative DNS services, in a
-      technology-agnostic manner. The code name for the project is
-      designate.
+      technology-agnostic manner.
 
    dnsmasq
 
