@@ -433,3 +433,9 @@ Known limitations
 * SR-IOV is not integrated into the OpenStack Dashboard (horizon). Users must
   use the CLI or API to configure SR-IOV interfaces.
 * Live migration is not supported for instances with SR-IOV ports.
+
+  .. note::
+
+     SR-IOV features may require a specific NIC driver version, depending on the vendor.
+     Intel NICs, for example, require ixgbe version 4.4.6 or greater, and ixgbevf version
+     3.2.2 or greater.
