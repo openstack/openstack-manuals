@@ -1690,11 +1690,11 @@ cannot query the instance-associated key-value pairs with the metadata
 service that is compatible with the Amazon EC2 metadata service.
 
 For an example of instance metadata, users can generate and register SSH
-keys using the :command:`nova` command:
+keys using the :command:`openstack keypair create` command:
 
 .. code-block:: console
 
-   $ nova keypair-add mykey > mykey.pem
+   $ openstack keypair create mykey > mykey.pem
 
 This creates a key named ``mykey``, which you can associate with
 instances. The file ``mykey.pem`` is the private key, which should be
@@ -1705,7 +1705,7 @@ Use this command to register an existing key with OpenStack:
 
 .. code-block:: console
 
-   $ nova keypair-add --pub-key mykey.pub mykey
+   $ openstack keypair create --public-key mykey.pub mykey
 
 .. note::
 
