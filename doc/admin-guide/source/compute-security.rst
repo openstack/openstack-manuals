@@ -134,7 +134,8 @@ settings:
 
    .. code-block:: console
 
-      $ nova boot --flavor m1.tiny --key-name myKeypairName --image myImageID newInstanceName
+      $ openstack server create --flavor m1.tiny \
+        --key-name myKeypairName --image myImageID newInstanceName
 
 
 .. figure:: figures/OpenStackTrustedComputePool2.png

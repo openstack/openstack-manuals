@@ -53,7 +53,7 @@ modified boot command look like the following:
 
 .. code-block:: console
 
-   $ nova boot --meta metering.custom_metadata=a_value my_vm
+   $ openstack server create --property metering.custom_metadata=a_value my_vm
 
 The other option is to set the ``reserved_metadata_keys`` to the list of
 metadata keys that you would like to be included in
