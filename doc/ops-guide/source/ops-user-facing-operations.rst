@@ -736,7 +736,7 @@ to access block devices from within the instance operating system,
 potentially formatting them for first use and being cautious when
 removing them. What is specific is how to create new volumes and attach
 and detach them from instances. These operations can all be done from
-the :guilabel:`Volumes` page of the dashboard or by using the ``cinder``
+the :guilabel:`Volumes` page of the dashboard or by using the ``openstack``
 command-line client.
 
 To add new volumes, you need only a volume size in gigabytes.
@@ -745,19 +745,19 @@ line:
 
 .. code-block:: console
 
-   $ cinder create 10
+   $ openstack volume create volume1 --size 10
 
 This creates a 10 GB volume. To list existing
 volumes and the instances they are connected to, if any:
 
 .. code-block:: console
 
-   $ cinder list
-   +------------+-----------+-------------+------+-------------+----------+-------------+
-   |     ID     |  Status   |     Name    | Size | Volume Type | Bootable | Attached to |
-   +------------+-----------+-------------+------+-------------+----------+-------------+
-   | 0821...19f | available |      -      |  10  |      -      |  false   |             |
-   +------------+-----------+-------------+------+-------------+----------+-------------+
+   $ openstack volume list
+   +--------------------------------------+--------------+--------+------+-------------+
+   | ID                                   | Display Name | Status | Size | Attached to |
+   +--------------------------------------+--------------+--------+------+-------------+
+   | 6cf4114a-56b2-476b-acf7-7359d8334aa2 | volume1      | error  |   10 |             |
+   +------------+-----------+-------------+------+-------------+----------+------------+
 
 OpenStack Block Storage also allows creating snapshots of volumes.
 Remember that this is a block-level snapshot that is crash consistent,
@@ -773,29 +773,51 @@ or run this from the command line:
 
 .. code-block:: console
 
-   $ cinder help snapshot-create
-   usage: cinder snapshot-create [--force [<True|False>]] [--name <name>]
-                                 [--description <description>]
-                                 [--metadata [<key=value> [<key=value> ...]]]
-                                 <volume>
+   $ openstack help snapshot create
+   usage: openstack snapshot create [-h] [-f {json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width <integer>]
+                                    [--noindent] [--prefix PREFIX]
+                                    [--name <name>] [--description <description>]
+                                    [--force] [--property <key=value>]
+                                    <volume>
 
-   Creates a snapshot.
+   Create new snapshot
 
-   Positional arguments:
-     <volume-id>           Name or ID of volume to snapshot.
+   positional arguments:
+     <volume>              Volume to snapshot (name or ID)
 
-   Optional arguments:
-     --force [<True|False>]
-                           Allows or disallows snapshot of a volume when the
-                           volume is attached to an instance. If set to True,
-                           ignores the current status of the volume when
-                           attempting to snapshot it rather than forcing it to be
-                           available. Default=False.
-     --name <name>         Snapshot name. Default=None.
+   optional arguments:
+     -h, --help            show this help message and exit
+     --name <name>         Name of the snapshot
      --description <description>
-                           Snapshot description. Default=None.
-     --metadata [<key=value> [<key=value> ...]]
-                           Snapshot metadata key and value pairs. Default=None.
+                           Description of the snapshot
+     --force               Create a snapshot attached to an instance. Default is
+                           False
+     --property <key=value>
+                           Set a property to this snapshot (repeat option to set
+                           multiple properties)
+
+   output formatters:
+     output formatter options
+
+     -f {json,shell,table,value,yaml}, --format {json,shell,table,value,yaml}
+                           the output format, defaults to table
+     -c COLUMN, --column COLUMN
+                           specify the column(s) to include, can be repeated
+
+   table formatter:
+     --max-width <integer>
+                           Maximum display width, <1 to disable. You can also use
+                           the CLIFF_MAX_TERM_WIDTH environment variable, but the
+                           parameter takes precedence.
+
+   json formatter:
+     --noindent            whether to disable indenting the JSON
+
+   shell formatter:
+     a format a UNIX shell can parse (variable="value")
+
+     --prefix PREFIX       add a prefix to all variable names
 
 .. note::
 
