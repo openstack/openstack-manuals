@@ -687,7 +687,7 @@ option in ``nova.conf``. The default setting is:
 
    ram_allocation_ratio = 1.5
 
-This setting enables 1.5&nbsp;GB instances to run on any compute node
+This setting enables 1.5 GB instances to run on any compute node
 with 1 GB of free RAM.
 
 RetryFilter
