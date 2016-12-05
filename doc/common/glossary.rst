@@ -2551,6 +2551,12 @@ N
 
       Provides support for NexentaStor devices in Compute.
 
+   NFV Orchestration Service (tacker)
+
+      OpenStack service that aims to implement Network Function Virtualization
+      (NFV) Orchestration services and libraries for end-to-end life-cycle
+      management of Network Services and Virtual Network Functions (VNFs).
+
    Nginx
 
       An HTTP and reverse proxy server, a mail proxy server, and a generic
@@ -3666,6 +3672,11 @@ T
 ~
 
 .. glossary::
+
+   tacker
+
+      Code name for the :term:`NFV Orchestration service <NFV Orchestration
+      service (tacker)>`
 
    Telemetry service (telemetry)
 
