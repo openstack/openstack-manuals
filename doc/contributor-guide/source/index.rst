@@ -19,7 +19,7 @@ Contents
    quickstart.rst
    team-structure.rst
    blueprints-and-specs.rst
-   project-install-guide
+   project-guides
    api-guides.rst
    doc-bugs.rst
    writing-docs.rst
