@@ -30,8 +30,8 @@ X-Delete-After
 
 .. note::
 
-   Use http://www.epochconverter.com/ to convert dates to and from
-   epoch timestamps and for batch conversions.
+   Use `EpochConverter <http://www.epochconverter.com/>`_ to convert dates to
+   and from epoch timestamps and for batch conversions.
 
 Use the POST method to assign expiration headers to existing objects
 that you want to expire.
