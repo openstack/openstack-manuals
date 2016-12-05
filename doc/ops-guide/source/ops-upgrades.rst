@@ -5,7 +5,7 @@ Upgrades
 With the exception of Object Storage, upgrading from one version of
 OpenStack to another can take a great deal of effort. This chapter
 provides some guidance on the operational aspects that you should
-consider for performing an upgrade for a basic architecture.
+consider for performing an upgrade for an OpenStack environment.
 
 Pre-upgrade considerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -40,7 +40,7 @@ Upgrade planning
    contains new, updated, and deprecated options for most services.
 
 -  Like all major system upgrades, your upgrade could fail for one or
-   more reasons. You should prepare for this situation by having the
+   more reasons. You can prepare for this situation by having the
    ability to roll back your environment to the previous release,
    including databases, configuration files, and packages. We provide an
    example process for rolling back your environment in
@@ -171,8 +171,8 @@ completes. Once the upgrade of nova-compute processes is complete, the
 operator can move onto upgrading nova-conductor and remove the version
 locking for nova-compute in ``nova.conf``.
 
-General upgrade process
-~~~~~~~~~~~~~~~~~~~~~~~
+Upgrade process
+~~~~~~~~~~~~~~~
 
 This section describes the process to upgrade a basic OpenStack
 deployment based on the basic two-node architecture in the `Installation
@@ -181,12 +181,18 @@ Tutorials and Guides
 nodes must run a supported distribution of Linux with a recent kernel
 and the current release packages.
 
-
 Service specific upgrade instructions
 -------------------------------------
 
+Refer to the following upgrade notes for information on upgrading specific
+OpenStack services:
+
 * `Upgrading the Networking service
   <http://docs.openstack.org/developer/neutron/devref/upgrade.html>`_
+* `Upgrading the Compute service
+  <http://docs.openstack.org/developer/nova/upgrade.html>_`
+* `Upgrading the Identity service
+  <http://docs.openstack.org/developer/keystone/upgrading.html>_`
 
 Prerequisites
 -------------
@@ -212,10 +218,10 @@ Perform a backup
    .. code-block:: console
 
       # for i in keystone glance nova neutron openstack-dashboard cinder heat ceilometer; \
-        do mkdir $i-kilo; \
+        do mkdir $i-RELEASE_NAME; \
         done
       # for i in keystone glance nova neutron openstack-dashboard cinder heat ceilometer; \
-        do cp -r /etc/$i/* $i-kilo/; \
+        do cp -r /etc/$i/* $i-RELEASE_NAME/; \
         done
 
    .. note::
@@ -223,13 +229,13 @@ Perform a backup
       You can modify this example script on each node to handle different
       services.
 
-#. Make a full database backup of your production data. As of Kilo,
-   database downgrades are not supported, and the only method available to
-   get back to a prior database version will be to restore from backup.
+#. Make a full database backup of your production data. Since the Kilo release,
+   database downgrades are not supported, and restoring from backup is the only
+   method available to retrieve a previous database version.
 
    .. code-block:: console
 
-      # mysqldump -u root -p --opt --add-drop-database --all-databases > icehouse-db-backup.sql
+      # mysqldump -u root -p --opt --add-drop-database --all-databases > RELEASE_NAME-db-backup.sql
 
    .. note::
 
@@ -320,19 +326,18 @@ Final steps
 On all distributions, you must perform some final tasks to complete the
 upgrade process.
 
-#. Decrease DHCP timeouts by modifying ``/etc/nova/nova.conf`` on the
-   compute nodes back to the original value for your environment.
+#. Decrease DHCP timeouts by modifying the :file:`/etc/nova/nova.conf` file on
+   the compute nodes back to the original value for your environment.
 
 #. Update all ``.ini`` files to match passwords and pipelines as required
    for the OpenStack release in your environment.
 
 #. After migration, users see different results from
    :command:`openstack image list` and :command:`glance image-list`. To ensure
-   users see the same images in the list
-   commands, edit the ``/etc/glance/policy.json`` and
-   ``/etc/nova/policy.json`` files to contain
-   ``"context_is_admin": "role:admin"``, which limits access to private
-   images for projects.
+   users see the same images in the list commands, edit the
+   :file:`/etc/glance/policy.json` file and :file:`/etc/nova/policy.json` file
+   to contain ``"context_is_admin": "role:admin"``, which limits access to
+   private images for projects.
 
 #. Verify proper operation of your environment. Then, notify your users
    that their cloud is operating normally again.
@@ -342,14 +347,13 @@ upgrade process.
 Rolling back a failed upgrade
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Upgrades involve complex operations and can fail. Before attempting any
-upgrade, you should make a full database backup of your production data.
-As of Kilo, database downgrades are not supported, and the only method
-available to get back to a prior database version will be to restore
-from backup.
-
 This section provides guidance for rolling back to a previous release of
 OpenStack. All distributions follow a similar procedure.
+
+.. warning::
+
+   Rolling back your environment should be the final course of action
+   since you are likely to lose any data added since the backup.
 
 A common scenario is to take down production management services in
 preparation for an upgrade, completed part of the upgrade process, and
@@ -380,7 +384,7 @@ rolling back as the very last option.
 The following steps described for Ubuntu have worked on at least one
 production environment, but they might not work for all environments.
 
-**To perform the rollback**
+**To perform a rollback**
 
 #. Stop all OpenStack services.
 
@@ -455,92 +459,83 @@ production environment, but they might not work for all environments.
          package list might vary from this example.
 
    #. You can determine the package versions available for reversion by using
-      the ``apt-cache policy`` command. If you removed the Grizzly
-      repositories, you must first reinstall them and run ``apt-get update``:
+      the ``apt-cache policy`` command. For example:
 
       .. code-block:: console
 
          # apt-cache policy nova-common
+
          nova-common:
-         Installed: 1:2013.2-0ubuntu1~cloud0
-         Candidate: 1:2013.2-0ubuntu1~cloud0
+         Installed: 2:14.0.1-0ubuntu1~cloud0
+         Candidate: 2:14.0.1-0ubuntu1~cloud0
          Version table:
-         *** 1:2013.2-0ubuntu1~cloud0 0
-               500 http://ubuntu-cloud.archive.canonical.com/ubuntu/
-                   precise-updates/havana/main amd64 Packages
+         *** 2:14.0.1-0ubuntu1~cloud0 500
+               500 http://ubuntu-cloud.archive.canonical.com/ubuntu xenial-updates/newton/main amd64 Packages
                100 /var/lib/dpkg/status
-             1:2013.1.4-0ubuntu1~cloud0 0
-               500 http://ubuntu-cloud.archive.canonical.com/ubuntu/
-                   precise-updates/grizzly/main amd64 Packages
-            2012.1.3+stable-20130423-e52e6912-0ubuntu1.2 0
-               500 http://us.archive.ubuntu.com/ubuntu/
-                   precise-updates/main amd64 Packages
-               500 http://security.ubuntu.com/ubuntu/
-                   precise-security/main amd64 Packages
-            2012.1-0ubuntu2 0
-               500 http://us.archive.ubuntu.com/ubuntu/
-                   precise/main amd64 Packages
-
-      This tells us the currently installed version of the package, newest
-      candidate version, and all versions along with the repository that
-      contains each version. Look for the appropriate Grizzly
-      version— ``1:2013.1.4-0ubuntu1~cloud0`` in this case. The process of
-      manually picking through this list of packages is rather tedious and
-      prone to errors. You should consider using the following script to help
-      with this process:
-
-      .. code-block:: console
-
-         # for i in `cut -f 1 openstack-selections | sed 's/neutron/quantum/;'`;
-           do echo -n $i ;apt-cache policy $i | grep -B 1 grizzly |
-           grep -v Packages | awk '{print "="$1}';done | tr '\n' ' ' |
-           tee openstack-grizzly-versions
-         cinder-api=1:2013.1.4-0ubuntu1~cloud0
-         cinder-common=1:2013.1.4-0ubuntu1~cloud0
-         cinder-scheduler=1:2013.1.4-0ubuntu1~cloud0
-         cinder-volume=1:2013.1.4-0ubuntu1~cloud0
-         glance=1:2013.1.4-0ubuntu1~cloud0
-         glance-api=1:2013.1.4-0ubuntu1~cloud0
-         glance-common=1:2013.1.4-0ubuntu1~cloud0
-         glance-registry=1:2013.1.4-0ubuntu1~cloud0
-         quantum-common=1:2013.1.4-0ubuntu1~cloud0
-         quantum-dhcp-agent=1:2013.1.4-0ubuntu1~cloud0
-         quantum-l3-agent=1:2013.1.4-0ubuntu1~cloud0
-         quantum-lbaas-agent=1:2013.1.4-0ubuntu1~cloud0
-         quantum-metadata-agent=1:2013.1.4-0ubuntu1~cloud0
-         quantum-plugin-openvswitch=1:2013.1.4-0ubuntu1~cloud0
-         quantum-plugin-openvswitch-agent=1:2013.1.4-0ubuntu1~cloud0
-         quantum-server=1:2013.1.4-0ubuntu1~cloud0
-         nova-api=1:2013.1.4-0ubuntu1~cloud0
-         nova-cert=1:2013.1.4-0ubuntu1~cloud0
-         nova-common=1:2013.1.4-0ubuntu1~cloud0
-         nova-conductor=1:2013.1.4-0ubuntu1~cloud0
-         nova-consoleauth=1:2013.1.4-0ubuntu1~cloud0
-         nova-novncproxy=1:2013.1.4-0ubuntu1~cloud0
-         nova-objectstore=1:2013.1.4-0ubuntu1~cloud0
-         nova-scheduler=1:2013.1.4-0ubuntu1~cloud0
-         python-cinder=1:2013.1.4-0ubuntu1~cloud0
-         python-cinderclient=1:1.0.3-0ubuntu1~cloud0
-         python-glance=1:2013.1.4-0ubuntu1~cloud0
-         python-glanceclient=1:0.9.0-0ubuntu1.2~cloud0
-         python-quantum=1:2013.1.4-0ubuntu1~cloud0
-         python-quantumclient=1:2.2.0-0ubuntu1~cloud0
-         python-nova=1:2013.1.4-0ubuntu1~cloud0
-         python-novaclient=1:2.13.0-0ubuntu1~cloud0
+             2:13.1.2-0ubuntu2 500
+               500 http://archive.ubuntu.com/ubuntu xenial-updates/main amd64 Packages
+             2:13.0.0-0ubuntu2 500
+               500 http://archive.ubuntu.com/ubuntu xenial/main amd64 Packages
 
       .. note::
 
-         If you decide to continue this step manually, don't forget to change
-         ``neutron`` to ``quantum`` where applicable.
+         If you removed the release repositories, you must first reinstall
+         them and run the :command:`apt-get update` command.
 
-   #. Use the :command:`apt-get install` command to install specific versions of each
-      package by specifying ``<package-name>=<version>``. The script in the
-      previous step conveniently created a list of ``package=version`` pairs
-      for you:
+      The command output lists the currently installed version of the package,
+      newest candidate version, and all versions along with the repository that
+      contains each version. Look for the appropriate release
+      version— ``2:14.0.1-0ubuntu1~cloud0`` in this case. The process of
+      manually picking through this list of packages is rather tedious and
+      prone to errors. You should consider using a script to help
+      with this process. For example:
 
       .. code-block:: console
 
-         # apt-get install `cat openstack-grizzly-versions`
+         # for i in `cut -f 1 openstack-selections | sed 's/neutron/;'`;
+           do echo -n $i ;apt-cache policy $i | grep -B 1 RELEASE_NAME |
+           grep -v Packages | awk '{print "="$1}';done | tr '\n' ' ' |
+           tee openstack-RELEASE_NAME-versions
+         cinder-api=2:9.0.0-0ubuntu1~cloud0
+         cinder-common=2:9.0.0-0ubuntu1~cloud0
+         cinder-scheduler=2:9.0.0-0ubuntu1~cloud0
+         cinder-volume=2:9.0.0-0ubuntu1~cloud0
+         glance=2:13.0.0-0ubuntu1~cloud0
+         glance-api=2:13.0.0-0ubuntu1~cloud0 500
+         glance-common=2:13.0.0-0ubuntu1~cloud0 500
+         glance-registry=2:13.0.0-0ubuntu1~cloud0 500
+         neutron-common=2:9.0.0-0ubuntu1~cloud0
+         neutron-dhcp-agent=2:9.0.0-0ubuntu1~cloud0
+         neutron-l3-agent=2:9.0.0-0ubuntu1~cloud0
+         neutron-lbaas-agent=2:9.0.0-0ubuntu1~cloud0
+         neutron-metadata-agent=2:9.0.0-0ubuntu1~cloud0
+         neutron-server=2:9.0.0-0ubuntu1~cloud0
+         nova-api=2:14.0.1-0ubuntu1~cloud0
+         nova-cert=2:14.0.1-0ubuntu1~cloud0
+         nova-common=2:14.0.1-0ubuntu1~cloud0
+         nova-conductor=2:14.0.1-0ubuntu1~cloud0
+         nova-consoleauth=2:14.0.1-0ubuntu1~cloud0
+         nova-novncproxy=2:14.0.1-0ubuntu1~cloud0
+         nova-objectstore=2:14.0.1-0ubuntu1~cloud0
+         nova-scheduler=2:14.0.1-0ubuntu1~cloud0
+         python-cinder=2:9.0.0-0ubuntu1~cloud0
+         python-cinderclient=1:1.9.0-0ubuntu1~cloud0
+         python-glance=2:13.0.0-0ubuntu1~cloud0
+         python-glanceclient=1:2.5.0-0ubuntu1~cloud0
+         python-neutron=2:9.0.0-0ubuntu1~cloud0
+         python-neutronclient=1:6.0.0-0ubuntu1~cloud0
+         python-nova=2:14.0.1-0ubuntu1~cloud0
+         python-novaclient=2:6.0.0-0ubuntu1~cloud0
+         python-openstackclient=3.2.0-0ubuntu2~cloud0
+
+   #. Use the :command:`apt-get install` command to install specific versions
+      of each package by specifying ``<package-name>=<version>``. The script in
+      the previous step conveniently created a list of ``package=version``
+      pairs for you:
+
+      .. code-block:: console
+
+         # apt-get install `cat openstack-RELEASE_NAME-versions`
 
       This step completes the rollback procedure. You should remove the
       upgrade release repository and run :command:`apt-get update` to prevent
