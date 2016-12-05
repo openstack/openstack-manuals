@@ -3511,12 +3511,12 @@ S
       A controlled reboot where a VM instance is properly restarted
       through operating system commands.
 
-   Software Development Lifecycle Automation service
+   Software Development Lifecycle Automation service (solum)
 
       OpenStack project that aims to make cloud services easier to
       consume and integrate with application development process
       by automating the source-to-image process, and simplifying
-      app-centric deployment. The project name is solum.
+      app-centric deployment.
 
    SolidFire Volume Driver
 
@@ -3525,8 +3525,8 @@ S
 
    solum
 
-      OpenStack project that provides a Software Development
-      Lifecycle Automation service.
+      Code name for the :term:`Software Development Lifecycle Automation
+      service <Software Development Lifecycle Automation service (solum)>`.
 
    spread-first scheduler
 
