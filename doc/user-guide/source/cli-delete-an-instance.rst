@@ -17,13 +17,13 @@ When you no longer need an instance, you can delete it.
       | d7efd3e4... | newServer            | ERROR  | None       | NOSTATE     |                  | centos     |
       +-------------+----------------------+--------+------------+-------------+------------------+------------+
 
-#. Run the :command:`nova delete` command to delete the instance. The following
-   example shows deletion of the ``newServer`` instance, which is in
-   ``ERROR`` state:
+#. Run the :command:`openstack server delete` command to delete the instance.
+   The following example shows deletion of the ``newServer`` instance, which
+   is in ``ERROR`` state:
 
    .. code-block:: console
 
-      $ nova delete newServer
+      $ openstack server delete newServer
 
    The command does not notify that your server was deleted.
 
