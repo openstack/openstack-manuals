@@ -4,28 +4,28 @@ Configure high availability of instances
 
 As of September 2016, the OpenStack High Availability community is
 designing and developing an official and unified way to provide high
-availability for instances. That is, we are developing automatic
+availability for instances. We are developing automatic
 recovery from failures of hardware or hypervisor-related software on
-the compute node, or other failures which could prevent instances from
-functioning correctly - issues with a cinder volume I/O path, for example.
+the compute node, or other failures that could prevent instances from
+functioning correctly, such as, issues with a cinder volume I/O path.
 
 More details are available in the `user story
 <http://specs.openstack.org/openstack/openstack-user-stories/user-stories/proposed/ha_vm.html>`_
 co-authored by OpenStack's HA community and `Product Working Group
-<https://wiki.openstack.org/wiki/ProductTeam>`_ (PWG), who have
-identified this feature as missing functionality in OpenStack which
+<https://wiki.openstack.org/wiki/ProductTeam>`_ (PWG), where this feature is
+identified as missing functionality in OpenStack, which
 should be addressed with high priority.
 
 Existing solutions
-------------------
+~~~~~~~~~~~~~~~~~~
 
 The architectural challenges of instance HA and several currently
 existing solutions were presented in `a talk at the Austin summit
 <https://www.openstack.org/videos/video/high-availability-for-pets-and-hypervisors-state-of-the-nation>`_,
-for which `slides are also available
-<http://aspiers.github.io/openstack-summit-2016-austin-compute-ha/>`_.
+for which `slides are also available <http://aspiers.github.io/openstack-summit-2016-austin-compute-ha/>`_.
 
-The code for three of these solutions can be found online:
+The code for three of these solutions can be found online at the following
+links:
 
 * `a mistral-based auto-recovery workflow
   <https://github.com/gryf/mistral-evacuate>`_, by Intel
@@ -35,7 +35,7 @@ The code for three of these solutions can be found online:
   as used by Red Hat and SUSE
 
 Current upstream work
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Work is in progress on a unified approach, which combines the best
 aspects of existing upstream solutions. More details are available on

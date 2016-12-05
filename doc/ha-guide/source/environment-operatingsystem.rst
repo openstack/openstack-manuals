@@ -1,6 +1,6 @@
-=====================================
-Install operating system on each node
-=====================================
+===============================
+Installing the operating system
+===============================
 
 The first step in setting up your highly available OpenStack cluster
 is to install the operating system on each node.

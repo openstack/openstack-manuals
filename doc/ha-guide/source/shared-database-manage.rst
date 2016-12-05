@@ -2,35 +2,31 @@
 Management
 ==========
 
-When you finish the installation and configuration process on each
-cluster node in your OpenStack database, you can initialize Galera Cluster.
+When you finish installing and configuring the OpenStack database,
+you can initialize the Galera Cluster.
 
-Before you attempt this, verify that you have the following ready:
+Prerequisites
+~~~~~~~~~~~~~
 
-- Database hosts with Galera Cluster installed. You need a
-  minimum of three hosts;
-- No firewalls between the hosts;
-- SELinux and AppArmor set to permit access to ``mysqld``;
+- Database hosts with Galera Cluster installed
+- A minimum of three hosts
+- No firewalls between the hosts
+- SELinux and AppArmor set to permit access to ``mysqld``
 - The correct path to ``libgalera_smm.so`` given to the
-  ``wsrep_provider`` parameter.
+  ``wsrep_provider`` parameter
 
 Initializing the cluster
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In Galera Cluster, the Primary Component is the cluster of database
+In the Galera Cluster, the Primary Component is the cluster of database
 servers that replicate into each other. In the event that a
 cluster node loses connectivity with the Primary Component, it
 defaults into a non-operational state, to avoid creating or serving
 inconsistent data.
 
-By default, cluster nodes do not start as part of a Primary
-Component. Instead they assume that one exists somewhere and
-attempts to establish a connection with it. To create a Primary
-Component, you must start one cluster node using the
-``--wsrep-new-cluster`` option. You can do this using any cluster
-node, it is not important which you choose. In the Primary
-Component, replication and state transfers bring all databases to
-the same state.
+By default, cluster nodes do not start as part of a Primary Component.
+In the Primary Component, replication and state transfers bring all databases
+to the same state.
 
 To start the cluster, complete the following steps:
 
@@ -41,7 +37,7 @@ To start the cluster, complete the following steps:
 
       # service mysql start --wsrep-new-cluster
 
-   For servers that use ``systemd``, instead run this command:
+   For servers that use ``systemd``, run the following command:
 
    .. code-block:: console
 
@@ -68,15 +64,15 @@ To start the cluster, complete the following steps:
 
       # service mysql start
 
-   For servers that use ``systemd``, instead run this command:
+   For servers that use ``systemd``, run the following command:
 
    .. code-block:: console
 
       # systemctl start mariadb
 
 #. When you have all cluster nodes started, log into the database
-   client on one of them and check the ``wsrep_cluster_size``
-   status variable again.
+   client of any cluster node and check the ``wsrep_cluster_size``
+   status variable again:
 
    .. code-block:: mysql
 
@@ -89,32 +85,33 @@ To start the cluster, complete the following steps:
       +--------------------+-------+
 
 When each cluster node starts, it checks the IP addresses given to
-the ``wsrep_cluster_address`` parameter and attempts to establish
+the ``wsrep_cluster_address`` parameter. It then attempts to establish
 network connectivity with a database server running there. Once it
 establishes a connection, it attempts to join the Primary
 Component, requesting a state transfer as needed to bring itself
 into sync with the cluster.
 
-In the event that you need to restart any cluster node, you can do
-so. When the database server comes back it, it establishes
-connectivity with the Primary Component and updates itself to any
-changes it may have missed while down.
+.. note::
 
+   In the event that you need to restart any cluster node, you can do
+   so. When the database server comes back it, it establishes
+   connectivity with the Primary Component and updates itself to any
+   changes it may have missed while down.
 
 Restarting the cluster
 -----------------------
 
 Individual cluster nodes can stop and be restarted without issue.
-When a database loses its connection or restarts, Galera Cluster
+When a database loses its connection or restarts, the Galera Cluster
 brings it back into sync once it reestablishes connection with the
 Primary Component. In the event that you need to restart the
 entire cluster, identify the most advanced cluster node and
 initialize the Primary Component on that node.
 
 To find the most advanced cluster node, you need to check the
-sequence numbers, or seqnos, on the last committed transaction for
+sequence numbers, or the ``seqnos``, on the last committed transaction for
 each. You can find this by viewing ``grastate.dat`` file in
-database directory,
+database directory:
 
 .. code-block:: console
 
@@ -139,12 +136,10 @@ Alternatively, if the database server is running, use the
    +----------------------+--------+
 
 This value increments with each transaction, so the most advanced
-node has the highest sequence number, and therefore is the most up to date.
-
+node has the highest sequence number and therefore is the most up to date.
 
 Configuration tips
 ~~~~~~~~~~~~~~~~~~~
-
 
 Deployment strategies
 ----------------------
@@ -152,13 +147,13 @@ Deployment strategies
 Galera can be configured using one of the following
 strategies:
 
-- Each instance has its own IP address;
+- Each instance has its own IP address:
 
   OpenStack services are configured with the list of these IP
   addresses so they can select one of the addresses from those
   available.
 
-- Galera runs behind HAProxy.
+- Galera runs behind HAProxy:
 
   HAProxy load balances incoming requests and exposes just one IP
   address for all the clients.
@@ -166,32 +161,25 @@ strategies:
   Galera synchronous replication guarantees a zero slave lag. The
   failover procedure completes once HAProxy detects that the active
   back end has gone down and switches to the backup one, which is
-  then marked as 'UP'. If no back ends are up (in other words, the
-  Galera cluster is not ready to accept connections), the failover
-  procedure finishes only when the Galera cluster has been
+  then marked as ``UP``. If no back ends are ``UP``, the failover
+  procedure finishes only when the Galera Cluster has been
   successfully reassembled. The SLA is normally no more than 5
   minutes.
 
 - Use MySQL/Galera in active/passive mode to avoid deadlocks on
   ``SELECT ... FOR UPDATE`` type queries (used, for example, by nova
-  and neutron). This issue is discussed more in the following:
+  and neutron). This issue is discussed in the following:
 
   - `IMPORTANT: MySQL Galera does *not* support SELECT ... FOR UPDATE
     <http://lists.openstack.org/pipermail/openstack-dev/2014-May/035264.html>`_
   - `Understanding reservations, concurrency, and locking in Nova
     <http://www.joinfu.com/2015/01/understanding-reservations-concurrency-locking-in-nova/>`_
 
-Of these options, the second one is highly recommended. Although Galera
-supports active/active configurations, we recommend active/passive
-(enforced by the load balancer) in order to avoid lock contention.
-
-
-
 Configuring HAProxy
 --------------------
 
-If you use HAProxy for load-balancing client access to Galera
-Cluster as described in the :doc:`controller-ha-haproxy`, you can
+If you use HAProxy as a load-balancing client to provide access to the
+Galera Cluster, as described in the :doc:`controller-ha-haproxy`, you can
 use the ``clustercheck`` utility to improve health checks.
 
 #. Create a configuration file for ``clustercheck`` at
@@ -205,7 +193,7 @@ use the ``clustercheck`` utility to improve health checks.
       MYSQL_PORT="3306"
 
 #. Log in to the database client and grant the ``clustercheck`` user
-   ``PROCESS`` privileges.
+   ``PROCESS`` privileges:
 
    .. code-block:: mysql
 
@@ -248,12 +236,10 @@ use the ``clustercheck`` utility to improve health checks.
       # service xinetd enable
       # service xinetd start
 
-   For servers that use ``systemd``, instead run these commands:
+   For servers that use ``systemd``, run the following commands:
 
    .. code-block:: console
 
       # systemctl daemon-reload
       # systemctl enable xinetd
       # systemctl start xinetd
-
-

@@ -2,10 +2,10 @@
 Networking services for high availability
 =========================================
 
-Configure networking on each node. See basic information
+Configure networking on each node. See the basic information
 about configuring networking in the *Networking service*
 section of the
-`Install Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`_
+`Install Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`_,
 depending on your distribution.
 
 Notes from planning outline:

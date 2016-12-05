@@ -14,41 +14,56 @@ in active/passive mode involves:
 Add Shared File Systems API resource to Pacemaker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You must first download the resource agent to your system:
+#. Download the resource agent to your system:
 
-.. code-block:: console
+   .. code-block:: console
 
-   # cd /usr/lib/ocf/resource.d/openstack
-   # wget https://git.openstack.org/cgit/openstack/openstack-resource-agents/plain/ocf/manila-api
-   # chmod a+rx *
+      # cd /usr/lib/ocf/resource.d/openstack
+      # wget https://git.openstack.org/cgit/openstack/openstack-resource-agents/plain/ocf/manila-api
+      # chmod a+rx *
 
-You can now add the Pacemaker configuration for the Shared File Systems
-API resource. Connect to the Pacemaker cluster with the
-:command:`crm configure` command and add the following cluster resources:
+#. Add the Pacemaker configuration for the Shared File Systems
+   API resource. Connect to the Pacemaker cluster with the following
+   command:
 
-.. code-block:: ini
+   .. code-block:: console
 
-   primitive p_manila-api ocf:openstack:manila-api \
-      params config="/etc/manila/manila.conf" \
-      os_password="secretsecret" \
-      os_username="admin" \
-      os_tenant_name="admin" \
-      keystone_get_token_url="http://10.0.0.11:5000/v2.0/tokens" \
-      op monitor interval="30s" timeout="30s"
+      # crm configure
 
-This configuration creates ``p_manila-api``, a resource for managing the
-Shared File Systems API service.
+   .. note::
 
-The :command:`crm configure` supports batch input, so you may copy and paste
-the lines above into your live Pacemaker configuration and then make changes
-as required. For example, you may enter ``edit p_ip_manila-api`` from the
-:command:`crm configure` menu and edit the resource to match your preferred
-virtual IP address.
+      The :command:`crm configure` supports batch input. Copy and paste
+      the lines in the next step into your live Pacemaker configuration and then
+      make changes as required.
 
-Once completed, commit your configuration changes by entering :command:`commit`
-from the :command:`crm configure` menu. Pacemaker then starts the
-Shared File Systems API service and its dependent resources on one of your
-nodes.
+      For example, you may enter ``edit p_ip_manila-api`` from the
+      :command:`crm configure` menu and edit the resource to match your preferred
+      virtual IP address.
+
+#. Add the following cluster resources:
+
+   .. code-block:: ini
+
+      primitive p_manila-api ocf:openstack:manila-api \
+        params config="/etc/manila/manila.conf" \
+        os_password="secretsecret" \
+        os_username="admin" \
+        os_tenant_name="admin" \
+        keystone_get_token_url="http://10.0.0.11:5000/v2.0/tokens" \
+        op monitor interval="30s" timeout="30s"
+
+   This configuration creates ``p_manila-api``, a resource for managing the
+   Shared File Systems API service.
+
+#. Commit your configuration changes by entering the following command
+   from the :command:`crm configure` menu:
+
+   .. code-block:: console
+
+      # commit
+
+Pacemaker now starts the Shared File Systems API service and its
+dependent resources on one of your nodes.
 
 .. _ha-sharedfilesystems-configure:
 

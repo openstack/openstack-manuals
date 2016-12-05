@@ -2,7 +2,7 @@
 Highly available Block Storage API
 ==================================
 
-Cinder provides 'block storage as a service' suitable for performance
+Cinder provides Block-Storage-as-a-Service suitable for performance
 sensitive scenarios such as databases, expandable file systems, or
 providing a server with access to raw block level storage.
 
@@ -10,7 +10,7 @@ Persistent block storage can survive instance termination and can also
 be moved across instances like any external storage device. Cinder
 also has volume snapshots capability for backing up the volumes.
 
-Making this Block Storage API service highly available in
+Making the Block Storage API service highly available in
 active/passive mode involves:
 
 - :ref:`ha-blockstorage-pacemaker`
@@ -18,44 +18,8 @@ active/passive mode involves:
 - :ref:`ha-blockstorage-services`
 
 In theory, you can run the Block Storage service as active/active.
-However, because of sufficient concerns, it is recommended running
+However, because of sufficient concerns, we recommend running
 the volume component as active/passive only.
-
-Jon Bernard writes:
-
-::
-
-  Requests are first seen by Cinder in the API service, and we have a
-  fundamental problem there - a standard test-and-set race condition
-  exists for many operations where the volume status is first checked
-  for an expected status and then (in a different operation) updated to
-  a pending status. The pending status indicates to other incoming
-  requests that the volume is undergoing a current operation, however it
-  is possible for two simultaneous requests to race here, which
-  undefined results.
-
-  Later, the manager/driver will receive the message and carry out the
-  operation. At this stage there is a question of the synchronization
-  techniques employed by the drivers and what guarantees they make.
-
-  If cinder-volume processes exist as different process, then the
-  'synchronized' decorator from the lockutils package will not be
-  sufficient. In this case the programmer can pass an argument to
-  synchronized() 'external=True'. If external is enabled, then the
-  locking will take place on a file located on the filesystem. By
-  default, this file is placed in Cinder's 'state directory' in
-  /var/lib/cinder so won't be visible to cinder-volume instances running
-  on different machines.
-
-  However, the location for file locking is configurable. So an
-  operator could configure the state directory to reside on shared
-  storage. If the shared storage in use implements unix file locking
-  semantics, then this could provide the requisite synchronization
-  needed for an active/active HA configuration.
-
-  The remaining issue is that not all drivers use the synchronization
-  methods, and even fewer of those use the external file locks. A
-  sub-concern would be whether they use them correctly.
 
 You can read more about these concerns on the
 `Red Hat Bugzilla <https://bugzilla.redhat.com/show_bug.cgi?id=1193229>`_
@@ -63,15 +27,13 @@ and there is a
 `psuedo roadmap <https://etherpad.openstack.org/p/cinder-kilo-stabilisation-work>`_
 for addressing them upstream.
 
-
 .. _ha-blockstorage-pacemaker:
 
 Add Block Storage API resource to Pacemaker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On RHEL-based systems, you should create resources for cinder's
-systemd agents and create constraints to enforce startup/shutdown
-ordering:
+On RHEL-based systems, create resources for cinder's systemd agents and create
+constraints to enforce startup/shutdown ordering:
 
 .. code-block:: console
 
@@ -115,29 +77,25 @@ and add the following cluster resources:
       keystone_get_token_url="http://10.0.0.11:5000/v2.0/tokens" \
       op monitor interval="30s" timeout="30s"
 
-This configuration creates ``p_cinder-api``,
-a resource for managing the Block Storage API service.
+This configuration creates ``p_cinder-api``, a resource for managing the
+Block Storage API service.
 
-The command :command:`crm configure` supports batch input,
-so you may copy and paste the lines above
-into your live pacemaker configuration and then make changes as required.
-For example, you may enter ``edit p_ip_cinder-api``
-from the :command:`crm configure` menu
-and edit the resource to match your preferred virtual IP address.
+The command :command:`crm configure` supports batch input, copy and paste the
+lines above into your live Pacemaker configuration and then make changes as
+required. For example, you may enter ``edit p_ip_cinder-api`` from the
+:command:`crm configure` menu and edit the resource to match your preferred
+virtual IP address.
 
-Once completed, commit your configuration changes
-by entering :command:`commit` from the :command:`crm configure` menu.
-Pacemaker then starts the Block Storage API service
-and its dependent resources on one of your nodes.
+Once completed, commit your configuration changes by entering :command:`commit`
+from the :command:`crm configure` menu. Pacemaker then starts the Block Storage
+API service and its dependent resources on one of your nodes.
 
 .. _ha-blockstorage-configure:
 
 Configure Block Storage API service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Edit the ``/etc/cinder/cinder.conf`` file:
-
-On a RHEL-based system, it should look something like:
+Edit the ``/etc/cinder/cinder.conf`` file. For example, on a RHEL-based system:
 
 .. code-block:: ini
    :linenos:
@@ -211,19 +169,17 @@ database.
 
 .. _ha-blockstorage-services:
 
-Configure OpenStack services to use highly available Block Storage API
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configure OpenStack services to use the highly available Block Storage API
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Your OpenStack services must now point their
-Block Storage API configuration to the highly available,
-virtual cluster IP address
-rather than a Block Storage API server’s physical IP address
-as you would for a non-HA environment.
+Your OpenStack services must now point their Block Storage API configuration
+to the highly available, virtual cluster IP address rather than a Block Storage
+API server’s physical IP address as you would for a non-HA environment.
 
-You must create the Block Storage API endpoint with this IP.
+Create the Block Storage API endpoint with this IP.
 
-If you are using both private and public IP addresses,
-you should create two virtual IPs and define your endpoint like this:
+If you are using both private and public IP addresses, create two virtual IPs
+and define your endpoint. For example:
 
 .. code-block:: console
 

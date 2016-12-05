@@ -2,13 +2,8 @@
 Highly available Identity API
 =============================
 
-You should be familiar with
-`OpenStack Identity service
-<http://docs.openstack.org/admin-guide/common/get-started-identity.html>`_
-before proceeding, which is used by many services.
-
 Making the OpenStack Identity service highly available
-in active / passive mode involves:
+in active and passive mode involves:
 
 - :ref:`identity-pacemaker`
 - :ref:`identity-config-identity`
@@ -16,8 +11,19 @@ in active / passive mode involves:
 
 .. _identity-pacemaker:
 
+Prerequisites
+~~~~~~~~~~~~~
+
+Before beginning, ensure you have read the
+`OpenStack Identity service getting started documentation
+<http://docs.openstack.org/admin-guide/common/get-started-identity.html>`_
+before proceeding.
+
 Add OpenStack Identity resource to Pacemaker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following section(s) detail how to add the OpenStack Identity
+resource to Pacemaker on SUSE and Red Hat.
 
 SUSE
 -----
@@ -25,8 +31,8 @@ SUSE
 SUSE Enterprise Linux and SUSE-based distributions, such as openSUSE,
 use a set of OCF agents for controlling OpenStack services.
 
-#. You must first download the OpenStack Identity resource to Pacemaker
-   by running the following commands:
+#. Run the following commands to download the OpenStack Identity resource
+   to Pacemaker:
 
    .. code-block:: console
 
@@ -36,40 +42,49 @@ use a set of OCF agents for controlling OpenStack services.
       # wget https://git.openstack.org/cgit/openstack/openstack-resource-agents/plain/ocf/keystone
       # chmod a+rx *
 
-#. You can now add the Pacemaker configuration
-   for the OpenStack Identity resource
-   by running the :command:`crm configure` command
-   to connect to the Pacemaker cluster.
-   Add the following cluster resources:
+#. Add the Pacemaker configuration for the OpenStack Identity resource
+   by running the following command to connect to the Pacemaker cluster:
 
-   ::
+   .. code-block:: console
+
+      # crm configure
+
+#. Add the following cluster resources:
+
+   .. code-block:: console
 
       clone p_keystone ocf:openstack:keystone \
       params config="/etc/keystone/keystone.conf" os_password="secretsecret" os_username="admin" os_tenant_name="admin" os_auth_url="http://10.0.0.11:5000/v2.0/" \
           op monitor interval="30s" timeout="30s"
 
-   This configuration creates ``p_keystone``,
-   a resource for managing the OpenStack Identity service.
+   .. note::
 
-   :command:`crm configure` supports batch input
-   so you may copy and paste the above lines
-   into your live Pacemaker configuration,
-   and then make changes as required.
-   For example, you may enter edit ``p_ip_keystone``
-   from the :command:`crm configure` menu
-   and edit the resource to match your preferred virtual IP address.
+      This configuration creates ``p_keystone``,
+      a resource for managing the OpenStack Identity service.
 
-#. After you add these resources,
-   commit your configuration changes by entering :command:`commit`
-   from the :command:`crm configure` menu.
-   Pacemaker then starts the OpenStack Identity service
-   and its dependent resources on all of your nodes.
+#. Commit your configuration changes from the :command:`crm configure` menu
+   with the following command:
+
+   .. code-block:: console
+
+      # commit
+
+The :command:`crm configure` supports batch input. You may have to copy and
+paste the above lines into your live Pacemaker configuration, and then make
+changes as required.
+
+For example, you may enter ``edit p_ip_keystone`` from the
+:command:`crm configure` menu and edit the resource to match your preferred
+virtual IP address.
+
+Pacemaker now starts the OpenStack Identity service and its dependent
+resources on all of your nodes.
 
 Red Hat
 --------
 
 For Red Hat Enterprise Linux and Red Hat-based Linux distributions,
-the process is simpler as they use the standard Systemd unit files.
+the following process uses Systemd unit files.
 
 .. code-block:: console
 
@@ -116,29 +131,24 @@ Configure OpenStack Identity service
 Configure OpenStack services to use the highly available OpenStack Identity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Your OpenStack services must now point
-their OpenStack Identity configuration
-to the highly available virtual cluster IP address
-rather than point to the physical IP address
-of an OpenStack Identity server as you would do
-in a non-HA environment.
+Your OpenStack services now point their OpenStack Identity configuration
+to the highly available virtual cluster IP address.
 
-#. For OpenStack Compute, for example,
-   if your OpenStack Identity service IP address is 10.0.0.11,
-   use the following configuration in your :file:`api-paste.ini` file:
+#. For OpenStack Compute, (if your OpenStack Identity service IP address
+   is 10.0.0.11) use the following configuration in the :file:`api-paste.ini`
+   file:
 
    .. code-block:: ini
 
       auth_host = 10.0.0.11
 
-#. You also need to create the OpenStack Identity Endpoint
-   with this IP address.
+#. Create the OpenStack Identity Endpoint with this IP address.
 
    .. note::
 
       If you are using both private and public IP addresses,
-      you should create two virtual IP addresses
-      and define your endpoint like this:
+      create two virtual IP addresses and define the endpoint. For
+      example:
 
       .. code-block:: console
 
@@ -150,12 +160,9 @@ in a non-HA environment.
            $service-type internal http://10.0.0.11:5000/v2.0
 
 
-#. If you are using the horizon dashboard,
-   edit the :file:`local_settings.py` file
-   to include the following:
+#. If you are using the horizon Dashboard, edit the :file:`local_settings.py`
+   file to include the following:
 
    .. code-block:: ini
 
       OPENSTACK_HOST = 10.0.0.11
-
-

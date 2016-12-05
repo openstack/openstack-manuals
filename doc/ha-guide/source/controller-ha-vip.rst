@@ -1,13 +1,12 @@
-
 =================
 Configure the VIP
 =================
 
-You must select and assign a virtual IP address (VIP)
-that can freely float between cluster nodes.
+You must select and assign a virtual IP address (VIP) that can freely float
+between cluster nodes.
 
-This configuration creates ``vip``,
-a virtual IP address for use by the API node (``10.0.0.11``):
+This configuration creates ``vip``, a virtual IP address for use by the
+API node (``10.0.0.11``).
 
 For ``crmsh``:
 

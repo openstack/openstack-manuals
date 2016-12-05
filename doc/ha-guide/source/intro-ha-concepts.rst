@@ -2,20 +2,18 @@
 High availability concepts
 ==========================
 
-High availability systems seek to minimize two things:
+High availability systems seek to minimize the following issues:
 
-**System downtime**
-  Occurs when a user-facing service is unavailable
-  beyond a specified maximum amount of time.
+#. System downtime: Occurs when a user-facing service is unavailable
+   beyond a specified maximum amount of time.
 
-**Data loss**
-  Accidental deletion or destruction of data.
+#. Data loss: Accidental deletion or destruction of data.
 
 Most high availability systems guarantee protection against system downtime
 and data loss only in the event of a single failure.
 However, they are also expected to protect against cascading failures,
 where a single failure deteriorates into a series of consequential failures.
-Many service providers guarantee :term:`Service Level Agreement (SLA)`
+Many service providers guarantee a :term:`Service Level Agreement (SLA)`
 including uptime percentage of computing service, which is calculated based
 on the available time and system downtime excluding planned outage time.
 
@@ -65,19 +63,16 @@ guarantee 99.99% availability for individual guest instances.
 This document discusses some common methods of implementing highly
 available systems, with an emphasis on the core OpenStack services and
 other open source services that are closely aligned with OpenStack.
-These methods are by no means the only ways to do it;
-you may supplement these services with commercial hardware and software
-that provides additional features and functionality.
-You also need to address high availability concerns
-for any applications software that you run on your OpenStack environment.
-The important thing is to make sure that your services are redundant
-and available; how you achieve that is up to you.
 
-Stateless vs. stateful services
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You will need to address high availability concerns for any applications
+software that you run on your OpenStack environment. The important thing is
+to make sure that your services are redundant and available.
+How you achieve that is up to you.
 
-Preventing single points of failure can depend on whether or not a
-service is stateless.
+Stateless versus stateful services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following are the definitions of stateless and stateful services:
 
 Stateless service
   A service that provides a response after your request
@@ -86,13 +81,13 @@ Stateless service
   you need to provide redundant instances and load balance them.
   OpenStack services that are stateless include ``nova-api``,
   ``nova-conductor``, ``glance-api``, ``keystone-api``,
-  ``neutron-api`` and ``nova-scheduler``.
+  ``neutron-api``, and ``nova-scheduler``.
 
 Stateful service
   A service where subsequent requests to the service
   depend on the results of the first request.
   Stateful services are more difficult to manage because a single
-  action typically involves more than one request, so simply providing
+  action typically involves more than one request. Providing
   additional instances and load balancing does not solve the problem.
   For example, if the horizon user interface reset itself every time
   you went to a new page, it would not be very useful.
@@ -101,10 +96,11 @@ Stateful service
   Making stateful services highly available can depend on whether you choose
   an active/passive or active/active configuration.
 
-Active/Passive vs. Active/Active
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Active/passive versus active/active
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Stateful services may be configured as active/passive or active/active:
+Stateful services can be configured as active/passive or active/active,
+which are defined as follows:
 
 :term:`active/passive configuration`
   Maintains a redundant instance
@@ -148,7 +144,7 @@ in order for the cluster to remain functional.
 When one node fails and failover transfers control to other nodes,
 the system must ensure that data and processes remain sane.
 To determine this, the contents of the remaining nodes are compared
-and, if there are discrepancies, a "majority rules" algorithm is implemented.
+and, if there are discrepancies, a majority rules algorithm is implemented.
 
 For this reason, each cluster in a high availability environment should
 have an odd number of nodes and the quorum is defined as more than a half
@@ -157,7 +153,7 @@ If multiple nodes fail so that the cluster size falls below the quorum
 value, the cluster itself fails.
 
 For example, in a seven-node cluster, the quorum should be set to
-floor(7/2) + 1 == 4. If quorum is four and four nodes fail simultaneously,
+``floor(7/2) + 1 == 4``. If quorum is four and four nodes fail simultaneously,
 the cluster itself would fail, whereas it would continue to function, if
 no more than three nodes fail. If split to partitions of three and four nodes
 respectively, the quorum of four nodes would continue to operate the majority
@@ -169,25 +165,23 @@ example.
 
 .. note::
 
-  Note that setting the quorum to a value less than floor(n/2) + 1 is not
-  recommended and would likely cause a split-brain in a face of network
-  partitions.
+  We do not recommend setting the quorum to a value less than ``floor(n/2) + 1``
+  as it would likely cause a split-brain in a face of network partitions.
 
-Then, for the given example when four nodes fail simultaneously,
-the cluster would continue to function as well. But if split to partitions of
-three and four nodes respectively, the quorum of three would have made both
-sides to attempt to fence the other and host resources. And without fencing
-enabled, it would go straight to running two copies of each resource.
+When four nodes fail simultaneously, the cluster would continue to function as
+well. But if split to partitions of three and four nodes respectively, the
+quorum of three would have made both sides to attempt to fence the other and
+host resources. Without fencing enabled, it would go straight to running
+two copies of each resource.
 
-This is why setting the quorum to a value less than floor(n/2) + 1 is
-dangerous. However it may be required for some specific cases, like a
+This is why setting the quorum to a value less than ``floor(n/2) + 1`` is
+dangerous. However it may be required for some specific cases, such as a
 temporary measure at a point it is known with 100% certainty that the other
 nodes are down.
 
 When configuring an OpenStack environment for study or demonstration purposes,
-it is possible to turn off the quorum checking;
-this is discussed later in this guide.
-Production systems should always run with quorum enabled.
+it is possible to turn off the quorum checking. Production systems should
+always run with quorum enabled.
 
 
 Single-controller high availability mode
@@ -203,11 +197,12 @@ but is not appropriate for a production environment.
 It is possible to add controllers to such an environment
 to convert it into a truly highly available environment.
 
-
 High availability is not for every user. It presents some challenges.
 High availability may be too complex for databases or
 systems with large amounts of data. Replication can slow large systems
 down. Different setups have different prerequisites. Read the guidelines
 for each setup.
 
-High availability is turned off as the default in OpenStack setups.
+.. important::
+
+   High availability is turned off as the default in OpenStack setups.
