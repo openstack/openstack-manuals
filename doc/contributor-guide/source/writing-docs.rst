@@ -21,3 +21,4 @@ to determine if your change renders properly.
    topic-structure.rst
    topic-tags.rst
    additional-git-workflow.rst
+   vendor-drivers.rst
