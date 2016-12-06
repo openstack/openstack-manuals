@@ -453,7 +453,7 @@ be set to ``uefi`` when the image is created. For example:
 
 .. code-block:: console
 
-   $ glance image-create --container-format bare --disk-format qcow2 \
+   $ openstack image create --container-format bare --disk-format qcow2 \
      --property hw_firmware_type=uefi --file /tmp/cloud-uefi.qcow --name uefi
 
 After that, you can launch instances from this UEFI image.
