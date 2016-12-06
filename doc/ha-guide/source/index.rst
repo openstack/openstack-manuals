@@ -19,9 +19,6 @@ This guide documents OpenStack Newton, Mitaka, and Liberty releases.
    `bug list <https://bugs.launchpad.net/openstack-manuals/>`_.
    Please help where you are able.
 
-Contents
-~~~~~~~~
-
 .. toctree::
    :maxdepth: 2
 
@@ -50,8 +47,3 @@ Glossary
    :maxdepth: 1
 
    common/glossary.rst
-
-Search in this guide
-~~~~~~~~~~~~~~~~~~~~
-
-* :ref:`search`
