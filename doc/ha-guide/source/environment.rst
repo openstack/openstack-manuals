@@ -1,6 +1,6 @@
-=======================================
-Basic environment for high availability
-=======================================
+=================================
+Configuring the basic environment
+=================================
 
 This chapter describes the basic environment for high availability,
 such as hardware, operating system, common services.

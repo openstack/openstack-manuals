@@ -1,6 +1,6 @@
-==================================================
-Configuring the compute node for high availability
-==================================================
+============================
+Configuring the compute node
+============================
 
 .. toctree::
    :maxdepth: 2

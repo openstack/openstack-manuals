@@ -1,6 +1,6 @@
-=====================================
-Shared services for high availability
-=====================================
+===============================
+Configuring the shared services
+===============================
 
 This chapter describes the shared services for high availability,
 such as database, messaging service.

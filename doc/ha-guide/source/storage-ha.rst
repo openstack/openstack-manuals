@@ -1,6 +1,6 @@
-=========================================
-Configuring Storage for high availability
-=========================================
+===================
+Configuring storage
+===================
 
 .. toctree::
    :maxdepth: 2

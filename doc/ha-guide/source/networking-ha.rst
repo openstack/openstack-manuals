@@ -1,6 +1,6 @@
-=========================================
-Networking services for high availability
-=========================================
+===================================
+Configuring the networking services
+===================================
 
 Configure networking on each node. See the basic information
 about configuring networking in the *Networking service*
