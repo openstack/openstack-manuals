@@ -586,15 +586,15 @@ Create external network and map it to a specific NSX gateway service:
 
 .. code-block:: console
 
-   $ neutron net-create public --router:external True --provider:network_type l3_ext \
-   --provider:physical_network L3_GATEWAY_SERVICE_UUID
+   $ openstack network create public --external --provider-network-type l3_ext \
+   --provider-physical-network L3_GATEWAY_SERVICE_UUID
 
 Terminate traffic on a specific VLAN from a NSX gateway service:
 
 .. code-block:: console
 
-   $ neutron net-create public --router:external True --provider:network_type l3_ext \
-   --provider:physical_network L3_GATEWAY_SERVICE_UUID --provider:segmentation_id VLAN_ID
+   $ openstack network create public --external --provider-network-type l3_ext \
+   --provider-physical-network L3_GATEWAY_SERVICE_UUID --provider-segment VLAN_ID
 
 Operational status synchronization in the VMware NSX plug-in
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
