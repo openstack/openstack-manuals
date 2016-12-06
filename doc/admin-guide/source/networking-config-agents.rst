@@ -97,13 +97,15 @@ For example:
 
 .. code-block:: console
 
-   $ neutron subnet-create --ip-version 6 --ipv6_ra_mode dhcpv6-stateful \
-     --ipv6_address_mode dhcpv6-stateful NETWORK CIDR
+   $ openstack subnet create --ip-version 6 --ipv6-ra-mode dhcpv6-stateful \
+     --ipv6-address-mode dhcpv6-stateful --network NETWORK --subnet-range \
+     CIDR SUBNET_NAME
 
 .. code-block:: console
 
-   $ neutron subnet-create --ip-version 6 --ipv6_ra_mode dhcpv6-stateless \
-     --ipv6_address_mode dhcpv6-stateless NETWORK CIDR
+   $ openstack subnet create --ip-version 6 --ipv6-ra-mode dhcpv6-stateless \
+     --ipv6-address-mode dhcpv6-stateless --network NETWORK --subnet-range \
+     CIDR SUBNET_NAME
 
 If no dnsmasq process for subnet's network is launched, Networking will
 launch a new one on subnet's dhcp port in ``qdhcp-XXX`` namespace. If
