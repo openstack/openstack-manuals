@@ -651,7 +651,7 @@ Unmanage a snapshot with the :command:`cinder snapshot-unmanage` command:
 
 .. code-block:: console
 
-   $ openstack snapshot unset SNAPSHOT
+   $ cinder snapshot-unmanage SNAPSHOT
 
 The arguments to be passed are:
 
@@ -662,4 +662,4 @@ The following example unmanages the ``my-snapshot-id`` image:
 
 .. code-block:: console
 
-   $ openstack snapshot unset my-snapshot-id
+   $ cinder snapshot-unmanage my-snapshot-id
