@@ -3,8 +3,8 @@ Migrate a single instance to another compute host
 =================================================
 
 When you want to move an instance from one compute host to another,
-you can use the :command:`nova migrate` command. The scheduler chooses the
-destination compute host based on its settings. This process does
+you can use the :command:`openstack server migrate` command. The scheduler
+chooses the destination compute host based on its settings. This process does
 not assume that the instance has shared storage available on the
 target host. If you are using SSH tunneling, you must ensure that
 each node is configured with SSH key authentication so that the
@@ -17,18 +17,11 @@ For more information, see :ref:`clinovamigratecfgssh`.
 
       $ openstack server list
 
-#. After selecting a VM from the list, run this command where :guilabel:`VM_ID`
-   is set to the ID in the list returned in the previous step:
+#. Use the :command:`openstack server migrate` command.
 
    .. code-block:: console
 
-      $ nova show VM_ID
-
-#. Use the :command:`nova migrate` command.
-
-   .. code-block:: console
-
-      $ nova migrate VM_ID
+      $ openstack server migrate --live TARGET_HOST VM_INSTANCE
 
 #. To migrate an instance and watch the status, use this example script:
 
