@@ -391,7 +391,7 @@ retrieve the metadata, make a GET request to
 
 Instances also retrieve user data (passed as the ``user_data`` parameter
 in the API call or by the :option:`--user_data` flag in the
-:command:`nova boot` command) through the metadata service, by making a
+:command:`openstack server create` command) through the metadata service, by making a
 GET request to ``http://169.254.169.254/openstack/2012-08-10/user_data``:
 
 .. code-block:: console
@@ -739,7 +739,8 @@ Save the file, and restart ``nova-network``
 .. note::
 
    If this option is enabled, but all floating IP addresses have
-   already been allocated, the :command:`nova boot` command will fail.
+   already been allocated, the :command:`openstack server create`
+   command will fail.
 
 Remove a network from a project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -834,11 +835,12 @@ Edit the ``/etc/network/interfaces`` file:
 
 If the Virtual Network Service Neutron is installed, you can specify the
 networks to attach to the interfaces by using the :option:`--nic` flag with
-the :command:`nova boot` command:
+the :command:`openstack server create` command:
 
 .. code-block:: console
 
-   $ nova boot --image ed8b2a37-5535-4a5f-a615-443513036d71 --flavor 1 --nic net-id=NETWORK1_ID --nic net-id=NETWORK2_ID test-vm1
+   $ openstack server create --image ed8b2a37-5535-4a5f-a615-443513036d71 \
+     --flavor 1 --nic net-id=NETWORK1_ID --nic net-id=NETWORK2_ID test-vm1
 
 Troubleshooting Networking
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
