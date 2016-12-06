@@ -75,7 +75,7 @@ commands:
 
 .. code-block:: console
 
-  $ glance image-create --disk-format raw --container-format bare --name <name>
+  $ openstack image create --disk-format raw --container-format bare IMAGE_NAME
 
   $ glance location-add <image-uuid> --url cinder://<volume-uuid>
 
@@ -87,4 +87,4 @@ store of the Image service.
 
 .. code-block:: console
 
-   $ cinder upload-to-image <volume> <image-name>
+   $ openstack image create --volume SOURCE_VOLUME IMAGE_NAME
