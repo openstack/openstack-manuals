@@ -7,7 +7,8 @@ Injecting the administrator password
 Compute can generate a random administrator (root) password and inject
 that password into an instance. If this feature is enabled, users can
 run :command:`ssh` to an instance without an :command:`ssh` keypair.
-The random password appears in the output of the :command:`nova boot` command.
+The random password appears in the output of the
+:command:`openstack server create` command.
 You can also view and set the admin password from the dashboard.
 
 **Password injection using the dashboard**
