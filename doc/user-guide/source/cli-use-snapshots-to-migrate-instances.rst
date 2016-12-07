@@ -134,4 +134,4 @@ new instance:
 
 .. code-block:: console
 
-   $ nova boot --flavor m1.tiny --image myInstanceSnapshot myNewInstance
+   $ openstack server create --flavor m1.tiny --image myInstanceSnapshot myNewInstance
