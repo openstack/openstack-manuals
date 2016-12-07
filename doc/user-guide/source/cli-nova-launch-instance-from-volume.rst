@@ -4,8 +4,8 @@ Launch an instance from a volume
 
 You can boot instances from a volume instead of an image.
 
-To complete these tasks, use these parameters on the :command:`nova boot`
-command:
+To complete these tasks, use these parameters on the
+:command:`openstack server create` command:
 
 .. list-table::
    :header-rows: 1
@@ -95,11 +95,11 @@ system.
 
    .. code-block:: console
 
-      $ nova boot --flavor 2 --image 98901246-af91-43d8-b5e6-a4506aa8f369 \
+      $ openstack server create --flavor 2 --image 98901246-af91-43d8-b5e6-a4506aa8f369 \
         --block-device source=volume,id=d620d971-b160-4c4e-8652-2513d74e2080,dest=volume,shutdown=preserve \
         myInstanceWithVolume
       +--------------------------------------+--------------------------------------------+
-      | Property                             | Value                                      |
+      | Field                                | Value                                      |
       +--------------------------------------+--------------------------------------------+
       | OS-DCF:diskConfig                    | MANUAL                                     |
       | OS-EXT-AZ:availability_zone          | nova                                       |
@@ -212,7 +212,7 @@ the volume to boot an instance.
 
    .. code-block:: console
 
-      $ nova boot --flavor FLAVOR --block-device \
+      $ openstack server create --flavor FLAVOR --block-device \
         source=SOURCE,id=ID,dest=DEST,size=SIZE,shutdown=PRESERVE,bootindex=INDEX \
         NAME
 
@@ -259,11 +259,11 @@ the volume to boot an instance.
 
    .. code-block:: console
 
-      $ nova boot --flavor 2 \
+      $ openstack server create --flavor 2 \
         --block-device source=volume,id=$VOLUME_ID,dest=volume,size=10,shutdown=preserve,bootindex=0 \
         myInstanceFromVolume
       +--------------------------------------+--------------------------------+
-      | Property                             | Value                          |
+      | Field                                | Value                          |
       +--------------------------------------+--------------------------------+
       | OS-EXT-STS:task_state                | scheduling                     |
       | image                                | Attempt to boot from volume    |
@@ -323,7 +323,8 @@ Boot an instance with a 512 MB swap disk and 2 GB ephemeral disk.
 
 .. code-block:: console
 
-   $ nova boot --flavor FLAVOR --image IMAGE_ID --swap 512 --ephemeral size=2 NAME
+   $ openstack server create --flavor FLAVOR --image IMAGE_ID --swap 512 \
+   --ephemeral size=2 NAME
 
 .. note::
 

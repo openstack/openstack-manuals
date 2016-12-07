@@ -8,18 +8,18 @@ Boot an instance from an ISO image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack supports booting instances using ISO images. But before you
-make such instances functional, use the :command:`nova boot` command
-with the following parameters to boot an instance.
+make such instances functional, use the :command:`openstack server create`
+command with the following parameters to boot an instance.
 
 .. code-block:: console
 
-    $ nova boot \
+    $ openstack server create \
         --image ubuntu-14.04.2-server-amd64.iso \
         --block-device source=blank,dest=volume,size=10,shutdown=preserve \
         --nic net-id = NETWORK_UUID \
         --flavor 2 INSTANCE_NAME
     +--------------------------------------+--------------------------------------------+
-    | Property                             | Value                                      |
+    | Field                                | Value                                      |
     +--------------------------------------+--------------------------------------------+
     | OS-DCF:diskConfig                    | MANUAL                                     |
     | OS-EXT-AZ:availability_zone          | nova                                       |
