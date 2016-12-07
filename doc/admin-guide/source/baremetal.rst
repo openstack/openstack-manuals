@@ -78,7 +78,8 @@ Use Bare Metal
 
 #. Register the ports information.
 
-#. Use nova boot to kick off the bare metal provision.
+#. Use the :command:`openstack server create` command to
+   kick off the bare metal provision.
 
 #. Check nodes' provision state and power state.
 
