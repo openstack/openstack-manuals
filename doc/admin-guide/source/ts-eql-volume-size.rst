@@ -25,25 +25,32 @@ following example, the ID and size are
 
 .. code-block:: console
 
-   $ cinder create --display-name volume1 1
+   $ openstack volume create volume1 --size 1
 
-   +-----------------------+-------------------------------------------+
-   |   Property            |   Value                                   |
-   +-----------------------+-------------------------------------------+
-   |   attachments         |   []                                      |
-   |   availability zone   |   nova                                    |
-   |   bootable            |   false                                   |
-   |   created_at          |   2014-03-21T18:31:54.248775              |
-   |   display_description |   None                                    |
-   |   display_name        |   volume1                                 |
-   |   id                  |   74cf9c04-4543-47ae-a937-a9b7c6c921e7    |
-   |   metadata            |   {}                                      |
-   |   size                |   1                                       |
-   |   snapshot_id         |   None                                    |
-   |   source volid        |   None                                    |
-   |   status              |   creating                                |
-   |   volume type         |   None                                    |
-   +-----------------------+-------------------------------------------+
+   +---------------------+--------------------------------------+
+   | Field               | Value                                |
+   +---------------------+--------------------------------------+
+   | attachments         | []                                   |
+   | availability_zone   | nova                                 |
+   | bootable            | false                                |
+   | consistencygroup_id | None                                 |
+   | created_at          | 2016-12-06T11:33:30.957318           |
+   | description         | None                                 |
+   | encrypted           | False                                |
+   | id                  | 74cf9c04-4543-47ae-a937-a9b7c6c921e7 |
+   | migration_status    | None                                 |
+   | multiattach         | False                                |
+   | name                | volume1                              |
+   | properties          |                                      |
+   | replication_status  | disabled                             |
+   | size                | 1                                    |
+   | snapshot_id         | None                                 |
+   | source_volid        | None                                 |
+   | status              | creating                             |
+   | type                | iscsi                                |
+   | updated_at          | None                                 |
+   | user_id             | c36cec73b0e44876a4478b1e6cd749bb     |
+   +---------------------+--------------------------------------+
 
 Verify the volume size on the EQL array by using its command-line
 interface.
@@ -82,35 +89,51 @@ Create a new image from this volume:
 
 .. code-block:: console
 
-   $ cinder upload-to-image --disk-format raw \
-     --container-format bare volume1 image_from_volume1
+   $ openstack image create --volume volume1 \
+     --disk-format raw --container-format bare image_from_volume1
 
-   +---------------------+---------------------------------------+
-   |       Property      |                 Value                 |
-   +---------------------+---------------------------------------+
-   |   container_format  |                  bare                 |
-   |     disk_format     |                  raw                  |
-   | display_description |                  None                 |
-   |          id         | 74cf9c04-4543-47ae-a937-a9b7c6c921e7  |
-   |       image_id      | 3020a21d-ba37-4495-8899-07fc201161b9  |
-   |      image_name     |          image_from_volume1           |
-   |         size        |                  1                    |
-   |        status       |              uploading                |
-   |      updated_at     |      2014-03-21T18:31:55.000000       |
-   |     volume_type     |                 None                  |
-   +---------------------+---------------------------------------+
+   +---------------------+--------------------------------------+
+   | Field               | Value                                |
+   +---------------------+--------------------------------------+
+   | container_format    | bare                                 |
+   | disk_format         | raw                                  |
+   | display_description | None                                 |
+   | id                  | 850fd393-a968-4259-9c65-6b495cba5209 |
+   | image_id            | 3020a21d-ba37-4495-8899-07fc201161b9 |
+   | image_name          | image_from_volume1                   |
+   | is_public           | False                                |
+   | protected           | False                                |
+   | size                | 1                                    |
+   | status              | uploading                            |
+   | updated_at          | 2016-12-05T12:43:56.000000           |
+   | volume_type         | iscsi                                |
+   +---------------------+--------------------------------------+
 
 When you uploaded the volume in the previous step, the Image service
 reported the volume's size as ``1`` (GB). However, when using
-:command:`glance image-list` to list the image, the displayed size is
+:command:`openstack image show` to show the image, the displayed size is
 1085276160 bytes, or roughly 1.01 GB:
 
-+-----------------------+---------+-----------+--------------+--------------+
-| Name                  | Disk    | Container | Size         | Status       |
-|                       | Format  | Format    |              |              |
-+=======================+=========+===========+==============+==============+
-| image\_from\_volume1  | raw     | bare      | *1085276160* | active       |
-+-----------------------+---------+-----------+--------------+--------------+
++------------------+--------------------------------------+
+| Property         | Value                                |
++------------------+--------------------------------------+
+| checksum         | cd573cfaace07e7949bc0c46028904ff     |
+| container_format | bare                                 |
+| created_at       | 2016-12-06T11:39:06Z                 |
+| disk_format      | raw                                  |
+| id               | 3020a21d-ba37-4495-8899-07fc201161b9 |
+| min_disk         | 0                                    |
+| min_ram          | 0                                    |
+| name             | image_from_volume1                   |
+| owner            | 5669caad86a04256994cdf755df4d3c1     |
+| protected        | False                                |
+| size             | 1085276160                           |
+| status           | active                               |
+| tags             | []                                   |
+| updated_at       | 2016-12-06T11:39:24Z                 |
+| virtual_size     | None                                 |
+| visibility       | private                              |
++------------------+--------------------------------------+
 
 
 
@@ -122,8 +145,7 @@ Image service:
 
 .. code-block:: console
 
-   $ cinder create --display-name volume2 \
-     --image-id 3020a21d-ba37-4495-8899-07fc201161b9 1
+   $ openstack volume create volume2 --size 1 --image 3020a21d-ba37-4495-8899-07fc201161b9
    ERROR: Invalid input received: Size of specified image 2 is larger
    than volume size 1. (HTTP 400) (Request-ID: req-4b9369c0-dec5-4e16-a114-c0cdl6bSd210)
 
@@ -140,26 +162,30 @@ volume-backed image should use a size of 2 GB:
 
 .. code-block:: console
 
-   $ cinder create --display-name volume2 \
-     --image-id 3020a21d-ba37-4495-8899-07fc201161b9 1
-
+   $ openstack volume create volume2 --size 1 --image 3020a21d-ba37-4495-8899-07fc201161b9
    +---------------------+--------------------------------------+
-   |       Property      |                Value                 |
+   | Field               | Value                                |
    +---------------------+--------------------------------------+
-   |     attachments     |                  []                  |
-   |  availability_zone  |                 nova                 |
-   |      bootable       |                false                 |
-   |     created_at      |      2014-03-21T19:25:31.564482      |
-   | display_description |               None                   |
-   |    display_name     |             volume2                  |
-   |         id          | 64e8eb18-d23f-437b-bcac-b3S2afa6843a |
-   |      image_id       | 3020a21d-ba37-4495-8899-07fc20116lb9 |
-   |      metadata       |                  []                  |
-   |        size         |                  2                   |
-   |    snapshot_id      |                 None                 |
-   |    source_volid     |                 None                 |
-   |       status        |               creating               |
-   |    volume_type      |                 None                 |
+   | attachments         | []                                   |
+   | availability_zone   | nova                                 |
+   | bootable            | false                                |
+   | consistencygroup_id | None                                 |
+   | created_at          | 2016-12-06T11:49:06.031768           |
+   | description         | None                                 |
+   | encrypted           | False                                |
+   | id                  | a70d6305-f861-4382-84d8-c43128be0013 |
+   | migration_status    | None                                 |
+   | multiattach         | False                                |
+   | name                | volume2                              |
+   | properties          |                                      |
+   | replication_status  | disabled                             |
+   | size                | 1                                    |
+   | snapshot_id         | None                                 |
+   | source_volid        | None                                 |
+   | status              | creating                             |
+   | type                | iscsi                                |
+   | updated_at          | None                                 |
+   | user_id             | c36cec73b0e44876a4478b1e6cd749bb     |
    +---------------------+--------------------------------------+
 
 .. note::
