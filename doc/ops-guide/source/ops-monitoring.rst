@@ -116,7 +116,7 @@ The first is through the :command:`nova` command:
 
 .. code-block:: console
 
-   # nova usage-list
+   # openstack usage list
 
 This command displays a list of how many instances a tenant has running
 and some light usage statistics about the combined instances. This
