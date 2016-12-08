@@ -545,6 +545,12 @@ Sparse image by setting ``vmware_disktype`` to ``sparse``:
 The following table shows the ``vmware_ostype`` property that applies to
 each of the supported guest OS:
 
+.. note::
+
+   If a glance image has a ``vmware_ostype`` property which does not
+   correspond to a valid VMware guestId, VM creation will fail, and a warning
+   will be logged.
+
 .. list-table:: OpenStack Image service OS type settings
    :header-rows: 1
 
