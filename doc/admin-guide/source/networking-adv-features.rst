@@ -856,14 +856,4 @@ complete basic L3 metering operations:
    * - Lists the value of created metering label rules.
      - .. code-block:: console
 
-          $ ceilometer sample-list -m SNMP_MEASUREMENT
-
-       For example:
-
-       .. code-block:: console
-
-          $ ceilometer sample-list -m hardware.network.bandwidth.bytes
-          $ ceilometer sample-list -m hardware.network.incoming.bytes
-          $ ceilometer sample-list -m hardware.network.outgoing.bytes
-          $ ceilometer sample-list -m hardware.network.outgoing.errors
-
+          $ ceilometer sample-list -m bandwidth -q resource=LABEL_UUID
