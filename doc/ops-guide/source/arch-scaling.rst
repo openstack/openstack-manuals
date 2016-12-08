@@ -342,8 +342,8 @@ change all flavor types relating to them.
 
     Previously, all services had an availability zone. Currently, only
     the ``nova-compute`` service has its own availability zone. Services
-    such as ``nova-scheduler``, ``nova-network``, and ``nova-conductor``
-    have always spanned all availability zones.
+    such as ``nova-scheduler`` and ``nova-conductor`` span all
+    availability zones.
 
     When you run any of the following operations, the services appear in
     their own internal availability zone

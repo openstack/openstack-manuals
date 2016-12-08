@@ -21,7 +21,7 @@ priority, and restore in order.
    * - 3
      - Public network connectivity for user virtual machines
    * - 4
-     - ``nova-compute``, ``nova-network``, cinder hosts
+     - ``nova-compute``, cinder hosts
    * - 5
      - User virtual machines
    * - 10
