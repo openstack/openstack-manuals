@@ -39,11 +39,11 @@ Create a snapshot of the instance
       | c41f3074-c82a-4837-8673-fa7e9fea7e11 | myInstance | ACTIVE | private=10.0.0.3             | cirros     |
       +--------------------------------------+------------+--------+------------------------------+------------+
 
-#. Use the :command:`nova stop` command to shut down the instance:
+#. Use the :command:`openstack server stop` command to shut down the instance:
 
    .. code-block:: console
 
-      $ nova stop myInstance
+      $ openstack server stop myInstance
 
 #. Use the :command:`openstack server list` command to confirm that the
    instance shows a ``SHUTOFF`` status:
