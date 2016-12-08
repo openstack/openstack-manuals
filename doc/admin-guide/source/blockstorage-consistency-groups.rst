@@ -123,6 +123,12 @@ consistency group snapshot:
 
 The details of consistency group operations are shown in the following.
 
+   .. note::
+
+      Currently, no OpenStack client command is available to run in
+      place of the cinder consistency group creation commands. Use the
+      cinder commands detailed in the following examples.
+
 **Create a consistency group**:
 
 .. code-block:: console
@@ -195,11 +201,11 @@ The details of consistency group operations are shown in the following.
 
 .. code-block:: console
 
-   $ cinder create --volume-type volume_type_1 --name cgBronzeVol\
-     --consisgroup-id 1de80c27-3b2f-47a6-91a7-e867cbe36462 1
+   $ openstack volume create --type volume_type_1 --consistency-group \
+     1de80c27-3b2f-47a6-91a7-e867cbe36462 --size 1 cgBronzeVol
 
    +---------------------------------------+--------------------------------------+
-   |                Property               |                Value                 |
+   | Field                                 | Value                                |
    +---------------------------------------+--------------------------------------+
    |              attachments              |                  []                  |
    |           availability_zone           |                 nova                 |
