@@ -1114,13 +1114,14 @@ Operations
 
   .. code-block:: console
 
-     cinder create [--consisgroup-id <consistencygroup-id>] [--name <name>]
-     [--description <description>] [--volume-type <volume-type>]
-     [--availability-zone <availability-zone>] <size>
+     $ openstack volume create [--consistency-group consistency-group>]
+       [--description <description>]  [--type <volume-type>]
+       [--availability-zone <availability-zone>]  [--size <size>] <name>
 
   .. code-block:: console
 
-     $ cinder create --volume-type volume_type_1 --name cgBronzeVol --consisgroup-id 1de80c27-3b2f-47a6-91a7-e867cbe36462 1
+     $ openstack volume create --type volume_type_1 ----consistency-group \
+       1de80c27-3b2f-47a6-91a7-e867cbe36462 --size 1 cgBronzeVol
 
 Workload Planner (WLP)
 ~~~~~~~~~~~~~~~~~~~~~~
