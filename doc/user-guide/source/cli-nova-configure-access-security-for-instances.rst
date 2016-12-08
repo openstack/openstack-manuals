@@ -57,7 +57,8 @@ Rules are automatically enforced as soon as you create or modify them.
   Instances that use the default security group cannot, by default, be
   accessed from any IP address outside of the cloud. If you want those
   IP addresses to access the instances, you must modify the rules for
-  the default security group.
+  the default security group. Additionally, security groups will
+  automatically drop DHCP responses coming from instances.
 
   You can also assign a floating IP address to a running instance to
   make it accessible from outside the cloud. See
