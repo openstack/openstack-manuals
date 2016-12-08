@@ -370,46 +370,47 @@ using neutron ports which contain the IPv4 & IPv6 address.
 
    .. code-block:: console
 
-      $ nova boot --flavor m1.medium --image ubuntu.qcow2 --key-name team_key \
-      --nic port-id=PORT_ID "example-fqdn-01.sys.example.com"
+      $ openstack server create --flavor m1.medium --image ubuntu.qcow2 \
+        --key-name team_key --nic port-id=PORT_ID \
+        "example-fqdn-01.sys.example.com"
 
 #. Verify the instance has the correct IP address:
 
    .. code-block:: console
 
-      +-------------------------------------+-----------------------------------------------------------+
-      | Property                            | Value                                                     |
-      +-------------------------------------+-----------------------------------------------------------+
-      | OS-DCF:diskConfig                   | MANUAL                                                    |
-      | OS-EXT-AZ:availability_zone         | nova                                                      |
-      | OS-EXT-SRV-ATTR:host                | os_compute-1                                              |
-      | OS-EXT-SRV-ATTR:hypervisor_hostname | os_compute.ece.example.com                                |
-      | OS-EXT-SRV-ATTR:instance_name       | instance-00012b82                                         |
-      | OS-EXT-STS:power_state              | 1                                                         |
-      | OS-EXT-STS:task_state               | -                                                     	|
-      | OS-EXT-STS:vm_state                 | active                                                	|
-      | OS-SRV-USG:launched_at              | 2016-07-26T21:27:04.000000                                |
-      | OS-SRV-USG:terminated_at            | -                                                         |
-      | Public_AGILE network                | 2001:558:fc0b:100:f816:3eff:fefb:65fc, 96.118.182.107     |
-      | accessIPv4                          |                                                          	|
-      | accessIPv6                          |                                                           |
-      | config_drive                        |                                                           |
-      | created                             | 2016-07-26T21:26:42Z                                      |
-      | flavor                              | m1.medium (103)                                           |
-      | hostId                              | b0a4684922bce321770daf033032d9115fe3e13190191bf01dbc357a  |
-      | id                                  | 9ff9a672-d496-470a-84a7-284799a777fd                    	|
-      | image                               | Example Cloud Ubuntu 14.04 x86_64 v2.5 (fb49d7e1-273b-... |
-      | key_name                            | team_key                                                	|
-      | metadata                            | {}                                                        |
-      | name                                | example-fqdn-01.sys.example.com                         	|
-      | os-extended-volumes:volumes_attached| []                                                       	|
-      | progress                            | 0                                                         |
-      | security_groups                     | default                                                   |
-      | status                              | ACTIVE                                                	|
-      | tenant_id                           | 52f0574689f14c8a99e7ca22c4eb5720                        	|
-      | updated                             | 2016-07-26T21:27:04Z                                      |
-      | user_id                             | e37b87cb8d784cc3a85e475f67b32ab5                      	|
-      +-------------------------------------+-----------------------------------------------------------+
+      +--------------------------------------+----------------------------------------------------------+
+      | Field                                | Value                                                    |
+      +--------------------------------------+----------------------------------------------------------+
+      | OS-DCF:diskConfig                    | MANUAL                                                   |
+      | OS-EXT-AZ:availability_zone          | nova                                                     |
+      | OS-EXT-SRV-ATTR:host                 | os_compute-1                                             |
+      | OS-EXT-SRV-ATTR:hypervisor_hostname  | os_compute.ece.example.com                               |
+      | OS-EXT-SRV-ATTR:instance_name        | instance-00012b82                                        |
+      | OS-EXT-STS:power_state               | Running                                                  |
+      | OS-EXT-STS:task_state                | None                                                     |
+      | OS-EXT-STS:vm_state                  | active                                                   |
+      | OS-SRV-USG:launched_at               | 2016-11-30T08:55:27.000000                               |
+      | OS-SRV-USG:terminated_at             | None                                                     |
+      | accessIPv4                           |                                                          |
+      | accessIPv6                           |                                                          |
+      | addresses                            | public=172.24.4.236                                      |
+      | config_drive                         |                                                          |
+      | created                              | 2016-11-30T08:55:14Z                                     |
+      | flavor                               | m1.medium (103)                                          |
+      | hostId                               | aca973d5b7981faaf8c713a0130713bbc1e64151be65c8dfb53039f7 |
+      | id                                   | f91bd761-6407-46a6-b5fd-11a8a46e4983                     |
+      | image                                | Example Cloud Ubuntu 14.04 x86_64 v2.5 (fb49d7e1-273b-...|
+      | key_name                             | team_key                                                 |
+      | name                                 | example-fqdn-01.sys.example.com                          |
+      | os-extended-volumes:volumes_attached | []                                                       |
+      | progress                             | 0                                                        |
+      | project_id                           | 2daf82a578e9437cab396c888ff0ca57                         |
+      | properties                           |                                                          |
+      | security_groups                      | [{u'name': u'default'}]                                  |
+      | status                               | ACTIVE                                                   |
+      | updated                              | 2016-11-30T08:55:27Z                                     |
+      | user_id                              | 8cbea24666ae49bbb8c1641f9b12d2d2                         |
+      +--------------------------------------+----------------------------------------------------------+
 
 #. Check the port connection using the netcat utility:
 
