@@ -124,15 +124,15 @@ This can be done by the following command:
 
 .. code-block:: console
 
-   $ cinder --os-username admin --os-tenant-name admin type-create lvm
+   $ openstack --os-username admin --os-tenant-name admin volume type create lvm
 
 Then, an extra-specification has to be created to link the volume
 type to a back end name. Run this command:
 
 .. code-block:: console
 
-   $ cinder --os-username admin --os-tenant-name admin type-key lvm set \
-     volume_backend_name=LVM_iSCSI
+   $ openstack --os-username admin --os-tenant-name admin volume type set lvm \
+     --property volume_backend_name=LVM_iSCSI
 
 This example creates a ``lvm`` volume type with
 ``volume_backend_name=LVM_iSCSI`` as extra-specifications.
@@ -141,10 +141,10 @@ Create another volume type:
 
 .. code-block:: console
 
-   $ cinder --os-username admin --os-tenant-name admin type-create lvm_gold
+   $ openstack --os-username admin --os-tenant-name admin volume type create lvm_gold
 
-   $ cinder --os-username admin --os-tenant-name admin type-key lvm_gold set \
-     volume_backend_name=LVM_iSCSI_b
+   $ openstack --os-username admin --os-tenant-name admin volume type set lvm_gold \
+     --property volume_backend_name=LVM_iSCSI_b
 
 This second volume type is named ``lvm_gold`` and has ``LVM_iSCSI_b`` as
 back end name.
@@ -173,13 +173,13 @@ back end has to be used.
 
 .. code-block:: console
 
-   $ cinder create --volume_type lvm --display_name test_multi_backend 1
+   $ openstack volume create --size 1 --type lvm test_multi_backend
 
 Considering the ``cinder.conf`` described previously, the scheduler
 creates this volume on ``lvmdriver-1`` or ``lvmdriver-2``.
 
 .. code-block:: console
 
-   $ cinder create --volume_type lvm_gold --display_name test_multi_backend 1
+   $ openstack volume create --size 1 --type lvm_gold test_multi_backend
 
 This second volume is created on ``lvmdriver-3``.
