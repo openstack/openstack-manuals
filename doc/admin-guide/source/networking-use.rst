@@ -59,8 +59,9 @@ complete basic network operations:
 |Creates a subnet that is |                                                 |
 |associated with net1.    |                                                 |
 |                         |                                                 |
-|                         |     ``$ openstack subnet create``               |
-|                         |     ``net1 10.0.0.0/24``                        |
+|                         |     ``$ openstack subnet create subnet1``       |
+|                         |     ``--subnet-range 10.0.0.0/24``              |
+|                         |     ``--network net1``                          |
 +-------------------------+-------------------------------------------------+
 |Lists ports for a        |                                                 |
 |specified project.       |                                                 |
