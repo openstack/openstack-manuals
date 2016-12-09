@@ -390,8 +390,10 @@ The following meters are collected for OpenStack Compute:
 
 .. note::
 
-   The ``instance:<type>`` meter can be replaced by using extra parameters in
-   both the samples and statistics queries. Sample queries look like:
+   1. In the Ocata release, the ``instance`` meter is no longer supported..
+
+   2. The ``instance:<type>`` meter can be replaced by using extra parameters in
+      both the samples and statistics queries. Sample queries look like:
 
    .. code-block:: console
 
@@ -604,6 +606,9 @@ meters are recorded from capable platform:
 +------------------------------------+----------------------------------------+
 | hardware.ipmi.node.temperature     | hardware.ipmi.node.inlet_temperature   |
 +------------------------------------+----------------------------------------+
+| hardware.ipmi.node.\               | hardware.ipmi.node.temperature         |
+| inlet_temperature                  |                                        |
++------------------------------------+----------------------------------------+
 
 SNMP based meters
 ~~~~~~~~~~~~~~~~~
@@ -626,7 +631,7 @@ SNMP:
 | 5min                |       | ess  |          |          | past 5 minutes   |
 +---------------------+-------+------+----------+----------+------------------+
 | hardware.cpu.load.\ | Gauge | proc\| host ID  | Pollster | CPU load in the  |
-| 10min               |       | ess  |          |          | past 10 minutes  |
+| 15min               |       | ess  |          |          | past 15 minutes  |
 +---------------------+-------+------+----------+----------+------------------+
 | hardware.disk.size\ | Gauge | KB   | disk ID  | Pollster | Total disk size  |
 | .total              |       |      |          |          |                  |
@@ -683,6 +688,11 @@ SNMP:
 +---------------------+-------+------+----------+----------+------------------+
 | hardware.system_st\ | Gauge | %    | host ID  | Pollster | CPU idle percen\ |
 | ats.cpu.idle        |       |      |          |          | tage             |
++---------------------+-------+------+----------+----------+------------------+
+| **Meters added in the Mitaka release**                                      |
++---------------------+-------+------+----------+----------+------------------+
+| hardware.cpu.util   | Gauge | %    | host ID  | Pollster | cpu usage        |
+|                     |       |      |          |          | percentage       |
 +---------------------+-------+------+----------+----------+------------------+
 
 OpenStack Image service
@@ -822,6 +832,20 @@ The following meters are collected for OpenStack Object Storage:
 | .objects.size      |       |       | /container |         | tored objects i\|
 |                    |       |       |            |         | n container     |
 +--------------------+-------+-------+------------+---------+-----------------+
+| **meters deprecated in the Kilo release**                                   |
++------------------+-------+------+----------+-------------+------------------+
+| storage.objects.in\| Delta | B     | storage ID | Notific\| Number of incom\|
+| coming.bytes       |       |       |            | ation   | ing bytes       |
++--------------------+-------+-------+------------+---------+-----------------+
+| storage.objects.ou\| Delta | B     | storage ID | Notific\| Number of outgo\|
+| tgoing.bytes       |       |       |            | ation   | ing bytes       |
++--------------------+-------+-------+------------+---------+-----------------+
+| storage.api.request| Delta | requ\ | storage ID | Notific\| Number of API r\|
+|                    |       | est   |            | ation   | equests against |
+|                    |       |       |            |         | OpenStack Obje\ |
+|                    |       |       |            |         | ct Storage      |
++--------------------+-------+-------+------------+---------+-----------------+
+
 
 Ceph Object Storage
 ~~~~~~~~~~~~~~~~~~~
@@ -944,6 +968,8 @@ The following meters are collected for OpenStack Identity:
 | signment.deleted  |      | ssignm\|           | tion      | from an actor   |
 |                   |      | ent    |           |           | on a target     |
 +-------------------+------+--------+-----------+-----------+-----------------+
+| **All meters thoroughly deprecated in the liberty release**                 |
++------------------+-------+------+----------+-------------+------------------+
 
 OpenStack Networking
 ~~~~~~~~~~~~~~~~~~~~
@@ -1391,6 +1417,7 @@ The following meters are collected for FWaaS:
 
 Orchestration service
 ~~~~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for the Orchestration service:
 
 +----------------+-------+------+----------+--------------+-------------------+
@@ -1413,6 +1440,8 @@ The following meters are collected for the Orchestration service:
 | stack.suspend  | Delta | stack| stack ID | Notification | Stack was success\|
 |                |       |      |          |              | fully suspended   |
 +----------------+-------+------+----------+--------------+-------------------+
+| **All meters thoroughly deprecated in the Liberty release**                 |
++------------------+-------+------+----------+-------------+------------------+
 
 Data processing service for OpenStack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1438,6 +1467,8 @@ OpenStack:
 |                |       |         |           |             | successfully   |
 |                |       |         |           |             | deleted        |
 +----------------+-------+---------+-----------+-------------+----------------+
+| **All meters thoroughly deprecated in the Liberty release**                 |
++------------------+-------+------+----------+-------------+------------------+
 
 Key Value Store module
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -1459,6 +1490,13 @@ The following meters are collected for the Key Value Store module:
 | .index.count     |       |      |          |             | created in a     |
 |                  |       |      |          |             | table            |
 +------------------+-------+------+----------+-------------+------------------+
+
+|
+
+.. note::
+
+   The the Key Value Store meters are not supported in the Newton release and
+   later.
 
 Energy
 ~~~~~~
