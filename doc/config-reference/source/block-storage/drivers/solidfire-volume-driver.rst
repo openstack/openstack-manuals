@@ -62,6 +62,7 @@ Supported operations
 * Extend a volume.
 * Retype a volume.
 * Manage and unmanage a volume.
+* Consistency group snapshots.
 
 QoS support for the SolidFire drivers includes the ability to set the
 following capabilities in the OpenStack Block Storage API
@@ -76,8 +77,28 @@ following capabilities in the OpenStack Block Storage API
 * **burstIOPS** - The maximum number of IOPS allowed over a short period of
   time. Default = 15,000.
 
+* **scaledIOPS** - The presence of this key is a flag indicating that the
+  above IOPS should be scaled by the following scale values. It is recommended
+  to set the value of scaledIOPS to True, but any value will work. The
+  absence of this key implies false.
+
+* **scaleMin** - The amount to scale the minIOPS by for every 1GB of
+  additional volume size. The value must be an integer.
+
+* **scaleMax** - The amount to scale the maxIOPS by for every 1GB of additional
+  volume size. The value must be an integer.
+
+* **scaleBurst** - The amount to scale the burstIOPS by for every 1GB of
+  additional volume size. The value must be an integer.
+
 The QoS keys above no longer require to be scoped but must be created and
 associated to a volume type. For information about how to set the key-value
 pairs and associate them with a volume type, see the `volume qos
 <http://docs.openstack.org/developer/python-openstackclient/command-objects/volume-qos.html>`_
 section in the OpenStackClient command list.
+
+.. note::
+
+  When using scaledIOPS, the scale values must be chosen such that the
+  constraint minIOPS <= maxIOPS <= burstIOPS is always true. The driver will
+  enforce this constraint.
