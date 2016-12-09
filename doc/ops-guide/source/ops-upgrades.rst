@@ -190,9 +190,9 @@ OpenStack services:
 * `Upgrading the Networking service
   <http://docs.openstack.org/developer/neutron/devref/upgrade.html>`_
 * `Upgrading the Compute service
-  <http://docs.openstack.org/developer/nova/upgrade.html>_`
+  <http://docs.openstack.org/developer/nova/upgrade.html>`_
 * `Upgrading the Identity service
-  <http://docs.openstack.org/developer/keystone/upgrading.html>_`
+  <http://docs.openstack.org/developer/keystone/upgrading.html>`_
 
 Prerequisites
 -------------
