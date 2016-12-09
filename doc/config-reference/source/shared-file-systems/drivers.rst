@@ -9,6 +9,7 @@ Share drivers
 
    drivers/generic-driver.rst
    drivers/cephfs-native-driver.rst
+   drivers/dell-emc-vmax-driver.rst
    drivers/glusterfs-driver.rst
    drivers/glusterfs-native-driver.rst
    drivers/hdfs-native-driver.rst
