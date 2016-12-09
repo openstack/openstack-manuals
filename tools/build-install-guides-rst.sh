@@ -27,7 +27,7 @@ for tag in $TAGS; do
         # Build the guide with debconf
         # To use debian only contents, use "debian" tag.
         tools/build-rst.sh doc/install-guide-debconf  \
-            --tag debian --target "draft/install-guide-${tag}" $LINKCHECK
+            --tag debian --target "draft/install-guide-${tag}" $LINKCHECK --pdf
     else
         ##
         # Because Sphinx uses the first heading as title regardless of
@@ -40,6 +40,6 @@ for tag in $TAGS; do
 
         # Build the guide
         tools/build-rst.sh doc/install-guide \
-            --tag ${tag} --target "draft/install-guide-${tag}" $LINKCHECK
+            --tag ${tag} --target "draft/install-guide-${tag}" $LINKCHECK --pdf
     fi
 done
