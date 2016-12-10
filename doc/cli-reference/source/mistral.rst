@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-====================================
-Workflow service command-line client
-====================================
+==============================================
+Workflow service (mistral) command-line client
+==============================================
 
 The mistral client is the command-line interface (CLI) for
-the Workflow service API and its extensions.
+the Workflow service (mistral) API and its extensions.
 
 This chapter documents :command:`mistral` version ``2.1.2``.
 

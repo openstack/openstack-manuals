@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-=======================================
-Key Manager service command-line client
-=======================================
+==================================================
+Key Manager service (barbican) command-line client
+==================================================
 
 The barbican client is the command-line interface (CLI) for
-the Key Manager service API and its extensions.
+the Key Manager service (barbican) API and its extensions.
 
 This chapter documents :command:`barbican` version ``4.1.0``.
 

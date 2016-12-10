@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-===============================================
-Application Catalog service command-line client
-===============================================
+========================================================
+Application Catalog service (murano) command-line client
+========================================================
 
 The murano client is the command-line interface (CLI) for
-the Application Catalog service API and its extensions.
+the Application Catalog service (murano) API and its extensions.
 
 This chapter documents :command:`murano` version ``0.11.1``.
 

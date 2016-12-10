@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-===============================
-DNS service command-line client
-===============================
+===========================================
+DNS service (designate) command-line client
+===========================================
 
 The designate client is the command-line interface (CLI) for
-the DNS service API and its extensions.
+the DNS service (designate) API and its extensions.
 
 This chapter documents :command:`designate` version ``2.3.0``.
 

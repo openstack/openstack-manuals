@@ -2,12 +2,13 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-==================================================================
-Backup, Restore, and Disaster Recovery service command-line client
-==================================================================
+============================================================================
+Backup, Restore, and Disaster Recovery service (freezer) command-line client
+============================================================================
 
 The freezer client is the command-line interface (CLI) for
-the Backup, Restore, and Disaster Recovery service API and its extensions.
+the Backup, Restore, and Disaster Recovery service (freezer) API and its
+extensions.
 
 This chapter documents :command:`freezer` version ``1.0.0``.
 

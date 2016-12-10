@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-=============================================
-NFV Orchestration service command-line client
-=============================================
+======================================================
+NFV Orchestration service (tacker) command-line client
+======================================================
 
 The tacker client is the command-line interface (CLI) for
-the NFV Orchestration service API and its extensions.
+the NFV Orchestration service (tacker) API and its extensions.
 
 This chapter documents :command:`tacker` version ``0.7.0``.
 

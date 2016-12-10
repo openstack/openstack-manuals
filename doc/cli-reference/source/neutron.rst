@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-======================================
-Networking service command-line client
-======================================
+================================================
+Networking service (neutron) command-line client
+================================================
 
 The neutron client is the command-line interface (CLI) for
-the Networking service API and its extensions.
+the Networking service (neutron) API and its extensions.
 
 This chapter documents :command:`neutron` version ``6.0.0``.
 

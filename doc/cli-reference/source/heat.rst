@@ -2,9 +2,9 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-=========================================
-Orchestration service command-line client
-=========================================
+================================================
+Orchestration service (heat) command-line client
+================================================
 
 .. warning::
 
@@ -15,7 +15,7 @@ Orchestration service command-line client
    python-heatclient.
 
 The heat client is the command-line interface (CLI) for
-the Orchestration service API and its extensions.
+the Orchestration service (heat) API and its extensions.
 
 This chapter documents :command:`heat` version ``1.6.1``.
 

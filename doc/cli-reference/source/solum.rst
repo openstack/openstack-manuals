@@ -1,11 +1,12 @@
 .. This file is manually generated, unlike many of the other chapters.
 
-=====================================================================
-Software Development Lifecycle Automation service command-line client
-=====================================================================
+=============================================================================
+Software Development Lifecycle Automation service (solum) command-line client
+=============================================================================
 
 The solum client is the command-line interface (CLI) for
-the Software Development Lifecycle Automation service API and its extensions.
+the Software Development Lifecycle Automation service (solum) API and its
+extensions.
 
 This chapter documents :command:`solum` version ``2.1.1``.
 

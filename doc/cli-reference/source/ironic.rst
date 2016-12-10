@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-======================================
-Bare Metal service command-line client
-======================================
+===============================================
+Bare Metal service (ironic) command-line client
+===============================================
 
 The ironic client is the command-line interface (CLI) for
-the Bare Metal service API and its extensions.
+the Bare Metal service (ironic) API and its extensions.
 
 This chapter documents :command:`ironic` version ``1.8.0``.
 
