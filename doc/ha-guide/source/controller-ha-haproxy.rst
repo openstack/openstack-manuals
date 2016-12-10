@@ -134,7 +134,7 @@ Configuring HAProxy
          option  httpchk
          option  tcplog
          server controller1 10.0.0.12:8774 check inter 2000 rise 2 fall 5
-         erver controller2 10.0.0.13:8774 check inter 2000 rise 2 fall 5
+         server controller2 10.0.0.13:8774 check inter 2000 rise 2 fall 5
          server controller3 10.0.0.14:8774 check inter 2000 rise 2 fall 5
 
         listen nova_metadata_api_cluster
