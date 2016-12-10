@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-=======================================================
-Infrastructure Optimization service command-line client
-=======================================================
+=================================================================
+Infrastructure Optimization service (watcher) command-line client
+=================================================================
 
 The watcher client is the command-line interface (CLI) for
-the Infrastructure Optimization service API and its extensions.
+the Infrastructure Optimization service (watcher) API and its extensions.
 
 This chapter documents :command:`watcher` version ``0.26.0``.
 

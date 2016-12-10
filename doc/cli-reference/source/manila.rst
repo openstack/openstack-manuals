@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-===============================================
-Shared File Systems service command-line client
-===============================================
+========================================================
+Shared File Systems service (manila) command-line client
+========================================================
 
 The manila client is the command-line interface (CLI) for
-the Shared File Systems service API and its extensions.
+the Shared File Systems service (manila) API and its extensions.
 
 This chapter documents :command:`manila` version ``1.11.0``.
 

@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-=================================
-Image service command-line client
-=================================
+==========================================
+Image service (glance) command-line client
+==========================================
 
 The glance client is the command-line interface (CLI) for
-the Image service API and its extensions.
+the Image service (glance) API and its extensions.
 
 This chapter documents :command:`glance` version ``2.5.0``.
 

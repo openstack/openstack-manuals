@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-=========================================
-Block Storage service command-line client
-=========================================
+==================================================
+Block Storage service (cinder) command-line client
+==================================================
 
 The cinder client is the command-line interface (CLI) for
-the Block Storage service API and its extensions.
+the Block Storage service (cinder) API and its extensions.
 
 This chapter documents :command:`cinder` version ``1.9.0``.
 

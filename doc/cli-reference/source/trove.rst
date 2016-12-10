@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-====================================
-Database service command-line client
-====================================
+============================================
+Database service (trove) command-line client
+============================================
 
 The trove client is the command-line interface (CLI) for
-the Database service API and its extensions.
+the Database service (trove) API and its extensions.
 
 This chapter documents :command:`trove` version ``2.6.0``.
 

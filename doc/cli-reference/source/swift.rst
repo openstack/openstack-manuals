@@ -2,9 +2,9 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-==========================================
-Object Storage service command-line client
-==========================================
+==================================================
+Object Storage service (swift) command-line client
+==================================================
 
 The swift client is the command-line interface (CLI) for
 the Object Storage service API and its extensions.

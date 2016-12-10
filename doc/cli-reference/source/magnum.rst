@@ -2,12 +2,13 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-===============================================================
-Container Infrastructure Management service command-line client
-===============================================================
+========================================================================
+Container Infrastructure Management service (magnum) command-line client
+========================================================================
 
 The magnum client is the command-line interface (CLI) for
-the Container Infrastructure Management service API and its extensions.
+the Container Infrastructure Management service (magnum) API and its
+extensions.
 
 This chapter documents :command:`magnum` version ``2.3.1``.
 
