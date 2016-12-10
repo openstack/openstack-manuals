@@ -2,14 +2,14 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-==============================
-Monitoring command-line client
-==============================
+========================================
+Monitoring (monasca) command-line client
+========================================
 
 The monasca client is the command-line interface (CLI) for
-the Monitoring API and its extensions.
+the Monitoring (monasca) API and its extensions.
 
-This chapter documents :command:`monasca` version ``1.2.0``.
+This chapter documents :command:`monasca` version ``1.3.0``.
 
 For help on a specific :command:`monasca` command, enter:
 
@@ -55,6 +55,8 @@ monasca usage
        alarm-patch              Patch the alarm state.
        alarm-show               Describe the alarm.
        alarm-update             Update the alarm state.
+       dimension-name-list      List names of metric dimensions.
+       dimension-value-list     List names of metric dimensions.
        measurement-list         List measurements for the specified metric.
        metric-create            Create metric.
        metric-create-raw        Create metric from raw json body.
@@ -65,7 +67,9 @@ monasca usage
        notification-create      Create notification.
        notification-delete      Delete notification.
        notification-list        List notifications for this tenant.
+       notification-patch       Patch notification.
        notification-show        Describe the notification.
+       notification-type-list   List notification types supported by monasca.
        notification-update      Update notification.
        bash-completion          Prints all of the commands and options to stdout.
        help                     Display help about this program or one of its
@@ -174,7 +178,7 @@ monasca alarm-count
 
    usage: monasca alarm-count [--alarm-definition-id <ALARM_DEFINITION_ID>]
                               [--metric-name <METRIC_NAME>]
-                              [--metric-dimensions <KEY1=VALUE1,KEY2=VALUE2...>]
+                              [--metric-dimensions <KEY1=VALUE1,KEY2,KEY3=VALUE2...>]
                               [--state <ALARM_STATE>] [--severity <SEVERITY>]
                               [--lifecycle-state <LIFECYCLE_STATE>]
                               [--link <LINK>] [--group-by <GROUP_BY>]
@@ -191,9 +195,10 @@ Count alarms.
 ``--metric-name <METRIC_NAME>``
   Name of the metric.
 
-``--metric-dimensions <KEY1=VALUE1,KEY2=VALUE2...>``
-  key value pair used to specify a metric dimension.
-  This can be specified multiple times, or once with
+``--metric-dimensions <KEY1=VALUE1,KEY2,KEY3=VALUE2...>``
+  key value pair used to specify a metric dimension or
+  just key to select all values of that dimension.This
+  can be specified multiple times, or once with
   parameters separated by a comma. Dimensions need
   quoting when they contain special chars
   [&,(,),{,},>,<] that confuse the CLI parser.
@@ -557,7 +562,7 @@ monasca alarm-list
 
    usage: monasca alarm-list [--alarm-definition-id <ALARM_DEFINITION_ID>]
                              [--metric-name <METRIC_NAME>]
-                             [--metric-dimensions <KEY1=VALUE1,KEY2=VALUE2...>]
+                             [--metric-dimensions <KEY1=VALUE1,KEY2,KEY3=VALUE2...>]
                              [--state <ALARM_STATE>] [--severity <SEVERITY>]
                              [--state-updated-start-time <UTC_STATE_UPDATED_START>]
                              [--lifecycle-state <LIFECYCLE_STATE>]
@@ -575,9 +580,10 @@ List alarms for this tenant.
 ``--metric-name <METRIC_NAME>``
   Name of the metric.
 
-``--metric-dimensions <KEY1=VALUE1,KEY2=VALUE2...>``
-  key value pair used to specify a metric dimension.
-  This can be specified multiple times, or once with
+``--metric-dimensions <KEY1=VALUE1,KEY2,KEY3=VALUE2...>``
+  key value pair used to specify a metric dimension or
+  just key to select all values of that dimension.This
+  can be specified multiple times, or once with
   parameters separated by a comma. Dimensions need
   quoting when they contain special chars
   [&,(,),{,},>,<] that confuse the CLI parser.
@@ -687,6 +693,74 @@ Update the alarm state.
 ``<LINK>``
   A link to an external resource with information about the
   alarm.
+
+.. _monasca_dimension-name-list:
+
+monasca dimension-name-list
+---------------------------
+
+.. code-block:: console
+
+   usage: monasca dimension-name-list [--metric-name <METRIC_NAME>]
+                                      [--offset <OFFSET LOCATION>]
+                                      [--limit <RETURN LIMIT>]
+                                      [--tenant-id <TENANT_ID>]
+
+List names of metric dimensions.
+
+**Optional arguments:**
+
+``--metric-name <METRIC_NAME>``
+  Name of the metric to report dimension name list.
+
+``--offset <OFFSET LOCATION>``
+  The offset used to paginate the return data.
+
+``--limit <RETURN LIMIT>``
+  The amount of data to be returned up to the API
+  maximum limit.
+
+``--tenant-id <TENANT_ID>``
+  Retrieve data for the specified tenant/project id
+  instead of the tenant/project from the user's Keystone
+  credentials.
+
+.. _monasca_dimension-value-list:
+
+monasca dimension-value-list
+----------------------------
+
+.. code-block:: console
+
+   usage: monasca dimension-value-list [--metric-name <METRIC_NAME>]
+                                       [--offset <OFFSET LOCATION>]
+                                       [--limit <RETURN LIMIT>]
+                                       [--tenant-id <TENANT_ID>]
+                                       <DIMENSION_NAME>
+
+List names of metric dimensions.
+
+**Positional arguments:**
+
+``<DIMENSION_NAME>``
+  Name of the dimension to list dimension values.
+
+**Optional arguments:**
+
+``--metric-name <METRIC_NAME>``
+  Name of the metric to report dimension value list.
+
+``--offset <OFFSET LOCATION>``
+  The offset used to paginate the return data.
+
+``--limit <RETURN LIMIT>``
+  The amount of data to be returned up to the API
+  maximum limit.
+
+``--tenant-id <TENANT_ID>``
+  Retrieve data for the specified tenant/project id
+  instead of the tenant/project from the user's Keystone
+  credentials.
 
 .. _monasca_measurement-list:
 
@@ -1035,6 +1109,40 @@ List notifications for this tenant.
   The amount of data to be returned up to the API
   maximum limit.
 
+.. _monasca_notification-patch:
+
+monasca notification-patch
+--------------------------
+
+.. code-block:: console
+
+   usage: monasca notification-patch [--name <NOTIFICATION_NAME>] [--type <TYPE>]
+                                     [--address <ADDRESS>] [--period <PERIOD>]
+                                     <NOTIFICATION_ID>
+
+Patch notification.
+
+**Positional arguments:**
+
+``<NOTIFICATION_ID>``
+  The ID of the notification.
+
+**Optional arguments:**
+
+``--name <NOTIFICATION_NAME>``
+  Name of the notification.
+
+``--type <TYPE>``
+  The notification type. Type must be either EMAIL,
+  WEBHOOK, or PAGERDUTY.
+
+``--address <ADDRESS>``
+  A valid EMAIL Address, URL, or SERVICE KEY.
+
+``--period <PERIOD>``
+  A period for the notification method. Can only be non
+  zero with webhooks
+
 .. _monasca_notification-show:
 
 monasca notification-show
@@ -1049,7 +1157,18 @@ Describe the notification.
 **Positional arguments:**
 
 ``<NOTIFICATION_ID>``
-  The ID of the notification. If not specified returns all.
+  The ID of the notification.
+
+.. _monasca_notification-type-list:
+
+monasca notification-type-list
+------------------------------
+
+.. code-block:: console
+
+   usage: monasca notification-type-list
+
+List notification types supported by monasca.
 
 .. _monasca_notification-update:
 
