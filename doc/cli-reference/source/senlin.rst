@@ -2,14 +2,14 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-======================================
-Clustering service command-line client
-======================================
+===============================================
+Clustering service (senlin) command-line client
+===============================================
 
 The senlin client is the command-line interface (CLI) for
-the Clustering service API and its extensions.
+the Clustering service (senlin) API and its extensions.
 
-This chapter documents :command:`senlin` version ``1.0.0``.
+This chapter documents :command:`senlin` version ``1.1.0``.
 
 For help on a specific :command:`senlin` command, enter:
 
@@ -38,7 +38,7 @@ senlin usage
                  [--os-password PASSWORD] [--os-trust-id TRUST_ID]
                  [--os-cacert CA_BUNDLE_FILE | --verify | --insecure]
                  [--os-token TOKEN] [--os-access-info ACCESS_INFO]
-                 [--profile HMAC_KEY]
+                 [--os-profile HMAC_KEY]
                  <subcommand> ...
 
 **Subcommands:**
@@ -303,7 +303,7 @@ senlin optional arguments
 ``--os-access-info ACCESS_INFO``
   Access info, defaults to ``env[OS_ACCESS_INFO]``
 
-``--profile HMAC_KEY``
+``--os-profile HMAC_KEY``
   HMAC key to use for encrypting context data for
   performance profiling of operation. This key should be
   the value of HMAC key configured in osprofiler
@@ -319,14 +319,14 @@ senlin action-list
 
 .. code-block:: console
 
-   usage: senlin action-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-o <KEY:DIR>]
-                             [-l <LIMIT>] [-m <ID>] [-F]
+   usage: senlin action-list [-f <"KEY1=VALUE1;KEY2=VALUE2...">] [-o <KEY:DIR>]
+                             [-l <LIMIT>] [-m <ID>] [-g] [-F]
 
 List actions.
 
 **Optional arguments:**
 
-``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+``-f <"KEY1=VALUE1;KEY2=VALUE2...">, --filters <"KEY1=VALUE1;KEY2=VALUE2...">``
   Filter parameters to apply on returned actions. This
   can be specified multiple times, or once with
   parameters separated by a semicolon.
@@ -342,6 +342,11 @@ List actions.
 ``-m <ID>, --marker <ID>``
   Only return actions that appear after the given node
   ID.
+
+``-g, --global-project``
+  Whether actions from all projects should be listed.
+  Default to False. Setting this to True may demand for
+  an admin privilege.
 
 ``-F, --full-id``
   Print full IDs in list.
@@ -371,8 +376,7 @@ senlin build-info
 
    usage: senlin build-info
 
-Retrieve build information. :param sc: Instance of senlinclient. :param args:
-Additional command line arguments, if any.
+Retrieve build information.
 
 .. _senlin_cluster-check:
 
@@ -415,7 +419,7 @@ Collect attributes across a cluster.
 ``-L, --list``
   Print a full list that contains both node ids and
   attribute values instead of values only. Default is
-  True.
+  False.
 
 ``-F, --full-id``
   Print full IDs in list.
@@ -429,7 +433,7 @@ senlin cluster-create
 
    usage: senlin cluster-create -p <PROFILE> [-n <MIN-SIZE>] [-m <MAX-SIZE>]
                                 [-c <DESIRED-CAPACITY>] [-t <TIMEOUT>]
-                                [-M <KEY1=VALUE1;KEY2=VALUE2...>]
+                                [-M <"KEY1=VALUE1;KEY2=VALUE2...">]
                                 <CLUSTER_NAME>
 
 Create the cluster.
@@ -442,7 +446,7 @@ Create the cluster.
 **Optional arguments:**
 
 ``-p <PROFILE>, --profile <PROFILE>``
-  Profile Id used for this cluster.
+  Profile Id or name used for this cluster.
 
 ``-n <MIN-SIZE>, --min-size <MIN-SIZE>``
   Min size of the cluster. Default to 0.
@@ -458,7 +462,7 @@ Create the cluster.
 ``-t <TIMEOUT>, --timeout <TIMEOUT>``
   Cluster creation timeout in seconds.
 
-``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
+``-M <"KEY1=VALUE1;KEY2=VALUE2...">, --metadata <"KEY1=VALUE1;KEY2=VALUE2...">``
   Metadata values to be attached to the cluster. This
   can
   be
@@ -498,14 +502,14 @@ senlin cluster-list
 
 .. code-block:: console
 
-   usage: senlin cluster-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-o <KEY:DIR>]
+   usage: senlin cluster-list [-f <"KEY1=VALUE1;KEY2=VALUE2...">] [-o <KEY:DIR>]
                               [-l <LIMIT>] [-m <ID>] [-g] [-F]
 
 List the user's clusters.
 
 **Optional arguments:**
 
-``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+``-f <"KEY1=VALUE1;KEY2=VALUE2...">, --filters <"KEY1=VALUE1;KEY2=VALUE2...">``
   Filter parameters to apply on returned clusters. This
   can be specified multiple times, or once with
   parameters separated by a semicolon.
@@ -581,8 +585,8 @@ senlin cluster-node-list
 
 .. code-block:: console
 
-   usage: senlin cluster-node-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-l <LIMIT>]
-                                   [-m <ID>] [-F]
+   usage: senlin cluster-node-list [-f <"KEY1=VALUE1;KEY2=VALUE2...">]
+                                   [-l <LIMIT>] [-m <ID>] [-F]
                                    <CLUSTER>
 
 List nodes from cluster.
@@ -594,7 +598,7 @@ List nodes from cluster.
 
 **Optional arguments:**
 
-``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+``-f <"KEY1=VALUE1;KEY2=VALUE2...">, --filters <"KEY1=VALUE1;KEY2=VALUE2...">``
   Filter parameters to apply on returned nodes. This can
   be specified multiple times, or once with parameters
   separated by a semicolon.
@@ -615,7 +619,7 @@ senlin cluster-policy-attach
 
 .. code-block:: console
 
-   usage: senlin cluster-policy-attach -p <POLICY> [-e] <NAME or ID>
+   usage: senlin cluster-policy-attach -p <POLICY> [-e <BOOLEAN>] <NAME or ID>
 
 Attach policy to cluster.
 
@@ -629,7 +633,7 @@ Attach policy to cluster.
 ``-p <POLICY>, --policy <POLICY>``
   ID or name of policy to be attached.
 
-``-e, --enabled``
+``-e <BOOLEAN>, --enabled <BOOLEAN>``
   Whether the policy should be enabled once attached.
   Default to enabled.
 
@@ -661,7 +665,7 @@ senlin cluster-policy-list
 
 .. code-block:: console
 
-   usage: senlin cluster-policy-list [-f <KEY1=VALUE1;KEY2=VALUE2...>]
+   usage: senlin cluster-policy-list [-f <"KEY1=VALUE1;KEY2=VALUE2...">]
                                      [-o <SORT_STRING>] [-F]
                                      <CLUSTER>
 
@@ -674,7 +678,7 @@ List policies from cluster.
 
 **Optional arguments:**
 
-``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+``-f <"KEY1=VALUE1;KEY2=VALUE2...">, --filters <"KEY1=VALUE1;KEY2=VALUE2...">``
   Filter parameters to apply on returned results. This
   can be specified multiple times, or once with
   parameters separated by a semicolon.
@@ -915,7 +919,7 @@ senlin cluster-update
 .. code-block:: console
 
    usage: senlin cluster-update [-p <PROFILE>] [-t <TIMEOUT>]
-                                [-M <KEY1=VALUE1;KEY2=VALUE2...>] [-n <NAME>]
+                                [-M <"KEY1=VALUE1;KEY2=VALUE2...">] [-n <NAME>]
                                 <CLUSTER>
 
 Update the cluster.
@@ -928,12 +932,12 @@ Update the cluster.
 **Optional arguments:**
 
 ``-p <PROFILE>, --profile <PROFILE>``
-  ID of new profile to use.
+  ID or name of new profile to use.
 
 ``-t <TIMEOUT>, --timeout <TIMEOUT>``
   New timeout (in seconds) value for the cluster.
 
-``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
+``-M <"KEY1=VALUE1;KEY2=VALUE2...">, --metadata <"KEY1=VALUE1;KEY2=VALUE2...">``
   Metadata values to be attached to the cluster. This
   can
   be
@@ -960,14 +964,14 @@ senlin event-list
 
 .. code-block:: console
 
-   usage: senlin event-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-l <LIMIT>]
+   usage: senlin event-list [-f <"KEY1=VALUE1;KEY2=VALUE2...">] [-l <LIMIT>]
                             [-m <ID>] [-o <KEY:DIR>] [-g] [-F]
 
 List events.
 
 **Optional arguments:**
 
-``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+``-f <"KEY1=VALUE1;KEY2=VALUE2...">, --filters <"KEY1=VALUE1;KEY2=VALUE2...">``
   Filter parameters to apply on returned events. This
   can be specified multiple times, or once with
   parameters separated by a semicolon.
@@ -1022,7 +1026,7 @@ Check the node(s).
 **Positional arguments:**
 
 ``<NODE>``
-  ID of node(s) to check.
+  ID or name of node(s) to check.
 
 .. _senlin_node-create:
 
@@ -1032,7 +1036,7 @@ senlin node-create
 .. code-block:: console
 
    usage: senlin node-create -p <PROFILE> [-c <CLUSTER>] [-r <ROLE>]
-                             [-M <KEY1=VALUE1;KEY2=VALUE2...>]
+                             [-M <"KEY1=VALUE1;KEY2=VALUE2...">]
                              <NODE_NAME>
 
 Create the node.
@@ -1045,7 +1049,7 @@ Create the node.
 **Optional arguments:**
 
 ``-p <PROFILE>, --profile <PROFILE>``
-  Profile Id used for this node.
+  Profile Id or name used for this node.
 
 ``-c <CLUSTER>, --cluster <CLUSTER>``
   Cluster Id for this node.
@@ -1053,7 +1057,7 @@ Create the node.
 ``-r <ROLE>, --role <ROLE>``
   Role for this node in the specific cluster.
 
-``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
+``-M <"KEY1=VALUE1;KEY2=VALUE2...">, --metadata <"KEY1=VALUE1;KEY2=VALUE2...">``
   Metadata values to be attached to the node. This can
   be specified multiple times, or once with key-value
   pairs separated by a semicolon.
@@ -1081,7 +1085,7 @@ senlin node-list
 
 .. code-block:: console
 
-   usage: senlin node-list [-c <CLUSTER>] [-f <KEY1=VALUE1;KEY2=VALUE2...>]
+   usage: senlin node-list [-c <CLUSTER>] [-f <"KEY1=VALUE1;KEY2=VALUE2...">]
                            [-o <KEY:DIR>] [-l <LIMIT>] [-m <ID>] [-g] [-F]
 
 Show list of nodes.
@@ -1092,7 +1096,7 @@ Show list of nodes.
   ID or name of cluster from which nodes are to be
   listed.
 
-``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+``-f <"KEY1=VALUE1;KEY2=VALUE2...">, --filters <"KEY1=VALUE1;KEY2=VALUE2...">``
   Filter parameters to apply on returned nodes. This can
   be specified multiple times, or once with parameters
   separated by a semicolon.
@@ -1130,7 +1134,7 @@ Recover the node(s).
 **Positional arguments:**
 
 ``<NODE>``
-  ID of node(s) to recover.
+  ID or name of node(s) to recover.
 
 .. _senlin_node-show:
 
@@ -1161,7 +1165,7 @@ senlin node-update
 .. code-block:: console
 
    usage: senlin node-update [-n <NAME>] [-p <PROFILE ID>] [-r <ROLE>]
-                             [-M <KEY1=VALUE1;KEY2=VALUE2...>]
+                             [-M <"KEY1=VALUE1;KEY2=VALUE2...">]
                              <NODE>
 
 Update the node.
@@ -1177,12 +1181,12 @@ Update the node.
   New name for the node.
 
 ``-p <PROFILE ID>, --profile <PROFILE ID>``
-  ID of new profile to use.
+  ID or name of new profile to use.
 
 ``-r <ROLE>, --role <ROLE>``
   Role for this node in the specific cluster.
 
-``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
+``-M <"KEY1=VALUE1;KEY2=VALUE2...">, --metadata <"KEY1=VALUE1;KEY2=VALUE2...">``
   Metadata values to be attached to the node. Metadata
   can
   be
@@ -1243,14 +1247,14 @@ senlin policy-list
 
 .. code-block:: console
 
-   usage: senlin policy-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-l <LIMIT>]
+   usage: senlin policy-list [-f <"KEY1=VALUE1;KEY2=VALUE2...">] [-l <LIMIT>]
                              [-m <ID>] [-o <KEY:DIR>] [-g] [-F]
 
 List policies that meet the criteria.
 
 **Optional arguments:**
 
-``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+``-f <"KEY1=VALUE1;KEY2=VALUE2...">, --filters <"KEY1=VALUE1;KEY2=VALUE2...">``
   Filter parameters to apply on returned policies. This
   can be specified multiple times, or once with
   parameters separated by a semicolon.
@@ -1288,7 +1292,7 @@ Show the policy details.
 **Positional arguments:**
 
 ``<POLICY>``
-  Name of the policy to be updated.
+  Name or ID of the policy to be shown.
 
 .. _senlin_policy-type-list:
 
@@ -1366,7 +1370,8 @@ senlin profile-create
 
 .. code-block:: console
 
-   usage: senlin profile-create -s <SPEC FILE> [-M <KEY1=VALUE1;KEY2=VALUE2...>]
+   usage: senlin profile-create -s <SPEC FILE>
+                                [-M <"KEY1=VALUE1;KEY2=VALUE2...">]
                                 <PROFILE_NAME>
 
 Create a profile.
@@ -1381,7 +1386,7 @@ Create a profile.
 ``-s <SPEC FILE>, --spec-file <SPEC FILE>``
   The spec file used to create the profile.
 
-``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
+``-M <"KEY1=VALUE1;KEY2=VALUE2...">, --metadata <"KEY1=VALUE1;KEY2=VALUE2...">``
   Metadata values to be attached to the profile. This
   can
   be
@@ -1421,14 +1426,14 @@ senlin profile-list
 
 .. code-block:: console
 
-   usage: senlin profile-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-l <LIMIT>]
+   usage: senlin profile-list [-f <"KEY1=VALUE1;KEY2=VALUE2...">] [-l <LIMIT>]
                               [-m <ID>] [-o <KEY:DIR>] [-g] [-F]
 
 List profiles that meet the criteria.
 
 **Optional arguments:**
 
-``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+``-f <"KEY1=VALUE1;KEY2=VALUE2...">, --filters <"KEY1=VALUE1;KEY2=VALUE2...">``
   Filter parameters to apply on returned profiles. This
   can be specified multiple times, or once with
   parameters separated by a semicolon.
@@ -1477,8 +1482,7 @@ senlin profile-type-list
 
    usage: senlin profile-type-list
 
-List the available profile types. :param sc: Instance of senlinclient. :param
-args: Additional command line arguments, if any.
+List the available profile types.
 
 .. _senlin_profile-type-show:
 
@@ -1508,7 +1512,7 @@ senlin profile-update
 
 .. code-block:: console
 
-   usage: senlin profile-update [-n <NAME>] [-M <KEY1=VALUE1;KEY2=VALUE2...>]
+   usage: senlin profile-update [-n <NAME>] [-M <"KEY1=VALUE1;KEY2=VALUE2...">]
                                 <PROFILE_ID>
 
 Update a profile.
@@ -1523,7 +1527,7 @@ Update a profile.
 ``-n <NAME>, --name <NAME>``
   The new name for the profile.
 
-``-M <KEY1=VALUE1;KEY2=VALUE2...>, --metadata <KEY1=VALUE1;KEY2=VALUE2...>``
+``-M <"KEY1=VALUE1;KEY2=VALUE2...">, --metadata <"KEY1=VALUE1;KEY2=VALUE2...">``
   Metadata values to be attached to the profile. This
   can
   be
@@ -1564,7 +1568,7 @@ senlin receiver-create
 .. code-block:: console
 
    usage: senlin receiver-create [-t <TYPE>] [-c <CLUSTER>] [-a <ACTION>]
-                                 [-P <KEY1=VALUE1;KEY2=VALUE2...>]
+                                 [-P <"KEY1=VALUE1;KEY2=VALUE2...">]
                                  <NAME>
 
 Create a receiver.
@@ -1577,7 +1581,8 @@ Create a receiver.
 **Optional arguments:**
 
 ``-t <TYPE>, --type <TYPE>``
-  Type of the receiver to create.
+  Type of the receiver to create. Receiver type can be
+  "webhook" or "message". Default to "webhook".
 
 ``-c <CLUSTER>, --cluster <CLUSTER>``
   Targeted cluster for this receiver. Required if
@@ -1587,7 +1592,7 @@ Create a receiver.
   Name or ID of the targeted action to be triggered.
   Required if receiver type is webhook.
 
-``-P <KEY1=VALUE1;KEY2=VALUE2...>, --params <KEY1=VALUE1;KEY2=VALUE2...>``
+``-P <"KEY1=VALUE1;KEY2=VALUE2...">, --params <"KEY1=VALUE1;KEY2=VALUE2...">``
   A dictionary of parameters that will be passed to
   target action when the receiver is triggered.
 
@@ -1614,14 +1619,14 @@ senlin receiver-list
 
 .. code-block:: console
 
-   usage: senlin receiver-list [-f <KEY1=VALUE1;KEY2=VALUE2...>] [-l <LIMIT>]
+   usage: senlin receiver-list [-f <"KEY1=VALUE1;KEY2=VALUE2...">] [-l <LIMIT>]
                                [-m <ID>] [-o <KEY:DIR>] [-g] [-F]
 
 List receivers that meet the criteria.
 
 **Optional arguments:**
 
-``-f <KEY1=VALUE1;KEY2=VALUE2...>, --filters <KEY1=VALUE1;KEY2=VALUE2...>``
+``-f <"KEY1=VALUE1;KEY2=VALUE2...">, --filters <"KEY1=VALUE1;KEY2=VALUE2...">``
   Filter parameters to apply on returned receivers. This
   can be specified multiple times, or once with
   parameters separated by a semicolon.
