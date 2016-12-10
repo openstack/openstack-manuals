@@ -49,13 +49,13 @@ Define a volume type in Block Storage:
 
 .. code-block:: console
 
-   $ cinder type-create lvm
+   $ openstack volume type create lvm
 
 Create an extra specification that links the volume type to a back-end name:
 
 .. code-block:: console
 
-   $ cinder type-key lvm set volume_backend_name=LVM
+   $ openstack volume type set lvm --property volume_backend_name=LVM
 
 This example creates a lvm volume type with
 ``volume_backend_name=LVM`` as extra specifications.
@@ -64,11 +64,12 @@ Usage
 ~~~~~
 
 To create six 1-GB volumes, run the
-:command:`cinder create --volume-type lvm 1` command six times:
+:command:`openstack volume create --size 1 --type lvm volume1` command
+six times:
 
 .. code-block:: console
 
-   $ cinder create --volume-type lvm 1
+   $ openstack volume create --size 1 --type lvm volume1
 
 This command creates three volumes in ``stack-volumes`` and
 three volumes in ``stack-volumes-1``.
