@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-===================================
-Compute service command-line client
-===================================
+==========================================
+Compute service (nova) command-line client
+==========================================
 
 The nova client is the command-line interface (CLI) for
-the Compute service API and its extensions.
+the Compute service (nova) API and its extensions.
 
 This chapter documents :command:`nova` version ``6.0.0``.
 
@@ -722,25 +722,27 @@ nova usage
   Display help about this program or one of its
   subcommands.
 
+``baremetal-interface-list``
+  **DEPRECATED**: List network interfaces associated
+  with a baremetal node.
+
+``baremetal-node-list``
+  **DEPRECATED**: Print list of available baremetal
+  nodes.
+
+``baremetal-node-show``
+  **DEPRECATED**: Show information about a baremetal
+  node.
+
+``host-meta``
+  Set or Delete metadata on all instances of a
+  host.
+
 ``force-delete``
   Force delete a server.
 
 ``restore``
   Restore a soft-deleted server.
-
-``host-servers-migrate``
-  Cold migrate all instances off the specified
-  host to other available hosts.
-
-``instance-action``
-  Show an action.
-
-``instance-action-list``
-  List actions on a server.
-
-``host-meta``
-  Set or Delete metadata on all instances of a
-  host.
 
 ``cell-capacities``
   Get cell capacities for all cells or a given
@@ -749,8 +751,26 @@ nova usage
 ``cell-show``
   Show details of a given cell.
 
-``host-evacuate``
-  Evacuate all instances from failed host.
+``host-servers-migrate``
+  Cold migrate all instances off the specified
+  host to other available hosts.
+
+``list-extensions``
+  List all the os-api extensions that are
+  available.
+
+``host-evacuate-live``
+  Live migrate all instances of the specified
+  host to other available hosts.
+
+``migration-list``
+  Print a list of migrations.
+
+``instance-action``
+  Show an action.
+
+``instance-action-list``
+  List actions on a server.
 
 ``net``
   **DEPRECATED**, use tenant-network-show instead.
@@ -776,28 +796,8 @@ nova usage
 ``tenant-network-show``
   **DEPRECATED**: Show a tenant network.
 
-``baremetal-interface-list``
-  **DEPRECATED**: List network interfaces associated
-  with a baremetal node.
-
-``baremetal-node-list``
-  **DEPRECATED**: Print list of available baremetal
-  nodes.
-
-``baremetal-node-show``
-  **DEPRECATED**: Show information about a baremetal
-  node.
-
-``host-evacuate-live``
-  Live migrate all instances of the specified
-  host to other available hosts.
-
-``migration-list``
-  Print a list of migrations.
-
-``list-extensions``
-  List all the os-api extensions that are
-  available.
+``host-evacuate``
+  Evacuate all instances from failed host.
 
 .. _nova_command_options:
 
@@ -1188,7 +1188,7 @@ Boot a new server.
 **Optional arguments:**
 
 ``--flavor <flavor>``
-  Name or ID of flavor (see 'openstack flavor list').
+  Name or ID of flavor (see 'nova flavor-list').
 
 ``--image <image>``
   Name or ID of image (see 'glance image-list').
@@ -1682,19 +1682,15 @@ Set or unset extra_spec for a flavor.
 ``<key=value>``
   Extra_specs to set/unset (only key is necessary on unset).
 
-.. _openstack_flavor_list:
+.. _nova_flavor-list:
 
-openstack flavor list
----------------------
+nova flavor-list
+----------------
 
 .. code-block:: console
 
-   usage: openstack flavor list [-h]
-                                [-f {csv,html,json,json,table,value,yaml,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--quote {all,minimal,none,nonnumeric}]
-                                [--public | --private | --all] [--long]
-                                [--marker <marker>] [--limit <limit>]
+   usage: nova flavor-list [--extra-specs] [--all] [--marker <marker>]
+                           [--limit <limit>]
 
 Print a list of available 'flavors' (sizes of servers).
 
