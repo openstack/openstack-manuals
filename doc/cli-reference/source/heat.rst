@@ -10,9 +10,6 @@ Orchestration service (heat) command-line client
 
    The heat CLI is deprecated
    in favor of python-openstackclient.
-   For more information, see :doc:`openstack`.
-   For a Python library, continue using
-   python-heatclient.
 
 The heat client is the command-line interface (CLI) for
 the Orchestration service (heat) API and its extensions.

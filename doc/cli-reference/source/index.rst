@@ -14,12 +14,21 @@ in the OpenStack End User Guide.
 Contents
 ~~~~~~~~
 
-.. sorted by the service name in alphabetical order, except for openstack
+.. important::
+
+   OpenStackClient is a command-line client for OpenStack that brings
+   the command set for the various APIs together in a single shell
+   with a uniform command structure.
+
+   Presently, Identity service (keystone) and Messaging service (zaqar)
+   only use the OpenStackClient command set.
+
+   For more information about OpenStackClient and the command list,
+   see the `OpenStackClient documentation
+   <http://docs.openstack.org/developer/python-openstackclient/>`_.
 
 .. toctree::
    :maxdepth: 1
-
-   openstack
 
    murano
    freezer
