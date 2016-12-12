@@ -120,72 +120,8 @@ To update an image by name or ID, use :command:`openstack image set`:
 
 The following list explains the optional arguments that you can use with
 the ``create`` and ``set`` commands to modify image properties. For
-more information, refer to Image service chapter in the `OpenStack
-Command-Line Interface
-Reference <http://docs.openstack.org/cli-reference/index.html>`__.
-
-``--name NAME``
-  The name of the image.
-
-``--disk-format DISK_FORMAT``
-  The disk format of the image. Acceptable formats are ami, ari, aki,
-  vhd, vhdx, vmdk, raw, qcow2, vdi, and iso.
-
-``--container-format CONTAINER_FORMAT``
-  The container format of the image. Acceptable formats are ami, ari,
-  aki, bare, docker, ova, and ovf.
-
-``--owner TENANT_ID --size SIZE``
-  The tenant who should own the image. The size of image data, in
-  bytes.
-
-``--min-disk DISK_GB``
-  The minimum size of the disk needed to boot the image, in
-  gigabytes.
-
-``--min-ram DISK_RAM``
-  The minimum amount of RAM needed to boot the image, in megabytes.
-
-``--location IMAGE_URL``
-  The URL where the data for this image resides. This option is only
-  available in V1 API. When using it, you also need to set
-  ``--os-image-api-version``. For example, if the image data is
-  stored in swift, you could specify
-  ``--os-image-api-version 1
-  --location swift://account:key@example.com/container/obj``.
-
-``--file FILE``
-  Local file that contains the disk image to be uploaded during the
-  update. Alternatively, you can pass images to the client through
-  stdin.
-
-``--checksum CHECKSUM``
-  Hash of image data to use for verification.
-
-``--copy-from IMAGE_URL``
-  Similar to :option:`--location` in usage, but indicates that the image
-  server should immediately copy the data and store it in its
-  configured image store.
-
-``--is-public [True|False]``
-  Makes an image accessible for all the tenants (admin-only by
-  default).
-
-``--is-protected [True|False]``
-  Prevents an image from being deleted.
-
-``--property KEY=VALUE``
-  Arbitrary property to associate with image. This option can be used
-  multiple times.
-
-``--purge-props``
-  Deletes all image properties that are not explicitly set in the
-  update request. Otherwise, those properties not referenced are
-  preserved.
-
-``--human-readable``
-  Prints the image size in a human-friendly format.
-
+more information, refer to the `OpenStack Image command reference
+<http://docs.openstack.org/developer/python-openstackclient/command-objects/image.html>`_.
 
 The following example shows the command that you would use to upload a
 CentOS 6.3 image in qcow2 format and configure it for public access:
