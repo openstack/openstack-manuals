@@ -277,8 +277,8 @@ Create a subnet
 
 .. code-block:: console
 
-   $ openstack subnet create --subnet-pool SUBNET SUBNET_NAME
-   $ openstack subnet create --subnet-pool 10.0.0.0/29 NETWORK
+   $ openstack subnet create --subnet-pool SUBNET --network NETWORK SUBNET_NAME
+   $ openstack subnet create --subnet-pool 10.0.0.0/29 --network net1 subnet1
 
 Block Storage (cinder)
 ~~~~~~~~~~~~~~~~~~~~~~

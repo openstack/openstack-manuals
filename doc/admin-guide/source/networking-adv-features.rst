@@ -212,7 +212,7 @@ basic L3 operations:
      - .. code-block:: console
 
           $ openstack network create public --external
-          $ openstack subnet create --network public --subnet-range 172.16.1.0/24
+          $ openstack subnet create --network public --subnet-range 172.16.1.0/24 public-subnet
    * - Lists external networks.
      - .. code-block:: console
 
@@ -221,9 +221,9 @@ basic L3 operations:
      - .. code-block:: console
 
           $ openstack network create net1
-          $ openstack subnet create --network net1 --subnet-range 10.0.0.0/24
+          $ openstack subnet create --network net1 --subnet-range 10.0.0.0/24 subnet1
           $ openstack network create net2
-          $ openstack subnet create --network net2 --subnet-range 10.0.1.0/24
+          $ openstack subnet create --network net2 --subnet-range 10.0.1.0/24 subnet2
           $ openstack router create router1
           $ openstack router add subnet router1 SUBNET1_UUID
           $ openstack router add subnet router1 SUBNET2_UUID
@@ -237,7 +237,7 @@ basic L3 operations:
        act as a NAT gateway for external connectivity.
      - .. code-block:: console
 
-          $ openstack router set --external-gateway EXT_NET_ID router1
+          $ neutron router-gateway-set router1 EXT_NET_ID
 
        The router obtains an interface with the gateway_ip address of the
        subnet and this interface is attached to a port on the L2 Networking
