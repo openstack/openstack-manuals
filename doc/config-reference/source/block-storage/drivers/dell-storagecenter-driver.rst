@@ -292,7 +292,7 @@ down list in the DSM.
 .. code-block:: ini
 
     [dell]
-    default_server_os = 'Red Hat Linux 7.x'
+    dell_server_os = 'Red Hat Linux 7.x'
 
 Note that this server definition is created once. Changing this setting after
 the fact will not change an existing definition. The selected Server OS does
