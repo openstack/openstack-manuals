@@ -1,6 +1,6 @@
-=====================================
-Database service command-line clients
-=====================================
+=============================================
+Database service (trove) command-line clients
+=============================================
 
 .. toctree::
    :maxdepth: 1

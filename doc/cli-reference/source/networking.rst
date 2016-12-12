@@ -1,6 +1,6 @@
-=======================================
-Networking service command-line clients
-=======================================
+=================================================
+Networking service (neutron) command-line clients
+=================================================
 
 .. toctree::
    :maxdepth: 1

@@ -1,6 +1,6 @@
-====================================
-Compute service command-line clients
-====================================
+===========================================
+Compute service (nova) command-line clients
+===========================================
 
 .. toctree::
    :maxdepth: 1

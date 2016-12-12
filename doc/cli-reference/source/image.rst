@@ -1,6 +1,6 @@
-==================================
-Image service command-line clients
-==================================
+===========================================
+Image service (glance) command-line clients
+===========================================
 
 .. toctree::
    :maxdepth: 1
