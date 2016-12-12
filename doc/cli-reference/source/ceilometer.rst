@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-=====================================
-Telemetry service command-line client
-=====================================
+==================================================
+Telemetry service (ceilometer) command-line client
+==================================================
 
 The ceilometer client is the command-line interface (CLI) for
-the Telemetry service API and its extensions.
+the Telemetry service (ceilometer) API and its extensions.
 
 This chapter documents :command:`ceilometer` version ``2.7.0``.
 
