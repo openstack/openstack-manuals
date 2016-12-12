@@ -16,17 +16,17 @@ fi
 #        --target $guide $LINKCHECK
 #done
 
+# This marker is needed for infra publishing.
+# Note for stable branches, this needs to be the top of each manual.
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
+
 # Draft guides
 # This includes guides that we publish from stable branches
 # as versioned like the networking-guide.
 for guide in networking-guide config-reference; do
     tools/build-rst.sh doc/$guide --build build \
         --target "newton/$guide" $LINKCHECK
+    echo $MARKER_TEXT > publish-docs/newton/$guide/.root-marker
 done
 
 tools/build-install-guides-rst.sh $LINKCHECK
-
-# This marker is needed for infra publishing.
-# Note for stable branches, this needs to be the top of each manual.
-MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
-echo $MARKER_TEXT > publish-docs/.root-marker

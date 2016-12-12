@@ -22,6 +22,10 @@ fi
 cp -f ${INDEX} ${INDEX}.save
 trap "mv -f ${INDEX}.save ${INDEX}" EXIT
 
+# This marker is needed for infra publishing.
+# Note for stable branches, this needs to be the top of each manual.
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
+
 for tag in $TAGS; do
     if [[ "$tag" == "debconf" ]]; then
         # Build the guide with debconf
@@ -42,4 +46,5 @@ for tag in $TAGS; do
         tools/build-rst.sh doc/install-guide \
             --tag ${tag} --target "newton/install-guide-${tag}" $LINKCHECK
     fi
+    echo $MARKER_TEXT > publish-docs/newton/install-guide-${tag}/.root-marker
 done
