@@ -702,7 +702,7 @@ to perform floating IP operations:
 
   .. code-block:: console
 
-     # nova-manage floating list
+     # openstack floating ip list
 
 - Create specific floating IPs for either a single address or a
   subnet:
@@ -716,7 +716,7 @@ to perform floating IP operations:
 
   .. code-block:: console
 
-     # nova-manage floating delete CIDR
+     # openstack floating ip delete CIDR
 
 For more information about how administrators can associate floating IPs
 with instances, see `Manage IP
