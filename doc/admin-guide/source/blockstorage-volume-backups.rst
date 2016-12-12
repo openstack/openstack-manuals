@@ -4,7 +4,7 @@
 Back up and restore volumes and snapshots
 =========================================
 
-The ``cinder`` command-line interface provides the tools for creating a
+The ``openstack`` command-line interface provides the tools for creating a
 volume backup. You can restore a volume from a backup as long as the
 backup's associated database information (or backup metadata) is intact
 in the Block Storage database.
@@ -13,7 +13,7 @@ Run this command to create a backup of a volume:
 
 .. code-block:: console
 
-   $ cinder backup-create [--incremental] [--force] VOLUME
+   $ openstack volume backup create [--incremental] [--force] VOLUME
 
 Where ``VOLUME`` is the name or ID of the volume, ``incremental`` is
 a flag that indicates whether an incremental backup should be performed,
@@ -73,7 +73,7 @@ the volume:
 
 .. code-block:: console
 
-   $ cinder backup-restore BACKUP_ID
+   $ openstack volume backup restore BACKUP_ID VOLUME_ID
 
 When restoring from a full backup, it is a full restore.
 
@@ -168,8 +168,8 @@ Run this command to create a backup of a snapshot:
 
 .. code-block:: console
 
-   $ cinder backup-create [--incremental] [--force] \
-     [--snapshot-id SNAPSHOT_ID] VOLUME
+   $ openstack volume backup create [--incremental] [--force] \
+     [--snapshot SNAPSHOT_ID] VOLUME
 
 Where ``VOLUME`` is the name or ID of the volume, ``SNAPSHOT_ID`` is the ID of
 the volume's snapshot.
