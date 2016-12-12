@@ -59,7 +59,8 @@ appropriate hypervisor, such as KVM.
 In the case of running smaller OpenStack clouds for testing
 purposes, where performance is not a critical factor, you can use
 QEMU instead. It is also possible to run a KVM hypervisor in an instance
-(see http://davejingtian.org/2014/03/30/nested-kvm-just-for-fun/),
+(see `davejingtian.org
+<http://davejingtian.org/2014/03/30/nested-kvm-just-for-fun/>`_),
 though this is not a supported configuration, and could be a
 complex solution for such a use case.
 
