@@ -2,6 +2,12 @@
 Database (Galera Cluster) for high availability
 ===============================================
 
+.. toctree::
+  :maxdepth: 2
+
+  shared-database-configure.rst
+  shared-database-manage.rst
+
 The first step is to install the database that sits at the heart of the
 cluster. To implement high availability, run an instance of the database on
 each controller node and use Galera Cluster to provide replication between
@@ -24,9 +30,3 @@ There are three implementations of Galera Cluster available to you:
 In addition to Galera Cluster, you can also achieve high availability
 through other database options, such as PostgreSQL, which has its own
 replication system.
-
-.. toctree::
-  :maxdepth: 2
-
-  shared-database-configure.rst
-  shared-database-manage.rst

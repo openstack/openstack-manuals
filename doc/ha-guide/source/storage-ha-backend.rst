@@ -57,13 +57,3 @@ it supports `live migration
 <http://docs.openstack.org/admin-guide/compute-live-migration-usage.html>`_
 of VMs with ephemeral drives. LVM only supports live migration of
 volume-backed VMs.
-
-Remote backup facilities
-------------------------
-
-[TODO: Add discussion of remote backup facilities
-as an alternate way to secure ones data.
-Include brief mention of key third-party technologies
-with links to their documentation]
-
-
