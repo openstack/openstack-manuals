@@ -49,7 +49,7 @@ Before starting a migration, review the Configure migrations section.
 
    ..  code-block:: console
 
-       $ nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c
+       $ openstack server show d1df1b5a-70c4-4fed-98b7-423362f2c47c
 
    ..  list-table::
        :widths: 30 45
@@ -157,7 +157,7 @@ Before starting a migration, review the Configure migrations section.
 
    ..  code-block:: console
 
-       # nova host-describe HostC
+       # openstack host show HostC
 
    ..  list-table::
        :header-rows: 1
@@ -205,18 +205,18 @@ Before starting a migration, review the Configure migrations section.
    used resources. The third line shows the maximum used resources. The
    fourth line and below shows the resources available for each project.
 
-#. Migrate the instance using the :command:`nova live-migration` command:
+#. Migrate the instance using the :command:`openstack server migrate` command:
 
    .. code-block:: console
 
-      $ nova live-migration SERVER HOST_NAME
+      $ openstack server migrate SERVER --live HOST_NAME
 
    In this example, SERVER can be the ID or name of the instance. Another
    example:
 
    .. code-block:: console
 
-      $ nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC
+      $ openstack server migrate d1df1b5a-70c4-4fed-98b7-423362f2c47c --live HostC
       Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.
 
    .. warning::
