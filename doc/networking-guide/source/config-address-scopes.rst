@@ -70,104 +70,149 @@ allow simple routing for project networks with the same subnet pools.
 
    .. code-block:: console
 
-      $ neutron address-scope-create --shared address-scope-ip6 6
-      Created a new address_scope:
+      $ openstack address scope create --share --ip-version 6 address-scope-ip6
       +------------+--------------------------------------+
       | Field      | Value                                |
       +------------+--------------------------------------+
-      | id         | 13b83fb2-beb4-4533-9e12-4bf9a5721ef5 |
+      | id         | 28424dfc-9abd-481b-afa3-1da97a8fead7 |
       | ip_version | 6                                    |
       | name       | address-scope-ip6                    |
+      | project_id | 098429d072d34d3596c88b7dbf7e91b6     |
       | shared     | True                                 |
       +------------+--------------------------------------+
 
    .. code-block:: console
 
-      $ neutron address-scope-create --shared address-scope-ip4 4
-      Created a new address_scope:
+      $ openstack address scope create --share --ip-version 4 address-scope-ip4
       +------------+--------------------------------------+
       | Field      | Value                                |
       +------------+--------------------------------------+
-      | id         | 97702525-e145-40c8-8c8f-d415930d12ce |
+      | id         | 3193bd62-11b5-44dc-acf8-53180f21e9f2 |
       | ip_version | 4                                    |
       | name       | address-scope-ip4                    |
+      | project_id | 098429d072d34d3596c88b7dbf7e91b6     |
       | shared     | True                                 |
       +------------+--------------------------------------+
 
+
 #. Create subnet pools specifying the name (or UUID) of the address
    scope that the subnet pool belongs to. If you have existing
-   subnet pools, use the :command:`neutron subnetpool-update` command to put
+   subnet pools, use the :command:`openstack subnet pool set` command to put
    them in a new address scope:
 
    .. code-block:: console
 
-      $ neutron subnetpool-create --address-scope address-scope-ip6 \
-        --shared --pool-prefix 2001:db8:a583::/48 --default-prefixlen 64 \
-        subnet-pool-ip6
-      Created a new subnetpool:
+      $ openstack subnet pool create --address-scope address-scope-ip6 \
+      --share --pool-prefix 2001:db8:a583::/48 --default-prefix-length 64 \
+      subnet-pool-ip6
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
-      | address_scope_id  | 13b83fb2-beb4-4533-9e12-4bf9a5721ef5 |
+      | address_scope_id  | 28424dfc-9abd-481b-afa3-1da97a8fead7 |
+      | created_at        | 2016-12-13T22:53:30Z                 |
       | default_prefixlen | 64                                   |
-      | id                | 14813344-d11a-4896-906c-e4c378291058 |
+      | default_quota     | None                                 |
+      | description       |                                      |
+      | id                | a59ff52b-0367-41ff-9781-6318b927dd0e |
       | ip_version        | 6                                    |
+      | is_default        | False                                |
+      | max_prefixlen     | 128                                  |
+      | min_prefixlen     | 64                                   |
       | name              | subnet-pool-ip6                      |
       | prefixes          | 2001:db8:a583::/48                   |
+      | project_id        | 098429d072d34d3596c88b7dbf7e91b6     |
+      | revision_number   | 1                                    |
       | shared            | True                                 |
+      | updated_at        | 2016-12-13T22:53:30Z                 |
       +-------------------+--------------------------------------+
+
 
    .. code-block:: console
 
-      $ neutron subnetpool-create --address-scope address-scope-ip4 \
-        --shared --pool-prefix 203.0.113.0/21 --default-prefixlen 26 \
-        subnet-pool-ip4
-      Created a new subnetpool:
+      $ openstack subnet pool create --address-scope address-scope-ip4 \
+      --share --pool-prefix 203.0.113.0/21 --default-prefix-length 26 \
+      subnet-pool-ip4
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
-      | address_scope_id  | 97702525-e145-40c8-8c8f-d415930d12ce |
+      | address_scope_id  | 3193bd62-11b5-44dc-acf8-53180f21e9f2 |
+      | created_at        | 2016-12-13T22:55:09Z                 |
       | default_prefixlen | 26                                   |
-      | id                | e2c4f12d-307f-4616-a4df-203a45e6cb7f |
+      | default_quota     | None                                 |
+      | description       |                                      |
+      | id                | d02af70b-d622-426f-8e60-ed9df2a8301f |
       | ip_version        | 4                                    |
+      | is_default        | False                                |
+      | max_prefixlen     | 32                                   |
+      | min_prefixlen     | 8                                    |
       | name              | subnet-pool-ip4                      |
       | prefixes          | 203.0.112.0/21                       |
+      | project_id        | 098429d072d34d3596c88b7dbf7e91b6     |
+      | revision_number   | 1                                    |
       | shared            | True                                 |
+      | updated_at        | 2016-12-13T22:55:09Z                 |
       +-------------------+--------------------------------------+
+
 
 #. Make sure that subnets on an external network are created
    from the subnet pools created above:
 
    .. code-block:: console
 
-      $ neutron subnet-show ipv6-public-subnet
-      +-------------------+--------------------------------------+
-      | Field             | Value                                |
-      +-------------------+--------------------------------------+
-      | cidr              | 2001:db8::/64                        |
-      | enable_dhcp       | False                                |
-      | gateway_ip        | 2001:db8::2                          |
-      | id                | 8e9299bf-5c48-4143-b081-010ba26636a2 |
-      | ip_version        | 6                                    |
-      | name              | ipv6-public-subnet                   |
-      | network_id        | d2ac8578-7e86-4646-849a-afdf5a05fff0 |
-      | subnetpool_id     | 14813344-d11a-4896-906c-e4c378291058 |
-      +-------------------+--------------------------------------+
+      $ openstack subnet show ipv6-public-subnet
+      +-------------------+------------------------------------------+
+      | Field             | Value                                    |
+      +-------------------+------------------------------------------+
+      | allocation_pools  | 2001:db8::3-2001:db8::ffff:ffff:ffff:fff |
+      |                   | f,2001:db8::1-2001:db8::1                |
+      | cidr              | 2001:db8::/64                            |
+      | created_at        | 2016-12-10T21:36:04Z                     |
+      | description       |                                          |
+      | dns_nameservers   |                                          |
+      | enable_dhcp       | False                                    |
+      | gateway_ip        | 2001:db8::2                              |
+      | host_routes       |                                          |
+      | id                | b333bf5a-758c-4b3f-97ec-5f12d9bfceb7     |
+      | ip_version        | 6                                        |
+      | ipv6_address_mode | None                                     |
+      | ipv6_ra_mode      | None                                     |
+      | name              | ipv6-public-subnet                       |
+      | network_id        | 05a8d31e-330b-4d96-a3fa-884b04abfa4c     |
+      | project_id        | 098429d072d34d3596c88b7dbf7e91b6         |
+      | revision_number   | 2                                        |
+      | segment_id        | None                                     |
+      | service_types     |                                          |
+      | subnetpool_id     | None                                     |
+      | updated_at        | 2016-12-10T21:36:04Z                     |
+      +-------------------+------------------------------------------+
+
 
    .. code-block:: console
 
-      $ neutron subnet-show public-subnet
+      $ openstack subnet show public-subnet
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
+      | allocation_pools  | 172.24.4.2-172.24.4.254              |
       | cidr              | 172.24.4.0/24                        |
+      | created_at        | 2016-12-10T21:35:52Z                 |
+      | description       |                                      |
+      | dns_nameservers   |                                      |
       | enable_dhcp       | False                                |
       | gateway_ip        | 172.24.4.1                           |
-      | id                | 3c3029d2-8081-4e56-9842-6007ce742860 |
+      | host_routes       |                                      |
+      | id                | 7fd48240-3acc-4724-bc82-16c62857edec |
       | ip_version        | 4                                    |
+      | ipv6_address_mode | None                                 |
+      | ipv6_ra_mode      | None                                 |
       | name              | public-subnet                        |
-      | network_id        | d2ac8578-7e86-4646-849a-afdf5a05fff0 |
-      | subnetpool_id     | e2c4f12d-307f-4616-a4df-203a45e6cb7f |
+      | network_id        | 05a8d31e-330b-4d96-a3fa-884b04abfa4c |
+      | project_id        | 098429d072d34d3596c88b7dbf7e91b6     |
+      | revision_number   | 2                                    |
+      | segment_id        | None                                 |
+      | service_types     |                                      |
+      | subnetpool_id     | None                                 |
+      | updated_at        | 2016-12-10T21:35:52Z                 |
       +-------------------+--------------------------------------+
 
 Routing with address scopes for non-privileged users
@@ -180,93 +225,193 @@ route straight to an external network without NAT.
 
    .. code-block:: console
 
-    $ neutron net-create network1
-    Created a new network:
-    +-------------------------+--------------------------------------+
-    | Field                   | Value                                |
-    +-------------------------+--------------------------------------+
-    | id                      | f5a980d9-5521-438e-b831-0ebacba2b372 |
-    | name                    | network1                             |
-    | subnets                 |                                      |
-    +-------------------------+--------------------------------------+
+    $ openstack network create network1
+    +---------------------------+--------------------------------------+
+    | Field                     | Value                                |
+    +---------------------------+--------------------------------------+
+    | admin_state_up            | UP                                   |
+    | availability_zone_hints   |                                      |
+    | availability_zones        |                                      |
+    | created_at                | 2016-12-13T23:21:01Z                 |
+    | description               |                                      |
+    | headers                   |                                      |
+    | id                        | 1bcf3fe9-a0cb-4d88-a067-a4d7f8e635f0 |
+    | ipv4_address_scope        | None                                 |
+    | ipv6_address_scope        | None                                 |
+    | mtu                       | 1450                                 |
+    | name                      | network1                             |
+    | port_security_enabled     | True                                 |
+    | project_id                | 098429d072d34d3596c88b7dbf7e91b6     |
+    | provider:network_type     | vxlan                                |
+    | provider:physical_network | None                                 |
+    | provider:segmentation_id  | 94                                   |
+    | revision_number           | 3                                    |
+    | router:external           | Internal                             |
+    | shared                    | False                                |
+    | status                    | ACTIVE                               |
+    | subnets                   |                                      |
+    | tags                      | []                                   |
+    | updated_at                | 2016-12-13T23:21:01Z                 |
+    +---------------------------+--------------------------------------+
+
 
    .. code-block:: console
 
-      $ neutron net-create network2
-      Created a new network:
-      +-------------------------+--------------------------------------+
-      | Field                   | Value                                |
-      +-------------------------+--------------------------------------+
-      | id                      | 438e4f26-0e45-4b26-9797-57d0bd817953 |
-      | name                    | network2                             |
-      | subnets                 |                                      |
-      +-------------------------+--------------------------------------+
+      $ openstack network create network2
+      +---------------------------+--------------------------------------+
+      | Field                     | Value                                |
+      +---------------------------+--------------------------------------+
+      | admin_state_up            | UP                                   |
+      | availability_zone_hints   |                                      |
+      | availability_zones        |                                      |
+      | created_at                | 2016-12-13T23:21:45Z                 |
+      | description               |                                      |
+      | headers                   |                                      |
+      | id                        | 6c583603-c097-4141-9c5c-288b0e49c59f |
+      | ipv4_address_scope        | None                                 |
+      | ipv6_address_scope        | None                                 |
+      | mtu                       | 1450                                 |
+      | name                      | network2                             |
+      | port_security_enabled     | True                                 |
+      | project_id                | 098429d072d34d3596c88b7dbf7e91b6     |
+      | provider:network_type     | vxlan                                |
+      | provider:physical_network | None                                 |
+      | provider:segmentation_id  | 81                                   |
+      | revision_number           | 3                                    |
+      | router:external           | Internal                             |
+      | shared                    | False                                |
+      | status                    | ACTIVE                               |
+      | subnets                   |                                      |
+      | tags                      | []                                   |
+      | updated_at                | 2016-12-13T23:21:45Z                 |
+      +---------------------------+--------------------------------------+
 
 #. Create a subnet not associated with a subnet pool or
    an address scope:
 
    .. code-block:: console
 
-      $ neutron subnet-create --name subnet-ip4-1 network1 198.51.100.0/26
-      Created a new subnet:
+      $ openstack subnet create --network network1 --subnet-range \
+      198.51.100.0/26 subnet-ip4-1
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
+      | allocation_pools  | 198.51.100.2-198.51.100.62           |
       | cidr              | 198.51.100.0/26                      |
-      | id                | 48ed5c71-2a1d-4f73-b29e-371deec04d44 |
+      | created_at        | 2016-12-13T23:24:16Z                 |
+      | description       |                                      |
+      | dns_nameservers   |                                      |
+      | enable_dhcp       | True                                 |
+      | gateway_ip        | 198.51.100.1                         |
+      | headers           |                                      |
+      | host_routes       |                                      |
+      | id                | 66874039-d31b-4a27-85d7-14c89341bbb7 |
+      | ip_version        | 4                                    |
+      | ipv6_address_mode | None                                 |
+      | ipv6_ra_mode      | None                                 |
       | name              | subnet-ip4-1                         |
-      | network_id        | f5a980d9-5521-438e-b831-0ebacba2b372 |
-      | subnetpool_id     |                                      |
+      | network_id        | 1bcf3fe9-a0cb-4d88-a067-a4d7f8e635f0 |
+      | project_id        | 098429d072d34d3596c88b7dbf7e91b6     |
+      | revision_number   | 2                                    |
+      | service_types     |                                      |
+      | subnetpool_id     | None                                 |
+      | updated_at        | 2016-12-13T23:24:16Z                 |
       +-------------------+--------------------------------------+
+
 
    .. code-block:: console
 
-      $ neutron subnet-create --name subnet-ip6-1 network1 \
-        --ipv6-ra-mode slaac --ipv6-address-mode slaac \
-        --ip_version 6 2001:db8:80d2:c4d3::/64
-      Created a new subnet:
-      +-------------------+--------------------------------------+
-      | Field             | Value                                |
-      +-------------------+--------------------------------------+
-      | cidr              | 2001:db8:80d2:c4d3::/64              |
-      | id                | c9f0bb79-1d7b-435f-b362-05a9a7259aa6 |
-      | name              | subnet-ip6-1                         |
-      | network_id        | f5a980d9-5521-438e-b831-0ebacba2b372 |
-      | subnetpool_id     |                                      |
-      +-------------------+--------------------------------------+
+      $ openstack subnet create --network network1 --ipv6-ra-mode slaac \
+      --ipv6-address-mode slaac --ip-version 6 --subnet-range \
+      2001:db8:80d2:c4d3::/64 subnet-ip6-1
+      +-------------------+-----------------------------------------+
+      | Field             | Value                                   |
+      +-------------------+-----------------------------------------+
+      | allocation_pools  | 2001:db8:80d2:c4d3::2-2001:db8:80d2:c4d |
+      |                   | 3:ffff:ffff:ffff:ffff                   |
+      | cidr              | 2001:db8:80d2:c4d3::/64                 |
+      | created_at        | 2016-12-13T23:28:28Z                    |
+      | description       |                                         |
+      | dns_nameservers   |                                         |
+      | enable_dhcp       | True                                    |
+      | gateway_ip        | 2001:db8:80d2:c4d3::1                   |
+      | headers           |                                         |
+      | host_routes       |                                         |
+      | id                | a7551b23-2271-4a88-9c41-c84b048e0722    |
+      | ip_version        | 6                                       |
+      | ipv6_address_mode | slaac                                   |
+      | ipv6_ra_mode      | slaac                                   |
+      | name              | subnet-ip6-1                            |
+      | network_id        | 1bcf3fe9-a0cb-4d88-a067-a4d7f8e635f0    |
+      | project_id        | 098429d072d34d3596c88b7dbf7e91b6        |
+      | revision_number   | 2                                       |
+      | service_types     |                                         |
+      | subnetpool_id     | None                                    |
+      | updated_at        | 2016-12-13T23:28:28Z                    |
+      +-------------------+-----------------------------------------+
+
 
 #. Create a subnet using a subnet pool associated with a address scope
    from an external network:
 
    .. code-block:: console
 
-      $ neutron subnet-create --name subnet-ip4-2 \
-        --subnetpool subnet-pool-ip4 network2
-      Created a new subnet:
+      $ openstack subnet create --subnet-pool subnet-pool-ip4 \
+      --network network2 subnet-ip4-2
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
+      | allocation_pools  | 203.0.112.2-203.0.112.62             |
       | cidr              | 203.0.112.0/26                       |
-      | id                | deb36645-8d46-4c13-a489-1135174d8a8c |
+      | created_at        | 2016-12-13T23:32:12Z                 |
+      | description       |                                      |
+      | dns_nameservers   |                                      |
+      | enable_dhcp       | True                                 |
+      | gateway_ip        | 203.0.112.1                          |
+      | headers           |                                      |
+      | host_routes       |                                      |
+      | id                | 12be8e8f-5871-4091-9e9e-4e0651b9677e |
+      | ip_version        | 4                                    |
+      | ipv6_address_mode | None                                 |
+      | ipv6_ra_mode      | None                                 |
       | name              | subnet-ip4-2                         |
-      | network_id        | 438e4f26-0e45-4b26-9797-57d0bd817953 |
-      | subnetpool_id     | e2c4f12d-307f-4616-a4df-203a45e6cb7f |
+      | network_id        | 6c583603-c097-4141-9c5c-288b0e49c59f |
+      | project_id        | 098429d072d34d3596c88b7dbf7e91b6     |
+      | revision_number   | 2                                    |
+      | service_types     |                                      |
+      | subnetpool_id     | d02af70b-d622-426f-8e60-ed9df2a8301f |
+      | updated_at        | 2016-12-13T23:32:12Z                 |
       +-------------------+--------------------------------------+
 
    .. code-block:: console
 
-      $ neutron subnet-create --name subnet-ip6-2 --ip_version 6 \
-        --ipv6-ra-mode slaac --ipv6-address-mode slaac \
-        --subnetpool subnet-pool-ip6 network2
-      Created a new subnet:
+      $ openstack subnet create --ip-version 6 --ipv6-ra-mode slaac \
+      --ipv6-address-mode slaac --subnet-pool subnet-pool-ip6 \
+      --network network2 subnet-ip6-2
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
+      | allocation_pools  | 2001:db8:a583::2-2001:db8:a583:0:fff |
+      |                   | f:ffff:ffff:ffff                     |
       | cidr              | 2001:db8:a583::/64                   |
-      | id                | b157e288-748e-4c4b-9b2e-8b8e65241036 |
+      | created_at        | 2016-12-13T23:31:17Z                 |
+      | description       |                                      |
+      | dns_nameservers   |                                      |
+      | enable_dhcp       | True                                 |
+      | gateway_ip        | 2001:db8:a583::1                     |
+      | headers           |                                      |
+      | host_routes       |                                      |
+      | id                | b599c2be-e3cd-449c-ba39-3cfcc744c4be |
+      | ip_version        | 6                                    |
+      | ipv6_address_mode | slaac                                |
+      | ipv6_ra_mode      | slaac                                |
       | name              | subnet-ip6-2                         |
-      | network_id        | 438e4f26-0e45-4b26-9797-57d0bd817953 |
-      | subnetpool_id     | 14813344-d11a-4896-906c-e4c378291058 |
+      | network_id        | 6c583603-c097-4141-9c5c-288b0e49c59f |
+      | project_id        | 098429d072d34d3596c88b7dbf7e91b6     |
+      | revision_number   | 2                                    |
+      | service_types     |                                      |
+      | subnetpool_id     | a59ff52b-0367-41ff-9781-6318b927dd0e |
+      | updated_at        | 2016-12-13T23:31:17Z                 |
       +-------------------+--------------------------------------+
 
    By creating subnets from scoped subnet pools, the network is
@@ -274,31 +419,49 @@ route straight to an external network without NAT.
 
    .. code-block:: console
 
-      $ neutron net-show network2
-      +-------------------------+--------------------------------------+
-      | Field                   | Value                                |
-      +-------------------------+--------------------------------------+
-      | id                      | 4f677ab6-32a1-452c-8feb-b0b6b7ed1a0f |
-      | ipv4_address_scope      | 97702525-e145-40c8-8c8f-d415930d12ce |
-      | ipv6_address_scope      | 13b83fb2-beb4-4533-9e12-4bf9a5721ef5 |
-      | name                    | network2                             |
-      | subnets                 | d5d68ac3-3eaa-439e-b75b-0e0b2c1d221a |
-      |                         | 917f9360-a840-45c1-83a1-2a093bd7b376 |
-      +-------------------------+--------------------------------------+
+      $ openstack network show network2
+      +---------------------------+------------------------------+
+      | Field                     | Value                        |
+      +---------------------------+------------------------------+
+      | admin_state_up            | UP                           |
+      | availability_zone_hints   |                              |
+      | availability_zones        | nova                         |
+      | created_at                | 2016-12-13T23:21:45Z         |
+      | description               |                              |
+      | id                        | 6c583603-c097-4141-9c5c-     |
+      |                           | 288b0e49c59f                 |
+      | ipv4_address_scope        | 3193bd62-11b5-44dc-          |
+      |                           | acf8-53180f21e9f2            |
+      | ipv6_address_scope        | 28424dfc-9abd-481b-          |
+      |                           | afa3-1da97a8fead7            |
+      | mtu                       | 1450                         |
+      | name                      | network2                     |
+      | port_security_enabled     | True                         |
+      | project_id                | 098429d072d34d3596c88b7dbf7e |
+      |                           | 91b6                         |
+      | provider:network_type     | vxlan                        |
+      | provider:physical_network | None                         |
+      | provider:segmentation_id  | 81                           |
+      | revision_number           | 10                           |
+      | router:external           | Internal                     |
+      | shared                    | False                        |
+      | status                    | ACTIVE                       |
+      | subnets                   | 12be8e8f-5871-4091-9e9e-     |
+      |                           | 4e0651b9677e, b599c2be-e3cd- |
+      |                           | 449c-ba39-3cfcc744c4be       |
+      | tags                      | []                           |
+      | updated_at                | 2016-12-13T23:32:12Z         |
+      +---------------------------+------------------------------+
 
 #. Connect a router to each of the project subnets that have been created, for
    example, using a router called ``router1``:
 
    .. code-block:: console
 
-      $ neutron router-interface-add router1 subnet-ip4-1
-      Added interface 73d832e1-e4a7-4029-9a66-f4e0f4ba0e76 to router router1.
-      $ neutron router-interface-add router1 subnet-ip4-2
-      Added interface 94b4cdb2-875d-4ab3-9a6e-803c3626c4d9 to router router1.
-      $ neutron router-interface-add router1 subnet-ip6-1
-      Added interface f35c4541-d529-4bd8-af4e-1b069269c263 to router router1.
-      $ neutron router-interface-add router1 subnet-ip6-2
-      Added interface f5904a4b-9547-4c08-bc7e-bc5fc71a8db9 to router router1.
+      $ openstack router add subnet router1 subnet-ip4-1
+      $ openstack router add subnet router1 subnet-ip4-2
+      $ openstack router add subnet router1 subnet-ip6-1
+      $ openstack router add subnet router1 subnet-ip6-2
 
 Checking connectivity
 ---------------------
