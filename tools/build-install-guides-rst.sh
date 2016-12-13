@@ -22,12 +22,22 @@ fi
 cp -f ${INDEX} ${INDEX}.save
 trap "mv -f ${INDEX}.save ${INDEX}" EXIT
 
+# Set this to a sensible value if not set by OpenStack CI.
+if [ -z "$ZUUL_REFNAME" ] ; then
+    ZUUL_REFNAME="master"
+fi
+
+# This marker is needed for infra publishing.
+# Note for stable branches, this needs to be the top of each manual.
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
+
 for tag in $TAGS; do
+    TARGET="draft/install-guide-${tag}"
     if [[ "$tag" == "debconf" ]]; then
         # Build the guide with debconf
         # To use debian only contents, use "debian" tag.
         tools/build-rst.sh doc/install-guide-debconf  \
-            --tag debian --target "draft/install-guide-${tag}" $LINKCHECK --pdf
+            --tag debian --target "$TARGET" $LINKCHECK --pdf
     else
         ##
         # Because Sphinx uses the first heading as title regardless of
@@ -40,6 +50,10 @@ for tag in $TAGS; do
 
         # Build the guide
         tools/build-rst.sh doc/install-guide \
-            --tag ${tag} --target "draft/install-guide-${tag}" $LINKCHECK --pdf
+            --tag ${tag} --target "$TARGET" $LINKCHECK --pdf
+    fi
+    # Add this for stable branches
+    if [ "$ZUUL_REFNAME" != "master" ] ; then
+        echo $MARKER_TEXT > publish-docs/$TARGET/.root-marker
     fi
 done
