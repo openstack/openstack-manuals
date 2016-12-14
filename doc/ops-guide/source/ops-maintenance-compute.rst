@@ -32,13 +32,13 @@ a software or hardware upgrade, perform the following steps:
 
         .. code-block:: console
 
-           # nova live-migration <uuid> c02.example.com
+           # openstack server migrate <uuid> --live c02.example.com
 
    * If your cloud is not using a shared storage, run:
 
      .. code-block:: console
 
-        # nova live-migration --block-migrate <uuid> c02.example.com
+        # openstack server migrate <uuid> --live --block-migration c02.example.com
 
 #. Stop the ``nova-compute`` service:
 
