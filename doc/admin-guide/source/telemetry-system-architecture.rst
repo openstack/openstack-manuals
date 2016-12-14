@@ -53,11 +53,17 @@ ceilometer-alarm-notifier
 
     .. note::
 
-       The ``ceilometer-polling`` service is available since the Kilo release.
-       It is intended to replace ``ceilometer-agent-central``,
-       ``ceilometer-agent-compute``, and ``ceilometer-agent-ipmi``.
+       1. The ``ceilometer-polling`` service is available since the Kilo release.
+          It is intended to replace ``ceilometer-agent-central``,
+          ``ceilometer-agent-compute``, and ``ceilometer-agent-ipmi``.
 
-Besides the ``ceilometer-agent-compute`` and the ``ceilometer-agent-ipmi``
+       2. The ``ceilometer-api`` and ``ceilometer-collector`` are no longer
+          supported since the Ocata release.
+
+       3. The ``ceilometer-alarm-evaluator`` and ``ceilometer-alarm-notifier``
+          services are removed in Mitaka release.
+
+Except for the ``ceilometer-agent-compute`` and the ``ceilometer-agent-ipmi``
 services, all the other services are placed on one or more controller
 nodes.
 
@@ -77,9 +83,12 @@ events, samples, alarm definitions, and alarms are stored.
 .. note::
 
    Multiple database back ends can be configured in order to store
-   events, samples, and alarms separately.
+   events, samples, and alarms separately. We recommend Gnocchi for
+   time-series storage.
 
 The list of supported database back ends:
+
+-  `Gnocchi <http://gnocchi.xyz/>`__
 
 -  `ElasticSearch (events only) <https://www.elastic.co/>`__
 
