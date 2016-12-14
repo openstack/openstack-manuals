@@ -259,7 +259,7 @@ the volume to boot an instance.
 
    .. code-block:: console
 
-      $ openstack server create --flavor 2 \
+      $ openstack server create --flavor 2 --volume VOLUME_ID \
         --block-device source=volume,id=$VOLUME_ID,dest=volume,size=10,shutdown=preserve,bootindex=0 \
         myInstanceFromVolume
       +--------------------------------------+--------------------------------+
