@@ -10,12 +10,13 @@ provides a building block from which other new features will be built in to
 OpenStack Networking.
 
 To see if your cloud has this feature available, you can check that it is
-listed in the supported aliases. You can do this with the neutron client.
+listed in the supported aliases. You can do this with the OpenStack client.
 
 .. code-block:: console
 
-    $ neutron ext-list | grep subnet_allocation
-    | subnet_allocation | Subnet Allocation |
+    $ openstack extension list | grep subnet_allocation
+    | Subnet Allocation | subnet_allocation | Enables allocation of subnets
+    from a subnet pool                                                                                                         |
 
 Why you need them
 ~~~~~~~~~~~~~~~~~
@@ -89,20 +90,21 @@ is handled with a new extension.
 
 .. code-block:: console
 
-    $ neutron ext-list | grep default-subnetpools
-    | default-subnetpools | Default Subnetpools |
+    $ openstack extension list | grep default-subnetpools
+    | Default Subnetpools | default-subnetpools | Provides ability to mark
+    and use a subnetpool as the default                                                                                             |
+
 
 An administrator can mark a pool as default. Only one pool from each
 address family can be marked default.
 
 .. code-block:: console
 
-    $ neutron subnetpool-update --is-default True 74348864-f8bf-4fc0-ab03-81229d189467
-    Updated subnetpool: 74348864-f8bf-4fc0-ab03-81229d189467
+    $ openstack subnet pool set --default 74348864-f8bf-4fc0-ab03-81229d189467
 
 If there is a default, it can be requested by passing
 :option:`--use-default-subnetpool` instead of
-:option:`--subnetpool SUBNETPOOL`.
+:option:`--subnet-pool SUBNETPOOL`.
 
 Demo
 ----
@@ -115,24 +117,34 @@ First, as admin, create a shared subnet pool:
 
 .. code-block:: console
 
-    admin> neutron subnetpool-create --shared --pool-prefix 203.0.113.0/24 \
-               --default-prefixlen 26 demo-subnetpool4
-    Created a new subnetpool:
-    +-------------------+--------------------------------------+
-    | Field             | Value                                |
-    +-------------------+--------------------------------------+
-    | default_prefixlen | 26                                   |
-    | default_quota     |                                      |
-    | id                | 670eb517-4fd3-4dfc-9bed-da2f99f85c7a |
-    | ip_version        | 4                                    |
-    | name              | demo-subnetpool4                     |
-    | prefixes          | 203.0.113.0/24                       |
-    | shared            | True                                 |
-    | tenant_id         | c597484841ff4a8785804c62ba81449b     |
-    +-------------------+--------------------------------------+
+    $ openstack subnet pool create --share --pool-prefix 203.0.113.0/24 \
+    --default-prefix-length 26 demo-subnetpool4
+    +-------------------+--------------------------------+
+    | Field             | Value                          |
+    +-------------------+--------------------------------+
+    | address_scope_id  | None                           |
+    | created_at        | 2016-12-14T07:21:26Z           |
+    | default_prefixlen | 26                             |
+    | default_quota     | None                           |
+    | description       |                                |
+    | headers           |                                |
+    | id                | d3aefb76-2527-43d4-bc21-0ec253 |
+    |                   | 908545                         |
+    | ip_version        | 4                              |
+    | is_default        | False                          |
+    | max_prefixlen     | 32                             |
+    | min_prefixlen     | 8                              |
+    | name              | demo-subnetpool4               |
+    | prefixes          | 203.0.113.0/24                 |
+    | project_id        | cfd1889ac7d64ad891d4f20aef9f8d |
+    |                   | 7c                             |
+    | revision_number   | 1                              |
+    | shared            | True                           |
+    | updated_at        | 2016-12-14T07:21:26Z           |
+    +-------------------+--------------------------------+
 
-The ``default_prefixlen`` defines the subnet size you will get if you do not
-specify :option:`--prefixlen` when creating a subnet.
+The ``default_prefix_length`` defines the subnet size you will get
+if you do not specify :option:`--prefix-length` when creating a subnet.
 
 Do essentially the same thing for IPv6 and there are now two subnet
 pools. Regular projects can see them. (the output is trimmed a bit
@@ -140,31 +152,49 @@ for display)
 
 .. code-block:: console
 
-    $ neutron subnetpool-list
-    +---------+------------------+------------------------------------+-------------------+
-    | id      | name             | prefixes                           | default_prefixlen |
-    +---------+------------------+------------------------------------+-------------------+
-    | 670e... | demo-subnetpool4 | [u'203.0.113.0/24']                | 26                |
-    | 7b69... | demo-subnetpool  | [u'2001:db8:1:2', u'2001:db8:1:2'] | 64                |
-    +---------+------------------+------------------------------------+-------------------+
+    $ openstack subnet pool list
+    +------------------+------------------+--------------------+
+    | ID               | Name             | Prefixes           |
+    +------------------+------------------+--------------------+
+    | 2b7cc19f-0114-4e | demo-subnetpool  | 2001:db8:a583::/48 |
+    | f4-ad86-c1bb91fc |                  |                    |
+    | d1f9             |                  |                    |
+    | d3aefb76-2527-43 | demo-subnetpool4 | 203.0.113.0/24     |
+    | d4-bc21-0ec25390 |                  |                    |
+    | 8545             |                  |                    |
+    +------------------+------------------+--------------------+
 
 Now, use them. It is easy to create a subnet from a pool:
 
 .. code-block:: console
 
-    $ neutron subnet-create --name demo-subnet1 --ip_version 4 \
-          --subnetpool demo-subnetpool4 demo-network1
+    $ openstack subnet create --ip-version 4 --subnet-pool \
+    demo-subnetpool4 --network demo-network1 demo-subnet1
     +-------------------+--------------------------------------+
     | Field             | Value                                |
     +-------------------+--------------------------------------+
-    | id                | 6e38b23f-0b27-4e3c-8e69-fd23a3df1935 |
+    | allocation_pools  | 203.0.113.194-203.0.113.254          |
+    | cidr              | 203.0.113.192/26                     |
+    | created_at        | 2016-12-14T07:33:13Z                 |
+    | description       |                                      |
+    | dns_nameservers   |                                      |
+    | enable_dhcp       | True                                 |
+    | gateway_ip        | 203.0.113.193                        |
+    | headers           |                                      |
+    | host_routes       |                                      |
+    | id                | 8d4fbae3-076c-4c08-b2dd-2d6175115a5e |
     | ip_version        | 4                                    |
-    | cidr              | 203.0.113.0/26                       |
+    | ipv6_address_mode | None                                 |
+    | ipv6_ra_mode      | None                                 |
     | name              | demo-subnet1                         |
-    | network_id        | b5b729d8-31cc-4d2c-8284-72b3291fec02 |
-    | subnetpool_id     | 670eb517-4fd3-4dfc-9bed-da2f99f85c7a |
-    | tenant_id         | a8b3054cc1214f18b1186b291525650f     |
+    | network_id        | 6b377f77-ce00-4ff6-8676-82343817470d |
+    | project_id        | cfd1889ac7d64ad891d4f20aef9f8d7c     |
+    | revision_number   | 2                                    |
+    | service_types     |                                      |
+    | subnetpool_id     | d3aefb76-2527-43d4-bc21-0ec253908545 |
+    | updated_at        | 2016-12-14T07:33:13Z                 |
     +-------------------+--------------------------------------+
+
 
 You can request a specific subnet from the pool. You need to specify a subnet
 that falls within the pool's prefixes. If the subnet is not already allocated,
@@ -173,39 +203,59 @@ from the subnet pool.
 
 .. code-block:: console
 
-    $ neutron subnet-create --name demo-subnet2 \
-          --subnetpool demo-subnetpool4 demo-network1 203.0.113.128/26
-    Created a new subnet:
-    +-------------------+----------------------------------------------------+
-    | Field             | Value                                              |
-    +-------------------+----------------------------------------------------+
-    | id                | b15db708-ce90-4ce3-8852-52e1779bae1f               |
-    | ip_version        | 4                                                  |
-    | cidr              | 203.0.113.128/26                                   |
-    | name              | demo-subnet2                                       |
-    | network_id        | 8d16c25d-690c-4414-a0c8-afbe698a1e73               |
-    | subnetpool_id     | 499b768b-0f8f-4762-8748-792e7e00face               |
-    | tenant_id         | a8b3054cc1214f18b1186b291525650f                   |
-    +-------------------+----------------------------------------------------+
+    $ openstack subnet create --subnet-pool demo-subnetpool4 \
+    --network demo-network1 --subnet-range 203.0.113.128/26 subnet2
+    +-------------------+--------------------------------------+
+    | Field             | Value                                |
+    +-------------------+--------------------------------------+
+    | allocation_pools  | 203.0.113.130-203.0.113.190          |
+    | cidr              | 203.0.113.128/26                     |
+    | created_at        | 2016-12-14T07:27:40Z                 |
+    | description       |                                      |
+    | dns_nameservers   |                                      |
+    | enable_dhcp       | True                                 |
+    | gateway_ip        | 203.0.113.129                        |
+    | headers           |                                      |
+    | host_routes       |                                      |
+    | id                | d32814e3-cf46-4371-80dd-498a80badfba |
+    | ip_version        | 4                                    |
+    | ipv6_address_mode | None                                 |
+    | ipv6_ra_mode      | None                                 |
+    | name              | subnet2                              |
+    | network_id        | 6b377f77-ce00-4ff6-8676-82343817470d |
+    | project_id        | cfd1889ac7d64ad891d4f20aef9f8d7c     |
+    | revision_number   | 2                                    |
+    | service_types     |                                      |
+    | subnetpool_id     | d3aefb76-2527-43d4-bc21-0ec253908545 |
+    | updated_at        | 2016-12-14T07:27:40Z                 |
+    +-------------------+--------------------------------------+
+
 
 If the pool becomes exhausted, load some more prefixes:
 
 .. code-block:: console
 
-    admin> neutron subnetpool-update --pool-prefix 203.0.113.0/24 \
-               --pool-prefix 198.51.100.0/24 demo-subnetpool4
-    Updated subnetpool: demo-subnetpool4
-    admin> neutron subnetpool-show demo-subnetpool4
+    $ openstack subnet pool set --pool-prefix \
+    198.51.100.0/24 demo-subnetpool4
+    $ openstack subnet pool show demo-subnetpool4
     +-------------------+--------------------------------------+
     | Field             | Value                                |
     +-------------------+--------------------------------------+
+    | address_scope_id  | None                                 |
+    | created_at        | 2016-12-14T07:21:26Z                 |
     | default_prefixlen | 26                                   |
-    | default_quota     |                                      |
-    | id                | 670eb517-4fd3-4dfc-9bed-da2f99f85c7a |
+    | default_quota     | None                                 |
+    | description       |                                      |
+    | id                | d3aefb76-2527-43d4-bc21-0ec253908545 |
     | ip_version        | 4                                    |
+    | is_default        | False                                |
+    | max_prefixlen     | 32                                   |
+    | min_prefixlen     | 8                                    |
     | name              | demo-subnetpool4                     |
-    | prefixes          | 198.51.100.0/24                      |
-    |                   | 203.0.113.0/24                       |
+    | prefixes          | 198.51.100.0/24, 203.0.113.0/24      |
+    | project_id        | cfd1889ac7d64ad891d4f20aef9f8d7c     |
+    | revision_number   | 2                                    |
     | shared            | True                                 |
-    | tenant_id         | c597484841ff4a8785804c62ba81449b     |
+    | updated_at        | 2016-12-14T07:30:32Z                 |
     +-------------------+--------------------------------------+
+
