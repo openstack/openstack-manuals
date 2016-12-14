@@ -29,6 +29,13 @@ subport network is presented to the instance. ``segmentation-type`` may be
 required by certain drivers like OVS, although at this time only ``vlan`` is
 supported as a ``segmentation-type``.
 
+  .. note::
+
+     The ``segmentation-type`` and ``segmentation-id`` parameters are optional
+     in the Networking API. However, all drivers as of the Newton release
+     require both to be provided when adding a subport to a trunk. Future
+     drivers may be implemented without this requirement.
+
 The ``segmentation-type`` and ``segmentation-id`` specified by the user on the
 subports is intentionally decoupled from the ``segmentation-type`` and ID of
 the networks. For example, it is possible to configure the Networking service
