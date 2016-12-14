@@ -26,7 +26,7 @@ Follow the steps below to launch an instance from an image.
       If you boot an instance with an INSTANCE_NAME greater than 63 characters,
       Compute truncates it automatically when turning it into a host name to
       ensure the correct work of dnsmasq. The corresponding warning is written
-      into the ``nova-network.log`` file.
+      into the ``neutron-dnsmasq.log`` file.
 
    The following command launches the ``MyCirrosServer`` instance with the
    ``m1.small`` flavor (ID of ``1``), ``cirros-0.3.2-x86_64-uec`` image (ID
