@@ -24,12 +24,12 @@ have.
 
 This feature is designed to automate the basic networking provisioning for
 projects. The steps to provision a basic network are run during instance
-boot, making the networking setup transparent.
+boot, making the networking setup hands-free.
 
 To make this possible, provide a default external network and default
 subnetpools (one for IPv4, or one for IPv6, or one of each) so that the
-platform can choose what to do in lieu of input. Once these are in place,
-users can boot their VMs without specifying any networking details.
+Networking service can choose what to do in lieu of input. Once these are in
+place, users can boot their VMs without specifying any networking details.
 The Compute service will then use this feature automatically to wire user
 VMs.
 
@@ -59,7 +59,7 @@ topology creation. To perform this task, proceed with the following steps:
 
    .. code-block:: console
 
-      $ neutron net-update public --is-default=True
+      $ openstack network set public --default
 
 #. Create default subnetpools
 
@@ -124,30 +124,38 @@ Get Me A Network
 ----------------
 
 In a deployment where the operator has set up the resources as described above,
-validate that users can get their auto-allocated network topology as follows:
+they can get their auto-allocated network topology as follows:
 
 .. code-block:: console
 
-   $ neutron auto-allocated-topology-show
-   +-----------+--------------------------------------+
-   | Field     | Value                                |
-   +-----------+--------------------------------------+
-   | id        | 8b835bfb-cae2-4acc-b53f-c16bb5f9a7d0 |
-   | tenant_id | 3a4e311bcb3545b9b7ad326f93194f8c     |
-   +-----------+--------------------------------------+
+   $ openstack network auto allocated topology create --or-show
+   +------------+--------------------------------------+
+   | Field      | Value                                |
+   +------------+--------------------------------------+
+   | id         | a380c780-d6cd-4510-a4c0-1a6ec9b85a29 |
+   | name       | None                                 |
+   | project_id | cfd1889ac7d64ad891d4f20aef9f8d7c     |
+   +------------+--------------------------------------+
+
+.. note::
+
+    When the ``--or-show`` option is used the command returns the topology
+    information if it already exists.
 
 Operators (and users with admin role) can get the auto-allocated topology for a
 project by specifying the project ID:
 
 .. code-block:: console
 
-   $ neutron auto-allocated-topology-show 3a4e311bcb3545b9b7ad326f93194f8c
-   +-----------+--------------------------------------+
-   | Field     | Value                                |
-   +-----------+--------------------------------------+
-   | id        | 8b835bfb-cae2-4acc-b53f-c16bb5f9a7d0 |
-   | tenant_id | 3a4e311bcb3545b9b7ad326f93194f8c     |
-   +-----------+--------------------------------------+
+   $ openstack network auto allocated topology create --project \
+     cfd1889ac7d64ad891d4f20aef9f8d7c --or-show
+   +------------+--------------------------------------+
+   | Field      | Value                                |
+   +------------+--------------------------------------+
+   | id         | a380c780-d6cd-4510-a4c0-1a6ec9b85a29 |
+   | name       | None                                 |
+   | project_id | cfd1889ac7d64ad891d4f20aef9f8d7c     |
+   +------------+--------------------------------------+
 
 The ID returned by this command is a network which can be used for booting
 a VM.
@@ -159,30 +167,31 @@ a VM.
      net-id=8b835bfb-cae2-4acc-b53f-c16bb5f9a7d0 vm1
 
 The auto-allocated topology for a user never changes. In practice, when a user
-boots a server omitting the ``--nic`` option, and not have any neutron network
-available, nova will invoke the API behind ``auto-allocated-topology-show``,
-fetch the network UUID, and pass it on during the boot process.
+boots a server omitting the ``--nic`` option, and there is more than one
+network available, the Compute service will invoke the API behind
+``auto allocated topology create``, fetch the network UUID, and pass it on
+during the boot process.
 
 Validating the requirements for auto-allocation
 -----------------------------------------------
 
 To validate that the required resources are correctly set up for
-auto-allocation, without actually provisioning any resource, use
-the ``--dry-run`` option:
+auto-allocation, without actually provisioning anything, use
+the ``--check-resources`` option:
 
 .. code-block:: console
 
-   $ neutron auto-allocated-topology-show --dry-run
+   $ openstack network auto allocated topology create --check-resources
    Deployment error: No default router:external network.
 
-   $ neutron net-update public --is-default=True
+   $ openstack network set public --default
 
-   $ neutron auto-allocated-topology-show --dry-run
+   $ openstack network auto allocated topology create --check-resources
    Deployment error: No default subnetpools defined.
 
-   $ neutron subnetpool-update shared-default --is-default=True
+   $ openstack subnet pool set shared-default --default
 
-   $ neutron auto-allocated-topology-show --dry-run
+   $ openstack network auto allocated topology create --check-resources
    +---------+-------+
    | Field   | Value |
    +---------+-------+
@@ -215,7 +224,7 @@ the following resources:
 Compatibility notes
 -------------------
 
-Nova uses the ``auto-allocated-typology`` feature with API micro
+Nova uses the ``auto allocated topology`` feature with API micro
 version 2.37 or later. This is because, unlike the neutron feature
 which was implemented in the Mitaka release, the integration for
 nova was completed during the Newton release cycle. Note that
