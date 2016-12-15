@@ -349,7 +349,7 @@ Identity attribute mapping
       user_enabled_attribute = userAccountControl
       user_enabled_mask      = 2
       user_enabled_invert    = false
-      user_enabled_default   = 51
+      user_enabled_default   = 512
       user_default_project_id_attribute =
       user_additional_attribute_mapping =
 
