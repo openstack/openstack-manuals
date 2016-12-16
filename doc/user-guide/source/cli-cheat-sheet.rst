@@ -108,7 +108,13 @@ Boot an instance using flavor and image names (if names are unique)
    $ openstack server create --image cirros-0.3.1-x86_64-uec --flavor m1.tiny \
      MyFirstInstance
 
-Login to instance
+Log in to the instance (from Linux)
+
+.. note::
+
+   The :command:`ip` command is available only on Linux. Using :command:`ip netns` provides your
+   environment a copy of the network stack with its own routes, firewall
+   rules, and network devices for better troubleshooting.
 
 .. code-block:: console
 
@@ -119,8 +125,14 @@ Login to instance
 
 .. note::
 
-   In CirrOS the password for user ``cirros`` is "cubswin:)" without
-   the quotes.
+   In CirrOS, the password for user ``cirros`` is ``cubswin:)``.
+   For any other operating system, use SSH keys.
+
+Log in to the instance with a public IP address (from Mac)
+
+.. code-block:: console
+
+   $ ssh cloud-user@128.107.37.150
 
 Show details of instance
 
