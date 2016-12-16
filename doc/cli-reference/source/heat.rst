@@ -14,7 +14,7 @@ Orchestration service (heat) command-line client
 The heat client is the command-line interface (CLI) for
 the Orchestration service (heat) API and its extensions.
 
-This chapter documents :command:`heat` version ``1.6.1``.
+This chapter documents :command:`heat` version ``1.7.0``.
 
 For help on a specific :command:`heat` command, enter:
 
@@ -837,7 +837,7 @@ Set resource's health.
   Name or ID of stack the resource belongs to.
 
 ``<RESOURCE>``
-  Name of the resource.
+  Name or physical ID of the resource.
 
 ``reason``
   Reason for state change.
