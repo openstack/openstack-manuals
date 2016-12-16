@@ -9,7 +9,7 @@ Infrastructure Optimization service (watcher) command-line client
 The watcher client is the command-line interface (CLI) for
 the Infrastructure Optimization service (watcher) API and its extensions.
 
-This chapter documents :command:`watcher` version ``0.26.0``.
+This chapter documents :command:`watcher` version ``0.27.0``.
 
 For help on a specific :command:`watcher` command, enter:
 
