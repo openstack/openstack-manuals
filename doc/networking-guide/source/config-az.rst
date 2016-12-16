@@ -31,18 +31,18 @@ extension to schedule a router according to the availability zones. The
 
 .. code-block:: console
 
-    $ neutron ext-list
-    +---------------------------+-----------------------------------------------+
-    | alias                     | name                                          |
-    +---------------------------+-----------------------------------------------+
+    $ openstack extension list --network -c Alias -c Name
+    +---------------------------+---------------------------+
+    | Name                      | Alias                     |
+    +---------------------------+---------------------------+
     ...
-    | network_availability_zone | Network Availability Zone                     |
+    | Network Availability Zone | network_availability_zone |
     ...
-    | availability_zone         | Availability Zone                             |
+    | Availability Zone         | availability_zone         |
     ...
-    | router_availability_zone  | Router Availability Zone                      |
+    | Router Availability Zone  | router_availability_zone  |
     ...
-    +---------------------------+-----------------------------------------------+
+    +---------------------------+---------------------------+
 
 
 Availability zone of agents
@@ -62,62 +62,51 @@ To confirm the agent's availability zone:
 
 .. code-block:: console
 
-    $ neutron agent-show ca203db1-9f7f-40a7-91aa-4b184886e65d
-    +---------------------+----------------------------------------------------------+
-    | Field               | Value                                                    |
-    +---------------------+----------------------------------------------------------+
-    | admin_state_up      | True                                                     |
-    | agent_type          | DHCP agent                                               |
-    | alive               | True                                                     |
-    | availability_zone   | zone-1                                                   |
-    | binary              | neutron-dhcp-agent                                       |
-    | configurations      | {                                                        |
-    |                     |      "subnets": 0,                                       |
-    |                     |      "dhcp_lease_duration": 86400,                       |
-    |                     |      "dhcp_driver": "neutron.agent.linux.dhcp.Dnsmasq",  |
-    |                     |      "networks": 0,                                      |
-    |                     |      "log_agent_heartbeats": false,                      |
-    |                     |      "ports": 0                                          |
-    |                     | }                                                        |
-    | created_at          | 2015-12-10 00:30:19                                      |
-    | description         |                                                          |
-    | heartbeat_timestamp | 2015-12-10 00:54:09                                      |
-    | host                | mitaka                                                   |
-    | id                  | ca203db1-9f7f-40a7-91aa-4b184886e65d                     |
-    | started_at          | 2015-12-10 00:45:09                                      |
-    | topic               | dhcp_agent                                               |
-    +---------------------+----------------------------------------------------------+
+    $ openstack network agent show 116cc128-4398-49af-a4ed-3e95494cd5fc
+    +---------------------+---------------------------------------------------+
+    | Field               | Value                                             |
+    +---------------------+---------------------------------------------------+
+    | admin_state_up      | UP                                                |
+    | agent_type          | DHCP agent                                        |
+    | alive               | True                                              |
+    | availability_zone   | zone-1                                            |
+    | binary              | neutron-dhcp-agent                                |
+    | configurations      | dhcp_driver='neutron.agent.linux.dhcp.Dnsmasq',   |
+    |                     | dhcp_lease_duration='86400',                      |
+    |                     | log_agent_heartbeats='False', networks='2',       |
+    |                     | notifies_port_ready='True', ports='6', subnets='4 |
+    | created_at          | 2016-12-14 00:25:54                               |
+    | description         | None                                              |
+    | heartbeat_timestamp | 2016-12-14 06:20:24                               |
+    | host                | ankur-desktop                                     |
+    | id                  | 116cc128-4398-49af-a4ed-3e95494cd5fc              |
+    | started_at          | 2016-12-14 00:25:54                               |
+    | topic               | dhcp_agent                                        |
+    +---------------------+---------------------------------------------------+
 
-    $ neutron agent-show 4d8aa289-21eb-4997-86f2-49a884f78d0b
-    +---------------------+---------------------------------------------+
-    | Field               | Value                                       |
-    +---------------------+---------------------------------------------+
-    | admin_state_up      | True                                        |
-    | agent_type          | L3 agent                                    |
-    | alive               | True                                        |
-    | availability_zone   | zone-1                                      |
-    | binary              | neutron-l3-agent                            |
-    | configurations      | {                                           |
-    |                     |      "router_id": "",                       |
-    |                     |      "agent_mode": "legacy",                |
-    |                     |      "gateway_external_network_id": "",     |
-    |                     |      "handle_internal_only_routers": true,  |
-    |                     |      "routers": 0,                          |
-    |                     |      "interfaces": 0,                       |
-    |                     |      "floating_ips": 0,                     |
-    |                     |      "interface_driver": "openvswitch",     |
-    |                     |      "log_agent_heartbeats": false,         |
-    |                     |      "external_network_bridge": "br-ex",    |
-    |                     |      "ex_gw_ports": 0                       |
-    |                     | }                                           |
-    | created_at          | 2015-12-10 00:30:22                         |
-    | description         |                                             |
-    | heartbeat_timestamp | 2015-12-10 00:54:48                         |
-    | host                | mitaka                                      |
-    | id                  | 4d8aa289-21eb-4997-86f2-49a884f78d0b        |
-    | started_at          | 2015-12-10 00:45:18                         |
-    | topic               | l3_agent                                    |
-    +---------------------+---------------------------------------------+
+    $ openstack network agent show 9632309a-2aa4-4304-8603-c4de02c4a55f
+    +---------------------+-------------------------------------------------+
+    | Field               | Value                                           |
+    +---------------------+-------------------------------------------------+
+    | admin_state_up      | UP                                              |
+    | agent_type          | L3 agent                                        |
+    | alive               | True                                            |
+    | availability_zone   | zone-1                                          |
+    | binary              | neutron-l3-agent                                |
+    | configurations      | agent_mode='legacy', ex_gw_ports='2',           |
+    |                     | external_network_bridge='', floating_ips='0',   |
+    |                     | gateway_external_network_id='',                 |
+    |                     | handle_internal_only_routers='True',            |
+    |                     | interface_driver='openvswitch', interfaces='4', |
+    |                     | log_agent_heartbeats='False', routers='2'       |
+    | created_at          | 2016-12-14 00:25:58                             |
+    | description         | None                                            |
+    | heartbeat_timestamp | 2016-12-14 06:20:28                             |
+    | host                | ankur-desktop                                   |
+    | id                  | 9632309a-2aa4-4304-8603-c4de02c4a55f            |
+    | started_at          | 2016-12-14 00:25:58                             |
+    | topic               | l3_agent                                        |
+    +---------------------+-------------------------------------------------+
 
 
 Availability zone related attributes
@@ -152,51 +141,66 @@ hosted:
 
 .. code-block:: console
 
-    $ neutron net-create --availability-zone-hint zone-1 \
+    $ openstack network create --availability-zone-hint zone-1 \
     --availability-zone-hint zone-2 net1
-    Created a new network:
     +---------------------------+--------------------------------------+
     | Field                     | Value                                |
     +---------------------------+--------------------------------------+
-    | admin_state_up            | True                                 |
+    | admin_state_up            | UP                                   |
     | availability_zone_hints   | zone-1                               |
     |                           | zone-2                               |
-    | id                        | 0ef0597c-4aab-4235-8513-bf5d8304fe64 |
+    | availability_zones        |                                      |
+    | created_at                | 2016-12-14T06:23:36Z                 |
+    | description               |                                      |
+    | headers                   |                                      |
+    | id                        | ad88e059-e7fa-4cf7-8857-6731a2a3a554 |
+    | ipv4_address_scope        | None                                 |
+    | ipv6_address_scope        | None                                 |
     | mtu                       | 1450                                 |
     | name                      | net1                                 |
     | port_security_enabled     | True                                 |
+    | project_id                | cfd1889ac7d64ad891d4f20aef9f8d7c     |
     | provider:network_type     | vxlan                                |
-    | provider:physical_network |                                      |
-    | provider:segmentation_id  | 1054                                 |
-    | router:external           | False                                |
+    | provider:physical_network | None                                 |
+    | provider:segmentation_id  | 77                                   |
+    | revision_number           | 3                                    |
+    | router:external           | Internal                             |
     | shared                    | False                                |
     | status                    | ACTIVE                               |
     | subnets                   |                                      |
-    | tenant_id                 | 32f5512c7b3f47fb8924588ff9ad603b     |
+    | tags                      | []                                   |
+    | updated_at                | 2016-12-14T06:23:37Z                 |
     +---------------------------+--------------------------------------+
+
 
 
 .. code-block:: console
 
-    $ neutron router-create --ha True --availability-zone-hint zone-1 \
+    $ openstack router create --ha --availability-zone-hint zone-1 \
     --availability-zone-hint zone-2 router1
-    Created a new router:
     +-------------------------+--------------------------------------+
     | Field                   | Value                                |
     +-------------------------+--------------------------------------+
-    | admin_state_up          | True                                 |
+    | admin_state_up          | UP                                   |
     | availability_zone_hints | zone-1                               |
     |                         | zone-2                               |
     | availability_zones      |                                      |
+    | created_at              | 2016-12-14T06:25:40Z                 |
+    | description             |                                      |
     | distributed             | False                                |
-    | external_gateway_info   |                                      |
-    | ha                      | True                                 |
-    | id                      | 272f9be2-e352-4138-92a7-f022449b83a0 |
+    | external_gateway_info   | null                                 |
+    | flavor_id               | None                                 |
+    | ha                      | False                                |
+    | headers                 |                                      |
+    | id                      | ced10262-6cfe-47c1-8847-cd64276a868c |
     | name                    | router1                              |
+    | project_id              | cfd1889ac7d64ad891d4f20aef9f8d7c     |
+    | revision_number         | 3                                    |
     | routes                  |                                      |
     | status                  | ACTIVE                               |
-    | tenant_id               | 32f5512c7b3f47fb8924588ff9ad603b     |
+    | updated_at              | 2016-12-14T06:25:40Z                 |
     +-------------------------+--------------------------------------+
+
 
 
 Availability zone is selected from ``default_availability_zones`` in
@@ -211,63 +215,77 @@ To confirm the availability zone defined by the system:
 
 .. code-block:: console
 
-    $ neutron availability-zone-list
-    +--------+----------+-----------+
-    | name   | resource | state     |
-    +--------+----------+-----------+
-    | zone-2 | router   | available |
-    | zone-1 | router   | available |
-    | zone-2 | network  | available |
-    | zone-1 | network  | available |
-    +--------+----------+-----------+
+    $ openstack availability zone list
+    +-----------+-------------+
+    | Zone Name | Zone Status |
+    +-----------+-------------+
+    | zone-1    | available   |
+    | zone-2    | available   |
+    | zone-1    | available   |
+    | zone-2    | available   |
+    +-----------+-------------+
 
 Look at the ``availability_zones`` attribute of each resource to confirm in
 which zone the resource is hosted:
 
 .. code-block:: console
 
-    $ neutron net-show net1
+    $ openstack network show net1
     +---------------------------+--------------------------------------+
     | Field                     | Value                                |
     +---------------------------+--------------------------------------+
-    | admin_state_up            | True                                 |
+    | admin_state_up            | UP                                   |
     | availability_zone_hints   | zone-1                               |
     |                           | zone-2                               |
     | availability_zones        | zone-1                               |
     |                           | zone-2                               |
-    | id                        | 0ef0597c-4aab-4235-8513-bf5d8304fe64 |
+    | created_at                | 2016-12-14T06:23:36Z                 |
+    | description               |                                      |
+    | headers                   |                                      |
+    | id                        | ad88e059-e7fa-4cf7-8857-6731a2a3a554 |
+    | ipv4_address_scope        | None                                 |
+    | ipv6_address_scope        | None                                 |
     | mtu                       | 1450                                 |
     | name                      | net1                                 |
     | port_security_enabled     | True                                 |
+    | project_id                | cfd1889ac7d64ad891d4f20aef9f8d7c     |
     | provider:network_type     | vxlan                                |
-    | provider:physical_network |                                      |
-    | provider:segmentation_id  | 1054                                 |
-    | router:external           | False                                |
+    | provider:physical_network | None                                 |
+    | provider:segmentation_id  | 77                                   |
+    | revision_number           | 3                                    |
+    | router:external           | Internal                             |
     | shared                    | False                                |
     | status                    | ACTIVE                               |
-    | subnets                   | b24490b9-a3dd-4103-895f-a28aaf2c9bff |
-    | tenant_id                 | 32f5512c7b3f47fb8924588ff9ad603b     |
+    | subnets                   |                                      |
+    | tags                      | []                                   |
+    | updated_at                | 2016-12-14T06:23:37Z                 |
     +---------------------------+--------------------------------------+
 
 .. code-block:: console
 
-    $ neutron router-show router1
+    $ openstack router show router1
     +-------------------------+--------------------------------------+
     | Field                   | Value                                |
     +-------------------------+--------------------------------------+
-    | admin_state_up          | True                                 |
+    | admin_state_up          | UP                                   |
     | availability_zone_hints | zone-1                               |
     |                         | zone-2                               |
     | availability_zones      | zone-1                               |
     |                         | zone-2                               |
+    | created_at              | 2016-12-14T06:25:40Z                 |
+    | description             |                                      |
     | distributed             | False                                |
-    | external_gateway_info   |                                      |
-    | ha                      | True                                 |
-    | id                      | 272f9be2-e352-4138-92a7-f022449b83a0 |
+    | external_gateway_info   | null                                 |
+    | flavor_id               | None                                 |
+    | ha                      | False                                |
+    | headers                 |                                      |
+    | id                      | ced10262-6cfe-47c1-8847-cd64276a868c |
     | name                    | router1                              |
+    | project_id              | cfd1889ac7d64ad891d4f20aef9f8d7c     |
+    | revision_number         | 3                                    |
     | routes                  |                                      |
     | status                  | ACTIVE                               |
-    | tenant_id               | 32f5512c7b3f47fb8924588ff9ad603b     |
+    | updated_at              | 2016-12-14T06:25:40Z                 |
     +-------------------------+--------------------------------------+
 
 .. note::
