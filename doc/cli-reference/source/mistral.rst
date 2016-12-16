@@ -1068,7 +1068,7 @@ mistral run-action
 
    usage: mistral run-action [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [-s] [-t TARGET]
+                             [--prefix PREFIX] [-s] [--run-sync] [-t TARGET]
                              name [input]
 
 Create new Action execution or just run specific action.
@@ -1088,6 +1088,9 @@ Create new Action execution or just run specific action.
 
 ``-s, --save-result``
   Save the result into DB.
+
+``--run-sync``
+  Run the action synchronously.
 
 ``-t TARGET, --target TARGET``
   Action will be executed on <target> executor.
