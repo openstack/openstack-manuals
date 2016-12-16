@@ -38,8 +38,9 @@ watcher usage
                   [--os-project-domain-id <auth-project-domain-id>]
                   [--os-project-domain-name <auth-project-domain-name>]
                   [--os-auth-token <auth-token>]
-                  [--watcher-api-version <watcher-api-version>]
-                  [--os-endpoint-type OS_ENDPOINT_TYPE] [--insecure]
+                  [--os-watcher-api-version <os-watcher-api-version>]
+                  [--os-endpoint-type OS_ENDPOINT_TYPE]
+                  [--os-endpoint-override <endpoint-override>] [--insecure]
                   [--os-cacert <ca-certificate>] [--os-cert <certificate>]
                   [--os-key <key>] [--timeout <seconds>]
 
@@ -119,11 +120,14 @@ watcher optional arguments
 ``--os-auth-token <auth-token>``
   Defaults to ``env[OS_AUTH_TOKEN]``.
 
-``--watcher-api-version <watcher-api-version>``
-  Defaults to ``env[WATCHER_API_VERSION]``.
+``--os-watcher-api-version <os-watcher-api-version>``
+  Defaults to ``env[OS_WATCHER_API_VERSION]``.
 
 ``--os-endpoint-type OS_ENDPOINT_TYPE``
   Defaults to ``env[OS_ENDPOINT_TYPE]`` or "publicURL"
+
+``--os-endpoint-override <endpoint-override>``
+  Use this API endpoint instead of the Service Catalog.
 
 ``--insecure``
   Explicitly allow client to perform "insecure" TLS
@@ -220,8 +224,7 @@ watcher actionplan create
    usage: watcher actionplan create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--noindent] [--prefix PREFIX] -a
-                                    <audit_template> [-d <deadline>]
-                                    [-t <audit_type>]
+                                    <audit_template> [-t <audit_type>]
 
 Create new audit.
 
@@ -233,9 +236,6 @@ Create new audit.
 ``-a <audit_template>, --audit-template <audit_template>``
   ActionPlan template used for this audit (name or
   uuid).
-
-``-d <deadline>, --deadline <deadline>``
-  Descrition of the audit.
 
 ``-t <audit_type>, --audit_type <audit_type>``
   ActionPlan type.
@@ -368,7 +368,7 @@ Update action plan command.
   UUID of the action_plan.
 
 ``<op>``
-  Operation: 'add'), 'replace', or 'remove'.
+  Operation: 'add', 'replace', or 'remove'.
 
 ``<path=value>``
   Attribute to add, replace, or remove. Can be specified
@@ -389,10 +389,9 @@ watcher audit create
 
    usage: watcher audit create [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] [-d <deadline>]
-                               [-t <audit_type>] [-p <name=value>]
-                               [-i <interval>] [-g <goal>] [-s <strategy>]
-                               [-r <host-aggregate>] [-a <audit_template>]
+                               [--prefix PREFIX] [-t <audit_type>]
+                               [-p <name=value>] [-i <interval>] [-g <goal>]
+                               [-s <strategy>] [-a <audit_template>]
 
 Create new audit.
 
@@ -400,9 +399,6 @@ Create new audit.
 
 ``-h, --help``
   show this help message and exit
-
-``-d <deadline>, --deadline <deadline>``
-  Descrition of the audit.
 
 ``-t <audit_type>, --audit_type <audit_type>``
   Audit type. It must be ONESHOT or CONTINUOUS. Default
@@ -420,10 +416,6 @@ Create new audit.
 
 ``-s <strategy>, --strategy <strategy>``
   Strategy UUID or name associated to this audit.
-
-``-r <host-aggregate>, --host-aggregate <host-aggregate>``
-  Name or UUID of the host aggregate targeted by this
-  audit.
 
 ``-a <audit_template>, --audit-template <audit_template>``
   Audit template used for this audit (name or uuid).
@@ -558,7 +550,7 @@ watcher audittemplate create
                                        [-c COLUMN] [--max-width <integer>]
                                        [--noindent] [--prefix PREFIX]
                                        [-s <strategy>] [-d <description>]
-                                       [-e <key=value>] [-a <host-aggregate>]
+                                       [--scope <path>]
                                        <name> <goal>
 
 Create new audit template.
@@ -583,13 +575,42 @@ Create new audit template.
 ``-d <description>, --description <description>``
   Descrition of the audit template.
 
-``-e <key=value>, --extra <key=value>``
-  Record arbitrary key/value metadata. Can be specified
-  multiple times.
+``--scope <path>``
+  Part of the cluster on which an audit will be done.
+  Can be provided either in yaml or json file.
+  YAML example:
+  :option:`---`
+  - host_aggregates:
+  - id: 1
+  - id: 2
+  - id: 3
+  - availability_zones:
+  - name: AZ1
+  - name: AZ2
+  - exclude:
+  - instances:
+  - uuid: UUID1
+  - uuid: UUID2
+  - compute_nodes:
+  - name: compute1
 
-``-a <host-aggregate>, --host-aggregate <host-aggregate>``
-  Name or UUID of the host aggregate targeted by this
-  audit template.
+  JSON example:
+  [{'host_aggregates': [
+  {'id': 1},
+  {'id': 2},
+  {'id': 3}]},
+  {'availability_zones': [
+  {'name': 'AZ1'},
+  {'name': 'AZ2'}]},
+  {'exclude': [
+  {'instances': [
+  {'uuid': 'UUID1'},
+  {'uuid': 'UUID2'}
+  ]},
+  {'compute_nodes': [
+  {'name': 'compute1'}
+  ]}
+  ]}]
 
 .. _watcher_audittemplate_delete:
 
@@ -702,7 +723,7 @@ Update audit template command.
   UUID or name of the audit_template.
 
 ``<op>``
-  Operation: 'add'), 'replace', or 'remove'.
+  Operation: 'add', 'replace', or 'remove'.
 
 ``<path=value>``
   Attribute to add, replace, or remove. Can be specified
@@ -826,6 +847,64 @@ Show detailed information about a given scoring engine.
 
 ``<scoring_engine>``
   Name of the scoring engine
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _watcher_service_list:
+
+watcher service list
+--------------------
+
+.. code-block:: console
+
+   usage: watcher service list [-h] [-f {csv,html,json,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--quote {all,minimal,none,nonnumeric}] [--detail]
+                               [--limit <limit>] [--sort-key <field>]
+                               [--sort-dir <direction>]
+
+List information on retrieved services.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--detail``
+  Show detailed information about each service.
+
+``--limit <limit>``
+  Maximum number of services to return per request, 0
+  for no limit. Default is the maximum number used by
+  the Watcher API Service.
+
+``--sort-key <field>``
+  Goal field that will be used for sorting.
+
+``--sort-dir <direction>``
+  Sort direction: "asc" (the default) or "desc".
+
+.. _watcher_service_show:
+
+watcher service show
+--------------------
+
+.. code-block:: console
+
+   usage: watcher service show [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--prefix PREFIX]
+                               <service>
+
+Show detailed information about a given service.
+
+**Positional arguments:**
+
+``<service>``
+  ID or name of the service
 
 **Optional arguments:**
 
