@@ -97,6 +97,10 @@ trove usage
 ``cluster-shrink``
   Drops instances from a cluster.
 
+``cluster-upgrade``
+  Upgrades a cluster to a new datastore
+  version.
+
 ``configuration-attach``
   Attaches a configuration group to an
   instance.
@@ -447,8 +451,7 @@ trove backup-copy
 
 .. code-block:: console
 
-   usage: trove backup-copy <name> <backup>
-                            [--region <region>] [--description <description>]
+   usage: trove backup-copy [--description <description>] <name> <backup>
 
 Creates a backup from another backup.
 
@@ -461,9 +464,6 @@ Creates a backup from another backup.
   Backup ID of the source backup.
 
 **Optional arguments:**
-
-``--region <region>``
-  Region where the source backup resides.
 
 ``--description <description>``
   An optional description for the backup.
@@ -796,6 +796,25 @@ Drops instances from a cluster.
   Drop instance(s) from the cluster. Specify multiple ids to drop
   multiple instances.
 
+.. _trove_cluster-upgrade:
+
+trove cluster-upgrade
+---------------------
+
+.. code-block:: console
+
+   usage: trove cluster-upgrade <cluster> <datastore_version>
+
+Upgrades a cluster to a new datastore version.
+
+**Positional arguments:**
+
+``<cluster>``
+  ID or name of the cluster.
+
+``<datastore_version>``
+  A datastore version name or ID.
+
 .. _trove_configuration-attach:
 
 trove configuration-attach
@@ -909,6 +928,7 @@ trove configuration-instances
 .. code-block:: console
 
    usage: trove configuration-instances <configuration_group>
+                                        [--limit <limit>] [--marker <ID>]
 
 Lists all instances associated with a configuration group.
 
@@ -917,6 +937,16 @@ Lists all instances associated with a configuration group.
 ``<configuration_group>``
   ID or name of the configuration group.
 
+**Optional arguments:**
+
+``--limit <limit>``
+  Limit the number of results displayed.
+
+``--marker <ID>``
+  Begin displaying the results for IDs greater than the
+  specified marker. When used with :option:`--limit,` set this to
+  the last ID displayed in the previous run.
+
 .. _trove_configuration-list:
 
 trove configuration-list
@@ -924,9 +954,19 @@ trove configuration-list
 
 .. code-block:: console
 
-   usage: trove configuration-list
+   usage: trove configuration-list [--limit <limit>] [--marker <ID>]
 
 Lists all configuration groups.
+
+**Optional arguments:**
+
+``--limit <limit>``
+  Limit the number of results displayed.
+
+``--marker <ID>``
+  Begin displaying the results for IDs greater than the
+  specified marker. When used with :option:`--limit,` set this to the
+  last ID displayed in the previous run.
 
 .. _trove_configuration-parameter-list:
 
