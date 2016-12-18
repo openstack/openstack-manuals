@@ -5,9 +5,10 @@ SR-IOV
 ======
 
 The purpose of this page is to describe how to enable SR-IOV functionality
-available in OpenStack (using OpenStack Networking) as of the Juno release. It
-is intended to server as a guide for how to configure OpenStack Networking and
-OpenStack Compute to create SR-IOV ports.
+available in OpenStack (using OpenStack Networking). This functionality was
+first introduced in the OpenStack Juno release. This page intends to serve as
+a guide for how to configure OpenStack Networking and OpenStack Compute to
+create SR-IOV ports.
 
 The basics
 ~~~~~~~~~~
