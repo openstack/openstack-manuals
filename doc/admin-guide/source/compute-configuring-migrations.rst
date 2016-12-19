@@ -367,7 +367,7 @@ by the XAPI plug-ins to establish the pool.
 
    .. code-block:: console
 
-      $ nova aggregate-create POOL_NAME AVAILABILITY_ZONE
+      $ openstack aggregate create --zone AVAILABILITY_ZONE POOL_NAME
 
    Add metadata to the aggregate, to mark it as a hypervisor pool
 
@@ -381,7 +381,7 @@ by the XAPI plug-ins to establish the pool.
 
    .. code-block:: console
 
-      $ nova aggregate-add-host AGGREGATE_ID MASTER_COMPUTE_NAME
+      $ openstack aggregate add host AGGREGATE_ID MASTER_COMPUTE_NAME
 
    The host is now part of a XenServer pool.
 
@@ -389,7 +389,7 @@ by the XAPI plug-ins to establish the pool.
 
    .. code-block:: console
 
-      $ nova aggregate-add-host AGGREGATE_ID COMPUTE_HOST_NAME
+      $ openstack aggregate add host AGGREGATE_ID COMPUTE_HOST_NAME
 
    .. note::
 

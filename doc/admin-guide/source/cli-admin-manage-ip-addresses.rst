@@ -32,7 +32,7 @@ To list all floating IP addresses for all projects, run:
 
 .. code-block:: console
 
-   $ nova floating-ip-bulk-list
+   $ openstack floating ip list
    +------------+---------------+---------------+--------+-----------+
    | project_id | address       | instance_uuid | pool   | interface |
    +------------+---------------+---------------+--------+-----------+
@@ -98,10 +98,10 @@ To delete a range of floating IP addresses, run:
 
 .. code-block:: console
 
-   $ nova floating-ip-bulk-delete RANGE_TO_DELETE
+   $ openstack floating ip delete RANGE_TO_DELETE
 
 For example:
 
 .. code-block:: console
 
-   $ nova floating-ip-bulk-delete 192.168.1.56/29
+   $ openstack floating ip delete 192.168.1.56/29
