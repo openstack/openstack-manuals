@@ -73,6 +73,9 @@ ports that each OpenStack service uses:
    * - Telemetry (``ceilometer``)
      - 8777
      - publicurl and adminurl
+   * - Workflow service (``Mistral``)
+     - 8989
+     -
 
 To function properly, some OpenStack components depend on other,
 non-OpenStack services. For example, the OpenStack dashboard uses HTTP
