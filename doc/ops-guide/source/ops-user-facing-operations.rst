@@ -1988,7 +1988,7 @@ snapshot a running instance to an image using the CLI, do this:
 
 .. code-block:: console
 
-   $ nova image-create <instance name or uuid> <name of new image>
+   $ openstack image create <image name> --volume <volume name of instance>
 
 The dashboard interface for snapshots can be confusing because the
 snapshots and images are displayed in the :guilabel:`Images` page. However, an
@@ -2123,13 +2123,13 @@ I/O operation and any I/O attempts are delayed until the file system has
 been unfrozen.
 
 Once you have issued the :command:`fsfreeze` command, it is safe to perform
-the snapshot. For example, if your instance was named ``mon-instance`` and
-you wanted to snapshot it to an image named ``mon-snapshot``, you could
-now run the following:
+the snapshot. For example, if the volume of your instance was named
+``mon-volume`` and you wanted to snapshot it to an image named
+``mon-snapshot``, you could now run the following:
 
 .. code-block:: console
 
-   $ nova image-create mon-instance mon-snapshot
+   $ openstack image create mon-snapshot --volume mon-volume
 
 When the snapshot is done, you can thaw the file system with the
 following command, as root, inside of the instance:
@@ -2146,10 +2146,11 @@ following one-liner, as root, inside the instance:
 
    # fsfreeze -f / && read x; fsfreeze -u /
 
-After this command it is common practice to call :command:`nova image-create`
-from your workstation, and once done press enter in your instance shell
-to unfreeze it. Obviously you could automate this, but at least it will
-let you properly synchronize.
+After this command it is common practice
+to call :command:`openstack image create` from your workstation, and
+once done press enter in your instance shell to unfreeze it.
+Obviously you could automate this, but at least it will let you
+properly synchronize.
 
 
 **Ensuring Snapshots of Windows Guests Are Consistent**
