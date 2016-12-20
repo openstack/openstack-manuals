@@ -88,7 +88,7 @@ For example:
        * xtensaeb - `Tensilica Xtensa configurable microprocessor core
          <http://en.wikipedia.org/wiki/Xtensa#Processor_Cores>`_ (Big Endian)
    * - All
-     - ``hypervisor-type``
+     - ``hypervisor_type``
      - The hypervisor type. Note that ``qemu`` is used for both QEMU and KVM
        hypervisor types.
      - ``hyperv``, ``ironic``, ``lxc``, ``qemu``, ``uml``, ``vmware``, or
