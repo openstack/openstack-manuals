@@ -149,7 +149,7 @@ Pre-configuration on OpenStack deployment
 
         $ openstack network list
 
-   * Create a subnet to the same porject (DEMO), the gateway IP of this subnet,
+   * Create a subnet to the same project (DEMO), the gateway IP of this subnet,
      a name for the subnet, the network name created before, and the CIDR of
      subnet:
 
