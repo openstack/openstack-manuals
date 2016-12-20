@@ -310,7 +310,7 @@ basic L3 operations:
    * - Clears the gateway.
      - .. code-block:: console
 
-          $ neutron router-gateway-clear router1
+          $ openstack router unset --external-gateway router1
    * - Removes the interfaces from the router.
      - .. code-block:: console
 
