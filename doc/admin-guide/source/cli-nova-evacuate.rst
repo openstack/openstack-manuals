@@ -16,7 +16,7 @@ current VM host is not operational. Otherwise, the evacuation fails.
 
    .. code-block:: console
 
-      $ nova host-list
+      $ openstack host list
 
 #. Evacuate the instance. You can use the :option:`--password PWD` option
    to pass the instance password to the command. If you do not specify a
