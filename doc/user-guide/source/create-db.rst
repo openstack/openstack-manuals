@@ -61,7 +61,7 @@ Create and access a database
 
    -  If your environment does not have a suitable flavor, an
       administrative user must create a custom flavor by using the
-      :command:`nova flavor-create` command.
+      :command:`openstack flavor create` command.
 
    **MySQL example.** This example creates a flavor that you can use
    with a MySQL database. This example has the following attributes:
@@ -79,12 +79,22 @@ Create and access a database
 
    .. code-block:: console
 
-      $ nova flavor-create mysql-minimum 6 512 5 1
-      +----+---------------+-----------+------+-----------+------+-------+-------------+-----------+
-      | ID | Name          | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
-      +----+---------------+-----------+------+-----------+------+-------+-------------+-----------+
-      | 6  | mysql-minimum | 512       | 5    | 0         |      | 1     | 1.0         | True      |
-      +----+---------------+-----------+------+-----------+------+-------+-------------+-----------+
+      $ openstack flavor create mysql-minimum --id 6 --ram 512 --disk 5 --vcpus 1
+      +----------------------------+---------------+
+      | Field                      | Value         |
+      +----------------------------+---------------+
+      | OS-FLV-DISABLED:disabled   | False         |
+      | OS-FLV-EXT-DATA:ephemeral  | 0             |
+      | disk                       | 5             |
+      | id                         | 6             |
+      | name                       | mysql-minimum |
+      | os-flavor-access:is_public | True          |
+      | properties                 |               |
+      | ram                        | 512           |
+      | rxtx_factor                | 1.0           |
+      | swap                       |               |
+      | vcpus                      | 1             |
+      +----------------------------+---------------+
 
    .. _create-database-instance:
 
