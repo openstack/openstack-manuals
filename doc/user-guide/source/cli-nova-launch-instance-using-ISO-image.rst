@@ -84,7 +84,7 @@ using ISO image actually functional.
 
    .. code-block:: console
 
-      $ nova delete INSTANCE_NAME
+      $ openstack server delete INSTANCE_NAME
 
 #. After you delete the instance, the system you have just installed
    using your ISO image remains, because the parameter

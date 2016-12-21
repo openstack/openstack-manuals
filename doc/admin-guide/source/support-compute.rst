@@ -219,7 +219,7 @@ instance. For example:
 .. code-block:: console
 
    $ nova reset-state c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
-   $ nova delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
+   $ openstack server delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
 
 You can also use the :option:`--active` parameter to force the instance back
 to an active state instead of an error state. For example:
