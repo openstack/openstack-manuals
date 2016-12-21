@@ -193,6 +193,8 @@ OpenStack services:
   <http://docs.openstack.org/developer/nova/upgrade.html>`_
 * `Upgrading the Identity service
   <http://docs.openstack.org/developer/keystone/upgrading.html>`_
+* `Upgrading the Block Storage service
+  <http://docs.openstack.org/developer/cinder/upgrade.html>`_
 
 Prerequisites
 -------------
