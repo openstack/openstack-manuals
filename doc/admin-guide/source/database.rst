@@ -76,33 +76,34 @@ data store version.
 
    You need to register your guest image with the Image service.
 
-   In this example, you use the glance :command:`image-create`
+   In this example, you use the :command:`openstack image create`
    command to register a ``mysql-5.5.qcow2`` image.
 
    .. code-block:: console
 
-      $ glance image-create --name mysql-5.5 --disk-format qcow2 --container-format bare --is-public True < mysql-5.5.qcow2
-      +------------------+--------------------------------------+
-      | Property         | Value                                |
-      +------------------+--------------------------------------+
-      | checksum         | d41d8cd98f00b204e9800998ecf8427e     |
-      | container_format | bare                                 |
-      | created_at       | 2014-05-23T21:01:18                  |
-      | deleted          | False                                |
-      | deleted_at       | None                                 |
-      | disk_format      | qcow2                                |
-      | id               | bb75f870-0c33-4907-8467-1367f8cb15b6 |
-      | is_public        | True                                 |
-      | min_disk         | 0                                    |
-      | min_ram          | 0                                    |
-      | name             | mysql-5.5                            |
-      | owner            | 1448da1223124bb291f5ae8e9af4270d     |
-      | protected        | False                                |
-      | size             | 0                                    |
-      | status           | active                               |
-      | updated_at       | 2014-05-23T21:01:22                  |
-      | virtual_size     | None                                 |
-      +------------------+--------------------------------------+
+      $ openstack image create mysql-5.5 --disk-format qcow2 --container-format bare --public < mysql-5.5.qcow2
+      +------------------+------------------------------------------------------+
+      | Field            | Value                                                |
+      +------------------+------------------------------------------------------+
+      | checksum         | 133eae9fb1c98f45894a4e60d8736619                     |
+      | container_format | bare                                                 |
+      | created_at       | 2016-12-21T12:10:02Z                                 |
+      | disk_format      | qcow2                                                |
+      | file             | /v2/images/d1afb4f0-2360-4400-8d97-846b1ab6af52/file |
+      | id               | d1afb4f0-2360-4400-8d97-846b1ab6af52                 |
+      | min_disk         | 0                                                    |
+      | min_ram          | 0                                                    |
+      | name             | mysql-5.5                                            |
+      | owner            | 5669caad86a04256994cdf755df4d3c1                     |
+      | protected        | False                                                |
+      | schema           | /v2/schemas/image                                    |
+      | size             | 13200896                                             |
+      | status           | active                                               |
+      | tags             |                                                      |
+      | updated_at       | 2016-12-21T12:10:03Z                                 |
+      | virtual_size     | None                                                 |
+      | visibility       | public                                               |
+      +------------------+------------------------------------------------------+
 
 #. **Create the data store**
 
