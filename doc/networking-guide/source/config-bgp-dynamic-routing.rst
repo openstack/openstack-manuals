@@ -206,23 +206,36 @@ Create the provider and self-service networks
 
    .. code-block:: console
 
-      $ neutron net-create --router:external True --provider:physical_network provider \
-        --provider:network_type flat provider
+      $ openstack network create provider --external --provider-physical-network \
+        provider --provider-network-type flat
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
-      | admin_state_up            | True                                 |
-      | id                        | 68ec148c-181f-4656-8334-8f4eb148689d |
+      | admin_state_up            | UP                                   |
+      | availability_zone_hints   |                                      |
+      | availability_zones        |                                      |
+      | created_at                | 2016-12-21T08:47:41Z                 |
+      | description               |                                      |
+      | headers                   |                                      |
+      | id                        | 190ca651-2ee3-4a4b-891f-dedda47974fe |
+      | ipv4_address_scope        | None                                 |
+      | ipv6_address_scope        | None                                 |
+      | is_default                | False                                |
+      | mtu                       | 1450                                 |
       | name                      | provider                             |
+      | port_security_enabled     | True                                 |
+      | project_id                | c961a8f6d3654657885226378ade8220     |
       | provider:network_type     | flat                                 |
       | provider:physical_network | provider                             |
-      | provider:segmentation_id  |                                      |
-      | router:external           | True                                 |
+      | provider:segmentation_id  | 66                                   |
+      | revision_number           | 3                                    |
+      | router:external           | External                             |
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      | tags                      | []                                   |
+      | updated_at                | 2016-12-21T08:47:41Z                 |
       +---------------------------+--------------------------------------+
 
 #. Create a subnet on the provider network using an IP address range from
@@ -265,46 +278,94 @@ Create the provider and self-service networks
 
    .. code-block:: console
 
-      $ neutron net-create selfservice1
+      $ openstack network create selfservice1
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
-      | admin_state_up            | True                                 |
-      | id                        | be79de1e-5f56-11e6-9dfb-233e41cec48c |
+      | admin_state_up            | UP                                   |
+      | availability_zone_hints   |                                      |
+      | availability_zones        |                                      |
+      | created_at                | 2016-12-21T08:49:38Z                 |
+      | description               |                                      |
+      | headers                   |                                      |
+      | id                        | 9d842606-ef3d-4160-9ed9-e03fa63aed96 |
+      | ipv4_address_scope        | None                                 |
+      | ipv6_address_scope        | None                                 |
+      | mtu                       | 1450                                 |
       | name                      | selfservice1                         |
+      | port_security_enabled     | True                                 |
+      | project_id                | c961a8f6d3654657885226378ade8220     |
+      | provider:network_type     | vxlan                                |
+      | provider:physical_network | None                                 |
+      | provider:segmentation_id  | 106                                  |
+      | revision_number           | 3                                    |
+      | router:external           | Internal                             |
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      | tags                      | []                                   |
+      | updated_at                | 2016-12-21T08:49:38Z                 |
       +---------------------------+--------------------------------------+
 
-      $ neutron net-create selfservice2
+      $ openstack network create selfservice2
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
-      | admin_state_up            | True                                 |
-      | id                        | c1fd9846-5f56-11e6-a8ac-0f998d9cc0a2 |
+      | admin_state_up            | UP                                   |
+      | availability_zone_hints   |                                      |
+      | availability_zones        |                                      |
+      | created_at                | 2016-12-21T08:50:05Z                 |
+      | description               |                                      |
+      | headers                   |                                      |
+      | id                        | f85639e1-d23f-438e-b2b1-f40570d86b1c |
+      | ipv4_address_scope        | None                                 |
+      | ipv6_address_scope        | None                                 |
+      | mtu                       | 1450                                 |
       | name                      | selfservice2                         |
+      | port_security_enabled     | True                                 |
+      | project_id                | c961a8f6d3654657885226378ade8220     |
+      | provider:network_type     | vxlan                                |
+      | provider:physical_network | None                                 |
+      | provider:segmentation_id  | 21                                   |
+      | revision_number           | 3                                    |
+      | router:external           | Internal                             |
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      | tags                      | []                                   |
+      | updated_at                | 2016-12-21T08:50:05Z                 |
       +---------------------------+--------------------------------------+
 
-      $ neutron net-create selfservice3
+      $ openstack network create selfservice3
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
-      | admin_state_up            | True                                 |
-      | id                        | c283dc1c-5f56-11e6-bfb6-efc30e1eb73b |
+      | admin_state_up            | UP                                   |
+      | availability_zone_hints   |                                      |
+      | availability_zones        |                                      |
+      | created_at                | 2016-12-21T08:50:35Z                 |
+      | description               |                                      |
+      | headers                   |                                      |
+      | id                        | eeccdb82-5cf4-4999-8ab3-e7dc99e7d43b |
+      | ipv4_address_scope        | None                                 |
+      | ipv6_address_scope        | None                                 |
+      | mtu                       | 1450                                 |
       | name                      | selfservice3                         |
+      | port_security_enabled     | True                                 |
+      | project_id                | c961a8f6d3654657885226378ade8220     |
+      | provider:network_type     | vxlan                                |
+      | provider:physical_network | None                                 |
+      | provider:segmentation_id  | 86                                   |
+      | revision_number           | 3                                    |
+      | router:external           | Internal                             |
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      | tags                      | []                                   |
+      | updated_at                | 2016-12-21T08:50:35Z                 |
       +---------------------------+--------------------------------------+
 
 #. Create a subnet on the first two self-service networks using an IP address

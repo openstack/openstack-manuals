@@ -30,22 +30,34 @@ Create networks
 
    .. code-block:: console
 
-      $ neutron net-create net1
+      $ openstack network create net1
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
-      | admin_state_up            | True                                 |
-      | id                        | 2d627131-c841-4e3a-ace6-f2dd75773b6d |
+      | admin_state_up            | UP                                   |
+      | availability_zone_hints   |                                      |
+      | availability_zones        |                                      |
+      | created_at                | 2016-12-21T08:32:54Z                 |
+      | description               |                                      |
+      | headers                   |                                      |
+      | id                        | 180620e3-9eae-4ba7-9739-c5847966e1f0 |
+      | ipv4_address_scope        | None                                 |
+      | ipv6_address_scope        | None                                 |
+      | mtu                       | 1450                                 |
       | name                      | net1                                 |
-      | provider:network_type     | vlan                                 |
-      | provider:physical_network | physnet1                             |
-      | provider:segmentation_id  | 1001                                 |
-      | router:external           | False                                |
+      | port_security_enabled     | True                                 |
+      | project_id                | c961a8f6d3654657885226378ade8220     |
+      | provider:network_type     | vxlan                                |
+      | provider:physical_network | None                                 |
+      | provider:segmentation_id  | 14                                   |
+      | revision_number           | 3                                    |
+      | router:external           | Internal                             |
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | 3671f46ec35e4bbca6ef92ab7975e463     |
+      | tags                      | []                                   |
+      | updated_at                | 2016-12-21T08:32:54Z                 |
       +---------------------------+--------------------------------------+
 
    .. note::
@@ -56,26 +68,38 @@ Create networks
 
    .. code-block:: console
 
-      $ neutron net-create net2 --provider:network-type local
+      $ openstack network create net2 --provider-network-type vxlan
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
-      | admin_state_up            | True                                 |
-      | id                        | 524e26ea-fad4-4bb0-b504-1ad0dc770e7a |
+      | admin_state_up            | UP                                   |
+      | availability_zone_hints   |                                      |
+      | availability_zones        |                                      |
+      | created_at                | 2016-12-21T08:33:34Z                 |
+      | description               |                                      |
+      | headers                   |                                      |
+      | id                        | c0a563d5-ef7d-46b3-b30d-6b9d4138b6cf |
+      | ipv4_address_scope        | None                                 |
+      | ipv6_address_scope        | None                                 |
+      | mtu                       | 1450                                 |
       | name                      | net2                                 |
-      | provider:network_type     | local                                |
-      | provider:physical_network |                                      |
-      | provider:segmentation_id  |                                      |
-      | router:external           | False                                |
+      | port_security_enabled     | True                                 |
+      | project_id                | c961a8f6d3654657885226378ade8220     |
+      | provider:network_type     | vxlan                                |
+      | provider:physical_network | None                                 |
+      | provider:segmentation_id  | 87                                   |
+      | revision_number           | 3                                    |
+      | router:external           | Internal                             |
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | 3671f46ec35e4bbca6ef92ab7975e463     |
+      | tags                      | []                                   |
+      | updated_at                | 2016-12-21T08:33:34Z                 |
       +---------------------------+--------------------------------------+
 
-   Just as shown previously, the unknown option ``--provider:network-type``
-   is used to create a ``local`` provider network.
+   Just as shown previously, the unknown option ``--provider-network-type``
+   is used to create a ``vxlan`` provider network.
 
 Create subnets
 ~~~~~~~~~~~~~~
