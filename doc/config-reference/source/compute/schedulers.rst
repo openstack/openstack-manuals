@@ -1161,28 +1161,37 @@ host aggregate in the ``nova`` availability zone and you add the
    | 1  | fast-io | nova              | [u'node1', u'node2'] | {u'ssd': u'true'} |
    +----+---------+-------------------+----------------------+-------------------+
 
-Use the :command:`nova flavor-create` command to create the ``ssd.large``
-flavor called with an ID of 6, 8 GB of RAM, 80 GB root disk, and four vCPUs.
+Use the :command:`openstack flavor create` command to create the ``ssd.large``
+flavor called with an ID of 6, 8 GB of RAM, 80 GB root disk, and 4 vCPUs.
 
 .. code-block:: console
 
-   $ nova flavor-create ssd.large 6 8192 80 4
-   +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-   | ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
-   +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-   | 6  | ssd.large | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
-   +----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+   $ openstack flavor create --id 6 --ram 8192 --disk 80 --vcpus 4 ssd.large
+   +----------------------------+-----------+
+   | Field                      | Value     |
+   +----------------------------+-----------+
+   | OS-FLV-DISABLED:disabled   | False     |
+   | OS-FLV-EXT-DATA:ephemeral  | 0         |
+   | disk                       | 80        |
+   | id                         | 6         |
+   | name                       | ssd.large |
+   | os-flavor-access:is_public | True      |
+   | ram                        | 8192      |
+   | rxtx_factor                | 1.0       |
+   | swap                       |           |
+   | vcpus                      | 4         |
+   +----------------------------+-----------+
 
 Once the flavor is created, specify one or more key-value pairs that
 match the key-value pairs on the host aggregates with scope
 ``aggregate_instance_extra_specs``. In this case, that is the
 ``aggregate_instance_extra_specs:ssd=true`` key-value pair.
 Setting a key-value pair on a flavor is done using the
-:command:`nova flavor-key` command.
+:command:`openstack flavor set` command.
 
 .. code-block:: console
 
-   $ nova flavor-key ssd.large set aggregate_instance_extra_specs:ssd=true
+   $ openstack flavor set --property aggregate_instance_extra_specs:ssd=true ssd.large
 
 Once it is set, you should see the ``extra_specs`` property of the
 ``ssd.large`` flavor populated with a key of ``ssd`` and a corresponding
@@ -1190,22 +1199,22 @@ value of ``true``.
 
 .. code-block:: console
 
-   $ nova flavor-show ssd.large
-   +----------------------------+--------------------------------------------------+
-   | Property                   | Value                                            |
-   +----------------------------+--------------------------------------------------+
-   | OS-FLV-DISABLED:disabled   | False                                            |
-   | OS-FLV-EXT-DATA:ephemeral  | 0                                                |
-   | disk                       | 80                                               |
-   | extra_specs                | {u'aggregate_instance_extra_specs:ssd': u'true'} |
-   | id                         | 6                                                |
-   | name                       | ssd.large                                        |
-   | os-flavor-access:is_public | True                                             |
-   | ram                        | 8192                                             |
-   | rxtx_factor                | 1.0                                              |
-   | swap                       |                                                  |
-   | vcpus                      | 4                                                |
-   +----------------------------+--------------------------------------------------+
+   $ openstack flavor show ssd.large
+   +----------------------------+-------------------------------------------+
+   | Field                      | Value                                     |
+   +----------------------------+-------------------------------------------+
+   | OS-FLV-DISABLED:disabled   | False                                     |
+   | OS-FLV-EXT-DATA:ephemeral  | 0                                         |
+   | disk                       | 80                                        |
+   | id                         | 6                                         |
+   | name                       | ssd.large                                 |
+   | os-flavor-access:is_public | True                                      |
+   | properties                 | aggregate_instance_extra_specs:ssd='true' |
+   | ram                        | 8192                                      |
+   | rxtx_factor                | 1.0                                       |
+   | swap                       |                                           |
+   | vcpus                      | 4                                         |
+   +----------------------------+-------------------------------------------+
 
 Now, when a user requests an instance with the ``ssd.large`` flavor,
 the scheduler only considers hosts with the ``ssd=true`` key-value pair.
