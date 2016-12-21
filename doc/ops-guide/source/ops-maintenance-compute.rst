@@ -434,9 +434,9 @@ using neutron ports which contain the IPv4 & IPv6 address.
       {"subnet_id": "11d8087b-6288-4129-95ff-42c3df0c1df0",
        "ip_address": "2001:558:fc0b:100:f816:3eff:fefb:65fc"} |
       | {"subnet_id": "4279c70a-7218-4c7e-94e5-7bd4c045644e",
-      "ip_address": "96.118.182.107"}                    	|
+      "ip_address": "96.118.182.107"}                           |
 
-#. Run the :command:`neutron port-update command` to remove the port from
+#. Run the :command:`neutron port-update` command to remove the port from
    the instance:
 
    .. code-block:: console
