@@ -55,13 +55,8 @@ To view and update default quota values
 
    .. code-block:: console
 
-      $ nova quota-defaults
+      $ openstack quota show --default
 
-   For example:
-
-   .. code-block:: console
-
-      $ nova quota-defaults
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+
@@ -81,13 +76,7 @@ To view and update default quota values
       | server_group_members        | 10    |
       +-----------------------------+-------+
 
-#. Update a default value for a new project.
-
-   .. code-block:: console
-
-      $ nova quota-class-update --KEY VALUE default
-
-   For example:
+#. Update a default value for a new project, for example:
 
    .. code-block:: console
 
@@ -96,23 +85,12 @@ To view and update default quota values
 To view quota values for an existing project
 --------------------------------------------
 
-#. Place the project ID in a usable variable.
+#. List the currently set quota values for a project:
 
    .. code-block:: console
 
-      $ tenant=$(openstack project show -f value -c id TENANT_NAME)
+      $ openstack quota show TENANT_NAME
 
-#. List the currently set quota values for a project.
-
-   .. code-block:: console
-
-      $ nova quota-show --tenant $tenant
-
-   For example:
-
-   .. code-block:: console
-
-      $ nova quota-show --tenant $tenant
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+
@@ -151,8 +129,8 @@ To update quota values for an existing project
 
    .. code-block:: console
 
-      $ nova quota-update --floating-ips 20 $tenant
-      $ nova quota-show --tenant $tenant
+      $ nova quota-update --floating-ips 20 TENANT_NAME
+      $ openstack quota show TENANT_NAME
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+

@@ -482,35 +482,24 @@ Basic operations on agents
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This table shows examples of Networking commands that enable you to
-complete basic operations on agents:
+complete basic operations on agents.
 
-+----------------------------------------+------------------------------------+
-| Operation                              | Command                            |
-+========================================+====================================+
-| List all available agents.             |                                    |
-|                                        |                                    |
-|                                        | ``$ neutron agent-list``           |
-+----------------------------------------+------------------------------------+
-| Show information of a given            |                                    |
-| agent.                                 |                                    |
-|                                        |                                    |
-|                                        | ``$ neutron agent-show AGENT_ID``  |
-+----------------------------------------+------------------------------------+
-| Update the admin status and description|                                    |
-| for a specified agent. The command can |                                    |
-| be used to enable and disable agents by|                                    |
-| using :option:`--admin-state-up`       |                                    |
-| parameter                              |                                    |
-| set to ``False`` or ``True``.          |                                    |
-|                                        |                                    |
-|                                        | ``$ neutron agent-update``         |
-|                                        | ``--admin-state-up False AGENT_ID``|
-+----------------------------------------+------------------------------------+
-| Delete a given agent. Consider         |                                    |
-| disabling the agent before deletion.   |                                    |
-|                                        |                                    |
-|                                        | ``$ neutron agent-delete AGENT_ID``|
-+----------------------------------------+------------------------------------+
+.. list-table::
+   :widths: 50 50
+   :header-rows: 1
+
+   * - Operation
+     - Command
+   * - List all available agents.
+     - ``$ openstack network agent list``
+   * - Show information of a given agent.
+     - ``$ openstack network agent show AGENT_ID``
+   * - Update the admin status and description for a specified agent. The
+       command can be used to enable and disable agents by using
+       :option:`--admin-state-up` parameter set to ``False`` or ``True``.
+     - ``$ neutron agent-update --admin-state-up False AGENT_ID``
+   * - Delete a given agent. Consider disabling the agent before deletion.
+     - ``$ openstack network agent delete AGENT_ID``
 
 **Basic operations on Networking agents**
 
