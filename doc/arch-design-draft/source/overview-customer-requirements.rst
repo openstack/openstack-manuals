@@ -44,8 +44,9 @@ increase costs in large systems. In these cases, it is important to minimize
 capital expenditure (CapEx) at all layers of the stack. Operators of massively
 scalable OpenStack clouds require the use of dependable commodity hardware and
 freely available open source software components to reduce deployment costs and
-operational expenses. Initiatives like OpenCompute (more information available
-at http://www.opencompute.org) provide additional information and pointers.
+operational expenses. Initiatives like Open Compute (more information available
+in the `Open Compute Project <http://www.opencompute.org>`_)
+provide additional information and pointers.
 Factors to consider include power, cooling, and the physical design of the
 chassis. Through customization, it is possible to optimize your hardware and
 systems for specific types of workloads when working at scale.
