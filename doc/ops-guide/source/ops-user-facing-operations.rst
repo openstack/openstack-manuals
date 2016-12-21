@@ -1634,7 +1634,7 @@ From the command line, do this:
 
 .. code-block:: console
 
-   $ nova delete <instance-uuid>
+   $ openstack server delete INSTANCE_ID
 
 It is important to note that powering off an instance does not terminate
 it in the OpenStack sense.
@@ -1650,50 +1650,59 @@ access to your log server or compute nodes.
 The simplest reasons for nodes to fail to launch are quota violations or
 the scheduler being unable to find a suitable compute node on which to
 run the instance. In these cases, the error is apparent when you run a
-:command:`nova show` on the faulted instance:
+:command:`openstack server show` on the faulted instance:
 
 .. code-block:: console
 
-   $ nova show test-instance
-   +------------------------+-----------------------------------------------------\
-   | Property               | Value                                               /
-   +------------------------+-----------------------------------------------------\
-   | OS-DCF:diskConfig      | MANUAL                                              /
-   | OS-EXT-STS:power_state | 0                                                   \
-   | OS-EXT-STS:task_state  | None                                                /
-   | OS-EXT-STS:vm_state    | error                                               \
-   | accessIPv4             |                                                     /
-   | accessIPv6             |                                                     \
-   | config_drive           |                                                     /
-   | created                | 2013-03-01T19:28:24Z                                \
-   | fault                  | {u'message': u'NoValidHost', u'code': 500, u'created/
-   | flavor                 | xxl.super (11)                                      \
-   | hostId                 |                                                     /
-   | id                     | 940f3b2f-bd74-45ad-bee7-eb0a7318aa84                \
-   | image                  | quantal-test (65b4f432-7375-42b6-a9b8-7f654a1e676e) /
-   | key_name               | None                                                \
-   | metadata               | {}                                                  /
-   | name                   | test-instance                                       \
-   | security_groups        | [{u'name': u'default'}]                             /
-   | status                 | ERROR                                               \
-   | tenant_id              | 98333a1a28e746fa8c629c83a818ad57                    /
-   | updated                | 2013-03-01T19:28:26Z                                \
-   | user_id                | a1ef823458d24a68955fec6f3d390019                    /
-   +------------------------+-----------------------------------------------------\
-
+   $ openstack server show test-instance
+   +--------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------+
+   | Field                                | Value                                                                                                                                 |
+   +--------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------+
+   | OS-DCF:diskConfig                    | AUTO                                                                                                                                  |
+   | OS-EXT-AZ:availability_zone          | nova                                                                                                                                  |
+   | OS-EXT-SRV-ATTR:host                 | None                                                                                                                                  |
+   | OS-EXT-SRV-ATTR:hypervisor_hostname  | None                                                                                                                                  |
+   | OS-EXT-SRV-ATTR:instance_name        | instance-0000000a                                                                                                                     |
+   | OS-EXT-STS:power_state               | NOSTATE                                                                                                                               |
+   | OS-EXT-STS:task_state                | None                                                                                                                                  |
+   | OS-EXT-STS:vm_state                  | error                                                                                                                                 |
+   | OS-SRV-USG:launched_at               | None                                                                                                                                  |
+   | OS-SRV-USG:terminated_at             | None                                                                                                                                  |
+   | accessIPv4                           |                                                                                                                                       |
+   | accessIPv6                           |                                                                                                                                       |
+   | addresses                            |                                                                                                                                       |
+   | config_drive                         |                                                                                                                                       |
+   | created                              | 2016-11-23T07:51:53Z                                                                                                                  |
+   | fault                                | {u'message': u'Build of instance 6ec42311-a121-4887-aece-48fb93a4a098 aborted: Failed to allocate the network(s), not rescheduling.', |
+   |                                      | u'code': 500, u'details': u'  File "/usr/lib/python2.7/site-packages/nova/compute/manager.py", line 1779, in                          |
+   |                                      | _do_build_and_run_instance\n    filter_properties)\n  File "/usr/lib/python2.7/site-packages/nova/compute/manager.py", line 1960, in  |
+   |                                      | _build_and_run_instance\n    reason=msg)\n', u'created': u'2016-11-23T07:57:04Z'}                                                     |
+   | flavor                               | m1.tiny (1)                                                                                                                           |
+   | hostId                               |                                                                                                                                       |
+   | id                                   | 6ec42311-a121-4887-aece-48fb93a4a098                                                                                                  |
+   | image                                | cirros (9fef3b2d-c35d-4b61-bea8-09cc6dc41829)                                                                                         |
+   | key_name                             | None                                                                                                                                  |
+   | name                                 | test-instance                                                                                                                         |
+   | os-extended-volumes:volumes_attached | []                                                                                                                                    |
+   | project_id                           | 5669caad86a04256994cdf755df4d3c1                                                                                                      |
+   | properties                           |                                                                                                                                       |
+   | status                               | ERROR                                                                                                                                 |
+   | updated                              | 2016-11-23T07:57:04Z                                                                                                                  |
+   | user_id                              | c36cec73b0e44876a4478b1e6cd749bb                                                                                                      |
+   +--------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------+
 
 In this case, looking at the ``fault`` message shows ``NoValidHost``,
 indicating that the scheduler was unable to match the instance
 requirements.
 
-If :command:`nova show` does not sufficiently explain the failure, searching
-for the instance UUID in the ``nova-compute.log`` on the compute node it
-was scheduled on or the ``nova-scheduler.log`` on your scheduler hosts
+If :command:`openstack server show` does not sufficiently explain the failure,
+searching for the instance UUID in the ``nova-compute.log`` on the compute
+node it was scheduled on or the ``nova-scheduler.log`` on your scheduler hosts
 is a good place to start looking for lower-level problems.
 
-Using :command:`nova show` as an admin user will show the compute node the
-instance was scheduled on as ``hostId``. If the instance failed during
-scheduling, this field is blank.
+Using :command:`openstack server show` as an admin user will show the compute
+node the instance was scheduled on as ``hostId``. If the instance failed
+during scheduling, this field is blank.
 
 Using Instance-Specific Data
 ----------------------------
