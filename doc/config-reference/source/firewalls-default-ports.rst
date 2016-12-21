@@ -22,6 +22,9 @@ ports that each OpenStack service uses:
    * - Block Storage (``cinder``)
      - 8776
      - publicurl and adminurl
+   * - Clustering (``senlin``)
+     - 8778
+     - publicurl and adminurl
    * - Compute (``nova``) endpoints
      - 8774
      - publicurl and adminurl
