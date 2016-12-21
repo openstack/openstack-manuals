@@ -10,7 +10,7 @@ The freezer client is the command-line interface (CLI) for
 the Backup, Restore, and Disaster Recovery service (freezer) API and its
 extensions.
 
-This chapter documents :command:`freezer` version ``1.0.0``.
+This chapter documents :command:`freezer` version ``1.1.0``.
 
 For help on a specific :command:`freezer` command, enter:
 
@@ -124,7 +124,7 @@ freezer action-create
 
 .. code-block:: console
 
-   usage: freezer action-create [-h] [--file FILE]
+   usage: freezer action-create [-h] --file FILE
 
 Create an action from a file
 
@@ -232,6 +232,27 @@ Update an action from a file
 ``-h, --help``
   show this help message and exit
 
+.. _freezer_backup-delete:
+
+freezer backup-delete
+---------------------
+
+.. code-block:: console
+
+   usage: freezer backup-delete [-h] backup_id
+
+Delete a backup from the api
+
+**Positional arguments:**
+
+``backup_id``
+  ID of the backup
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
 .. _freezer_backup-list:
 
 freezer backup-list
@@ -269,14 +290,14 @@ freezer backup-show
    usage: freezer backup-show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--noindent]
                               [--prefix PREFIX]
-                              backup_uuid
+                              backup_id
 
 Show the metadata of a single backup
 
 **Positional arguments:**
 
-``backup_uuid``
-  UUID of the backup
+``backup_id``
+  ID of the backup
 
 **Optional arguments:**
 
@@ -338,7 +359,7 @@ freezer client-register
 
 .. code-block:: console
 
-   usage: freezer client-register [-h] [--file FILE]
+   usage: freezer client-register [-h] --file FILE
 
 Register a new client
 
@@ -402,7 +423,7 @@ freezer job-create
 
 .. code-block:: console
 
-   usage: freezer job-create [-h] [--file FILE]
+   usage: freezer job-create [-h] --file FILE
 
 Create a new job from a file
 
@@ -470,6 +491,7 @@ freezer job-list
                            [--max-width <integer>] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--limit LIMIT] [--offset OFFSET] [--search SEARCH]
+                           [--client CLIENT_ID]
 
 List all the jobs for your user
 
@@ -485,6 +507,10 @@ List all the jobs for your user
 
 ``--search SEARCH``
   Define a filter for the query
+
+``--client CLIENT_ID, -C``
+  CLIENT_ID
+  Get jobs for a specific client
 
 .. _freezer_job-show:
 
@@ -583,8 +609,7 @@ freezer session-add-job
 
 .. code-block:: console
 
-   usage: freezer session-add-job [-h] [--session-id SESSION_ID]
-                                  [--job-id JOB_ID]
+   usage: freezer session-add-job [-h] --session-id SESSION_ID --job-id JOB_ID
 
 Add a job to a session
 
@@ -606,7 +631,7 @@ freezer session-create
 
 .. code-block:: console
 
-   usage: freezer session-create [-h] [--file FILE]
+   usage: freezer session-create [-h] --file FILE
 
 Create a session from a file
 
@@ -617,4 +642,123 @@ Create a session from a file
 
 ``--file FILE``
   Path to json file with the job
+
+.. _freezer_session-delete:
+
+freezer session-delete
+----------------------
+
+.. code-block:: console
+
+   usage: freezer session-delete [-h] session_id
+
+Delete a session
+
+**Positional arguments:**
+
+``session_id``
+  ID of the session
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _freezer_session-list:
+
+freezer session-list
+--------------------
+
+.. code-block:: console
+
+   usage: freezer session-list [-h] [-f {csv,html,json,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--quote {all,minimal,none,nonnumeric}]
+                               [--limit LIMIT] [--offset OFFSET]
+                               [--search SEARCH]
+
+List all the sessions for your user
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--limit LIMIT``
+  Specify a limit for search query
+
+``--offset OFFSET``
+
+``--search SEARCH``
+  Define a filter for the query
+
+.. _freezer_session-remove-job:
+
+freezer session-remove-job
+--------------------------
+
+.. code-block:: console
+
+   usage: freezer session-remove-job [-h] --session-id SESSION_ID --job-id JOB_ID
+
+Remove a job from a session
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--session-id SESSION_ID``
+  ID of the session
+
+``--job-id JOB_ID``
+  ID of the job to add
+
+.. _freezer_session-show:
+
+freezer session-show
+--------------------
+
+.. code-block:: console
+
+   usage: freezer session-show [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [--prefix PREFIX]
+                               session_id
+
+Show a single session
+
+**Positional arguments:**
+
+``session_id``
+  ID of the session
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+.. _freezer_session-update:
+
+freezer session-update
+----------------------
+
+.. code-block:: console
+
+   usage: freezer session-update [-h] session_id file
+
+Update a session from a file
+
+**Positional arguments:**
+
+``session_id``
+  ID of the session
+
+``file``
+  Path to json file with the session
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
 
