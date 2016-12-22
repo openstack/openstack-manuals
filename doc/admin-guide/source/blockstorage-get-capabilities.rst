@@ -33,13 +33,13 @@ First, get a list of the services:
 
 .. code-block:: console
 
-   $ cinder service-list
-   +------------------+-------------------+------+---------+-------+------+
-   |      Binary      |        Host       | Zone |  Status | State | ...  |
-   +------------------+-------------------+------+---------+-------+------+
-   | cinder-scheduler | controller        | nova | enabled |   up  | ...  |
-   | cinder-volume    | block1@ABC-driver | nova | enabled |   up  | ...  |
-   +------------------+-------------------+------+---------+-------+------+
+   $ openstack volume service list
+   +------------------+-------------------+------+---------+-------+----------------------------+
+   | Binary           | Host              | Zone | Status  | State | Updated At                 |
+   +------------------+-------------------+------+---------+-------+----------------------------+
+   | cinder-scheduler | controller        | nova | enabled | up    | 2016-10-24T13:53:35.000000 |
+   | cinder-volume    | block1@ABC-driver | nova | enabled | up    | 2016-10-24T13:53:35.000000 |
+   +------------------+-------------------+------+---------+-------+----------------------------+
 
 With one of the listed hosts, pass that to ``get-capabilities``, then
 the administrator can obtain volume stats and also back end ``capabilities``
@@ -87,13 +87,13 @@ command combined with the Binary and Host to disable the service:
 
    .. code-block:: console
 
-      $ cinder service-list
-      +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
-      |      Binary      |         Host         | Zone |  Status | State |         Updated_at         | Disabled Reason |
-      +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
-      | cinder-scheduler |       devstack       | nova | enabled |   up  | 2015-10-13T15:21:48.000000 |        -        |
-      |  cinder-volume   | devstack@lvmdriver-1 | nova | enabled |   up  | 2015-10-13T15:21:52.000000 |        -        |
-      +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
+      $ openstack volume service list
+      +------------------+----------------------+------+---------+-------+----------------------------+
+      | Binary           | Host                 | Zone | Status  | State | Updated At                 |
+      +------------------+----------------------+------+---------+-------+----------------------------+
+      | cinder-scheduler | devstack             | nova | enabled | up    | 2016-10-24T13:53:35.000000 |
+      | cinder-volume    | devstack@lvmdriver-1 | nova | enabled | up    | 2016-10-24T13:53:35.000000 |
+      +------------------+----------------------+------+---------+-------+----------------------------+
 
 #. Disable the service using the Binary and Host name, placing the Host
    before the Binary name.
