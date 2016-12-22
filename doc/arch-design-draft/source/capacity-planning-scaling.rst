@@ -353,11 +353,11 @@ change all flavor types relating to them.
     their own internal availability zone
     (CONF.internal_service_availability_zone):
 
-    -  :command:`nova host-list` (os-hosts)
+    -  :command:`openstack host list` (os-hosts)
 
     -  :command:`euca-describe-availability-zones verbose`
 
-    -  :command:`nova service-list`
+    -  :command:`openstack compute service list`
 
     The internal availability zone is hidden in
     euca-describe-availability_zones (nonverbose).

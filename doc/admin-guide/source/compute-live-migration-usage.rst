@@ -99,8 +99,8 @@ Before starting a migration, review the Configure migrations section.
    example, we will migrate the instance to ``HostC``, because
    ``nova-compute`` is running on it:
 
-   .. list-table:: **nova service-list**
-      :widths: 20 9 12 11 9 30 24
+   .. list-table:: **openstack compute service list**
+      :widths: 20 9 12 11 9 30
       :header-rows: 1
 
       * - Binary
@@ -109,49 +109,42 @@ Before starting a migration, review the Configure migrations section.
         - Status
         - State
         - Updated_at
-        - Disabled Reason
       * - nova-consoleauth
         - HostA
         - internal
         - enabled
         - up
         - 2014-03-25T10:33:25.000000
-        - -
       * - nova-scheduler
         - HostA
         - internal
         - enabled
         - up
         - 2014-03-25T10:33:25.000000
-        - -
       * - nova-conductor
         - HostA
         - internal
         - enabled
         - up
         - 2014-03-25T10:33:27.000000
-        - -
       * - nova-compute
         - HostB
         - nova
         - enabled
         - up
         - 2014-03-25T10:33:31.000000
-        - -
       * - nova-compute
         - HostC
         - nova
         - enabled
         - up
         - 2014-03-25T10:33:31.000000
-        - -
       * - nova-cert
         - HostA
         - internal
         - enabled
         - up
         - 2014-03-25T10:33:31.000000
-        - -
 
 #. Check that ``HostC`` has enough resources for migration:
 
