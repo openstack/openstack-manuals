@@ -510,8 +510,8 @@ mount point:
 
 .. code-block:: console
 
-   # nova volume-detach <instance_uuid> <volume_uuid>
-   # nova volume-attach <instance_uuid> <volume_uuid> /dev/vdX
+   # openstack server remove volume <instance_uuid> <volume_uuid>
+   # openstack server add volume <instance_uuid> <volume_uuid> --device /dev/vdX
 
 Be sure that the instance has successfully booted and is at a login
 screen before doing the above.
