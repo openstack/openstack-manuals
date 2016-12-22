@@ -1133,33 +1133,63 @@ host aggregate in the ``nova`` availability zone and you add the
 
 .. code-block:: console
 
-   $ nova aggregate-create fast-io nova
-   +----+---------+-------------------+-------+----------+
-   | Id | Name    | Availability Zone | Hosts | Metadata |
-   +----+---------+-------------------+-------+----------+
-   | 1  | fast-io | nova              |       |          |
-   +----+---------+-------------------+-------+----------+
+   $ openstack aggregate create --zone nova fast-io
+   +-------------------+----------------------------+
+   | Field             | Value                      |
+   +-------------------+----------------------------+
+   | availability_zone | nova                       |
+   | created_at        | 2016-12-22T07:31:13.013466 |
+   | deleted           | False                      |
+   | deleted_at        | None                       |
+   | id                | 1                          |
+   | name              | fast-io                    |
+   | updated_at        | None                       |
+   +-------------------+----------------------------+
 
-   $ nova aggregate-set-metadata 1 ssd=true
-   +----+---------+-------------------+-------+-------------------+
-   | Id | Name    | Availability Zone | Hosts | Metadata          |
-   +----+---------+-------------------+-------+-------------------+
-   | 1  | fast-io | nova              | []    | {u'ssd': u'true'} |
-   +----+---------+-------------------+-------+-------------------+
+   $ openstack aggregate set --property ssd=true 1
+   +-------------------+----------------------------+
+   | Field             | Value                      |
+   +-------------------+----------------------------+
+   | availability_zone | nova                       |
+   | created_at        | 2016-12-22T07:31:13.000000 |
+   | deleted           | False                      |
+   | deleted_at        | None                       |
+   | hosts             | []                         |
+   | id                | 1                          |
+   | name              | fast-io                    |
+   | properties        | ssd='true'                 |
+   | updated_at        | None                       |
+   +-------------------+----------------------------+
 
-   $ nova aggregate-add-host 1 node1
-   +----+---------+-------------------+------------+-------------------+
-   | Id | Name    | Availability Zone | Hosts      | Metadata          |
-   +----+---------+-------------------+------------+-------------------+
-   | 1  | fast-io | nova              | [u'node1'] | {u'ssd': u'true'} |
-   +----+---------+-------------------+------------+-------------------+
+   $ openstack aggregate add host 1 node1
+   +-------------------+--------------------------------------------------+
+   | Field             | Value                                            |
+   +-------------------+--------------------------------------------------+
+   | availability_zone | nova                                             |
+   | created_at        | 2016-12-22T07:31:13.000000                       |
+   | deleted           | False                                            |
+   | deleted_at        | None                                             |
+   | hosts             | [u'node1']                                       |
+   | id                | 1                                                |
+   | metadata          | {u'ssd': u'true', u'availability_zone': u'nova'} |
+   | name              | fast-io                                          |
+   | updated_at        | None                                             |
+   +-------------------+--------------------------------------------------+
 
-   $ nova aggregate-add-host 1 node2
-   +----+---------+-------------------+----------------------+-------------------+
-   | Id | Name    | Availability Zone | Hosts                | Metadata          |
-   +----+---------+-------------------+----------------------+-------------------+
-   | 1  | fast-io | nova              | [u'node1', u'node2'] | {u'ssd': u'true'} |
-   +----+---------+-------------------+----------------------+-------------------+
+   $ openstack aggregate add host 1 node2
+   +-------------------+--------------------------------------------------+
+   | Field             | Value                                            |
+   +-------------------+--------------------------------------------------+
+   | availability_zone | nova                                             |
+   | created_at        | 2016-12-22T07:31:13.000000                       |
+   | deleted           | False                                            |
+   | deleted_at        | None                                             |
+   | hosts             | [u'node2']                                       |
+   | id                | 1                                                |
+   | metadata          | {u'ssd': u'true', u'availability_zone': u'nova'} |
+   | name              | fast-io                                          |
+   | updated_at        | None                                             |
+   +-------------------+--------------------------------------------------+
 
 Use the :command:`openstack flavor create` command to create the ``ssd.large``
 flavor called with an ID of 6, 8 GB of RAM, 80 GB root disk, and 4 vCPUs.

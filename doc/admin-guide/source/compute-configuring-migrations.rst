@@ -373,9 +373,9 @@ by the XAPI plug-ins to establish the pool.
 
    .. code-block:: console
 
-      $ nova aggregate-set-metadata AGGREGATE_ID hypervisor_pool=true
+      $ openstack aggregate set --property hypervisor_pool=true AGGREGATE_ID
 
-      $ nova aggregate-set-metadata AGGREGATE_ID operational_state=created
+      $ openstack aggregate set --property operational_state=created AGGREGATE_ID
 
    Make the first compute node part of that aggregate
 
