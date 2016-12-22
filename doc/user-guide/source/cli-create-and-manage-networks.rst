@@ -12,19 +12,17 @@ Create networks
 
    .. code-block:: console
 
-      $ neutron ext-list -c alias -c name
-      +-----------------+--------------------------+
-      | alias           | name                     |
-      +-----------------+--------------------------+
-      | agent_scheduler | Agent Schedulers         |
-      | binding         | Port Binding             |
-      | quotas          | Quota management support |
-      | agent           | agent                    |
-      | provider        | Provider Network         |
-      | router          | Neutron L3 Router        |
-      | lbaas           | LoadBalancing service    |
-      | extraroute      | Neutron Extra Route      |
-      +-----------------+--------------------------+
+      $ openstack extension list -c Alias -c Name --network
+      +------------------------------------------+---------------------------+
+      | Name                                     | Alias                     |
+      +------------------------------------------+---------------------------+
+      | Default Subnetpools                      | default-subnetpools       |
+      | Network IP Availability                  | network-ip-availability   |
+      | Auto Allocated Topology Services         | auto-allocated-topology   |
+      | Neutron L3 Configurable external gateway | ext-gw-mode               |
+      | Address scope                            | address-scope             |
+      | Neutron Extra Route                      | extraroute                |
+      +------------------------------------------+---------------------------+
 
 #. Create a network:
 
@@ -84,23 +82,33 @@ Create a subnet:
 
 .. code-block:: console
 
-   $ neutron subnet-create net1 192.168.2.0/24 --name subnet1
-   Created a new subnet:
-   +------------------+--------------------------------------------------+
-   | Field            | Value                                            |
-   +------------------+--------------------------------------------------+
-   | allocation_pools | {"start": "192.168.2.2", "end": "192.168.2.254"} |
-   | cidr             | 192.168.2.0/24                                   |
-   | dns_nameservers  |                                                  |
-   | enable_dhcp      | True                                             |
-   | gateway_ip       | 192.168.2.1                                      |
-   | host_routes      |                                                  |
-   | id               | 15a09f6c-87a5-4d14-b2cf-03d97cd4b456             |
-   | ip_version       | 4                                                |
-   | name             | subnet1                                          |
-   | network_id       | 2d627131-c841-4e3a-ace6-f2dd75773b6d             |
-   | tenant_id        | 3671f46ec35e4bbca6ef92ab7975e463                 |
-   +------------------+--------------------------------------------------+
+   $ openstack subnet create subnet1 --network net1
+     --subnet-range 192.168.2.0/24
+   +-------------------+--------------------------------------+
+   | Field             | Value                                |
+   +-------------------+--------------------------------------+
+   | allocation_pools  | 192.168.2.2-192.168.2.254            |
+   | cidr              | 192.168.2.0/24                       |
+   | created_at        | 2016-12-22T18:47:52Z                 |
+   | description       |                                      |
+   | dns_nameservers   |                                      |
+   | enable_dhcp       | True                                 |
+   | gateway_ip        | 192.168.2.1                          |
+   | headers           |                                      |
+   | host_routes       |                                      |
+   | id                | a394689c-f547-4834-9778-3e0bb22130dc |
+   | ip_version        | 4                                    |
+   | ipv6_address_mode | None                                 |
+   | ipv6_ra_mode      | None                                 |
+   | name              | subnet1                              |
+   | network_id        | 9db55b7f-e803-4e1b-9bba-6262f60b96cb |
+   | project_id        | e17431afc0524e0690484889a04b7fa0     |
+   | revision_number   | 2                                    |
+   | service_types     |                                      |
+   | subnetpool_id     | None                                 |
+   | updated_at        | 2016-12-22T18:47:52Z                 |
+   +-------------------+--------------------------------------+
+
 
 The ``subnet-create`` command has the following positional and optional
 parameters:
@@ -131,18 +139,29 @@ Create routers
 
    .. code-block:: console
 
-      $ neutron router-create router1
-      Created a new router:
-      +-----------------------+--------------------------------------+
-      | Field                 | Value                                |
-      +-----------------------+--------------------------------------+
-      | admin_state_up        | True                                 |
-      | external_gateway_info |                                      |
-      | id                    | 6e1f11ed-014b-4c16-8664-f4f615a3137a |
-      | name                  | router1                              |
-      | status                | ACTIVE                               |
-      | tenant_id             | 7b5970fbe7724bf9b74c245e66b92abf     |
-      +-----------------------+--------------------------------------+
+      $ openstack router create router1
+      +-------------------------+--------------------------------------+
+      | Field                   | Value                                |
+      +-------------------------+--------------------------------------+
+      | admin_state_up          | UP                                   |
+      | availability_zone_hints |                                      |
+      | availability_zones      |                                      |
+      | created_at              | 2016-12-22T18:48:57Z                 |
+      | description             |                                      |
+      | distributed             | True                                 |
+      | external_gateway_info   | null                                 |
+      | flavor_id               | None                                 |
+      | ha                      | False                                |
+      | headers                 |                                      |
+      | id                      | e25a24ee-3458-45c7-b16e-edf49092aab7 |
+      | name                    | router1                              |
+      | project_id              | e17431afc0524e0690484889a04b7fa0     |
+      | revision_number         | 1                                    |
+      | routes                  |                                      |
+      | status                  | ACTIVE                               |
+      | updated_at              | 2016-12-22T18:48:57Z                 |
+      +-------------------------+--------------------------------------+
+
 
    Take note of the unique router identifier returned, this will be
    required in subsequent steps.
@@ -151,7 +170,7 @@ Create routers
 
    .. code-block:: console
 
-      $ neutron router-gateway-set ROUTER NETWORK
+      $ openstack router set ROUTER --external-gateway NETWORK
 
    Replace ROUTER with the unique identifier of the router, replace NETWORK
    with the unique identifier of the external provider network.
@@ -160,7 +179,7 @@ Create routers
 
    .. code-block:: console
 
-      $ neutron router-interface-add ROUTER SUBNET
+      $ openstack router add subnet ROUTER SUBNET
 
    Replace ROUTER with the unique identifier of the router, replace SUBNET
    with the unique identifier of the subnet.
@@ -172,27 +191,39 @@ Create ports
 
    .. code-block:: console
 
-      $ neutron port-create net1 --fixed-ip ip_address=192.168.2.40
-      Created a new port:
-      +----------------------+----------------------------------------------------------------------+
-      | Field                | Value                                                                |
-      +----------------------+----------------------------------------------------------------------+
-      | admin_state_up       | True                                                                 |
-      | binding:capabilities | {"port_filter": false}                                               |
-      | binding:vif_type     | ovs                                                                  |
-      | device_id            |                                                                      |
-      | device_owner         |                                                                      |
-      | fixed_ips            | {"subnet_id": "15a09f6c-87a5-4d14-b2cf-03d97cd4b456", "ip_address... |
-      | id                   | f7a08fe4-e79e-4b67-bbb8-a5002455a493                                 |
-      | mac_address          | fa:16:3e:97:e0:fc                                                    |
-      | name                 |                                                                      |
-      | network_id           | 2d627131-c841-4e3a-ace6-f2dd75773b6d                                 |
-      | status               | DOWN                                                                 |
-      | tenant_id            | 3671f46ec35e4bbca6ef92ab7975e463                                     |
-      +----------------------+----------------------------------------------------------------------+
+      $ openstack port create --network net1 --fixed-ip subnet=subnet1,ip-address=192.168.2.40 port1
+      +-----------------------+-----------------------------------------+
+      | Field                 | Value                                   |
+      +-----------------------+-----------------------------------------+
+      | admin_state_up        | UP                                      |
+      | allowed_address_pairs |                                         |
+      | binding_host_id       |                                         |
+      | binding_profile       |                                         |
+      | binding_vif_details   |                                         |
+      | binding_vif_type      | unbound                                 |
+      | binding_vnic_type     | normal                                  |
+      | created_at            | 2016-12-22T18:54:43Z                    |
+      | description           |                                         |
+      | device_id             |                                         |
+      | device_owner          |                                         |
+      | extra_dhcp_opts       |                                         |
+      | fixed_ips             | ip_address='192.168.2.40', subnet_id='a |
+      |                       | 394689c-f547-4834-9778-3e0bb22130dc'    |
+      | headers               |                                         |
+      | id                    | 031ddba8-3e3f-4c3c-ae26-7776905eb24f    |
+      | mac_address           | fa:16:3e:df:3d:c7                       |
+      | name                  | port1                                   |
+      | network_id            | 9db55b7f-e803-4e1b-9bba-6262f60b96cb    |
+      | port_security_enabled | True                                    |
+      | project_id            | e17431afc0524e0690484889a04b7fa0        |
+      | revision_number       | 5                                       |
+      | security_groups       | 84abb9eb-dc59-40c1-802c-4e173c345b6a    |
+      | status                | DOWN                                    |
+      | updated_at            | 2016-12-22T18:54:44Z                    |
+      +-----------------------+-----------------------------------------+
 
    In the previous command, ``net1`` is the network name, which is a
-   positional argument. :option:`--fixed-ip ip_address=192.168.2.40` is
+   positional argument. :option:`--fixed-ip subnet<subnet>,ip-address=192.168.2.40` is
    an option which specifies the port's fixed IP address we wanted.
 
    .. note::
@@ -205,29 +236,41 @@ Create ports
 
    .. code-block:: console
 
-      $ neutron port-create net1
-      Created a new port:
-      +----------------------+----------------------------------------------------------------------+
-      | Field                | Value                                                                |
-      +----------------------+----------------------------------------------------------------------+
-      | admin_state_up       | True                                                                 |
-      | binding:capabilities | {"port_filter": false}                                               |
-      | binding:vif_type     | ovs                                                                  |
-      | device_id            |                                                                      |
-      | device_owner         |                                                                      |
-      | fixed_ips            | {"subnet_id": "15a09f6c-87a5-4d14-b2cf-03d97cd4b456", "ip_address... |
-      | id                   | baf13412-2641-4183-9533-de8f5b91444c                                 |
-      | mac_address          | fa:16:3e:f6:ec:c7                                                    |
-      | name                 |                                                                      |
-      | network_id           | 2d627131-c841-4e3a-ace6-f2dd75773b6d                                 |
-      | status               | DOWN                                                                 |
-      | tenant_id            | 3671f46ec35e4bbca6ef92ab7975e463                                     |
-      +----------------------+----------------------------------------------------------------------+
+      $ openstack port create port2 --network net1
+      +-----------------------+-----------------------------------------+
+      | Field                 | Value                                   |
+      +-----------------------+-----------------------------------------+
+      | admin_state_up        | UP                                      |
+      | allowed_address_pairs |                                         |
+      | binding_host_id       |                                         |
+      | binding_profile       |                                         |
+      | binding_vif_details   |                                         |
+      | binding_vif_type      | unbound                                 |
+      | binding_vnic_type     | normal                                  |
+      | created_at            | 2016-12-22T18:56:06Z                    |
+      | description           |                                         |
+      | device_id             |                                         |
+      | device_owner          |                                         |
+      | extra_dhcp_opts       |                                         |
+      | fixed_ips             | ip_address='192.168.2.10', subnet_id='a |
+      |                       | 394689c-f547-4834-9778-3e0bb22130dc'    |
+      | headers               |                                         |
+      | id                    | eac47fcd-07ac-42dd-9993-5b36ac1f201b    |
+      | mac_address           | fa:16:3e:96:ae:6e                       |
+      | name                  | port2                                   |
+      | network_id            | 9db55b7f-e803-4e1b-9bba-6262f60b96cb    |
+      | port_security_enabled | True                                    |
+      | project_id            | e17431afc0524e0690484889a04b7fa0        |
+      | revision_number       | 5                                       |
+      | security_groups       | 84abb9eb-dc59-40c1-802c-4e173c345b6a    |
+      | status                | DOWN                                    |
+      | updated_at            | 2016-12-22T18:56:06Z                    |
+      +-----------------------+-----------------------------------------+
 
    .. note::
 
       Note that the system allocates one IP address if you do not specify
-      an IP address in the :command:`neutron port-create` command.
+      an IP address in the :command:`openstack port create` command.
 
    .. note::
 
