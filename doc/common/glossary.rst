@@ -2234,6 +2234,11 @@ L
       Enables Networking to distribute incoming requests evenly
       between designated instances.
 
+   Load-balancing service (octavia)
+
+      The project that aims to rovide scalable, on demand, self service
+      access to load-balancer services, in technology-agnostic manner.
+
    Logical Volume Manager (LVM)
 
       Provides a method of allocating space on mass-storage
@@ -2672,7 +2677,8 @@ O
 
    Octavia
 
-      An operator-grade open source scalable load balancer.
+      Code name for the :term:`Load-balancing service
+      <Load-balancing service (octavia)>`.
 
    Oldie
 
