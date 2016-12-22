@@ -198,36 +198,42 @@ Create a public volume type by setting ``is_public`` field to ``True``:
 
 .. code-block:: console
 
-   $ cinder type-create --description test1 --is-public True vol_Type1
-   +--------------------------------------+-----------+-------------+-----------+
-   |                  ID                  |    Name   | Description | Is_Public |
-   +--------------------------------------+-----------+-------------+-----------+
-   | 0a948c84-bad5-4fba-88a2-c062006e4f6b | vol_Type1 |    test1    |    True   |
-   +--------------------------------------+-----------+-------------+-----------+
+   $ openstack volume type create vol_Type1 --description test1 --public
+   +-------------+--------------------------------------+
+   | Field       | Value                                |
+   +-------------+--------------------------------------+
+   | description | test1                                |
+   | id          | b7dbed9e-de78-49f8-a840-651ae7308592 |
+   | is_public   | True                                 |
+   | name        | vol_Type1                            |
+   +-------------+--------------------------------------+
 
 Create a private volume type by setting ``is_public`` field to ``False``:
 
 .. code-block:: console
 
-   $ cinder type-create --description test2 --is-public False vol_Type2
-   +--------------------------------------+-----------+-------------+-----------+
-   |                  ID                  |    Name   | Description | Is_Public |
-   +--------------------------------------+-----------+-------------+-----------+
-   | fd508846-213f-4a07-aaf2-40518fb9a23f | vol_Type2 |    test2    |    False  |
-   +--------------------------------------+-----------+-------------+-----------+
+   $ openstack volume type create vol_Type2 --description test2 --private
+   +-------------+--------------------------------------+
+   | Field       | Value                                |
+   +-------------+--------------------------------------+
+   | description | test2                                |
+   | id          | 154baa73-d2c4-462f-8258-a2df251b0d39 |
+   | is_public   | False                                |
+   | name        | vol_Type2                            |
+   +-------------+--------------------------------------+
 
 Get a list of the volume types:
 
 .. code-block:: console
 
-   $ cinder type-list
-   +--------------------------------------+-------------+-------------+-----------+
-   |                  ID                  |     Name    | Description | Is_Public |
-   +--------------------------------------+-------------+-------------+-----------+
-   | 0a948c84-bad5-4fba-88a2-c062006e4f6b | vol_Type1   |    test1    |    True   |
-   | 87e5be6f-9491-4ea5-9906-9ac56494bb91 | lvmdriver-1 |      -      |    True   |
-   | fd508846-213f-4a07-aaf2-40518fb9a23f | vol_Type2   |    test2    |   False   |
-   +--------------------------------------+-------------+-------------+-----------+
+   $ openstack volume type list
+   +--------------------------------------+-------------+
+   | ID                                   | Name        |
+   +--------------------------------------+-------------+
+   | 0a948c84-bad5-4fba-88a2-c062006e4f6b | vol_Type1   |
+   | 87e5be6f-9491-4ea5-9906-9ac56494bb91 | lvmdriver-1 |
+   | fd508846-213f-4a07-aaf2-40518fb9a23f | vol_Type2   |
+   +--------------------------------------+-------------+
 
 Get a list of the projects:
 
