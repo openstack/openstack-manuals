@@ -1867,11 +1867,11 @@ tools. Here is an example:
 
 .. code-block:: console
 
-   $ nova add-secgroup <server> <securitygroup>
+   $ openstack server add security group <server> <securitygroup>
 
 .. code-block:: console
 
-   $ nova remove-secgroup <server> <securitygroup>
+   $ openstack server remove security group <server> <securitygroup>
 
 Floating IPs
 ~~~~~~~~~~~~
