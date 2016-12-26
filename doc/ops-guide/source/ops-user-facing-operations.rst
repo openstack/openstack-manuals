@@ -1919,7 +1919,7 @@ To perform this action from command line, run the following command:
 
 .. code-block:: console
 
-   $ nova volume-attach <server> <volume> <device>
+   $ openstack server add volume <server> <volume> --device <device>
 
 You can also specify block deviceblock device mapping at instance boot
 time through the nova command-line client with this option set:
@@ -1938,7 +1938,7 @@ dev-name
 
 id
     The ID of the volume to boot from, as shown in the output of
-    :command:`nova volume-list`
+    :command:`openstack volume list`
 
 type
     Either ``snap``, which means that the volume was created from a
