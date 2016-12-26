@@ -670,7 +670,7 @@ can retrieve the console log by doing:
 
 .. code-block:: console
 
-   $ nova console-log <instance name or uuid>
+   $ openstack console log show <instance name or uuid>
 
 If your instance failed to obtain an IP through DHCP, some messages
 should appear in the console. For example, for the Cirros image, you see
