@@ -1900,6 +1900,11 @@ I
       A community project may be elevated to this status and is then
       promoted to a core project.
 
+   Infrastructure Optimization service (watcher)
+
+      OpenStack project that aims to provide a flexible and scalable resource
+      optimization service for multi-tenant OpenStack-based clouds.
+
    Infrastructure-as-a-Service (IaaS)
 
       IaaS is a provisioning model in which an organization outsources
@@ -4013,6 +4018,11 @@ W
 ~
 
 .. glossary::
+
+   Watcher
+
+      Code name for the :term:`Infrastructure Optimization service
+      <Infrastructure Optimization service (watcher)>`.
 
    weight
 
