@@ -96,7 +96,7 @@ Also ensure that it has successfully connected to the AMQP server:
 
 .. code-block:: console
 
-   # grep AMQP /var/log/nova/nova-compute
+   # grep AMQP /var/log/nova/nova-compute.log
    2013-02-26 09:51:31 12427 INFO nova.openstack.common.rpc.common [-] Connected to AMQP server on 199.116.232.36:5672
 
 After the compute node is successfully running, you must deal with the
