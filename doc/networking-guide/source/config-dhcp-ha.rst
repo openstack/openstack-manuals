@@ -176,15 +176,15 @@ Managing agents in neutron deployment
 
    .. code-block:: console
 
-      $ neutron agent-list
-      +--------------------------------------+--------------------+-------+-------+----------------+
-      | id                                   | agent_type         | host  | alive | admin_state_up |
-      +--------------------------------------+--------------------+-------+-------+----------------+
-      | 1b69828d-6a9b-4826-87cd-1757f0e27f31 | Linux bridge agent | HostA | :-)   | True           |
-      | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | DHCP agent         | HostA | :-)   | True           |
-      | ed96b856-ae0f-4d75-bb28-40a47ffd7695 | Linux bridge agent | HostB | :-)   | True           |
-      | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
-      +--------------------------------------+--------------------+-------+-------+----------------+
+      $ openstack network agent list
+      +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
+      | ID                                   | Agent Type         | Host  | Availability Zone | Alive | State | Binary                    |
+      +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
+      | 22467163-01ea-4231-ba45-3bd316f425e6 | Linux bridge agent | HostA | None              | True  | UP    | neutron-metering-agent    |
+      | 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b | DHCP agent         | HostA | None              | True  | UP    | neutron-openvswitch-agent |
+      | 3066d20c-9f8f-440c-ae7c-a40ffb4256b6 | Linux bridge agent | HostB | nova              | True  | UP    | neutron-l3-agent          |
+      | 55569f4e-6f31-41a6-be9d-526efce1f7fe | DHCP agent         | HostB | nova              | True  | UP    | neutron-l3-agent          |
+      +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
 
    Every agent that supports these extensions will register itself with the
    neutron server when it starts up.
@@ -225,29 +225,25 @@ Managing agents in neutron deployment
 
    .. code-block:: console
 
-      $ neutron agent-show a0c1c21c-d4f4-4577-9ec7-908f2d48622d
-      +---------------------+--------------------------------------------------------+
-      | Field               | Value                                                  |
-      +---------------------+--------------------------------------------------------+
-      | admin_state_up      | True                                                   |
-      | agent_type          | DHCP agent                                             |
-      | alive               | False                                                  |
-      | binary              | neutron-dhcp-agent                                     |
-      | configurations      | {                                                      |
-      |                     |     "subnets": 1,                                      |
-      |                     |     "dhcp_driver": "neutron.agent.linux.dhcp.Dnsmasq", |
-      |                     |     "networks": 1,                                     |
-      |                     |     "dhcp_lease_time": 120,                            |
-      |                     |     "ports": 3                                         |
-      |                     | }                                                      |
-      | created_at          | 2013-03-16T01:16:18.000000                             |
-      | description         |                                                        |
-      | heartbeat_timestamp | 2013-03-17T01:37:22.000000                             |
-      | host                | HostA                                                  |
-      | id                  | 58f4ce07-6789-4bb3-aa42-ed3779db2b03                   |
-      | started_at          | 2013-03-16T06:48:39.000000                             |
-      | topic               | dhcp_agent                                             |
-      +---------------------+--------------------------------------------------------+
+      $ openstack network agent show 22467163-01ea-4231-ba45-3bd316f425e6
+      +---------------------+-------------------------------------------------------------------------+
+      | Field               | Value                                                                   |
+      +---------------------+-------------------------------------------------------------------------+
+      | admin_state_up      | UP                                                                      |
+      | agent_type          | Metering agent                                                          |
+      | alive               | False                                                                   |
+      | availability_zone   | None                                                                    |
+      | binary              | neutron-metering-agent                                                  |
+      | configurations      | measure_interval='30', metering_driver='neutron.services.metering.drive |
+      |                     | rs.noop.noop_driver.NoopMeteringDriver', report_interval='300'          |
+      | created_at          | 2016-10-08 15:17:14                                                     |
+      | description         | None                                                                    |
+      | heartbeat_timestamp | 2016-10-24 13:53:35                                                     |
+      | host                | HostA                                                                   |
+      | id                  | 22467163-01ea-4231-ba45-3bd316f425e6                                    |
+      | started_at          | 2016-10-08 15:17:14                                                     |
+      | topic               | dhcp_agent                                                              |
+      +---------------------+-------------------------------------------------------------------------+
 
    In this output, ``heartbeat_timestamp`` is the time on the neutron
    server. You do not need to synchronize all agents to this time for this
@@ -260,27 +256,25 @@ Managing agents in neutron deployment
 
    .. code-block:: console
 
-      $ neutron agent-show ed96b856-ae0f-4d75-bb28-40a47ffd7695
-      +---------------------+--------------------------------------+
-      | Field               | Value                                |
-      +---------------------+--------------------------------------+
-      | admin_state_up      | True                                 |
-      | binary              | neutron-linuxbridge-agent            |
-      | configurations      | {                                    |
-      |                     |      "physnet1": "eth0",             |
-      |                     |      "devices": "4"                  |
-      |                     | }                                    |
-      | created_at          | 2013-03-16T01:49:52.000000           |
-      | description         |                                      |
-      | disabled            | False                                |
-      | group               | agent                                |
-      | heartbeat_timestamp | 2013-03-16T01:59:45.000000           |
-      | host                | HostB                                |
-      | id                  | ed96b856-ae0f-4d75-bb28-40a47ffd7695 |
-      | topic               | N/A                                  |
-      | started_at          | 2013-03-16T06:48:39.000000           |
-      | type                | Linux bridge agent                   |
-      +---------------------+--------------------------------------+
+      $ openstack network agent show 22467163-01ea-4231-ba45-3bd316f425e6
+      +---------------------+-------------------------------------------------------------------------+
+      | Field               | Value                                                                   |
+      +---------------------+-------------------------------------------------------------------------+
+      | admin_state_up      | UP                                                                      |
+      | agent_type          | Metering agent                                                          |
+      | alive               | False                                                                   |
+      | availability_zone   | None                                                                    |
+      | binary              | neutron-linuxbridge-agent                                               |
+      | configurations      | measure_interval='30', metering_driver='neutron.services.metering.drive |
+      |                     | rs.noop.noop_driver.NoopMeteringDriver', report_interval='300'          |
+      | created_at          | 2016-10-08 15:17:14                                                     |
+      | description         | None                                                                    |
+      | heartbeat_timestamp | 2016-10-24 13:53:35                                                     |
+      | host                | HostB                                                                   |
+      | id                  | 22467163-01ea-4231-ba45-3bd316f425e6                                    |
+      | started_at          | 2016-10-08 15:17:14                                                     |
+      | topic               | dhcp_agent                                                              |
+      +---------------------+-------------------------------------------------------------------------+
 
    The output shows ``bridge-mapping`` and the number of virtual network
    devices on this L2 agent.
