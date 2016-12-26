@@ -335,7 +335,7 @@ no longer available in the cloud—meaning,
 
 .. code-block:: console
 
-   $ nova service-list
+   $ openstack compute service list
 
 showed this particular node in a down state.
 

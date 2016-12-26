@@ -71,19 +71,3 @@ examples disable and enable the ``nova-compute`` service.
       +----------+--------------+---------+
       | compute  | nova-compute | enabled |
       +----------+--------------+---------+
-
-#. Check the service list:
-
-   .. code-block:: console
-
-      $ nova service-list
-      +------------------+----------+----------+---------+-------+----------------------------+-----------------+
-      | Binary           | Host     | Zone     | Status  | State | Updated_at                 | Disabled Reason |
-      +------------------+----------+----------+---------+-------+----------------------------+-----------------+
-      | nova-conductor   | devstack | internal | enabled | up    | 2013-10-16T00:57:08.000000 | None            |
-      | nova-cert        | devstack | internal | enabled | up    | 2013-10-16T00:57:09.000000 | None            |
-      | nova-compute     | devstack | nova     | enabled | up    | 2013-10-16T00:57:07.000000 | None            |
-      | nova-network     | devstack | internal | enabled | up    | 2013-10-16T00:57:11.000000 | None            |
-      | nova-scheduler   | devstack | internal | enabled | up    | 2013-10-16T00:57:14.000000 | None            |
-      | nova-consoleauth | devstack | internal | enabled | up    | 2013-10-16T00:57:07.000000 | None            |
-      +------------------+----------+----------+---------+-------+----------------------------+-----------------+
