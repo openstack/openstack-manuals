@@ -3225,6 +3225,12 @@ R
 
       Alphanumeric ID assigned to each Identity service role.
 
+   Root Cause Analysis (RCA) service (Vitrage)
+
+      OpenStack project that aims to organize, analyze and visualize OpenStack
+      alarms and events, yield insights regarding the root cause of problems
+      and deduce their existence before they are directly detected.
+
    rootwrap
 
       A feature of Compute that allows the unprivileged "nova" user to
@@ -3908,6 +3914,11 @@ V
    VirtualBox
 
       An OpenStack-supported hypervisor.
+
+   Vitrage
+
+      Code name for the :term:`Root Cause Analysis service <Root Cause
+      Analysis (RCA) service (Vitrage)>`.
 
    VLAN manager
 
