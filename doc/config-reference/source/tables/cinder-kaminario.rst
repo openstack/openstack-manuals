@@ -18,5 +18,5 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``kaminario_nodedup_substring`` = ``K2-nodedup``
-     - (String) DEPRECATED: If volume-type name contains this substring nodedup volume will be created, otherwise dedup volume wil be created. This option is deprecated in favour of 'kaminario:thin_prov_type' in extra-specs and will be removed in the next release.
+   * - ``auto_calc_max_oversubscription_ratio`` = ``False``
+     - (Boolean) K2 driver will calculate max_oversubscription_ratio on setting this option as True.
