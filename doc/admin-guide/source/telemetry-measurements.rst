@@ -508,7 +508,7 @@ data from the host machine.
    The sensor data is not available in the Bare metal service by
    default. To enable the meters and configure this module to emit
    notifications about the measured values see the `Installation
-   Guide <http://docs.openstack.org/developer/ironic/deploy/install-guide.html>`__
+   Guide <http://docs.openstack.org/project-install-guide/baremetal/newton>`__
    for the Bare metal service.
 
 The following meters are recorded for the Bare metal service:
