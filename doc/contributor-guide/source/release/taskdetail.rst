@@ -152,7 +152,8 @@ End-of-life
 ~~~~~~~~~~~
 
 Once a release is at end-of-life, you must stop producing new publications.
-To indicate the end-of-life, add the below sentence at the index:
+To indicate the end-of-life, add the below sentence at the index
+for release-specific documentation:
 
 .. code-block:: rst
 
@@ -163,6 +164,20 @@ To indicate the end-of-life, add the below sentence at the index:
       This guide will not get any updates from the OpenStack project anymore.
       See the `OpenStack Documentation page
       <http://docs.openstack.org/>`_ for current documentation.
+
+For continuously released documentation, exclude the release from target.
+
+For example, from:
+
+.. code-block:: rst
+
+   This guide documents OpenStack Newton, Mitaka, and Liberty releases.
+
+To:
+
+.. code-block:: rst
+
+   This guide documents OpenStack Newton and Mitaka releases.
 
 However, we will keep the documentation on the
 `docs.openstack.org <http://docs.openstack.org/>`_
