@@ -77,12 +77,12 @@ the volume.
    .. code-block:: console
 
 
-      $ cinder encryption-type-create --cipher aes-xts-plain64 --key_size 512 \
+      $ cinder encryption-type-create --cipher aes-xts-plain64 --key_size 256 \
         --control_location front-end LUKS nova.volume.encryptors.luks.LuksEncryptor
       +--------------------------------------+-------------------------------------------+-----------------+----------+------------------+
       |            Volume Type ID            |                  Provider                 |      Cipher     | Key Size | Control Location |
       +--------------------------------------+-------------------------------------------+-----------------+----------+------------------+
-      | e64b35a4-a849-4c53-9cc7-2345d3c8fbde | nova.volume.encryptors.luks.LuksEncryptor | aes-xts-plain64 |   512    |    front-end     |
+      | e64b35a4-a849-4c53-9cc7-2345d3c8fbde | nova.volume.encryptors.luks.LuksEncryptor | aes-xts-plain64 |   256    |    front-end     |
       +--------------------------------------+-------------------------------------------+-----------------+----------+------------------+
 
 The OpenStack dashboard (horizon) supports creating the encrypted
