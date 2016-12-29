@@ -124,8 +124,8 @@ A red background and a warning icon on the top left are also recommended.
     :align: right
     :width: 65%
 
-For more information on guidelines for UI text, see:
-`<http://docs.openstack.org/contributor-guide/ui-text-guidelines.html>`_.
+For more information on guidelines for UI text, see
+:ref:`uitextguidelines`.
 
 Wizards
 -------
