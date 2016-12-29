@@ -9,7 +9,7 @@ Compute service (nova) command-line client
 The nova client is the command-line interface (CLI) for
 the Compute service (nova) API and its extensions.
 
-This chapter documents :command:`nova` version ``6.0.0``.
+This chapter documents :command:`nova` version ``7.0.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -29,7 +29,7 @@ nova usage
                [--service-name <service-name>]
                [--os-endpoint-type <endpoint-type>]
                [--os-compute-api-version <compute-api-ver>]
-               [--bypass-url <bypass-url>] [--insecure]
+               [--endpoint-override <bypass-url>] [--insecure]
                [--os-cacert <ca-certificate>] [--os-cert <certificate>]
                [--os-key <key>] [--timeout <seconds>] [--os-auth-type <name>]
                [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
@@ -48,14 +48,8 @@ nova usage
 
 **Subcommands:**
 
-``absolute-limits``
-  **DEPRECATED**, use limits instead.
-
 ``add-fixed-ip``
   Add new IP address on a network to server.
-
-``add-floating-ip``
-  **DEPRECATED**, use floating-ip-associate instead.
 
 ``add-secgroup``
   Add a Security Group to a server.
@@ -81,9 +75,6 @@ nova usage
 
 ``aggregate-delete``
   Delete the aggregate.
-
-``aggregate-details``
-  **DEPRECATED**, use aggregate-show instead.
 
 ``aggregate-list``
   Print a list of all aggregates.
@@ -113,6 +104,13 @@ nova usage
 ``boot``
   Boot a new server.
 
+``cell-capacities``
+  Get cell capacities for all cells or a given
+  cell.
+
+``cell-show``
+  Show details of a given cell.
+
 ``clear-password``
   Clear the admin password for a server from the
   metadata server. This action does not actually
@@ -131,9 +129,6 @@ nova usage
 
 ``console-log``
   Get console log output of a server.
-
-``credentials``
-  Show user credentials returned from auth.
 
 ``delete``
   Immediately shut down and delete specified
@@ -165,10 +160,6 @@ nova usage
 ``dns-list``
   **DEPRECATED**: List current DNS entries for
   domain and IP or domain and name.
-
-``endpoints``
-  Discover endpoints that get returned from the
-  authenticate services.
 
 ``evacuate``
   Evacuate server from failed host.
@@ -239,6 +230,9 @@ nova usage
 ``floating-ip-pool-list``
   **DEPRECATED**: List all floating IP pools.
 
+``force-delete``
+  Force delete a server.
+
 ``get-mks-console``
   Get an MKS console to a server. (Supported by
   API versions '2.8' - '2.latest') [hint: use
@@ -269,8 +263,23 @@ nova usage
 ``host-describe``
   Describe a specific host.
 
+``host-evacuate``
+  Evacuate all instances from failed host.
+
+``host-evacuate-live``
+  Live migrate all instances of the specified
+  host to other available hosts.
+
 ``host-list``
   List all hosts by service.
+
+``host-meta``
+  Set or Delete metadata on all instances of a
+  host.
+
+``host-servers-migrate``
+  Cold migrate all instances off the specified
+  host to other available hosts.
 
 ``host-update``
   Update host settings.
@@ -316,6 +325,12 @@ nova usage
   **DEPRECATED**: Show details about the given
   image.
 
+``instance-action``
+  Show an action.
+
+``instance-action-list``
+  List actions on a server.
+
 ``interface-attach``
   Attach a network interface to a server.
 
@@ -351,6 +366,10 @@ nova usage
 
 ``list``
   List active servers.
+
+``list-extensions``
+  List all the os-api extensions that are
+  available.
 
 ``list-secgroup``
   List Security Group(s) of a server.
@@ -389,6 +408,9 @@ nova usage
 ``migrate``
   Migrate a server. The new host will be
   selected by the scheduler.
+
+``migration-list``
+  Print a list of migrations.
 
 ``network-associate-host``
   **DEPRECATED**: Associate host with network.
@@ -442,9 +464,6 @@ nova usage
   [hint: use ':option:`--os-compute-api-version`' flag to
   show help message for proper version]
 
-``rate-limits``
-  **DEPRECATED**, use limits instead.
-
 ``reboot``
   Reboot a server.
 
@@ -457,15 +476,8 @@ nova usage
 ``remove-fixed-ip``
   Remove an IP address from a server.
 
-``remove-floating-ip``
-  **DEPRECATED**, use floating-ip-disassociate
-  instead.
-
 ``remove-secgroup``
   Remove a Security Group from a server.
-
-``rename``
-  **DEPRECATED**, use update instead.
 
 ``rescue``
   Reboots a server into rescue mode, which
@@ -489,11 +501,11 @@ nova usage
   Revert a previous resize (and return to the
   previous VM).
 
+``restore``
+  Restore a soft-deleted server.
+
 ``resume``
   Resume a server.
-
-``root-password``
-  **DEPRECATED**, use set-password instead.
 
 ``scrub``
   **DEPRECATED**: Delete networks and security
@@ -734,44 +746,6 @@ nova usage
   **DEPRECATED**: Show information about a baremetal
   node.
 
-``host-meta``
-  Set or Delete metadata on all instances of a
-  host.
-
-``force-delete``
-  Force delete a server.
-
-``restore``
-  Restore a soft-deleted server.
-
-``cell-capacities``
-  Get cell capacities for all cells or a given
-  cell.
-
-``cell-show``
-  Show details of a given cell.
-
-``host-servers-migrate``
-  Cold migrate all instances off the specified
-  host to other available hosts.
-
-``list-extensions``
-  List all the os-api extensions that are
-  available.
-
-``host-evacuate-live``
-  Live migrate all instances of the specified
-  host to other available hosts.
-
-``migration-list``
-  Print a list of migrations.
-
-``instance-action``
-  Show an action.
-
-``instance-action-list``
-  List actions on a server.
-
 ``net``
   **DEPRECATED**, use tenant-network-show instead.
 
@@ -795,9 +769,6 @@ nova usage
 
 ``tenant-network-show``
   **DEPRECATED**: Show a tenant network.
-
-``host-evacuate``
-  Evacuate all instances from failed host.
 
 .. _nova_command_options:
 
@@ -835,10 +806,10 @@ nova optional arguments
   minor part) or "X.latest", defaults to
   ``env[OS_COMPUTE_API_VERSION]``.
 
-``--bypass-url <bypass-url>``
+``--endpoint-override <bypass-url>``
   Use this API endpoint instead of the Service
   Catalog. Defaults to
-  ``env[NOVACLIENT_BYPASS_URL]``.
+  ``env[NOVACLIENT_ENDPOINT_OVERRIDE]``.
 
 ``--os-auth-type <name>, --os-auth-plugin <name>``
   Authentication type to use
@@ -1444,22 +1415,6 @@ Get console log output of a server.
 ``--length <length>``
   Length in lines to tail.
 
-.. _nova_credentials:
-
-nova credentials
-----------------
-
-.. code-block:: console
-
-   usage: nova credentials [--wrap <integer>]
-
-Show user credentials returned from auth.
-
-**Optional arguments:**
-
-``--wrap <integer>``
-  Wrap PKI tokens to a specified length, or 0 to disable.
-
 .. _nova_delete:
 
 nova delete
@@ -1496,17 +1451,6 @@ Retrieve server diagnostics.
 
 ``<server>``
   Name or ID of server.
-
-.. _nova_endpoints:
-
-nova endpoints
---------------
-
-.. code-block:: console
-
-   usage: nova endpoints
-
-Discover endpoints that get returned from the authenticate services.
 
 .. _nova_evacuate:
 
@@ -1690,7 +1634,9 @@ nova flavor-list
 .. code-block:: console
 
    usage: nova flavor-list [--extra-specs] [--all] [--marker <marker>]
-                           [--limit <limit>]
+                           [--min-disk <min-disk>] [--min-ram <min-ram>]
+                           [--limit <limit>] [--sort-key <sort-key>]
+                           [--sort-dir <sort-dir>]
 
 Print a list of available 'flavors' (sizes of servers).
 
@@ -1703,14 +1649,25 @@ Print a list of available 'flavors' (sizes of servers).
   Display all flavors (Admin only).
 
 ``--marker <marker>``
-  The last flavor ID of the previous page; displays list of
-  flavors after "marker".
+  The last flavor ID of the previous page; displays
+  list of flavors after "marker".
+
+``--min-disk <min-disk>``
+  Filters the flavors by a minimum disk space, in GiB.
+
+``--min-ram <min-ram>``
+  Filters the flavors by a minimum RAM, in MB.
 
 ``--limit <limit>``
-  Maximum number of flavors to display. If limit == -1, all
-  flavors will be displayed. If limit is bigger than
-  'osapi_max_limit' option of Nova API, limit
-  'osapi_max_limit' will be used instead.
+  Maximum number of flavors to display. If limit is
+  bigger than 'CONF.api.max_limit' option of Nova API,
+  limit 'CONF.api.max_limit' will be used instead.
+
+``--sort-key <sort-key>``
+  Flavors list sort key.
+
+``--sort-dir <sort-dir>``
+  Flavors list sort direction.
 
 .. _nova_flavor-show:
 
@@ -2129,10 +2086,9 @@ version]
   list of hypervisors after "marker".
 
 ``--limit <limit>``
-  Maximum number of hypervisors to display. If limit ==
-  -1, all hypervisors will be displayed. If limit is
-  bigger than 'osapi_max_limit' option of Nova API,
-  limit 'osapi_max_limit' will be used instead.
+  Maximum number of hypervisors to display. If limit is
+  bigger than 'CONF.api.max_limit' option of Nova API,
+  limit 'CONF.api.max_limit' will be used instead.
 
 .. _nova_hypervisor-servers:
 
@@ -2430,10 +2386,9 @@ for proper version]
   keypairs after "marker".
 
 ``--limit <limit>``
-  Maximum number of keypairs to display. If limit == -1,
-  all keypairs will be displayed. If limit is bigger than
-  'osapi_max_limit' option of Nova API, limit
-  'osapi_max_limit' will be used instead.
+  Maximum number of keypairs to display. If limit is bigger
+  than 'CONF.api.max_limit' option of Nova API, limit
+  'CONF.api.max_limit' will be used instead.
 
 .. _nova_keypair-show:
 
@@ -2574,9 +2529,9 @@ List active servers.
 ``--limit <limit>``
   Maximum number of servers to display. If limit
   == -1, all servers will be displayed. If limit
-  is bigger than 'osapi_max_limit' option of
-  Nova API, limit 'osapi_max_limit' will be used
-  instead.
+  is bigger than 'CONF.api.max_limit' option of
+  Nova API, limit 'CONF.api.max_limit' will be
+  used instead.
 
 ``--changes-since <changes_since>``
   List only servers changed after a certain
@@ -3353,7 +3308,7 @@ nova server-group-create
 
 .. code-block:: console
 
-   usage: nova server-group-create <name> [<policy> [<policy> ...]]
+   usage: nova server-group-create <name> <policy> [<policy> ...]
 
 Create a new server group with the specified details.
 
@@ -3404,11 +3359,21 @@ nova server-group-list
 
 .. code-block:: console
 
-   usage: nova server-group-list [--all-projects]
+   usage: nova server-group-list [--limit <limit>] [--offset <offset>]
+                                 [--all-projects]
 
 Print a list of all server groups.
 
 **Optional arguments:**
+
+``--limit <limit>``
+  Maximum number of server groups to display. If limit is
+  biggerthan 'CONF.api.max_limit' option of Nova API,
+  limit'CONF.api.max_limit' will be used instead.
+
+``--offset <offset>``
+  The offset of groups list to display; use with limit to
+  return a slice of server groups.
 
 ``--all-projects``
   Display server groups from all projects (Admin only).
@@ -3778,7 +3743,7 @@ nova show
 
 .. code-block:: console
 
-   usage: nova show [--minimal] <server>
+   usage: nova show [--minimal] [--wrap <integer>] <server>
 
 Show details about the given server.
 
@@ -3791,6 +3756,9 @@ Show details about the given server.
 
 ``--minimal``
   Skips flavor/image lookups when showing servers.
+
+``--wrap <integer>``
+  Wrap the output to a specified length, or 0 to disable.
 
 .. _nova_ssh:
 
