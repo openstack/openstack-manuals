@@ -114,12 +114,12 @@ by performing the following command:
 
    # openstack server list --host c01.example.com --all-projects
 
-After you have the list, you can use the :command:`nova` command to start each
-instance:
+After you have the list, you can use the :command:`openstack` command to
+start each instance:
 
 .. code-block:: console
 
-   # nova reboot <uuid>
+   # openstack server reboot <server>
 
 .. note::
 
@@ -136,8 +136,8 @@ node:
 
    # tail -f /var/log/nova/nova-compute.log
 
-Try executing the :command:`nova reboot` command again. You should see an
-error message about why the instance was not able to boot
+Try executing the :command:`openstack server reboot` command again. You should
+see an error message about why the instance was not able to boot.
 
 In most cases, the error is the result of something in libvirt's XML
 file (``/etc/libvirt/qemu/instance-xxxxxxxx.xml``) that no longer
@@ -146,7 +146,7 @@ the instance by running the following command:
 
 .. code-block:: console
 
-   # nova reboot --hard <uuid>
+   # openstack server reboot --hard <server>
 
 Inspecting and Recovering Data from Failed Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -558,12 +558,13 @@ hosted on c01.example.com are now hosted on c02.example.com:
    mysql> update ml2_port_binding_levels set host = 'c02.example.com'
           where host = 'c01.example.com';
 
-After that, use the :command:`nova` command to reboot all instances that were
-on c01.example.com while regenerating their XML files at the same time:
+After that, use the :command:`openstack` command to reboot all instances
+that were on c01.example.com while regenerating their XML files at the same
+time:
 
 .. code-block:: console
 
-   # nova reboot --hard <uuid>
+   # openstack server reboot --hard <server>
 
 Finally, reattach volumes using the same method described in the section
 :ref:`volumes`.
