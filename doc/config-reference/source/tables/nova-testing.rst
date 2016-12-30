@@ -25,7 +25,7 @@
 
        Related options:
 
-        * ``monkey_patch_modules``: This must have values set for this option to have any effect
+       * ``monkey_patch_modules``: This must have values set for this option to have any effect
    * - ``monkey_patch_modules`` = ``nova.compute.api:nova.notifications.notify_decorator``
      - (List) List of modules/decorators to monkey patch.
 
@@ -33,8 +33,12 @@
 
        Possible values:
 
-        * nova.compute.api:nova.notifications.notify_decorator * nova.api.ec2.cloud:nova.notifications.notify_decorator * [...]
+       * nova.compute.api:nova.notifications.notify_decorator
+
+       * nova.api.ec2.cloud:nova.notifications.notify_decorator
+
+       * [...]
 
        Related options:
 
-        * ``monkey_patch``: This must be set to ``True`` for this option to have any effect
+       * ``monkey_patch``: This must be set to ``True`` for this option to have any effect

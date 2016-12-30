@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _nova-crypt:
+.. _nova-crypto:
 
-.. list-table:: Description of crypt configuration options
+.. list-table:: Description of crypto configuration options
    :header-rows: 1
    :class: config-ref-table
 
