@@ -15,16 +15,19 @@ degrees, including:
 * `Hyper-V <http://technet.microsoft.com/en-us/library/hh831531.aspx>`_
 * `Docker <https://www.docker.com/>`_
 
-Probably the most important factor in your choice of hypervisor is your
-current usage or experience. Aside from that, there are practical
-concerns to do with feature parity, documentation, and the level of
-community experience.
+An important factor in your choice of hypervisor is your current organization's
+hypervisor usage or experience. Also important is the hypervisor's feature
+parity, documentation, and the level of community experience.
 
-For example, KVM is the most widely adopted hypervisor in the OpenStack
-community. Besides KVM, more deployments run Xen, LXC, VMware, and
-Hyper-V than the others listed. However, each of these are lacking some
-feature support or the documentation on how to use them with OpenStack
-is out of date.
+As per the recent OpenStack user survey, KVM is the most widely adopted
+hypervisor in the OpenStack community. Besides KVM, there are many deployments
+that run other hypervisors such as LXC, VMware, Xen and Hyper-V. However, these
+hypervisors are either less used, are niche hypervisors, or have limited
+functionality based on the more commonly used hypervisors. This is due to gaps
+in feature parity.
+
+In addition, the nova configuration reference below details feature support for
+hypervisors as well as ironic and Virtuozzo (formerly Parallels).
 
 The best information available to support your choice is found on the
 `Hypervisor Support Matrix
