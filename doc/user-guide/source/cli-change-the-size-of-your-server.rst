@@ -61,20 +61,17 @@ Change the size of a server by changing its flavor.
       | 5   | m1.xlarge | 16384 |  160 |         0 |     8 | True      |
       +-----+-----------+-------+------+-----------+-------+-----------+
 
-#. To resize the server, use the :command:`nova resize` command and add
-   the server ID or name and the new flavor. Include the :option:`--poll`
-   parameter to display the resize progress. For example:
+#. To resize the server, use the :command:`openstack server resize` command and
+   add the server ID or name and the new flavor. For example:
 
    .. code-block:: console
 
-      $ nova resize myCirrosServer 4 --poll
+      $ openstack server resize --flavor 4 myCirrosServer
 
-    Instance resizing... 100% complete
-    Finished
 
    .. note::
 
-      By default, the :command:`nova resize` command gives the guest operating
+      By default, the :command:`openstack server resize` command gives the guest operating
       system a chance to perform a controlled shutdown before the instance
       is powered off and the instance is resized.
       The shutdown behavior is configured by the
