@@ -161,7 +161,7 @@ Install and configure the components
 
       # OS_TOKEN=`openstack token issue -c id -f value`
         openstack endpoint create \
-        --os-url=http://127.0.0.1:35357/v3/ \
+        --os-url=http://127.0.0.1:5000/v3/ \
         keystone internal http://controller:5000/v2.0
 
       # OS_TOKEN=`openstack token issue -c id -f value`
