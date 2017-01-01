@@ -254,8 +254,8 @@ Add volume type access for the given demo project, using its project-id:
 
 .. code-block:: console
 
-   $ cinder type-access-add --volume-type vol_Type2 --project-id \
-     c4860af62ffe465e99ed1bc08ef6082e
+   $ openstack volume type set --project c4860af62ffe465e99ed1bc08ef6082e \
+     vol_Type2
 
 List the access information about the given volume type:
 
@@ -272,8 +272,8 @@ Remove volume type access for the given project:
 
 .. code-block:: console
 
-   $ cinder type-access-remove --volume-type vol_Type2 --project-id \
-     c4860af62ffe465e99ed1bc08ef6082e
+   $ openstack volume type unset --project c4860af62ffe465e99ed1bc08ef6082e \
+     vol_Type2
    $ cinder type-access-list --volume-type vol_Type2
    +----------------+------------+
    | Volume_type_ID | Project_ID |
