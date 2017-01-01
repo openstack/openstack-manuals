@@ -157,5 +157,5 @@ If you get this message, check the following:
    service to the Compute service after introspection. Our tooling usually
    accounts for it, but if you did some steps manually there may be a period
    of time when nodes are not available to the Compute service yet. Check that
-   the :command:`nova hypervisor-stats` command correctly shows total amount
-   of resources in your system.
+   the :command:`openstack hypervisor stats show` command correctly shows total
+   amount of resources in your system.
