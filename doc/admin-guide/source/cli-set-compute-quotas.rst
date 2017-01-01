@@ -46,8 +46,8 @@ project user, as well as update the quota defaults for a new project.
    * - server-group-members
      - Number of servers per server group.
 
-View and update Compute quotas for a project (project)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+View and update Compute quotas for a project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To view and update default quota values
 ---------------------------------------
