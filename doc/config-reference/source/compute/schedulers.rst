@@ -513,7 +513,8 @@ You can decorate an image with these properties by using:
 
 .. code-block:: console
 
-   $ glance image-update img-uuid --property architecture=arm --property hypervisor_type=qemu
+   $ openstack image set --architecture arm --property hypervisor_type=qemu \
+     img-uuid
 
 The image properties that the filter checks for are:
 
@@ -543,7 +544,8 @@ hypervisor_version_requires
 
   .. code-block:: console
 
-     $ glance image-update img-uuid --property hypervisor_type=xen --property hypervisor_version_requires=">=4.3"
+     $ openstack image set --property hypervisor_type=xen --property \
+       hypervisor_version_requires=">=4.3" img-uuid
 
 vm_mode
   describes the hypervisor application binary interface (ABI) required
