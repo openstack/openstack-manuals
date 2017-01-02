@@ -256,8 +256,7 @@ supports adding distributed routing to existing routers.
 
    .. code-block:: console
 
-      $ neutron router-gateway-set router2 provider1
-      Set gateway for router router2
+      $ openstack router set router2 --external-gateway provider1
 
 Verify network operation
 ------------------------
