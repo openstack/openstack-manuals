@@ -457,7 +457,7 @@ when an instance has been deleted with the port still attached:
 
    .. code-block:: console
 
-      $ for i in {0..10}; do neutron port-create Public_AGILE --name
+      $ for i in {0..10}; do neutron port-create Public_AGILE --name \
       ip-recovery; done
 
 #. Check the ports for the lost IP address and update the name:
