@@ -730,14 +730,14 @@ To create a replication enabled volume, you need to create a volume type:
 
 .. code-block:: console
 
-   $ cinder type-create replication-type
-   $ cinder type-key replication-type set replication_enabled="<is> True"
+   $ openstack volume type create replication-type
+   $ openstack volume type set --property replication_enabled="<is> True" replication-type
 
 And then create volume with above volume type:
 
 .. code-block:: console
 
-   $ cinder create --volume-type replication-type --name replication-volume 1
+   $ openstack volume create replication-volume --type replication-type --size 1
 
 **Supported operations**
 
