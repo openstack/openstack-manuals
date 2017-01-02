@@ -156,13 +156,13 @@ To disassociate a floating IP address from an instance:
 
 .. code-block:: console
 
-   $ nova floating-ip-disassociate INSTANCE_NAME_OR_ID FLOATING_IP_ADDRESS
+   $ openstack server remove floating ip INSTANCE_NAME_OR_ID FLOATING_IP_ADDRESS
 
 To remove the floating IP address from a project:
 
 .. code-block:: console
 
-   $ openstack server remove floating ip INSTANCE_NAME_OR_ID FLOATING_IP_ADDRESS
+   $ openstack floating ip delete FLOATING_IP_ADDRESS
 
 The IP address is returned to the pool of IP addresses that is available
 for all projects. If the IP address is still associated with a running
