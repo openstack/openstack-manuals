@@ -25,7 +25,7 @@ permissions to run libvirt, but has sudo privileges, do:
 
 .. code-block:: console
 
-   $ ssh -X root@server
+   $ ssh -X user@server
    $ sudo virt-manager
 
 .. note::
