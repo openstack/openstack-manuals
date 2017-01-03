@@ -8,7 +8,7 @@ more resources than the quota allows, an error occurs:
 
 .. code-block:: ini
 
-   $ neutron net-create test_net
+   $ openstack network create test_net
     Quota exceeded for resources: ['network']
 
 Per-project quota configuration is also supported by the quota

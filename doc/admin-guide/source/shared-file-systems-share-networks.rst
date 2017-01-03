@@ -16,15 +16,15 @@ To list networks in a project, run:
 
 .. code-block:: console
 
-   $ neutron net-list
-   +--------------+---------+---------------------------------------+
-   | id           | name    | subnets                               |
-   +--------------+---------+---------------------------------------+
-   | bee7411d-... | public  | 884a6564-0f11-... 2001:db8::/64       |
-   |              |         | e6da81fa-5d5f-... 172.24.4.0/24       |
-   | 5ed5a854-... | private | 74dcfb5a-b4d7-... 10.0.0.0/24         |
-   |              |         | cc297be2-5213-... fd7d:177d:a48b::/64 |
-   +--------------+---------+---------------------------------------+
+   $ openstack network list
+   +--------------+---------+--------------------+
+   | ID           | Name    | Subnets            |
+   +--------------+---------+--------------------+
+   | bee7411d-... | public  | 884a6564-0f11-...  |
+   |              |         | e6da81fa-5d5f-...  |
+   | 5ed5a854-... | private | 74dcfb5a-b4d7-...  |
+   |              |         | cc297be2-5213-...  |
+   +--------------+---------+--------------------+
 
 A share network stores network information that share servers can use where
 shares are hosted. You can associate a share with a single share network.
@@ -103,39 +103,48 @@ use.
 
 .. code-block:: console
 
-   $ neutron net-list
-   +--------------+------------------------+------------------------------------+
-   | id           | name                   | subnets                            |
-   +--------------+------------------------+------------------------------------+
-   | 3b5a629a-e...| manila_service_network | 4f366100-50... 10.254.0.0/28       |
-   | bee7411d-d...| public                 | 884a6564-01... 2001:db8::/64       |
-   |              |                        | e6da81fa-55... 172.24.4.0/24       |
-   | 5ed5a854-2...| private                | 74dcfb5a-bd... 10.0.0.0/24         |
-   |              |                        | cc297be2-51... fd7d:177d:a48b::/64 |
-   +--------------+------------------------+------------------------------------+
+   $ openstack network list
+   +--------------+------------------------+--------------------+
+   | ID           | Name                   | Subnets            |
+   +--------------+------------------------+--------------------+
+   | 3b5a629a-e...| manila_service_network | 4f366100-50...     |
+   | bee7411d-... | public                 | 884a6564-0f11-...  |
+   |              |                        | e6da81fa-5d5f-...  |
+   | 5ed5a854-... | private                | 74dcfb5a-b4d7-...  |
+   |              |                        | cc297be2-5213-...  |
+   +--------------+------------------------+--------------------+
 
 You also can see detailed information about the share network including
 ``network_type``, and ``segmentation_id`` fields:
 
 .. code-block:: console
 
-   $ neutron net-show manila_service_network
+   $ openstack network show manila_service_network
    +---------------------------+--------------------------------------+
    | Field                     | Value                                |
    +---------------------------+--------------------------------------+
-   | admin_state_up            | True                                 |
+   | admin_state_up            | UP                                   |
+   | availability_zone_hints   |                                      |
+   | availability_zones        | nova                                 |
+   | created_at                | 2016-12-13T09:31:30Z                 |
+   | description               |                                      |
    | id                        | 3b5a629a-e7a1-46a3-afb2-ab666fb884bc |
-   | mtu                       | 0                                    |
+   | ipv4_address_scope        | None                                 |
+   | ipv6_address_scope        | None                                 |
+   | mtu                       | 1450                                 |
    | name                      | manila_service_network               |
    | port_security_enabled     | True                                 |
+   | project_id                | f6ac448a469b45e888050cf837b6e628     |
    | provider:network_type     | vxlan                                |
-   | provider:physical_network |                                      |
-   | provider:segmentation_id  | 1068                                 |
-   | router:external           | False                                |
+   | provider:physical_network | None                                 |
+   | provider:segmentation_id  | 73                                   |
+   | revision_number           | 7                                    |
+   | router:external           | Internal                             |
    | shared                    | False                                |
    | status                    | ACTIVE                               |
-   | subnets                   | 4f366100-5108-4fa2-b5b1-989a121c1403 |
-   | tenant_id                 | 24c6491074e942309a908c674606f598     |
+   | subnets                   | 682e3329-60b0-440f-8749-83ef53dd8544 |
+   | tags                      | []                                   |
+   | updated_at                | 2016-12-13T09:31:36Z                 |
    +---------------------------+--------------------------------------+
 
 You also can add and remove the security services from the share network.
