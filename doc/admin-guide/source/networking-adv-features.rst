@@ -237,7 +237,7 @@ basic L3 operations:
        act as a NAT gateway for external connectivity.
      - .. code-block:: console
 
-          $ neutron router-gateway-set router1 EXT_NET_ID
+          $ openstack router set router1 --external-gateway EXT_NET_ID
 
        The router obtains an interface with the gateway_ip address of the
        subnet and this interface is attached to a port on the L2 Networking
@@ -704,7 +704,7 @@ Router rule attributes
 
 Each project router has a set of router rules associated with it. Each
 router rule has the attributes in this table. Router rules and their
-attributes can be set using the :command:`neutron router-update` command,
+attributes can be set using the :command:`openstack router set` command,
 through the horizon interface or the Networking API.
 
 .. list-table:: **Big Switch Router rule attributes**
