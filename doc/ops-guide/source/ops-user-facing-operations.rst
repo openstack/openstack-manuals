@@ -217,17 +217,17 @@ To share an image or snapshot with another project, do the following:
    target project.
 
 #. Once you have both pieces of information, run
-   the :command:`glance member-create` command:
+   the :command:`openstack image add project` command:
 
    .. code-block:: console
 
-      $ glance member-create <image-uuid> <project-uuid>
+      $ openstack image add project <image-uuid> <project-uuid>
 
    For example:
 
    .. code-block:: console
 
-      $ glance member-create 733d1c44-a2ea-414b-aca7-69decf20d810 \
+      $ openstack image add project 733d1c44-a2ea-414b-aca7-69decf20d810 \
         771ed149ef7e4b2b88665cc1c98f77ca
 
 #. You now need to act in the target project scope.
