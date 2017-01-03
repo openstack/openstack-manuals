@@ -96,20 +96,20 @@ Block Storage driver installation and deployment
 
 #. After configuration, restart the ``cinder-volume`` service:
 
-#. Check the status of services using the :command:`cinder service-list`
+#. Check the status of services using the
+   :command:`openstack volume service list`
    command. If the ``State`` of ``cinder-volume`` is ``up``, that means
    ``cinder-volume`` is okay.
 
    .. code-block:: console
 
-      # cinder service-list
-      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
-      | Binary          | Host            | Zone | Status  | State | Updated_at                 | Disabled Reason |
-      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
-      | cinderscheduler | controller      | nova | enabled | up    | 2016-02-01T16:26:00.000000 | -               |
-      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
-      | cindervolume    | controller@v3r3 | nova | enabled | up    | 2016-02-01T16:25:53.000000 | -               |
-      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
+      # openstack volume service list
+      +------------------+-----------------+------+---------+-------+----------------------------+
+      | Binary           | Host            | Zone | Status  | State | Updated At                 |
+      +------------------+-----------------+------+---------+-------+----------------------------+
+      | cinder-scheduler | controller      | nova | enabled | up    | 2017-01-03T11:53:30.000000 |
+      | cinder-volume    | controller@v3r3 | nova | enabled | up    | 2017-01-03T11:53:34.000000 |
+      +------------------+-----------------+------+---------+-------+----------------------------+
 
 .. _huawei-driver-configuration:
 
