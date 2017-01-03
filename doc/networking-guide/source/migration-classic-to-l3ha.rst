@@ -38,21 +38,34 @@ Here is the router we have used in our demonstration:
 
 .. code-block:: console
 
-   $ neutron router-show router
-
-   +-----------------------+--------------------------------------+
-   | Field                 | Value                                |
-   +-----------------------+--------------------------------------+
-   | admin_state_up        | True                                 |
-   | distributed           | False                                |
-   | external_gateway_info |                                      |
-   | ha                    | False                                |
-   | id                    | f8cc0f21-f51f-471d-a03c-37a6966553e0 |
-   | name                  | router                               |
-   | routes                |                                      |
-   | status                | ACTIVE                               |
-   | tenant_id             | ef488829f82c4a36a262011fabe0129f     |
-   +-----------------------+--------------------------------------+
+   $ openstack router show router1
+   +-------------------------+-------------------------------------------+
+   | Field                   | Value                                     |
+   +-------------------------+-------------------------------------------+
+   | admin_state_up          | UP                                        |
+   | availability_zone_hints |                                           |
+   | availability_zones      | nova                                      |
+   | created_at              | 2017-01-02T23:01:47Z                      |
+   | description             |                                           |
+   | distributed             | False                                     |
+   | external_gateway_info   | {"network_id": "c21c0f6a-0341-42ed-b5ff-  |
+   |                         | 9f1ff1d8ef56", "enable_snat": true,       |
+   |                         | "external_fixed_ips": [{"subnet_id":      |
+   |                         | "9a698e72-7707-43fe-ac09-5e05659a1aa5",   |
+   |                         | "ip_address": "172.24.4.5"},              |
+   |                         | {"subnet_id": "e8223e93-d5f6-48eb-afca-   |
+   |                         | 5cc095c1e340", "ip_address":              |
+   |                         | "2001:db8::b"}]}                          |
+   | flavor_id               | None                                      |
+   | ha                      | False                                     |
+   | id                      | 6b793b46-d082-4fd5-980f-a6f80cbb0f2a      |
+   | name                    | router1                                   |
+   | project_id              | bb8b84ab75be4e19bd0dfe02f6c3f5c1          |
+   | revision_number         | 7                                         |
+   | routes                  |                                           |
+   | status                  | ACTIVE                                    |
+   | updated_at              | 2017-01-02T23:02:03Z                      |
+   +-------------------------+-------------------------------------------+
 
 #. Source the administrative project credentials.
 #. Set the admin_state_up to ``False``. This will severe south-north
@@ -60,43 +73,53 @@ Here is the router we have used in our demonstration:
 
    .. code-block:: console
 
-      $ neutron router-update router --admin_state_up=False
-      Updated router: router
+      $ openstack router set router1 --disable
 
 #. Set the ``ha`` attribute of the router to ``True``.
 
    .. code-block:: console
 
-      $ neutron router-update router --ha=True
-      Updated router: router
+      $ openstack router set router1 --ha
 
 #. Set the admin_state_up to ``True``.
    After this, south-north connections can start.
 
    .. code-block:: console
 
-      $ neutron router-update router --admin_state_up=True
-      Updated router: router
+      $ openstack router set router1 --enable
 
 #. Make sure that the router's ``ha`` attribute has changed to ``True``.
 
    .. code-block:: console
 
-      $ neutron router-show router
-
-      +-----------------------+--------------------------------------+
-      | Field                 | Value                                |
-      +-----------------------+--------------------------------------+
-      | admin_state_up        | True                                 |
-      | distributed           | False                                |
-      | external_gateway_info |                                      |
-      | ha                    | True                                 |
-      | id                    | f8cc0f21-f51f-471d-a03c-37a6966553e0 |
-      | name                  | router                               |
-      | routes                |                                      |
-      | status                | ACTIVE                               |
-      | tenant_id             | ef488829f82c4a36a262011fabe0129f     |
-      +-----------------------+--------------------------------------+
+      $ openstack router show router1
+      +-------------------------+-------------------------------------------+
+      | Field                   | Value                                     |
+      +-------------------------+-------------------------------------------+
+      | admin_state_up          | UP                                        |
+      | availability_zone_hints |                                           |
+      | availability_zones      | nova                                      |
+      | created_at              | 2017-01-02T23:01:47Z                      |
+      | description             |                                           |
+      | distributed             | False                                     |
+      | external_gateway_info   | {"network_id": "c21c0f6a-0341-42ed-b5ff-  |
+      |                         | 9f1ff1d8ef56", "enable_snat": true,       |
+      |                         | "external_fixed_ips": [{"subnet_id":      |
+      |                         | "9a698e72-7707-43fe-ac09-5e05659a1aa5",   |
+      |                         | "ip_address": "172.24.4.5"},              |
+      |                         | {"subnet_id": "e8223e93-d5f6-48eb-afca-   |
+      |                         | 5cc095c1e340", "ip_address":              |
+      |                         | "2001:db8::b"}]}                          |
+      | flavor_id               | None                                      |
+      | ha                      | True                                      |
+      | id                      | 6b793b46-d082-4fd5-980f-a6f80cbb0f2a      |
+      | name                    | router1                                   |
+      | project_id              | bb8b84ab75be4e19bd0dfe02f6c3f5c1          |
+      | revision_number         | 7                                         |
+      | routes                  |                                           |
+      | status                  | ACTIVE                                    |
+      | updated_at              | 2017-01-02T23:02:03Z                      |
+      +-------------------------+-------------------------------------------+
 
 
 L3 HA to Legacy
@@ -115,21 +138,34 @@ Here is the router we have used in our demonstration:
 
 .. code-block:: console
 
-   $ neutron router-show router
-
-   +-----------------------+--------------------------------------+
-   | Field                 | Value                                |
-   +-----------------------+--------------------------------------+
-   | admin_state_up        | False                                |
-   | distributed           | False                                |
-   | external_gateway_info |                                      |
-   | ha                    | True                                 |
-   | id                    | f8cc0f21-f51f-471d-a03c-37a6966553e0 |
-   | name                  | router                               |
-   | routes                |                                      |
-   | status                | ACTIVE                               |
-   | tenant_id             | ef488829f82c4a36a262011fabe0129f     |
-   +-----------------------+--------------------------------------+
+   $ openstack router show router1
+   +-------------------------+-------------------------------------------+
+   | Field                   | Value                                     |
+   +-------------------------+-------------------------------------------+
+   | admin_state_up          | DOWN                                      |
+   | availability_zone_hints |                                           |
+   | availability_zones      | nova                                      |
+   | created_at              | 2017-01-02T23:01:47Z                      |
+   | description             |                                           |
+   | distributed             | False                                     |
+   | external_gateway_info   | {"network_id": "c21c0f6a-0341-42ed-b5ff-  |
+   |                         | 9f1ff1d8ef56", "enable_snat": true,       |
+   |                         | "external_fixed_ips": [{"subnet_id":      |
+   |                         | "9a698e72-7707-43fe-ac09-5e05659a1aa5",   |
+   |                         | "ip_address": "172.24.4.5"},              |
+   |                         | {"subnet_id": "e8223e93-d5f6-48eb-afca-   |
+   |                         | 5cc095c1e340", "ip_address":              |
+   |                         | "2001:db8::b"}]}                          |
+   | flavor_id               | None                                      |
+   | ha                      | True                                      |
+   | id                      | 6b793b46-d082-4fd5-980f-a6f80cbb0f2a      |
+   | name                    | router1                                   |
+   | project_id              | bb8b84ab75be4e19bd0dfe02f6c3f5c1          |
+   | revision_number         | 7                                         |
+   | routes                  |                                           |
+   | status                  | ACTIVE                                    |
+   | updated_at              | 2017-01-02T23:02:03Z                      |
+   +-------------------------+-------------------------------------------+
 
 #. Source the administrative project credentials.
 #. Set the admin_state_up to ``False``. This will severe south-north
@@ -137,40 +173,50 @@ Here is the router we have used in our demonstration:
 
    .. code-block:: console
 
-      $ neutron router-update router --admin_state_up=False
-      Updated router: router
+      $ openstack router set router1 --disable
 
 #. Set the ``ha`` attribute of the router to ``True``.
 
    .. code-block:: console
 
-      $ neutron router-update router --ha=False
-      Updated router: router
+      $ openstack router set router1 --no-ha
 
 #. Set the admin_state_up to ``True``.
    After this, south-north connections can start.
 
    .. code-block:: console
 
-      $ neutron router-update router --admin_state_up=True
-      Updated router: router
+      $ openstack router set router1 --enable
 
 #. Make sure that the router's ``ha`` attribute has changed to ``False``.
 
    .. code-block:: console
 
-      $ neutron router-show router
-
-      +-----------------------+--------------------------------------+
-      | Field                 | Value                                |
-      +-----------------------+--------------------------------------+
-      | admin_state_up        | True                                 |
-      | distributed           | False                                |
-      | external_gateway_info |                                      |
-      | ha                    | False                                |
-      | id                    | f8cc0f21-f51f-471d-a03c-37a6966553e0 |
-      | name                  | router                               |
-      | routes                |                                      |
-      | status                | ACTIVE                               |
-      | tenant_id             | ef488829f82c4a36a262011fabe0129f     |
-      +-----------------------+--------------------------------------+
+      $ openstack router show router1
+      +-------------------------+-------------------------------------------+
+      | Field                   | Value                                     |
+      +-------------------------+-------------------------------------------+
+      | admin_state_up          | UP                                        |
+      | availability_zone_hints |                                           |
+      | availability_zones      | nova                                      |
+      | created_at              | 2017-01-02T23:01:47Z                      |
+      | description             |                                           |
+      | distributed             | False                                     |
+      | external_gateway_info   | {"network_id": "c21c0f6a-0341-42ed-b5ff-  |
+      |                         | 9f1ff1d8ef56", "enable_snat": true,       |
+      |                         | "external_fixed_ips": [{"subnet_id":      |
+      |                         | "9a698e72-7707-43fe-ac09-5e05659a1aa5",   |
+      |                         | "ip_address": "172.24.4.5"},              |
+      |                         | {"subnet_id": "e8223e93-d5f6-48eb-afca-   |
+      |                         | 5cc095c1e340", "ip_address":              |
+      |                         | "2001:db8::b"}]}                          |
+      | flavor_id               | None                                      |
+      | ha                      | False                                     |
+      | id                      | 6b793b46-d082-4fd5-980f-a6f80cbb0f2a      |
+      | name                    | router1                                   |
+      | project_id              | bb8b84ab75be4e19bd0dfe02f6c3f5c1          |
+      | revision_number         | 7                                         |
+      | routes                  |                                           |
+      | status                  | ACTIVE                                    |
+      | updated_at              | 2017-01-02T23:02:03Z                      |
+      +-------------------------+-------------------------------------------+
