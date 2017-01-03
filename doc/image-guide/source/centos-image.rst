@@ -122,8 +122,11 @@ three partitions (``/boot``, ``/``, ``swap``), which works fine.
 Alternatively, you might want to create a single ext4
 partition that is mounted to ``/``, which also works fine.
 
-If unsure, use the default partition scheme for the installer
-because no scheme is better than another.
+If unsure, use the default partition scheme for the installer.
+While no scheme is inherently better than another, having the
+partition that you want to dynamically grow at the end of the
+list will allow it to grow without crossing another
+partition's boundary.
 
 Select installation option
 --------------------------
@@ -234,6 +237,18 @@ to the configuration file:
 .. code-block:: console
 
    user: admin
+
+Install cloud-utils-growpart to allow partitions to resize
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In order for the root partition to properly resize one must
+install cloud-utils-growpart which contains the proper tools
+to allow the disk to resize using cloud-init.
+
+.. code-block:: console
+
+   # yum install cloud-utils-growpart
+
 
 Write a script to fetch the public key (if no cloud-init)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
