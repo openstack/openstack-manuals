@@ -1615,7 +1615,7 @@ On the command line, do this:
 
 .. code-block:: console
 
-   $ openstack server create --flavor FLAVOR --image IMAGE NAME
+   $ openstack server create --flavor FLAVOR --image IMAGE_NAME
 
 There are a number of optional items that can be specified. You should
 read the rest of this section before trying to start an instance, but
