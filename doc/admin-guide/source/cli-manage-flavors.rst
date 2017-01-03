@@ -63,7 +63,8 @@ Extra Specs
   the compute nodes. It can be used to implement special resources, such
   as flavors that run on only compute nodes with GPU hardware.
 
-The default flavors are:
+As of Newton, there are no default flavors.  The following table
+lists the default flavors for Mitaka and earlier.
 
 ============  =========  ===============  ===============
  Flavor         VCPUs      Disk (in GB)     RAM (in MB)
