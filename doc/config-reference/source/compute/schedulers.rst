@@ -156,12 +156,20 @@ Windows operating system as metadata (named 'windows'):
 
 .. code-block:: console
 
-   $ nova aggregate-details MyWinAgg
-   +----+----------+-------------------+------------+---------------+
-   | Id | Name     | Availability Zone | Hosts      | Metadata      |
-   +----+----------+-------------------+------------+---------------+
-   | 1  | MyWinAgg | None              | 'sf-devel' | 'os=windows'  |
-   +----+----------+-------------------+------------+---------------+
+   $ openstack aggregate show MyWinAgg
+   +-------------------+----------------------------+
+   | Field             | Value                      |
+   +-------------------+----------------------------+
+   | availability_zone | zone1                      |
+   | created_at        | 2017-01-01T15:36:44.000000 |
+   | deleted           | False                      |
+   | deleted_at        | None                       |
+   | hosts             | [u'sf-devel']              |
+   | id                | 1                          |
+   | name              | test                       |
+   | properties        |                            |
+   | updated_at        | None                       |
+   +-------------------+----------------------------+
 
 In this example, because the following Win-2012 image has the
 ``windows`` property, it boots on the ``sf-devel`` host
@@ -169,14 +177,14 @@ In this example, because the following Win-2012 image has the
 
 .. code-block:: console
 
-   $ glance image-show Win-2012
-   +------------------+--------------------------------------+
-   | Property         | Value                                |
-   +------------------+--------------------------------------+
-   | Property 'os'    | windows                              |
-   | checksum         | f8a2eeee2dc65b3d9b6e63678955bd83     |
-   | container_format | ami                                  |
-   | created_at       | 2013-11-14T13:24:25                  |
+   $ openstack image show Win-2012
+   +------------------+------------------------------------------------------+
+   | Field            | Value                                                |
+   +------------------+------------------------------------------------------+
+   | checksum         | ee1eca47dc88f4879d8a229cc70a07c6                     |
+   | container_format | bare                                                 |
+   | created_at       | 2016-12-13T09:30:30Z                                 |
+   | disk_format      | qcow2                                                |
    | ...
 
 You can configure the ``AggregateImagePropertiesIsolation``
