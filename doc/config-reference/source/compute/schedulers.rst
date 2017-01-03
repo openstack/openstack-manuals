@@ -394,22 +394,22 @@ a hypervisor's statistics:
 
 .. code-block:: console
 
-   $ nova hypervisor-stats
+   $ openstack hypervisor stats show
    +----------------------+-------+
-   | Property             | Value |
+   | Field                | Value |
    +----------------------+-------+
-   | count                |  1    |
-   | current_workload     |  0    |
-   | disk_available_least |  29   |
-   | free_disk_gb         |  35   |
-   | free_ram_mb          |  3441 |
-   | local_gb             |  35   |
-   | local_gb_used        |  0    |
-   | memory_mb            |  3953 |
-   | memory_mb_used       |  512  |
-   | running_vms          |  0    |
-   | vcpus                |  2    |
-   | vcpus_used           |  0    |
+   | count                | 1     |
+   | current_workload     | 0     |
+   | disk_available_least | 14    |
+   | free_disk_gb         | 27    |
+   | free_ram_mb          | 15374 |
+   | local_gb             | 27    |
+   | local_gb_used        | 0     |
+   | memory_mb            | 15886 |
+   | memory_mb_used       | 512   |
+   | running_vms          | 0     |
+   | vcpus                | 8     |
+   | vcpus_used           | 0     |
    +----------------------+-------+
 
 As it can be viewed from the command output above, the amount of the
