@@ -162,9 +162,9 @@ To experiment, you need VMs and a neutron network:
    | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 | centos     |
    +--------------------------------------+-----------+--------+---------------+------------+
 
-   $ neutron net-list
+   $ openstack network list
    +--------------------------------------+------+--------------------------------------+
-   | id                                   | name | subnets                              |
+   | ID                                   | Name | Subnets                              |
    +--------------------------------------+------+--------------------------------------+
    | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 |
    +--------------------------------------+------+--------------------------------------+
@@ -358,14 +358,14 @@ in turn to see if the VM can still get the desired IP.
 
    .. code-block:: console
 
-      $ neutron net-list
-      +--------------------------------------+------+--------------------------------------------------+
-      | id                                   | name | subnets                                          |
-      +--------------------------------------+------+--------------------------------------------------+
-      | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 10.0.1.0/24 |
-      | 9b96b14f-71b8-4918-90aa-c5d705606b1a | net2 | 6979b71a-0ae8-448c-aa87-65f68eedcaaa 9.0.1.0/24  |
-      +--------------------------------------+------+--------------------------------------------------+
-      $ nova boot --image tty --flavor 1 myserver4 \
+      $ openstack network list
+      +--------------------------------------+------+--------------------------------------+
+      | ID                                   | Name | Subnets                              |
+      +--------------------------------------+------+--------------------------------------+
+      | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 |
+      | 9b96b14f-71b8-4918-90aa-c5d705606b1a | net2 | 6979b71a-0ae8-448c-aa87-65f68eedcaaa |
+      +--------------------------------------+------+--------------------------------------+
+      $ openstack server create --image tty  --flavor 1 myserver4 \
         --nic net-id=9b96b14f-71b8-4918-90aa-c5d705606b1a
       ...
       $ openstack server list
@@ -427,30 +427,30 @@ Disable the DHCP agent on HostA before you stop it:
 
    $ neutron agent-update a0c1c21c-d4f4-4577-9ec7-908f2d48622d --admin-state-up False
    $ neutron agent-list
-   +--------------------------------------+--------------------+-------+-------+----------------+
-   | id                                   | agent_type         | host  | alive | admin_state_up |
-   +--------------------------------------+--------------------+-------+-------+----------------+
-   | 1b69828d-6a9b-4826-87cd-1757f0e27f31 | Linux bridge agent | HostA | :-)   | True           |
-   | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | DHCP agent         | HostA | :-)   | False          |
-   | ed96b856-ae0f-4d75-bb28-40a47ffd7695 | Linux bridge agent | HostB | :-)   | True           |
-   | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
-   +--------------------------------------+--------------------+-------+-------+----------------+
+   $ openstack network agent list
+   +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
+   | ID                                   | Agent Type         | Host  | Availability Zone | Alive | State | Binary                    |
+   +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
+   | 22467163-01ea-4231-ba45-3bd316f425e6 | Linux bridge agent | HostA | None              | True  | UP    | neutron-metering-agent    |
+   | 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b | DHCP agent         | HostA | None              | True  | UP    | neutron-openvswitch-agent |
+   | 3066d20c-9f8f-440c-ae7c-a40ffb4256b6 | Linux bridge agent | HostB | nova              | True  | UP    | neutron-l3-agent          |
+   | 55569f4e-6f31-41a6-be9d-526efce1f7fe | DHCP agent         | HostB | nova              | True  | UP    | neutron-l3-agent          |
+   +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
 
 After you stop the DHCP agent on HostA, you can delete it by the following
 command:
 
 .. code-block:: console
 
-   $ neutron agent-delete a0c1c21c-d4f4-4577-9ec7-908f2d48622d
-   Deleted agent: a0c1c21c-d4f4-4577-9ec7-908f2d48622d
-   $ neutron agent-list
-   +--------------------------------------+--------------------+-------+-------+----------------+
-   | id                                   | agent_type         | host  | alive | admin_state_up |
-   +--------------------------------------+--------------------+-------+-------+----------------+
-   | 1b69828d-6a9b-4826-87cd-1757f0e27f31 | Linux bridge agent | HostA | :-)   | True           |
-   | ed96b856-ae0f-4d75-bb28-40a47ffd7695 | Linux bridge agent | HostB | :-)   | True           |
-   | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent         | HostB | :-)   | True           |
-   +--------------------------------------+--------------------+-------+-------+----------------+
+   $ openstack network agent delete 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b
+   $ openstack network agent list
+   +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
+   | ID                                   | Agent Type         | Host  | Availability Zone | Alive | State | Binary                    |
+   +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
+   | 22467163-01ea-4231-ba45-3bd316f425e6 | Linux bridge agent | HostA | None              | True  | UP    | neutron-metering-agent    |
+   | 3066d20c-9f8f-440c-ae7c-a40ffb4256b6 | Linux bridge agent | HostB | nova              | True  | UP    | neutron-l3-agent          |
+   | 55569f4e-6f31-41a6-be9d-526efce1f7fe | DHCP agent         | HostB | nova              | True  | UP    | neutron-l3-agent          |
+   +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
 
 After deletion, if you restart the DHCP agent, it appears on the agent
 list again.
