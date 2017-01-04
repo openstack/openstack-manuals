@@ -14,7 +14,7 @@ Use lowercase when you refer to:
 * command-line interface (CLI)
 
 For more information, see `Service and Project Naming
-<http://governance.openstack.org/reference/service-project-naming.html>`_
+<https://governance.openstack.org/tc/reference/service-project-naming.html>`_
 in OpenStack Technical Committee governance documents.
 
 The official source for services and project names is in the
