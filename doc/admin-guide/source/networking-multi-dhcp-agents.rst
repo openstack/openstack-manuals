@@ -2,5 +2,6 @@
 Scalable and highly available DHCP agents
 =========================================
 
-This section is fully described in the `Networking Guide
-<http://docs.openstack.org/newton/networking-guide/config-dhcp-ha.html>`_.
+This section is fully described at the `High-availability for DHCP
+<http://docs.openstack.org/newton/networking-guide/config-dhcp-ha.html>`_
+in the Networking Guide.
