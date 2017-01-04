@@ -2501,6 +2501,11 @@ N
       Represents a virtual, isolated OSI layer-2 subnet in
       Networking.
 
+   Network Service Header (NSH)
+
+      Provides a mechanism for metadata exchange along the
+      instantiated service path.
+
    Network Time Protocol (NTP)
 
       Method of keeping a clock for a host or node correct via
@@ -2862,6 +2867,11 @@ P
 
       Component of Identity that provides a rule-management
       interface and a rule-based authorization engine.
+
+   policy-based routing (PBR)
+
+      Provides a mechanism to implement packet forwarding and routing
+      according to the policies defined by the network administrator.
 
    pool
 
@@ -3383,6 +3393,11 @@ S
 
       Alternative term for the Identity service catalog.
 
+   Service Function Chain (SFC)
+
+      For a given service, SFC is the abstracted view of the required
+      service functions and the order in which they are to be applied.
+
    service ID
 
       Unique ID assigned to each service that is available in the
@@ -3534,6 +3549,11 @@ S
       consume and integrate with application development process
       by automating the source-to-image process, and simplifying
       app-centric deployment.
+
+   Software-defined networking (SDN)
+
+      Provides an approach for network administrators to manage computer
+      network services through abstraction of lower-level functionality.
 
    SolidFire Volume Driver
 
