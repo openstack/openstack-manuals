@@ -29,7 +29,7 @@ database and an administration token.
 
      .. code-block:: console
 
-        mysql> CREATE DATABASE keystone;
+        MariaDB [(none)] CREATE DATABASE keystone;
 
      .. end
 
@@ -37,9 +37,9 @@ database and an administration token.
 
      .. code-block:: console
 
-        mysql> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
+        MariaDB [(none)] GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
           IDENTIFIED BY 'KEYSTONE_DBPASS';
-        mysql> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
+        MariaDB [(none)] GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
           IDENTIFIED BY 'KEYSTONE_DBPASS';
 
      .. end
