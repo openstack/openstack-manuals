@@ -6,7 +6,8 @@ In OpenStack, a flavor defines the compute, memory, and storage
 capacity of a virtual server, also known as an instance. As an
 administrative user, you can create, edit, and delete flavors.
 
-The following table lists the default flavors.
+As of Newton, there are no default flavors.  The following table
+lists the default flavors for Mitaka and earlier.
 
 ============  =========  ===============  =============
  Flavor         VCPUs      Disk (in GB)     RAM (in MB)
