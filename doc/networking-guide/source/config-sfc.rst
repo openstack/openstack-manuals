@@ -91,9 +91,9 @@ traffic through the port chain.
 
 The ``chain_parameters`` attribute contains one or more parameters for the
 port chain. Currently, it only supports a correlation parameter that
-defaults to ``mpls`` for consistency with Open vSwitch (OVS) capabilities.
-Future values for the correlation parameter may include the network service
-header (NSH).
+defaults to ``mpls`` for consistency with :term:`Open vSwitch` (OVS)
+capabilities. Future values for the correlation parameter may include
+the network service header (NSH).
 
 Port pair group
 ---------------
