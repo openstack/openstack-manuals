@@ -472,8 +472,9 @@ synchronous replication (metro mirror):
 
 .. code-block:: console
 
-   $ cinder type-create "ReplicationType"
-   $ cinder type-key "ReplicationType" set replication_type='<in> metro' replication_enabled='<is> True' volume_backend_name=svc234
+   $ openstack volume type create ReplicationType
+   $ openstack volume type set --property replication_type="<in> metro" \
+     --property replication_enabled='<is> True' --property volume_backend_name=svc234 ReplicationType
 
 Volume types can be used, for example, to provide users with different
 
