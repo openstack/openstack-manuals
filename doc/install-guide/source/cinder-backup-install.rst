@@ -73,9 +73,14 @@ Install and configure components
 
      .. end
 
-     Replace ``SWIFT_URL`` with the URL of the Object Storage service, typically
-     ``http://10.0.0.51:8080/v1/AUTH_`` if using the installation guide
-     architecture.
+     Replace ``SWIFT_URL`` with the URL of the Object Storage service. The
+     URL can be found by showing the object-store API endpoints:
+
+     .. code-block:: console
+
+      $ openstack catalog show object-store
+
+     .. end
 
 Finalize installation
 ---------------------
