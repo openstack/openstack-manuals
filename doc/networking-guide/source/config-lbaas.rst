@@ -153,7 +153,7 @@ configure the Network service to use Octavia:
 
 #.  Add the Octavia service provider to the ``service_provider`` configuration
     directive within the ``[service_providers]`` section in
-    ``/etc/neutron/neutron.conf``:
+    ``/etc/neutron/neutron_lbaas.conf``:
 
     .. code-block:: console
 
