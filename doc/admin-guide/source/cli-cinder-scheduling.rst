@@ -18,35 +18,41 @@ Example Usages
 
    .. code-block:: console
 
-      $ cinder create --hint same_host=Volume_A-UUID SIZE
+      $ openstack volume create --hint same_host=Volume_A-UUID \
+        --size SIZE VOLUME_NAME
 
 #. Create a new volume on a different back end than Volume_A:
 
    .. code-block:: console
 
-      $ cinder create --hint different_host=Volume_A-UUID SIZE
+      $ openstack volume create --hint different_host=Volume_A-UUID \
+        --size SIZE VOLUME_NAME
 
 #. Create a new volume on the same back end as Volume_A and Volume_B:
 
    .. code-block:: console
 
-      $ cinder create --hint same_host=Volume_A-UUID --hint same_host=Volume_B-UUID SIZE
+      $ openstack volume create --hint same_host=Volume_A-UUID \
+        --hint same_host=Volume_B-UUID --size SIZE VOLUME_NAME
 
    Or:
 
    .. code-block:: console
 
-      $ cinder create --hint same_host="[Volume_A-UUID, Volume_B-UUID]" SIZE
+      $ openstack volume create --hint same_host="[Volume_A-UUID, \
+        Volume_B-UUID]" --size SIZE VOLUME_NAME
 
 #. Create a new volume on a different back end than both Volume_A and
    Volume_B:
 
    .. code-block:: console
 
-      $ cinder create --hint different_host=Volume_A-UUID --hint different_host=Volume_B-UUID SIZE
+      $ openstack volume create --hint different_host=Volume_A-UUID \
+        --hint different_host=Volume_B-UUID --size SIZE VOLUME_NAME
 
    Or:
 
    .. code-block:: console
 
-      $ cinder create --hint different_host="[Volume_A-UUID, Volume_B-UUID]" SIZE
+      $ openstack volume create --hint different_host="[Volume_A-UUID, \
+        Volume_B-UUID]" --size SIZE VOLUME_NAME
