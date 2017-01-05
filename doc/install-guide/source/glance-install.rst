@@ -26,7 +26,7 @@ create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        mysql> CREATE DATABASE glance;
+        MariaDB [(none)] CREATE DATABASE glance;
 
      .. end
 
@@ -34,9 +34,9 @@ create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        mysql> GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
+        MariaDB [(none)] GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
           IDENTIFIED BY 'GLANCE_DBPASS';
-        mysql> GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
+        MariaDB [(none)] GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
           IDENTIFIED BY 'GLANCE_DBPASS';
 
      .. end

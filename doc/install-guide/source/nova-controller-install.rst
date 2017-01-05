@@ -25,8 +25,8 @@ create databases, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        mysql> CREATE DATABASE nova_api;
-        mysql> CREATE DATABASE nova;
+        MariaDB [(none)] CREATE DATABASE nova_api;
+        MariaDB [(none)] CREATE DATABASE nova;
 
      .. end
 
@@ -34,13 +34,13 @@ create databases, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        mysql> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' \
+        MariaDB [(none)] GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' \
           IDENTIFIED BY 'NOVA_DBPASS';
-        mysql> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
+        MariaDB [(none)] GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
           IDENTIFIED BY 'NOVA_DBPASS';
-        mysql> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
+        MariaDB [(none)] GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
           IDENTIFIED BY 'NOVA_DBPASS';
-        mysql> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
+        MariaDB [(none)] GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
           IDENTIFIED BY 'NOVA_DBPASS';
 
      .. end

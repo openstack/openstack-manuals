@@ -22,7 +22,7 @@ must create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        mysql> CREATE DATABASE neutron;
+        MariaDB [(none)] CREATE DATABASE neutron;
 
      .. end
 
@@ -31,9 +31,9 @@ must create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        mysql> GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
+        MariaDB [(none)] GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
           IDENTIFIED BY 'NEUTRON_DBPASS';
-        mysql> GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' \
+        MariaDB [(none)] GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' \
           IDENTIFIED BY 'NEUTRON_DBPASS';
 
      .. end
