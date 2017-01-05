@@ -123,8 +123,8 @@ Configure the server component
        auth_url = http://controller:35357
        memcached_servers = controller:11211
        auth_type = password
-       project_domain_name = default
-       user_domain_name = default
+       project_domain_name = Default
+       user_domain_name = Default
        project_name = service
        username = neutron
        password = NEUTRON_PASS
@@ -154,8 +154,8 @@ Configure the server component
        ...
        auth_url = http://controller:35357
        auth_type = password
-       project_domain_name = default
-       user_domain_name = default
+       project_domain_name = Default
+       user_domain_name = Default
        region_name = RegionOne
        project_name = service
        username = nova
