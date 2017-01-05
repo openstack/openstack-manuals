@@ -18,7 +18,7 @@ create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        $ mysql -u root -p
+        # mysql
 
      .. end
 
@@ -50,7 +50,7 @@ create a database, service credentials, and API endpoints.
 
    .. code-block:: console
 
-      $ . admin-openrc
+      # . admin-openrc
 
    .. end
 
@@ -60,7 +60,7 @@ create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        $ openstack user create --domain default --password-prompt glance
+        # openstack user create --domain default --password-prompt glance
 
         User Password:
         Repeat User Password:
@@ -82,7 +82,7 @@ create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        $ openstack role add --project service --user glance admin
+        # openstack role add --project service --user glance admin
 
      .. end
 
@@ -94,7 +94,7 @@ create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        $ openstack service create --name glance \
+        # openstack service create --name glance \
           --description "OpenStack Image" image
 
         +-------------+----------------------------------+
@@ -113,7 +113,7 @@ create a database, service credentials, and API endpoints.
 
    .. code-block:: console
 
-      $ openstack endpoint create --region RegionOne \
+      # openstack endpoint create --region RegionOne \
         image public http://controller:9292
 
       +--------------+----------------------------------+
@@ -130,7 +130,7 @@ create a database, service credentials, and API endpoints.
       | url          | http://controller:9292           |
       +--------------+----------------------------------+
 
-      $ openstack endpoint create --region RegionOne \
+      # openstack endpoint create --region RegionOne \
         image internal http://controller:9292
 
       +--------------+----------------------------------+
@@ -147,7 +147,7 @@ create a database, service credentials, and API endpoints.
       | url          | http://controller:9292           |
       +--------------+----------------------------------+
 
-      $ openstack endpoint create --region RegionOne \
+      # openstack endpoint create --region RegionOne \
         image admin http://controller:9292
 
       +--------------+----------------------------------+

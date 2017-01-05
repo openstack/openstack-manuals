@@ -14,7 +14,7 @@ must create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        $ mysql -u root -p
+        # mysql
 
      .. end
 
@@ -45,7 +45,7 @@ must create a database, service credentials, and API endpoints.
 
    .. code-block:: console
 
-      $ . admin-openrc
+      # . admin-openrc
 
    .. end
 
@@ -55,7 +55,7 @@ must create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        $ openstack user create --domain default --password-prompt neutron
+        # openstack user create --domain default --password-prompt neutron
 
         User Password:
         Repeat User Password:
@@ -75,7 +75,7 @@ must create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        $ openstack role add --project service --user neutron admin
+        # openstack role add --project service --user neutron admin
 
      .. end
 
@@ -87,7 +87,7 @@ must create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        $ openstack service create --name neutron \
+        # openstack service create --name neutron \
           --description "OpenStack Networking" network
 
         +-------------+----------------------------------+
@@ -106,7 +106,7 @@ must create a database, service credentials, and API endpoints.
 
    .. code-block:: console
 
-      $ openstack endpoint create --region RegionOne \
+      # openstack endpoint create --region RegionOne \
         network public http://controller:9696
 
       +--------------+----------------------------------+
@@ -123,7 +123,7 @@ must create a database, service credentials, and API endpoints.
       | url          | http://controller:9696           |
       +--------------+----------------------------------+
 
-      $ openstack endpoint create --region RegionOne \
+      # openstack endpoint create --region RegionOne \
         network internal http://controller:9696
 
       +--------------+----------------------------------+
@@ -140,7 +140,7 @@ must create a database, service credentials, and API endpoints.
       | url          | http://controller:9696           |
       +--------------+----------------------------------+
 
-      $ openstack endpoint create --region RegionOne \
+      # openstack endpoint create --region RegionOne \
         network admin http://controller:9696
 
       +--------------+----------------------------------+
