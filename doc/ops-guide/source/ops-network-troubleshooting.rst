@@ -127,7 +127,7 @@ OpenStack User Survey. We'll describe each step in turn, with
 
    .. code-block:: console
 
-      # neutron port-list | grep 10.0.0.10 | cut -d \| -f 2
+      # openstack port list | grep 10.0.0.10 | cut -d \| -f 2
        ff387e54-9e54-442b-94a3-aa4481764f1d
 
    Taking the first 11 characters, we can construct a device name of
@@ -1019,8 +1019,8 @@ dhcp-agent name spaces are named ``qdhcp-<net_uuid>``. This output
 shows a network node with four networks running dhcp-agents, one of
 which is also running an l3-agent router. It's important to know which
 network you need to be working in. A list of existing networks and their
-UUIDs can be obtained by running ``neutron net-list`` with administrative
-credentials.
+UUIDs can be obtained by running ``openstack network list`` with
+administrative credentials.
 
 
 Once you've determined which namespace you need to work in, you can use
