@@ -55,6 +55,7 @@ raw
 
 Event indexing
 ~~~~~~~~~~~~~~
+
 The general philosophy of notifications in OpenStack is to emit any and
 all data someone might need, and let the consumer filter out what they
 are not interested in. In order to make processing simpler and more
@@ -71,6 +72,7 @@ conversion is specified by a config file.
 
 Event conversion
 ----------------
+
 The conversion from notifications to events is driven by a configuration
 file defined by the ``definitions_cfg_file`` in the ``ceilometer.conf``
 configuration file.
@@ -154,3 +156,10 @@ type
 plugin
     (Optional) Used to execute simple programmatic conversions on the
     value in a notification field.
+
+Event delivery to external sinks
+--------------------------------
+
+You can configure the Telemetry service to deliver the events
+into external sinks. These sinks are configurable in the
+``/etc/ceilometer/event_pipeline.yaml`` file.
