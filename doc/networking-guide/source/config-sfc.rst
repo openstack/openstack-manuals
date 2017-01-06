@@ -4,9 +4,10 @@
 Service function chaining
 =========================
 
-Service function chaining (SFC) essentially refers to the software-defined
-networking (SDN) version of policy-based routing (PBR). In many cases,
-SFC involves security, although it can include a variety of other features.
+:term:`Service function chain (SFC)` essentially refers to the
+:term:`software-defined networking (SDN)` version of
+:term:`policy-based routing (PBR)`. In many cases, SFC involves security,
+although it can include a variety of other features.
 
 Fundamentally, SFC routes packets through one or more service functions
 instead of conventional routing that routes packets using destination IP
@@ -93,7 +94,7 @@ The ``chain_parameters`` attribute contains one or more parameters for the
 port chain. Currently, it only supports a correlation parameter that
 defaults to ``mpls`` for consistency with :term:`Open vSwitch` (OVS)
 capabilities. Future values for the correlation parameter may include
-the network service header (NSH).
+the :term:`network service header (NSH)`.
 
 Port pair group
 ---------------
