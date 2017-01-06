@@ -50,26 +50,33 @@ Install RabbitMQ
 ~~~~~~~~~~~~~~~~
 
 The commands for installing RabbitMQ are specific to the Linux distribution
-you are using:
+you are using.
 
-.. list-table:: Install RabbitMQ
-   :widths: 15 30
-   :header-rows: 1
+For Ubuntu or Debian:
 
-   * - Distribution
-     - Command
-   * - Ubuntu, Debian
-     - :command:`# apt-get install rabbitmq-server`
-   * - RHEL, Fedora, CentOS
-     - :command:`# yum install rabbitmq-server`
-   * - openSUSE
-     - :command:`# zypper install rabbitmq-server`
-   * - SLES 12
-     - :command:`# zypper addrepo -f obs://Cloud:OpenStack:Kilo/SLE_12 Kilo`
+.. code-block: console
 
-       [Verify the fingerprint of the imported GPG key. See below.]
+   # apt-get install rabbitmq-server
 
-       :command:`# zypper install rabbitmq-server`
+For RHEL, Fedora, or CentOS:
+
+.. code-block: console
+
+   # yum install rabbitmq-server
+
+For openSUSE:
+
+.. code-block: console
+
+   # zypper install rabbitmq-server
+
+For SLES 12:
+
+.. code-block: console
+
+   # zypper addrepo -f obs://Cloud:OpenStack:Kilo/SLE_12 Kilo
+   [Verify the fingerprint of the imported GPG key. See below.]
+   # zypper install rabbitmq-server
 
 .. note::
 
