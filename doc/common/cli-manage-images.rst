@@ -45,8 +45,8 @@ commands.
    | container_format | ami                                                  |
    | created_at       | 2016-08-11T15:07:26Z                                 |
    | disk_format      | ami                                                  |
-   | file             | /v2/images/dfc1dfb0-d7bf-4fff-8994-319dd6f703d7/file |
-   | id               | dfc1dfb0-d7bf-4fff-8994-319dd6f703d7                 |
+   | file             | /v2/images/d07831df-edc3-4817-9881-89141f9134c3/file |
+   | id               | d07831df-edc3-4817-9881-89141f9134c3                 |
    | min_disk         | 0                                                    |
    | min_ram          | 0                                                    |
    | name             | myCirrosImage                                        |
