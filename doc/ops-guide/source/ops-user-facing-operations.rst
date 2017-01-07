@@ -60,12 +60,11 @@ Run the following command to view the properties of existing images:
 Adding Signed Images
 --------------------
 
-To provide a chain of trust from an end user to the Image service, and
-the Image service to Compute, an end user can import signed images into
-the Image service that can be verified in Compute. Appropriate Image
-service properties need to be set to enable signature verification.
-Currently, signature verification is provided in Compute only, but an
-accompanying feature in the Image service is targeted for :term:`Mitaka`.
+To provide a chain of trust from an end user to the Image service,
+and the Image service to Compute, an end user can import signed images
+that can be initially verified in the Image service, and later verified
+in the Compute service.  Appropriate Image service properties need
+to be set to enable this signature feature.
 
 .. note::
 
@@ -111,10 +110,18 @@ signed images:
 
       $ openssl dgst -sha256 -sign private_key.pem -sigopt rsa_padding_mode:pss \
         -out image-file.signature cirros-0.3.4-x86_64-disk.img
-      $ base64 image-file.signature > signature_64
+      $ base64 -w 0 image-file.signature > signature_64
       $ cat signature_64
       'c4br5f3FYQV6Nu20cRUSnx75R/VcW3diQdsUN2nhPw+UcQRDoGx92hwMgRxzFYeUyydRTWCcUS2ZLudPR9X7rM
       THFInA54Zj1TwEIbJTkHwlqbWBMU4+k5IUIjXxHO6RuH3Z5f/SlSt7ajsNVXaIclWqIw5YvEkgXTIEuDPE+C4='
+
+   .. note::
+
+      - Using Image API v1 requires '-w 0' above, since multiline image
+        properties are not supported.
+      - Image API v2 supports multiline properties, so this option is not
+        required for v2 but it can still be used.
+
 
 #. Create context
 
@@ -188,11 +195,32 @@ signed images:
 
    .. note::
 
-      As of the Mitaka release, Compute supports instance signature
-      validation. This is enabled by setting the
-      ``verify_glance_signatures`` flag in nova.conf to TRUE. When enabled,
-      Compute will automatically validate signed instances prior to its
-      launch.
+      nova-compute servers first need to be updated by the following steps:
+
+      - Ensure that cryptsetup is installed, and ensure that
+        ``pythin-barbicanclient`` Python package is installed
+      - Set up the Key Manager service by editing /etc/nova/nova.conf and
+        adding the entries in the codeblock below
+      - The flag verify_glance_signatures enables Compute to automatically
+        validate signed instances prior to its launch.  This validation
+        feature is enabled when the value is set to TRUE
+
+   .. code-block:: console
+
+      [key_manager]
+      api_class = castellan.key_manager.barbican_key_manager.BarbicanKeyManager
+      [glance]
+      verify_glance_signatures = TRUE
+
+   .. note::
+
+      The api_class [keymgr] is deprecated as of Newton, so it
+      should not be included in this release or beyond.
+
+   .. note:
+
+      restart nova-compute
+
 
 Sharing Images Between Projects
 -------------------------------
