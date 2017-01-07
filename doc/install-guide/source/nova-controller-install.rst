@@ -17,7 +17,7 @@ create databases, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        # mysql
+        $ mysql -u root -p
 
      .. end
 
@@ -54,7 +54,7 @@ create databases, service credentials, and API endpoints.
 
    .. code-block:: console
 
-      # . admin-openrc
+      $ . admin-openrc
 
    .. end
 
@@ -64,7 +64,7 @@ create databases, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        # openstack user create --domain default \
+        $ openstack user create --domain default \
           --password-prompt nova
 
         User Password:
@@ -85,7 +85,7 @@ create databases, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        # openstack role add --project service --user nova admin
+        $ openstack role add --project service --user nova admin
 
      .. end
 
@@ -97,7 +97,7 @@ create databases, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        # openstack service create --name nova \
+        $ openstack service create --name nova \
           --description "OpenStack Compute" compute
 
         +-------------+----------------------------------+
@@ -116,7 +116,7 @@ create databases, service credentials, and API endpoints.
 
    .. code-block:: console
 
-      # openstack endpoint create --region RegionOne \
+      $ openstack endpoint create --region RegionOne \
         compute public http://controller:8774/v2.1/%\(tenant_id\)s
 
       +--------------+-------------------------------------------+
@@ -133,7 +133,7 @@ create databases, service credentials, and API endpoints.
       | url          | http://controller:8774/v2.1/%(tenant_id)s |
       +--------------+-------------------------------------------+
 
-      # openstack endpoint create --region RegionOne \
+      $ openstack endpoint create --region RegionOne \
         compute internal http://controller:8774/v2.1/%\(tenant_id\)s
 
       +--------------+-------------------------------------------+
@@ -150,7 +150,7 @@ create databases, service credentials, and API endpoints.
       | url          | http://controller:8774/v2.1/%(tenant_id)s |
       +--------------+-------------------------------------------+
 
-      # openstack endpoint create --region RegionOne \
+      $ openstack endpoint create --region RegionOne \
         compute admin http://controller:8774/v2.1/%\(tenant_id\)s
 
       +--------------+-------------------------------------------+
