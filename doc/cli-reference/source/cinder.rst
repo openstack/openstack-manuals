@@ -489,16 +489,6 @@ cinder optional arguments
 ``--os-url <url>``
   Defaults to ``env[OS_URL]``.
 
-You can select an API version to use by adding the
-:option:`--os-volume-api-version` parameter or by
-setting the corresponding environment variable:
-
-.. code-block:: console
-
-   export OS_VOLUME_API_VERSION=1
-
-This chapter describes the commands with API v2.
-
 .. _cinder_absolute-limits:
 
 cinder absolute-limits
