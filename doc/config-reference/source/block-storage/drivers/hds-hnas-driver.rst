@@ -21,7 +21,8 @@ The NFS and iSCSI drivers support these operations:
 * Extend a volume.
 * Get volume statistics.
 * Manage and unmanage a volume.
-* Manage and unmanage snapshots (`HNAS NFS only`)
+* Manage and unmanage snapshots (`HNAS NFS only`).
+* List manageable volumes and snapshots (`HNAS NFS only`).
 
 HNAS storage requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -222,7 +223,7 @@ in a HNAS back-end section in the ``cinder.conf`` file:
      - N/A
      - The IP of the EVS that contains the file system specified in
        hnas_svcX_hdp
-   * - ``hnas_svcX_volume_type``
+   * - ``hnas_svcX_pool_name``
      - Required
      - N/A
      - A `unique string` that is used to refer to this pool within the
@@ -245,7 +246,7 @@ gold, platinum, silver, ssd, and so on).
 After creating the services in the ``cinder.conf`` configuration file, you
 need to configure one cinder ``volume_type`` per service. Each ``volume_type``
 must have the metadata service_label with the same name configured in the
-``hnas_svcX_volume_type option`` of that service. See the
+``hnas_svcX_pool_name option`` of that service. See the
 :ref:`configuration_example` section for more details. If the ``volume_type``
 is not set, the cinder service pool with largest available free space or
 other criteria configured in scheduler filters.
@@ -507,16 +508,16 @@ Below are configuration examples for both NFS and iSCSI backends:
         hnas_password = supervisor
         hnas_mgmt_ip0 = 172.24.44.15
 
-        hnas_svc0_volume_type = nfs_gold
+        hnas_svc0_pool_name = nfs_gold
         hnas_svc0_hdp = 172.24.49.21:/gold_export
 
-        hnas_svc1_volume_type = nfs_platinum
+        hnas_svc1_pool_name = nfs_platinum
         hnas_svc1_hdp = 172.24.49.21:/silver_platinum
 
-        hnas_svc2_volume_type = nfs_silver
+        hnas_svc2_pool_name = nfs_silver
         hnas_svc2_hdp = 172.24.49.22:/silver_export
 
-        hnas_svc3_volume_type = nfs_bronze
+        hnas_svc3_pool_name = nfs_bronze
         hnas_svc3_hdp = 172.24.49.23:/bronze_export
 
    #. Add it to the ``enabled_backends`` list, under the ``DEFAULT`` section
@@ -568,19 +569,19 @@ Below are configuration examples for both NFS and iSCSI backends:
         hnas_mgmt_ip0 = 172.24.44.15
         hnas_chap_enabled = True
 
-        hnas_svc0_volume_type = iscsi_gold
+        hnas_svc0_pool_name = iscsi_gold
         hnas_svc0_hdp = FS-gold
         hnas_svc0_iscsi_ip = 172.24.49.21
 
-        hnas_svc1_volume_type = iscsi_platinum
+        hnas_svc1_pool_name = iscsi_platinum
         hnas_svc1_hdp = FS-platinum
         hnas_svc1_iscsi_ip = 172.24.49.21
 
-        hnas_svc2_volume_type = iscsi_silver
+        hnas_svc2_pool_name = iscsi_silver
         hnas_svc2_hdp = FS-silver
         hnas_svc2_iscsi_ip = 172.24.49.22
 
-        hnas_svc3_volume_type = iscsi_bronze
+        hnas_svc3_pool_name = iscsi_bronze
         hnas_svc3_hdp = FS-bronze
         hnas_svc3_iscsi_ip = 172.24.49.23
 
@@ -643,10 +644,15 @@ Additional notes and limitations
 * iSCSI driver limitations: The iSCSI driver has a ``limit of 1024`` volumes
   attached to instances.
 
-* The ``hnas_svcX_volume_type`` option must be unique for a given back end.
+* The ``hnas_svcX_pool_name`` option must be unique for a given back end. It
+  is still possible to use the deprecated form ``hnas_svcX_volume_type``, but
+  this support will be removed in a future release.
 
 * SSC simultaneous connections limit: In very busy environments, if 2 or
   more volume hosts are configured to use the same storage, some requests
   (create, delete and so on) can have some attempts failed and re-tried (
   ``5 attempts`` by default) due to an HNAS connection limitation (
   ``max of 5`` simultaneous connections).
+
+* Hitachi NAS Platform iSCSI driver is now deprecated and will be removed
+  on Pike release.
