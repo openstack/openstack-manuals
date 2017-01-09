@@ -2,7 +2,7 @@
 Deployment guides
 =================
 
-As of the the Newton release, a new method of publishing deployment guides has
+As of the Newton release, a new method of publishing deployment guides has
 been implemented. This allows each deployment projects to create their own
 deployment guide, based on a standard template, in their own repository.
 These guides are then centrally published to
