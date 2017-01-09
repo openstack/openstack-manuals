@@ -71,9 +71,11 @@ allow simple routing for project networks with the same subnet pools.
    .. code-block:: console
 
       $ openstack address scope create --share --ip-version 6 address-scope-ip6
+
       +------------+--------------------------------------+
       | Field      | Value                                |
       +------------+--------------------------------------+
+      | headers    |                                      |
       | id         | 28424dfc-9abd-481b-afa3-1da97a8fead7 |
       | ip_version | 6                                    |
       | name       | address-scope-ip6                    |
@@ -84,9 +86,11 @@ allow simple routing for project networks with the same subnet pools.
    .. code-block:: console
 
       $ openstack address scope create --share --ip-version 4 address-scope-ip4
+
       +------------+--------------------------------------+
       | Field      | Value                                |
       +------------+--------------------------------------+
+      | headers    |                                      |
       | id         | 3193bd62-11b5-44dc-acf8-53180f21e9f2 |
       | ip_version | 4                                    |
       | name       | address-scope-ip4                    |

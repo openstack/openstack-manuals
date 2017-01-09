@@ -128,16 +128,17 @@ Create the address scope and subnet pools
 
    .. code-block:: console
 
-      $ neutron address-scope-create --shared bgp 4
-      Created a new address_scope:
+      $ openstack address scope create --share --ip-version 4 bgp
+
       +------------+--------------------------------------+
       | Field      | Value                                |
       +------------+--------------------------------------+
-      | id         | c02c358a-9d35-43ea-8313-986b3e4a91c0 |
+      | headers    |                                      |
+      | id         | f71c958f-dbe8-49a2-8fb9-19c5f52a37f1 |
       | ip_version | 4                                    |
       | name       | bgp                                  |
+      | project_id | 86acdbd1d72745fd8e8320edd7543400     |
       | shared     | True                                 |
-      | tenant_id  | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
       +------------+--------------------------------------+
 
 #. Create subnet pools. The provider and self-service networks use different
@@ -153,7 +154,7 @@ Create the address scope and subnet pools
         +-------------------+--------------------------------------+
         | Field             | Value                                |
         +-------------------+--------------------------------------+
-        | address_scope_id  | c02c358a-9d35-43ea-8313-986b3e4a91c0 |
+        | address_scope_id  | f71c958f-dbe8-49a2-8fb9-19c5f52a37f1 |
         | created_at        | 2016-03-17T23:11:12                  |
         | default_prefixlen | 8                                    |
         | default_quota     |                                      |
@@ -181,7 +182,7 @@ Create the address scope and subnet pools
         +-------------------+--------------------------------------+
         | Field             | Value                                |
         +-------------------+--------------------------------------+
-        | address_scope_id  | c02c358a-9d35-43ea-8313-986b3e4a91c0 |
+        | address_scope_id  | f71c958f-dbe8-49a2-8fb9-19c5f52a37f1 |
         | created_at        | 2016-03-17T23:11:51                  |
         | default_prefixlen | 8                                    |
         | default_quota     |                                      |
