@@ -43,6 +43,12 @@ Usage
    Creating a subnet with a service type requires administrative
    privileges.
 
+Example 1 - Proof-of-concept
+----------------------------
+
+This following example is not typical of an actual deployment. It is shown
+to allow users to experiment with configuring service subnets.
+
 #. Create a network.
 
    .. code-block:: console
@@ -165,3 +171,159 @@ Usage
       +--------------------------------------+-----------------+---------+--------------------+
       | 20181f46-5cd2-4af8-9af0-f4cf5c983008 | demo-instance1  | ACTIVE  | demo-net1=10.0.0.3 |
       +--------------------------------------+-----------------+---------+--------------------+
+
+Example 2 - DVR configuration
+-----------------------------
+
+The following example outlines how you can configure service subnets in
+a DVR-enabled deployment, with the goal of minimizing public IP
+address consumption. This example uses three subnets on the same external
+network:
+
+* 192.168.1.0/16 for instance floating IP addresses
+* 10.1.0.0/24 for floating IP agent gateway IPs configured on compute nodes
+* 10.2.0.0/24 for all other IP allocations on the external network
+
+This example uses again the private network, ``demo-net1``
+(b5b729d8-31cc-4d2c-8284-72b3291fec02) which was created in
+`Example 1 - Proof-of-concept`_.
+
+.. note:
+
+   The output of the commands is not always shown since it
+   is very similar to the above.
+
+#. Create an external network:
+
+   .. code-block:: console
+
+      $ openstack network create --external demo-ext-net
+
+#. Create a subnet on the external network for the instance floating IP
+   addresses. This uses the ``network:floatingip`` service type.
+
+   .. code-block:: console
+
+      $ openstack subnet create demo-floating-ip-subnet \
+        --subnet-range 192.168.1.0/16 --no-dhcp \
+        --service-type 'network:floatingip' --network demo-ext-net
+
+#. Create a subnet on the external network for the floating IP agent
+   gateway IP addresses, which are configured by DVR on compute nodes.
+   This will use the ``network:floatingip_agent_gateway`` service type.
+
+   .. code-block:: console
+
+      $ openstack subnet create demo-floating-ip-agent-gateway-subnet \
+        --subnet-range 10.1.0.0/24 --no-dhcp \
+        --service-type 'network:floatingip_agent_gateway' \
+        --network demo-ext-net
+
+#. Create a subnet on the external network for all other IP addresses
+   allocated on the external network. This will not use any service
+   type. It acts as a fall back for allocations that do not match
+   either of the above two service subnets.
+
+   .. code-block:: console
+
+      $ openstack subnet create demo-other-subnet \
+        --subnet-range 10.2.0.0/24 --no-dhcp \
+        --network demo-ext-net
+
+#. Create a router:
+
+   .. code-block:: console
+
+      $ openstack router create demo-router
+
+#. Add an interface to the router on demo-subnet1:
+
+   .. code-block:: console
+
+      $ openstack router add subnet demo-router demo-subnet1
+
+#. Set the external gateway for the router, which will create an
+   interface and allocate an IP address on demo-ext-net:
+
+   .. code-block:: console
+
+      $ neutron router-gateway-set demo-router demo-ext-net
+
+#. Launch an instance on a private network and retrieve the neutron
+   port ID that was allocated. As above, use the ``cirros``
+   image and ``m1.tiny`` flavor:
+
+   .. code-block:: console
+
+      $ openstack server create demo-instance1 --flavor m1.tiny \
+        --image cirros --nic net-id=b5b729d8-31cc-4d2c-8284-72b3291fec02
+      $ openstack port list --server demo-instance1
+      +--------------------------------------+------+-------------------+----------------------------------------------------------------------------------------------------+--------+
+      | ID                                   | Name | MAC Address       | Fixed IP Addresses                                                                                 | Status |
+      +--------------------------------------+------+-------------------+----------------------------------------------------------------------------------------------------+--------+
+      | a752bb24-9bf2-4d37-b9d6-07da69c86f19 |      | fa:16:3e:99:54:32 | ip_address='10.0.0.3', subnet_id='6e38b23f-0b27-4e3c-8e69-fd23a3df1935'                            | ACTIVE |
+      +--------------------------------------+------+-------------------+----------------------------------------------------------------------------------------------------+--------+
+
+#. Associate a floating IP with the instance port and verify it was
+   allocated an IP address from the correct subnet:
+
+   .. code-block:: console
+
+      $ openstack floating ip create --port \
+        a752bb24-9bf2-4d37-b9d6-07da69c86f19 demo-ext-net
+      +---------------------+--------------------------------------+
+      | Field               | Value                                |
+      +---------------------+--------------------------------------+
+      | fixed_ip_address    | 10.0.0.3                             |
+      | floating_ip_address | 192.168.1.12                         |
+      | floating_network_id | 02d236d5-dad9-4082-bb6b-5245f9f84d13 |
+      | id                  | f15cae7f-5e05-4b19-bd25-4bb71edcf3de |
+      | port_id             | a752bb24-9bf2-4d37-b9d6-07da69c86f19 |
+      | project_id          | d44c19e056674381b86430575184b167     |
+      | router_id           | 5a8ca19f-3703-4f81-bc29-db6bc2f528d6 |
+      | status              | ACTIVE                               |
+      +---------------------+--------------------------------------+
+
+#. As the `admin` user, verify the neutron routers are allocated IP
+   addresses from their correct subnets. Use ``openstack port list``
+   to find ports associated with the routers.
+
+   First, the router gateway external port:
+
+   .. code-block:: console
+
+      $ neutron port-show f148ffeb-3c26-4067-bc5f-5c3dfddae2f5
+      +-----------------------+--------------------------------------------------------------------------+
+      | Field                 | Value                                                                    |
+      +-----------------------+--------------------------------------------------------------------------+
+      | admin_state_up        | UP                                                                       |
+      | device_id             | 5a8ca19f-3703-4f81-bc29-db6bc2f528d6                                     |
+      | device_owner          | network:router_gateway                                                   |
+      | extra_dhcp_opts       |                                                                          |
+      | fixed_ips             | ip_address='10.2.0.11', subnet_id='67c251d9-2b7a-4200-99f6-e13785b0334d' |
+      | id                    | f148ffeb-3c26-4067-bc5f-5c3dfddae2f5                                     |
+      | mac_address           | fa:16:3e:2c:0f:69                                                        |
+      | network_id            | 02d236d5-dad9-4082-bb6b-5245f9f84d13                                     |
+      | project_id            |                                                                          |
+      | status                | ACTIVE                                                                   |
+      +-----------------------+--------------------------------------------------------------------------+
+
+   Second, the router floating IP agent gateway external port:
+
+   .. code-block:: console
+
+      $ neutron port-show a2d1e756-8ae1-4f96-9aa1-e7ea16a6a68a
+      +-----------------------+--------------------------------------------------------------------------+
+      | Field                 | Value                                                                    |
+      +-----------------------+--------------------------------------------------------------------------+
+      | admin_state_up        | UP                                                                       |
+      | device_id             | 3d0c98eb-bca3-45cc-8aa4-90ae3deb0844                                     |
+      | device_owner          | network:floatingip_agent_gateway                                         |
+      | extra_dhcp_opts       |                                                                          |
+      | fixed_ips             | ip_address='10.1.0.10', subnet_id='67c251d9-2b7a-4200-99f6-e13785b0334d' |
+      | id                    | a2d1e756-8ae1-4f96-9aa1-e7ea16a6a68a                                     |
+      | mac_address           | fa:16:3e:f4:5d:fa                                                        |
+      | network_id            | 02d236d5-dad9-4082-bb6b-5245f9f84d13                                     |
+      | project_id            |                                                                          |
+      | status                | ACTIVE                                                                   |
+      +-----------------------+--------------------------------------------------------------------------+
