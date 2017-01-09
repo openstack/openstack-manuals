@@ -90,7 +90,8 @@ During the set up or testing of OpenStack, you might have questions
 about how a specific task is completed or be in a situation where a
 feature does not work correctly. Use the
 `ask.openstack.org <https://ask.openstack.org>`__ site to ask questions
-and get answers. When you visit the https://ask.openstack.org site, scan
+and get answers. When you visit the `Ask OpenStack
+<https://ask.openstack.org>`_ site, scan
 the recently asked questions to see whether your question has already
 been answered. If not, ask a new question. Be sure to give a clear,
 concise summary in the title and provide as much detail as possible in
@@ -103,8 +104,8 @@ OpenStack mailing lists
 A great way to get answers and insights is to post your question or
 problematic scenario to the OpenStack mailing list. You can learn from
 and help others who might have similar issues. To subscribe or view the
-archives, go to
-http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack. If you are
+archives, go to the `general OpenStack mailing list
+<http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack>`_. If you are
 interested in the other mailing lists for specific projects or development,
 refer to `Mailing Lists <https://wiki.openstack.org/wiki/Mailing_Lists>`__.
 
@@ -220,8 +221,9 @@ Freenode network. You can hang out, ask questions, or get immediate
 feedback for urgent and pressing issues. To install an IRC client or use
 a browser-based client, go to
 `https://webchat.freenode.net/ <https://webchat.freenode.net>`__. You can
-also use Colloquy (Mac OS X, http://colloquy.info/), mIRC (Windows,
-http://www.mirc.com/), or XChat (Linux). When you are in the IRC channel
+also use `Colloquy <http://colloquy.info/>`_ (Mac OS X),
+`mIRC <http://www.mirc.com/>`_ (Windows),
+or XChat (Linux). When you are in the IRC channel
 and want to share code or command output, the generally accepted method
 is to use a Paste Bin. The OpenStack project has one at
 http://paste.openstack.org. Just paste your longer amounts of text or
