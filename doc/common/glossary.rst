@@ -3570,7 +3570,7 @@ S
       The Compute VM scheduling algorithm that attempts to start a new
       VM on the host with the least amount of load.
 
-   SQL-Alchemy
+   SQLAlchemy
 
       An open source SQL toolkit for Python, used in OpenStack.
 
