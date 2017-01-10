@@ -460,41 +460,74 @@ Create and configure the routers
 
    .. code-block:: console
 
-      $ neutron router-create router1
-      +-----------------------+--------------------------------------+
-      | Field                 | Value                                |
-      +-----------------------+--------------------------------------+
-      | admin_state_up        | True                                 |
-      | external_gateway_info |                                      |
-      | id                    | 3f6f4ef8-63be-11e6-bbb3-2fbcef363ab8 |
-      | name                  | router1                              |
-      | status                | ACTIVE                               |
-      | tenant_id             | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
-      +-----------------------+--------------------------------------+
+      $ openstack router create router1
+      +-------------------------+--------------------------------------+
+      | Field                   | Value                                |
+      +-------------------------+--------------------------------------+
+      | admin_state_up          | UP                                   |
+      | availability_zone_hints |                                      |
+      | availability_zones      |                                      |
+      | created_at              | 2017-01-10T13:15:19Z                 |
+      | description             |                                      |
+      | distributed             | False                                |
+      | external_gateway_info   | null                                 |
+      | flavor_id               | None                                 |
+      | ha                      | False                                |
+      | headers                 |                                      |
+      | id                      | 3f6f4ef8-63be-11e6-bbb3-2fbcef363ab8 |
+      | name                    | router1                              |
+      | project_id              | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      | revision_number         | 1                                    |
+      | routes                  |                                      |
+      | status                  | ACTIVE                               |
+      | updated_at              | 2017-01-10T13:15:19Z                 |
+      +-------------------------+--------------------------------------+
 
-      $ neutron router-create router2
-      +-----------------------+--------------------------------------+
-      | Field                 | Value                                |
-      +-----------------------+--------------------------------------+
-      | admin_state_up        | True                                 |
-      | external_gateway_info |                                      |
-      | id                    | 3fd21a60-63be-11e6-9c95-5714c208c499 |
-      | name                  | router1                              |
-      | status                | ACTIVE                               |
-      | tenant_id             | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
-      +-----------------------+--------------------------------------+
+      $ openstack router create router2
+      +-------------------------+--------------------------------------+
+      | Field                   | Value                                |
+      +-------------------------+--------------------------------------+
+      | admin_state_up          | UP                                   |
+      | availability_zone_hints |                                      |
+      | availability_zones      |                                      |
+      | created_at              | 2017-01-10T13:15:19Z                 |
+      | description             |                                      |
+      | distributed             | False                                |
+      | external_gateway_info   | null                                 |
+      | flavor_id               | None                                 |
+      | ha                      | False                                |
+      | headers                 |                                      |
+      | id                      | 3fd21a60-63be-11e6-9c95-5714c208c499 |
+      | name                    | router2                              |
+      | project_id              | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      | revision_number         | 1                                    |
+      | routes                  |                                      |
+      | status                  | ACTIVE                               |
+      | updated_at              | 2017-01-10T13:15:19Z                 |
+      +-------------------------+--------------------------------------+
 
-      $ neutron router-create router3
-      +-----------------------+--------------------------------------+
-      | Field                 | Value                                |
-      +-----------------------+--------------------------------------+
-      | admin_state_up        | True                                 |
-      | external_gateway_info |                                      |
-      | id                    | 40069a4c-63be-11e6-9ecc-e37c1eaa7e84 |
-      | name                  | router1                              |
-      | status                | ACTIVE                               |
-      | tenant_id             | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
-      +-----------------------+--------------------------------------+
+      $ openstack router create router3
+      +-------------------------+--------------------------------------+
+      | Field                   | Value                                |
+      +-------------------------+--------------------------------------+
+      | admin_state_up          | UP                                   |
+      | availability_zone_hints |                                      |
+      | availability_zones      |                                      |
+      | created_at              | 2017-01-10T13:15:19Z                 |
+      | description             |                                      |
+      | distributed             | False                                |
+      | external_gateway_info   | null                                 |
+      | flavor_id               | None                                 |
+      | ha                      | False                                |
+      | headers                 |                                      |
+      | id                      | 40069a4c-63be-11e6-9ecc-e37c1eaa7e84 |
+      | name                    | router3                              |
+      | project_id              | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
+      | revision_number         | 1                                    |
+      | routes                  |                                      |
+      | status                  | ACTIVE                               |
+      | updated_at              | 2017-01-10T13:15:19Z                 |
+      +-------------------------+--------------------------------------+
 
 #. For each router, add one self-service subnet as an interface on the router.
 
