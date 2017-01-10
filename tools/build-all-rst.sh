@@ -22,7 +22,7 @@ PDF_OPTION="--pdf"
 
 # PDF targets for Install guides are dealt in build-install-guides-rst.sh
 PDF_TARGETS=( 'arch-design' 'arch-design-draft' 'cli-reference'\
-              'ha-guide' 'networking-guide'\
+              'ha-guide' 'image-guide' 'networking-guide'\
               'ops-guide' 'user-guide' )
 
 # Note that these guides are only build for master branch
