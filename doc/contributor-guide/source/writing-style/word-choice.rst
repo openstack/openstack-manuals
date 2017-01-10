@@ -41,6 +41,8 @@ The following table lists the preferred word or phrase choice.
 | **command-line      | command line         |
 | (adj)**             |                      |
 +---------------------+----------------------+
+| **compute node**    | Compute node         |
++---------------------+----------------------+
 | **data store**      | datastore            |
 +---------------------+----------------------+
 | **delete**          | destroy              |
