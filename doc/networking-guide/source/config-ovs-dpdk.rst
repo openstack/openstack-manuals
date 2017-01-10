@@ -18,7 +18,7 @@ interfaces can connect guests to this datapath. For more information on DPDK,
 refer to the `DPDK <http://dpdk.org/>`__ website.
 
 OVS with DPDK, or OVS-DPDK, can be used to provide high-performance networking
-between instances on OpenStack Compute nodes.
+between instances on OpenStack compute nodes.
 
 Prerequisites
 -------------

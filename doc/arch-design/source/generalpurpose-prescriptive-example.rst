@@ -31,7 +31,7 @@ The solution would consist of the following OpenStack components:
   combined with support services such as MariaDB and RabbitMQ,
   configured for high availability on at least three controller nodes.
 
-* OpenStack Compute nodes running the KVM hypervisor.
+* OpenStack compute nodes running the KVM hypervisor.
 
 * OpenStack Block Storage for use by compute instances, requiring
   persistent storage (such as databases for dynamic sites).
@@ -44,10 +44,10 @@ Running up to 140 web instances and the small number of MariaDB
 instances requires 292 vCPUs available, as well as 584 GB RAM. On a
 typical 1U server using dual-socket hex-core Intel CPUs with
 Hyperthreading, and assuming 2:1 CPU overcommit ratio, this would
-require 8 OpenStack Compute nodes.
+require 8 OpenStack compute nodes.
 
 The web application instances run from local storage on each of the
-OpenStack Compute nodes. The web application instances are stateless,
+OpenStack compute nodes. The web application instances are stateless,
 meaning that any of the instances can fail and the application will
 continue to function.
 

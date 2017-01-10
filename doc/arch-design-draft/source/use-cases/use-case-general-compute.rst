@@ -37,7 +37,7 @@ The solution would consist of the following OpenStack components:
   RabbitMQ, configured for high availability on at least three controller
   nodes.
 
-* OpenStack Compute nodes running the KVM hypervisor.
+* OpenStack compute nodes running the KVM hypervisor.
 
 * OpenStack Block Storage for use by compute instances, requiring
   persistent storage (such as databases for dynamic sites).

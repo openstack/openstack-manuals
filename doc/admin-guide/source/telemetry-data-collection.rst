@@ -200,7 +200,7 @@ Compute agent
 -------------
 
 This agent is responsible for collecting resource usage data of VM
-instances on individual Compute nodes within an OpenStack deployment.
+instances on individual compute nodes within an OpenStack deployment.
 This mechanism requires a closer interaction with the hypervisor,
 therefore a separate agent type fulfills the collection of the related
 meters, which is placed on the host machines to retrieve this
@@ -218,7 +218,7 @@ database connection. The samples are sent via AMQP to the notification agent.
 
 The list of supported hypervisors can be found in
 :ref:`telemetry-supported-hypervisors`. The Compute agent uses the API of the
-hypervisor installed on the Compute hosts. Therefore, the supported meters may
+hypervisor installed on the compute hosts. Therefore, the supported meters may
 be different in case of each virtualization back end, as each inspection tool
 provides a different set of meters.
 
@@ -272,7 +272,7 @@ instances.
 Therefore Telemetry uses another method to gather this data by polling
 the infrastructure including the APIs of the different OpenStack
 services and other assets, like hypervisors. The latter case requires
-closer interaction with the Compute hosts. To solve this issue,
+closer interaction with the compute hosts. To solve this issue,
 Telemetry uses an agent based architecture to fulfill the requirements
 against the data collection.
 
@@ -359,15 +359,15 @@ IPMI agent
 ----------
 
 This agent is responsible for collecting IPMI sensor data and Intel Node
-Manager data on individual Compute nodes within an OpenStack deployment.
+Manager data on individual compute nodes within an OpenStack deployment.
 This agent requires an IPMI capable node with the ipmitool utility installed,
 which is commonly used for IPMI control on various Linux distributions.
 
-An IPMI agent instance could be installed on each and every Compute node
+An IPMI agent instance could be installed on each and every compute node
 with IPMI support, except when the node is managed by the Bare metal
 service and the ``conductor.send_sensor_data`` option is set to ``true``
 in the Bare metal service. It is no harm to install this agent on a
-Compute node without IPMI or Intel Node Manager support, as the agent
+compute node without IPMI or Intel Node Manager support, as the agent
 checks for the hardware and if none is available, returns empty data. It
 is suggested that you install the IPMI agent only on an IPMI capable
 node for performance reasons.

@@ -10,7 +10,7 @@ An OpenStack environment includes multiple data pools for the VMs:
 - Ephemeral storage is allocated for an instance and is deleted when the
   instance is deleted. The Compute service manages ephemeral storage and
   by default, Compute stores ephemeral drives as files on local disks on the
-  Compute node. As an alternative, you can use Ceph RBD as the storage back
+  compute node. As an alternative, you can use Ceph RBD as the storage back
   end for ephemeral storage.
 
 - Persistent storage exists outside all instances. Two types of persistent
