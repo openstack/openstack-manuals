@@ -332,7 +332,7 @@ staple.
 
 You can create automated alerts for critical processes by using Nagios
 and NRPE. For example, to ensure that the ``nova-compute`` process is
-running on Compute nodes, create an alert on your Nagios server:
+running on the compute nodes, create an alert on your Nagios server:
 
 .. code-block:: ini
 

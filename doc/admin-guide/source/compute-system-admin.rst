@@ -23,7 +23,7 @@ System administration
    compute-node-down.rst
    compute-adv-config.rst
 
-To effectively administer Compute, you must understand how the different
+To effectively administer compute, you must understand how the different
 installed nodes interact with each other. Compute can be installed in
 many different ways using multiple servers, but generally multiple
 compute nodes control the virtual servers and a cloud controller node
@@ -51,7 +51,7 @@ deployment. The responsibilities of services and drivers are:
    Procedure Call (RPC).
 
 ``nova-conductor``
-   provides database-access support for Compute nodes
+   provides database-access support for compute nodes
    (thereby reducing security risks).
 
 ``nova-consoleauth``

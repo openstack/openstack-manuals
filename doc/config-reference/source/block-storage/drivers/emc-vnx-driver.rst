@@ -338,7 +338,7 @@ Storage group automatic deletion
 For volume attaching, the driver has a storage group on VNX for each compute
 node hosting the vm instances which are going to consume VNX Block Storage
 (using compute node's host name as storage group's name).  All the volumes
-attached to the VM instances in a Compute node will be put into the storage
+attached to the VM instances in a compute node will be put into the storage
 group. If ``destroy_empty_storage_group`` is set to ``True``, the driver will
 remove the empty storage group after its last volume is detached. For data
 safety, it does not suggest to set ``destroy_empty_storage_group=True`` unless
@@ -379,7 +379,7 @@ iSCSI initiators
 ----------------
 
 ``iscsi_initiators`` is a dictionary of IP addresses of the iSCSI
-initiator ports on OpenStack Compute and Block Storage nodes which want to
+initiator ports on OpenStack compute and block storage nodes which want to
 connect to VNX via iSCSI. If this option is configured, the driver will
 leverage this information to find an accessible iSCSI target portal for the
 initiator when attaching volume. Otherwise, the iSCSI target portal will be
@@ -781,7 +781,7 @@ Enabling multipath volume access is recommended for robust data access.
 The major configuration includes:
 
 #. Install ``multipath-tools``, ``sysfsutils`` and ``sg3-utils`` on the
-   nodes hosting Nova-Compute and Cinder-Volume services. Check
+   nodes hosting compute and ``cinder-volume`` services. Check
    the operating system manual for the system distribution for specific
    installation steps. For Red Hat based distributions, they should be
    ``device-mapper-multipath``, ``sysfsutils`` and ``sg3_utils``.

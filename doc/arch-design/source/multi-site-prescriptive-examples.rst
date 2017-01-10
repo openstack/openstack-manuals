@@ -100,7 +100,7 @@ The solution would consist of the following OpenStack components:
   nodes in each of the region providing a redundant OpenStack
   Controller plane throughout the globe.
 
-* OpenStack Compute nodes running the KVM hypervisor.
+* OpenStack compute nodes running the KVM hypervisor.
 
 * OpenStack Object Storage for serving static objects such as images
   can be used to ensure that all images are standardized across all the

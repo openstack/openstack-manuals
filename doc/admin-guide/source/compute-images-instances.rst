@@ -300,10 +300,10 @@ image is transferred over this connection. The Image service streams the
 image from the back end to the compute node.
 
 It is possible to set up the Object Storage node on a separate network,
-and still allow image traffic to flow between the Compute and Object
-Storage nodes. Configure the ``my_block_storage_ip`` option in the
+and still allow image traffic to flow between the compute and object
+storage nodes. Configure the ``my_block_storage_ip`` option in the
 storage node configuration file to allow block storage traffic to reach
-the Compute node.
+the compute node.
 
 Certain back ends support a more direct method, where on request the
 Image service will return a URL that links directly to the back-end store.

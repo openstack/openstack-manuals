@@ -52,7 +52,7 @@ Possible solutions: hypervisor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the case of running TripleO, the underlying OpenStack
-cloud deploys the Compute nodes as bare-metal. You then deploy
+cloud deploys the compute nodes as bare-metal. You then deploy
 OpenStack on these Compute bare-metal servers with the
 appropriate hypervisor, such as KVM.
 

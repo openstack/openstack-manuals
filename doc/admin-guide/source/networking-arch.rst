@@ -77,7 +77,7 @@ controller.
 
 The diagrams below depict some VMware NSX deployment examples. The first
 diagram illustrates the traffic flow between VMs on separate Compute
-nodes, and the second diagram between two VMs on a single Compute node.
+nodes, and the second diagram between two VMs on a single compute node.
 Note the placement of the VMware NSX plug-in and the neutron-server
 service on the network node. The green arrow indicates the management
 relationship between the NSX controller and the network node.
