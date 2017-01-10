@@ -32,6 +32,12 @@ uses the following selection process:
 * ``network:floatingip_agent_gateway``
 * ``None``
 
+.. note::
+
+   Ports with the device owner ``network:dhcp`` are exempt from the above IPAM
+   logic for subnets with ``dhcp_enabled`` set to ``True``. This preserves the
+   existing automatic DHCP port creation behaviour for DHCP-enabled subnets.
+
 Creating or updating a port with a specific subnet skips this selection
 process and explicitly uses the given subnet.
 
