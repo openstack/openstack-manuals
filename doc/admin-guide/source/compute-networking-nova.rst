@@ -390,7 +390,7 @@ retrieve the metadata, make a GET request to
    }
 
 Instances also retrieve user data (passed as the ``user_data`` parameter
-in the API call or by the :option:`--user_data` flag in the
+in the API call or by the ``--user_data`` flag in the
 :command:`openstack server create` command) through the metadata service, by making a
 GET request to ``http://169.254.169.254/openstack/2012-08-10/user_data``:
 
@@ -834,7 +834,7 @@ Edit the ``/etc/network/interfaces`` file:
    iface eth1 inet dhcp
 
 If the Virtual Network Service Neutron is installed, you can specify the
-networks to attach to the interfaces by using the :option:`--nic` flag with
+networks to attach to the interfaces by using the ``--nic`` flag with
 the :command:`openstack server create` command:
 
 .. code-block:: console

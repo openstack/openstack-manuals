@@ -86,7 +86,7 @@ rights, and create the database for you. Since OpenStack 2014.1.1, all
 OpenStack packages in Debian are performing the following MySQL query
 after database creation (if you decide to use MySQL as a back-end):
 
-.. code-block:: ini
+.. code-block:: mysql
 
    ALTER DATABASE keystone CHARACTER SET utf8 COLLATE utf8_unicode_ci
 

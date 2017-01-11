@@ -68,7 +68,7 @@ Each section should follow this format:
 * A link with detailed instructions to the vendor site (if there is one).
 * A default paragraph, for example:
 
-  .. code-block:: ini
+  .. code-block:: rst
 
      Set the following in your ``cinder.conf``, and use the following options
      to configure it.

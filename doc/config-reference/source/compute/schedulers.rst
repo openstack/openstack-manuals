@@ -432,7 +432,7 @@ To enable scheduling instances while overcommitting disk resources on the
 node, adjust the value of the ``disk_allocation_ratio`` configuration
 option to greater than ``1.0``:
 
-.. code-block:: ini
+.. code-block:: none
 
    disk_allocation_ratio > 1.0
 

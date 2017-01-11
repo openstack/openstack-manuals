@@ -44,7 +44,7 @@ You can configure the text editor to do that automatically.
 
 For example, in the :file:`.vimrc`:
 
-.. code-block:: ini
+.. code-block:: vim
 
    set list
    set listchars=tab:>-,trail:-,extends:#,nbsp:-

@@ -508,11 +508,11 @@ If the sample corresponds to an existing meter, then the fields like
 The required fields for sending a sample using the command-line client
 are:
 
--  ID of the corresponding resource. (:option:`--resource-id`)
+-  ID of the corresponding resource. (``--resource-id``)
 
--  Name of meter. (:option:`--meter-name`)
+-  Name of meter. (``--meter-name``)
 
--  Type of meter. (:option:`--meter-type`)
+-  Type of meter. (``--meter-type``)
 
    Predefined meter types:
 
@@ -522,9 +522,9 @@ are:
 
    -  Cumulative
 
--  Unit of meter. (:option:`--meter-unit`)
+-  Unit of meter. (``--meter-unit``)
 
--  Volume of sample. (:option:`--sample-volume`)
+-  Volume of sample. (``--sample-volume``)
 
 To send samples to Telemetry using the command-line client, the
 following command should be invoked:

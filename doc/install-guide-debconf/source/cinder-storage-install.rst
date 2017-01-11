@@ -62,7 +62,7 @@ storage node, you must prepare the storage device.
      ``/dev/sdb`` device and rejects all other devices:
 
      .. path /etc/lvm/lvm.conf
-     .. code-block:: ini
+     .. code-block:: bash
 
         devices {
         ...
@@ -128,7 +128,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
 
      .. end
@@ -145,7 +145,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         glance_api_servers = http://controller:9292
 
      .. end

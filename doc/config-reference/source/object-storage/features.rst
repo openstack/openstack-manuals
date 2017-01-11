@@ -383,7 +383,7 @@ production environment with many devices the impact of one device change is
 much less. Next, run the replicators to get everything put back into place and
 then rerun the dispersion report:
 
-.. code-block:: console
+.. code-block:: none
 
     # start object replicators and monitor logs until they're caught up ...
     $ swift-dispersion-report

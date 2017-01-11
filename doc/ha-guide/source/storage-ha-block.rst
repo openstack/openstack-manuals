@@ -67,7 +67,7 @@ You can now add the Pacemaker configuration for Block Storage API resource.
 Connect to the Pacemaker cluster with the :command:`crm configure` command
 and add the following cluster resources:
 
-.. code-block:: ini
+.. code-block:: none
 
    primitive p_cinder-api ocf:openstack:cinder-api \
       params config="/etc/cinder/cinder.conf" \

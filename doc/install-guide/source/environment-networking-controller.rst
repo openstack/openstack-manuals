@@ -24,7 +24,7 @@ Configure network interfaces
       * Edit the ``/etc/network/interfaces`` file to contain the following:
 
         .. path /etc/network/interfaces
-        .. code-block:: ini
+        .. code-block:: bash
 
            # The provider network interface
            auto INTERFACE_NAME

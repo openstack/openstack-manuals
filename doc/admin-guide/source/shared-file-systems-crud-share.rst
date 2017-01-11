@@ -582,7 +582,7 @@ Use **manila delete <share_name_or_ID>** command to delete a specified share:
 .. note::
 
    If you specified :ref:`the consistency group <shared_file_systems_cgroups>`
-   while creating a share, you should provide the :option:`--consistency-group`
+   while creating a share, you should provide the ``--consistency-group``
    parameter to delete the share:
 
 .. code-block:: console

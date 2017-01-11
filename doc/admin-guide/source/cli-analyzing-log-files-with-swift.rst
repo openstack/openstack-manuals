@@ -6,10 +6,10 @@ Use the swift command-line client for Object Storage to analyze log files.
 
 The swift client is simple to use, scalable, and flexible.
 
-Use the swift client :option:`-o` or :option:`-output` option to get
+Use the swift client ``-o`` or ``-output`` option to get
 short answers to questions about logs.
 
-You can use the :option:`-o` or :option:`--output` option with a single object
+You can use the ``-o`` or ``--output`` option with a single object
 download to redirect the command output to a specific file or to STDOUT
 (``-``). The ability to redirect the output to STDOUT enables you to
 pipe (``|``) data without saving it to disk first.
@@ -102,7 +102,7 @@ Upload and analyze log files
 Download and analyze an object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This example uses the :option:`-o` option and a hyphen (``-``) to get
+This example uses the ``-o`` option and a hyphen (``-``) to get
 information about an object.
 
 Use the :command:`swift download` command to download the object. On this
@@ -159,8 +159,8 @@ return code combination.
 
 #. Discover how many PUT requests are in each log file.
 
-   Use a bash for loop with awk and swift with the :option:`-o` or
-   :option:`--output` option and a hyphen (``-``) to discover how many
+   Use a bash for loop with awk and swift with the ``-o`` or
+   ``--output`` option and a hyphen (``-``) to discover how many
    PUT requests are in each log file.
 
    Run the :command:`swift list` command to list objects in the logtest

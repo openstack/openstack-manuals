@@ -946,8 +946,8 @@ configuration file. Following is the instruction on how to do this.
 
    .. code-block:: console
 
-      # su -l cinder -c '/opt/Navisphere/bin/naviseccli \
-        -AddUserSecurity -user admin -password admin -scope 0 -secfilepath <location>'
+      # su -l cinder -c \
+        '/opt/Navisphere/bin/naviseccli -AddUserSecurity -user admin -password admin -scope 0 -secfilepath <location>'
 
 #. Change ``cinder:x:113:120::/var/lib/cinder:/bin/bash`` back to
    ``cinder:x:113:120::/var/lib/cinder:/bin/false`` in ``/etc/passwd`` file.

@@ -103,8 +103,8 @@ address family can be marked default.
     $ openstack subnet pool set --default 74348864-f8bf-4fc0-ab03-81229d189467
 
 If there is a default, it can be requested by passing
-:option:`--use-default-subnetpool` instead of
-:option:`--subnet-pool SUBNETPOOL`.
+``--use-default-subnetpool`` instead of
+``--subnet-pool SUBNETPOOL``.
 
 Demo
 ----
@@ -144,7 +144,7 @@ First, as admin, create a shared subnet pool:
     +-------------------+--------------------------------+
 
 The ``default_prefix_length`` defines the subnet size you will get
-if you do not specify :option:`--prefix-length` when creating a subnet.
+if you do not specify ``--prefix-length`` when creating a subnet.
 
 Do essentially the same thing for IPv6 and there are now two subnet
 pools. Regular projects can see them. (the output is trimmed a bit

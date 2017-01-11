@@ -28,7 +28,7 @@ Database management command-line tool
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The database management command-line tool is called
-:command:`neutron-db-manage`. Pass the :option:`--help` option to the tool for
+:command:`neutron-db-manage`. Pass the ``--help`` option to the tool for
 usage information.
 
 The tool takes some options followed by some commands:
@@ -46,10 +46,10 @@ If the configuration is in a different location, use the following command:
 
    $ neutron-db-manage --config-file /path/to/neutron.conf <commands>
 
-Multiple :option:`--config-file` options can be passed if needed.
+Multiple ``--config-file`` options can be passed if needed.
 
 Instead of reading the DB connection from the configuration file(s), you can
-use the :option:`--database-connection` option:
+use the ``--database-connection`` option:
 
 .. code-block:: console
 
@@ -57,7 +57,7 @@ use the :option:`--database-connection` option:
      mysql+pymysql://root:secret@127.0.0.1/neutron?charset=utf8 <commands>
 
 The `branches`, `current`, and `history` commands all accept a
-:option:`--verbose` option, which, when passed, will instruct
+``--verbose`` option, which, when passed, will instruct
 :command:`neutron-db-manage` to display more verbose output for the specified
 command:
 

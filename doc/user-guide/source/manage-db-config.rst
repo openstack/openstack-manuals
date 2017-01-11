@@ -108,7 +108,7 @@ Bulk-configure a database or databases
 
    .. code-block:: json
 
-      {"myFirstKey" : "someString", "mySecondKey" : someInt}
+      {"myFirstKey" : "someString", "mySecondKey" : 1}
 
    This example creates a configuration group called ``group1``.
    ``group1`` contains just one key and value pair, and this pair sets

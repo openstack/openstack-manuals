@@ -121,7 +121,7 @@ data store version.
         - In this example:
       * - config file
         - The configuration file to use.
-        - :option:`--config-file=/etc/trove/trove.conf`
+        - ``--config-file=/etc/trove/trove.conf``
       * - name
         - Name you want to use for this data store.
         - ``mysql``
@@ -162,7 +162,7 @@ data store version.
 
       * - config file
         - The configuration file to use.
-        - :option:`--config-file=/etc/trove/trove.conf`
+        - ``--config-file=/etc/trove/trove.conf``
 
       * - data store
         - The name of the data store you just created via

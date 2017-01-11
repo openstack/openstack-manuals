@@ -66,7 +66,7 @@ http://technet.microsoft.com/en-us/library/hh831823.aspx
 To quickly enable an interface to be used as a Virtual Interface the
 following PowerShell may be used:
 
-.. code-block:: powershell
+.. code-block:: none
 
    PS C:\> $if = Get-NetIPAddress -IPAddress 192* | Get-NetIPInterface
    PS C:\> New-VMSwitch -NetAdapterName $if.ifAlias -Name YOUR_BRIDGE_NAME -AllowManagementOS $false
@@ -84,7 +84,7 @@ To prepare the Hyper-V node to be able to attach to volumes provided by
 cinder you must first make sure the Windows iSCSI initiator service is
 running and started automatically.
 
-.. code-block:: powershell
+.. code-block:: none
 
    PS C:\> Set-Service -Name MSiSCSI -StartupType Automatic
    PS C:\> Start-Service MSiSCSI
@@ -147,10 +147,10 @@ Additional Requirements:
 How to setup live migration on Hyper-V
 --------------------------------------
 
-To enable 'shared nothing live' migration, run the 3 PowerShell
+To enable 'shared nothing live' migration, run the 3
 instructions below on each Hyper-V host:
 
-.. code-block:: powershell
+.. code-block:: none
 
    PS C:\> Enable-VMMigration
    PS C:\> Set-VMMigrationNetwork IP_ADDRESS
@@ -203,7 +203,7 @@ working properly on the 64bit version.
 
    http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi
 
-   .. code-block:: powershell
+   .. code-block:: none
 
       PS C:\> $src = "http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi"
       PS C:\> $dest = "$env:temp\python-2.7.3.msi"
@@ -214,7 +214,7 @@ working properly on the 64bit version.
 #. Make sure that the ``Python`` and ``Python\Scripts`` paths are set up
    in the ``PATH`` environment variable.
 
-   .. code-block:: powershell
+   .. code-block:: none
 
       PS C:\> $oldPath = [System.Environment]::GetEnvironmentVariable("Path")
       PS C:\> $newPath = $oldPath + ";C:\python27\;C:\python27\Scripts\"
@@ -249,7 +249,7 @@ The following packages must be installed with pip:
 * amqp
 * wmi
 
-.. code-block:: powershell
+.. code-block:: none
 
    PS C:\> pip install ecdsa
    PS C:\> pip install amqp
@@ -292,7 +292,7 @@ Download the nova code
    run the installer and follow the prompts in the installation wizard.
    The default should be acceptable for the purposes of this guide.
 
-   .. code-block:: powershell
+   .. code-block:: none
 
       PS C:\> $src = "https://github.com/msysgit/msysgit/releases/download/Git-1.9.2-preview20140411/Git-1.9.2-preview20140411.exe"
       PS C:\> $dest = "$env:temp\Git-1.9.2-preview20140411.exe"
@@ -302,7 +302,7 @@ Download the nova code
 
 #. Run the following to clone the nova code.
 
-   .. code-block:: powershell
+   .. code-block:: none
 
       PS C:\> git.exe clone https://git.openstack.org/openstack/nova
 
@@ -311,7 +311,7 @@ Install nova-compute service
 
 To install ``nova-compute``, run:
 
-.. code-block:: powershell
+.. code-block:: none
 
    PS C:\> cd c:\nova
    PS C:\> python setup.py install
@@ -387,7 +387,7 @@ http://technet.microsoft.com/en-us/library/cc772480.aspx
 Once you have successfully created a virtual machine, you can then upload
 the image to glance using the openstack-client:
 
-.. code-block:: powershell
+.. code-block:: none
 
    PS C:\> openstack image create --name "VM_IMAGE_NAME" --public \
              --container-format bare --disk-format vhd
@@ -399,7 +399,7 @@ the image to glance using the openstack-client:
    disk size than the internal size of the disk file.
    To create VHDs, use the following PowerShell cmdlet:
 
-   .. code-block:: powershell
+   .. code-block:: none
 
       PS C:\> New-VHD DISK_NAME.vhd -SizeBytes VHD_SIZE
 
@@ -423,7 +423,7 @@ Run Compute with Hyper-V
 To start the ``nova-compute`` service, run this command from a console
 in the Windows server:
 
-.. code-block:: powershell
+.. code-block:: none
 
    PS C:\> C:\Python27\python.exe c:\Python27\Scripts\nova-compute --config-file c:\etc\nova\nova.conf
 
@@ -440,12 +440,12 @@ Troubleshoot Hyper-V configuration
 
 * How do I restart the compute service?
 
-  .. code-block:: powershell
+  .. code-block:: none
 
      PS C:\> net stop nova-compute && net start nova-compute
 
 * How do I restart the iSCSI initiator service?
 
-  .. code-block:: powershell
+  .. code-block:: none
 
      PS C:\> net stop msiscsi && net start msiscsi

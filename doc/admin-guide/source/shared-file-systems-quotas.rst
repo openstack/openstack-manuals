@@ -86,7 +86,7 @@ Quotas
 Quota sets provide quota management support.
 
 To list the quotas for a project or user, use the :command:`manila quota-show`
-command. If you specify the optional :option:`--user` parameter, you get the
+command. If you specify the optional ``--user`` parameter, you get the
 quotas for this user in the specified project. If you omit this parameter,
 you get the quotas for the specified project.
 

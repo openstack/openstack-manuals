@@ -32,7 +32,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         my_ip = 10.0.0.11
 
 Configure Compute to use Block Storage

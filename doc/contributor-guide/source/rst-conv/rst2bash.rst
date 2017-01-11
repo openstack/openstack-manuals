@@ -22,7 +22,7 @@ syntax format.
 
 * The ``code-block`` tags should be closed with ``end``.
 
-  .. code-block:: ini
+  .. code-block:: rst
 
       .. code-block:: console
 
@@ -39,7 +39,7 @@ syntax format.
 
   * Example 1: Run a specific command from a given folder.
 
-    .. code-block:: ini
+    .. code-block:: rst
 
       .. path /usr/local/
       .. code-block:: console
@@ -53,7 +53,7 @@ syntax format.
 
   * Example 2: Configure a configuration file.
 
-    .. code-block:: ini
+    .. code-block:: none
 
       .. path /etc/keystone/keystone.conf
       .. code-block:: ini
@@ -68,7 +68,7 @@ syntax format.
 
 * The ``only`` tags should be closed with ``endonly``.
 
-  .. code-block:: ini
+  .. code-block:: none
 
     .. only:: ubuntu or debian
 

@@ -217,7 +217,7 @@ Install and configure components
      .. code-block:: ini
 
         [database]
-        ...
+        # ...
         connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
 
      .. end
@@ -232,7 +232,7 @@ Install and configure components
      .. code-block:: ini
 
         [keystone_authtoken]
-        ...
+        # ...
         auth_uri = http://controller:5000
         auth_url = http://controller:35357
         memcached_servers = controller:11211
@@ -244,7 +244,7 @@ Install and configure components
         password = GLANCE_PASS
 
         [paste_deploy]
-        ...
+        # ...
         flavor = keystone
 
      .. end
@@ -264,7 +264,7 @@ Install and configure components
      .. code-block:: ini
 
         [glance_store]
-        ...
+        # ...
         stores = file,http
         default_store = file
         filesystem_store_datadir = /var/lib/glance/images/
@@ -280,7 +280,7 @@ Install and configure components
      .. code-block:: ini
 
         [database]
-        ...
+        # ...
         connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
 
      .. end
@@ -295,7 +295,7 @@ Install and configure components
      .. code-block:: ini
 
         [keystone_authtoken]
-        ...
+        # ...
         auth_uri = http://controller:5000
         auth_url = http://controller:35357
         memcached_servers = controller:11211
@@ -307,7 +307,7 @@ Install and configure components
         password = GLANCE_PASS
 
         [paste_deploy]
-        ...
+        # ...
         flavor = keystone
 
      .. end

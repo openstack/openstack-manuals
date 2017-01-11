@@ -19,7 +19,7 @@ To insert a semantic markup into your document, use the syntax below.
 
 **Syntax**
 
-.. code-block:: ini
+.. code-block:: rst
 
   :markup:`inline text`
 

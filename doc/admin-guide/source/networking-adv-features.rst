@@ -426,11 +426,11 @@ basic LBaaS operations:
 
 -  Creates a load balancer pool by using specific provider.
 
-   :option:`--provider` is an optional argument. If not used, the pool is
+   ``--provider`` is an optional argument. If not used, the pool is
    created with default provider for LBaaS service. You should configure
    the default provider in the ``[service_providers]`` section of the
    ``neutron.conf`` file. If no default provider is specified for LBaaS,
-   the :option:`--provider` parameter is required for pool creation.
+   the ``--provider`` parameter is required for pool creation.
 
    .. code-block:: console
 

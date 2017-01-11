@@ -381,7 +381,7 @@ attached over iSCSI or ``F`` for volumes attached over Fiber Channel.
 
 VMAX All Flash and Hybrid
 
-.. code-block:: ini
+.. code-block:: none
 
    OS-[shortHostName]-[SRP]-[SLO]-[workload]-[protocol]-MV
 
@@ -397,7 +397,7 @@ as required. Names are of the following format. ``[protocol]`` is either ``I``
 for volumes attached over iSCSI or ``F`` for volumes attached over Fiber
 Channel.
 
-.. code-block:: ini
+.. code-block:: none
 
    OS-[shortHostName]-[protocol]-IG
 
@@ -424,7 +424,7 @@ or ``F`` for volumes attached over Fiber Channel.
 
 VMAX All Flash and Hybrid
 
-.. code-block:: ini
+.. code-block:: none
 
    OS-[shortHostName]-[SRP]-[SLO]-[Workload]-[protocol]-SG
 
@@ -811,7 +811,7 @@ The multipath configuration file may be edited for better management and
 performance. Log in as a privileged user and make the following changes to
 :file:`/etc/multipath.conf` on the  Compute (nova) node(s).
 
-.. code-block:: ini
+.. code-block:: none
 
    devices {
    # Device attributed for EMC VMAX
@@ -842,7 +842,7 @@ On Ubuntu:
    # service open-iscsi restart
    # service multipath-tools restart
 
-On On openSUSE, SUSE Linux Enterprise Server, Red Hat Enterprise Linux, and
+On openSUSE, SUSE Linux Enterprise Server, Red Hat Enterprise Linux, and
 CentOS:
 
 .. code-block:: console

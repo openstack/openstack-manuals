@@ -141,7 +141,7 @@ require accuracy (``sample_rate=1``) while others may not.
 .. code-block:: ini
 
    [DEFAULT]
-        ...
+   # ...
    log_statsd_host = 127.0.0.1
    log_statsd_port = 8125
    log_statsd_default_sample_rate = 1

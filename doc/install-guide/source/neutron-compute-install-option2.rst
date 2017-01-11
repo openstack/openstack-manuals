@@ -55,7 +55,7 @@ networking infrastructure for instances and handles security groups.
     .. code-block:: ini
 
        [securitygroup]
-       ...
+       # ...
        enable_security_group = True
        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 

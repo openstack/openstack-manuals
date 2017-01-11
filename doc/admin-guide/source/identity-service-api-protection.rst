@@ -12,7 +12,7 @@ certain actions in defined services.
 Each Identity API v3 call has a line in the policy file that dictates
 which level of governance of access applies.
 
-.. code-block:: ini
+.. code-block:: none
 
    API_NAME: RULE_STATEMENT or MATCH_STATEMENT
 
@@ -25,7 +25,7 @@ Where:
 token provided by the caller of the API and the parameters or target
 entities of the API call in question. For example:
 
-.. code-block:: ini
+.. code-block:: none
 
    "identity:create_user": "role:admin and domain_id:%(user.domain_id)s"
 
@@ -39,7 +39,7 @@ must be scoped to that domain.
 
 Each component of a match statement uses this format:
 
-.. code-block:: ini
+.. code-block:: none
 
    ATTRIB_FROM_TOKEN:CONSTANT or ATTRIB_RELATED_TO_API_CALL
 
@@ -64,7 +64,7 @@ You reference attributes of objects passed with an object.attribute
 syntax (such as, ``user.domain_id``). The target objects of an API are
 also available using a target.object.attribute syntax. For instance:
 
-.. code-block:: ini
+.. code-block:: none
 
    "identity:delete_user": "role:admin and domain_id:%(target.user.domain_id)s"
 
@@ -79,7 +79,7 @@ such as user passwords.
 
 List of object attributes:
 
-.. code-block:: ini
+.. code-block:: yaml
 
    role:
         target.role.id

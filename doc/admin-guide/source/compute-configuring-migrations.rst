@@ -305,7 +305,7 @@ configuration is required.
 
 .. note::
 
-   -  To use block migration, you must use the :option:`--block-migrate`
+   -  To use block migration, you must use the ``--block-migrate``
       parameter with the live migration command.
 
    -  Block migration is incompatible with read-only devices such as
@@ -409,7 +409,7 @@ Block migration
 
    .. note::
 
-      -  To use block migration, you must use the :option:`--block-migrate`
+      -  To use block migration, you must use the ``--block-migrate``
          parameter with the live migration command.
 
       -  Block migration works only with EXT local storage storage

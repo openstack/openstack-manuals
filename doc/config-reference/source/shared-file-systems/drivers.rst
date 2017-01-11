@@ -42,7 +42,7 @@ The configuration for all of them follows a common paradigm:
    .. code-block:: ini
 
       [Default]
-      ...
+      # ...
       enabled_backends = Driver1 Driver2
 
 #. Configure a separate section for each driver using these
@@ -54,11 +54,11 @@ The configuration for all of them follows a common paradigm:
 
       [Driver1]
       share_driver = manila.share.drivers.generic.GenericShareDriver
-      ...
+      # ...
 
       [Driver2]
       share_driver = manila.share.drivers.generic.GenericShareDriver
-      ...
+      # ...
 
 The share drivers are included in the `Shared File Systems repository
 <https://git.openstack.org/cgit/openstack/manila/tree/manila/share/drivers>`_.

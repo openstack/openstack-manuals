@@ -73,7 +73,7 @@ multi-node, non-multi-host setup.
 One cloud controller acted as a gateway to all compute nodes.
 VlanManager was used for the network config. This means that the cloud
 controller and all compute nodes had a different VLAN for each OpenStack
-project. We used the :option:`-s` option of ``ping`` to change the packet
+project. We used the ``-s`` option of ``ping`` to change the packet
 size. We watched as sometimes packets would fully return, sometimes they'd
 only make it out and never back in, and sometimes the packets would stop at a
 random point. We changed ``tcpdump`` to start displaying the hex dump of

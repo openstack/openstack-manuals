@@ -43,7 +43,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        type_drivers = flat,vlan,vxlan
 
   * In the ``[ml2]`` section, enable VXLAN self-service networks:
@@ -51,7 +51,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        tenant_network_types = vxlan
 
   * In the ``[ml2]`` section, enable the Linux bridge and layer-2 population
@@ -60,7 +60,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        mechanism_drivers = linuxbridge,l2population
 
     .. warning::
@@ -77,7 +77,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        extension_drivers = port_security
 
   * In the ``[ml2_type_flat]`` section, configure the provider virtual
@@ -86,7 +86,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2_type_flat]
-       ...
+       # ...
        flat_networks = provider
 
   * In the ``[ml2_type_vxlan]`` section, configure the VXLAN network identifier
@@ -95,7 +95,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2_type_vxlan]
-       ...
+       # ...
        vni_ranges = 1:1000
 
   * In the ``[securitygroup]`` section, enable :term:`ipset` to increase
@@ -104,7 +104,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [securitygroup]
-       ...
+       # ...
        enable_ipset = True
 
 Configure the Linux bridge agent
@@ -152,7 +152,7 @@ networking infrastructure for instances and handles security groups.
     .. code-block:: ini
 
        [securitygroup]
-       ...
+       # ...
        enable_security_group = True
        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
@@ -171,7 +171,7 @@ self-service virtual networks.
     .. code-block:: ini
 
        [DEFAULT]
-       ...
+       # ...
        interface_driver = linuxbridge
        external_network_bridge =
 
@@ -195,7 +195,7 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
     .. code-block:: ini
 
        [DEFAULT]
-       ...
+       # ...
        interface_driver = linuxbridge
        dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
        enable_isolated_metadata = True

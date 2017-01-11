@@ -48,7 +48,7 @@ By default, Object Storage logs to syslog.
 
 Next, create ``/etc/rsyslog.d/client.conf`` with the following line:
 
-.. code-block:: ini
+.. code-block:: none
 
    *.* @192.168.1.10
 
@@ -62,7 +62,7 @@ Designate a server as the central logging server. The best practice is
 to choose a server that is solely dedicated to this purpose. Create a
 file called ``/etc/rsyslog.d/server.conf`` with the following contents:
 
-.. code-block:: ini
+.. code-block:: none
 
    # Enable UDP
    $ModLoad imudp

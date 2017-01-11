@@ -144,7 +144,7 @@ content from a remote URL (``http`` or ``https``).
 
 **Output**
 
-.. code-block:: ini
+.. code-block:: yaml
 
    ############
    # Metadata #

@@ -49,7 +49,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
 
      Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
@@ -62,7 +62,7 @@ Install and configure components
      .. code-block:: ini
 
         [vnc]
-        ...
+        # ...
         enabled = True
         vncserver_listen = 0.0.0.0
         vncserver_proxyclient_address = $my_ip
@@ -87,7 +87,7 @@ Install and configure components
      .. code-block:: ini
 
         [glance]
-        ...
+        # ...
         api_servers = http://controller:9292
 
 #. Ensure the kernel module ``nbd`` is loaded.

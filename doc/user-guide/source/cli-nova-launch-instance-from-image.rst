@@ -99,7 +99,7 @@ Follow the steps below to launch an instance from an image.
       option. You can store up to five files. For example, if you have a
       special authorized keys file named ``special_authorized_keysfile`` that
       you want to put on the instance rather than using the regular SSH key
-      injection, you can use the :option:`--file` option as shown in the following
+      injection, you can use the ``--file`` option as shown in the following
       example.
 
    .. code-block:: console

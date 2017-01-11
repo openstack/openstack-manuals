@@ -103,7 +103,7 @@ Configuration
 
    Target interfaces can be seen as follows in the CLI:
 
-   .. code-block:: ini
+   .. code-block:: none
 
       zfssa:> configuration net interfaces
       zfssa:configuration net interfaces> show

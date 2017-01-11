@@ -262,7 +262,7 @@ directory in the ``shell`` screen and edit your middleware module.
 
 #. Among the log statements you'll see the lines:
 
-   .. code-block:: ini
+   .. code-block:: none
 
       proxy-server Remote IP: my.instance.ip.address (txn: ...)
       proxy-server Allow IPs: set(['my.instance.ip.address']) (txn: ...)

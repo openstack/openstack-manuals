@@ -96,7 +96,7 @@ Set up the cluster with pcs
 
    .. note::
 
-      The :option:`-p` option is used to give the password on command
+      The ``-p`` option is used to give the password on command
       line and makes it easier to script.
 
 #. Create and name the cluster, and then start it:
@@ -142,7 +142,7 @@ the Corosync package. An example Corosync configuration file is shown below:
 
 **Example Corosync configuration file for multicast (``corosync.conf``)**
 
-.. code-block:: ini
+.. code-block:: none
 
    totem {
          version: 2
@@ -279,7 +279,7 @@ Note the following:
      configuration file ``/etc/corosync/uidgid.d/pacemaker``
      to be created with the following content:
 
-     .. code-block:: ini
+     .. code-block:: none
 
         uidgid {
           uid: hacluster
@@ -301,7 +301,7 @@ for unicastis is shown below:
 
 **Corosync configuration file fragment for unicast (``corosync.conf``)**
 
-.. code-block:: ini
+.. code-block:: none
 
    totem {
            #...
@@ -403,7 +403,7 @@ disk-based quorum daemon for CMAN, from advanced cluster configurations.
 
 A sample votequorum service configuration in the :file:`corosync.conf` file is:
 
-.. code-block:: ini
+.. code-block:: none
 
    quorum {
            provider: corosync_votequorum (1)
@@ -479,7 +479,7 @@ a Systemd unit file.
 
 You can now check the ``corosync`` connectivity with one of these tools.
 
-Use the :command:`corosync-cfgtool` utility with the :option:`-s` option
+Use the :command:`corosync-cfgtool` utility with the ``-s`` option
 to get a summary of the health of the communication rings:
 
 .. code-block:: console

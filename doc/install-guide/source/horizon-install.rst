@@ -107,7 +107,7 @@ Install and configure components
         ``controller`` node:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_HOST = "controller"
 
@@ -116,7 +116,7 @@ Install and configure components
       * Allow all hosts to access the dashboard:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            ALLOWED_HOSTS = ['*', ]
 
@@ -125,7 +125,7 @@ Install and configure components
       * Configure the ``memcached`` session storage service:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
@@ -145,7 +145,7 @@ Install and configure components
       * Enable the Identity API version 3:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
 
@@ -154,7 +154,7 @@ Install and configure components
       * Enable support for domains:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
 
@@ -163,7 +163,7 @@ Install and configure components
       * Configure API versions:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_API_VERSIONS = {
                "identity": 3,
@@ -177,7 +177,7 @@ Install and configure components
         via the dashboard:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
 
@@ -187,7 +187,7 @@ Install and configure components
         users that you create via the dashboard:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
 
@@ -197,7 +197,7 @@ Install and configure components
         networking services:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_NEUTRON_NETWORK = {
                ...
@@ -216,7 +216,7 @@ Install and configure components
       * Optionally, configure the time zone:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            TIME_ZONE = "TIME_ZONE"
 
@@ -238,7 +238,7 @@ Install and configure components
         ``controller`` node:
 
         .. path /etc/openstack-dashboard/local_settings
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_HOST = "controller"
 
@@ -247,7 +247,7 @@ Install and configure components
       * Allow all hosts to access the dashboard:
 
         .. path /etc/openstack-dashboard/local_settings
-        .. code-block:: ini
+        .. code-block:: python
 
            ALLOWED_HOSTS = ['*', ]
 
@@ -256,7 +256,7 @@ Install and configure components
       * Configure the ``memcached`` session storage service:
 
         .. path /etc/openstack-dashboard/local_settings
-        .. code-block:: ini
+        .. code-block:: python
 
            SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
@@ -276,7 +276,7 @@ Install and configure components
       * Enable the Identity API version 3:
 
         .. path /etc/openstack-dashboard/local_settings
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
 
@@ -285,7 +285,7 @@ Install and configure components
       * Enable support for domains:
 
         .. path /etc/openstack-dashboard/local_settings
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
 
@@ -294,7 +294,7 @@ Install and configure components
       * Configure API versions:
 
         .. path /etc/openstack-dashboard/local_settings
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_API_VERSIONS = {
                "identity": 3,
@@ -308,7 +308,7 @@ Install and configure components
         via the dashboard:
 
         .. path /etc/openstack-dashboard/local_settings
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
 
@@ -318,7 +318,7 @@ Install and configure components
         users that you create via the dashboard:
 
         .. path /etc/openstack-dashboard/local_settings
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
 
@@ -328,7 +328,7 @@ Install and configure components
         networking services:
 
         .. path /etc/openstack-dashboard/local_settings
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_NEUTRON_NETWORK = {
                ...
@@ -347,7 +347,7 @@ Install and configure components
       * Optionally, configure the time zone:
 
         .. path /etc/openstack-dashboard/local_settings
-        .. code-block:: ini
+        .. code-block:: python
 
            TIME_ZONE = "TIME_ZONE"
 
@@ -369,7 +369,7 @@ Install and configure components
         ``controller`` node:
 
         .. path /etc/openstack-dashboard/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_HOST = "controller"
 
@@ -378,7 +378,7 @@ Install and configure components
       * Allow all hosts to access the dashboard:
 
         .. path /etc/openstack-dashboard/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            ALLOWED_HOSTS = ['*', ]
 
@@ -387,7 +387,7 @@ Install and configure components
       * Configure the ``memcached`` session storage service:
 
         .. path /etc/openstack-dashboard/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
@@ -407,7 +407,7 @@ Install and configure components
       * Enable the Identity API version 3:
 
         .. path /etc/openstack-dashboard/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
 
@@ -416,7 +416,7 @@ Install and configure components
       * Enable support for domains:
 
         .. path /etc/openstack-dashboard/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
 
@@ -425,7 +425,7 @@ Install and configure components
       * Configure API versions:
 
         .. path /etc/openstack-dashboard/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_API_VERSIONS = {
                "identity": 3,
@@ -439,7 +439,7 @@ Install and configure components
         via the dashboard:
 
         .. path /etc/openstack-dashboard/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
 
@@ -449,7 +449,7 @@ Install and configure components
         users that you create via the dashboard:
 
         .. path /etc/openstack-dashboard/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
 
@@ -459,7 +459,7 @@ Install and configure components
         networking services:
 
         .. path /etc/openstack-dashboard/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            OPENSTACK_NEUTRON_NETWORK = {
                ...
@@ -479,7 +479,7 @@ Install and configure components
       * Optionally, configure the time zone:
 
         .. path /etc/openstack-dashboard/local_settings.py
-        .. code-block:: ini
+        .. code-block:: python
 
            TIME_ZONE = "TIME_ZONE"
 

@@ -33,9 +33,9 @@ following example:
                     --lock-volume <True|False>
                     <volume> <host>
 
-In this example, :option:`--force-host-copy True` forces the generic
+In this example, ``--force-host-copy True`` forces the generic
 host-based migration mechanism and bypasses any driver optimizations.
-:option:`--lock-volume <True|False>` applies to the available volume.
+``--lock-volume <True|False>`` applies to the available volume.
 To determine whether the termination of volume migration caused by other
 commands. ``True``  locks the volume state and does not allow the
 migration to be aborted.
@@ -621,17 +621,17 @@ Manage a snapshot with the :command:`openstack snapshot set` command:
 
 The arguments to be passed are:
 
-:option:`--name <name>`
+``--name <name>``
  New snapshot name
 
-:option:`--description <description>`
+``--description <description>``
  New snapshot description
 
-:option:`--property <key=value>`
+``--property <key=value>``
  Property to add or modify for this snapshot (repeat option to set
  multiple properties)
 
-:option:`--state <state>`
+``--state <state>``
  New snapshot state. (“available”, “error”, “creating”, “deleting”,
  or “error_deleting”)
  (admin only) (This option simply changes the state of the snapshot in the

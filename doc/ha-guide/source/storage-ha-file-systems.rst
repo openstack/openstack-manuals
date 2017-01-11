@@ -42,7 +42,7 @@ Add Shared File Systems API resource to Pacemaker
 
 #. Add the following cluster resources:
 
-   .. code-block:: ini
+   .. code-block:: none
 
       primitive p_manila-api ocf:openstack:manila-api \
         params config="/etc/manila/manila.conf" \

@@ -11,14 +11,13 @@ FWaaS management options are also available in the Dashboard.
    .. code-block:: ini
 
       service_plugins = firewall
+
       [service_providers]
-      ...
-      service_provider = FIREWALL:Iptables:neutron.agent.linux.iptables_
-      firewall.OVSHybridIptablesFirewallDriver:default
+      # ...
+      service_provider = FIREWALL:Iptables:neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver:default
 
       [fwaas]
-      driver = neutron_fwaas.services.firewall.drivers.linux.iptables_
-      fwaas.IptablesFwaasDriver
+      driver = neutron_fwaas.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver
       enabled = True
 
    .. note::
@@ -56,12 +55,12 @@ FWaaS management options are also available in the Dashboard.
 #. Enable the option in the ``local_settings.py`` file,
    which is typically located on the controller node:
 
-   .. code-block:: ini
+   .. code-block:: python
 
       OPENSTACK_NEUTRON_NETWORK = {
-          ...
+          # ...
           'enable_firewall' = True,
-          ...
+          # ...
       }
 
    .. note::

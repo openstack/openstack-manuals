@@ -46,7 +46,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         enabled_apis = osapi_compute,metadata
 
    * The ``.config`` and ``.postinst`` maintainer scripts of the
@@ -58,7 +58,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         my_ip = 10.0.0.11
 
    * In the ``[DEFAULT]`` section, enable support for the Networking service:
@@ -66,7 +66,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         use_neutron = True
         firewall_driver = nova.virt.firewall.NoopFirewallDriver
 
@@ -84,7 +84,7 @@ Install and configure components
 
         [vnc]
         enabled = true
-        ...
+        # ...
         vncserver_listen = $my_ip
         vncserver_proxyclient_address = $my_ip
 
@@ -102,7 +102,7 @@ Install and configure components
      .. code-block:: ini
 
         [glance]
-        ...
+        # ...
         api_servers = http://controller:9292
 
 Finalize installation

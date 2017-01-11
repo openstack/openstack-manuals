@@ -11,7 +11,7 @@ Configure Identity service for Networking
 
    a. Add the following function to your ``.bashrc`` file:
 
-      .. code-block:: ini
+      .. code-block:: bash
 
          function get_id () {
          echo `"$@" | awk '/ id / { print $4 }'`

@@ -114,7 +114,7 @@ Create the trunk
      | network_id        | 1b47d3e7-cda5-48e4-b0c8-d20bd7e35f55                                   |
      +-------------------+------------------------------------------------------------------------+
 
-* Create the trunk using :option:`--parent-port` to reference the port from
+* Create the trunk using ``--parent-port`` to reference the port from
   the previous step:
 
   .. code-block:: console

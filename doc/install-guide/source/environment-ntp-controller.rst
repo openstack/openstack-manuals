@@ -45,7 +45,7 @@ Install and configure components
    2. Edit the ``/etc/chrony/chrony.conf`` file and add, change, or remove
       these keys as necessary for your environment:
 
-      .. code-block:: ini
+      .. code-block:: shell
 
          server NTP_SERVER iburst
 
@@ -64,7 +64,7 @@ Install and configure components
    3. To enable other nodes to connect to the chrony daemon on the controller node,
       add this key to the ``/etc/chrony/chrony.conf`` file:
 
-      .. code-block:: ini
+      .. code-block:: shell
 
          allow 10.0.0.0/24
 
@@ -85,7 +85,7 @@ Install and configure components
    2. Edit the ``/etc/chrony.conf`` file and add, change, or remove these
       keys as necessary for your environment:
 
-      .. code-block:: ini
+      .. code-block:: shell
 
          server NTP_SERVER iburst
 
@@ -104,7 +104,7 @@ Install and configure components
    3. To enable other nodes to connect to the chrony daemon on the controller node,
       add this key to the ``/etc/chrony.conf`` file:
 
-      .. code-block:: ini
+      .. code-block:: shell
 
          allow 10.0.0.0/24
 

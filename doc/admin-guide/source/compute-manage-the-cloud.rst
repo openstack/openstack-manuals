@@ -51,7 +51,7 @@ specific commands might be restricted by the Identity service.
    <http://docs.openstack.org/cli-reference/openstack.html>`__.
 
 #. Set the required parameters as environment variables to make running
-   commands easier. For example, you can add :option:`--os-username` as an
+   commands easier. For example, you can add ``--os-username`` as an
    ``openstack`` option, or set it as an environment variable. To set the user
    name, password, and project as environment variables, use:
 

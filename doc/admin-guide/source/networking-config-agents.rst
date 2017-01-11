@@ -225,7 +225,7 @@ capabilities:
    communication is interrupted. To avoid this, edit the
    ``/etc/network/interfaces`` file to contain the following information:
 
-   .. code-block:: ini
+   .. code-block:: shell
 
       ## External bridge
       auto br-ex
@@ -332,8 +332,7 @@ The Neutron Metering agent resides beside neutron-l3-agent.
 
    .. code-block:: ini
 
-      driver = neutron.services.metering.drivers.iptables.iptables_driver
-      .IptablesMeteringDriver
+      driver = neutron.services.metering.drivers.iptables.iptables_driver.IptablesMeteringDriver
 
 #. Set the ``service_plugins`` option in the ``/etc/neutron/neutron.conf``
    file on the host that runs ``neutron-server``:
@@ -365,8 +364,7 @@ This example uses Octavia.
 
    .. code-block:: ini
 
-      service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.
-      drivers.octavia.driver.OctaviaDriver:default
+      service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.drivers.octavia.driver.OctaviaDriver:default
 
 
 #. Edit the ``/etc/neutron/neutron.conf`` file and add the
@@ -467,8 +465,7 @@ correctly using these
       enable_metrics_collection = true
 
       [SECURITYGROUP]
-      firewall_driver = hyperv.neutron.security_groups_driver.
-      HyperVSecurityGroupsDriver
+      firewall_driver = hyperv.neutron.security_groups_driver.HyperVSecurityGroupsDriver
       enable_security_group = true
 
 #. Start the OpenStack Networking Hyper-V agent:
@@ -496,7 +493,7 @@ complete basic operations on agents.
      - ``$ openstack network agent show AGENT_ID``
    * - Update the admin status and description for a specified agent. The
        command can be used to enable and disable agents by using
-       :option:`--admin-state-up` parameter set to ``False`` or ``True``.
+       ``--admin-state-up`` parameter set to ``False`` or ``True``.
      - ``$ neutron agent-update --admin-state-up False AGENT_ID``
    * - Delete a given agent. Consider disabling the agent before deletion.
      - ``$ openstack network agent delete AGENT_ID``

@@ -156,7 +156,7 @@ Controller node
    .. code-block:: ini
 
       [DEFAULT]
-      ...
+      # ...
       service_plugins = ..., segments
 
 #. Restart the ``neutron-server`` service.

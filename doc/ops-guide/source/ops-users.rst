@@ -176,7 +176,7 @@ Generic rules
 
 Here are snippets of the default nova ``policy.json`` file:
 
-.. code-block:: json
+.. code-block:: none
 
    {
            "context_is_admin":  [["role:admin"]],
