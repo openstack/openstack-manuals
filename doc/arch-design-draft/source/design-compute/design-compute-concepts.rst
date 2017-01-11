@@ -1,41 +1,61 @@
-=========
-Overview
-=========
+====================================
+Compute Server Architecture Overview
+====================================
 
 When designing compute resource pools, consider the number of processors,
-amount of memory, and the quantity of storage required for each hypervisor.
+amount of memory, network requirements, the quantity of storage required for
+each hypervisor, and any requirements for bare metal hosts provisioned
+through ironic.
 
-Determine whether compute resources will be provided in a single pool or in
-multiple pools. In most cases, multiple pools of resources can be allocated
-and addressed on demand, commonly referred to as bin packing.
+When architecting an OpenStack cloud, as part of the planning process, the
+architect must not only determine what hardware to utilize but whether compute
+resources will be provided in a single pool or in multiple pools or
+availability zones. Will the cloud provide distinctly different profiles for
+compute?
+For example, CPU, memory or local storage based compute nodes. For NFV
+or HPC based clouds, there may even be specific network configurations that
+should be reserved for those specific workloads on specific compute nodes. This
+method of designing specific resources into groups or zones of compute can be
+referred to as bin packing.
 
-In a bin packing design, each independent resource pool provides service
-for specific flavors. Since instances are scheduled onto compute hypervisors,
-each independent node's resources will be allocated to efficiently use the
-available hardware. Bin packing also requires a common hardware design,
-with all hardware nodes within a compute resource pool sharing a common
-processor, memory, and storage layout. This makes it easier to deploy,
-support, and maintain nodes throughout their lifecycle.
+.. note::
 
-Increasing the size of the supporting compute environment increases the
-network traffic and messages, adding load to the controller or
-networking nodes. Effective monitoring of the environment will help with
-capacity decisions on scaling.
+  In a bin packing design, each independent resource pool provides service for
+  specific flavors. Since instances are scheduled onto compute hypervisors,
+  each independent node's resources will be allocated to efficiently use the
+  available hardware. While bin packing can separate workload specific
+  resources onto individual servers, bin packing also requires a common
+  hardware design, with all hardware nodes within a compute resource pool
+  sharing a common processor, memory, and storage layout. This makes it easier
+  to deploy, support, and maintain nodes throughout their lifecycle.
+
+Increasing the size of the supporting compute environment increases the network
+traffic and messages, adding load to the controllers and administrative
+services used to support the OpenStack cloud or networking nodes. When
+considering hardware for controller nodes, whether using the monolithic
+controller design, where all of the controller services live on one or more
+physical hardware nodes, or in any of the newer shared nothing control plane
+models, adequate resources must be allocated and scaled to meet scale
+requirements. Effective monitoring of the environment will help with capacity
+decisions on scaling. Proper planning will help avoid bottlenecks and network
+oversubscription as the cloud scales.
 
 Compute nodes automatically attach to OpenStack clouds, resulting in a
 horizontally scaling process when adding extra compute capacity to an
-OpenStack cloud. Additional processes are required to place nodes into
-appropriate availability zones and host aggregates. When adding
-additional compute nodes to environments, ensure identical or functional
-compatible CPUs are used, otherwise live migration features will break.
-It is necessary to add rack capacity or network switches as scaling out
-compute hosts directly affects data center resources.
+OpenStack cloud. To further group compute nodes and place nodes into
+appropriate availability zones and host aggregates, additional work is
+required. It is necessary to plan rack capacity and network switches as scaling
+out compute hosts directly affects data center infrastructure resources as
+would any other infrastructure expansion.
 
-Compute host components can also be upgraded to account for increases in
+While not as common in large enterprises, compute host components can also be
+upgraded to account for increases in
 demand, known as vertical scaling. Upgrading CPUs with more
 cores, or increasing the overall server memory, can add extra needed
 capacity depending on whether the running applications are more CPU
-intensive or memory intensive.
+intensive or memory intensive. Since OpenStack schedules workload placement
+based on capacity and technical requirements, removing compute nodes from
+availability and upgrading them using a rolling upgrade design.
 
 When selecting a processor, compare features and performance
 characteristics. Some processors include features specific to
@@ -74,8 +94,8 @@ Consider the Compute requirements of non-hypervisor nodes (also referred to as
 resource nodes). This includes controller, Object Storage nodes, Block Storage
 nodes, and networking services.
 
-The ability to add Compute resource pools for unpredictable workloads should
-be considered. In some cases, the demand for certain instance types or flavors
-may not justify individual hardware design. Allocate hardware designs that are
-capable of servicing the most common instance requests. Adding hardware to the
-overall architecture can be done later.
+The ability to create pools or availability zones for unpredictable workloads
+should be considered. In some cases, the demand for certain instance types or
+flavors may not justify individual hardware design. Allocate hardware designs
+that are capable of servicing the most common instance requests. Adding
+hardware to the overall architecture can be done later.
