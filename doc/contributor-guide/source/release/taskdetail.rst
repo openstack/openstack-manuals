@@ -60,7 +60,7 @@ Speciality Team lead, listed at :doc:`../team-structure`., and ask them for
 the notes for the books they look after. The source repository for release
 notes is `openstack-manuals/releasenotes/source/RELEASENAME` and they are
 published to
-<http://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html>.
+``http://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html``.
 
 Publish index page
 ~~~~~~~~~~~~~~~~~~

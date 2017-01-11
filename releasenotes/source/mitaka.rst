@@ -20,8 +20,7 @@ High Availability Guide
   installation and configuration details.
 
 * Documented the `Pacemaker cluster manager <http://docs.openstack.org/ha-guide/intro-ha-arch-pacemaker.html>`_
-  and `Keepalived architecture <http://docs.openstack.org/ha-guide/intro-ha-arch-keepalived.html>`_
-  details and limitations.
+  and Keepalived architecture details and limitations.
 
 * Added the `MariaDB Galera cluster <http://docs.openstack.org/ha-guide/shared-database.html>`_
   installation, configuration, and management details.
