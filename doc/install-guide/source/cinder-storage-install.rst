@@ -121,7 +121,7 @@ storage node, you must prepare the storage device.
      ``/dev/sdb`` device and rejects all other devices:
 
      .. path /etc/lvm/lvm.conf
-     .. code-block:: ini
+     .. code-block:: none
 
         devices {
         ...
@@ -209,7 +209,7 @@ Install and configure components
      .. code-block:: ini
 
         [database]
-        ...
+        # ...
         connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
 
      .. end
@@ -224,7 +224,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         transport_url = rabbit://openstack:RABBIT_PASS@controller
 
      .. end
@@ -239,11 +239,11 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         auth_strategy = keystone
 
         [keystone_authtoken]
-        ...
+        # ...
         auth_uri = http://controller:5000
         auth_url = http://controller:35357
         memcached_servers = controller:11211
@@ -270,7 +270,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
 
      .. end
@@ -290,7 +290,7 @@ Install and configure components
         .. code-block:: ini
 
            [lvm]
-           ...
+           # ...
            volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
            volume_group = cinder-volumes
            iscsi_protocol = iscsi
@@ -326,7 +326,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         enabled_backends = lvm
 
      .. end
@@ -343,7 +343,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         glance_api_servers = http://controller:9292
 
      .. end
@@ -354,7 +354,7 @@ Install and configure components
      .. code-block:: ini
 
         [oslo_concurrency]
-        ...
+        # ...
         lock_path = /var/lib/cinder/tmp
 
      .. end

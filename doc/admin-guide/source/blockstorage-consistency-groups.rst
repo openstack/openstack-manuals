@@ -31,7 +31,8 @@ Here are existing policy entries for consistency groups:
 
 .. code-block:: json
 
-   "consistencygroup:create": "group:nobody",
+   {
+   "consistencygroup:create": "group:nobody"
    "consistencygroup:delete": "group:nobody",
    "consistencygroup:update": "group:nobody",
    "consistencygroup:get": "group:nobody",
@@ -40,11 +41,13 @@ Here are existing policy entries for consistency groups:
    "consistencygroup:delete_cgsnapshot": "group:nobody",
    "consistencygroup:get_cgsnapshot": "group:nobody",
    "consistencygroup:get_all_cgsnapshots": "group:nobody",
+   }
 
 Remove ``group:nobody`` to enable these APIs:
 
 .. code-block:: json
 
+   {
    "consistencygroup:create": "",
    "consistencygroup:delete": "",
    "consistencygroup:update": "",
@@ -54,6 +57,8 @@ Remove ``group:nobody`` to enable these APIs:
    "consistencygroup:delete_cgsnapshot": "",
    "consistencygroup:get_cgsnapshot": "",
    "consistencygroup:get_all_cgsnapshots": "",
+   }
+
 
 Restart Block Storage API service after changing policies.
 
@@ -306,10 +311,11 @@ the consistency group, separated by commas. Default is None.
 
 .. code-block:: console
 
-   $ cinder consisgroup-update --name 'new name' --description 'new descripti\
-     on' --add-volumes 0b3923f5-95a4-4596-a536-914c2c84e2db,1c02528b-3781-4e3\
-     2-929c-618d81f52cf3 --remove-volumes 8c0f6ae4-efb1-458f-a8fc-9da2afcc5fb\
-     1,a245423f-bb99-4f94-8c8c-02806f9246d8 1de80c27-3b2f-47a6-91a7-e867cbe36462
+   $ cinder consisgroup-update --name 'new name' \
+     --description 'new description' \
+     --add-volumes 0b3923f5-95a4-4596-a536-914c2c84e2db,1c02528b-3781-4e32-929c-618d81f52cf3 \
+     --remove-volumes 8c0f6ae4-efb1-458f-a8fc-9da2afcc5fb1,a245423f-bb99-4f94-8c8c-02806f9246d8 \
+     1de80c27-3b2f-47a6-91a7-e867cbe36462
 
 **Create a consistency group from the snapshot of another consistency
 group**:
@@ -326,8 +332,9 @@ consistency group:
 
 .. code-block:: console
 
-   $ cinder consisgroup-create-from-src --cgsnapshot 6d9dfb7d-079a-471e-b75a-\
-     6e9185ba0c38 --name 'new cg' --description 'new cg from cgsnapshot'
+   $ cinder consisgroup-create-from-src \
+     --cgsnapshot 6d9dfb7d-079a-471e-b75a-6e9185ba0c38 \
+     --name 'new cg' --description 'new cg from cgsnapshot'
 
 **Create a consistency group from a source consistency group**:
 
@@ -343,6 +350,6 @@ consistency group:
 
 .. code-block:: console
 
-   $ cinder consisgroup-create-from-src --source-cg 6d9dfb7d-079a-471e-b75a-\
-     6e9185ba0c38 --name 'new cg' --description 'new cloned cg'
-
+   $ cinder consisgroup-create-from-src \
+     --source-cg 6d9dfb7d-079a-471e-b75a-6e9185ba0c38 \
+     --name 'new cg' --description 'new cloned cg'

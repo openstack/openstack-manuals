@@ -254,7 +254,7 @@ Install and configure components
         .. code-block:: ini
 
            [DEFAULT]
-           ...
+           # ...
            enabled_apis = osapi_compute,metadata
 
         .. end
@@ -268,11 +268,11 @@ Install and configure components
      .. code-block:: ini
 
         [api_database]
-        ...
+        # ...
         connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova_api
 
         [database]
-        ...
+        # ...
         connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
 
      .. end
@@ -287,7 +287,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         transport_url = rabbit://openstack:RABBIT_PASS@controller
 
      .. end
@@ -302,11 +302,11 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         auth_strategy = keystone
 
         [keystone_authtoken]
-        ...
+        # ...
         auth_uri = http://controller:5000
         auth_url = http://controller:35357
         memcached_servers = controller:11211
@@ -334,7 +334,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         my_ip = 10.0.0.11
 
      .. end
@@ -347,7 +347,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         use_neutron = True
         firewall_driver = nova.virt.firewall.NoopFirewallDriver
 
@@ -370,7 +370,7 @@ Install and configure components
 
      [vnc]
      enabled = true
-     ...
+     # ...
      vncserver_listen = $my_ip
      vncserver_proxyclient_address = $my_ip
 
@@ -397,7 +397,7 @@ Install and configure components
   .. code-block:: ini
 
      [glance]
-     ...
+     # ...
      api_servers = http://controller:9292
 
   .. end
@@ -410,7 +410,7 @@ Install and configure components
    .. code-block:: ini
 
       [oslo_concurrency]
-      ...
+      # ...
       lock_path = /var/run/nova
 
    .. end
@@ -425,7 +425,7 @@ Install and configure components
      .. code-block:: ini
 
         [oslo_concurrency]
-        ...
+        # ...
         lock_path = /var/lib/nova/tmp
 
      .. end
@@ -440,7 +440,7 @@ Install and configure components
      .. code-block:: ini
 
         [oslo_concurrency]
-        ...
+        # ...
         lock_path = /var/lib/nova/tmp
 
      .. end

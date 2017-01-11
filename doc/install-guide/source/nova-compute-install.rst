@@ -86,7 +86,7 @@ Install and configure components
         .. code-block:: ini
 
            [DEFAULT]
-           ...
+           # ...
            enabled_apis = osapi_compute,metadata
 
         .. end
@@ -100,7 +100,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         transport_url = rabbit://openstack:RABBIT_PASS@controller
 
      .. end
@@ -115,11 +115,11 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         auth_strategy = keystone
 
         [keystone_authtoken]
-        ...
+        # ...
         auth_uri = http://controller:5000
         auth_url = http://controller:35357
         memcached_servers = controller:11211
@@ -150,7 +150,7 @@ Install and configure components
         .. code-block:: ini
 
            [DEFAULT]
-           ...
+           # ...
            my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
 
         .. end
@@ -170,7 +170,7 @@ Install and configure components
         .. code-block:: ini
 
            [DEFAULT]
-           ...
+           # ...
            my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
 
         .. end
@@ -186,7 +186,7 @@ Install and configure components
         .. code-block:: ini
 
            [DEFAULT]
-           ...
+           # ...
            use_neutron = True
            firewall_driver = nova.virt.firewall.NoopFirewallDriver
 
@@ -207,7 +207,7 @@ Install and configure components
      .. code-block:: ini
 
         [vnc]
-        ...
+        # ...
         enabled = True
         vncserver_listen = 0.0.0.0
         vncserver_proxyclient_address = $my_ip
@@ -235,7 +235,7 @@ Install and configure components
      .. code-block:: ini
 
         [glance]
-        ...
+        # ...
         api_servers = http://controller:9292
 
      .. end
@@ -248,7 +248,7 @@ Install and configure components
         .. code-block:: ini
 
            [oslo_concurrency]
-           ...
+           # ...
            lock_path = /var/run/nova
 
         .. end
@@ -263,7 +263,7 @@ Install and configure components
         .. code-block:: ini
 
            [oslo_concurrency]
-           ...
+           # ...
            lock_path = /var/lib/nova/tmp
 
         .. end
@@ -325,7 +325,7 @@ Finalize installation
         .. code-block:: ini
 
            [libvirt]
-           ...
+           # ...
            virt_type = qemu
 
         .. end
@@ -341,7 +341,7 @@ Finalize installation
         .. code-block:: ini
 
            [libvirt]
-           ...
+           # ...
            virt_type = qemu
 
         .. end

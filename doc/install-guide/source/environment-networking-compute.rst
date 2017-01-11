@@ -28,7 +28,7 @@ Configure network interfaces
       * Edit the ``/etc/network/interfaces`` file to contain the following:
 
         .. path /etc/network/interfaces
-        .. code-block:: ini
+        .. code-block:: bash
 
            # The provider network interface
            auto INTERFACE_NAME
@@ -48,7 +48,7 @@ Configure network interfaces
         Do not change the ``HWADDR`` and ``UUID`` keys.
 
         .. path /etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME
-        .. code-block:: ini
+        .. code-block:: bash
 
            DEVICE=INTERFACE_NAME
            TYPE=Ethernet
@@ -65,7 +65,7 @@ Configure network interfaces
         contain the following:
 
         .. path /etc/sysconfig/network/ifcfg-INTERFACE_NAME
-        .. code-block:: ini
+        .. code-block:: bash
 
            STARTMODE='auto'
            BOOTPROTO='static'

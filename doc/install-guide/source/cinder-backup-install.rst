@@ -67,7 +67,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         backup_driver = cinder.backup.drivers.swift
         backup_swift_url = SWIFT_URL
 

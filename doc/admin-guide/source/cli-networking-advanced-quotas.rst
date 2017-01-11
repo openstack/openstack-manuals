@@ -6,7 +6,7 @@ A quota limits the number of available resources. A default
 quota might be enforced for all projects. When you try to create
 more resources than the quota allows, an error occurs:
 
-.. code-block:: ini
+.. code-block:: console
 
    $ openstack network create test_net
     Quota exceeded for resources: ['network']

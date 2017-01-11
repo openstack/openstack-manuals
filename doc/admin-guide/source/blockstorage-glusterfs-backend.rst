@@ -75,7 +75,7 @@ OpenStack Block Storage to use GlusterFS shares:
 #. Enable client connections from unprivileged ports. To do this,
    add the following line to ``/etc/glusterfs/glusterd.vol``:
 
-   .. code-block:: ini
+   .. code-block:: none
 
       option rpc-auth-allow-insecure on
 
@@ -99,7 +99,7 @@ After you configure the GlusterFS service, complete these steps:
    Each entry should be a separate line, and should use the following
    format:
 
-   .. code-block:: ini
+   .. code-block:: none
 
       HOST:/VOL_NAME
 
@@ -116,7 +116,7 @@ After you configure the GlusterFS service, complete these steps:
    Optionally, if your environment requires additional mount options for
    a share, you can add them to the share's entry:
 
-   .. code-block:: ini
+   .. code-block:: yaml
 
       HOST:/VOL_NAME -o OPTIONS
 

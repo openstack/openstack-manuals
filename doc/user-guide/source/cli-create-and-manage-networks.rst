@@ -244,7 +244,7 @@ Create ports
       +-----------------------+-----------------------------------------+
 
    In the previous command, ``net1`` is the network name, which is a
-   positional argument. :option:`--fixed-ip subnet<subnet>,ip-address=192.168.2.40` is
+   positional argument. ``--fixed-ip subnet<subnet>,ip-address=192.168.2.40`` is
    an option which specifies the port's fixed IP address we wanted.
 
    .. note::
@@ -295,7 +295,7 @@ Create ports
 
    .. note::
 
-      You can specify a MAC address with :option:`--mac-address MAC_ADDRESS`.
+      You can specify a MAC address with ``--mac-address MAC_ADDRESS``.
       If you specify an invalid MAC address, including ``00:00:00:00:00:00``
       or ``ff:ff:ff:ff:ff:ff``, you will get an error.
 
