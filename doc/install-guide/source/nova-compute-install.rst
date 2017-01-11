@@ -32,7 +32,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper install openstack-nova-compute genisoimage kvm libvirt
+         # zypper install openstack-nova-compute genisoimage qemu-kvm libvirt
 
       .. end
 
@@ -88,6 +88,21 @@ Install and configure components
            [DEFAULT]
            ...
            enabled_apis = osapi_compute,metadata
+
+        .. end
+
+   .. endonly
+
+   .. only:: obs
+
+      * In the ``[DEFAULT]`` section, set the ``compute_driver``:
+
+        .. path /etc/nova/nova.conf
+        .. code-block:: ini
+
+           [DEFAULT]
+           # ...
+           compute_driver = libvirt.LibvirtDriver
 
         .. end
 
