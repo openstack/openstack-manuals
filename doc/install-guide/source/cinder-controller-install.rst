@@ -297,7 +297,7 @@ Install and configure components
      .. code-block:: ini
 
         [database]
-        ...
+        # ...
         connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
 
      .. end
@@ -312,7 +312,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         transport_url = rabbit://openstack:RABBIT_PASS@controller
 
      .. end
@@ -327,11 +327,11 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         auth_strategy = keystone
 
         [keystone_authtoken]
-        ...
+        # ...
         auth_uri = http://controller:5000
         auth_url = http://controller:35357
         memcached_servers = controller:11211
@@ -359,7 +359,7 @@ Install and configure components
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         my_ip = 10.0.0.11
 
      .. end
@@ -372,7 +372,7 @@ Install and configure components
         .. code-block:: ini
 
            [oslo_concurrency]
-           ...
+           # ...
            lock_path = /var/lib/cinder/tmp
 
         .. end

@@ -40,7 +40,7 @@ To enable the Networking service ML2 driver, edit the
 .. code-block:: ini
 
    [ml2]
-   ...
+   # ...
    mechanism_drivers = my_mechanism_driver
 
    [my_vendor]
@@ -64,11 +64,11 @@ service:
    .. code-block:: ini
 
       [DEFAULT]
-      ...
+      # ...
       enabled_network_interfaces=flat,neutron
 
       [neutron]
-      ...
+      # ...
       cleaning_network_uuid=$UUID
       provisioning_network_uuid=$UUID
 

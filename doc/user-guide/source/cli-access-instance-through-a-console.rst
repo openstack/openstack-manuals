@@ -39,7 +39,7 @@ The command returns a URL from which you can access your instance:
    | xvpvnc | http://192.168.5.96:6081/console?token=c83ae3a3-15c4-4890-8d45-aefb494a8d6c  |
    +--------+------------------------------------------------------------------------------+
 
-:option:`--xvpvnc` can be replaced by any of the above values as connection
+``--xvpvnc`` can be replaced by any of the above values as connection
 types.
 
 When using SPICE to view the console of an instance, a browser plugin

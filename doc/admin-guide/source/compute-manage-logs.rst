@@ -105,14 +105,14 @@ on the log server host, which receives the log files
 Add a filter rule to ``/etc/rsyslog.conf`` which looks for a host name.
 This example uses COMPUTE_01 as the compute host name:
 
-.. code-block:: ini
+.. code-block:: none
 
    :hostname, isequal, "COMPUTE_01" /mnt/rsyslog/logs/compute-01.log
 
 On each compute host, create a file named
 ``/etc/rsyslog.d/60-nova.conf``, with the following content:
 
-.. code-block:: console
+.. code-block:: none
 
    # prevent debug from dnsmasq with the daemon.none parameter
    *.*;auth,authpriv.none,daemon.none,local0.none -/var/log/syslog
@@ -147,7 +147,7 @@ also requires a websocket client to access the serial console.
    .. code-block:: ini
 
       [serial_console]
-      ...
+      # ...
       enabled = true
 
 #. In the ``[serial_console]`` section, configure the serial console proxy
@@ -156,7 +156,7 @@ also requires a websocket client to access the serial console.
    .. code-block:: ini
 
       [serial_console]
-      ...
+      # ...
       base_url = ws://controller:6083/
       listen = 0.0.0.0
       proxyclient_address = MANAGEMENT_INTERFACE_IP_ADDRESS
@@ -208,8 +208,7 @@ also requires a websocket client to access the serial console.
 
    .. code-block:: console
 
-      $ curl -i 'http://<controller>:8774/v2.1/<tenant_uuid>/servers/
-        <instance_uuid>/action' \
+      $ curl -i 'http://<controller>:8774/v2.1/<tenant_uuid>/servers/<instance_uuid>/action' \
         -X POST \
         -H "Accept: application/json" \
         -H "Content-Type: application/json" \

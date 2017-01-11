@@ -74,7 +74,7 @@ Volume type extra specs
 If volume type is provided as part of the volume creation request, it can
 have the following extra specs defined:
 
-.. code-block:: ini
+.. code-block:: none
 
    'capabilities:thin_provisioning_support': '<is> True' or '<is> False'
    'capabilities:thick_provisioning_support': '<is> True' or '<is> False'
@@ -84,7 +84,7 @@ have the following extra specs defined:
    ``capabilities`` scope key before ``thin_provisioning_support`` and
    ``thick_provisioning_support`` is not required. So the following works too:
 
-.. code-block:: ini
+.. code-block:: none
 
    'thin_provisioning_support': '<is> True' or '<is> False'
    'thick_provisioning_support': '<is> True' or '<is> False'

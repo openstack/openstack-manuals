@@ -32,9 +32,9 @@ Create a stack from an example template file
       $ openstack stack create --template server_console.yaml \
         --parameter "image=cirros" MYSTACK
 
-   The :option:`--parameter` values that you specify depend on the parameters
+   The ``--parameter`` values that you specify depend on the parameters
    that are defined in the template. If a website hosts the template
-   file, you can also specify the URL with the :option:`--template` parameter.
+   file, you can also specify the URL with the ``--template`` parameter.
 
    The command returns the following output:
 
@@ -54,7 +54,7 @@ Create a stack from an example template file
       | stack_status_reason |                                                                |
       +---------------------+----------------------------------------------------------------+
 
--  You can also use the :option:`--dry-run` option with the
+-  You can also use the ``--dry-run`` option with the
    :command:`openstack stack create` command to validate a
    template file without creating a stack from it.
 

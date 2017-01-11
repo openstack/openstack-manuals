@@ -220,8 +220,10 @@ can also be used to set policies for Image service actions.
 
    .. code-block:: json
 
+      {
       "download_image":
       "upload_image":
+      }
 
 #. Define which roles or policies can manage which properties in a property
    protections configuration file. For example:

@@ -65,7 +65,7 @@ Configure the server component
     .. code-block:: ini
 
        [database]
-       ...
+       # ...
        connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
 
     .. end
@@ -85,7 +85,7 @@ Configure the server component
     .. code-block:: ini
 
        [DEFAULT]
-       ...
+       # ...
        core_plugin = ml2
        service_plugins = router
        allow_overlapping_ips = True
@@ -99,7 +99,7 @@ Configure the server component
     .. code-block:: ini
 
        [DEFAULT]
-       ...
+       # ...
        transport_url = rabbit://openstack:RABBIT_PASS@controller
 
     .. end
@@ -114,11 +114,11 @@ Configure the server component
     .. code-block:: ini
 
        [DEFAULT]
-       ...
+       # ...
        auth_strategy = keystone
 
        [keystone_authtoken]
-       ...
+       # ...
        auth_uri = http://controller:5000
        auth_url = http://controller:35357
        memcached_servers = controller:11211
@@ -146,12 +146,12 @@ Configure the server component
     .. code-block:: ini
 
        [DEFAULT]
-       ...
+       # ...
        notify_nova_on_port_status_changes = True
        notify_nova_on_port_data_changes = True
 
        [nova]
-       ...
+       # ...
        auth_url = http://controller:35357
        auth_type = password
        project_domain_name = default
@@ -174,7 +174,7 @@ Configure the server component
        .. code-block:: ini
 
           [oslo_concurrency]
-          ...
+          # ...
           lock_path = /var/lib/neutron/tmp
 
        .. end
@@ -194,7 +194,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        type_drivers = flat,vlan,vxlan
 
     .. end
@@ -205,7 +205,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        tenant_network_types = vxlan
 
     .. end
@@ -217,7 +217,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        mechanism_drivers = linuxbridge,l2population
 
     .. end
@@ -237,7 +237,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        extension_drivers = port_security
 
     .. end
@@ -249,7 +249,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2_type_flat]
-       ...
+       # ...
        flat_networks = provider
 
     .. end
@@ -261,7 +261,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2_type_vxlan]
-       ...
+       # ...
        vni_ranges = 1:1000
 
     .. end
@@ -273,7 +273,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [securitygroup]
-       ...
+       # ...
        enable_ipset = True
 
     .. end
@@ -330,7 +330,7 @@ networking infrastructure for instances and handles security groups.
     .. code-block:: ini
 
        [securitygroup]
-       ...
+       # ...
        enable_security_group = True
        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
@@ -352,7 +352,7 @@ self-service virtual networks.
     .. code-block:: ini
 
        [DEFAULT]
-       ...
+       # ...
        interface_driver = linuxbridge
 
     .. end
@@ -373,7 +373,7 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
     .. code-block:: ini
 
        [DEFAULT]
-       ...
+       # ...
        interface_driver = linuxbridge
        dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
        enable_isolated_metadata = True

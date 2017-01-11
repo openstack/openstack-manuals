@@ -121,8 +121,8 @@ return code combination.
    .. code-block:: console
 
       $ swift -A http://swift-auth.com:11000/v1.0 -U test:tester -K testing \
-           download -o - logtest 2010-11-16-22_access.log | awk '{ print \
-           $9"-"$12}' | sort | uniq -c
+        download -o - logtest 2010-11-16-22_access.log | \
+        awk '{ print $9"-"$12}' | sort | uniq -c
 
    .. code-block:: console
 

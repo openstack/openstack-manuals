@@ -47,7 +47,7 @@ Install and configure components
       service to use the management IP address of the controller node
       to enable access by other nodes via the management network:
 
-      .. code-block:: ini
+      .. code-block:: none
 
          -l 10.0.0.11
 

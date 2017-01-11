@@ -36,7 +36,7 @@ that hosts the ``cinder`` volume service.
    Each entry should be a separate line, and should use the following
    format:
 
-   .. code-block:: ini
+   .. code-block:: none
 
       HOST:SHARE
 
