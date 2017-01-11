@@ -157,8 +157,7 @@ the ``X`` on the upper right corner of the message.
 
    The error message height should vary to fit the content.
 
-For more information on guidelines for UI text, see:
-`<http://docs.openstack.org/contributor-guide/ui-text-guidelines.html>`_.
+For more information on guidelines for UI text, see :ref:`uitextguidelines`.
 
 Actions
 -------
