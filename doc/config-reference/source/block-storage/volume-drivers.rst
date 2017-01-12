@@ -21,6 +21,7 @@ Volume drivers
    drivers/datera-volume-driver.rst
    drivers/dell-equallogic-driver.rst
    drivers/dell-storagecenter-driver.rst
+   drivers/dell-emc-unity-driver.rst
    drivers/dothill-driver.rst
    drivers/emc-scaleio-driver.rst
    drivers/emc-vmax-driver.rst
