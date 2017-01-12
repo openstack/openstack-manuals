@@ -143,14 +143,12 @@ Parameter
 Any parameter for sub-commands for the command-line interfaces.
 
 +------------------------+---------------------------------------------------+
-| **Markup**             | ``:option:`` to mark parameters that start with   |
-|                        | ``-`` or ``--``, `````` (double backticks) for    |
-|                        | any other parameter                               |
+| **Markup**             | `````` (double backticks)                         |
 +------------------------+---------------------------------------------------+
-| **Syntax**             | ``:option:`--template-url```, ````back end````    |
+| **Syntax**             | `` ``--template-url```` or ````back end````       |
 +------------------------+---------------------------------------------------+
 | **Example of output**  | * You can specify the URL with the                |
-|                        |   :option:`--template-url` parameter.             |
+|                        |   ``--template-url`` parameter.                   |
 |                        | * Set the ``back end`` parameter.                 |
 +------------------------+---------------------------------------------------+
 
@@ -161,14 +159,12 @@ Any option for sub-commands for the command-line interfaces or configuration
 option.
 
 +------------------------+---------------------------------------------------+
-| **Markup**             | ``:option:`` to mark options that start with      |
-|                        | ``-`` or ``--``, `````` (double backticks) for    |
-|                        | any other parameter                               |
+| **Markup**             | `````` (double backticks)                         |
 +------------------------+---------------------------------------------------+
-| **Syntax**             | ``:option:`--parent```,                           |
+| **Syntax**             | `` ``--parent````,                                |
 |                        | ````force_dhcp_release = True````                 |
 +------------------------+---------------------------------------------------+
-| **Example of output**  | * The :option:`--parent` stands for the parent of |
+| **Example of output**  | * The ``--parent`` stands for the parent of       |
 |                        |   the project (name or ID).                       |
 |                        | * The ``force_dhcp_release = True`` option sends  |
 |                        |   a dhcp release on instance termination.         |
