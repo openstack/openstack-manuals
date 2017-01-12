@@ -148,56 +148,59 @@ Create the address scope and subnet pools
 
      .. code-block:: console
 
-        $ neutron subnetpool-create --pool-prefix 203.0.113.0/24 \
+        $ openstack subnet pool create --pool-prefix 203.0.113.0/24 \
           --address-scope bgp provider
-        Created a new subnetpool:
+
         +-------------------+--------------------------------------+
         | Field             | Value                                |
         +-------------------+--------------------------------------+
         | address_scope_id  | f71c958f-dbe8-49a2-8fb9-19c5f52a37f1 |
-        | created_at        | 2016-03-17T23:11:12                  |
+        | created_at        | 2017-01-12T14:58:57Z                 |
         | default_prefixlen | 8                                    |
-        | default_quota     |                                      |
+        | default_quota     | None                                 |
         | description       |                                      |
-        | id                | 3771c0e7-7096-46d3-a3bd-699c58e70259 |
+        | headers           |                                      |
+        | id                | 63532225-b9a0-445a-9935-20a15f9f68d1 |
         | ip_version        | 4                                    |
         | is_default        | False                                |
         | max_prefixlen     | 32                                   |
         | min_prefixlen     | 8                                    |
         | name              | provider                             |
         | prefixes          | 203.0.113.0/24                       |
+        | project_id        | 86acdbd1d72745fd8e8320edd7543400     |
+        | revision_number   | 1                                    |
         | shared            | False                                |
-        | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
-        | updated_at        | 2016-03-17T23:11:12                  |
+        | updated_at        | 2017-01-12T14:58:57Z                 |
         +-------------------+--------------------------------------+
 
    * Create the self-service network pool.
 
      .. code-block:: console
 
-        $ neutron subnetpool-create --pool-prefix 10.0.1.0/24 \
+        $ openstack subnet pool create --pool-prefix 10.0.1.0/24 \
           --pool-prefix 10.0.2.0/24 --address-scope bgp \
-          --shared selfservice
-        Created a new subnetpool:
+          --share selfservice
+
         +-------------------+--------------------------------------+
         | Field             | Value                                |
         +-------------------+--------------------------------------+
         | address_scope_id  | f71c958f-dbe8-49a2-8fb9-19c5f52a37f1 |
-        | created_at        | 2016-03-17T23:11:51                  |
+        | created_at        | 2017-01-12T15:02:31Z                 |
         | default_prefixlen | 8                                    |
-        | default_quota     |                                      |
+        | default_quota     | None                                 |
         | description       |                                      |
-        | id                | c7e9737a-cfd3-45b5-a861-d1cee1135a92 |
+        | headers           |                                      |
+        | id                | 8d8270b1-b194-4b7e-914c-9c741dcbd49b |
         | ip_version        | 4                                    |
         | is_default        | False                                |
         | max_prefixlen     | 32                                   |
         | min_prefixlen     | 8                                    |
         | name              | selfservice                          |
-        | prefixes          | 10.0.1.0/24                          |
-        |                   | 10.0.2.0/24                          |
+        | prefixes          | 10.0.1.0/24, 10.0.2.0/24             |
+        | project_id        | 86acdbd1d72745fd8e8320edd7543400     |
+        | revision_number   | 1                                    |
         | shared            | True                                 |
-        | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d     |
-        | updated_at        | 2016-03-17T23:11:51                  |
+        | updated_at        | 2017-01-12T15:02:31Z                 |
         +-------------------+--------------------------------------+
 
 Create the provider and self-service networks
