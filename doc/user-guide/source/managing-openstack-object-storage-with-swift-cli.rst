@@ -21,6 +21,7 @@ concurrency of 10.
    cli-swift-manage-objects.rst
    cli-swift-env-vars.rst
    cli-swift-set-object-versions.rst
+   cli-swift-set-object-expiration.rst
    cli-swift-serialized-response-formats.rst
    cli-swift-large-lists.rst
    cli-swift-pseudo-hierarchical-folders-directories.rst
