@@ -55,7 +55,7 @@ Run the following command to view the properties of existing images:
 
 .. code-block:: console
 
-   $ openstack image show <image-uuid>
+   $ openstack image show IMAGE_NAME_OR_UUID
 
 Adding Signed Images
 --------------------
@@ -249,7 +249,7 @@ To share an image or snapshot with another project, do the following:
 
    .. code-block:: console
 
-      $ openstack image add project <image-uuid> <project-uuid>
+      $ openstack image add project IMAGE_NAME_OR_UUID PROJECT_NAME_OR_UUID
 
    For example:
 
@@ -269,7 +269,7 @@ To share an image or snapshot with another project, do the following:
 
    .. code-block:: console
 
-      $ glance member-update <image-uuid> <project-uuid> accepted
+      $ glance member-update IMAGE_UUID PROJECT_UUID accepted
 
    For example:
 
@@ -297,7 +297,7 @@ To delete an image, just execute:
 
 .. code-block:: console
 
-   $ openstack image delete <image uuid>
+   $ openstack image delete IMAGE_NAME_OR_UUID
 
 .. caution::
 
@@ -452,13 +452,13 @@ this, you can restrict access to the custom flavor using the
 
 .. code-block:: console
 
-   $ nova flavor-access-add <flavor-id> <project-id>
+   $ nova flavor-access-add FLAVOR_ID PROJECT_ID
 
 To view a flavor's access list, do the following:
 
 .. code-block:: console
 
-   $ nova flavor-access-list [--flavor <flavor-id>]
+   $ nova flavor-access-list [--flavor FLAVOR_ID]
 
 .. tip::
 
@@ -1643,7 +1643,7 @@ On the command line, do this:
 
 .. code-block:: console
 
-   $ openstack server create --flavor FLAVOR --image IMAGE_NAME
+   $ openstack server create --flavor FLAVOR --image IMAGE_NAME_OR_ID
 
 There are a number of optional items that can be specified. You should
 read the rest of this section before trying to start an instance, but
@@ -1895,11 +1895,11 @@ tools. Here is an example:
 
 .. code-block:: console
 
-   $ openstack server add security group <server> <securitygroup>
+   $ openstack server add security group SERVER SECURITY_GROUP_NAME_OR_ID
 
 .. code-block:: console
 
-   $ openstack server remove security group <server> <securitygroup>
+   $ openstack server remove security group SERVER SECURITY_GROUP_NAME_OR_ID
 
 Floating IPs
 ~~~~~~~~~~~~
@@ -1914,7 +1914,7 @@ of the dashboard. The command line can also be used:
 
 .. code-block:: console
 
-   $ openstack floating ip create NETWORK
+   $ openstack floating ip create NETWORK_NAME_OR_ID
 
 Once allocated, a floating IP can be assigned to running instances from
 the dashboard either by selecting :guilabel:`Associate` from the
@@ -1947,7 +1947,7 @@ To perform this action from command line, run the following command:
 
 .. code-block:: console
 
-   $ openstack server add volume <server> <volume> --device <device>
+   $ openstack server add volume SERVER VOLUME_NAME_OR_ID --device DEVICE
 
 You can also specify block deviceblock device mapping at instance boot
 time through the nova command-line client with this option set:
@@ -2025,7 +2025,7 @@ snapshot a running instance to an image using the CLI, do this:
 
 .. code-block:: console
 
-   $ openstack image create <image name> --volume <volume name of instance>
+   $ openstack image create IMAGE_NAME --volume VOLUME_NAME_OR_ID
 
 The dashboard interface for snapshots can be confusing because the
 snapshots and images are displayed in the :guilabel:`Images` page. However, an
