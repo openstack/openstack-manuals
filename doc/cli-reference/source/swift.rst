@@ -1,5 +1,6 @@
 .. ##  WARNING  #####################################
 .. This file is tool-generated. Do not edit manually.
+.. Because of a tool bug, temporary edited manually.
 .. ##################################################
 
 ==================================================
@@ -268,7 +269,7 @@ Download objects from containers.
 
 ``<container>``
   Name of container to download from. To download a
-  whole account, omit this and specify :option:`--all`.
+  whole account, omit this and specify --all.
 
 ``<object>``
   Name of object to download. Specify multiple times
@@ -289,7 +290,7 @@ Download objects from containers.
   Only download items beginning with <prefix>
 
 ``-r, --remove-prefix``
-  An optional flag for :option:`--prefix` <prefix>, use this
+  An optional flag for --prefix <prefix>, use this
   option to download items without <prefix>
 
 ``-o, --output <out_file>``
@@ -317,7 +318,7 @@ Download objects from containers.
 ``-H, --header <header:value>``
   Adds a customized request header to the query, like
   "Range" or "If-Match". This option may be repeated.
-  Example: :option:`--header` "content-type:text/plain"
+  Example: --header "content-type:text/plain"
 
 ``--skip-identical``
   Skip downloading files that are identical on both
@@ -362,7 +363,7 @@ Lists the containers for the account or the objects for a container.
   ls -lh.
 
 ``-t, --totals``
-  Used with -l or :option:`--lh,` only report totals.
+  Used with -l or --lh, only report totals.
 
 ``-p <prefix>, --prefix <prefix>``
   Only list items beginning with the prefix.
@@ -462,7 +463,7 @@ Generates a temporary URL for a Swift object.
 
 ``<seconds>``
   The amount of time in seconds the temporary URL will be
-  valid for; or, if :option:`--absolute` is passed, the Unix
+  valid for; or, if --absolute is passed, the Unix
   timestamp when the temporary URL will expire.
 
 ``<path>``
@@ -540,7 +541,7 @@ Uploads specified files and directories to the given container.
   -H "Content-Length: 4000".
 
 ``--use-slo``
-  When used in conjunction with :option:`--segment-size` it will
+  When used in conjunction with --segment-size it will
   create a Static Large Object instead of the default
   Dynamic Large Object.
 
