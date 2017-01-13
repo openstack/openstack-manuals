@@ -53,7 +53,8 @@ perspective:
   require the use of dependable commodity hardware and freely available open
   source software components to reduce deployment costs and operational
   expenses. Initiatives like OpenCompute (more information available at
-  http://www.opencompute.org) provide additional information and pointers. To
+  `Open Compute Project <http://www.opencompute.org>`_)
+  provide additional information and pointers. To
   cut costs, many operators sacrifice redundancy. For example, using redundant
   power supplies, network connections, and rack switches.
 
