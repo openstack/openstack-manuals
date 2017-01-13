@@ -60,7 +60,7 @@ neutron-sanity-check optional arguments
   Path to a config directory to pull ``*.conf`` files from.
   This file set is sorted, so as to provide a predictable parse order
   if individual options are over-ridden. The set is parsed after the file(s)
-  specified via previous :option:`--config-file`, arguments hence
+  specified via previous --config-file, arguments hence
   over-ridden options in the directory take precedence.
 
 ``--config-file PATH``
@@ -121,79 +121,79 @@ neutron-sanity-check optional arguments
   This option is ignored if ``log_config_append`` is set.
 
 ``--noarp_header_match``
-  The inverse of :option:`--arp_header_match`
+  The inverse of --arp_header_match
 
 ``--noarp_responder``
-  The inverse of :option:`--arp_responder`
+  The inverse of --arp_responder
 
 ``--nodebug``
-  The inverse of :option:`--debug`
+  The inverse of --debug
 
 ``--nodhcp_release6``
-   The inverse of :option:`--dhcp_release6`
+   The inverse of --dhcp_release6
 
 ``--nodibbler_version``
-  The inverse of :option:`--dibbler_version`
+  The inverse of --dibbler_version
 
 ``--nodnsmasq_version``
-  The inverse of :option:`--dnsmasq_version`
+  The inverse of --dnsmasq_version
 
 ``--noebtables_installed``
-  The inverse of :option:`--ebtables_installed`
+  The inverse of --ebtables_installed
 
 ``--noicmpv6_header_match``
-  The inverse of :option:`--icmpv6_header_match`
+  The inverse of --icmpv6_header_match
 
 ``--noip6tables_installed``
-  The inverse of :option:`--ip6tables_installed`
+  The inverse of --ip6tables_installed
 
 ``--noiproute2_vxlan``
-  The inverse of :option:`--iproute2_vxlan`
+  The inverse of --iproute2_vxlan
 
 ``--noipset_installed``
-  The inverse of :option:`--ipset_installed`
+  The inverse of --ipset_installed
 
 ``--nokeepalived_ipv6_support``
-  The inverse of :option:`--keepalived_ipv6_support`
+  The inverse of --keepalived_ipv6_support
 
 ``--nonova_notify``
-  The inverse of :option:`--nova_notify`
+  The inverse of --nova_notify
 
 ``--noovs_conntrack``
-  The inverse of :option:`--ovs_conntrack`
+  The inverse of --ovs_conntrack
 
 ``--noovs_geneve``
-  The inverse of :option:`--ovs_geneve`
+  The inverse of --ovs_geneve
 
 ``--noovs_patch``
-  The inverse of :option:`--ovs_patch`
+  The inverse of --ovs_patch
 
 ``--noovs_vxlan``
-  The inverse of :option:`--ovs_vxlan`
+  The inverse of --ovs_vxlan
 
 ``--noovsdb_native``
-  The inverse of :option:`--ovsdb_native`
+  The inverse of --ovsdb_native
 
 ``--noread_netns``
-  The inverse of :option:`--read_netns`
+  The inverse of --read_netns
 
 ``--nouse-syslog``
-  The inverse of :option:`--use-syslog`
+  The inverse of --use-syslog
 
 ``--nova_notify``
   Check for nova notification support
 
 ``--noverbose``
-  The inverse of :option:`--verbose`
+  The inverse of --verbose
 
 ``--novf_extended_management``
-   The inverse of :option:`--vf_extended_management`
+   The inverse of --vf_extended_management
 
 ``--novf_management``
-  The inverse of :option:`--vf_management`
+  The inverse of --vf_management
 
 ``--nowatch-log-file``
-  The inverse of :option:`--watch-log-file`
+  The inverse of --watch-log-file
 
 ``--ovs_geneve``
   Check for OVS Geneve support

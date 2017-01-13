@@ -50,7 +50,7 @@ nova-manage optional arguments
   This file set is sorted, so as to provide a
   predictable parse order if individual options are
   over-ridden. The set is parsed after the file(s)
-  specified via previous :option:`--config-file,` arguments hence
+  specified via previous --config-file, arguments hence
   over-ridden options in the directory take precedence.
 
 ``--config-file PATH``
@@ -89,16 +89,16 @@ nova-manage optional arguments
   log_config_append is set.
 
 ``--nodebug``
-  The inverse of :option:`--debug`
+  The inverse of --debug
 
 ``--nouse-syslog``
-  The inverse of :option:`--use-syslog`
+  The inverse of --use-syslog
 
 ``--noverbose``
-  The inverse of :option:`--verbose`
+  The inverse of --verbose
 
 ``--nowatch-log-file``
-  The inverse of :option:`--watch-log-file`
+  The inverse of --watch-log-file
 
 ``--syslog-log-facility SYSLOG_LOG_FACILITY``
   Syslog facility to receive log lines. This option is
