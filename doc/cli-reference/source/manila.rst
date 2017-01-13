@@ -434,7 +434,7 @@ manila optional arguments
 
 ``--os-project-name <auth-project-name>``
   Another way to specify tenant name. This option is
-  mutually exclusive with :option:`--os-tenant-name`. Defaults to
+  mutually exclusive with --os-tenant-name. Defaults to
   ``env[OS_PROJECT_NAME]``.
 
 ``--os-tenant-id <auth-tenant-id>``
@@ -442,7 +442,7 @@ manila optional arguments
 
 ``--os-project-id <auth-project-id>``
   Another way to specify tenant ID. This option is
-  mutually exclusive with :option:`--os-tenant-id`. Defaults to
+  mutually exclusive with --os-tenant-id. Defaults to
   ``env[OS_PROJECT_ID]``.
 
 ``--os-user-domain-id <auth-user-domain-id>``
@@ -579,7 +579,7 @@ Show access list for share.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "access_type,access_to"
+  --columns "access_type,access_to"
 
 .. _manila_api-version:
 
@@ -673,7 +673,7 @@ List consistency groups with filters (Experimental).
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,name"
+  --columns "id,name"
 
 .. _manila_cg-reset-state:
 
@@ -794,7 +794,7 @@ List consistency group snapshots with filters (Experimental).
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,name"
+  --columns "id,name"
 
 .. _manila_cg-snapshot-members:
 
@@ -1049,7 +1049,7 @@ Print a list of current 'share types and extra specs' (Admin Only).
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,name"
+  --columns "id,name"
 
 .. _manila_force-delete:
 
@@ -1148,7 +1148,7 @@ List NAS shares with filters.
 
 ``--project-id <project_id>, --project_id <project_id>``
   Filter results by project id. Useful with set key
-  ':option:`--all-tenants`'.
+  '--all-tenants'.
 
 ``--public``
   Add public shares from all tenants to result.
@@ -1159,7 +1159,7 @@ List NAS shares with filters.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "export_location,is public"
+  --columns "export_location,is public"
 
 .. _manila_list-extensions:
 
@@ -1420,7 +1420,7 @@ List all backend storage pools known to the scheduler (Admin only).
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "name,host"
+  --columns "name,host"
 
 .. _manila_quota-class-show:
 
@@ -1589,7 +1589,7 @@ Print a list of rate limits for a user.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "verb,uri,value"
+  --columns "verb,uri,value"
 
 .. _manila_reset-state:
 
@@ -1765,7 +1765,7 @@ Get a list of security services.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "name,type"
+  --columns "name,type"
 
 .. _manila_security-service-show:
 
@@ -1896,7 +1896,7 @@ List all services (Admin only).
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,host"
+  --columns "id,host"
 
 .. _manila_share-export-location-list:
 
@@ -1918,7 +1918,7 @@ List export locations of a given share.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,host,status"
+  --columns "id,host,status"
 
 .. _manila_share-export-location-show:
 
@@ -1960,7 +1960,7 @@ List export locations of a given share instance.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,host,status"
+  --columns "id,host,status"
 
 .. _manila_share-instance-export-location-show:
 
@@ -2016,7 +2016,7 @@ List share instances (Admin only).
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,host,status"
+  --columns "id,host,status"
 
 .. _manila_share-instance-reset-state:
 
@@ -2183,7 +2183,7 @@ Get a list of network info.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id"
+  --columns "id"
 
 .. _manila_share-network-security-service-add:
 
@@ -2226,7 +2226,7 @@ Get list of security services associated with a given share network.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,name"
+  --columns "id,name"
 
 .. _manila_share-network-security-service-remove:
 
@@ -2373,7 +2373,7 @@ List share replicas (Experimental).
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "replica_state,id"
+  --columns "replica_state,id"
 
 .. _manila_share-replica-promote:
 
@@ -2533,7 +2533,7 @@ List all share servers (Admin only).
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,host,status"
+  --columns "id,host,status"
 
 .. _manila_share-server-show:
 
@@ -2668,7 +2668,7 @@ List share snapshot instances.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id"
+  --columns "id"
 
 ``--detailed <detailed>``
   Show detailed information about snapshot instances.
@@ -2767,7 +2767,7 @@ List all the snapshots.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,name"
+  --columns "id,name"
 
 .. _manila_snapshot-manage:
 
@@ -3025,7 +3025,7 @@ Print a list of available 'share types'.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
-  :option:`--columns` "id,name"
+  --columns "id,name"
 
 .. _manila_unmanage:
 
