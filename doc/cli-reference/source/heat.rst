@@ -248,7 +248,7 @@ heat optional arguments
   key.
 
 ``--cert-file OS_CERT``
-  **DEPRECATED!** Use :option:`--os-cert`.
+  **DEPRECATED!** Use --os-cert.
 
 ``--os-key OS_KEY``
   Path of client key to use in SSL connection. This
@@ -256,7 +256,7 @@ heat optional arguments
   your cert file.
 
 ``--key-file OS_KEY``
-  **DEPRECATED!** Use :option:`--os-key`.
+  **DEPRECATED!** Use --os-key.
 
 ``--os-cacert <ca-certificate-file>``
   Path of CA TLS certificate(s) used to verify the
@@ -264,7 +264,7 @@ heat optional arguments
   glance looks for the default system CA certificates.
 
 ``--ca-file OS_CACERT``
-  **DEPRECATED!** Use :option:`--os-cacert`.
+  **DEPRECATED!** Use --os-cacert.
 
 ``--os-username OS_USERNAME``
   Defaults to ``env[OS_USERNAME]``.
@@ -280,12 +280,12 @@ heat optional arguments
 
 ``--os-project-id OS_PROJECT_ID``
   Another way to specify tenant ID. This option is
-  mutually exclusive with :option:`--os-tenant-id`. Defaults to
+  mutually exclusive with --os-tenant-id. Defaults to
   ``env[OS_PROJECT_ID]``.
 
 ``--os-project-name OS_PROJECT_NAME``
   Another way to specify tenant name. This option is
-  mutually exclusive with :option:`--os-tenant-name`. Defaults to
+  mutually exclusive with --os-tenant-name. Defaults to
   ``env[OS_PROJECT_NAME]``.
 
 ``--os-project-domain-id OS_PROJECT_DOMAIN_ID``
@@ -656,7 +656,7 @@ List events for a stack.
 
 ``-n <DEPTH>, --nested-depth <DEPTH>``
   Depth of nested stacks from which to display events.
-  Note this cannot be specified with :option:`--resource`.
+  Note this cannot be specified with --resource.
 
 ``-F <FORMAT>, --format <FORMAT>``
   The output value format, one of: log, table
@@ -1094,7 +1094,7 @@ Adopt a stack.
 
 ``-c <TIMEOUT>, --create-timeout <TIMEOUT>``
   Stack creation timeout in minutes. **DEPRECATED** use
-  :option:`--timeout` instead.
+  --timeout instead.
 
 ``-t <TIMEOUT>, --timeout <TIMEOUT>``
   Stack creation timeout in minutes.
@@ -1172,7 +1172,7 @@ Create the stack.
 
 ``-c <TIMEOUT>, --create-timeout <TIMEOUT>``
   Stack creation timeout in minutes. **DEPRECATED** use
-  :option:`--timeout` instead.
+  --timeout instead.
 
 ``-t <TIMEOUT>, --timeout <TIMEOUT>``
   Stack creation timeout in minutes.
@@ -1295,7 +1295,7 @@ List the user's stacks.
 
 ``-o, --show-owner``
   Display stack owner information. This is automatically
-  enabled when using :option:`--global-tenant`.
+  enabled when using --global-tenant.
 
 .. _heat_stack-preview:
 
@@ -1463,7 +1463,7 @@ Update the stack.
   Stack update timeout in minutes.
 
 ``-r, --enable-rollback``
-  **DEPRECATED!** Use :option:`--rollback` argument instead. Enable
+  **DEPRECATED!** Use --rollback argument instead. Enable
   rollback on stack update failure. NOTE: default
   behavior is now to use the rollback value of existing
   stack.
@@ -1480,7 +1480,7 @@ Update the stack.
   what would be changed
 
 ``-n, --show-nested``
-  Show nested stacks when performing :option:`--dry-run`
+  Show nested stacks when performing --dry-run
 
 ``-P <KEY1=VALUE1;KEY2=VALUE2...>, --parameters <KEY1=VALUE1;KEY2=VALUE2...>``
   Parameter values used to create the stack. This can be
@@ -1496,9 +1496,9 @@ Update the stack.
   Re-use the template, parameters and environment of the
   current stack. If the template argument is omitted
   then the existing template is used. If no
-  :option:`--environment-file` is specified then the existing
+  --environment-file is specified then the existing
   environment is used. Parameters specified in
-  :option:`--parameters` will patch over the existing values in
+  --parameters will patch over the existing values in
   the current stack. Parameters omitted will keep the
   existing values.
 
