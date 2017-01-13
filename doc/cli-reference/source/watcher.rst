@@ -103,12 +103,12 @@ watcher optional arguments
 
 ``--os-project-id <auth-project-id>``
   Another way to specify tenant ID. This option is
-  mutually exclusive with :option:`--os-tenant-id`. Defaults to
+  mutually exclusive with --os-tenant-id. Defaults to
   ``env[OS_PROJECT_ID]``.
 
 ``--os-project-name <auth-project-name>``
   Another way to specify tenant name. This option is
-  mutually exclusive with :option:`--os-tenant-name`. Defaults to
+  mutually exclusive with --os-tenant-name. Defaults to
   ``env[OS_PROJECT_NAME]``.
 
 ``--os-project-domain-id <auth-project-domain-id>``
@@ -157,7 +157,8 @@ watcher action list
 .. code-block:: console
 
    usage: watcher action list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--action-plan <action-plan>] [--audit <audit>]
                               [--detail] [--limit <limit>] [--sort-key <field>]
@@ -198,8 +199,8 @@ watcher action show
 .. code-block:: console
 
    usage: watcher action show [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
                               <action>
 
 Show detailed information about a given action.
@@ -223,8 +224,9 @@ watcher actionplan create
 
    usage: watcher actionplan create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX] -a
-                                    <audit_template> [-t <audit_type>]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX] -a <audit_template>
+                                    [-t <audit_type>]
 
 Create new audit.
 
@@ -270,7 +272,7 @@ watcher actionplan list
 
    usage: watcher actionplan list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
+                                  [--print-empty] [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   [--audit <audit>] [--detail] [--limit <limit>]
                                   [--sort-key <field>] [--sort-dir <direction>]
@@ -308,7 +310,7 @@ watcher actionplan show
 
    usage: watcher actionplan show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   <action-plan>
 
 Show detailed information about a given action plan.
@@ -332,7 +334,7 @@ watcher actionplan start
 
    usage: watcher actionplan start [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX]
+                                   [--print-empty] [--noindent] [--prefix PREFIX]
                                    <action-plan>
 
 Start action plan command.
@@ -356,7 +358,8 @@ watcher actionplan update
 
    usage: watcher actionplan update [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX]
                                     <action-plan> <op> <path=value>
                                     [<path=value> ...]
 
@@ -388,10 +391,11 @@ watcher audit create
 .. code-block:: console
 
    usage: watcher audit create [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] [-t <audit_type>]
-                               [-p <name=value>] [-i <interval>] [-g <goal>]
-                               [-s <strategy>] [-a <audit_template>]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
+                               [-t <audit_type>] [-p <name=value>]
+                               [-i <interval>] [-g <goal>] [-s <strategy>]
+                               [-a <audit_template>]
 
 Create new audit.
 
@@ -449,9 +453,9 @@ watcher audit list
 .. code-block:: console
 
    usage: watcher audit list [-h] [-f {csv,html,json,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--quote {all,minimal,none,nonnumeric}] [--detail]
-                             [--goal <goal>] [--strategy <strategy>]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--quote {all,minimal,none,nonnumeric}]
+                             [--detail] [--goal <goal>] [--strategy <strategy>]
                              [--limit <limit>] [--sort-key <field>]
                              [--sort-dir <direction>]
 
@@ -490,8 +494,8 @@ watcher audit show
 .. code-block:: console
 
    usage: watcher audit show [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX]
                              <audit>
 
 Show detailed information about a given audit.
@@ -514,8 +518,8 @@ watcher audit update
 .. code-block:: console
 
    usage: watcher audit update [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
                                <audit> <op> <path=value> [<path=value> ...]
 
 Update audit command.
@@ -548,9 +552,9 @@ watcher audittemplate create
    usage: watcher audittemplate create [-h]
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
-                                       [-s <strategy>] [-d <description>]
-                                       [--scope <path>]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX] [-s <strategy>]
+                                       [-d <description>] [--scope <path>]
                                        <name> <goal>
 
 Create new audit template.
@@ -579,8 +583,7 @@ Create new audit template.
   Part of the cluster on which an audit will be done.
   Can be provided either in yaml or json file.
   YAML example:
-  :option:`---`
-  - host_aggregates:
+  ---- host_aggregates:
   - id: 1
   - id: 2
   - id: 3
@@ -643,7 +646,7 @@ watcher audittemplate list
 
    usage: watcher audittemplate list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent]
+                                     [--print-empty] [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--detail] [--goal <goal>]
                                      [--strategy <strategy>] [--limit <limit>]
@@ -686,7 +689,8 @@ watcher audittemplate show
 
    usage: watcher audittemplate show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX]
                                      <audit-template>
 
 Show detailed information about a given audit template.
@@ -711,7 +715,8 @@ watcher audittemplate update
    usage: watcher audittemplate update [-h]
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX]
                                        <audit-template> <op> <path=value>
                                        [<path=value> ...]
 
@@ -743,9 +748,9 @@ watcher goal list
 .. code-block:: console
 
    usage: watcher goal list [-h] [-f {csv,html,json,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--quote {all,minimal,none,nonnumeric}] [--detail]
-                            [--limit <limit>] [--sort-key <field>]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--quote {all,minimal,none,nonnumeric}]
+                            [--detail] [--limit <limit>] [--sort-key <field>]
                             [--sort-dir <direction>]
 
 List information on retrieved goals.
@@ -777,8 +782,8 @@ watcher goal show
 .. code-block:: console
 
    usage: watcher goal show [-h] [-f {html,json,shell,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--prefix PREFIX]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--prefix PREFIX]
                             <goal>
 
 Show detailed information about a given goal.
@@ -802,7 +807,7 @@ watcher scoringengine list
 
    usage: watcher scoringengine list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent]
+                                     [--print-empty] [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--detail] [--limit <limit>]
                                      [--sort-key <field>]
@@ -838,7 +843,8 @@ watcher scoringengine show
 
    usage: watcher scoringengine show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX]
                                      <scoring_engine>
 
 Show detailed information about a given scoring engine.
@@ -861,7 +867,8 @@ watcher service list
 .. code-block:: console
 
    usage: watcher service list [-h] [-f {csv,html,json,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}] [--detail]
                                [--limit <limit>] [--sort-key <field>]
                                [--sort-dir <direction>]
@@ -895,8 +902,8 @@ watcher service show
 .. code-block:: console
 
    usage: watcher service show [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
                                <service>
 
 Show detailed information about a given service.
@@ -919,7 +926,8 @@ watcher strategy list
 .. code-block:: console
 
    usage: watcher strategy list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--goal <goal>] [--detail] [--limit <limit>]
                                 [--sort-key <field>] [--sort-dir <direction>]
@@ -956,8 +964,8 @@ watcher strategy show
 .. code-block:: console
 
    usage: watcher strategy show [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
                                 <strategy>
 
 Show detailed information about a given strategy.
