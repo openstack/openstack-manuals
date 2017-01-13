@@ -78,8 +78,22 @@ glance optional arguments
 
 ``--os-image-url OS_IMAGE_URL``
   Defaults to ``env[OS_IMAGE_URL]``. If the provided image
-  url contains a version number and \`:option:`--os-image-api-`
-  version\` is omitted the version of the URL will be
+  url
+  contains
+  a
+  version
+  number
+  and
+  \`--os-image-api-version\`
+  is
+  omitted
+  the
+  version
+  of
+  the
+  URL
+  will
+  be
   picked as the image api version to use.
 
 ``--os-image-api-version OS_IMAGE_API_VERSION``
@@ -155,13 +169,13 @@ glance optional arguments
   User's password
 
 ``--key-file OS_KEY``
-  **DEPRECATED!** Use :option:`--os-key`.
+  **DEPRECATED!** Use --os-key.
 
 ``--ca-file OS_CACERT``
-  **DEPRECATED!** Use :option:`--os-cacert`.
+  **DEPRECATED!** Use --os-cacert.
 
 ``--cert-file OS_CERT``
-  **DEPRECATED!** Use :option:`--os-cert`.
+  **DEPRECATED!** Use --os-cert.
 
 ``--os-tenant-id OS_TENANT_ID``
   Defaults to ``env[OS_TENANT_ID]``.
