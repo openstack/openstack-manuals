@@ -72,10 +72,10 @@ neutron optional arguments
   Defaults to ``env[OS_ENDPOINT_TYPE]`` or public.
 
 ``--service-type <service-type>``
-  **DEPRECATED!** Use :option:`--os-service-type`.
+  **DEPRECATED!** Use --os-service-type.
 
 ``--endpoint-type <endpoint-type>``
-  **DEPRECATED!** Use :option:`--os-endpoint-type`.
+  **DEPRECATED!** Use --os-endpoint-type.
 
 ``--os-auth-strategy <auth-strategy>``
   **DEPRECATED!** Only keystone is supported.
@@ -92,7 +92,7 @@ neutron optional arguments
 
 ``--os-project-name <auth-project-name>``
   Another way to specify tenant name. This option is
-  mutually exclusive with :option:`--os-tenant-name`. Defaults to
+  mutually exclusive with --os-tenant-name. Defaults to
   ``env[OS_PROJECT_NAME]``.
 
 ``--os-tenant-id <auth-tenant-id>``
@@ -101,7 +101,7 @@ neutron optional arguments
 
 ``--os-project-id <auth-project-id>``
   Another way to specify tenant ID. This option is
-  mutually exclusive with :option:`--os-tenant-id`. Defaults to
+  mutually exclusive with --os-tenant-id. Defaults to
   ``env[OS_PROJECT_ID]``.
 
 ``--os-username <auth-username>``
@@ -937,7 +937,8 @@ neutron address-scope-create
    usage: neutron address-scope-create [-h]
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX]
                                        [--request-format {json}]
                                        [--tenant-id TENANT_ID] [--shared]
                                        NAME IP_VERSION
@@ -1000,7 +1001,7 @@ neutron address-scope-list
 
    usage: neutron address-scope-list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent]
+                                     [--print-empty] [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--request-format {json}] [-D] [-F FIELD]
                                      [-P SIZE] [--sort-key FIELD]
@@ -1047,8 +1048,9 @@ neutron address-scope-show
 
    usage: neutron address-scope-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
-                                     [--request-format {json}] [-D] [-F FIELD]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX] [--request-format {json}]
+                                     [-D] [-F FIELD]
                                      ADDRESS_SCOPE
 
 Show information about an address scope.
@@ -1137,8 +1139,8 @@ neutron agent-list
 .. code-block:: console
 
    usage: neutron agent-list [-h] [-f {csv,html,json,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--quote {all,minimal,none,nonnumeric}]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--quote {all,minimal,none,nonnumeric}]
                              [--request-format {json}] [-D] [-F FIELD]
                              [--sort-key FIELD] [--sort-dir {asc,desc}]
 
@@ -1178,9 +1180,9 @@ neutron agent-show
 .. code-block:: console
 
    usage: neutron agent-show [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [--request-format {json}] [-D]
-                             [-F FIELD]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX]
+                             [--request-format {json}] [-D] [-F FIELD]
                              AGENT
 
 Show information of a given agent.
@@ -1272,7 +1274,8 @@ neutron auto-allocated-topology-show
                                                [-f {html,json,shell,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
-                                               [--noindent] [--prefix PREFIX]
+                                               [--print-empty] [--noindent]
+                                               [--prefix PREFIX]
                                                [--request-format {json}]
                                                [--dry-run]
                                                [--tenant-id tenant-id]
@@ -1305,7 +1308,7 @@ neutron availability-zone-list
    usage: neutron availability-zone-list [-h]
                                          [-f {csv,html,json,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
-                                         [--noindent]
+                                         [--print-empty] [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
                                          [--request-format {json}] [-D]
                                          [-F FIELD] [-P SIZE] [--sort-key FIELD]
@@ -1354,7 +1357,7 @@ neutron bgp-dragent-list-hosting-speaker
                                                    [-f {csv,html,json,table,value,yaml}]
                                                    [-c COLUMN]
                                                    [--max-width <integer>]
-                                                   [--noindent]
+                                                   [--print-empty] [--noindent]
                                                    [--quote {all,minimal,none,nonnumeric}]
                                                    [--request-format {json}] [-D]
                                                    [-F FIELD]
@@ -1447,7 +1450,7 @@ neutron bgp-peer-create
 
    usage: neutron bgp-peer-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   [--request-format {json}]
                                   [--tenant-id TENANT_ID] --peer-ip
                                   PEER_IP_ADDRESS --remote-as PEER_REMOTE_AS
@@ -1519,7 +1522,8 @@ neutron bgp-peer-list
 .. code-block:: console
 
    usage: neutron bgp-peer-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--request-format {json}] [-D] [-F FIELD]
                                 [-P SIZE] [--sort-key FIELD]
@@ -1565,9 +1569,9 @@ neutron bgp-peer-show
 .. code-block:: console
 
    usage: neutron bgp-peer-show [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--request-format {json}] [-D]
-                                [-F FIELD]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
+                                [--request-format {json}] [-D] [-F FIELD]
                                 BGP_PEER
 
 Show information of a given BGP peer.
@@ -1635,7 +1639,7 @@ neutron bgp-speaker-advertiseroute-list
                                                   [-f {csv,html,json,table,value,yaml}]
                                                   [-c COLUMN]
                                                   [--max-width <integer>]
-                                                  [--noindent]
+                                                  [--print-empty] [--noindent]
                                                   [--quote {all,minimal,none,nonnumeric}]
                                                   [--request-format {json}] [-D]
                                                   [-F FIELD] [-P SIZE]
@@ -1689,8 +1693,8 @@ neutron bgp-speaker-create
 
    usage: neutron bgp-speaker-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
-                                     [--request-format {json}]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX] [--request-format {json}]
                                      [--tenant-id TENANT_ID] --local-as LOCAL_AS
                                      [--ip-version {4,6}]
                                      [--advertise-floating-ip-host-routes {True,False}]
@@ -1767,7 +1771,7 @@ neutron bgp-speaker-list
 
    usage: neutron bgp-speaker-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
+                                   [--print-empty] [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
                                    [--request-format {json}] [-D] [-F FIELD]
                                    [-P SIZE] [--sort-key FIELD]
@@ -1815,7 +1819,7 @@ neutron bgp-speaker-list-on-dragent
    usage: neutron bgp-speaker-list-on-dragent [-h]
                                               [-f {csv,html,json,table,value,yaml}]
                                               [-c COLUMN] [--max-width <integer>]
-                                              [--noindent]
+                                              [--print-empty] [--noindent]
                                               [--quote {all,minimal,none,nonnumeric}]
                                               [--request-format {json}] [-D]
                                               [-F FIELD]
@@ -1964,7 +1968,7 @@ neutron bgp-speaker-show
 
    usage: neutron bgp-speaker-show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX]
+                                   [--print-empty] [--noindent] [--prefix PREFIX]
                                    [--request-format {json}] [-D] [-F FIELD]
                                    BGP_SPEAKER
 
@@ -2042,7 +2046,7 @@ neutron dhcp-agent-list-hosting-net
    usage: neutron dhcp-agent-list-hosting-net [-h]
                                               [-f {csv,html,json,table,value,yaml}]
                                               [-c COLUMN] [--max-width <integer>]
-                                              [--noindent]
+                                              [--print-empty] [--noindent]
                                               [--quote {all,minimal,none,nonnumeric}]
                                               [--request-format {json}] [-D]
                                               [-F FIELD]
@@ -2134,7 +2138,7 @@ neutron ext-list
 .. code-block:: console
 
    usage: neutron ext-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width <integer>] [--noindent]
+                           [--max-width <integer>] [--print-empty] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--request-format {json}] [-D] [-F FIELD]
 
@@ -2163,9 +2167,9 @@ neutron ext-show
 .. code-block:: console
 
    usage: neutron ext-show [-h] [-f {html,json,shell,table,value,yaml}]
-                           [-c COLUMN] [--max-width <integer>] [--noindent]
-                           [--prefix PREFIX] [--request-format {json}] [-D]
-                           [-F FIELD]
+                           [-c COLUMN] [--max-width <integer>] [--print-empty]
+                           [--noindent] [--prefix PREFIX]
+                           [--request-format {json}] [-D] [-F FIELD]
                            EXTENSION
 
 Show information of a given resource.
@@ -2199,7 +2203,7 @@ neutron firewall-create
 
    usage: neutron firewall-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   [--request-format {json}]
                                   [--tenant-id TENANT_ID] [--name NAME]
                                   [--description DESCRIPTION]
@@ -2277,7 +2281,8 @@ neutron firewall-list
 .. code-block:: console
 
    usage: neutron firewall-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--request-format {json}] [-D] [-F FIELD]
                                 [-P SIZE] [--sort-key FIELD]
@@ -2325,7 +2330,8 @@ neutron firewall-policy-create
    usage: neutron firewall-policy-create [-h]
                                          [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
-                                         [--noindent] [--prefix PREFIX]
+                                         [--print-empty] [--noindent]
+                                         [--prefix PREFIX]
                                          [--request-format {json}]
                                          [--tenant-id TENANT_ID] [--shared]
                                          [--audited] [--description DESCRIPTION]
@@ -2361,7 +2367,7 @@ Create a firewall policy.
 
 ``--firewall-rules FIREWALL_RULES``
   Ordered list of whitespace-delimited firewall rule
-  names or IDs; e.g., :option:`--firewall-rules` "rule1 rule2"
+  names or IDs; e.g., --firewall-rules "rule1 rule2"
 
 .. _neutron_firewall-policy-delete:
 
@@ -2433,7 +2439,7 @@ neutron firewall-policy-list
 
    usage: neutron firewall-policy-list [-h] [-f {csv,html,json,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent]
+                                       [--print-empty] [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]
                                        [--request-format {json}] [-D] [-F FIELD]
                                        [-P SIZE] [--sort-key FIELD]
@@ -2510,7 +2516,8 @@ neutron firewall-policy-show
    usage: neutron firewall-policy-show [-h]
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX]
                                        [--request-format {json}] [-D] [-F FIELD]
                                        FIREWALL_POLICY
 
@@ -2570,7 +2577,7 @@ Update a given firewall policy.
 
 ``--firewall-rules FIREWALL_RULES``
   Ordered list of whitespace-delimited firewall rule
-  names or IDs; e.g., :option:`--firewall-rules` "rule1 rule2"
+  names or IDs; e.g., --firewall-rules "rule1 rule2"
 
 ``--name NAME``
   Name for the firewall policy.
@@ -2593,7 +2600,8 @@ neutron firewall-rule-create
    usage: neutron firewall-rule-create [-h]
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX]
                                        [--request-format {json}]
                                        [--tenant-id TENANT_ID] [--shared]
                                        [--name NAME] [--description DESCRIPTION]
@@ -2686,7 +2694,7 @@ neutron firewall-rule-list
 
    usage: neutron firewall-rule-list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent]
+                                     [--print-empty] [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--request-format {json}] [-D] [-F FIELD]
                                      [-P SIZE] [--sort-key FIELD]
@@ -2733,8 +2741,9 @@ neutron firewall-rule-show
 
    usage: neutron firewall-rule-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
-                                     [--request-format {json}] [-D] [-F FIELD]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX] [--request-format {json}]
+                                     [-D] [-F FIELD]
                                      FIREWALL_RULE
 
 Show information of a given firewall rule.
@@ -2836,9 +2845,9 @@ neutron firewall-show
 .. code-block:: console
 
    usage: neutron firewall-show [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--request-format {json}] [-D]
-                                [-F FIELD]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
+                                [--request-format {json}] [-D] [-F FIELD]
                                 FIREWALL
 
 Show information of a given firewall.
@@ -2952,9 +2961,9 @@ neutron flavor-create
 .. code-block:: console
 
    usage: neutron flavor-create [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--request-format {json}]
-                                [--tenant-id TENANT_ID]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
+                                [--request-format {json}] [--tenant-id TENANT_ID]
                                 [--description DESCRIPTION]
                                 [--enabled {True,False}]
                                 NAME SERVICE_TYPE
@@ -3049,7 +3058,8 @@ neutron flavor-list
 .. code-block:: console
 
    usage: neutron flavor-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
                               [--sort-key FIELD] [--sort-dir {asc,desc}]
@@ -3096,7 +3106,8 @@ neutron flavor-profile-create
    usage: neutron flavor-profile-create [-h]
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX]
                                         [--request-format {json}]
                                         [--tenant-id TENANT_ID]
                                         [--description DESCRIPTION]
@@ -3162,7 +3173,7 @@ neutron flavor-profile-list
 
    usage: neutron flavor-profile-list [-h] [-f {csv,html,json,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent]
+                                      [--print-empty] [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
                                       [--request-format {json}] [-D] [-F FIELD]
                                       [-P SIZE] [--sort-key FIELD]
@@ -3210,8 +3221,9 @@ neutron flavor-profile-show
    usage: neutron flavor-profile-show [-h]
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      [--request-format {json}] [-D] [-F FIELD]
+                                      [--print-empty] [--noindent]
+                                      [--prefix PREFIX] [--request-format {json}]
+                                      [-D] [-F FIELD]
                                       SERVICE_PROFILE
 
 Show information about a given Neutron service flavor profile.
@@ -3284,9 +3296,9 @@ neutron flavor-show
 .. code-block:: console
 
    usage: neutron flavor-show [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX] [--request-format {json}] [-D]
-                              [-F FIELD]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
+                              [--request-format {json}] [-D] [-F FIELD]
                               FLAVOR
 
 Show information about a given Neutron service flavor.
@@ -3390,8 +3402,8 @@ neutron floatingip-create
 
    usage: neutron floatingip-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
-                                    [--request-format {json}]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX] [--request-format {json}]
                                     [--tenant-id TENANT_ID]
                                     [--description DESCRIPTION]
                                     [--port-id PORT_ID]
@@ -3504,7 +3516,7 @@ neutron floatingip-list
 
    usage: neutron floatingip-list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
+                                  [--print-empty] [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   [--request-format {json}] [-D] [-F FIELD]
                                   [-P SIZE] [--sort-key FIELD]
@@ -3551,7 +3563,7 @@ neutron floatingip-show
 
    usage: neutron floatingip-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   [--request-format {json}] [-D] [-F FIELD]
                                   FLOATINGIP
 
@@ -3588,7 +3600,8 @@ neutron ipsec-site-connection-create
                                                [-f {html,json,shell,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
-                                               [--noindent] [--prefix PREFIX]
+                                               [--print-empty] [--noindent]
+                                               [--prefix PREFIX]
                                                [--request-format {json}]
                                                [--tenant-id TENANT_ID]
                                                [--admin-state-down]
@@ -3712,7 +3725,7 @@ neutron ipsec-site-connection-list
    usage: neutron ipsec-site-connection-list [-h]
                                              [-f {csv,html,json,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
-                                             [--noindent]
+                                             [--print-empty] [--noindent]
                                              [--quote {all,minimal,none,nonnumeric}]
                                              [--request-format {json}] [-D]
                                              [-F FIELD] [-P SIZE]
@@ -3761,7 +3774,8 @@ neutron ipsec-site-connection-show
    usage: neutron ipsec-site-connection-show [-h]
                                              [-f {html,json,shell,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
-                                             [--noindent] [--prefix PREFIX]
+                                             [--print-empty] [--noindent]
+                                             [--prefix PREFIX]
                                              [--request-format {json}] [-D]
                                              [-F FIELD]
                                              IPSEC_SITE_CONNECTION
@@ -3883,7 +3897,7 @@ neutron l3-agent-list-hosting-router
                                                [-f {csv,html,json,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
-                                               [--noindent]
+                                               [--print-empty] [--noindent]
                                                [--quote {all,minimal,none,nonnumeric}]
                                                [--request-format {json}] [-D]
                                                [-F FIELD]
@@ -3977,7 +3991,7 @@ neutron lb-agent-hosting-pool
    usage: neutron lb-agent-hosting-pool [-h]
                                         [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent]
+                                        [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         [--request-format {json}] [-D] [-F FIELD]
                                         POOL
@@ -4045,7 +4059,8 @@ neutron lb-healthmonitor-create
    usage: neutron lb-healthmonitor-create [-h]
                                           [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent] [--prefix PREFIX]
+                                          [--print-empty] [--noindent]
+                                          [--prefix PREFIX]
                                           [--request-format {json}]
                                           [--tenant-id TENANT_ID]
                                           [--admin-state-down]
@@ -4167,7 +4182,7 @@ neutron lb-healthmonitor-list
    usage: neutron lb-healthmonitor-list [-h]
                                         [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent]
+                                        [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         [--request-format {json}] [-D] [-F FIELD]
                                         [-P SIZE] [--sort-key FIELD]
@@ -4215,7 +4230,8 @@ neutron lb-healthmonitor-show
    usage: neutron lb-healthmonitor-show [-h]
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX]
                                         [--request-format {json}] [-D] [-F FIELD]
                                         HEALTH_MONITOR
 
@@ -4275,7 +4291,7 @@ neutron lb-member-create
 
    usage: neutron lb-member-create [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX]
+                                   [--print-empty] [--noindent] [--prefix PREFIX]
                                    [--request-format {json}]
                                    [--tenant-id TENANT_ID] [--admin-state-down]
                                    [--weight WEIGHT] --address ADDRESS
@@ -4347,7 +4363,8 @@ neutron lb-member-list
 .. code-block:: console
 
    usage: neutron lb-member-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [-c COLUMN] [--max-width <integer>]
+                                 [--print-empty] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--request-format {json}] [-D] [-F FIELD]
                                  [-P SIZE] [--sort-key FIELD]
@@ -4393,9 +4410,9 @@ neutron lb-member-show
 .. code-block:: console
 
    usage: neutron lb-member-show [-h] [-f {html,json,shell,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX] [--request-format {json}] [-D]
-                                 [-F FIELD]
+                                 [-c COLUMN] [--max-width <integer>]
+                                 [--print-empty] [--noindent] [--prefix PREFIX]
+                                 [--request-format {json}] [-D] [-F FIELD]
                                  MEMBER
 
 Show information of a given member.
@@ -4452,8 +4469,9 @@ neutron lb-pool-create
 .. code-block:: console
 
    usage: neutron lb-pool-create [-h] [-f {html,json,shell,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX] [--request-format {json}]
+                                 [-c COLUMN] [--max-width <integer>]
+                                 [--print-empty] [--noindent] [--prefix PREFIX]
+                                 [--request-format {json}]
                                  [--tenant-id TENANT_ID] [--admin-state-down]
                                  [--description DESCRIPTION] --lb-method
                                  {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP} --name
@@ -4528,7 +4546,8 @@ neutron lb-pool-list
 .. code-block:: console
 
    usage: neutron lb-pool-list [-h] [-f {csv,html,json,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
                                [--request-format {json}] [-D] [-F FIELD]
                                [-P SIZE] [--sort-key FIELD]
@@ -4576,7 +4595,7 @@ neutron lb-pool-list-on-agent
    usage: neutron lb-pool-list-on-agent [-h]
                                         [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent]
+                                        [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         [--request-format {json}] [-D] [-F FIELD]
                                         LBAAS_AGENT
@@ -4611,9 +4630,9 @@ neutron lb-pool-show
 .. code-block:: console
 
    usage: neutron lb-pool-show [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] [--request-format {json}] [-D]
-                               [-F FIELD]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
+                               [--request-format {json}] [-D] [-F FIELD]
                                POOL
 
 Show information of a given pool.
@@ -4646,9 +4665,9 @@ neutron lb-pool-stats
 .. code-block:: console
 
    usage: neutron lb-pool-stats [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--request-format {json}] [-D]
-                                [-F FIELD]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
+                                [--request-format {json}] [-D] [-F FIELD]
                                 POOL
 
 Retrieve stats for a given pool.
@@ -4705,10 +4724,10 @@ neutron lb-vip-create
 .. code-block:: console
 
    usage: neutron lb-vip-create [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--request-format {json}]
-                                [--tenant-id TENANT_ID] [--address ADDRESS]
-                                [--admin-state-down]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
+                                [--request-format {json}] [--tenant-id TENANT_ID]
+                                [--address ADDRESS] [--admin-state-down]
                                 [--connection-limit CONNECTION_LIMIT]
                                 [--description DESCRIPTION] --name NAME
                                 --protocol-port PROTOCOL_PORT --protocol
@@ -4792,7 +4811,8 @@ neutron lb-vip-list
 .. code-block:: console
 
    usage: neutron lb-vip-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
                               [--sort-key FIELD] [--sort-dir {asc,desc}]
@@ -4837,9 +4857,9 @@ neutron lb-vip-show
 .. code-block:: console
 
    usage: neutron lb-vip-show [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX] [--request-format {json}] [-D]
-                              [-F FIELD]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
+                              [--request-format {json}] [-D] [-F FIELD]
                               VIP
 
 Show information of a given vip.
@@ -4899,7 +4919,7 @@ neutron lbaas-agent-hosting-loadbalancer
                                                    [-f {csv,html,json,table,value,yaml}]
                                                    [-c COLUMN]
                                                    [--max-width <integer>]
-                                                   [--noindent]
+                                                   [--print-empty] [--noindent]
                                                    [--quote {all,minimal,none,nonnumeric}]
                                                    [--request-format {json}] [-D]
                                                    [-F FIELD]
@@ -4939,7 +4959,8 @@ neutron lbaas-healthmonitor-create
    usage: neutron lbaas-healthmonitor-create [-h]
                                              [-f {html,json,shell,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
-                                             [--noindent] [--prefix PREFIX]
+                                             [--print-empty] [--noindent]
+                                             [--prefix PREFIX]
                                              [--request-format {json}]
                                              [--tenant-id TENANT_ID] --delay
                                              DELAY [--name NAME] --timeout
@@ -5039,7 +5060,7 @@ neutron lbaas-healthmonitor-list
    usage: neutron lbaas-healthmonitor-list [-h]
                                            [-f {csv,html,json,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent]
+                                           [--print-empty] [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
                                            [--request-format {json}] [-D]
                                            [-F FIELD] [-P SIZE]
@@ -5088,7 +5109,8 @@ neutron lbaas-healthmonitor-show
    usage: neutron lbaas-healthmonitor-show [-h]
                                            [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent] [--prefix PREFIX]
+                                           [--print-empty] [--noindent]
+                                           [--prefix PREFIX]
                                            [--request-format {json}] [-D]
                                            [-F FIELD]
                                            HEALTHMONITOR
@@ -5192,7 +5214,8 @@ neutron lbaas-l7policy-create
    usage: neutron lbaas-l7policy-create [-h]
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX]
                                         [--request-format {json}]
                                         [--tenant-id TENANT_ID] [--name NAME]
                                         [--description DESCRIPTION] --action
@@ -5277,7 +5300,7 @@ neutron lbaas-l7policy-list
 
    usage: neutron lbaas-l7policy-list [-h] [-f {csv,html,json,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent]
+                                      [--print-empty] [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
                                       [--request-format {json}] [-D] [-F FIELD]
                                       [-P SIZE] [--sort-key FIELD]
@@ -5325,8 +5348,9 @@ neutron lbaas-l7policy-show
    usage: neutron lbaas-l7policy-show [-h]
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      [--request-format {json}] [-D] [-F FIELD]
+                                      [--print-empty] [--noindent]
+                                      [--prefix PREFIX] [--request-format {json}]
+                                      [-D] [-F FIELD]
                                       L7POLICY
 
 LBaaS v2 Show information of a given L7 policy.
@@ -5419,8 +5443,8 @@ neutron lbaas-l7rule-create
    usage: neutron lbaas-l7rule-create [-h]
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      [--request-format {json}]
+                                      [--print-empty] [--noindent]
+                                      [--prefix PREFIX] [--request-format {json}]
                                       [--tenant-id TENANT_ID] --type
                                       {HOST_NAME,PATH,FILE_TYPE,HEADER,COOKIE}
                                       --compare-type
@@ -5503,7 +5527,7 @@ neutron lbaas-l7rule-list
 
    usage: neutron lbaas-l7rule-list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent]
+                                    [--print-empty] [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
                                     [--request-format {json}] [-D] [-F FIELD]
                                     [-P SIZE] [--sort-key FIELD]
@@ -5556,8 +5580,9 @@ neutron lbaas-l7rule-show
 
    usage: neutron lbaas-l7rule-show [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
-                                    [--request-format {json}] [-D] [-F FIELD]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX] [--request-format {json}]
+                                    [-D] [-F FIELD]
                                     RULE L7POLICY
 
 LBaaS v2 Show information of a given rule.
@@ -5648,7 +5673,8 @@ neutron lbaas-listener-create
    usage: neutron lbaas-listener-create [-h]
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX]
                                         [--request-format {json}]
                                         [--tenant-id TENANT_ID]
                                         [--description DESCRIPTION]
@@ -5689,8 +5715,21 @@ LBaaS v2 Create a listener.
   Set admin state up to false.
 
 ``--name NAME``
-  The name of the listener. At least one of :option:`--default-`
-  pool or :option:`--loadbalancer` must be specified.
+  The
+  name
+  of
+  the
+  listener.
+  At
+  least
+  one
+  of
+  --default-pool
+  or
+  --loadbalancer
+  must
+  be
+  specified.
 
 ``--default-tls-container-ref DEFAULT_TLS_CONTAINER_REF``
   Default TLS container reference to retrieve TLS
@@ -5742,7 +5781,7 @@ neutron lbaas-listener-list
 
    usage: neutron lbaas-listener-list [-h] [-f {csv,html,json,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent]
+                                      [--print-empty] [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
                                       [--request-format {json}] [-D] [-F FIELD]
                                       [-P SIZE] [--sort-key FIELD]
@@ -5790,8 +5829,9 @@ neutron lbaas-listener-show
    usage: neutron lbaas-listener-show [-h]
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      [--request-format {json}] [-D] [-F FIELD]
+                                      [--print-empty] [--noindent]
+                                      [--prefix PREFIX] [--request-format {json}]
+                                      [-D] [-F FIELD]
                                       LISTENER
 
 LBaaS v2 Show information of a given listener.
@@ -5874,7 +5914,8 @@ neutron lbaas-loadbalancer-create
    usage: neutron lbaas-loadbalancer-create [-h]
                                             [-f {html,json,shell,table,value,yaml}]
                                             [-c COLUMN] [--max-width <integer>]
-                                            [--noindent] [--prefix PREFIX]
+                                            [--print-empty] [--noindent]
+                                            [--prefix PREFIX]
                                             [--request-format {json}]
                                             [--tenant-id TENANT_ID]
                                             [--description DESCRIPTION]
@@ -5955,7 +5996,7 @@ neutron lbaas-loadbalancer-list
    usage: neutron lbaas-loadbalancer-list [-h]
                                           [-f {csv,html,json,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent]
+                                          [--print-empty] [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
                                           [--request-format {json}] [-D]
                                           [-F FIELD] [-P SIZE] [--sort-key FIELD]
@@ -6004,7 +6045,7 @@ neutron lbaas-loadbalancer-list-on-agent
                                                    [-f {csv,html,json,table,value,yaml}]
                                                    [-c COLUMN]
                                                    [--max-width <integer>]
-                                                   [--noindent]
+                                                   [--print-empty] [--noindent]
                                                    [--quote {all,minimal,none,nonnumeric}]
                                                    [--request-format {json}] [-D]
                                                    [-F FIELD]
@@ -6042,7 +6083,8 @@ neutron lbaas-loadbalancer-show
    usage: neutron lbaas-loadbalancer-show [-h]
                                           [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent] [--prefix PREFIX]
+                                          [--print-empty] [--noindent]
+                                          [--prefix PREFIX]
                                           [--request-format {json}] [-D]
                                           [-F FIELD]
                                           LOADBALANCER
@@ -6079,7 +6121,8 @@ neutron lbaas-loadbalancer-stats
    usage: neutron lbaas-loadbalancer-stats [-h]
                                            [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent] [--prefix PREFIX]
+                                           [--print-empty] [--noindent]
+                                           [--prefix PREFIX]
                                            [--request-format {json}] [-D]
                                            [-F FIELD]
                                            LOADBALANCER
@@ -6180,8 +6223,8 @@ neutron lbaas-member-create
    usage: neutron lbaas-member-create [-h]
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      [--request-format {json}]
+                                      [--print-empty] [--noindent]
+                                      [--prefix PREFIX] [--request-format {json}]
                                       [--tenant-id TENANT_ID] [--name NAME]
                                       [--weight WEIGHT] [--admin-state-down]
                                       --subnet SUBNET --address ADDRESS
@@ -6263,7 +6306,7 @@ neutron lbaas-member-list
 
    usage: neutron lbaas-member-list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent]
+                                    [--print-empty] [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
                                     [--request-format {json}] [-D] [-F FIELD]
                                     [-P SIZE] [--sort-key FIELD]
@@ -6316,8 +6359,9 @@ neutron lbaas-member-show
 
    usage: neutron lbaas-member-show [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
-                                    [--request-format {json}] [-D] [-F FIELD]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX] [--request-format {json}]
+                                    [-D] [-F FIELD]
                                     MEMBER POOL
 
 LBaaS v2 Show information of a given member.
@@ -6395,8 +6439,8 @@ neutron lbaas-pool-create
 
    usage: neutron lbaas-pool-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
-                                    [--request-format {json}]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX] [--request-format {json}]
                                     [--tenant-id TENANT_ID]
                                     [--description DESCRIPTION] [--name NAME]
                                     --lb-algorithm
@@ -6434,13 +6478,13 @@ LBaaS v2 Create a pool.
 
 ``--listener LISTENER``
   Listener whose default-pool should be set to this
-  pool. At least one of :option:`--listener` or :option:`--loadbalancer`
+  pool. At least one of --listener or --loadbalancer
   must be specified.
 
 ``--loadbalancer LOADBALANCER``
   Loadbalancer with which this pool should be
-  associated. At least one of :option:`--listener` or
-  :option:`--loadbalancer` must be specified.
+  associated. At least one of --listener or
+  --loadbalancer must be specified.
 
 ``--protocol {HTTP,HTTPS,TCP}``
   Protocol for balancing.
@@ -6484,7 +6528,7 @@ neutron lbaas-pool-list
 
    usage: neutron lbaas-pool-list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
+                                  [--print-empty] [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   [--request-format {json}] [-D] [-F FIELD]
                                   [-P SIZE] [--sort-key FIELD]
@@ -6531,7 +6575,7 @@ neutron lbaas-pool-show
 
    usage: neutron lbaas-pool-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   [--request-format {json}] [-D] [-F FIELD]
                                   POOL
 
@@ -6615,8 +6659,8 @@ neutron meter-label-create
 
    usage: neutron meter-label-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
-                                     [--request-format {json}]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX] [--request-format {json}]
                                      [--tenant-id TENANT_ID]
                                      [--description DESCRIPTION] [--shared]
                                      NAME
@@ -6679,7 +6723,7 @@ neutron meter-label-list
 
    usage: neutron meter-label-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
+                                   [--print-empty] [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
                                    [--request-format {json}] [-D] [-F FIELD]
                                    [-P SIZE] [--sort-key FIELD]
@@ -6727,7 +6771,8 @@ neutron meter-label-rule-create
    usage: neutron meter-label-rule-create [-h]
                                           [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent] [--prefix PREFIX]
+                                          [--print-empty] [--noindent]
+                                          [--prefix PREFIX]
                                           [--request-format {json}]
                                           [--tenant-id TENANT_ID]
                                           [--direction {ingress,egress}]
@@ -6798,7 +6843,7 @@ neutron meter-label-rule-list
    usage: neutron meter-label-rule-list [-h]
                                         [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent]
+                                        [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         [--request-format {json}] [-D] [-F FIELD]
                                         [-P SIZE] [--sort-key FIELD]
@@ -6846,7 +6891,8 @@ neutron meter-label-rule-show
    usage: neutron meter-label-rule-show [-h]
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX]
                                         [--request-format {json}] [-D] [-F FIELD]
                                         METERING_LABEL_RULE
 
@@ -6881,7 +6927,7 @@ neutron meter-label-show
 
    usage: neutron meter-label-show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX]
+                                   [--print-empty] [--noindent] [--prefix PREFIX]
                                    [--request-format {json}] [-D] [-F FIELD]
                                    METERING_LABEL
 
@@ -6915,10 +6961,11 @@ neutron net-create
 .. code-block:: console
 
    usage: neutron net-create [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [--request-format {json}]
-                             [--tenant-id TENANT_ID] [--admin-state-down]
-                             [--shared] [--provider:network_type <network_type>]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX]
+                             [--request-format {json}] [--tenant-id TENANT_ID]
+                             [--admin-state-down] [--shared]
+                             [--provider:network_type <network_type>]
                              [--provider:physical_network <physical_network_name>]
                              [--provider:segmentation_id <segmentation_id>]
                              [--vlan-transparent {True,False}]
@@ -7016,7 +7063,7 @@ neutron net-external-list
 
    usage: neutron net-external-list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent]
+                                    [--print-empty] [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
                                     [--request-format {json}] [-D] [-F FIELD]
                                     [-P SIZE] [--sort-key FIELD]
@@ -7070,7 +7117,7 @@ neutron net-ip-availability-list
    usage: neutron net-ip-availability-list [-h]
                                            [-f {csv,html,json,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent]
+                                           [--print-empty] [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
                                            [--request-format {json}] [-D]
                                            [-F FIELD] [--sort-key FIELD]
@@ -7118,7 +7165,8 @@ neutron net-ip-availability-show
    usage: neutron net-ip-availability-show [-h]
                                            [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent] [--prefix PREFIX]
+                                           [--print-empty] [--noindent]
+                                           [--prefix PREFIX]
                                            [--request-format {json}]
                                            NETWORK
 
@@ -7145,7 +7193,7 @@ neutron net-list
 .. code-block:: console
 
    usage: neutron net-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width <integer>] [--noindent]
+                           [--max-width <integer>] [--print-empty] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
                            [--sort-key FIELD] [--sort-dir {asc,desc}]
@@ -7197,7 +7245,7 @@ neutron net-list-on-dhcp-agent
    usage: neutron net-list-on-dhcp-agent [-h]
                                          [-f {csv,html,json,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
-                                         [--noindent]
+                                         [--print-empty] [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
                                          [--request-format {json}] [-D]
                                          [-F FIELD] [-P SIZE] [--sort-key FIELD]
@@ -7256,9 +7304,9 @@ neutron net-show
 .. code-block:: console
 
    usage: neutron net-show [-h] [-f {html,json,shell,table,value,yaml}]
-                           [-c COLUMN] [--max-width <integer>] [--noindent]
-                           [--prefix PREFIX] [--request-format {json}] [-D]
-                           [-F FIELD]
+                           [-c COLUMN] [--max-width <integer>] [--print-empty]
+                           [--noindent] [--prefix PREFIX]
+                           [--request-format {json}] [-D] [-F FIELD]
                            NETWORK
 
 Show information of a given network.
@@ -7340,10 +7388,10 @@ neutron port-create
 .. code-block:: console
 
    usage: neutron port-create [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX] [--request-format {json}]
-                              [--tenant-id TENANT_ID] [--name NAME]
-                              [--description DESCRIPTION]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
+                              [--request-format {json}] [--tenant-id TENANT_ID]
+                              [--name NAME] [--description DESCRIPTION]
                               [--fixed-ip subnet_id=SUBNET,ip_address=IP_ADDR]
                               [--device-id DEVICE_ID]
                               [--device-owner DEVICE_OWNER] [--admin-state-down]
@@ -7465,8 +7513,8 @@ neutron port-list
 .. code-block:: console
 
    usage: neutron port-list [-h] [-f {csv,html,json,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--quote {all,minimal,none,nonnumeric}]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--quote {all,minimal,none,nonnumeric}]
                             [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
                             [--sort-key FIELD] [--sort-dir {asc,desc}]
 
@@ -7510,9 +7558,9 @@ neutron port-show
 .. code-block:: console
 
    usage: neutron port-show [-h] [-f {html,json,shell,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--prefix PREFIX] [--request-format {json}] [-D]
-                            [-F FIELD]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--prefix PREFIX]
+                            [--request-format {json}] [-D] [-F FIELD]
                             PORT
 
 Show information of a given port.
@@ -7663,7 +7711,7 @@ neutron qos-available-rule-types
    usage: neutron qos-available-rule-types [-h]
                                            [-f {csv,html,json,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent]
+                                           [--print-empty] [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
                                            [--request-format {json}] [-D]
                                            [-F FIELD] [-P SIZE]
@@ -7713,7 +7761,8 @@ neutron qos-bandwidth-limit-rule-create
                                                   [-f {html,json,shell,table,value,yaml}]
                                                   [-c COLUMN]
                                                   [--max-width <integer>]
-                                                  [--noindent] [--prefix PREFIX]
+                                                  [--print-empty] [--noindent]
+                                                  [--prefix PREFIX]
                                                   [--request-format {json}]
                                                   [--tenant-id TENANT_ID]
                                                   [--max-kbps MAX_KBPS]
@@ -7785,7 +7834,7 @@ neutron qos-bandwidth-limit-rule-list
                                                 [-f {csv,html,json,table,value,yaml}]
                                                 [-c COLUMN]
                                                 [--max-width <integer>]
-                                                [--noindent]
+                                                [--print-empty] [--noindent]
                                                 [--quote {all,minimal,none,nonnumeric}]
                                                 [--request-format {json}] [-D]
                                                 [-F FIELD] [-P SIZE]
@@ -7841,7 +7890,8 @@ neutron qos-bandwidth-limit-rule-show
                                                 [-f {html,json,shell,table,value,yaml}]
                                                 [-c COLUMN]
                                                 [--max-width <integer>]
-                                                [--noindent] [--prefix PREFIX]
+                                                [--print-empty] [--noindent]
+                                                [--prefix PREFIX]
                                                 [--request-format {json}] [-D]
                                                 [-F FIELD]
                                                 BANDWIDTH_LIMIT_RULE QOS_POLICY
@@ -7918,7 +7968,8 @@ neutron qos-dscp-marking-rule-create
                                                [-f {html,json,shell,table,value,yaml}]
                                                [-c COLUMN]
                                                [--max-width <integer>]
-                                               [--noindent] [--prefix PREFIX]
+                                               [--print-empty] [--noindent]
+                                               [--prefix PREFIX]
                                                [--request-format {json}]
                                                [--tenant-id TENANT_ID]
                                                --dscp-mark DSCP_MARK
@@ -7985,7 +8036,7 @@ neutron qos-dscp-marking-rule-list
    usage: neutron qos-dscp-marking-rule-list [-h]
                                              [-f {csv,html,json,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
-                                             [--noindent]
+                                             [--print-empty] [--noindent]
                                              [--quote {all,minimal,none,nonnumeric}]
                                              [--request-format {json}] [-D]
                                              [-F FIELD] [-P SIZE]
@@ -8040,7 +8091,8 @@ neutron qos-dscp-marking-rule-show
    usage: neutron qos-dscp-marking-rule-show [-h]
                                              [-f {html,json,shell,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
-                                             [--noindent] [--prefix PREFIX]
+                                             [--print-empty] [--noindent]
+                                             [--prefix PREFIX]
                                              [--request-format {json}] [-D]
                                              [-F FIELD]
                                              DSCP_MARKING_RULE QOS_POLICY
@@ -8114,7 +8166,7 @@ neutron qos-minimum-bandwidth-rule-create
                                                     [-f {html,json,shell,table,value,yaml}]
                                                     [-c COLUMN]
                                                     [--max-width <integer>]
-                                                    [--noindent]
+                                                    [--print-empty] [--noindent]
                                                     [--prefix PREFIX]
                                                     [--request-format {json}]
                                                     [--tenant-id TENANT_ID]
@@ -8189,7 +8241,7 @@ neutron qos-minimum-bandwidth-rule-list
                                                   [-f {csv,html,json,table,value,yaml}]
                                                   [-c COLUMN]
                                                   [--max-width <integer>]
-                                                  [--noindent]
+                                                  [--print-empty] [--noindent]
                                                   [--quote {all,minimal,none,nonnumeric}]
                                                   [--request-format {json}] [-D]
                                                   [-F FIELD] [-P SIZE]
@@ -8245,7 +8297,8 @@ neutron qos-minimum-bandwidth-rule-show
                                                   [-f {html,json,shell,table,value,yaml}]
                                                   [-c COLUMN]
                                                   [--max-width <integer>]
-                                                  [--noindent] [--prefix PREFIX]
+                                                  [--print-empty] [--noindent]
+                                                  [--prefix PREFIX]
                                                   [--request-format {json}] [-D]
                                                   [-F FIELD]
                                                   MINIMUM_BANDWIDTH_RULE
@@ -8324,8 +8377,8 @@ neutron qos-policy-create
 
    usage: neutron qos-policy-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
-                                    [--request-format {json}]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX] [--request-format {json}]
                                     [--tenant-id TENANT_ID]
                                     [--description DESCRIPTION] [--shared]
                                     NAME
@@ -8389,7 +8442,7 @@ neutron qos-policy-list
 
    usage: neutron qos-policy-list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
+                                  [--print-empty] [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   [--request-format {json}] [-D] [-F FIELD]
                                   [-P SIZE] [--sort-key FIELD]
@@ -8436,7 +8489,7 @@ neutron qos-policy-show
 
    usage: neutron qos-policy-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   [--request-format {json}] [-D] [-F FIELD]
                                   POLICY
 
@@ -8511,8 +8564,8 @@ neutron quota-default-show
 
    usage: neutron quota-default-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
-                                     [--request-format {json}]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX] [--request-format {json}]
                                      [--tenant-id tenant-id]
 
 Show default quotas for a given tenant.
@@ -8561,8 +8614,8 @@ neutron quota-list
 .. code-block:: console
 
    usage: neutron quota-list [-h] [-f {csv,html,json,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--quote {all,minimal,none,nonnumeric}]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--quote {all,minimal,none,nonnumeric}]
                              [--request-format {json}]
 
 List quotas of all tenants who have non-default quota values.
@@ -8583,9 +8636,9 @@ neutron quota-show
 .. code-block:: console
 
    usage: neutron quota-show [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [--request-format {json}]
-                             [--tenant-id tenant-id]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX]
+                             [--request-format {json}] [--tenant-id tenant-id]
 
 Show quotas for a given tenant.
 
@@ -8609,11 +8662,12 @@ neutron quota-update
 .. code-block:: console
 
    usage: neutron quota-update [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] [--request-format {json}]
-                               [--tenant-id tenant-id] [--network networks]
-                               [--subnet subnets] [--port ports]
-                               [--router routers] [--floatingip floatingips]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
+                               [--request-format {json}] [--tenant-id tenant-id]
+                               [--network networks] [--subnet subnets]
+                               [--port ports] [--router routers]
+                               [--floatingip floatingips]
                                [--security-group security_groups]
                                [--security-group-rule security_group_rules]
                                [--vip vips] [--pool pools] [--member members]
@@ -8687,9 +8741,10 @@ neutron rbac-create
 .. code-block:: console
 
    usage: neutron rbac-create [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX] [--request-format {json}]
-                              [--tenant-id TENANT_ID] --type {qos-policy,network}
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
+                              [--request-format {json}] [--tenant-id TENANT_ID]
+                              --type {qos-policy,network}
                               [--target-tenant TARGET_TENANT] --action
                               {access_as_external,access_as_shared}
                               RBAC_OBJECT
@@ -8755,8 +8810,8 @@ neutron rbac-list
 .. code-block:: console
 
    usage: neutron rbac-list [-h] [-f {csv,html,json,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--quote {all,minimal,none,nonnumeric}]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--quote {all,minimal,none,nonnumeric}]
                             [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
                             [--sort-key FIELD] [--sort-dir {asc,desc}]
 
@@ -8800,9 +8855,9 @@ neutron rbac-show
 .. code-block:: console
 
    usage: neutron rbac-show [-h] [-f {html,json,shell,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--prefix PREFIX] [--request-format {json}] [-D]
-                            [-F FIELD]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--prefix PREFIX]
+                            [--request-format {json}] [-D] [-F FIELD]
                             RBAC_POLICY
 
 Show information of a given RBAC policy.
@@ -8865,11 +8920,12 @@ neutron router-create
 .. code-block:: console
 
    usage: neutron router-create [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--request-format {json}]
-                                [--tenant-id TENANT_ID] [--admin-state-down]
-                                [--description DESCRIPTION] [--flavor FLAVOR]
-                                [--distributed {True,False}] [--ha {True,False}]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
+                                [--request-format {json}] [--tenant-id TENANT_ID]
+                                [--admin-state-down] [--description DESCRIPTION]
+                                [--flavor FLAVOR] [--distributed {True,False}]
+                                [--ha {True,False}]
                                 [--availability-zone-hint AVAILABILITY_ZONE]
                                 NAME
 
@@ -9070,7 +9126,8 @@ neutron router-list
 .. code-block:: console
 
    usage: neutron router-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
                               [--sort-key FIELD] [--sort-dir {asc,desc}]
@@ -9117,7 +9174,7 @@ neutron router-list-on-l3-agent
    usage: neutron router-list-on-l3-agent [-h]
                                           [-f {csv,html,json,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent]
+                                          [--print-empty] [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
                                           [--request-format {json}] [-D]
                                           [-F FIELD]
@@ -9154,7 +9211,7 @@ neutron router-port-list
 
    usage: neutron router-port-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
+                                   [--print-empty] [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
                                    [--request-format {json}] [-D] [-F FIELD]
                                    [-P SIZE] [--sort-key FIELD]
@@ -9206,9 +9263,9 @@ neutron router-show
 .. code-block:: console
 
    usage: neutron router-show [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX] [--request-format {json}] [-D]
-                              [-F FIELD]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
+                              [--request-format {json}] [-D] [-F FIELD]
                               ROUTER
 
 Show information of a given router.
@@ -9294,7 +9351,8 @@ neutron security-group-create
    usage: neutron security-group-create [-h]
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX]
                                         [--request-format {json}]
                                         [--tenant-id TENANT_ID]
                                         [--description DESCRIPTION]
@@ -9355,7 +9413,7 @@ neutron security-group-list
 
    usage: neutron security-group-list [-h] [-f {csv,html,json,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent]
+                                      [--print-empty] [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
                                       [--request-format {json}] [-D] [-F FIELD]
                                       [-P SIZE] [--sort-key FIELD]
@@ -9403,7 +9461,8 @@ neutron security-group-rule-create
    usage: neutron security-group-rule-create [-h]
                                              [-f {html,json,shell,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
-                                             [--noindent] [--prefix PREFIX]
+                                             [--print-empty] [--noindent]
+                                             [--prefix PREFIX]
                                              [--request-format {json}]
                                              [--tenant-id TENANT_ID]
                                              [--description DESCRIPTION]
@@ -9497,7 +9556,7 @@ neutron security-group-rule-list
    usage: neutron security-group-rule-list [-h]
                                            [-f {csv,html,json,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent]
+                                           [--print-empty] [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
                                            [--request-format {json}] [-D]
                                            [-F FIELD] [-P SIZE]
@@ -9550,7 +9609,8 @@ neutron security-group-rule-show
    usage: neutron security-group-rule-show [-h]
                                            [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent] [--prefix PREFIX]
+                                           [--print-empty] [--noindent]
+                                           [--prefix PREFIX]
                                            [--request-format {json}] [-D]
                                            [-F FIELD]
                                            SECURITY_GROUP_RULE
@@ -9587,8 +9647,9 @@ neutron security-group-show
    usage: neutron security-group-show [-h]
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      [--request-format {json}] [-D] [-F FIELD]
+                                      [--print-empty] [--noindent]
+                                      [--prefix PREFIX] [--request-format {json}]
+                                      [-D] [-F FIELD]
                                       SECURITY_GROUP
 
 Show information of a given security group.
@@ -9655,7 +9716,7 @@ neutron service-provider-list
    usage: neutron service-provider-list [-h]
                                         [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent]
+                                        [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         [--request-format {json}] [-D] [-F FIELD]
                                         [-P SIZE] [--sort-key FIELD]
@@ -9701,10 +9762,10 @@ neutron subnet-create
 .. code-block:: console
 
    usage: neutron subnet-create [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--request-format {json}]
-                                [--tenant-id TENANT_ID] [--name NAME]
-                                [--description DESCRIPTION]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
+                                [--request-format {json}] [--tenant-id TENANT_ID]
+                                [--name NAME] [--description DESCRIPTION]
                                 [--gateway GATEWAY_IP | --no-gateway]
                                 [--allocation-pool start=IP_ADDR,end=IP_ADDR]
                                 [--host-route destination=CIDR,nexthop=IP_ADDR]
@@ -9828,7 +9889,8 @@ neutron subnet-list
 .. code-block:: console
 
    usage: neutron subnet-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
                               [--sort-key FIELD] [--sort-dir {asc,desc}]
@@ -9873,9 +9935,9 @@ neutron subnet-show
 .. code-block:: console
 
    usage: neutron subnet-show [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX] [--request-format {json}] [-D]
-                              [-F FIELD]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
+                              [--request-format {json}] [-D] [-F FIELD]
                               SUBNET
 
 Show information of a given subnet.
@@ -9971,8 +10033,8 @@ neutron subnetpool-create
 
    usage: neutron subnetpool-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
-                                    [--request-format {json}]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX] [--request-format {json}]
                                     [--tenant-id TENANT_ID]
                                     [--description DESCRIPTION]
                                     [--min-prefixlen MIN_PREFIXLEN]
@@ -10062,7 +10124,7 @@ neutron subnetpool-list
 
    usage: neutron subnetpool-list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
+                                  [--print-empty] [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   [--request-format {json}] [-D] [-F FIELD]
                                   [-P SIZE] [--sort-key FIELD]
@@ -10109,7 +10171,7 @@ neutron subnetpool-show
 
    usage: neutron subnetpool-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   [--request-format {json}] [-D] [-F FIELD]
                                   SUBNETPOOL
 
@@ -10297,7 +10359,8 @@ neutron vpn-endpoint-group-create
    usage: neutron vpn-endpoint-group-create [-h]
                                             [-f {html,json,shell,table,value,yaml}]
                                             [-c COLUMN] [--max-width <integer>]
-                                            [--noindent] [--prefix PREFIX]
+                                            [--print-empty] [--noindent]
+                                            [--prefix PREFIX]
                                             [--request-format {json}]
                                             [--tenant-id TENANT_ID] [--name NAME]
                                             [--description DESCRIPTION] --type
@@ -10364,7 +10427,7 @@ neutron vpn-endpoint-group-list
    usage: neutron vpn-endpoint-group-list [-h]
                                           [-f {csv,html,json,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent]
+                                          [--print-empty] [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
                                           [--request-format {json}] [-D]
                                           [-F FIELD] [-P SIZE] [--sort-key FIELD]
@@ -10412,7 +10475,8 @@ neutron vpn-endpoint-group-show
    usage: neutron vpn-endpoint-group-show [-h]
                                           [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent] [--prefix PREFIX]
+                                          [--print-empty] [--noindent]
+                                          [--prefix PREFIX]
                                           [--request-format {json}] [-D]
                                           [-F FIELD]
                                           ENDPOINT_GROUP
@@ -10482,7 +10546,8 @@ neutron vpn-ikepolicy-create
    usage: neutron vpn-ikepolicy-create [-h]
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX]
                                        [--request-format {json}]
                                        [--tenant-id TENANT_ID]
                                        [--description DESCRIPTION]
@@ -10569,7 +10634,7 @@ neutron vpn-ikepolicy-list
 
    usage: neutron vpn-ikepolicy-list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent]
+                                     [--print-empty] [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--request-format {json}] [-D] [-F FIELD]
                                      [-P SIZE] [--sort-key FIELD]
@@ -10616,8 +10681,9 @@ neutron vpn-ikepolicy-show
 
    usage: neutron vpn-ikepolicy-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
-                                     [--request-format {json}] [-D] [-F FIELD]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX] [--request-format {json}]
+                                     [-D] [-F FIELD]
                                      IKEPOLICY
 
 Show information of a given IKE policy.
@@ -10710,7 +10776,8 @@ neutron vpn-ipsecpolicy-create
    usage: neutron vpn-ipsecpolicy-create [-h]
                                          [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
-                                         [--noindent] [--prefix PREFIX]
+                                         [--print-empty] [--noindent]
+                                         [--prefix PREFIX]
                                          [--request-format {json}]
                                          [--tenant-id TENANT_ID]
                                          [--auth-algorithm AUTH_ALGORITHM]
@@ -10801,7 +10868,7 @@ neutron vpn-ipsecpolicy-list
 
    usage: neutron vpn-ipsecpolicy-list [-h] [-f {csv,html,json,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent]
+                                       [--print-empty] [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]
                                        [--request-format {json}] [-D] [-F FIELD]
                                        [-P SIZE] [--sort-key FIELD]
@@ -10849,7 +10916,8 @@ neutron vpn-ipsecpolicy-show
    usage: neutron vpn-ipsecpolicy-show [-h]
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX]
                                        [--request-format {json}] [-D] [-F FIELD]
                                        IPSECPOLICY
 
@@ -10947,8 +11015,8 @@ neutron vpn-service-create
 
    usage: neutron vpn-service-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
-                                     [--request-format {json}]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX] [--request-format {json}]
                                      [--tenant-id TENANT_ID] [--admin-state-down]
                                      [--name NAME] [--description DESCRIPTION]
                                      ROUTER [SUBNET]
@@ -11018,7 +11086,7 @@ neutron vpn-service-list
 
    usage: neutron vpn-service-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
+                                   [--print-empty] [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
                                    [--request-format {json}] [-D] [-F FIELD]
                                    [-P SIZE] [--sort-key FIELD]
@@ -11065,7 +11133,7 @@ neutron vpn-service-show
 
    usage: neutron vpn-service-show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX]
+                                   [--print-empty] [--noindent] [--prefix PREFIX]
                                    [--request-format {json}] [-D] [-F FIELD]
                                    VPNSERVICE
 
