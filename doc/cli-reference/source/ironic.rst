@@ -9,7 +9,7 @@ Bare Metal service (ironic) command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service (ironic) API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.8.0``.
+This chapter documents :command:`ironic` version ``1.9.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -123,6 +123,15 @@ ironic usage
 ``node-vendor-passthru``
   Call a vendor-passthru extension for a node.
 
+``node-vif-attach``
+  Attach VIF to a given node.
+
+``node-vif-detach``
+  Detach VIF from a given node.
+
+``node-vif-list``
+  List VIFs for a given node.
+
 ``port-create``
   Create a new port.
 
@@ -137,6 +146,24 @@ ironic usage
 
 ``port-update``
   Update information about a port.
+
+``portgroup-create``
+  Create a new portgroup.
+
+``portgroup-delete``
+  Delete a portgroup.
+
+``portgroup-list``
+  List the portgroups.
+
+``portgroup-port-list``
+  List the ports associated with a portgroup.
+
+``portgroup-show``
+  Show detailed information about a portgroup.
+
+``portgroup-update``
+  Update information about a portgroup.
 
 ``driver-get-vendor-passthru-methods``
   Get the vendor passthru methods for a driver.
@@ -185,13 +212,13 @@ ironic optional arguments
   Print more verbose output
 
 ``--cert-file OS_CERT``
-  **DEPRECATED!** Use :option:`--os-cert`.
+  **DEPRECATED!** Use --os-cert.
 
 ``--key-file OS_KEY``
-  **DEPRECATED!** Use :option:`--os-key`.
+  **DEPRECATED!** Use --os-key.
 
 ``--ca-file OS_CACERT``
-  **DEPRECATED!** Use :option:`--os-cacert`.
+  **DEPRECATED!** Use --os-cacert.
 
 ``--os-username OS_USERNAME``
   Defaults to ``env[OS_USERNAME]``
@@ -240,12 +267,12 @@ ironic optional arguments
 
 ``--os-project-id OS_PROJECT_ID``
   Another way to specify tenant ID. This option is
-  mutually exclusive with :option:`--os-tenant-id`. Defaults to
+  mutually exclusive with --os-tenant-id. Defaults to
   ``env[OS_PROJECT_ID]``.
 
 ``--os-project-name OS_PROJECT_NAME``
   Another way to specify tenant name. This option is
-  mutually exclusive with :option:`--os-tenant-name`. Defaults to
+  mutually exclusive with --os-tenant-name. Defaults to
   ``env[OS_PROJECT_NAME]``.
 
 ``--os-project-domain-id OS_PROJECT_DOMAIN_ID``
@@ -339,8 +366,7 @@ List the chassis.
 
 ``--fields <field> [<field> ...]``
   One or more chassis fields. Only these fields will be
-  fetched from the server. Can not be used when ':option:`--`
-  detail' is specified.
+  fetched from the server. Can not be used when '--detail' is specified.
 
 .. _ironic_chassis-node-list:
 
@@ -387,8 +413,7 @@ List the nodes contained in a chassis.
 
 ``--fields <field> [<field> ...]``
   One or more node fields. Only these fields will be
-  fetched from the server. Can not be used when ':option:`--`
-  detail' is specified.
+  fetched from the server. Can not be used when '--detail' is specified.
 
 ``--maintenance <boolean>``
   List nodes in maintenance mode: 'true' or 'false'.
@@ -604,9 +629,6 @@ Register a new node with the Ironic service.
 ``-c <chassis>, --chassis <chassis>``
   UUID of the chassis that this node belongs to.
 
-``-d <driver>, --driver <driver>``
-  Driver used to control the node [REQUIRED].
-
 ``-i <key=value>, --driver-info <key=value>``
   Key/value pair used by the driver, such as out-of-band
   management credentials. Can be specified multiple
@@ -769,8 +791,7 @@ List the nodes which are registered with the Ironic service.
 
 ``--fields <field> [<field> ...]``
   One or more node fields. Only these fields will be
-  fetched from the server. Can not be used when ':option:`--`
-  detail' is specified.
+  fetched from the server. Can not be used when '--detail' is specified.
 
 ``--resource-class <resource class>``
   List nodes using specified resource class.
@@ -817,8 +838,7 @@ List the ports associated with a node.
 
 ``--fields <field> [<field> ...]``
   One or more port fields. Only these fields will be
-  fetched from the server. Can not be used when ':option:`--`
-  detail' is specified.
+  fetched from the server. Can not be used when '--detail' is specified.
 
 .. _ironic_node-set-boot-device:
 
@@ -998,7 +1018,7 @@ Show detailed information about a node.
 
 ``<id>``
   Name or UUID of the node (or instance UUID if
-  :option:`--instance` is specified).
+  --instance is specified).
 
 **Optional arguments:**
 
@@ -1098,6 +1118,60 @@ Call a vendor-passthru extension for a node.
   methods are: POST, PUT, GET, DELETE, PATCH. Defaults
   to 'POST'.
 
+.. _ironic_node-vif-attach:
+
+ironic node-vif-attach
+----------------------
+
+.. code-block:: console
+
+   usage: ironic node-vif-attach <node> <vif-id>
+
+Attach VIF to a given node.
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+``<vif-id>``
+  Name or UUID of the VIF to attach to node.
+
+.. _ironic_node-vif-detach:
+
+ironic node-vif-detach
+----------------------
+
+.. code-block:: console
+
+   usage: ironic node-vif-detach <node> <vif-id>
+
+Detach VIF from a given node.
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
+``<vif-id>``
+  Name or UUID of the VIF to detach from node.
+
+.. _ironic_node-vif-list:
+
+ironic node-vif-list
+--------------------
+
+.. code-block:: console
+
+   usage: ironic node-vif-list <node>
+
+List VIFs for a given node.
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
 .. _ironic_port-create:
 
 ironic port-create
@@ -1106,23 +1180,20 @@ ironic port-create
 .. code-block:: console
 
    usage: ironic port-create -a <address> -n <node> [-l <key=value>]
-                             [--pxe-enabled <boolean>] [-e <key=value>]
-                             [-u <uuid>]
+                             [--portgroup <portgroup>] [--pxe-enabled <boolean>]
+                             [-e <key=value>] [-u <uuid>]
 
 Create a new port.
 
 **Optional arguments:**
 
-``-a <address>, --address <address>``
-  MAC address for this port.
-
-``-n <node>, --node <node>, --node_uuid <node>``
-  UUID of the node that this port belongs to.
-
 ``-l <key=value>, --local-link-connection <key=value>``
   Key/value metadata describing Local link connection
   information. Valid keys are switch_info, switch_id,
   port_id.Can be specified multiple times.
+
+``--portgroup <portgroup>``
+  UUID of the portgroup that this port belongs to.
 
 ``--pxe-enabled <boolean>``
   Indicates whether this Port should be used when PXE
@@ -1192,8 +1263,7 @@ List the ports.
 
 ``--fields <field> [<field> ...]``
   One or more port fields. Only these fields will be
-  fetched from the server. Can not be used when ':option:`--`
-  detail' is specified.
+  fetched from the server. Can not be used when '--detail' is specified.
 
 .. _ironic_port-show:
 
@@ -1209,7 +1279,7 @@ Show detailed information about a port.
 **Positional arguments:**
 
 ``<id>``
-  UUID of the port (or MAC address if :option:`--address` is
+  UUID of the port (or MAC address if --address is
   specified).
 
 **Optional arguments:**
@@ -1237,6 +1307,206 @@ Update information about a port.
 
 ``<port>``
   UUID of the port.
+
+``<op>``
+  Operation: 'add', 'replace', or 'remove'.
+
+``<path=value>``
+  Attribute to add, replace, or remove. Can be specified
+  multiple times. For 'remove', only <path> is necessary.
+
+.. _ironic_portgroup-create:
+
+ironic portgroup-create
+-----------------------
+
+.. code-block:: console
+
+   usage: ironic portgroup-create [-a <address>] -n <node> [--name <name>]
+                                  [-e <key=value>]
+                                  [--standalone-ports-supported <boolean>]
+                                  [-u <uuid>] [-m <mode>] [-p <key=value>]
+
+Create a new portgroup.
+
+**Optional arguments:**
+
+``-a <address>, --address <address>``
+  MAC address for this portgroup.
+
+``--name <name>``
+  Name for the portgroup.
+
+``-e <key=value>, --extra <key=value>``
+  Record arbitrary key/value metadata. Can be specified
+  multiple times.
+
+``--standalone-ports-supported <boolean>``
+  Specifies whether ports from this portgroup can be
+  used in stand alone mode.
+
+``-u <uuid>, --uuid <uuid>``
+  UUID of the portgroup.
+
+``-m <mode>, --mode <mode>``
+  Portgroup mode. For possible values, refer to https://
+  www.kernel.org/doc/Documentation/networking/bonding.tx
+  t
+
+``-p <key=value>, --properties <key=value>``
+  Record key/value properties related to this
+  portgroup's configuration.
+
+.. _ironic_portgroup-delete:
+
+ironic portgroup-delete
+-----------------------
+
+.. code-block:: console
+
+   usage: ironic portgroup-delete <portgroup> [<portgroup> ...]
+
+Delete a portgroup.
+
+**Positional arguments:**
+
+``<portgroup>``
+  UUID or Name of the portgroup.
+
+.. _ironic_portgroup-list:
+
+ironic portgroup-list
+---------------------
+
+.. code-block:: console
+
+   usage: ironic portgroup-list [--detail] [-n <node>] [-a <mac-address>]
+                                [--limit <limit>] [--marker <portgroup>]
+                                [--sort-key <field>] [--sort-dir <direction>]
+                                [--fields <field> [<field> ...]]
+
+List the portgroups.
+
+**Optional arguments:**
+
+``--detail``
+  Show detailed information about portgroups.
+
+``-n <node>, --node <node>``
+  UUID of the node that this portgroup belongs to.
+
+``-a <mac-address>, --address <mac-address>``
+  Only show information for the portgroup with this MAC
+  address.
+
+``--limit <limit>``
+  Maximum number of portgroups to return per request, 0
+  for no limit. Default is the maximum number used by
+  the Ironic API Service.
+
+``--marker <portgroup>``
+  Portgroup UUID (for example, of the last portgroup in
+  the list from a previous request). Returns the list of
+  portgroups after this UUID.
+
+``--sort-key <field>``
+  Portgroup field that will be used for sorting.
+
+``--sort-dir <direction>``
+  Sort direction: "asc" (the default) or "desc".
+
+``--fields <field> [<field> ...]``
+  One or more portgroup fields. Only these fields will
+  be fetched from the server. Can not be used when '--detail' is specified.
+
+.. _ironic_portgroup-port-list:
+
+ironic portgroup-port-list
+--------------------------
+
+.. code-block:: console
+
+   usage: ironic portgroup-port-list [--detail] [--limit <limit>]
+                                     [--marker <port>] [--sort-key <field>]
+                                     [--sort-dir <direction>]
+                                     [--fields <field> [<field> ...]]
+                                     <portgroup>
+
+List the ports associated with a portgroup.
+
+**Positional arguments:**
+
+``<portgroup>``
+  Name or UUID of the portgroup.
+
+**Optional arguments:**
+
+``--detail``
+  Show detailed information about the ports.
+
+``--limit <limit>``
+  Maximum number of ports to return per request, 0 for
+  no limit. Default is the maximum number used by the
+  Ironic API Service.
+
+``--marker <port>``
+  Port UUID (for example, of the last port in the list
+  from a previous request). Returns the list of ports
+  after this UUID.
+
+``--sort-key <field>``
+  Port field that will be used for sorting.
+
+``--sort-dir <direction>``
+  Sort direction: "asc" (the default) or "desc".
+
+``--fields <field> [<field> ...]``
+  One or more port fields. Only these fields will be
+  fetched from the server. Can not be used when '--detail' is specified.
+
+.. _ironic_portgroup-show:
+
+ironic portgroup-show
+---------------------
+
+.. code-block:: console
+
+   usage: ironic portgroup-show [--address] [--fields <field> [<field> ...]] <id>
+
+Show detailed information about a portgroup.
+
+**Positional arguments:**
+
+``<id>``
+  Name or UUID of the portgroup (or MAC address if
+  --address is specified).
+
+**Optional arguments:**
+
+``--address <id>``
+  is the MAC address (instead of the UUID) of the
+  portgroup.
+
+``--fields <field> [<field> ...]``
+  One or more portgroup fields. Only these fields will
+  be fetched from the server.
+
+.. _ironic_portgroup-update:
+
+ironic portgroup-update
+-----------------------
+
+.. code-block:: console
+
+   usage: ironic portgroup-update <portgroup> <op> <path=value>
+                                  [<path=value> ...]
+
+Update information about a portgroup.
+
+**Positional arguments:**
+
+``<portgroup>``
+  UUID or Name of the portgroup.
 
 ``<op>``
   Operation: 'add', 'replace', or 'remove'.
