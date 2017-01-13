@@ -9,7 +9,7 @@ Block Storage service (cinder) command-line client
 The cinder client is the command-line interface (CLI) for
 the Block Storage service (cinder) API and its extensions.
 
-This chapter documents :command:`cinder` version ``1.9.0``.
+This chapter documents :command:`cinder` version ``1.10.0``.
 
 For help on a specific :command:`cinder` command, enter:
 
@@ -355,8 +355,7 @@ cinder usage
   Sets or unsets extra_spec for a volume type.
 
 ``type-list``
-  Lists available 'volume types'. (Admin only will see
-  private types)
+  Lists available 'volume types'.
 
 ``type-show``
   Show volume type details.
@@ -379,7 +378,6 @@ cinder usage
   subcommands.
 
 ``list-extensions``
-  Lists all available os-api extensions.
 
 .. _cinder_command_options:
 
@@ -411,7 +409,7 @@ cinder optional arguments
   ``env[CINDER_ENDPOINT_TYPE]`` or publicURL.
 
 ``--endpoint-type <endpoint-type>``
-  **DEPRECATED!** Use :option:`--os-endpoint-type`.
+  **DEPRECATED!** Use --os-endpoint-type.
 
 ``--os-volume-api-version <volume-api-ver>``
   Block Storage API version. Accepts X, X.Y (where X is
@@ -466,12 +464,12 @@ cinder optional arguments
 
 ``--os-project-id <auth-project-id>``
   Another way to specify tenant ID. This option is
-  mutually exclusive with :option:`--os-tenant-id`. Defaults to
+  mutually exclusive with --os-tenant-id. Defaults to
   ``env[OS_PROJECT_ID]``.
 
 ``--os-project-name <auth-project-name>``
   Another way to specify tenant name. This option is
-  mutually exclusive with :option:`--os-tenant-name`. Defaults to
+  mutually exclusive with --os-tenant-name. Defaults to
   ``env[OS_PROJECT_NAME]``.
 
 ``--os-project-domain-id <auth-project-domain-id>``
@@ -716,18 +714,13 @@ Restores a backup.
 
 ``--volume <volume>``
   Name or ID of existing volume to which to restore. This
-  is mutually exclusive with :option:`--name` and takes priority.
+  is mutually exclusive with --name and takes priority.
   Default=None.
 
 ``--name <name>``
   Use the name for new volume creation to restore. This is
-  mutually exclusive with :option:`--volume` (or the deprecated
-  :option:`--volume-id)`
-  and
-  :option:`--volume`
-  (or
-  :option:`--volume-id)`
-  takes
+  mutually exclusive with --volume (or the deprecated
+  --volume-id) and --volume (or --volume-id) takes
   priority. Default=None.
 
 .. _cinder_backup-show:
@@ -1413,7 +1406,7 @@ cinder list
    usage: cinder list [--all-tenants [<0|1>]] [--name <name>] [--status <status>]
                       [--bootable [<True|true|False|false>]]
                       [--migration_status <migration_status>]
-                      [--metadata [<key=value> [<key=value> ...]]]
+                      [--image_metadata [<key=value> [<key=value> ...]]]
                       [--marker <marker>] [--limit <limit>] [--fields <fields>]
                       [--sort <key>[:<direction>]] [--tenant [<tenant>]]
 
@@ -1437,9 +1430,9 @@ Lists all volumes.
   Filters results by a migration status. Default=None.
   Admin only.
 
-``--metadata [<key=value> [<key=value> ...]]``
-  Filters results by a metadata key and value pair.
-  Default=None.
+``--image_metadata [<key=value> [<key=value> ...]]``
+  Filters results by a image metadata key and value
+  pair. Default=None.
 
 ``--marker <marker>``
   Begin returning volumes that appear later in the
@@ -1473,7 +1466,6 @@ cinder list-extensions
 
    usage: cinder list-extensions
 
-Lists all available os-api extensions.
 
 .. _cinder_manage:
 
@@ -1588,7 +1580,7 @@ Sets or deletes volume metadata.
 
 ``<key=value>``
   Metadata key and value pair to set or unset. For unset, specify
-  only the key. Supported until API version 3.14)
+  only the key.
 
 .. _cinder_metadata-show:
 
@@ -2860,7 +2852,8 @@ cinder type-list
 
    usage: cinder type-list
 
-Lists available 'volume types'. (Admin only will see private types)
+Lists available 'volume types'. (Only admin and tenant users will see private
+types)
 
 .. _cinder_type-show:
 
