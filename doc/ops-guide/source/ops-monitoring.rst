@@ -330,7 +330,7 @@ You can create automated alerts for critical processes by using Nagios
 and NRPE. For example, to ensure that the ``nova-compute`` process is
 running on the compute nodes, create an alert on your Nagios server:
 
-.. code-block:: ini
+.. code-block:: none
 
    define service {
        host_name c01.example.com
@@ -354,7 +354,7 @@ all times.
 For resource alerting, for example, monitor disk capacity on a compute node
 with Nagios, add the following to your Nagios configuration:
 
-.. code-block:: ini
+.. code-block:: none
 
    define service {
        host_name c01.example.com
@@ -366,7 +366,7 @@ with Nagios, add the following to your Nagios configuration:
 
 On the compute node, add the following to your NRPE configuration:
 
-.. code-block:: ini
+.. code-block:: none
 
    command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w $ARG1$ -c $ARG2$ -e
 

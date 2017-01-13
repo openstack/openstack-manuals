@@ -124,7 +124,7 @@ volume driver controls:
 
 #. Create filesystem on appliance and share via NFS. For example:
 
-   .. code-block:: ini
+   .. code-block:: none
 
       "securityContexts": [
          {"readWriteList": [{"allow": true, "etype": "fqnip", "entity": "1.1.1.1"}],
@@ -133,7 +133,7 @@ volume driver controls:
 
 #. Create ACL for the filesystem. For example:
 
-   .. code-block:: ini
+   .. code-block:: json
 
       {"type": "allow",
       "principal": "everyone@",

@@ -70,7 +70,7 @@ Install and configure components
            bind-address = 10.0.0.11
 
            default-storage-engine = innodb
-           innodb_file_per_table
+           innodb_file_per_table = on
            max_connections = 4096
            collation-server = utf8_general_ci
            character-set-server = utf8
@@ -96,7 +96,7 @@ Install and configure components
            bind-address = 10.0.0.11
 
            default-storage-engine = innodb
-           innodb_file_per_table
+           innodb_file_per_table = on
            max_connections = 4096
            collation-server = utf8_general_ci
            character-set-server = utf8
@@ -122,7 +122,7 @@ Install and configure components
            bind-address = 10.0.0.11
 
            default-storage-engine = innodb
-           innodb_file_per_table
+           innodb_file_per_table = on
            max_connections = 4096
            collation-server = utf8_general_ci
            character-set-server = utf8

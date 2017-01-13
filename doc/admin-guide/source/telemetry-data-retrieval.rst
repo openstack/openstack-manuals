@@ -201,7 +201,7 @@ in the Installation Tutorials and Guides.
 
 Similarly to other OpenStack command-line clients, the ``ceilometer``
 client uses OpenStack Identity for authentication. The proper
-credentials and :option:`--auth_url` parameter have to be defined via command
+credentials and ``--auth_url`` parameter have to be defined via command
 line parameters or environment variables.
 
 This section provides some examples without the aim of completeness.
@@ -350,7 +350,7 @@ complex operators, it is possible to retrieve a subset of samples for a
 given VM instance. To request for the first six samples for the ``cpu``
 and ``disk.read.bytes`` meters, the following command should be invoked:
 
-.. code-block:: console
+.. code-block:: none
 
    $ ceilometer query-samples --filter '{"and": \
      [{"=":{"resource":"bb52e52b-1e42-4751-b3ac-45c52d83ba07"}},{"or":[{"=":{"counter_name":"cpu"}}, \
@@ -414,8 +414,7 @@ retrieve specific events:
 
 .. code-block:: console
 
-    $ ceilometer event-list -q 'event_type=compute.instance.exists; \
-      instance_type=m1.tiny'
+    $ ceilometer event-list -q 'event_type=compute.instance.exists;instance_type=m1.tiny'
     +--------------------------------------+-------------------------+----------------------------+----------------------------------------------------------------------------------+
     | Message ID                           | Event Type              | Generated                  | Traits                                                                           |
     +--------------------------------------+-------------------------+----------------------------+----------------------------------------------------------------------------------+

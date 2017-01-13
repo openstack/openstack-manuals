@@ -38,7 +38,7 @@ Configure the server component
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         service_plugins =
 
    * In the ``[DEFAULT]`` and ``[nova]`` sections, configure Networking to
@@ -47,12 +47,12 @@ Configure the server component
      .. code-block:: ini
 
         [DEFAULT]
-        ...
+        # ...
         notify_nova_on_port_status_changes = True
         notify_nova_on_port_data_changes = True
 
         [nova]
-        ...
+        # ...
         auth_url = http://controller:35357
         auth_type = password
         project_domain_name = default
@@ -79,7 +79,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        type_drivers = flat,vlan
 
   * In the ``[ml2]`` section, disable self-service networks:
@@ -87,7 +87,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        tenant_network_types =
 
   * In the ``[ml2]`` section, enable the Linux bridge mechanism:
@@ -95,7 +95,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        mechanism_drivers = linuxbridge
 
     .. warning::
@@ -108,7 +108,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2]
-       ...
+       # ...
        extension_drivers = port_security
 
   * In the ``[ml2_type_flat]`` section, configure the provider virtual
@@ -117,7 +117,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [ml2_type_flat]
-       ...
+       # ...
        flat_networks = provider
 
   * In the ``[securitygroup]`` section, enable :term:`ipset` to increase
@@ -126,7 +126,7 @@ and switching) virtual networking infrastructure for instances.
     .. code-block:: ini
 
        [securitygroup]
-       ...
+       # ...
        enable_ipset = True
 
 Configure the Linux bridge agent
@@ -163,7 +163,7 @@ networking infrastructure for instances and handles security groups.
     .. code-block:: ini
 
        [securitygroup]
-       ...
+       # ...
        enable_security_group = True
        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
@@ -182,7 +182,7 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
     .. code-block:: ini
 
        [DEFAULT]
-       ...
+       # ...
        interface_driver = linuxbridge
        dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
        enable_isolated_metadata = True

@@ -87,7 +87,7 @@ Check that consistency group status is ``available``:
    +----------------------+--------------------------------------+
 
 To add a share to the consistency group, create a share by adding the
-:option:`--consistency-group` option where you specify the ID of the consistency
+``--consistency-group`` option where you specify the ID of the consistency
 group in ``available`` status:
 
 .. code-block:: console
@@ -207,7 +207,7 @@ description using the :command:`cg-snapshot-update` command, or delete
 it with the :command:`cg-snapshot-delete` command.
 
 A consistency group snapshot can have ``members``. To add a member,
-include the :option:`--consistency-group` optional parameter in the
+include the ``--consistency-group`` optional parameter in the
 create share command. This ID must match the ID of the consistency group from
 which the consistency group snapshot was created. Then, while restoring data,
 and operating with consistency group snapshots, you can quickly
@@ -318,5 +318,5 @@ Print detailed information about new share:
 As an administrator, you can also reset the state of a consistency group
 snapshot with the :command:`cg-snapshot-reset-state` command, and force delete a specified
 consistency group snapshot in any state using the :command:`cg-snapshot-delete` command
-with the :option:`--force` key. Use the ``policy.json`` file to grant permissions for
+with the ``--force`` key. Use the ``policy.json`` file to grant permissions for
 these actions to other roles.

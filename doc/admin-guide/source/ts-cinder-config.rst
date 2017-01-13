@@ -194,7 +194,7 @@ To fix this issue, change the content of the ``/etc/tgt/targets.conf``
 file from ``include /etc/tgt/conf.d/*.conf`` to
 ``include /etc/tgt/conf.d/cinder_tgt.conf``, as follows:
 
-.. code-block:: ini
+.. code-block:: shell
 
    include /etc/tgt/conf.d/cinder_tgt.conf
    include /etc/tgt/conf.d/cinder.conf

@@ -119,7 +119,7 @@ resources.
 
    Earlier versions of OpenStack used the term ``tenant`` instead of
    ``project``. Because of this legacy terminology, some command-line tools
-   use :option:`--tenant_id` where you would normally expect to enter a
+   use ``--tenant_id`` where you would normally expect to enter a
    project ID.
 
 Block storage

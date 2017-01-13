@@ -208,7 +208,7 @@ with a different user. For example, to configure ``cloud-init``
 to put the key in an account named ``admin``, edit the
 configuration file so it has the line:
 
-.. code-block:: ini
+.. code-block:: yaml
 
    user: admin
 

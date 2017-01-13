@@ -34,7 +34,7 @@ and used for testing purposes. To add this image, simply do:
      --disk-format qcow2 "cirros image"
 
 The :command:`openstack image create` command provides a large set of options
-for working with your image. For example, the :option:`--min-disk` option is
+for working with your image. For example, the ``--min-disk`` option is
 useful for images that require root disks of a certain size (for example,
 large Windows images). To view these options, run:
 
@@ -42,12 +42,12 @@ large Windows images). To view these options, run:
 
    $ openstack help image create
 
-The :option:`location` option is important to note. It does not copy the
+The ``location`` option is important to note. It does not copy the
 entire image into the Image service, but references an original location
 where the image can be found. Upon launching an instance of that image,
 the Image service accesses the image from the location specified.
 
-The :option:`copy-from` option copies the image from the location specified
+The ``copy-from`` option copies the image from the location specified
 into the ``/var/lib/glance/images`` directory. The same thing is done
 when using the STDIN redirection with <, as shown in the example.
 
@@ -125,7 +125,7 @@ signed images:
 
 #. Create context
 
-   .. code-block:: python
+   .. code-block:: console
 
       $ python
       >>> from keystoneclient.v3 import client
@@ -727,7 +727,7 @@ rules to allow each new member of the cluster.
 
 The code is similar to the above example of
 :command:`openstack security group rule create`. To use RemoteGroup, specify
-:option:`--remote-group` instead of :option:`--remote-ip`.
+``--remote-group`` instead of ``--remote-ip``.
 For example:
 
 .. code-block:: console
@@ -1771,7 +1771,7 @@ Use this command to register an existing key with OpenStack:
    You must have the matching private key to access instances
    associated with this key.
 
-To associate a key with an instance on boot, add :option:`--key-name mykey` to
+To associate a key with an instance on boot, add ``--key-name mykey`` to
 your command line. For example:
 
 .. code-block:: console
@@ -1781,7 +1781,7 @@ your command line. For example:
 
 When booting a server, you can also add arbitrary metadata so that you
 can more easily identify it among other running instances. Use the
-:option:`--property` option with a key-value pair, where you can make up
+``--property`` option with a key-value pair, where you can make up
 the string for both the key and the value. For example, you could add a
 description and also the creator of the server:
 
@@ -1844,7 +1844,7 @@ user data.
 
 This user data can be put in a file on your local system and then passed
 in at instance creation with the flag
-:option:`--user-data` ``<user-data-file>``.
+``--user-data <user-data-file>``.
 
 For example
 
@@ -1862,7 +1862,7 @@ File injection
 --------------
 
 Arbitrary local files can also be placed into the instance file system
-at creation time by using the :option:`--file` ``<dst-path=src-path>`` option.
+at creation time by using the ``--file <dst-path=src-path>`` option.
 You may store up to five files.
 
 For example, let's say you have a special ``authorized_keys`` file named

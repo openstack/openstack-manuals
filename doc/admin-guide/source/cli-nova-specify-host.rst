@@ -7,7 +7,7 @@ host instances are launched on and which roles can boot instances
 on this host.
 
 #. To select the host where instances are launched, use
-   the :option:`--availability-zone ZONE:HOST:NODE` parameter on the
+   the ``--availability-zone ZONE:HOST:NODE`` parameter on the
    :command:`openstack server create` command.
 
    For example:
@@ -21,7 +21,7 @@ on this host.
 
    .. note::
       HOST is an optional parameter. In such cases,
-      use the :option:`--availability-zone ZONE::NODE`.
+      use the ``--availability-zone ZONE::NODE``.
 
 
 #. To specify which roles can launch an instance on a

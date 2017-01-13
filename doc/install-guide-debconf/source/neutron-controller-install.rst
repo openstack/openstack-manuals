@@ -59,7 +59,7 @@ such as credentials to instances.
     .. code-block:: ini
 
        [DEFAULT]
-       ...
+       # ...
        nova_metadata_ip = controller
        metadata_proxy_shared_secret = METADATA_SECRET
 
@@ -76,7 +76,7 @@ Configure the Compute service to use the Networking service
     .. code-block:: ini
 
        [neutron]
-       ...
+       # ...
        url = http://controller:9696
        auth_url = http://controller:35357
        auth_type = password

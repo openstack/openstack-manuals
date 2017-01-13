@@ -19,7 +19,7 @@ location of log files.
 The logs show the components that have come in to the WSGI request, and
 ideally show an error that explains why an authorization request failed.
 If you do not see the request in the logs, run keystone with the
-:option:`--debug` parameter. Pass the :option:`--debug` parameter before the
+``--debug`` parameter. Pass the ``--debug`` parameter before the
 command parameters.
 
 Debug PKI middleware
@@ -165,8 +165,8 @@ is owned by ``root:root``. This can present a problem when you run the
 Identity daemon under the keystone user account (nologin) when you try
 to run PKI. Unless you run the :command:`chown` command against the
 files ``keystone:keystone``, or run the :command:`keystone-manage pki_setup`
-command with the :option:`--keystone-user` and
-:option:`--keystone-group` parameters, you will get an error.
+command with the ``--keystone-user`` and
+``--keystone-group`` parameters, you will get an error.
 For example:
 
 .. code-block:: console

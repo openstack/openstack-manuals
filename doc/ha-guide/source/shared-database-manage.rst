@@ -208,7 +208,7 @@ use the ``clustercheck`` utility to improve health checks.
 #. Create a configuration file for the HAProxy monitor service, at
    ``/etc/xinetd.d/galera-monitor``:
 
-   .. code-block:: ini
+   .. code-block:: none
 
       service galera-monitor
       {

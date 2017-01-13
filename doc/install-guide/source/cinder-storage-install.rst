@@ -364,7 +364,7 @@ Install and configure components
    3. Create the ``/etc/tgt/conf.d/cinder.conf`` file
       with the following data:
 
-      .. code-block:: ini
+      .. code-block:: shell
 
          include /var/lib/cinder/volumes/*
 

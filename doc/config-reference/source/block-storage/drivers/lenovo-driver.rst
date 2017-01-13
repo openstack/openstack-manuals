@@ -129,10 +129,9 @@ Configuring the array
    .. code-block:: ini
 
       [DEFAULT]
-      ...
+      # ...
       enabled_backends = pool-a,pool-b
       default_volume_type = lenovo
-      ...
 
 #. Create a new volume type for each distinct ``volume_backend_name`` value
    that you added to the ``cinder.conf`` file. The example below

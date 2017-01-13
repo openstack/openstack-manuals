@@ -56,7 +56,7 @@ Controller node configuration
 
    When the ``router_distributed = True`` flag is configured, routers created
    by all users are distributed. Without it, only privileged users can create
-   distributed routers by using :option:`--distributed True`.
+   distributed routers by using ``--distributed True``.
 
    Similarly, when the ``l3_ha = True`` flag is configured, routers created
    by all users default to HA.

@@ -325,7 +325,7 @@ on CentOS 7.``x``, you might need to do the following steps:
    ``GRUB_CMDLINE_LINUX`` option. Delete the ``rhgb quiet``
    and add the ``console=tty0 console=ttyS0,115200n8`` to the option:
 
-   .. code-block:: ini
+   .. code-block:: none
 
      ...
      GRUB_CMDLINE_LINUX="crashkernel=auto console=tty0 console=ttyS0,115200n8"

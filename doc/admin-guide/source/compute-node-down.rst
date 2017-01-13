@@ -38,7 +38,7 @@ To manually recover a failed compute node:
    :command:`nova` commands, you can substitute the ID directly. This example
    output is truncated:
 
-   .. code-block:: mysql
+   .. code-block:: none
 
       mysql> SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
       *************************** 1. row ***************************
@@ -327,7 +327,7 @@ iSCSI session. This example closes an iSCSI session with the number ``15``:
 
    # iscsiadm -m session -u -r 15
 
-Do not forget the :option:`-r` option. Otherwise, all sessions close.
+Do not forget the ``-r`` option. Otherwise, all sessions close.
 
 .. warning::
 

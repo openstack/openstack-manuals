@@ -123,7 +123,7 @@ volume driver controls:
       Add your list of Nexenta NFS servers to the file you specified with the
       ``nexenta_shares_config`` option. For example, this is how this file should look:
 
-   .. code-block:: ini
+   .. code-block:: none
 
       192.168.1.200:/volumes/VOLUME_NAME/NFS_SHARE http://USER:PASSWORD@192.168.1.200:8457
       192.168.1.201:/volumes/VOLUME_NAME/NFS_SHARE http://USER:PASSWORD@192.168.1.201:8457

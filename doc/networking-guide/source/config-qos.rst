@@ -64,7 +64,7 @@ On network nodes:
 #. Add the QoS service to the ``service_plugins`` setting in
    ``/etc/neutron/neutron.conf``. For example:
 
-   .. code-block:: ini
+   .. code-block:: none
 
       service_plugins = \
       neutron.services.l3_router.l3_router_plugin.L3RouterPlugin,
@@ -115,7 +115,7 @@ your cloud, neutron's file ``policy.json`` can be modified to allow this.
 
 Modify ``/etc/neutron/policy.json`` policy entries as follows:
 
-.. code-block:: json
+.. code-block:: none
 
    "get_policy": "rule:regular_user",
    "create_policy": "rule:regular_user",
@@ -124,7 +124,7 @@ Modify ``/etc/neutron/policy.json`` policy entries as follows:
 
 To enable bandwidth limit rule:
 
-.. code-block:: json
+.. code-block:: none
 
    "get_policy_bandwidth_limit_rule": "rule:regular_user",
    "create_policy_bandwidth_limit_rule": "rule:admin_only",
@@ -134,7 +134,7 @@ To enable bandwidth limit rule:
 
 To enable DSCP marking rule:
 
-.. code-block:: json
+.. code-block:: none
 
    "get_policy_dscp_marking_rule": "rule:regular_user",
    "create_dscp_marking_rule": "rule:admin_only",

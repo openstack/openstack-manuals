@@ -298,7 +298,7 @@ For example:
 .. code-block:: ini
 
   [hnas-backend]
-  …
+  # ...
   hnas_username = supervisor
   hnas_password = supervisor
 
@@ -363,7 +363,7 @@ through public key. To configure that:
    .. code-block:: ini
 
     [hnas-backend]
-    …
+    # ...
     hnas_ssh_private_key = /opt/hitachi/ssh/hnaskey
 
 Managing volumes
@@ -530,7 +530,7 @@ Below are configuration examples for both NFS and iSCSI backends:
 
    #. Add the configured exports to the ``nfs_shares`` file:
 
-      .. code-block:: ini
+      .. code-block:: none
 
         172.24.49.21:/gold_export
         172.24.49.21:/silver_platinum

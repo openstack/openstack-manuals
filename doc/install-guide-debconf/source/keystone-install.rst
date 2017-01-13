@@ -23,7 +23,7 @@ Install and configure the components
    .. code-block:: ini
 
       [database]
-      ...
+      # ...
       connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
 
    If you decide to not use ``dbconfig-common``, then you have to
@@ -56,7 +56,7 @@ Install and configure the components
    .. code-block:: ini
 
       [DEFAULT]
-      ...
+      # ...
       admin_token = ADMIN_TOKEN
 
 #. Create the ``admin`` project and user:

@@ -1,4 +1,3 @@
-
 =====================================
 Customize and configure the Dashboard
 =====================================
@@ -357,7 +356,7 @@ Use a domain that fits your current setup.
 
    **Example After**
 
-   .. code-block:: apacheconf
+   .. code-block:: none
 
       <VirtualHost *:80>
       ServerName openstack.example.com
@@ -436,7 +435,7 @@ Use a domain that fits your current setup.
       .. code-block:: ini
 
          [DEFAULT]
-         ...
+         # ...
          ssl_only = true
          cert = /etc/apache2/SSL/openstack.example.com.crt
          key = /etc/apache2/SSL/openstack.example.com.key
@@ -447,5 +446,5 @@ Use a domain that fits your current setup.
       .. code-block:: ini
 
          [DEFAULT]
-         ...
+         # ...
          novncproxy_base_url = https://controller:6080/vnc_auto.html

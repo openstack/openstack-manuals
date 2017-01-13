@@ -18,7 +18,7 @@ current VM host is not operational. Otherwise, the evacuation fails.
 
       $ openstack host list
 
-#. Evacuate the instance. You can use the :option:`--password PWD` option
+#. Evacuate the instance. You can use the ``--password PWD`` option
    to pass the instance password to the command. If you do not specify a
    password, the command generates and prints one after it finishes
    successfully. The following command evacuates a server from a failed host

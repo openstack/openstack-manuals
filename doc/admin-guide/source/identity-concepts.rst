@@ -160,7 +160,7 @@ is required for Compute operations.
 For example, the following line in the ``/etc/cinder/policy.json``
 file does not restrict which users can create volumes:
 
-.. code-block:: json
+.. code-block:: none
 
    "volume:create": "",
 
@@ -170,7 +170,7 @@ project.
 To restrict the creation of volumes to users who have the
 ``compute-user`` role in a particular project, you add ``"role:compute-user"``:
 
-.. code-block:: json
+.. code-block:: none
 
    "volume:create": "role:compute-user",
 

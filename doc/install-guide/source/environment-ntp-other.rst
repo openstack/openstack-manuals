@@ -47,7 +47,7 @@ Install and configure components
       but one ``server`` key. Change it to reference the controller node:
 
       .. path /etc/chrony/chrony.conf
-      .. code-block:: ini
+      .. code-block:: shell
 
          server controller iburst
 
@@ -71,7 +71,7 @@ Install and configure components
       ``server`` key. Change it to reference the controller node:
 
       .. path /etc/chrony.conf
-      .. code-block:: ini
+      .. code-block:: shell
 
          server controller iburst
 

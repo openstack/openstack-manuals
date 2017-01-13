@@ -185,7 +185,7 @@ Inspecting API Calls
 --------------------
 
 The command-line tools can be made to show the OpenStack API calls they
-make by passing the :option:`--debug` flag to them. For example:
+make by passing the ``--debug`` flag to them. For example:
 
 .. code-block:: console
 

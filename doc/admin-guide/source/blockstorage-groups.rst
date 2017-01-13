@@ -39,7 +39,7 @@ found in `Cinder specs <https://github.com/openstack/cinder-specs/blob/master/sp
 .. note::
 
    Only Block Storage V3 API supports groups. You can
-   specify :option:`--os-volume-api-version 3.x` when using the `cinder`
+   specify ``--os-volume-api-version 3.x`` when using the `cinder`
    command line for group operations where `3.x` contains a microversion value
    for that command. The generic volume group feature was completed in several
    patches. As a result, the minimum required microversion is different for
@@ -137,7 +137,7 @@ microversion to support group type and group specs is 3.11:
 .. note::
 
    The parameter ``NAME`` is required. The
-   :option:`--is-public IS_PUBLIC` determines whether the group type is
+   ``--is-public IS_PUBLIC`` determines whether the group type is
    accessible to the public. It is ``True`` by default. By default, the
    policy on privileges for creating a group type is admin-only.
 
@@ -256,7 +256,7 @@ microversion to support groups operations is 3.13.
 
 .. note::
 
-   :option:`--all-tenants` specifies whether to list groups for all tenants.
+   ``--all-tenants`` specifies whether to list groups for all tenants.
    Only admin can use this option.
 
 **Create a volume and add it to a group**:
@@ -283,9 +283,9 @@ microversion to support groups operations is 3.13.
 
 .. note::
 
-   :option:`--delete-volumes` allows or disallows groups to be deleted
+   ``--delete-volumes`` allows or disallows groups to be deleted
    if they are not empty. If the group is empty, it can be deleted without
-   :option:`--delete-volumes`. If the group is not empty, the flag is
+   ``--delete-volumes``. If the group is not empty, the flag is
    required for it to be deleted. When the flag is specified, the group
    and all volumes in the group will be deleted.
 
@@ -345,9 +345,9 @@ minimum microversion to support group snapshots operations is 3.14.
 
 .. note::
 
-   :option:`--all-tenants` specifies whether to list group snapshots for
-   all tenants. Only admin can use this option. :option:`--status STATUS`
-   filters results by a status. :option:`--group-id GROUP_ID` filters
+   ``--all-tenants`` specifies whether to list group snapshots for
+   all tenants. Only admin can use this option. ``--status STATUS``
+   filters results by a status. ``--group-id GROUP_ID`` filters
    results by a group id.
 
 **Delete group snapshot**:

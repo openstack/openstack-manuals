@@ -78,7 +78,7 @@ in the ``cell_type`` key:
 
    [DEFAULT]
    compute_api_class=nova.compute.cells_api.ComputeCellsAPI
-   ...
+   # ...
 
    [cells]
    cell_type= api

@@ -150,7 +150,7 @@ CoprHD drivers - Single back end
    .. code-block:: ini
 
      [DEFAULT]
-     ...
+     # ...
      rpc_response_timeout = 300
 
 #. Now, restart the ``cinder-volume`` service.

@@ -293,7 +293,7 @@ environments using the driver filter and weighter methods.
 
 Metrics reported include, but are not limited to:
 
-.. code-block:: ini
+.. code-block:: none
 
    total_capacity_gb
    free_capacity_gb

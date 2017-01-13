@@ -445,7 +445,7 @@ using neutron ports which contain the IPv4 & IPv6 address.
       --device_id "" --device_owner "" --binding:host_id ""
 
 #.  Delete the instance and create a new instance using the
-    :option:`--nic port-id` option.
+    ``--nic port-id`` option.
 
 **Retrieve an IP address when an instance is deleted before detaching
 a port**

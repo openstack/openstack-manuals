@@ -118,7 +118,7 @@ Install and configure components
      .. code-block:: ini
 
         [database]
-        ...
+        # ...
         connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
 
      .. end
@@ -131,7 +131,7 @@ Install and configure components
      .. code-block:: ini
 
         [token]
-        ...
+        # ...
         provider = fernet
 
      .. end
@@ -228,7 +228,7 @@ Configure the Apache HTTP server
       ``APACHE_SERVERNAME`` option to reference the controller node:
 
       .. path /etc/sysconfig/apache2
-      .. code-block:: apache
+      .. code-block:: shell
 
          APACHE_SERVERNAME="controller"
 

@@ -26,7 +26,7 @@ And set the following values in ``nova.conf`` as follows:
 .. code-block:: ini
 
    [DEFAULT]
-   ...
+   # ...
    auth_strategy=keystone
 
    [keystone_authtoken]

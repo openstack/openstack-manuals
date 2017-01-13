@@ -71,7 +71,7 @@ share type creation with extra specifications to other roles.
 You set a share type to private or public and
 :ref:`manage the access<share_type_access>` to the private share types. By
 default a share type is created as publicly accessible. Set
-:option:`--is_public` to ``False`` to make the share type private.
+``--is_public`` to ``False`` to make the share type private.
 
 Share type operations
 ---------------------
@@ -149,7 +149,7 @@ Create a private type:
 
    If you run :command:`manila type-list` only public share types appear.
    To see private share types, run :command:`manila type-list` with
-   :option:`--all` optional argument.
+   ``--all`` optional argument.
 
 Grant access to created private type for a demo and alt_demo projects
 by providing their IDs:

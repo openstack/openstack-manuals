@@ -83,7 +83,7 @@ For SLES 12:
    For SLES 12, the packages are signed by GPG key 893A90DAD85F9316.
    You should verify the fingerprint of the imported GPG key before using it.
 
-   .. code-block:: ini
+   .. code-block:: none
 
       Key ID: 893A90DAD85F9316
       Key Name: Cloud:OpenStack OBS Project <Cloud:OpenStack@build.opensuse.org>

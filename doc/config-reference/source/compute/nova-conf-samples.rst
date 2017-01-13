@@ -44,8 +44,8 @@ This example ``nova.conf`` file is from an internal Rackspace test system.
 
 .. code-block:: ini
 
-   verbose
-   nodaemon
+   verbose=True
+   nodaemon=True
    network_manager=nova.network.manager.FlatManager
    image_service=nova.image.glance.GlanceImageService
    flat_network_bridge=xenbr0

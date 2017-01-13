@@ -63,7 +63,7 @@ Check that status of a snapshot is ``available``:
    +-------------+--------------------------------------+
 
 To restore your data from a snapshot, use :command:`manila create` with
-key :option:`--snapshot-id`. This creates a new share from an
+key ``--snapshot-id``. This creates a new share from an
 existing snapshot. Create a share from a snapshot and check whether
 it is available:
 

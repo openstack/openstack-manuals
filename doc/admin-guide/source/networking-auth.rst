@@ -90,7 +90,7 @@ This extract is from the default ``policy.json`` file:
    administrator or the owner of the resource specified in the request
    (project identifier is equal).
 
-   .. code-block:: json
+   .. code-block:: none
 
       {
        "admin_or_owner": [
@@ -126,7 +126,7 @@ This extract is from the default ``policy.json`` file:
 -  The default policy that is always evaluated if an API operation does
    not match any of the policies in ``policy.json``.
 
-   .. code-block:: json
+   .. code-block:: none
 
                 "rule:admin_or_owner"
             ]
@@ -163,7 +163,7 @@ This extract is from the default ``policy.json`` file:
 -  This policy evaluates successfully if either *admin\_or\_owner*, or
    *shared* evaluates successfully.
 
-   .. code-block:: json
+   .. code-block:: none
 
             [
                 "rule:shared"
@@ -177,7 +177,7 @@ This extract is from the default ``policy.json`` file:
 -  This policy restricts the ability to manipulate the *shared*
    attribute for a network to administrators only.
 
-   .. code-block:: json
+   .. code-block:: none
 
         ],
         "update_network": [
@@ -202,7 +202,7 @@ This extract is from the default ``policy.json`` file:
    attribute for a port only to administrators and the owner of the
    network where the port is attached.
 
-   .. code-block:: json
+   .. code-block:: none
 
             [
                 "rule:admin_or_network_owner"
@@ -230,7 +230,7 @@ This example shows you how to modify a policy file to permit project to
 define networks, see their resources, and permit administrative users to
 perform all other operations:
 
-.. code-block:: ini
+.. code-block:: none
 
     {
             "admin_or_owner": [["role:admin"], ["tenant_id:%(tenant_id)s"]],

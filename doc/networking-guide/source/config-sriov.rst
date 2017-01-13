@@ -244,7 +244,7 @@ Configure neutron-server (Controller)
    service. Edit the appropriate initialization script to configure the
    ``neutron-server`` service to load the SR-IOV configuration file:
 
-   .. code-block:: ini
+   .. code-block:: bash
 
       --config-file /etc/neutron/neutron.conf
       --config-file /etc/neutron/plugin.ini
@@ -412,7 +412,7 @@ you must:
    If ``ebrctl`` does not appear in any of the rootwrap files, add this to the
    ``/etc/nova/rootwrap.d/compute.filters`` file in the ``[Filters]`` section.
 
-   .. code-block:: ini
+   .. code-block:: none
 
       [Filters]
       ebrctl: CommandFilter, ebrctl, root

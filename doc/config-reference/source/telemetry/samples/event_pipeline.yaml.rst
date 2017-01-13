@@ -9,6 +9,6 @@ defined in the ``event_pipeline.yaml`` file.
 This file can be modified to adjust which notifications to capture and
 where to publish the events.
 
-.. remote-code-block:: ini
+.. remote-code-block:: yaml
 
    https://git.openstack.org/cgit/openstack/ceilometer/plain/etc/ceilometer/event_pipeline.yaml?h=stable/newton

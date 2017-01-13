@@ -136,7 +136,7 @@ The following configuration is for 3.X Linux kernels, some parameters in
 different Linux distributions may be different. Make the following changes
 in the ``multipath.conf`` file:
 
-.. code-block:: json
+.. code-block:: none
 
     defaults {
     checker_timer 5

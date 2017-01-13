@@ -46,7 +46,7 @@ Examples
 
 A simple rule might look like this:
 
-.. code-block:: json
+.. code-block:: none
 
     "compute:get_all" : ""
 
@@ -56,7 +56,7 @@ policy allows anybody to list instances.
 
 You can also decline permission to use an API:
 
-.. code-block:: json
+.. code-block:: none
 
     "compute:shelve": "!"
 
@@ -67,7 +67,7 @@ Many APIs can only be called by admin users. This can be expressed by
 the rule ``"role:admin"``. The following policy ensures that only
 administrators can create new users in the Identity database:
 
-.. code-block:: json
+.. code-block:: none
 
     "identity:create_user" : "role:admin"
 
@@ -75,7 +75,7 @@ You can limit APIs to any role. For example, the Orchestration service
 defines a role named ``heat_stack_user``. Whoever has this role isn't
 allowed to create stacks:
 
-.. code-block:: json
+.. code-block:: none
 
     "stacks:create": "not role:heat_stack_user"
 
@@ -84,7 +84,7 @@ can be built using operators ``and``, ``or`` and parentheses.
 
 You can define aliases for rules:
 
-.. code-block:: json
+.. code-block:: none
 
     "deny_stack_user": "not role:heat_stack_user"
 
@@ -92,7 +92,7 @@ The policy engine understands that ``"deny_stack_user"`` is not an API
 and consequently interprets it as an alias. The stack creation policy
 above can then be written as:
 
-.. code-block:: json
+.. code-block:: none
 
     "stacks:create": "rule:deny_stack_user"
 
@@ -100,7 +100,7 @@ This is taken verbatim from ``/etc/heat/policy.json``.
 
 Rules can compare API attributes to object attributes. For example:
 
-.. code-block:: json
+.. code-block:: none
 
     "os_compute_api:servers:start" : "project_id:%(project_id)s"
 
@@ -114,7 +114,7 @@ equal, permission is granted.
 An admin user always has permission to call APIs. This is how
 ``/etc/keystone/policy.json`` makes this policy explicit:
 
-.. code-block:: json
+.. code-block:: none
 
     "admin_required": "role:admin or is_admin:1",
     "owner" : "user_id:%(user_id)s",
@@ -138,7 +138,7 @@ owner or an admin user.
 
 As a final example, let's examine a more complex rule:
 
-.. code-block:: json
+.. code-block:: none
 
     "identity:ec2_delete_credential": "rule:admin_required or
                  (rule:owner and user_id:%(target.credential.user_id)s)"
@@ -158,7 +158,7 @@ A ``policy.json`` file consists of policies and aliases of the form
 ``target:rule`` or ``alias:definition``, separated by commas and
 enclosed in curly braces:
 
-.. code-block:: json
+.. code-block:: none
 
      {
            "alias 1" : "definition 1",
@@ -201,7 +201,7 @@ Developers can define additional special checks.
 
 Two values are compared in the following way:
 
-.. code-block:: json
+.. code-block:: none
 
     "value1 : value2"
 
@@ -232,7 +232,7 @@ The alias construct exists for convenience. An alias is short name for a
 complex or hard to understand rule. It is defined in the same way as a
 policy:
 
-.. code-block:: json
+.. code-block:: none
 
     alias name : alias definition
 
@@ -247,7 +247,7 @@ syntax, where JavaScript arrays are used instead of boolean operators.
 For example, the EC2 credentials rule above would have been written as
 follows:
 
-.. code-block:: json
+.. code-block:: none
 
     "identity:ec2_delete_credential": [ [ "rule:admin_required ],
                  [ "rule:owner", "user_id:%(target.credential.user_id)s)" ] ]

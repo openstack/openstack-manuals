@@ -43,7 +43,7 @@ The following screens show an example Image service configuration:
 This information is stored in the configuration file for each service.
 For example:
 
-.. code-block:: ini
+.. code-block:: bash
 
    /etc/ceilometer/ceilometer.conf
    /etc/nova/api-paste.ini

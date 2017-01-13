@@ -59,14 +59,14 @@ You can apply this process to volumes of any size.
         # lvcreate --size 10G --snapshot --name volume-00000001-snapshot \
           /dev/cinder-volumes/volume-00000001
 
-     Use the :option:`--snapshot` configuration option to tell LVM that you want a
+     Use the ``--snapshot`` configuration option to tell LVM that you want a
      snapshot of an already existing volume. The command includes the size
      of the space reserved for the snapshot volume, the name of the snapshot,
      and the path of an already existing volume. Generally, this path
      is ``/dev/cinder-volumes/VOLUME_NAME``.
 
      The size does not have to be the same as the volume of the snapshot.
-     The :option:`--size` parameter defines the space that LVM reserves
+     The ``--size`` parameter defines the space that LVM reserves
      for the snapshot volume. As a precaution, the size should be the same
      as that of the original volume, even if the whole space is not
      currently used by the snapshot.

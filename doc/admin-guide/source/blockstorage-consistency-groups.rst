@@ -12,7 +12,7 @@ group operations can be performed using the Block Storage command line.
 .. note::
 
    Only Block Storage V2 API supports consistency groups. You can
-   specify :option:`--os-volume-api-version 2` when using Block Storage
+   specify ``--os-volume-api-version 2`` when using Block Storage
    command line for consistency group operations.
 
 Before using consistency groups, make sure the Block Storage driver that

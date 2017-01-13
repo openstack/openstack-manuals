@@ -22,7 +22,7 @@ the system user that will run the Identity service.
    going to sign tokens. When generating files with the
    :command:`keystone-manage pki_setup` command, your best option is to run
    as the pki user. If you run :command:`keystone-manage` as root, you can
-   append :option:`--keystone-user` and :option:`--keystone-group` parameters
+   append ``--keystone-user`` and ``--keystone-group`` parameters
    to set the user name and group keystone is going to run under.
 
 The values that specify where to read the certificates are under the

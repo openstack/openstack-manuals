@@ -2,7 +2,7 @@
 Search for an instance using IP address
 =======================================
 
-You can search for an instance using the IP address parameter, :option:`--ip`,
+You can search for an instance using the IP address parameter, ``--ip``,
 with the :command:`openstack server list` command.
 
 .. code-block:: console

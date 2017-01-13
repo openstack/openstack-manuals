@@ -24,7 +24,7 @@ Use X.509
 The following Apache configuration snippet authenticates the user based
 on a valid X.509 certificate from a known CA:
 
-.. code-block:: apacheconf
+.. code-block:: none
 
    <VirtualHost _default_:5000>
        SSLEngine on

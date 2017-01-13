@@ -174,9 +174,9 @@ share networks:
 
 The Shared File Systems service allows you to update a security service field
 using :command:`manila security-service-update` command with optional
-arguments such as :option:`--dns-ip`, :option:`--server`, :option:`--domain`,
-:option:`--user`, :option:`--password`, :option:`--name`, or
-:option:`--description`.
+arguments such as ``--dns-ip``, ``--server``, ``--domain``,
+``--user``, ``--password``, ``--name``, or
+``--description``.
 
 To remove a security service not associated with any share networks
 run:

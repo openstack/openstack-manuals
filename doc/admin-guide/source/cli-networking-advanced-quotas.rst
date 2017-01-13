@@ -180,14 +180,14 @@ the default set of quotas are enforced for all projects, so no
    The :command:`neutron quota-show` command reports the current
    set of quota limits for the specified project.
    Non-administrative users can run this command without the
-   :option:`--tenant_id` parameter. If per-project quota limits are
+   ``--tenant_id`` parameter. If per-project quota limits are
    not enabled for the project, the command shows the default
    set of quotas.
 
    .. note::
 
-      Additional quotas added in the Mitaka release include :option:`security_group`,
-      :option:`security_group_rule`, :option:`subnet`, and :option:`subnetpool`.
+      Additional quotas added in the Mitaka release include ``security_group``,
+      ``security_group_rule``, ``subnet``, and ``subnetpool``.
 
    .. code-block:: console
 
