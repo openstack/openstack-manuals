@@ -184,7 +184,8 @@ mistral action-create
 .. code-block:: console
 
    usage: mistral action-create [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--public]
                                 definition
@@ -257,7 +258,8 @@ mistral action-execution-get
    usage: mistral action-execution-get [-h]
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX]
                                        action_execution
 
 Show specific Action execution.
@@ -324,7 +326,7 @@ mistral action-execution-list
    usage: mistral action-execution-list [-h]
                                         [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent]
+                                        [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         [task_execution_id]
 
@@ -350,7 +352,8 @@ mistral action-execution-update
    usage: mistral action-execution-update [-h]
                                           [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent] [--prefix PREFIX]
+                                          [--print-empty] [--noindent]
+                                          [--prefix PREFIX]
                                           [--state {IDLE,RUNNING,SUCCESS,ERROR}]
                                           [--output OUTPUT]
                                           id
@@ -381,8 +384,8 @@ mistral action-get
 .. code-block:: console
 
    usage: mistral action-get [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX]
                              action
 
 Show specific action.
@@ -426,7 +429,8 @@ mistral action-list
 .. code-block:: console
 
    usage: mistral action-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
 
 List all actions.
@@ -444,7 +448,8 @@ mistral action-update
 .. code-block:: console
 
    usage: mistral action-update [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}] [--id ID]
                                 [--public]
                                 definition
@@ -476,7 +481,7 @@ mistral action-validate
 
    usage: mistral action-validate [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   definition
 
 Validate action.
@@ -501,8 +506,9 @@ mistral cron-trigger-create
    usage: mistral cron-trigger-create [-h]
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
-                                      [--params PARAMS] [--pattern <* * * * *>]
+                                      [--print-empty] [--noindent]
+                                      [--prefix PREFIX] [--params PARAMS]
+                                      [--pattern <* * * * *>]
                                       [--first-time <YYYY-MM-DD HH:MM>]
                                       [--count <integer>]
                                       name workflow_identifier [workflow_input]
@@ -567,7 +573,7 @@ mistral cron-trigger-get
 
    usage: mistral cron-trigger-get [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX]
+                                   [--print-empty] [--noindent] [--prefix PREFIX]
                                    cron_trigger
 
 Show specific cron trigger.
@@ -591,7 +597,7 @@ mistral cron-trigger-list
 
    usage: mistral cron-trigger-list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent]
+                                    [--print-empty] [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
 
 List all cron triggers.
@@ -610,7 +616,8 @@ mistral environment-create
 
    usage: mistral environment-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX]
                                      file
 
 Create new environment.
@@ -655,7 +662,7 @@ mistral environment-get
 
    usage: mistral environment-get [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   environment
 
 Show specific environment.
@@ -679,7 +686,7 @@ mistral environment-list
 
    usage: mistral environment-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
+                                   [--print-empty] [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
 
 List all environments.
@@ -698,7 +705,8 @@ mistral environment-update
 
    usage: mistral environment-update [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX]
                                      file
 
 Update environment.
@@ -722,7 +730,7 @@ mistral execution-create
 
    usage: mistral execution-create [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX]
+                                   [--print-empty] [--noindent] [--prefix PREFIX]
                                    [-d DESCRIPTION]
                                    workflow_identifier [workflow_input] [params]
 
@@ -777,8 +785,8 @@ mistral execution-get
 .. code-block:: console
 
    usage: mistral execution-get [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
                                 execution
 
 Show specific execution.
@@ -843,7 +851,8 @@ mistral execution-list
 .. code-block:: console
 
    usage: mistral execution-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [-c COLUMN] [--max-width <integer>]
+                                 [--print-empty] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--marker [MARKER]] [--limit [LIMIT]]
                                  [--sort_keys [SORT_KEYS]]
@@ -867,12 +876,12 @@ List all executions.
 ``--sort_keys [SORT_KEYS]``
   Comma-separated list of sort keys to sort results by.
   Default: created_at. Example: mistral execution-list
-  :option:`--sort_keys=id,description`
+  --sort_keys=id,description
 
 ``--sort_dirs [SORT_DIRS]``
   Comma-separated list of sort directions. Default: asc.
   Example: mistral execution-list
-  :option:`--sort_keys=id,description` :option:`--sort_dirs=asc,desc`
+  --sort_keys=id,description --sort_dirs=asc,desc
 
 .. _mistral_execution-update:
 
@@ -883,7 +892,7 @@ mistral execution-update
 
    usage: mistral execution-update [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent] [--prefix PREFIX]
+                                   [--print-empty] [--noindent] [--prefix PREFIX]
                                    [-s {RUNNING,PAUSED,SUCCESS,ERROR,CANCELLED}]
                                    [-e ENV] [-d DESCRIPTION]
                                    id
@@ -917,8 +926,8 @@ mistral member-create
 .. code-block:: console
 
    usage: mistral member-create [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
                                 resource_id resource_type member_id
 
 Shares a resource to another tenant.
@@ -974,8 +983,8 @@ mistral member-get
 .. code-block:: console
 
    usage: mistral member-get [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [-m MEMBER_ID]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX] [-m MEMBER_ID]
                              resource resource_type
 
 Show specific member information.
@@ -1005,7 +1014,8 @@ mistral member-list
 .. code-block:: console
 
    usage: mistral member-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               resource_id resource_type
 
@@ -1032,9 +1042,9 @@ mistral member-update
 .. code-block:: console
 
    usage: mistral member-update [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [-m MEMBER_ID]
-                                [-s {pending,accepted,rejected}]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
+                                [-m MEMBER_ID] [-s {pending,accepted,rejected}]
                                 resource_id resource_type
 
 Update resource sharing status.
@@ -1067,8 +1077,9 @@ mistral run-action
 .. code-block:: console
 
    usage: mistral run-action [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [-s] [--run-sync] [-t TARGET]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX] [-s] [--run-sync]
+                             [-t TARGET]
                              name [input]
 
 Create new Action execution or just run specific action.
@@ -1103,7 +1114,8 @@ mistral service-list
 .. code-block:: console
 
    usage: mistral service-list [-h] [-f {csv,html,json,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
 
 List all services.
@@ -1121,8 +1133,8 @@ mistral task-get
 .. code-block:: console
 
    usage: mistral task-get [-h] [-f {html,json,shell,table,value,yaml}]
-                           [-c COLUMN] [--max-width <integer>] [--noindent]
-                           [--prefix PREFIX]
+                           [-c COLUMN] [--max-width <integer>] [--print-empty]
+                           [--noindent] [--prefix PREFIX]
                            task
 
 Show specific task.
@@ -1187,8 +1199,8 @@ mistral task-list
 .. code-block:: console
 
    usage: mistral task-list [-h] [-f {csv,html,json,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--quote {all,minimal,none,nonnumeric}]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--quote {all,minimal,none,nonnumeric}]
                             [workflow_execution]
 
 List all tasks.
@@ -1211,8 +1223,8 @@ mistral task-rerun
 .. code-block:: console
 
    usage: mistral task-rerun [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [--resume] [-e ENV]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX] [--resume] [-e ENV]
                              id
 
 Rerun an existing task.
@@ -1243,7 +1255,7 @@ mistral workbook-create
 
    usage: mistral workbook-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   definition
 
 Create new workbook.
@@ -1287,8 +1299,8 @@ mistral workbook-get
 .. code-block:: console
 
    usage: mistral workbook-get [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
                                workbook
 
 Show specific workbook.
@@ -1332,7 +1344,8 @@ mistral workbook-list
 .. code-block:: console
 
    usage: mistral workbook-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
 List all workbooks.
@@ -1351,7 +1364,7 @@ mistral workbook-update
 
    usage: mistral workbook-update [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   definition
 
 Update workbook.
@@ -1375,7 +1388,8 @@ mistral workbook-validate
 
    usage: mistral workbook-validate [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX]
                                     definition
 
 Validate workbook.
@@ -1399,7 +1413,7 @@ mistral workflow-create
 
    usage: mistral workflow-create [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
+                                  [--print-empty] [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   [--public]
                                   definition
@@ -1448,8 +1462,8 @@ mistral workflow-get
 .. code-block:: console
 
    usage: mistral workflow-get [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
                                workflow
 
 Show specific workflow.
@@ -1493,7 +1507,8 @@ mistral workflow-list
 .. code-block:: console
 
    usage: mistral workflow-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
 List all workflows.
@@ -1512,7 +1527,7 @@ mistral workflow-update
 
    usage: mistral workflow-update [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
+                                  [--print-empty] [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   [--id ID] [--public]
                                   definition
@@ -1544,7 +1559,8 @@ mistral workflow-validate
 
    usage: mistral workflow-validate [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX]
                                     definition
 
 Validate workflow.
