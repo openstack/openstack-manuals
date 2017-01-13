@@ -9,13 +9,11 @@ Boot an instance from an ISO image
 
 OpenStack supports booting instances using ISO images. But before you
 make such instances functional, use the :command:`openstack server create`
-command with the following parameters to boot an instance.
+command with the following parameters to boot an instance:
 
-.. code-block:: console
+   .. code-block:: console
 
-    $ openstack server create \
-        --image ubuntu-14.04.2-server-amd64.iso \
-        --block-device source=blank,dest=volume,size=10,shutdown=preserve \
+      $ openstack server create --image ubuntu-14.04.2-server-amd64.iso \
         --nic net-id = NETWORK_UUID \
         --flavor 2 INSTANCE_NAME
     +--------------------------------------+--------------------------------------------+
@@ -56,11 +54,33 @@ In this command, ``ubuntu-14.04.2-server-amd64.iso`` is the ISO image,
 and ``INSTANCE_NAME`` is the name of the new instance. ``NETWORK_UUID``
 is a valid network id in your system.
 
+Create a bootable volume for the instance to reside on after shutdown.
+
+#. Create the volume:
+
+   .. code-block:: console
+
+      $ openstack volume create \
+        --size <SIZE_IN_GB> \
+        --bootable VOLUME_NAME
+
+#. Attach the instance to the volume:
+
+   .. code-block:: console
+
+      $ openstack server add volume
+        INSTANCE_NAME \
+        VOLUME_NAME \
+        --device /dev/vda
+
 .. note::
 
-   You need the Block Storage service, and the parameter
-   ``shutdown=preserve`` is also mandatory, thus the volume will be
-   preserved after the shutdown of the instance.
+   You need the Block Storage service to preserve the instance after
+   shutdown. The `--block-device` argument, used with the
+   legacy command:: `nova-boot`, will not work with the OpenStack
+   :command:`openstack server create` command. Instead, the
+   :command:`openstack volume create` and
+   :command:`openstack server add volume` commands create persistent storage.
 
 After the instance is successfully launched, connect to the instance
 using a remote console and follow the instructions to install the
