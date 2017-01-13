@@ -189,7 +189,7 @@ cloudkitty optional arguments
   Number of seconds to wait for a response.
 
 ``--cloudkitty-url <CLOUDKITTY_URL>``
-  **DEPRECATED**, use :option:`--os-endpoint` instead.
+  **DEPRECATED**, use --os-endpoint instead.
   Defaults to ``env[CLOUDKITTY_URL]``.
 
 ``--cloudkitty-api-version CLOUDKITTY_API_VERSION``
