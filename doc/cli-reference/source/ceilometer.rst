@@ -2,12 +2,12 @@
 .. This file is tool-generated. Do not edit manually.
 .. ##################################################
 
-==================================================
-Telemetry service (ceilometer) command-line client
-==================================================
+==================================================================
+Telemetry Data Collection service (ceilometer) command-line client
+==================================================================
 
 The ceilometer client is the command-line interface (CLI) for
-the Telemetry service (ceilometer) API and its extensions.
+the Telemetry Data Collection service (ceilometer) API and its extensions.
 
 This chapter documents :command:`ceilometer` version ``2.7.0``.
 
@@ -157,7 +157,7 @@ ceilometer usage
 
 ``sample-list``
   List the samples (return OldSample objects if
-  -m/:option:`--meter` is set).
+  -m/--meter is set).
 
 ``sample-show``
   Show a sample.
@@ -198,7 +198,7 @@ ceilometer optional arguments
   Number of seconds to wait for a response.
 
 ``--ceilometer-url <CEILOMETER_URL>``
-  **DEPRECATED**, use :option:`--os-endpoint` instead.
+  **DEPRECATED**, use --os-endpoint instead.
   Defaults to ``env[CEILOMETER_URL]``.
 
 ``--ceilometer-api-version CEILOMETER_API_VERSION``
@@ -351,9 +351,9 @@ Create a new alarm based on state of other alarms.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -444,9 +444,9 @@ Update an existing alarm based on state of other alarms.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -549,9 +549,9 @@ Create a new alarm based on events.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -640,9 +640,9 @@ Update an existing alarm based on events.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -724,9 +724,9 @@ Create a new alarm based on computed statistics.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -848,9 +848,9 @@ Update an existing alarm based on computed statistics.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -971,9 +971,9 @@ Create a new alarm based on computed statistics.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -1103,9 +1103,9 @@ Update an existing alarm based on computed statistics.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -1245,9 +1245,9 @@ Create a new alarm based on computed statistics.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -1385,9 +1385,9 @@ Update an existing alarm based on computed statistics.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -1615,9 +1615,9 @@ Create a new alarm based on computed statistics.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -1731,9 +1731,9 @@ Update an existing alarm based on computed statistics.
   with a cron expression, whereas its duration
   is given in seconds. Can be specified multiple
   times for multiple time constraints, format
-  is: name=<CONSTRAINT_NAME>;start=<CRON>;
-  duration=<SECONDS>;[description=<DESCRIPTION>;
-  [timezone=<IANA Timezone>]] Defaults to None.
+  is: name=<CONSTRAINT_NAME>;start=<CRON>;durati
+  on=<SECONDS>;[description=<DESCRIPTION>;[timez
+  one=<IANA Timezone>]] Defaults to None.
 
 ``--repeat-actions {True|False}``
   True if actions should be repeatedly notified
@@ -2079,7 +2079,7 @@ ceilometer sample-list
 
    usage: ceilometer sample-list [-q <QUERY>] [-m <NAME>] [-l <NUMBER>]
 
-List the samples (return OldSample objects if -m/:option:`--meter` is set).
+List the samples (return OldSample objects if -m/--meter is set).
 
 **Optional arguments:**
 
