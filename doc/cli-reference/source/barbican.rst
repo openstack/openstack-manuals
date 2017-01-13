@@ -101,12 +101,12 @@ barbican optional arguments
 
 ``--os-project-id <auth-project-id>``
   Another way to specify tenant ID. This option is
-  mutually exclusive with :option:`--os-tenant-id`. Defaults to
+  mutually exclusive with --os-tenant-id. Defaults to
   ``env[OS_PROJECT_ID]``.
 
 ``--os-project-name <auth-project-name>``
   Another way to specify tenant name. This option is
-  mutually exclusive with :option:`--os-tenant-name`. Defaults to
+  mutually exclusive with --os-tenant-name. Defaults to
   ``env[OS_PROJECT_NAME]``.
 
 ``--os-project-domain-id <auth-project-domain-id>``
@@ -185,7 +185,7 @@ barbican acl get
 .. code-block:: console
 
    usage: barbican acl get [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width <integer>] [--noindent]
+                           [--max-width <integer>] [--print-empty] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            URI
 
@@ -209,7 +209,8 @@ barbican acl submit
 .. code-block:: console
 
    usage: barbican acl submit [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--user [USERS]]
                               [--project-access | --no-project-access]
@@ -248,7 +249,8 @@ barbican acl user add
 .. code-block:: console
 
    usage: barbican acl user add [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--user [USERS]]
                                 [--project-access | --no-project-access]
@@ -288,7 +290,7 @@ barbican acl user remove
 
    usage: barbican acl user remove [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
+                                   [--print-empty] [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
                                    [--user [USERS]]
                                    [--project-access | --no-project-access]
@@ -327,8 +329,8 @@ barbican ca get
 .. code-block:: console
 
    usage: barbican ca get [-h] [-f {html,json,shell,table,value,yaml}]
-                          [-c COLUMN] [--max-width <integer>] [--noindent]
-                          [--prefix PREFIX]
+                          [-c COLUMN] [--max-width <integer>] [--print-empty]
+                          [--noindent] [--prefix PREFIX]
                           URI
 
 Retrieve a CA by providing its URI.
@@ -351,7 +353,7 @@ barbican ca list
 .. code-block:: console
 
    usage: barbican ca list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width <integer>] [--noindent]
+                           [--max-width <integer>] [--print-empty] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--limit LIMIT] [--offset OFFSET] [--name NAME]
 
@@ -382,9 +384,9 @@ barbican secret container create
    usage: barbican secret container create [-h]
                                            [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent] [--prefix PREFIX]
-                                           [--name NAME] [--type TYPE]
-                                           [--secret SECRET]
+                                           [--print-empty] [--noindent]
+                                           [--prefix PREFIX] [--name NAME]
+                                           [--type TYPE] [--secret SECRET]
 
 Store a container in Barbican.
 
@@ -401,7 +403,7 @@ Store a container in Barbican.
 
 ``--secret SECRET, -s SECRET``
   one secret to store in a container (can be set
-  multiple times). Example: :option:`--secret`
+  multiple times). Example: --secret
   "private_key=https://url.test/v1/secrets/1-2-3-4"
 
 .. _barbican_secret_container_delete:
@@ -435,7 +437,8 @@ barbican secret container get
    usage: barbican secret container get [-h]
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX]
                                         URI
 
 Retrieve a container by providing its URI.
@@ -460,7 +463,7 @@ barbican secret container list
    usage: barbican secret container list [-h]
                                          [-f {csv,html,json,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
-                                         [--noindent]
+                                         [--print-empty] [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
                                          [--limit LIMIT] [--offset OFFSET]
                                          [--name NAME] [--type TYPE]
@@ -514,8 +517,9 @@ barbican secret get
 .. code-block:: console
 
    usage: barbican secret get [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX] [--decrypt] [--payload]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX] [--decrypt]
+                              [--payload]
                               [--payload_content_type PAYLOAD_CONTENT_TYPE]
                               URI
 
@@ -533,13 +537,28 @@ Retrieve a secret by providing its URI.
 
 ``--decrypt, -d``
   if specified, retrieve the unencrypted secret data;
-  the data type can be specified with :option:`--payload-content-`
-  type.
+  the data type can be specified with --payload-content-type.
 
 ``--payload, -p``
   if specified, retrieve the unencrypted secret data;
-  the data type can be specified with :option:`--payload-content-`
-  type. If the user wishes to only retrieve the value of
+  the
+  data
+  type
+  can
+  be
+  specified
+  with
+  --payload-content-type.
+  If
+  the
+  user
+  wishes
+  to
+  only
+  retrieve
+  the
+  value
+  of
   the payload they must add "-f value" to format
   returning only the value of the payload
 
@@ -555,7 +574,8 @@ barbican secret list
 .. code-block:: console
 
    usage: barbican secret list [-h] [-f {csv,html,json,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
                                [--limit LIMIT] [--offset OFFSET] [--name NAME]
                                [--algorithm ALGORITHM] [--bit-length BIT_LENGTH]
@@ -598,8 +618,9 @@ barbican secret order create
    usage: barbican secret order create [-h]
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
-                                       [--name NAME] [--algorithm ALGORITHM]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX] [--name NAME]
+                                       [--algorithm ALGORITHM]
                                        [--bit-length BIT_LENGTH] [--mode MODE]
                                        [--payload-content-type PAYLOAD_CONTENT_TYPE]
                                        [--expiration EXPIRATION]
@@ -694,7 +715,8 @@ barbican secret order get
 
    usage: barbican secret order get [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX]
                                     URI
 
 Retrieve an order by providing its URI.
@@ -718,7 +740,7 @@ barbican secret order list
 
    usage: barbican secret order list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent]
+                                     [--print-empty] [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--limit LIMIT] [--offset OFFSET]
 
@@ -744,9 +766,10 @@ barbican secret store
 .. code-block:: console
 
    usage: barbican secret store [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--name NAME]
-                                [--payload PAYLOAD] [--secret-type SECRET_TYPE]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
+                                [--name NAME] [--payload PAYLOAD]
+                                [--secret-type SECRET_TYPE]
                                 [--payload-content-type PAYLOAD_CONTENT_TYPE]
                                 [--payload-content-encoding PAYLOAD_CONTENT_ENCODING]
                                 [--algorithm ALGORITHM] [--bit-length BIT_LENGTH]
@@ -773,10 +796,10 @@ Store a secret in Barbican.
 ``--payload-content-type PAYLOAD_CONTENT_TYPE, -t PAYLOAD_CONTENT_TYPE``
   the type/format of the provided secret data;
   "text/plain" is assumed to be UTF-8; required when
-  :option:`--payload` is supplied.
+  --payload is supplied.
 
 ``--payload-content-encoding PAYLOAD_CONTENT_ENCODING, -e PAYLOAD_CONTENT_ENCODING``
-  required if :option:`--payload-content-type` is "application
+  required if --payload-content-type is "application
   /octet-stream".
 
 ``--algorithm ALGORITHM, -a ALGORITHM``
