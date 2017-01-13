@@ -65,11 +65,7 @@ configuration of the environment, but can include:
 
 **Identity service (keystone)**
 
-The keystone processes can run standalone, but are often run within Apache
-as WSGI applications.
-
-* keystone-public
-* keystone-admin
+The keystone processes are run within Apache as WSGI applications.
 
 Resource Alerting
 ~~~~~~~~~~~~~~~~~
