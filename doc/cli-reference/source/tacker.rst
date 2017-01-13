@@ -71,10 +71,10 @@ tacker optional arguments
   Defaults to ``env[OS_ENDPOINT_TYPE]`` or publicURL.
 
 ``--service-type <service-type>``
-  **DEPRECATED!** Use :option:`--os-service-type`.
+  **DEPRECATED!** Use --os-service-type.
 
 ``--endpoint-type <endpoint-type>``
-  **DEPRECATED!** Use :option:`--os-endpoint-type`.
+  **DEPRECATED!** Use --os-endpoint-type.
 
 ``--os-auth-strategy <auth-strategy>``
   **DEPRECATED!** Only keystone is supported.
@@ -88,7 +88,7 @@ tacker optional arguments
 
 ``--os-project-name <auth-project-name>``
   Another way to specify tenant name. This option is
-  mutually exclusive with :option:`--os-tenant-name`. Defaults to
+  mutually exclusive with --os-tenant-name. Defaults to
   ``env[OS_PROJECT_NAME]``.
 
 ``--os-tenant-id <auth-tenant-id>``
@@ -97,7 +97,7 @@ tacker optional arguments
 
 ``--os-project-id <auth-project-id>``
   Another way to specify tenant ID. This option is
-  mutually exclusive with :option:`--os-tenant-id`. Defaults to
+  mutually exclusive with --os-tenant-id. Defaults to
   ``env[OS_PROJECT_ID]``.
 
 ``--os-username <auth-username>``
@@ -346,11 +346,11 @@ The
 supported
 args
 are
-:option:`--id,`
-:option:`--resource_id,`
-:option:`--resource_state,`
-:option:`--resource_type,`
-:option:`--event_type`
+--id,
+--resource_id,
+--resource_state,
+--resource_type,
+--event_type
 
 **Optional arguments:**
 
@@ -531,8 +531,8 @@ tacker vim-events-list
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--request-format {json,xml}] [-D] [-F FIELD]
 
-List events that belong to a given VIM. The supported args are :option:`--id,`
-:option:`--resource_id,` :option:`--resource_state,` :option:`--event_type`
+List events that belong to a given VIM. The supported args are --id,
+--resource_id, --resource_state, --event_type
 
 **Optional arguments:**
 
@@ -785,8 +785,8 @@ tacker vnf-events-list
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--request-format {json,xml}] [-D] [-F FIELD]
 
-List events that belong to a given VNF. The supported args are :option:`--id,`
-:option:`--resource_id,` :option:`--resource_state,` :option:`--event_type`
+List events that belong to a given VNF. The supported args are --id,
+--resource_id, --resource_state, --event_type
 
 **Optional arguments:**
 
@@ -1060,8 +1060,8 @@ The
 supported
 args
 are
-:option:`--id,`
-:option:`--resource_id,` :option:`--resource_state,` :option:`--event_type`
+--id,
+--resource_id, --resource_state, --event_type
 
 **Optional arguments:**
 
