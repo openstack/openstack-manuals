@@ -538,7 +538,7 @@ Lists available backups.
 
 ``--marker <ID>``
   Begin displaying the results for IDs greater than
-  the specified marker. When used with :option:`--limit,` set
+  the specified marker. When used with --limit, set
   this to the last ID displayed in the previous run.
 
 ``--datastore <datastore>``
@@ -567,7 +567,7 @@ Lists available backups for an instance.
 
 ``--marker <ID>``
   Begin displaying the results for IDs greater than the
-  specified marker. When used with :option:`--limit,` set this to the
+  specified marker. When used with --limit, set this to the
   last ID displayed in the previous run.
 
 .. _trove_backup-show:
@@ -725,7 +725,7 @@ Lists all the clusters.
 
 ``--marker <ID>``
   Begin displaying the results for IDs greater than the
-  specified marker. When used with :option:`--limit,` set this to the
+  specified marker. When used with --limit, set this to the
   last ID displayed in the previous run.
 
 .. _trove_cluster-modules:
@@ -944,7 +944,7 @@ Lists all instances associated with a configuration group.
 
 ``--marker <ID>``
   Begin displaying the results for IDs greater than the
-  specified marker. When used with :option:`--limit,` set this to
+  specified marker. When used with --limit, set this to
   the last ID displayed in the previous run.
 
 .. _trove_configuration-list:
@@ -965,7 +965,7 @@ Lists all configuration groups.
 
 ``--marker <ID>``
   Begin displaying the results for IDs greater than the
-  specified marker. When used with :option:`--limit,` set this to the
+  specified marker. When used with --limit, set this to the
   last ID displayed in the previous run.
 
 .. _trove_configuration-parameter-list:
@@ -1403,7 +1403,7 @@ Lists executions of a scheduled backup of an instance.
 
 ``--marker <ID>``
   Begin displaying the results for IDs greater than the
-  specified marker. When used with :option:`--limit,` set this to the
+  specified marker. When used with --limit, set this to the
   last ID displayed in the previous run.
 
 .. _trove_flavor-list:
@@ -1488,14 +1488,14 @@ Lists all the instances.
 ``--marker <ID>``
   Begin displaying the results for IDs greater
   than the specified marker. When used with
-  :option:`--limit,` set this to the last ID displayed
+  --limit, set this to the last ID displayed
   in the previous run.
 
 ``--include_clustered, --include-clustered``
   Include instances that are part of a cluster
-  (default False). :option:`--include-clustered` may be
+  (default False). --include-clustered may be
   deprecated in the future, retaining just
-  :option:`--include_clustered`.
+  --include_clustered.
 
 .. _trove_log-disable:
 
@@ -1942,7 +1942,7 @@ Lists the instances that have a particular module applied.
 
 ``--marker <ID>``
   Begin displaying the results for IDs greater than the
-  specified marker. When used with :option:`--limit,` set this to
+  specified marker. When used with --limit, set this to
   the last ID displayed in the previous run.
 
 .. _trove_module-list:
@@ -2559,9 +2559,9 @@ Updates an instance: Edits name, configuration, or replica source.
 
 ``--detach_replica_source, --detach-replica-source``
   Detach the replica instance from its
-  replication source. :option:`--detach-replica-source`
+  replication source. --detach-replica-source
   may be deprecated in the future in favor of
-  just :option:`--detach_replica_source`
+  just --detach_replica_source
 
 ``--remove_configuration``
   Drops the current configuration reference.
