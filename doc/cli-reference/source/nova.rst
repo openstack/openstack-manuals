@@ -236,7 +236,7 @@ nova usage
 ``get-mks-console``
   Get an MKS console to a server. (Supported by
   API versions '2.8' - '2.latest') [hint: use
-  ':option:`--os-compute-api-version`' flag to show help
+  '--os-compute-api-version' flag to show help
   message for proper version]
 
 ``get-password``
@@ -286,8 +286,18 @@ nova usage
 
 ``hypervisor-list``
   List hypervisors. (Supported by API versions
-  '2.0' - '2.latest') [hint: use ':option:`--os-compute-`
-  api-version' flag to show help message for
+  '2.0'
+  -
+  '2.latest')
+  [hint:
+  use
+  '--os-compute-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
   proper version]
 
 ``hypervisor-servers``
@@ -346,19 +356,19 @@ nova usage
 ``keypair-delete``
   Delete keypair given by its name. (Supported
   by API versions '2.0' - '2.latest') [hint: use
-  ':option:`--os-compute-api-version`' flag to show help
+  '--os-compute-api-version' flag to show help
   message for proper version]
 
 ``keypair-list``
   Print a list of keypairs for a user (Supported
   by API versions '2.0' - '2.latest') [hint: use
-  ':option:`--os-compute-api-version`' flag to show help
+  '--os-compute-api-version' flag to show help
   message for proper version]
 
 ``keypair-show``
   Show details about the given keypair.
   (Supported by API versions '2.0' - '2.latest')
-  [hint: use ':option:`--os-compute-api-version`' flag to
+  [hint: use '--os-compute-api-version' flag to
   show help message for proper version]
 
 ``limits``
@@ -380,7 +390,7 @@ nova usage
 ``live-migration-abort``
   Abort an on-going live migration. (Supported
   by API versions '2.24' - '2.latest') [hint:
-  use ':option:`--os-compute-api-version`' flag to show
+  use '--os-compute-api-version' flag to show
   help message for proper version]
 
 ``live-migration-force-complete``
@@ -393,8 +403,14 @@ nova usage
   -'2.latest')
   [hint:
   use
-  ':option:`--os-compute-api-`
-  version' flag to show help message for proper
+  '--os-compute-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
   version]
 
 ``lock``
@@ -445,7 +461,7 @@ nova usage
 ``quota-class-update``
   Update the quotas for a quota class.
   (Supported by API versions '2.0' - '2.latest')
-  [hint: use ':option:`--os-compute-api-version`' flag to
+  [hint: use '--os-compute-api-version' flag to
   show help message for proper version]
 
 ``quota-defaults``
@@ -461,7 +477,7 @@ nova usage
 ``quota-update``
   Update the quotas for a tenant/user.
   (Supported by API versions '2.0' - '2.latest')
-  [hint: use ':option:`--os-compute-api-version`' flag to
+  [hint: use '--os-compute-api-version' flag to
   show help message for proper version]
 
 ``reboot``
@@ -580,8 +596,14 @@ nova usage
   -'2.latest')
   [hint:
   use
-  ':option:`--os-compute-api-`
-  version' flag to show help message for proper
+  '--os-compute-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
   version]
 
 ``server-migration-show``
@@ -594,38 +616,44 @@ nova usage
   -'2.latest')
   [hint:
   use
-  ':option:`--os-compute-api-`
-  version' flag to show help message for proper
+  '--os-compute-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
   version]
 
 ``server-tag-add``
   Add single tag to a server. (Supported by API
   versions '2.26' - '2.latest') [hint: use
-  ':option:`--os-compute-api-version`' flag to show help
+  '--os-compute-api-version' flag to show help
   message for proper version]
 
 ``server-tag-delete``
   Delete single tag from a server. (Supported by
   API versions '2.26' - '2.latest') [hint: use
-  ':option:`--os-compute-api-version`' flag to show help
+  '--os-compute-api-version' flag to show help
   message for proper version]
 
 ``server-tag-delete-all``
   Delete all tags from a server. (Supported by
   API versions '2.26' - '2.latest') [hint: use
-  ':option:`--os-compute-api-version`' flag to show help
+  '--os-compute-api-version' flag to show help
   message for proper version]
 
 ``server-tag-list``
   Get list of tags from a server. (Supported by
   API versions '2.26' - '2.latest') [hint: use
-  ':option:`--os-compute-api-version`' flag to show help
+  '--os-compute-api-version' flag to show help
   message for proper version]
 
 ``server-tag-set``
   Set list of tags to a server. (Supported by
   API versions '2.26' - '2.latest') [hint: use
-  ':option:`--os-compute-api-version`' flag to show help
+  '--os-compute-api-version' flag to show help
   message for proper version]
 
 ``service-delete``
@@ -640,7 +668,7 @@ nova usage
 ``service-force-down``
   Force service to down. (Supported by API
   versions '2.11' - '2.latest') [hint: use
-  ':option:`--os-compute-api-version`' flag to show help
+  '--os-compute-api-version' flag to show help
   message for proper version]
 
 ``service-list``
@@ -674,7 +702,7 @@ nova usage
 ``trigger-crash-dump``
   Trigger crash dump in an instance. (Supported
   by API versions '2.17' - '2.latest') [hint:
-  use ':option:`--os-compute-api-version`' flag to show
+  use '--os-compute-api-version' flag to show
   help message for proper version]
 
 ``unlock``
@@ -1755,16 +1783,7 @@ nova get-mks-console
    usage: nova get-mks-console <server>
 
 Get an MKS console to a server. (Supported by API versions '2.8' - '2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
-for
-proper
+[hint: use '--os-compute-api-version' flag to show help message for proper
 version]
 
 **Positional arguments:**
@@ -2064,15 +2083,7 @@ nova hypervisor-list
                                [--limit <limit>]
 
 List hypervisors. (Supported by API versions '2.0' - '2.latest') [hint: use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
-for
-proper
-version]
+'--os-compute-api-version' flag to show help message for proper version]
 
 **Optional arguments:**
 
@@ -2333,15 +2344,7 @@ nova keypair-delete
    usage: nova keypair-delete [--user <user-id>] <name>
 
 Delete keypair given by its name. (Supported by API versions '2.0' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
@@ -2365,15 +2368,7 @@ nova keypair-list
                             [--limit <limit>]
 
 Print a list of keypairs for a user (Supported by API versions '2.0' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Optional arguments:**
@@ -2400,15 +2395,7 @@ nova keypair-show
    usage: nova keypair-show [--user <user-id>] <keypair>
 
 Show details about the given keypair. (Supported by API versions '2.0' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
@@ -2543,7 +2530,7 @@ List active servers.
   The given tags must all be present for a
   server to be included in the list result.
   Boolean expression in this case is 't1 AND
-  t2'. Tags must be separated by commas: :option:`--tags`
+  t2'. Tags must be separated by commas: --tags
   <tag1,tag2> (Supported by API versions '2.26'
   - '2.latest')
 
@@ -2551,7 +2538,7 @@ List active servers.
   If one of the given tags is present the server
   will be included in the list result. Boolean
   expression in this case is 't1 OR t2'. Tags
-  must be separated by commas: :option:`--tags-any`
+  must be separated by commas: --tags-any
   <tag1,tag2> (Supported by API versions '2.26'
   - '2.latest')
 
@@ -2560,7 +2547,7 @@ List active servers.
   given tags willbe included in the list
   results. Boolean expression in this case is
   'NOT(t1 AND t2)'. Tags must be separated by
-  commas: :option:`--not-tags` <tag1,tag2> (Supported by
+  commas: --not-tags <tag1,tag2> (Supported by
   API versions '2.26' - '2.latest')
 
 ``--not-tags-any <not-tags-any>``
@@ -2568,7 +2555,7 @@ List active servers.
   of the given tagswill be included in the list
   result. Boolean expression in this case is
   'NOT(t1 OR t2)'. Tags must be separated by
-  commas: :option:`--not-tags-any` <tag1,tag2> (Supported
+  commas: --not-tags-any <tag1,tag2> (Supported
   by API versions '2.26' - '2.latest')
 
 .. _nova_list-extensions:
@@ -2638,15 +2625,7 @@ nova live-migration-abort
    usage: nova live-migration-abort <server> <migration>
 
 Abort an on-going live migration. (Supported by API versions '2.24' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
@@ -2667,15 +2646,7 @@ nova live-migration-force-complete
    usage: nova live-migration-force-complete <server> <migration>
 
 Force on-going live migration to complete. (Supported by API versions '2.22' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
@@ -2820,15 +2791,7 @@ nova quota-class-update
                                   <class>
 
 Update the quotas for a quota class. (Supported by API versions '2.0' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
@@ -2947,15 +2910,7 @@ nova quota-update
                             <tenant-id>
 
 Update the quotas for a tenant/user. (Supported by API versions '2.0' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
@@ -3388,16 +3343,7 @@ nova server-migration-list
    usage: nova server-migration-list <server>
 
 Get the migrations list of specified server. (Supported by API versions '2.23'
--
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+- '2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
@@ -3415,15 +3361,7 @@ nova server-migration-show
    usage: nova server-migration-show <server> <migration>
 
 Get the migration of specified server. (Supported by API versions '2.23' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
@@ -3444,16 +3382,7 @@ nova server-tag-add
    usage: nova server-tag-add <server> <tag>
 
 Add single tag to a server. (Supported by API versions '2.26' - '2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
-for
-proper
+[hint: use '--os-compute-api-version' flag to show help message for proper
 version]
 
 **Positional arguments:**
@@ -3474,15 +3403,7 @@ nova server-tag-delete
    usage: nova server-tag-delete <server> <tag>
 
 Delete single tag from a server. (Supported by API versions '2.26' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
@@ -3503,16 +3424,7 @@ nova server-tag-delete-all
    usage: nova server-tag-delete-all <server>
 
 Delete all tags from a server. (Supported by API versions '2.26' - '2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
-for
-proper
+[hint: use '--os-compute-api-version' flag to show help message for proper
 version]
 
 **Positional arguments:**
@@ -3530,15 +3442,7 @@ nova server-tag-list
    usage: nova server-tag-list <server>
 
 Get list of tags from a server. (Supported by API versions '2.26' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
@@ -3556,16 +3460,7 @@ nova server-tag-set
    usage: nova server-tag-set <server> <tags> [<tags> ...]
 
 Set list of tags to a server. (Supported by API versions '2.26' - '2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
-for
-proper
+[hint: use '--os-compute-api-version' flag to show help message for proper
 version]
 
 **Positional arguments:**
@@ -3645,16 +3540,7 @@ nova service-force-down
    usage: nova service-force-down [--unset] <hostname> <binary>
 
 Force service to down. (Supported by API versions '2.11' - '2.latest') [hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
-for
-proper
-version]
+use '--os-compute-api-version' flag to show help message for proper version]
 
 **Positional arguments:**
 
@@ -3876,15 +3762,7 @@ nova trigger-crash-dump
    usage: nova trigger-crash-dump <server>
 
 Trigger crash dump in an instance. (Supported by API versions '2.17' -
-'2.latest')
-[hint:
-use
-':option:`--os-compute-api-version`'
-flag
-to
-show
-help
-message
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
 **Positional arguments:**
