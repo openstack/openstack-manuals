@@ -188,13 +188,13 @@ murano optional arguments
   Print more verbose output.
 
 ``--cert-file OS_CERT``
-  **DEPRECATED!** Use :option:`--os-cert`.
+  **DEPRECATED!** Use --os-cert.
 
 ``--key-file OS_KEY``
-  **DEPRECATED!** Use :option:`--os-key`.
+  **DEPRECATED!** Use --os-key.
 
 ``--ca-file OS_CACERT``
-  **DEPRECATED!** Use :option:`--os-cacert`.
+  **DEPRECATED!** Use --os-cacert.
 
 ``--api-timeout API_TIMEOUT``
   Number of seconds to wait for an API response,
@@ -1011,7 +1011,7 @@ Import a package. \`FILE\` can be either a path to a zip file, url or a FQPN.
 You
 can
 use
-```--```
+\`--\`
 to
 separate
 \`FILE\`s
