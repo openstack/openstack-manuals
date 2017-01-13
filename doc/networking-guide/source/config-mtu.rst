@@ -124,9 +124,8 @@ MTU for other networks:
 Instance network interfaces (VIFs)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, the ``advertise_mtu`` option in the ``neutron.conf`` file
-enables the DHCP agent to provide an appropriate MTU value to instances
-using IPv4 and enables the L3 agent to provide an appropriate MTU value
-to instances using IPv6. IPv6 uses RA via the L3 agent because the DHCP
-agent only supports IPv4. Instances using IPv4 and IPv6 should obtain the
-same MTU value regardless of method.
+The DHCP agent provides an appropriate MTU value to instances using IPv4,
+while the L3 agent provides an appropriate MTU value to instances using
+IPv6. IPv6 uses RA via the L3 agent because the DHCP agent only supports
+IPv4. Instances using IPv4 and IPv6 should obtain the same MTU value
+regardless of method.
