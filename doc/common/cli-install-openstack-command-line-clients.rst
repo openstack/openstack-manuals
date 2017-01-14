@@ -30,15 +30,16 @@ command-line clients, and provides installation instructions as needed.
        easy to install. Search your package manager for setuptools to
        find an installation package.
        If you cannot find one, download the setuptools package
-       directly from https://pypi.python.org/pypi/setuptools.
+       directly from `Python Setuptools
+       <https://pypi.python.org/pypi/setuptools>`_.
 
        The recommended way to install setuptools on Microsoft Windows
-       is to follow the documentation provided on the setuptools website
-       (https://pypi.python.org/pypi/setuptools).
+       is to follow the documentation provided on the `Python Setuptools
+       <https://pypi.python.org/pypi/setuptools>`_ website.
 
-       Another option is to use the unofficial binary installer
+       Another option is to use the `unofficial binary installer
        maintained by Christoph Gohlke
-       (http://www.lfd.uci.edu/~gohlke/pythonlibs/#setuptools).
+       <http://www.lfd.uci.edu/~gohlke/pythonlibs/#setuptools>`_.
    * - pip package
      - To install the clients on a Linux, Mac OS X, or Microsoft Windows
        system, use pip. It is easy to use, ensures that you get the latest
@@ -68,8 +69,8 @@ command-line clients, and provides installation instructions as needed.
 
           C:\>easy_install pip
 
-       Another option is to use the unofficial binary installer provided by
-       Christoph Gohlke (http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip).
+       Another option is to use the `unofficial binary installer provided by
+       Christoph Gohlke <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip>`_.
 
        **Ubuntu or Debian**
 
