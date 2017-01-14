@@ -212,6 +212,10 @@ htmlhelp_basename = 'cli-reference'
 # If true, publish source files
 html_copy_source = False
 
+# If true, SmartyPants will be used to convert quotes and dashes
+# to typographically correct entities. Default: True.
+html_use_smartypants = False
+
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
