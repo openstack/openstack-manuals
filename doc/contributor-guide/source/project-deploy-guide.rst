@@ -85,7 +85,7 @@ does alter the standard linking conventions.
 
 Usage for the deploy guide is as follows:
 
-.. code-block:: ini
+.. code-block:: rst
 
    :deploy_guide:`Link title text <last-part-of-url.html>`
 
