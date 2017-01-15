@@ -47,48 +47,57 @@ topology creation. To perform this task, proceed with the following steps:
 
    .. code-block:: console
 
-      $ neutron subnetpool-create --shared --is-default True\
-        --pool-prefix 10.0.0.0/24 --default-prefixlen 26 shared-default
+      $ openstack subnet pool create --share --default \
+        --pool-prefix 10.0.0.0/24 --default-prefix-length 26 \
+        shared-default
 
-      Created a new subnetpool:
+        +-------------------+--------------------------------------+
+        | Field             | Value                                |
+        +-------------------+--------------------------------------+
+        | address_scope_id  | None                                 |
+        | created_at        | 2017-01-12T15:10:34Z                 |
+        | default_prefixlen | 26                                   |
+        | default_quota     | None                                 |
+        | description       |                                      |
+        | headers           |                                      |
+        | id                | b41b7b9c-de57-4c19-b1c5-731985bceb7f |
+        | ip_version        | 4                                    |
+        | is_default        | True                                 |
+        | max_prefixlen     | 32                                   |
+        | min_prefixlen     | 8                                    |
+        | name              | shared-default                       |
+        | prefixes          | 10.0.0.0/24                          |
+        | project_id        | 86acdbd1d72745fd8e8320edd7543400     |
+        | revision_number   | 1                                    |
+        | shared            | True                                 |
+        | updated_at        | 2017-01-12T15:10:34Z                 |
+        +-------------------+--------------------------------------+
+
+      $ openstack subnet pool create --share --default \
+        --pool-prefix 2001:db8:8000::/48 --default-prefix-length 64 \
+        default-v6
+
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
-      | address_scope_id  |                                      |
-      | default_prefixlen | 26                                   |
-      | default_quota     |                                      |
-      | id                | 7923bc31-4ca4-4c95-9ec2-d69b21775ee2 |
-      | ip_version        | 4                                    |
-      | is_default        | True                                 |
-      | max_prefixlen     | 32                                   |
-      | min_prefixlen     | 8                                    |
-      | name              | shared-default                       |
-      | prefixes          | 10.0.0.0/24                          |
-      | shared            | True                                 |
-      | tenant_id         | 375e91c9dc854aaa8c8fd93f4b24e87c     |
-      +-------------------+--------------------------------------+
-
-      $ neutron subnetpool-create --shared --is-default True\
-        --pool-prefix 2001:db8:8000::/48 --default-prefixlen 64 default-v6
-
-      Created a new subnetpool:
-      +-------------------+--------------------------------------+
-      | Field             | Value                                |
-      +-------------------+--------------------------------------+
-      | address_scope_id  |                                      |
+      | address_scope_id  | None                                 |
+      | created_at        | 2017-01-12T15:14:35Z                 |
       | default_prefixlen | 64                                   |
-      | default_quota     |                                      |
-      | id                | 953b28ab-5afa-42ea-8f44-44bf111672b1 |
+      | default_quota     | None                                 |
+      | description       |                                      |
+      | headers           |                                      |
+      | id                | 6f387016-17f0-4564-96ad-e34775b6ea14 |
       | ip_version        | 6                                    |
       | is_default        | True                                 |
       | max_prefixlen     | 128                                  |
       | min_prefixlen     | 64                                   |
       | name              | default-v6                           |
       | prefixes          | 2001:db8:8000::/48                   |
+      | project_id        | 86acdbd1d72745fd8e8320edd7543400     |
+      | revision_number   | 1                                    |
       | shared            | True                                 |
-      | tenant_id         | 375e91c9dc854aaa8c8fd93f4b24e87c     |
+      | updated_at        | 2017-01-12T15:14:35Z                 |
       +-------------------+--------------------------------------+
-
 
 Get Me A Network
 ----------------
