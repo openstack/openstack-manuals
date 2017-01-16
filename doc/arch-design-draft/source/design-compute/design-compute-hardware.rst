@@ -17,36 +17,72 @@ Consider the following factors when selecting compute (server) hardware:
    reaches capacity.
 
 * Cost
-   The relative cost of the hardware weighed against the level of
-   design effort needed to build the system.
+  The relative cost of the hardware weighed against the total amount of
+  capacity available on the hardware based on predetermined requirements.
 
 
 Compute (server) hardware selection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Weigh these considerations against each other to determine the best
-design for the desired purpose. For example, increasing server density
-means sacrificing resource capacity or expandability. Increasing resource
-capacity and expandability can increase cost but decrease server density.
-Decreasing cost often means decreasing supportability, server density,
-resource capacity, and expandability.
+Weigh these considerations against each other to determine the best design for
+the desired purpose. For example, increasing server density means sacrificing
+resource capacity or expandability. It also can decrease availability and
+increase the chance of noisy neighbor issues. Increasing resource capacity and
+expandability can increase cost but decrease server density. Decreasing cost
+often means decreasing supportability, availability, server density, resource
+capacity, and expandability.
 
-Compute capacity (CPU cores and RAM capacity) is a secondary
-consideration for selecting server hardware. The required
-server hardware must supply adequate CPU sockets, additional CPU cores,
-and more RAM. Network connectivity and storage capacity are not as
-critical. Your hardware will need to provide enough network connectivity and
-storage capacity to meet the user requirements.
+The primary job of the OpenStack architect is to determine the requirements for
+the cloud prior to constructing the cloud, and planning for expansion
+and new features that may require different hardware. Planning for hardware
+lifecycles is also the job of the architect. However, if the cloud is initially
+built with near end of life, but cost effective hardware, then the
+performance and capacity demand of new workloads will drive the purchase of
+more modern hardware quicker. With individual harware components changing over
+time, companies may prefer to manage configurations as stock keeping units
+(SKU)s. This method provides an enterprise with a standard configuration unit
+of compute (server) that can be placed in any IT service manager or vendor
+supplied ordering system that can  be triggered manually or through advanced
+operational automations. This simplifies ordering, provisioning, and
+activating additional compute resources. For example, there are plug-ins for
+several commercial service management tools that enable integration with
+hardware APIs. This configures and activates new compute resources from standby
+hardware based on a standard configurations. Using this methodology, spare
+hardware can be ordered for a datacenter and provisioned based on
+capacity data derived from OpenStack Telemetry.
+
+Compute capacity (CPU cores and RAM capacity) is a secondary consideration for
+selecting server hardware. The required server hardware must supply adequate
+CPU sockets, additional CPU cores, and adequate RAM, and is discussed in detail
+under the CPU selection secution.
+
+However, there are also network and storage considerations for any compute
+server. Network considerations are discussed in the
+`network section
+<http://docs.openstack.org/draft/arch-design-draft/design-networking.html>`_
+of this chapter.
+
+
+Scaling your cloud
+~~~~~~~~~~~~~~~~~~
 
 For a compute-focused cloud, emphasis should be on server
 hardware that can offer more CPU sockets, more CPU cores, and more RAM.
 Network connectivity and storage capacity are less critical.
 
-When designing a OpenStack cloud architecture, you must
+When designing a OpenStack cloud compute server architecture, you must
 consider whether you intend to scale up or scale out. Selecting a
 smaller number of larger hosts, or a larger number of smaller hosts,
 depends on a combination of factors: cost, power, cooling, physical rack
-and floor space, support-warranty, and manageability.
+and floor space, support-warranty, and manageability. Typically, the scale out
+model has been popular for OpenStack because it further reduces the number of
+possible failure domains by spreading workloads across more infrastructure.
+However, the downside is the cost of additional servers and the datacenter
+resources needed to power, network, and cool them.
+
+
+Hardware selection considerations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Consider the following in selecting server hardware form factor suited for
 your OpenStack design architecture:
@@ -90,45 +126,56 @@ your OpenStack design architecture:
   For example, many sled servers offer four independent dual-socket
   nodes in 2U for a total of eight CPU sockets in 2U.
 
-Other factors that influence server hardware selection for an OpenStack
-design architecture include:
+
+Other factors to consider
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here are some other factors to consider when selecting hardware for your
+compute servers.
 
 Instance density
- More hosts are required to support the anticipated scale
- if the design architecture uses dual-socket hardware designs.
+----------------
 
- For a general purpose OpenStack cloud, sizing is an important consideration.
- The expected or anticipated number of instances that each hypervisor can
- host is a common meter used in sizing the deployment. The selected server
- hardware needs to support the expected or anticipated instance density.
+More hosts are required to support the anticipated scale
+if the design architecture uses dual-socket hardware designs.
+
+For a general purpose OpenStack cloud, sizing is an important consideration.
+The expected or anticipated number of instances that each hypervisor can
+host is a common meter used in sizing the deployment. The selected server
+hardware needs to support the expected or anticipated instance density.
 
 Host density
- Another option to address the higher host count is to use a
- quad-socket platform. Taking this approach decreases host density
- which also increases rack count. This configuration affects the
- number of power connections and also impacts network and cooling
- requirements.
+------------
 
- Physical data centers have limited physical space, power, and
- cooling. The number of hosts (or hypervisors) that can be fitted
- into a given metric (rack, rack unit, or floor tile) is another
- important method of sizing. Floor weight is an often overlooked
- consideration. The data center floor must be able to support the
- weight of the proposed number of hosts within a rack or set of
- racks. These factors need to be applied as part of the host density
- calculation and server hardware selection.
+Another option to address the higher host count is to use a
+quad-socket platform. Taking this approach decreases host density
+which also increases rack count. This configuration affects the
+number of power connections and also impacts network and cooling
+requirements.
+
+Physical data centers have limited physical space, power, and
+cooling. The number of hosts (or hypervisors) that can be fitted
+into a given metric (rack, rack unit, or floor tile) is another
+important method of sizing. Floor weight is an often overlooked
+consideration.
+The data center floor must be able to support the
+weight of the proposed number of hosts within a rack or set of
+racks. These factors need to be applied as part of the host density
+calculation and server hardware selection.
 
 Power and cooling density
- The power and cooling density requirements might be lower than with
- blade, sled, or 1U server designs due to lower host density (by
- using 2U, 3U or even 4U server designs). For data centers with older
- infrastructure, this might be a desirable feature.
+-------------------------
 
- Data centers have a specified amount of power fed to a given rack or
- set of racks. Older data centers may have a power density as power
- as low as 20 AMPs per rack, while more recent data centers can be
- architected to support power densities as high as 120 AMP per rack.
- The selected server hardware must take power density into account.
+The power and cooling density requirements might be lower than with
+blade,sled, or 1U server designs due to lower host density (by
+using 2U, 3U or even 4U server designs). For data centers with older
+infrastructure, this might be a desirable feature.
+
+Data centers have a specified amount of power fed to a given rack or
+set of racks. Older data centers may have a power density as power
+as low as 20 AMPs per rack, while more recent data centers can be
+architected to support power densities as high as 120 AMP per rack.
+The selected server hardware must take power density into account.
 
 Specific hardware concepts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
