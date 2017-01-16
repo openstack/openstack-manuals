@@ -123,6 +123,39 @@ To create a volume type that enables replication using Live Volume:
     $ openstack volume type key --property replication_enabled='<is> True' "ReplicationType"
     $ openstack volume type key --property replication:livevolume='<is> True' "ReplicationType"
 
+If QOS options are enabled on the Storage Center they can be enabled via extra
+specs. The name of the Volume QOS can be specified via the
+``storagetype:volumeqos`` extra spec. Likewise the name of the Group QOS to
+use can be specificed via the ``storagetype:groupqos`` extra spec. Volumes
+created with these extra specs set will be added to the specified QOS groups.
+
+To create a volume type that sets both Volume and Group QOS:
+
+.. code-block:: console
+
+    $ openstack volume type create "StorageCenterQOS"
+    $ openstack volume type key --property 'storagetype:volumeqos'='unlimited' "StorageCenterQOS"
+    $ openstack volume type key --property 'storagetype:groupqos'='limited' "StorageCenterQOS"
+
+Data reduction profiles can be specified in the
+``storagetype:datareductionprofile`` extra spec. Available options are None,
+Compression, and Deduplication. Note that not all options are available on
+every Storage Center.
+
+To create volume types that support no compression, compression, and
+deduplication and compression respectively:
+
+.. code-block:: console
+
+    $ openstack volume type create "NoCompressionType"
+    $ openstack volume type key --property 'storagetype:datareductionprofile'='None' "NoCompressionType"
+    $ openstack volume type create "CompressedType"
+    $ openstack volume type key --property 'storagetype:datareductionprofile'='Compression' "CompressedType"
+    $ openstack volume type create "DedupType"
+    $ openstack volume type key --property 'storagetype:datareductionprofile'='Deduplication' "DedupType"
+
+Note: The default is no compression.
+
 iSCSI configuration
 ~~~~~~~~~~~~~~~~~~~
 
@@ -297,6 +330,27 @@ down list in the DSM.
 Note that this server definition is created once. Changing this setting after
 the fact will not change an existing definition. The selected Server OS does
 not have to match the actual OS used on the node.
+
+Excluding a domain
+~~~~~~~~~~~~~~~~~~
+
+This option excludes a Storage Center ISCSI fault domain from the ISCSI
+properties returned by the initialize_connection call. This only applies to
+the ISCSI driver.
+
+Add the excluded_domain_ip option into the backend config for each fault domain
+to be excluded. This option takes the specified Target IPv4 Address listed
+under the fault domain. Older versions of DSM (EM) may list this as the Well
+Known IP Address.
+
+Add the following to the back-end specification to exclude the domains at
+172.20.25.15 and 172.20.26.15.
+
+.. code-block:: ini
+
+    [dell]
+    excluded_domain_ip=172.20.25.15
+    excluded_domain_ip=172.20.26.15
 
 Driver options
 ~~~~~~~~~~~~~~
