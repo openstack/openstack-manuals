@@ -134,7 +134,7 @@ to edit the policy file.
 
 The OpenStack service's policy engine matches a policy directly. A rule
 indicates evaluation of the elements of such policies. For instance, in
-a ``compute:create: [["rule:admin_or_owner"]]`` statement, the policy is
+a ``compute:create: "rule:admin_or_owner"`` statement, the policy is
 ``compute:create``, and the rule is ``admin_or_owner``.
 
 Policies are triggered by an OpenStack policy engine whenever one of
@@ -179,25 +179,25 @@ Here are snippets of the default nova ``policy.json`` file:
 .. code-block:: none
 
    {
-           "context_is_admin":  [["role:admin"]],
-           "admin_or_owner":  [["is_admin:True"], ["project_id:%(project_id)s"]], ~~~~(1)~~~~
-           "default": [["rule:admin_or_owner"]], ~~~~(2)~~~~
-           "compute:create": [ ],
-           "compute:create:attach_network": [ ],
-           "compute:create:attach_volume": [ ],
-           "compute:get_all": [ ],
-           "admin_api": [["is_admin:True"]],
-           "compute_extension:accounts": [["rule:admin_api"]],
-           "compute_extension:admin_actions": [["rule:admin_api"]],
-           "compute_extension:admin_actions:pause": [["rule:admin_or_owner"]],
-           "compute_extension:admin_actions:unpause": [["rule:admin_or_owner"]],
+           "context_is_admin":  "role:admin",
+           "admin_or_owner":  "is_admin:True", "project_id:%(project_id)s", ~~~~(1)~~~~
+           "default": "rule:admin_or_owner", ~~~~(2)~~~~
+           "compute:create": "",
+           "compute:create:attach_network": "",
+           "compute:create:attach_volume": "",
+           "compute:get_all": "",
+           "admin_api": "is_admin:True",
+           "compute_extension:accounts": "rule:admin_api",
+           "compute_extension:admin_actions": "rule:admin_api",
+           "compute_extension:admin_actions:pause": "rule:admin_or_owner",
+           "compute_extension:admin_actions:unpause": "rule:admin_or_owner",
            ...
-           "compute_extension:admin_actions:migrate": [["rule:admin_api"]],
-           "compute_extension:aggregates": [["rule:admin_api"]],
-           "compute_extension:certificates": [ ],
+           "compute_extension:admin_actions:migrate": "rule:admin_api",
+           "compute_extension:aggregates": "rule:admin_api",
+           "compute_extension:certificates": "",
            ...
-           "compute_extension:flavorextraspecs": [ ],
-           "compute_extension:flavormanage": [["rule:admin_api"]], ~~~~(3)~~~~
+           "compute_extension:flavorextraspecs": "",
+           "compute_extension:flavormanage": "rule:admin_api", ~~~~(3)~~~~
    }
 
 
@@ -216,9 +216,9 @@ only. Therefore, as a further example, let us consider how this sample
 policy file could be modified in a scenario where we enable users to
 create their own flavors:
 
-.. code-block:: console
+.. code-block:: none
 
-   "compute_extension:flavormanage": [ ],
+   "compute_extension:flavormanage": "",
 
 Users Who Disrupt Other Users
 -----------------------------
