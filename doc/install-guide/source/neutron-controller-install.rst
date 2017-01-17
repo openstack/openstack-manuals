@@ -9,14 +9,31 @@ must create a database, service credentials, and API endpoints.
 
 #. To create the database, complete these steps:
 
-   * Use the database access client to connect to the database server as the
-     ``root`` user:
+   .. only:: ubuntu
 
-     .. code-block:: console
+      * Use the database access client to connect to the database
+        server as the ``root`` user:
 
-        $ mysql -u root -p
+        .. code-block:: console
 
-     .. end
+           # mysql
+
+        .. end
+
+   .. endonly
+
+   .. only:: rdo or debian or obs
+
+      * Use the database access client to connect to the database
+        server as the ``root`` user:
+
+        .. code-block:: console
+
+           $ mysql -u root -p
+
+        .. end
+
+   .. endonly
 
    * Create the ``neutron`` database:
 

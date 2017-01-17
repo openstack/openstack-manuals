@@ -7,6 +7,19 @@ guide use MariaDB or MySQL depending on the distribution. OpenStack
 services also support other SQL databases including
 `PostgreSQL <http://www.postgresql.org/>`__.
 
+.. only:: ubuntu
+
+   .. note::
+
+      As of Ubuntu 15.10, MariaDB was changed to use
+      the "unix_socket Authentication Plugin". Local authentication is
+      now preformed using the user credentials (UID) and password
+      authentication is no longer used by default. This means that
+      the root user no longer uses a password for local access to
+      the server.
+
+.. endonly
+
 Install and configure components
 --------------------------------
 
