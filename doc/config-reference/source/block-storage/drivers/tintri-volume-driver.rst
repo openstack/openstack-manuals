@@ -65,6 +65,7 @@ following actions:
 
    .. code-block:: ini
 
+      [libvirt]
       nfs_mount_options = vers=3
 
 #. Edit the ``/etc/cinder/nfs_shares`` file and add the Tintri VMstore mount
