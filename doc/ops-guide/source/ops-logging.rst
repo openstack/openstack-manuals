@@ -53,7 +53,7 @@ Reading the Logs
 ~~~~~~~~~~~~~~~~
 
 OpenStack services use the standard logging levels, at increasing
-severity: DEBUG, INFO, AUDIT, WARNING, ERROR, CRITICAL, and TRACE. That
+severity: TRACE, DEBUG, INFO, AUDIT, WARNING, ERROR, and CRITICAL. That
 is, messages only appear in the logs if they are more "severe" than the
 particular log level, with DEBUG allowing all log statements through.
 For example, TRACE is logged only if the software has a stack trace,
@@ -76,44 +76,36 @@ a Django web application, it follows the `Django Logging framework
 conventions <https://docs.djangoproject.com/en/dev/topics/logging/>`_.
 
 The first step in finding the source of an error is typically to search
-for a CRITICAL, TRACE, or ERROR message in the log starting at the
+for a CRITICAL, or ERROR message in the log starting at the
 bottom of the log file.
 
-Here is an example of a CRITICAL log message, with the corresponding
-TRACE (Python traceback) immediately following:
+Here is an example of a log message with the corresponding
+ERROR (Python traceback) immediately following:
 
 .. code-block:: console
 
-   2013-02-25 21:05:51 17409 CRITICAL cinder [-] Bad or unexpected response from the storage volume backend API:
-   volume group cinder-volumes doesn't exist
-   2013-02-25 21:05:51 17409 TRACE cinder Traceback (most recent call last):
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/bin/cinder-volume", line 48, in <module>
-   2013-02-25 21:05:51 17409 TRACE cinder service.wait()
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/service.py", line 422, in wait
-   2013-02-25 21:05:51 17409 TRACE cinder _launcher.wait()
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/service.py", line 127, in wait
-   2013-02-25 21:05:51 17409 TRACE cinder service.wait()
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/eventlet/greenthread.py", line 166, in wait
-   2013-02-25 21:05:51 17409 TRACE cinder return self._exit_event.wait()
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/eventlet/event.py", line 116, in wait
-   2013-02-25 21:05:51 17409 TRACE cinder return hubs.get_hub().switch()
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/eventlet/hubs/hub.py", line 177, in switch
-   2013-02-25 21:05:51 17409 TRACE cinder return self.greenlet.switch()
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/eventlet/greenthread.py", line 192, in main
-   2013-02-25 21:05:51 17409 TRACE cinder result = function(*args, **kwargs)
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/service.py", line 88, in run_server
-   2013-02-25 21:05:51 17409 TRACE cinder server.start()
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/service.py", line 159, in start
-   2013-02-25 21:05:51 17409 TRACE cinder self.manager.init_host()
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/volume/manager.py", line 95,
-    in init_host
-   2013-02-25 21:05:51 17409 TRACE cinder self.driver.check_for_setup_error()
-   2013-02-25 21:05:51 17409 TRACE cinder File "/usr/lib/python2.7/dist-packages/cinder/volume/driver.py", line 116,
-    in check_for_setup_error
-   2013-02-25 21:05:51 17409 TRACE cinder raise exception.VolumeBackendAPIException(data=exception_message)
-   2013-02-25 21:05:51 17409 TRACE cinder VolumeBackendAPIException: Bad or unexpected response from the storage volume
-    backend API: volume group cinder-volumes doesn't exist
-   2013-02-25 21:05:51 17409 TRACE cinder
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server [req-c0b38ace-2586-48ce-9336-6233efa1f035 6c9808c2c5044e1388a83a74da9364d5 e07f5395c
+   2eb428cafc41679e7deeab1 - default default] Exception during message handling
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server Traceback (most recent call last):
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server   File "/openstack/venvs/cinder-14.0.0/lib/python2.7/site-packages/oslo_messaging/rpc/server.py", line 133, in _process_incoming
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server     res = self.dispatcher.dispatch(message)
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server   File "/openstack/venvs/cinder-14.0.0/lib/python2.7/site-packages/oslo_messaging/rpc/dispatcher.py", line 150, in dispatch
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server     return self._do_dispatch(endpoint, method, ctxt, args)
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server   File "/openstack/venvs/cinder-14.0.0/lib/python2.7/site-packages/oslo_messaging/rpc/dispatcher.py", line 121, in _do_dispatch
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server     result = func(ctxt, **new_args)
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server   File "/openstack/venvs/cinder-14.0.0/lib/python2.7/site-packages/cinder/volume/manager.py", line 4366, in create_volume
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server     allow_reschedule=allow_reschedule, volume=volume)
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server   File "/openstack/venvs/cinder-14.0.0/lib/python2.7/site-packages/cinder/volume/manager.py", line 634, in create_volume
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server     _run_flow()
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server   File "/openstack/venvs/cinder-14.0.0/lib/python2.7/site-packages/cinder/volume/manager.py", line 626, in _run_flow
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server     flow_engine.run()
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server   File "/openstack/venvs/cinder-14.0.0/lib/python2.7/site-packages/taskflow/engines/action_engine/engine.py", line 247, in run
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server     for _state in self.run_iter(timeout=timeout):
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server   File "/openstack/venvs/cinder-14.0.0/lib/python2.7/site-packages/taskflow/engines/action_engine/engine.py", line 340, in run_iter
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server     failure.Failure.reraise_if_any(er_failures)
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server   File "/openstack/venvs/cinder-14.0.0/lib/python2.7/site-packages/taskflow/types/failure.py", line 336, in reraise_if_any
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server     failures[0].reraise()
+   2017-01-18 15:54:00.467 32552 ERROR oslo_messaging.rpc.server   File "/openstack/venvs/cinder-14.0.0/lib/python2.7/site-packages/taskflow/types/failure.py", line 343, in reraise
 
 In this example, ``cinder-volumes`` failed to start and has provided a
 stack trace, since its volume back end has been unable to set up the
