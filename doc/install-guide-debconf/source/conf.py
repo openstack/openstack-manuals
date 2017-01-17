@@ -103,7 +103,6 @@ exclude_patterns = ['common/cli*', 'common/nova*',
                     'common/get-started-orchestration.rst',
                     'common/get-started-shared-file-systems.rst',
                     'common/get-started-telemetry.rst',
-                    'common/dashboard-customizing.rst',
                     'shared/note_configuration_vary_by_distribution.rst']
 
 # The reST default role (used for this markup: `text`) to use for all

@@ -14,8 +14,8 @@ complete the following tasks:
   IP address to a domain name, and give users access.
 
 * Customize your dashboard. See section
-  `Customize the dashboard
-  <http://docs.openstack.org/admin-guide/common/dashboard-customizing.html>`__.
+  `Customize and configure the Dashboard
+  <http://docs.openstack.org/admin-guide/dashboard-customize-configure.html>`__.
 
 * Set up session storage. See
   `Set up session storage for the dashboard
