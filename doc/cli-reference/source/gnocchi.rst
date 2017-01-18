@@ -10,7 +10,7 @@ The gnocchi client is the command-line interface (CLI) for
 the A time series storage and resources index service (gnocchi) API and its
 extensions.
 
-This chapter documents :command:`gnocchi` version ``2.7.0``.
+This chapter documents :command:`gnocchi` version ``2.8.2``.
 
 For help on a specific :command:`gnocchi` command, enter:
 
@@ -94,9 +94,9 @@ gnocchi archive-policy create
    usage: gnocchi archive-policy create [-h]
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX] -d
-                                        <DEFINITION> [-b BACK_WINDOW]
-                                        [-m AGGREGATION_METHODS]
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX] -d <DEFINITION>
+                                        [-b BACK_WINDOW] [-m AGGREGATION_METHODS]
                                         name
 
 Create an archive policy
@@ -152,7 +152,7 @@ gnocchi archive-policy list
 
    usage: gnocchi archive-policy list [-h] [-f {csv,html,json,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent]
+                                      [--print-empty] [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
 
 List archive policies
@@ -172,7 +172,8 @@ gnocchi archive-policy show
    usage: gnocchi archive-policy show [-h]
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
+                                      [--print-empty] [--noindent]
+                                      [--prefix PREFIX]
                                       name
 
 Show an archive policy
@@ -197,8 +198,8 @@ gnocchi archive-policy update
    usage: gnocchi archive-policy update [-h]
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX] -d
-                                        <DEFINITION>
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX] -d <DEFINITION>
                                         name
 
 Update an archive policy
@@ -228,7 +229,8 @@ gnocchi archive-policy-rule create
    usage: gnocchi archive-policy-rule create [-h]
                                              [-f {html,json,shell,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
-                                             [--noindent] [--prefix PREFIX] -a
+                                             [--print-empty] [--noindent]
+                                             [--prefix PREFIX] -a
                                              ARCHIVE_POLICY_NAME -m
                                              METRIC_PATTERN
                                              name
@@ -282,7 +284,7 @@ gnocchi archive-policy-rule list
    usage: gnocchi archive-policy-rule list [-h]
                                            [-f {csv,html,json,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent]
+                                           [--print-empty] [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
 
 List archive policy rules
@@ -302,7 +304,8 @@ gnocchi archive-policy-rule show
    usage: gnocchi archive-policy-rule show [-h]
                                            [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
-                                           [--noindent] [--prefix PREFIX]
+                                           [--print-empty] [--noindent]
+                                           [--prefix PREFIX]
                                            name
 
 Show an archive policy rule
@@ -327,9 +330,9 @@ gnocchi benchmark measures add
    usage: gnocchi benchmark measures add [-h] [--resource-id RESOURCE_ID]
                                          [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
-                                         [--noindent] [--prefix PREFIX]
-                                         [--workers WORKERS] --count COUNT
-                                         [--batch BATCH]
+                                         [--print-empty] [--noindent]
+                                         [--prefix PREFIX] [--workers WORKERS]
+                                         --count COUNT [--batch BATCH]
                                          [--timestamp-start TIMESTAMP_START]
                                          [--timestamp-end TIMESTAMP_END] [--wait]
                                          metric
@@ -377,11 +380,13 @@ gnocchi benchmark measures show
    usage: gnocchi benchmark measures show [-h]
                                           [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent] [--prefix PREFIX]
+                                          [--print-empty] [--noindent]
+                                          [--prefix PREFIX]
                                           [--resource-id RESOURCE_ID]
                                           [--aggregation AGGREGATION]
                                           [--start START] [--stop STOP]
                                           [--granularity GRANULARITY] [--refresh]
+                                          [--resample RESAMPLE]
                                           [--workers WORKERS] --count COUNT
                                           metric
 
@@ -410,10 +415,13 @@ Do benchmark testing of measurements show
   end of the period
 
 ``--granularity GRANULARITY``
-  granularity to retrieve (in seconds)
+  granularity to retrieve
 
 ``--refresh``
   force aggregation of all known measures
+
+``--resample RESAMPLE``
+  granularity to resample time-series to (in seconds)
 
 ``--workers WORKERS, -w WORKERS``
   Number of workers to use
@@ -431,7 +439,8 @@ gnocchi benchmark metric create
    usage: gnocchi benchmark metric create [-h] [--resource-id RESOURCE_ID]
                                           [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent] [--prefix PREFIX]
+                                          [--print-empty] [--noindent]
+                                          [--prefix PREFIX]
                                           [--archive-policy-name ARCHIVE_POLICY_NAME]
                                           [--workers WORKERS] --count COUNT
                                           [--keep]
@@ -468,8 +477,9 @@ gnocchi benchmark metric show
    usage: gnocchi benchmark metric show [-h] [--resource-id RESOURCE_ID]
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent] [--prefix PREFIX]
-                                        [--workers WORKERS] --count COUNT
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX] [--workers WORKERS]
+                                        --count COUNT
                                         metric [metric ...]
 
 Do benchmark testing of metric show
@@ -502,7 +512,8 @@ gnocchi capabilities list
 
    usage: gnocchi capabilities list [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX]
 
 List capabilities
 
@@ -566,7 +577,7 @@ gnocchi measures batch-resources-metrics
 
 .. code-block:: console
 
-   usage: gnocchi measures batch-resources-metrics [-h] file
+   usage: gnocchi measures batch-resources-metrics [-h] [--create-metrics] file
 
 
 **Positional arguments:**
@@ -580,6 +591,9 @@ gnocchi measures batch-resources-metrics
 ``-h, --help``
   show this help message and exit
 
+``--create-metrics``
+  Create unknown metrics
+
 .. _gnocchi_measures_show:
 
 gnocchi measures show
@@ -588,12 +602,13 @@ gnocchi measures show
 .. code-block:: console
 
    usage: gnocchi measures show [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--resource-id RESOURCE_ID]
                                 [--aggregation AGGREGATION] [--start START]
                                 [--stop STOP] [--granularity GRANULARITY]
-                                [--refresh]
+                                [--refresh] [--resample RESAMPLE]
                                 metric
 
 Get measurements of a metric
@@ -621,10 +636,13 @@ Get measurements of a metric
   end of the period
 
 ``--granularity GRANULARITY``
-  granularity to retrieve (in seconds)
+  granularity to retrieve
 
 ``--refresh``
   force aggregation of all known measures
+
+``--resample RESAMPLE``
+  granularity to resample time-series to (in seconds)
 
 .. _gnocchi_metric_create:
 
@@ -635,8 +653,8 @@ gnocchi metric create
 
    usage: gnocchi metric create [-h] [--resource-id RESOURCE_ID]
                                 [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
                                 [--archive-policy-name ARCHIVE_POLICY_NAME]
                                 [--unit UNIT]
                                 [METRIC_NAME]
@@ -695,7 +713,8 @@ gnocchi metric list
 .. code-block:: console
 
    usage: gnocchi metric list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--limit <LIMIT>] [--marker <MARKER>]
                               [--sort <SORT>]
@@ -726,8 +745,9 @@ gnocchi metric show
 .. code-block:: console
 
    usage: gnocchi metric show [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX] [--resource-id RESOURCE_ID]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
+                              [--resource-id RESOURCE_ID]
                               metric
 
 Show a metric
@@ -754,7 +774,7 @@ gnocchi resource create
 
    usage: gnocchi resource create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   [--type RESOURCE_TYPE] [-a ATTRIBUTE]
                                   [-m ADD_METRIC] [-n CREATE_METRIC]
                                   resource_id
@@ -813,7 +833,7 @@ gnocchi resource history
 
    usage: gnocchi resource history [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
+                                   [--print-empty] [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
                                    [--details] [--limit <LIMIT>]
                                    [--marker <MARKER>] [--sort <SORT>]
@@ -857,7 +877,8 @@ gnocchi resource list
 .. code-block:: console
 
    usage: gnocchi resource list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--details] [--history] [--limit <LIMIT>]
                                 [--marker <MARKER>] [--sort <SORT>]
@@ -898,8 +919,9 @@ gnocchi resource show
 .. code-block:: console
 
    usage: gnocchi resource show [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX] [--type RESOURCE_TYPE]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
+                                [--type RESOURCE_TYPE]
                                 resource_id
 
 Show a resource
@@ -926,7 +948,7 @@ gnocchi resource update
 
    usage: gnocchi resource update [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   [--type RESOURCE_TYPE] [-a ATTRIBUTE]
                                   [-m ADD_METRIC] [-n CREATE_METRIC]
                                   [-d DELETE_METRIC]
@@ -969,8 +991,8 @@ gnocchi resource-type create
    usage: gnocchi resource-type create [-h]
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent] [--prefix PREFIX]
-                                       [-a ATTRIBUTE]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX] [-a ATTRIBUTE]
                                        name
 
 Create a resource type
@@ -1021,7 +1043,7 @@ gnocchi resource-type list
 
    usage: gnocchi resource-type list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent]
+                                     [--print-empty] [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
 
 List resource types
@@ -1040,7 +1062,8 @@ gnocchi resource-type show
 
    usage: gnocchi resource-type show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX]
                                      name
 
 Show a resource type
@@ -1063,7 +1086,8 @@ gnocchi status
 .. code-block:: console
 
    usage: gnocchi status [-h] [-f {html,json,shell,table,value,yaml}] [-c COLUMN]
-                         [--max-width <integer>] [--noindent] [--prefix PREFIX]
+                         [--max-width <integer>] [--print-empty] [--noindent]
+                         [--prefix PREFIX]
 
 Show the status of measurements processing
 
