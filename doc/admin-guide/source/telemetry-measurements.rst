@@ -1495,7 +1495,7 @@ The following meters are collected for the Key Value Store module:
 
 .. note::
 
-   The the Key Value Store meters are not supported in the Newton release and
+   The Key Value Store meters are not supported in the Newton release and
    later.
 
 Energy
