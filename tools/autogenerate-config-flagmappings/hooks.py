@@ -74,7 +74,7 @@ def nova_spice():
 
 
 def zaqar_config():
-    # Zaqar registers most of it's options in lazy way
+    # Zaqar registers most of its options in lazy way
     # Let's find all these options and manually register them
     from oslo_config import cfg
     import pkg_resources
