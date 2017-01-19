@@ -7,19 +7,6 @@ Reporting documentation bugs
 The Documentation team tracks all its work through bugs. This section includes
 the detailed overview of documentation bugs specifics.
 
-Bugs differ depending on:
-
-* The way they are filed:
-
-  * Manually
-  * Automatically (through the DocImpact flag)
-
-* The required changes:
-
-  * Fix spelling errors or formatting
-  * Update existing content
-  * Add new content
-
 .. note::
 
    To work on documentation bugs, join the openstack-doc-bugs team on
@@ -34,6 +21,40 @@ OpenStack code.
 To pick up a documentation bug or mark a bug as related to the documentation,
 go to `the aggregated list of documentation bugs from all OpenStack projects
 <https://bugs.launchpad.net/openstack/+bugs?field.tag=documentation>`_.
+
+Filing a bug
+~~~~~~~~~~~~
+
+Bugs differ depending on:
+
+* The way they are filed:
+
+  * Manually
+  * Automatically (through the DocImpact flag)
+
+* The required changes:
+
+  * Fix spelling errors or formatting
+  * Update existing content
+  * Add new content
+
+.. important::
+
+   Do not file a bug with troubleshooting issues. If you are experiencing
+   problems with your environment, and you are following the installation
+   tutorials, seek assistance from the relevant team and operations
+   specialists on IRC,
+   `ask.openstack.org <https://ask.openstack.org/en/questions/>`_
+   or the OpenStack mailing list.
+
+   For more information about the relevant IRC channels, see the
+   `OpenStack IRC wiki <https://wiki.openstack.org/wiki/IRC>`_.
+
+   For more information about the OpenStack mailing list, see the
+   `Mailing lists wiki <https://wiki.openstack.org/wiki/Mailing_Lists>`_.
+
+   A bug should be filed only if the documentation itself is found to be
+   incorrect.
 
 **DocImpact**
 
