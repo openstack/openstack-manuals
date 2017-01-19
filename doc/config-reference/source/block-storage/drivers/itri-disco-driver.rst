@@ -16,6 +16,7 @@ The DISCO driver supports the following features:
 * Copy volume to image
 * Clone volume
 * Extend volume
+* Manage and unmanage volume
 
 Configuration options
 ~~~~~~~~~~~~~~~~~~~~~
