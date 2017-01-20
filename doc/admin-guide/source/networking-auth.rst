@@ -93,136 +93,59 @@ This extract is from the default ``policy.json`` file:
    .. code-block:: none
 
       {
-       "admin_or_owner": [
-           [
-               "role:admin"
-           ],
-           [
-               "tenant_id:%(tenant_id)s"
-           ]
-       ],
-       "admin_or_network_owner": [
-           [
-               "role:admin"
-           ],
-           [
-               "tenant_id:%(network_tenant_id)s"
-           ]
-       ],
-       "admin_only": [
-           [
-               "role:admin"
-       ]
-       ],
-       "regular_user": [],
-       "shared": [
-           [
-               "field:networks:shared=True"
-           ]
-       ],
-       "default": [
-           [
+       "admin_or_owner": "role:admin",
+       "tenant_id:%(tenant_id)s",
+       "admin_or_network_owner": "role:admin",
+       "tenant_id:%(network_tenant_id)s",
+       "admin_only": "role:admin",
+       "regular_user": "",
+       "shared":"field:networks:shared=True",
+       "default":
 
 -  The default policy that is always evaluated if an API operation does
    not match any of the policies in ``policy.json``.
 
    .. code-block:: none
 
-                "rule:admin_or_owner"
-            ]
-        ],
-        "create_subnet": [
-            [
-                "rule:admin_or_network_owner"
-            ]
-        ],
-        "get_subnet": [
-            [
-                "rule:admin_or_owner"
-            ],
-            [
-                "rule:shared"
-            ]
-        ],
-        "update_subnet": [
-            [
-                "rule:admin_or_network_owner"
-            ]
-        ],
-        "delete_subnet": [
-            [
-                "rule:admin_or_network_owner"
-            ]
-        ],
-        "create_network": [],
-        "get_network": [
-            [
-                "rule:admin_or_owner"
-            ],
+        "rule:admin_or_owner",
+        "create_subnet": "rule:admin_or_network_owner",
+        "get_subnet": "rule:admin_or_owner",
+        "rule:shared",
+        "update_subnet": "rule:admin_or_network_owner",
+        "delete_subnet": "rule:admin_or_network_owner",
+        "create_network": "",
+        "get_network": "rule:admin_or_owner",
 
--  This policy evaluates successfully if either *admin\_or\_owner*, or
+-  This policy evaluates successfully if either *admin_or_owner*, or
    *shared* evaluates successfully.
 
    .. code-block:: none
 
-            [
-                "rule:shared"
-            ]
-        ],
-        "create_network:shared": [
-            [
-                "rule:admin_only"
-            ]
+         "rule:shared",
+         "create_network:shared": "rule:admin_only"
 
 -  This policy restricts the ability to manipulate the *shared*
    attribute for a network to administrators only.
 
    .. code-block:: none
 
-        ],
-        "update_network": [
-            [
-                "rule:admin_or_owner"
-            ]
-        ],
-        "delete_network": [
-            [
-                "rule:admin_or_owner"
-            ]
-        ],
-        "create_port": [],
-        "create_port:mac_address": [
-            [
-                "rule:admin_or_network_owner"
-            ]
-        ],
-        "create_port:fixed_ips": [
+         ,
+         "update_network": "rule:admin_or_owner",
+        "delete_network": "rule:admin_or_owner",
+        "create_port": "",
+        "create_port:mac_address": "rule:admin_or_network_owner",
+        "create_port:fixed_ips":
 
--  This policy restricts the ability to manipulate the *mac\_address*
+-  This policy restricts the ability to manipulate the *mac_address*
    attribute for a port only to administrators and the owner of the
    network where the port is attached.
 
    .. code-block:: none
 
-            [
-                "rule:admin_or_network_owner"
-            ]
-        ],
-        "get_port": [
-            [
-                "rule:admin_or_owner"
-            ]
-        ],
-        "update_port": [
-            [
-                "rule:admin_or_owner"
-            ]
-        ],
-         "delete_port": [
-            [
-                "rule:admin_or_owner"
-            ]
-        ]
+         "rule:admin_or_network_owner",
+        "get_port": "rule:admin_or_owner",
+        "update_port": "rule:admin_or_owner",
+         "delete_port": "rule:admin_or_owner"
        }
 
 In some cases, some operations are restricted to administrators only.
@@ -233,20 +156,20 @@ perform all other operations:
 .. code-block:: none
 
     {
-            "admin_or_owner": [["role:admin"], ["tenant_id:%(tenant_id)s"]],
-            "admin_only": [["role:admin"]], "regular_user": [],
-            "default": [["rule:admin_only"]],
-            "create_subnet": [["rule:admin_only"]],
-            "get_subnet": [["rule:admin_or_owner"]],
-            "update_subnet": [["rule:admin_only"]],
-            "delete_subnet": [["rule:admin_only"]],
-            "create_network": [],
-            "get_network": [["rule:admin_or_owner"]],
-            "create_network:shared": [["rule:admin_only"]],
-            "update_network": [["rule:admin_or_owner"]],
-            "delete_network": [["rule:admin_or_owner"]],
-            "create_port": [["rule:admin_only"]],
-            "get_port": [["rule:admin_or_owner"]],
-            "update_port": [["rule:admin_only"]],
-            "delete_port": [["rule:admin_only"]]
+            "admin_or_owner": "role:admin", "tenant_id:%(tenant_id)s",
+            "admin_only": "role:admin", "regular_user": "",
+            "default": "rule:admin_only",
+            "create_subnet": "rule:admin_only",
+            "get_subnet": "rule:admin_or_owner",
+            "update_subnet": "rule:admin_only",
+            "delete_subnet": "rule:admin_only",
+            "create_network": "",
+            "get_network": "rule:admin_or_owner",
+            "create_network:shared": "rule:admin_only",
+            "update_network": "rule:admin_or_owner",
+            "delete_network": "rule:admin_or_owner",
+            "create_port": "rule:admin_only",
+            "get_port": "rule:admin_or_owner",
+            "update_port": "rule:admin_only",
+            "delete_port": "rule:admin_only"
     }
