@@ -227,15 +227,23 @@ Access the instance remotely
 
       $ openstack floating ip create provider
 
-      +-------------+--------------------------------------+
-      | Field       | Value                                |
-      +-------------+--------------------------------------+
-      | fixed_ip    | None                                 |
-      | id          | 3d05a9b1-b1af-4884-be1c-833a69744449 |
-      | instance_id | None                                 |
-      | ip          | 203.0.113.104                        |
-      | pool        | provider                             |
-      +-------------+--------------------------------------+
+      +---------------------+--------------------------------------+
+      | Field               | Value                                |
+      +---------------------+--------------------------------------+
+      | created_at          | 2017-01-20T17:29:16Z                 |
+      | description         |                                      |
+      | fixed_ip_address    | None                                 |
+      | floating_ip_address | 203.0.113.104                        |
+      | floating_network_id | b5b6993c-ddf9-40e7-91d0-86806a42edb8 |
+      | headers             |                                      |
+      | id                  | 88b4d06a-d794-4406-affd-6ffa2bcf1e2a |
+      | port_id             | None                                 |
+      | project_id          | ed0b60bf607743088218b0a533d5943f     |
+      | revision_number     | 1                                    |
+      | router_id           | None                                 |
+      | status              | DOWN                                 |
+      | updated_at          | 2017-01-20T17:29:16Z                 |
+      +---------------------+--------------------------------------+
 
    .. end
 
