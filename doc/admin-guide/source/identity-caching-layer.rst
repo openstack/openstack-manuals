@@ -49,12 +49,15 @@ So to enable only the token back end caching, set the values as follows:
 Caching for tokens and tokens validation
 ----------------------------------------
 
+All types of tokens benefit from caching, including Fernet tokens. Although
+Fernet tokens do not need to be persisted, they should still be cached for
+optimal token validation performance.
+
 The token system has a separate ``cache_time`` configuration option,
 that can be set to a value above or below the global ``expiration_time``
 default, allowing for different caching behavior from the other systems
 in OpenStack Identity. This option is set in the ``[token]`` section of
-the configuration file. Fernet tokens do not need to be persisted in a
-back end and therefore must not be cached.
+the configuration file.
 
 The token revocation list cache time is handled by the configuration
 option ``revocation_cache_time`` in the ``[token]`` section. The
