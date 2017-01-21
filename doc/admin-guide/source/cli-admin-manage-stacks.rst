@@ -22,8 +22,8 @@ For information about:
    to the `OpenStack End User Guide
    <http://docs.openstack.org/user-guide/dashboard-stacks.html>`_
 
--  **openstack** CLI, see the `OpenStack Command-Line Interface
-   Reference <http://docs.openstack.org/cli-reference/openstack.html>`_
+-  **openstack** CLI, see the `OpenStackClient documentation
+   <http://docs.openstack.org/developer/python-openstackclient/>`_
 
 .. note::
 
