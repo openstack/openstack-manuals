@@ -112,8 +112,9 @@ provider networks. We recommend using the following procedure:
 #. Map segments to compute nodes.
 
    Routed provider networks imply that compute nodes reside on different
-   segments. The operator should maintain this mapping to assist with
-   configuration of agents.
+   segments. The operator must ensure that every compute host that is supposed
+   to participate in a router provider network has direct connectivity to one
+   of its segments.
 
    =========== ====== ================
    Host        Rack   Physical Network
@@ -143,6 +144,32 @@ provider networks. We recommend using the following procedure:
    ...         ...    ...
    =========== ====== ================
 
+#. Configure communication of the Networking service with the Compute
+   scheduler.
+
+   An instance with an interface with an IPv4 address in a routed provider
+   network must be placed by the Compute scheduler in a host that has access to
+   a segment with available IPv4 addresses. To make this possible, the
+   Networking service communicates to the Compute scheduler the inventory of
+   IPv4 addresses associated with each segment of a routed provider network.
+   The operator must configure the authentication credentials that the
+   Networking service will use to communicate with the Compute scheduler's
+   placement API. Please see below an example configuration.
+
+   .. note::
+
+      Coordination between the Networking service and the Compute scheduler is
+      not necessary for IPv6 subnets as a consequence of their large address
+      spaces.
+
+   .. note::
+
+      The coordination between the Networking service and the Compute scheduler
+      requires the following minimum API micro-versions.
+
+      * Compute service API: 2.41
+      * Placement API: 1.1
+
 Example configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -158,6 +185,22 @@ Controller node
       [DEFAULT]
       # ...
       service_plugins = ..., segments
+
+#. Add a ``placement`` section to the ``neutron.conf`` file with authentication
+   credentials for the Compute service placement API:
+
+   .. code-block:: ini
+
+      [placement]
+      auth_uri = http://192.168.33.72/identity
+      project_domain_name = Default
+      project_name = service
+      user_domain_name = Default
+      password = apassword
+      username = nova
+      auth_url = http://192.168.33.72/identity_admin
+      auth_type = password
+      region_name = RegionOne
 
 #. Restart the ``neutron-server`` service.
 
@@ -358,6 +401,48 @@ segment contains one IPv4 subnet and one IPv6 subnet.
       | c904ed10-922c-4c1a-84fd-d928abaf8f55 | compute0001 | True           | :-)   |
       | e0b22cc0-d2a6-4f1c-b17c-27558e20b454 | compute0101 | True           | :-)   |
       +--------------------------------------+-------------+----------------+-------+
+
+#. Verify that inventories were created for each segment IPv4 subnet in the
+   Compute service placement API (for the sake of brevity, only one of the
+   segments is shown in this example).
+
+   .. code-block:: console
+
+      $ SEGMENT_ID=053b7925-9a89-4489-9992-e164c8cc8763
+      $ curl -s -X GET
+      > http://localhost/placement/resource_providers/$SEGMENT_ID/inventories \
+      > -H "Content-type: application/json" \
+      > -H "X-Auth-Token: $TOKEN" \
+      > -H "Openstack-Api-Version: placement 1.1"
+      {
+          "resource_provider_generation": 1,
+          "inventories": {
+              "allocation_ratio": 1,
+              "total": 254,
+              "reserved": 2,
+              "step_size": 1,
+              "min_unit": 1,
+              "max_unit": 1
+          }
+      }
+
+   .. note::
+
+      As of the writing of this guide, there is not placement API CLI client,
+      so the curl command is used for this example.
+
+#. Verify that host aggregates were created for each segment in the Compute
+   service (for the sake of brevity, only one of the segments is shown in this
+   example).
+
+   .. code-block:: console
+
+      $nova aggregate-list
+      +----+---------------------------------------------------------+-------------------+
+      | Id | Name                                                    | Availability Zone |
+      +----+---------------------------------------------------------+-------------------+
+      | 10 | Neutron segment id 053b7925-9a89-4489-9992-e164c8cc8763 |                   |
+      +----+---------------------------------------------------------+-------------------+
 
 #. Launch one or more instances. Each instance obtains IP addresses according
    to the segment it uses on the particular compute node.
