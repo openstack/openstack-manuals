@@ -17,6 +17,7 @@ throughout all technical publications.
    writing-style/punctuation.rst
    writing-style/headings.rst
    writing-style/lists.rst
+   writing-style/urls.rst
    writing-style/num_and_units_of_measure.rst
    writing-style/openstack-components.rst
    writing-style/release-names.rst
