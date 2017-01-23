@@ -142,7 +142,7 @@ Oversubscription
 ----------------
 
 Configure the oversubscription ratio by adding the following parameter
-under the seperate section for ScaleIO:
+under the separate section for ScaleIO:
 
 .. code-block:: ini
 
