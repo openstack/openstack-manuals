@@ -246,7 +246,8 @@ Application Programming Interface (API)
 
 All public access, whether direct, through a command-line client, or
 through the web-based dashboard, uses the API service. Find the API
-reference at http://developer.openstack.org/.
+reference at `Development resources for OpenStack clouds
+<http://developer.openstack.org/>`_.
 
 You must choose whether you want to support the Amazon EC2 compatibility
 APIs, or just the OpenStack APIs. One issue you might encounter when
