@@ -14,6 +14,11 @@ Prerequisites
 Before you configure the OpenStack Identity service, you must create a
 database and an administration token.
 
+.. note::
+
+   Before you begin, ensure you have the most recent version of
+   ``python-pyasn1`` `installed <https://pypi.python.org/pypi/pyasn1>`_.
+
 #. To create the database, complete the following actions:
 
    .. only:: ubuntu
