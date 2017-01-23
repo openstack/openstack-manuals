@@ -38,6 +38,26 @@ components:
 
 .. note::
 
+   The network address ranges used in this guide are chosen in accordance with
+   `RFC 5737 <https://tools.ietf.org/rfc/rfc5737>`_ and
+   `RFC 3849 <https://tools.ietf.org/html/rfc3849>`_, and as such are restricted
+   to the following:
+
+   **IPv4:**
+
+   * 192.0.2.0/24
+   * 198.51.100.0/24
+   * 203.0.113.0/24
+
+   **IPv6:**
+
+   * 2001:DB8::/32
+
+   The network address ranges in the examples of this guide should not be used
+   for any purpose other than documentation.
+
+.. note::
+
    To reduce clutter, this guide removes command output without relevance
    to the particular action.
 
