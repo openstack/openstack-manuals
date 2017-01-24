@@ -113,14 +113,22 @@ Install and configure components
 
         .. end
 
-      * Allow all hosts to access the dashboard:
+      * Allow your hosts to access the dashboard:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
         .. code-block:: python
 
-           ALLOWED_HOSTS = ['*', ]
+           ALLOWED_HOSTS = ['one.example.com', 'two.example.com']
 
         .. end
+
+        .. note::
+
+           ``ALLOWED_HOSTS`` can also be ['*'] to accept all hosts. This may be
+           useful for development work, but is potentially insecure and should
+           not be used in production. See
+           `allowed hosts <https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts>`_
+           for further information.
 
       * Configure the ``memcached`` session storage service:
 
@@ -244,14 +252,22 @@ Install and configure components
 
         .. end
 
-      * Allow all hosts to access the dashboard:
+      * Allow your hosts to access the dashboard:
 
         .. path /etc/openstack-dashboard/local_settings
         .. code-block:: python
 
-           ALLOWED_HOSTS = ['*', ]
+           ALLOWED_HOSTS = ['one.example.com', 'two.example.com']
 
         .. end
+
+        .. note::
+
+           ALLOWED_HOSTS can also be ['*'] to accept all hosts. This may be
+           useful for development work, but is potentially insecure and should
+           not be used in production. See
+           https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+           for further information.
 
       * Configure the ``memcached`` session storage service:
 
@@ -375,14 +391,22 @@ Install and configure components
 
         .. end
 
-      * Allow all hosts to access the dashboard:
+      * Allow your hosts to access the dashboard:
 
         .. path /etc/openstack-dashboard/local_settings.py
         .. code-block:: python
 
-           ALLOWED_HOSTS = ['*', ]
+           ALLOWED_HOSTS = ['one.example.com', 'two.example.com']
 
         .. end
+
+        .. note::
+
+           ALLOWED_HOSTS can also be ['*'] to accept all hosts. This may be
+           useful for development work, but is potentially insecure and should
+           not be used in production. See
+           https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
+           for further information.
 
       * Configure the ``memcached`` session storage service:
 
