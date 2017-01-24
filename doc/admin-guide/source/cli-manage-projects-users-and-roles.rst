@@ -248,6 +248,11 @@ Create the ``new-role`` role:
    | name      | new-role                         |
    +-----------+----------------------------------+
 
+.. note::
+
+   If you are using identity v3, you may need to use the
+   ``--domain`` option with a specific domain name.
+
 Assign a role
 -------------
 
