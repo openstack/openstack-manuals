@@ -1,3 +1,6 @@
+
+.. _fc_zone_manager:
+
 ==========================
 Fibre Channel Zone Manager
 ==========================
