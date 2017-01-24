@@ -125,6 +125,11 @@ Install and configure components
 
      Replace ``KEYSTONE_DBPASS`` with the password you chose for the database.
 
+     .. note::
+
+        Comment out or remove any other ``connection`` options in the
+        ``[database]`` section.
+
    * In the ``[token]`` section, configure the Fernet token provider:
 
      .. path /etc/keystone/keystone.conf
