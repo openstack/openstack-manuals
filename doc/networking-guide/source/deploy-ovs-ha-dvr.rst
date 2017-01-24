@@ -119,10 +119,6 @@ Compute nodes
       [DEFAULT]
       enable_distributed_routing = True
 
-#. Restart the following services:
-
-   * Open vSwitch agent
-
 #. In the ``l3_agent.ini`` file, configure the layer-3 agent.
 
    .. code-block:: ini
@@ -136,6 +132,11 @@ Compute nodes
 
       The ``external_network_bridge`` option intentionally contains
       no value.
+
+#. Restart the following services:
+
+   * Open vSwitch agent
+   * Layer-3 agent
 
 Verify service operation
 ------------------------
