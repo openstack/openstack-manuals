@@ -600,45 +600,63 @@ First, create a network and IPv6 subnet:
 
 .. code-block:: console
 
-   $ neutron net-create ipv6-pd
+   $ openstack network create ipv6-pd
+   +---------------------------+--------------------------------------+
+   | Field                     | Value                                |
+   +---------------------------+--------------------------------------+
+   | admin_state_up            | UP                                   |
+   | availability_zone_hints   |                                      |
+   | availability_zones        |                                      |
+   | created_at                | 2017-01-25T19:26:01Z                 |
+   | description               |                                      |
+   | headers                   |                                      |
+   | id                        | 4b782725-6abe-4a2d-b061-763def1bb029 |
+   | ipv4_address_scope        | None                                 |
+   | ipv6_address_scope        | None                                 |
+   | mtu                       | 1450                                 |
+   | name                      | ipv6-pd                              |
+   | port_security_enabled     | True                                 |
+   | project_id                | 61b7eba037fd41f29cfba757c010faff     |
+   | provider:network_type     | vxlan                                |
+   | provider:physical_network | None                                 |
+   | provider:segmentation_id  | 46                                   |
+   | revision_number           | 3                                    |
+   | router:external           | Internal                             |
+   | shared                    | False                                |
+   | status                    | ACTIVE                               |
+   | subnets                   |                                      |
+   | tags                      | []                                   |
+   | updated_at                | 2017-01-25T19:26:01Z                 |
+   +---------------------------+--------------------------------------+
 
-   Created a new network:
-   +-----------------+--------------------------------------+
-   | Field           | Value                                |
-   +-----------------+--------------------------------------+
-   | admin_state_up  | True                                 |
-   | id              | 31ef3e85-111f-4772-8172-8e4a404a7476 |
-   | mtu             | 1450                                 |
-   | name            | ipv6-pd                              |
-   | router:external | False                                |
-   | shared          | False                                |
-   | status          | ACTIVE                               |
-   | subnets         |                                      |
-   | tenant_id       | 28b39bcce66e4a648f82e2362b958b60     |
-   +-----------------+--------------------------------------+
-
-   $ neutron subnet-create ipv6-pd --name ipv6-pd-1 --ip_version 6 \
-     --ipv6_ra_mode slaac --ipv6_address_mode slaac --use_default_subnetpool
-
-   Created a new subnet:
-   +-------------------+--------------------------------------------------+
-   | Field             | Value                                            |
-   +-------------------+--------------------------------------------------+
-   | allocation_pools  | {"start": "::2", "end": "::ffff:ffff:ffff:fffe"} |
-   | cidr              | ::/64                                            |
-   | dns_nameservers   |                                                  |
-   | enable_dhcp       | True                                             |
-   | gateway_ip        | ::1                                              |
-   | host_routes       |                                                  |
-   | id                | ea139dcd-17a3-4f0a-8cca-dff8b4e03f8a             |
-   | ip_version        | 6                                                |
-   | ipv6_address_mode | slaac                                            |
-   | ipv6_ra_mode      | slaac                                            |
-   | name              | ipv6-pd-1                                        |
-   | network_id        | 31ef3e85-111f-4772-8172-8e4a404a7476             |
-   | subnetpool_id     | prefix_delegation                                |
-   | tenant_id         | 28b39bcce66e4a648f82e2362b958b60                 |
-   +-------------------+--------------------------------------------------+
+   $ openstack subnet create --ip-version 6 --ipv6-ra-mode slaac \
+   --ipv6-address-mode slaac --use-default-subnet-pool \
+   --network ipv6-pd ipv6-pd-1
+   +------------------------+--------------------------------------+
+   | Field                  | Value                                |
+   +------------------------+--------------------------------------+
+   | allocation_pools       | ::2-::ffff:ffff:ffff:ffff            |
+   | cidr                   | ::/64                                |
+   | created_at             | 2017-01-25T19:31:53Z                 |
+   | description            |                                      |
+   | dns_nameservers        |                                      |
+   | enable_dhcp            | True                                 |
+   | gateway_ip             | ::1                                  |
+   | headers                |                                      |
+   | host_routes            |                                      |
+   | id                     | 1319510d-c92c-4532-bf5d-8bcf3da761a1 |
+   | ip_version             | 6                                    |
+   | ipv6_address_mode      | slaac                                |
+   | ipv6_ra_mode           | slaac                                |
+   | name                   | ipv6-pd-1                            |
+   | network_id             | 4b782725-6abe-4a2d-b061-763def1bb029 |
+   | project_id             | 61b7eba037fd41f29cfba757c010faff     |
+   | revision_number        | 2                                    |
+   | service_types          |                                      |
+   | subnetpool_id          | prefix_delegation                    |
+   | updated_at             | 2017-01-25T19:31:53Z                 |
+   | use_default_subnetpool | True                                 |
+   +------------------------+--------------------------------------+
 
 The subnet is initially created with a temporary CIDR before one can be
 assigned by prefix delegation. Any number of subnets with this temporary CIDR
@@ -650,10 +668,7 @@ this subnet and a router with an active interface on the external network:
 
 .. code-block:: console
 
-    $ neutron router-interface-add cb9b7a2c-0ffa-412f-989a-1e6c60e1c02f \
-      ea139dcd-17a3-4f0a-8cca-dff8b4e03f8a
-    Added interface a7e4d663-e3fc-4b8f-909f-865c397a930e to router
-    cb9b7a2c-0ffa-412f-989a-1e6c60e1c02f.
+    $ openstack router add subnet router1 ipv6-pd-1
 
 The prefix delegation mechanism then sends a request via the external network
 to your prefix delegation server, which replies with the delegated prefix. The
@@ -662,27 +677,32 @@ to all ports:
 
 .. code-block:: console
 
-    $ neutron subnet-show ipv6-pd-1
+    $ openstack subnet show ipv6-pd-1
+    +-------------------+--------------------------------------+
+    | Field             | Value                                |
+    +-------------------+--------------------------------------+
+    | allocation_pools  | 2001:db8:2222:6977::2-2001:db8:2222: |
+    |                   | 6977:ffff:ffff:ffff:ffff             |
+    | cidr              | 2001:db8:2222:6977::/64              |
+    | created_at        | 2017-01-25T19:31:53Z                 |
+    | description       |                                      |
+    | dns_nameservers   |                                      |
+    | enable_dhcp       | True                                 |
+    | gateway_ip        | 2001:db8:2222:6977::1                |
+    | host_routes       |                                      |
+    | id                | 1319510d-c92c-4532-bf5d-8bcf3da761a1 |
+    | ip_version        | 6                                    |
+    | ipv6_address_mode | slaac                                |
+    | ipv6_ra_mode      | slaac                                |
+    | name              | ipv6-pd-1                            |
+    | network_id        | 4b782725-6abe-4a2d-b061-763def1bb029 |
+    | project_id        | 61b7eba037fd41f29cfba757c010faff     |
+    | revision_number   | 4                                    |
+    | service_types     |                                      |
+    | subnetpool_id     | prefix_delegation                    |
+    | updated_at        | 2017-01-25T19:35:26Z                 |
+    +-------------------+--------------------------------------+
 
-    +-------------------+-------------------------------------------------+
-    | Field             | Value                                           |
-    +-------------------+-------------------------------------------------+
-    | allocation_pools  | {"start": "2001:db8:2222:6977::2",              |
-    |                   | "end":"2001:db8:2222:6977:ffff:ffff:ffff:fffe"} |
-    | cidr              | 2001:db8:2222:6977::/64                         |
-    | dns_nameservers   |                                                 |
-    | enable_dhcp       | True                                            |
-    | gateway_ip        | 2001:db8:2222:6977::1                           |
-    | host_routes       |                                                 |
-    | id                | ea139dcd-17a3-4f0a-8cca-dff8b4e03f8a            |
-    | ip_version        | 6                                               |
-    | ipv6_address_mode | slaac                                           |
-    | ipv6_ra_mode      | slaac                                           |
-    | name              | ipv6-pd-1                                       |
-    | network_id        | 31ef3e85-111f-4772-8172-8e4a404a7476            |
-    | subnetpool_id     | prefix_delegation                               |
-    | tenant_id         | 28b39bcce66e4a648f82e2362b958b60                |
-    +-------------------+-------------------------------------------------+
 
 If the prefix delegation server is configured to delegate globally routable
 prefixes and setup routes, then any instance with a port on this subnet should
