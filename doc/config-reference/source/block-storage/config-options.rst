@@ -22,7 +22,6 @@ These options can also be set in the ``cinder.conf`` file.
 .. include:: ../tables/cinder-huawei.rst
 .. include:: ../tables/cinder-hyperv.rst
 .. include:: ../tables/cinder-images.rst
-.. include:: ../tables/cinder-infortrend.rst
 .. include:: ../tables/cinder-nas.rst
 .. include:: ../tables/cinder-profiler.rst
 .. include:: ../tables/cinder-pure.rst
