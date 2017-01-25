@@ -34,74 +34,86 @@ Create a network to share:
 
 .. code-block:: console
 
-   $ neutron net-create secret_network
-
-   Created a new network:
+   $ openstack network create secret_network
    +---------------------------+--------------------------------------+
    | Field                     | Value                                |
    +---------------------------+--------------------------------------+
-   | admin_state_up            | True                                 |
-   | id                        | 6532a265-43fb-4c8c-8edb-e26b39f2277c |
+   | admin_state_up            | UP                                   |
+   | availability_zone_hints   |                                      |
+   | availability_zones        |                                      |
+   | created_at                | 2017-01-25T20:16:40Z                 |
+   | description               |                                      |
+   | dns_domain                | None                                 |
+   | id                        | f55961b9-3eb8-42eb-ac96-b97038b568de |
+   | ipv4_address_scope        | None                                 |
+   | ipv6_address_scope        | None                                 |
+   | is_default                | None                                 |
    | mtu                       | 1450                                 |
    | name                      | secret_network                       |
    | port_security_enabled     | True                                 |
+   | project_id                | 61b7eba037fd41f29cfba757c010faff     |
    | provider:network_type     | vxlan                                |
-   | provider:physical_network |                                      |
-   | provider:segmentation_id  | 1031                                 |
-   | router:external           | False                                |
+   | provider:physical_network | None                                 |
+   | provider:segmentation_id  | 9                                    |
+   | qos_policy_id             | None                                 |
+   | revision_number           | 3                                    |
+   | router:external           | Internal                             |
+   | segments                  | None                                 |
    | shared                    | False                                |
    | status                    | ACTIVE                               |
    | subnets                   |                                      |
-   | tenant_id                 | de56db175c1d48b0bbe72f09a24a3b66     |
+   | updated_at                | 2017-01-25T20:16:40Z                 |
    +---------------------------+--------------------------------------+
 
-Create the policy entry using the :command:`neutron rbac-create` command (in
-this example, the ID of the project we want to share with is
-``e28769db97d9449da658bc6931fcb683``):
+
+Create the policy entry using the :command:`openstack network rbac create`
+command (in this example, the ID of the project we want to share with is
+``b87b2fc13e0248a4a031d38e06dc191d``):
 
 .. code-block:: console
 
-   $ neutron rbac-create --target-tenant e28769db97d9449da658bc6931fcb683 \
-     --action access_as_shared --type network 6532a265-43fb-4c8c-8edb-e26b39f2277c
+   $ openstack network rbac create --target-project \
+   b87b2fc13e0248a4a031d38e06dc191d --action access_as_shared \
+   --type network f55961b9-3eb8-42eb-ac96-b97038b568de
+   +-------------------+--------------------------------------+
+   | Field             | Value                                |
+   +-------------------+--------------------------------------+
+   | action            | access_as_shared                     |
+   | id                | f93efdbf-f1e0-41d2-b093-8328959d469e |
+   | name              | None                                 |
+   | object_id         | f55961b9-3eb8-42eb-ac96-b97038b568de |
+   | object_type       | network                              |
+   | project_id        | 61b7eba037fd41f29cfba757c010faff     |
+   | target_project_id | b87b2fc13e0248a4a031d38e06dc191d     |
+   +-------------------+--------------------------------------+
 
-   Created a new rbac_policy:
-   +---------------+--------------------------------------+
-   | Field         | Value                                |
-   +---------------+--------------------------------------+
-   | action        | access_as_shared                     |
-   | id            | 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411 |
-   | object_id     | 6532a265-43fb-4c8c-8edb-e26b39f2277c |
-   | object_type   | network                              |
-   | target_tenant | e28769db97d9449da658bc6931fcb683     |
-   | tenant_id     | de56db175c1d48b0bbe72f09a24a3b66     |
-   +---------------+--------------------------------------+
 
-The ``target-tenant`` parameter specifies the project that requires
+The ``target-project`` parameter specifies the project that requires
 access to the network. The ``action`` parameter specifies what
 the project is allowed to do. The ``type`` parameter says
 that the target object is a network. The final parameter is the ID of
 the network we are granting access to.
 
-Project ``e28769db97d9449da658bc6931fcb683`` will now be able to see
-the network when running :command:`neutron net-list` and :command:`neutron net-show`
-and will also be able to create ports on that network. No other users
-(other than admins and the owner) will be able to see the network.
+Project ``b87b2fc13e0248a4a031d38e06dc191d`` will now be able to see
+the network when running :command:`openstack network list` and
+:command:`openstack network show` and will also be able to create ports
+on that network. No other users (other than admins and the owner)
+will be able to see the network.
 
 To remove access for that project, delete the policy that allows
-it using the :command:`neutron rbac-delete` command:
+it using the :command:`openstack network rbac delete` command:
 
 .. code-block:: console
 
-   $ neutron rbac-delete 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411
-   Deleted rbac_policy: 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411
+   $ openstack network rbac delete f93efdbf-f1e0-41d2-b093-8328959d469e
 
 If that project has ports on the network, the server will prevent the
 policy from being deleted until the ports have been deleted:
 
 .. code-block:: console
 
-   $ neutron rbac-delete 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411
-   RBAC policy on object 6532a265-43fb-4c8c-8edb-e26b39f2277c
+   $ openstack network rbac delete f93efdbf-f1e0-41d2-b093-8328959d469e
+   RBAC policy on object f93efdbf-f1e0-41d2-b093-8328959d469e
    cannot be removed because other objects depend on it.
 
 This process can be repeated any number of times to share a network
@@ -115,60 +127,59 @@ Create a QoS policy to share:
 
 .. code-block:: console
 
-   $ neutron qos-policy-create secret_policy
-
-   Created a new policy:
+   $ openstack network qos policy create secret_policy
    +-------------+--------------------------------------+
    | Field       | Value                                |
    +-------------+--------------------------------------+
    | description |                                      |
-   | id          | e45e6917-3f3f-4835-ad54-d12c9151541d |
+   | id          | 1f730d69-1c45-4ade-a8f2-89070ac4f046 |
    | name        | secret_policy                        |
-   | rules       |                                      |
+   | project_id  | 61b7eba037fd41f29cfba757c010faff     |
+   | rules       | []                                   |
    | shared      | False                                |
-   | tenant_id   | 5b32b072f8354942ab13b6decb1294b3     |
    +-------------+--------------------------------------+
 
-Create the RBAC policy entry using the :command:`neutron rbac-create` command
-(in this example, the ID of the project we want to share with is
-``a6bf6cfbcd1f4e32a57d2138b6bd41d1``):
+
+Create the RBAC policy entry using the :command:`openstack network rbac create`
+command (in this example, the ID of the project we want to share with is
+``be98b82f8fdf46b696e9e01cebc33fd9``):
 
 .. code-block:: console
 
-   $ neutron rbac-create --target-tenant a6bf6cfbcd1f4e32a57d2138b6bd41d1 \
-     --action access_as_shared --type qos-policy e45e6917-3f3f-4835-ad54-d12c9151541d
+   $ openstack network rbac create --target-project \
+   be98b82f8fdf46b696e9e01cebc33fd9 --action access_as_shared \
+   --type qos_policy 1f730d69-1c45-4ade-a8f2-89070ac4f046
+   +-------------------+--------------------------------------+
+   | Field             | Value                                |
+   +-------------------+--------------------------------------+
+   | action            | access_as_shared                     |
+   | id                | 8828e38d-a0df-4c78-963b-e5f215d3d550 |
+   | name              | None                                 |
+   | object_id         | 1f730d69-1c45-4ade-a8f2-89070ac4f046 |
+   | object_type       | qos_policy                           |
+   | project_id        | 61b7eba037fd41f29cfba757c010faff     |
+   | target_project_id | be98b82f8fdf46b696e9e01cebc33fd9     |
+   +-------------------+--------------------------------------+
 
-   Created a new rbac_policy:
-   +---------------+--------------------------------------+
-   | Field         | Value                                |
-   +---------------+--------------------------------------+
-   | action        | access_as_shared                     |
-   | id            | ec2e3db1-de5b-4043-9d95-156f582653d0 |
-   | object_id     | e45e6917-3f3f-4835-ad54-d12c9151541d |
-   | object_type   | qos_policy                           |
-   | target_tenant | a6bf6cfbcd1f4e32a57d2138b6bd41d1     |
-   | tenant_id     | 5b32b072f8354942ab13b6decb1294b3     |
-   +---------------+--------------------------------------+
 
-The ``target-tenant`` parameter specifies the project that requires
+The ``target-project`` parameter specifies the project that requires
 access to the QoS policy. The ``action`` parameter specifies what
 the project is allowed to do. The ``type`` parameter says
 that the target object is a QoS policy. The final parameter is the ID of
 the QoS policy we are granting access to.
 
-Project ``a6bf6cfbcd1f4e32a57d2138b6bd41d1`` will now be able to see
-the QoS policy when running :command:`neutron qos-policy-list` and
-:command:`neutron qos-policy-show` and will also be able to bind it to
-its ports or networks. No other users (other than admins and the owner)
+Project ``be98b82f8fdf46b696e9e01cebc33fd9`` will now be able to see
+the QoS policy when running :command:`openstack network qos policy list` and
+:command:`openstack network qos policy show` and will also be able to bind
+it to its ports or networks. No other users (other than admins and the owner)
 will be able to see the QoS policy.
 
 To remove access for that project, delete the RBAC policy that allows
-it using the :command:`neutron rbac-delete` command:
+it using the :command:`openstack network rbac delete` command:
 
 .. code-block:: console
 
-   $ neutron rbac-delete e45e6917-3f3f-4835-ad54-d12c9151541d
-   Deleted rbac_policy: e45e6917-3f3f-4835-ad54-d12c9151541d
+   $ openstack network rbac delete 8828e38d-a0df-4c78-963b-e5f215d3d550
 
 If that project has ports or networks with the QoS policy applied to them,
 the server will not delete the RBAC policy until
@@ -176,8 +187,8 @@ the QoS policy is no longer in use:
 
 .. code-block:: console
 
-   $ neutron rbac-delete e45e6917-3f3f-4835-ad54-d12c9151541d
-   RBAC policy on object e45e6917-3f3f-4835-ad54-d12c9151541d
+   $ openstack network rbac delete 8828e38d-a0df-4c78-963b-e5f215d3d550
+   RBAC policy on object 8828e38d-a0df-4c78-963b-e5f215d3d550
    cannot be removed because other objects depend on it.
 
 This process can be repeated any number of times to share a qos-policy
@@ -193,63 +204,77 @@ This is accomplished using the ``shared`` flag on the supported object:
 
 .. code-block:: console
 
-   $ neutron net-create global_network --shared
-
-   Created a new network:
+   $ openstack network create global_network --share
    +---------------------------+--------------------------------------+
    | Field                     | Value                                |
    +---------------------------+--------------------------------------+
-   | admin_state_up            | True                                 |
-   | id                        | 9a4af544-7158-456d-b180-95f2e11eaa8c |
+   | admin_state_up            | UP                                   |
+   | availability_zone_hints   |                                      |
+   | availability_zones        |                                      |
+   | created_at                | 2017-01-25T20:32:06Z                 |
+   | description               |                                      |
+   | dns_domain                | None                                 |
+   | id                        | 84a7e627-573b-49da-af66-c9a65244f3ce |
+   | ipv4_address_scope        | None                                 |
+   | ipv6_address_scope        | None                                 |
+   | is_default                | None                                 |
    | mtu                       | 1450                                 |
    | name                      | global_network                       |
    | port_security_enabled     | True                                 |
+   | project_id                | 61b7eba037fd41f29cfba757c010faff     |
    | provider:network_type     | vxlan                                |
-   | provider:physical_network |                                      |
-   | provider:segmentation_id  | 1010                                 |
-   | router:external           | False                                |
+   | provider:physical_network | None                                 |
+   | provider:segmentation_id  | 7                                    |
+   | qos_policy_id             | None                                 |
+   | revision_number           | 3                                    |
+   | router:external           | Internal                             |
+   | segments                  | None                                 |
    | shared                    | True                                 |
    | status                    | ACTIVE                               |
    | subnets                   |                                      |
-   | tenant_id                 | de56db175c1d48b0bbe72f09a24a3b66     |
+   | updated_at                | 2017-01-25T20:32:07Z                 |
    +---------------------------+--------------------------------------+
+
 
 This is the equivalent of creating a policy on the network that permits
 every project to perform the action ``access_as_shared`` on that network.
 Neutron treats them as the same thing, so the policy entry for that
-network should be visible using the :command:`neutron rbac-list` command:
+network should be visible using the :command:`openstack network rbac list`
+command:
 
 .. code-block:: console
 
-   $ neutron rbac-list
-
-   +--------------------------------------+-------------+--------------------------------------+
-   | id                                   | object_type | object_id                            |
-   +--------------------------------------+-------------+--------------------------------------+
-   | ec2e3db1-de5b-4043-9d95-156f582653d0 | qos_policy  | e45e6917-3f3f-4835-ad54-d12c9151541d |
-   | e7b7a4a7-8c3e-4003-9e15-5a9464c1ecea | network     | fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55 |
-   +--------------------------------------+-------------+--------------------------------------+
+   $ openstack network rbac list
+   +-------------------------------+-------------+--------------------------------+
+   | ID                            | Object Type | Object ID                      |
+   +-------------------------------+-------------+--------------------------------+
+   | 58a5ee31-2ad6-467d-           | qos_policy  | 1f730d69-1c45-4ade-            |
+   | 8bb8-8c2ae3dd1382             |             | a8f2-89070ac4f046              |
+   | 27efbd79-f384-4d89-9dfc-      | network     | 84a7e627-573b-49da-            |
+   | 6c4a606ceec6                  |             | af66-c9a65244f3ce              |
+   +-------------------------------+-------------+--------------------------------+
 
 
 Use the :command:`neutron rbac-show` command to see the details:
 
 .. code-block:: console
 
-   $ neutron rbac-show fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55
+   $ openstack network rbac show 27efbd79-f384-4d89-9dfc-6c4a606ceec6
+   +-------------------+--------------------------------------+
+   | Field             | Value                                |
+   +-------------------+--------------------------------------+
+   | action            | access_as_shared                     |
+   | id                | 27efbd79-f384-4d89-9dfc-6c4a606ceec6 |
+   | name              | None                                 |
+   | object_id         | 84a7e627-573b-49da-af66-c9a65244f3ce |
+   | object_type       | network                              |
+   | project_id        | 61b7eba037fd41f29cfba757c010faff     |
+   | target_project_id | *                                    |
+   +-------------------+--------------------------------------+
 
-   +---------------+--------------------------------------+
-   | Field         | Value                                |
-   +---------------+--------------------------------------+
-   | action        | access_as_shared                     |
-   | id            | fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55 |
-   | object_id     | 9a4af544-7158-456d-b180-95f2e11eaa8c |
-   | object_type   | network                              |
-   | target_tenant | *                                    |
-   | tenant_id     | de56db175c1d48b0bbe72f09a24a3b66     |
-   +---------------+--------------------------------------+
 
 The output shows that the entry allows the action ``access_as_shared``
-on object ``9a4af544-7158-456d-b180-95f2e11eaa8c`` of type ``network``
+on object ``84a7e627-573b-49da-af66-c9a65244f3ce`` of type ``network``
 to target_tenant ``*``, which is a wildcard that represents all projects.
 
 Currently, the ``shared`` flag is just a mapping to the underlying
@@ -257,11 +282,11 @@ RBAC policies for a network. Setting the flag to ``True`` on a network
 creates a wildcard RBAC entry. Setting it to ``False`` removes the
 wildcard entry.
 
-When you run :command:`neutron net-list` or :command:`neutron net-show`, the
-``shared`` flag is calculated by the server based on the calling
-project and the RBAC entries for each network. For QoS objects
-use :command:`neutron qos-policy-list` or :command:`neutron qos-policy-show`
-respectively.
+When you run :command:`openstack network list` or
+:command:`openstack network show`, the ``shared`` flag is calculated by the
+server based on the calling project and the RBAC entries for each network.
+For QoS objects use :command:`openstack network qos policy list` or
+:command:`openstack network qos policy show` respectively.
 If there is a wildcard entry, the ``shared`` flag is always set to ``True``.
 If there are only entries that share with specific projects, only
 the projects the object is shared to will see the flag as ``True``
@@ -278,75 +303,78 @@ rather than all projects, use the ``access_as_external`` action.
 
    .. code-block:: console
 
-      $ neutron net-create secret_external_network
-
-      Created a new network:
+      $ openstack network create secret_external_network
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
-      | admin_state_up            | True                                 |
+      | admin_state_up            | UP                                   |
       | availability_zone_hints   |                                      |
       | availability_zones        |                                      |
-      | created_at                | 2016-04-30T06:51:46                  |
+      | created_at                | 2017-01-25T20:36:59Z                 |
       | description               |                                      |
-      | id                        | f9e39715-f7da-4bca-a74d-fc3675321661 |
-      | ipv4_address_scope        |                                      |
-      | ipv6_address_scope        |                                      |
+      | dns_domain                | None                                 |
+      | id                        | 802d4e9e-4649-43e6-9ee2-8d052a880cfb |
+      | ipv4_address_scope        | None                                 |
+      | ipv6_address_scope        | None                                 |
+      | is_default                | None                                 |
       | mtu                       | 1450                                 |
       | name                      | secret_external_network              |
       | port_security_enabled     | True                                 |
-      | provider:network_type     | vxlan                                |
-      | provider:physical_network |                                      |
-      | provider:segmentation_id  | 1073                                 |
-      | router:external           | False                                |
+      | project_id                | 61b7eba037fd41f29cfba757c010faff     |
+      | proider:network_type      | vxlan                                |
+      | provider:physical_network | None                                 |
+      | provider:segmentation_id  | 21                                   |
+      | qos_policy_id             | None                                 |
+      | revision_number           | 3                                    |
+      | router:external           | Internal                             |
+      | segments                  | None                                 |
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tags                      |                                      |
-      | tenant_id                 | dfe49b63660e494fbdbf6ad2ca2a810f     |
-      | updated_at                | 2016-04-30T06:51:46                  |
+      | updated_at                | 2017-01-25T20:36:59Z                 |
       +---------------------------+--------------------------------------+
 
-#. Create a policy entry using the :command:`neutron rbac-create` command (in
-   this example, the ID of the project we want to share with is
-   ``e28769db97d9449da658bc6931fcb683``):
+
+#. Create a policy entry using the :command:`openstack network rbac create`
+   command (in this example, the ID of the project we want to share with is
+   ``838030a7bf3c4d04b4b054c0f0b2b17c``):
 
    .. code-block:: console
 
-      $ neutron rbac-create --target-tenant e28769db97d9449da658bc6931fcb683 \
-        --action access_as_external --type network f9e39715-f7da-4bca-a74d-fc3675321661
+      $ openstack network rbac create --target-project \
+      838030a7bf3c4d04b4b054c0f0b2b17c --action access_as_external \
+      --type network 802d4e9e-4649-43e6-9ee2-8d052a880cfb
+      +-------------------+--------------------------------------+
+      | Field             | Value                                |
+      +-------------------+--------------------------------------+
+      | action            | access_as_external                   |
+      | id                | afdd5b8d-b6f5-4a15-9817-5231434057be |
+      | name              | None                                 |
+      | object_id         | 802d4e9e-4649-43e6-9ee2-8d052a880cfb |
+      | object_type       | network                              |
+      | project_id        | 61b7eba037fd41f29cfba757c010faff     |
+      | target_project_id | 838030a7bf3c4d04b4b054c0f0b2b17c     |
+      +-------------------+--------------------------------------+
 
-      Created a new rbac_policy:
-      +---------------+--------------------------------------+
-      | Field         | Value                                |
-      +---------------+--------------------------------------+
-      | action        | access_as_external                   |
-      | id            | c26b3b05-5781-48a1-a36a-fb63072b5e56 |
-      | object_id     | f9e39715-f7da-4bca-a74d-fc3675321661 |
-      | object_type   | network                              |
-      | target_tenant | e28769db97d9449da658bc6931fcb683     |
-      | tenant_id     | dfe49b63660e494fbdbf6ad2ca2a810f     |
-      +---------------+--------------------------------------+
 
-The ``target-tenant`` parameter specifies the project that requires
+The ``target-project`` parameter specifies the project that requires
 access to the network. The ``action`` parameter specifies what
 the project is allowed to do. The ``type`` parameter indicates
 that the target object is a network. The final parameter is the ID of
 the network we are granting external access to.
 
-Now project ``e28769db97d9449da658bc6931fcb683`` is able to see
-the network when running :command:`neutron net-list`
-and :command:`neutron net-show` and can attach router gateway
+Now project ``838030a7bf3c4d04b4b054c0f0b2b17c`` is able to see
+the network when running :command:`openstack network list`
+and :command:`openstack network show` and can attach router gateway
 ports to that network. No other users (other than admins
 and the owner) are able to see the network.
 
 To remove access for that project, delete the policy that allows
-it using the :command:`neutron rbac-delete` command:
+it using the :command:`openstack network rbac delete` command:
 
 .. code-block:: console
 
-   $ neutron rbac-delete c26b3b05-5781-48a1-a36a-fb63072b5e56
-   Deleted rbac_policy: c26b3b05-5781-48a1-a36a-fb63072b5e56
+   $ openstack network rbac delete afdd5b8d-b6f5-4a15-9817-5231434057be
 
 If that project has router gateway ports attached to that network,
 the server prevents the policy from being deleted until the
@@ -354,8 +382,8 @@ ports have been deleted:
 
 .. code-block:: console
 
-   $ neutron rbac-delete c26b3b05-5781-48a1-a36a-fb63072b5e56
-   RBAC policy on object f9e39715-f7da-4bca-a74d-fc3675321661
+   $ openstack network rbac delete afdd5b8d-b6f5-4a15-9817-5231434057be
+   RBAC policy on object afdd5b8d-b6f5-4a15-9817-5231434057be
    cannot be removed because other objects depend on it.
 
 This process can be repeated any number of times to make a network
@@ -367,50 +395,51 @@ previous behavior before this feature was added.
 
 .. code-block:: console
 
-   $ neutron net-create global_external_network --router:external
-
-   Created a new network:
+   $ openstack network create global_external_network --external
    +---------------------------+--------------------------------------+
    | Field                     | Value                                |
    +---------------------------+--------------------------------------+
-   | admin_state_up            | True                                 |
+   | admin_state_up            | UP                                   |
    | availability_zone_hints   |                                      |
    | availability_zones        |                                      |
-   | created_at                | 2016-04-30T07:00:57                  |
+   | created_at                | 2017-01-25T20:41:44Z                 |
    | description               |                                      |
-   | id                        | cb78991c-cdde-445b-a8ca-d819b9266756 |
-   | ipv4_address_scope        |                                      |
-   | ipv6_address_scope        |                                      |
-   | is_default                | False                                |
+   | dns_domain                | None                                 |
+   | id                        | 72a257a2-a56e-4ac7-880f-94a4233abec6 |
+   | ipv4_address_scope        | None                                 |
+   | ipv6_address_scope        | None                                 |
+   | is_default                | None                                 |
    | mtu                       | 1450                                 |
    | name                      | global_external_network              |
    | port_security_enabled     | True                                 |
+   | project_id                | 61b7eba037fd41f29cfba757c010faff     |
    | provider:network_type     | vxlan                                |
-   | provider:physical_network |                                      |
-   | provider:segmentation_id  | 1007                                 |
-   | router:external           | True                                 |
+   | provider:physical_network | None                                 |
+   | provider:segmentation_id  | 69                                   |
+   | qos_policy_id             | None                                 |
+   | revision_number           | 4                                    |
+   | router:external           | External                             |
+   | segments                  | None                                 |
    | shared                    | False                                |
    | status                    | ACTIVE                               |
    | subnets                   |                                      |
-   | tags                      |                                      |
-   | tenant_id                 | dfe49b63660e494fbdbf6ad2ca2a810f     |
-   | updated_at                | 2016-04-30T07:00:57                  |
+   | updated_at                | 2017-01-25T20:41:44Z                 |
    +---------------------------+--------------------------------------+
 
+
 In the output above the standard ``router:external`` attribute is
-``True`` as expected. Now a wildcard policy is visible in the
+``External`` as expected. Now a wildcard policy is visible in the
 RBAC policy listings:
 
 .. code-block:: console
 
-   $ neutron rbac-list --object_id=cb78991c-cdde-445b-a8ca-d819b9266756 \
-     -c id -c target_tenant
+   $ openstack network rbac list --long -c ID -c Action
+   +--------------------------------------+--------------------+
+   | ID                                   | Action             |
+   +--------------------------------------+--------------------+
+   | b694e541-bdca-480d-94ec-eda59ab7d71a | access_as_external |
+   +--------------------------------------+--------------------+
 
-   +--------------------------------------+---------------+
-   | id                                   | target_tenant |
-   +--------------------------------------+---------------+
-   | 2b72fe2e-20cf-4856-af12-3ac0733604d8 | *             |
-   +--------------------------------------+---------------+
 
 You can modify or delete this policy with the same constraints
 as any other RBAC ``access_as_external`` policy.
