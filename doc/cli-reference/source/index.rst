@@ -51,6 +51,7 @@ Contents
    swift
    heat
    cloudkitty
+   vitrage
    manila
    solum
    ceilometer
