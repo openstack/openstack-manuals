@@ -3,12 +3,12 @@ Security
 
 OpenStack services support various security methods including password,
 policy, and encryption. Additionally, supporting services including the
-database server and message broker support at least password security.
+database server and message broker support password security.
 
 To ease the installation process, this guide only covers password
 security where applicable. You can create secure passwords manually,
 generate them using a tool such as
-`pwgen <http://sourceforge.net/projects/pwgen/>`__, or by running the
+`pwgen <http://sourceforge.net/projects/pwgen/>`_, or by running the
 following command:
 
 .. code-block:: console
@@ -22,7 +22,7 @@ service account passwords and ``SERVICE_DBPASS`` to reference database
 passwords.
 
 The following table provides a list of services that require passwords
-and their associated references in the guide:
+and their associated references in the guide.
 
 .. list-table:: **Passwords**
    :widths: 50 60
@@ -39,7 +39,7 @@ and their associated references in the guide:
    * - ``CINDER_PASS``
      - Password of Block Storage service user ``cinder``
    * - ``DASH_DBPASS``
-     - Database password for the dashboard
+     - Database password for the Dashboard
    * - ``DEMO_PASS``
      - Password of user ``demo``
    * - ``GLANCE_DBPASS``
@@ -68,7 +68,7 @@ policies. See the `OpenStack Administrator Guide <http://docs.openstack.org/
 admin-guide/compute-root-wrap-reference.html>`__
 for more information.
 
-Also, the Networking service assumes default values for kernel network
+The Networking service assumes default values for kernel network
 parameters and modifies firewall rules. To avoid most issues during your
 initial installation, we recommend using a stock deployment of a supported
 distribution on your hosts. However, if you choose to automate deployment

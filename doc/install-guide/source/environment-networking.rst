@@ -10,7 +10,7 @@ Host networking
    recommend that you disable any automated network management tools and
    manually edit the appropriate configuration files for your distribution.
    For more information on how to configure networking on your
-   distribution, see the `documentation <https://help.ubuntu.com/lts/serverguide/network-configuration.html>`__ .
+   distribution, see the `documentation <https://help.ubuntu.com/lts/serverguide/network-configuration.html>`_.
 
 .. endonly
 
@@ -21,7 +21,8 @@ Host networking
    recommend that you disable any automated network management tools and
    manually edit the appropriate configuration files for your distribution.
    For more information on how to configure networking on your
-   distribution, see the `documentation <https://wiki.debian.org/NetworkConfiguration>`__ .
+   distribution, see the `documentation
+   <https://wiki.debian.org/NetworkConfiguration>`__ .
 
 .. endonly
 
@@ -32,7 +33,8 @@ Host networking
    recommend that you disable any automated network management tools and
    manually edit the appropriate configuration files for your distribution.
    For more information on how to configure networking on your
-   distribution, see the `documentation <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Using_the_Command_Line_Interface.html>`__ .
+   distribution, see the `documentation
+   <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Using_the_Command_Line_Interface.html>`__ .
 
 .. endonly
 
@@ -43,19 +45,23 @@ Host networking
    recommend that you disable any automated network management tools and
    manually edit the appropriate configuration files for your distribution.
    For more information on how to configure networking on your
-   distribution, see the `SLES 12 <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__ or `openSUSE <http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking>`__ documentation.
+   distribution, see the `SLES 12
+   <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__
+   or `openSUSE
+   <http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking>`__
+   documentation.
 
 .. endonly
 
 All nodes require Internet access for administrative purposes such as package
 installation, security updates, :term:`DNS <Domain Name System (DNS)>`, and
 :term:`NTP <Network Time Protocol (NTP)>`. In most cases, nodes should obtain
-internet access through the management network interface.
+Internet access through the management network interface.
 To highlight the importance of network separation, the example architectures
 use `private address space <https://tools.ietf.org/html/rfc1918>`__ for the
 management network and assume that the physical network infrastructure
 provides Internet access via :term:`NAT <Network Address Translation (NAT)>`
-or other method. The example architectures use routable IP address space for
+or other methods. The example architectures use routable IP address space for
 the provider (external) network and assume that the physical network
 infrastructure provides direct Internet access.
 
@@ -89,14 +95,14 @@ You can modify these ranges and gateways to work with your particular
 network infrastructure.
 
 Network interface names vary by distribution. Traditionally,
-interfaces use "eth" followed by a sequential number. To cover all
-variations, this guide simply refers to the first interface as the
+interfaces use ``eth`` followed by a sequential number. To cover all
+variations, this guide refers to the first interface as the
 interface with the lowest number and the second interface as the
 interface with the highest number.
 
 Unless you intend to use the exact configuration provided in this
 example architecture, you must modify the networks in this procedure to
-match your environment. Also, each node must resolve the other nodes by
+match your environment. Each node must resolve the other nodes by
 name in addition to IP address. For example, the ``controller`` name must
 resolve to ``10.0.0.11``, the IP address of the management interface on
 the controller node.

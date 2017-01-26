@@ -22,7 +22,7 @@ node, can take several minutes to synchronize.
    .. end
 
    Contents in the *Name/IP address* column should indicate the hostname or IP
-   address of one or more NTP servers.  Contents in the *S* column should indicate
+   address of one or more NTP servers. Contents in the *MS* column should indicate
    *\** for the server to which the NTP service is currently synchronized.
 
 #. Run the same command on *all other* nodes:
