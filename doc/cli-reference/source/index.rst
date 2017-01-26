@@ -20,7 +20,10 @@ Contents
    the command set for the various APIs together in a single shell
    with a uniform command structure.
 
-   Presently, Identity service (keystone) and Messaging service (zaqar)
+   Presently,
+   Data Processing service (sahara),
+   Identity service (keystone),
+   and Messaging service (zaqar)
    only use the OpenStackClient command set.
 
    For more information about OpenStackClient and the command list,
