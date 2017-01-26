@@ -9,7 +9,7 @@ NFV Orchestration service (tacker) command-line client
 The tacker client is the command-line interface (CLI) for
 the NFV Orchestration service (tacker) API and its extensions.
 
-This chapter documents :command:`tacker` version ``0.7.0``.
+This chapter documents :command:`tacker` version ``0.9.0``.
 
 For help on a specific :command:`tacker` command, enter:
 
@@ -167,8 +167,8 @@ tacker chain-list
 .. code-block:: console
 
    usage: tacker chain-list [-h] [-f {csv,html,json,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--quote {all,minimal,none,nonnumeric}]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--quote {all,minimal,none,nonnumeric}]
                             [--request-format {json,xml}] [-D] [-F FIELD]
 
 List SFCs that belong to a given tenant.
@@ -196,9 +196,9 @@ tacker chain-show
 .. code-block:: console
 
    usage: tacker chain-show [-h] [-f {html,json,shell,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                            [-F FIELD]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--prefix PREFIX]
+                            [--request-format {json,xml}] [-D] [-F FIELD]
                             SFC
 
 Show information of a given SFC.
@@ -231,7 +231,8 @@ tacker classifier-list
 .. code-block:: console
 
    usage: tacker classifier-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [-c COLUMN] [--max-width <integer>]
+                                 [--print-empty] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--request-format {json,xml}] [-D] [-F FIELD]
 
@@ -260,9 +261,9 @@ tacker classifier-show
 .. code-block:: console
 
    usage: tacker classifier-show [-h] [-f {html,json,shell,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX] [--request-format {json,xml}]
-                                 [-D] [-F FIELD]
+                                 [-c COLUMN] [--max-width <integer>]
+                                 [--print-empty] [--noindent] [--prefix PREFIX]
+                                 [--request-format {json,xml}] [-D] [-F FIELD]
                                  CLASSIFIER
 
 Show information of a given FC.
@@ -295,9 +296,9 @@ tacker event-show
 .. code-block:: console
 
    usage: tacker event-show [-h] [-f {html,json,shell,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                            [-F FIELD]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--prefix PREFIX]
+                            [--request-format {json,xml}] [-D] [-F FIELD]
                             EVENT
 
 Show event given the event id.
@@ -330,27 +331,15 @@ tacker events-list
 .. code-block:: console
 
    usage: tacker events-list [-h] [-f {csv,html,json,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--quote {all,minimal,none,nonnumeric}]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--quote {all,minimal,none,nonnumeric}]
                              [--request-format {json,xml}] [-D] [-F FIELD]
+                             [--id ID] [--resource-id RESOURCE_ID]
+                             [--resource-state RESOURCE_STATE]
+                             [--event-type EVENT_TYPE]
+                             [--resource-type RESOURCE_TYPE]
 
-List
-events
-that
-belong
-to
-a
-given
-resource.
-The
-supported
-args
-are
---id,
---resource_id,
---resource_state,
---resource_type,
---event_type
+List events of resources.
 
 **Optional arguments:**
 
@@ -367,6 +356,21 @@ are
   Specify the field(s) to be returned by server. You can
   repeat this option.
 
+``--id ID``
+  id of the event to look up.
+
+``--resource-id RESOURCE_ID``
+  resource id of the events to look up.
+
+``--resource-state RESOURCE_STATE``
+  resource state of the events to look up.
+
+``--event-type EVENT_TYPE``
+  event type of the events to look up.
+
+``--resource-type RESOURCE_TYPE``
+  resource type of the events to look up.
+
 .. _tacker_ext-list:
 
 tacker ext-list
@@ -375,7 +379,7 @@ tacker ext-list
 .. code-block:: console
 
    usage: tacker ext-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
-                          [--max-width <integer>] [--noindent]
+                          [--max-width <integer>] [--print-empty] [--noindent]
                           [--quote {all,minimal,none,nonnumeric}]
                           [--request-format {json,xml}] [-D] [-F FIELD]
 
@@ -404,9 +408,9 @@ tacker ext-show
 .. code-block:: console
 
    usage: tacker ext-show [-h] [-f {html,json,shell,table,value,yaml}]
-                          [-c COLUMN] [--max-width <integer>] [--noindent]
-                          [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                          [-F FIELD]
+                          [-c COLUMN] [--max-width <integer>] [--print-empty]
+                          [--noindent] [--prefix PREFIX]
+                          [--request-format {json,xml}] [-D] [-F FIELD]
                           EXT-ALIAS
 
 Show information of a given resource.
@@ -439,7 +443,7 @@ tacker nfp-list
 .. code-block:: console
 
    usage: tacker nfp-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
-                          [--max-width <integer>] [--noindent]
+                          [--max-width <integer>] [--print-empty] [--noindent]
                           [--quote {all,minimal,none,nonnumeric}]
                           [--request-format {json,xml}] [-D] [-F FIELD]
 
@@ -468,9 +472,9 @@ tacker nfp-show
 .. code-block:: console
 
    usage: tacker nfp-show [-h] [-f {html,json,shell,table,value,yaml}]
-                          [-c COLUMN] [--max-width <integer>] [--noindent]
-                          [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                          [-F FIELD]
+                          [-c COLUMN] [--max-width <integer>] [--print-empty]
+                          [--noindent] [--prefix PREFIX]
+                          [--request-format {json,xml}] [-D] [-F FIELD]
                           NFP
 
 Show information of a given NFP.
@@ -495,6 +499,312 @@ Show information of a given NFP.
   Specify the field(s) to be returned by server. You can
   repeat this option.
 
+.. _tacker_ns-create:
+
+tacker ns-create
+----------------
+
+.. code-block:: console
+
+   usage: tacker ns-create [-h] [-f {html,json,shell,table,value,yaml}]
+                           [-c COLUMN] [--max-width <integer>] [--print-empty]
+                           [--noindent] [--prefix PREFIX]
+                           [--request-format {json,xml}] [--tenant-id TENANT_ID]
+                           [--description DESCRIPTION]
+                           (--nsd-id NSD_ID | --nsd-name NSD_NAME)
+                           [--vim-id VIM_ID | --vim-name VIM_NAME]
+                           [--vim-region-name VIM_REGION_NAME]
+                           [--param-file PARAM_FILE]
+                           NAME
+
+Create a NS.
+
+**Positional arguments:**
+
+``NAME``
+  Set a name for the NS
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID
+
+``--description DESCRIPTION``
+  Set description for the NS
+
+``--nsd-id NSD_ID``
+  NSD ID to use as template to create NS
+
+``--nsd-name NSD_NAME``
+  NSD name to use as template to create NS
+
+``--vim-id VIM_ID``
+  VIM ID to use to create NS on the specified VIM
+
+``--vim-name VIM_NAME``
+  VIM name to use to create NS on the specified VIM
+
+``--vim-region-name VIM_REGION_NAME``
+  VIM Region to use to create NS on the specified VIM
+
+``--param-file PARAM_FILE``
+  Specify parameter yaml file
+
+.. _tacker_ns-delete:
+
+tacker ns-delete
+----------------
+
+.. code-block:: console
+
+   usage: tacker ns-delete [-h] [--request-format {json,xml}] NS [NS ...]
+
+Delete given NS(s).
+
+**Positional arguments:**
+
+``NS``
+  IDs or names of ns to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+.. _tacker_ns-list:
+
+tacker ns-list
+--------------
+
+.. code-block:: console
+
+   usage: tacker ns-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
+                         [--max-width <integer>] [--print-empty] [--noindent]
+                         [--quote {all,minimal,none,nonnumeric}]
+                         [--request-format {json,xml}] [-D] [-F FIELD]
+
+List NS that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_ns-show:
+
+tacker ns-show
+--------------
+
+.. code-block:: console
+
+   usage: tacker ns-show [-h] [-f {html,json,shell,table,value,yaml}] [-c COLUMN]
+                         [--max-width <integer>] [--print-empty] [--noindent]
+                         [--prefix PREFIX] [--request-format {json,xml}] [-D]
+                         [-F FIELD]
+                         NS
+
+Show information of a given NS.
+
+**Positional arguments:**
+
+``NS``
+  ID or name of ns to look up
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_nsd-create:
+
+tacker nsd-create
+-----------------
+
+.. code-block:: console
+
+   usage: tacker nsd-create [-h] [-f {html,json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--prefix PREFIX]
+                            [--request-format {json,xml}] [--tenant-id TENANT_ID]
+                            --nsd-file NSD_FILE [--description DESCRIPTION]
+                            NAME
+
+Create a NSD.
+
+**Positional arguments:**
+
+``NAME``
+  Set a name for the NSD
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``--tenant-id TENANT_ID``
+  The owner tenant ID
+
+``--nsd-file NSD_FILE``
+  Specify NSD file
+
+``--description DESCRIPTION``
+  Set a description for the NSD
+
+.. _tacker_nsd-delete:
+
+tacker nsd-delete
+-----------------
+
+.. code-block:: console
+
+   usage: tacker nsd-delete [-h] [--request-format {json,xml}] NSD [NSD ...]
+
+Delete a given NSD.
+
+**Positional arguments:**
+
+``NSD``
+  IDs or names of nsd to delete
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+.. _tacker_nsd-list:
+
+tacker nsd-list
+---------------
+
+.. code-block:: console
+
+   usage: tacker nsd-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
+                          [--max-width <integer>] [--print-empty] [--noindent]
+                          [--quote {all,minimal,none,nonnumeric}]
+                          [--request-format {json,xml}] [-D] [-F FIELD]
+
+List NSDs that belong to a given tenant.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_nsd-show:
+
+tacker nsd-show
+---------------
+
+.. code-block:: console
+
+   usage: tacker nsd-show [-h] [-f {html,json,shell,table,value,yaml}]
+                          [-c COLUMN] [--max-width <integer>] [--print-empty]
+                          [--noindent] [--prefix PREFIX]
+                          [--request-format {json,xml}] [-D] [-F FIELD]
+                          NSD
+
+Show information of a given NSD.
+
+**Positional arguments:**
+
+``NSD``
+  ID or name of nsd to look up
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
+.. _tacker_nsd-template-show:
+
+tacker nsd-template-show
+------------------------
+
+.. code-block:: console
+
+   usage: tacker nsd-template-show [-h] [-f {html,json,shell,table,value,yaml}]
+                                   [-c COLUMN] [--max-width <integer>]
+                                   [--print-empty] [--noindent] [--prefix PREFIX]
+                                   [--request-format {json,xml}] [-D] [-F FIELD]
+                                   NSD
+
+Show template of a given NSD.
+
+**Positional arguments:**
+
+``NSD``
+  ID or name of nsd to look up
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--request-format {json,xml}``
+  The xml or json request format
+
+``-D, --show-details``
+  Show detailed info
+
+``-F FIELD, --field FIELD``
+  Specify the field(s) to be returned by server. You can
+  repeat this option.
+
 .. _tacker_vim-delete:
 
 tacker vim-delete
@@ -502,14 +812,14 @@ tacker vim-delete
 
 .. code-block:: console
 
-   usage: tacker vim-delete [-h] [--request-format {json,xml}] VIM
+   usage: tacker vim-delete [-h] [--request-format {json,xml}] VIM [VIM ...]
 
-Delete a given VIM.
+Delete given VIM(s).
 
 **Positional arguments:**
 
 ``VIM``
-  ID or name of vim to delete
+  IDs or names of vim to delete
 
 **Optional arguments:**
 
@@ -527,12 +837,15 @@ tacker vim-events-list
 .. code-block:: console
 
    usage: tacker vim-events-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [-c COLUMN] [--max-width <integer>]
+                                 [--print-empty] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--request-format {json,xml}] [-D] [-F FIELD]
+                                 [--id ID] [--resource-id RESOURCE_ID]
+                                 [--resource-state RESOURCE_STATE]
+                                 [--event-type EVENT_TYPE]
 
-List events that belong to a given VIM. The supported args are --id,
---resource_id, --resource_state, --event_type
+List events of VIMs.
 
 **Optional arguments:**
 
@@ -549,6 +862,18 @@ List events that belong to a given VIM. The supported args are --id,
   Specify the field(s) to be returned by server. You can
   repeat this option.
 
+``--id ID``
+  id of the event to look up.
+
+``--resource-id RESOURCE_ID``
+  resource id of the events to look up.
+
+``--resource-state RESOURCE_STATE``
+  resource state of the events to look up.
+
+``--event-type EVENT_TYPE``
+  event type of the events to look up.
+
 .. _tacker_vim-list:
 
 tacker vim-list
@@ -557,7 +882,7 @@ tacker vim-list
 .. code-block:: console
 
    usage: tacker vim-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
-                          [--max-width <integer>] [--noindent]
+                          [--max-width <integer>] [--print-empty] [--noindent]
                           [--quote {all,minimal,none,nonnumeric}]
                           [--request-format {json,xml}] [-D] [-F FIELD]
 
@@ -586,8 +911,9 @@ tacker vim-register
 .. code-block:: console
 
    usage: tacker vim-register [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX] [--request-format {json,xml}]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
+                              [--request-format {json,xml}]
                               [--tenant-id TENANT_ID] --config-file CONFIG_FILE
                               [--description DESCRIPTION] [--is-default]
                               NAME
@@ -611,7 +937,7 @@ Create a VIM.
   The owner tenant ID
 
 ``--config-file CONFIG_FILE``
-  Specify VIM specific config parameters in a file
+  YAML file with VIM configuration parameters
 
 ``--description DESCRIPTION``
   Set a description for the VIM
@@ -627,9 +953,9 @@ tacker vim-show
 .. code-block:: console
 
    usage: tacker vim-show [-h] [-f {html,json,shell,table,value,yaml}]
-                          [-c COLUMN] [--max-width <integer>] [--noindent]
-                          [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                          [-F FIELD]
+                          [-c COLUMN] [--max-width <integer>] [--print-empty]
+                          [--noindent] [--prefix PREFIX]
+                          [--request-format {json,xml}] [-D] [-F FIELD]
                           VIM
 
 Show information of a given VIM.
@@ -661,8 +987,9 @@ tacker vim-update
 
 .. code-block:: console
 
-   usage: tacker vim-update [-h] [--request-format {json,xml}]
-                            [--config-file CONFIG_FILE] [--is-default]
+   usage: tacker vim-update [-h] [--request-format {json,xml}] --config-file
+                            CONFIG_FILE [--name NAME] [--description DESCRIPTION]
+                            [--is-default {True,False}]
                             VIM
 
 Update a given VIM.
@@ -681,10 +1008,16 @@ Update a given VIM.
   The xml or json request format
 
 ``--config-file CONFIG_FILE``
-  Specify VIM specific config parameters in a file
+  YAML file with VIM configuration parameters
 
-``--is-default``
-  Set as default VIM
+``--name NAME``
+  New name for the VIM
+
+``--description DESCRIPTION``
+  New description for the VIM
+
+``--is-default {True,False}``
+  Indicate whether the VIM is used as default
 
 .. _tacker_vnf-create:
 
@@ -694,10 +1027,11 @@ tacker vnf-create
 .. code-block:: console
 
    usage: tacker vnf-create [-h] [-f {html,json,shell,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--prefix PREFIX] [--request-format {json,xml}]
-                            [--tenant-id TENANT_ID] [--description DESCRIPTION]
-                            (--vnfd-id VNFD_ID | --vnfd-name VNFD_NAME)
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--prefix PREFIX]
+                            [--request-format {json,xml}] [--tenant-id TENANT_ID]
+                            [--description DESCRIPTION]
+                            (--vnfd-id VNFD_ID | --vnfd-name VNFD_NAME | --vnfd-template VNFD_TEMPLATE)
                             [--vim-id VIM_ID | --vim-name VIM_NAME]
                             [--vim-region-name VIM_REGION_NAME]
                             [--config-file CONFIG_FILE] [--config CONFIG]
@@ -731,6 +1065,9 @@ Create a VNF.
 ``--vnfd-name VNFD_NAME``
   VNFD Name to use as template to create VNF
 
+``--vnfd-template VNFD_TEMPLATE``
+  VNFD file to create VNF
+
 ``--vim-id VIM_ID``
   VIM ID to use to create VNF on the specified VIM
 
@@ -741,10 +1078,10 @@ Create a VNF.
   VIM Region to use to create VNF on the specified VIM
 
 ``--config-file CONFIG_FILE``
-  Specify config yaml file
+  YAML file with VNF configuration
 
 ``--config CONFIG``
-  Specify config yaml data
+  Specify config yaml data (**DEPRECATED**)
 
 ``--param-file PARAM_FILE``
   Specify parameter yaml file
@@ -756,14 +1093,14 @@ tacker vnf-delete
 
 .. code-block:: console
 
-   usage: tacker vnf-delete [-h] [--request-format {json,xml}] VNF
+   usage: tacker vnf-delete [-h] [--request-format {json,xml}] VNF [VNF ...]
 
-Delete a given VNF.
+Delete given VNF(s).
 
 **Positional arguments:**
 
 ``VNF``
-  ID or name of vnf to delete
+  IDs or names of vnf to delete
 
 **Optional arguments:**
 
@@ -781,12 +1118,15 @@ tacker vnf-events-list
 .. code-block:: console
 
    usage: tacker vnf-events-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
+                                 [-c COLUMN] [--max-width <integer>]
+                                 [--print-empty] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--request-format {json,xml}] [-D] [-F FIELD]
+                                 [--id ID] [--resource-id RESOURCE_ID]
+                                 [--resource-state RESOURCE_STATE]
+                                 [--event-type EVENT_TYPE]
 
-List events that belong to a given VNF. The supported args are --id,
---resource_id, --resource_state, --event_type
+List events of VNFs.
 
 **Optional arguments:**
 
@@ -803,6 +1143,18 @@ List events that belong to a given VNF. The supported args are --id,
   Specify the field(s) to be returned by server. You can
   repeat this option.
 
+``--id ID``
+  id of the event to look up.
+
+``--resource-id RESOURCE_ID``
+  resource id of the events to look up.
+
+``--resource-state RESOURCE_STATE``
+  resource state of the events to look up.
+
+``--event-type EVENT_TYPE``
+  event type of the events to look up.
+
 .. _tacker_vnf-list:
 
 tacker vnf-list
@@ -811,7 +1163,7 @@ tacker vnf-list
 .. code-block:: console
 
    usage: tacker vnf-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
-                          [--max-width <integer>] [--noindent]
+                          [--max-width <integer>] [--print-empty] [--noindent]
                           [--quote {all,minimal,none,nonnumeric}]
                           [--request-format {json,xml}] [-D] [-F FIELD]
 
@@ -841,7 +1193,7 @@ tacker vnf-resource-list
 
    usage: tacker vnf-resource-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
-                                   [--noindent]
+                                   [--print-empty] [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]
                                    [--request-format {json,xml}] [-D] [-F FIELD]
                                    VNF
@@ -910,9 +1262,9 @@ tacker vnf-show
 .. code-block:: console
 
    usage: tacker vnf-show [-h] [-f {html,json,shell,table,value,yaml}]
-                          [-c COLUMN] [--max-width <integer>] [--noindent]
-                          [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                          [-F FIELD]
+                          [-c COLUMN] [--max-width <integer>] [--print-empty]
+                          [--noindent] [--prefix PREFIX]
+                          [--request-format {json,xml}] [-D] [-F FIELD]
                           VNF
 
 Show information of a given VNF.
@@ -964,7 +1316,7 @@ Update a given VNF.
   The xml or json request format
 
 ``--config-file CONFIG_FILE``
-  Specify config yaml file
+  YAML file with VNF configuration
 
 ``--config CONFIG``
   Specify config yaml data
@@ -977,8 +1329,9 @@ tacker vnfd-create
 .. code-block:: console
 
    usage: tacker vnfd-create [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [--request-format {json,xml}]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX]
+                             [--request-format {json,xml}]
                              [--tenant-id TENANT_ID]
                              (--vnfd-file VNFD_FILE | --vnfd VNFD)
                              [--description DESCRIPTION]
@@ -1006,7 +1359,7 @@ Create a VNFD.
   Specify VNFD file
 
 ``--vnfd VNFD``
-  Specify VNFD
+  Specify VNFD (**DEPRECATED**)
 
 ``--description DESCRIPTION``
   Set a description for the VNFD
@@ -1018,14 +1371,14 @@ tacker vnfd-delete
 
 .. code-block:: console
 
-   usage: tacker vnfd-delete [-h] [--request-format {json,xml}] VNFD
+   usage: tacker vnfd-delete [-h] [--request-format {json,xml}] VNFD [VNFD ...]
 
-Delete a given VNFD.
+Delete given VNFD(s).
 
 **Positional arguments:**
 
 ``VNFD``
-  ID or name of vnfd to delete
+  IDs or names of vnfd to delete
 
 **Optional arguments:**
 
@@ -1044,24 +1397,14 @@ tacker vnfd-events-list
 
    usage: tacker vnfd-events-list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent]
+                                  [--print-empty] [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   [--request-format {json,xml}] [-D] [-F FIELD]
+                                  [--id ID] [--resource-id RESOURCE_ID]
+                                  [--resource-state RESOURCE_STATE]
+                                  [--event-type EVENT_TYPE]
 
-List
-events
-that
-belong
-to
-a
-given
-VNFD.
-The
-supported
-args
-are
---id,
---resource_id, --resource_state, --event_type
+List events of VNFDs.
 
 **Optional arguments:**
 
@@ -1078,6 +1421,18 @@ are
   Specify the field(s) to be returned by server. You can
   repeat this option.
 
+``--id ID``
+  id of the event to look up.
+
+``--resource-id RESOURCE_ID``
+  resource id of the events to look up.
+
+``--resource-state RESOURCE_STATE``
+  resource state of the events to look up.
+
+``--event-type EVENT_TYPE``
+  event type of the events to look up.
+
 .. _tacker_vnfd-list:
 
 tacker vnfd-list
@@ -1086,9 +1441,10 @@ tacker vnfd-list
 .. code-block:: console
 
    usage: tacker vnfd-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width <integer>] [--noindent]
+                           [--max-width <integer>] [--print-empty] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--request-format {json,xml}] [-D] [-F FIELD]
+                           [--template-source TEMPLATE_SOURCE]
 
 List VNFD that belong to a given tenant.
 
@@ -1107,6 +1463,10 @@ List VNFD that belong to a given tenant.
   Specify the field(s) to be returned by server. You can
   repeat this option.
 
+``--template-source TEMPLATE_SOURCE``
+  List VNFD with specified template source. Available
+  options are 'onboarded' (default), 'inline' or 'all'
+
 .. _tacker_vnfd-show:
 
 tacker vnfd-show
@@ -1115,9 +1475,9 @@ tacker vnfd-show
 .. code-block:: console
 
    usage: tacker vnfd-show [-h] [-f {html,json,shell,table,value,yaml}]
-                           [-c COLUMN] [--max-width <integer>] [--noindent]
-                           [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                           [-F FIELD]
+                           [-c COLUMN] [--max-width <integer>] [--print-empty]
+                           [--noindent] [--prefix PREFIX]
+                           [--request-format {json,xml}] [-D] [-F FIELD]
                            VNFD
 
 Show information of a given VNFD.
@@ -1151,7 +1511,8 @@ tacker vnfd-template-show
 
    usage: tacker vnfd-template-show [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
-                                    [--noindent] [--prefix PREFIX]
+                                    [--print-empty] [--noindent]
+                                    [--prefix PREFIX]
                                     [--request-format {json,xml}] [-D] [-F FIELD]
                                     VNFD
 
@@ -1185,12 +1546,14 @@ tacker vnffg-create
 .. code-block:: console
 
    usage: tacker vnffg-create [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX] [--request-format {json,xml}]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
+                              [--request-format {json,xml}]
                               [--tenant-id TENANT_ID]
                               (--vnffgd-id VNFFGD_ID | --vnffgd-name VNFFGD_NAME)
                               [--vnf-mapping VNF_MAPPING]
                               [--symmetrical {True,False}]
+                              [--param-file PARAM_FILE]
                               NAME
 
 Create a VNFFG.
@@ -1224,6 +1587,9 @@ Create a VNFFG.
 ``--symmetrical {True,False}``
   Should a reverse path be created for the NFP
 
+``--param-file PARAM_FILE``
+  Specify parameter yaml file
+
 .. _tacker_vnffg-delete:
 
 tacker vnffg-delete
@@ -1231,14 +1597,15 @@ tacker vnffg-delete
 
 .. code-block:: console
 
-   usage: tacker vnffg-delete [-h] [--request-format {json,xml}] VNFFG
+   usage: tacker vnffg-delete [-h] [--request-format {json,xml}]
+                              VNFFG [VNFFG ...]
 
 Delete a given VNFFG.
 
 **Positional arguments:**
 
 ``VNFFG``
-  ID or name of vnffg to delete
+  IDs or names of vnffg to delete
 
 **Optional arguments:**
 
@@ -1256,8 +1623,8 @@ tacker vnffg-list
 .. code-block:: console
 
    usage: tacker vnffg-list [-h] [-f {csv,html,json,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--quote {all,minimal,none,nonnumeric}]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--quote {all,minimal,none,nonnumeric}]
                             [--request-format {json,xml}] [-D] [-F FIELD]
 
 List VNFFGs that belong to a given tenant.
@@ -1285,9 +1652,9 @@ tacker vnffg-show
 .. code-block:: console
 
    usage: tacker vnffg-show [-h] [-f {html,json,shell,table,value,yaml}]
-                            [-c COLUMN] [--max-width <integer>] [--noindent]
-                            [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                            [-F FIELD]
+                            [-c COLUMN] [--max-width <integer>] [--print-empty]
+                            [--noindent] [--prefix PREFIX]
+                            [--request-format {json,xml}] [-D] [-F FIELD]
                             VNFFG
 
 Show information of a given VNFFG.
@@ -1354,8 +1721,9 @@ tacker vnffgd-create
 .. code-block:: console
 
    usage: tacker vnffgd-create [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX] [--request-format {json,xml}]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
+                               [--request-format {json,xml}]
                                [--tenant-id TENANT_ID]
                                (--vnffgd-file VNFFGD_FILE | --vnffgd VNFFGD)
                                [--description DESCRIPTION]
@@ -1383,7 +1751,7 @@ Create a VNFFGD.
   Specify VNFFGD file
 
 ``--vnffgd VNFFGD``
-  Specify VNFFGD
+  Specify VNFFGD (**DEPRECATED**)
 
 ``--description DESCRIPTION``
   Set a description for the VNFFGD
@@ -1395,14 +1763,15 @@ tacker vnffgd-delete
 
 .. code-block:: console
 
-   usage: tacker vnffgd-delete [-h] [--request-format {json,xml}] VNFFGD
+   usage: tacker vnffgd-delete [-h] [--request-format {json,xml}]
+                               VNFFGD [VNFFGD ...]
 
 Delete a given VNFFGD.
 
 **Positional arguments:**
 
 ``VNFFGD``
-  ID or name of vnffgd to delete
+  IDs or names of vnffgd to delete
 
 **Optional arguments:**
 
@@ -1420,8 +1789,8 @@ tacker vnffgd-list
 .. code-block:: console
 
    usage: tacker vnffgd-list [-h] [-f {csv,html,json,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--quote {all,minimal,none,nonnumeric}]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--quote {all,minimal,none,nonnumeric}]
                              [--request-format {json,xml}] [-D] [-F FIELD]
 
 List VNFFGDs that belong to a given tenant.
@@ -1449,9 +1818,9 @@ tacker vnffgd-show
 .. code-block:: console
 
    usage: tacker vnffgd-show [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                             [-F FIELD]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX]
+                             [--request-format {json,xml}] [-D] [-F FIELD]
                              VNFFGD
 
 Show information of a given VNFFGD.
@@ -1486,7 +1855,8 @@ tacker vnffgd-template-show
    usage: tacker vnffgd-template-show [-h]
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
-                                      [--noindent] [--prefix PREFIX]
+                                      [--print-empty] [--noindent]
+                                      [--prefix PREFIX]
                                       [--request-format {json,xml}] [-D]
                                       [-F FIELD]
                                       VNFFGD
