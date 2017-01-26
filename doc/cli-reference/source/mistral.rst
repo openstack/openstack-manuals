@@ -9,7 +9,7 @@ Workflow service (mistral) command-line client
 The mistral client is the command-line interface (CLI) for
 the Workflow service (mistral) API and its extensions.
 
-This chapter documents :command:`mistral` version ``2.1.2``.
+This chapter documents :command:`mistral` version ``3.0.0``.
 
 For help on a specific :command:`mistral` command, enter:
 
@@ -31,8 +31,11 @@ mistral usage
                   [--os-mistral-endpoint-type ENDPOINT_TYPE]
                   [--os-username USERNAME] [--os-password PASSWORD]
                   [--os-tenant-id TENANT_ID] [--os-tenant-name TENANT_NAME]
-                  [--os-auth-token TOKEN] [--os-auth-url AUTH_URL]
-                  [--os-cert OS_CERT] [--os-key OS_KEY] [--os-cacert OS_CACERT]
+                  [--os-auth-token TOKEN]
+                  [--os-project-domain-name PROJECT_DOMAIN_NAME]
+                  [--os-user-domain-name USER_DOMAIN_NAME]
+                  [--os-auth-url AUTH_URL] [--os-cert OS_CERT] [--os-key OS_KEY]
+                  [--os-cacert OS_CACERT] [--os-region-name REGION_NAME]
                   [--insecure] [--auth-type AUTH_TYPE]
                   [--openid-client-id CLIENT_ID]
                   [--openid-client-secret CLIENT_SECRET]
@@ -42,8 +45,11 @@ mistral usage
                   [--os-target-tenant-name TARGET_TENANT_NAME]
                   [--os-target-auth-token TARGET_TOKEN]
                   [--os-target-auth-url TARGET_AUTH_URL]
-                  [--os-target_cacert TARGET_CACERT] [--target_insecure]
-                  [--profile HMAC_KEY]
+                  [--os-target_cacert TARGET_CACERT]
+                  [--os-target-region-name TARGET_REGION_NAME]
+                  [--os-target-user-domain-name TARGET_USER_DOMAIN_NAME]
+                  [--os-target-project-domain-name TARGET_PROJECT_DOMAIN_NAME]
+                  [--target_insecure] [--profile HMAC_KEY]
 
 .. _mistral_command_options:
 
@@ -103,6 +109,14 @@ mistral optional arguments
 ``--os-auth-token TOKEN``
   Authentication token (Env: OS_AUTH_TOKEN)
 
+``--os-project-domain-name PROJECT_DOMAIN_NAME``
+  Authentication project domain name (Env:
+  OS_PROJECT_DOMAIN_NAME)
+
+``--os-user-domain-name USER_DOMAIN_NAME``
+  Authentication user domain name (Env:
+  OS_USER_DOMAIN_NAME)
+
 ``--os-auth-url AUTH_URL``
   Authentication URL (Env: OS_AUTH_URL)
 
@@ -114,6 +128,9 @@ mistral optional arguments
 
 ``--os-cacert OS_CACERT``
   Authentication CA Certificate (Env: OS_CACERT)
+
+``--os-region-name REGION_NAME``
+  Region name (Env: OS_REGION_NAME)
 
 ``--insecure``
   Disables SSL/TLS certificate verification
@@ -159,6 +176,18 @@ mistral optional arguments
 ``--os-target_cacert TARGET_CACERT``
   Authentication CA Certificate for target cloud
   (Env: OS_TARGET_CACERT)
+
+``--os-target-region-name TARGET_REGION_NAME``
+  Region name for target cloud(Env:
+  OS_TARGET_REGION_NAME)
+
+``--os-target-user-domain-name TARGET_USER_DOMAIN_NAME``
+  User domain name for target cloud(Env:
+  OS_TARGET_USER_DOMAIN_NAME)
+
+``--os-target-project-domain-name TARGET_PROJECT_DOMAIN_NAME``
+  Project domain name for target cloud(Env:
+  OS_TARGET_PROJECT_DOMAIN_NAME)
 
 ``--target_insecure``
   Disables SSL/TLS certificate verification for
@@ -354,7 +383,7 @@ mistral action-execution-update
                                           [-c COLUMN] [--max-width <integer>]
                                           [--print-empty] [--noindent]
                                           [--prefix PREFIX]
-                                          [--state {IDLE,RUNNING,SUCCESS,ERROR}]
+                                          [--state {IDLE,RUNNING,SUCCESS,ERROR,CANCELLED}]
                                           [--output OUTPUT]
                                           id
 
@@ -370,7 +399,7 @@ Update specific Action execution.
 ``-h, --help``
   show this help message and exit
 
-``--state {IDLE,RUNNING,SUCCESS,ERROR}``
+``--state {IDLE,RUNNING,SUCCESS,ERROR,CANCELLED}``
   Action execution state
 
 ``--output OUTPUT``
@@ -432,6 +461,7 @@ mistral action-list
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
                               [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
+                              [--filter FILTERS]
 
 List all actions.
 
@@ -439,6 +469,9 @@ List all actions.
 
 ``-h, --help``
   show this help message and exit
+
+``--filter FILTERS``
+  Filters. Can be repeated.
 
 .. _mistral_action-update:
 
@@ -854,9 +887,9 @@ mistral execution-list
                                  [-c COLUMN] [--max-width <integer>]
                                  [--print-empty] [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
-                                 [--marker [MARKER]] [--limit [LIMIT]]
-                                 [--sort_keys [SORT_KEYS]]
-                                 [--sort_dirs [SORT_DIRS]]
+                                 [--task [TASK]] [--marker [MARKER]]
+                                 [--limit [LIMIT]] [--sort_keys [SORT_KEYS]]
+                                 [--sort_dirs [SORT_DIRS]] [--filter FILTERS]
 
 List all executions.
 
@@ -864,6 +897,10 @@ List all executions.
 
 ``-h, --help``
   show this help message and exit
+
+``--task [TASK]``
+  Parent task execution ID associated with workflow
+  execution list.
 
 ``--marker [MARKER]``
   The last execution uuid of the previous page, displays
@@ -882,6 +919,9 @@ List all executions.
   Comma-separated list of sort directions. Default: asc.
   Example: mistral execution-list
   --sort_keys=id,description --sort_dirs=asc,desc
+
+``--filter FILTERS``
+  Filters. Can be repeated.
 
 .. _mistral_execution-update:
 
@@ -1201,6 +1241,7 @@ mistral task-list
    usage: mistral task-list [-h] [-f {csv,html,json,table,value,yaml}]
                             [-c COLUMN] [--max-width <integer>] [--print-empty]
                             [--noindent] [--quote {all,minimal,none,nonnumeric}]
+                            [--filter FILTERS]
                             [workflow_execution]
 
 List all tasks.
@@ -1214,6 +1255,9 @@ List all tasks.
 
 ``-h, --help``
   show this help message and exit
+
+``--filter FILTERS``
+  Filters. Can be repeated.
 
 .. _mistral_task-rerun:
 
@@ -1510,6 +1554,7 @@ mistral workflow-list
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
+                                [--filter FILTERS]
 
 List all workflows.
 
@@ -1517,6 +1562,9 @@ List all workflows.
 
 ``-h, --help``
   show this help message and exit
+
+``--filter FILTERS``
+  Filters. Can be repeated.
 
 .. _mistral_workflow-update:
 
