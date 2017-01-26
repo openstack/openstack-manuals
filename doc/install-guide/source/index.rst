@@ -93,7 +93,7 @@ or as connected entities.
 Explanations of configuration options and sample configuration files
 are included.
 
-This guide documents the OpenStack Newton release.
+This guide documents the OpenStack Ocata release.
 
 .. warning::
 
