@@ -9,7 +9,7 @@ Image service (glance) command-line client
 The glance client is the command-line interface (CLI) for
 the Image service (glance) API and its extensions.
 
-This chapter documents :command:`glance` version ``2.5.0``.
+This chapter documents :command:`glance` version ``2.6.0``.
 
 For help on a specific :command:`glance` command, enter:
 
@@ -27,25 +27,26 @@ glance usage
    usage: glance [--version] [-d] [-v] [--get-schema] [--no-ssl-compression] [-f]
                  [--os-image-url OS_IMAGE_URL]
                  [--os-image-api-version OS_IMAGE_API_VERSION]
-                 [--profile HMAC_KEY] [--insecure] [--os-cacert <ca-certificate>]
-                 [--os-cert <certificate>] [--os-key <key>] [--timeout <seconds>]
+                 [--profile HMAC_KEY] [--key-file OS_KEY] [--ca-file OS_CACERT]
+                 [--cert-file OS_CERT] [--os-region-name OS_REGION_NAME]
+                 [--os-auth-token OS_AUTH_TOKEN]
+                 [--os-service-type OS_SERVICE_TYPE]
+                 [--os-endpoint-type OS_ENDPOINT_TYPE] [--insecure]
+                 [--os-cacert <ca-certificate>] [--os-cert <certificate>]
+                 [--os-key <key>] [--timeout <seconds>] [--os-auth-type <name>]
                  [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
                  [--os-domain-name OS_DOMAIN_NAME]
                  [--os-project-id OS_PROJECT_ID]
                  [--os-project-name OS_PROJECT_NAME]
                  [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
                  [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
-                 [--os-trust-id OS_TRUST_ID] [--os-user-id OS_USER_ID]
-                 [--os-username OS_USERNAME]
+                 [--os-trust-id OS_TRUST_ID]
+                 [--os-default-domain-id OS_DEFAULT_DOMAIN_ID]
+                 [--os-default-domain-name OS_DEFAULT_DOMAIN_NAME]
+                 [--os-user-id OS_USER_ID] [--os-username OS_USERNAME]
                  [--os-user-domain-id OS_USER_DOMAIN_ID]
                  [--os-user-domain-name OS_USER_DOMAIN_NAME]
-                 [--os-password OS_PASSWORD] [--key-file OS_KEY]
-                 [--ca-file OS_CACERT] [--cert-file OS_CERT]
-                 [--os-tenant-id OS_TENANT_ID] [--os-tenant-name OS_TENANT_NAME]
-                 [--os-region-name OS_REGION_NAME]
-                 [--os-auth-token OS_AUTH_TOKEN]
-                 [--os-service-type OS_SERVICE_TYPE]
-                 [--os-endpoint-type OS_ENDPOINT_TYPE]
+                 [--os-password OS_PASSWORD]
                  <subcommand> ...
 
 .. _glance_command_options:
@@ -109,65 +110,6 @@ glance optional arguments
   profiling will not be triggered even if osprofiler is
   enabled on server side.
 
-``--insecure``
-  Explicitly allow client to perform "insecure" TLS
-  (https) requests. The server's certificate will not be
-  verified against any certificate authorities. This
-  option should be used with caution.
-
-``--os-cacert <ca-certificate>``
-  Specify a CA bundle file to use in verifying a TLS
-  (https) server certificate. Defaults to
-  ``env[OS_CACERT]``.
-
-``--os-cert <certificate>``
-  Defaults to ``env[OS_CERT]``.
-
-``--os-key <key>``
-  Defaults to ``env[OS_KEY]``.
-
-``--timeout <seconds>``
-  Set request timeout (in seconds).
-
-``--os-auth-url OS_AUTH_URL``
-  Authentication URL
-
-``--os-domain-id OS_DOMAIN_ID``
-  Domain ID to scope to
-
-``--os-domain-name OS_DOMAIN_NAME``
-  Domain name to scope to
-
-``--os-project-id OS_PROJECT_ID``
-  Project ID to scope to
-
-``--os-project-name OS_PROJECT_NAME``
-  Project name to scope to
-
-``--os-project-domain-id OS_PROJECT_DOMAIN_ID``
-  Domain ID containing project
-
-``--os-project-domain-name OS_PROJECT_DOMAIN_NAME``
-  Domain name containing project
-
-``--os-trust-id OS_TRUST_ID``
-  Trust ID
-
-``--os-user-id OS_USER_ID``
-  User ID
-
-``--os-username OS_USERNAME, --os-user_name OS_USERNAME``
-  Username
-
-``--os-user-domain-id OS_USER_DOMAIN_ID``
-  User's domain id
-
-``--os-user-domain-name OS_USER_DOMAIN_NAME``
-  User's domain name
-
-``--os-password OS_PASSWORD``
-  User's password
-
 ``--key-file OS_KEY``
   **DEPRECATED!** Use --os-key.
 
@@ -176,12 +118,6 @@ glance optional arguments
 
 ``--cert-file OS_CERT``
   **DEPRECATED!** Use --os-cert.
-
-``--os-tenant-id OS_TENANT_ID``
-  Defaults to ``env[OS_TENANT_ID]``.
-
-``--os-tenant-name OS_TENANT_NAME``
-  Defaults to ``env[OS_TENANT_NAME]``.
 
 ``--os-region-name OS_REGION_NAME``
   Defaults to ``env[OS_REGION_NAME]``.
@@ -194,6 +130,9 @@ glance optional arguments
 
 ``--os-endpoint-type OS_ENDPOINT_TYPE``
   Defaults to ``env[OS_ENDPOINT_TYPE]``.
+
+``--os-auth-type <name>, --os-auth-plugin <name>``
+  Authentication type to use
 
 .. _glance_explain:
 
@@ -257,7 +196,7 @@ Create a new image.
 
 ``--visibility <VISIBILITY>``
   Scope of image accessibility Valid values: public,
-  private
+  private, community, shared
 
 ``--kernel-id <KERNEL_ID>``
   ID of image stored in Glance that should be used as
@@ -272,7 +211,7 @@ Create a new image.
 
 ``--disk-format <DISK_FORMAT>``
   Format of the disk Valid values: None, ami, ari, aki,
-  vhd, vmdk, raw, qcow2, vdi, iso
+  vhd, vhdx, vmdk, raw, qcow2, vdi, iso, ploop
 
 ``--os-distro <OS_DISTRO>``
   Common name of operating system distribution as
@@ -551,7 +490,7 @@ Update an existing image.
 
 ``--visibility <VISIBILITY>``
   Scope of image accessibility Valid values: public,
-  private
+  private, community, shared
 
 ``--kernel-id <KERNEL_ID>``
   ID of image stored in Glance that should be used as
@@ -563,7 +502,7 @@ Update an existing image.
 
 ``--disk-format <DISK_FORMAT>``
   Format of the disk Valid values: None, ami, ari, aki,
-  vhd, vmdk, raw, qcow2, vdi, iso
+  vhd, vhdx, vmdk, raw, qcow2, vdi, iso, ploop
 
 ``--os-distro <OS_DISTRO>``
   Common name of operating system distribution as
