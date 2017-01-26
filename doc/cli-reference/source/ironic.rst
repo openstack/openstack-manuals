@@ -9,7 +9,7 @@ Bare Metal service (ironic) command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service (ironic) API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.9.0``.
+This chapter documents :command:`ironic` version ``1.11.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -82,6 +82,9 @@ ironic usage
 
 ``node-get-vendor-passthru-methods``
   Get the vendor passthru methods for a node.
+
+``node-inject-nmi``
+  Inject NMI to a node.
 
 ``node-list``
   List the nodes which are registered with the Ironic
@@ -184,8 +187,8 @@ ironic usage
   Call a vendor-passthru extension for a driver.
 
 ``create``
-  Create baremetal resources (chassis, nodes, and
-  ports).
+  Create baremetal resources (chassis, nodes, port
+  groups and ports).
 
 ``bash-completion``
   Prints all of the commands and options for bash-completion.
@@ -478,11 +481,11 @@ ironic create
 
    usage: ironic create <file> [<file> ...]
 
-Create baremetal resources (chassis, nodes, and ports). The resources may be
-described in one or more JSON or YAML files. If any file cannot be validated,
-no resources are created. An attempt is made to create all the resources;
-those that could not be created are skipped (with a corresponding error
-message).
+Create baremetal resources (chassis, nodes, port groups and ports). The
+resources may be described in one or more JSON or YAML files. If any file
+cannot be validated, no resources are created. An attempt is made to create
+all the resources; those that could not be created are skipped (with a
+corresponding error message).
 
 **Positional arguments:**
 
@@ -739,6 +742,22 @@ Get the vendor passthru methods for a node.
 ``<node>``
   Name or UUID of the node.
 
+.. _ironic_node-inject-nmi:
+
+ironic node-inject-nmi
+----------------------
+
+.. code-block:: console
+
+   usage: ironic node-inject-nmi <node>
+
+Inject NMI to a node.
+
+**Positional arguments:**
+
+``<node>``
+  Name or UUID of the node.
+
 .. _ironic_node-list:
 
 ironic node-list
@@ -916,7 +935,8 @@ ironic node-set-power-state
 
 .. code-block:: console
 
-   usage: ironic node-set-power-state <node> <power-state>
+   usage: ironic node-set-power-state [--soft] [--power-timeout <power-timeout>]
+                                      <node> <power-state>
 
 Power a node on or off or reboot.
 
@@ -927,6 +947,16 @@ Power a node on or off or reboot.
 
 ``<power-state>``
   'on', 'off', or 'reboot'.
+
+**Optional arguments:**
+
+``--soft``
+  Gracefully change the power state. Only valid for
+  'off' and 'reboot' power states.
+
+``--power-timeout <power-timeout>``
+  Timeout (in seconds, positive integer) to wait for the
+  target power state before erroring out.
 
 .. _ironic_node-set-provision-state:
 
@@ -1125,7 +1155,7 @@ ironic node-vif-attach
 
 .. code-block:: console
 
-   usage: ironic node-vif-attach <node> <vif-id>
+   usage: ironic node-vif-attach [--vif-info <key=value>] <node> <vif-id>
 
 Attach VIF to a given node.
 
@@ -1136,6 +1166,13 @@ Attach VIF to a given node.
 
 ``<vif-id>``
   Name or UUID of the VIF to attach to node.
+
+**Optional arguments:**
+
+``--vif-info <key=value>``
+  Record arbitrary key/value metadata. Can be specified
+  multiple times. The mandatory 'id' parameter cannot be
+  specified as a key.
 
 .. _ironic_node-vif-detach:
 
