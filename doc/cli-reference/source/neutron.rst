@@ -9,7 +9,7 @@ Networking service (neutron) command-line client
 The neutron client is the command-line interface (CLI) for
 the Networking service (neutron) API and its extensions.
 
-This chapter documents :command:`neutron` version ``6.0.0``.
+This chapter documents :command:`neutron` version ``6.1.0``.
 
 For help on a specific :command:`neutron` command, enter:
 
@@ -4158,10 +4158,10 @@ Remove a mapping from a health monitor to a pool.
 **Positional arguments:**
 
 ``HEALTH_MONITOR_ID``
-  Health monitor to associate.
+  Health monitor to disassociate.
 
 ``POOL``
-  ID of the pool to be associated with the health
+  ID of the pool to be disassociated with the health
   monitor.
 
 **Optional arguments:**
@@ -5705,7 +5705,7 @@ LBaaS v2 Create a listener.
 
 ``--connection-limit CONNECTION_LIMIT``
   The maximum number of connections per second allowed
-  for the vip. Positive integer or -1 for unlimited
+  for the listener. Positive integer or -1 for unlimited
   (default).
 
 ``--default-pool DEFAULT_POOL``
@@ -5891,7 +5891,7 @@ LBaaS v2 Update a given listener.
 
 ``--connection-limit CONNECTION_LIMIT``
   The maximum number of connections per second allowed
-  for the vip. Positive integer or -1 for unlimited
+  for the listener. Positive integer or -1 for unlimited
   (default).
 
 ``--default-pool DEFAULT_POOL``
@@ -6610,10 +6610,10 @@ neutron lbaas-pool-update
 
    usage: neutron lbaas-pool-update [-h] [--request-format {json}]
                                     [--admin-state-up {True,False}]
-                                    [--session-persistence type=TYPE[,cookie_name=COOKIE_NAME]]
+                                    [--session-persistence type=TYPE[,cookie_name=COOKIE_NAME]
+                                    | --no-session-persistence]
                                     [--description DESCRIPTION] [--name NAME]
-                                    --lb-algorithm
-                                    {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}
+                                    [--lb-algorithm {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}]
                                     POOL
 
 LBaaS v2 Update a given pool.
@@ -6639,6 +6639,9 @@ LBaaS v2 Update a given pool.
   type=TYPE[,cookie_name=COOKIE_NAME]
   The type of session persistence to use and associated
   cookie name.
+
+``--no-session-persistence``
+  Clear session persistence for the pool.
 
 ``--description DESCRIPTION``
   Description of the pool.
@@ -6823,7 +6826,7 @@ Delete a given metering label.
 **Positional arguments:**
 
 ``METERING_LABEL_RULE``
-  ID(s) or name(s) of metering_label_rule to delete.
+  ID(s) of metering_label_rule to delete.
 
 **Optional arguments:**
 
@@ -6901,7 +6904,7 @@ Show information of a given metering label rule.
 **Positional arguments:**
 
 ``METERING_LABEL_RULE``
-  ID or name of metering_label_rule to look up.
+  ID of metering_label_rule to look up.
 
 **Optional arguments:**
 
@@ -8674,6 +8677,7 @@ neutron quota-update
                                [--health-monitor health_monitors]
                                [--loadbalancer loadbalancers]
                                [--listener listeners]
+                               [--rbac-policy rbac_policies]
 
 Define tenant's quotas not to use defaults.
 
@@ -8732,6 +8736,10 @@ Define tenant's quotas not to use defaults.
 
 ``--listener``
   listeners  The limit of listeners.
+
+``--rbac-policy``
+  rbac_policies
+  The limit of RBAC policies.
 
 .. _neutron_rbac-create:
 
@@ -9024,7 +9032,7 @@ neutron router-gateway-set
 .. code-block:: console
 
    usage: neutron router-gateway-set [-h] [--request-format {json}]
-                                     [--disable-snat]
+                                     [--enable-snat] [--disable-snat]
                                      [--fixed-ip subnet_id=SUBNET,ip_address=IP_ADDR]
                                      ROUTER EXTERNAL-NETWORK
 
@@ -9045,6 +9053,9 @@ Set the external network gateway for a router.
 
 ``--request-format {json}``
   **DEPRECATED!** Only JSON request format is supported.
+
+``--enable-snat``
+  Enable source NAT on the router gateway.
 
 ``--disable-snat``
   Disable source NAT on the router gateway.
@@ -10551,7 +10562,7 @@ neutron vpn-ikepolicy-create
                                        [--request-format {json}]
                                        [--tenant-id TENANT_ID]
                                        [--description DESCRIPTION]
-                                       [--auth-algorithm AUTH_ALGORITHM]
+                                       [--auth-algorithm {sha1,sha256,sha384,sha512}]
                                        [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                        [--phase1-negotiation-mode {main}]
                                        [--ike-version {v1,v2}] [--pfs PFS]
@@ -10579,7 +10590,7 @@ Create an IKE policy.
 ``--description DESCRIPTION``
   Description of the IKE policy.
 
-``--auth-algorithm AUTH_ALGORITHM``
+``--auth-algorithm {sha1,sha256,sha384,sha512}``
   Authentication algorithm, default:sha1.
 
 ``--encryption-algorithm ENCRYPTION_ALGORITHM``
@@ -10717,7 +10728,7 @@ neutron vpn-ikepolicy-update
 
    usage: neutron vpn-ikepolicy-update [-h] [--request-format {json}]
                                        [--name NAME] [--description DESCRIPTION]
-                                       [--auth-algorithm AUTH_ALGORITHM]
+                                       [--auth-algorithm {sha1,sha256,sha384,sha512}]
                                        [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                        [--phase1-negotiation-mode {main}]
                                        [--ike-version {v1,v2}] [--pfs PFS]
@@ -10745,7 +10756,7 @@ Update a given IKE policy.
 ``--description DESCRIPTION``
   Description of the IKE policy.
 
-``--auth-algorithm AUTH_ALGORITHM``
+``--auth-algorithm {sha1,sha256,sha384,sha512}``
   Authentication algorithm, default:sha1.
 
 ``--encryption-algorithm ENCRYPTION_ALGORITHM``
@@ -10780,7 +10791,7 @@ neutron vpn-ipsecpolicy-create
                                          [--prefix PREFIX]
                                          [--request-format {json}]
                                          [--tenant-id TENANT_ID]
-                                         [--auth-algorithm AUTH_ALGORITHM]
+                                         [--auth-algorithm {sha1,sha256,sha384,sha512}]
                                          [--description DESCRIPTION]
                                          [--encapsulation-mode {tunnel,transport}]
                                          [--encryption-algorithm ENCRYPTION_ALGORITHM]
@@ -10807,7 +10818,7 @@ Create an IPsec policy.
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
-``--auth-algorithm AUTH_ALGORITHM``
+``--auth-algorithm {sha1,sha256,sha384,sha512}``
   Authentication algorithm for IPsec policy,
   default:sha1.
 
@@ -10952,7 +10963,7 @@ neutron vpn-ipsecpolicy-update
 
    usage: neutron vpn-ipsecpolicy-update [-h] [--request-format {json}]
                                          [--name NAME]
-                                         [--auth-algorithm AUTH_ALGORITHM]
+                                         [--auth-algorithm {sha1,sha256,sha384,sha512}]
                                          [--description DESCRIPTION]
                                          [--encapsulation-mode {tunnel,transport}]
                                          [--encryption-algorithm ENCRYPTION_ALGORITHM]
@@ -10979,7 +10990,7 @@ Update a given IPsec policy.
 ``--name NAME``
   Updated name of the IPsec policy.
 
-``--auth-algorithm AUTH_ALGORITHM``
+``--auth-algorithm {sha1,sha256,sha384,sha512}``
   Authentication algorithm for IPsec policy,
   default:sha1.
 
