@@ -9,7 +9,7 @@ Shared File Systems service (manila) command-line client
 The manila client is the command-line interface (CLI) for
 the Shared File Systems service (manila) API and its extensions.
 
-This chapter documents :command:`manila` version ``1.11.0``.
+This chapter documents :command:`manila` version ``1.13.0``.
 
 For help on a specific :command:`manila` command, enter:
 
@@ -62,51 +62,8 @@ manila usage
 ``api-version``
   Display the API version information.
 
-``cg-create``
-  Creates a new consistency group (Experimental).
-
-``cg-delete``
-  Remove one or more consistency groups (Experimental).
-
-``cg-list``
-  List consistency groups with filters (Experimental).
-
-``cg-reset-state``
-  Explicitly update the state of a consistency group
-  (Admin only, Experimental).
-
-``cg-show``
-  Show details about a consistency group (Experimental).
-
-``cg-snapshot-create``
-  Creates a new consistency group snapshot
-  (Experimental).
-
-``cg-snapshot-delete``
-  Remove one or more consistency group snapshots
-  (Experimental).
-
-``cg-snapshot-list``
-  List consistency group snapshots with filters
-  (Experimental).
-
-``cg-snapshot-members``
-  Get member details for a consistency group snapshot
-  (Experimental).
-
-``cg-snapshot-reset-state``
-  Explicitly update the state of a consistency group
-  (Admin only, Experimental).
-
-``cg-snapshot-show``
-  Show details about a consistency group snapshot
-  (Experimental).
-
-``cg-snapshot-update``
-  Update a consistency group snapshot (Experimental).
-
-``cg-update``
-  Update a consistency group (Experimental).
+``availability-zone-list``
+  List all availability zones.
 
 ``create``
   Creates a new share (NFS, CIFS, CephFS, GlusterFS or
@@ -197,11 +154,14 @@ manila usage
   Explicitly update the task state of a share (Admin
   only, Experimental).
 
+``revert-to-snapshot``
+  Revert a share to the specified snapshot.
+
 ``security-service-create``
   Create security service used by tenant.
 
 ``security-service-delete``
-  Delete security service.
+  Delete one or more security services.
 
 ``security-service-list``
   Get a list of security services.
@@ -229,6 +189,79 @@ manila usage
 ``share-export-location-show``
   Show export location of the share.
 
+``share-group-create``
+  Creates a new share group (Experimental).
+
+``share-group-delete``
+  Remove one or more share groups (Experimental).
+
+``share-group-list``
+  List share groups with filters (Experimental).
+
+``share-group-reset-state``
+  Explicitly update the state of a share group (Admin
+  only, Experimental).
+
+``share-group-show``
+  Show details about a share group (Experimental).
+
+``share-group-snapshot-create``
+  Creates a new share group snapshot (Experimental).
+
+``share-group-snapshot-delete``
+  Remove one or more share group snapshots
+  (Experimental).
+
+``share-group-snapshot-list``
+  List share group snapshots with filters
+  (Experimental).
+
+``share-group-snapshot-list-members``
+  List members of a share group snapshot (Experimental).
+
+``share-group-snapshot-reset-state``
+  Explicitly update the state of a share group snapshot
+  (Admin only, Experimental).
+
+``share-group-snapshot-show``
+  Show details about a share group snapshot
+  (Experimental).
+
+``share-group-snapshot-update``
+  Update a share group snapshot (Experimental).
+
+``share-group-type-access-add``
+  Adds share group type access for the given project
+  (Admin only).
+
+``share-group-type-access-list``
+  Print access information about a share group type
+  (Admin only).
+
+``share-group-type-access-remove``
+  Removes share group type access for the given project
+  (Admin only).
+
+``share-group-type-create``
+  Create a new share group type (Admin only).
+
+``share-group-type-delete``
+  Delete a specific share group type (Admin only).
+
+``share-group-type-key``
+  Set or unset group_spec for a share group type (Admin
+  only).
+
+``share-group-type-list``
+  Print a list of available 'share group types'.
+
+``share-group-type-specs-list``
+  Print a list of 'share group types specs' (Admin
+  Only).
+
+``share-group-update``
+  Update a share group (Experimental).
+
 ``share-instance-export-location-list``
   List export locations of a given share instance.
 
@@ -253,7 +286,7 @@ manila usage
   Create description for network used by the tenant.
 
 ``share-network-delete``
-  Delete share network.
+  Delete one or more share networks.
 
 ``share-network-list``
   Get a list of network info.
@@ -303,7 +336,7 @@ manila usage
   Show details about a replica (Experimental).
 
 ``share-server-delete``
-  Delete share server (Admin only).
+  Delete one or more share servers (Admin only).
 
 ``share-server-details``
   Show share server details (Admin only).
@@ -320,15 +353,36 @@ manila usage
 ``shrink``
   Decreases the size of an existing share.
 
+``snapshot-access-allow``
+  Allow read only access to a snapshot.
+
+``snapshot-access-deny``
+  Deny access to a snapshot.
+
+``snapshot-access-list``
+  Show access list for a snapshot.
+
 ``snapshot-create``
   Add a new snapshot.
 
 ``snapshot-delete``
-  Remove a snapshot.
+  Remove one or more snapshots.
+
+``snapshot-export-location-list``
+  List export locations of a given snapshot.
+
+``snapshot-export-location-show``
+  Show export location of the share snapshot.
 
 ``snapshot-force-delete``
-  Attempt force-delete of snapshot, regardless of state
-  (Admin only).
+  Attempt force-deletion of one or more snapshots.
+  Regardless of the state (Admin only).
+
+``snapshot-instance-export-location-list``
+  List export locations of a given snapshot instance.
+
+``snapshot-instance-export-location-show``
+  Show export location of the share instance snapshot.
 
 ``snapshot-instance-list``
   List share snapshot instances.
@@ -376,7 +430,7 @@ manila usage
   Create a new share type (Admin only).
 
 ``type-delete``
-  Delete a specific share type (Admin only).
+  Delete one or more specific share types (Admin only).
 
 ``type-key``
   Set or unset extra_spec for a share type (Admin only).
@@ -592,325 +646,22 @@ manila api-version
 
 Display the API version information.
 
-.. _manila_cg-create:
+.. _manila_availability-zone-list:
 
-manila cg-create
-----------------
-
-.. code-block:: console
-
-   usage: manila cg-create [--name <name>] [--description <description>]
-                           [--share-types <share_types>]
-                           [--share-network <share_network>]
-                           [--source-cgsnapshot-id <source_cgsnapshot_id>]
-
-Creates a new consistency group (Experimental).
-
-**Optional arguments:**
-
-``--name <name>``
-  Optional consistency group name. (Default=None)
-
-``--description <description>``
-  Optional consistency group description. (Default=None)
-
-``--share-types <share_types>, --share_types <share_types>``
-  Optional list of share types. (Default=None)
-
-``--share-network <share_network>, --share_network <share_network>``
-  Specify share-network name or id.
-
-``--source-cgsnapshot-id <source_cgsnapshot_id>, --source_cgsnapshot_id <source_cgsnapshot_id>``
-  Optional snapshot ID to create the share from.
-  (Default=None)
-
-.. _manila_cg-delete:
-
-manila cg-delete
-----------------
+manila availability-zone-list
+-----------------------------
 
 .. code-block:: console
 
-   usage: manila cg-delete [--force]
-                           <consistency_group> [<consistency_group> ...]
+   usage: manila availability-zone-list [--columns <columns>]
 
-Remove one or more consistency groups (Experimental).
-
-**Positional arguments:**
-
-``<consistency_group>``
-  Name or ID of the consistency group(s).
+List all availability zones.
 
 **Optional arguments:**
-
-``--force``
-  Attempt to force delete the consistency group
-  (Default=False) (Admin only).
-
-.. _manila_cg-list:
-
-manila cg-list
---------------
-
-.. code-block:: console
-
-   usage: manila cg-list [--all-tenants [<0|1>]] [--limit <limit>]
-                         [--offset <offset>] [--columns <columns>]
-
-List consistency groups with filters (Experimental).
-
-**Optional arguments:**
-
-``--all-tenants [<0|1>]``
-  Display information from all tenants (Admin only).
-
-``--limit <limit>``
-  Maximum number of consistency groups to return.
-  (Default=None)
-
-``--offset <offset>``
-  Start position of consistency group listing.
 
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
   --columns "id,name"
-
-.. _manila_cg-reset-state:
-
-manila cg-reset-state
----------------------
-
-.. code-block:: console
-
-   usage: manila cg-reset-state [--state <state>] <consistency_group>
-
-Explicitly update the state of a consistency group (Admin only, Experimental).
-
-**Positional arguments:**
-
-``<consistency_group>``
-  Name or ID of the consistency group state to modify.
-
-**Optional arguments:**
-
-``--state <state>``
-  Indicate which state to assign the consistency group.
-  Options include available, error, creating, deleting,
-  error_deleting. If no state is provided, available will
-  be used.
-
-.. _manila_cg-show:
-
-manila cg-show
---------------
-
-.. code-block:: console
-
-   usage: manila cg-show <consistency_group>
-
-Show details about a consistency group (Experimental).
-
-**Positional arguments:**
-
-``<consistency_group>``
-  Name or ID of the consistency group.
-
-.. _manila_cg-snapshot-create:
-
-manila cg-snapshot-create
--------------------------
-
-.. code-block:: console
-
-   usage: manila cg-snapshot-create [--name <name>] [--description <description>]
-                                    <consistency_group>
-
-Creates a new consistency group snapshot (Experimental).
-
-**Positional arguments:**
-
-``<consistency_group>``
-  Name or ID of the consistency group.
-
-**Optional arguments:**
-
-``--name <name>``
-  Optional consistency group snapshot name.
-  (Default=None)
-
-``--description <description>``
-  Optional consistency group snapshot description.
-  (Default=None)
-
-.. _manila_cg-snapshot-delete:
-
-manila cg-snapshot-delete
--------------------------
-
-.. code-block:: console
-
-   usage: manila cg-snapshot-delete [--force] <cg_snapshot> [<cg_snapshot> ...]
-
-Remove one or more consistency group snapshots (Experimental).
-
-**Positional arguments:**
-
-``<cg_snapshot>``
-  Name or ID of the consistency group snapshot.
-
-**Optional arguments:**
-
-``--force``
-  Attempt to force delete the cg snapshot(s) (Default=False)
-  (Admin only).
-
-.. _manila_cg-snapshot-list:
-
-manila cg-snapshot-list
------------------------
-
-.. code-block:: console
-
-   usage: manila cg-snapshot-list [--all-tenants [<0|1>]] [--limit <limit>]
-                                  [--offset <offset>] [--detailed DETAILED]
-                                  [--columns <columns>]
-
-List consistency group snapshots with filters (Experimental).
-
-**Optional arguments:**
-
-``--all-tenants [<0|1>]``
-  Display information from all tenants (Admin only).
-
-``--limit <limit>``
-  Maximum number of consistency group snapshots to
-  return.(Default=None)
-
-``--offset <offset>``
-  Start position of consistency group snapshot listing.
-
-``--detailed DETAILED``
-  Show detailed information about snapshots.
-
-``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
-
-.. _manila_cg-snapshot-members:
-
-manila cg-snapshot-members
---------------------------
-
-.. code-block:: console
-
-   usage: manila cg-snapshot-members [--limit <limit>] [--offset <offset>]
-                                     <cg_snapshot>
-
-Get member details for a consistency group snapshot (Experimental).
-
-**Positional arguments:**
-
-``<cg_snapshot>``
-  Name or ID of the consistency group snapshot.
-
-**Optional arguments:**
-
-``--limit <limit>``
-  Maximum number of shares to return. (Default=None)
-
-``--offset <offset>``
-  Start position of security services listing.
-
-.. _manila_cg-snapshot-reset-state:
-
-manila cg-snapshot-reset-state
-------------------------------
-
-.. code-block:: console
-
-   usage: manila cg-snapshot-reset-state [--state <state>] <cg_snapshot>
-
-Explicitly update the state of a consistency group (Admin only, Experimental).
-
-**Positional arguments:**
-
-``<cg_snapshot>``
-  Name or ID of the consistency group snapshot.
-
-**Optional arguments:**
-
-``--state <state>``
-  Indicate which state to assign the consistency group.
-  Options include available, error, creating, deleting,
-  error_deleting. If no state is provided, available will be
-  used.
-
-.. _manila_cg-snapshot-show:
-
-manila cg-snapshot-show
------------------------
-
-.. code-block:: console
-
-   usage: manila cg-snapshot-show <cg_snapshot>
-
-Show details about a consistency group snapshot (Experimental).
-
-**Positional arguments:**
-
-``<cg_snapshot>``
-  Name or ID of the consistency group snapshot.
-
-.. _manila_cg-snapshot-update:
-
-manila cg-snapshot-update
--------------------------
-
-.. code-block:: console
-
-   usage: manila cg-snapshot-update [--name <name>] [--description <description>]
-                                    <cg_snapshot>
-
-Update a consistency group snapshot (Experimental).
-
-**Positional arguments:**
-
-``<cg_snapshot>``
-  Name or ID of the cg snapshot to update.
-
-**Optional arguments:**
-
-``--name <name>``
-  Optional new name for the cg snapshot. (Default=None
-
-``--description <description>``
-  Optional cg snapshot description. (Default=None)
-
-.. _manila_cg-update:
-
-manila cg-update
-----------------
-
-.. code-block:: console
-
-   usage: manila cg-update [--name <name>] [--description <description>]
-                           <consistency_group>
-
-Update a consistency group (Experimental).
-
-**Positional arguments:**
-
-``<consistency_group>``
-  Name or ID of the consistency group to update.
-
-**Optional arguments:**
-
-``--name <name>``
-  Optional new name for the consistency group.
-  (Default=None)
-
-``--description <description>``
-  Optional consistency group description. (Default=None)
 
 .. _manila_create:
 
@@ -924,7 +675,7 @@ manila create
                         [--share-network <network-info>]
                         [--description <description>] [--share-type <share-type>]
                         [--public] [--availability-zone <availability-zone>]
-                        [--consistency-group <consistency-group>]
+                        [--share-group <share-group>]
                         <share_protocol> <size>
 
 Creates a new share (NFS, CIFS, CephFS, GlusterFS or HDFS).
@@ -932,7 +683,7 @@ Creates a new share (NFS, CIFS, CephFS, GlusterFS or HDFS).
 **Positional arguments:**
 
 ``<share_protocol>``
-  Share type (NFS, CIFS, CephFS, GlusterFS or HDFS).
+  Share protocol (NFS, CIFS, CephFS, GlusterFS or HDFS).
 
 ``<size>``
   Share size in GiB.
@@ -966,9 +717,9 @@ Creates a new share (NFS, CIFS, CephFS, GlusterFS or HDFS).
 ``--availability-zone <availability-zone>, --availability_zone <availability-zone>, --az <availability-zone>``
   Availability zone in which share should be created.
 
-``--consistency-group <consistency-group>, --consistency_group <consistency-group>, --cg <consistency-group>``
-  Optional consistency group name or ID in which to
-  create the share (Experimental, Default=None).
+``--share-group <share-group>, --share_group <share-group>, --group <share-group>``
+  Optional share group name or ID in which to create the
+  share (Experimental, Default=None).
 
 .. _manila_credentials:
 
@@ -988,8 +739,7 @@ manila delete
 
 .. code-block:: console
 
-   usage: manila delete [--consistency-group <consistency-group>]
-                        <share> [<share> ...]
+   usage: manila delete [--share-group <share-group>] <share> [<share> ...]
 
 Remove one or more shares.
 
@@ -1000,9 +750,9 @@ Remove one or more shares.
 
 **Optional arguments:**
 
-``--consistency-group <consistency-group>, --consistency_group <consistency-group>, --cg <consistency-group>``
-  Optional consistency group name or ID which contains
-  the share (Experimental, Default=None).
+``--share-group <share-group>, --share_group <share-group>, --group <share-group>``
+  Optional share group name or ID which contains the
+  share (Experimental, Default=None).
 
 .. _manila_endpoints:
 
@@ -1083,8 +833,7 @@ manila list
                       [--sort-dir <sort_dir>] [--snapshot <snapshot>]
                       [--host <host>] [--share-network <share_network>]
                       [--project-id <project_id>] [--public]
-                      [--consistency-group <consistency_group>]
-                      [--columns <columns>]
+                      [--share-group <share_group>] [--columns <columns>]
 
 List NAS shares with filters.
 
@@ -1153,8 +902,8 @@ List NAS shares with filters.
 ``--public``
   Add public shares from all tenants to result.
 
-``--consistency-group <consistency_group>, --consistency_group <consistency_group>, --cg <consistency_group>``
-  Filter results by consistency group name or ID
+``--share-group <share_group>, --share_group <share_group>, --group <share_group>``
+  Filter results by share group name or ID
   (Experimental, Default=None).
 
 ``--columns <columns>``
@@ -1335,9 +1084,9 @@ manila migration-start
 .. code-block:: console
 
    usage: manila migration-start [--force_host_assisted_migration <True|False>]
-                                 [--preserve-metadata <True|False>]
-                                 [--writable <True|False>]
-                                 [--non-disruptive <True|False>]
+                                 --preserve-metadata <True|False>
+                                 --preserve-snapshots <True|False> --writable
+                                 <True|False> --nondisruptive <True|False>
                                  [--new_share_network <new_share_network>]
                                  [--new_share_type <new_share_type>]
                                  <share> <host@backend#pool>
@@ -1350,47 +1099,56 @@ Migrates share to a new host (Admin only, Experimental).
   Name or ID of share to migrate.
 
 ``<host@backend#pool>``
-  Destination host, backend and pool in format
-  'host@backend#pool'.
+  Destination host where share will be migrated to. Use
+  the format 'host@backend#pool'.
 
 **Optional arguments:**
 
 ``--force_host_assisted_migration <True|False>, --force-host-assisted-migration <True|False>``
-  Enables
-  or
-  disables
-  generic
-  host-based
-  force-migration,
-  which
-  bypasses
-  driver
-  optimizations.
-  Default=False. Renamed from "force_host_copy" in
-  version 2.22.
+  Enforces the use of the host-assisted migration
+  approach, which bypasses driver optimizations.
+  Default=False.
 
 ``--preserve-metadata <True|False>, --preserve_metadata <True|False>``
-  Chooses whether migration should be forced to preserve
-  all file metadata when moving its contents.
-  Default=True. Introduced in version 2.22.
+  Enforces migration to preserve all file metadata when
+  moving its contents. If set to True, host-assisted
+  migration will not be attempted.
+
+``--preserve-snapshots <True|False>, --preserve_snapshots <True|False>``
+  Enforces migration of the share snapshots to the
+  destination. If set to True, host-assisted migration
+  will not be attempted.
 
 ``--writable <True|False>``
-  Chooses whether migration should be forced to remain
-  writable while contents are being moved. Default=True.
-  Introduced in version 2.22.
+  Enforces migration to keep the share writable while
+  contents
+  are
+  being
+  moved.
+  If
+  set
+  to
+  True,
+  host-assisted
+  migration
+  will
+  not
+  be
+  attempted.
 
-``--non-disruptive <True|False>, --non_disruptive <True|False>``
-  Chooses whether migration should only be performed if
-  it is not disruptive. Default=False. Introduced in
-  version 2.22.
+``--nondisruptive <True|False>``
+  Enforces migration to be nondisruptive. If set to
+  True, host-assisted migration will not be attempted.
 
 ``--new_share_network <new_share_network>, --new-share-network <new_share_network>``
-  Specifies a new share network if desired to change.
-  Default=None. Introduced in version 2.22.
+  Specify the new share network for the share. Do not
+  specify this parameter if the migrating share has to
+  be retained within its current share network.
 
 ``--new_share_type <new_share_type>, --new-share-type <new_share_type>``
-  Specifies a new share type if desired to change.
-  Default=None. Introduced in version 2.22.
+  Specify the new share type for the share. Do not
+  specify this parameter if the migrating share has to
+  be retained with its current share type.
 
 .. _manila_pool-list:
 
@@ -1400,7 +1158,8 @@ manila pool-list
 .. code-block:: console
 
    usage: manila pool-list [--host <host>] [--backend <backend>] [--pool <pool>]
-                           [--columns <columns>]
+                           [--columns <columns>] [--detail]
+                           [--share-type <share_type>]
 
 List all backend storage pools known to the scheduler (Admin only).
 
@@ -1411,8 +1170,8 @@ List all backend storage pools known to the scheduler (Admin only).
   supported.
 
 ``--backend <backend>``
-  Filter results by backend name. Regular expressions are
-  supported.
+  Filter results by backend name. Regular expressions
+  are supported.
 
 ``--pool <pool>``
   Filter results by pool name. Regular expressions are
@@ -1421,6 +1180,13 @@ List all backend storage pools known to the scheduler (Admin only).
 ``--columns <columns>``
   Comma separated list of columns to be displayed e.g.
   --columns "name,host"
+
+``--detail, --detailed``
+  Show detailed information about pools. (Default=False)
+
+``--share-type <share_type>, --share_type <share_type>, --share-type-id <share_type>, --share_type_id <share_type>``
+  Filter results by share type name or ID.
+  (Default=None)Available only for microversion >= 2.23
 
 .. _manila_quota-class-show:
 
@@ -1518,7 +1284,7 @@ manila quota-show
 
 .. code-block:: console
 
-   usage: manila quota-show [--tenant <tenant-id>] [--user <user-id>]
+   usage: manila quota-show [--tenant <tenant-id>] [--user <user-id>] [--detail]
 
 List the quotas for a tenant/user.
 
@@ -1529,6 +1295,11 @@ List the quotas for a tenant/user.
 
 ``--user <user-id>``
   ID of user to list the quotas for.
+
+``--detail``
+  Optional flag to indicate whether to show quota in
+  detail. Default false, available only for microversion
+  >= 2.25.
 
 .. _manila_quota-update:
 
@@ -1644,6 +1415,23 @@ Explicitly update the task state of a share (Admin only, Experimental).
   data_copying_error. If no value is provided, None will
   be used.
 
+.. _manila_revert-to-snapshot:
+
+manila revert-to-snapshot
+-------------------------
+
+.. code-block:: console
+
+   usage: manila revert-to-snapshot <snapshot>
+
+Revert a share to the specified snapshot.
+
+**Positional arguments:**
+
+``<snapshot>``
+  Name or ID of the snapshot to restore. The snapshot must be the
+  most recent one known to manila.
+
 .. _manila_security-service-create:
 
 manila security-service-create
@@ -1696,13 +1484,14 @@ manila security-service-delete
 .. code-block:: console
 
    usage: manila security-service-delete <security-service>
+                                         [<security-service> ...]
 
-Delete security service.
+Delete one or more security services.
 
 **Positional arguments:**
 
 ``<security-service>``
-  Security service name or ID to delete.
+  Name or ID of the security service(s) to delete
 
 .. _manila_security-service-list:
 
@@ -1939,6 +1728,566 @@ Show export location of the share.
 ``<export_location>``
   ID of the share export location.
 
+.. _manila_share-group-create:
+
+manila share-group-create
+-------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-create [--name <name>] [--description <description>]
+                                    [--share-types <share_types>]
+                                    [--share-group-type <share_group_type>]
+                                    [--share-network <share_network>]
+                                    [--source-share-group-snapshot <source_share_group_snapshot>]
+                                    [--availability-zone <availability-zone>]
+
+Creates a new share group (Experimental).
+
+**Optional arguments:**
+
+``--name <name>``
+  Optional share group name. (Default=None)
+
+``--description <description>``
+  Optional share group description. (Default=None)
+
+``--share-types <share_types>, --share_types <share_types>``
+  Comma-separated list of share types. (Default=None)
+
+``--share-group-type <share_group_type>, --share_group_type <share_group_type>, --type <share_group_type>``
+  Share group type name or ID of the share group to be
+  created. (Default=None)
+
+``--share-network <share_network>, --share_network <share_network>``
+  Specify share network name or id.
+
+``--source-share-group-snapshot <source_share_group_snapshot>, --source_share_group_snapshot <source_share_group_snapshot>``
+  Optional share group snapshot name or ID to create the
+  share group from. (Default=None)
+
+``--availability-zone <availability-zone>, --availability_zone <availability-zone>, --az <availability-zone>``
+  Optional availability zone in which group should be
+  created. (Default=None
+
+.. _manila_share-group-delete:
+
+manila share-group-delete
+-------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-delete [--force] <share_group> [<share_group> ...]
+
+Remove one or more share groups (Experimental).
+
+**Positional arguments:**
+
+``<share_group>``
+  Name or ID of the share_group(s).
+
+**Optional arguments:**
+
+``--force``
+  Attempt to force delete the share group (Default=False)
+  (Admin only).
+
+.. _manila_share-group-list:
+
+manila share-group-list
+-----------------------
+
+.. code-block:: console
+
+   usage: manila share-group-list [--all-tenants [<0|1>]] [--name <name>]
+                                  [--status <status>]
+                                  [--share-server-id <share_server_id>]
+                                  [--share-group-type <share_group_type>]
+                                  [--snapshot <snapshot>] [--host <host>]
+                                  [--share-network <share_network>]
+                                  [--project-id <project_id>] [--limit <limit>]
+                                  [--offset <offset>] [--sort-key <sort_key>]
+                                  [--sort-dir <sort_dir>] [--columns <columns>]
+
+List share groups with filters (Experimental).
+
+**Optional arguments:**
+
+``--all-tenants [<0|1>]``
+  Display information from all tenants (Admin only).
+
+``--name <name>``
+  Filter results by name.
+
+``--status <status>``
+  Filter results by status.
+
+``--share-server-id <share_server_id>, --share-server_id <share_server_id>, --share_server-id <share_server_id>, --share_server_id <share_server_id>``
+  Filter results by share server ID (Admin only).
+
+``--share-group-type <share_group_type>, --share-group-type-id <share_group_type>, --share_group_type <share_group_type>, --share_group_type_id <share_group_type>``
+  Filter results by a share group type ID or name that
+  was used for share group creation.
+
+``--snapshot <snapshot>``
+  Filter results by share group snapshot name or ID that
+  was used to create the share group.
+
+``--host <host>``
+  Filter results by host.
+
+``--share-network <share_network>, --share_network <share_network>``
+  Filter results by share-network name or ID.
+
+``--project-id <project_id>, --project_id <project_id>``
+  Filter results by project ID. Useful with set key
+  '--all-tenants'.
+
+``--limit <limit>``
+  Maximum number of share groups to return.
+  (Default=None)
+
+``--offset <offset>``
+  Start position of share group listing.
+
+``--sort-key <sort_key>, --sort_key <sort_key>``
+  Key to be sorted, available keys are ('id', 'name',
+  'status', 'host', 'user_id', 'project_id',
+  'created_at', 'availability_zone', 'share_network',
+  'share_network_id', 'share_group_type',
+  'share_group_type_id',
+  'source_share_group_snapshot_id'). Default=None.
+
+``--sort-dir <sort_dir>, --sort_dir <sort_dir>``
+  Sort direction, available values are ('asc', 'desc').
+  OPTIONAL: Default=None.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  --columns "id,name"
+
+.. _manila_share-group-reset-state:
+
+manila share-group-reset-state
+------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-reset-state [--state <state>] <share_group>
+
+Explicitly update the state of a share group (Admin only, Experimental).
+
+**Positional arguments:**
+
+``<share_group>``
+  Name or ID of the share group to modify.
+
+**Optional arguments:**
+
+``--state <state>``
+  Indicate which state to assign the share group. Options
+  include available, error, creating, deleting,
+  error_deleting. If no state is provided, available will be
+  used.
+
+.. _manila_share-group-show:
+
+manila share-group-show
+-----------------------
+
+.. code-block:: console
+
+   usage: manila share-group-show <share_group>
+
+Show details about a share group (Experimental).
+
+**Positional arguments:**
+
+``<share_group>``
+  Name or ID of the share group.
+
+.. _manila_share-group-snapshot-create:
+
+manila share-group-snapshot-create
+----------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-snapshot-create [--name <name>]
+                                             [--description <description>]
+                                             <share_group>
+
+Creates a new share group snapshot (Experimental).
+
+**Positional arguments:**
+
+``<share_group>``
+  Name or ID of the share group.
+
+**Optional arguments:**
+
+``--name <name>``
+  Optional share group snapshot name. (Default=None)
+
+``--description <description>``
+  Optional share group snapshot description.
+  (Default=None)
+
+.. _manila_share-group-snapshot-delete:
+
+manila share-group-snapshot-delete
+----------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-snapshot-delete [--force]
+                                             <share_group_snapshot>
+                                             [<share_group_snapshot> ...]
+
+Remove one or more share group snapshots (Experimental).
+
+**Positional arguments:**
+
+``<share_group_snapshot>``
+  Name or ID of the share group snapshot(s) to delete.
+
+**Optional arguments:**
+
+``--force``
+  Attempt to force delete the share group snapshot(s)
+  (Default=False) (Admin only).
+
+.. _manila_share-group-snapshot-list:
+
+manila share-group-snapshot-list
+--------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-snapshot-list [--all-tenants [<0|1>]]
+                                           [--name <name>] [--status <status>]
+                                           [--share-group-id <share_group_id>]
+                                           [--limit <limit>] [--offset <offset>]
+                                           [--sort-key <sort_key>]
+                                           [--sort-dir <sort_dir>]
+                                           [--detailed DETAILED]
+                                           [--columns <columns>]
+
+List share group snapshots with filters (Experimental).
+
+**Optional arguments:**
+
+``--all-tenants [<0|1>]``
+  Display information from all tenants (Admin only).
+
+``--name <name>``
+  Filter results by name.
+
+``--status <status>``
+  Filter results by status.
+
+``--share-group-id <share_group_id>, --share_group_id <share_group_id>``
+  Filter results by share group ID.
+
+``--limit <limit>``
+  Maximum number of share group snapshots to
+  return.(Default=None)
+
+``--offset <offset>``
+  Start position of share group snapshot listing.
+
+``--sort-key <sort_key>, --sort_key <sort_key>``
+  Key to be sorted, available keys are ('id', 'name',
+  'status', 'host', 'user_id', 'project_id',
+  'created_at', 'share_group_id'). Default=None.
+
+``--sort-dir <sort_dir>, --sort_dir <sort_dir>``
+  Sort direction, available values are ('asc', 'desc').
+  OPTIONAL: Default=None.
+
+``--detailed DETAILED``
+  Show detailed information about share group snapshots.
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  --columns "id,name"
+
+.. _manila_share-group-snapshot-list-members:
+
+manila share-group-snapshot-list-members
+----------------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-snapshot-list-members [--columns <columns>]
+                                                   <share_group_snapshot>
+
+List members of a share group snapshot (Experimental).
+
+**Positional arguments:**
+
+``<share_group_snapshot>``
+  Name or ID of the share group snapshot.
+
+**Optional arguments:**
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  --columns "id,name"
+
+.. _manila_share-group-snapshot-reset-state:
+
+manila share-group-snapshot-reset-state
+---------------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-snapshot-reset-state [--state <state>]
+                                                  <share_group_snapshot>
+
+Explicitly update the state of a share group snapshot (Admin only,
+Experimental).
+
+**Positional arguments:**
+
+``<share_group_snapshot>``
+  Name or ID of the share group snapshot.
+
+**Optional arguments:**
+
+``--state <state>``
+  Indicate which state to assign the share group
+  snapshot. Options include available, error, creating,
+  deleting, error_deleting. If no state is provided,
+  available will be used.
+
+.. _manila_share-group-snapshot-show:
+
+manila share-group-snapshot-show
+--------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-snapshot-show <share_group_snapshot>
+
+Show details about a share group snapshot (Experimental).
+
+**Positional arguments:**
+
+``<share_group_snapshot>``
+  Name or ID of the share group snapshot.
+
+.. _manila_share-group-snapshot-update:
+
+manila share-group-snapshot-update
+----------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-snapshot-update [--name <name>]
+                                             [--description <description>]
+                                             <share_group_snapshot>
+
+Update a share group snapshot (Experimental).
+
+**Positional arguments:**
+
+``<share_group_snapshot>``
+  Name or ID of the share group snapshot to update.
+
+**Optional arguments:**
+
+``--name <name>``
+  Optional new name for the share group snapshot.
+  (Default=None
+
+``--description <description>``
+  Optional share group snapshot description.
+  (Default=None)
+
+.. _manila_share-group-type-access-add:
+
+manila share-group-type-access-add
+----------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-type-access-add <share_group_type> <project_id>
+
+Adds share group type access for the given project (Admin only).
+
+**Positional arguments:**
+
+``<share_group_type>``
+  Share group type name or ID to add access for the given
+  project.
+
+``<project_id>``
+  Project ID to add share group type access for.
+
+.. _manila_share-group-type-access-list:
+
+manila share-group-type-access-list
+-----------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-type-access-list <share_group_type>
+
+Print access information about a share group type (Admin only).
+
+**Positional arguments:**
+
+``<share_group_type>``
+  Filter results by share group type name or ID.
+
+.. _manila_share-group-type-access-remove:
+
+manila share-group-type-access-remove
+-------------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-type-access-remove <share_group_type> <project_id>
+
+Removes share group type access for the given project (Admin only).
+
+**Positional arguments:**
+
+``<share_group_type>``
+  Share group type name or ID to remove access for the
+  given project.
+
+``<project_id>``
+  Project ID to remove share group type access for.
+
+.. _manila_share-group-type-create:
+
+manila share-group-type-create
+------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-type-create [--is_public <is_public>]
+                                         <name> <share_types>
+
+Create a new share group type (Admin only).
+
+**Positional arguments:**
+
+``<name>``
+  Name of the new share group type.
+
+``<share_types>``
+  Comma-separated list of share type names or IDs.
+
+**Optional arguments:**
+
+``--is_public <is_public>, --is-public <is_public>``
+  Make type accessible to the public (default true).
+
+.. _manila_share-group-type-delete:
+
+manila share-group-type-delete
+------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-type-delete <id>
+
+Delete a specific share group type (Admin only).
+
+**Positional arguments:**
+
+``<id>``
+  Name or ID of the share group type to delete.
+
+.. _manila_share-group-type-key:
+
+manila share-group-type-key
+---------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-type-key <share_group_type> <action>
+                                      [<key=value> [<key=value> ...]]
+
+Set or unset group_spec for a share group type (Admin only).
+
+**Positional arguments:**
+
+``<share_group_type>``
+  Name or ID of the share group type.
+
+``<action>``
+  Actions: 'set' or 'unset'.
+
+``<key=value>``
+  Group specs to set or unset (key is only necessary on
+  unset).
+
+.. _manila_share-group-type-list:
+
+manila share-group-type-list
+----------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-type-list [--all] [--columns <columns>]
+
+Print a list of available 'share group types'.
+
+**Optional arguments:**
+
+``--all``
+  Display all share group types (Admin only).
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  --columns "id,name"
+
+.. _manila_share-group-type-specs-list:
+
+manila share-group-type-specs-list
+----------------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-type-specs-list [--columns <columns>]
+
+Print a list of 'share group types specs' (Admin Only).
+
+**Optional arguments:**
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  --columns "id,name"
+
+.. _manila_share-group-update:
+
+manila share-group-update
+-------------------------
+
+.. code-block:: console
+
+   usage: manila share-group-update [--name <name>] [--description <description>]
+                                    <share_group>
+
+Update a share group (Experimental).
+
+**Positional arguments:**
+
+``<share_group>``
+  Name or ID of the share group to update.
+
+**Optional arguments:**
+
+``--name <name>``
+  Optional new name for the share group. (Default=None)
+
+``--description <description>``
+  Optional share group description. (Default=None)
+
 .. _manila_share-instance-export-location-list:
 
 manila share-instance-export-location-list
@@ -2065,8 +2414,7 @@ manila share-network-create
 
 .. code-block:: console
 
-   usage: manila share-network-create [--nova-net-id <nova-net-id>]
-                                      [--neutron-net-id <neutron-net-id>]
+   usage: manila share-network-create [--neutron-net-id <neutron-net-id>]
                                       [--neutron-subnet-id <neutron-subnet-id>]
                                       [--name <name>]
                                       [--description <description>]
@@ -2074,9 +2422,6 @@ manila share-network-create
 Create description for network used by the tenant.
 
 **Optional arguments:**
-
-``--nova-net-id <nova-net-id>, --nova-net_id <nova-net-id>, --nova_net_id <nova-net-id>, --nova_net-id <nova-net-id>``
-  Nova net ID. Used to set up network for share servers.
 
 ``--neutron-net-id <neutron-net-id>, --neutron-net_id <neutron-net-id>, --neutron_net_id <neutron-net-id>, --neutron_net-id <neutron-net-id>``
   Neutron network ID. Used to set up network for share
@@ -2100,14 +2445,14 @@ manila share-network-delete
 
 .. code-block:: console
 
-   usage: manila share-network-delete <share-network>
+   usage: manila share-network-delete <share-network> [<share-network> ...]
 
-Delete share network.
+Delete one or more share networks.
 
 **Positional arguments:**
 
 ``<share-network>``
-  Name or ID of share network to be deleted.
+  Name or ID of share network(s) to be deleted.
 
 .. _manila_share-network-list:
 
@@ -2121,7 +2466,6 @@ manila share-network-list
                                     [--created-since <created_since>]
                                     [--created-before <created_before>]
                                     [--security-service <security_service>]
-                                    [--nova-net-id <nova_net_id>]
                                     [--neutron-net-id <neutron_net_id>]
                                     [--neutron-subnet-id <neutron_subnet_id>]
                                     [--network-type <network_type>]
@@ -2153,9 +2497,6 @@ Get a list of network info.
 
 ``--security-service <security_service>, --security_service <security_service>``
   Filter results by attached security service.
-
-``--nova-net-id <nova_net_id>, --nova_net_id <nova_net_id>, --nova_net-id <nova_net_id>, --nova-net_id <nova_net_id>``
-  Filter results by Nova net ID.
 
 ``--neutron-net-id <neutron_net_id>, --neutron_net_id <neutron_net_id>, --neutron_net-id <neutron_net_id>, --neutron-net_id <neutron_net_id>``
   Filter results by neutron net ID.
@@ -2271,8 +2612,7 @@ manila share-network-update
 
 .. code-block:: console
 
-   usage: manila share-network-update [--nova-net-id <nova-net-id>]
-                                      [--neutron-net-id <neutron-net-id>]
+   usage: manila share-network-update [--neutron-net-id <neutron-net-id>]
                                       [--neutron-subnet-id <neutron-subnet-id>]
                                       [--name <name>]
                                       [--description <description>]
@@ -2287,12 +2627,10 @@ Update share network data.
 
 **Optional arguments:**
 
-``--nova-net-id <nova-net-id>, --nova-net_id <nova-net-id>, --nova_net_id <nova-net-id>, --nova_net-id <nova-net-id>``
-  Nova net ID. Used to set up network for share servers.
-
 ``--neutron-net-id <neutron-net-id>, --neutron-net_id <neutron-net-id>, --neutron_net_id <neutron-net-id>, --neutron_net-id <neutron-net-id>``
   Neutron network ID. Used to set up network for share
-  servers.
+  servers. This option is deprecated and will be
+  rejected in newer releases of OpenStack Manila.
 
 ``--neutron-subnet-id <neutron-subnet-id>, --neutron-subnet_id <neutron-subnet-id>, --neutron_subnet_id <neutron-subnet-id>, --neutron_subnet-id <neutron-subnet-id>``
   Neutron subnet ID. Used to set up network for share
@@ -2478,14 +2816,14 @@ manila share-server-delete
 
 .. code-block:: console
 
-   usage: manila share-server-delete <id>
+   usage: manila share-server-delete <id> [<id> ...]
 
-Delete share server (Admin only).
+Delete one or more share servers (Admin only).
 
 **Positional arguments:**
 
 ``<id>``
-  ID of share server.
+  ID of the share server(s) to delete.
 
 .. _manila_share-server-details:
 
@@ -2586,6 +2924,70 @@ Decreases the size of an existing share.
 ``<new_size>``
   New size of share, in GiBs.
 
+.. _manila_snapshot-access-allow:
+
+manila snapshot-access-allow
+----------------------------
+
+.. code-block:: console
+
+   usage: manila snapshot-access-allow <snapshot> <access_type> <access_to>
+
+Allow read only access to a snapshot.
+
+**Positional arguments:**
+
+``<snapshot>``
+  Name or ID of the share snapshot to allow access to.
+
+``<access_type>``
+  Access rule type (only "ip", "user"(user or group), "cert" or
+  "cephx" are supported).
+
+``<access_to>``
+  Value that defines access.
+
+.. _manila_snapshot-access-deny:
+
+manila snapshot-access-deny
+---------------------------
+
+.. code-block:: console
+
+   usage: manila snapshot-access-deny <snapshot> <id> [<id> ...]
+
+Deny access to a snapshot.
+
+**Positional arguments:**
+
+``<snapshot>``
+  Name or ID of the share snapshot to deny access to.
+
+``<id>``
+  ID(s) of the access rule(s) to be deleted.
+
+.. _manila_snapshot-access-list:
+
+manila snapshot-access-list
+---------------------------
+
+.. code-block:: console
+
+   usage: manila snapshot-access-list [--columns <columns>] <snapshot>
+
+Show access list for a snapshot.
+
+**Positional arguments:**
+
+``<snapshot>``
+  Name or ID of the share snapshot to list access of.
+
+**Optional arguments:**
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  --columns "access_type,access_to"
+
 .. _manila_snapshot-create:
 
 manila snapshot-create
@@ -2623,14 +3025,55 @@ manila snapshot-delete
 
 .. code-block:: console
 
-   usage: manila snapshot-delete <snapshot>
+   usage: manila snapshot-delete <snapshot> [<snapshot> ...]
 
-Remove a snapshot.
+Remove one or more snapshots.
 
 **Positional arguments:**
 
 ``<snapshot>``
-  Name or ID of the snapshot to delete.
+  Name or ID of the snapshot(s) to delete.
+
+.. _manila_snapshot-export-location-list:
+
+manila snapshot-export-location-list
+------------------------------------
+
+.. code-block:: console
+
+   usage: manila snapshot-export-location-list [--columns <columns>] <snapshot>
+
+List export locations of a given snapshot.
+
+**Positional arguments:**
+
+``<snapshot>``
+  Name or ID of the snapshot.
+
+**Optional arguments:**
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  --columns "id,path"
+
+.. _manila_snapshot-export-location-show:
+
+manila snapshot-export-location-show
+------------------------------------
+
+.. code-block:: console
+
+   usage: manila snapshot-export-location-show <snapshot> <export_location>
+
+Show export location of the share snapshot.
+
+**Positional arguments:**
+
+``<snapshot>``
+  Name or ID of the snapshot.
+
+``<export_location>``
+  ID of the share snapshot export location.
 
 .. _manila_snapshot-force-delete:
 
@@ -2639,14 +3082,58 @@ manila snapshot-force-delete
 
 .. code-block:: console
 
-   usage: manila snapshot-force-delete <snapshot>
+   usage: manila snapshot-force-delete <snapshot> [<snapshot> ...]
 
-Attempt force-delete of snapshot, regardless of state (Admin only).
+Attempt force-deletion of one or more snapshots. Regardless of the state
+(Admin only).
 
 **Positional arguments:**
 
 ``<snapshot>``
-  Name or ID of the snapshot to force delete.
+  Name or ID of the snapshot(s) to force delete.
+
+.. _manila_snapshot-instance-export-location-list:
+
+manila snapshot-instance-export-location-list
+---------------------------------------------
+
+.. code-block:: console
+
+   usage: manila snapshot-instance-export-location-list [--columns <columns>]
+                                                        <instance>
+
+List export locations of a given snapshot instance.
+
+**Positional arguments:**
+
+``<instance>``
+  Name or ID of the snapshot instance.
+
+**Optional arguments:**
+
+``--columns <columns>``
+  Comma separated list of columns to be displayed e.g.
+  --columns "id,path,is_admin_only"
+
+.. _manila_snapshot-instance-export-location-show:
+
+manila snapshot-instance-export-location-show
+---------------------------------------------
+
+.. code-block:: console
+
+   usage: manila snapshot-instance-export-location-show <snapshot_instance>
+                                                        <export_location>
+
+Show export location of the share instance snapshot.
+
+**Positional arguments:**
+
+``<snapshot_instance>``
+  ID of the share snapshot instance.
+
+``<export_location>``
+  ID of the share snapshot instance export location.
 
 .. _manila_snapshot-instance-list:
 
@@ -2945,6 +3432,10 @@ manila type-create
 .. code-block:: console
 
    usage: manila type-create [--snapshot_support <snapshot_support>]
+                             [--create_share_from_snapshot_support <create_share_from_snapshot_support>]
+                             [--revert_to_snapshot_support <revert_to_snapshot_support>]
+                             [--mount_snapshot_support <mount_snapshot_support>]
+                             [--extra-specs [<key=value> [<key=value> ...]]]
                              [--is_public <is_public>]
                              <name> <spec_driver_handles_share_servers>
 
@@ -2962,9 +3453,28 @@ Create a new share type (Admin only).
 **Optional arguments:**
 
 ``--snapshot_support <snapshot_support>, --snapshot-support <snapshot_support>``
-  Boolean extra spec that used for filtering of back
-  ends by their capability to create share snapshots.
-  (Default is True).
+  Boolean extra spec used for filtering of back ends by
+  their capability to create share snapshots.
+
+``--create_share_from_snapshot_support <create_share_from_snapshot_support>, --create-share-from-snapshot-support <create_share_from_snapshot_support>``
+  Boolean extra spec used for filtering of back ends by
+  their capability to create shares from snapshots.
+
+``--revert_to_snapshot_support <revert_to_snapshot_support>, --revert-to-snapshot-support <revert_to_snapshot_support>``
+  Boolean extra spec used for filtering of back ends by
+  their capability to revert shares to snapshots.
+  (Default is False).
+
+``--mount_snapshot_support <mount_snapshot_support>, --mount-snapshot-support <mount_snapshot_support>``
+  Boolean extra spec used for filtering of back ends by
+  their capability to mount share snapshots. (Default is
+  False).
+
+``--extra-specs [<key=value> [<key=value> ...]], --extra_specs [<key=value> [<key=value> ...]]``
+  Extra specs key and value of share type that will be
+  used for share type creation. OPTIONAL: Default=None.
+  e.g --extra-specs thin_provisioning='<is> True',
+  replication_type=readable.
 
 ``--is_public <is_public>, --is-public <is_public>``
   Make type accessible to the public (default true).
@@ -2976,14 +3486,14 @@ manila type-delete
 
 .. code-block:: console
 
-   usage: manila type-delete <id>
+   usage: manila type-delete <id> [<id> ...]
 
-Delete a specific share type (Admin only).
+Delete one or more specific share types (Admin only).
 
 **Positional arguments:**
 
 ``<id>``
-  Name or ID of the share type to delete.
+  Name or ID of the share type(s) to delete.
 
 .. _manila_type-key:
 
