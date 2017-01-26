@@ -52,6 +52,7 @@ All associated properties for an image can be displayed using the
    | min_ram          | 0                                                    |
    | name             | cirros                                               |
    | owner            | f9574e69042645d6b5539035cb8c00bf                     |
+   | properties       | architecture='arm', hypervisor_type='qemu'           |
    | protected        | False                                                |
    | schema           | /v2/schemas/image                                    |
    | size             | 13287936                                             |
