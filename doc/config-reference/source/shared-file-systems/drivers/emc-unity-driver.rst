@@ -18,9 +18,9 @@ Systems service back ends to manage multiple Unity systems.
 Requirements
 ~~~~~~~~~~~~
 
-- Unity OE 4.0.1 or higher.
+- Unity OE 4.1.x or higher.
 
-- StorOps 0.2.17 or higher is installed on Manila node.
+- StorOps 0.4.3 or higher is installed on Manila node.
 
 - Following licenses are activated on Unity:
 
@@ -58,10 +58,48 @@ The following operations are supported:
 Supported network types
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-- Flat
+- ``Flat``
 
-- VLAN
+  This type is fully supported by Unity share driver, however flat networks are
+  restricted due to the limited number of tenant networks that can be created
+  from them.
 
+- ``VLAN``
+
+  We recommend this type of network topology in Manila.
+  In most use cases, VLAN is used to isolate the different tenants and provide
+  an isolated network for each tenant. To support this function, an
+  administrator needs to set a slot connected with Unity Ethernet port in
+  ``Trunk`` mode or allow multiple VLANs from the slot.
+
+- ``VXLAN``
+
+  Unity native VXLAN is still unavailable. However, with the `HPB
+  <http://specs.openstack.org/openstack/neutron-specs/specs/kilo/ml2-hierarchical-port-binding.html>`_
+  (Hierarchical Port Binding) in Networking and Shared file system services,
+  it is possible that Unity co-exists with VXLAN enabled network environment.
+
+Supported MTU size
+~~~~~~~~~~~~~~~~~~
+
+Unity currently only supports 1500 and 9000 as the mtu size, the user can
+change the above mtu size from Unity Unisphere:
+
+#. In the Unisphere, go to `Settings`, `Access`, and then `Ethernet`.
+#. Double click the ethernet port.
+#. Select the `MTU` size from the drop down list.
+
+The Unity driver will select the port where mtu is equal to the mtu
+of share network during share server creation.
+
+
+Supported security services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Unity share driver provides ``IP`` based authentication method support for
+``NFS`` shares and ``user`` based authentication method for ``CIFS`` shares
+respectively. For ``CIFS`` share, Microsoft Active Directory is the only
+supported security services.
 
 Pre-configurations
 ~~~~~~~~~~~~~~~~~~
@@ -76,7 +114,6 @@ You may need root privilege to install python libraries.
 .. code-block:: console
 
     pip install storops
-
 
 On Unity system
 ---------------
@@ -115,15 +152,14 @@ for the Unity driver.
 
 .. code-block:: ini
 
-    share_driver = manila.share.drivers.emc.driver.EMCShareDriver
+    share_driver = manila.share.drivers.dell_emc.driver.EMCShareDriver
     emc_share_backend = unity
     emc_nas_server = <management IP address of the Unity system>
     emc_nas_login = <user with administrator privilege>
     emc_nas_password = <password>
-    emc_nas_server_container = [SPA|SPB]
-    emc_nas_server_pool = <pool name>
-    emc_nas_pool_names = <comma separated pool names>
-    emc_interface_ports = <comma separated ports list>
+    unity_server_meta_pool = <pool name>
+    unity_share_data_pools = <comma separated pool names>
+    unity_ethernet_ports = <comma separated ports list>
     driver_handles_share_servers = True
 
 - ``emc_share_backend``
@@ -132,27 +168,58 @@ for the Unity driver.
 - ``emc_nas_server``
     The management IP for Unity.
 
-- ``emc_nas_server_container``
-    The SP to be used as NAS server container.
+- ``emc_nas_login``
+    The user with administrator privilege.
 
-- ``emc_nas_server_pool``
+- ``emc_nas_passowrd``
+    Password for the user.
+
+- ``unity_server_meta_pool``
     The name of the pool to persist the meta-data of NAS server.
 
-- ``emc_nas_pool_names``
+- ``unity_share_data_pools``
     Comma separated list specifying the name of the pools to be used
     by this back end. Do not set this option if all storage pools
     on the system can be used.
     Wild card character is supported.
 
-    Examples: pool_1, pool_*, *
+    Examples:
 
-- ``emc_interface_ports``
+    .. code-block:: ini
+
+       # Only use pool_1
+       unity_share_data_pools = pool_1
+       # Only use pools whose name stars from pool_
+       unity_share_data_pools = pool_*
+       # Use all pools on Unity
+       unity_share_data_pools = *
+
+- ``unity_ethernet_ports``
     Comma separated list specifying the ethernet ports of Unity system
     that can be used for share. Do not set this option if all ethernet ports
     can be used.
-    Wild card character is supported.
+    Wild card character is supported. Both the normal ethernet port and link
+    aggregation port can be used by Unity share driver.
 
-    Examples: spa_eth1, spa_*, *
+
+    Examples:
+
+    .. code-block:: ini
+
+       # Only use spa_eth1
+       unity_ethernet_ports = spa_eth1
+       # Use port whose name stars from spa_
+       unity_ethernet_ports = spa_*
+       # Use all Link Aggregation ports
+       unity_ethernet_ports = sp*_la_*
+       # Use all available ports
+       unity_ethernet_ports = *
+
+
+   .. note::
+
+      Refer to :ref:`unity_file_io_load_balance` for performance
+      impact.
 
 - ``driver_handles_share_servers``
     Unity driver requires this option to be as ``True``.
@@ -160,6 +227,23 @@ for the Unity driver.
 
 Restart of :term:`manila-share` service is needed for the configuration
 changes to take effect.
+
+
+.. _unity_file_io_load_balance:
+
+
+IO Load balance
+~~~~~~~~~~~~~~~
+
+The Unity driver automatically distributes the file interfaces per storage
+processor based on the option ``unity_ethernet_ports``. This balances IO
+traffic. The recommended configuration for ``unity_ethernet_ports`` specifies
+balanced ports per storage processor. For example:
+
+.. code-block:: ini
+
+   # Use eth2 from both SPs
+   unity_ethernet_ports = spa_eth2, spb_eth2
 
 
 Restrictions
