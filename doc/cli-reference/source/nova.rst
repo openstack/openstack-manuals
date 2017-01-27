@@ -9,7 +9,7 @@ Compute service (nova) command-line client
 The nova client is the command-line interface (CLI) for
 the Compute service (nova) API and its extensions.
 
-This chapter documents :command:`nova` version ``7.0.0``.
+This chapter documents :command:`nova` version ``7.1.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -29,11 +29,12 @@ nova usage
                [--service-name <service-name>]
                [--os-endpoint-type <endpoint-type>]
                [--os-compute-api-version <compute-api-ver>]
-               [--endpoint-override <bypass-url>] [--insecure]
-               [--os-cacert <ca-certificate>] [--os-cert <certificate>]
-               [--os-key <key>] [--timeout <seconds>] [--os-auth-type <name>]
-               [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
-               [--os-domain-name OS_DOMAIN_NAME] [--os-project-id OS_PROJECT_ID]
+               [--endpoint-override <bypass-url>] [--profile HMAC_KEY]
+               [--insecure] [--os-cacert <ca-certificate>]
+               [--os-cert <certificate>] [--os-key <key>] [--timeout <seconds>]
+               [--os-auth-type <name>] [--os-auth-url OS_AUTH_URL]
+               [--os-domain-id OS_DOMAIN_ID] [--os-domain-name OS_DOMAIN_NAME]
+               [--os-project-id OS_PROJECT_ID]
                [--os-project-name OS_PROJECT_NAME]
                [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
                [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
@@ -627,16 +628,30 @@ nova usage
   version]
 
 ``server-tag-add``
-  Add single tag to a server. (Supported by API
-  versions '2.26' - '2.latest') [hint: use
-  '--os-compute-api-version' flag to show help
-  message for proper version]
+  Add one or more tags to a server. (Supported
+  by API versions '2.26' - '2.latest') [hint:
+  use '--os-compute-api-version' flag to show
+  help message for proper version]
 
 ``server-tag-delete``
-  Delete single tag from a server. (Supported by
-  API versions '2.26' - '2.latest') [hint: use
-  '--os-compute-api-version' flag to show help
-  message for proper version]
+  Delete one or more tags from a server.
+  (Supported
+  by
+  API
+  versions
+  '2.26'
+  -'2.latest')
+  [hint:
+  use
+  '--os-compute-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
+  version]
 
 ``server-tag-delete-all``
   Delete all tags from a server. (Supported by
@@ -838,6 +853,17 @@ nova optional arguments
   Use this API endpoint instead of the Service
   Catalog. Defaults to
   ``env[NOVACLIENT_ENDPOINT_OVERRIDE]``.
+
+``--profile HMAC_KEY``
+  HMAC key to use for encrypting context data
+  for performance profiling of operation. This
+  key should be the value of the HMAC key
+  configured for the OSprofiler middleware in
+  nova; it is specified in the Nova
+  configuration file at "/etc/nova/nova.conf".
+  Without the key, profiling will not be
+  triggered even if OSprofiler is enabled on the
+  server side.
 
 ``--os-auth-type <name>, --os-auth-plugin <name>``
   Authentication type to use
@@ -2544,7 +2570,7 @@ List active servers.
 
 ``--not-tags <not-tags>``
   Only the servers that do not have any of the
-  given tags willbe included in the list
+  given tags will be included in the list
   results. Boolean expression in this case is
   'NOT(t1 AND t2)'. Tags must be separated by
   commas: --not-tags <tag1,tag2> (Supported by
@@ -2552,7 +2578,7 @@ List active servers.
 
 ``--not-tags-any <not-tags-any>``
   Only the servers that do not have at least one
-  of the given tagswill be included in the list
+  of the given tags will be included in the list
   result. Boolean expression in this case is
   'NOT(t1 OR t2)'. Tags must be separated by
   commas: --not-tags-any <tag1,tag2> (Supported
@@ -3323,8 +3349,8 @@ Print a list of all server groups.
 
 ``--limit <limit>``
   Maximum number of server groups to display. If limit is
-  biggerthan 'CONF.api.max_limit' option of Nova API,
-  limit'CONF.api.max_limit' will be used instead.
+  bigger than 'CONF.api.max_limit' option of Nova API,
+  limit 'CONF.api.max_limit' will be used instead.
 
 ``--offset <offset>``
   The offset of groups list to display; use with limit to
@@ -3379,30 +3405,9 @@ nova server-tag-add
 
 .. code-block:: console
 
-   usage: nova server-tag-add <server> <tag>
+   usage: nova server-tag-add <server> <tag> [<tag> ...]
 
-Add single tag to a server. (Supported by API versions '2.26' - '2.latest')
-[hint: use '--os-compute-api-version' flag to show help message for proper
-version]
-
-**Positional arguments:**
-
-``<server>``
-  Name or ID of server.
-
-``<tag>``
-  Tag to add.
-
-.. _nova_server-tag-delete:
-
-nova server-tag-delete
-----------------------
-
-.. code-block:: console
-
-   usage: nova server-tag-delete <server> <tag>
-
-Delete single tag from a server. (Supported by API versions '2.26' -
+Add one or more tags to a server. (Supported by API versions '2.26' -
 '2.latest') [hint: use '--os-compute-api-version' flag to show help message
 for proper version]
 
@@ -3412,7 +3417,28 @@ for proper version]
   Name or ID of server.
 
 ``<tag>``
-  Tag to delete.
+  Tag(s) to add.
+
+.. _nova_server-tag-delete:
+
+nova server-tag-delete
+----------------------
+
+.. code-block:: console
+
+   usage: nova server-tag-delete <server> <tag> [<tag> ...]
+
+Delete one or more tags from a server. (Supported by API versions '2.26' -
+'2.latest') [hint: use '--os-compute-api-version' flag to show help message
+for proper version]
+
+**Positional arguments:**
+
+``<server>``
+  Name or ID of server.
+
+``<tag>``
+  Tag(s) to delete.
 
 .. _nova_server-tag-delete-all:
 
