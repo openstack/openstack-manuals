@@ -9,7 +9,7 @@ Block Storage service (cinder) command-line client
 The cinder client is the command-line interface (CLI) for
 the Block Storage service (cinder) API and its extensions.
 
-This chapter documents :command:`cinder` version ``1.10.0``.
+This chapter documents :command:`cinder` version ``1.11.0``.
 
 For help on a specific :command:`cinder` command, enter:
 
@@ -102,13 +102,13 @@ cinder usage
   Removes one or more consistency groups.
 
 ``consisgroup-list``
-  Lists all consistencygroups.
+  Lists all consistency groups.
 
 ``consisgroup-show``
   Shows details of a consistency group.
 
 ``consisgroup-update``
-  Updates a consistencygroup.
+  Updates a consistency group.
 
 ``create``
   Creates a volume.
@@ -912,7 +912,7 @@ cinder consisgroup-list
 
    usage: cinder consisgroup-list [--all-tenants [<0|1>]]
 
-Lists all consistencygroups.
+Lists all consistency groups.
 
 **Optional arguments:**
 
@@ -947,7 +947,7 @@ cinder consisgroup-update
                                     [--remove-volumes <uuid3,uuid4,......>]
                                     <consistencygroup>
 
-Updates a consistencygroup.
+Updates a consistency group.
 
 **Positional arguments:**
 
