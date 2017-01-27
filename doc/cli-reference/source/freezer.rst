@@ -10,7 +10,7 @@ The freezer client is the command-line interface (CLI) for
 the Backup, Restore, and Disaster Recovery service (freezer) API and its
 extensions.
 
-This chapter documents :command:`freezer` version ``1.1.0``.
+This chapter documents :command:`freezer` version ``1.2.0``.
 
 For help on a specific :command:`freezer` command, enter:
 
@@ -32,10 +32,12 @@ freezer usage
                   [--os-password OS_PASSWORD] [--os-username OS_USERNAME]
                   [--os-token OS_TOKEN]
                   [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
+                  [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
                   [--os-project-name OS_PROJECT_NAME]
                   [--os-region-name OS_REGION_NAME] [--os-tenant-id OS_TENANT_ID]
                   [--os-tenant-name OS_TENANT_NAME]
-                  [--os-user-domain-name OS_USER_DOMAIN_NAME] [-k]
+                  [--os-user-domain-name OS_USER_DOMAIN_NAME]
+                  [--os-user-domain-id OS_USER_DOMAIN_ID] [-k]
                   [--os-cacert OS_CACERT] [--os-cert OS_CERT]
 
 .. _freezer_command_options:
@@ -90,6 +92,10 @@ freezer optional arguments
 ``--os-project-domain-name OS_PROJECT_DOMAIN_NAME``
   Domain name containing project
 
+``--os-project-domain-id OS_PROJECT_DOMAIN_ID``
+  OpenStack project domain ID. Defaults to
+  ``env[OS_PROJECT_ID]``.
+
 ``--os-project-name OS_PROJECT_NAME``
   Project name to scope to
 
@@ -104,6 +110,10 @@ freezer optional arguments
 
 ``--os-user-domain-name OS_USER_DOMAIN_NAME``
   User domain name
+
+``--os-user-domain-id OS_USER_DOMAIN_ID``
+  OpenStack user domain ID. Defaults to
+  ``env[OS_USER_DOMAIN_ID]``.
 
 ``-k, --insecure``
   use python-freezerclient with insecure connections
@@ -165,7 +175,8 @@ freezer action-list
 .. code-block:: console
 
    usage: freezer action-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--limit LIMIT] [--offset OFFSET] [--search SEARCH]
 
@@ -192,8 +203,8 @@ freezer action-show
 .. code-block:: console
 
    usage: freezer action-show [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
                               action_id
 
 Show a single action
@@ -261,7 +272,8 @@ freezer backup-list
 .. code-block:: console
 
    usage: freezer backup-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--limit LIMIT] [--offset OFFSET] [--search SEARCH]
 
@@ -288,8 +300,8 @@ freezer backup-show
 .. code-block:: console
 
    usage: freezer backup-show [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
                               backup_id
 
 Show the metadata of a single backup
@@ -333,7 +345,8 @@ freezer client-list
 .. code-block:: console
 
    usage: freezer client-list [-h] [-f {csv,html,json,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--limit LIMIT] [--offset OFFSET] [--search SEARCH]
 
@@ -379,8 +392,8 @@ freezer client-show
 .. code-block:: console
 
    usage: freezer client-show [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
                               client_id
 
 Show a single client
@@ -488,7 +501,7 @@ freezer job-list
 .. code-block:: console
 
    usage: freezer job-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width <integer>] [--noindent]
+                           [--max-width <integer>] [--print-empty] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--limit LIMIT] [--offset OFFSET] [--search SEARCH]
                            [--client CLIENT_ID]
@@ -520,8 +533,8 @@ freezer job-show
 .. code-block:: console
 
    usage: freezer job-show [-h] [-f {html,json,shell,table,value,yaml}]
-                           [-c COLUMN] [--max-width <integer>] [--noindent]
-                           [--prefix PREFIX]
+                           [-c COLUMN] [--max-width <integer>] [--print-empty]
+                           [--noindent] [--prefix PREFIX]
                            job_id
 
 Show a single job
@@ -672,7 +685,8 @@ freezer session-list
 .. code-block:: console
 
    usage: freezer session-list [-h] [-f {csv,html,json,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
                                [--limit LIMIT] [--offset OFFSET]
                                [--search SEARCH]
@@ -722,8 +736,8 @@ freezer session-show
 .. code-block:: console
 
    usage: freezer session-show [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
                                session_id
 
 Show a single session
