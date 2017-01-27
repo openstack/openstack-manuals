@@ -393,4 +393,4 @@ For example, you can upload the ``/tmp/centos.qcow2``
 image to the Image service by using the :command:`openstack image create`
 command. For more information, see the
 `Create or update an image
-<http://docs.openstack.org/user-guide/common/cli-manage-images.html#create-or-update-an-image-glance>`__.
+<https://docs.openstack.org/user-guide/common/cli-manage-images.html#create-or-update-an-image-glance>`__.

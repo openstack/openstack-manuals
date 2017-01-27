@@ -38,4 +38,4 @@ to find a VNC client that works on your local desktop.
 
 To create an image for the Database service,
 see `Building Guest Images for OpenStack Trove
-<http://docs.openstack.org/developer/trove/dev/building_guest_images.html>`_.
+<https://docs.openstack.org/developer/trove/dev/building_guest_images.html>`_.
