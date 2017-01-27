@@ -52,7 +52,7 @@ Storage.
 
 A good document describing the Object Storage architecture is found
 within the `developer
-documentation <http://docs.openstack.org/developer/swift/overview_architecture.html>`_
+documentation <https://docs.openstack.org/developer/swift/overview_architecture.html>`_
 — read this first. Once you understand the architecture, you should know what a
 proxy server does and how zones work. However, some important points are
 often missed at first glance.
@@ -229,7 +229,7 @@ provided by OpenStack.
    * - Encryption set by…
      - Parameter in nova.conf
      - Admin establishing `encrypted volume type
-       <http://docs.openstack.org/admin-guide/dashboard-manage-volumes.html>`_,
+       <https://docs.openstack.org/admin-guide/dashboard-manage-volumes.html>`_,
        then user selecting encrypted volume
      - Not yet available
      - Shared File Systems service does not apply any additional encryption
@@ -242,7 +242,7 @@ provided by OpenStack.
        a share was being created. In case of thin provisioning it can be
        partial space reservation (for more details see
        `Capabilities and Extra-Specs
-       <http://docs.openstack.org/developer/manila/devref/capabilities_and_extra_specs.html?highlight=extra%20specs#common-capabilities>`_
+       <https://docs.openstack.org/developer/manila/devref/capabilities_and_extra_specs.html?highlight=extra%20specs#common-capabilities>`_
        specification)
 
 .. note::
@@ -352,7 +352,7 @@ solution that you can use.
    In addition to the open source technologies, there are a number of
    proprietary solutions that are officially supported by OpenStack Block
    Storage. The full list of options can be found in the
-   `Available Drivers <http://docs.openstack.org/developer/cinder/drivers.html>`_
+   `Available Drivers <https://docs.openstack.org/developer/cinder/drivers.html>`_
    list.
 
    You can find a matrix of the functionality provided by all of the

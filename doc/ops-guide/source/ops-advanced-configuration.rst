@@ -12,7 +12,7 @@ possible deployments with the default configuration values.
 At the time of writing, OpenStack has more than 3,000 configuration
 options. You can see them documented at the
 `OpenStack Configuration Reference
-<http://docs.openstack.org/newton/config-reference/config-overview.html>`_.
+<https://docs.openstack.org/newton/config-reference/config-overview.html>`_.
 This chapter cannot hope to document all of these, but we do try to
 introduce the important concepts so that you know where to go digging
 for more information.
@@ -31,10 +31,10 @@ different tuning requirements.
 
    The currently implemented hypervisors are listed on the `OpenStack
    Configuration Reference
-   <http://docs.openstack.org/newton/config-reference/compute/hypervisors.html>`__.
+   <https://docs.openstack.org/newton/config-reference/compute/hypervisors.html>`__.
    You can see a matrix of the various features in OpenStack Compute
    (nova) hypervisor drivers at the `Hypervisor support matrix
-   page <http://docs.openstack.org/developer/nova/support-matrix.html>`_.
+   page <https://docs.openstack.org/developer/nova/support-matrix.html>`_.
 
 The point we are trying to make here is that just because an option
 exists doesn't mean that option is relevant to your driver choices.
@@ -106,7 +106,7 @@ consider tuning. It is by no means an exhaustive list.
 Security Configuration for Compute, Networking, and Storage
 -----------------------------------------------------------
 
-The `OpenStack Security Guide <http://docs.openstack.org/sec/>`_
+The `OpenStack Security Guide <https://docs.openstack.org/sec/>`_
 provides a deep dive into securing an OpenStack cloud, including
 SSL/TLS, key management, PKI and certificate management, data transport
 and privacy concerns, and compliance.
@@ -115,7 +115,7 @@ High Availability
 -----------------
 
 The `OpenStack High Availability
-Guide <http://docs.openstack.org/ha-guide/index.html>`_ offers
+Guide <https://docs.openstack.org/ha-guide/index.html>`_ offers
 suggestions for elimination of a single point of failure that could
 cause system downtime. While it is not a completely prescriptive
 document, it offers methods and techniques for avoiding downtime and
@@ -147,5 +147,5 @@ with one zone for each cluster, but be sure your network (WAN) can
 handle the additional request and response load between zones as you add
 more zones and build a ring that handles more zones. Refer to
 `Geographically Distributed Clusters
-<http://docs.openstack.org/developer/swift/admin_guide.html#geographically-distributed-clusters>`_
+<https://docs.openstack.org/developer/swift/admin_guide.html#geographically-distributed-clusters>`_
 in the documentation for additional information.

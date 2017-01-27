@@ -6,7 +6,7 @@ The OpenStack Dashboard provides a graphical interface to manage users.
 This section describes user management with the Dashboard.
 
 You can also `manage projects, users, and roles
-<http://docs.openstack.org/admin-guide/cli-manage-projects-users-and-roles.html>`_
+<https://docs.openstack.org/admin-guide/cli-manage-projects-users-and-roles.html>`_
 from the command-line clients.
 
 In addition, many sites write custom tools for local needs to enforce

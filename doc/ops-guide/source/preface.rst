@@ -131,7 +131,7 @@ Further Reading
 ---------------
 
 There are other books on the `OpenStack documentation
-website <http://docs.openstack.org>`_ that can help you get the job
+website <https://docs.openstack.org>`_ that can help you get the job
 done.
 
 Installation Tutorials and Guides
@@ -139,41 +139,41 @@ Installation Tutorials and Guides
     automation, for multiple distributions based on a packaging system:
 
     -  `OpenStack Installation Tutorial for openSUSE and SUSE Linux Enterprise
-       <http://docs.openstack.org/newton/install-guide-obs/>`_
+       <https://docs.openstack.org/newton/install-guide-obs/>`_
 
     -  `OpenStack Installation Tutorial for Red Hat Enterprise Linux and CentOS
-       <http://docs.openstack.org/newton/install-guide-rdo/>`_
+       <https://docs.openstack.org/newton/install-guide-rdo/>`_
 
     -  `OpenStack Installation Tutorial for Ubuntu
-       <http://docs.openstack.org/newton/install-guide-ubuntu/>`_
+       <https://docs.openstack.org/newton/install-guide-ubuntu/>`_
 
-`OpenStack Configuration Reference <http://docs.openstack.org/newton/config-reference/>`_
+`OpenStack Configuration Reference <https://docs.openstack.org/newton/config-reference/>`_
     Contains a reference listing of all configuration options for core
     and integrated OpenStack services by release version
 
-`OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/>`_
+`OpenStack Administrator Guide <https://docs.openstack.org/admin-guide/>`_
     Contains how-to information for managing an OpenStack cloud as
     needed for your use cases, such as storage, computing, or
     software-defined-networking
 
-`OpenStack High Availability Guide <http://docs.openstack.org/ha-guide/index.html>`_
+`OpenStack High Availability Guide <https://docs.openstack.org/ha-guide/index.html>`_
     Describes potential strategies for making your OpenStack services
     and related controllers and data stores highly available
 
-`OpenStack Security Guide <http://docs.openstack.org/sec/>`_
+`OpenStack Security Guide <https://docs.openstack.org/sec/>`_
     Provides best practices and conceptual information about securing an
     OpenStack cloud
 
-`Virtual Machine Image Guide <http://docs.openstack.org/image-guide/>`_
+`Virtual Machine Image Guide <https://docs.openstack.org/image-guide/>`_
     Shows you how to obtain, create, and modify virtual machine images
     that are compatible with OpenStack
 
-`OpenStack End User Guide <http://docs.openstack.org/user-guide/>`_
+`OpenStack End User Guide <https://docs.openstack.org/user-guide/>`_
     Shows OpenStack end users how to create and manage resources in an
     OpenStack cloud with the OpenStack dashboard and OpenStack client
     commands
 
-`OpenStack Networking Guide <http://docs.openstack.org/newton/networking-guide/>`_
+`OpenStack Networking Guide <https://docs.openstack.org/newton/networking-guide/>`_
     This guide targets OpenStack administrators seeking to deploy and
     manage OpenStack Networking (neutron).
 
@@ -438,7 +438,7 @@ content on GitHub and enables collaboration among contributors.
 
 Learn more about how to contribute to the OpenStack docs at `OpenStack
 Documentation Contributor
-Guide <http://docs.openstack.org/contributor-guide/>`_.
+Guide <https://docs.openstack.org/contributor-guide/>`_.
 
 If you find a bug and can't fix it or aren't sure it's really a doc bug,
 log a bug at `OpenStack

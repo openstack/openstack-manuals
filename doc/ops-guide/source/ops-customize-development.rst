@@ -8,4 +8,4 @@ builds an OpenStack development environment for you. You use it to
 create such an environment for developing a new feature.
 
 For more information on installing DevStack, see the
-`DevStack <http://docs.openstack.org/developer/devstack/>`_ website.
+`DevStack <https://docs.openstack.org/developer/devstack/>`_ website.

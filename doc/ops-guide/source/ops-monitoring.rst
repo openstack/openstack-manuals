@@ -93,11 +93,11 @@ by the Telemetry service could be used for billing. Depending on
 deployment configuration, collected data may be accessible to users
 based on the deployment configuration. The Telemetry service provides a
 REST API documented at `ceilometer V2 Web API
-<http://docs.openstack.org/developer/ceilometer/webapi/v2.html>`_. You can
+<https://docs.openstack.org/developer/ceilometer/webapi/v2.html>`_. You can
 read more about the module in the `OpenStack Administrator
-Guide <http://docs.openstack.org/admin-guide/telemetry.html>`_ or
+Guide <https://docs.openstack.org/admin-guide/telemetry.html>`_ or
 in the `developer
-documentation <http://docs.openstack.org/developer/ceilometer>`_.
+documentation <https://docs.openstack.org/developer/ceilometer>`_.
 
 OpenStack Specific Resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

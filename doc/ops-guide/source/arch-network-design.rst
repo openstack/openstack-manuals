@@ -289,5 +289,5 @@ Conclusion
 Armed with your IP address layout and numbers and knowledge about the
 topologies and services you can use, it's now time to prepare the
 network for your installation. Be sure to also check out the `OpenStack
-Security Guide <http://docs.openstack.org/sec/>`_ for tips on securing
+Security Guide <https://docs.openstack.org/sec/>`_ for tips on securing
 your network. We wish you a good relationship with your networking team!

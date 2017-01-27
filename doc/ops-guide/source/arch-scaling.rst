@@ -149,7 +149,7 @@ load-balancing method (DNS round robin, hardware load balancer, or
 software such as Pound or HAProxy). One caveat with dashboard is the VNC
 proxy, which uses the WebSocket protocol—something that an L7 load
 balancer might struggle with. See also `Horizon session storage
-<http://docs.openstack.org/developer/horizon/topics/deployment.html#session-storage>`_.
+<https://docs.openstack.org/developer/horizon/topics/deployment.html#session-storage>`_.
 
 You can configure some services, such as ``nova-api`` and
 ``glance-api``, to use multiple processes by changing a flag in their
