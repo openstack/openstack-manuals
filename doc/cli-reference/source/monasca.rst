@@ -9,7 +9,7 @@ Monitoring (monasca) command-line client
 The monasca client is the command-line interface (CLI) for
 the Monitoring (monasca) API and its extensions.
 
-This chapter documents :command:`monasca` version ``1.3.0``.
+This chapter documents :command:`monasca` version ``1.5.0``.
 
 For help on a specific :command:`monasca` command, enter:
 
@@ -32,7 +32,8 @@ monasca usage
                   [--os-user-domain-name OS_USER_DOMAIN_NAME]
                   [--os-project-id OS_PROJECT_ID]
                   [--os-project-name OS_PROJECT_NAME]
-                  [--os-domain-id OS_DOMAIN_ID] [--os-domain-name OS_DOMAIN_NAME]
+                  [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
+                  [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
                   [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
                   [--os-auth-token OS_AUTH_TOKEN] [--os-no-client-auth]
                   [--monasca-api-url MONASCA_API_URL]
@@ -138,11 +139,11 @@ monasca optional arguments
 ``--os-project-name OS_PROJECT_NAME``
   Defaults to ``env[OS_PROJECT_NAME]``.
 
-``--os-domain-id OS_DOMAIN_ID``
-  Defaults to ``env[OS_DOMAIN_ID]``.
+``--os-project-domain-id OS_PROJECT_DOMAIN_ID``
+  Defaults to ``env[OS_PROJECT_DOMAIN_ID]``.
 
-``--os-domain-name OS_DOMAIN_NAME``
-  Defaults to ``env[OS_DOMAIN_NAME]``.
+``--os-project-domain-name OS_PROJECT_DOMAIN_NAME``
+  Defaults to ``env[OS_PROJECT_DOMAIN_NAME]``.
 
 ``--os-auth-url OS_AUTH_URL``
   Defaults to ``env[OS_AUTH_URL]``.
@@ -180,6 +181,7 @@ monasca alarm-count
                               [--metric-name <METRIC_NAME>]
                               [--metric-dimensions <KEY1=VALUE1,KEY2,KEY3=VALUE2...>]
                               [--state <ALARM_STATE>] [--severity <SEVERITY>]
+                              [--state-updated-start-time <UTC_STATE_UPDATED_START>]
                               [--lifecycle-state <LIFECYCLE_STATE>]
                               [--link <LINK>] [--group-by <GROUP_BY>]
                               [--offset <OFFSET LOCATION>]
@@ -209,6 +211,10 @@ Count alarms.
 ``--severity <SEVERITY>``
   Severity is one of ["LOW", "MEDIUM", "HIGH",
   "CRITICAL"].
+
+``--state-updated-start-time <UTC_STATE_UPDATED_START>``
+  Return all alarms whose state was updated on or after
+  the time specified.
 
 ``--lifecycle-state <LIFECYCLE_STATE>``
   The lifecycle state of the alarm.
