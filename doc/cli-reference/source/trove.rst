@@ -9,7 +9,7 @@ Database service (trove) command-line client
 The trove client is the command-line interface (CLI) for
 the Database service (trove) API and its extensions.
 
-This chapter documents :command:`trove` version ``2.7.0``.
+This chapter documents :command:`trove` version ``2.8.0``.
 
 For help on a specific :command:`trove` command, enter:
 
@@ -257,6 +257,10 @@ trove usage
 ``module-delete``
   Delete a module.
 
+``module-instance-count``
+  Lists a count of the instances for each
+  module md5.
+
 ``module-instances``
   Lists the instances that have a particular
   module applied.
@@ -271,6 +275,9 @@ trove usage
 ``module-query``
   Query the status of the modules on an
   instance.
+
+``module-reapply``
+  Reapply a module.
 
 ``module-remove``
   Remove a module from an instance.
@@ -622,7 +629,8 @@ Creates a new cluster.
   v4-fixed-ip=<ip-addr>, port-id=<port-uuid>>'
   (where net-id=network_id, v4-fixed-ip=IPv4r_fixed_address, port-id=port_id),
   availability_zone=<AZ_hint_for_Nova>,
-  module=<module_name_or_id>.
+  module=<module_name_or_id>,
+  type=<type_of_cluster_node>.
 
 ``--locality <policy>``
   Locality policy to use when creating
@@ -689,7 +697,8 @@ Adds more instances to a cluster.
   v4-fixed-ip=<ip-addr>, port-id=<port-uuid>>'
   (where net-id=network_id, v4-fixed-ip=IPv4r_fixed_address, port-id=port_id),
   availability_zone=<AZ_hint_for_Nova>,
-  module=<module_name_or_id>.
+  module=<module_name_or_id>,
+  type=<type_of_cluster_node>.
 
 .. _trove_cluster-instances:
 
@@ -1879,8 +1888,7 @@ Create a module.
 ``--live_update``
   Allow module to be updated even if it is
   already applied to a current instance or
-  cluster. Automatically attempt to reapply
-  this module if the contents change.
+  cluster.
 
 ``--priority_apply``
   Sets a priority for applying the module. All
@@ -1912,6 +1920,28 @@ Delete a module.
 
 ``<module>``
   ID or name of the module.
+
+.. _trove_module-instance-count:
+
+trove module-instance-count
+---------------------------
+
+.. code-block:: console
+
+   usage: trove module-instance-count [--include_clustered] <module>
+
+Lists a count of the instances for each module md5.
+
+**Positional arguments:**
+
+``<module>``
+  ID or name of the module.
+
+**Optional arguments:**
+
+``--include_clustered``
+  Include instances that are part of a cluster (default
+  False).
 
 .. _trove_module-instances:
 
@@ -1993,6 +2023,47 @@ Query the status of the modules on an instance.
 
 ``<instance>``
   ID or name of the instance.
+
+.. _trove_module-reapply:
+
+trove module-reapply
+--------------------
+
+.. code-block:: console
+
+   usage: trove module-reapply <module>
+                               [--md5 <md5>] [--include_clustered]
+                               [--batch_size <batch_size>] [--delay <delay>]
+                               [--force]
+
+Reapply a module.
+
+**Positional arguments:**
+
+``<module>``
+  Name or ID of the module.
+
+**Optional arguments:**
+
+``--md5 <md5>``
+  Reapply the module only to instances applied with
+  the specific md5.
+
+``--include_clustered``
+  Include instances that are part of a cluster
+  (default False).
+
+``--batch_size <batch_size>``
+  Number of instances to reapply the module to
+  before sleeping.
+
+``--delay <delay>``
+  Time to sleep in seconds between applying
+  batches.
+
+``--force``
+  Force reapply even on modules already having the
+  current MD5
 
 .. _trove_module-remove:
 
@@ -2146,9 +2217,7 @@ Update a module.
 ``--live_update``
   Allow module to be updated or deleted even
   if it is already applied to a current
-  instance or cluster. Automatically attempt
-  to reapply this module if the contents
-  change.
+  instance or cluster.
 
 ``--no_live_update``
   Restricts a module from being updated or
