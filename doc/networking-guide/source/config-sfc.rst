@@ -65,7 +65,7 @@ path rendering.
    :alt: Port chain model
 
 See the `developer documentation
-<http://docs.openstack.org/developer/networking-sfc/>`_ for more information.
+<https://docs.openstack.org/developer/networking-sfc/>`_ for more information.
 
 Resources
 ~~~~~~~~~
@@ -220,7 +220,7 @@ HTTP (TCP) traffic flows from 192.168.1.11:1000 to 192.168.2.11:80.
 
       This command requires additional options to successfully launch an
       instance. See the
-      `CLI reference <http://docs.openstack.org/cli-reference/openstack.html>`_
+      `CLI reference <https://docs.openstack.org/cli-reference/openstack.html>`_
       for more information.
 
    Alternatively, you can launch each instance with one network interface and

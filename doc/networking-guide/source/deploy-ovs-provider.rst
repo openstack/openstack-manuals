@@ -95,7 +95,7 @@ Controller node
      any. However, this breaks portions of the dashboard that manage
      the Networking service. See the
      `Newton Install Tutorials and Guides
-     <http://docs.openstack.org/project-install-guide/newton>`__ for more
+     <https://docs.openstack.org/project-install-guide/newton>`__ for more
      information.
 
      .. code-block:: ini

@@ -379,7 +379,7 @@ Once configuration is complete, you can launch instances with SR-IOV ports.
       There are two ways to attach VFs to an instance. You can create an SR-IOV
       port or use the ``pci_alias`` in the Compute service. For more
       information about using ``pci_alias``, refer to `nova-api configuration
-      <http://docs.openstack.org/admin-guide/compute-pci-passthrough.html#configure-nova-api-controller>`__.
+      <https://docs.openstack.org/admin-guide/compute-pci-passthrough.html#configure-nova-api-controller>`__.
 
 SR-IOV with InfiniBand
 ~~~~~~~~~~~~~~~~~~~~~~

@@ -35,4 +35,4 @@ Configuration
 .. note::
 
    For general configuration, see the `Configuration Reference
-   <http://docs.openstack.org/newton/config-reference/>`_.
+   <https://docs.openstack.org/newton/config-reference/>`_.
