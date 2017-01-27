@@ -9,7 +9,7 @@ Shared File Systems service (manila) command-line client
 The manila client is the command-line interface (CLI) for
 the Shared File Systems service (manila) API and its extensions.
 
-This chapter documents :command:`manila` version ``1.13.0``.
+This chapter documents :command:`manila` version ``1.14.0``.
 
 For help on a specific :command:`manila` command, enter:
 
@@ -2388,8 +2388,8 @@ Explicitly update the state of a share instance (Admin only).
 ``--state <state>``
   Indicate which state to assign the instance. Options
   include available, error, creating, deleting,
-  error_deleting. If no state is provided, available will be
-  used.
+  error_deleting, migrating,migrating_to. If no state is
+  provided, available will be used.
 
 .. _manila_share-instance-show:
 
