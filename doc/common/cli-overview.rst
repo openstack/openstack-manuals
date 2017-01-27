@@ -32,7 +32,7 @@ Unified command-line client
 You can use the unified ``openstack`` command (**python-openstackclient**)
 for the most of OpenStack services.
 For more information, see `OpenStackClient document
-<http://docs.openstack.org/developer/python-openstackclient/>`_.
+<https://docs.openstack.org/developer/python-openstackclient/>`_.
 
 
 Individual command-line clients

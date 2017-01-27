@@ -19,7 +19,7 @@ Documentation
 ~~~~~~~~~~~~~
 
 For the available OpenStack documentation, see
-`docs.openstack.org <http://docs.openstack.org>`__.
+`docs.openstack.org <https://docs.openstack.org>`__.
 
 To provide feedback on documentation, join and use the
 openstack-docs@lists.openstack.org mailing list at `OpenStack
@@ -34,45 +34,45 @@ associated components:
 
 *  `Installation Tutorial for openSUSE Leap 42.2 and SUSE Linux Enterprise
    Server 12 SP2
-   <http://docs.openstack.org/newton/install-guide-obs/>`__
+   <https://docs.openstack.org/newton/install-guide-obs/>`__
 
 *  `Installation Tutorial for Red Hat Enterprise Linux 7 and CentOS 7
-   <http://docs.openstack.org/newton/install-guide-rdo/>`__
+   <https://docs.openstack.org/newton/install-guide-rdo/>`__
 
 *  `Installation Tutorial for Ubuntu 16.04 (LTS)
-   <http://docs.openstack.org/newton/install-guide-ubuntu/>`__
+   <https://docs.openstack.org/newton/install-guide-ubuntu/>`__
 
 *  `Installation Tutorial for Debian with Debconf
-   <http://docs.openstack.org/newton/install-guide-debconf/>`__
+   <https://docs.openstack.org/newton/install-guide-debconf/>`__
 
 *  `Installation Tutorial for Debian
-   <http://docs.openstack.org/newton/install-guide-debian/>`__
+   <https://docs.openstack.org/newton/install-guide-debian/>`__
 
 The following books explain how to configure and run an OpenStack cloud:
 
-*  `Architecture Design Guide <http://docs.openstack.org/arch-design/>`__
+*  `Architecture Design Guide <https://docs.openstack.org/arch-design/>`__
 
-*  `Administrator Guide <http://docs.openstack.org/admin-guide/>`__
+*  `Administrator Guide <https://docs.openstack.org/admin-guide/>`__
 
-*  `Configuration Reference <http://docs.openstack.org/newton/config-reference/>`__
+*  `Configuration Reference <https://docs.openstack.org/newton/config-reference/>`__
 
-*  `Operations Guide <http://docs.openstack.org/ops/>`__
+*  `Operations Guide <https://docs.openstack.org/ops/>`__
 
-*  `Networking Guide <http://docs.openstack.org/newton/networking-guide>`__
+*  `Networking Guide <https://docs.openstack.org/newton/networking-guide>`__
 
-*  `High Availability Guide <http://docs.openstack.org/ha-guide/>`__
+*  `High Availability Guide <https://docs.openstack.org/ha-guide/>`__
 
-*  `Security Guide <http://docs.openstack.org/sec/>`__
+*  `Security Guide <https://docs.openstack.org/sec/>`__
 
-*  `Virtual Machine Image Guide <http://docs.openstack.org/image-guide/>`__
+*  `Virtual Machine Image Guide <https://docs.openstack.org/image-guide/>`__
 
 The following books explain how to use the OpenStack Dashboard and
 command-line clients:
 
-*  `End User Guide <http://docs.openstack.org/user-guide/>`__
+*  `End User Guide <https://docs.openstack.org/user-guide/>`__
 
 *  `Command-Line Interface Reference
-   <http://docs.openstack.org/cli-reference/>`__
+   <https://docs.openstack.org/cli-reference/>`__
 
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
@@ -81,7 +81,7 @@ for the OpenStack APIs:
 
 The following guide provides how to contribute to OpenStack documentation:
 
-*  `Documentation Contributor Guide <http://docs.openstack.org/contributor-guide/>`__
+*  `Documentation Contributor Guide <https://docs.openstack.org/contributor-guide/>`__
 
 ask.openstack.org
 ~~~~~~~~~~~~~~~~~

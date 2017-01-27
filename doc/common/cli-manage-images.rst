@@ -15,7 +15,7 @@ backup types.
 After you upload an image, you cannot change it.
 
 For details about image creation, see the `Virtual Machine Image
-Guide <http://docs.openstack.org/image-guide/>`__.
+Guide <https://docs.openstack.org/image-guide/>`__.
 
 List or get details for images (glance)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -121,7 +121,7 @@ To update an image by name or ID, use :command:`openstack image set`:
 The following list explains the optional arguments that you can use with
 the ``create`` and ``set`` commands to modify image properties. For
 more information, refer to the `OpenStack Image command reference
-<http://docs.openstack.org/developer/python-openstackclient/command-objects/image.html>`_.
+<https://docs.openstack.org/developer/python-openstackclient/command-objects/image.html>`_.
 
 The following example shows the command that you would use to upload a
 CentOS 6.3 image in qcow2 format and configure it for public access:
@@ -142,7 +142,7 @@ model:
    :command:`openstack image create`.
    Also, we recommend that you set the ``hypervisor_type="vmware"`` property.
    For more information, see `Images with VMware vSphere
-   <http://docs.openstack.org/newton/config-reference/compute/hypervisor-vmware.html#images-with-vmware-vsphere>`_
+   <https://docs.openstack.org/newton/config-reference/compute/hypervisor-vmware.html#images-with-vmware-vsphere>`_
    in the OpenStack Configuration Reference.
 
 .. code-block:: console
