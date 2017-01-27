@@ -12,7 +12,7 @@ After architecting and implementing the core OpenStack
 services and other required services, combined with the Dashboard
 service steps below, users and administrators can use
 the OpenStack dashboard. Refer to the `OpenStack Dashboard
-<http://docs.openstack.org/user-guide/dashboard.html>`__
+<https://docs.openstack.org/user-guide/dashboard.html>`__
 chapter of the OpenStack End User Guide for
 further instructions on logging in to the Dashboard.
 

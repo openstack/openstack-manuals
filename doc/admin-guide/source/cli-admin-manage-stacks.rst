@@ -20,10 +20,10 @@ For information about:
 
 -  basic creation and deletion of Orchestration stacks, refer
    to the `OpenStack End User Guide
-   <http://docs.openstack.org/user-guide/dashboard-stacks.html>`_
+   <https://docs.openstack.org/user-guide/dashboard-stacks.html>`_
 
 -  **openstack** CLI, see the `OpenStackClient documentation
-   <http://docs.openstack.org/developer/python-openstackclient/>`_
+   <https://docs.openstack.org/developer/python-openstackclient/>`_
 
 .. note::
 

@@ -303,7 +303,7 @@ service, such as, a user named ``nova`` for the Compute service, and a
 special service project called ``service``.
 
 For information about how to create services and endpoints, see the
-`OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/
+`OpenStack Administrator Guide <https://docs.openstack.org/admin-guide/
 cli-manage-services.html>`__.
 
 Groups

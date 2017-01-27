@@ -165,7 +165,7 @@ Users, roles, and projects
 This service of OpenStack uses OpenStack Identity for authenticating and
 authorizing users. The required configuration options are listed in the
 `Telemetry
-section <http://docs.openstack.org/newton/config-reference/telemetry.html>`__
+section <https://docs.openstack.org/newton/config-reference/telemetry.html>`__
 in the OpenStack Configuration Reference.
 
 The system uses two roles:``admin`` and ``non-admin``. The authorization

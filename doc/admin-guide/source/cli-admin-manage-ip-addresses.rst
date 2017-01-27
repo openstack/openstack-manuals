@@ -13,7 +13,7 @@ Internet.
   addresses with projects and instances. You can change user permissions for
   managing IP addresses by updating the ``/etc/nova/policy.json``
   file. For basic floating-IP procedures, refer to the `Allocate a
-  floating address to an instance <http://docs.openstack.org/user-guide/configure-access-and-security-for-instances.html#allocate-a-floating-ip-address-to-an-instance>`_
+  floating address to an instance <https://docs.openstack.org/user-guide/configure-access-and-security-for-instances.html#allocate-a-floating-ip-address-to-an-instance>`_
   section in the OpenStack End User Guide.
 
 - For details on creating public networks using OpenStack Networking

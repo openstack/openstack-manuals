@@ -156,7 +156,7 @@ Least connections
 Firewall-as-a-Service (FWaaS) overview
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For information on Firewall-as-a-Service (FWaaS), please consult the `Networking Guide <http://docs.openstack.org/newton/networking-guide/fwaas.html>`__.
+For information on Firewall-as-a-Service (FWaaS), please consult the `Networking Guide <https://docs.openstack.org/newton/networking-guide/fwaas.html>`__.
 
 Allowed-address-pairs
 ~~~~~~~~~~~~~~~~~~~~~

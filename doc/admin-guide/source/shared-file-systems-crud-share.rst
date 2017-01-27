@@ -746,7 +746,7 @@ Allow access to the share with ``user`` access type:
    For the example, the Generic driver with the Block Storage service as a
    back-end doesn't support ``user`` and ``cert`` authentications methods. For
    details of supporting of features by different drivers, see `Manila share
-   features support mapping <http://docs.openstack.org/developer/manila/devref
+   features support mapping <https://docs.openstack.org/developer/manila/devref
    /share_back_ends_feature_support_mapping.html>`_.
 
 To verify that the access rules (ACL) were configured correctly for a share,

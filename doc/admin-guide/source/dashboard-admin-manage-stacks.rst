@@ -21,7 +21,7 @@ For information about:
 
 * administrative tasks on the command-line, see
   the `OpenStack Administrator Guide
-  <http://docs.openstack.org/admin-guide/cli-admin-manage-stacks.html>`__.
+  <https://docs.openstack.org/admin-guide/cli-admin-manage-stacks.html>`__.
 
   .. note::
 
@@ -30,5 +30,5 @@ For information about:
 
 * the basic creation and deletion of Orchestration stacks, refer to
   the `OpenStack End User Guide
-  <http://docs.openstack.org/user-guide/dashboard-stacks.html>`__.
+  <https://docs.openstack.org/user-guide/dashboard-stacks.html>`__.
 

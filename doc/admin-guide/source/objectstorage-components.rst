@@ -49,7 +49,7 @@ take over.
 
 For more information concerning proxy server configuration, see
 `Configuration Reference
-<http://docs.openstack.org/newton/config-reference/object-storage/proxy-server.html>`_.
+<https://docs.openstack.org/newton/config-reference/object-storage/proxy-server.html>`_.
 
 Rings
 -----

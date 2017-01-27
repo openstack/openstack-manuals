@@ -134,7 +134,7 @@ separate networks. The service network is reachable from the host where the
 ``manila-share`` service is running. The share export IP is from a network that
 allows user access.
 
-See `Configuring the ZFSonLinux driver <http://docs.openstack.org/newton/config-reference/shared-file-systems/drivers/zfs-on-linux-driver.html>`_
+See `Configuring the ZFSonLinux driver <https://docs.openstack.org/newton/config-reference/shared-file-systems/drivers/zfs-on-linux-driver.html>`_
 for information on how to set up the ZFSonLinux driver.
 
 

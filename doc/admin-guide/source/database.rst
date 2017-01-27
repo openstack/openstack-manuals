@@ -23,7 +23,7 @@ configuration, patching, backups, restores, and monitoring.
 You can modify various cluster characteristics by editing the
 ``/etc/trove/trove.conf`` file. A comprehensive list of the Database
 service configuration options is described in the `Database service
-<http://docs.openstack.org/newton/config-reference/database.html>`_
+<https://docs.openstack.org/newton/config-reference/database.html>`_
 chapter in the *Configuration Reference*.
 
 Create a data store
@@ -446,7 +446,7 @@ Redis.
          testing and Database service development installations.
          Do not use Redstack in a production environment. For
          more information, see `the Database service
-         developer docs <http://docs.openstack.org/developer/trove/dev/install.html#running-redstack-to-install-trove>`_
+         developer docs <https://docs.openstack.org/developer/trove/dev/install.html#running-redstack-to-install-trove>`_
 
 #. Start Redis:
 

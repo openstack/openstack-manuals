@@ -11,7 +11,7 @@ multiple aggregates.
 
 The scheduler uses this information to make scheduling decisions.
 For information, see
-`Scheduling <http://docs.openstack.org/newton/config-reference/compute/scheduler.html>`__.
+`Scheduling <https://docs.openstack.org/newton/config-reference/compute/scheduler.html>`__.
 
 To create a host aggregate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

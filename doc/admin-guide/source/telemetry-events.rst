@@ -18,7 +18,7 @@ Event configuration
 To enable the creation and storage of events in the Telemetry service
 ``store_events`` option needs to be set to ``True``. For further configuration
 options, see the event section in the `OpenStack Configuration Reference
-<http://docs.openstack.org/newton/config-reference/telemetry.html>`__.
+<https://docs.openstack.org/newton/config-reference/telemetry.html>`__.
 
 .. note::
 

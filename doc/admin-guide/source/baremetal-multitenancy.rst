@@ -49,7 +49,7 @@ To enable the Networking service ML2 driver, edit the
    param_3 = ...
 
 For more details, see
-`Networking service mechanism drivers <http://docs.openstack.org/newton/networking-guide/config-ml2.html#mechanism-drivers>`__.
+`Networking service mechanism drivers <https://docs.openstack.org/newton/networking-guide/config-ml2.html#mechanism-drivers>`__.
 
 Configure Bare Metal service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -115,7 +115,7 @@ Configure Identity service for Networking
            --project $SERVICE_TENANT
 
 For information about how to create service entries and users, see the `Newton Installation
-Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton/>`_
+Tutorials and Guides <https://docs.openstack.org/project-install-guide/newton/>`_
 for your distribution.
 
 Compute

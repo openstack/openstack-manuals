@@ -11,7 +11,7 @@ logging, the format of the log entries and the log levels.
 The log settings can be changed in ``ceilometer.conf``. The list of
 configuration options are listed in the logging configuration options
 table in the `Telemetry
-section <http://docs.openstack.org/newton/config-reference/telemetry.html>`__
+section <https://docs.openstack.org/newton/config-reference/telemetry.html>`__
 in the OpenStack Configuration Reference.
 
 By default ``stderr`` is used as standard output for the log messages.
@@ -61,7 +61,7 @@ service and the log file of Telemetry should be checked first.
 
 For the list of meters that are originated from notifications, see the
 `Telemetry Measurements
-Reference <http://docs.openstack.org/developer/ceilometer/measurements.html>`__.
+Reference <https://docs.openstack.org/developer/ceilometer/measurements.html>`__.
 
 
 Recommended auth_url to be used
@@ -71,7 +71,7 @@ When using the Telemetry command-line client, the credentials and the
 ``os_auth_url`` have to be set in order for the client to authenticate
 against OpenStack Identity. For further details
 about the credentials that have to be provided see the `Telemetry Python
-API <http://docs.openstack.org/developer/python-ceilometerclient/>`__.
+API <https://docs.openstack.org/developer/python-ceilometerclient/>`__.
 
 The service catalog provided by OpenStack Identity contains the
 URLs that are available for authentication. The URLs have

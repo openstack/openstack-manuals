@@ -8,7 +8,7 @@ less capacity with similar durability characteristics as replicas.
 From an application perspective, erasure coding support is transparent.
 Object Storage (swift) implements erasure coding as a Storage Policy.
 See `Storage Policies
-<http://docs.openstack.org/developer/swift/overview_policies.html>`_
+<https://docs.openstack.org/developer/swift/overview_policies.html>`_
 for more details.
 
 There is no external API related to erasure coding. Create a container using a

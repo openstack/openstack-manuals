@@ -47,7 +47,7 @@ into account. However, the majority of OpenStack development is done on
 systems using KVM and Xen-based hypervisors. For a detailed list of
 features and support across different hypervisors, see the
 `Feature Support Matrix
-<http://docs.openstack.org/developer/nova/support-matrix.html>`_.
+<https://docs.openstack.org/developer/nova/support-matrix.html>`_.
 
 You can also orchestrate clouds using multiple hypervisors in different
 availability zones. Compute supports the following hypervisors:
@@ -73,7 +73,7 @@ availability zones. Compute supports the following hypervisors:
 -  `Xen <http://www.xen.org/support/documentation.html>`__
 
 For more information about hypervisors, see the
-`Hypervisors <http://docs.openstack.org/newton/config-reference/compute/hypervisors.html>`__
+`Hypervisors <https://docs.openstack.org/newton/config-reference/compute/hypervisors.html>`__
 section in the OpenStack Configuration Reference.
 
 Projects, users, and roles
@@ -179,7 +179,7 @@ to keep ephemeral storage, depending on the flavor selected. In this
 case, the root file system can be on the persistent volume, and its
 state is maintained, even if the instance is shut down. For more
 information about this type of configuration, see `Introduction to the
-Block Storage service <http://docs.openstack.org/newton/config-reference/block-storage/block-storage-overview.html>`_
+Block Storage service <https://docs.openstack.org/newton/config-reference/block-storage/block-storage-overview.html>`_
 in the OpenStack Configuration Reference.
 
 .. note::

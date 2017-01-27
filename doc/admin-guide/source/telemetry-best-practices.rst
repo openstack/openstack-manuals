@@ -94,7 +94,7 @@ Data storage
 
       For more information on how to configure ``mod_wsgi``, see the
       `Telemetry Install Documentation
-      <http://docs.openstack.org/developer/ceilometer/install/mod_wsgi.html>`__.
+      <https://docs.openstack.org/developer/ceilometer/install/mod_wsgi.html>`__.
 
 #. The collection service provided by the Telemetry project is not intended
    to be an archival service. Set a Time to Live (TTL) value to expire data

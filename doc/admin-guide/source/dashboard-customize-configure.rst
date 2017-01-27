@@ -141,7 +141,7 @@ Logo link
 Help URL
 --------
 
-#. By default, the help URL points to http://docs.openstack.org. To change
+#. By default, the help URL points to https://docs.openstack.org. To change
    this, edit the following attribute in ``local_settings.py``:
 
    .. code-block:: python
@@ -305,7 +305,7 @@ The standard installation uses a non-encrypted HTTP channel.
    The service catalog configuration in the Identity service determines
    whether a service appears in the Dashboard.
    For the full listing, see `Horizon Settings and Configuration
-   <http://docs.openstack.org/developer/horizon/topics/settings.html>`_.
+   <https://docs.openstack.org/developer/horizon/topics/settings.html>`_.
 
 #. Restart the Apache HTTP Server.
 

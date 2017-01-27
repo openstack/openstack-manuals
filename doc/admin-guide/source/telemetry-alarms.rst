@@ -116,7 +116,7 @@ information about this approach, see the section called
 To use this workload partitioning solution set the
 ``evaluation_service`` option to ``default``. For more
 information, see the alarm section in the
-`OpenStack Configuration Reference <http://docs.openstack.org/newton/config-reference/telemetry.html>`_.
+`OpenStack Configuration Reference <https://docs.openstack.org/newton/config-reference/telemetry.html>`_.
 
 Using alarms
 ~~~~~~~~~~~~
