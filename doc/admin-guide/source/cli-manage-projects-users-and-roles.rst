@@ -327,8 +327,8 @@ IDs.
 
    .. code-block:: console
 
-      $ openstack role list --user USER_NAME --project TENANT_ID
-      Listing assignments using role list is deprecated as of the Newton release. Use role assignment list --user <user-name> --project <project-name> --names instead.
+      $ openstack role assignment list --user USER_NAME \
+        --project PROJECT_ID --names
       +----------------------------------+-------------+---------+------+
       | ID                               | Name        | Project | User |
       +----------------------------------+-------------+---------+------+
@@ -336,6 +336,12 @@ IDs.
       | 04a7e3192c0745a2b1e3d2baf5a3ee0f | Member      | demo    | demo |
       | 62bcf3e27eef4f648eb72d1f9920f6e5 | anotherrole | demo    | demo |
       +----------------------------------+-------------+---------+------+
+
+.. note::
+
+   Before the Newton release, users would run
+   the :command:`openstack role list --user USER_NAME --project TENANT_ID` command to
+   verify the role assignment.
 
 View role details
 -----------------
