@@ -8,7 +8,7 @@ Install and configure the backup service
 Optionally, install and configure the backup service. For simplicity,
 this configuration uses the Block Storage node and the Object Storage
 (swift) driver, thus depending on the
-`Object Storage service <http://docs.openstack.org/project-install-guide/newton/object-storage>`_.
+`Object Storage service <https://docs.openstack.org/project-install-guide/newton/object-storage>`_.
 
 .. note::
 

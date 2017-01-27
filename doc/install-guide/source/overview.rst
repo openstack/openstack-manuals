@@ -48,9 +48,9 @@ follows:
   network instead of a dedicated network.
 
 For more information on production architectures, see the
-`Architecture Design Guide <http://docs.openstack.org/arch-design/>`__,
-`OpenStack Operations Guide <http://docs.openstack.org/ops/>`__, and
-`OpenStack Networking Guide <http://docs.openstack.org/newton/networking-guide/>`__.
+`Architecture Design Guide <https://docs.openstack.org/arch-design/>`__,
+`OpenStack Operations Guide <https://docs.openstack.org/ops/>`__, and
+`OpenStack Networking Guide <https://docs.openstack.org/newton/networking-guide/>`__.
 
 .. _figure-hwreqs:
 

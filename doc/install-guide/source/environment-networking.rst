@@ -115,7 +115,7 @@ the controller node.
       default. During the installation process, certain steps will
       fail unless you alter or disable the firewall. For more
       information about securing your environment, refer to the
-      `OpenStack Security Guide <http://docs.openstack.org/sec/>`__.
+      `OpenStack Security Guide <https://docs.openstack.org/sec/>`__.
 
    .. endonly
 
@@ -124,7 +124,7 @@ the controller node.
       Your distribution does not enable a restrictive :term:`firewall`
       by default. For more information about securing your environment,
       refer to the
-      `OpenStack Security Guide <http://docs.openstack.org/sec/>`__.
+      `OpenStack Security Guide <https://docs.openstack.org/sec/>`__.
 
    .. endonly
 

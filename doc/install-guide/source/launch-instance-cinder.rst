@@ -139,7 +139,7 @@ Attach the volume to an instance
 
 For more information about how to manage volumes, see the
 `Manage volumes
-<http://docs.openstack.org/user-guide/common/cli-manage-volumes.html>`__
+<https://docs.openstack.org/user-guide/common/cli-manage-volumes.html>`__
 in OpenStack End User Guide.
 
 Return to :ref:`launch-instance`.

@@ -15,11 +15,11 @@ complete the following tasks:
 
 * Customize your dashboard. See section
   `Customize and configure the Dashboard
-  <http://docs.openstack.org/admin-guide/dashboard-customize-configure.html>`__.
+  <https://docs.openstack.org/admin-guide/dashboard-customize-configure.html>`__.
 
 * Set up session storage. See
   `Set up session storage for the dashboard
-  <http://docs.openstack.org/admin-guide/dashboard-sessions.html>`__.
+  <https://docs.openstack.org/admin-guide/dashboard-sessions.html>`__.
 
 * To use the VNC client with the dashboard, the browser
   must support HTML5 Canvas and HTML5 WebSockets.
