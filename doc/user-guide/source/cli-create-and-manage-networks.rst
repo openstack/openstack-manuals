@@ -3,7 +3,7 @@ Create and manage networks
 ==========================
 
 Before you run commands, `set environment variables using the OpenStack RC file
-<http://docs.openstack.org/user-guide/common/cli-set-environment-variables-using-openstack-rc.html>`_.
+<https://docs.openstack.org/user-guide/common/cli-set-environment-variables-using-openstack-rc.html>`_.
 
 Create networks
 ~~~~~~~~~~~~~~~
@@ -151,7 +151,7 @@ parameters:
 
 For information and examples on more advanced use of neutron's
 ``subnet`` subcommand, see the `OpenStack Administrator
-Guide <http://docs.openstack.org/admin-guide/networking-use.html#advanced-networking-operations>`__.
+Guide <https://docs.openstack.org/admin-guide/networking-use.html#advanced-networking-operations>`__.
 
 Create routers
 ~~~~~~~~~~~~~~

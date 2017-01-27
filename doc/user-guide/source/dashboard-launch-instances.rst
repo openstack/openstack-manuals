@@ -179,7 +179,7 @@ When you launch an instance from an image, OpenStack creates a local
 copy of the image on the compute node where the instance starts.
 
 For details on creating images, see `Creating images
-manually <http://docs.openstack.org/image-guide/create-images-manually.html>`_
+manually <https://docs.openstack.org/image-guide/create-images-manually.html>`_
 in the *OpenStack Virtual Machine Image Guide*.
 
 When you launch an instance from a volume, note the following steps:
@@ -220,7 +220,7 @@ file.
 It is also possible to SSH into an instance without an SSH keypair, if the
 administrator has enabled root password injection.  For more information
 about root password injection, see `Injecting the administrator password
-<http://docs.openstack.org/admin-guide/compute-admin-password-injection.html>`_
+<https://docs.openstack.org/admin-guide/compute-admin-password-injection.html>`_
 in the *OpenStack Administrator Guide*.
 
 Track usage for instances

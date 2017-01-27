@@ -52,7 +52,7 @@ command:
    a guest operation system is allowed to complete the shutdown.
    The default timeout is 60 seconds. See `Description of
    Compute configuration options
-   <http://docs.openstack.org/newton/config-reference/compute/config-options.html>`_
+   <https://docs.openstack.org/newton/config-reference/compute/config-options.html>`_
    for details.
 
    The timeout value can be overridden on a per image basis

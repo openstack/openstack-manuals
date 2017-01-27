@@ -9,7 +9,7 @@ replacing ``compute`` with ``network``.
 
 To use the legacy ``python-novaclient`` with a Compute endpoint, instantiate a
 `novaclient.v2.client.Client
-<http://docs.openstack.org/developer/python-novaclient/ref/v2/client.html>`__
+<https://docs.openstack.org/developer/python-novaclient/ref/v2/client.html>`__
 object using ``os-client-config``:
 
 .. code-block:: python

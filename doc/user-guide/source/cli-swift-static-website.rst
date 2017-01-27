@@ -20,9 +20,9 @@ The Static Web filter must be added to the pipeline in your
 middleware. You must also add a Static Web middleware configuration
 section.
 
-See the Cloud Administrator Guide for an example of the `static web configuration syntax <http://docs.openstack.org/newton/config-reference/object-storage/features.html#static-web-sites>`_.
+See the Cloud Administrator Guide for an example of the `static web configuration syntax <https://docs.openstack.org/newton/config-reference/object-storage/features.html#static-web-sites>`_.
 
-See the Cloud Administrator Guide for a complete example of the `/etc/swift/proxy-server.conf file <http://docs.openstack.org/newton/config-reference/object-storage/proxy-server.html#sample-proxy-server-configuration-file>`_
+See the Cloud Administrator Guide for a complete example of the `/etc/swift/proxy-server.conf file <https://docs.openstack.org/newton/config-reference/object-storage/proxy-server.html#sample-proxy-server-configuration-file>`_
 (including static web).
 
 Your publicly readable containers are checked for two headers,

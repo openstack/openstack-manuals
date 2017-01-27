@@ -50,7 +50,7 @@ Direct REST calls via keystoneauth
 ----------------------------------
 
 All of OpenStack's APIs are actually REST APIs. The
-`keystoneauth <http://docs.openstack.org/developer/keystoneauth>`_ library
+`keystoneauth <https://docs.openstack.org/developer/keystoneauth>`_ library
 provides an object that looks very much like a
 `Session <http://docs.python-requests.org/en/master/api/#request-sessions>`_
 object from the Python
