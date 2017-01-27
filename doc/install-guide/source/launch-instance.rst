@@ -8,9 +8,11 @@ This section creates the necessary virtual networks to support launching
 instances. Networking option 1 includes one provider (external) network
 with one instance that uses it. Networking option 2 includes one provider
 network with one instance that uses it and one self-service (private)
-network with one instance that uses it. The instructions in this
-section use command-line interface (CLI) tools on the controller
-node. For more information on the CLI tools, see the
+network with one instance that uses it.
+The instructions in this section use command-line interface (CLI)
+tools on the controller node. However, you can follow the instructions
+on any host that the tools are installed.
+For more information on the CLI tools, see the
 `OpenStack End User Guide
 <http://docs.openstack.org/user-guide/cli-launch-instances.html>`__.
 To use the dashboard, see the
@@ -81,7 +83,7 @@ must add a public key to the Compute service.
 
    .. end
 
-#. Generate and add a key pair:
+#. Generate a key pair and add a public key:
 
    .. code-block:: console
 
