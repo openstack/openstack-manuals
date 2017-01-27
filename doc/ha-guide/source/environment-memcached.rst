@@ -28,5 +28,5 @@ By default, ``controller1`` handles the caching service. If the host goes down,
 
 For more information about Memcached installation, see the
 *Environment -> Memcached* section in the
-`Installation Tutorials and Guides <http://docs.openstack.org/project-install-guide/newton>`_
+`Installation Tutorials and Guides <https://docs.openstack.org/project-install-guide/newton>`_
 depending on your distribution.

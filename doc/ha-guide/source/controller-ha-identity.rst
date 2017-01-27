@@ -16,7 +16,7 @@ Prerequisites
 
 Before beginning, ensure you have read the
 `OpenStack Identity service getting started documentation
-<http://docs.openstack.org/admin-guide/common/get-started-identity.html>`_.
+<https://docs.openstack.org/admin-guide/common/get-started-identity.html>`_.
 
 Add OpenStack Identity resource to Pacemaker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
