@@ -6,15 +6,15 @@ OpenStack
 ~~~~~~~~~
 
 -  `OpenStack Installation Tutorial for openSUSE and SUSE Linux Enterprise
-   Server <http://docs.openstack.org/newton/install-guide-obs/>`_
+   Server <https://docs.openstack.org/newton/install-guide-obs/>`_
 
 -  `OpenStack Installation Tutorial for Red Hat Enterprise Linux and CentOS
-   <http://docs.openstack.org/newton/install-guide-rdo/>`_
+   <https://docs.openstack.org/newton/install-guide-rdo/>`_
 
 -  `OpenStack Installation Tutorial for Ubuntu
-   Server <http://docs.openstack.org/newton/install-guide-ubuntu/>`_
+   Server <https://docs.openstack.org/newton/install-guide-ubuntu/>`_
 
--  `OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/>`_
+-  `OpenStack Administrator Guide <https://docs.openstack.org/admin-guide/>`_
 
 -  `OpenStack Cloud Computing Cookbook (Packt
    Publishing) <http://www.packtpub.com/openstack-cloud-computing-cookbook-second-edition/book>`_

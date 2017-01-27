@@ -18,7 +18,7 @@ tab with a :guilabel:`System Panel` and an :guilabel:`Identity` tab.
 These interfaces give you access to system information and usage as
 well as to settings for configuring what
 end users can do. Refer to the `OpenStack Administrator
-Guide <http://docs.openstack.org/admin-guide/dashboard.html>`__ for
+Guide <https://docs.openstack.org/admin-guide/dashboard.html>`__ for
 detailed how-to information about using the dashboard as an admin user.
 
 Command-Line Tools
@@ -50,7 +50,7 @@ Install OpenStack command-line clients
 
 For instructions on installing, upgrading, or removing command-line clients,
 see the `Install the OpenStack command-line clients
-<http://docs.openstack.org/user-guide/common/cli-install-openstack-command-line-clients.html>`_
+<https://docs.openstack.org/user-guide/common/cli-install-openstack-command-line-clients.html>`_
 section in OpenStack End User Guide.
 
 .. note::
@@ -579,5 +579,5 @@ Summary
 We hope you have enjoyed this quick tour of your working environment,
 including how to interact with your cloud and extract useful
 information. From here, you can use the `OpenStack Administrator
-Guide <http://docs.openstack.org/admin-guide/>`_ as your
+Guide <https://docs.openstack.org/admin-guide/>`_ as your
 reference for all of the command-line functionality in your cloud.

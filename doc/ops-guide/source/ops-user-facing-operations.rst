@@ -316,7 +316,7 @@ A full set of options can be found using:
    $ glance help
 
 or the `Command-Line Interface
-Reference <http://docs.openstack.org/cli-reference/glance.html>`__.
+Reference <https://docs.openstack.org/cli-reference/glance.html>`__.
 
 The Image service and the Database
 ----------------------------------
@@ -851,7 +851,7 @@ or run this from the command line:
 
    For more information about updating Block Storage volumes (for
    example, resizing or transferring), see the `OpenStack End User
-   Guide <http://docs.openstack.org/user-guide/common/cli-manage-volumes.html>`__.
+   Guide <https://docs.openstack.org/user-guide/common/cli-manage-volumes.html>`__.
 
 Block Storage Creation Failures
 -------------------------------
@@ -878,7 +878,7 @@ The default configuration of the Shared File Systems service depends on
 the back-end driver the admin chooses when starting the Shared File
 Systems service. For more information about existing back-end drivers,
 see `Share Backends
-<http://docs.openstack.org/developer/manila/devref/index.html#share-backends>`__
+<https://docs.openstack.org/developer/manila/devref/index.html#share-backends>`__
 of Shared File Systems service Developer Guide. For example, in case of
 OpenStack Block Storage based back-end is used, the Shared File Systems
 service cares about everything, including VMs, networking, keypairs, and
@@ -902,36 +902,36 @@ large number of operations with shares:
 * Use security services
 
 For more information on share management see `Share management
-<http://docs.openstack.org/admin-guide/shared-file-systems-share-management.html>`__
+<https://docs.openstack.org/admin-guide/shared-file-systems-share-management.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide.
 As to Security services, you should remember that different drivers
 support different authentication methods, while generic driver does not
 support Security Services at all (see section `Security services
-<http://docs.openstack.org/admin-guide/shared-file-systems-security-services.html>`__
+<https://docs.openstack.org/admin-guide/shared-file-systems-security-services.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 You can create a share in a network, list shares, and show information
 for, update, and delete a specified share. You can also create snapshots
 of shares (see `Share snapshots
-<http://docs.openstack.org/admin-guide/shared-file-systems-snapshots.html>`__
+<https://docs.openstack.org/admin-guide/shared-file-systems-snapshots.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 There are default and specific share types that allow you to filter or
 choose back-ends before you create a share. Functions and behaviour of
 share type is similar to Block Storage volume type (see `Share types
-<http://docs.openstack.org/admin-guide/shared-file-systems-share-types.html>`__
+<https://docs.openstack.org/admin-guide/shared-file-systems-share-types.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 To help users keep and restore their data, Shared File Systems service
 provides a mechanism to create and operate snapshots (see `Share snapshots
-<http://docs.openstack.org/admin-guide/shared-file-systems-snapshots.html>`__
+<https://docs.openstack.org/admin-guide/shared-file-systems-snapshots.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 A security service stores configuration information for clients for
 authentication and authorization. Inside Manila a share network can be
 associated with up to three security types (for detailed information see
 `Security services
-<http://docs.openstack.org/admin-guide/shared-file-systems-security-services.html>`__
+<https://docs.openstack.org/admin-guide/shared-file-systems-security-services.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide):
 
 * LDAP
@@ -953,7 +953,7 @@ called StandaloneNetworkPlugin is used. In this case, provide network
 information in the configuration: IP range, network type, and
 segmentation ID. Also you can add security services to a share network
 (see section
-`“Networking” <http://docs.openstack.org/admin-guide/shared-file-systems-networking.html>`__
+`“Networking” <https://docs.openstack.org/admin-guide/shared-file-systems-networking.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 
@@ -961,7 +961,7 @@ The main idea of consistency groups is to enable you to create snapshots
 at the exact same point in time from multiple file system shares. Those
 snapshots can be then used for restoring all shares that were associated
 with the consistency group (see section `“Consistency
-groups” <http://docs.openstack.org/admin-guide/shared-file-systems-cgroups.html>`__
+groups” <https://docs.openstack.org/admin-guide/shared-file-systems-cgroups.html>`__
 of chapter “Shared File Systems” in OpenStack Administrator Guide).
 
 Shared File System storage allows administrators to set limits and
@@ -988,7 +988,7 @@ quotas for the following resources:
 User can see his rate limits and absolute limits by running commands
 :command:`manila rate-limits` and :command:`manila absolute-limits`
 respectively. For more details on limits and quotas see `Quotas and limits
-<http://docs.openstack.org/admin-guide/shared-file-systems-quotas.html>`__
+<https://docs.openstack.org/admin-guide/shared-file-systems-quotas.html>`__
 of "Share management" section of OpenStack Administrator Guide document.
 
 This section lists several of the most important Use Cases that
@@ -1171,7 +1171,7 @@ system and use it for your purposes.
 .. note::
 
    See `Share Management
-   <http://docs.openstack.org/admin-guide/shared-file-systems-share-management.html>`__
+   <https://docs.openstack.org/admin-guide/shared-file-systems-share-management.html>`__
    of “Shared File Systems” section of OpenStack Administrator Guide
    document for the details on share management operations.
 
@@ -1254,7 +1254,7 @@ specified access rules:
 
    For the details of features supported by different drivers see
    `Manila share features support mapping
-   <http://docs.openstack.org/developer/manila/devref/share_back_ends_feature_support_mapping.html>`__
+   <https://docs.openstack.org/developer/manila/devref/share_back_ends_feature_support_mapping.html>`__
    of Manila Developer Guide document.
 
 Manage Shares
@@ -1409,7 +1409,7 @@ permissions to run it:
 
    For more details and additional information about other cases,
    features, API commands etc, see `Share Management
-   <http://docs.openstack.org/admin-guide/shared-file-systems-share-management.html>`__
+   <https://docs.openstack.org/admin-guide/shared-file-systems-share-management.html>`__
    of “Shared File Systems” section of OpenStack Administrator Guide document.
 
 Create Snapshots
@@ -1468,7 +1468,7 @@ To make sure that the snapshot is available, run:
 
    For more details and additional information on snapshots, see
    `Share Snapshots
-   <http://docs.openstack.org/admin-guide/shared-file-systems-snapshots.html>`__
+   <https://docs.openstack.org/admin-guide/shared-file-systems-snapshots.html>`__
    of “Shared File Systems” section of “OpenStack Administrator Guide” document.
 
 
@@ -1542,7 +1542,7 @@ Share use case described earlier in this chapter.
 .. tip::
 
    See `Share Networks
-   <http://docs.openstack.org/admin-guide/shared-file-systems-share-networks.html>`__
+   <https://docs.openstack.org/admin-guide/shared-file-systems-share-networks.html>`__
    of “Shared File Systems” section of OpenStack Administrator Guide
    document for more details.
 
@@ -1617,7 +1617,7 @@ You also can add and remove the security services to the share network.
 .. tip::
 
    For details, see subsection `Security Services
-   <http://docs.openstack.org/admin-guide/shared-file-systems-security-services.html>`__
+   <https://docs.openstack.org/admin-guide/shared-file-systems-security-services.html>`__
    of “Shared File Systems” section of OpenStack Administrator Guide document.
 
 Instances
@@ -2007,13 +2007,13 @@ is now attached as ``/dev/vda``:
 
 Read more detailed instructions for launching an instance from a
 bootable volume in the `OpenStack End User
-Guide <http://docs.openstack.org/user-guide/cli-nova-launch-instance-from-volume.html>`__.
+Guide <https://docs.openstack.org/user-guide/cli-nova-launch-instance-from-volume.html>`__.
 
 To boot normally from an image and attach block storage, map to a device
 other than vda. You can find instructions for launching an instance and
 attaching a volume to the instance and for copying the image to the
 attached volume in the `OpenStack End User
-Guide <http://docs.openstack.org/user-guide/dashboard-launch-instances.html>`__.
+Guide <https://docs.openstack.org/user-guide/dashboard-launch-instances.html>`__.
 
 Taking Snapshots
 ~~~~~~~~~~~~~~~~
@@ -2284,7 +2284,7 @@ Good Luck!
 
 This section was intended as a brief introduction to some of the most
 useful of many OpenStack commands. For an exhaustive list, please refer
-to the `OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/>`__.
+to the `OpenStack Administrator Guide <https://docs.openstack.org/admin-guide/>`__.
 We hope your users remain happy and recognize your hard work!
 (For more hard work, turn the page to the next chapter, where we discuss
 the system-facing operations: maintenance, failures and debugging.)

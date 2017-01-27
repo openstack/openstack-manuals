@@ -19,7 +19,7 @@ To take the first path, you can modify the OpenStack code directly.
 Learn `how to contribute
 <https://wiki.openstack.org/wiki/How_To_Contribute>`_,
 follow the `Developer's Guide
-<http://docs.openstack.org/infra/manual/developers.html>`_, make your
+<https://docs.openstack.org/infra/manual/developers.html>`_, make your
 changes, and contribute them back to the upstream OpenStack project.
 This path is recommended if the feature you need requires deep
 integration with an existing project. The community is always open to

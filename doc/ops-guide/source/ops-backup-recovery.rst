@@ -10,7 +10,7 @@ to how quickly you need to recover from data loss.
 
    If you cannot have any data loss at all, you should also focus on a
    highly available deployment. The `OpenStack High Availability
-   Guide <http://docs.openstack.org/ha-guide/index.html>`_ offers
+   Guide <https://docs.openstack.org/ha-guide/index.html>`_ offers
    suggestions for elimination of a single point of failure that could
    cause system downtime. While it is not a completely prescriptive
    document, it offers methods and techniques for avoiding downtime and

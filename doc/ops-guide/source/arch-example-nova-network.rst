@@ -158,7 +158,7 @@ We chose the *SQL back end for Identity* over others, such as LDAP. This
 back end is simple to install and is robust. The authors acknowledge
 that many installations want to bind with existing directory services
 and caution careful understanding of the `array of options available
-<http://docs.openstack.org/newton/config-reference/identity/options.html#keystone-ldap>`_.
+<https://docs.openstack.org/newton/config-reference/identity/options.html#keystone-ldap>`_.
 
 Block Storage (cinder) is installed natively on external storage nodes
 and uses the *LVM/iSCSI plug-in*. Most Block Storage plug-ins are tied
@@ -195,7 +195,7 @@ goes out of the cloud.
 
 .. tip::
 
-   `Multi-host <http://docs.openstack.org/havana/install-guide/install/apt/content/nova-network.html>`_
+   `Multi-host <https://docs.openstack.org/havana/install-guide/install/apt/content/nova-network.html>`_
    is a high-availability option for the network configuration, where
    the ``nova-network`` service is run on every compute node instead of
    running on only a single node.
@@ -255,7 +255,7 @@ You can extend this reference architecture as follows:
 
 -  Add an OpenStack Storage service (see the Object Storage chapter in
    the `Installation Tutorials and Guides
-   <http://docs.openstack.org/project-install-guide/newton/>`_ for your distribution).
+   <https://docs.openstack.org/project-install-guide/newton/>`_ for your distribution).
 
 -  Add additional OpenStack Block Storage hosts (see
    :doc:`ops-maintenance`).

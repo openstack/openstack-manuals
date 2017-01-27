@@ -82,7 +82,7 @@ have many missing services if it goes down.
 To avoid this situation, create a highly available cloud controller
 cluster. This is outside the scope of this document, but you can read
 more in the `OpenStack High Availability
-Guide <http://docs.openstack.org/ha-guide/index.html>`_.
+Guide <https://docs.openstack.org/ha-guide/index.html>`_.
 
 The next best approach is to use a configuration-management tool, such
 as Puppet, to automatically build a cloud controller. This should not
