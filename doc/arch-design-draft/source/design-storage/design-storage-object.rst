@@ -19,7 +19,7 @@ every level, at some point. Infrequently encountered failures that would
 hamstring other storage systems, such as issues taking down RAID cards
 or entire servers, are handled gracefully with OpenStack Object
 Storage. For more information, see the  `Swift developer
-documentation <http://docs.openstack.org/developer/swift/overview_architecture.html>`_
+documentation <https://docs.openstack.org/developer/swift/overview_architecture.html>`_
 
 When designing your cluster, you must consider durability and
 availability which is dependent on the spread and placement of your data,

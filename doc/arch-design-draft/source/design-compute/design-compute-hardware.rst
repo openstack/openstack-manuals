@@ -59,7 +59,7 @@ under the CPU selection secution.
 However, there are also network and storage considerations for any compute
 server. Network considerations are discussed in the
 `network section
-<http://docs.openstack.org/draft/arch-design-draft/design-networking.html>`_
+<https://docs.openstack.org/draft/arch-design-draft/design-networking.html>`_
 of this chapter.
 
 

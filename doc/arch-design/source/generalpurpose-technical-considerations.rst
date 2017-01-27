@@ -522,7 +522,7 @@ case, the switching infrastructure must support L3 routing.
 OpenStack Networking and legacy networking both have their advantages
 and disadvantages. They are both valid and supported options that fit
 different network deployment models described in the
-`Networking deployment options table <http://docs.openstack.org/ops-guide/arch-network-design.html#network-topology>`
+`Networking deployment options table <https://docs.openstack.org/ops-guide/arch-network-design.html#network-topology>`
 of OpenStack Operations Guide.
 
 Ensure your deployment has adequate back-up capabilities.
@@ -540,7 +540,7 @@ level of guarantee to match service features.
 
 For more information on high availability in OpenStack, see the
 `OpenStack High Availability
-Guide <http://docs.openstack.org/ha-guide/>`_.
+Guide <https://docs.openstack.org/ha-guide/>`_.
 
 Security
 ~~~~~~~~
@@ -615,4 +615,4 @@ authentication tokens. For this reason, placing the API services behind
 hardware that performs SSL termination is strongly recommended.
 
 For more information OpenStack Security, see the `OpenStack Security
-Guide <http://docs.openstack.org/security-guide/>`_.
+Guide <https://docs.openstack.org/security-guide/>`_.

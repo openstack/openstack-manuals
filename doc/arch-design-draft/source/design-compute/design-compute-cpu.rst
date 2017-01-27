@@ -56,7 +56,7 @@ Additionally, CPU selection may not be one-size-fits-all across enterprises,
 but more of a list of SKUs that are tuned for the enterprise workloads.
 
 A deeper discussion about NUMA can be found in `CPU topologies in the Admin
-Guide <http://docs.openstack.org/admin-guide/compute-cpu-topologies.html>`_.
+Guide <https://docs.openstack.org/admin-guide/compute-cpu-topologies.html>`_.
 
 In order to take advantage of these new enhancements in OpenStack nova, Compute
 hosts must be using NUMA capable CPUs.

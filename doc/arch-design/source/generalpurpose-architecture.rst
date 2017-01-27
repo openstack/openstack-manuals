@@ -428,7 +428,7 @@ examples include:
 Some of these software packages are described in more detail in the
 OpenStack High Availability Guide (refer to the `OpenStack network
 nodes
-chapter <http://docs.openstack.org/ha-guide/networking-ha.html>`__ of
+chapter <https://docs.openstack.org/ha-guide/networking-ha.html>`__ of
 the OpenStack High Availability Guide).
 
 For a general purpose OpenStack cloud, the OpenStack infrastructure
@@ -449,7 +449,7 @@ including (or not including) these software packages is primarily
 determined by the availability of the cloud infrastructure and the
 complexity of supporting the configuration after it is deployed. The
 `OpenStack High Availability
-Guide <http://docs.openstack.org/ha-guide/>`__ provides more details on
+Guide <https://docs.openstack.org/ha-guide/>`__ provides more details on
 the installation and configuration of Corosync and Pacemaker, should
 these packages need to be included in the design.
 

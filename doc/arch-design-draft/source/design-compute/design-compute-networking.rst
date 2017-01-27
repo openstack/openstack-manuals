@@ -47,4 +47,4 @@ be handled by a SDN other than neutron. However, when using neutron DVR with
 OVS, this network must be present on the compute node since north and south
 traffic will not be handled by the controller nodes, but by the compute node
 itself. For more information on DVR with OVS and compute nodes, see `Scenario:
-High Availability using Distributed Virtual Routing (DVR) <http://docs.openstack.org/mitaka/networking-guide/scenario-dvr-ovs.html>`_
+High Availability using Distributed Virtual Routing (DVR) <https://docs.openstack.org/mitaka/networking-guide/scenario-dvr-ovs.html>`_

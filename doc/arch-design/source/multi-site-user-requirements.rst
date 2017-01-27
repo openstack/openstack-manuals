@@ -55,7 +55,7 @@ should have minimal impact on the availability of the OpenStack
 services.
 
 The `OpenStack High Availability
-Guide <http://docs.openstack.org/ha-guide/>`_ contains more information
+Guide <https://docs.openstack.org/ha-guide/>`_ contains more information
 on how to provide redundancy for the OpenStack components.
 
 Multiple network links should be deployed between sites to provide

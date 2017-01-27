@@ -48,7 +48,7 @@ Logging and monitoring
 
 Logging and monitoring does not significantly differ for a multi-site
 OpenStack cloud. The tools described in the `Logging and monitoring
-chapter <http://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`__
+chapter <https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`__
 of the OpenStack Operations Guide remain applicable. Logging and monitoring
 can be provided on a per-site basis, and in a common centralized location.
 
@@ -64,7 +64,7 @@ independent OpenStack installations which are linked together using
 shared centralized services such as OpenStack Identity. At a high level
 the recommended order of operations to upgrade an individual OpenStack
 environment is (see the `Upgrades
-chapter <http://docs.openstack.org/ops-guide/ops-upgrades.html>`__
+chapter <https://docs.openstack.org/ops-guide/ops-upgrades.html>`__
 of the OpenStack Operations Guide for details):
 
 #. Upgrade the OpenStack Identity service (keystone).
@@ -119,7 +119,7 @@ launch more than 25 instances in any single region.
 
 For more information on managing quotas refer to the `Managing projects
 and users
-chapter <http://docs.openstack.org/ops-guide/ops-projects-users.html>`__
+chapter <https://docs.openstack.org/ops-guide/ops-projects-users.html>`__
 of the OpenStack Operators Guide.
 
 Policy management

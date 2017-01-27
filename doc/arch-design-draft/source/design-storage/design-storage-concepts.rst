@@ -93,7 +93,7 @@ provided by OpenStack.
    * - Encryption set by…
      - Parameter in nova.conf
      - Admin establishing `encrypted volume type
-       <http://docs.openstack.org/admin-guide/dashboard_manage_volumes.html>`_,
+       <https://docs.openstack.org/admin-guide/dashboard_manage_volumes.html>`_,
        then user selecting encrypted volume
      - Not yet available
      - Shared File Systems service does not apply any additional encryption
@@ -106,7 +106,7 @@ provided by OpenStack.
        a share was being created. In case of thin provisioning it can be
        partial space reservation (for more details see
        `Capabilities and Extra-Specs
-       <http://docs.openstack.org/developer/manila/devref/capabilities_and_extra_specs.html?highlight=extra%20specs#common-capabilities>`_
+       <https://docs.openstack.org/developer/manila/devref/capabilities_and_extra_specs.html?highlight=extra%20specs#common-capabilities>`_
        specification)
 
 .. note::

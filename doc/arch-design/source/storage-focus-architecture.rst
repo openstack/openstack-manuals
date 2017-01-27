@@ -360,7 +360,7 @@ themselves. Some examples include HAProxy, Keepalived, and various
 routing daemons (like Quagga). The OpenStack High Availability Guide
 describes some of these software packages, HAProxy in particular. See
 the `Network controller cluster stack
-chapter <http://docs.openstack.org/ha-guide/networking-ha.html>`_ of
+chapter <https://docs.openstack.org/ha-guide/networking-ha.html>`_ of
 the OpenStack High Availability Guide.
 
 Management software

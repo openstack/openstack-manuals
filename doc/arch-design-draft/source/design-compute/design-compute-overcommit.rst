@@ -50,7 +50,7 @@ Logging
 ~~~~~~~
 
 Logging is described in more detail in `Logging and Monitoring
-<http://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_. However,
+<https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_. However,
 it is an important design consideration to take into account before
 commencing operations of your cloud.
 

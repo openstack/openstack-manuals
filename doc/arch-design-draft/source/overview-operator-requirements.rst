@@ -156,7 +156,7 @@ Reliability and availability
 
 For more information on
 managing and maintaining your OpenStack environment, see the
-`Operations chapter <http://docs.openstack.org/ops-guide/operations.html>`_
+`Operations chapter <https://docs.openstack.org/ops-guide/operations.html>`_
 in the OpenStack Operations Guide.
 
 Logging and monitoring
@@ -178,7 +178,7 @@ Specific meters that are critically important to capture include:
 
 Logging and monitoring does not significantly differ for a multi-site OpenStack
 cloud. The tools described in the `Logging and monitoring chapter
-<http://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`__ of
+<https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`__ of
 the Operations Guide remain applicable. Logging and monitoring can be provided
 on a per-site basis, and in a common centralized location.
 
@@ -198,7 +198,7 @@ bandwidth.
 The inclusion of clustering software, such as Corosync or Pacemaker, is
 primarily determined by the availability of the cloud infrastructure and
 the complexity of supporting the configuration after it is deployed. The
-`OpenStack High Availability Guide <http://docs.openstack.org/ha-guide/>`_
+`OpenStack High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 provides more details on the installation and configuration of Corosync
 and Pacemaker, should these packages need to be included in the design.
 
@@ -265,7 +265,7 @@ Quota management
 Quotas are used to set operational limits to prevent system capacities
 from being exhausted without notification. For more
 information on managing quotas refer to the `Managing projects and users
-chapter <http://docs.openstack.org/ops-guide/ops-projects-users.html>`__
+chapter <https://docs.openstack.org/ops-guide/ops-projects-users.html>`__
 of the OpenStack Operations Guide.
 
 Policy management

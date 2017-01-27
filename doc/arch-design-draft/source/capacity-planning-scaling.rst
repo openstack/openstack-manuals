@@ -131,7 +131,7 @@ CPU performance (CPU/core).
 
    For a discussion of metric tracking, including how to extract
    metrics from your cloud, see the .`OpenStack Operations Guide
-   <http://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_.
+   <https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_.
 
 Adding Cloud Controller Nodes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,7 +152,7 @@ load-balancing method (DNS round robin, hardware load balancer, or
 software such as Pound or HAProxy). One caveat with dashboard is the VNC
 proxy, which uses the WebSocket protocol— something that an L7 load
 balancer might struggle with. See also `Horizon session storage
-<http://docs.openstack.org/developer/horizon/topics/deployment.html#session-storage>`_.
+<https://docs.openstack.org/developer/horizon/topics/deployment.html#session-storage>`_.
 
 You can configure some services, such as ``nova-api`` and
 ``glance-api``, to use multiple processes by changing a flag in their
@@ -165,7 +165,7 @@ the one machine.
    supported AMQP brokers have built-in clustering support. Information
    on how to configure these and many of the other services can be
    found in the `operations chapter
-   <http://docs.openstack.org/ops-guide/operations.html>`_ in the Operations
+   <https://docs.openstack.org/ops-guide/operations.html>`_ in the Operations
    Guide.
 
 Segregating Your Cloud
@@ -417,7 +417,7 @@ nodes, a :term:`weight` should be specified that reflects the
 
 Monitoring the resource usage and user growth will enable you to know
 when to procure. The `Logging and Monitoring
-<http://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_
+<https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_
 chapte in the Operations Guide details some useful metrics.
 
 Burn-in Testing
