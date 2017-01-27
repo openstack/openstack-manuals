@@ -9,7 +9,7 @@ DNS service (designate) command-line client
 The designate client is the command-line interface (CLI) for
 the DNS service (designate) API and its extensions.
 
-This chapter documents :command:`designate` version ``2.4.0``.
+This chapter documents :command:`designate` version ``2.5.0``.
 
 For help on a specific :command:`designate` command, enter:
 
@@ -157,8 +157,9 @@ designate diagnostics-ping
 
    usage: designate diagnostics-ping [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX] --service
-                                     SERVICE --host HOST
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX] --service SERVICE --host
+                                     HOST
 
 Ping a service on a given host
 
@@ -182,8 +183,8 @@ designate domain-create
 
    usage: designate domain-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX] --name NAME
-                                  --email EMAIL [--ttl TTL]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
+                                  --name NAME --email EMAIL [--ttl TTL]
                                   [--description DESCRIPTION]
 
 Create Domain
@@ -214,7 +215,7 @@ designate domain-delete
 
    usage: designate domain-delete [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   id
 
 Delete Domain
@@ -237,8 +238,8 @@ designate domain-get
 .. code-block:: console
 
    usage: designate domain-get [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
                                id
 
 Get Domain
@@ -261,7 +262,8 @@ designate domain-list
 .. code-block:: console
 
    usage: designate domain-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
 List Domains
@@ -281,7 +283,7 @@ designate domain-servers-list
    usage: designate domain-servers-list [-h]
                                         [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
-                                        [--noindent]
+                                        [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         id
 
@@ -306,8 +308,8 @@ designate domain-update
 
    usage: designate domain-update [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX] [--name NAME]
-                                  [--email EMAIL] [--ttl TTL]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
+                                  [--name NAME] [--email EMAIL] [--ttl TTL]
                                   [--description DESCRIPTION | --no-description]
                                   id
 
@@ -345,8 +347,8 @@ designate quota-get
 .. code-block:: console
 
    usage: designate quota-get [-h] [-f {html,json,shell,table,value,yaml}]
-                              [-c COLUMN] [--max-width <integer>] [--noindent]
-                              [--prefix PREFIX]
+                              [-c COLUMN] [--max-width <integer>] [--print-empty]
+                              [--noindent] [--prefix PREFIX]
                               tenant_id
 
 Get Quota
@@ -369,8 +371,8 @@ designate quota-reset
 .. code-block:: console
 
    usage: designate quota-reset [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
                                 tenant_id
 
 Reset Quota
@@ -393,8 +395,9 @@ designate quota-update
 .. code-block:: console
 
    usage: designate quota-update [-h] [-f {html,json,shell,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX] [--domains DOMAINS]
+                                 [-c COLUMN] [--max-width <integer>]
+                                 [--print-empty] [--noindent] [--prefix PREFIX]
+                                 [--domains DOMAINS]
                                  [--domain-recordsets DOMAIN_RECORDSETS]
                                  [--recordset-records RECORDSET_RECORDS]
                                  [--domain-records DOMAIN_RECORDS]
@@ -437,8 +440,8 @@ designate record-create
 
    usage: designate record-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX] --name NAME
-                                  --type TYPE --data DATA [--ttl TTL]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
+                                  --name NAME --type TYPE --data DATA [--ttl TTL]
                                   [--priority PRIORITY]
                                   [--description DESCRIPTION]
                                   domain_id
@@ -482,7 +485,7 @@ designate record-delete
 
    usage: designate record-delete [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   domain_id id
 
 Delete Record
@@ -508,8 +511,8 @@ designate record-get
 .. code-block:: console
 
    usage: designate record-get [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
                                domain_id id
 
 Get Record
@@ -535,7 +538,8 @@ designate record-list
 .. code-block:: console
 
    usage: designate record-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 domain_id
 
@@ -560,8 +564,8 @@ designate record-update
 
    usage: designate record-update [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX] [--name NAME]
-                                  [--type TYPE] [--data DATA]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
+                                  [--name NAME] [--type TYPE] [--data DATA]
                                   [--description DESCRIPTION | --no-description]
                                   [--ttl TTL | --no-ttl]
                                   [--priority PRIORITY | --no-priority]
@@ -615,7 +619,8 @@ designate report-count-all
 
    usage: designate report-count-all [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
-                                     [--noindent] [--prefix PREFIX]
+                                     [--print-empty] [--noindent]
+                                     [--prefix PREFIX]
 
 Get count totals for all tenants, domains and records
 
@@ -634,7 +639,8 @@ designate report-count-domains
    usage: designate report-count-domains [-h]
                                          [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
-                                         [--noindent] [--prefix PREFIX]
+                                         [--print-empty] [--noindent]
+                                         [--prefix PREFIX]
 
 Get counts for total domains
 
@@ -653,7 +659,8 @@ designate report-count-records
    usage: designate report-count-records [-h]
                                          [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
-                                         [--noindent] [--prefix PREFIX]
+                                         [--print-empty] [--noindent]
+                                         [--prefix PREFIX]
 
 Get counts for total records
 
@@ -672,7 +679,8 @@ designate report-count-tenants
    usage: designate report-count-tenants [-h]
                                          [-f {html,json,shell,table,value,yaml}]
                                          [-c COLUMN] [--max-width <integer>]
-                                         [--noindent] [--prefix PREFIX]
+                                         [--print-empty] [--noindent]
+                                         [--prefix PREFIX]
 
 Get counts for total tenants
 
@@ -691,7 +699,7 @@ designate report-tenant-domains
    usage: designate report-tenant-domains [-h]
                                           [-f {csv,html,json,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
-                                          [--noindent]
+                                          [--print-empty] [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
                                           --report-tenant-id REPORT_TENANT_ID
 
@@ -714,7 +722,7 @@ designate report-tenants-all
 
    usage: designate report-tenants-all [-h] [-f {csv,html,json,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
-                                       [--noindent]
+                                       [--print-empty] [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]
 
 Get list of tenants and domain count for each
@@ -733,7 +741,8 @@ designate server-create
 
    usage: designate server-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX] --name NAME
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
+                                  --name NAME
 
 Create Server
 
@@ -754,7 +763,7 @@ designate server-delete
 
    usage: designate server-delete [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
                                   id
 
 Delete Server
@@ -777,8 +786,8 @@ designate server-get
 .. code-block:: console
 
    usage: designate server-get [-h] [-f {html,json,shell,table,value,yaml}]
-                               [-c COLUMN] [--max-width <integer>] [--noindent]
-                               [--prefix PREFIX]
+                               [-c COLUMN] [--max-width <integer>]
+                               [--print-empty] [--noindent] [--prefix PREFIX]
                                id
 
 Get Server
@@ -801,7 +810,8 @@ designate server-list
 .. code-block:: console
 
    usage: designate server-list [-h] [-f {csv,html,json,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
 
 List Servers
@@ -820,7 +830,8 @@ designate server-update
 
    usage: designate server-update [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
-                                  [--noindent] [--prefix PREFIX] [--name NAME]
+                                  [--print-empty] [--noindent] [--prefix PREFIX]
+                                  [--name NAME]
                                   id
 
 Update Server
@@ -846,8 +857,8 @@ designate sync-all
 .. code-block:: console
 
    usage: designate sync-all [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width <integer>] [--noindent]
-                             [--prefix PREFIX]
+                             [-c COLUMN] [--max-width <integer>] [--print-empty]
+                             [--noindent] [--prefix PREFIX]
 
 Sync Everything
 
@@ -864,8 +875,8 @@ designate sync-domain
 .. code-block:: console
 
    usage: designate sync-domain [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
                                 domain_id
 
 Sync a single Domain
@@ -888,8 +899,8 @@ designate sync-record
 .. code-block:: console
 
    usage: designate sync-record [-h] [-f {html,json,shell,table,value,yaml}]
-                                [-c COLUMN] [--max-width <integer>] [--noindent]
-                                [--prefix PREFIX]
+                                [-c COLUMN] [--max-width <integer>]
+                                [--print-empty] [--noindent] [--prefix PREFIX]
                                 domain_id record_id
 
 Sync a single Record
@@ -915,8 +926,8 @@ designate touch-domain
 .. code-block:: console
 
    usage: designate touch-domain [-h] [-f {html,json,shell,table,value,yaml}]
-                                 [-c COLUMN] [--max-width <integer>] [--noindent]
-                                 [--prefix PREFIX]
+                                 [-c COLUMN] [--max-width <integer>]
+                                 [--print-empty] [--noindent] [--prefix PREFIX]
                                  domain_id
 
 Touch a single Domain
