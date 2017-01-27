@@ -9,7 +9,7 @@ Key Manager service (barbican) command-line client
 The barbican client is the command-line interface (CLI) for
 the Key Manager service (barbican) API and its extensions.
 
-This chapter documents :command:`barbican` version ``4.1.0``.
+This chapter documents :command:`barbican` version ``4.2.0``.
 
 For help on a specific :command:`barbican` command, enter:
 
@@ -135,26 +135,6 @@ barbican optional arguments
 
 ``--barbican-api-version <barbican-api-version>``
   Defaults to ``env[BARBICAN_API_VERSION]``.
-
-``--insecure``
-  Explicitly allow client to perform "insecure" TLS
-  (https) requests. The server's certificate will not be
-  verified against any certificate authorities. This
-  option should be used with caution.
-
-``--os-cacert <ca-certificate>``
-  Specify a CA bundle file to use in verifying a TLS
-  (https) server certificate. Defaults to
-  ``env[OS_CACERT]``.
-
-``--os-cert <certificate>``
-  Defaults to ``env[OS_CERT]``.
-
-``--os-key <key>``
-  Defaults to ``env[OS_KEY]``.
-
-``--timeout <seconds>``
-  Set request timeout (in seconds).
 
 .. _barbican_acl_delete:
 
@@ -372,7 +352,7 @@ List cas.
   specify the page offset (default: 0)
 
 ``--name NAME, -n NAME``
-  specify the secret name (default: None)
+  specify the ca name (default: None)
 
 .. _barbican_secret_container_create:
 
@@ -636,7 +616,8 @@ Create a new order.
 **Positional arguments:**
 
 ``type``
-  the type of the order to create.
+  the type of the order (key, asymmetric, certificate)
+  to create.
 
 **Optional arguments:**
 
