@@ -8,7 +8,7 @@ Abstract
 This guide provides information about OpenStack command-line client commands.
 For more information about installing and using command-line clients,
 see the `OpenStack command-line clients
-<http://docs.openstack.org/user-guide/cli.html>`_
+<https://docs.openstack.org/user-guide/cli.html>`_
 in the OpenStack End User Guide.
 
 Contents
@@ -28,7 +28,7 @@ Contents
 
    For more information about OpenStackClient and the command list,
    see the `OpenStackClient documentation
-   <http://docs.openstack.org/developer/python-openstackclient/>`_.
+   <https://docs.openstack.org/developer/python-openstackclient/>`_.
 
 .. toctree::
    :maxdepth: 1

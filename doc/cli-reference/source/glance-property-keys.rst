@@ -15,7 +15,7 @@ For example:
 
    Behavior set using image properties overrides behavior set using flavors.
    For more information, refer to the `Manage images
-   <http://docs.openstack.org/admin-guide/common/cli-manage-images.html>`_
+   <https://docs.openstack.org/admin-guide/common/cli-manage-images.html>`_
    in the OpenStack Administrator Guide.
 
 .. list-table:: Image service property keys
