@@ -9,7 +9,7 @@ Rating service (cloudkitty) command-line client
 The cloudkitty client is the command-line interface (CLI) for
 the Rating service (cloudkitty) API and its extensions.
 
-This chapter documents :command:`cloudkitty` version ``0.6.0``.
+This chapter documents :command:`cloudkitty` version ``1.0.0``.
 
 For help on a specific :command:`cloudkitty` command, enter:
 
@@ -49,6 +49,12 @@ cloudkitty usage
 
 **Subcommands:**
 
+``info-config-get``
+  Get cloudkitty configuration.
+
+``info-service-get``
+  Get service info.
+
 ``module-disable``
   Disable a module.
 
@@ -57,6 +63,9 @@ cloudkitty usage
 
 ``module-list``
   List the samples for this meters.
+
+``module-set-priority``
+  Set module priority.
 
 ``collector-mapping-create``
   Create collector mapping.
@@ -81,6 +90,9 @@ cloudkitty usage
 
 ``report-tenant-list``
   List tenant report.
+
+``summary-get``
+  Get summary report.
 
 ``total-get``
   Get total reports.
@@ -785,6 +797,33 @@ Update a threshold.
 ``-p PROJECT_ID, --project-id PROJECT_ID``
   Project/tenant id.
 
+.. _cloudkitty_info-config-get:
+
+cloudkitty info-config-get
+--------------------------
+
+.. code-block:: console
+
+   usage: cloudkitty info-config-get
+
+Get cloudkitty configuration.
+
+.. _cloudkitty_info-service-get:
+
+cloudkitty info-service-get
+---------------------------
+
+.. code-block:: console
+
+   usage: cloudkitty info-service-get [-n NAME]
+
+Get service info.
+
+**Optional arguments:**
+
+``-n NAME, --name NAME``
+  Service name.
+
 .. _cloudkitty_module-disable:
 
 cloudkitty module-disable
@@ -827,6 +866,25 @@ cloudkitty module-list
    usage: cloudkitty module-list
 
 List the samples for this meters.
+
+.. _cloudkitty_module-set-priority:
+
+cloudkitty module-set-priority
+------------------------------
+
+.. code-block:: console
+
+   usage: cloudkitty module-set-priority -n NAME -p PRIORITY
+
+Set module priority.
+
+**Optional arguments:**
+
+``-n NAME, --name NAME``
+  Module name required.
+
+``-p PRIORITY, --priority PRIORITY``
+  Module priority required.
 
 .. _cloudkitty_pyscripts-script-create:
 
@@ -948,44 +1006,41 @@ cloudkitty storage-dataframe-list
 
 .. code-block:: console
 
-   usage: cloudkitty storage-dataframe-list --begin BEGIN --end END
-                                            [--tenant TENANT]
-                                            [--resource-type RESOURCE_TYPE]
+   usage: cloudkitty storage-dataframe-list [-b BEGIN] [-e END] [-t TENANT]
+                                            [-r RESOURCE_TYPE]
 
 List dataframes.
 
 **Optional arguments:**
 
-``--begin BEGIN``
-  Starting date/time (YYYY-MM-ddThh:mm:ss)
-  required.
+``-b BEGIN, --begin BEGIN``
+  Starting date/time (YYYY-MM-DDTHH:MM:SS).
 
-``--end END``
-  Ending date/time (YYYY-MM-ddThh:mm:ss)
-  required.
+``-e END, --end END``
+  Ending date/time (YYYY-MM-DDTHH:MM:SS).
 
-``--tenant TENANT``
+``-t TENANT, --tenant TENANT``
   Tenant ID Defaults to None.
 
-``--resource-type RESOURCE_TYPE``
+``-r RESOURCE_TYPE, --resource-type RESOURCE_TYPE``
   Resource type (compute, image, ...) Defaults
   to None.
 
-.. _cloudkitty_total-get:
+.. _cloudkitty_summary-get:
 
-cloudkitty total-get
---------------------
+cloudkitty summary-get
+----------------------
 
 .. code-block:: console
 
-   usage: cloudkitty total-get [-t TOTAL_TENANT_ID] [-b BEGIN] [-e END]
-                               [-s SERVICE]
+   usage: cloudkitty summary-get [-t SUMMARY_TENANT_ID] [-b BEGIN] [-e END]
+                                 [-s SERVICE] [-g GROUPBY] [-a]
 
-Get total reports.
+Get summary report.
 
 **Optional arguments:**
 
-``-t TOTAL_TENANT_ID, --tenant-id TOTAL_TENANT_ID``
+``-t SUMMARY_TENANT_ID, --tenant-id SUMMARY_TENANT_ID``
   Tenant id.
 
 ``-b BEGIN, --begin BEGIN``
@@ -996,4 +1051,42 @@ Get total reports.
 
 ``-s SERVICE, --service SERVICE``
   Service Type.
+
+``-g GROUPBY, --groupby GROUPBY``
+  Fields to groupby, separated by commas if
+  multiple, now support res_type,tenant_id.
+
+``-a, --all-tenants``
+  Allows to get summary from all tenants (admin
+  only). Defaults to False.
+
+.. _cloudkitty_total-get:
+
+cloudkitty total-get
+--------------------
+
+.. code-block:: console
+
+   usage: cloudkitty total-get [-t TOTAL_TENANT_ID] [-b BEGIN] [-e END]
+                               [-s SERVICE] [-a]
+
+Get total reports.
+
+**Optional arguments:**
+
+``-t TOTAL_TENANT_ID, --tenant-id TOTAL_TENANT_ID``
+  Tenant id.
+
+``-b BEGIN, --begin BEGIN``
+  Starting date/time (YYYY-MM-DDTHH:MM:SS).
+
+``-e END, --end END``
+  Ending date/time (YYYY-MM-DDTHH:MM:SS).
+
+``-s SERVICE, --service SERVICE``
+  Service Type.
+
+``-a, --all-tenants``
+  Allows to get total from all tenants (admin
+  only). Defaults to False.
 
