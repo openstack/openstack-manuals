@@ -24,7 +24,7 @@ systems to object-storage systems like OpenStack Object Storage.
 
    For information on requirements for other back ends, see
    `Configuration Reference
-   <http://docs.openstack.org/newton/config-reference/image.html>`__.
+   <https://docs.openstack.org/newton/config-reference/image.html>`__.
 
 The OpenStack Image service is central to Infrastructure-as-a-Service
 (IaaS) as shown in :ref:`get_started_conceptual_architecture`. It accepts API
