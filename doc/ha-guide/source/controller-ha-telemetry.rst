@@ -3,7 +3,7 @@ Highly available Telemetry API
 ==============================
 
 The `Telemetry service
-<http://docs.openstack.org/admin-guide/common/get-started-telemetry.html>`_
+<https://docs.openstack.org/admin-guide/common/get-started-telemetry.html>`_
 provides a data collection service and an alarming service.
 
 Telemetry central agent
@@ -22,7 +22,7 @@ It provides an API above several back ends that can be used for building
 distributed applications.
 
 Tooz supports
-`various drivers <http://docs.openstack.org/developer/tooz/drivers.html>`_
+`various drivers <https://docs.openstack.org/developer/tooz/drivers.html>`_
 including the following back end solutions:
 
 * `Zookeeper <http://zookeeper.apache.org/>`_:
@@ -39,7 +39,7 @@ the Telemetry services.
 
 For information about the required configuration options
 to set in the :file:`ceilometer.conf`, see the `coordination section
-<http://docs.openstack.org/newton/config-reference/telemetry.html>`_
+<https://docs.openstack.org/newton/config-reference/telemetry.html>`_
 in the OpenStack Configuration Reference.
 
 .. note::
@@ -61,7 +61,7 @@ agent configuration supports using different configuration files. This is for
 groups of service instances that are running in parallel.
 For enabling this configuration, set a value for the
 ``partitioning_group_prefix`` option in the
-`polling section <http://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`_
+`polling section <https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`_
 in the OpenStack Configuration Reference.
 
 .. warning::
@@ -72,10 +72,10 @@ in the OpenStack Configuration Reference.
    can be set in the :file:`/etc/ceilometer/pipeline.yaml` configuration file.
    For more information about pipelines see the `Data collection and
    processing
-   <http://docs.openstack.org/admin-guide/telemetry-data-collection.html#data-collection-and-processing>`_
+   <https://docs.openstack.org/admin-guide/telemetry-data-collection.html#data-collection-and-processing>`_
    section.
 
 To enable the compute agent to run multiple instances simultaneously with
 workload partitioning, the ``workload_partitioning`` option must be set to
-``True`` under the `compute section <http://docs.openstack.org/newton/config-reference/telemetry.html>`_
+``True`` under the `compute section <https://docs.openstack.org/newton/config-reference/telemetry.html>`_
 in the :file:`ceilometer.conf` configuration file.
