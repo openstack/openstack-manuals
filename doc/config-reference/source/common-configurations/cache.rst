@@ -15,4 +15,4 @@ These options are supported by:
 
 For a complete list of all available cache configuration options,
 see `olso.cache configuration options
-<http://docs.openstack.org/developer/oslo.cache/opts.html>`_.
+<https://docs.openstack.org/developer/oslo.cache/opts.html>`_.

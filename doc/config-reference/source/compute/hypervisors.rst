@@ -20,7 +20,7 @@ for you to choose one. Most installations use only one hypervisor.
 However, you can use :ref:`ComputeFilter` and :ref:`ImagePropertiesFilter`
 to schedule different hypervisors within the same installation.
 The following links help you choose a hypervisor.
-See http://docs.openstack.org/developer/nova/support-matrix.html
+See https://docs.openstack.org/developer/nova/support-matrix.html
 for a detailed list of features and support across the hypervisors.
 
 The following hypervisors are supported:

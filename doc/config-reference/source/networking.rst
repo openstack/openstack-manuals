@@ -17,8 +17,8 @@ Networking service
 This chapter explains the Networking service configuration options.
 For installation prerequisites, steps, and use cases, see the
 Installation Tutorials and Guides for your distribution
-(`docs.openstack.org <http://docs.openstack.org>`__) and the
-`OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/>`__.
+(`docs.openstack.org <https://docs.openstack.org>`__) and the
+`OpenStack Administrator Guide <https://docs.openstack.org/admin-guide/>`__.
 
 .. note::
 

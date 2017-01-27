@@ -2,7 +2,7 @@
 glance-scrubber.conf
 ====================
 
-`glance-scrubber <http://docs.openstack.org/developer/glance/man/glancescrubber.html>`_
+`glance-scrubber <https://docs.openstack.org/developer/glance/man/glancescrubber.html>`_
 is a utility for the Image service that cleans up images that have been
 deleted. Its configuration is stored in the ``glance-scrubber.conf`` file.
 

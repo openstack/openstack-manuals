@@ -44,7 +44,7 @@ stages, the sequence in which the option values are listed does matter or not.
 You can add external stages to the storage layer pipelines. For information how
 to write and add your own external stages, see
 `Writing stages for the storage pipelines
-<http://docs.openstack.org/developer/zaqar/writing_pipeline_stages.html>`_
+<https://docs.openstack.org/developer/zaqar/writing_pipeline_stages.html>`_
 tutorial.
 
 Options

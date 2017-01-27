@@ -27,7 +27,7 @@ There is currently support for two major federation protocols:
 
 To enable federation:
 
-#. Run keystone under Apache. See `Configure the Apache HTTP server <http://docs.openstack.org/newton/install-guide-obs/keystone-install.html>`_
+#. Run keystone under Apache. See `Configure the Apache HTTP server <https://docs.openstack.org/newton/install-guide-obs/keystone-install.html>`_
    for more information.
 
    .. note::
@@ -37,7 +37,7 @@ To enable federation:
       by the community.
 
 #. Configure Apache to use a federation capable module.
-   We recommend Shibboleth, see `the Shibboleth documentation <http://docs.openstack.org/developer/keystone/federation/shibboleth.html>`_
+   We recommend Shibboleth, see `the Shibboleth documentation <https://docs.openstack.org/developer/keystone/federation/shibboleth.html>`_
    for more information.
 
    .. note::
@@ -317,7 +317,7 @@ A rule hierarchy is as follows:
 * ``condition``: contains information on conditions that allow a rule, can
   only be set in a remote rule.
 
-For more information on mapping rules, see `<http://docs.openstack.org/developer/keystone/federation/federated_identity.html#mapping-rules>`_.
+For more information on mapping rules, see `<https://docs.openstack.org/developer/keystone/federation/federated_identity.html#mapping-rules>`_.
 
 Mapping creation
 ----------------

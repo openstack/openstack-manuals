@@ -17,7 +17,7 @@ and applications within OpenStack clouds. Its various agents and services are
 configured in the ``/etc/heat/heat.conf`` file.
 
 To install Orchestration, see the `Newton Installation Tutorials and Guides
-<http://docs.openstack.org/project-install-guide/newton/>`_ for your distribution.
+<https://docs.openstack.org/project-install-guide/newton/>`_ for your distribution.
 
 .. note::
 

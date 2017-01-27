@@ -179,7 +179,7 @@ The value of the option ``storage_protocol`` can be either ``fc`` or ``iscsi``,
 which is case insensitive.
 
 For more details on multiple back ends, see `Configure multiple-storage
-back ends <http://docs.openstack.org/admin-guide/blockstorage-multi-backend.html>`_
+back ends <https://docs.openstack.org/admin-guide/blockstorage-multi-backend.html>`_
 
 Required configurations
 -----------------------

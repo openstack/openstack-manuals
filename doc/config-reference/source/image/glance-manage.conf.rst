@@ -3,7 +3,7 @@ glance-manage.conf
 ==================
 
 Configuration options for the `glance database management tool
-<http://docs.openstack.org/developer/glance/man/glancemanage.html>`_
+<https://docs.openstack.org/developer/glance/man/glancemanage.html>`_
 are found in the ``glance-manage.conf`` file.
 
 .. note::

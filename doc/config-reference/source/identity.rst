@@ -16,8 +16,8 @@ Identity service
 This chapter details the Identity service configuration options. For
 installation prerequisites and step-by-step walkthroughs, see the
 `Newton Installation Tutorials and Guides
-<http://docs.openstack.org/project-install-guide/newton/>`_ for your distribution and
-`OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/>`_.
+<https://docs.openstack.org/project-install-guide/newton/>`_ for your distribution and
+`OpenStack Administrator Guide <https://docs.openstack.org/admin-guide/>`_.
 
 .. note::
 

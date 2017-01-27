@@ -58,7 +58,7 @@ Pre-configuration on OpenStack deployment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Install the OpenStack environment with manila. See the
-   `OpenStack installation guide <http://docs.openstack.org/>`_.
+   `OpenStack installation guide <https://docs.openstack.org/>`_.
 
 #. Configure the OpenStack networking so it can reach HNAS Management
    interface and HNAS EVS Data interface.
