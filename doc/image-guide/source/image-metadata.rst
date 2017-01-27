@@ -31,7 +31,7 @@ Common image properties are also specified in the
 ``/etc/glance/schema-image.json`` file.
 For a complete list of valid property keys and values, refer to the
 `OpenStack Command-Line Reference
-<http://docs.openstack.org/cli-reference/glance.html#image-service-property-keys>`_.
+<https://docs.openstack.org/cli-reference/glance.html#image-service-property-keys>`_.
 
 All associated properties for an image can be displayed using the
 :command:`openstack image show` command. For example:
