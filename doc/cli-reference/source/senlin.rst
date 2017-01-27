@@ -9,7 +9,7 @@ Clustering service (senlin) command-line client
 The senlin client is the command-line interface (CLI) for
 the Clustering service (senlin) API and its extensions.
 
-This chapter documents :command:`senlin` version ``1.1.0``.
+This chapter documents :command:`senlin` version ``1.2.0``.
 
 For help on a specific :command:`senlin` command, enter:
 
@@ -75,6 +75,9 @@ senlin usage
 
 ``cluster-node-list``
   List nodes from cluster.
+
+``cluster-node-replace``
+  Replace the nodes in cluster with specified nodes.
 
 ``cluster-policy-attach``
   Attach policy to cluster.
@@ -162,7 +165,7 @@ senlin usage
   Update a policy.
 
 ``policy-validate``
-  VAlidate a policy spec.
+  Validate a policy spec.
 
 ``profile-create``
   Create a profile.
@@ -401,7 +404,7 @@ senlin cluster-collect
 
 .. code-block:: console
 
-   usage: senlin cluster-collect [-p <PATH>] [-L] [-F] <CLUSTER>
+   usage: senlin cluster-collect -p <PATH> [-L] [-F] <CLUSTER>
 
 Collect attributes across a cluster.
 
@@ -611,6 +614,30 @@ List nodes from cluster.
 
 ``-F, --full-id``
   Print full IDs in list.
+
+.. _senlin_cluster-node-replace:
+
+senlin cluster-node-replace
+---------------------------
+
+.. code-block:: console
+
+   usage: senlin cluster-node-replace -n <OLD_NODE1=NEW_NODE1> <CLUSTER>
+
+Replace the nodes in cluster with specified nodes.
+
+**Positional arguments:**
+
+``<CLUSTER>``
+  Name or ID of cluster to operate on.
+
+**Optional arguments:**
+
+``-n <OLD_NODE1=NEW_NODE1>, --nodes <OLD_NODE1=NEW_NODE1>``
+  OLD_NODE is the name or ID of a node to be replaced,
+  NEW_NODE is the name or ID of a node as replacement.
+  This can be specified multiple times, or once with
+  node-pairs separated by a comma ','.
 
 .. _senlin_cluster-policy-attach:
 
@@ -953,6 +980,10 @@ Update the cluster.
   by
   a
   semicolon.
+  Use
+  '{}'
+  can
+  clean metadata
 
 ``-n <NAME>, --name <NAME>``
   New name for the cluster to update.
@@ -1187,21 +1218,10 @@ Update the node.
   Role for this node in the specific cluster.
 
 ``-M <"KEY1=VALUE1;KEY2=VALUE2...">, --metadata <"KEY1=VALUE1;KEY2=VALUE2...">``
-  Metadata values to be attached to the node. Metadata
-  can
-  be
-  specified
-  multiple
-  times,
-  or
-  once
-  with
-  key-value
-  pairs
-  separated
-  by
-  a
-  semicolon.
+  Metadata values to be attached to the node. This can
+  be specified multiple times, or once with key-value
+  pairs separated by a semicolon. Use '{}' can clean
+  metadata
 
 .. _senlin_policy-create:
 
@@ -1356,12 +1376,12 @@ senlin policy-validate
 
    usage: senlin policy-validate -s <SPEC_FILE>
 
-VAlidate a policy spec.
+Validate a policy spec.
 
 **Optional arguments:**
 
 ``-s <SPEC_FILE>, --spec-file <SPEC_FILE>``
-  The spec file used to create the policy.
+  The spec file of the policy to be validated.
 
 .. _senlin_profile-create:
 
@@ -1543,6 +1563,10 @@ Update a profile.
   by
   a
   semicolon.
+  Use
+  '{}'
+  can
+  clean metadata
 
 .. _senlin_profile-validate:
 
@@ -1558,7 +1582,7 @@ Validate a profile.
 **Optional arguments:**
 
 ``-s <SPEC FILE>, --spec-file <SPEC FILE>``
-  The spec file used to create the profile.
+  The spec file of the profile to be validated.
 
 .. _senlin_receiver-create:
 
