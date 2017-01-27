@@ -83,7 +83,7 @@ List keypairs
 ~~~~~~~~~~~~~
 
 To list keypairs, call the
-`novaclient.v1\_1.keypairs.KeypairManager.list <http://docs.openstack.
+`novaclient.v1\_1.keypairs.KeypairManager.list <https://docs.openstack.
 org/developer/python-novaclient/api/novaclient.v1_1.keypairs.html
 #novaclient.v1_1.keypairs.KeypairManager.list>`__ method:
 
@@ -100,7 +100,7 @@ Create and manage security groups
 
 To list security groups for the current project, call the
 `novaclient.v\_1.security\_groups.SecurityGroupManager.list
-<http://docs.openstack.org/developer/python-novaclient/api/novaclient
+<https://docs.openstack.org/developer/python-novaclient/api/novaclient
 .v1_1.security_groups.html#novaclient.v1_1.security_groups.
 SecurityGroupManager.list>`__ method:
 
@@ -112,7 +112,7 @@ SecurityGroupManager.list>`__ method:
 
 To create a security group with a specified name and description, call
 the `novaclient.v\_1.security\_groups.SecurityGroupManager.create
-<http://docs.openstack.org/developer/python-novaclient/api/novaclient.
+<https://docs.openstack.org/developer/python-novaclient/api/novaclient.
 v1_1.security_groups.html#novaclient.v1_1.security_groups.
 SecurityGroupManager.create>`__ method:
 
@@ -124,11 +124,11 @@ SecurityGroupManager.create>`__ method:
 
 To delete a security group, call the
 `novaclient.v\_1.security\_groups.SecurityGroupManager.delete
-<http://docs.openstack.org/developer/python-novaclient/api/novaclient.
+<https://docs.openstack.org/developer/python-novaclient/api/novaclient.
 v1_1.security_groups.html#novaclient.v1_1.security_groups.
 SecurityGroupManager.delete>`__ method, passing either a
 `novaclient.v1\_1.security\_groups.SecurityGroup
-<http://docs.openstack.org/developer/python-novaclient/api/novaclient
+<https://docs.openstack.org/developer/python-novaclient/api/novaclient
 .v1_1.security_groups.html#novaclient.v1_1.security_groups.
 SecurityGroup>`__ object or group ID as an argument:
 
@@ -161,7 +161,7 @@ _groups.html#novaclient.v1_1.security_groups.SecurityGroup>`__ object:
 
 To add a rule to a security group, call the
 `novaclient.v1\_1.security\_group\_rules.SecurityGroupRuleManager.create
-<http://docs.openstack.org/developer/python-novaclient/api/
+<https://docs.openstack.org/developer/python-novaclient/api/
 novaclient.v1_1.security_group_rules.html#novaclient.v1_1.
 security_group_rules.SecurityGroupRuleManager.create>`__ method:
 

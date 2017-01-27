@@ -7,7 +7,7 @@ as an image, is a single file that contains a virtual disk that
 has a bootable operating system installed on it. Images are used
 to create virtual machine instances within the cloud. For information
 about creating image files, see the `OpenStack Virtual Machine
-Image Guide <http://docs.openstack.org/image-guide/>`_.
+Image Guide <https://docs.openstack.org/image-guide/>`_.
 
 Depending on your role, you may have permission to upload and manage
 virtual machine images. Operators might restrict the upload and

@@ -49,4 +49,4 @@ returning a token-authenticated address, as in the example above.
 
 For further information and comparisons (including security
 considerations), see the `Security
-Guide <http://docs.openstack.org/security-guide/compute.html>`__.
+Guide <https://docs.openstack.org/security-guide/compute.html>`__.
