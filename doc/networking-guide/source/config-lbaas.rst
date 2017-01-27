@@ -15,7 +15,7 @@ There are two reference implementations of LBaaS v2.
 The one is an agent based implementation with HAProxy.
 The agents handle the HAProxy configuration and manage the HAProxy daemon.
 Another LBaaS v2 implementation, `Octavia
-<http://docs.openstack.org/developer/octavia/>`_, has a separate API and
+<https://docs.openstack.org/developer/octavia/>`_, has a separate API and
 separate worker processes that build load balancers within virtual machines on
 hypervisors that are managed by the Compute service. You do not need an agent
 for Octavia.
@@ -25,8 +25,8 @@ for Octavia.
    LBaaS v1 was removed in the Newton release. These links provide more
    details about how LBaaS v1 works and how to configure it:
 
-   * `Load-Balancer-as-a-Service (LBaaS) overview <http://docs.openstack.org/admin-guide/networking-introduction.html#load-balancer-as-a-service-lbaas-overview>`__
-   * `Basic Load-Balancer-as-a-Service operations <http://docs.openstack.org/admin-guide/networking-adv-features.html#basic-load-balancer-as-a-service-operations>`__
+   * `Load-Balancer-as-a-Service (LBaaS) overview <https://docs.openstack.org/admin-guide/networking-introduction.html#load-balancer-as-a-service-lbaas-overview>`__
+   * `Basic Load-Balancer-as-a-Service operations <https://docs.openstack.org/admin-guide/networking-adv-features.html#basic-load-balancer-as-a-service-operations>`__
 
 .. warning::
 
@@ -138,7 +138,7 @@ The `Hands on Lab - Install and Configure OpenStack Octavia
 session at the OpenStack Summit in Tokyo provides an overview of Octavia.
 
 The DevStack documentation offers a `simple method to deploy Octavia
-<http://docs.openstack.org/developer/devstack/guides/devstack-with-lbaas-v2.html>`_
+<https://docs.openstack.org/developer/devstack/guides/devstack-with-lbaas-v2.html>`_
 and test the service with redundant load balancer instances. If you already
 have Octavia installed and configured within your environment, you can
 configure the Network service to use Octavia:

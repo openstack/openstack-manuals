@@ -42,5 +42,5 @@ Enable the native OVS firewall driver
      firewall_driver = openvswitch
 
 For more information, see the `developer documentation
-<http://docs.openstack.org/developer/neutron/devref/openvswitch_firewall.html>`_
+<https://docs.openstack.org/developer/neutron/devref/openvswitch_firewall.html>`_
 and the `video <https://www.youtube.com/watch?v=SOHeZ3g9yxM>`_.

@@ -54,7 +54,7 @@ pages. This can be done through flavors. For example:
    $ openstack flavor set m1.large --property hw:mem_page_size=large
 
 For more information about the syntax for ``hw:mem_page_size``, refer to the
-`Flavors <http://docs.openstack.org/admin-guide/compute-flavors.html>`__ guide.
+`Flavors <https://docs.openstack.org/admin-guide/compute-flavors.html>`__ guide.
 
 .. note::
 

@@ -412,8 +412,8 @@ for many TCP-based services, as well as services that use other layer 4
 protocols that employ ports. Registering a TCP port number is not required, but
 registering a port number is helpful to avoid collisions with other
 services. See `Appendix B. Firewalls and default ports
-<http://docs.openstack.org/newton/config-reference/firewalls-default-ports.html>`_
-of the `OpenStack Configuration Reference <http://docs.openstack.org/newton/config-reference/>`_
+<https://docs.openstack.org/newton/config-reference/firewalls-default-ports.html>`_
+of the `OpenStack Configuration Reference <https://docs.openstack.org/newton/config-reference/>`_
 for the default TCP ports used by various services involved in an OpenStack
 deployment.
 
