@@ -44,7 +44,7 @@ Release-specific documentation
 
 The Installation Tutorials and Guides, Configuration Reference, and Networking
 Guide are released at release time, with draft material published to
-http://docs.openstack.org/draft/draft-index.html.
+https://docs.openstack.org/draft/draft-index.html.
 The rest of the guides are continuously released.
 
 To patch for the release-specific documentation, you should generally patch to
@@ -78,33 +78,33 @@ process for multiple distributions based on the following packaging systems:
 
    * - Installation Tutorial for openSUSE and SUSE Linux Enterprise Server
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/newton/install-guide-obs/
+     - https://docs.openstack.org/newton/install-guide-obs/
 
    * - Installation Tutorial for Red Hat Enterprise Linux and CentOS
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/newton/install-guide-rdo/
+     - https://docs.openstack.org/newton/install-guide-rdo/
 
    * - Installation Tutorial for Ubuntu 16.04 (LTS)
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/newton/install-guide-ubuntu/
+     - https://docs.openstack.org/newton/install-guide-ubuntu/
 
    * - Installation Tutorial For Debian With Debconf
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/newton/install-guide-debconf/
+     - https://docs.openstack.org/newton/install-guide-debconf/
 
    * - Installation Tutorial For Debian
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/newton/install-guide-debian/
+     - https://docs.openstack.org/newton/install-guide-debian/
 
 Guides for deployers and administrators
 ---------------------------------------
 
 * `OpenStack Configuration Reference
-  <http://docs.openstack.org/newton/config-reference/>`_:
+  <https://docs.openstack.org/newton/config-reference/>`_:
   Contains a reference listing of all configuration options for OpenStack
   services by release version.
 * `OpenStack Networking Guide
-  <http://docs.openstack.org/newton/networking-guide/>`_:
+  <https://docs.openstack.org/newton/networking-guide/>`_:
   This guide targets OpenStack administrators seeking to deploy and manage
   OpenStack Networking (neutron).
 
@@ -117,11 +117,11 @@ Guides for deployers and administrators
 
    * - Configuration Reference
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/config-reference
-     - http://docs.openstack.org/newton/config-reference/
+     - https://docs.openstack.org/newton/config-reference/
 
    * - OpenStack Networking Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide
-     - http://docs.openstack.org/newton/networking-guide/
+     - https://docs.openstack.org/newton/networking-guide/
 
 Continuously released documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -139,20 +139,20 @@ Guides for deployers and administrators
 ---------------------------------------
 
 * `OpenStack Architecture Design Guide
-  <http://docs.openstack.org/arch-design/>`_:
+  <https://docs.openstack.org/arch-design/>`_:
   Contains information on how to plan, design and architect
   an OpenStack cloud.
-* `OpenStack Administrator Guide <http://docs.openstack.org/admin-guide/>`_:
+* `OpenStack Administrator Guide <https://docs.openstack.org/admin-guide/>`_:
   Contains how-to information for managing an OpenStack cloud as needed for
   your use cases, such as storage, computing, or software-defined-networking.
-* `OpenStack High Availability Guide <http://docs.openstack.org/ha-guide/>`_:
+* `OpenStack High Availability Guide <https://docs.openstack.org/ha-guide/>`_:
   Describes potential strategies for making your OpenStack services and
   related controllers and data stores highly available.
-* `OpenStack Security Guide <http://docs.openstack.org/sec/>`_:
+* `OpenStack Security Guide <https://docs.openstack.org/sec/>`_:
   Provide best practices and conceptual
   information about securing an OpenStack cloud.
 * `OpenStack Virtual Machine Image Guide
-  <http://docs.openstack.org/image-guide/>`_:
+  <https://docs.openstack.org/image-guide/>`_:
   Shows you how to obtain, create, and modify virtual machine images that
   are compatible with OpenStack.
 
@@ -165,28 +165,28 @@ Guides for deployers and administrators
 
    * - OpenStack Architecture Design Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/arch-design
-     - http://docs.openstack.org/arch-design/
+     - https://docs.openstack.org/arch-design/
 
    * - OpenStack Administrator Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide
-     - http://docs.openstack.org/admin-guide/
+     - https://docs.openstack.org/admin-guide/
 
    * - OpenStack High Availability Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/ha-guide
-     - http://docs.openstack.org/ha-guide/
+     - https://docs.openstack.org/ha-guide/
 
    * - OpenStack Security Guide
      - http://git.openstack.org/cgit/openstack/security-doc/tree/security-guide
-     - http://docs.openstack.org/security-guide/
+     - https://docs.openstack.org/security-guide/
 
    * - OpenStack Virtual Machine Image Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/image-guide
-     - http://docs.openstack.org/image-guide/
+     - https://docs.openstack.org/image-guide/
 
 Guides for end users
 --------------------
 
-* `OpenStack End User Guide <http://docs.openstack.org/user-guide/>`_:
+* `OpenStack End User Guide <https://docs.openstack.org/user-guide/>`_:
   Shows OpenStack end users how to create and manage resources in an
   OpenStack cloud with the OpenStack dashboard and OpenStack client commands.
 * `OpenStack API Guide
@@ -194,7 +194,7 @@ Guides for end users
   A brief overview of how to send REST API requests to endpoints for
   OpenStack services.
 * `OpenStack Command-Line Interface Reference
-  <http://docs.openstack.org/cli-reference/>`_:
+  <https://docs.openstack.org/cli-reference/>`_:
   Automatically generates help text for CLI commands and subcommands.
 
 .. list-table::
@@ -206,7 +206,7 @@ Guides for end users
 
    * - OpenStack End User Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/user-guide
-     - http://docs.openstack.org/user-guide/
+     - https://docs.openstack.org/user-guide/
 
    * - OpenStack API Guide
      - http://git.openstack.org/cgit/openstack/api-site/tree/api-quick-start
@@ -214,7 +214,7 @@ Guides for end users
 
    * - OpenStack Command-Line Interface Reference
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/cli-reference
-     - http://docs.openstack.org/cli-reference/
+     - https://docs.openstack.org/cli-reference/
 
 API documentation
 -----------------
@@ -226,7 +226,7 @@ API documentation
   Within project's specification repos, some have opted
   to document API specifications, such as Identity.
 * `Object Storage API v1
-  <http://docs.openstack.org/developer/swift/#object-storage-v1-rest-api-documentation>`_
+  <https://docs.openstack.org/developer/swift/#object-storage-v1-rest-api-documentation>`_
 
 We are migrating away from WADL in 2016. Refer to :ref:`api-docs` for details.
 Once the migration is complete, the API reference pages will be stored in the
@@ -237,21 +237,21 @@ Project-specific guides
 
 Each project maintains its own developer guide.
 They are published from each project repository.
-See http://docs.openstack.org/developer/openstack-projects.html
-and http://docs.openstack.org/developer/language-bindings.html.
+See https://docs.openstack.org/developer/openstack-projects.html
+and https://docs.openstack.org/developer/language-bindings.html.
 
 Contributor guides
 ------------------
 
-Generally, the http://docs.openstack.org/developer/ documentation is meant
+Generally, the https://docs.openstack.org/developer/ documentation is meant
 for contributors to OpenStack projects. Each project's repo has a
 ``doc/source`` directory where RST source files are stored. They are built
 automatically with Sphinx when the patch is merged. For example, see
 http://git.openstack.org/cgit/openstack/horizon/tree/doc/source for the
-horizon contributor documentation source and http://docs.openstack.org/developer/horizon/
+horizon contributor documentation source and https://docs.openstack.org/developer/horizon/
 for the built documentation.
 
-* `Infrastructure User Manual <http://docs.openstack.org/infra/manual>`_:
+* `Infrastructure User Manual <https://docs.openstack.org/infra/manual>`_:
   Reference documentation for tools and processes used for all
   contributors to OpenStack projects. It includes instructions on how
   to create all the necessary accounts, setup development environment,
@@ -268,25 +268,25 @@ for the built documentation.
 
    * - Documentation Contributor Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/contributor-guide
-     - http://docs.openstack.org/contributor-guide/
+     - https://docs.openstack.org/contributor-guide/
 
    * - Python Developer Documentation
      - http://git.openstack.org/cgit/openstack/<project>/tree/master/doc/source/,
        such as http://git.openstack.org/cgit/openstack/nova/tree/doc/source
-     - http://docs.openstack.org/developer/openstack-projects.html
+     - https://docs.openstack.org/developer/openstack-projects.html
 
    * - Language Bindings and Python Clients
      - http://git.openstack.org/cgit/openstack/python-<project>client/tree/master/doc/source/,
        such as http://git.openstack.org/cgit/openstack/python-novaclient/tree/doc/source
-     - http://docs.openstack.org/developer/language-bindings.html
+     - https://docs.openstack.org/developer/language-bindings.html
 
    * - OpenStack Project Infrastructure
      - http://git.openstack.org/cgit/openstack-infra/system-config/tree/doc/source
-     - http://docs.openstack.org/infra/system-config/
+     - https://docs.openstack.org/infra/system-config/
 
    * - Tempest Testing Project
      - http://git.openstack.org/cgit/openstack/tempest/tree/doc/source
-     - http://docs.openstack.org/developer/tempest/
+     - https://docs.openstack.org/developer/tempest/
 
 Guides for contributors
 -----------------------

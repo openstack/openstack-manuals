@@ -9,4 +9,4 @@ The ``openstackdocstheme``, ``openstack-doc-tools``, and
 The release is done by the OpenStack release team but needs to be
 triggered by the documentation team. For details, see `Release
 management
-<http://docs.openstack.org/project-team-guide/release-management.html#how-to-release>`__.
+<https://docs.openstack.org/project-team-guide/release-management.html#how-to-release>`__.

@@ -60,7 +60,7 @@ Speciality Team lead, listed at :doc:`../team-structure`., and ask them for
 the notes for the books they look after. The source repository for release
 notes is `openstack-manuals/releasenotes/source/RELEASENAME` and they are
 published to
-``http://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html``.
+``https://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html``.
 
 Publish index page
 ~~~~~~~~~~~~~~~~~~
@@ -163,7 +163,7 @@ for release-specific documentation:
       as OpenStack Liberty has reached its official end-of-life.
       This guide will not get any updates from the OpenStack project anymore.
       See the `OpenStack Documentation page
-      <http://docs.openstack.org/>`_ for current documentation.
+      <https://docs.openstack.org/>`_ for current documentation.
 
 For continuously released documentation, exclude the release from target.
 
@@ -180,5 +180,5 @@ To:
    This guide documents OpenStack Newton and Mitaka releases.
 
 However, we will keep the documentation on the
-`docs.openstack.org <http://docs.openstack.org/>`_
+`docs.openstack.org <https://docs.openstack.org/>`_
 page for a while so that the users can refer the guides if necessary.

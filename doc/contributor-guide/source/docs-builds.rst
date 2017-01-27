@@ -110,7 +110,7 @@ To get the ``.html`` output locally, switch to the directory containing a
 
 The RST source is built into HTML using Sphinx, so that it is displayed on
 the *docs.openstack.org/<guide-name>*. For example:
-http://docs.openstack.org/user-guide/.
+https://docs.openstack.org/user-guide/.
 
 Using Tox to check builds
 -------------------------
