@@ -140,14 +140,10 @@ You can assign a floating IP address to a project and to an instance.
 
    .. note::
 
-      If an instance is connected to multiple networks, you can associate a
+      The :command:`openstack server` command does not allow users to associate a
       floating IP address with a specific fixed IP address using the optional
-      ``--fixed-address`` parameter:
-
-      .. code-block:: console
-
-         $ openstack server add floating ip --fixed-address FIXED_IP_ADDRESS \
-           INSTANCE_NAME_OR_ID FLOATING_IP_ADDRESS
+      ``--fixed-address`` parameter, which legacy commands required as an
+      argument.
 
 Disassociate floating IP addresses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
