@@ -26,7 +26,7 @@ you can use Image service configuration options.
 For example, assign the cryptography chip to a device node in the guest.
 The OpenStack Command Line Reference contains further information on
 configuring this solution in the section `Image service property keys
-<http://docs.openstack.org/cli-reference/glance.html#image-service-property-keys>`_.
+<https://docs.openstack.org/cli-reference/glance.html#image-service-property-keys>`_.
 A challenge, however, is this option allows all guests using the
 configured images to access the hypervisor cryptography device.
 

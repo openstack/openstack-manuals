@@ -121,4 +121,4 @@ installed in compute hosts, and adding capacity to the shared storage
 for additional ephemeral storage to instances, may be necessary.
 
 For a deeper discussion on many of these topics, refer to the `OpenStack
-Operations Guide <http://docs.openstack.org/ops>`_.
+Operations Guide <https://docs.openstack.org/ops>`_.

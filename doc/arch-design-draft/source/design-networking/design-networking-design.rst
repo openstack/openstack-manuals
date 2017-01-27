@@ -286,7 +286,7 @@ examples include:
 * Routing daemons
 
 Some of these software packages are described in more detail in the
-`OpenStack network nodes chapter <http://docs.openstack.org/ha-guide/networking-ha.html>`_
+`OpenStack network nodes chapter <https://docs.openstack.org/ha-guide/networking-ha.html>`_
 in the OpenStack High Availability Guide.
 
 For a general purpose OpenStack cloud, the OpenStack infrastructure

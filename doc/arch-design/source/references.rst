@@ -19,7 +19,7 @@ techsupport/papers/ethernet_switch_reliability.pdf>`_
 <http://www.finra.org/Industry/Regulation/FINRARules/>`_
 : Requirements of the Financial Industry Regulatory Authority in the USA.
 
-`Image Service property keys <http://docs.openstack.org/
+`Image Service property keys <https://docs.openstack.org/
 cli-reference/glance.html#image-service-property-keys>`_
 : Glance API property keys allows the administrator to attach custom
 characteristics to images.
@@ -28,7 +28,7 @@ characteristics to images.
 : Official LibGuestFS documentation.
 
 `Logging and Monitoring
-<http://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_
+<https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_
 : Official OpenStack Operations documentation.
 
 `ManageIQ Cloud Management Platform <http://manageiq.org/>`_
@@ -47,10 +47,10 @@ and enable the delivery of the most efficient server,
 storage and data center hardware designs for scalable computing.
 
 `OpenStack Flavors
-<http://docs.openstack.org/ops-guide/ops-user-facing-operations.html#flavors>`_
+<https://docs.openstack.org/ops-guide/ops-user-facing-operations.html#flavors>`_
 : Official OpenStack documentation.
 
-`OpenStack High Availability Guide <http://docs.openstack.org/ha-guide/>`_
+`OpenStack High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 : Information on how to provide redundancy for the OpenStack components.
 
 `OpenStack Hypervisor Support Matrix
@@ -58,14 +58,14 @@ storage and data center hardware designs for scalable computing.
 : Matrix of supported hypervisors and capabilities when used with OpenStack.
 
 `OpenStack Object Store (Swift) Replication Reference
-<http://docs.openstack.org/developer/swift/replication_network.html>`_
+<https://docs.openstack.org/developer/swift/replication_network.html>`_
 : Developer documentation of Swift replication.
 
-`OpenStack Operations Guide <http://docs.openstack.org/ops-guide/>`_
+`OpenStack Operations Guide <https://docs.openstack.org/ops-guide/>`_
 : The OpenStack Operations Guide provides information on setting up
 and installing OpenStack.
 
-`OpenStack Security Guide <http://docs.openstack.org/security-guide/>`_
+`OpenStack Security Guide <https://docs.openstack.org/security-guide/>`_
 : The OpenStack Security Guide provides information on securing
 OpenStack deployments.
 

@@ -299,7 +299,7 @@ useful in rolling back the changes if they affect production. For example,
 if all security group rules for a tenant disappeared, the ability to quickly
 track down the issue would be important for operational and legal reasons.
 For more details on auditing, see the `Compliance chapter
-<http://docs.openstack.org/security-guide/compliance.html>`_ in the OpenStack
+<https://docs.openstack.org/security-guide/compliance.html>`_ in the OpenStack
 Security Guide.
 
 Security

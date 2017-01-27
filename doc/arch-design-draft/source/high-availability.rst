@@ -73,7 +73,7 @@ extensible OpenStack Networking (neutron). OpenStack Networking and legacy
 networking both have their advantages and disadvantages. They are both valid
 and supported options that fit different network deployment models described in
 the `OpenStack Operations Guide
-<http://docs.openstack.org/ops-guide/arch_network_design.html#network-topology>`_.
+<https://docs.openstack.org/ops-guide/arch_network_design.html#network-topology>`_.
 
 When using the Networking service, the OpenStack controller servers or separate
 Networking hosts handle routing unless the dynamic virtual routers pattern for
@@ -140,7 +140,7 @@ connectivity. Some options include full mesh topology, hub spoke, spine leaf,
 and 3D Torus.
 
 For more information on high availability in OpenStack, see the `OpenStack High
-Availability Guide <http://docs.openstack.org/ha-guide/>`_.
+Availability Guide <https://docs.openstack.org/ha-guide/>`_.
 
 Site loss and recovery
 ~~~~~~~~~~~~~~~~~~~~~~

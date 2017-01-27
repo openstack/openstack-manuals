@@ -167,7 +167,7 @@ configuration, particularly where they present different ratios of CPU
 versus RAM versus HDD requirements.
 
 For more information on Flavors see `OpenStack Operations Guide:
-Flavors <http://docs.openstack.org/ops-guide/ops-user-facing-operations.html#flavors>`_.
+Flavors <https://docs.openstack.org/ops-guide/ops-user-facing-operations.html#flavors>`_.
 
 OpenStack components
 ~~~~~~~~~~~~~~~~~~~~

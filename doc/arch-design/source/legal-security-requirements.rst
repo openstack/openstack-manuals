@@ -164,7 +164,7 @@ offers private Cloud-as-a-Service.
    handles the organization's data or workloads.
 
 More information on OpenStack Security can be found in the
-`OpenStack Security Guide <http://docs.openstack.org/security-guide>`_.
+`OpenStack Security Guide <https://docs.openstack.org/security-guide>`_.
 
 Networking security
 ~~~~~~~~~~~~~~~~~~~

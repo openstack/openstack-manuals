@@ -37,7 +37,7 @@ Consider the following security implications and requirements:
    clouds to explore authentication options.
 
 For more information OpenStack Security, see the `OpenStack Security
-Guide <http://docs.openstack.org/security-guide/>`_.
+Guide <https://docs.openstack.org/security-guide/>`_.
 
 Security domains
 ~~~~~~~~~~~~~~~~

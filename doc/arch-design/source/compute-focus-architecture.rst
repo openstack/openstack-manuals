@@ -165,7 +165,7 @@ Networking software
 OpenStack Networking provides a wide variety of networking services for
 instances. There are many additional networking software packages that
 might be useful to manage the OpenStack components themselves. The
-`OpenStack High Availability Guide <http://docs.openstack.org/ha-guide/>`_
+`OpenStack High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 describes some of these software packages in more detail.
 
 For a compute-focused OpenStack cloud, the OpenStack infrastructure
