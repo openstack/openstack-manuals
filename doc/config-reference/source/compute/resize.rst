@@ -16,7 +16,7 @@ and passwordless ssh access between your compute hosts. Direct access
 from one compute host to another is needed to copy the VM file across.
 
 Cloud end users can find out how to resize a server by reading the
-`OpenStack End User Guide <http://docs.openstack.org/user-guide/
+`OpenStack End User Guide <https://docs.openstack.org/user-guide/
 cli_change_the_size_of_your_server.html>`_.
 
 XenServer

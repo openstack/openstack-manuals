@@ -49,7 +49,7 @@ how often the list is updated.
    be dead while the host list is being cached.
 
 For information about the volume scheduler, see the `Block Storage section
-<http://docs.openstack.org/admin-guide/blockstorage-manage-volumes.html>`_
+<https://docs.openstack.org/admin-guide/blockstorage-manage-volumes.html>`_
 of OpenStack Administrator Guide.
 
 The scheduler chooses a new host when an instance is migrated.
@@ -59,7 +59,7 @@ the target host defined by the administrator on the
 :command:`nova evacuate` command.
 If a target is not defined by the administrator, the scheduler
 determines the target host. For information about instance evacuation,
-see `Evacuate instances <http://docs.openstack.org/admin-guide/
+see `Evacuate instances <https://docs.openstack.org/admin-guide/
 compute-node-down.html#evacuate-instances>`_ section of the
 OpenStack Administrator Guide.
 

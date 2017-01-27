@@ -146,7 +146,7 @@ Use the following as a guideline for configuring Xen for use in OpenStack:
 
 #. **Image formats**: Xen supports raw, qcow2 and vhd image formats.
    For more information on image formats, refer to the `OpenStack Virtual
-   Image Guide <http://docs.openstack.org/image-guide/introduction.html>`__
+   Image Guide <https://docs.openstack.org/image-guide/introduction.html>`__
    and the `Storage Options Guide on the Xen Project Wiki
    <http://wiki.xenproject.org/wiki/Storage_options>`_.
 
@@ -166,7 +166,7 @@ Use the following as a guideline for configuring Xen for use in OpenStack:
 
    For more more information on image metadata, refer to the
    `OpenStack Virtual Image Guide
-   <http://docs.openstack.org/image-guide/image-metadata.html>`__.
+   <https://docs.openstack.org/image-guide/image-metadata.html>`__.
 
 #. **Libguestfs file injection**: OpenStack compute nodes can use `libguestfs
    <http://libguestfs.org/>`_ to inject files into an instance's image prior

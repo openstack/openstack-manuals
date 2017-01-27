@@ -30,4 +30,4 @@ hardware and inexpensive storage.
 
 For more information, review the key concepts in the developer documentation
 at `docs.openstack.org/developer/swift/
-<http://docs.openstack.org/developer/swift/>`__.
+<https://docs.openstack.org/developer/swift/>`__.

@@ -15,7 +15,7 @@ as v2 of ``glance-api`` can connect directly to the database.
 To assist you in formulating your deployment strategy for the Image APIs,
 the Glance team has published a statement concerning the status and
 development plans of the APIs: `Using public Image API
-<http://docs.openstack.org/developer/glance/glanceapi.html>`_.
+<https://docs.openstack.org/developer/glance/glanceapi.html>`_.
 
 Configuration options
 ~~~~~~~~~~~~~~~~~~~~~

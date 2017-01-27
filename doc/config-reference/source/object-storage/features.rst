@@ -418,7 +418,7 @@ consistent container listings to do so.  Instead, a user-defined manifest of
 the object segments is used.
 
 For more information regarding SLO usage and support, please see: `Static Large
-Objects <http://docs.openstack.org/developer/swift/middleware.html#slo-doc>`__.
+Objects <https://docs.openstack.org/developer/swift/middleware.html#slo-doc>`__.
 
 .. include:: ../tables/swift-proxy-server-filter-slo.rst
 

@@ -17,7 +17,7 @@ various agents and services are configured in the
 ``/etc/ceilometer/ceilometer.conf`` file.
 
 To install Telemetry, see the `Newton Installation Tutorials and Guides
-<http://docs.openstack.org/project-install-guide/newton/>`_ for your distribution.
+<https://docs.openstack.org/project-install-guide/newton/>`_ for your distribution.
 
 .. note::
 

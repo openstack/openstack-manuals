@@ -1135,7 +1135,7 @@ these snapshots. The functionality to backup snapshots provides another layer
 of data protection.
 
 Please refer to `backup and restore volumes and
-snapshots <http://docs.openstack.org/admin-guide/blockstorage-volume-backups.html>`
+snapshots <https://docs.openstack.org/admin-guide/blockstorage-volume-backups.html>`
 for more more information.
 
 Enable attach and detach snapshot functionality
