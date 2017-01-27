@@ -306,7 +306,7 @@ For more information about image metadata, refer to the `Image metadata`_
 guide.
 
 .. Links
-.. _`Scheduling`: http://docs.openstack.org/newton/config-reference/compute/scheduler.html
-.. _`Flavors`: http://docs.openstack.org/admin-guide/compute-flavors.html
-.. _`Image metadata`: http://docs.openstack.org/image-guide/image-metadata.html
+.. _`Scheduling`: https://docs.openstack.org/newton/config-reference/compute/scheduler.html
+.. _`Flavors`: https://docs.openstack.org/admin-guide/compute-flavors.html
+.. _`Image metadata`: https://docs.openstack.org/image-guide/image-metadata.html
 .. _`discussion`: http://lists.openstack.org/pipermail/openstack-dev/2016-March/090367.html

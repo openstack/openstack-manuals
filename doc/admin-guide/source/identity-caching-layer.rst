@@ -5,7 +5,7 @@ Caching layer
 
 OpenStack Identity supports a caching layer that is above the
 configurable subsystems (for example, token). OpenStack Identity uses the
-`oslo.cache <http://docs.openstack.org/developer/oslo.cache/>`__
+`oslo.cache <https://docs.openstack.org/developer/oslo.cache/>`__
 library which allows flexible cache back ends. The majority of the
 caching configuration options are set in the ``[cache]`` section of the
 ``/etc/keystone/keystone.conf`` file. However, each section that has

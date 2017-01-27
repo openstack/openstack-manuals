@@ -15,7 +15,7 @@ A share type is a list from key-value pairs called extra-specs. The
 scheduler uses required and un-scoped extra-specs to look up
 the shared service most suitable for a new share with the specified share type.
 For more information about extra-specs and their type, see `Capabilities
-and Extra-Specs <http://docs.openstack.org/developer/manila/devref/capabilities_and_extra_specs.html>`_ section in developer documentation.
+and Extra-Specs <https://docs.openstack.org/developer/manila/devref/capabilities_and_extra_specs.html>`_ section in developer documentation.
 
 The general scheduler workflow:
 

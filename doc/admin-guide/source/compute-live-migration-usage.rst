@@ -16,7 +16,7 @@ Before starting a migration, review the Configure migrations section.
    under the default Compute configuration options, the instances
    are suspended before migration. For more information, see
    `Configure migrations
-   <http://docs.openstack.org/newton/config-reference/compute/config-options.html>`_.
+   <https://docs.openstack.org/newton/config-reference/compute/config-options.html>`_.
    in the OpenStack Configuration Reference.
 
 **Migrating instances**

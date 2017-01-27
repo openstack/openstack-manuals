@@ -10,9 +10,9 @@ access.
 To create and manage images in specified projects as an end
 user, see the `upload and manage images with Dashboard in
 OpenStack End User Guide
-<http://docs.openstack.org/user-guide/dashboard-manage-images.html>`_
+<https://docs.openstack.org/user-guide/dashboard-manage-images.html>`_
 and `manage images with CLI in OpenStack End User Guide
-<http://docs.openstack.org/user-guide/common/cli-manage-images.html>`_ .
+<https://docs.openstack.org/user-guide/common/cli-manage-images.html>`_ .
 
 To create and manage images as an administrator for other
 users, use the following procedures.
@@ -21,7 +21,7 @@ Create images
 ~~~~~~~~~~~~~
 
 For details about image creation, see the `Virtual Machine Image
-Guide <http://docs.openstack.org/image-guide/>`_.
+Guide <https://docs.openstack.org/image-guide/>`_.
 
 #. Log in to the Dashboard and select the :guilabel:`admin` project
    from the drop-down list.

@@ -7,7 +7,7 @@ manage OpenStack resources and services. The Dashboard allows you to
 interact with the OpenStack Compute cloud controller using the OpenStack
 APIs. For more information about installing and configuring the
 Dashboard, see the `Installation Tutorials and Guides
-<http://docs.openstack.org/project-install-guide/newton/>`__
+<https://docs.openstack.org/project-install-guide/newton/>`__
 for your operating system.
 
 .. toctree::
@@ -27,11 +27,11 @@ for your operating system.
    dashboard-admin-manage-stacks.rst
 
 - To deploy the dashboard, see the `OpenStack dashboard documentation
-  <http://docs.openstack.org/developer/horizon/topics/deployment.html>`__.
+  <https://docs.openstack.org/developer/horizon/topics/deployment.html>`__.
 - To launch instances with the dashboard as an end user, see the
   `Launch and manage instances
-  <http://docs.openstack.org/user-guide/dashboard-launch-instances.html>`__.
+  <https://docs.openstack.org/user-guide/dashboard-launch-instances.html>`__.
   in the OpenStack End User Guide.
 - To create and manage ports, see the `Create and manage networks
-  <http://docs.openstack.org/user-guide/dashboard-create-networks.html#create-a-port>`__
+  <https://docs.openstack.org/user-guide/dashboard-create-networks.html#create-a-port>`__
   section of the OpenStack End User Guide.

@@ -128,7 +128,7 @@ integrated into Object Storage itself. The submitted change set (see
 `<https://review.openstack.org/#change,6058>`_) currently reports 124 meters
 across 15 Object Storage daemons and the tempauth middleware. Details of
 the meters tracked are in the `Administrator's
-Guide <http://docs.openstack.org/developer/swift/admin_guide.html>`_.
+Guide <https://docs.openstack.org/developer/swift/admin_guide.html>`_.
 
 The sending of meters is integrated with the logging framework. To
 enable, configure ``log_statsd_host`` in the relevant config file. You

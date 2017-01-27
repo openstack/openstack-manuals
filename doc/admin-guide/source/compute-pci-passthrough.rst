@@ -139,8 +139,8 @@ available with the specified ``vendor_id`` and ``product_id`` that matches the
    # openstack server create --flavor m1.large --image cirros-0.3.4-x86_64-uec --wait test-pci
 
 .. Links
-.. _`Create Virtual Functions`: http://docs.openstack.org/newton/networking-guide/config-sriov.html#create-virtual-functions-compute
-.. _`Configure nova-scheduler`: http://docs.openstack.org/newton/networking-guide/config-sriov.html#configure-nova-scheduler-controller
-.. _`nova.conf configuration options`: http://docs.openstack.org/newton/config-reference/compute/config-options.html
-.. _`flavor`: http://docs.openstack.org/admin-guide/compute-flavors.html
-.. _`Networking Guide`: http://docs.openstack.org/newton/networking-guide/config-sriov.html
+.. _`Create Virtual Functions`: https://docs.openstack.org/newton/networking-guide/config-sriov.html#create-virtual-functions-compute
+.. _`Configure nova-scheduler`: https://docs.openstack.org/newton/networking-guide/config-sriov.html#configure-nova-scheduler-controller
+.. _`nova.conf configuration options`: https://docs.openstack.org/newton/config-reference/compute/config-options.html
+.. _`flavor`: https://docs.openstack.org/admin-guide/compute-flavors.html
+.. _`Networking Guide`: https://docs.openstack.org/newton/networking-guide/config-sriov.html

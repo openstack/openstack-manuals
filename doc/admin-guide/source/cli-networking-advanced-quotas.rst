@@ -146,7 +146,7 @@ the default set of quotas are enforced for all projects, so no
       | description | Expose functions for quotas management per tenant          |
       | links       |                                                            |
       | name        | Quota management support                                   |
-      | namespace   | http://docs.openstack.org/network/ext/quotas-sets/api/v2.0 |
+      | namespace   | https://docs.openstack.org/network/ext/quotas-sets/api/v2.0 |
       | updated     | 2012-07-29T10:00:00-00:00                                  |
       +-------------+------------------------------------------------------------+
 

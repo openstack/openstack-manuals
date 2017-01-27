@@ -123,7 +123,7 @@ Create a flavor
    flavor that you do not want other projects to have access to,
    you can change the flavor's access to make it a private flavor.
    See
-   `Private Flavors in the OpenStack Operations Guide <http://docs.openstack.org/ops-guide/ops-user-facing-operations.html#private-flavors>`_.
+   `Private Flavors in the OpenStack Operations Guide <https://docs.openstack.org/ops-guide/ops-user-facing-operations.html#private-flavors>`_.
 
    For a list of optional parameters, run this command:
 

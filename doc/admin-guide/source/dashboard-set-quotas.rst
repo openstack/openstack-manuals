@@ -24,7 +24,7 @@ quotas for new projects, as well as update quotas for existing projects.
    Using the command-line interface, you can manage quotas for the
    OpenStack Compute service, the OpenStack Block Storage service, and
    the OpenStack Networking service (see `OpenStack Administrator Guide
-   <http://docs.openstack.org/admin-guide/cli-set-quotas.html>`_).
+   <https://docs.openstack.org/admin-guide/cli-set-quotas.html>`_).
    Additionally, you can update Compute service quotas for
    project users.
 
@@ -114,4 +114,4 @@ Update project quotas
    The dashboard does not show all possible project quotas.
    To view and update the quotas for a service, use its
    command-line client. See `OpenStack Administrator Guide
-   <http://docs.openstack.org/admin-guide/cli-set-quotas.html>`_.
+   <https://docs.openstack.org/admin-guide/cli-set-quotas.html>`_.

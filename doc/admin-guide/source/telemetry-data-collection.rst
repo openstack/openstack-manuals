@@ -88,7 +88,7 @@ types by each OpenStack service that Telemetry transforms into samples.
 
        image.send
      - The required configuration for Image service can be  * - service found in
-       `Configure the Image service for Telemetry <http://docs.openstack.org/project-install-guide/telemetry/newton>`__
+       `Configure the Image service for Telemetry <https://docs.openstack.org/project-install-guide/telemetry/newton>`__
        section in the Installation Tutorials and Guides.
    * - OpenStack Networking
      - floatingip.create.end
@@ -171,7 +171,7 @@ types by each OpenStack service that Telemetry transforms into samples.
        volume.backup.restore.\
        \*
      - The required configuration for Block Storage service can be found in the
-       `Add the Block Storage service agent for Telemetry section <http://docs.openstack.org/project-install-guide/telemetry/newton/configure_services/cinder/install-cinder-ubuntu.html>`__
+       `Add the Block Storage service agent for Telemetry section <https://docs.openstack.org/project-install-guide/telemetry/newton/configure_services/cinder/install-cinder-ubuntu.html>`__
        in the Installation Tutorials and Guides.
 
 .. note::
@@ -186,7 +186,7 @@ administrators and users. Configuring ``nova_notifications`` in the
 ``nova.conf`` file allows administrators to respond to events
 rapidly. For more information on configuring notifications for the
 compute service, see
-`Telemetry services <http://docs.openstack.org/project-install-guide/
+`Telemetry services <https://docs.openstack.org/project-install-guide/
 telemetry/newton/configure_services/nova/install-nova-ubuntu.html>`__ in the
 Installation Tutorials and Guides.
 
@@ -209,7 +209,7 @@ information locally.
 A Compute agent instance has to be installed on each and every compute
 node, installation instructions can be found in the `Install the Compute
 agent for Telemetry
-<http://docs.openstack.org/project-install-guide/
+<https://docs.openstack.org/project-install-guide/
 telemetry/newton/configure_services/nova/install-nova-ubuntu.html>`__
 section in the Installation Tutorials and Guides.
 
@@ -242,7 +242,7 @@ meters are listed in :ref:`telemetry-object-storage-meter`, marked with
 
 The instructions on how to install this middleware can be found in
 `Configure the Object Storage service for Telemetry
-<http://docs.openstack.org/project-install-guide/
+<https://docs.openstack.org/project-install-guide/
 telemetry/newton/configure_services/swift/install-swift-ubuntu.html>`__
 section in the Installation Tutorials and Guides.
 
@@ -341,7 +341,7 @@ The following services can be polled with this agent:
    framework
 
 To install and configure this service use the `Add the Telemetry service
-<http://docs.openstack.org/project-install-guide/telemetry/newton/install-base-ubuntu.html>`__
+<https://docs.openstack.org/project-install-guide/telemetry/newton/install-base-ubuntu.html>`__
 section in the Installation Tutorials and Guides.
 
 The central agent does not need direct database connection. The samples
@@ -399,7 +399,7 @@ above several back ends that can be used for building distributed
 applications.
 
 Tooz supports `various
-drivers <http://docs.openstack.org/developer/tooz/drivers.html>`__
+drivers <https://docs.openstack.org/developer/tooz/drivers.html>`__
 including the following back end solutions:
 
 -  `Zookeeper <http://zookeeper.apache.org/>`__. Recommended solution by
@@ -416,7 +416,7 @@ Telemetry services.
 For information about the required configuration options that have to be
 set in the ``ceilometer.conf`` configuration file for both the central
 and Compute agents, see the `Coordination section
-<http://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
 in the OpenStack Configuration Reference.
 
 Notification agent HA deployment
@@ -430,7 +430,7 @@ in a larger amount of load.
 To enable workload partitioning by notification agent, the ``backend_url``
 option must be set in the ``ceilometer.conf`` configuration file.
 Additionally, ``workload_partitioning`` should be enabled in the
-`Notification section <http://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__ in the OpenStack Configuration Reference.
+`Notification section <https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__ in the OpenStack Configuration Reference.
 
 .. note::
 
@@ -468,7 +468,7 @@ central agent configuration also supports using different configuration
 files for groups of service instances of this type that are running in
 parallel. For enabling this configuration set a value for the
 ``partitioning_group_prefix`` option in the `polling section
-<http://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
 in the OpenStack Configuration Reference.
 
 .. warning::
@@ -483,7 +483,7 @@ in the OpenStack Configuration Reference.
 To enable the Compute agent to run multiple instances simultaneously
 with workload partitioning, the ``workload_partitioning`` option has to
 be set to ``True`` under the `Compute section
-<http://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
 in the ``ceilometer.conf`` configuration file.
 
 
@@ -725,7 +725,7 @@ Multiple ``ceilometer-collector`` processes can be run at a time. It is also
 supported to start multiple worker threads per collector process. The
 ``collector_workers`` configuration option has to be modified in the
 `Collector section
-<http://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
 of the ``ceilometer.conf`` configuration file.
 
 Database dispatcher
@@ -782,7 +782,7 @@ target. The samples are sent without any modification. To set this
 option as the collector's target, the ``dispatcher`` has to be changed
 to ``http`` in the ``ceilometer.conf`` configuration file. For the list
 of options that you need to set, see the see the `dispatcher_http
-section <http://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+section <https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
 in the OpenStack Configuration Reference.
 
 File dispatcher
@@ -791,5 +791,5 @@ File dispatcher
 You can store samples in a file by setting the ``dispatcher`` option in the
 ``ceilometer.conf`` file. For the list of configuration options,
 see the `dispatcher_file section
-<http://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
 in the OpenStack Configuration Reference.

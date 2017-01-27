@@ -28,7 +28,7 @@ from its primary project.
 
 Before you can run client commands, you must download and
 source an OpenStack RC file. See `Download and source the OpenStack RC file
-<http://docs.openstack.org/user-guide/common/cli-set-environment-variables-using-openstack-rc.html#download-and-source-the-openstack-rc-file>`_.
+<https://docs.openstack.org/user-guide/common/cli-set-environment-variables-using-openstack-rc.html#download-and-source-the-openstack-rc-file>`_.
 
 Projects
 ~~~~~~~~

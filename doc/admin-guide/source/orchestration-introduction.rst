@@ -29,4 +29,4 @@ a web interface.
 
 For more information about using the Orchestration service through the
 command line, see the `OpenStack Command-Line Interface Reference
-<http://docs.openstack.org/cli-reference/heat.html>`_.
+<https://docs.openstack.org/cli-reference/heat.html>`_.

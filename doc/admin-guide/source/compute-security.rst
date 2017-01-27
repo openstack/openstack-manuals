@@ -6,7 +6,7 @@ Security hardening
 
 OpenStack Compute can be integrated with various third-party
 technologies to increase security. For more information, see the
-`OpenStack Security Guide <http://docs.openstack.org/sec/>`_.
+`OpenStack Security Guide <https://docs.openstack.org/sec/>`_.
 
 Trusted compute pools
 ~~~~~~~~~~~~~~~~~~~~~

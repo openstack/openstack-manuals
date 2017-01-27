@@ -59,7 +59,7 @@ for the following purposes:
 The scheduler uses the special capabilities prefix for filtering. The scheduler
 can only create a share on a back end that reports capabilities matching the
 un-scoped extra-spec keys for the share type. For details, see `Capabilities
-and Extra-Specs <http://docs.openstack.org/developer/manila/devref/
+and Extra-Specs <https://docs.openstack.org/developer/manila/devref/
 capabilities_and_extra_specs.html>`_.
 
 Each driver implementation determines which extra specification keys it uses.

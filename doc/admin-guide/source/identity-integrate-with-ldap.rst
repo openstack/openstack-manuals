@@ -240,7 +240,7 @@ administrators to use users and groups in LDAP.
 
 #. List the domains using the dashboard, or the OpenStackClient CLI. Refer
    to the `Command List
-   <http://docs.openstack.org/developer/python-openstackclient/command-list.html>`__
+   <https://docs.openstack.org/developer/python-openstackclient/command-list.html>`__
    for a list of OpenStackClient commands.
 
 #. Create domains using OpenStack dashboard, or the OpenStackClient CLI.
@@ -386,7 +386,7 @@ Secure the OpenStack Identity service connection to an LDAP back end
 The Identity service supports the use of TLS to encrypt LDAP traffic.
 Before configuring this, you must first verify where your certificate
 authority file is located. For more information, see the
-`OpenStack Security Guide SSL introduction <http://docs.openstack.org/
+`OpenStack Security Guide SSL introduction <https://docs.openstack.org/
 security-guide/secure-communication/introduction-to-ssl-and-tls.html>`_.
 
 Once you verify the location of your certificate authority file:

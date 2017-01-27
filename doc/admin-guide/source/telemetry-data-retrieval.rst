@@ -57,12 +57,12 @@ be a list of data structures that consist of the following items:
 
 Regardless of the endpoint on which the filter is applied on, it will
 always target the fields of the `Sample type
-<http://docs.openstack.org/developer/ceilometer/webapi/v2.html#Sample>`__.
+<https://docs.openstack.org/developer/ceilometer/webapi/v2.html#Sample>`__.
 
 Several fields of the API endpoints accept shorter names than the ones
 defined in the reference. The API will do the transformation internally
 and return the output with the fields that are listed in the `API reference
-<http://docs.openstack.org/developer/ceilometer/webapi/v2.html>`__.
+<https://docs.openstack.org/developer/ceilometer/webapi/v2.html>`__.
 The fields are the following:
 
 -  ``project_id``: project
@@ -129,7 +129,7 @@ The ``filter``, ``orderby`` and ``limit`` fields are optional.
 
    As opposed to the simple query, complex query is available via a
    separate API endpoint. For more information see the `Telemetry v2 Web API
-   Reference <http://docs.openstack.org/developer/ceilometer/webapi/v2.html#v2-web-api>`__.
+   Reference <https://docs.openstack.org/developer/ceilometer/webapi/v2.html#v2-web-api>`__.
 
 Statistics
 ----------
@@ -189,7 +189,7 @@ the requested operations.
 To be able to use the :command:`ceilometer` command, the
 python-ceilometerclient package needs to be installed and configured
 properly. For details about the installation process, see the `Telemetry
-chapter <http://docs.openstack.org/project-install-guide/telemetry/newton/>`__
+chapter <https://docs.openstack.org/project-install-guide/telemetry/newton/>`__
 in the Installation Tutorials and Guides.
 
 .. note::
@@ -479,7 +479,7 @@ The method calls look like the following:
 
 For further details about the python-ceilometerclient package, see the
 `Python bindings to the OpenStack Ceilometer
-API <http://docs.openstack.org/developer/python-ceilometerclient/>`__
+API <https://docs.openstack.org/developer/python-ceilometerclient/>`__
 reference.
 
 .. _telemetry-publishers:

@@ -27,11 +27,11 @@ flavors that you can edit or add to.
 
    -  For more information about creating and troubleshooting images,
       see the `OpenStack Virtual Machine Image
-      Guide <http://docs.openstack.org/image-guide/>`__.
+      Guide <https://docs.openstack.org/image-guide/>`__.
 
    -  For more information about image configuration options, see the
       `Image services
-      <http://docs.openstack.org/newton/config-reference/image.html>`__
+      <https://docs.openstack.org/newton/config-reference/image.html>`__
       section of the OpenStack Configuration Reference.
 
    -  For more information about flavors, see :ref:`compute-flavors`.
@@ -270,7 +270,7 @@ can also be used to set policies for Image service actions.
 
    To view a sample configuration file, see
    `glance-api.conf
-   <http://docs.openstack.org/newton/config-reference/image/glance-api.conf.html>`__.
+   <https://docs.openstack.org/newton/config-reference/image/glance-api.conf.html>`__.
 
 #. Optionally, in the ``glance-api.conf`` file, specify whether roles or
    policies are used in the property protections configuration file
@@ -283,7 +283,7 @@ can also be used to set policies for Image service actions.
 
    To view a sample configuration file, see
    `glance-api.conf
-   <http://docs.openstack.org/newton/config-reference/image/glance-api.conf.html>`__.
+   <https://docs.openstack.org/newton/config-reference/image/glance-api.conf.html>`__.
 
 Image download: how it works
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -319,7 +319,7 @@ Compute nodes also implement caching of images, meaning that if an image
 has been used before it won't necessarily be downloaded every time.
 Information on the configuration options for caching on compute nodes
 can be found in the `Configuration
-Reference <http://docs.openstack.org/newton/config-reference/>`__.
+Reference <https://docs.openstack.org/newton/config-reference/>`__.
 
 Instance building blocks
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -406,14 +406,14 @@ version using the pip python package installer:
 
 For more information about python-novaclient and other command-line
 tools, see the `OpenStack End User
-Guide <http://docs.openstack.org/user-guide/cli.html>`__.
+Guide <https://docs.openstack.org/user-guide/cli.html>`__.
 
 
 Control where instances run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The `Scheduling section
-<http://docs.openstack.org/newton/config-reference/compute/scheduler.html>`__
+<https://docs.openstack.org/newton/config-reference/compute/scheduler.html>`__
 of OpenStack Configuration Reference
 provides detailed information on controlling where your instances run,
 including ensuring a set of instances run on different compute nodes for

@@ -39,7 +39,7 @@ For more about the logging configuration syntax, including the
 on logging configuration files.
 
 For an example of the ``logging.conf`` file with various defined handlers, see
-the `OpenStack Configuration Reference <http://docs.openstack.org/newton/config-reference/>`__.
+the `OpenStack Configuration Reference <https://docs.openstack.org/newton/config-reference/>`__.
 
 Syslog
 ~~~~~~

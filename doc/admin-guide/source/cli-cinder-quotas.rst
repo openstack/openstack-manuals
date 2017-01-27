@@ -96,7 +96,7 @@ service quotas.
    update the property in the :guilabel:`cinder.quota`
    section of the ``/etc/cinder/cinder.conf`` file.
    For more information, see the `Block Storage service
-   <http://docs.openstack.org/newton/config-reference/block-storage.html>`_
+   <https://docs.openstack.org/newton/config-reference/block-storage.html>`_
    in OpenStack Configuration Reference.
 
 #. To update Block Storage service quotas for an existing project

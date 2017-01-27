@@ -80,4 +80,4 @@ Shared File Systems service:
    These network plug-ins were introduced in the OpenStack Kilo release. In
    the OpenStack Juno version, only NeutronNetworkPlugin is available.
 
-More information about network plug-ins can be found in `Manila developer documentation <http://docs.openstack.org/developer/manila/adminref/network_plugins.html>`_
+More information about network plug-ins can be found in `Manila developer documentation <https://docs.openstack.org/developer/manila/adminref/network_plugins.html>`_
