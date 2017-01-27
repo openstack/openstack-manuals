@@ -7,7 +7,7 @@ command options to interact with the Identity service via the
 OpenStack supports simple client environment scripts also known as
 OpenRC files. These scripts typically contain common options for
 all clients, but also support unique options. For more information, see the
-`OpenStack End User Guide <http://docs.openstack.org/user-guide/common/
+`OpenStack End User Guide <https://docs.openstack.org/user-guide/common/
 cli_set_environment_variables_using_openstack_rc.html>`__.
 
 Creating the scripts

@@ -11,7 +11,7 @@ Although most environments include Identity, Image service, Compute, at least
 one networking service, and the Dashboard, the Object Storage service can
 operate independently. If your use case only involves Object Storage, you can
 skip to `Object Storage Installation Guide
-<http://docs.openstack.org/project-install-guide/object-storage/draft/>`_
+<https://docs.openstack.org/project-install-guide/object-storage/draft/>`_
 after configuring the appropriate nodes for it.
 
 You must use an account with administrative privileges to configure each node.
@@ -71,7 +71,7 @@ of nested VMs.
    interface.
 
 For more information about system requirements, see the `OpenStack
-Operations Guide <http://docs.openstack.org/ops/>`_.
+Operations Guide <https://docs.openstack.org/ops/>`_.
 
 .. toctree::
    :maxdepth: 1

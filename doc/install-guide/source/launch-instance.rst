@@ -14,10 +14,10 @@ tools on the controller node. However, you can follow the instructions
 on any host that the tools are installed.
 For more information on the CLI tools, see the
 `OpenStack End User Guide
-<http://docs.openstack.org/user-guide/cli-launch-instances.html>`__.
+<https://docs.openstack.org/user-guide/cli-launch-instances.html>`__.
 To use the dashboard, see the
 `OpenStack End User Guide
-<http://docs.openstack.org/user-guide/dashboard.html>`__.
+<https://docs.openstack.org/user-guide/dashboard.html>`__.
 
 .. _launch-instance-networks:
 
@@ -220,7 +220,7 @@ If your environment includes the Orchestration service, you can create
 a stack that launches an instance.
 
 For more information, see the
-`Orchestration installation guide <http://docs.openstack.org/project-install-guide/orchestration/newton/launch-instance.html>`_.
+`Orchestration installation guide <https://docs.openstack.org/project-install-guide/orchestration/newton/launch-instance.html>`_.
 
 Shared File Systems
 -------------------
@@ -230,4 +230,4 @@ a share and mount it in an instance.
 
 For more information, see the
 `Shared File Systems installation guide
-<http://docs.openstack.org/project-install-guide/shared-file-systems/newton>`_.
+<https://docs.openstack.org/project-install-guide/shared-file-systems/newton>`_.

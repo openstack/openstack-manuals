@@ -7,10 +7,10 @@ Linux image that helps you test your OpenStack deployment.
 
 For more information about how to download and build images, see
 `OpenStack Virtual Machine Image Guide
-<http://docs.openstack.org/image-guide/>`__.
+<https://docs.openstack.org/image-guide/>`__.
 For information about how to manage images, see the
 `OpenStack End User Guide
-<http://docs.openstack.org/user-guide/common/cli-manage-images.html>`__.
+<https://docs.openstack.org/user-guide/common/cli-manage-images.html>`__.
 
 .. note::
 
@@ -75,12 +75,12 @@ For information about how to manage images, see the
 
    For information about the :command:`openstack image create` parameters,
    see `Create or update an image (glance)
-   <http://docs.openstack.org/user-guide/common/cli-manage-images.html#create-or-update-an-image-glance>`__
+   <https://docs.openstack.org/user-guide/common/cli-manage-images.html#create-or-update-an-image-glance>`__
    in the ``OpenStack User Guide``.
 
    For information about disk and container formats for images, see
    `Disk and container formats for images
-   <http://docs.openstack.org/image-guide/image-formats.html>`__
+   <https://docs.openstack.org/image-guide/image-formats.html>`__
    in the ``OpenStack Virtual Machine Image Guide``.
 
    .. note::
