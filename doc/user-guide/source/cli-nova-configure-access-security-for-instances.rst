@@ -175,8 +175,8 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
       .. code-block:: console
 
-         $ openstack security group rule create SECURITY_GROUP_NAME \
-             --protocol icmp --dst-port -1:-1 --remote-ip 0.0.0.0/0
+         $ openstack security group rule create --protocol icmp \
+           SECURITY_GROUP_NAME
 
       This allows access to all codes and all types of ICMP traffic.
 
@@ -185,8 +185,8 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
       .. code-block:: console
 
-         $ openstack security group rule create SECURITY_GROUP_NAME \
-             --protocol icmp --dst-port -1:-1 --remote-group SOURCE_GROUP_NAME
+         $ openstack security group rule create --protocol icmp \
+           --remote-group SOURCE_GROUP_NAME SECURITY_GROUP
 
 #. To allow access through a UDP port, such as allowing access to a DNS
    server that runs on a VM, choose one of the following options:
@@ -196,16 +196,16 @@ see :doc:`../common/cli-set-environment-variables-using-openstack-rc`.
 
       .. code-block:: console
 
-         $ openstack security group rule create SECURITY_GROUP_NAME \
-               --protocol udp --dst-port 53:53 --remote-ip 0.0.0.0/0
+         $ openstack security group rule create --protocol udp \
+           --dst-port 53:53 SECURITY_GROUP
 
    -  Allow only IP addresses from other security groups (source groups) to
       access the specified port.
 
       .. code-block:: console
 
-         $ openstack security group rule create SECURITY_GROUP_NAME \
-               --protocol udp --dst-port 53:53 --remote-group SOURCE_GROUP_NAME
+         $ openstack security group rule create --protocol udp \
+           --dst-port 53:53 --remote-group SOURCE_GROUP_NAME SECURITY_GROUP
 
 Delete a security group rule
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

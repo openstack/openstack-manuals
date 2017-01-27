@@ -309,12 +309,12 @@ you are using. If you are using a plug-in that:
    .. code-block:: console
 
       $ openstack security group rule create --protocol icmp \
-          --ingress
+        --ingress SECURITY_GROUP
 
    .. code-block:: console
 
       $ openstack security group rule create --protocol tcp \
-          --egress --description "Sample Security Group"
+        --egress --description "Sample Security Group" SECURITY_GROUP
 
 -  Does not implement Networking security groups, you can configure
    security group rules by using the :command:`openstack security group rule
@@ -323,8 +323,8 @@ you are using. If you are using a plug-in that:
 
    .. code-block:: console
 
-      $ openstack security group rule create default --protocol icmp --dst-port -1:-1 --remote-ip 0.0.0.0/0
-      $ openstack security group rule create default --protocol tcp --dst-port 22:22 --remote-ip 0.0.0.0/0
+      $ openstack security group rule create --protocol icmp default
+      $ openstack security group rule create --protocol tcp --dst-port 22:22 default
 
 .. note::
 
