@@ -16,7 +16,7 @@ review, use the `Documentation Program Dashboard
 audience for the documentation. To see current proposed changes, make sure
 you register and log into https://review.openstack.org. For more details on
 the review process, see `Code Review
-<http://docs.openstack.org/infra/manual/developers.html#code-review>`_.
+<https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
 
 Repositories and core team
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,7 +44,7 @@ Reviewing a documentation patch
 Before you proceed with reviewing patches, make sure to read carefully
 the :doc:`Review Guidelines <docs-review-guidelines>` for documentation
 and `Code Review Guidelines
-<http://docs.openstack.org/infra/manual/developers.html#code-review>`_.
+<https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
 Once done, follow the steps below to submit a patch review.
 
 #. Go to the `Documentation Program Dashboard
@@ -70,12 +70,12 @@ Once done, follow the steps below to submit a patch review.
    A patch with WorkInProgress (WIP) status needs additional work
    before review and possible approval. Therefore, you may skip such a patch
    and review once it is ready. For more information, see `Work In Progress
-   <http://docs.openstack.org/infra/manual/core.html#work-in-progress>`_.
+   <https://docs.openstack.org/infra/manual/core.html#work-in-progress>`_.
 
 .. seealso::
 
    `Peer Review
-   <http://docs.openstack.org/infra/manual/developers.html#peer-review>`_
+   <https://docs.openstack.org/infra/manual/developers.html#peer-review>`_
 
 Achieving core reviewer status
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -124,7 +124,7 @@ unfavorable gets through, without discouraging contributions.
 
 General instructions for being a core reviewer are located in the
 `Core Reviewer's Guide
-<http://docs.openstack.org/infra/manual/developers.html#code-review>`_.
+<https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
 This section is for openstack-manuals core reviewers.
 
 In almost all cases, patches can be merged with at least one +1 vote, and

@@ -6,7 +6,7 @@ Word choice
 
 This section offers conventions around general English usage and the terms that
 are not covered in the
-`glossary <http://docs.openstack.org/glossary/content/glossary.html>`_.
+`glossary <https://docs.openstack.org/glossary/content/glossary.html>`_.
 Additionally, use the `IBM
 Terminology <http://www-01.ibm.com/software/globalization/terminology/>`_ as
 a reference.

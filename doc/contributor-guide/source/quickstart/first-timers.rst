@@ -294,7 +294,7 @@ Try again when your network connection improves.
 
 If you suspect that SSH over non-standards ports might be blocked or need to
 access the web using http/https, you can configure git-review to `use an http
-endpoint instead of ssh <http://docs.openstack.org/infra/manual/developers.html#accessing-gerrit-over-https>`_
+endpoint instead of ssh <https://docs.openstack.org/infra/manual/developers.html#accessing-gerrit-over-https>`_
 as explained in the Infrastructure Manual.
 
 Python
@@ -335,12 +335,12 @@ instead:
 
 .. Links
 
-.. _`Account Setup`: http://docs.openstack.org/infra/manual/developers.html#account-setup
-.. _`Sign the appropriate Individual Contributor License Agreement`: http://docs.openstack.org/infra/manual/developers.html#sign-the-appropriate-individual-contributor-license-agreement
-.. _`Installing git-review`: http://docs.openstack.org/infra/manual/developers.html#installing-git-review
+.. _`Account Setup`: https://docs.openstack.org/infra/manual/developers.html#account-setup
+.. _`Sign the appropriate Individual Contributor License Agreement`: https://docs.openstack.org/infra/manual/developers.html#sign-the-appropriate-individual-contributor-license-agreement
+.. _`Installing git-review`: https://docs.openstack.org/infra/manual/developers.html#installing-git-review
 .. _`OpenStack Documentation Bug Team`: https://launchpad.net/~openstack-doc-bugs
 .. _`OpenStack Foundation`: http://www.openstack.org/join
-.. _`Development Workflow`: http://docs.openstack.org/infra/manual/developers.html#development-workflow
+.. _`Development Workflow`: https://docs.openstack.org/infra/manual/developers.html#development-workflow
 .. _`git`: http://msysgit.github.io
 .. _`curl`: http://curl.haxx.se/
 .. _`tar`: http://gnuwin32.sourceforge.net/packages/gtar.htm
@@ -350,8 +350,8 @@ instead:
 .. _`GitHub help`: https://help.github.com/articles/set-up-git
 .. _`Settings page on gerrit`: https://review.openstack.org/#/settings/
 .. _`Settings > SSH Public Keys`: https://review.openstack.org/#/settings/ssh-keys
-.. _`Starting Work on a New Project`: http://docs.openstack.org/infra/manual/developers.html#starting-work-on-a-new-project
-.. _`Starting a Change`: http://docs.openstack.org/infra/manual/developers.html#starting-a-change
-.. _`Committing a change`: http://docs.openstack.org/infra/manual/developers.html#committing-a-change
-.. _`Submitting a Change for Review`: http://docs.openstack.org/infra/manual/developers.html#submitting-a-change-for-review
-.. _`Updating a Change`: http://docs.openstack.org/infra/manual/developers.html#updating-a-change
+.. _`Starting Work on a New Project`: https://docs.openstack.org/infra/manual/developers.html#starting-work-on-a-new-project
+.. _`Starting a Change`: https://docs.openstack.org/infra/manual/developers.html#starting-a-change
+.. _`Committing a change`: https://docs.openstack.org/infra/manual/developers.html#committing-a-change
+.. _`Submitting a Change for Review`: https://docs.openstack.org/infra/manual/developers.html#submitting-a-change-for-review
+.. _`Updating a Change`: https://docs.openstack.org/infra/manual/developers.html#updating-a-change

@@ -6,7 +6,7 @@ For the Newton release, a new method of publishing installation tutorials
 and guides is being implemented. This will allow each big tent project to
 create their own installation guide, based on a standard template,
 in their own repository. These guides are then centrally published to
-`docs.openstack.org <http://docs.openstack.org>`_.
+`docs.openstack.org <https://docs.openstack.org>`_.
 
 For updates on the progress of this project, see the `Install Guide wiki
 page <https://wiki.openstack.org/wiki/Documentation/InstallGuideWorkItems>`_.

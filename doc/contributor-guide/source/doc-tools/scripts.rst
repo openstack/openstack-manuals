@@ -11,7 +11,7 @@ openstack-doc-tools repository
 
 autogenerate_config_docs
   Generates configuration references published at
-  http://docs.openstack.org/newton/config-reference/.
+  https://docs.openstack.org/newton/config-reference/.
 
 build_environment directory (deprecated)
   A Vagrant environment for working with the guides.
@@ -34,7 +34,7 @@ openstack-autohelp
 
 openstack-auto-commands
   Generates the command-line interface reference published at
-  http://docs.openstack.org/cli-reference/. A helper script to use this
+  https://docs.openstack.org/cli-reference/. A helper script to use this
   tool is available at ``bin/doc-tools-update-cli-reference``.
 
 openstack-jsoncheck
@@ -49,7 +49,7 @@ Several scripts currently reside in the `openstack-manuals
 beneficial to consolidate these into the ``openstack-doc-tools`` repository.
 
 www-generator.py
-  Generates static, template-based HTML files for http://docs.openstack.org/.
+  Generates static, template-based HTML files for https://docs.openstack.org/.
 
 sync-projects.sh
   Synchronizes the **Glossary**, common files, and some translations
@@ -57,7 +57,7 @@ sync-projects.sh
 
 publishdocs.sh
   Publishdocs job uses this script to publish documentation to
-  http://docs.openstack.org/.
+  https://docs.openstack.org/.
 
 
 Notes
