@@ -28,7 +28,7 @@ retrieve data, as described in :ref:`telemetry-users-roles-projects`.
 
 Further information about the available API endpoints can be found in
 the `Telemetry API Reference
-<http://developer.openstack.org/api-ref-telemetry-v2.html>`__.
+<https://developer.openstack.org/api-ref-telemetry-v2.html>`__.
 
 Query
 -----

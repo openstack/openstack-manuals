@@ -190,7 +190,7 @@ Guides for end users
   Shows OpenStack end users how to create and manage resources in an
   OpenStack cloud with the OpenStack dashboard and OpenStack client commands.
 * `OpenStack API Guide
-  <http://developer.openstack.org/api-guide/quick-start/>`_:
+  <https://developer.openstack.org/api-guide/quick-start/>`_:
   A brief overview of how to send REST API requests to endpoints for
   OpenStack services.
 * `OpenStack Command-Line Interface Reference
@@ -210,7 +210,7 @@ Guides for end users
 
    * - OpenStack API Guide
      - http://git.openstack.org/cgit/openstack/api-site/tree/api-quick-start
-     - http://developer.openstack.org/api-guide/quick-start/
+     - https://developer.openstack.org/api-guide/quick-start/
 
    * - OpenStack Command-Line Interface Reference
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/cli-reference
@@ -219,7 +219,7 @@ Guides for end users
 API documentation
 -----------------
 
-* `Complete API Reference <http://developer.openstack.org/api-guide/quick-start/index.html>`_:
+* `Complete API Reference <https://developer.openstack.org/api-guide/quick-start/index.html>`_:
   Complete reference listing of OpenStack REST APIs
   with example requests and responses.
 * `API specifications <http://specs.openstack.org/>`_:

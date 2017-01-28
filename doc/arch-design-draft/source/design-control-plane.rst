@@ -250,7 +250,7 @@ Application Programming Interface (API)
 All public access, whether direct, through a command-line client, or
 through the web-based dashboard, uses the API service. Find the API
 reference at `Development resources for OpenStack clouds
-<http://developer.openstack.org/>`_.
+<https://developer.openstack.org/>`_.
 
 You must choose whether you want to support the Amazon EC2 compatibility
 APIs, or just the OpenStack APIs. One issue you might encounter when
@@ -276,7 +276,7 @@ Extensions
 ~~~~~~~~~~
 
 The `API
-Specifications <http://developer.openstack.org/api-guide/quick-start/index.html>`_ define
+Specifications <https://developer.openstack.org/api-guide/quick-start/index.html>`_ define
 the core actions, capabilities, and mediatypes of the OpenStack API. A
 client can always depend on the availability of this core API, and
 implementers are always required to support it in its entirety.
