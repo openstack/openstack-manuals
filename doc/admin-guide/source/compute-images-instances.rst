@@ -395,16 +395,16 @@ OpenStack provides command-line, web interface, and API-based instance
 management tools. Third-party management tools are also available, using
 either the native API or the provided EC2-compatible API.
 
-The OpenStack python-novaclient package provides a basic command-line
-utility, which uses the :command:`nova` command. This is available as a native
-package for most Linux distributions, or you can install the latest
-version using the pip python package installer:
+The OpenStack python-openstackclient package provides a basic command-line
+utility, which uses the :command:`openstack` command.
+This is available as a native package for most Linux distributions,
+or you can install the latest version using the pip python package installer:
 
 .. code-block:: console
 
-   # pip install python-novaclient
+   # pip install python-openstackclient
 
-For more information about python-novaclient and other command-line
+For more information about python-openstackclient and other command-line
 tools, see the `OpenStack End User
 Guide <https://docs.openstack.org/user-guide/cli.html>`__.
 
