@@ -25,9 +25,6 @@ The service features a RESTful API, which developers can use to send messages
 between various components of their SaaS and mobile applications, by using a
 variety of communication patterns.
 
-Key features
-~~~~~~~~~~~~
-
 The Message service provides the following key features:
 
 * Choice between two communication transports. Both with Identity service
@@ -59,9 +56,6 @@ The Message service provides the following key features:
   * Email notifications.
   * Webhook notifications.
   * Websocket notifications.
-
-Components
-~~~~~~~~~~
 
 The Message service contains the following components:
 
