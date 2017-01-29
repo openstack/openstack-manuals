@@ -6,6 +6,7 @@ Share drivers
 .. and the drivers for proprietary components
 
 .. toctree::
+   :maxdepth: 1
 
    drivers/generic-driver.rst
    drivers/cephfs-native-driver.rst
