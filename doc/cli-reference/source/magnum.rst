@@ -24,7 +24,7 @@ The magnum client is the command-line interface (CLI) for
 the Container Infrastructure Management service (magnum) API and its
 extensions.
 
-This chapter documents :command:`magnum` version ``2.3.1``.
+This chapter documents :command:`magnum` version ``2.4.0``.
 
 For help on a specific :command:`magnum` command, enter:
 
@@ -55,45 +55,54 @@ magnum usage
                  [--magnum-api-version <magnum-api-ver>]
                  [--os-cacert <ca-certificate>]
                  [--os-endpoint-override <endpoint-override>] [--insecure]
+                 [--profile HMAC_KEY]
                  <subcommand> ...
 
 **Subcommands:**
 
 ``baymodel-create``
-  Create a baymodel.
+  Create a baymodel. (Deprecated in favor of cluster-template-create.)
 
 ``baymodel-delete``
-  Delete specified baymodel.
+  Delete specified baymodel. (Deprecated in favor of
+  cluster-template-delete.)
 
 ``baymodel-list``
-  Print a list of baymodels.
+  Print a list of baymodels. (Deprecated in favor of
+  cluster-template-list.)
 
 ``baymodel-show``
-  Show details about the given baymodel.
+  Show details about the given baymodel. (Deprecated in
+  favor of cluster-template-show.)
 
 ``baymodel-update``
-  Updates one or more baymodel attributes.
+  Updates one or more baymodel attributes. (Deprecated
+  in favor of cluster-template-update.)
 
 ``bay-config``
   Configure native client to access bay. You can source
   the output of this command to get the native client of
   the corresponding COE configured to access the bay.
   Example: eval $(magnum bay-config <bay-name>).
+  (Deprecated in favor of cluster-config.)
 
 ``bay-create``
-  Create a bay.
+  Create a bay. (Deprecated in favor of cluster-create.)
 
 ``bay-delete``
-  Delete specified bay.
+  Delete specified bay. (Deprecated in favor of cluster-delete.)
 
 ``bay-list``
-  Print a list of available bays.
+  Print a list of available bays. (Deprecated in favor
+  of cluster-list.)
 
 ``bay-show``
-  Show details about the given bay.
+  Show details about the given bay. (Deprecated in favor
+  of cluster-show.)
 
 ``bay-update``
-  Update information about the given bay.
+  Update information about the given bay. (Deprecated in
+  favor of cluster-update.)
 
 ``ca-show``
   Show details about the CA certificate for a bay or
@@ -141,6 +150,9 @@ magnum usage
 
 ``service-list``
   Print a list of magnum services.
+
+``stats-list``
+  Show stats for the given project_id
 
 ``bash-completion``
   Prints arguments for bash-completion. Prints all of
@@ -226,360 +238,14 @@ magnum optional arguments
 ``--insecure``
   Do not verify https connections
 
-.. _magnum_bay-config:
-
-magnum bay-config
------------------
-
-.. code-block:: console
-
-   usage: magnum bay-config [--dir <dir>] [--force] <bay>
-
-Configure native client to access bay. You can source the output of this
-command to get the native client of the corresponding COE configured to access
-the bay. Example: eval $(magnum bay-config <bay-name>).
-
-**Positional arguments:**
-
-``<bay>``
-  ID or name of the bay to retrieve config.
-
-**Optional arguments:**
-
-``--dir <dir>``
-  Directory to save the certificate and config files.
-
-``--force``
-  Overwrite files if existing.
-
-.. _magnum_bay-create:
-
-magnum bay-create
------------------
-
-.. code-block:: console
-
-   usage: magnum bay-create [--name <name>] --baymodel <baymodel>
-                            [--node-count <node-count>]
-                            [--master-count <master-count>]
-                            [--discovery-url <discovery-url>]
-                            [--timeout <timeout>]
-
-Create a bay.
-
-**Optional arguments:**
-
-``--name <name>``
-  Name of the bay to create.
-
-``--baymodel <baymodel>``
-  ID or name of the baymodel.
-
-``--node-count <node-count>``
-  The bay node count.
-
-``--master-count <master-count>``
-  The number of master nodes for the bay.
-
-``--discovery-url <discovery-url>``
-  Specifies custom discovery url for node discovery.
-
-``--timeout <timeout>``
-  The timeout for bay creation in minutes. The default
-  is 60 minutes.
-
-.. _magnum_bay-delete:
-
-magnum bay-delete
------------------
-
-.. code-block:: console
-
-   usage: magnum bay-delete <bay> [<bay> ...]
-
-Delete specified bay.
-
-**Positional arguments:**
-
-``<bay>``
-  ID or name of the (bay)s to delete.
-
-.. _magnum_bay-list:
-
-magnum bay-list
----------------
-
-.. code-block:: console
-
-   usage: magnum bay-list [--marker <marker>] [--limit <limit>]
-                          [--sort-key <sort-key>] [--sort-dir <sort-dir>]
-                          [--fields <fields>]
-
-Print a list of available bays.
-
-**Optional arguments:**
-
-``--marker <marker>``
-  The last bay UUID of the previous page; displays list
-  of bays after "marker".
-
-``--limit <limit>``
-  Maximum number of bays to return.
-
-``--sort-key <sort-key>``
-  Column to sort results by.
-
-``--sort-dir <sort-dir>``
-  Direction to sort. "asc" or "desc".
-
-``--fields <fields>``
-  Comma-separated list of fields to display. Available
-  fields: uuid, name, baymodel_id, stack_id, status,
-  master_count, node_count, links, bay_create_timeout
-
-.. _magnum_bay-show:
-
-magnum bay-show
----------------
-
-.. code-block:: console
-
-   usage: magnum bay-show [--long] <bay>
-
-Show details about the given bay.
-
-**Positional arguments:**
-
-``<bay>``
-  ID or name of the bay to show.
-
-**Optional arguments:**
-
-``--long``
-  Display extra associated Baymodel info.
-
-.. _magnum_bay-update:
-
-magnum bay-update
------------------
-
-.. code-block:: console
-
-   usage: magnum bay-update <bay> <op> <path=value> [<path=value> ...]
-
-Update information about the given bay.
-
-**Positional arguments:**
-
-``<bay>``
-  UUID or name of bay
-
-``<op>``
-  Operations: 'add', 'replace' or 'remove'
-
-``<path=value>``
-  Attributes to add/replace or remove (only PATH is necessary on
-  remove)
-
-.. _magnum_baymodel-create:
-
-magnum baymodel-create
-----------------------
-
-.. code-block:: console
-
-   usage: magnum baymodel-create [--name <name>] --image-id <image-id>
-                                 --keypair-id <keypair-id> --external-network-id
-                                 <external-network-id> --coe <coe>
-                                 [--fixed-network <fixed-network>]
-                                 [--fixed-subnet <fixed-subnet>]
-                                 [--network-driver <network-driver>]
-                                 [--volume-driver <volume-driver>]
-                                 [--dns-nameserver <dns-nameserver>]
-                                 [--flavor-id <flavor-id>]
-                                 [--master-flavor-id <master-flavor-id>]
-                                 [--docker-volume-size <docker-volume-size>]
-                                 [--docker-storage-driver <docker-storage-driver>]
-                                 [--http-proxy <http-proxy>]
-                                 [--https-proxy <https-proxy>]
-                                 [--no-proxy <no-proxy>]
-                                 [--labels <KEY1=VALUE1,KEY2=VALUE2;KEY3=VALUE3...>]
-                                 [--tls-disabled] [--public] [--registry-enabled]
-                                 [--server-type <server-type>]
-                                 [--master-lb-enabled] [--floating-ip-enabled]
-
-Create a baymodel.
-
-**Optional arguments:**
-
-``--name <name>``
-  Name of the baymodel to create.
-
-``--image-id <image-id>``
-  The name or UUID of the base image to customize for
-  the bay.
-
-``--keypair-id <keypair-id>``
-  The name or UUID of the SSH keypair to load into the
-  Bay nodes.
-
-``--external-network-id <external-network-id>``
-  The external Neutron network ID to connect to this bay
-  model.
-
-``--coe <coe>``
-  Specify the Container Orchestration Engine to use.
-
-``--fixed-network <fixed-network>``
-  The private Neutron network name to connect to this
-  bay model.
-
-``--fixed-subnet <fixed-subnet>``
-  The private Neutron subnet name to connect to bay.
-
-``--network-driver <network-driver>``
-  The network driver name for instantiating container
-  networks.
-
-``--volume-driver <volume-driver>``
-  The volume driver name for instantiating container
-  volume.
-
-``--dns-nameserver <dns-nameserver>``
-  The DNS nameserver to use for this baymodel.
-
-``--flavor-id <flavor-id>``
-  The nova flavor id to use when launching the bay.
-
-``--master-flavor-id <master-flavor-id>``
-  The nova flavor id to use when launching the master
-  node of the bay.
-
-``--docker-volume-size <docker-volume-size>``
-  Specify the number of size in GB for the docker volume
-  to use.
-
-``--docker-storage-driver <docker-storage-driver>``
-  Select a docker storage driver. Supported:
-  devicemapper, overlay. Default: devicemapper
-
-``--http-proxy <http-proxy>``
-  The http_proxy address to use for nodes in bay.
-
-``--https-proxy <https-proxy>``
-  The https_proxy address to use for nodes in bay.
-
-``--no-proxy <no-proxy>``
-  The no_proxy address to use for nodes in bay.
-
-``--labels <KEY1=VALUE1,KEY2=VALUE2;KEY3=VALUE3...>``
-  Arbitrary labels in the form of key=value pairs to
-  associate with a baymodel. May be used multiple times.
-
-``--tls-disabled``
-  Disable TLS in the Bay.
-
-``--public``
-  Make baymodel public.
-
-``--registry-enabled``
-  Enable docker registry in the Bay
-
-``--server-type <server-type>``
-  Specify the server type to be used for example vm. For
-  this release default server type will be vm.
-
-``--master-lb-enabled``
-  Indicates whether created bays should have a load
-  balancer for master nodes or not.
-
-``--floating-ip-enabled``
-  Indicates whether created bays should have a floating
-  ipor not.
-
-.. _magnum_baymodel-delete:
-
-magnum baymodel-delete
-----------------------
-
-.. code-block:: console
-
-   usage: magnum baymodel-delete <baymodels> [<baymodels> ...]
-
-Delete specified baymodel.
-
-**Positional arguments:**
-
-``<baymodels>``
-  ID or name of the (baymodel)s to delete.
-
-.. _magnum_baymodel-list:
-
-magnum baymodel-list
---------------------
-
-.. code-block:: console
-
-   usage: magnum baymodel-list [--limit <limit>] [--sort-key <sort-key>]
-                               [--sort-dir <sort-dir>] [--fields <fields>]
-
-Print a list of baymodels.
-
-**Optional arguments:**
-
-``--limit <limit>``
-  Maximum number of baymodels to return
-
-``--sort-key <sort-key>``
-  Column to sort results by
-
-``--sort-dir <sort-dir>``
-  Direction to sort. "asc" or "desc".
-
-``--fields <fields>``
-  Comma-separated list of fields to display. Available
-  fields: uuid, name, coe, image_id, public, link,
-  apiserver_port, server_type, tls_disabled,
-  registry_enabled
-
-.. _magnum_baymodel-show:
-
-magnum baymodel-show
---------------------
-
-.. code-block:: console
-
-   usage: magnum baymodel-show <baymodel>
-
-Show details about the given baymodel.
-
-**Positional arguments:**
-
-``<baymodel>``
-  ID or name of the baymodel to show.
-
-.. _magnum_baymodel-update:
-
-magnum baymodel-update
-----------------------
-
-.. code-block:: console
-
-   usage: magnum baymodel-update <baymodel> <op> <path=value> [<path=value> ...]
-
-Updates one or more baymodel attributes.
-
-**Positional arguments:**
-
-``<baymodel>``
-  UUID or name of baymodel
-
-``<op>``
-  Operations: 'add', 'replace' or 'remove'
-
-``<path=value>``
-  Attributes to add/replace or remove (only PATH is necessary on
-  remove)
+``--profile HMAC_KEY``
+  HMAC key to use for encrypting context data for
+  performance profiling of operation. This key should be
+  the value of the HMAC key configured for the
+  OSprofiler middleware in nova; it is specified in the
+  Nova configuration file at "/etc/nova/nova.conf".
+  Without the key, profiling will not be triggered even
+  if OSprofiler is enabled on the server side.
 
 .. _magnum_ca-show:
 
@@ -656,7 +322,8 @@ magnum cluster-create
 
 .. code-block:: console
 
-   usage: magnum cluster-create [--name <name>] --cluster-template
+   usage: magnum cluster-create [--keypair-id <keypair> | --keypair <keypair>]
+                                [--name <name>] --cluster-template
                                 <cluster_template> [--node-count <node-count>]
                                 [--master-count <master-count>]
                                 [--discovery-url <discovery-url>]
@@ -665,6 +332,14 @@ magnum cluster-create
 Create a cluster.
 
 **Optional arguments:**
+
+``--keypair-id <keypair>``
+  UUID or name of the keypair to use for this cluster.
+  This parameter is deprecated and will be removed in a
+  future release. Use --keypair instead.
+
+``--keypair <keypair>``
+  UUID or name of the keypair to use for this cluster.
 
 ``--name <name>``
   Name of the cluster to create.
@@ -731,9 +406,9 @@ Print a list of available clusters.
 
 ``--fields <fields>``
   Comma-separated list of fields to display. Available
-  fields: uuid, name, baymodel_id, stack_id, status,
-  master_count, node_count, links,
-  cluster_create_timeout
+  fields: uuid, name, cluster_template_id, stack_id,
+  status, master_count, node_count, links,
+  create_timeout
 
 .. _magnum_cluster-show:
 
@@ -763,17 +438,18 @@ magnum cluster-template-create
 
 .. code-block:: console
 
-   usage: magnum cluster-template-create [--name <name>] --image-id <image-id>
-                                         --keypair-id <keypair-id>
-                                         --external-network-id
-                                         <external-network-id> --coe <coe>
+   usage: magnum cluster-template-create
+                                         [--keypair-id <keypair> | --keypair <keypair>]
+                                         (--external-network-id <external-network> | --external-network <external-network>)
+                                         [--master-flavor-id <master-flavor> | --master-flavor <master-flavor>]
+                                         [--flavor-id <flavor> | --flavor <flavor>]
+                                         (--image-id <image> | --image <image>)
+                                         [--name <name>] --coe <coe>
                                          [--fixed-network <fixed-network>]
                                          [--fixed-subnet <fixed-subnet>]
                                          [--network-driver <network-driver>]
                                          [--volume-driver <volume-driver>]
                                          [--dns-nameserver <dns-nameserver>]
-                                         [--flavor-id <flavor-id>]
-                                         [--master-flavor-id <master-flavor-id>]
                                          [--docker-volume-size <docker-volume-size>]
                                          [--docker-storage-driver <docker-storage-driver>]
                                          [--http-proxy <http-proxy>]
@@ -790,30 +466,65 @@ Create a cluster template.
 
 **Optional arguments:**
 
+``--keypair-id <keypair>``
+  The name or UUID of the SSH keypair to load into the
+  Cluster nodes. This parameter is deprecated and will
+  be removed in a future release. Use --keypair instead.
+
+``--keypair <keypair>``
+  The name or UUID of the SSH keypair to load into the
+  Cluster nodes.
+
+``--external-network-id <external-network>``
+  The external Neutron network name or UUID to connect
+  to this Cluster Template. This parameter is deprecated
+  and will be removed in a future release. Use
+  --external-network instead.
+
+``--external-network <external-network>``
+  The external Neutron network name or UUID to connect
+  to this Cluster Template.
+
+``--master-flavor-id <master-flavor>``
+  The nova flavor name or UUID to use when launching the
+  master node of the Cluster. This parameter is
+  deprecated and will be removed in a future release.
+  Use --master-flavor instead.
+
+``--master-flavor <master-flavor>``
+  The nova flavor name or UUID to use when launching the
+  master node of the Cluster.
+
+``--flavor-id <flavor>``
+  The nova flavor name or UUID to use when launching the
+  Cluster. This parameter is deprecated and will be
+  removed in a future release. Use --flavor instead.
+
+``--flavor <flavor>``
+  The nova flavor name or UUID to use when launching the
+  Cluster.
+
+``--image-id <image>``
+  The name or UUID of the base image to customize for
+  the Cluster. This parameter is deprecated and will be
+  removed in a future release. Use --image instead.
+
+``--image <image>``
+  The name or UUID of the base image to customize for
+  the Cluster.
+
 ``--name <name>``
   Name of the cluster template to create.
-
-``--image-id <image-id>``
-  The name or UUID of the base image to customize for
-  the bay.
-
-``--keypair-id <keypair-id>``
-  The name or UUID of the SSH keypair to load into the
-  Bay nodes.
-
-``--external-network-id <external-network-id>``
-  The external Neutron network ID to connect to this bay
-  model.
 
 ``--coe <coe>``
   Specify the Container Orchestration Engine to use.
 
 ``--fixed-network <fixed-network>``
   The private Neutron network name to connect to this
-  bay model.
+  Cluster model.
 
 ``--fixed-subnet <fixed-subnet>``
-  The private Neutron subnet name to connect to bay.
+  The private Neutron subnet name to connect to Cluster.
 
 ``--network-driver <network-driver>``
   The network driver name for instantiating container
@@ -826,13 +537,6 @@ Create a cluster template.
 ``--dns-nameserver <dns-nameserver>``
   The DNS nameserver to use for this cluster template.
 
-``--flavor-id <flavor-id>``
-  The nova flavor id to use when launching the bay.
-
-``--master-flavor-id <master-flavor-id>``
-  The nova flavor id to use when launching the master
-  node of the bay.
-
 ``--docker-volume-size <docker-volume-size>``
   Specify the number of size in GB for the docker volume
   to use.
@@ -842,13 +546,13 @@ Create a cluster template.
   devicemapper, overlay. Default: devicemapper
 
 ``--http-proxy <http-proxy>``
-  The http_proxy address to use for nodes in bay.
+  The http_proxy address to use for nodes in Cluster.
 
 ``--https-proxy <https-proxy>``
-  The https_proxy address to use for nodes in bay.
+  The https_proxy address to use for nodes in Cluster.
 
 ``--no-proxy <no-proxy>``
-  The no_proxy address to use for nodes in bay.
+  The no_proxy address to use for nodes in Cluster.
 
 ``--labels <KEY1=VALUE1,KEY2=VALUE2;KEY3=VALUE3...>``
   Arbitrary labels in the form of key=value pairs to
@@ -856,25 +560,25 @@ Create a cluster template.
   multiple times.
 
 ``--tls-disabled``
-  Disable TLS in the Bay.
+  Disable TLS in the Cluster.
 
 ``--public``
   Make cluster template public.
 
 ``--registry-enabled``
-  Enable docker registry in the Bay
+  Enable docker registry in the Cluster
 
 ``--server-type <server-type>``
   Specify the server type to be used for example vm. For
   this release default server type will be vm.
 
 ``--master-lb-enabled``
-  Indicates whether created bays should have a load
+  Indicates whether created Clusters should have a load
   balancer for master nodes or not.
 
 ``--floating-ip-enabled``
-  Indicates whether created bays should have a floating
-  ipor not.
+  Indicates whether created Clusters should have a
+  floating ip or not.
 
 .. _magnum_cluster-template-delete:
 
@@ -970,7 +674,8 @@ magnum cluster-update
 
 .. code-block:: console
 
-   usage: magnum cluster-update <cluster> <op> <path=value> [<path=value> ...]
+   usage: magnum cluster-update [--rollback]
+                                <cluster> <op> <path=value> [<path=value> ...]
 
 Update information about the given cluster.
 
@@ -986,6 +691,11 @@ Update information about the given cluster.
   Attributes to add/replace or remove (only PATH is necessary on
   remove)
 
+**Optional arguments:**
+
+``--rollback``
+  Rollback cluster on update failure.
+
 .. _magnum_service-list:
 
 magnum service-list
@@ -996,4 +706,20 @@ magnum service-list
    usage: magnum service-list
 
 Print a list of magnum services.
+
+.. _magnum_stats-list:
+
+magnum stats-list
+-----------------
+
+.. code-block:: console
+
+   usage: magnum stats-list [--project-id <project-id>]
+
+Show stats for the given project_id
+
+**Optional arguments:**
+
+``--project-id <project-id>``
+  Project ID
 
