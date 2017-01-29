@@ -10,7 +10,7 @@ Object Storage service (swift) command-line client
 The swift client is the command-line interface (CLI) for
 the Object Storage service API and its extensions.
 
-This chapter documents :command:`swift` version ``3.2.0``.
+This chapter documents :command:`swift` version ``3.3.0``.
 
 For help on a specific :command:`swift` command, enter:
 
@@ -206,7 +206,7 @@ swift capabilities
 
 .. code-block:: console
 
-   Usage: swift capabilities
+   Usage: swift capabilities [--json] [<proxy_url>]
 
 Retrieve capability of the proxy.
 
@@ -218,6 +218,50 @@ Retrieve capability of the proxy.
 ``--json``
   Print the cluster capabilities in JSON format.
 
+.. _swift_copy:
+
+swift copy
+----------
+
+.. code-block:: console
+
+   Usage: swift copy [--destination </container/object>] [--fresh-metadata]
+                     [--meta <name:value>] [--header <header>] <container>
+                     <object> [<object>] [...]
+
+Copies object to new destination, optionally updates objects metadata.
+If destination is not set, will update metadata of object
+
+**Positional arguments:**
+
+``<container>``
+  Name of container to copy from.
+
+``<object>``
+  Name of object to copy. Specify multiple times for multiple objects
+
+**Optional arguments:**
+
+``-d, --destination </container[/object]>``
+  The container and name of the destination object. Name
+  of destination object can be omitted, then will be
+  same as name of source object. Supplying multiple
+  objects and destination with object name is invalid.
+
+``-M, --fresh-metadata``
+  Copy the object without any existing metadata,
+  If not set, metadata will be preserved or appended
+
+``-m, --meta <name:value>``
+  Sets a meta data item. This option may be repeated.
+
+  Example: -m Color:Blue -m Size:Large
+
+``-H, --header <header:value>``
+  Adds a customized request header. This option may be repeated.
+
+  Example: -H "content-type:text/plain" -H "Content-Length: 4000"
+
 .. _swift_delete:
 
 swift delete
@@ -225,7 +269,11 @@ swift delete
 
 .. code-block:: console
 
-   Usage: swift delete
+   Usage: swift delete [--all] [--leave-segments]
+                       [--object-threads <threads>]
+                       [--container-threads <threads>]
+                       [--header <header:value>]
+                       [<container> [<object>] [...]]
 
 Delete a container or objects within a container.
 
@@ -246,6 +294,11 @@ Delete a container or objects within a container.
 ``--leave-segments``
   Do not delete segments of manifest objects.
 
+``-H, --header <header:value>``
+  Adds a custom request header to use for deleting
+  objects or an entire container.
+
+
 ``--object-threads <threads>``
   Number of threads to use for deleting objects.
   Default is 10.
@@ -261,7 +314,13 @@ swift download
 
 .. code-block:: console
 
-   Usage: swift download
+   Usage: swift download [--all] [--marker <marker>] [--prefix <prefix>]
+                         [--output <out_file>] [--output-dir <out_directory>]
+                         [--object-threads <threads>] [--ignore-checksum]
+                         [--container-threads <threads>] [--no-download]
+                         [--skip-identical] [--remove-prefix]
+                         [--header <header:value>] [--no-shuffle]
+                         [<container> [<object>] [...]]
 
 Download objects from containers.
 
@@ -318,6 +377,7 @@ Download objects from containers.
 ``-H, --header <header:value>``
   Adds a customized request header to the query, like
   "Range" or "If-Match". This option may be repeated.
+
   Example: --header "content-type:text/plain"
 
 ``--skip-identical``
@@ -344,7 +404,9 @@ swift list
 
 .. code-block:: console
 
-   Usage: swift list
+   Usage: swift list [--long] [--lh] [--totals] [--prefix <prefix>]
+                     [--delimiter <delimiter>] [--header <header:value>]
+                     [<container>]
 
 Lists the containers for the account or the objects for a container.
 
@@ -373,6 +435,9 @@ Lists the containers for the account or the objects for a container.
   only. See OpenStack Swift API documentation for what
   this means.
 
+``-H, --header <header:value>``
+  Adds a custom request header to use for listing.
+
 .. _swift_post:
 
 swift post
@@ -380,7 +445,10 @@ swift post
 
 .. code-block:: console
 
-   Usage: swift post
+   Usage: swift post [--read-acl <acl>] [--write-acl <acl>] [--sync-to]
+                     [--sync-key <sync-key>] [--meta <name:value>]
+                     [--header <header>]
+                     [<container> [<object>]]
 
 Updates meta information for the account, container, or object.
 If the container is not found, it will be created automatically.
@@ -397,12 +465,14 @@ If the container is not found, it will be created automatically.
 
 ``-r, --read-acl <acl>``
   Read ACL for containers. Quick summary of ACL syntax:
-  ``.r:*``, ``.r:-.example.com``, ``.r:www.example.com``, ``account1``,
-  ``account2:user2``
+  ``.r:*``, ``.r:-.example.com``, ``.r:www.example.com``,
+  ``account1`` (v1.0 identity API only),
+  ``account1:*``, ``account2:user2`` (v2.0+ identity API).
 
 ``-w, --write-acl <acl>``
   Write ACL for containers. Quick summary of ACL syntax:
-  account1 account2:user2
+  ``account1`` (v1.0 identity API only),
+  ``account1:*``, ``account2:user2`` (v2.0+ identity API).
 
 ``-t, --sync-to <sync-to>``
   Sync To for containers, for multi-cluster replication.
@@ -412,12 +482,14 @@ If the container is not found, it will be created automatically.
 
 ``-m, --meta <name:value>``
   Sets a meta data item. This option may be repeated.
+
   Example: -m Color:Blue -m Size:Large
 
 ``-H, --header <header:value>``
   Adds a customized request header.
-  This option may be repeated. Example
-  -H "content-type:text/plain" -H "Content-Length: 4000"
+  This option may be repeated.
+
+  Example: -H "content-type:text/plain" -H "Content-Length: 4000"
 
 .. _swift_stat:
 
@@ -426,7 +498,8 @@ swift stat
 
 .. code-block:: console
 
-   Usage: swift stat
+   Usage: swift stat [--lh] [--header <header:value>]
+                     [<container> [<object>]]
 
 Displays information for the account, container, or object.
 
@@ -444,6 +517,9 @@ Displays information for the account, container, or object.
   Report sizes in human readable format similar to
   ls -lh.
 
+``-H, --header <header:value>``
+  Adds a custom request header to use for stat.
+
 .. _swift_tempurl:
 
 swift tempurl
@@ -451,7 +527,8 @@ swift tempurl
 
 .. code-block:: console
 
-   Usage: swift tempurl
+   Usage: swift tempurl [--absolute] [--prefix-based]
+                        <method> <seconds> <path> <key>
 
 Generates a temporary URL for a Swift object.
 
@@ -467,8 +544,10 @@ Generates a temporary URL for a Swift object.
   timestamp when the temporary URL will expire.
 
 ``<path>``
-  The full path to the Swift object. Example:
-  /v1/AUTH_account/c/o.
+  The full path to the Swift object.
+
+  Example: /v1/AUTH_account/c/o
+  or: http://saio:8080/v1/AUTH_account/c/o
 
 ``<key>``
   The secret temporary URL key set on the Swift cluster.
@@ -482,6 +561,9 @@ Generates a temporary URL for a Swift object.
   timestamp rather than a number of seconds in the
   future.
 
+``--prefix-based``
+  If present, a prefix-based tempURL will be generated.
+
 .. _swift_upload:
 
 swift upload
@@ -489,7 +571,12 @@ swift upload
 
 .. code-block:: console
 
-   Usage: swift upload
+   Usage: swift upload [--changed] [--skip-identical] [--segment-size <size>]
+                       [--segment-container <container>] [--leave-segments]
+                       [--object-threads <thread>] [--segment-threads <threads>]
+                       [--header <header>] [--use-slo] [--ignore-checksum]
+                       [--object-name <object-name>]
+                       <container> <file_or_directory> [<file_or_directory>] [...]
 
 Uploads specified files and directories to the given container.
 
