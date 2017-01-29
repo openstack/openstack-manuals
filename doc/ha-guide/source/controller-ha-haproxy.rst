@@ -207,6 +207,20 @@ Configuring HAProxy
 
 .. TODO: explain why the Telemetry API is so special
 
+#. Configure the kernel parameter to allow non-local IP binding. This allows
+   running HAProxy instances to bind to a VIP for failover. Add following line
+   to ``/etc/sysctl.conf``:
+
+   .. code-block:: none
+
+      net.ipv4.ip_nonlocal_bind = 1
+
+#. Restart the host or, to make changes work immediately, invoke:
+
+   .. code-block:: console
+
+      $ sysctl -p
+
 #. Add HAProxy to the cluster and ensure the VIPs can only run on machines
    where HAProxy is active:
 

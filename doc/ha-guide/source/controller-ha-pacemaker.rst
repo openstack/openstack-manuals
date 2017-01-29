@@ -99,13 +99,15 @@ Set up the cluster with pcs
       The ``-p`` option is used to give the password on command
       line and makes it easier to script.
 
-#. Create and name the cluster, and then start it:
+#. Create and name the cluster. Then, start it and enable all components to
+   auto-start at boot time:
 
    .. code-block:: console
 
       $ pcs cluster setup --force --name my-first-openstack-cluster \
         controller1 controller2 controller3
       $ pcs cluster start --all
+      $ pcs cluster enable --all
 
 .. note ::
 
