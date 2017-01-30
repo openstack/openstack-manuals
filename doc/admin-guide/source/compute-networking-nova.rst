@@ -549,8 +549,8 @@ commands:
 
 .. code-block:: console
 
-   $ openstack security group rule create default --protocol icmp --dst-port -1:-1 --remote-ip 0.0.0.0/0
-   $ openstack security group rule create default --protocol tcp --dst-port 22:22 --remote-ip 0.0.0.0/0
+   $ openstack security group rule create --protocol icmp default
+   $ openstack security group rule create --protocol tcp --dst-port 22:22 default
 
 Enable ping and SSH with ``euca2ools``:
 
