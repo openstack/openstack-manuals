@@ -43,7 +43,6 @@ Appendix
    :maxdepth: 1
 
    policy-json-file.rst
-   firewalls-default-ports.rst
    common/app-support.rst
 
 Glossary

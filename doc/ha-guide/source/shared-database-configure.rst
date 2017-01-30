@@ -28,9 +28,9 @@ Galera Cluster requires that you open the following ports to network traffic:
 
 .. seealso::
 
-   For more information on firewalls, see `Firewalls and default ports
-   <https://docs.openstack.org/newton/config-reference/firewalls-default-ports.html>`_
-   in the Configuration Reference.
+   For more information on firewalls, see `firewalls and default ports
+   <https://docs.openstack.org/admin-guide/firewalls-default-ports.html>`_
+   in OpenStack Administrator Guide.
 
 This can be achieved using the :command:`iptables` command:
 

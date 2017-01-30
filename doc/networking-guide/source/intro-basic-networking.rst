@@ -411,11 +411,10 @@ IANA maintains a `registry of port numbers
 for many TCP-based services, as well as services that use other layer 4
 protocols that employ ports. Registering a TCP port number is not required, but
 registering a port number is helpful to avoid collisions with other
-services. See `Appendix B. Firewalls and default ports
-<https://docs.openstack.org/newton/config-reference/firewalls-default-ports.html>`_
-of the `OpenStack Configuration Reference <https://docs.openstack.org/newton/config-reference/>`_
-for the default TCP ports used by various services involved in an OpenStack
-deployment.
+services. See `firewalls and default ports
+<https://docs.openstack.org/admin-guide/firewalls-default-ports.html>`_
+in OpenStack Administrator Guide for the default TCP ports used by
+various services involved in an OpenStack deployment.
 
 
 The most common application programming interface (API) for writing TCP-based
