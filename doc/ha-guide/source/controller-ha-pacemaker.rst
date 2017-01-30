@@ -609,4 +609,23 @@ Note the following:
   It is usually prudent to reduce this to a shorter interval,
   such as 5 or 3 minutes.
 
+By default, STONITH is enabled in Pacemaker, but STONITH mechanisms (to
+shutdown a node via IPMI or ssh) are not configured. In this case Pacemaker
+will refuse to start any resources.
+For production cluster it is recommended to configure appropriate STONITH
+mechanisms. But for demo or testing purposes STONITH can be disabled completely
+as follows:
+
+- ``crmsh``
+
+  .. code-block:: console
+
+     $ crm configure property stonith-enabled=false
+
+- ``pcs``
+
+  .. code-block:: console
+
+     $ pcs property set stonith-enabled=false
+
 After you make these changes, commit the updated configuration.
