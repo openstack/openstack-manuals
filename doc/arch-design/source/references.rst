@@ -70,7 +70,7 @@ and installing OpenStack.
 OpenStack deployments.
 
 `OpenStack Training Marketplace
-<http://www.openstack.org/marketplace/training>`_
+<https://www.openstack.org/marketplace/training>`_
 : The OpenStack Market for training and Vendors providing training
 on OpenStack.
 

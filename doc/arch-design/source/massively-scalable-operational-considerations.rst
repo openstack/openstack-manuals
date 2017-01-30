@@ -82,4 +82,4 @@ members to OpenStack conferences, meetup events, and encouraging active
 participation in the mailing lists and committees is a very important way to
 maintain skills and forge relationships in the community. For a list of
 OpenStack training providers in the marketplace, see the `Openstack Marketplace
-<http://www.openstack.org/marketplace/training/>`_.
+<https://www.openstack.org/marketplace/training/>`_.

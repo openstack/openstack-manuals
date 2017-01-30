@@ -152,7 +152,7 @@ documentation, patch the ``reference/projects.yaml`` file in the
 .. _`wadl2rst`: http://github.com/annegentle/wadl2rst
 .. _`Compute API Guide`: https://developer.openstack.org/api-guide/compute
 .. _`example patch`: https://review.openstack.org/#/c/233446/
-.. _`API documentation guidelines`: http://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html
+.. _`API documentation guidelines`: https://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html
 .. _`nova example`: https://github.com/openstack/nova/blob/master/api-ref/source/conf.py
 .. _`openstack/api-site repository`: http://git.openstack.org/cgit/openstack/api-site/tree/api-quick-start/source/index.rst
 .. _`openstack/governance repository`: http://git.openstack.org/cgit/openstack/governance/tree/reference/projects.yaml

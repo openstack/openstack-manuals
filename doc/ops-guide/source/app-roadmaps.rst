@@ -180,7 +180,7 @@ Release notes are maintained on the OpenStack wiki, and also shown here:
 Here are some other resources:
 
 -  `A breakdown of current features under development, with their target
-   milestone <http://status.openstack.org/release/>`_
+   milestone <https://status.openstack.org/release/>`_
 
 -  `A list of all features, including those not yet under
    development <https://blueprints.launchpad.net/openstack>`_
@@ -215,7 +215,7 @@ to work with blueprints
 the perspective of Victoria Martínez, a developer intern.
 
 The roadmap for the next release as it is developed can be seen at
-`Releases <http://releases.openstack.org>`_.
+`Releases <https://releases.openstack.org>`_.
 
 To determine the potential features going in to future releases, or to
 look at features implemented previously, take a look at the existing
@@ -226,8 +226,9 @@ Blueprints <https://blueprints.launchpad.net/keystone>`_, and release
 notes.
 
 Aside from the direct-to-blueprint pathway, there is another very
-well-regarded mechanism to influence the development roadmap: the user
-survey. Found at `OpenStack User Survey <http://openstack.org/user-survey>`_,
+well-regarded mechanism to influence the development roadmap:
+the user survey. Found at `OpenStack User Survey
+<https://www.openstack.org/user-survey/>`_,
 it allows you to provide details of your deployments and needs, anonymously by
 default. Each cycle, the user committee analyzes the results and produces a
 report, including providing specific information to the technical

@@ -154,7 +154,7 @@ Bugs to update tables for the configuration references use the tag
 
 For updates of specific sections or adding of new drivers, follow the
 specification `Proprietary driver docs in openstack-manuals
-<http://specs.openstack.org/openstack/docs-specs/specs/kilo/move-driver-docs.html>`_
+<https://specs.openstack.org/openstack/docs-specs/specs/kilo/move-driver-docs.html>`_
 and assign the bug to the contact person that is mentioned on the
 `Vendor driver page
 <https://wiki.openstack.org/wiki/Documentation/VendorDrivers>`_. If

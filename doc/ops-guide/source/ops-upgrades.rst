@@ -14,7 +14,7 @@ Upgrade planning
 ----------------
 
 -  Thoroughly review the `release
-   notes <http://releases.openstack.org/>`_ to learn
+   notes <https://releases.openstack.org/>`_ to learn
    about new, updated, and deprecated features. Find incompatibilities
    between versions.
 

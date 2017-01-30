@@ -2,8 +2,8 @@
 Team and repository tags
 ========================
 
-.. image:: http://governance.openstack.org/badges/openstack-manuals.svg
-    :target: http://governance.openstack.org/reference/tags/index.html
+.. image:: https://governance.openstack.org/badges/openstack-manuals.svg
+    :target: https://governance.openstack.org/reference/tags/index.html
 
 .. Change things from this point on
 
@@ -13,7 +13,7 @@ OpenStack Manuals
 This repository contains documentation for the OpenStack project.
 
 For more details, see the `OpenStack Documentation Contributor
-Guide <http://docs.openstack.org/contributor-guide/>`_.
+Guide <https://docs.openstack.org/contributor-guide/>`_.
 
 It includes these manuals:
 
@@ -82,7 +82,7 @@ Generated files
 Some documentation files are generated using tools. These files include
 a ``do not edit`` header and should not be modified by hand.
 Please see `Generated files
-<http://docs.openstack.org/contributor-guide/doc-tools.html>`_.
+<https://docs.openstack.org/contributor-guide/doc-tools.html>`_.
 
 
 Bugs
@@ -96,5 +96,5 @@ Bugs should be filed on Launchpad, not GitHub:
 Installing
 ==========
 
-Refer to http://docs.openstack.org to see where these documents are published
-and to learn more about the OpenStack project.
+Refer to https://docs.openstack.org to see where these documents are
+published and to learn more about the OpenStack project.

@@ -159,7 +159,7 @@ project.
         is true even when project B has not created any volumes.
 
 See `cinder nested quota spec
-<http://specs.openstack.org/openstack/cinder-specs/specs/liberty/cinder-nested-quota-driver.html>`_
+<https://specs.openstack.org/openstack/cinder-specs/specs/liberty/cinder-nested-quota-driver.html>`_
 and `hierarchical multi-tenancy spec
 <https://blueprints.launchpad.net/keystone/+spec/hierarchical-multitenancy>`_
 for details.

@@ -23,7 +23,7 @@ ml2 extension driver.
 
 Details about the DB models, API extension, and use cases are out of the scope
 of this guide but can be found in the
-`Neutron QoS specification <http://specs.openstack.org/openstack/neutron-specs/specs/liberty/qos-api-extension.html>`_.
+`Neutron QoS specification <https://specs.openstack.org/openstack/neutron-specs/specs/liberty/qos-api-extension.html>`_.
 
 
 Supported QoS rule types

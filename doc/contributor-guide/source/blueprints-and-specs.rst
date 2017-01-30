@@ -10,7 +10,7 @@ Blueprints and specifications
 The Documentation team uses specifications in the `docs-specs repository
 <http://git.openstack.org/cgit/openstack/docs-specs>`_ to maintain large
 changes. Approved specifications are published at `Documentation Program
-Specifications <http://specs.openstack.org/openstack/docs-specs>`_.
+Specifications <https://specs.openstack.org/openstack/docs-specs>`_.
 For tracking purposes, a blueprint is created for each specification. It is
 also good practice to contact the speciality team for the book you want to
 change to discuss your changes before starting work.
