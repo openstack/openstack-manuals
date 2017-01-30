@@ -250,7 +250,7 @@ token.
         http://203.0.113.10:8774/v2.0/98333aba48e756fa8f629c83a818ad57/servers | jq .
 
 To discover how API requests should be structured, read the `OpenStack
-API Reference <http://developer.openstack.org/api-guide/quick-start/index.html>`_. To chew
+API Reference <https://developer.openstack.org/api-guide/quick-start/index.html>`_. To chew
 through the responses using jq, see the `jq
 Manual <http://stedolan.github.io/jq/manual/>`_.
 

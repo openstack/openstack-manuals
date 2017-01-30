@@ -162,6 +162,6 @@ old password.
 .. _Security Hardening PCI-DSS: http://specs.openstack.org/openstack/keystone-specs/specs/keystone/newton/pci-dss.html
 
 
-.. _v2.0: http://developer.openstack.org/api-ref/identity/v2-admin/index.html?expanded=update-user-admin-endpoint-detail#update-user-admin-endpoint
+.. _v2.0: https://developer.openstack.org/api-ref/identity/v2-admin/index.html?expanded=update-user-admin-endpoint-detail#update-user-admin-endpoint
 
-.. _v3: http://developer.openstack.org/api-ref/identity/v3/index.html#update-user
+.. _v3: https://developer.openstack.org/api-ref/identity/v3/index.html#update-user

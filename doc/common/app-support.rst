@@ -77,7 +77,7 @@ command-line clients:
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
 
-*  `API Guide <http://developer.openstack.org/api-guide/quick-start/>`__
+*  `API Guide <https://developer.openstack.org/api-guide/quick-start/>`__
 
 The following guide provides how to contribute to OpenStack documentation:
 
