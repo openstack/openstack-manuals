@@ -190,7 +190,7 @@ Finalize installation
 
    2. Secure the database service by running the ``mysql_secure_installation``
       script. In particular, choose a suitable password for the database
-      ``root`` account.
+      ``root`` account:
 
       .. code-block:: console
 
