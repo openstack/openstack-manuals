@@ -206,6 +206,19 @@ already.
       # virsh suspend 30
       Domain 30 suspended
 
+#. Find the ID for each instance by listing the server IDs using the
+   following command:
+
+   .. code-block:: console
+
+      # openstack server list
+      +--------------------------------------+-------+---------+-----------------------------+------------+
+      | ID                                   | Name  | Status  | Networks                    | Image Name |
+      +--------------------------------------+-------+---------+-----------------------------+------------+
+      | 2da14c5c-de6d-407d-a7d2-2dd0862b9967 | try3  | ACTIVE  | finance-internal=10.10.0.4  |            |
+      | 223f4860-722a-44a0-bac7-f73f58beec7b | try2  | ACTIVE  | finance-internal=10.10.0.13 |            |
+      +--------------------------------------+-------+---------+-----------------------------+------------+
+
 #. Connect the qemu-nbd device to the disk:
 
    .. code-block:: console
