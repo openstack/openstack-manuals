@@ -77,7 +77,7 @@ experience, such as Mirantis or Metacloud.
 If your preference is to build your own OpenStack expertise internally,
 a good way to kick-start that might be to attend or arrange a training
 session. The OpenStack Foundation has a `Training
-Marketplace <http://www.openstack.org/marketplace/training>`_ where you
+Marketplace <https://www.openstack.org/marketplace/training>`_ where you
 can look for nearby events. Also, the OpenStack community is `working to
 produce <https://wiki.openstack.org/wiki/Training-guides>`_ open source
 training materials.

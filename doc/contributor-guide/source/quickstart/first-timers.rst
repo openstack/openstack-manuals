@@ -154,7 +154,7 @@ Committing a change
 
 #. Follow the URL returned from ``git-review`` to check your commit::
 
-     http://review.openstack.org/<COMMIT-NUMBER>
+     https://review.openstack.org/<COMMIT-NUMBER>
 
 Celebrate and wait for reviews!
 
@@ -264,7 +264,7 @@ git and git review
      Permission denied (publickey).
 
   Double check the :guilabel:`Settings` page at
-  http://review.openstack.org to make sure your public key on the computer
+  https://review.openstack.org to make sure your public key on the computer
   or virtual server has been copied to SSH public keys on
   https://review.openstack.org/#/settings/ssh-keys. If you have not adjusted
   your ``.ssh`` configuration, your system may not be connecting using
@@ -339,7 +339,7 @@ instead:
 .. _`Sign the appropriate Individual Contributor License Agreement`: https://docs.openstack.org/infra/manual/developers.html#sign-the-appropriate-individual-contributor-license-agreement
 .. _`Installing git-review`: https://docs.openstack.org/infra/manual/developers.html#installing-git-review
 .. _`OpenStack Documentation Bug Team`: https://launchpad.net/~openstack-doc-bugs
-.. _`OpenStack Foundation`: http://www.openstack.org/join
+.. _`OpenStack Foundation`: https://www.openstack.org/join
 .. _`Development Workflow`: https://docs.openstack.org/infra/manual/developers.html#development-workflow
 .. _`git`: http://msysgit.github.io
 .. _`curl`: http://curl.haxx.se/

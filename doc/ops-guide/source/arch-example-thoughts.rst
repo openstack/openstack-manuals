@@ -9,4 +9,4 @@ exploration. If you're looking for additional ideas, check out
 `Installation Tutorials and Guides
 <https://docs.openstack.org/project-install-guide/newton/>`_, or the
 `OpenStack User Stories
-page <http://www.openstack.org/user-stories/>`_.
+page <https://www.openstack.org/user-stories/>`_.
