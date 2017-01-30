@@ -279,10 +279,9 @@ The displayed image attributes are:
     is the UUID of the instance the snapshot derives from. For uploaded
     images, this field is blank.
 
-Virtual hardware templates are called ``flavors``. The default
-installation provides five flavors. By default, these are configurable
-by admin users, however that behavior can be changed by redefining the
-access controls for ``compute_extension:flavormanage`` in
+Virtual hardware templates are called ``flavors``. By default, these are
+configurable by admin users, however that behavior can be changed by
+redefining the access controls for ``compute_extension:flavormanage`` in
 ``/etc/nova/policy.json`` on the ``compute-api`` server.
 
 For a list of flavors that are available on your system:

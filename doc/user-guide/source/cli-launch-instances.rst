@@ -70,6 +70,12 @@ Gather parameters to launch an instance
 
 Before you begin, source the OpenStack RC file.
 
+#. Create a flavor.
+
+   .. code-block:: console
+
+      $  openstack flavor create --ram 512 --disk 1 --vcpus 1 m1.tiny
+
 #. List the available flavors.
 
    .. code-block:: console
