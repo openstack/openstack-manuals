@@ -201,11 +201,11 @@ working properly on the 64bit version.
 
 #. Download and install Python 2.7 using the MSI installer from here:
 
-   http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi
+   https://www.python.org/ftp/python/2.7.3/python-2.7.3.msi
 
    .. code-block:: none
 
-      PS C:\> $src = "http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi"
+      PS C:\> $src = "https://www.python.org/ftp/python/2.7.3/python-2.7.3.msi"
       PS C:\> $dest = "$env:temp\python-2.7.3.msi"
       PS C:\> Invoke-WebRequest –Uri $src –OutFile $dest
       PS C:\> Unblock-File $dest
