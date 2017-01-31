@@ -176,6 +176,10 @@
 # Extensions list to use (list value)
 #extensions =
 
+# To support daemon mode with each agent service that will call XenAPI
+# directly to execute commands in dom0.
+#root_helper_daemon = xenapi_root_helper
+
 
 [ovs]
 
@@ -278,3 +282,14 @@
 # Use ipset to speed-up the iptables based security groups. Enabling ipset
 # support requires that ipset is installed on L2 agent node. (boolean value)
 #enable_ipset = true
+
+
+[xenapi]
+
+#
+# From neutron.ml2.ovs.agent
+#
+
+#connection_url = http://169.254.0.1
+#connection_username = root
+#connection_password = xenroot
