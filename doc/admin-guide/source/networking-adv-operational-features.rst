@@ -15,7 +15,7 @@ methods:
 -  Provide logging settings in a logging configuration file.
 
    See `Python logging
-   how-to <http://docs.python.org/howto/logging.html>`__ to learn more
+   how-to <https://docs.python.org/howto/logging.html>`__ to learn more
    about logging.
 
 -  Provide logging setting in ``neutron.conf``.

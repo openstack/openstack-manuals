@@ -168,8 +168,8 @@ For example, if your LDAP DNS password is ``$xkj432``, specify it, as follows:
 The code uses the Python ``string.Template.safe_substitute()``
 method to implement variable substitution.
 For more details on how variable substitution is resolved, see
-http://docs.python.org/2/library/string.html#template-strings
-and `PEP 292 <http://www.python.org/dev/peps/pep-0292/>`_.
+https://docs.python.org/2/library/string.html#template-strings
+and `PEP 292 <https://www.python.org/dev/peps/pep-0292/>`_.
 
 Whitespace
 ~~~~~~~~~~
