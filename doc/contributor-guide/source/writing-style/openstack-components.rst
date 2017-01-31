@@ -18,5 +18,5 @@ For more information, see `Service and Project Naming
 in OpenStack Technical Committee governance documents.
 
 The official source for services and project names is in the
-`projects.yaml <http://git.openstack.org/cgit/openstack/governance/tree/reference/projects.yaml>`_
+`projects.yaml <https://git.openstack.org/cgit/openstack/governance/tree/reference/projects.yaml>`_
 file in the ``openstack/governance`` repository.

@@ -8,7 +8,7 @@ Building output locally
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 The openstack-manuals project uses a `tox.ini
-<http://git.openstack.org/cgit/openstack/openstack-manuals/tree/tox.ini>`_
+<https://git.openstack.org/cgit/openstack/openstack-manuals/tree/tox.ini>`_
 file with specific sections that run jobs using the `Tox
 <https://tox.readthedocs.org/en/latest/>`_ tool, a virtualenv-based
 automation of test activities.
@@ -183,7 +183,7 @@ Build jobs
 ~~~~~~~~~~
 
 The build jobs for documentation are stored in the
-http://git.openstack.org/cgit/openstack-infra/project-config
+https://git.openstack.org/cgit/openstack-infra/project-config
 repository. The :file:`zuul/layout.yaml` file and the
 ``jenkins/jobs/manual-jobs.yaml`` or ``jenkins/jobs/api-jobs.yaml``
 file contain the Jenkins build jobs that build to the docs.openstack.org

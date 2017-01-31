@@ -200,7 +200,7 @@ to work with OpenStack.
 .. warning::
 
    Nova in tree EC2-compatible API is deprecated.
-   The `ec2-api project <http://git.openstack.org/cgit/openstack/ec2-api/>`_
+   The `ec2-api project <https://git.openstack.org/cgit/openstack/ec2-api/>`_
    is working to implement the EC2 API.
 
 You can use numerous third-party tools and language-specific SDKs to

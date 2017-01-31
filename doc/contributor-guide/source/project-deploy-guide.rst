@@ -53,7 +53,7 @@ Setting up
 #. Add the Python package ``openstackdocstheme``  to the
    ``test-requirements.txt`` file. Copy the exact requirement line from the
    `global file
-   <http://git.openstack.org/cgit/openstack/requirements/tree/global-requirements.txt>`_:
+   <https://git.openstack.org/cgit/openstack/requirements/tree/global-requirements.txt>`_:
 
    .. code-block:: none
 
