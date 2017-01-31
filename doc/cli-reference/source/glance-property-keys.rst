@@ -34,59 +34,59 @@ For example:
        the architecture data vocabulary defined by the `libosinfo project
        <http://libosinfo.org/>`_ for this purpose.
      - * ``alpha`` - `DEC 64-bit RISC
-         <http://en.wikipedia.org/wiki/DEC_Alpha>`_
+         <https://en.wikipedia.org/wiki/DEC_Alpha>`_
        * ``armv7l`` - `ARM Cortex-A7 MPCore
-         <http://en.wikipedia.org/wiki/ARM_architecture>`_
+         <https://en.wikipedia.org/wiki/ARM_architecture>`_
        * ``cris`` - `Ethernet, Token Ring, AXis—Code Reduced Instruction
-         Set <http://en.wikipedia.org/wiki/ETRAX_CRIS>`_
+         Set <https://en.wikipedia.org/wiki/ETRAX_CRIS>`_
        * ``i686`` - `Intel sixth-generation x86 (P6 micro architecture)
-         <http://en.wikipedia.org/wiki/X86>`_
-       * ``ia64`` - `Itanium <http://en.wikipedia.org/wiki/Itanium>`_
+         <https://en.wikipedia.org/wiki/X86>`_
+       * ``ia64`` - `Itanium <https://en.wikipedia.org/wiki/Itanium>`_
        * ``lm32`` - `Lattice Micro32
-         <http://en.wikipedia.org/wiki/Milkymist>`_
+         <https://en.wikipedia.org/wiki/Milkymist>`_
        * ``m68k`` - `Motorola 68000
-         <http://en.wikipedia.org/wiki/Motorola_68000_family>`_
+         <https://en.wikipedia.org/wiki/Motorola_68000_family>`_
        * ``microblaze`` - `Xilinx 32-bit FPGA (Big Endian)
-         <http://en.wikipedia.org/wiki/MicroBlaze>`_
+         <https://en.wikipedia.org/wiki/MicroBlaze>`_
        * ``microblazeel`` - `Xilinx 32-bit FPGA (Little Endian)
-         <http://en.wikipedia.org/wiki/MicroBlaze>`_
+         <https://en.wikipedia.org/wiki/MicroBlaze>`_
        * ``mips`` - `MIPS 32-bit RISC (Big Endian)
-         <http://en.wikipedia.org/wiki/MIPS_architecture>`_
+         <https://en.wikipedia.org/wiki/MIPS_architecture>`_
        * ``mipsel`` - `MIPS 32-bit RISC (Little Endian)
-         <http://en.wikipedia.org/wiki/MIPS_architecture>`_
+         <https://en.wikipedia.org/wiki/MIPS_architecture>`_
        * ``mips64`` - `MIPS 64-bit RISC (Big Endian)
-         <http://en.wikipedia.org/wiki/MIPS_architecture>`_
+         <https://en.wikipedia.org/wiki/MIPS_architecture>`_
        * ``mips64el`` - `MIPS 64-bit RISC (Little Endian)
-         <http://en.wikipedia.org/wiki/MIPS_architecture>`_
+         <https://en.wikipedia.org/wiki/MIPS_architecture>`_
        * ``openrisc`` - `OpenCores RISC
-         <http://en.wikipedia.org/wiki/OpenRISC#QEMU_support>`_
+         <https://en.wikipedia.org/wiki/OpenRISC#QEMU_support>`_
        * ``parisc`` - `HP Precision Architecture RISC
-         <http://en.wikipedia.org/wiki/PA-RISC>`_
+         <https://en.wikipedia.org/wiki/PA-RISC>`_
        * parisc64 - `HP Precision Architecture 64-bit RISC
-         <http://en.wikipedia.org/wiki/PA-RISC>`_
-       * ppc - `PowerPC 32-bit <http://en.wikipedia.org/wiki/PowerPC>`_
-       * ppc64 - `PowerPC 64-bit <http://en.wikipedia.org/wiki/PowerPC>`_
+         <https://en.wikipedia.org/wiki/PA-RISC>`_
+       * ppc - `PowerPC 32-bit <https://en.wikipedia.org/wiki/PowerPC>`_
+       * ppc64 - `PowerPC 64-bit <https://en.wikipedia.org/wiki/PowerPC>`_
        * ppcemb - `PowerPC (Embedded 32-bit)
-         <http://en.wikipedia.org/wiki/PowerPC>`_
+         <https://en.wikipedia.org/wiki/PowerPC>`_
        * s390 - `IBM Enterprise Systems Architecture/390
-         <http://en.wikipedia.org/wiki/S390>`_
-       * s390x - `S/390 64-bit <http://en.wikipedia.org/wiki/S390x>`_
+         <https://en.wikipedia.org/wiki/S390>`_
+       * s390x - `S/390 64-bit <https://en.wikipedia.org/wiki/S390x>`_
        * sh4 - `SuperH SH-4 (Little Endian)
-         <http://en.wikipedia.org/wiki/SuperH>`_
+         <https://en.wikipedia.org/wiki/SuperH>`_
        * sh4eb - `SuperH SH-4 (Big Endian)
-         <http://en.wikipedia.org/wiki/SuperH>`_
+         <https://en.wikipedia.org/wiki/SuperH>`_
        * sparc - `Scalable Processor Architecture, 32-bit
-         <http://en.wikipedia.org/wiki/Sparc>`_
+         <https://en.wikipedia.org/wiki/Sparc>`_
        * sparc64 - `Scalable Processor Architecture, 64-bit
-         <http://en.wikipedia.org/wiki/Sparc>`_
+         <https://en.wikipedia.org/wiki/Sparc>`_
        * unicore32 - `Microprocessor Research and Development Center RISC
-         Unicore32 <http://en.wikipedia.org/wiki/Unicore>`_
+         Unicore32 <https://en.wikipedia.org/wiki/Unicore>`_
        * x86_64 - `64-bit extension of IA-32
-         <http://en.wikipedia.org/wiki/X86>`_
+         <https://en.wikipedia.org/wiki/X86>`_
        * xtensa - `Tensilica Xtensa configurable microprocessor core
-         <http://en.wikipedia.org/wiki/Xtensa#Processor_Cores>`_
+         <https://en.wikipedia.org/wiki/Xtensa#Processor_Cores>`_
        * xtensaeb - `Tensilica Xtensa configurable microprocessor core
-         <http://en.wikipedia.org/wiki/Xtensa#Processor_Cores>`_ (Big Endian)
+         <https://en.wikipedia.org/wiki/Xtensa#Processor_Cores>`_ (Big Endian)
    * - All
      - ``hypervisor_type``
      - The hypervisor type. Note that ``qemu`` is used for both QEMU and KVM

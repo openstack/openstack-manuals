@@ -245,7 +245,7 @@ increase performance, but means that the entire size of the virtual disk is
 reserved on the physical disk.
 
 Local `LVM volumes
-<http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)>`__ can also be
+<https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)>`__ can also be
 used. Set ``images_volume_group = nova_local`` where ``nova_local`` is the name
 of the LVM group you have created.
 

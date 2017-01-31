@@ -232,7 +232,7 @@ Install and configure components
 
         Replace ``TIME_ZONE`` with an appropriate time zone identifier.
         For more information, see the `list of time zones
-        <http://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`__.
+        <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`__.
 
 .. endonly
 
@@ -371,7 +371,7 @@ Install and configure components
 
         Replace ``TIME_ZONE`` with an appropriate time zone identifier.
         For more information, see the `list of time zones
-        <http://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`__.
+        <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`__.
 
 .. endonly
 
@@ -511,7 +511,7 @@ Install and configure components
 
         Replace ``TIME_ZONE`` with an appropriate time zone identifier.
         For more information, see the `list of time zones
-        <http://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`__.
+        <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`__.
 
 .. endonly
 

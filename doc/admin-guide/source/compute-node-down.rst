@@ -148,7 +148,7 @@ persistent storage volumes. Backups are mandatory, even outside of disaster
 scenarios.
 
 For a definition of a disaster recovery plan (DRP), see
-`http://en.wikipedia.org/wiki/Disaster\_Recovery\_Plan <http://en.wikipedia.org/wiki/Disaster_Recovery_Plan>`_.
+`https://en.wikipedia.org/wiki/Disaster\_Recovery\_Plan <https://en.wikipedia.org/wiki/Disaster_Recovery_Plan>`_.
 
 A disk crash, network loss, or power failure can affect several components in
 your cloud architecture. The worst disaster for a cloud is a power loss. A

@@ -31,12 +31,12 @@ manager has the following capabilities:
    first determine the last machine to be active.
 
 #. A shared implementation and calculation of `quorum
-   <http://en.wikipedia.org/wiki/Quorum_(Distributed_Systems)>`_
+   <https://en.wikipedia.org/wiki/Quorum_(Distributed_Systems)>`_
 
    It is very important that all members of the system share the same
    view of who their peers are and whether or not they are in the
    majority. Failure to do this leads very quickly to an internal
-   `split-brain <http://en.wikipedia.org/wiki/Split-brain_(computing)>`_
+   `split-brain <https://en.wikipedia.org/wiki/Split-brain_(computing)>`_
    state. This is where different parts of the system are pulling in
    different and incompatible directions.
 
