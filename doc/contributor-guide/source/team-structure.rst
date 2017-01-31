@@ -17,10 +17,10 @@ with their respective leads:
   Tomoyuki Kato
 * `High Availability Guide
   <https://wiki.openstack.org/wiki/Documentation/HA_Guide_Update>`_:
-  Andrew Beekhof
+  Ianeta Hutchinson
 * `Hypervisor Tuning Guide
   <https://wiki.openstack.org/wiki/Documentation/HypervisorTuningGuide>`_:
-  Joe Topjian
+  Blair Bethwaite
 * `Installation guides
   <https://wiki.openstack.org/wiki/Documentation/InstallGuide>`_:
   Lana Brindley
@@ -29,7 +29,7 @@ with their respective leads:
   John Davidge
 * `Operations and Architecture Design guides
   <https://wiki.openstack.org/wiki/Documentation/OpsGuide>`_:
-  Shilla Saebi
+  Darren Chan
 * `Security Guide
   <https://wiki.openstack.org/wiki/Documentation/SecurityGuide>`_:
   Nathaniel Dillon
