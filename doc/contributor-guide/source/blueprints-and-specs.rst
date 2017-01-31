@@ -8,7 +8,7 @@ Blueprints and specifications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Documentation team uses specifications in the `docs-specs repository
-<http://git.openstack.org/cgit/openstack/docs-specs>`_ to maintain large
+<https://git.openstack.org/cgit/openstack/docs-specs>`_ to maintain large
 changes. Approved specifications are published at `Documentation Program
 Specifications <https://specs.openstack.org/openstack/docs-specs>`_.
 For tracking purposes, a blueprint is created for each specification. It is
@@ -77,23 +77,23 @@ process for multiple distributions based on the following packaging systems:
      - Target location
 
    * - Installation Tutorial for openSUSE and SUSE Linux Enterprise Server
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/newton/install-guide-obs/
 
    * - Installation Tutorial for Red Hat Enterprise Linux and CentOS
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/newton/install-guide-rdo/
 
    * - Installation Tutorial for Ubuntu 16.04 (LTS)
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/newton/install-guide-ubuntu/
 
    * - Installation Tutorial For Debian With Debconf
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/newton/install-guide-debconf/
 
    * - Installation Tutorial For Debian
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/newton/install-guide-debian/
 
 Guides for deployers and administrators
@@ -116,11 +116,11 @@ Guides for deployers and administrators
      - Target location
 
    * - Configuration Reference
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/config-reference
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/config-reference
      - https://docs.openstack.org/newton/config-reference/
 
    * - OpenStack Networking Guide
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide
      - https://docs.openstack.org/newton/networking-guide/
 
 Continuously released documentation
@@ -164,23 +164,23 @@ Guides for deployers and administrators
      - Target location
 
    * - OpenStack Architecture Design Guide
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/arch-design
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/arch-design
      - https://docs.openstack.org/arch-design/
 
    * - OpenStack Administrator Guide
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide
      - https://docs.openstack.org/admin-guide/
 
    * - OpenStack High Availability Guide
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/ha-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/ha-guide
      - https://docs.openstack.org/ha-guide/
 
    * - OpenStack Security Guide
-     - http://git.openstack.org/cgit/openstack/security-doc/tree/security-guide
+     - https://git.openstack.org/cgit/openstack/security-doc/tree/security-guide
      - https://docs.openstack.org/security-guide/
 
    * - OpenStack Virtual Machine Image Guide
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/image-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/image-guide
      - https://docs.openstack.org/image-guide/
 
 Guides for end users
@@ -205,15 +205,15 @@ Guides for end users
      - Target location
 
    * - OpenStack End User Guide
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/user-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/user-guide
      - https://docs.openstack.org/user-guide/
 
    * - OpenStack API Guide
-     - http://git.openstack.org/cgit/openstack/api-site/tree/api-quick-start
+     - https://git.openstack.org/cgit/openstack/api-site/tree/api-quick-start
      - https://developer.openstack.org/api-guide/quick-start/
 
    * - OpenStack Command-Line Interface Reference
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/cli-reference
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/cli-reference
      - https://docs.openstack.org/cli-reference/
 
 API documentation
@@ -247,7 +247,7 @@ Generally, the https://docs.openstack.org/developer/ documentation is meant
 for contributors to OpenStack projects. Each project's repo has a
 ``doc/source`` directory where RST source files are stored. They are built
 automatically with Sphinx when the patch is merged. For example, see
-http://git.openstack.org/cgit/openstack/horizon/tree/doc/source for the
+https://git.openstack.org/cgit/openstack/horizon/tree/doc/source for the
 horizon contributor documentation source and https://docs.openstack.org/developer/horizon/
 for the built documentation.
 
@@ -267,25 +267,25 @@ for the built documentation.
      - Target location
 
    * - Documentation Contributor Guide
-     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/contributor-guide
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/contributor-guide
      - https://docs.openstack.org/contributor-guide/
 
    * - Python Developer Documentation
-     - http://git.openstack.org/cgit/openstack/<project>/tree/master/doc/source/,
-       such as http://git.openstack.org/cgit/openstack/nova/tree/doc/source
+     - https://git.openstack.org/cgit/openstack/<project>/tree/master/doc/source/,
+       such as https://git.openstack.org/cgit/openstack/nova/tree/doc/source
      - https://docs.openstack.org/developer/openstack-projects.html
 
    * - Language Bindings and Python Clients
-     - http://git.openstack.org/cgit/openstack/python-<project>client/tree/master/doc/source/,
-       such as http://git.openstack.org/cgit/openstack/python-novaclient/tree/doc/source
+     - https://git.openstack.org/cgit/openstack/python-<project>client/tree/master/doc/source/,
+       such as https://git.openstack.org/cgit/openstack/python-novaclient/tree/doc/source
      - https://docs.openstack.org/developer/language-bindings.html
 
    * - OpenStack Project Infrastructure
-     - http://git.openstack.org/cgit/openstack-infra/system-config/tree/doc/source
+     - https://git.openstack.org/cgit/openstack-infra/system-config/tree/doc/source
      - https://docs.openstack.org/infra/system-config/
 
    * - Tempest Testing Project
-     - http://git.openstack.org/cgit/openstack/tempest/tree/doc/source
+     - https://git.openstack.org/cgit/openstack/tempest/tree/doc/source
      - https://docs.openstack.org/developer/tempest/
 
 Guides for contributors

@@ -87,7 +87,7 @@ Block Storage driver installation and deployment
       used, make corresponding changes to the driver path.
 
 #. Copy `the Block Storage driver
-   <http://git.openstack.org/cgit/openstack/cinder/tree/cinder/volume/drivers/huawei?h=stable/newton>`_
+   <https://git.openstack.org/cgit/openstack/cinder/tree/cinder/volume/drivers/huawei?h=stable/newton>`_
    to the Block Storage driver installation directory.
    Refer to step 1 to find the default directory.
 

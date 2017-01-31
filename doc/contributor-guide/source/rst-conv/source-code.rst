@@ -138,7 +138,7 @@ content from a remote URL (``http`` or ``https``).
    .. path /path/to/config/file
    .. remote-code-block:: ini
 
-      http://git.openstack.org/cgit/openstack/nova/tree/etc/nova/api-paste.ini?h=stable/newton
+      https://git.openstack.org/cgit/openstack/nova/tree/etc/nova/api-paste.ini?h=stable/newton
 
    .. end
 

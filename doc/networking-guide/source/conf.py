@@ -71,7 +71,7 @@ release = '0.9'
 #   gitsha: The SHA checksum of the bug description. Automatically extracted from git log.
 #   bug_tag: Tag for categorizing the bug. Must be set manually.
 # These variables are passed to the logabug code via html_context.
-giturl = u'http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide/source'
+giturl = u'https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide/source'
 git_cmd = "/usr/bin/git log | head -n1 | cut -f2 -d' '"
 gitsha = os.popen(git_cmd).read().strip('\n')
 html_context = {"gitsha": gitsha, "bug_tag": bug_tag,
