@@ -19,6 +19,9 @@ This guide documents OpenStack Ocata, Newton, and Mitaka releases.
    `bug list <https://bugs.launchpad.net/openstack-manuals/>`_.
    Please help where you are able.
 
+Contents
+~~~~~~~~
+
 .. toctree::
    :maxdepth: 2
 

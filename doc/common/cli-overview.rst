@@ -42,6 +42,7 @@ Unless the unified OpenStack Client (**python-openstackclient**) is used,
 the following table lists the command-line client for each OpenStack
 service with its package name and description.
 
+.. tabularcolumns:: |p{0.2\textwidth}|l|l|p{0.35\textwidth}|
 .. list-table:: OpenStack services and clients
    :widths: 20 20 20 40
    :header-rows: 1

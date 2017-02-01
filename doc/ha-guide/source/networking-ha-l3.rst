@@ -13,6 +13,7 @@ and `Open vSwitch: High availability using VRRP
 To enable high availability for configured routers, edit the
 :file:`/etc/neutron/neutron.conf` file to set the following values:
 
+.. tabularcolumns:: |l|l|L|
 .. list-table:: /etc/neutron/neutron.conf parameters for high availability
    :widths: 15 10 30
    :header-rows: 1

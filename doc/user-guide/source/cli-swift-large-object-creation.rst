@@ -275,6 +275,7 @@ Comparison of static and dynamic large objects
 While static and dynamic objects have similar behavior, this table describes
 their differences:
 
+.. tabularcolumns:: |p{0.2\textwidth}|p{0.35\textwidth}|p{0.35\textwidth}|
 .. list-table::
    :header-rows: 1
    :widths: 20 25 25

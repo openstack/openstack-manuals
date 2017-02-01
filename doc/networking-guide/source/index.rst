@@ -45,7 +45,9 @@ Glossary
 
    common/glossary
 
-Search
-~~~~~~
+.. only:: html
 
-* :ref:`search`
+   Search
+   ~~~~~~
+
+   * :ref:`search`
