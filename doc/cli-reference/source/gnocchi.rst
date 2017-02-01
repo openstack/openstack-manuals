@@ -24,7 +24,7 @@ The gnocchi client is the command-line interface (CLI) for
 the A time series storage and resources index service (gnocchi) API and its
 extensions.
 
-This chapter documents :command:`gnocchi` version ``2.8.2``.
+This chapter documents :command:`gnocchi` version ``3.0.0``.
 
 For help on a specific :command:`gnocchi` command, enter:
 
@@ -45,19 +45,7 @@ gnocchi usage
                   [--gnocchi-api-version GNOCCHI_API_VERSION] [--insecure]
                   [--os-cacert <ca-certificate>] [--os-cert <certificate>]
                   [--os-key <key>] [--timeout <seconds>] [--os-auth-type <name>]
-                  [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
-                  [--os-domain-name OS_DOMAIN_NAME]
-                  [--os-project-id OS_PROJECT_ID]
-                  [--os-project-name OS_PROJECT_NAME]
-                  [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
-                  [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
-                  [--os-trust-id OS_TRUST_ID]
-                  [--os-default-domain-id OS_DEFAULT_DOMAIN_ID]
-                  [--os-default-domain-name OS_DEFAULT_DOMAIN_NAME]
-                  [--os-user-id OS_USER_ID] [--os-username OS_USERNAME]
-                  [--os-user-domain-id OS_USER_DOMAIN_ID]
-                  [--os-user-domain-name OS_USER_DOMAIN_NAME]
-                  [--os-password OS_PASSWORD] [--endpoint ENDPOINT]
+                  [--user <gnocchi user>] [--endpoint <gnocchi endpoint>]
 
 .. _gnocchi_command_options:
 
@@ -94,9 +82,6 @@ gnocchi optional arguments
 
 ``--os-auth-type <name>, --os-auth-plugin <name>``
   Authentication type to use
-
-``--endpoint ENDPOINT``
-  Gnocchi endpoint (Env: GNOCCHI_ENDPOINT)
 
 .. _gnocchi_archive-policy_create:
 
@@ -563,6 +548,84 @@ Add measurements to a metric
 ``-m MEASURE, --measure MEASURE``
   timestamp and value of a measure separated with a '@'
 
+.. _gnocchi_measures_aggregation:
+
+gnocchi measures aggregation
+----------------------------
+
+.. code-block:: console
+
+   usage: gnocchi measures aggregation [-h] [-f {csv,html,json,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--print-empty] [--noindent]
+                                       [--quote {all,minimal,none,nonnumeric}] -m
+                                       METRIC [METRIC ...]
+                                       [--aggregation AGGREGATION]
+                                       [--reaggregation REAGGREGATION]
+                                       [--start START] [--stop STOP]
+                                       [--granularity GRANULARITY]
+                                       [--needed-overlap NEEDED_OVERLAP]
+                                       [--query QUERY]
+                                       [--resource-type RESOURCE_TYPE]
+                                       [--groupby GROUPBY] [--refresh]
+                                       [--resample RESAMPLE] [--fill FILL]
+
+Get measurements of aggregated metrics
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``-m METRIC [METRIC ...], --metric METRIC [METRIC ...]``
+  metrics IDs or metric name
+
+``--aggregation AGGREGATION``
+  granularity aggregation function to retrieve
+
+``--reaggregation REAGGREGATION``
+  groupby aggregation function to retrieve
+
+``--start START``
+  beginning of the period
+
+``--stop STOP``
+  end of the period
+
+``--granularity GRANULARITY``
+  granularity to retrieve
+
+``--needed-overlap NEEDED_OVERLAP``
+  percent of datapoints in each metrics required
+
+``--query QUERY``
+  A query to filter resource. The syntax is a
+  combination of attribute, operator and value. For
+  example: id=90d58eea-70d7-4294-a49a-170dcdf44c3c would
+  filter resource with a certain id. More complex
+  queries can be built, e.g.: not (flavor_id!="1" and
+  memory>=24). Use "" to force data to be interpreted as
+  string. Supported operators are: not, and, ∧ or, ∨,
+  >=, <=, !=, >, <, =, ==, eq, ne, lt, gt, ge, le, in,
+  like, ≠, ≥, ≤, like, in.
+
+``--resource-type RESOURCE_TYPE``
+  Resource type to query
+
+``--groupby GROUPBY``
+  Attribute to use to group resources
+
+``--refresh``
+  force aggregation of all known measures
+
+``--resample RESAMPLE``
+  granularity to resample time-series to (in seconds)
+
+``--fill FILL``
+  Value to use when backfilling timestamps with missing
+  values in a subset of series. Value should be a float
+  or 'null'.
+
 .. _gnocchi_measures_batch-metrics:
 
 gnocchi measures batch-metrics
@@ -778,6 +841,43 @@ Show a metric
 
 ``--resource-id RESOURCE_ID, -r RESOURCE_ID``
   ID of the resource
+
+.. _gnocchi_resource_batch_delete:
+
+gnocchi resource batch delete
+-----------------------------
+
+.. code-block:: console
+
+   usage: gnocchi resource batch delete [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width <integer>]
+                                        [--print-empty] [--noindent]
+                                        [--prefix PREFIX] [--type RESOURCE_TYPE]
+                                        query
+
+Delete a batch of resources based on attribute values
+
+**Positional arguments:**
+
+``query``
+  A query to filter resource. The syntax is a
+  combination of attribute, operator and value. For
+  example: id=90d58eea-70d7-4294-a49a-170dcdf44c3c would
+  filter resource with a certain id. More complex
+  queries can be built, e.g.: not (flavor_id!="1" and
+  memory>=24). Use "" to force data to be interpreted as
+  string. Supported operators are: not, and, ∧ or, ∨,
+  >=, <=, !=, >, <, =, ==, eq, ne, lt, gt, ge, le, in,
+  like, ≠, ≥, ≤, like, in.
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--type RESOURCE_TYPE, -t RESOURCE_TYPE``
+  Type of resource
 
 .. _gnocchi_resource_create:
 
@@ -1091,6 +1191,41 @@ Show a resource type
 
 ``-h, --help``
   show this help message and exit
+
+.. _gnocchi_resource-type_update:
+
+gnocchi resource-type update
+----------------------------
+
+.. code-block:: console
+
+   usage: gnocchi resource-type update [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-c COLUMN] [--max-width <integer>]
+                                       [--print-empty] [--noindent]
+                                       [--prefix PREFIX] [-a ATTRIBUTE]
+                                       [-r REMOVE_ATTRIBUTE]
+                                       name
+
+
+**Positional arguments:**
+
+``name``
+  name of the resource type
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``-a ATTRIBUTE, --attribute ATTRIBUTE``
+  attribute definition, attribute_name:attribute_type:at
+  tribute_is_required:attribute_type_option_name=attribu
+  te_type_option_value:… For example:
+  display_name:string:true:max_length=255
+
+``-r REMOVE_ATTRIBUTE, --remove-attribute REMOVE_ATTRIBUTE``
+  attribute name
 
 .. _gnocchi_status:
 
