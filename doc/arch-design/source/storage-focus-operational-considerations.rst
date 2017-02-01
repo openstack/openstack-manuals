@@ -218,15 +218,15 @@ careful planning and consideration. In the design phase, it is important
 to determine the maximum partition power required by the Object Storage
 service, which determines the maximum number of partitions which can
 exist. Object Storage distributes data among all available storage, but
-a partition cannot span more than one disk, so the maximum number of
-partitions can only be as high as the number of disks.
+a partition cannot span more than one disk, although a disk can have
+multiple partitions.
 
 For example, a system that starts with a single disk and a partition
 power of 3 can have 8 (2^3) partitions. Adding a second disk means that
 each has 4 partitions. The one-disk-per-partition limit means that this
-system can never have more than 8 disks, limiting its scalability.
+system can never have more than 8 partitions, limiting its scalability.
 However, a system that starts with a single disk and a partition power
-of 10 can have up to 1024 (2^10) disks.
+of 10 can have up to 1024 (2^10) partitions.
 
 As you add back-end storage capacity to the system, the partition maps
 redistribute data amongst the storage nodes. In some cases, this
