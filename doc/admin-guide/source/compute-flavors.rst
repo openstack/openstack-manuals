@@ -42,7 +42,10 @@ Flavors define these elements:
 |             | sk that the base image is copied into. When booting from a p\ |
 |             | ersistent volume it is not used. The "0" size is a special c\ |
 |             | ase which uses the native base image size as the size of the  |
-|             | ephemeral root volume.                                        |
+|             | ephemeral root volume. However, in this case the filter       |
+|             | scheduler cannot select the compute host based on the virtual |
+|             | image size. Therefore 0 should only be used for volume booted |
+|             | instances or for testing purposes.                            |
 +-------------+---------------------------------------------------------------+
 | Ephemeral   | Specifies the size of a secondary ephemeral data disk. This   |
 |             | is an empty, unformatted disk and exists only for the life o\ |
