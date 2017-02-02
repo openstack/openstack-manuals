@@ -41,6 +41,7 @@ Volume drivers
    drivers/itri-disco-driver.rst
    drivers/kaminario-driver.rst
    drivers/lenovo-driver.rst
+   drivers/nec-storage-m-series-driver.rst
    drivers/netapp-volume-driver.rst
    drivers/nimble-volume-driver.rst
    drivers/nexentastor4-driver.rst
