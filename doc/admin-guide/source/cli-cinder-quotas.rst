@@ -21,9 +21,7 @@ View Block Storage quotas
 
 Administrative users can view Block Storage service quotas.
 
-#. Obtain the project ID.
-
-   For example:
+#. Obtain the project ID:
 
    .. code-block:: console
 
@@ -33,13 +31,7 @@ Administrative users can view Block Storage service quotas.
 
    .. code-block:: console
 
-      $ cinder quota-defaults PROJECT_ID
-
-   For example:
-
-   .. code-block:: console
-
-      $ cinder quota-defaults $project_id
+      $ openstack quota show --default $OS_TENANT_ID
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+
@@ -48,17 +40,20 @@ Administrative users can view Block Storage service quotas.
       |  volumes  |   10  |
       +-----------+-------+
 
+.. note::
+
+   Listing default quotas with the OpenStack command line client will
+   provide all quotas for storage and network services. Previously, the
+   :command:`cinder quota-defaults` command would list only storage
+   quotas. You can use `PROJECT_ID` or `$OS_TENANT_NAME` arguments to
+   show Block Storage service quotas. If the `PROJECT_ID` argument returns
+   errors in locating resources, use `$OS_TENANT_NAME`.
+
 #. View Block Storage service quotas for a project:
 
    .. code-block:: console
 
-      $ cinder quota-show PROJECT_ID
-
-   For example:
-
-   .. code-block:: console
-
-      $ cinder quota-show $project_id
+      $ openstack quota show $OS_TENANT_ID
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+
@@ -68,12 +63,6 @@ Administrative users can view Block Storage service quotas.
       +-----------+-------+
 
 #. Show the current usage of a per-project quota:
-
-   .. code-block:: console
-
-      $ cinder quota-usage PROJECT_ID
-
-   For example:
 
    .. code-block:: console
 
@@ -106,15 +95,15 @@ service quotas.
       $ cinder quota-update --QUOTA_NAME QUOTA_VALUE PROJECT_ID
 
    Replace ``QUOTA_NAME`` with the quota that is to be updated,
-   ``QUOTA_VALUE`` with the required new value, and ``PROJECT_ID``
-   with the required project ID.
+   ``QUOTA_VALUE`` with the required new value. Use the :command:`openstack quota show`
+   command with ``PROJECT_ID``, which is the required project ID.
 
    For example:
 
    .. code-block:: console
 
       $ cinder quota-update --volumes 15 $project_id
-      $ cinder quota-show $project_id
+      $ openstack quota show $project_id
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+

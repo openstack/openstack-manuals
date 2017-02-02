@@ -329,7 +329,7 @@ the default set of quotas are enforced for all projects, so no
 
    .. code-block:: console
 
-      $ neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
+      $ openstack quota show PROJECT_ID 6f88036c45344d9999a1f971e4882723
       +---------------------+-------+
       | Field               | Value |
       +---------------------+-------+
@@ -340,6 +340,13 @@ the default set of quotas are enforced for all projects, so no
       | router              | 10    |
       | security_group      | 10    |
       | security_group_rule | 100   |
-      | subnet              | 10     |
+      | subnet              | 10    |
       | subnetpool          | -1    |
       +---------------------+-------+
+
+.. note::
+
+   Listing defualt quotas with the OpenStack command line client will
+   provide all quotas for networking and other services. Previously,
+   the :command:`neutron quota-show --tenant_id` would list only networking
+   quotas.
