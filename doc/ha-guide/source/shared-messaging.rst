@@ -94,8 +94,8 @@ For SLES 12:
 For more information, see the official installation manual for the
 distribution:
 
-- `Debian and Ubuntu <http://www.rabbitmq.com/install-debian.html>`_
-- `RPM based <http://www.rabbitmq.com/install-rpm.html>`_
+- `Debian and Ubuntu <https://www.rabbitmq.com/install-debian.html>`_
+- `RPM based <https://www.rabbitmq.com/install-rpm.html>`_
   (RHEL, Fedora, CentOS, openSUSE)
 
 .. _rabbitmq-configure:
@@ -209,7 +209,7 @@ To build a broker, ensure that all nodes have the same Erlang cookie file.
 
 More information is available in the RabbitMQ documentation:
 
-- `Highly Available Queues <http://www.rabbitmq.com/ha.html>`_
+- `Highly Available Queues <https://www.rabbitmq.com/ha.html>`_
 - `Clustering Guide <https://www.rabbitmq.com/clustering.html>`_
 
 .. note::
@@ -218,7 +218,7 @@ More information is available in the RabbitMQ documentation:
    OCF scripts for the Pacemaker cluster resource agents since version 3.5.7.
    It provides the active/active RabbitMQ cluster with mirrored queues.
    For more information, see `Auto-configuration of a cluster with
-   a Pacemaker <http://www.rabbitmq.com/pacemaker.html>`_.
+   a Pacemaker <https://www.rabbitmq.com/pacemaker.html>`_.
 
 .. _rabbitmq-services:
 
