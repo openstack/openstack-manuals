@@ -38,7 +38,6 @@ A list of config options based on different topics can be found below:
    compute/hypervisors.rst
    compute/schedulers.rst
    compute/cells.rst
-   compute/conductor.rst
    compute/logs.rst
    compute/nova-conf-samples.rst
    compute/samples/index.rst
