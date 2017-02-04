@@ -186,7 +186,7 @@ Priority Optimization license installed.
 
 ``hpe3par:vvs``
  The virtual volume set name that has been predefined by the Administrator
- with :term:`quality of service (QoS)` rules associated to it. If you specify
+ with quality of service (QoS) rules associated to it. If you specify
  extra_specs ``hpe3par:vvs``, the qos_specs ``minIOPS``, ``maxIOPS``,
  ``minBWS``, and ``maxBWS`` settings are ignored.
 

@@ -225,7 +225,7 @@ for the Unity driver.
     Unity driver requires this option to be as ``True``.
 
 
-Restart of :term:`manila-share` service is needed for the configuration
+Restart of ``manila-share`` service is needed for the configuration
 changes to take effect.
 
 

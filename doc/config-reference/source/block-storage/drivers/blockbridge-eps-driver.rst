@@ -7,8 +7,8 @@ Introduction
 
 Blockbridge is software that transforms commodity infrastructure into
 secure multi-tenant storage that operates as a programmable service. It
-provides automatic encryption, secure deletion, :term:`quality of service
-(QoS)`, replication, and programmable security capabilities on your choice of
+provides automatic encryption, secure deletion, quality of service (QoS),
+replication, and programmable security capabilities on your choice of
 hardware. Blockbridge uses micro-segmentation to provide isolation that allows
 you to concurrently operate OpenStack, Docker, and bare-metal workflows on
 shared resources. When used with OpenStack, isolated management domains are
