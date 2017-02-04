@@ -11,7 +11,7 @@ services also support other SQL databases including
 
    .. note::
 
-      As of Ubuntu 15.10, MariaDB was changed to use
+      As of Ubuntu 16.04, MariaDB was changed to use
       the "unix_socket Authentication Plugin". Local authentication is
       now preformed using the user credentials (UID) and password
       authentication is no longer used by default. This means that
