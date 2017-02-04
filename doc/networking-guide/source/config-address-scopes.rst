@@ -134,7 +134,7 @@ allow simple routing for project networks with the same subnet pools.
    .. code-block:: console
 
       $ openstack subnet pool create --address-scope address-scope-ip4 \
-      --share --pool-prefix 203.0.113.0/21 --default-prefix-length 26 \
+      --share --pool-prefix 203.0.113.0/24 --default-prefix-length 26 \
       subnet-pool-ip4
       +-------------------+--------------------------------------+
       | Field             | Value                                |
@@ -150,7 +150,7 @@ allow simple routing for project networks with the same subnet pools.
       | max_prefixlen     | 32                                   |
       | min_prefixlen     | 8                                    |
       | name              | subnet-pool-ip4                      |
-      | prefixes          | 203.0.112.0/21                       |
+      | prefixes          | 203.0.113.0/24                       |
       | project_id        | 098429d072d34d3596c88b7dbf7e91b6     |
       | revision_number   | 1                                    |
       | shared            | True                                 |
@@ -167,14 +167,14 @@ allow simple routing for project networks with the same subnet pools.
       +-------------------+------------------------------------------+
       | Field             | Value                                    |
       +-------------------+------------------------------------------+
-      | allocation_pools  | 2001:db8::3-2001:db8::ffff:ffff:ffff:fff |
-      |                   | f,2001:db8::1-2001:db8::1                |
-      | cidr              | 2001:db8::/64                            |
+      | allocation_pools  | 2001:db8:a583::2-2001:db8:a583:0:ffff:ff |
+      |                   | ff:ffff:ffff                             |
+      | cidr              | 2001:db8:a583::/64                       |
       | created_at        | 2016-12-10T21:36:04Z                     |
       | description       |                                          |
       | dns_nameservers   |                                          |
       | enable_dhcp       | False                                    |
-      | gateway_ip        | 2001:db8::2                              |
+      | gateway_ip        | 2001:db8:a583::1                         |
       | host_routes       |                                          |
       | id                | b333bf5a-758c-4b3f-97ec-5f12d9bfceb7     |
       | ip_version        | 6                                        |
@@ -186,7 +186,7 @@ allow simple routing for project networks with the same subnet pools.
       | revision_number   | 2                                        |
       | segment_id        | None                                     |
       | service_types     |                                          |
-      | subnetpool_id     | None                                     |
+      | subnetpool_id     | a59ff52b-0367-41ff-9781-6318b927dd0e     |
       | updated_at        | 2016-12-10T21:36:04Z                     |
       +-------------------+------------------------------------------+
 
@@ -197,13 +197,13 @@ allow simple routing for project networks with the same subnet pools.
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
-      | allocation_pools  | 172.24.4.2-172.24.4.254              |
-      | cidr              | 172.24.4.0/24                        |
+      | allocation_pools  | 203.0.113.2-203.0.113.62             |
+      | cidr              | 203.0.113.0/26                       |
       | created_at        | 2016-12-10T21:35:52Z                 |
       | description       |                                      |
       | dns_nameservers   |                                      |
       | enable_dhcp       | False                                |
-      | gateway_ip        | 172.24.4.1                           |
+      | gateway_ip        | 203.0.113.1                          |
       | host_routes       |                                      |
       | id                | 7fd48240-3acc-4724-bc82-16c62857edec |
       | ip_version        | 4                                    |
@@ -215,7 +215,7 @@ allow simple routing for project networks with the same subnet pools.
       | revision_number   | 2                                    |
       | segment_id        | None                                 |
       | service_types     |                                      |
-      | subnetpool_id     | None                                 |
+      | subnetpool_id     | d02af70b-d622-426f-8e60-ed9df2a8301f |
       | updated_at        | 2016-12-10T21:35:52Z                 |
       +-------------------+--------------------------------------+
 
@@ -365,13 +365,13 @@ route straight to an external network without NAT.
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
-      | allocation_pools  | 203.0.112.2-203.0.112.62             |
-      | cidr              | 203.0.112.0/26                       |
+      | allocation_pools  | 203.0.113.2-203.0.112.62             |
+      | cidr              | 203.0.113.0/26                       |
       | created_at        | 2016-12-13T23:32:12Z                 |
       | description       |                                      |
       | dns_nameservers   |                                      |
       | enable_dhcp       | True                                 |
-      | gateway_ip        | 203.0.112.1                          |
+      | gateway_ip        | 203.0.113.1                          |
       | headers           |                                      |
       | host_routes       |                                      |
       | id                | 12be8e8f-5871-4091-9e9e-4e0651b9677e |
@@ -486,7 +486,7 @@ with address scopes.
       | ID           | Name      | Networks                                                                  | Image Name |
       +--------------+-----------+---------------------------------------------------------------------------+------------+
       | 97e49c8e-... | instance1 | network1=2001:db8:80d2:c4d3:f816:3eff:fe52:b69f, 198.51.100.3, 172.24.4.3 | cirros     |
-      | ceba9638-... | instance2 | network2=203.0.112.3, 2001:db8:a583:0:f816:3eff:fe42:1eeb, 172.24.4.4     | centos     |
+      | ceba9638-... | instance2 | network2=203.0.113.3, 2001:db8:a583:0:f816:3eff:fe42:1eeb, 172.24.4.4     | centos     |
       +--------------+-----------+---------------------------------------------------------------------------+------------+
 
 Regardless of address scopes, the floating IPs can be pinged from the
@@ -507,8 +507,8 @@ same address scope as the external network:
 
 .. code-block:: console
 
-    # ip route add 203.0.112.0/26 via 172.24.4.2
-    $ ping -c 1 203.0.112.3
+    # ip route add 203.0.113.0/26 via 172.24.4.2
+    $ ping -c 1 203.0.113.3
     1 packets transmitted, 1 received, 0% packet loss, time 0ms
 
 .. code-block:: console
