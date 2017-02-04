@@ -43,16 +43,6 @@ Appendix
    :maxdepth: 1
 
    policy-json-file.rst
-   common/app-support.rst
-
-Glossary
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/glossary.rst
-
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~

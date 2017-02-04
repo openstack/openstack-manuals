@@ -5,7 +5,6 @@ OpenStack configuration overview
 .. toctree::
    :maxdepth: 1
 
-   common/conventions.rst
    config-format.rst
    mutable.rst
 
