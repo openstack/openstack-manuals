@@ -47,6 +47,26 @@ Update ``nova-compute`` servers:
 #. Restart ``nova-compute``.
 
 
+Key management access control
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Special privileges can be assigned on behalf of an end user to allow
+them to manage their own encryption keys, which are required when
+creating the encrypted volumes. The Barbican `Default Policy
+<http://docs.openstack.org/developer/barbican/admin-guide-cloud/access_control.html#default-policy>`_
+for access control specifies that only users with an ``admin`` or
+``creator`` role can create keys. The policy is very flexible and
+can be modified.
+
+To assign the ``creator`` role, the admin must know the user ID,
+project ID, and creator role ID. See `Assign a role
+<http://docs.openstack.org/admin-guide/cli-manage-projects-users-and-roles.html#assign-a-role>`_
+for more information. An admin can list existing roles and associated
+IDs using the ``openstack role list`` command. If the creator
+role does not exist, the admin can `create the role
+<http://docs.openstack.org/admin-guide/cli-manage-projects-users-and-roles.html#create-a-role>`_.
+
+
 Create an encrypted volume type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
