@@ -52,7 +52,6 @@ Controller node configuration
       l3_ha = True
       l3_ha_net_cidr = 169.254.192.0/18
       max_l3_agents_per_router = 3
-      min_l3_agents_per_router = 2
 
    When the ``router_distributed = True`` flag is configured, routers created
    by all users are distributed. Without it, only privileged users can create
@@ -76,8 +75,8 @@ Controller node configuration
 
    .. note::
 
-      The *max_l3_agents_per_router* and *min_l3_agents_per_router* determine
-      the number of backup DVR/SNAT routers which  will be instantiated.
+      The *max_l3_agents_per_router* determine the number of backup
+      DVR/SNAT routers which  will be instantiated.
 
 #. Add the following to ``/etc/neutron/plugins/ml2/ml2_conf.ini``:
 
