@@ -5,8 +5,8 @@ X-IO volume driver
 The X-IO volume driver for OpenStack Block Storage enables ISE products to be
 managed by OpenStack Block Storage nodes. This driver can be configured to work
 with iSCSI and Fibre Channel storage protocols. The X-IO volume driver allows
-the cloud operator to take advantage of ISE features like :term:`Quality of
-Service (QOS)` and Continuous Adaptive Data Placement (CADP). It also supports
+the cloud operator to take advantage of ISE features like quality of
+service (QoS) and Continuous Adaptive Data Placement (CADP). It also supports
 creating thin volumes and specifying volume media affinity.
 
 Requirements

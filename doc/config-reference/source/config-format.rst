@@ -2,8 +2,8 @@
 Configuration file format
 =========================
 
-OpenStack uses the :term:`INI <INI format>` file format for configuration
-files. An INI file is a simple text file that specifies options as
+OpenStack uses the INI file format for configuration files.
+An INI file is a simple text file that specifies options as
 ``key=value`` pairs, grouped into sections.
 The ``DEFAULT`` section contains most of the configuration options.
 Lines starting with a hash sign (``#``) are comment lines.

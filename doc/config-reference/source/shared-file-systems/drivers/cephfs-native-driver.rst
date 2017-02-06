@@ -65,13 +65,13 @@ Requirements
   http://docs.ceph.com/docs/master/cephfs/createfs/)
 
 - ``ceph-common`` package installed in the servers running the
-  :term:`manila-share` service.
+  ``manila-share`` service.
 
 - Ceph client installed in the guest, preferably the FUSE based client,
   ``ceph-fuse``.
 
 - Network connectivity between your Ceph cluster's public network and the
-  servers running the :term:`manila-share` service.
+  servers running the ``manila-share`` service.
 
 - Network connectivity between your Ceph cluster's public network and guests.
 
@@ -104,7 +104,7 @@ Systems service to use:
 
 
 ``manila.keyring``, along with your ``ceph.conf`` file, then needs to be placed
-on the server running the :term:`manila-share` service.
+on the server running the ``manila-share`` service.
 
 Enable snapshots in Ceph if you want to use them in the Shared File Systems
 service:
@@ -113,9 +113,9 @@ service:
 
     ceph mds set allow_new_snaps true --yes-i-really-mean-it
 
-In the server running the :term:`manila-share` service, you can place the
+In the server running the ``manila-share`` service, you can place the
 ``ceph.conf`` and ``manila.keyring`` files in the ``/etc/ceph`` directory. Set
-the same owner for the :term:`manila-share` process and the ``manila.keyring``
+the same owner for the ``manila-share`` process and the ``manila.keyring``
 file. Add the following section to the ``ceph.conf`` file.
 
 .. code-block:: ini
