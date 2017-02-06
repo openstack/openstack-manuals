@@ -35,4 +35,4 @@ manila-share
 Messaging queue
   Routes information between the Shared File Systems processes.
 
-For more information, see `Configuration Reference Guide <http://docs.openstack.org/mitaka/config-reference/content/section_shared-file-systems-overview.html>`__.
+For more information, see `Configuration Reference Guide <http://docs.openstack.org/mitaka/config-reference/shared-file-systems/overview.html>`_.
