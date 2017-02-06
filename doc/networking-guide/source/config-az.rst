@@ -360,7 +360,6 @@ so that you get L3 high availability.
 
     l3_ha = True
     max_l3_agents_per_router = 3
-    min_l3_agents_per_router = 2
 
 HA routers are created on availability zones you selected when creating the
 router.
