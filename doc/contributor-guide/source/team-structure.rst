@@ -33,6 +33,9 @@ with their respective leads:
 * `Security Guide
   <https://wiki.openstack.org/wiki/Documentation/SecurityGuide>`_:
   Nathaniel Dillon
+* `Tools
+  <http://git.openstack.org/cgit/openstack/openstack-doc-tools>`_:
+  Brian Moss
 * `Training Guides <https://wiki.openstack.org/wiki/Training-guides>`_:
   Matjaz Pancur
 * `Training labs
