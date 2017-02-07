@@ -165,6 +165,11 @@ Verify failover operation
 
 .. include:: shared/deploy-ha-vrrp-verifyfailoveroperation.txt
 
+Keepalived VRRP health check
+----------------------------
+
+.. include:: shared/keepalived-vrrp-healthcheck.txt
+
 Network traffic flow
 ~~~~~~~~~~~~~~~~~~~~
 
