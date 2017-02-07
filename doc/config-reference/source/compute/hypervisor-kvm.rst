@@ -230,9 +230,9 @@ Configure Compute backing storage
 Backing Storage is the storage used to provide the expanded operating system
 image, and any ephemeral storage. Inside the virtual machine, this is normally
 presented as two virtual hard disks (for example, ``/dev/vda`` and ``/dev/vdb``
-respectively). However, inside OpenStack, this can be derived from one of three
-methods: ``lvm``, ``qcow`` or ``raw``, chosen using the ``images_type`` option
-in ``nova.conf`` on the compute node.
+respectively). However, inside OpenStack, this can be derived from one of
+these methods: ``lvm``, ``qcow``, ``rbd`` or ``raw``, chosen using the
+``images_type`` option in ``nova.conf`` on the compute node.
 
 QCOW is the default backing store. It uses a copy-on-write philosophy to delay
 allocation of storage until it is actually needed. This means that the space
