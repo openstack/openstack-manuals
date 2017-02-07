@@ -34,6 +34,9 @@ architectures should avoid cases 2 and 3.
    However, propagating MTU calculations to the data plane may require
    users to delete and recreate ports on the network.
 
+   When using the Open vSwitch or Linux bridge drivers, new MTU calculations
+   will be propogated automatically after restarting the ``l3-agent`` service.
+
 Case 1
 ------
 
