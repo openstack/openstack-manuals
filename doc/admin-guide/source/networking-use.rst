@@ -174,6 +174,18 @@ advanced network operations:
 
 **Advanced Networking operations**
 
+.. note::
+
+   During port creation and update, specific extra-dhcp-options can be left blank.
+   For example, ``router`` and ``classless-static-route``. This causes dnsmasq
+   to have an empty option in the ``opts`` file related to the network.
+   For example:
+
+   .. code-block:: console
+
+      tag:tag0,option:classless-static-route,
+      tag:tag0,option:router,
+
 Use Compute with Networking
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
