@@ -341,11 +341,13 @@ Adding an HTTP listener
          --listener test-lb-http \
          --protocol HTTP
        $ neutron lbaas-member-create \
+         --name test-lb-http-member-1 \
          --subnet private-subnet \
          --address 192.168.1.16 \
          --protocol-port 80 \
          test-lb-pool-http
        $ neutron lbaas-member-create \
+         --name test-lb-http-member-2 \
          --subnet private-subnet \
          --address 192.168.1.17 \
          --protocol-port 80 \
@@ -374,6 +376,7 @@ Adding an HTTP listener
     .. code-block:: console
 
        $ neutron lbaas-healthmonitor-create \
+         --name test-lb-http-monitor \
          --delay 5 \
          --max-retries 2 \
          --timeout 10 \
@@ -407,11 +410,13 @@ approach and allows encrypted connections to terminate at each member server.
          --listener test-lb-https \
          --protocol HTTPS
        $ neutron lbaas-member-create \
+         --name test-lb-https-member-1 \
          --subnet private-subnet \
          --address 192.168.1.16 \
          --protocol-port 443 \
          test-lb-pool-https
        $ neutron lbaas-member-create \
+         --name test-lb-https-member-2 \
          --subnet private-subnet \
          --address 192.168.1.17 \
          --protocol-port 443 \
@@ -422,6 +427,7 @@ approach and allows encrypted connections to terminate at each member server.
     .. code-block:: console
 
        $ neutron lbaas-healthmonitor-create \
+         --name test-lb-https-monitor \
          --delay 5 \
          --max-retries 2 \
          --timeout 10 \
