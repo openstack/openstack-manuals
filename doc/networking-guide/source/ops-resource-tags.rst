@@ -7,11 +7,19 @@ Resource tags
 Various virtual networking resources support tags for use by external
 systems or any other clients of the Networking service API.
 
+The currently supported resources are:
+
+* networks
+* subnets
+* subnetpools
+* ports
+* routers
+
 Use cases
 ~~~~~~~~~
 
 The following use cases refer to adding tags to networks, but the same
-can be applicable to any other Networking service resource:
+can be applicable to any other supported Networking service resource:
 
 #. Ability to map different networks in different OpenStack locations
    to one logically same network (for multi-site OpenStack).
@@ -258,5 +266,5 @@ supported. Thus, do not put such a tag name to resources.
 Future support
 ~~~~~~~~~~~~~~
 
-In future release, the Networking service will support setting tags to
-resources other than network.
+In future releases, the Networking service may support setting tags for
+additional resources.
