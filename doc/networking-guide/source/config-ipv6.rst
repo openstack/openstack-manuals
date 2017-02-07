@@ -501,7 +501,7 @@ reachable from your OpenStack Networking node(s). This could be software
 running on the OpenStack Networking node(s) or elsewhere, or a physical router.
 For the purposes of this guide we are using the open-source DHCPv6 server,
 Dibbler. Dibbler is available in many Linux package managers, or from source at
-https://github.com/tomaszmrugalski/dibbler.
+`tomaszmrugalski/dibbler <https://github.com/tomaszmrugalski/dibbler>`_.
 
 When using the reference implementation of the OpenStack Networking prefix
 delegation driver, Dibbler must also be installed on your OpenStack Networking
@@ -575,7 +575,8 @@ The variables used in the script file above are:
 
 The above is all you need in this scenario, but more information on
 installing, configuring, and running Dibbler is available in the Dibbler user
-guide, at http://klub.com.pl/dhcpv6/doc/dibbler-user.pdf.
+guide, at `Dibbler – a portable DHCPv6
+<http://klub.com.pl/dhcpv6/doc/dibbler-user.pdf>`_.
 
 To start your Dibbler server, run:
 
@@ -716,7 +717,8 @@ References
 ----------
 
 The following link provides a great step by step tutorial on setting up IPv6
-with OpenStack: http://www.debug-all.com/?p=52
+with OpenStack: `Tenant IPV6 deployment in OpenStack Kilo release
+<http://www.debug-all.com/?p=52>`_.
 
 .. _extra-driver-conf:
 
