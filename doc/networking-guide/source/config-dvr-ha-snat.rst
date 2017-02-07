@@ -169,6 +169,11 @@ Compute nodes
    Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
    that handles VXLAN project networks.
 
+Keepalived VRRP health check
+----------------------------
+
+.. include:: shared/keepalived-vrrp-healthcheck.txt
+
 Known limitations
 ~~~~~~~~~~~~~~~~~
 
