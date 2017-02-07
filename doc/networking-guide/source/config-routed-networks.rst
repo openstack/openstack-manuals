@@ -429,7 +429,7 @@ segment contains one IPv4 subnet and one IPv6 subnet.
    .. note::
 
       As of the writing of this guide, there is not placement API CLI client,
-      so the curl command is used for this example.
+      so the :command:`curl` command is used for this example.
 
 #. Verify that host aggregates were created for each segment in the Compute
    service (for the sake of brevity, only one of the segments is shown in this
@@ -437,7 +437,7 @@ segment contains one IPv4 subnet and one IPv6 subnet.
 
    .. code-block:: console
 
-      $nova aggregate-list
+      $ nova aggregate-list
       +----+---------------------------------------------------------+-------------------+
       | Id | Name                                                    | Availability Zone |
       +----+---------------------------------------------------------+-------------------+
