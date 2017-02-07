@@ -72,7 +72,7 @@ If you like to run individual tests, run:
  * ``tox -e checkniceness`` - to run the niceness tests
  * ``tox -e linkcheck`` - to run the tests for working remote URLs
 
-tox will use the openstack-doc-tools package for execution of these
+The :command:`tox` command uses the openstack-doc-tools package to run the
 tests.
 
 
