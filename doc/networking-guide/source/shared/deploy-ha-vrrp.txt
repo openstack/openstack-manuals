@@ -27,6 +27,13 @@ that backup router to master router.
    for all routers. Therefore, VRRP promotes the backup router with the
    highest IP address to the master router.
 
+.. warning::
+
+   There is a known bug with ``keepalived`` v1.2.15 and earlier which can
+   cause packet loss when ``max_l3_agents_per_router`` is set to 3 or more.
+   Therefore, we recommend that you upgrade to ``keepalived`` v1.2.16
+   or greater when using this feature.
+
 Interruption of VRRP *heartbeat* traffic between network nodes, typically
 due to a network interface or physical network infrastructure failure,
 triggers a failover. Restarting the layer-3 agent, or failure of it, does
