@@ -26,6 +26,13 @@ configuring IP addresses on the interfaces in the ``snat`` namespace. In
 environments with more than one backup router, the rules of VRRP are followed
 to select a new master router.
 
+.. warning::
+
+   There is a known bug with ``keepalived`` v1.2.15 and earlier which can
+   cause packet loss when ``max_l3_agents_per_router`` is set to 3 or more.
+   Therefore, we recommend that you upgrade to ``keepalived`` v1.2.16
+   or greater when using this feature.
+
 .. note::
 
    Experimental feature or incomplete documentation.
