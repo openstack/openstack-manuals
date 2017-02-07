@@ -42,8 +42,8 @@ create databases, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        MariaDB [(none)] CREATE DATABASE nova_api;
-        MariaDB [(none)] CREATE DATABASE nova;
+        MariaDB [(none)]> CREATE DATABASE nova_api;
+        MariaDB [(none)]> CREATE DATABASE nova;
 
      .. end
 
@@ -51,13 +51,13 @@ create databases, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        MariaDB [(none)] GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' \
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' \
           IDENTIFIED BY 'NOVA_DBPASS';
-        MariaDB [(none)] GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
           IDENTIFIED BY 'NOVA_DBPASS';
-        MariaDB [(none)] GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
           IDENTIFIED BY 'NOVA_DBPASS';
-        MariaDB [(none)] GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
           IDENTIFIED BY 'NOVA_DBPASS';
 
      .. end
@@ -470,7 +470,7 @@ Install and configure components
 
       https://bugs.launchpad.net/ubuntu/+source/nova/+bug/1506667
 
-   * Due to a packaging bug, remove the ``logdir`` option from the
+   * Due to a packaging bug, remove the ``log_dir`` option from the
      ``[DEFAULT]`` section.
 
 .. endonly

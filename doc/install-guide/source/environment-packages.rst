@@ -28,7 +28,7 @@ these procedures on all nodes.
    .. code-block:: console
 
       # apt install software-properties-common
-      # add-apt-repository cloud-archive:newton
+      # add-apt-repository cloud-archive:ocata
 
    .. end
 
@@ -202,7 +202,7 @@ these procedures on all nodes.
 Finalize the installation
 -------------------------
 
-1. Upgrade the packages on your host:
+1. Upgrade the packages on all nodes:
 
    .. only:: ubuntu or debian
 

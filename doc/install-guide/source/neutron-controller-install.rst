@@ -48,9 +48,9 @@ must create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        MariaDB [(none)] GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
           IDENTIFIED BY 'NEUTRON_DBPASS';
-        MariaDB [(none)] GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' \
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' \
           IDENTIFIED BY 'NEUTRON_DBPASS';
 
      .. end
