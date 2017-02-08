@@ -23,7 +23,7 @@ RCA (Root Cause Analysis) service (vitrage) command-line client
 The vitrage client is the command-line interface (CLI) for
 the RCA (Root Cause Analysis) service (vitrage) API and its extensions.
 
-This chapter documents :command:`vitrage` version ``1.1.0``.
+This chapter documents :command:`vitrage` version ``1.1.1``.
 
 For help on a specific :command:`vitrage` command, enter:
 
