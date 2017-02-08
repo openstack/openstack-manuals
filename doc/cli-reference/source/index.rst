@@ -54,6 +54,7 @@ Contents
    vitrage
    manila
    solum
+   aodh
    ceilometer
    gnocchi
    mistral
