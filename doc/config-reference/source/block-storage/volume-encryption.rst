@@ -142,6 +142,18 @@ type, ``unencrypted``, is used.
 Notice the encrypted parameter; it will show ``True`` or ``False``.
 The option ``volume_type`` is also shown for easy review.
 
+Non-admin users need the ``creator`` role to store secrets in Barbican
+and to create encrypted volumes. As an administrator, you can give a user
+the creator role in the following way:
+
+.. code-block:: console
+
+   $ openstack role add --project PROJECT --user USER creator
+
+For details, see the
+`Barbican Access Control page
+<http://docs.openstack.org/developer/barbican/admin-guide-cloud/access_control.html>`_.
+
 .. note::
 
    Due to the issue that some of the volume drivers do not set
