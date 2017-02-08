@@ -233,6 +233,16 @@ For example:
 
        For hyper-V: Acceptable values are either ``hyperv-gen1`` or
        ``hyperv-gen2``.
+   * - libvirt API driver, XenAPI driver
+     - ``os_type``
+     - The operating system installed on the image. The ``libvirt`` API driver
+       and ``XenAPI`` driver contains logic that takes different actions
+       depending on the value of the ``os_type`` parameter of the image.
+       For example, for ``os_type=windows`` images, it creates a FAT32-based
+       swap partition instead of a Linux swap partition, and it limits the
+       injected host name to less than 16 characters.
+     - ``linux`` or ``windows``.
+
    * - libvirt API driver
      - ``hw_scsi_model``
      - Enables the use of VirtIO SCSI (``virtio-scsi``) to provide block
@@ -328,12 +338,3 @@ For example:
        there is a single partition on the image, and only if the partition
        is in ``ext3`` or ``ext4`` format.
      - ``true`` or ``false``
-   * - XenAPI driver
-     - ``os_type``
-     - The operating system installed on the image. The ``XenAPI`` driver
-       contains logic that takes different actions depending on the value of
-       the ``os_type`` parameter of the image. For example, for
-       ``os_type=windows`` images, it creates a FAT32-based swap partition
-       instead of a Linux swap partition, and it limits the injected host
-       name to less than 16 characters.
-     - ``linux`` or ``windows``.
