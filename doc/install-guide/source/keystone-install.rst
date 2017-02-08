@@ -51,7 +51,7 @@ database and an administration token.
 
      .. code-block:: console
 
-        MariaDB [(none)] CREATE DATABASE keystone;
+        MariaDB [(none)]> CREATE DATABASE keystone;
 
      .. end
 
@@ -59,9 +59,9 @@ database and an administration token.
 
      .. code-block:: console
 
-        MariaDB [(none)] GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
           IDENTIFIED BY 'KEYSTONE_DBPASS';
-        MariaDB [(none)] GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
           IDENTIFIED BY 'KEYSTONE_DBPASS';
 
      .. end
@@ -69,6 +69,8 @@ database and an administration token.
      Replace ``KEYSTONE_DBPASS`` with a suitable password.
 
    * Exit the database access client.
+
+.. _keystone-install-configure:
 
 Install and configure components
 --------------------------------
@@ -372,5 +374,4 @@ Finalize the installation
    .. end
 
    Replace ``ADMIN_PASS`` with the password used in the
-   ``keystone-manage bootstrap`` command from the section called
-   :ref:`keystone-install`.
+   ``keystone-manage bootstrap`` command in `keystone-install-configure`_.
