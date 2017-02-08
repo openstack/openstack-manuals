@@ -23,7 +23,7 @@ DNS service (designate) command-line client
 The designate client is the command-line interface (CLI) for
 the DNS service (designate) API and its extensions.
 
-This chapter documents :command:`designate` version ``2.5.0``.
+This chapter documents :command:`designate` version ``2.6.0``.
 
 For help on a specific :command:`designate` command, enter:
 
