@@ -17,3 +17,18 @@ Configuration Reference
 * Cleaned up content that is not directly configuration options.
 
 * Created a few vendor plug-in sections newly added for Ocata.
+
+Networking Guide
+~~~~~~~~~~~~~~~~
+
+* Made progress towards replacing all neutron client commands with OpenStack
+  client equivalents.
+* Added routed provider networks.
+* Added VLAN trunking.
+* Added RFC 5737 and 3849 compliance policy.
+* Improved Open vSwitch HA DVR deployment.
+* Improved Quality of Service (QoS).
+* Improved service subnets.
+* Improved SR-IOV.
+* Improved MTU considerations.
+* Improved Load-Balancer-as-a-Service.
