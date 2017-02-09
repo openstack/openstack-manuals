@@ -2847,7 +2847,7 @@ P
       The code name for the sixteenth release of OpenStack. The design
       summit will take place in Boston, Massachusetts, US. The release
       is named after the Massachusetts Turnpike, abbreviated commonly
-      as the Mass Pike, which is the eastermost stretch of
+      as the Mass Pike, which is the easternmost stretch of
       Interstate 90.
 
    Platform-as-a-Service (PaaS)
