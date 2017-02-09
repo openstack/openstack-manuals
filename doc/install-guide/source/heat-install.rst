@@ -405,7 +405,7 @@ Install and configure components
 
            [ec2authtoken]
            ...
-           auth_uri = http://controller:5000
+           auth_uri = http://controller:5000/v2.0
 
         Replace ``HEAT_PASS`` with the password you chose for the
         ``heat`` user in the Identity service.
