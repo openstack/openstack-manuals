@@ -123,13 +123,13 @@ Install and configure components
      Replace ``RABBIT_PASS`` with the password you chose for
      the ``openstack`` account in ``RabbitMQ``.
 
-   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
+   * In the ``[api]`` and ``[keystone_authtoken]`` sections,
      configure Identity service access:
 
      .. path /etc/nova/nova.conf
      .. code-block:: ini
 
-        [DEFAULT]
+        [api]
         # ...
         auth_strategy = keystone
 
