@@ -50,25 +50,31 @@ Verify operation of the Compute service.
    .. code-block:: console
 
       $ openstack catalog list
-      +---------------+---------------+---------------------------------------------------------------------------------+
-      | Name          | Type          | Endpoints                                                                       |
-      +---------------+---------------+---------------------------------------------------------------------------------+
-      | nova          | compute       | RegionOne                                                                       |
-      |               |               |   publicURL: http://controller:8774/v2/ae7a98326b9c455588edd2656d723b9d         |
-      |               |               |   internalURL: http://controller:8774/v2/ae7a98326b9c455588edd2656d723b9d       |
-      |               |               |   adminURL: http://controller:8774/v2/ae7a98326b9c455588edd2656d723b9d          |
-      |               |               |                                                                                 |
-      | glance        | image         | RegionOne                                                                       |
-      |               |               |   publicURL: http://controller:9292                                             |
-      |               |               |   internalURL: http://controller:9292                                           |
-      |               |               |   adminURL: http://controller:9292                                              |
-      |               |               |                                                                                 |
-      | keystone      | identity      | RegionOne                                                                       |
-      |               |               |   publicURL: http://controller:5000/v2.0                                        |
-      |               |               |   internalURL: http://controller:5000/v2.0                                      |
-      |               |               |   adminURL: http://controller:35357/v2.0                                        |
-      |               |               |                                                                                 |
-      +---------------+---------------+---------------------------------------------------------------------------------+
+      +----------+----------+--------------------------------------------------------------------------+
+      | Name     | Type     | Endpoints                                                                |
+      +----------+----------+--------------------------------------------------------------------------+
+      | keystone | identity | RegionOne                                                                |
+      |          |          |   public: http://controller:5000/v3/                                     |
+      |          |          | RegionOne                                                                |
+      |          |          |   internal: http://controller:5000/v3/                                   |
+      |          |          | RegionOne                                                                |
+      |          |          |   admin: http://controller:35357/v3/                                     |
+      |          |          |                                                                          |
+      | glance   | image    | RegionOne                                                                |
+      |          |          |   admin: http://controller:9292                                          |
+      |          |          | RegionOne                                                                |
+      |          |          |   public: http://controller:9292                                         |
+      |          |          | RegionOne                                                                |
+      |          |          |   internal: http://controller:9292                                       |
+      |          |          |                                                                          |
+      | nova     | compute  | RegionOne                                                                |
+      |          |          |   admin: http://controller:8774/v2.1/3825a95e0e7f4e2fbfdbd65cc836ecfb    |
+      |          |          | RegionOne                                                                |
+      |          |          |   internal: http://controller:8774/v2.1/3825a95e0e7f4e2fbfdbd65cc836ecfb |
+      |          |          | RegionOne                                                                |
+      |          |          |   public: http://controller:8774/v2.1/3825a95e0e7f4e2fbfdbd65cc836ecfb   |
+      |          |          |                                                                          |
+      +----------+----------+--------------------------------------------------------------------------+
 
    .. note::
 
