@@ -8,9 +8,30 @@ The auto-allocation feature introduced in Mitaka simplifies the procedure of
 setting up an external connectivity for end-users, and is also known as **Get
 Me A Network**.
 
-The operator must create a default external network and default subnetpools
-(one for IPv4, or one for IPv6, or one of each). Once these are in place, users
-can get their auto-allocated topologies with a single command.
+Previously, a user had to configure a range of networking resources to boot
+a server and get access to the Internet. For example, the following steps
+are required:
+
+* Create a network
+* Create a subnet
+* Create a router
+* Uplink the router on an external network
+* Downlink the router on the previously created subnet
+
+These steps need to be performed on each logical segment that a VM needs to
+be connected to, and may require networking knowledge the user might not
+have.
+
+This feature is designed to automate the basic networking provisioning for
+projects. The steps to provision a basic network are run during instance
+boot, making the networking setup transparent.
+
+To make this possible, provide a default external network and default
+subnetpools (one for IPv4, or one for IPv6, or one of each) so that the
+platform can choose what to do in lieu of input. Once these are in place,
+users can boot their VMs without specifying any networking details.
+The Compute service will then use this feature automatically to wire user
+VMs.
 
 Enabling the deployment for auto-allocation
 -------------------------------------------
@@ -103,7 +124,7 @@ Get Me A Network
 ----------------
 
 In a deployment where the operator has set up the resources as described above,
-users can get their auto-allocated network topology as follows:
+validate that users can get their auto-allocated network topology as follows:
 
 .. code-block:: console
 
@@ -115,8 +136,8 @@ users can get their auto-allocated network topology as follows:
    | tenant_id | 3a4e311bcb3545b9b7ad326f93194f8c     |
    +-----------+--------------------------------------+
 
-Operators (and users with admin role) can get the auto-allocated
-topology for a project by specifying the project ID:
+Operators (and users with admin role) can get the auto-allocated topology for a
+project by specifying the project ID:
 
 .. code-block:: console
 
@@ -137,13 +158,17 @@ a VM.
      cirros-0.3.4-x86_64-uec --nic \
      net-id=8b835bfb-cae2-4acc-b53f-c16bb5f9a7d0 vm1
 
-The auto-allocated topology for a user never changes.
+The auto-allocated topology for a user never changes. In practice, when a user
+boots a server omitting the ``--nic`` option, and not have any neutron network
+available, nova will invoke the API behind ``auto-allocated-topology-show``,
+fetch the network UUID, and pass it on during the boot process.
 
 Validating the requirements for auto-allocation
 -----------------------------------------------
 
 To validate that the required resources are correctly set up for
-auto-allocation, use the ``--dry-run`` option:
+auto-allocation, without actually provisioning any resource, use
+the ``--dry-run`` option:
 
 .. code-block:: console
 
@@ -165,8 +190,8 @@ auto-allocation, use the ``--dry-run`` option:
    +---------+-------+
 
 The validation option behaves identically for all users. However, it
-is considered primarily an admin utility since it is the operator who
-must set up the requirements.
+is considered primarily an admin or service utility since it is the
+operator who must set up the requirements.
 
 Project resources created by auto-allocation
 --------------------------------------------
@@ -187,3 +212,17 @@ the following resources:
 |router              |``auto_allocated_router``     |
 +--------------------+------------------------------+
 
+Compatibility notes
+-------------------
+
+Nova uses the ``auto-allocated-typology`` feature with API micro
+version 2.37 or later. This is because, unlike the neutron feature
+which was implemented in the Mitaka release, the integration for
+nova was completed during the Newton release cycle. Note that
+the CLI option ``--nic`` can be omitted regardless of the microversion
+used as long as there is no more than one network available to the
+project, in which case nova fails with a 400 error because it
+does not know which network to use. Furthermore, nova does not start
+using the feature, regardless of whether or not a user requests
+micro version 2.37 or later, unless all of the ``nova-compute``
+services are running Newton-level code.
