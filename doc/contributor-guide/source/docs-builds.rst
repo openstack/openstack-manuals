@@ -220,3 +220,74 @@ environment, you first have to install the *xml2po* utility on your local
 workstation. xml2po is part of the gnome-doc-utils and can be installed with
 :command:`yum install gnome-doc-utils` (on RedHat-based distributions), or
 :command:`zypper install xml2po` (on SUSE-based distributions).
+
+Building docs from end-of-life releases
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OpenStack projects can follow different `release models
+<https://releases.openstack.org/reference/release_models.html>`_. The
+openstack-manuals repo follows two of these models, independent and
+cycle-with-milestones.
+
+.. note::
+
+   The docs repo, api-site, follows the independent release model.
+
+The content that uses a stable branch method to indicate a point in time that
+content is set for a release (cycle-with-milestones) includes these docs:
+
+* Configuration Reference
+* Install Guides
+* Networking Guide
+
+When a release reaches an end-of-life status and is no longer maintained by the
+stable branch maintainers, the docs.openstack.org website redirects requests
+for old content to the latest release. Read more about support phases and
+stable branches in the `Project Team Guide
+<https://docs.openstack.org/project-team-guide/stable-branches.html>`_.
+
+To build documentation from a particular release locally, follow these steps.
+
+#. Clone a copy of the stable branch content locally, if you do not already
+   have a local copy:
+
+   .. code-block:: console
+
+      $ git clone git://git.openstack.org/openstack/openstack-manuals.git
+      $ cd openstack-manuals
+
+#. View the remote tags to see the tags for each release:
+
+   .. code-block:: console
+
+      $ git tag -l
+      2012.1
+      2012.2
+      2013.1.rc1
+      2013.1.rc2
+      2013.2
+      diablo-eol
+      essex-eol
+      folsom-eol
+      grizzly-eol
+      havana-eol
+      icehouse-eol
+      juno-eol
+      kilo-eol
+      liberty-eol
+
+#. Look for the release name you want to build, such as Essex, and check out
+   the corresponding tag:
+
+   .. code-block:: console
+
+      $ git checkout essex-eol
+
+   Git checks out the files and when complete, shows you the reference point
+   for your local files, such as, ``HEAD is now at e6b9f61... fix
+   delay_auth_decision parameter``.
+
+#. Read the :file:`README.rst` file available at that point in time for the
+   prerequisites for building the documentation locally. For example, you may
+   need to install Apache Maven in order to build old documents.
+
