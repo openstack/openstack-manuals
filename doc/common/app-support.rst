@@ -225,12 +225,12 @@ also use `Colloquy <http://colloquy.info/>`_ (Mac OS X),
 `mIRC <http://www.mirc.com/>`_ (Windows),
 or XChat (Linux). When you are in the IRC channel
 and want to share code or command output, the generally accepted method
-is to use a Paste Bin. The OpenStack project has one at
-http://paste.openstack.org. Just paste your longer amounts of text or
+is to use a Paste Bin. The OpenStack project has one at `Paste
+<http://paste.openstack.org>`_. Just paste your longer amounts of text or
 logs in the web form and you get a URL that you can paste into the
 channel. The OpenStack IRC channel is ``#openstack`` on
-``irc.freenode.net``. You can find a list of all OpenStack IRC channels
-at https://wiki.openstack.org/wiki/IRC.
+``irc.freenode.net``. You can find a list of all OpenStack IRC channels on
+the `IRC page on the wiki <https://wiki.openstack.org/wiki/IRC>`_.
 
 Documentation feedback
 ~~~~~~~~~~~~~~~~~~~~~~
