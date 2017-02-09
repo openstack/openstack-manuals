@@ -61,7 +61,8 @@ Configure Hyper-V virtual switching
 -----------------------------------
 
 Information regarding the Hyper-V virtual Switch can be located here:
-http://technet.microsoft.com/en-us/library/hh831823.aspx
+`Hyper-V Virtual Switch Overview
+<http://technet.microsoft.com/en-us/library/hh831823.aspx>`_.
 
 To quickly enable an interface to be used as a Virtual Interface the
 following PowerShell may be used:
@@ -93,7 +94,8 @@ Configure shared nothing live migration
 ---------------------------------------
 
 Detailed information on the configuration of live migration can be found
-here: http://technet.microsoft.com/en-us/library/jj134199.aspx
+here: `Use live migration without Failover Clustering to move a virtual
+machine <http://technet.microsoft.com/en-us/library/jj134199.aspx>`_.
 
 The following outlines the steps of shared nothing live migration.
 
@@ -166,7 +168,8 @@ Additional Reading
 
 This article clarifies the various live migration options in Hyper-V:
 
-http://ariessysadmin.blogspot.ro/2012/04/hyper-v-live-migration-of-windows.html
+`Hyper-V Live Migration of Yesterday
+<http://ariessysadmin.blogspot.ro/2012/04/hyper-v-live-migration-of-windows.html>`_
 
 Install nova-compute using OpenStack Hyper-V installer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -174,7 +177,8 @@ Install nova-compute using OpenStack Hyper-V installer
 In case you want to avoid all the manual setup, you can use Cloudbase
 Solutions' installer. You can find it here:
 
-https://www.cloudbase.it/downloads/HyperVNovaCompute_Beta.msi
+`HyperVNovaCompute_Beta download
+<https://www.cloudbase.it/downloads/HyperVNovaCompute_Beta.msi>`_
 
 The tool installs an independent Python environment in order to avoid
 conflicts with existing applications, and dynamically generates a
@@ -184,7 +188,7 @@ The tool can also be used for an automated and unattended mode for
 deployments on a massive number of servers. More details about how
 to use the installer and its features can be found here:
 
-https://www.cloudbase.it
+`Cloudbase <https://www.cloudbase.it>`_
 
 .. _windows-requirements:
 
@@ -201,7 +205,8 @@ working properly on the 64bit version.
 
 #. Download and install Python 2.7 using the MSI installer from here:
 
-   https://www.python.org/ftp/python/2.7.3/python-2.7.3.msi
+   `python-2.7.3.msi download
+   <https://www.python.org/ftp/python/2.7.3/python-2.7.3.msi>`_
 
    .. code-block:: none
 
