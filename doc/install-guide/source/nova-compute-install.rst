@@ -409,3 +409,5 @@ Finalize installation
    ``/var/log/nova/nova-compute.log``. The error message
    ``AMQP server on controller:5672 is unreachable`` likely indicates that
    the firewall on the controller node is preventing access to port 5672.
+   Configure the firewall to open port 5672 on the controller node and
+   restart ``nova-compute`` service on the compute node.
