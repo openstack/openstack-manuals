@@ -122,12 +122,12 @@ settings:
 **Specifying trusted flavors**
 
 #. Flavors can be designated as trusted using the
-   :command:`nova flavor-key set` command. In this example, the ``m1.tiny``
-   flavor is being set as trusted:
+   :command:`openstack flavor set` command. In this example, the
+   ``m1.tiny`` flavor is being set as trusted:
 
    .. code-block:: console
 
-      $ nova flavor-key m1.tiny set trust:trusted_host=trusted
+      $ openstack flavor set --property trusted_host=trusted m1.tiny
 
 #. You can request that your instance is run on a trusted host by
    specifying a trusted flavor when booting the instance:
