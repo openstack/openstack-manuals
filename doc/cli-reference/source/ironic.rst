@@ -675,6 +675,11 @@ Register a new node with the Ironic service.
   Used, for example, to classify nodes in Nova's
   placement engine.
 
+**Required arguments:**
+
+``-d <driver>, --driver <driver>``
+  Driver used to control the node.
+
 .. _ironic_node-delete:
 
 ironic node-delete
@@ -1257,6 +1262,14 @@ Create a new port.
 ``-u <uuid>, --uuid <uuid>``
   UUID of the port.
 
+**Required arguments:**
+
+``-a <address>, --address <address>``
+  MAC address for this port.
+
+``-n <node>, --node <node>, --node_uuid <node>``
+  UUID of the node that this port belongs to.
+
 .. _ironic_port-delete:
 
 ironic port-delete
@@ -1407,6 +1420,11 @@ Create a new portgroup.
 ``-p <key=value>, --properties <key=value>``
   Record key/value properties related to this
   portgroup's configuration.
+
+**Required arguments:**
+
+``-n <node>, --node <node>``
+  UUID of the node that this portgroup belongs to.
 
 .. _ironic_portgroup-delete:
 
