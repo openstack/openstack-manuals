@@ -46,7 +46,7 @@ must create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        mysql> CREATE DATABASE cinder;
+        MariaDB [(none)]> CREATE DATABASE cinder;
 
      .. end
 
@@ -54,9 +54,9 @@ must create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        mysql> GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
           IDENTIFIED BY 'CINDER_DBPASS';
-        mysql> GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
           IDENTIFIED BY 'CINDER_DBPASS';
 
      .. end
@@ -89,11 +89,11 @@ must create a database, service credentials, and API endpoints.
         +---------------------+----------------------------------+
         | domain_id           | default                          |
         | enabled             | True                             |
-        | id                  | 0dbcdd0968dd4c948eacf9eb60d82b46 |
+        | id                  | 9d7e33de3e1a498390353819bc7d245d |
         | name                | cinder                           |
+        | options             | {}                               |
         | password_expires_at | None                             |
         +---------------------+----------------------------------+
-
 
      .. end
 
