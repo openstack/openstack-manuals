@@ -144,8 +144,8 @@ and plug-in.
 
        [DEFAULT]
        # ...
-       notify_nova_on_port_status_changes = True
-       notify_nova_on_port_data_changes = True
+       notify_nova_on_port_status_changes = true
+       notify_nova_on_port_data_changes = true
 
        [nova]
        # ...
@@ -254,7 +254,7 @@ and switching) virtual networking infrastructure for instances.
 
        [securitygroup]
        # ...
-       enable_ipset = True
+       enable_ipset = true
 
     .. end
 
@@ -288,7 +288,7 @@ networking infrastructure for instances and handles security groups.
     .. code-block:: ini
 
        [vxlan]
-       enable_vxlan = False
+       enable_vxlan = false
 
     .. end
 
@@ -300,7 +300,7 @@ networking infrastructure for instances and handles security groups.
 
        [securitygroup]
        # ...
-       enable_security_group = True
+       enable_security_group = true
        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
     .. end
