@@ -10,62 +10,43 @@ database, or provide an API service for handling incoming requests.
 
 The Telemetry service is built from the following agents and services:
 
-ceilometer-api
+ceilometer-api (deprecated in Ocata)
     Presents aggregated metering data to consumers (such as billing
-    engines and analytics tools).
+    engines and analytics tools). Alarm, Meter and Event APIs are now handled
+    by aodh, gnocchi, and panko services respectively.
 
 ceilometer-polling
     Polls for different kinds of meter data by using the polling
     plug-ins (pollsters) registered in different namespaces. It provides a
-    single polling interface across different namespaces.
-
-ceilometer-agent-central
-    Polls the public RESTful APIs of other OpenStack services such as
-    Compute service and Image service, in order to keep tabs on resource
-    existence, by using the polling plug-ins (pollsters) registered in
-    the central polling namespace.
-
-ceilometer-agent-compute
-    Polls the local hypervisor or libvirt daemon to acquire performance
-    data for the local instances, messages and emits the data as AMQP
-    messages, by using the polling plug-ins (pollsters) registered in
-    the compute polling namespace.
-
-ceilometer-agent-ipmi
-    Polls the local node with IPMI support, in order to acquire IPMI
-    sensor data and Intel Node Manager data, by using the polling
-    plug-ins (pollsters) registered in the IPMI polling namespace.
+    single polling interface across different namespaces. The ``compute``
+    namespace polls the local hypervisor to acquire performance data of local
+    instances. The ``central`` namespace polls the public RESTful APIs of other
+    OpenStack services such as Compute service and Image service. The ``ipmi``
+    namespace polls the local node with IPMI support, in order to acquire IPMI
+    sensor data and Intel Node Manager datahost-level information.
 
 ceilometer-agent-notification
-    Consumes AMQP messages from other OpenStack services.
+    Consumes AMQP messages from other OpenStack services, normalizes messages,
+    and publishes them to configured targets.
 
-ceilometer-collector
+ceilometer-collector (deprecated in Ocata)
     Consumes AMQP notifications from the agents, then dispatches these
     data to the appropriate data store.
 
-ceilometer-alarm-evaluator
-    Determines when alarms fire due to the associated statistic trend
-    crossing a threshold over a sliding time window.
-
-ceilometer-alarm-notifier
-    Initiates alarm actions, for example calling out to a webhook with a
-    description of the alarm state transition.
-
     .. note::
 
-       1. The ``ceilometer-polling`` service is available since the Kilo release.
-          It is intended to replace ``ceilometer-agent-central``,
-          ``ceilometer-agent-compute``, and ``ceilometer-agent-ipmi``.
+       1. The ``ceilometer-polling`` service provides polling support on any
+          namespace but many distributions continue to provide namespace-scoped
+          agents: ``ceilometer-agent-central``, ``ceilometer-agent-compute``,
+          and ``ceilometer-agent-ipmi``.
 
        2. The ``ceilometer-api`` and ``ceilometer-collector`` are no longer
-          supported since the Ocata release.
+          supported since the Ocata release. Storage and API are provided by
+          gnocchi, aodh, and panko services.
 
-       3. The ``ceilometer-alarm-evaluator`` and ``ceilometer-alarm-notifier``
-          services are removed in Mitaka release.
-
-Except for the ``ceilometer-agent-compute`` and the ``ceilometer-agent-ipmi``
-services, all the other services are placed on one or more controller
-nodes.
+Except for the ``ceilometer-polling`` agents polling the ``compute`` or
+``ipmi`` namespaces, all the other services are placed on one or more
+controller nodes.
 
 The Telemetry architecture highly depends on the AMQP service both for
 consuming notifications coming from OpenStack services and internal
@@ -78,19 +59,24 @@ Supported databases
 ~~~~~~~~~~~~~~~~~~~
 
 The other key external component of Telemetry is the database, where
-events, samples, alarm definitions, and alarms are stored.
+events, samples, alarm definitions, and alarms are stored. Each of the data
+models have their own storage service and each support various back ends.
 
-.. note::
+The list of supported base back ends for measurements:
 
-   Multiple database back ends can be configured in order to store
-   events, samples, and alarms separately. We recommend Gnocchi for
-   time-series storage.
+-  `gnocchi <http://gnocchi.xyz/>`__
 
-The list of supported database back ends:
 
--  `Gnocchi <http://gnocchi.xyz/>`__
+The list of supported base back ends for alarms:
 
--  `ElasticSearch (events only) <https://www.elastic.co/>`__
+-  `MySQL <http://www.mysql.com/>`__
+
+-  `PostgreSQL <http://www.postgresql.org/>`__
+
+
+The list of supported base back ends for events:
+
+-  `ElasticSearch <https://www.elastic.co/>`__
 
 -  `MongoDB <https://www.mongodb.org/>`__
 
@@ -166,7 +152,8 @@ This service of OpenStack uses OpenStack Identity for authenticating and
 authorizing users. The required configuration options are listed in the
 `Telemetry
 section <https://docs.openstack.org/newton/config-reference/telemetry.html>`__
-in the OpenStack Configuration Reference.
+in the OpenStack Configuration Reference. Alternatively, gnocchi can be
+configured without authentication to minimize overhead.
 
 The system uses two roles:``admin`` and ``non-admin``. The authorization
 happens before processing each API request. The amount of returned data
