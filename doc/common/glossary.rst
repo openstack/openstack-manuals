@@ -2568,8 +2568,8 @@ N
    NFV Orchestration Service (tacker)
 
       OpenStack service that aims to implement Network Function Virtualization
-      (NFV) Orchestration services and libraries for end-to-end life-cycle
-      management of Network Services and Virtual Network Functions (VNFs).
+      (NFV) orchestration services and libraries for end-to-end life-cycle
+      management of network services and Virtual Network Functions (VNFs).
 
    Nginx
 
