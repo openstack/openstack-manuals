@@ -12,6 +12,7 @@ Compute nodes
   design-compute/design-compute-overcommit
   design-compute/design-compute-storage
   design-compute/design-compute-networking
+  design-compute/design-compute-logging
 
 This section describes some of the choices you need to consider
 when designing and building your compute nodes. Compute nodes form the
