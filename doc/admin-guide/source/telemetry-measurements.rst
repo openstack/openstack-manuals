@@ -94,7 +94,33 @@ Telemetry or emit notifications that this service consumes.
 OpenStack Compute
 ~~~~~~~~~~~~~~~~~
 
-The following meters are collected for OpenStack Compute:
+The following meters are collected for OpenStack Compute.
+
+.. note::
+
+   There are two resources in the following table:
+
+   - Instance ID provides a unique ID per instance.
+
+   - Interface ID is the interface identifier. You can find an example of how
+     the interface ID is composed in the
+     `net.py <https://git.openstack.org/cgit/openstack/ceilometer/tree/ceilometer/compute/pollsters/net.py#n48>`_
+     file.
+
+   1. In the Ocata release, the ``instance`` meter is no longer supported.
+
+   2. The ``instance:<type>`` meter can be replaced by using extra parameters in
+      both the samples and statistics queries. Sample queries look like:
+
+      .. code-block:: console
+
+         statistics:
+
+           ceilometer statistics -m instance -g resource_metadata.instance_type
+
+         samples:
+
+           ceilometer sample-list -m instance -q metadata.instance_type=<value>
 
 +-----------+-------+------+----------+----------+---------+------------------+
 | Name      | Type  | Unit | Resource | Origin   | Support | Note             |
@@ -386,25 +412,6 @@ The following meters are collected for OpenStack Compute:
 | he.misses |       | nt   | ID       |          |         | che misses       |
 +-----------+-------+------+----------+----------+---------+------------------+
 
-|
-
-.. note::
-
-   1. In the Ocata release, the ``instance`` meter is no longer supported..
-
-   2. The ``instance:<type>`` meter can be replaced by using extra parameters in
-      both the samples and statistics queries. Sample queries look like:
-
-   .. code-block:: console
-
-      statistics:
-
-        ceilometer statistics -m instance -g resource_metadata.instance_type
-
-      samples:
-
-        ceilometer sample-list -m instance -q metadata.instance_type=<value>
-
 The Telemetry service supports to create new meters by using
 transformers. For more details about transformers see
 :ref:`telemetry-transformers`. Among the meters gathered from libvirt and
@@ -412,7 +419,7 @@ Hyper-V there are a few ones which are generated from other meters. The list of
 meters that are created by using the ``rate_of_change`` transformer from the
 above table is the following:
 
--  cpu\_util
+-  cpu_util
 
 -  disk.read.requests.rate
 
