@@ -68,10 +68,10 @@ if [ "$PUBLISH" = "publish" ] ; then
 fi
 
 # For publishing to both /draft and /BRANCH
-#if [ "$PUBLISH" = "publish" ] ; then
-#    # For publishing to both /draft and /BRANCH
-#    copy_to_branch newton
-#fi
+if [ "$PUBLISH" = "publish" ] ; then
+    # For publishing to both /draft and /BRANCH
+    copy_to_branch ocata
+fi
 
 if [ "$PUBLISH" = "build" ] ; then
     # Create index page for viewing
