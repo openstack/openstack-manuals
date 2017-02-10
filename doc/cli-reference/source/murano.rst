@@ -23,7 +23,7 @@ Application Catalog service (murano) command-line client
 The murano client is the command-line interface (CLI) for
 the Application Catalog service (murano) API and its extensions.
 
-This chapter documents :command:`murano` version ``0.11.1``.
+This chapter documents :command:`murano` version ``0.12.0``.
 
 For help on a specific :command:`murano` command, enter:
 
@@ -141,6 +141,12 @@ murano usage
 
 ``environment-list``
   List the environments.
+
+``environment-model-edit``
+  Edit an environment's object model.
+
+``environment-model-show``
+  Display an environment's object model.
 
 ``environment-rename``
   Rename an environment.
@@ -583,7 +589,7 @@ murano env-template-create-env
 
 .. code-block:: console
 
-   usage: murano env-template-create-env <ID> <ENV_NAME>
+   usage: murano env-template-create-env [--region <REGION_NAME>] <ID> <ENV_NAME>
 
 Create a new environment from template.
 
@@ -594,6 +600,11 @@ Create a new environment from template.
 
 ``<ENV_NAME>``
   New environment name.
+
+**Optional arguments:**
+
+``--region <REGION_NAME>``
+  Name of the target OpenStack region.
 
 .. _murano_env-template-del-app:
 
@@ -846,14 +857,69 @@ murano environment-list
 
 .. code-block:: console
 
-   usage: murano environment-list [--all-tenants]
+   usage: murano environment-list [--all-tenants] [--tenant <TENANT_ID>]
 
 List the environments.
 
 **Optional arguments:**
 
 ``--all-tenants``
-  Allows to list environments from all tenants (admin only).
+  Allows to list environments from all tenants (admin
+  only).
+
+``--tenant <TENANT_ID>``
+  Allows to list environments for a given tenant (admin
+  only).
+
+.. _murano_environment-model-edit:
+
+murano environment-model-edit
+-----------------------------
+
+.. code-block:: console
+
+   usage: murano environment-model-edit --session-id <SESSION_ID> <ID> [<FILE>]
+
+Edit an environment's object model.
+
+**Positional arguments:**
+
+``<ID>``
+  ID of Environment to edit.
+
+``<FILE>``
+  File to read JSON-patch from (defaults to stdin).
+
+**Optional arguments:**
+
+``--session-id <SESSION_ID>``
+  Id of a config session.
+
+.. _murano_environment-model-show:
+
+murano environment-model-show
+-----------------------------
+
+.. code-block:: console
+
+   usage: murano environment-model-show [--path <PATH>]
+                                        [--session-id <SESSION_ID>]
+                                        <ID>
+
+Display an environment's object model.
+
+**Positional arguments:**
+
+``<ID>``
+  ID of Environment to show.
+
+**Optional arguments:**
+
+``--path <PATH>``
+  Path to Environment model section. Defaults to '/'.
+
+``--session-id <SESSION_ID>``
+  Id of a config session.
 
 .. _murano_environment-rename:
 
@@ -1040,8 +1106,8 @@ be separated with a space and have to be already present in murano.
 **Positional arguments:**
 
 ``<FILE>``
-  URL of the murano zip package, FQPN, or path to zip
-  package.
+  URL of the murano zip package, FQPN, path to zip
+  package or path to directory with package.
 
 **Optional arguments:**
 
@@ -1071,7 +1137,8 @@ murano package-list
 
 .. code-block:: console
 
-   usage: murano package-list [--limit LIMIT] [--include-disabled] [--owned]
+   usage: murano package-list [--limit LIMIT] [--marker MARKER]
+                              [--include-disabled] [--owned]
                               [--search <SEARCH_KEYS>] [--name <PACKAGE_NAME>]
                               [--fqn <PACKAGE_FULLY_QUALIFIED_NAME>]
                               [--type <PACKAGE_TYPE>]
@@ -1084,6 +1151,11 @@ List available packages.
 **Optional arguments:**
 
 ``--limit LIMIT``
+  Show limited number of packages
+
+``--marker MARKER``
+  Show packages starting from package with id excluding
+  it
 
 ``--include-disabled``
 
