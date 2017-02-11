@@ -45,12 +45,6 @@ function copy_rst {
 
 
 case "$PROJECT_DIR" in
-    api-site)
-        copy_rst common
-        # TODO(jaegerandi): Uncomment once we have translations
-        # for firstapp guide in api-site repository.
-        #copy_rst_trans common
-        ;;
     security-doc)
         copy_rst common
         copy_rst_trans common
