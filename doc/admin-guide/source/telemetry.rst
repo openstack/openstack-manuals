@@ -39,9 +39,10 @@ happen if an alarm is raised. The last section contains a
 troubleshooting guide, which mentions error situations and possible
 solutions to the problems.
 
-You can retrieve the collected samples in three different ways: with
-the REST API, with the command-line interface, or with the Metering
-tab on an OpenStack dashboard.
+You can retrieve the collected data in two different ways: with
+the REST API or with the command-line interface of the storage service.
+Additionally, measurement data can be visualised through a graphical
+service such as Grafana.
 
 
 .. toctree::
