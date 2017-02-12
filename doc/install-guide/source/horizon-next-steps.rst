@@ -15,17 +15,17 @@ complete the following tasks:
 
 * Customize your dashboard. See section
   `Customize the dashboard
-  <http://docs.openstack.org/admin-guide/common/dashboard-customizing.html>`__.
+  <http://docs.openstack.org/admin-guide/dashboard-customize-configure.html>`_.
 
 * Set up session storage. See
   `Set up session storage for the dashboard
-  <http://docs.openstack.org/admin-guide/dashboard-sessions.html>`__.
+  <http://docs.openstack.org/admin-guide/dashboard-sessions.html>`_.
 
 * To use the VNC client with the dashboard, the browser
   must support HTML5 Canvas and HTML5 WebSockets.
 
   For details about browsers that support noVNC, see
   `README
-  <https://github.com/kanaka/noVNC/blob/master/README.md>`__
+  <https://github.com/kanaka/noVNC/blob/master/README.md>`_
   and `browser support
-  <https://github.com/kanaka/noVNC/wiki/Browser-support>`__.
+  <https://github.com/kanaka/noVNC/wiki/Browser-support>`_.
