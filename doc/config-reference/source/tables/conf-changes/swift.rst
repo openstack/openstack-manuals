@@ -1,4 +1,4 @@
-New, updated, and deprecated options in Newton for OpenStack Object Storage
+New, updated, and deprecated options in Ocata for OpenStack Object Storage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ..
@@ -6,8 +6,5 @@ New, updated, and deprecated options in Newton for OpenStack Object Storage
   changes will be overwritten. The tool to do so lives in the
   openstack-doc-tools repository.
 
-
-
-
 There are no new, updated, and deprecated options
-in Mitaka for OpenStack Object Storage.
+in Ocata for OpenStack Object Storage.
