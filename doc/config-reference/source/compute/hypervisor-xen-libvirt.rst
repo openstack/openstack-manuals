@@ -144,7 +144,7 @@ Use the following as a guideline for configuring Xen for use in OpenStack:
 
       The default for virtualization mode in nova is PV mode.
 
-#. **Image formats**: Xen supports flat, qcow2 and vhd image formats.
+#. **Image formats**: Xen supports raw, qcow2 and vhd image formats.
    For more information on image formats, refer to the `OpenStack Virtual
    Image Guide <https://docs.openstack.org/image-guide/introduction.html>`__
    and the `Storage Options Guide on the Xen Project Wiki
