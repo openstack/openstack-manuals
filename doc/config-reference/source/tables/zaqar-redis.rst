@@ -32,3 +32,21 @@
      - (Floating point) Base sleep interval between attempts to reconnect after a redis node failover.
    * - ``uri`` = ``redis://127.0.0.1:6379``
      - (String) Redis connection URI, taking one of three forms. For a direct connection to a Redis server, use the form "redis://host[:port][?options]", where port defaults to 6379 if not specified. For an HA master-slave Redis cluster using Redis Sentinel, use the form "redis://host1[:port1][,host2[:port2],...,hostN[:portN]][?options]", where each host specified corresponds to an instance of redis-sentinel. In this form, the name of the Redis master used in the Sentinel configuration must be included in the query string as "master=<name>". Finally, to connect to a local instance of Redis over a unix socket, you may use the form "redis:/path/to/redis.sock[?options]". In all forms, the "socket_timeout" option may be specified in the query string. Its value is given in seconds. If not provided, "socket_timeout" defaults to 0.1 seconds.
+   * - **[matchmaker_redis]**
+     -
+   * - ``check_timeout`` = ``20000``
+     - (Integer) Time in ms to wait before the transaction is killed.
+   * - ``host`` = ``127.0.0.1``
+     - (String) DEPRECATED: Host to locate redis. Replaced by [DEFAULT]/transport_url
+   * - ``password`` =
+     - (String) DEPRECATED: Password for Redis server (optional). Replaced by [DEFAULT]/transport_url
+   * - ``port`` = ``6379``
+     - (Port number) DEPRECATED: Use this port to connect to redis host. Replaced by [DEFAULT]/transport_url
+   * - ``sentinel_group_name`` = ``oslo-messaging-zeromq``
+     - (String) Redis replica set name.
+   * - ``sentinel_hosts`` =
+     - (List) DEPRECATED: List of Redis Sentinel hosts (fault tolerance mode), e.g., [host:port, host1:port ... ] Replaced by [DEFAULT]/transport_url
+   * - ``socket_timeout`` = ``10000``
+     - (Integer) Timeout in ms on blocking socket operations.
+   * - ``wait_timeout`` = ``2000``
+     - (Integer) Time in ms to wait between connection attempts.

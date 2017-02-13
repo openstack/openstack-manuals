@@ -30,6 +30,8 @@
      - (Integer) Defines the maximum message grace period in seconds.
    * - ``max_claim_ttl`` = ``43200``
      - (Integer) Maximum length of a message in claimed state.
+   * - ``max_flavors_per_page`` = ``20``
+     - (Integer) Defines the maximum number of flavors per page.
    * - ``max_message_ttl`` = ``1209600``
      - (Integer) Maximum amount of time a message will be available.
    * - ``max_messages_per_claim_or_pop`` = ``20``
@@ -38,6 +40,8 @@
      - (Integer) Defines the maximum number of messages per page.
    * - ``max_messages_post_size`` = ``262144``
      - (Integer) Defines the maximum size of message posts.
+   * - ``max_pools_per_page`` = ``20``
+     - (Integer) Defines the maximum number of pools per page.
    * - ``max_queue_metadata`` = ``65536``
      - (Integer) Defines the maximum amount of metadata in a queue.
    * - ``max_queues_per_page`` = ``20``
