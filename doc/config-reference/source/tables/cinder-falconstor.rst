@@ -24,3 +24,5 @@
      - (Boolean) Enable HTTP debugging to FSS
    * - ``fss_pool`` =
      - (Integer) FSS pool id in which FalconStor volumes are stored.
+   * - ``fss_san_secondary_ip`` =
+     - (String) Specifies FSS secondary management IP to be used if san_ip is invalid or becomes inaccessible.

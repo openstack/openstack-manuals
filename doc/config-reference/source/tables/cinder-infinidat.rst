@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _cinder-swift:
+.. _cinder-infinidat:
 
-.. list-table:: Description of swift configuration options
+.. list-table:: Description of INFINIDAT InfiniBox volume driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,7 +18,5 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``backup_swift_auth_insecure`` = ``False``
-     - (Boolean) Bypass verification of server certificate when making SSL connection to Swift.
-   * - ``backup_swift_auth_url`` = ``None``
-     - (URI) The URL of the Keystone endpoint
+   * - ``infinidat_pool_name`` = ``None``
+     - (String) Name of the pool from which volumes are allocated

@@ -19,7 +19,7 @@
    * - **[DEFAULT]**
      -
    * - ``allowed_direct_url_schemes`` =
-     - (List) A list of url schemes that can be downloaded directly via the direct_url. Currently supported schemes: [file].
+     - (List) A list of url schemes that can be downloaded directly via the direct_url. Currently supported schemes: [file, cinder].
    * - ``glance_api_insecure`` = ``False``
      - (Boolean) Allow to perform insecure SSL (https) requests to glance (https will be used but cert validation will not be performed).
    * - ``glance_api_servers`` = ``None``

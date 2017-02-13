@@ -18,9 +18,5 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``glusterfs_mount_point_base`` = ``$state_path/mnt``
-     - (String) Base dir containing mount points for gluster shares.
-   * - ``glusterfs_shares_config`` = ``/etc/cinder/glusterfs_shares``
-     - (String) File with the list of available gluster shares
    * - ``nas_volume_prov_type`` = ``thin``
      - (String) Provisioning type that will be used when creating volumes.

@@ -40,5 +40,5 @@
      - (Integer) Volumes will be chunked into objects of this size (in megabytes).
    * - ``rbd_user`` = ``None``
      - (String) The RADOS client name for accessing rbd volumes - only set when using cephx authentication
-   * - ``volume_tmp_dir`` = ``None``
-     - (String) Directory where temporary image files are stored when the volume driver does not write them directly to the volume. Warning: this option is now deprecated, please use image_conversion_dir instead.
+   * - ``replication_connect_timeout`` = ``5``
+     - (Integer) Timeout value (in seconds) used when connecting to ceph cluster to do a demotion/promotion of volumes. If value < 0, no timeout is set and default librados value is used.

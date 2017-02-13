@@ -21,7 +21,7 @@
    * - ``check_max_pool_luns_threshold`` = ``False``
      - (Boolean) Report free_capacity_gb as 0 when the limit to maximum number of pool LUNs is reached. By default, the value is False.
    * - ``cinder_emc_config_file`` = ``/etc/cinder/cinder_emc_config.xml``
-     - (String) use this file for cinder emc plugin config data
+     - (String) Use this file for cinder emc plugin config data
    * - ``destroy_empty_storage_group`` = ``False``
      - (Boolean) To destroy storage group when the last LUN is removed from it. By default, the value is False.
    * - ``force_delete_lun_in_storagegroup`` = ``False``
@@ -36,6 +36,8 @@
      - (String) Mapping between hostname and its iSCSI initiator IP addresses.
    * - ``max_luns_per_storage_group`` = ``255``
      - (Integer) Default max number of LUNs in a storage group. By default, the value is 255.
+   * - ``multi_pool_support`` = ``False``
+     - (String) Use this value to specify multi-pool support for VMAX3
    * - ``naviseccli_path`` = ``None``
      - (String) Naviseccli Path.
    * - ``storage_vnx_authentication_type`` = ``global``

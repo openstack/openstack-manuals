@@ -34,8 +34,8 @@
      - (String) IP address of NexentaEdge management REST API endpoint
    * - ``nexenta_rest_password`` = ``nexenta``
      - (String) Password to connect to NexentaEdge
-   * - ``nexenta_rest_port`` = ``8080``
-     - (Integer) HTTP port to connect to Nexenta REST API server
+   * - ``nexenta_rest_port`` = ``0``
+     - (Integer) HTTP(S) port to connect to Nexenta REST API server. If it is equal zero, 8443 for HTTPS and 8080 for HTTP is used
    * - ``nexenta_rest_protocol`` = ``auto``
      - (String) Use http or https for REST connection (default auto)
    * - ``nexenta_rest_user`` = ``admin``

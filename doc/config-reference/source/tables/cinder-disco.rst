@@ -18,6 +18,8 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``choice_client`` = ``None``
+     - (String) Use soap client or rest client for communicating with DISCO. Possible values are "soap" or "rest".
    * - ``clone_check_timeout`` = ``3600``
      - (Integer) How long we check whether a clone is finished before we give up
    * - ``clone_volume_timeout`` = ``680``
@@ -26,8 +28,12 @@
      - (IP) The IP of DMS client socket server
    * - ``disco_client_port`` = ``9898``
      - (Port number) The port to connect DMS client socket server
+   * - ``disco_src_api_port`` = ``8080``
+     - (Port number) The port of DISCO source API
    * - ``disco_wsdl_path`` = ``/etc/cinder/DISCOService.wsdl``
-     - (String) Path to the wsdl file to communicate with DISCO request manager
+     - (String) DEPRECATED: Path to the wsdl file to communicate with DISCO request manager
+   * - ``rest_ip`` = ``None``
+     - (IP) The IP address of the REST server
    * - ``restore_check_timeout`` = ``3600``
      - (Integer) How long we check whether a restore is finished before we give up
    * - ``retry_interval`` = ``1``

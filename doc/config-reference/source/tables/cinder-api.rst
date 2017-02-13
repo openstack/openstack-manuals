@@ -26,7 +26,7 @@
      - (String) Backend override of host value.
    * - ``default_timeout`` = ``31536000``
      - (Integer) Default timeout for CLI operations in minutes. For example, LUN migration is a typical long running operation, which depends on the LUN size and the load of the array. An upper bound in the specific deployment can be set to avoid unnecessary long wait. By default, it is 365 days long.
-   * - ``enable_v1_api`` = ``True``
+   * - ``enable_v1_api`` = ``False``
      - (Boolean) DEPRECATED: Deploy v1 of the Cinder API.
    * - ``enable_v2_api`` = ``True``
      - (Boolean) DEPRECATED: Deploy v2 of the Cinder API.
@@ -42,8 +42,6 @@
      - (Integer) message minimum life in seconds.
    * - ``osapi_max_limit`` = ``1000``
      - (Integer) The maximum number of items that a collection resource returns in a single response
-   * - ``osapi_max_request_body_size`` = ``114688``
-     - (Integer) Max size for body of a request
    * - ``osapi_volume_base_URL`` = ``None``
      - (String) Base URL that will be presented to users in links to the OpenStack Volume API
    * - ``osapi_volume_ext_list`` =

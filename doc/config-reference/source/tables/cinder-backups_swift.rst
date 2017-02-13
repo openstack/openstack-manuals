@@ -45,7 +45,7 @@
    * - ``backup_swift_tenant`` = ``None``
      - (String) Swift tenant/account name. Required when connecting to an auth 2.0 system
    * - ``backup_swift_url`` = ``None``
-     - (String) The URL of the Swift endpoint
+     - (URI) The URL of the Swift endpoint
    * - ``backup_swift_user`` = ``None``
      - (String) Swift user name
    * - ``backup_swift_user_domain`` = ``None``

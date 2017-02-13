@@ -91,7 +91,7 @@
    * - ``num_shell_tries`` = ``3``
      - (Integer) Number of times to attempt to run flakey shell commands
    * - ``os_privileged_user_auth_url`` = ``None``
-     - (String) Auth URL associated with the OpenStack privileged account.
+     - (URI) Auth URL associated with the OpenStack privileged account.
    * - ``os_privileged_user_name`` = ``None``
      - (String) OpenStack privileged account username. Used for requests to other services (such as Nova) that require an account with special rights.
    * - ``os_privileged_user_password`` = ``None``
@@ -102,8 +102,6 @@
      - (Integer) Range, in seconds, to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
    * - ``periodic_interval`` = ``60``
      - (Integer) Interval, in seconds, between running periodic tasks
-   * - ``replication_api_class`` = ``cinder.replication.api.API``
-     - (String) The full class name of the volume replication API class
    * - ``replication_device`` = ``None``
      - (Unknown) Multi opt of dictionaries to represent a replication target device. This option may be specified multiple times in a single config section to specify multiple replication target devices. Each entry takes the standard dict config form: replication_device = target_device_id:<required>,key1:value1,key2:value2...
    * - ``report_discard_supported`` = ``False``
@@ -144,6 +142,18 @@
      - (Boolean) Option to enable/disable CHAP authentication for targets.
    * - ``use_forwarded_for`` = ``False``
      - (Boolean) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.
+   * - **[healthcheck]**
+     -
+   * - ``backends`` =
+     - (List) Additional backends that can perform health checks and report that information back as part of a request.
+   * - ``detailed`` = ``False``
+     - (Boolean) Show more detailed information as part of the response
+   * - ``disable_by_file_path`` = ``None``
+     - (String) Check the presence of a file to determine if an application is running on a port. Used by DisableByFileHealthcheck plugin.
+   * - ``disable_by_file_paths`` =
+     - (List) Check the presence of a file based on a port to determine if an application is running on a port. Expects a "port:path" list of strings. Used by DisableByFilesPortsHealthcheck plugin.
+   * - ``path`` = ``/healthcheck``
+     - (String) DEPRECATED: The path to respond to healtcheck requests on.
    * - **[key_manager]**
      -
    * - ``api_class`` = ``castellan.key_manager.barbican_key_manager.BarbicanKeyManager``

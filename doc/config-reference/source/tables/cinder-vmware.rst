@@ -24,6 +24,8 @@
      - (String) CA bundle file to use in verifying the vCenter server certificate.
    * - ``vmware_cluster_name`` = ``None``
      - (Multi-valued) Name of a vCenter compute cluster where volumes should be created.
+   * - ``vmware_connection_pool_size`` = ``10``
+     - (Integer) Maximum number of connections in http connection pool.
    * - ``vmware_host_ip`` = ``None``
      - (String) IP address for connecting to VMware vCenter server.
    * - ``vmware_host_password`` = ``None``
