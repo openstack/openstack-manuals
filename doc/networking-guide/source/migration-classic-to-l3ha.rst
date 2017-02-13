@@ -43,28 +43,14 @@ Here is the router we have used in our demonstration:
    | Field                   | Value                                     |
    +-------------------------+-------------------------------------------+
    | admin_state_up          | UP                                        |
-   | availability_zone_hints |                                           |
-   | availability_zones      | nova                                      |
-   | created_at              | 2017-01-02T23:01:47Z                      |
-   | description             |                                           |
    | distributed             | False                                     |
-   | external_gateway_info   | {"network_id": "c21c0f6a-0341-42ed-b5ff-  |
-   |                         | 9f1ff1d8ef56", "enable_snat": true,       |
-   |                         | "external_fixed_ips": [{"subnet_id":      |
-   |                         | "9a698e72-7707-43fe-ac09-5e05659a1aa5",   |
-   |                         | "ip_address": "172.24.4.5"},              |
-   |                         | {"subnet_id": "e8223e93-d5f6-48eb-afca-   |
-   |                         | 5cc095c1e340", "ip_address":              |
-   |                         | "2001:db8::b"}]}                          |
-   | flavor_id               | None                                      |
+   | external_gateway_info   |                                           |
    | ha                      | False                                     |
    | id                      | 6b793b46-d082-4fd5-980f-a6f80cbb0f2a      |
    | name                    | router1                                   |
    | project_id              | bb8b84ab75be4e19bd0dfe02f6c3f5c1          |
-   | revision_number         | 7                                         |
    | routes                  |                                           |
    | status                  | ACTIVE                                    |
-   | updated_at              | 2017-01-02T23:02:03Z                      |
    +-------------------------+-------------------------------------------+
 
 #. Source the administrative project credentials.
@@ -97,28 +83,14 @@ Here is the router we have used in our demonstration:
       | Field                   | Value                                     |
       +-------------------------+-------------------------------------------+
       | admin_state_up          | UP                                        |
-      | availability_zone_hints |                                           |
-      | availability_zones      | nova                                      |
-      | created_at              | 2017-01-02T23:01:47Z                      |
-      | description             |                                           |
       | distributed             | False                                     |
-      | external_gateway_info   | {"network_id": "c21c0f6a-0341-42ed-b5ff-  |
-      |                         | 9f1ff1d8ef56", "enable_snat": true,       |
-      |                         | "external_fixed_ips": [{"subnet_id":      |
-      |                         | "9a698e72-7707-43fe-ac09-5e05659a1aa5",   |
-      |                         | "ip_address": "172.24.4.5"},              |
-      |                         | {"subnet_id": "e8223e93-d5f6-48eb-afca-   |
-      |                         | 5cc095c1e340", "ip_address":              |
-      |                         | "2001:db8::b"}]}                          |
-      | flavor_id               | None                                      |
+      | external_gateway_info   |                                           |
       | ha                      | True                                      |
       | id                      | 6b793b46-d082-4fd5-980f-a6f80cbb0f2a      |
       | name                    | router1                                   |
       | project_id              | bb8b84ab75be4e19bd0dfe02f6c3f5c1          |
-      | revision_number         | 7                                         |
       | routes                  |                                           |
       | status                  | ACTIVE                                    |
-      | updated_at              | 2017-01-02T23:02:03Z                      |
       +-------------------------+-------------------------------------------+
 
 
@@ -143,28 +115,14 @@ Here is the router we have used in our demonstration:
    | Field                   | Value                                     |
    +-------------------------+-------------------------------------------+
    | admin_state_up          | DOWN                                      |
-   | availability_zone_hints |                                           |
-   | availability_zones      | nova                                      |
-   | created_at              | 2017-01-02T23:01:47Z                      |
-   | description             |                                           |
    | distributed             | False                                     |
-   | external_gateway_info   | {"network_id": "c21c0f6a-0341-42ed-b5ff-  |
-   |                         | 9f1ff1d8ef56", "enable_snat": true,       |
-   |                         | "external_fixed_ips": [{"subnet_id":      |
-   |                         | "9a698e72-7707-43fe-ac09-5e05659a1aa5",   |
-   |                         | "ip_address": "172.24.4.5"},              |
-   |                         | {"subnet_id": "e8223e93-d5f6-48eb-afca-   |
-   |                         | 5cc095c1e340", "ip_address":              |
-   |                         | "2001:db8::b"}]}                          |
-   | flavor_id               | None                                      |
+   | external_gateway_info   |                                           |
    | ha                      | True                                      |
    | id                      | 6b793b46-d082-4fd5-980f-a6f80cbb0f2a      |
    | name                    | router1                                   |
    | project_id              | bb8b84ab75be4e19bd0dfe02f6c3f5c1          |
-   | revision_number         | 7                                         |
    | routes                  |                                           |
    | status                  | ACTIVE                                    |
-   | updated_at              | 2017-01-02T23:02:03Z                      |
    +-------------------------+-------------------------------------------+
 
 #. Source the administrative project credentials.
@@ -197,26 +155,12 @@ Here is the router we have used in our demonstration:
       | Field                   | Value                                     |
       +-------------------------+-------------------------------------------+
       | admin_state_up          | UP                                        |
-      | availability_zone_hints |                                           |
-      | availability_zones      | nova                                      |
-      | created_at              | 2017-01-02T23:01:47Z                      |
-      | description             |                                           |
       | distributed             | False                                     |
-      | external_gateway_info   | {"network_id": "c21c0f6a-0341-42ed-b5ff-  |
-      |                         | 9f1ff1d8ef56", "enable_snat": true,       |
-      |                         | "external_fixed_ips": [{"subnet_id":      |
-      |                         | "9a698e72-7707-43fe-ac09-5e05659a1aa5",   |
-      |                         | "ip_address": "172.24.4.5"},              |
-      |                         | {"subnet_id": "e8223e93-d5f6-48eb-afca-   |
-      |                         | 5cc095c1e340", "ip_address":              |
-      |                         | "2001:db8::b"}]}                          |
-      | flavor_id               | None                                      |
+      | external_gateway_info   |                                           |
       | ha                      | False                                     |
       | id                      | 6b793b46-d082-4fd5-980f-a6f80cbb0f2a      |
       | name                    | router1                                   |
       | project_id              | bb8b84ab75be4e19bd0dfe02f6c3f5c1          |
-      | revision_number         | 7                                         |
       | routes                  |                                           |
       | status                  | ACTIVE                                    |
-      | updated_at              | 2017-01-02T23:02:03Z                      |
       +-------------------------+-------------------------------------------+
