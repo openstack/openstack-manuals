@@ -198,19 +198,19 @@ First, create a QoS policy and its bandwidth limit rule:
 Second, associate the created policy with an existing neutron port.
 In order to do this, user extracts the port id to be associated to
 the already created policy. In the next example, we will assign the
-``bw-limiter`` policy to the VM with IP address 10.0.0.3
+``bw-limiter`` policy to the VM with IP address ``192.0.2.1``.
 
 .. code-block:: console
 
    $ neutron port-list
 
-   +--------------------------------------+----------------------------------+
-   | id                                   | fixed_ips                        |
-   +--------------------------------------+----------------------------------+
-   | 0271d1d9-1b16-4410-bd74-82cdf6dcb5b3 | { ... , "ip_address": "10.0.0.1"}|
-   | 88101e57-76fa-4d12-b0e0-4fc7634b874a | { ... , "ip_address": "10.0.0.3"}|
-   | e04aab6a-5c6c-4bd9-a600-33333551a668 | { ... , "ip_address": "10.0.0.2"}|
-   +--------------------------------------+----------------------------------+
+   +--------------------------------------+-----------------------------------+
+   | id                                   | fixed_ips                         |
+   +--------------------------------------+-----------------------------------+
+   | 0271d1d9-1b16-4410-bd74-82cdf6dcb5b3 | { ... , "ip_address": "192.0.2.1"}|
+   | 88101e57-76fa-4d12-b0e0-4fc7634b874a | { ... , "ip_address": "192.0.2.3"}|
+   | e04aab6a-5c6c-4bd9-a600-33333551a668 | { ... , "ip_address": "192.0.2.2"}|
+   +--------------------------------------+-----------------------------------+
 
    $ neutron port-update 88101e57-76fa-4d12-b0e0-4fc7634b874a --qos-policy bw-limiter
    Updated port: 88101e57-76fa-4d12-b0e0-4fc7634b874a
@@ -239,11 +239,11 @@ Ports can be created with a policy attached to them too.
    | binding:vnic_type     | normal                                           |
    | device_id             |                                                  |
    | device_owner          |                                                  |
-   | dns_assignment        | {"hostname": "host-10-0-0-4", ...   }            |
+   | dns_assignment        | {"hostname": "host-192-0-2-4", ...   }           |
    | dns_name              |                                                  |
    | fixed_ips             | {"subnet_id":                                    |
    |                       |         "fabaf9b6-7a84-43b6-9d23-543591b531b8",  |
-   |                       |          "ip_address": "10.0.0.4"}               |
+   |                       |          "ip_address": "192.0.2.4"}              |
    | id                    | c3cb8faa-db36-429d-bd25-6003fafe63c5             |
    | mac_address           | fa:16:3e:02:65:15                                |
    | name                  |                                                  |
