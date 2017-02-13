@@ -19,7 +19,7 @@
    * - **[DEFAULT]**
      -
    * - ``max_events_per_stack`` = ``1000``
-     - (Integer) Maximum events that will be available per stack. Older events will be deleted when this is reached. Set to 0 for unlimited events per stack.
+     - (Integer) Rough number of maximum events that will be available per stack. Actual number of events can be a bit higher since purge checks take place randomly 200/event_purge_batch_size percent of the time. Older events are deleted when events are purged. Set to 0 for unlimited events per stack.
    * - ``max_nested_stack_depth`` = ``5``
      - (Integer) Maximum depth allowed when using nested stacks.
    * - ``max_resources_per_stack`` = ``1000``
