@@ -10,7 +10,7 @@
 
 .. _manila-glusterfs:
 
-.. list-table:: Description of GlusterFS Share Drivers configuration options
+.. list-table:: Description of GlusterFS share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 

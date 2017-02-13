@@ -110,3 +110,25 @@
      - (Boolean) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.
    * - ``wsgi_keep_alive`` = ``True``
      - (Boolean) If False, closes the client socket connection explicitly. Setting it to True to maintain backward compatibility. Recommended setting is set it to False.
+   * - **[coordination]**
+     -
+   * - ``backend_url`` = ``file://$state_path``
+     - (String) The back end URL to use for distributed coordination.
+   * - ``heartbeat`` = ``1.0``
+     - (Floating point) Number of seconds between heartbeats for distributed coordination.
+   * - ``initial_reconnect_backoff`` = ``0.1``
+     - (Floating point) Initial number of seconds to wait after failed reconnection.
+   * - ``max_reconnect_backoff`` = ``60.0``
+     - (Floating point) Maximum number of seconds between sequential reconnection retries.
+   * - **[healthcheck]**
+     -
+   * - ``backends`` =
+     - (List) Additional backends that can perform health checks and report that information back as part of a request.
+   * - ``detailed`` = ``False``
+     - (Boolean) Show more detailed information as part of the response
+   * - ``disable_by_file_path`` = ``None``
+     - (String) Check the presence of a file to determine if an application is running on a port. Used by DisableByFileHealthcheck plugin.
+   * - ``disable_by_file_paths`` =
+     - (List) Check the presence of a file based on a port to determine if an application is running on a port. Expects a "port:path" list of strings. Used by DisableByFilesPortsHealthcheck plugin.
+   * - ``path`` = ``/healthcheck``
+     - (String) DEPRECATED: The path to respond to healtcheck requests on.

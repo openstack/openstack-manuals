@@ -10,7 +10,7 @@
 
 .. _manila-huawei:
 
-.. list-table:: Description of Huawei Share Driver configuration options
+.. list-table:: Description of Huawei share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 

@@ -10,7 +10,7 @@
 
 .. _manila-hds_hsp:
 
-.. list-table:: Description of HDS HSP Share Driver configuration options
+.. list-table:: Description of HDS HSP share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,12 +18,6 @@
      - Description
    * - **[hsp1]**
      -
-   * - ``hitachi_hsp_host`` = ``None``
-     - (String) HSP management host for communication between Manila controller and HSP.
-   * - ``hitachi_hsp_username`` = ``None``
-     - (String) HSP username to perform tasks such as create filesystems and shares.
-   * - ``hitachi_hsp_password`` = ``None``
-     - (String) HSP password for the username provided.
    * - ``share_backend_name`` = ``None``
      - (String) The backend name for a given driver implementation.
    * - ``share_driver`` = ``manila.share.drivers.generic.GenericShareDriver``

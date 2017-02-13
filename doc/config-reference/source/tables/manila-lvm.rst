@@ -10,7 +10,7 @@
 
 .. _manila-lvm:
 
-.. list-table:: Description of LVM Share Driver configuration options
+.. list-table:: Description of LVM share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 

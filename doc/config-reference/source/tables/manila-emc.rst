@@ -10,7 +10,7 @@
 
 .. _manila-emc:
 
-.. list-table:: Description of EMC Share Drivers configuration options
+.. list-table:: Description of EMC share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,22 +18,16 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``emc_interface_ports`` = ``None``
-     - (List) Comma separated list specifying the ports that can be used for share server interfaces. Members of the list can be Unix-style glob expressions.
    * - ``emc_nas_login`` = ``None``
      - (String) User name for the EMC server.
    * - ``emc_nas_password`` = ``None``
      - (String) Password for the EMC server.
-   * - ``emc_nas_pool_names`` = ``None``
-     - (List) EMC pool names.
    * - ``emc_nas_root_dir`` = ``None``
      - (String) The root directory where shares will be located.
    * - ``emc_nas_server`` = ``None``
      - (String) EMC server hostname or IP address.
    * - ``emc_nas_server_container`` = ``None``
-     - (String) Container of share servers.
-   * - ``emc_nas_server_pool`` = ``None``
-     - (String) Pool to persist the meta-data of NAS server.
+     - (String) DEPRECATED: Storage processor to host the NAS server. Obsolete. Unity driver supports nas server auto load balance.
    * - ``emc_nas_server_port`` = ``8080``
      - (Port number) Port number for the EMC server.
    * - ``emc_nas_server_secure`` = ``True``

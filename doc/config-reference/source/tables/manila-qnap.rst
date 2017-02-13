@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _manila-tegile:
+.. _manila-qnap:
 
-.. list-table:: Description of Tegile share driver configuration options
+.. list-table:: Description of QNAP storage share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,11 +18,13 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``tegile_default_project`` = ``None``
-     - (String) Create shares in this project
-   * - ``tegile_nas_login`` = ``None``
-     - (String) User name for the Tegile NAS server.
-   * - ``tegile_nas_password`` = ``None``
-     - (String) Password for the Tegile NAS server.
-   * - ``tegile_nas_server`` = ``None``
-     - (String) Tegile NAS server hostname or IP address.
+   * - ``qnap_management_url`` = ``None``
+     - (String) The URL to manage QNAP Storage.
+   * - ``qnap_nas_login`` = ``None``
+     - (String) Username for QNAP storage.
+   * - ``qnap_nas_password`` = ``None``
+     - (String) Password for QNAP storage.
+   * - ``qnap_poolname`` = ``None``
+     - (String) Pool within which QNAP shares must be created.
+   * - ``qnap_share_ip`` = ``None``
+     - (String) NAS share IP for mounting shares.

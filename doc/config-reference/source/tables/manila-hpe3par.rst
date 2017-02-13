@@ -10,7 +10,7 @@
 
 .. _manila-hpe3par:
 
-.. list-table:: Description of HPE 3PAR Share Driver configuration options
+.. list-table:: Description of HPE 3PAR share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 

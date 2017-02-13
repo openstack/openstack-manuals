@@ -10,7 +10,7 @@
 
 .. _manila-zfssa:
 
-.. list-table:: Description of ZFSSA Share Driver configuration options
+.. list-table:: Description of ZFSSA share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 

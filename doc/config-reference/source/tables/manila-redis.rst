@@ -29,8 +29,8 @@
    * - ``sentinel_group_name`` = ``oslo-messaging-zeromq``
      - (String) Redis replica set name.
    * - ``sentinel_hosts`` =
-     - (List) DEPRECATED: List of Redis Sentinel hosts (fault tolerance mode) e.g. [host:port, host1:port ... ] Replaced by [DEFAULT]/transport_url
+     - (List) DEPRECATED: List of Redis Sentinel hosts (fault tolerance mode), e.g., [host:port, host1:port ... ] Replaced by [DEFAULT]/transport_url
    * - ``socket_timeout`` = ``10000``
-     - (Integer) Timeout in ms on blocking socket operations
+     - (Integer) Timeout in ms on blocking socket operations.
    * - ``wait_timeout`` = ``2000``
      - (Integer) Time in ms to wait between connection attempts.

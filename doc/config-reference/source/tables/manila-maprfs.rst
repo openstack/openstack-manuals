@@ -10,7 +10,7 @@
 
 .. _manila-maprfs:
 
-.. list-table:: Description of MapRFS Share Driver configuration options
+.. list-table:: Description of MapRFS share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,21 +18,21 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``maprfs_clinode_ip`` = ``None``
-     - (List) The list of IPs or hostnames of nodes with mapr-core installed.
+   * - ``maprfs_base_volume_dir`` = ``/``
+     - (String) Path in MapRFS where share volumes must be created.
    * - ``maprfs_cldb_ip`` = ``None``
      - (List) The list of IPs or hostnames of CLDB nodes.
-   * - ``maprfs_zookeeper_ip`` = ``None``
-     - (List) The list of IPs or hostnames of Zookeeper nodes.
-   * - ``maprfs_ssh_name`` = ``None``
+   * - ``maprfs_clinode_ip`` = ``None``
+     - (List) The list of IPs or hostnames of nodes where mapr-core is installed.
+   * - ``maprfs_rename_managed_volume`` = ``True``
+     - (Boolean) Specify whether existing volume should be renamed when start managing.
+   * - ``maprfs_ssh_name`` = ``mapr``
      - (String) Cluster admin user ssh login name.
    * - ``maprfs_ssh_port`` = ``22``
-     - (Port number) SSH port.
+     - (Port number) CLDB node SSH port.
    * - ``maprfs_ssh_private_key`` = ``None``
-     - (String) Path to private key to ssh login.
+     - (String) Path to SSH private key for login.
    * - ``maprfs_ssh_pw`` = ``None``
-     - (String) Cluster node SSH login password, this parameter is not necessary, if 'maprfs_ssh_private_key' is configured
-   * - ``maprfs_rename_managed_volume`` = ``True``
-     - (Boolean) Whether driver should rename share on manage operation.
-   * - ``maprfs_base_volume_dir`` = ``True``
-     - (String) Path to directory where volumes should be mounted.
+     - (String) Cluster node SSH login password, This parameter is not necessary, if 'maprfs_ssh_private_key' is configured.
+   * - ``maprfs_zookeeper_ip`` = ``None``
+     - (List) The list of IPs or hostnames of ZooKeeper nodes.
