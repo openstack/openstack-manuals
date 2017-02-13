@@ -26,14 +26,16 @@
      - (String) Template default for how the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL (requires enabled heat-api-cfn). TEMP_URL_SIGNAL will create a Swift TempURL to be signaled via HTTP PUT (requires object-store endpoint which supports TempURL). HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. ZAQAR_SIGNAL will create a dedicated zaqar queue to be signaled using the provided keystone credentials.
    * - ``default_software_config_transport`` = ``POLL_SERVER_CFN``
      - (String) Template default for how the server should receive the metadata required for software configuration. POLL_SERVER_CFN will allow calls to the cfn API action DescribeStackResource authenticated with the provided keypair (requires enabled heat-api-cfn). POLL_SERVER_HEAT will allow calls to the Heat API resource-show using the provided keystone credentials (requires keystone v3 API, and configured stack_user_* config options). POLL_TEMP_URL will create and populate a Swift TempURL with metadata for polling (requires object-store endpoint which supports TempURL).ZAQAR_MESSAGE will create a dedicated zaqar queue and post the metadata for polling.
+   * - ``default_user_data_format`` = ``HEAT_CFNTOOLS``
+     - (String) Template default for how the user_data should be formatted for the server. For HEAT_CFNTOOLS, the user_data is bundled as part of the heat-cfntools cloud-init boot configuration data. For RAW the user_data is passed to Nova unmodified. For SOFTWARE_CONFIG user_data is bundled as part of the software config data, and metadata is derived from any associated SoftwareDeployment resources.
    * - ``deferred_auth_method`` = ``trusts``
      - (String) Select deferred auth method, stored password or trusts.
    * - ``environment_dir`` = ``/etc/heat/environment.d``
      - (String) The directory to search for environment files.
    * - ``error_wait_time`` = ``240``
      - (Integer) The amount of time in seconds after an error has occurred that tasks may continue to run before being cancelled.
-   * - ``event_purge_batch_size`` = ``10``
-     - (Integer) Controls how many events will be pruned whenever a stack's events exceed max_events_per_stack. Set this lower to keep more events at the expense of more frequent purges.
+   * - ``event_purge_batch_size`` = ``200``
+     - (Integer) Controls how many events will be pruned whenever a stack's events are purged. Set this lower to keep more events at the expense of more frequent purges.
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
    * - ``host`` = ``localhost``
@@ -56,6 +58,64 @@
      - (Boolean) Toggle to enable/disable caching when Orchestration Engine validates property constraints of stack.During property validation with constraints Orchestration Engine caches requests to other OpenStack services. Please note that the global toggle for oslo.cache(enabled=True in [cache] group) must be enabled to use this feature.
    * - ``expiration_time`` = ``60``
      - (Integer) TTL, in seconds, for any cached item in the dogpile.cache region used for caching of validation constraints.
+   * - **[healthcheck]**
+     -
+   * - ``backends`` =
+     - (List) Additional backends that can perform health checks and report that information back as part of a request.
+   * - ``detailed`` = ``False``
+     - (Boolean) Show more detailed information as part of the response
+   * - ``disable_by_file_path`` = ``None``
+     - (String) Check the presence of a file to determine if an application is running on a port. Used by DisableByFileHealthcheck plugin.
+   * - ``disable_by_file_paths`` =
+     - (List) Check the presence of a file based on a port to determine if an application is running on a port. Expects a "port:path" list of strings. Used by DisableByFilesPortsHealthcheck plugin.
+   * - ``path`` = ``/healthcheck``
+     - (String) DEPRECATED: The path to respond to healtcheck requests on.
+   * - **[heat_all]**
+     -
+   * - ``enabled_services`` = ``engine, api, api_cfn``
+     - (List) Specifies the heat services that are enabled when running heat-all. Valid options are all or any combination of api, engine, api_cfn, or api_cloudwatch.
+   * - **[profiler]**
+     -
+   * - ``connection_string`` = ``messaging://``
+     - (String) Connection string for a notifier backend. Default value is messaging:// which sets the notifier to oslo_messaging.
+
+       Examples of possible values:
+
+       * messaging://: use oslo_messaging driver for sending notifications.
+
+       * mongodb://127.0.0.1:27017 : use mongodb driver for sending notifications.
+
+       * elasticsearch://127.0.0.1:9200 : use elasticsearch driver for sending notifications.
+   * - ``enabled`` = ``False``
+     - (Boolean) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature).
+
+       Possible values:
+
+       * True: Enables the feature
+
+       * False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.
+   * - ``es_doc_type`` = ``notification``
+     - (String) Document type for notification indexing in elasticsearch.
+   * - ``es_scroll_size`` = ``10000``
+     - (Integer) Elasticsearch splits large requests in batches. This parameter defines maximum size of each batch (for example: es_scroll_size=10000).
+   * - ``es_scroll_time`` = ``2m``
+     - (String) This parameter is a time value parameter (for example: es_scroll_time=2m), indicating for how long the nodes that participate in the search will maintain relevant resources in order to continue and support it.
+   * - ``hmac_keys`` = ``SECRET_KEY``
+     - (String) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project.
+
+       Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
+   * - ``sentinel_service_name`` = ``mymaster``
+     - (String) Redissentinel uses a service name to identify a master redis service. This parameter defines the name (for example: sentinal_service_name=mymaster).
+   * - ``socket_timeout`` = ``0.1``
+     - (Floating point) Redissentinel provides a timeout option on the connections. This parameter defines that timeout (for example: socket_timeout=0.1).
+   * - ``trace_sqlalchemy`` = ``False``
+     - (Boolean) Enables SQL requests profiling in services. Default value is False (SQL requests won't be traced).
+
+       Possible values:
+
+       * True: Enables SQL requests profiling. Each SQL query will be part of the trace and can the be analyzed by how much time was spent for that.
+
+       * False: Disables SQL requests profiling. The spent time is only shown on a higher level of operations. Single SQL queries cannot be analyzed this way.
    * - **[resource_finder_cache]**
      -
    * - ``caching`` = ``True``
