@@ -10,7 +10,7 @@
 
 .. _manila-hds_hnas:
 
-.. list-table:: Description of HDS NAS Share Driver configuration options
+.. list-table:: Description of HDS NAS share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,6 +18,8 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``hitachi_hnas_admin_network_ip`` = ``None``
+     - (String) Specify IP for mounting shares in the Admin network.
    * - ``hitachi_hnas_allow_cifs_snapshot_while_mounted`` = ``False``
      - (Boolean) By default, CIFS snapshots are not allowed to be taken when the share has clients connected because consistent point-in-time replica cannot be guaranteed for all files. Enabling this might cause inconsistent snapshots on CIFS shares.
    * - ``hitachi_hnas_cluster_admin_ip0`` = ``None``

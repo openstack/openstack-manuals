@@ -22,6 +22,8 @@
      - (Boolean) If set to True, then Manila will delete all share servers which were unused more than specified time .If set to False - automatic deletion of share servers will be disabled.
    * - ``backlog`` = ``4096``
      - (Integer) Number of backlog requests to configure the socket with.
+   * - ``default_share_group_type`` = ``None``
+     - (String) Default share group type to use.
    * - ``default_share_type`` = ``None``
      - (String) Default share type to use.
    * - ``delete_share_server_with_last_share`` = ``False``
@@ -37,7 +39,7 @@
    * - ``enabled_share_backends`` = ``None``
      - (List) A list of share backend names to use. These backend names should be backed by a unique [CONFIG] group with its options.
    * - ``enabled_share_protocols`` = ``NFS, CIFS``
-     - (List) Specify list of protocols to be allowed for share creation. Available values are '('NFS', 'CIFS', 'GLUSTERFS', 'HDFS', 'CEPHFS')'
+     - (List) Specify list of protocols to be allowed for share creation. Available values are '('NFS', 'CIFS', 'GLUSTERFS', 'HDFS', 'CEPHFS', 'MAPRFS')'
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
    * - ``hook_drivers`` =
@@ -49,7 +51,7 @@
    * - ``migration_ignore_files`` = ``lost+found``
      - (List) List of files and folders to be ignored when migrating shares. Items should be names (not including any path).
    * - ``migration_readonly_rules_support`` = ``True``
-     - (Boolean) Specify whether read only access rule mode is supported in this backend.
+     - (Boolean) DEPRECATED: Specify whether read only access rule mode is supported in this backend. Obsolete. All drivers are now required to support read-only access rules.
    * - ``migration_wait_access_rules_timeout`` = ``180``
      - (Integer) Time to wait for access rules to be allowed/denied on backends when migrating shares using generic approach (seconds).
    * - ``network_config_group`` = ``None``

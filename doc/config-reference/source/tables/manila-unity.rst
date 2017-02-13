@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _manila-tegile:
+.. _manila-unity:
 
-.. list-table:: Description of Tegile share driver configuration options
+.. list-table:: Description of Dell EMC Unity share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -18,11 +18,9 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``tegile_default_project`` = ``None``
-     - (String) Create shares in this project
-   * - ``tegile_nas_login`` = ``None``
-     - (String) User name for the Tegile NAS server.
-   * - ``tegile_nas_password`` = ``None``
-     - (String) Password for the Tegile NAS server.
-   * - ``tegile_nas_server`` = ``None``
-     - (String) Tegile NAS server hostname or IP address.
+   * - ``unity_ethernet_ports`` = ``None``
+     - (List) Comma separated list of ports that can be used for share server interfaces. Members of the list can be Unix-style glob expressions.
+   * - ``unity_server_meta_pool`` = ``None``
+     - (String) Pool to persist the meta-data of NAS server.
+   * - ``unity_share_data_pools`` = ``None``
+     - (List) Comma separated list of pools that can be used to persist share data.

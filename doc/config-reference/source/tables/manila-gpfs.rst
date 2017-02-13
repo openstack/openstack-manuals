@@ -10,7 +10,7 @@
 
 .. _manila-gpfs:
 
-.. list-table:: Description of IBM GPFS Share Driver configuration options
+.. list-table:: Description of IBM GPFS share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 

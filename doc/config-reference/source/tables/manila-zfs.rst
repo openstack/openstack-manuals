@@ -10,7 +10,7 @@
 
 .. _manila-zfs:
 
-.. list-table:: Description of ZFS Share Driver configuration options
+.. list-table:: Description of ZFS share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 

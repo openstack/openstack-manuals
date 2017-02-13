@@ -10,7 +10,7 @@
 
 .. _manila-hdfs:
 
-.. list-table:: Description of HDFS Share Driver configuration options
+.. list-table:: Description of HDFS share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 

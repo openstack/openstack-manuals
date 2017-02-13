@@ -10,7 +10,7 @@
 
 .. _manila-netapp:
 
-.. list-table:: Description of NetApp Share Drivers configuration options
+.. list-table:: Description of NetApp share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -46,6 +46,8 @@
      - (String) Comma-separated list of options that control which trace info is written to the debug logs. Values include method and api.
    * - ``netapp_transport_type`` = ``http``
      - (String) The transport protocol used when communicating with the storage system or proxy server. Valid values are http or https.
+   * - ``netapp_volume_move_cutover_timeout`` = ``3600``
+     - (Integer) The maximum time in seconds to wait for the completion of a volume move operation after the cutover was triggered.
    * - ``netapp_volume_name_template`` = ``share_%(share_id)s``
      - (String) NetApp volume name template.
    * - ``netapp_volume_snapshot_reserve_percent`` = ``5``

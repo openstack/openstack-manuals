@@ -10,7 +10,7 @@
 
 .. _manila-cephfs:
 
-.. list-table:: Description of CephFS Driver configuration options
+.. list-table:: Description of CephFS share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 

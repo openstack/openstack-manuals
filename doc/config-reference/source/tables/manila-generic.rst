@@ -10,7 +10,7 @@
 
 .. _manila-generic:
 
-.. list-table:: Description of Generic Share Driver configuration options
+.. list-table:: Description of Generic share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -67,7 +67,7 @@
    * - ``service_instance_name_template`` = ``manila_service_instance_%s``
      - (String) Name of service instance. Only used if driver_handles_share_servers=True.
    * - ``service_instance_network_helper_type`` = ``neutron``
-     - (String) Allowed values are ['nova', 'neutron']. Only used if driver_handles_share_servers=True.
+     - (String) DEPRECATED: Used to select between neutron and nova helpers when driver_handles_share_servers=True. Obsolete. This option isn't used any longer because nova networking is no longer supported.
    * - ``service_instance_password`` = ``None``
      - (String) Password for service instance user.
    * - ``service_instance_security_group`` = ``manila-service``
@@ -116,12 +116,16 @@
      - (String) PEM encoded client certificate cert file
    * - ``cross_az_attach`` = ``True``
      - (Boolean) Allow attaching between instances and volumes in different availability zones.
+   * - ``endpoint_type`` = ``publicURL``
+     - (String) Endpoint type to be used with cinder client calls.
    * - ``http_retries`` = ``3``
      - (Integer) Number of cinderclient retries on failed HTTP calls.
    * - ``insecure`` = ``False``
      - (Boolean) Verify HTTPS connections.
    * - ``keyfile`` = ``None``
      - (String) PEM encoded client certificate key file
+   * - ``region_name`` = ``None``
+     - (String) Region name for connecting to cinder.
    * - ``timeout`` = ``None``
      - (Integer) Timeout value for http requests
    * - **[neutron]**
@@ -152,9 +156,13 @@
      - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``certfile`` = ``None``
      - (String) PEM encoded client certificate cert file
+   * - ``endpoint_type`` = ``publicURL``
+     - (String) Endpoint type to be used with nova client calls.
    * - ``insecure`` = ``False``
      - (Boolean) Verify HTTPS connections.
    * - ``keyfile`` = ``None``
      - (String) PEM encoded client certificate key file
+   * - ``region_name`` = ``None``
+     - (String) Region name for connecting to nova.
    * - ``timeout`` = ``None``
      - (Integer) Timeout value for http requests
