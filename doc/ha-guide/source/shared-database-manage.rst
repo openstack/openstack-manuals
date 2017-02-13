@@ -192,6 +192,10 @@ use the ``clustercheck`` utility to improve health checks.
       MYSQL_HOST="localhost"
       MYSQL_PORT="3306"
 
+.. note::
+      For Ubuntu 16.04.1: Create a configuration file for ``clustercheck``
+      at ``/etc/default/clustercheck``.
+
 #. Log in to the database client and grant the ``clustercheck`` user
    ``PROCESS`` privileges:
 
