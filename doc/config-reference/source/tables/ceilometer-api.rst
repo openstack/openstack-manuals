@@ -16,42 +16,6 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``api_paste_config`` = ``api_paste.ini``
-     - (String) Configuration file for WSGI definition of API.
-   * - ``event_pipeline_cfg_file`` = ``event_pipeline.yaml``
-     - (String) Configuration file for event pipeline definition.
-   * - ``pipeline_cfg_file`` = ``pipeline.yaml``
-     - (String) Configuration file for pipeline definition.
-   * - ``pipeline_polling_interval`` = ``20``
-     - (Integer) Polling interval for pipeline file configuration in seconds.
-   * - ``refresh_event_pipeline_cfg`` = ``False``
-     - (Boolean) Refresh Event Pipeline configuration on-the-fly.
-   * - ``refresh_pipeline_cfg`` = ``False``
-     - (Boolean) Refresh Pipeline configuration on-the-fly.
-   * - ``reserved_metadata_keys`` =
-     - (List) List of metadata keys reserved for metering use. And these keys are additional to the ones included in the namespace.
-   * - ``reserved_metadata_length`` = ``256``
-     - (Integer) Limit on length of reserved metadata values.
-   * - ``reserved_metadata_namespace`` = ``metering.``
-     - (List) List of metadata prefixes reserved for metering use.
-   * - **[api]**
-     -
-   * - ``aodh_is_enabled`` = ``None``
-     - (Boolean) Set True to redirect alarms URLs to aodh. Default autodetection by querying keystone.
-   * - ``aodh_url`` = ``None``
-     - (String) The endpoint of Aodh to redirect alarms URLs to Aodh API. Default autodetection by querying keystone.
-   * - ``default_api_return_limit`` = ``100``
-     - (Integer) Default maximum number of items returned by API request.
-   * - ``gnocchi_is_enabled`` = ``None``
-     - (Boolean) Set True to disable resource/meter/sample URLs. Default autodetection by querying keystone.
-   * - ``panko_is_enabled`` = ``None``
-     - (Boolean) Set True to redirect events URLs to Panko. Default autodetection by querying keystone.
-   * - ``panko_url`` = ``None``
-     - (String) The endpoint of Panko to redirect events URLs to Panko API. Default autodetection by querying keystone.
-   * - ``pecan_debug`` = ``False``
-     - (Boolean) Toggle Pecan Debug Middleware.
    * - **[oslo_middleware]**
      -
    * - ``enable_proxy_headers_parsing`` = ``False``
