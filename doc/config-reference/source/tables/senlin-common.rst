@@ -30,6 +30,8 @@
      - (Integer) RPC timeout for the engine liveness check that is used for cluster locking.
    * - ``environment_dir`` = ``/etc/senlin/environments``
      - (String) The directory to search for environment files.
+   * - ``event_dispatchers`` = ``['database']``
+     - (Multi-valued) Event dispatchers to enable
    * - ``executor_thread_pool_size`` = ``64``
      - (Integer) Size of executor thread pool.
    * - ``fatal_deprecations`` = ``False``
@@ -57,22 +59,86 @@
    * - ``periodic_interval`` = ``60``
      - (Integer) Seconds between running periodic tasks.
    * - ``periodic_interval_max`` = ``120``
-     - (Integer) Seconds between periodic tasks to be called
+     - (Integer) Maximum seconds between periodic tasks to be called
    * - ``publish_errors`` = ``False``
      - (Boolean) Enables or disables publication of error events.
-   * - ``use_router_proxy`` = ``True``
+   * - ``use_router_proxy`` = ``False``
      - (Boolean) Use ROUTER remote proxy.
+   * - **[dispatchers]**
+     -
+   * - ``exclude_derived_actions`` = ``True``
+     - (Boolean) Exclude derived actions from events dumping.
+   * - ``priority`` = ``info``
+     - (String) Lowest event priorities to be dispatched.
    * - **[health_manager]**
      -
+   * - ``heat_control_exchange`` = ``heat``
+     - (String) Exchange name for heat notifications
    * - ``nova_control_exchange`` = ``nova``
      - (String) Exchange name for nova notifications
+   * - **[healthcheck]**
+     -
+   * - ``backends`` =
+     - (List) Additional backends that can perform health checks and report that information back as part of a request.
+   * - ``detailed`` = ``False``
+     - (Boolean) Show more detailed information as part of the response
+   * - ``disable_by_file_path`` = ``None``
+     - (String) Check the presence of a file to determine if an application is running on a port. Used by DisableByFileHealthcheck plugin.
+   * - ``disable_by_file_paths`` =
+     - (List) Check the presence of a file based on a port to determine if an application is running on a port. Expects a "port:path" list of strings. Used by DisableByFilesPortsHealthcheck plugin.
+   * - ``path`` = ``/healthcheck``
+     - (String) DEPRECATED: The path to respond to healtcheck requests on.
    * - **[oslo_versionedobjects]**
      -
    * - ``fatal_exception_format_errors`` = ``False``
      - (Boolean) Make exception message format errors fatal
-   * - **[webhook]**
+   * - **[profiler]**
+     -
+   * - ``connection_string`` = ``messaging://``
+     - (String) Connection string for a notifier backend. Default value is messaging:// which sets the notifier to oslo_messaging.
+
+       Examples of possible values:
+
+       * messaging://: use oslo_messaging driver for sending notifications.
+
+       * mongodb://127.0.0.1:27017 : use mongodb driver for sending notifications.
+
+       * elasticsearch://127.0.0.1:9200 : use elasticsearch driver for sending notifications.
+   * - ``enabled`` = ``False``
+     - (Boolean) Enables the profiling for all services on this node. Default value is False (fully disable the profiling feature).
+
+       Possible values:
+
+       * True: Enables the feature
+
+       * False: Disables the feature. The profiling cannot be started via this project operations. If the profiling is triggered by another project, this project part will be empty.
+   * - ``es_doc_type`` = ``notification``
+     - (String) Document type for notification indexing in elasticsearch.
+   * - ``es_scroll_size`` = ``10000``
+     - (Integer) Elasticsearch splits large requests in batches. This parameter defines maximum size of each batch (for example: es_scroll_size=10000).
+   * - ``es_scroll_time`` = ``2m``
+     - (String) This parameter is a time value parameter (for example: es_scroll_time=2m), indicating for how long the nodes that participate in the search will maintain relevant resources in order to continue and support it.
+   * - ``hmac_keys`` = ``SECRET_KEY``
+     - (String) Secret key(s) to use for encrypting context data for performance profiling. This string value should have the following format: <key1>[,<key2>,...<keyn>], where each key is some random string. A user who triggers the profiling via the REST API has to set one of these keys in the headers of the REST API call to include profiling results of this node for this particular project.
+
+       Both "enabled" flag and "hmac_keys" config options should be set to enable profiling. Also, to generate correct profiling information across all services at least one key needs to be consistent between OpenStack projects. This ensures it can be used from client side to generate the trace, containing information from all possible resources.
+   * - ``sentinel_service_name`` = ``mymaster``
+     - (String) Redissentinel uses a service name to identify a master redis service. This parameter defines the name (for example: sentinal_service_name=mymaster).
+   * - ``socket_timeout`` = ``0.1``
+     - (Floating point) Redissentinel provides a timeout option on the connections. This parameter defines that timeout (for example: socket_timeout=0.1).
+   * - ``trace_sqlalchemy`` = ``False``
+     - (Boolean) Enables SQL requests profiling in services. Default value is False (SQL requests won't be traced).
+
+       Possible values:
+
+       * True: Enables SQL requests profiling. Each SQL query will be part of the trace and can the be analyzed by how much time was spent for that.
+
+       * False: Disables SQL requests profiling. The spent time is only shown on a higher level of operations. Single SQL queries cannot be analyzed this way.
+   * - **[receiver]**
      -
    * - ``host`` = ``None``
-     - (String) Address for invoking webhooks. It is useful for cases where proxies are used for triggering webhooks. Default to the hostname of the API node.
+     - (String) The address for notifying and triggering receivers. It is useful for case Senlin API service is running behind a proxy.
+   * - ``max_message_size`` = ``65535``
+     - (Port number) The max size(bytes) of message can be posted to receiver queue.
    * - ``port`` = ``8778``
-     - (Port number) The port on which a webhook will be invoked. Useful when service is running behind a proxy.
+     - (Port number) The port for notifying and triggering receivers. It is useful for case Senlin API service is running behind a proxy.
