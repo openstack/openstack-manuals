@@ -22,16 +22,12 @@
      - (Integer) Maximum count of actions for each state of an alarm, non-positive number means no limit.
    * - ``enable_combination_alarms`` = ``False``
      - (Boolean) DEPRECATED: Enable deprecated combination alarms. Combination alarms are deprecated. This option and combination alarms will be removed in Aodh 5.0.
-   * - ``paste_config`` = ``api_paste.ini``
+   * - ``paste_config`` = ``/usr/lib/python/site-packages/aodh/aodh/api/api-paste.ini``
      - (String) Configuration file for WSGI definition of API.
-   * - ``pecan_debug`` = ``False``
-     - (Boolean) Toggle Pecan Debug Middleware.
    * - ``project_alarm_quota`` = ``None``
      - (Integer) Maximum number of alarms defined for a project.
    * - ``user_alarm_quota`` = ``None``
      - (Integer) Maximum number of alarms defined for a user.
-   * - ``workers`` = ``1``
-     - (Integer) Number of workers for aodh API server.
    * - **[oslo_middleware]**
      -
    * - ``enable_proxy_headers_parsing`` = ``False``
