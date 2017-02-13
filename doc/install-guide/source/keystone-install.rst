@@ -11,64 +11,62 @@ the Apache HTTP server to handle requests.
 Prerequisites
 -------------
 
-Before you configure the OpenStack Identity service, you must create a
-database and an administration token.
+Before you install and configure the Identity service, you must
+create a database.
 
 .. note::
 
    Before you begin, ensure you have the most recent version of
    ``python-pyasn1`` `installed <https://pypi.python.org/pypi/pyasn1>`_.
 
-#. To create the database, complete the following actions:
+.. only:: ubuntu
 
-   .. only:: ubuntu
+   #. Use the database access client to connect to the database
+      server as the ``root`` user:
 
-      * Use the database access client to connect to the database
-        server as the ``root`` user:
+      .. code-block:: console
 
-        .. code-block:: console
+         # mysql
 
-           # mysql
-
-        .. end
+      .. end
 
    .. endonly
 
-   .. only:: rdo or debian or obs
+.. only:: rdo or debian or obs
 
-      * Use the database access client to connect to the database
-        server as the ``root`` user:
+   #. Use the database access client to connect to the database
+      server as the ``root`` user:
 
-        .. code-block:: console
+      .. code-block:: console
 
-           $ mysql -u root -p
+         $ mysql -u root -p
 
-        .. end
+      .. end
 
    .. endonly
 
-   * Create the ``keystone`` database:
+2. Create the ``keystone`` database:
 
-     .. code-block:: console
+   .. code-block:: console
 
-        MariaDB [(none)]> CREATE DATABASE keystone;
+      MariaDB [(none)]> CREATE DATABASE keystone;
 
-     .. end
+   .. end
 
-   * Grant proper access to the ``keystone`` database:
+#. Grant proper access to the ``keystone`` database:
 
-     .. code-block:: console
+   .. code-block:: console
 
-        MariaDB [(none)]> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
-          IDENTIFIED BY 'KEYSTONE_DBPASS';
-        MariaDB [(none)]> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
-          IDENTIFIED BY 'KEYSTONE_DBPASS';
+      MariaDB [(none)]> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
+      IDENTIFIED BY 'KEYSTONE_DBPASS';
+      MariaDB [(none)]> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
+      IDENTIFIED BY 'KEYSTONE_DBPASS';
 
-     .. end
+   .. end
 
-     Replace ``KEYSTONE_DBPASS`` with a suitable password.
+   Replace ``KEYSTONE_DBPASS`` with a suitable password.
 
-   * Exit the database access client.
+#. Exit the database access client.
 
 .. _keystone-install-configure:
 
