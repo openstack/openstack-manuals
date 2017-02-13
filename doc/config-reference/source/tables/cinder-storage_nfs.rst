@@ -24,7 +24,11 @@
      - (String) Mount options passed to the NFS client. See section of the NFS man page for details.
    * - ``nfs_mount_point_base`` = ``$state_path/mnt``
      - (String) Base dir containing mount points for NFS shares.
+   * - ``nfs_qcow2_volumes`` = ``False``
+     - (Boolean) Create volumes as QCOW2 files rather than raw files.
    * - ``nfs_shares_config`` = ``/etc/cinder/nfs_shares``
-     - (String) File with the list of available NFS shares
+     - (String) File with the list of available NFS shares.
+   * - ``nfs_snapshot_support`` = ``False``
+     - (Boolean) Enable support for snapshots on the NFS driver. Platforms using libvirt <1.2.7 will encounter issues with this feature.
    * - ``nfs_sparsed_volumes`` = ``True``
-     - (Boolean) Create volumes as sparsed files which take no space.If set to False volume is created as regular file.In such case volume creation takes a lot of time.
+     - (Boolean) Create volumes as sparsed files which take no space. If set to False volume is created as regular file. In such case volume creation takes a lot of time.

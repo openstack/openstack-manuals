@@ -19,7 +19,7 @@
    * - **[DEFAULT]**
      -
    * - ``hpelefthand_api_url`` = ``None``
-     - (String) HPE LeftHand WSAPI Server Url like https://<LeftHand ip>:8081/lhos
+     - (URI) HPE LeftHand WSAPI Server Url like https://<LeftHand ip>:8081/lhos
    * - ``hpelefthand_clustername`` = ``None``
      - (String) HPE LeftHand cluster name
    * - ``hpelefthand_debug`` = ``False``

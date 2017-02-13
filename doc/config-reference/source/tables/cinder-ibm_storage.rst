@@ -18,7 +18,13 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``proxy`` = ``storage.proxy.IBMStorageProxy``
+   * - ``ds8k_devadd_unitadd_mapping`` =
+     - (String) Mapping between IODevice address and unit address.
+   * - ``ds8k_host_type`` = ``auto``
+     - (String) Set to zLinux if your OpenStack version is prior to Liberty and you're connecting to zLinux systems. Otherwise set to auto. Valid values for this parameter are: 'auto', 'AMDLinuxRHEL', 'AMDLinuxSuse', 'AppleOSX', 'Fujitsu', 'Hp', 'HpTru64', 'HpVms', 'LinuxDT', 'LinuxRF', 'LinuxRHEL', 'LinuxSuse', 'Novell', 'SGI', 'SVC', 'SanFsAIX', 'SanFsLinux', 'Sun', 'VMWare', 'Win2000', 'Win2003', 'Win2008', 'Win2012', 'iLinux', 'nSeries', 'pLinux', 'pSeries', 'pSeriesPowerswap', 'zLinux', 'iSeries'.
+   * - ``ds8k_ssid_prefix`` = ``FF``
+     - (String) Set the first two digits of SSID
+   * - ``proxy`` = ``cinder.volume.drivers.ibm.ibm_storage.proxy.IBMStorageProxy``
      - (String) Proxy driver that connects to the IBM Storage Array
    * - ``san_clustername`` =
      - (String) Cluster name to use for creating volumes

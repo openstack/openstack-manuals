@@ -94,6 +94,7 @@ chap_password common
 chap_username common
 check_max_pool_luns_threshold emc
 chiscsi_conf common
+choice_client disco
 cinder_emc_config_file emc
 cinder_eternus_config_file eternus
 cinder_huawei_conf_file huawei
@@ -124,12 +125,11 @@ coprhd_username coprhd
 coprhd_varray coprhd
 datera_503_interval datera
 datera_503_timeout datera
-datera_acl_allow_all datera
 datera_api_port datera
 datera_api_version datera
 datera_debug datera
 datera_debug_replica_count_override datera
-datera_num_replicas datera
+datera_tenant_id datera
 db_driver disable
 debug disable
 default_availability_zone common
@@ -146,6 +146,7 @@ dell_server_os dellsc
 destroy_empty_storage_group emc
 disco_client disco
 disco_client_port disco
+disco_src_api_port disco
 disco_wsdl_path disco
 dothill_api_protocol dothill
 dothill_backend_name dothill
@@ -172,6 +173,9 @@ driver_data_namespace common
 driver_ssl_cert_path common
 driver_ssl_cert_verify common
 driver_use_ssl xio
+ds8k_devadd_unitadd_mapping ibm_storage
+ds8k_host_type ibm_storage
+ds8k_ssid_prefix ibm_storage
 dsware_isthin fusionio
 dsware_manager fusionio
 enable_force_upload common
@@ -183,13 +187,9 @@ enable_v3_api api
 enabled_backends storage
 end_time common
 enforce_multipath_for_image_xfer common
-eqlx_chap_login eqlx
-eqlx_chap_password eqlx
 eqlx_cli_max_retries eqlx
-eqlx_cli_timeout eqlx
 eqlx_group_name eqlx
 eqlx_pool eqlx
-eqlx_use_chap eqlx
 excluded_domain_ip dellsc
 executor_thread_pool_size common
 expiry_thres_minutes netapp_7mode_nfs netapp_cdot_nfs
@@ -204,6 +204,7 @@ flashsystem_multipath_enabled flashsystem
 force_delete_lun_in_storagegroup emc
 fss_debug falconstor
 fss_pool falconstor
+fss_san_secondary_ip falconstor
 fusionstorageagent fusionio
 glance_api_insecure images
 glance_api_servers images
@@ -216,8 +217,6 @@ glance_num_retries images
 glance_request_timeout images
 glusterfs_backup_mount_point backups_glusterfs
 glusterfs_backup_share backups_glusterfs
-glusterfs_mount_point_base storage_glusterfs
-glusterfs_shares_config storage_glusterfs
 goodness_function scheduler
 gpfs_images_dir storage_gpfs
 gpfs_images_share_mode storage_gpfs
@@ -265,16 +264,16 @@ hnas_ssh_port hitachi-hnas
 hnas_ssh_private_key hitachi-hnas
 hnas_svc0_hdp hitachi-hnas
 hnas_svc0_iscsi_ip hitachi-hnas
-hnas_svc0_volume_type hitachi-hnas
+hnas_svc0_pool_name hitachi-hnas
 hnas_svc1_hdp hitachi-hnas
 hnas_svc1_iscsi_ip hitachi-hnas
-hnas_svc1_volume_type hitachi-hnas
+hnas_svc1_pool_name hitachi-hnas
 hnas_svc2_hdp hitachi-hnas
 hnas_svc2_iscsi_ip hitachi-hnas
-hnas_svc2_volume_type hitachi-hnas
+hnas_svc2_pool_name hitachi-hnas
 hnas_svc3_hdp hitachi-hnas
 hnas_svc3_iscsi_ip hitachi-hnas
-hnas_svc3_volume_type hitachi-hnas
+hnas_svc3_pool_name hitachi-hnas
 hnas_username hitachi-hnas
 host common
 hpe3par_api_url hpe3par
@@ -327,6 +326,7 @@ image_upload_use_internal_tenant images
 image_volume_cache_enabled images
 image_volume_cache_max_count images
 image_volume_cache_max_size_gb images
+infinidat_pool_name infinidat
 infortrend_cli_max_retries infortrend
 infortrend_cli_path infortrend
 infortrend_cli_timeout infortrend
@@ -393,6 +393,7 @@ metro_storage_pools huawei
 migration_create_volume_timeout_secs storage
 monkey_patch common
 monkey_patch_modules common
+multi_pool_support emc
 my_ip common
 nas_host nas storage_gpfs
 nas_login nas storage_gpfs
@@ -474,16 +475,21 @@ nexenta_sparse nexenta nexenta5
 nexenta_sparsed_volumes nexenta nexenta5
 nexenta_target_group_prefix nexenta
 nexenta_target_prefix nexenta
+nexenta_use_https nexenta nexenta5
 nexenta_user nexenta nexenta5
 nexenta_volume nexenta nexenta5
 nexenta_volume_group nexenta5
 nfs_mount_attempts storage_nfs
 nfs_mount_options storage_nfs
 nfs_mount_point_base storage_nfs
+nfs_qcow2_volumes storage_nfs
 nfs_shares_config storage_nfs
+nfs_snapshot_support storage_nfs
 nfs_sparsed_volumes storage_nfs
 nimble_pool_name nimble
 nimble_subnet_label nimble
+nimble_verify_cert_path nimble
+nimble_verify_certificate nimble
 no_snapshot_gb_quota common
 nova_api_insecure compute
 nova_ca_certificates_file compute
@@ -500,7 +506,6 @@ os_privileged_user_password common
 os_privileged_user_tenant common
 os_region_name compute
 osapi_max_limit api
-osapi_max_request_body_size api
 osapi_volume_base_URL api
 osapi_volume_ext_list api
 osapi_volume_extension api
@@ -523,6 +528,9 @@ pure_replica_interval_default pure
 pure_replica_retention_long_term_default pure
 pure_replica_retention_long_term_per_day_default pure
 pure_replica_retention_short_term_default pure
+qnap_management_url qnap
+qnap_poolname qnap
+qnap_storage_protocol qnap
 query_volume_filters api
 quobyte_client_cfg quobyte
 quobyte_mount_point_base quobyte
@@ -540,6 +548,9 @@ quota_volumes quota
 rados_connect_timeout storage_ceph
 rados_connection_interval storage_ceph
 rados_connection_retries storage_ceph
+rate_limit_burst disable
+rate_limit_except_level disable
+rate_limit_interval disable
 rbd_ceph_conf storage_ceph
 rbd_cluster_name storage_ceph
 rbd_flatten_volume_from_snapshot storage_ceph
@@ -548,21 +559,27 @@ rbd_pool storage_ceph
 rbd_secret_uuid storage_ceph
 rbd_store_chunk_size storage_ceph
 rbd_user storage_ceph
-replication_api_class common
+replication_connect_timeout storage_ceph
 replication_device common
 report_discard_supported common
 report_interval common
 reservation_expire quota
 reserved_percentage common
+rest_ip disco
 restore_check_timeout disco
 restore_discard_excess_bytes backups_ceph
 retry_interval disco
 rootwrap_config common
+rpc_ack_timeout_base disable
+rpc_ack_timeout_multiplier disable
 rpc_backend disable
-rpc_cast_timeout disable
 rpc_conn_pool_size disable
+rpc_message_ttl disable
 rpc_poll_timeout disable
 rpc_response_timeout disable
+rpc_retry_attempts disable
+rpc_thread_pool_size disable
+rpc_use_acks disable
 rpc_zmq_bind_address disable
 rpc_zmq_bind_port_retries disable
 rpc_zmq_contexts disable
@@ -583,9 +600,6 @@ san_ssh_port san
 san_thin_provision san prophetstor_dpl
 scaleio_server_certificate_path coprhd
 scaleio_verify_server_certificate coprhd
-scality_sofs_config scality
-scality_sofs_mount_point scality
-scality_sofs_volume_dir scality
 scheduler_default_filters scheduler
 scheduler_default_weighers scheduler
 scheduler_driver scheduler
@@ -665,6 +679,7 @@ storwize_svc_vol_rsize storwize
 storwize_svc_vol_warning storwize
 storwize_svc_volpool_name storwize
 strict_ssh_host_key_policy common
+subscribe_on disable
 suppress_requests_ssl_warnings common
 swift_catalog_info backups_swift
 synology_admin_port synology
@@ -690,10 +705,12 @@ tintri_server_password tintri
 tintri_server_username tintri
 trace_flags debug
 transfer_api_class api
+unity_io_ports dell_emc_unity
 unity_storage_pool_names dell_emc_unity
 until_refresh common
 use_chap_auth common
 use_default_quota_class quota
+use_dynamic_connections disable
 use_forwarded_for common
 use_multipath_for_image_xfer images
 use_pub_sub disable
@@ -709,6 +726,7 @@ violin_request_timeout violin
 vmware_api_retry_count vmware
 vmware_ca_file vmware
 vmware_cluster_name vmware
+vmware_connection_pool_size vmware
 vmware_host_ip vmware
 vmware_host_password vmware
 vmware_host_port vmware
@@ -736,11 +754,30 @@ volume_name_prefix api
 volume_name_template api
 volume_number_multiplier api
 volume_service_inithost_offload storage
-volume_tmp_dir storage_ceph
 volume_transfer_key_length api
 volume_transfer_salt_length api
 volume_usage_audit_period storage
 volumes_dir storage
+vsp_async_copy_check_interval hitachi-vsp
+vsp_auth_password hitachi-vsp
+vsp_auth_user hitachi-vsp
+vsp_compute_target_ports hitachi-vsp
+vsp_copy_check_interval hitachi-vsp
+vsp_copy_speed hitachi-vsp
+vsp_default_copy_method hitachi-vsp
+vsp_group_request hitachi-vsp
+vsp_horcm_add_conf hitachi-vsp
+vsp_horcm_numbers hitachi-vsp
+vsp_horcm_pair_target_ports hitachi-vsp
+vsp_horcm_password hitachi-vsp
+vsp_horcm_user hitachi-vsp
+vsp_ldev_range hitachi-vsp
+vsp_pool hitachi-vsp
+vsp_storage_id hitachi-vsp
+vsp_target_ports hitachi-vsp
+vsp_thin_pool hitachi-vsp
+vsp_use_chap_auth hitachi-vsp
+vsp_zoning_request hitachi-vsp
 vzstorage_default_volume_format vzstorage
 vzstorage_mount_options vzstorage
 vzstorage_mount_point_base vzstorage
@@ -793,9 +830,15 @@ zfssa_target_interfaces zfssa-iscsi
 zfssa_target_password zfssa-iscsi
 zfssa_target_portal zfssa-iscsi
 zfssa_target_user zfssa-iscsi
+zmq_failover_connections disable
 zmq_immediate disable
+zmq_linger disable
 zmq_target_expire disable
 zmq_target_update disable
+zmq_tcp_keepalive disable
+zmq_tcp_keepalive_cnt disable
+zmq_tcp_keepalive_idle disable
+zmq_tcp_keepalive_intvl disable
 zoning_mode zoning
 zteAheadReadSize zte
 zteCachePolicy zte
@@ -880,6 +923,11 @@ fc-zone-manager/fc_fabric_names zoning
 fc-zone-manager/fc_san_lookup_service zoning
 fc-zone-manager/zone_driver zoning
 fc-zone-manager/zoning_policy zoning
+healthcheck/backends common
+healthcheck/detailed common
+healthcheck/disable_by_file_path common
+healthcheck/disable_by_file_paths common
+healthcheck/path common
 hyperv/force_volumeutils_v1 hyperv
 key_manager/api_class common
 key_manager/fixed_key common
@@ -919,6 +967,8 @@ keystone_authtoken/memcache_use_advanced_pool disable
 keystone_authtoken/memcached_servers disable
 keystone_authtoken/region_name disable
 keystone_authtoken/revocation_cache_time disable
+keystone_authtoken/service_token_roles disable
+keystone_authtoken/service_token_roles_required disable
 keystone_authtoken/signing_dir disable
 keystone_authtoken/token_cache_time disable
 matchmaker_redis/check_timeout redis
@@ -941,9 +991,11 @@ oslo_messaging_amqp/connection_retry_interval_max disable
 oslo_messaging_amqp/container_name disable
 oslo_messaging_amqp/default_notification_exchange disable
 oslo_messaging_amqp/default_notify_timeout disable
+oslo_messaging_amqp/default_reply_retry disable
 oslo_messaging_amqp/default_reply_timeout disable
 oslo_messaging_amqp/default_rpc_exchange disable
 oslo_messaging_amqp/default_send_timeout disable
+oslo_messaging_amqp/default_sender_link_timeout disable
 oslo_messaging_amqp/group_request_prefix disable
 oslo_messaging_amqp/idle_timeout disable
 oslo_messaging_amqp/link_retry_delay disable
@@ -951,6 +1003,7 @@ oslo_messaging_amqp/multicast_address disable
 oslo_messaging_amqp/notify_address_prefix disable
 oslo_messaging_amqp/notify_server_credit disable
 oslo_messaging_amqp/password disable
+oslo_messaging_amqp/pre_settled disable
 oslo_messaging_amqp/reply_link_credit disable
 oslo_messaging_amqp/rpc_address_prefix disable
 oslo_messaging_amqp/rpc_server_credit disable
@@ -965,6 +1018,16 @@ oslo_messaging_amqp/ssl_key_password disable
 oslo_messaging_amqp/trace disable
 oslo_messaging_amqp/unicast_address disable
 oslo_messaging_amqp/username disable
+oslo_messaging_kafka/conn_pool_min_size disable
+oslo_messaging_kafka/conn_pool_ttl disable
+oslo_messaging_kafka/consumer_group disable
+oslo_messaging_kafka/kafka_consumer_timeout disable
+oslo_messaging_kafka/kafka_default_host disable
+oslo_messaging_kafka/kafka_default_port disable
+oslo_messaging_kafka/kafka_max_fetch_bytes disable
+oslo_messaging_kafka/pool_size disable
+oslo_messaging_kafka/producer_batch_size disable
+oslo_messaging_kafka/producer_batch_timeout disable
 oslo_messaging_notifications/driver disable
 oslo_messaging_notifications/topics disable
 oslo_messaging_notifications/transport_url disable
@@ -976,6 +1039,7 @@ oslo_messaging_rabbit/default_notification_exchange disable
 oslo_messaging_rabbit/default_notification_retry_attempts disable
 oslo_messaging_rabbit/default_rpc_exchange disable
 oslo_messaging_rabbit/default_rpc_retry_attempts disable
+oslo_messaging_rabbit/default_serializer_type disable
 oslo_messaging_rabbit/fake_rabbit disable
 oslo_messaging_rabbit/frame_max disable
 oslo_messaging_rabbit/heartbeat_interval disable
@@ -1024,8 +1088,13 @@ oslo_messaging_rabbit/socket_timeout disable
 oslo_messaging_rabbit/ssl disable
 oslo_messaging_rabbit/ssl_options disable
 oslo_messaging_rabbit/tcp_user_timeout disable
-oslo_messaging_zmq/rpc_cast_timeout disable
+oslo_messaging_zmq/rpc_ack_timeout_base disable
+oslo_messaging_zmq/rpc_ack_timeout_multiplier disable
+oslo_messaging_zmq/rpc_message_ttl disable
 oslo_messaging_zmq/rpc_poll_timeout disable
+oslo_messaging_zmq/rpc_retry_attempts disable
+oslo_messaging_zmq/rpc_thread_pool_size disable
+oslo_messaging_zmq/rpc_use_acks disable
 oslo_messaging_zmq/rpc_zmq_bind_address disable
 oslo_messaging_zmq/rpc_zmq_bind_port_retries disable
 oslo_messaging_zmq/rpc_zmq_contexts disable
@@ -1036,11 +1105,19 @@ oslo_messaging_zmq/rpc_zmq_max_port disable
 oslo_messaging_zmq/rpc_zmq_min_port disable
 oslo_messaging_zmq/rpc_zmq_serialization disable
 oslo_messaging_zmq/rpc_zmq_topic_backlog disable
+oslo_messaging_zmq/subscribe_on disable
+oslo_messaging_zmq/use_dynamic_connections disable
 oslo_messaging_zmq/use_pub_sub disable
 oslo_messaging_zmq/use_router_proxy disable
+oslo_messaging_zmq/zmq_failover_connections disable
 oslo_messaging_zmq/zmq_immediate disable
+oslo_messaging_zmq/zmq_linger disable
 oslo_messaging_zmq/zmq_target_expire disable
 oslo_messaging_zmq/zmq_target_update disable
+oslo_messaging_zmq/zmq_tcp_keepalive disable
+oslo_messaging_zmq/zmq_tcp_keepalive_cnt disable
+oslo_messaging_zmq/zmq_tcp_keepalive_idle disable
+oslo_messaging_zmq/zmq_tcp_keepalive_intvl disable
 oslo_middleware/enable_proxy_headers_parsing api
 oslo_middleware/max_request_body_size api
 oslo_middleware/secure_proxy_ssl_header api
@@ -1054,5 +1131,10 @@ privsep_osbrick/helper_command osbrick
 privsep_osbrick/user osbrick
 profiler/connection_string profiler
 profiler/enabled profiler
+profiler/es_doc_type profiler
+profiler/es_scroll_size profiler
+profiler/es_scroll_time profiler
 profiler/hmac_keys profiler
+profiler/sentinel_service_name profiler
+profiler/socket_timeout profiler
 profiler/trace_sqlalchemy profiler

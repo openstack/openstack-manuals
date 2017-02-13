@@ -40,25 +40,25 @@
      - (String) Service 0 HDP
    * - ``hnas_svc0_iscsi_ip`` = ``None``
      - (IP) Service 0 iSCSI IP
-   * - ``hnas_svc0_volume_type`` = ``None``
-     - (String) Service 0 volume type
+   * - ``hnas_svc0_pool_name`` = ``None``
+     - (String) Service 0 pool name
    * - ``hnas_svc1_hdp`` = ``None``
      - (String) Service 1 HDP
    * - ``hnas_svc1_iscsi_ip`` = ``None``
      - (IP) Service 1 iSCSI IP
-   * - ``hnas_svc1_volume_type`` = ``None``
-     - (String) Service 1 volume type
+   * - ``hnas_svc1_pool_name`` = ``None``
+     - (String) Service 1 pool name
    * - ``hnas_svc2_hdp`` = ``None``
      - (String) Service 2 HDP
    * - ``hnas_svc2_iscsi_ip`` = ``None``
      - (IP) Service 2 iSCSI IP
-   * - ``hnas_svc2_volume_type`` = ``None``
-     - (String) Service 2 volume type
+   * - ``hnas_svc2_pool_name`` = ``None``
+     - (String) Service 2 pool name
    * - ``hnas_svc3_hdp`` = ``None``
      - (String) Service 3 HDP
    * - ``hnas_svc3_iscsi_ip`` = ``None``
      - (IP) Service 3 iSCSI IP
-   * - ``hnas_svc3_volume_type`` = ``None``
-     - (String) Service 3 volume type
+   * - ``hnas_svc3_pool_name`` = ``None``
+     - (String) Service 3 pool name:
    * - ``hnas_username`` = ``None``
      - (String) HNAS username.

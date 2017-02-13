@@ -27,4 +27,4 @@
    * - ``quobyte_sparsed_volumes`` = ``True``
      - (Boolean) Create volumes as sparse files which take no space. If set to False, volume is created as regular file.In such case volume creation takes a lot of time.
    * - ``quobyte_volume_url`` = ``None``
-     - (String) URL to the Quobyte volume e.g., quobyte://<DIR host>/<volume name>
+     - (URI) URL to the Quobyte volume e.g., quobyte://<DIR host>/<volume name>

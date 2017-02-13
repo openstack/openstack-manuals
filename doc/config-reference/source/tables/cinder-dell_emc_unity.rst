@@ -18,5 +18,7 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``unity_io_ports`` = ``None``
+     - (List) A comma-separated list of iSCSI or FC ports to be used. Each port can be Unix-style glob expressions.
    * - ``unity_storage_pool_names`` = ``None``
      - (List) A comma-separated list of storage pool names to be used.

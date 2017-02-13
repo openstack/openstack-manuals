@@ -22,3 +22,7 @@
      - (String) Nimble Controller pool name
    * - ``nimble_subnet_label`` = ``*``
      - (String) Nimble Subnet Label
+   * - ``nimble_verify_cert_path`` = ``None``
+     - (String) Path to Nimble Array SSL certificate
+   * - ``nimble_verify_certificate`` = ``False``
+     - (String) Whether to verify Nimble SSL Certificate
