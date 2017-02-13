@@ -61,19 +61,22 @@ Install and configure components
 
 .. only:: rdo
 
-   2. Edit the ``/etc/sysconfig/memcached`` file and configure the
-      service to use the management IP address of the controller node.
-      This is to enable access by other nodes via the management network:
+   2. Edit the ``/etc/sysconfig/memcached`` file and complete the
+      following actions:
 
-      .. code-block:: none
+      * Configure the service to use the management IP address of the
+        controller node. This is to enable access by other nodes via
+        the management network:
 
-         10.0.0.11
+        .. code-block:: none
 
-      .. end
+           OPTIONS="-l 127.0.0.1,::1,controller"
 
-      .. note::
+        .. end
 
-         Change the existing line from ``127.0.0.1``.
+        .. note::
+
+           Change the existing line ``OPTIONS="-l 127.0.0.1,::1"``.
 
 .. endonly
 
