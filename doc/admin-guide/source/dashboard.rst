@@ -7,7 +7,7 @@ manage OpenStack resources and services. The Dashboard allows you to
 interact with the OpenStack Compute cloud controller using the OpenStack
 APIs. For more information about installing and configuring the
 Dashboard, see the `Installation Tutorials and Guides
-<https://docs.openstack.org/project-install-guide/newton/>`__
+<https://docs.openstack.org/project-install-guide/ocata/>`__
 for your operating system.
 
 .. toctree::

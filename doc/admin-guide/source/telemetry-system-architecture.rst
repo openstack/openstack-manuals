@@ -150,10 +150,10 @@ Users, roles, and projects
 
 This service of OpenStack uses OpenStack Identity for authenticating and
 authorizing users. The required configuration options are listed in the
-`Telemetry
-section <https://docs.openstack.org/newton/config-reference/telemetry.html>`__
-in the OpenStack Configuration Reference. Alternatively, gnocchi can be
-configured without authentication to minimize overhead.
+`Telemetry section
+<https://docs.openstack.org/ocata/config-reference/telemetry.html>`__ in the
+OpenStack Configuration Reference. Alternatively, gnocchi can be configured
+without authentication to minimize overhead.
 
 The system uses two roles:``admin`` and ``non-admin``. The authorization
 happens before processing each API request. The amount of returned data

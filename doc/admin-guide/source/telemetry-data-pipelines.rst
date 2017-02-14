@@ -51,7 +51,7 @@ the ``ceilometer.conf`` file. The meter pipeline and event pipeline
 configuration files can be set by the ``pipeline_cfg_file`` and
 ``event_pipeline_cfg_file`` options listed in the `Description of
 configuration options for api table
-<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+<https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`__
 section in the OpenStack Configuration Reference respectively. Multiple
 pipelines can be defined in one pipeline configuration file.
 

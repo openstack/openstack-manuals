@@ -94,8 +94,9 @@ types by each OpenStack service that Telemetry transforms into samples.
        image.delete
 
        image.send
+
      - The required configuration for Image service can be found in the
-       `Configure the Image service for Telemetry <https://docs.openstack.org/project-install-guide/telemetry/newton>`__
+       `Configure the Image service for Telemetry <https://docs.openstack.org/project-install-guide/telemetry/ocata>`__
        section in the Installation Tutorials and Guides.
    * - OpenStack Networking
      - floatingip.create.end
@@ -178,7 +179,8 @@ types by each OpenStack service that Telemetry transforms into samples.
        volume.backup.restore.\
        \*
      - The required configuration for Block Storage service can be found in the
-       `Add the Block Storage service agent for Telemetry <https://docs.openstack.org/project-install-guide/telemetry/newton/configure_services/cinder/install-cinder-ubuntu.html>`__
+       `Add the Block Storage service agent for Telemetry
+       <https://docs.openstack.org/project-install-guide/telemetry/ocata/configure_services/cinder/install-cinder-ubuntu.html>`__
        section in the Installation Tutorials and Guides.
 
 .. note::
@@ -194,7 +196,7 @@ administrators and users. Configuring ``nova_notifications`` in the
 rapidly. For more information on configuring notifications for the
 compute service, see
 `Telemetry services <https://docs.openstack.org/project-install-guide/
-telemetry/newton/configure_services/nova/install-nova-ubuntu.html>`__ in the
+telemetry/ocata/configure_services/nova/install-nova-ubuntu.html>`__ in the
 Installation Tutorials and Guides.
 
 Middleware for the OpenStack Object Storage service
@@ -210,7 +212,7 @@ meters are listed in :ref:`telemetry-object-storage-meter`, marked with
 The instructions on how to install this middleware can be found in
 `Configure the Object Storage service for Telemetry
 <https://docs.openstack.org/project-install-guide/
-telemetry/newton/configure_services/swift/install-swift-ubuntu.html>`__
+telemetry/ocata/configure_services/swift/install-swift-ubuntu.html>`__
 section in the Installation Tutorials and Guides.
 
 Telemetry middleware
@@ -297,7 +299,7 @@ A Compute agent instance has to be installed on each and every compute
 node, installation instructions can be found in the `Install the Compute
 agent for Telemetry
 <https://docs.openstack.org/project-install-guide/
-telemetry/newton/configure_services/nova/install-nova-ubuntu.html>`__
+telemetry/ocata/configure_services/nova/install-nova-ubuntu.html>`__
 section in the Installation Tutorials and Guides.
 
 The compute agent does not need direct database connection. The samples
@@ -339,7 +341,7 @@ The following services can be polled with this agent:
    framework (deprecated in Newton)
 
 To install and configure this service use the `Add the Telemetry service
-<https://docs.openstack.org/project-install-guide/telemetry/newton/install-base-ubuntu.html>`__
+<https://docs.openstack.org/project-install-guide/telemetry/ocata/install-base-ubuntu.html>`__
 section in the Installation Tutorials and Guides.
 
 Just like the compute agent, this component also does not need a direct
@@ -405,7 +407,7 @@ Telemetry services.
 For information about the required configuration options that have to be
 set in the ``ceilometer.conf`` configuration file for both the central
 and Compute agents, see the `Coordination section
-<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+<https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`__
 in the OpenStack Configuration Reference.
 
 Notification agent HA deployment
@@ -418,7 +420,7 @@ in a larger amount of load.
 To enable workload partitioning by notification agent, the ``backend_url``
 option must be set in the ``ceilometer.conf`` configuration file.
 Additionally, ``workload_partitioning`` should be enabled in the
-`Notification section <https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__ in the OpenStack Configuration Reference.
+`Notification section <https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`__ in the OpenStack Configuration Reference.
 
 The notification agent creates multiple queues to divide the workload across
 all active agents. The number of queues can be controlled by  the
@@ -458,7 +460,7 @@ central agent configuration also supports using different configuration
 files for groups of service instances of this type that are running in
 parallel. For enabling this configuration set a value for the
 ``partitioning_group_prefix`` option in the `polling section
-<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+<https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`__
 in the OpenStack Configuration Reference.
 
 .. warning::
@@ -473,7 +475,7 @@ in the OpenStack Configuration Reference.
 To enable the Compute agent to run multiple instances simultaneously
 with workload partitioning, the ``workload_partitioning`` option has to
 be set to ``True`` under the `Compute section
-<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+<https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`__
 in the ``ceilometer.conf`` configuration file.
 
 
@@ -697,7 +699,7 @@ Multiple ``ceilometer-agent-notification`` agents can be run at a time. It is
 also supported to start multiple worker threads per agent. The
 ``workers`` configuration option has to be modified in the
 `notification section
-<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
+<https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`__
 of the ``ceilometer.conf`` configuration file.
 
 .. note::
@@ -797,4 +799,3 @@ The level of support differs in case of the configured back end:
      - No
      - DB2 NoSQL does not have native TTL
        nor ``ceilometer-expirer`` support.
-

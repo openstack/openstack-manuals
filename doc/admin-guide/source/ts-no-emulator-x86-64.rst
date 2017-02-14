@@ -15,5 +15,5 @@ On the KVM host, run :command:`cat /proc/cpuinfo`. Make sure the ``vmx`` or
 ``svm`` flags are set.
 
 Follow the instructions in the `Enable KVM
-<https://docs.openstack.org/newton/config-reference/compute/hypervisor-kvm.html#enable-kvm>`__ section in the OpenStack Configuration Reference to enable hardware
+<https://docs.openstack.org/ocata/config-reference/compute/hypervisor-kvm.html#enable-kvm>`__ section in the OpenStack Configuration Reference to enable hardware
 virtualization support in your BIOS.

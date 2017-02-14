@@ -23,7 +23,7 @@ configuration, patching, backups, restores, and monitoring.
 You can modify various cluster characteristics by editing the
 ``/etc/trove/trove.conf`` file. A comprehensive list of the Database
 service configuration options is described in the `Database service
-<https://docs.openstack.org/newton/config-reference/database.html>`_
+<https://docs.openstack.org/ocata/config-reference/database.html>`_
 chapter in the *Configuration Reference*.
 
 Create a data store
