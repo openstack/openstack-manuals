@@ -68,7 +68,7 @@ You can run the following shelving tasks:
    period (in seconds) a guest operation system is allowed
    to complete the shutdown. The default timeout is 60 seconds.
    See `Description of Compute configuration options
-   <https://docs.openstack.org/newton/config-reference/compute/config-options.html>`_
+   <https://docs.openstack.org/ocata/config-reference/compute/config-options.html>`_
    for details.
 
    The timeout value can be overridden on a per image basis
